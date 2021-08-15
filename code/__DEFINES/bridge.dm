@@ -13,6 +13,7 @@
 #define BRIDGE_ADMINBAN       "adminban"       //bans
 #define BRIDGE_ADMINWL        "adminwl"        //whitelist changes
 #define BRIDGE_ADMINIMPORTANT "adminimportant" //important notifications for main channel
+// brdge
 
 //misc
 #define BRIDGE_OOC        "ooc"
@@ -29,7 +30,7 @@
 #define BRIDGE_COLOR_ADMINBAN   "#ff0000"
 #define BRIDGE_COLOR_ADMINWL    "#ffff00"
 
-#define BRIDGE_COLOR_BRIDGE     "#ADB3F0"
+#define BRIDGE_COLOR_BRIDGE     "#adb3f0"
 
 //mention types, can be mappet to specific groups
 //if not listed - bot will try to find and slap user

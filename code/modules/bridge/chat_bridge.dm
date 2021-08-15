@@ -43,8 +43,11 @@
 
 	return 1
 
-// Topic format: bridge&bridge_secret=secret&bridge_type=type&bridge_from_user=ckey&bridge_from_uid=DiscordID&bridge_from_suffix=Discord&bridge_*=*
+// Topic format: bridge&bridge_secret=secret&bridge_type=type&bridge_from_user=username&bridge_from_uid=DiscordID&bridge_from_suffix=Discord&bridge_arg_1=...
 /world/proc/bridge2game(list/packet_data)
+	if(!config.chat_bridge)
+		return
+
 	if(global.bridge_secret == null || !istext(packet_data["bridge_secret"]) || global.bridge_secret != packet_data["bridge_secret"])
 		return
 
@@ -59,13 +62,17 @@
 		return
 
 	var/datum/bridge_command/command = bridge_commands[packet_data["bridge_type"]]
-	world.log << "Req type [packet_data["bridge_type"]]"
+	//world.log << "Req type [packet_data["bridge_type"]]"
 	if(command)
-		world.log << "Command [command.name]"
+		//world.log << "Command [command.name]"
 		command.execute(packet_data)
 
-#define BRIDGE_FROM_HTML_SNIPPET "[params["bridge_from_user"]]<span class=\"bridge_[params["bridge_from_suffix"]]\">([params["bridge_from_suffix"]])</span>"
+#define BRIDGE_FROM_HTML_SNIPPET "[params["bridge_from_user"]](<span class=\"bridge_[params["bridge_from_suffix"]]\">[params["bridge_from_suffix"]]</span>)"
 #define BRIDGE_FROM_SNIPPET "[params["bridge_from_user"]]([params["bridge_from_suffix"]]:[params["bridge_from_uid"]])"
+
+// because of varchar(32) in database we need short version
+// todo: temporery before HoP bot will give us trusted associations ckey<->discordID
+#define BRIDGE_FROM_DB_SNIPPET "[params["bridge_from_suffix"]]:[params["bridge_from_uid"]]"
 
 var/global/list/bridge_commands
 
@@ -74,53 +81,59 @@ var/global/list/bridge_commands
 	var/desc
 	var/format
 	var/example
-	var/arguments
 
 /datum/bridge_command/proc/execute(list/params)
 	return
 
 /datum/bridge_command/help
 	name = "help"
-	desc = "List of commands"
-	format = "@Bot help"
+	desc = "List of commands or help for a specific command"
+	format = "@Bot help %command%"
 	example = "@Bot help"
-	arguments = 0
 
 /datum/bridge_command/help/execute(list/params)
 	var/message = ""
+	var/command_scpecified = params["bridge_arg_1"]
 
-	for(var/C in bridge_commands)
-		var/datum/bridge_command/command = bridge_commands[C]
+	if(bridge_commands[command_scpecified])
+		var/datum/bridge_command/command = bridge_commands[command_scpecified]
 		message += {"**[command.name]**
 		[command.desc]
 		*Format*: ``[command.format]``
 		*Example*: ``[command.example]``
 		"}
+	else
+		for(var/C in bridge_commands)
+			var/datum/bridge_command/command = bridge_commands[C]
+			message += {"**[command.name]**
+			[command.desc]
+			*Format*: ``[command.format]``
+			*Example*: ``[command.example]``
+			"}
 	
 	var/footer = {"Where:
-``%message%`` or ``%reason%`` - Just text. New line is allowed.
-``%ckey%`` - Player key in ckey format: without spaces and \\_-
-``%duration%`` - Number for minutes or ``perma``
-``%banid%`` - ban ID, look in ``banlist`` command
-``%page%`` - optional parameter, by default 1"}
+%message% or %reason% - Just text. New line is allowed.
+%ckey% - Player key in ckey format: without spaces and \\_-
+%duration% - Number for minutes or perma
+%banid% or %noteid% - ID number, look in banlist/noteslist command
+%offset% - optional offset for lists, default 0"}
 
 	world.send2bridge(
-		type = list(BRIDGE_ADMINIMPORTANT),
+		type = list(BRIDGE_ADMINCOM),
 		attachment_title = "Bridge: help",
-		attachment_msg = message,
+		attachment_msg = "Help for <@![params["bridge_from_uid"]]>\n-----\n[message]",
 		attachment_footer = footer,
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
 /datum/bridge_command/announce
 	name = "announce"
-	desc = "Admin announment message to server"
+	desc = "Admin announment message to the server"
 	format = "@Bot announce %message%"
 	example = "@Bot announce Hello! How are you?"
-	arguments = 1
 
 /datum/bridge_command/announce/execute(list/params)
-	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
+	var/message = sanitize(params["bridge_arg_1"], MAX_PAPER_MESSAGE_LEN, extra = 0)
 	
 	if(!message)
 		return
@@ -129,7 +142,7 @@ var/global/list/bridge_commands
 	log_admin("Announce: [BRIDGE_FROM_SNIPPET] : [message]")
 
 	world.send2bridge(
-		type = list(BRIDGE_ADMINIMPORTANT),
+		type = list(BRIDGE_ADMINCOM, BRIDGE_ADMINIMPORTANT),
 		attachment_title = "Bridge: announce",
 		attachment_msg = "Admin announcment by <@![params["bridge_from_uid"]]>\n-----\n[message]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
@@ -140,10 +153,9 @@ var/global/list/bridge_commands
 	desc = "Send fax from CentComm to all faxes, bb-codes allowed"
 	format = "@Bot fax %message%"
 	example = "@Bot fax You are all fired!"
-	arguments = 1
 
 /datum/bridge_command/fax/execute(list/params)
-	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
+	var/message = sanitize(params["bridge_arg_1"], MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(!message)
 		return
@@ -176,10 +188,9 @@ var/global/list/bridge_commands
 	desc = "Send centcomm message to crew" // todo: pub | priv
 	format = "@Bot centcomm %message%"
 	example = "@Bot centcomm You are all fired!"
-	arguments = 1
 
 /datum/bridge_command/centcomm/execute(list/params)
-	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
+	var/message = sanitize(params["bridge_arg_1"], MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(!message)
 		return
@@ -198,22 +209,75 @@ var/global/list/bridge_commands
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
-/datum/bridge_command/pm //todo: ticked command from tg bot
+/datum/bridge_command/pm
 	name = "pm"
-	desc = "Send private message to player"
+	desc = "(WiP)Send private message to player"
 	format = "@Bot pm %ckey% %message%"
 	example = "@Bot pm taukitty Hello! How are you?"
-	//arguments = 2
 
-/datum/bridge_command/ooc //todo: enable ooc channel for bridge
+/datum/bridge_command/pm/execute(list/params)
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/message = sanitize(params["bridge_arg_2"])
+
+	if(!ckey || !message)
+		return
+
+	var/client/target
+	for(var/client/C in clients)
+		if(C.ckey == ckey)
+			target = C
+			break
+
+	if(!target)
+		world.send2bridge(
+			type = list(BRIDGE_ADMINCOM, BRIDGE_ADMINLOG),
+			attachment_title = "Bridge: PM",
+			attachment_msg = "<@![params["bridge_from_uid"]]> client [ckey] is offline!",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		return
+
+	if(!target.holder && !target.current_ticket)
+		new /datum/admin_help(message, target, TRUE)
+
+	if(!target.holder)
+		to_chat(target, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+
+	//todo: reply (priv_msg) currently works only with client
+	//to_chat(target, "<font color='red'>Admin PM from-<b><a href='?priv_msg=[BRIDGE_FROM_SNIPPET]'>[BRIDGE_FROM_HTML_SNIPPET]</a></b>: <span class='emojify linkify'>[message]</span></font>")
+	to_chat(target, "<font color='red'>Remote admin PM from-<b>[BRIDGE_FROM_HTML_SNIPPET]</b>: <span class='emojify linkify'>[message]</span></font>")
+
+	if(!target.holder)
+		 // workaround because tickets needs clients to reply and it's not easy to change
+		to_chat(target, "<font color='red'><i>Это удаленный ответ администратора, используйте F1 для ответа.</i></font>")
+		giveadminhelpverb(target.ckey)
+
+	admin_ticket_log(target, "<font color='blue'>PM From [BRIDGE_FROM_SNIPPET]: [message]</font>")
+	
+	if(!target.holder)
+		target.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+
+	log_admin_private("[BRIDGE_FROM_SNIPPET]->[key_name(target)]: [message]")
+	to_chat((global.admins-target), "<font color='blue'><B>PM: [BRIDGE_FROM_SNIPPET]-&gt;[key_name(target, 1, 0)]:</B> <span class='emojify linkify'>[message]</span></font>" )
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM, BRIDGE_ADMINLOG),
+		attachment_title = "Bridge: PM",
+		attachment_msg = "**<@![params["bridge_from_uid"]]>->[key_name(target)]:** [message]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+///datum/bridge_command/ticketlist
+///datum/bridge_command/ticketaction
+
+/datum/bridge_command/ooc
 	name = "ooc"
 	desc = "Send OOC message"
 	format = "@Bot ooc %message%"
 	example = "@Bot ooc Hello! How are you?"
-	arguments = 1
 
 /datum/bridge_command/ooc/execute(list/params)
-	var/message = sanitize(params["bridge_message"])
+	var/message = sanitize(params["bridge_arg_1"])
 
 	if(!message)
 		return
@@ -231,11 +295,10 @@ var/global/list/bridge_commands
 	desc = "Kick player"
 	format = "@Bot kick %ckey% %reason%"
 	example = "@Bot kick taukitty For no reason"
-	arguments = 2
 
 /datum/bridge_command/kick/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/reason = sanitize(params["bridge_reason"])
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/reason = sanitize(params["bridge_arg_2"])
 
 	if(!ckey || !reason)
 		return
@@ -248,24 +311,21 @@ var/global/list/bridge_commands
 
 	if(!target || target.holder)
 		world.send2bridge(
-			type = list(BRIDGE_ADMINIMPORTANT),
+			type = list(BRIDGE_ADMINCOM, BRIDGE_ADMINLOG),
 			attachment_title = "Bridge: Kick",
 			attachment_msg = "Kick command from <@![params["bridge_from_uid"]]> could not be executed: [target ? "admin can not be kicked" : "client not found"]",
 			attachment_color = BRIDGE_COLOR_BRIDGE,
 		)
 		return
 
-	if(!reason)
-		to_chat(target, "<span class='warning'>You have been kicked from the server by admin</span>")
-	else
-		to_chat(target, "<span class='warning'>You have been kicked from the server by admin: [reason]</span>")
+	to_chat(target, "<span class='warning'>You have been kicked from the server by admin: [reason]</span>")
 
-	log_admin("[BRIDGE_FROM_SNIPPET] booted [key_name(target)].")
-	message_admins("<span class='notice'>[BRIDGE_FROM_HTML_SNIPPET] booted [key_name_admin(target)].</span>")
+	log_admin("[BRIDGE_FROM_SNIPPET] booted [key_name(target)] with reason: [reason].")
+	message_admins("<span class='notice'>[BRIDGE_FROM_HTML_SNIPPET] booted [key_name_admin(target)] with reason: [reason].</span>")
 	QDEL_IN(target, 2 SECONDS)
 
 	world.send2bridge(
-		type = list(BRIDGE_ADMINIMPORTANT),
+		type = list(BRIDGE_ADMINCOM, BRIDGE_ADMINLOG),
 		attachment_title = "Bridge: Kick",
 		attachment_msg = "Client **[target.ckey]** has been kicked by <@![params["bridge_from_uid"]]>",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
@@ -274,16 +334,15 @@ var/global/list/bridge_commands
 /datum/bridge_command/banlist
 	name = "banlist"
 	desc = "Show active player bans."
-	format = "@Bot banlist %ckey% %page%"
+	format = "@Bot banlist %ckey% %offset%"
 	example = "@Bot banlist taukitty"
-	arguments = 1
 
 /datum/bridge_command/banlist/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/page_offset = text2num(params["bridge_page"])
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/offset = text2num(params["bridge_arg_2"]) // offset
 
-	if(!isnum(page_offset) || page_offset <= 1)
-		page_offset = 1
+	if(!isnum(offset) || offset < 0)
+		offset = 0
 
 	if(!ckey || !establish_db_connection("erro_ban"))
 		return
@@ -294,7 +353,7 @@ var/global/list/bridge_commands
 			AND (bantype = 'PERMABAN' OR bantype = 'JOB_PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()) OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now()))
 			AND isnull(unbanned)
 		ORDER BY bantime DESC 
-		LIMIT 10 OFFSET [(page_offset-1)*10]"})
+		LIMIT 10 OFFSET [offset]"})
 	select_query.Execute()
 
 	var/message = ""
@@ -314,7 +373,7 @@ var/global/list/bridge_commands
 		world.send2bridge(
 			type = list(BRIDGE_ADMINIMPORTANT),
 			attachment_title = "Bridge: Ban List",
-			attachment_msg = "Client **[ckey]** has no bans, <@![params["bridge_from_uid"]]>",
+			attachment_msg = "Client **[ckey]** has no more active bans, <@![params["bridge_from_uid"]]>",
 			attachment_color = BRIDGE_COLOR_BRIDGE,
 		)
 		return
@@ -322,7 +381,7 @@ var/global/list/bridge_commands
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
 		attachment_title = "Bridge: Ban List",
-		attachment_msg = "Active bans of **[ckey]**, page **[page_offset]**, requested by <@![params["bridge_from_uid"]]>\n---\n[message]",
+		attachment_msg = "Active bans of **[ckey]**, offset **[offset]**, requested by <@![params["bridge_from_uid"]]>\n-----\n[message]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
@@ -331,19 +390,18 @@ var/global/list/bridge_commands
 	desc = "Ban player."
 	format = "@Bot ban ckey %duration% %reason%"
 	example = "@Bot ban taukitty 1440 For no reason"
-	arguments = 3
 
 /datum/bridge_command/ban/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/reason = sanitize(params["bridge_reason"])
-	var/duration = text2num(params["bridge_duration"])
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/duration = (lowertext(params["bridge_arg_2"]) == "perma" ? "perma" : text2num(params["bridge_arg_2"]))
+	var/reason = sanitize(params["bridge_arg_3"])
 
-	if(!ckey || !reason || !establish_db_connection("erro_ban"))
+	if(!ckey || !reason || !duration || !establish_db_connection("erro_ban"))
 		return
 
 	reason = "[BRIDGE_FROM_SNIPPET]: [reason]" // todo: after HoP bot BD we can use trusted admin name as actual ban author
 
-	if(lowertext(params["bridge_duration"]) == "perma" && DB_ban_record_2(bantype = BANTYPE_PERMA, duration = -1, reason = reason, banckey = ckey))
+	if(duration == "perma" && DB_ban_record_2(bantype = BANTYPE_PERMA, duration = -1, reason = reason, banckey = ckey))
 		world.send2bridge(
 			type = list(BRIDGE_ADMINBAN),
 			attachment_title = "Bridge: Ban",
@@ -387,25 +445,24 @@ var/global/list/bridge_commands
 	desc = "Unban player ban by ID. You can find ID with ``banlist``"
 	format = "@Bot unban ckey %banid%"
 	example = "@Bot unban taukitty 123"
-	arguments = 2
 
 /datum/bridge_command/unban/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/id = text2num(params["bridge_banid"])
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/id = text2num(params["bridge_arg_2"])
 
 	if(!ckey || !id || !establish_db_connection("erro_ban"))
 		return
 
 	var/DBQuery/select_query = dbcon.NewQuery({"SELECT bantype, a_ckey, job, reason
 		FROM erro_ban 
-		WHERE id='[id]' AND isnull(unbanned)"})
+		WHERE id='[id]' AND ckey='[ckey]' AND isnull(unbanned)"})
 	select_query.Execute()
 
 	if(!select_query.NextRow())
 		world.send2bridge(
 			type = list(BRIDGE_ADMINBAN),
 			attachment_title = "Bridge: Unban",
-			attachment_msg = "<@![params["bridge_from_uid"]]> wrong ban ID or ban already unbanned",
+			attachment_msg = "<@![params["bridge_from_uid"]]> wrong ban ID, client, or ban already unbanned",
 			attachment_color = BRIDGE_COLOR_BRIDGE,
 		)
 		return
@@ -417,34 +474,33 @@ var/global/list/bridge_commands
 
 
 	var/DBQuery/update_query = dbcon.NewQuery({"UPDATE erro_ban 
-		SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[BRIDGE_FROM_SNIPPET]', unbanned_computerid = '0000000000', unbanned_ip = '127.0.0.1' 
+		SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[BRIDGE_FROM_DB_SNIPPET]', unbanned_computerid = '0000000000', unbanned_ip = '127.0.0.1' 
 		WHERE id = [id]"})
 	update_query.Execute()
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
-		attachment_title = "UNBAN",
-		attachment_msg = "**<@![params["bridge_from_uid"]]> has lifted **[ckey]**'s ban:\n[bantype][job ? "([job])" : ""] by [admin] with reason:\n*[reason]*",
-		attachment_color = BRIDGE_COLOR_ADMINBAN,
+		attachment_title = "Bridge: Unban",
+		attachment_msg = "**<@![params["bridge_from_uid"]]> has lifted **[ckey]**\'s ban:\n[bantype][job ? "([job])" : ""] by [admin] with reason:\n*[reason]*",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
 	ban_unban_log_save("[BRIDGE_FROM_SNIPPET] has lifted [ckey] ban.")
 	log_admin("[BRIDGE_FROM_SNIPPET] has lifted [ckey] ban.")
 	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has lifted [ckey] ban.")
 
-/datum/bridge_command/notes
-	name = "notes"
+/datum/bridge_command/noteslist
+	name = "noteslist"
 	desc = "Show player notes."
-	format = "@Bot notes %ckey% %page%"
+	format = "@Bot notes %ckey% %offset%"
 	example = "@Bot notes taukitty"
-	arguments = 1
 
-/datum/bridge_command/notes/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/page_offset = text2num(params["bridge_page"])
+/datum/bridge_command/noteslist/execute(list/params)
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/offset = text2num(params["bridge_arg_2"])
 
-	if(!isnum(page_offset) || page_offset <= 1)
-		page_offset = 1
+	if(!isnum(offset) || offset < 0)
+		offset = 0
 
 	if(!ckey || !establish_db_connection("erro_messages"))
 		return
@@ -453,7 +509,7 @@ var/global/list/bridge_commands
 		FROM erro_messages 
 		WHERE targetckey='[ckey]' AND deleted=0
 		ORDER BY timestamp DESC
-		LIMIT 10 OFFSET [(page_offset-1)*10]"})
+		LIMIT 10 OFFSET [offset]"})
 	select_query.Execute()
 
 	var/message = ""
@@ -472,27 +528,27 @@ var/global/list/bridge_commands
 		world.send2bridge(
 			type = list(BRIDGE_ADMINIMPORTANT),
 			attachment_title = "Bridge: Notes",
-			attachment_msg = "Client **[ckey]** has no notes, <@![params["bridge_from_uid"]]>",
+			attachment_msg = "Client **[ckey]** has no more notes, <@![params["bridge_from_uid"]]>",
 			attachment_color = BRIDGE_COLOR_BRIDGE,
 		)
 		return
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
-		attachment_title = "Bridge: Ban List",
-		attachment_msg = "Notes of **[ckey]**, page **[page_offset]**, requested by <@![params["bridge_from_uid"]]>\n---\n[message]",
+		attachment_title = "Bridge: Notes",
+		attachment_msg = "Notes of **[ckey]**, offset **[offset]**, requested by <@![params["bridge_from_uid"]]>\n-----\n[message]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
 /datum/bridge_command/notedel
 	name = "notedel"
-	desc = "Delete player note by ID. You can find ID with ``notes``"
+	desc = "Delete player note by ID. You can find ID with ``noteslist``"
 	format = "@Bot notedel %ckey% %noteid%"
 	example = "@Bot notedel taukitty 123"
 
 /datum/bridge_command/notedel/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
-	var/id = text2num(params["bridge_banid"])
+	var/ckey = ckey(params["bridge_arg_1"])
+	var/id = text2num(params["bridge_arg_2"])
 
 	if(!ckey || !id || !establish_db_connection("erro_messages"))
 		return
@@ -515,9 +571,8 @@ var/global/list/bridge_commands
 	var/admin = select_query.item[2]
 	var/text = select_query.item[3]
 
-
 	var/DBQuery/update_query = dbcon.NewQuery({"UPDATE erro_messages 
-		SET deleted = 1, deleted_ckey = '[BRIDGE_FROM_SNIPPET]'
+		SET deleted = 1, deleted_ckey = '[BRIDGE_FROM_DB_SNIPPET]'
 		WHERE id = [id]"})
 	update_query.Execute()
 
@@ -528,18 +583,17 @@ var/global/list/bridge_commands
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
 
-	log_admin("[BRIDGE_FROM_SNIPPET] has deleted [ckey] note.")
-	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has deleted [ckey] note.")
+	log_admin("[BRIDGE_FROM_SNIPPET] has deleted [ckey] note [notetype] by [admin] with text: [text].")
+	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has deleted [ckey] note [notetype] by [admin] with text: [text].")
 
 /datum/bridge_command/pp
 	name = "pp"
 	desc = "Player panel (info on player)"
 	format = "@Bot pp %ckey%"
 	example = "@Bot pp taukitty"
-	arguments = 2
 
 /datum/bridge_command/pp/execute(list/params)
-	var/ckey = ckey(params["bridge_ckey"])
+	var/ckey = ckey(params["bridge_arg_1"])
 
 	if(!ckey || !establish_db_connection("erro_ban", "erro_messages", "erro_player"))
 		return
@@ -589,7 +643,7 @@ var/global/list/bridge_commands
 
 	message += "\n"
 
-	//todo: if online - show IC info (character, antag)
+	// todo: if online - show IC info (character, antag)
 
 	// guard
 	if(online_client)
@@ -650,10 +704,9 @@ var/global/list/bridge_commands
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
 		attachment_title = "Bridge: Player Panel",
-		attachment_msg = "<@![params["bridge_from_uid"]]> player **[ckey]**:\n[message]",
+		attachment_msg = "<@![params["bridge_from_uid"]]> player **[ckey]**:\n-----\n[message]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
-
 
 ///datum/bridge_command/noteadd
 ///datum/bridge_command/notewarn
@@ -663,7 +716,6 @@ var/global/list/bridge_commands
 	desc = "Get server status"
 	format = "@Bot status"
 	example = "@Bot status"
-	arguments = 1
 
 /datum/bridge_command/status/execute(list/params)
 	var/message = ""
@@ -686,6 +738,8 @@ var/global/list/bridge_commands
 		message += ", Shuttle ETA [shuttleeta2text()] [SSshuttle.location == 0 ? "(transit)" : "(station)"]"
 
 	message += "\n"
+
+	// todo: code, antags
 	
 	// admins
 	var/list/adm = get_admin_counts()

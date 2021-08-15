@@ -26,7 +26,6 @@
 	global.game_log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
-	world.log << "\[[time_stamp()]]: [text][log_end]"
 	if (config && config.log_hrefs)
 		global.hrefs_log << "\[[time_stamp()]]: [text][log_end]"
 
