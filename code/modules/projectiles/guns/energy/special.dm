@@ -153,8 +153,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
-	w_class = ITEM_SIZE_LARGE
-  var/zoom = 0
+	w_class = SIZE_NORMAL
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
