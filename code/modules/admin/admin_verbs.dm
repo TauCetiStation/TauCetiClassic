@@ -130,7 +130,6 @@ var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_fluid_verb
 	)
 var/list/admin_verbs_server = list(
-	/client/proc/Set_Holiday,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -183,6 +182,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
+	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	)
 var/list/admin_verbs_possess = list(
@@ -195,6 +195,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/library_debug_read,
 	/client/proc/regisration_panic_bunker,
 	/client/proc/host_announcements,
+	/client/proc/add_round_admin,
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,
@@ -260,7 +261,6 @@ var/list/admin_verbs_hideable = list(
 //	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/Set_Holiday,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -901,7 +901,8 @@ var/list/admin_verbs_hideable = list(
 	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY)) // add data huds
 		var/datum/atom_hud/H = global.huds[hudtype]
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	if(ishuman(mob))

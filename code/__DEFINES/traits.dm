@@ -88,5 +88,6 @@
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
+#define MOOD_COMPONENT_TRAIT "mood_component"
 
 #define FEAR_TRAIT         "fear"

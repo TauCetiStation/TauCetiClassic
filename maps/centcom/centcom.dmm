@@ -2231,6 +2231,10 @@
 /obj/machinery/light,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
+"afV" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/space,
+/area/space)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -8804,7 +8808,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
 	dir = 1;
@@ -8856,6 +8860,7 @@
 /area/centcom/living)
 "aBL" = (
 /obj/structure/stool/bed/chair/metal/black,
+/obj/effect/landmark/cops_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9049,6 +9054,7 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
+/obj/effect/landmark/cops_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9063,6 +9069,7 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
+/obj/effect/landmark/cops_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9313,6 +9320,7 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
+/obj/effect/landmark/cops_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -22174,6 +22182,12 @@
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
+	},
+/area/centcom/living)
+"kEE" = (
+/obj/effect/landmark/cops_spawn,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/living)
 "kFb" = (
@@ -52913,10 +52927,10 @@ aAm
 aAM
 aAM
 aAM
-aBK
+kEE
 aCk
 aCk
-aBK
+kEE
 aAM
 aAM
 aAM
@@ -53684,10 +53698,10 @@ aAm
 aAP
 aAM
 aAM
-aBK
+kEE
 aCm
 aCm
-aBK
+kEE
 aAM
 aAM
 aEp
@@ -80451,7 +80465,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afV
 aaM
 aaM
 aaM

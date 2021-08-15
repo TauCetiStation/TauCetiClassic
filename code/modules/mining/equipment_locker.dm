@@ -422,7 +422,8 @@
 	"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
 	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
 	"Mining Drone" = image(icon = 'icons/obj/aibots.dmi', icon_state = "mining_drone"),
-	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining")
+	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining"),
+	"Mining Meson HUD" = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "mesonmininghud")
 	)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
@@ -444,6 +445,8 @@
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
+		if("Mining Meson HUD")
+			new /obj/item/clothing/glasses/hud/mining/meson(src.loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return
@@ -469,7 +472,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /**********************Mining Point Card**********************/
@@ -506,7 +509,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -575,7 +578,7 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
@@ -678,6 +681,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	w_class = SIZE_BIG
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
@@ -853,7 +857,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -904,7 +908,7 @@
 	icon_state = "patcher"
 	item_state = "patcher"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1

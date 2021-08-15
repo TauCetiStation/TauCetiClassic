@@ -29,6 +29,12 @@
 				S.randomize_param()
 				spawn(0)
 					S.ninitialize(10, H)
+
+			var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
+			if(!N)
+				N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+			add_faction_member(N, H, FALSE)
+
 	else
 		tgui_alert(usr, "Invalid mob")
 

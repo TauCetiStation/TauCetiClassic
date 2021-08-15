@@ -158,78 +158,84 @@ var/can_call_ert
 	sleep(600 * 5)
 	send_emergency_team = 0 // Can no longer join the ERT.
 
-/client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
-
-
-	var/mob/living/carbon/human/M = new(null)
-	response_team_members |= M
-
+/client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	var/new_facial = input(src, "Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
+		H.r_facial = hex2num(copytext(new_facial, 2, 4))
+		H.g_facial = hex2num(copytext(new_facial, 4, 6))
+		H.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	var/new_hair = input(src, "Please select hair color.", "Character Generation") as color
 	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+		H.r_hair = hex2num(copytext(new_hair, 2, 4))
+		H.g_hair = hex2num(copytext(new_hair, 4, 6))
+		H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	var/new_eyes = input(src, "Please select eye color.", "Character Generation") as color
 	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input(src, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.s_tone =  -M.s_tone + 35
+	H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+	H.s_tone = -H.s_tone + 35
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
 	var/list/hairs = list()
 
 	// loop through potential hairs
 	for(var/x in all_hairs)
-		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-		hairs.Add(H.name) // add hair name to hairs
-		qdel(H) // delete the hair after it's all done
+		var/datum/sprite_accessory/hair/hair = new x // create new hair datum based on type x
+		hairs.Add(hair.name) // add hair name to hairs
+		qdel(hair) // delete the hair after it's all done
 
-	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
+	var/new_gender = tgui_alert(src, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			H.gender = MALE
 		else
-			M.gender = FEMALE
+			H.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	var/new_hstyle = input(src, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 	if(new_hstyle)
-		M.h_style = new_hstyle
+		H.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	var/new_fstyle = input(src, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 	if(new_fstyle)
-		M.f_style = new_fstyle
+		H.f_style = new_fstyle
 
+	H.apply_recolor()
+	H.update_hair()
+	H.update_body()
+	H.check_dna(H)
 
-	//M.rebuild_appearance()
-	M.apply_recolor()
-	M.update_hair()
-	M.update_body()
-	M.check_dna(M)
+	if(!_name)
+		_name = H.gender == FEMALE ? pick(global.first_names_female) : pick(global.first_names_male)
 
-	M.real_name = commando_name
-	M.name = commando_name
+	H.real_name = _name
+	H.name = _name
+	if(H.mind)
+		H.mind.name = _name
+	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
+
+	H.dna.ready_dna(H)//Creates DNA.
+
+/client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
+
+	var/mob/living/carbon/human/M = new(null)
+	response_team_members |= M
+
+	create_human_apperance(M, commando_name)
 	M.age = !leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
-
-	M.dna.ready_dna(M)//Creates DNA.
 
 	//Creates mind stuff.
 	M.mind = new

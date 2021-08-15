@@ -40,7 +40,7 @@
 /mob/living/simple_animal/price = 50
 /mob/living/simple_animal/corgi/price = 225
 /mob/living/carbon/ian/price = 65000
-/mob/living/simple_animal/cat/Runtime/price = 55000
+/mob/living/simple_animal/cat/dusty/price = 55000
 
 /obj/item/ammo_casing/price = 10
 /obj/item/ammo_casing/energy/price = 0
@@ -84,6 +84,7 @@
 /obj/item/clothing/glasses/meson/price = 489
 /obj/item/clothing/glasses/night/price = 6500
 /obj/item/clothing/glasses/thermal/price = 10000
+/obj/item/clothing/glasses/thermal/dealer/price = 5000
 /obj/item/clothing/glasses/thermal/hos_thermals/price = 14000
 /obj/item/clothing/glasses/welding/price = 287
 /obj/item/clothing/glasses/welding/superior/price = 6200
@@ -250,7 +251,7 @@
 /obj/item/weapon/gun/projectile/m79/price = 2500
 /obj/item/weapon/gun/projectile/shotgun/price = 4000
 /obj/item/weapon/gun/projectile/shotgun/combat/price = 6500
-/obj/item/weapon/gun/projectile/wjpp/price = 3000
+/obj/item/weapon/gun/projectile/glock/price = 3000
 /obj/item/weapon/hand_tele/price = 8000
 /obj/item/weapon/hemostat/price = 1250
 /obj/item/weapon/implantcase/death_alarm/price = 750

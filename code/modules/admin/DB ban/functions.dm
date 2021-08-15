@@ -104,7 +104,8 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))	return
+	if(!check_rights(R_BAN))
+		return
 
 	var/bantype_str
 	if(bantype)
@@ -310,7 +311,8 @@
 	if(!usr.client)
 		return
 
-	if(!check_rights(R_BAN))	return
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+		return
 
 	if(!establish_db_connection("erro_ban"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
@@ -343,7 +345,7 @@
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_RAIDER, ROLE_CULTIST, ROLE_WIZARD, ROLE_ERT, ROLE_SHADOWLING, ROLE_ABDUCTOR, ROLE_NINJA, ROLE_BLOB, ROLE_MALF))
+	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_RAIDER, ROLE_CULTIST, ROLE_WIZARD, ROLE_ERT, ROLE_SHADOWLING, ROLE_ABDUCTOR, ROLE_FAMILIES, ROLE_NINJA, ROLE_BLOB, ROLE_MALF))
 		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"

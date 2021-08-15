@@ -9,7 +9,7 @@
 	. = ..()
 
 	if(!spawn_type)
-		var/new_type = pick(typesof(/obj/effect/landmark/animal_spawner) - /obj/effect/landmark/animal_spawner)
+		var/new_type = pick(subtypesof(/obj/effect/landmark/animal_spawner))
 		new new_type(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -65,6 +65,7 @@
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 50
 	health = 50
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -122,6 +123,7 @@
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 25
 	health = 25
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 2
 	melee_damage = 7

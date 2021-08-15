@@ -7,7 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
@@ -710,9 +711,7 @@
 
 /mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(..())
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-		if(blood_volume > 0)
-			vessel.remove_reagent("blood", 1)
+		blood_remove(1)
 
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
@@ -772,7 +771,7 @@
 	return "trails_1"
 
 /mob/living/carbon/human/getTrail()
-	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+	if(blood_amount() > 0)
 		return ..()
 
 /mob/living/verb/resist()

@@ -16,6 +16,8 @@
 
 	var/moving_diagonally = 0
 
+	var/w_class = 0
+
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
@@ -363,3 +365,38 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	return
+
+/* Sizes stuff */
+
+/atom/movable/proc/get_size_flavor()
+	switch(w_class)
+		if(SIZE_MINUSCULE)
+			. = "minuscule"
+		if(SIZE_TINY)
+			. = "tiny"
+		if(SIZE_SMALL)
+			. = "small"
+		if(SIZE_NORMAL to SIZE_LARGE)
+			. = "medium"
+		if(SIZE_HUMAN)
+			. = "human"
+		if(SIZE_BIG_HUMAN to SIZE_MASSIVE)
+			. = "huge"
+		if(SIZE_GYGANT to SIZE_GARGANTUAN)
+			. = "gygant"
+		else
+			. = "unknown"
+
+	. = EMBED_TIP_MINI(., repeat_string_times("*", w_class))
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/atom/movable/proc/is_bigger_than(mob/living/target)
+	if(w_class - target.w_class >= 3)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(atom/movable/dividend, atom/movable/divisor)
+	return (dividend.w_class / divisor.w_class)
+
+/atom/movable/proc/update_size_class()
+	return w_class
