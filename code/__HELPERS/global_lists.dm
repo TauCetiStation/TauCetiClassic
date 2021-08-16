@@ -219,6 +219,8 @@
 		var/datum/bridge_command/C = new command
 		global.bridge_commands[C.name] = C
 
+	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))

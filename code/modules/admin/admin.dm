@@ -767,13 +767,20 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
-	else
-		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.")
+
+	ooc_allowed = !ooc_allowed
+
+	world.send2bridge(
+		type = list(BRIDGE_OOC, BRIDGE_ADMINCOM),
+		attachment_msg = "[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"]!</B>")
+
+	log_admin("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()

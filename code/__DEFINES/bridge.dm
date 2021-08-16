@@ -13,7 +13,6 @@
 #define BRIDGE_ADMINBAN       "adminban"       //bans
 #define BRIDGE_ADMINWL        "adminwl"        //whitelist changes
 #define BRIDGE_ADMINIMPORTANT "adminimportant" //important notifications for main channel
-// brdge
 
 //misc
 #define BRIDGE_OOC        "ooc"
@@ -38,3 +37,12 @@
 #define BRIDGE_MENTION_EVERYONE   "everyone"
 #define BRIDGE_MENTION_ROUNDSTART "roundstart"
 #define BRIDGE_MENTION_EVENT      "event"
+
+
+// snippets for bot command messages
+#define BRIDGE_FROM_SNIPPET_HTML "[params["bridge_from_user"]](<span class=\"bridge_[params["bridge_from_suffix"]]\">[params["bridge_from_suffix"]]</span>)"
+#define BRIDGE_FROM_SNIPPET_TEXT "[params["bridge_from_user"]]([params["bridge_from_suffix"]]:[params["bridge_from_uid"]])"
+
+// because of varchar(32) in database we need short version
+// todo: temporery before HoP bot will give us trusted associations ckey<->discordID
+#define BRIDGE_FROM_SNIPPET_DB "[params["bridge_from_suffix"]]:[params["bridge_from_uid"]]"
