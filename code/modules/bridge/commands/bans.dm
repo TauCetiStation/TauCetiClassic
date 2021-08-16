@@ -33,9 +33,16 @@
 	if(!ckey || !reason || !duration || !establish_db_connection("erro_ban"))
 		return
 
+	var/mob/target_mob
+
+	for(var/client/C in clients)
+		if(C.ckey == ckey)
+			target_mob = C.mob
+			break
+
 	reason = "[BRIDGE_FROM_SNIPPET_TEXT]: [reason]" // todo: after HoP bot BD we can use trusted admin name as actual ban author
 
-	if(duration == "perma" && DB_ban_record_2(bantype = BANTYPE_PERMA, duration = -1, reason = reason, banckey = ckey)) // need to send MOB for corrent ip/cid or DB_ban_record_2 should take bans from connection table
+	if(duration == "perma" && DB_ban_record_2(bantype = BANTYPE_PERMA, banned_mob = target_mob, duration = -1, reason = reason, banckey = ckey))
 		world.send2bridge(
 			type = list(BRIDGE_ADMINBAN),
 			attachment_title = "Bridge: Ban",
@@ -47,7 +54,7 @@
 		message_admins("[BRIDGE_FROM_SNIPPET_HTML] has banned [ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 
-	else if (duration && DB_ban_record_2(bantype = BANTYPE_TEMP, duration = duration, reason = reason, banckey = ckey))
+	else if (duration && DB_ban_record_2(bantype = BANTYPE_TEMP, banned_mob = target_mob, duration = duration, reason = reason, banckey = ckey))
 		world.send2bridge(
 			type = list(BRIDGE_ADMINBAN),
 			attachment_title = "Bridge: Ban",
