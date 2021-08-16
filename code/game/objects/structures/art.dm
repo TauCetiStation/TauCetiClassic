@@ -118,14 +118,16 @@
 				return FALSE
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
+			if(!(x in 0 to width) || !(y in 0 to height))
+				return
+
 			grid[x][y] = color
 			used = TRUE
 			update_overlays()
 			. = TRUE
 		if("finalize")
 			. = TRUE
-			if(!finalized)
-				finalize(user)
+			finalize(user)
 
 /obj/item/canvas/proc/finalize(mob/user)
 	finalized = TRUE
@@ -175,7 +177,7 @@
 		return crayon.colour
 	else if(istype(I, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/P = I
-		switch(P.colour)
+		switch(P.colour) // maybe pens can always hold this color as hex to not care about this?
 			if("yellow")
 				return "#ffff00"
 			if("lime")

@@ -9,7 +9,6 @@
 
 import os, sys
 from PIL import Image
-from pathlib import Path
 
 def main():
 	path = sys.argv[1]
