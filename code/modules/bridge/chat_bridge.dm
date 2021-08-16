@@ -1,4 +1,4 @@
-var/global/list/bridge_commands
+var/global/list/datum/bridge_command/bridge_commands
 
 /world/proc/send2bridge(msg, list/type = list(BRIDGE_SERVICE), attachment_msg, attachment_title, attachment_color, attachment_footer, mention)
 
