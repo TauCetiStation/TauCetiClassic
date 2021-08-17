@@ -56,7 +56,7 @@
 		log_mode("M is [M.type]!")
 		return FALSE
 	if(!CanBeAssigned(M) && !override)
-		log_mode("[M.name] was to be assigned to [name] but failed CanBeAssigned!")
+		log_mode("[key_name(M)] was to be assigned to [name] but failed CanBeAssigned!")
 		return FALSE
 
 	antag = M
