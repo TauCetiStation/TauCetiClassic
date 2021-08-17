@@ -80,14 +80,20 @@
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
 	var/RolesSuccess = CreateRoles()
-	return FactionSuccess && RolesSuccess
+	var/GeneralSuccess = FactionSuccess && RolesSuccess
+	if(!GeneralSuccess)
+		DropAll()
+	return GeneralSuccess
 
-//1 = station, 2 = centcomm
-/datum/game_mode/proc/ShuttleDocked(state)
-	for(var/datum/faction/F in factions)
-		F.ShuttleDocked(state)
-	for(var/datum/role/R in orphaned_roles)
-		R.ShuttleDocked(state)
+// it is necessary in those rare cases when the gamemode did not start for those reasons
+// that cannot be detected BEFORE the creation of a human
+/datum/game_mode/proc/DropAll()
+	for(var/f in factions)
+		var/datum/faction/faction = f
+		faction.Dismantle()
+	for(var/r in orphaned_roles)
+		var/datum/role/role = r
+		role.Drop()
 
 /*===FACTION RELATED STUFF===*/
 
@@ -343,3 +349,10 @@
 					return "lose"
 
 	return "win"
+
+//1 = station, 2 = centcomm
+/datum/game_mode/proc/ShuttleDocked(state)
+	for(var/datum/faction/F in factions)
+		F.ShuttleDocked(state)
+	for(var/datum/role/R in orphaned_roles)
+		R.ShuttleDocked(state)
