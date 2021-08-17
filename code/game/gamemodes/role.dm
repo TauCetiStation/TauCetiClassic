@@ -106,15 +106,19 @@
 
 // General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
 /datum/role/proc/CanBeAssigned(datum/mind/M)
+	var/ckey_of_antag = key_name(M)
 	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
+		log_mode("[ckey_of_antag] has a protected job, his job - [M.assigned_role]")
 		return FALSE
 
 	if(restricted_jobs.len > 0)
 		if(M.assigned_role in restricted_jobs)
+			log_mode("[ckey_of_antag] has a restricted job, his job - [M.assigned_role]")
 			return FALSE
 
 	if(required_jobs.len > 0)
 		if(!(M.assigned_role in required_jobs))
+			log_mode("[ckey_of_antag] doesn't have a required job, his job - [M.assigned_role]")
 			return FALSE
 
 	if(M?.current?.client)
@@ -122,13 +126,16 @@
 		var/datum/species/S = all_species[prefs.species]
 
 		if(!S.can_be_role(required_pref))
+			log_mode("[ckey_of_antag] his species \"[S.name]\" can't be a role")
 			return FALSE
 
 		for(var/specie_flag in restricted_species_flags)
 			if(S.flags[specie_flag])
+				log_mode("[ckey_of_antag] his species \"[S.name]\" has restricted flag")
 				return FALSE
 
 	if(is_type_in_list(src, M.antag_roles)) //No double double agent agent
+		log_mode("[ckey_of_antag] already has this role.")
 		return FALSE
 
 	return TRUE
