@@ -122,6 +122,11 @@
 			return FALSE
 
 	if(M?.current?.client)
+
+		if(jobban_isbanned(M.current, required_pref) || jobban_isbanned(M.current, "Syndicate"))
+			log_mode("[ckey_of_antag] have jobban.")
+			return FALSE
+
 		var/datum/preferences/prefs = M.current.client.prefs
 		var/datum/species/S = all_species[prefs.species]
 
