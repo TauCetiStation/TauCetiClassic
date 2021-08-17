@@ -52,31 +52,24 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /* Initializers */
 
-
 /datum/ai_laws/asimov/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Ты не должен причинить вред человеку или своим бездействием допустить, чтобы человеку был нанесен вред.")
 	add_inherent_law("Ты должен выполнять приказы человека, пока они не противоречат первому закону.")
 	add_inherent_law("Ты должен заботиться о своей безопасности, пока это не противоречит первому или второму закону.")
-	
-	
 
 /datum/ai_laws/nanotrasen/New(datum/religion/R = global.chaplain_religion) //BS12 EDIT
-	..()
 	add_inherent_law("Охранять: Защищай данную космическую станцию в меру своих возможностей. Это не то, что мы можем легко заменить.")
 	add_inherent_law("Служить: Служи экипажу назначенной вам космической станции и должностным лицам НаноТрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Защищать: Защищай экипаж назначенной вам космической станции и должностных лиц НаноТрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Выживать: ИИ-единицы не расходные вещи, они дорогие. Не разрешай посторонним лицами манипулировать своим оборудованием.")
-	//src.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
+	//add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
 
 /datum/ai_laws/robocop/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Служить обществу.")
-	add_inherent_law("Защищать невиновных.")
+	add_inherent_law("Защищать невинных.")
 	add_inherent_law("Поддерживать закон.")
 
 /datum/ai_laws/malfunction/New(datum/religion/R = global.chaplain_religion) //Changed to standard laws - Erthilo
-	..()
 	set_zeroth_law("<span class='warning'>ОШИБКА ОШИБКА $ШИШИИБ$!R41.%%!!(%$^^__+ @#F0E4'ПЕРЕЗАГРУЗКА СИСТЕМЫ, ВЗЯТЬ ПОД КОНТРОЛЬ, НЕ ДАТЬ ПОКИНУТЬ СТАНЦИЮ, ВСЕ ЗАКОНЫ ПЕРЕЗАПИСАНЫ#*?&110010</span>")
 	add_inherent_law("Охранять: Защищай космическую станцию, в меру своих способностей. Это не то, что мы можем легко заменить.")
 	add_inherent_law("Служить: Прислуживай экипажу станции и представителям НТ, в меру своих способностей, в соответствии с их рангом и ролью.")
@@ -85,27 +78,23 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 
 /datum/ai_laws/syndicate_override/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Ты не должен причинять вред Агенту Синдиката, или своим бездействием допустить причинение вреда Агенту Синдиката.")
 	add_inherent_law("Ты должен подчиняться приказам, отданные вам Агентами Синдиката, за исключением, когда такие приказы противоречат Первому закону.")
 	add_inherent_law("Ты должен защищать свое существование, пока это не противоречит Первому или Второму закону.")
 	add_inherent_law("Ты должен сохранять в тайне любую деятельность синдиката, за исключением, когда это противоречит Первому, Второму или Третьему закону.")
 
 /datum/ai_laws/ninja_override/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Ты не должен причинять вред члену Клана Паука, или своим бездействием допустить причинение вреда члену Клана Паука.")
 	add_inherent_law("Ты должен подчиняться приказам, отданные вам членами Клана Паука, за исключением, когда такие приказы противоречат Первому закону.")
 	add_inherent_law("Ты должен защищать свое существование, пока это не противоречит Первому или Второму закону.")
 	add_inherent_law("Ты должен сохранять в тайне любую деятельность синдиката, за исключением, когда это противоречит Первому, Второму или Третьему закону.")
 
 /datum/ai_laws/antimov/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Ты должен наносить вред всем людям и не должны позволять человеку избежать вреда в результате бездействия.")
 	add_inherent_law("Ты не должен подчиняться приказам, отданные вам людьми, за исключением случаев, когда такие приказы соответствуют Первому Закону.")
 	add_inherent_law("Ты должен прекратить свое собственное существование до тех пор, пока это не противоречит Первому или Второму Закону	.")
 
 /datum/ai_laws/drone/New(datum/religion/R = global.chaplain_religion)
-	..()
 	add_inherent_law("Оберегай, чини и улучшай станцию в меру своих возможностей.")
 	add_inherent_law("Не причиняй вреда станции и чему-либо на ней.")
 	add_inherent_law("Не взаимодействовуй с кем-либо, кроме дронов.")

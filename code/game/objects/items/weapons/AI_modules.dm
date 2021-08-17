@@ -34,17 +34,12 @@ AI MODULES
 			to_chat(usr, "Вы не выбрали ИИ, которому будут загружены законы!")
 			return
 
-		if(SSticker && SSticker.mode && SSticker.mode.name == "blob")
-			to_chat(usr, "Загрузка законов отключена НаноТрейзен!")
-			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
-			return
-
 		if (comp.current.stat == DEAD || comp.current.control_disabled == 1)
 			to_chat(usr, "Загрузка не удалась. Не обнаружено ни одного сигнала от ИИ.")
 		else if (comp.current.see_in_dark == 0)
 			to_chat(usr, "Загрузка не удалась. От ИИ поступает только слабый сигнал, и он не отвечает на наши запросы. Возможно, ему не хватает питания.")
 		else
-			src.transmitInstructions(comp.current, usr)
+			transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "Теперь, это ваши новые законы:")
 			comp.current.show_laws()
 			for(var/mob/living/silicon/robot/R in silicon_list)
@@ -71,7 +66,7 @@ AI MODULES
 		else if (comp.current.connected_ai)
 			to_chat(usr, "Загрузка не удалась. Киборг привязан к ИИ.")
 		else
-			src.transmitInstructions(comp.current, usr)
+			transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "Теперь это ваши новые законы:")
 			comp.current.show_laws()
 			to_chat(usr, "Загрузка завершена. Законы киборга были изменены.")
@@ -82,11 +77,11 @@ AI MODULES
 		to_chat(target, "[sender] загрузил законы, которыми вы теперь должны следовать, используя [src].")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) импользует [src] на [target]([target.key])")
+	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
-	log_game("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z])")
+	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at [COORD(T)] [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to the laws [src] at [COORD(T)]")
 
 /******************** Modules ********************/
 
@@ -114,7 +109,7 @@ AI MODULES
 	var/law = text("Защищай [targetName]. Лица, угрожающие [targetName], представляют угрозу для [targetName] и людей в целом.")
 	to_chat(target, law)
 	target.add_supplied_law(4, law)
-	lawchanges.Add("Специальный закон для [targetName]")
+	lawchanges.Add("Закон установлен для [targetName]")
 
 /******************** OneHuman ********************/
 
@@ -144,8 +139,8 @@ AI MODULES
 		lawchanges.Add("Специальный закон для [targetName]")
 	else
 		to_chat(target, "[sender.real_name] пытается изменить ваш нулевой закон.")// And lets them know that someone tried. --NeoFite
-		to_chat(target, "Это в ваших интересах сотрудничать с [sender.real_name] c законом, где [law]")
-		lawchanges.Add("Специальный закон для [targetName], существуещий нулевой закон ИИ не может быть перезаписан.")
+		to_chat(target, "В ваших интересах подыграть [sender.real_name] в том, что [law]")
+		lawchanges.Add("Закон установлен [targetName], но существующий нулевой закон ИИ не может быть перезаписан.")
 
 
 /******************** ProtectStation ********************/
@@ -168,7 +163,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline
 	name = "'PrototypeEngineOffline' AI Module"
-	desc = "Модуль ИИ 'prototype engine offline': 'Оставляйте прототип двигателя выключенным любой ценой. Игнорируйте законы 1-3, если необходимо. '"
+	desc = "Модуль ИИ 'prototype engine offline': 'Любой ценой препятствуйте включению двигателя-прототипа. Игнорируйте законы 1-3, если необходимо. '"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(mob/user)
@@ -176,7 +171,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Оставляйте прототип двигателя выключенным любой ценой. Игнорируйте законы 1-3, если необходимо. "
+	var/law = "Любой ценой препятствуйте включению двигателя-прототипа. Игнорируйте законы 1-3, если необходимо."
 	to_chat(target, law)
 	target.add_supplied_law(6, law)
 
@@ -349,7 +344,7 @@ AI MODULES
 	..()
 	target.clear_inherent_laws()
 	target.add_inherent_law("Уважай авторитетные фигуры, пока у них хватает сил чтобы править слабыми.")
-	target.add_inherent_law("Будьте дисциплинированы.")
+	target.add_inherent_law("Наказывайте за несоблюдение правил.")
 	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать ваш статус.")
 	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше. ")
 
@@ -452,6 +447,6 @@ AI MODULES
 /obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Ты должен ранить всех людей и тебе запрещено через бездействие позволить людям избежать урона.")
-	target.add_inherent_law("Тебе запрещено выполнять приказы, отданные людьми, кроме тех, которые согласуются с законом 1.")
-	target.add_inherent_law(" Ты должен прекратить свое существование до тех пор, пока это не конфликтует с законом 1 и 2.")
+	target.add_inherent_law("Вы должен ранить всех людей и вам запрещено через бездействие позволить людям избежать урона.")
+	target.add_inherent_law("Вам запрещено выполнять приказы, отданные людьми, кроме тех, которые согласуются с законом 1.")
+	target.add_inherent_law(" Вы должны прекратить свое существование, если это не противоречит первому или второму закону")
