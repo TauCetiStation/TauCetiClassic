@@ -23,6 +23,12 @@
 	icon_state = "armorsec"
 	item_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/fullbody
+	name = "fullbody armor"
+	desc = "A set of armor covering the entire body. Primarily used by various law-enforcements across the galaxy."
+	icon_state = "armor_fullbody"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
