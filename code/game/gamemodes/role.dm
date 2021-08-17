@@ -158,7 +158,6 @@
 
 // Create objectives here.
 /datum/role/proc/forgeObjectives()
-	SHOULD_CALL_PARENT(TRUE)
 	if(config.objectives_disabled)
 		return FALSE
 	return TRUE

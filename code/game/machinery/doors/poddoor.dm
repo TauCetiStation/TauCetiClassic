@@ -55,12 +55,12 @@
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
 			to_chat(user, "<span class='warning'>This poddoor cannot be connected!</span>")
-		else if(src in M.poddoors_buffer)
+		else if(src in M.doors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
-		else if(M.poddoors_buffer.len >= M.buffer_limit)
+		else if(M.doors_buffer.len >= M.buffer_limit)
 			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")
 		else
-			M.poddoors_buffer += src
+			M.doors_buffer += src
 			to_chat(user, "<span class='notice'>You add this poddoor to the buffer of your multitool.</span>")
 
 

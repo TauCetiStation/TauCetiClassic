@@ -3,7 +3,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "riotgun"
 	item_state = "riotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0

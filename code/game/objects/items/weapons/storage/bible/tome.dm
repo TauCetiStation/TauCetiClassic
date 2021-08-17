@@ -8,7 +8,7 @@
 	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	religify_cd = 5 MINUTES
 

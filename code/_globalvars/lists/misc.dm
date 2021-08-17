@@ -31,6 +31,7 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_MALF = 3600,
 	ROLE_SHADOWLING = 4320,
 	ROLE_ABDUCTOR = 2880,
+	ROLE_FAMILIES = 2160,
 	ROLE_GHOSTLY = 360,
 )
 
