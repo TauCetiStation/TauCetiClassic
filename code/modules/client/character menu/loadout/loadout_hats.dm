@@ -30,7 +30,6 @@
 	var/colors = list()
 	colors["black brown"] = /obj/item/clothing/head/ushanka
 	colors["brown"] = /obj/item/clothing/head/ushanka/brown
-	colors["black"] = /obj/item/clothing/head/ushanka/black
 	colors["black white"] = /obj/item/clothing/head/ushanka/black_white
 	colors["brown white"] = /obj/item/clothing/head/ushanka/brown_white
 	gear_tweaks += new/datum/gear_tweak/path(colors)
