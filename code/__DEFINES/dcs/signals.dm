@@ -99,9 +99,9 @@
 	#define COMPONENT_PREVENT_EMP 1
 /// from base of mob/living/carbon/human/electrocute_act(): (shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 #define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
-/// from base of atom/Entered(): (atom/movable/entering, /atom)
+/// from base of atom/Entered(): (atom/movable/entering, /atom/OldLoc)
 #define COMSIG_ATOM_ENTERED "atom_entered"
-/// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
+/// from base of atom/Exited(): (atom/movable/exiting, /atom/NewLoc)
 #define COMSIG_ATOM_EXITED "atom_exited"
 /// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
@@ -160,9 +160,9 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
-///from base of area/Entered(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
+///from base of area/Entered(): (/area, /atom/OldLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_ENTER_AREA "enter_area"
-///from base of area/Exited(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
+///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 
 // /obj
