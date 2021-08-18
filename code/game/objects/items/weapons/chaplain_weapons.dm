@@ -11,7 +11,6 @@
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
-	w_class = ITEM_SIZE_SMALL
 
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
