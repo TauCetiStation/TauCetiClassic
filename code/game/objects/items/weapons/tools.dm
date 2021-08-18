@@ -21,7 +21,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
@@ -70,7 +70,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -109,7 +109,7 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
@@ -137,7 +137,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
@@ -208,7 +208,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	m_amt = 70 // Cost to make in the autolathe
 	g_amt = 30
@@ -506,7 +506,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
 	max_fuel = 80
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
@@ -516,7 +516,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 70
 	g_amt = 120
 	toolspeed = 0.5
@@ -549,7 +549,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')

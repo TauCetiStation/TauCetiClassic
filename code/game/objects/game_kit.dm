@@ -12,7 +12,7 @@
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/game_kit/red
 	icon_state = "game_kit_red"

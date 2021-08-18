@@ -6,6 +6,7 @@
 	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
+	w_class = SIZE_MASSIVE
 	maxHealth = INFINITY
 	health = INFINITY
 	immune_to_ssd = 1

@@ -7,7 +7,7 @@
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 10
 	amount_per_transfer_from_this = 10
@@ -441,7 +441,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 3
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

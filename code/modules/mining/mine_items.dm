@@ -174,7 +174,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750 //one sheet, but where can you make them?
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
@@ -205,7 +205,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	damtype = "fire"
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
@@ -231,7 +231,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=3"
 	desc = "This thing breaks skulls pretty well, right?"
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 15
 	force_wielded = 35
@@ -281,7 +281,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -293,7 +293,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -320,7 +320,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/drill.ogg'
@@ -444,7 +444,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/timer = 10
 	var/atom/target = null
 	var/blast_range = 1
@@ -601,7 +601,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule_classic"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -673,7 +673,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Version of emergency shelter with all the amenities for survival."
 	icon_state = "capsule_improved"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=4;bluespace=3"
 	template_id = "shelter_beta"
 
@@ -682,7 +682,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Wow, this is a mining bar? In a capsule?"
 	icon_state = "capsule_elite"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=5;bluespace=4"
 	template_id = "shelter_gamma"
 
@@ -711,7 +711,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/structure/inflatable/survival
 	name = "pod wall"

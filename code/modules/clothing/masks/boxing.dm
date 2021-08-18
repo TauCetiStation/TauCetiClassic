@@ -6,7 +6,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/mask/balaclava/tactical
 	name = "green balaclava"
@@ -15,7 +15,7 @@
 	item_state = "balaclava"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/mask/luchador
 	name = "luchador mask"
@@ -25,7 +25,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 3.0
 
 /obj/item/clothing/mask/luchador/tecnicos

@@ -25,7 +25,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	action_button_name = "Flip Welding Mask"
 	siemens_coefficient = 0.9
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -134,7 +134,7 @@
 	body_parts_covered = HEAD|EYES
 	light_range = 2 //luminosity when on
 	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /*
  * Kitty ears

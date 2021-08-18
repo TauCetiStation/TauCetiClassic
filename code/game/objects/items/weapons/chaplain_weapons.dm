@@ -18,6 +18,7 @@
 	light_range = 3
 	light_color = "#4c4cff"
 	light_power = 3
+	w_class = SIZE_TINY
 
 	// Deconvering mobs
 	var/deconverting = FALSE
@@ -179,7 +180,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
 	item_state = "talking_staff"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	req_access = list(access_chapel_office)
 
 	var/mob/living/simple_animal/shade/god/brainmob = null
@@ -376,7 +377,7 @@
 	name = "forcefield staff"
 	desc = "Makes the wielder believe that they are protected by something, anything, really. Probably works on AA batteries."
 
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 
 	icon_state = "godstaff"

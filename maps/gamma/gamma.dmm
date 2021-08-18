@@ -18015,10 +18015,17 @@
 	id = "Armoury0";
 	name = "Emergency Access";
 	pixel_x = 28;
-	pixel_y = 28;
+	pixel_y = 26;
 	req_access = list(2)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door_control{
+	id = "ArmorDoors";
+	name = "Open Armor";
+	pixel_x = 39;
+	pixel_y = 26;
+	req_access = list(3)
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -33511,6 +33518,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -34460,6 +34468,7 @@
 /obj/item/weapon/shield/riot,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -44514,6 +44523,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -67250,6 +67260,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -68429,6 +68440,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -69684,6 +69696,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},

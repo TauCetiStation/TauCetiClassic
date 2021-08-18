@@ -215,6 +215,7 @@
 					stat(SRM.module.interface_name,SRM)
 
 /obj/stat_rig_module
+	flags = ABSTRACT
 	var/module_mode = ""
 	var/obj/item/rig_module/module
 

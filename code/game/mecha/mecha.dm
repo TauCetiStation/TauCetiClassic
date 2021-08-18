@@ -27,6 +27,7 @@
 	light_range = 4
 	light_on = FALSE
 
+	w_class = SIZE_MASSIVE
 	var/initial_icon = null //Mech type for resetting icon. Only used for reskinning kits (see custom items)
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null

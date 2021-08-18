@@ -2,7 +2,7 @@
 	name = "Exotic particles power battery"
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "particles_battery0"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/datum/artifact_effect/battery_effect
 	var/capacity = 200
 	var/stored_charge = 0
@@ -21,7 +21,7 @@
 	name = "Exotic particles power utilizer"
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "utilizer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	light_system = MOVABLE_LIGHT
 	light_color = "#8f66f4"

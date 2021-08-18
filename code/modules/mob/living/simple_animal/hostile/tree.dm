@@ -8,6 +8,7 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
+	w_class = SIZE_GYGANT
 	response_help = "brushes the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"
