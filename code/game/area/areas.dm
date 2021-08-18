@@ -71,7 +71,7 @@
 	/// Beauty average per open turf in the area
 	var/beauty = 0
 	/// If a room is too big it doesn't have beauty.
-	var/beauty_threshold = 150
+	var/beauty_threshold = BEAUTY_MAX_AREA_SIZE
 
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
@@ -414,10 +414,10 @@ var/list/ghostteleportlocs = list()
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/A)
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
+/area/Entered(atom/movable/A, atom/OldLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A, OldLoc)
 	for(var/atom/movable/recipient in A.area_sensitive_contents)
-		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
+		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src, OldLoc)
 
 	if (!isliving(A))
 		return
@@ -466,10 +466,10 @@ var/list/ghostteleportlocs = list()
   * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
   * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
   */
-/area/Exited(atom/movable/A)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A)
-	for(var/atom/movable/recipient in A.area_sensitive_contents)
-		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
+/area/Exited(atom/movable/A, atom/NewLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A, NewLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents, NewLoc)
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src, NewLoc)
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate

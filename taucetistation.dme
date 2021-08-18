@@ -25,6 +25,7 @@
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\backpack_styles.dm"
+#include "code\__DEFINES\beauty.dm"
 #include "code\__DEFINES\bitfields.dm"
 #include "code\__DEFINES\bridge.dm"
 #include "code\__DEFINES\callbacks.dm"

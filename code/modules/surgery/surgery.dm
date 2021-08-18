@@ -110,26 +110,23 @@
 	return FALSE
 
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
-	switch(user.get_targetzone())
-		if(BP_CHEST)
-			return !check_covered_bodypart(T, UPPER_TORSO)
-		if(BP_GROIN)
-			return !check_covered_bodypart(T, LOWER_TORSO)
-		if(BP_L_LEG)
-			return !check_covered_bodypart(T, LEG_LEFT)
-		if(BP_R_LEG)
-			return !check_covered_bodypart(T, LEG_RIGHT)
-		if(BP_L_ARM)
-			return !check_covered_bodypart(T, ARM_LEFT)
-		if(BP_R_ARM)
-			return !check_covered_bodypart(T, ARM_RIGHT)
-		if(BP_HEAD)
-			return !check_covered_bodypart(T, HEAD)
-		if(O_MOUTH)
-			return !check_covered_bodypart(T, FACE)
-		if(O_EYES)
-			return !check_covered_bodypart(T, EYES)
-	return TRUE
+	var/static/list/zone_by_clothing_part = list(
+		BP_CHEST = UPPER_TORSO,
+		BP_GROIN = LOWER_TORSO,
+		BP_L_LEG = LEG_LEFT,
+		BP_R_LEG = LEG_RIGHT,
+		BP_L_ARM = ARM_LEFT,
+		BP_R_ARM = ARM_RIGHT,
+		BP_HEAD = HEAD,
+		O_MOUTH = FACE,
+		O_EYES = EYES,
+	)
+
+	var/zone = zone_by_clothing_part[user.get_targetzone()]
+	if(!zone)
+		return TRUE
+
+	return !check_covered_bodypart(T, zone)
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	checks_for_surgery(M, user, FALSE)

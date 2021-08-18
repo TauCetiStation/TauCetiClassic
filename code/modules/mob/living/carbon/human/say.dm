@@ -24,7 +24,6 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/conversation, speaker)
-	return
 
 /mob/living/carbon/human/proc/clear_conversation(speaker)
 	if(!conversations || !conversations[speaker])
@@ -43,7 +42,7 @@
 	if(conversations.len > 3)
 		return
 	if(!conversations[speaker])
-		conversations[speaker] = list("say"=0, "hear"=0)
+		conversations[speaker] = list("say" = 0, "hear" = 0)
 
 	conversations[speaker][tag] += length(message)
 	addtimer(
