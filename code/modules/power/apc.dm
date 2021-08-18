@@ -958,25 +958,25 @@
 		lowest_treshold += malf_ai.intercept_apcs
 	switch (SSticker.MALF_revealed)
 		if(0)
-			if(hacked_amount>lowest_treshold)
+			if(hacked_amount>=lowest_treshold)
 				SSticker.MALF_revealed = 1
 				lowest_treshold += 2
 				var/datum/announcement/centcomm/malf/first/announce_first = new
 				announce_first.play()
 		if(1)
-			if(hacked_amount>lowest_treshold)
+			if(hacked_amount>=lowest_treshold)
 				SSticker.MALF_revealed = 2
 				lowest_treshold += 2
 				var/datum/announcement/centcomm/malf/second/announce_second = new
 				announce_second.play()
 		if(2)
-			if(hacked_amount>lowest_treshold)
+			if(hacked_amount>=lowest_treshold)
 				SSticker.MALF_revealed = 3
 				lowest_treshold += 2
 				var/datum/announcement/centcomm/malf/third/announce_third = new
 				announce_third.play()
 		if(3)
-			if(hacked_amount>lowest_treshold)
+			if(hacked_amount>=lowest_treshold)
 				SSticker.MALF_revealed = 4
 				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 				announce_forth.play()
