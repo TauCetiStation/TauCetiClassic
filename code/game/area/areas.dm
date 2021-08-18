@@ -468,7 +468,7 @@ var/list/ghostteleportlocs = list()
   */
 /area/Exited(atom/movable/A, atom/NewLoc)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A, NewLoc)
-	for(var/atom/movable/recipient in A.area_sensitive_contents, NewLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src, NewLoc)
 
 /area/proc/gravitychange(gravitystate = FALSE)
