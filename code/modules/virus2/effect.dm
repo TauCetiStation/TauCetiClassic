@@ -389,7 +389,7 @@
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
 		M.confused = max(0, M.confused - 2)
-		M.druggy = max(M.druggy - 5, 0)
+		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		if(M.reagents.has_reagent("mindbreaker"))

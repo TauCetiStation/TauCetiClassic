@@ -927,6 +927,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+// ========== DRUGGINESS ==========
+/mob/proc/adjustDrugginess(amount)
+	druggy = max(druggy + amount, 0)
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
+
+/mob/proc/setDrugginess(amount)
+	druggy = max(amount, 0)
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
 
 // =============================
 
@@ -1079,14 +1097,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
-	if(ishuman(src) && druggy)
-		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
-		var/multiplied
-		if(preset)
-			var/datum/ColorMatrix/CM = new(preset)
-			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
-		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
-	else if(preset)
+	if(preset)
 		var/datum/ColorMatrix/CM = new(preset)
 		animate(client, color = CM.matrix, time = transition_time)
 	else

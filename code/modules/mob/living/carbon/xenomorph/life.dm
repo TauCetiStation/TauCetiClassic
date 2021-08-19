@@ -103,7 +103,7 @@
 			silent = 0
 
 		if(druggy)
-			druggy = 0
+			setDrugginess(0)
 	return 1
 
 
