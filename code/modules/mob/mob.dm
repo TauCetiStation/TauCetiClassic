@@ -930,15 +930,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
-	if(druggy)
-		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		throw_alert("high", /atom/movable/screen/alert/high)
-	else
-		clear_fullscreen("high")
-		clear_alert("high")
+	updateDrugginesOverlay()
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/updateDrugginesOverlay()
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
