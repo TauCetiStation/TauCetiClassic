@@ -181,9 +181,9 @@ var/list/slot_equipment_priority = list(
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.equipped(src,SLOT_L_HAND)
 		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
@@ -210,9 +210,9 @@ var/list/slot_equipment_priority = list(
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.equipped(src,SLOT_R_HAND)
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
