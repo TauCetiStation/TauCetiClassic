@@ -1256,6 +1256,7 @@
 #include "code\modules\bridge\commands\player_panel.dm"
 #include "code\modules\bridge\commands\status.dm"
 #include "code\modules\bridge\commands\tickets.dm"
+#include "code\modules\bridge\commands\who.dm"
 #include "code\modules\cargo\console.dm"
 #include "code\modules\cargo\export_scanner.dm"
 #include "code\modules\cargo\exports.dm"

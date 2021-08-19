@@ -263,10 +263,10 @@
 		return
 
 	var/pckey = query.item[1]
-	var/pbantype  = query.item[1]
-	var/padmin = query.item[2]
-	var/pjob = query.item[3]
-	var/preason = query.item[4]
+	var/pbantype  = query.item[2]
+	var/padmin = query.item[3]
+	var/pjob = query.item[4]
+	var/preason = query.item[5]
 
 	if(!src.owner || !istype(src.owner, /client))
 		return

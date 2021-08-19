@@ -11,7 +11,7 @@
 	if(!ckey || !establish_db_connection("erro_ban", "erro_messages", "erro_player"))
 		return
 
-	var/DBQuery/select_query_player = dbcon.NewQuery({"SELECT firstseen, lastseen, ingameage
+	var/DBQuery/select_query_player = dbcon.NewQuery({"SELECT DATE_FORMAT(firstseen, '%d.%m.%Y %H:%i:%s'), DATE_FORMAT(lastseen, '%d.%m.%Y %H:%i:%s'), ingameage
 		FROM erro_player 
 		WHERE ckey='[ckey]'"})
 	select_query_player.Execute()
@@ -56,7 +56,23 @@
 
 	message += "\n"
 
-	// todo: if online - show IC info (character, antag)
+	if(online_client)
+		var/mob/M = online_client.mob
+		message += "Playing as [M.real_name]"
+		if(M.mind && M.mind.assigned_job)
+			message += " ([M.mind.assigned_job.title] - spawn job)"
+		switch(M.stat)
+			if(UNCONSCIOUS)
+				message += " (unconscious)"
+			if(DEAD)
+				message += " (dead)"
+		message += "\n"
+
+		if(isanyantag(M))
+			message += "**Antag roles:**\n"
+			for(var/id in M.mind.antag_roles)
+				var/datum/role/role = M.mind.antag_roles[id]
+				message += "[role.name]\n"
 
 	// guard
 	if(online_client)
