@@ -780,7 +780,7 @@ var/list/net_announcer_secret = list()
 		if (probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if (global.master_last_mode == M.name)
+		if (global.master_last_mode == M.name && !istype(M, /datum/game_mode/extended))
 			qdel(M)
 			continue
 		var/mod_prob = probabilities[M.name]
