@@ -1,12 +1,12 @@
-/datum/game_mode/extended
-	name = "Extended"
+/datum/game_mode/casual_shift
+	name = "Casual Shift"
 	config_name = "extended"
 	probability = 40
 	minimum_player_count = 0
 
-/datum/game_mode/extended/announce()
-	to_chat(world, "<B>The current game mode is - Extended Role-Playing!</B>")
+/datum/game_mode/casual_shift/announce()
+	to_chat(world, "<B>The current game mode is - Casual Shift!</B>")
 	to_chat(world, "<B>Just have fun and role-play!</B>")
 
-/datum/game_mode/extended/Setup()
+/datum/game_mode/casual_shift/Setup()
 	return TRUE

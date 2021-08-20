@@ -22,7 +22,7 @@
 	/datum/game_mode/blob,
 	/datum/game_mode/changeling,
 	/datum/game_mode/cult,
-	/datum/game_mode/extended,
+	/datum/game_mode/casual_shift,
 	/datum/game_mode/heist,
 	/datum/game_mode/infestation,
 	/datum/game_mode/malfunction,
@@ -60,15 +60,15 @@
 	votable = TRUE
 
 /datum/modesbundle/mix/New()
-	for(var/type in subtypesof(/datum/game_mode/mix) + /datum/game_mode/extended)
+	for(var/type in subtypesof(/datum/game_mode/mix) + /datum/game_mode/casual_shift)
 		var/datum/game_mode/M = type
 		if(initial(M.name))
 			possible_gamemodes += type
 
-/datum/modesbundle/extended
-	name = "Extended"
+/datum/modesbundle/casual_shift
+	name = "Casual Shift"
 	hidden = FALSE
-	possible_gamemodes = list(/datum/game_mode/extended)
+	possible_gamemodes = list(/datum/game_mode/casual_shift)
 
 /datum/modesbundle/all
 	name = "Random"
@@ -96,7 +96,7 @@
 	name = "Modes that will ALWAYS start"
 	votable = FALSE
 	hidden = FALSE
-	possible_gamemodes = list(/datum/game_mode/extended)
+	possible_gamemodes = list(/datum/game_mode/casual_shift)
 
 /datum/modesbundle/run_anyway/get_gamemodes_name()
 	var/list/L = list()

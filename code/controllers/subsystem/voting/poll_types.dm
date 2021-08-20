@@ -192,7 +192,7 @@
 
 /datum/vote_choice/gamemode
 	text = "Название режима игры"
-	var/new_gamemode = "extended"
+	var/new_gamemode = "casual_shift"
 
 /datum/vote_choice/gamemode/on_win()
 	if(master_mode != new_gamemode)

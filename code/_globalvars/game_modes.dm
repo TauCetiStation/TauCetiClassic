@@ -1,4 +1,4 @@
-var/master_mode = "extended" //"extended"
+var/master_mode = "casual_shift"
 var/secret_force_mode = "Secret" // if this is anything but "Secret", the secret rotation will forceably choose this mode
 
 var/wavesecret = 0
