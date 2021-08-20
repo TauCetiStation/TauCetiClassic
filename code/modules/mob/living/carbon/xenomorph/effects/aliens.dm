@@ -417,7 +417,7 @@
 			if(kill_fh)
 				FH.Die()
 
-/obj/structure/alien/egg/attack_ghost(mob/living/user)
+/obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
 		to_chat(user, "<span class='notice'>You can't control the facehugger! This feature is disabled by the administrator, you can ask him to enable this feature.</span>")
 		return
@@ -432,6 +432,8 @@
 			to_chat(user, "<span class='warning'>The facehugger hasn't grown yet.</span>")
 			return
 		if(GROWN)
+			if(jobban_isbanned(user, ROLE_ALIEN) || jobban_isbanned(user, "Syndicate"))
+				return
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
 			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
