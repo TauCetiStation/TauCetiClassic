@@ -1341,7 +1341,6 @@
 
 		if(blinded)
 			see_in_dark = 8
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(healths)
 			if (analgesic)
