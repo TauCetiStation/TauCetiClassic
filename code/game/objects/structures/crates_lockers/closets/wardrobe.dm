@@ -401,9 +401,9 @@
 
 /obj/structure/closet/wardrobe/tactical
 	name = "tactical equipment"
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/wardrobe/tactical/PopulateContents()
 	new /obj/item/device/radio/headset/headset_sec/marinad(src)

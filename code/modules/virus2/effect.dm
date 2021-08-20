@@ -1139,7 +1139,7 @@
 			var/mob/living/carbon/human/H = mob
 			if(prob(drop_item_chance))
 				var/obj/item/I = H.get_active_hand()
-				if(I && I.w_class <= ITEM_SIZE_SMALL)
+				if(I && I.w_class <= SIZE_TINY)
 					H.drop_item()
 			if(prob(couthing_fit_chance))
 				to_chat(mob, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")

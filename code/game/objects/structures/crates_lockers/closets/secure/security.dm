@@ -362,3 +362,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
+
+/obj/structure/closet/secure_closet/pistols
+	name = "Pistol Secure Closet"
+	req_access = list(access_armory)
+	icon_state = "syndicatealtsecure1"
+	icon_closed = "syndicatealtsecure"
+	icon_locked = "syndicatealtsecure1"
+	icon_opened = "syndicatealtsecureopen"
+	icon_broken = "syndicatealtsecurebroken"
+	icon_off = "syndicatealtsecureoff"
+
+/obj/structure/closet/secure_closet/pistols/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/gun/projectile/glock(src)

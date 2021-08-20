@@ -15,14 +15,13 @@
 				var/mob/living/carbon/human/H = toucher
 				for(var/obj/item/organ/external/BP in H.bodyparts)
 					BP.heal_damage(25 * weakness, 25 * weakness)
-				//H:heal_bodypart_damage(25, 25)
-				H.vessel.add_reagent("blood",5)
+				H.blood_add(5)
+				H.fixblood()
 				H.nutrition += 50 * weakness
 				H.adjustBrainLoss(-25 * weakness)
 				H.radiation -= min(H.radiation, 25 * weakness)
 				H.bodytemperature = initial(H.bodytemperature)
-				spawn(1)
-					H.fixblood()
+
 			//
 			C.adjustOxyLoss(-25 * weakness)
 			C.adjustToxLoss(-25 * weakness)

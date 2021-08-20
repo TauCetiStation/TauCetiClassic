@@ -99,9 +99,7 @@
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(blood_volume > 0)
-					handle_blood(blood_volume)
+				handle_blood()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -1025,6 +1023,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
@@ -1034,6 +1033,7 @@
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+				update_size_class()
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
@@ -1656,7 +1656,7 @@
 
 	var/temp = PULSE_NORM
 
-	if(round(vessel.get_reagent_amount("blood")) <= BLOOD_VOLUME_BAD)	//how much blood do we have
+	if(blood_amount() <= BLOOD_VOLUME_BAD)	//how much blood do we have
 		temp = PULSE_THREADY	//not enough :(
 
 	if(status_flags & FAKEDEATH)
