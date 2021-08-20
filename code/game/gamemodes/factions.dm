@@ -47,12 +47,10 @@
 
 // Destroy fraction and her members
 /datum/faction/proc/Dismantle()
-	for(var/datum/role/R in members)
-		var/datum/game_mode/G = SSticker.mode
-		G.orphaned_roles += R
-		remove_role(R)
-	qdel(objective_holder)
 	var/datum/game_mode/G = SSticker.mode
+	for(var/datum/role/R in members)
+		HandleRemovedRole(R)
+	qdel(objective_holder)
 	G.factions -= src
 	qdel(src)
 
