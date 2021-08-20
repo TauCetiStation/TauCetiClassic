@@ -56,9 +56,10 @@
 	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) < minimum_players_bundles)
 		log_mode("[name] not start because number of players who Ready is less than minimum number of players in bundle.")
 		return FALSE
-	if(!CanPopulateFaction(check_ready))
-		log_mode("[name] not start because pre-filling of the faction failed.")
-		return FALSE
+	if(check_ready)
+		if(!CanSetup(check_ready))
+			log_mode("[name] not start because pre-filling of the faction failed.")
+			return FALSE
 	return TRUE
 
 /datum/game_mode/proc/potential_runnable()
@@ -74,26 +75,27 @@
 /datum/game_mode/proc/AdminPanelEntry()
 	return
 
+/*===CAN START MODE RELATED STUFF===*/
+
+/datum/game_mode/proc/CanSetup(check_ready)
+	log_mode("=== START CHECKING TO START [uppertext(name)] ===")
+	SetupFactions()
+
+	CreateFactions(null, FALSE)
+	var/FactionSuccess = PopulateFactions(FALSE)
+
+	var/RolesSuccess = CreateRoles()
+	log_mode("== [uppertext(name)] [FactionSuccess && RolesSuccess ? "SUCCESS" : "FAILED"] THE CHECK ==")
+	log_mode("=== END CHECKING TO START [uppertext(name)] ===")
+	return FactionSuccess && RolesSuccess
+
+/*===START MODE RELATED STUFF===*/
+
 /datum/game_mode/proc/Setup()
-	if(!can_start(TRUE))
-		return FALSE
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
 	var/RolesSuccess = CreateRoles()
-	var/GeneralSuccess = FactionSuccess && RolesSuccess
-	if(!GeneralSuccess)
-		DropAll()
-	return GeneralSuccess
-
-// it is necessary in those rare cases when the gamemode did not start for those reasons
-// that cannot be detected BEFORE the creation of a human
-/datum/game_mode/proc/DropAll()
-	for(var/f in factions)
-		var/datum/faction/faction = f
-		faction.Dismantle()
-	for(var/r in orphaned_roles)
-		var/datum/role/role = r
-		role.Drop()
+	return FactionSuccess && RolesSuccess
 
 /*===FACTION RELATED STUFF===*/
 
@@ -111,7 +113,7 @@
 		else
 			CreateFaction(Fac, pc)
 	if(populate_factions)
-		return PopulateFactions()
+		return PopulateFactions(TRUE)
 
 /datum/game_mode/proc/CreateFaction(Fac, population, override = 0)
 	var/datum/faction/F = new Fac
@@ -132,21 +134,7 @@
 			already in another faction
 */
 
-/datum/game_mode/proc/CanPopulateFaction(check_ready = TRUE)
-	var/list/L = get_ready_players(check_ready)
-	for(var/type in factions_allowed)
-		var/datum/faction/F = new type()
-		var/can_be = L.len
-		for(var/mob/M in L)
-			if(!F.can_join_faction(M))
-				can_be--
-		if(can_be < F.min_roles)
-			log_mode("[F] cannot be filled completely. Possible members is [can_be], minimum [F.min_roles]")
-			return FALSE
-		qdel(F)
-	return TRUE
-
-/datum/game_mode/proc/PopulateFactions()
+/datum/game_mode/proc/PopulateFactions(give_role)
 	if(!factions.len)
 		message_admins("No faction was created in [type].")
 		log_mode("No faction was created in [type].")
@@ -159,9 +147,14 @@
 			if(!F.can_join_faction(P))
 				log_mode("[P] failed [F] can_join_faction!")
 				continue
-			if(!F.HandleNewMind(P.mind))
-				log_mode("[P] failed [F] HandleNewMind!")
-				continue
+			if(give_role)
+				if(!F.HandleNewMind(P.mind))
+					log_mode("[P] failed [F] HandleNewMind!")
+					continue
+			else
+				if(!F.CanGiveRole(P.mind))
+					log_mode("[P] failed [F] CanGiveRole!")
+					continue
 			available_players -= P // One player cannot be a borero-ninja-malf
 		if(F.members.len < F.min_roles)
 			log_mode("Not enought players for [F]!")

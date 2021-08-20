@@ -95,6 +95,15 @@
 		return FALSE
 	return TRUE
 
+/datum/faction/proc/CanGiveRole(datum/mind/M) //Used on faction creation
+	. = TRUE
+	var/role_type = get_initrole_type()
+	var/datum/role/newRole = new role_type(null, src)
+	if(!newRole.CanBeAssigned(M))
+		log_mode("[key_name(M)] failed the test CanBeAssigned!")
+		. = FALSE
+	remove_role(newRole)
+
 // Basically, they are members of the new faction
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)

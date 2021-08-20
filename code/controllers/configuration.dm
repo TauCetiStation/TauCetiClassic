@@ -772,6 +772,7 @@ var/list/net_announcer_secret = list()
 /datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
 	var/list/datum/game_mode/runnable_modes = list()
 	var/list/runnable_modes_names = list()
+	log_mode("===== START FORMING A POLL OF [uppertext(bundle.name)] =====")
 	for (var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
 		if (!M.name || !(M.config_name in config_name_by_real))
@@ -785,12 +786,14 @@ var/list/net_announcer_secret = list()
 			continue
 		var/mod_prob = probabilities[M.name]
 		if (M.can_start())
-			runnable_modes[M] = mod_prob
+			runnable_modes[type] = mod_prob
 			runnable_modes_names += M.name
+			qdel(M)
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
 	log_mode(get_english_list(runnable_modes_names))
 	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
 		return get_always_runnable_modes()
+	log_mode("===== END FORMING A POLL OF [uppertext(bundle.name)] =====")
 	return runnable_modes
 
 /datum/configuration/proc/get_always_runnable_modes()
@@ -798,9 +801,9 @@ var/list/net_announcer_secret = list()
 	var/list/runnable_modes_names = list()
 	var/datum/modesbundle/run_anyway/bundle = new
 	for(var/type in bundle.possible_gamemodes)
-		var/datum/game_mode/M = new type()
-		exactly_runnable_modes[M] = 1
-		runnable_modes_names += M.name
+		var/datum/game_mode/M = type
+		exactly_runnable_modes[type] = 1
+		runnable_modes_names += initial(M.name)
 	log_mode("Current pool of always runnable gamemodes([exactly_runnable_modes.len]):")
 	log_mode(get_english_list(runnable_modes_names))
 	return exactly_runnable_modes

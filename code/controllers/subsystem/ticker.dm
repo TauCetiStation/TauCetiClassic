@@ -161,6 +161,9 @@ SUBSYSTEM_DEF(ticker)
 
 	var/init_start = world.timeofday
 
+	//Configure mode and assign player to special mode stuff
+	SSjob.DivideOccupations() //Distribute jobs
+
 	log_mode("Current master mode is [master_mode]")
 	if(config.is_bundle_by_name(master_mode))
 		//Create and announce mode
@@ -170,7 +173,7 @@ SUBSYSTEM_DEF(ticker)
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
+			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby. Something very important has broken.")
 			// Players can initiate gamemode vote again
 			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
 			if(gamemode_vote)
@@ -186,29 +189,17 @@ SUBSYSTEM_DEF(ticker)
 			else
 				mode = smode
 
-		SSjob.ResetOccupations()
 		if(!mode)
-			mode = pickweight(runnable_modes)
-		if(mode)
-			var/mtype = mode.type
+			var/mtype = pickweight(runnable_modes)
 			mode = new mtype
 
 	else
 		mode = config.pick_mode(master_mode)
 
-	if (!mode.can_start())
-		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.minimum_player_count] players needed. Reverting to pre-game lobby.")
-		QDEL_NULL(mode)
-		current_state = GAME_STATE_PREGAME
-		SSjob.ResetOccupations()
-		return 0
-
-	//Configure mode and assign player to special mode stuff
-	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = mode.Setup() //Setup special modes
 	if(!can_continue)
 		current_state = GAME_STATE_PREGAME
-		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
+		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby. Something very important has broken.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
 		world.log << "The gamemode setup for [mode.name] errored out."
 		QDEL_NULL(mode)
