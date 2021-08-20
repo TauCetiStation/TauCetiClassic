@@ -83,6 +83,14 @@
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	mag_type = /obj/item/ammo_box/magazine/m50/weakened
+
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	icon_state = "deagleg"
+	item_state = "deagleg"
+
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds."

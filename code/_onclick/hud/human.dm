@@ -432,6 +432,10 @@
 	mymob.zone_sel.cut_overlays()
 	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
 
+	if(isanycop(H) || isanygangster(H))
+		wanted_lvl = new /atom/movable/screen/wanted()
+		adding += wanted_lvl
+
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
 
