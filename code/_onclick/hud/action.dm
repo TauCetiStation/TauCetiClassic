@@ -251,6 +251,7 @@
 #define AB_MAX_COLUMNS 10
 
 /mob/proc/update_sight()
+	SHOULD_CALL_PARENT(TRUE)
 	sync_lighting_plane_alpha()
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
