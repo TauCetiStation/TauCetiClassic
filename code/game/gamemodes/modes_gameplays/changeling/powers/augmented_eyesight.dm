@@ -14,11 +14,12 @@
 		to_chat(user, "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>")
 		user.sight |= SEE_MOBS
 		user.see_in_dark = 8
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
+		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else
 		to_chat(user, "<span class='notice'>Our vision dulls. Shadows gather.</span>")
 		user.sight -= SEE_MOBS
 		user.see_in_dark = 0
+		user.lighting_alpha = initial(user.lighting_alpha)
 		user.see_invisible = SEE_INVISIBLE_LIVING
 	return 1
 
