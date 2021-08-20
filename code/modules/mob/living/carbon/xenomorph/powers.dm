@@ -5,11 +5,8 @@
 	src.nightvision = !src.nightvision
 
 	if(!src.nightvision)
-		src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		src.nightvisionicon.icon_state = "nightvision0"
 	else if(src.nightvision == 1)
-		src.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-		src.see_invisible = 45
 		src.nightvisionicon.icon_state = "nightvision1"
 
 	update_sight()

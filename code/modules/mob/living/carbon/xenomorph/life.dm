@@ -144,8 +144,9 @@
 		sight &= ~SEE_OBJS
 		if(nightvision)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			see_invisible = SEE_INVISIBLE_LIVING
 		else if(!nightvision)
-			see_invisible = 45
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	..()
 
