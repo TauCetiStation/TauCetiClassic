@@ -1510,7 +1510,7 @@
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
-	. = ..()
+	return ..()
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
