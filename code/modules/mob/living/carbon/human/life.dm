@@ -1306,7 +1306,7 @@
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
 					if(!druggy)
-						see_invisible = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 				if(!isnull(G.lighting_alpha))
 					lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
