@@ -163,6 +163,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 					qdel(M)
 			return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		set_EyesVision(transition_time = 0)
 		SStgui.on_transfer(src, ghost)
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT

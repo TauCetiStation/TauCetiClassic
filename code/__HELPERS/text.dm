@@ -451,3 +451,6 @@
 			return two
 		else
 			return five
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

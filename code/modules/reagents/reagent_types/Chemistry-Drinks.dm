@@ -321,7 +321,7 @@
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
 	..()
 	M.make_jittery(20)
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 	M.dizziness += 5
 	M.drowsyness = 0
 
@@ -509,7 +509,7 @@
 
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
@@ -548,7 +548,7 @@
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
-		M.druggy = max(M.druggy, 55)
+		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
@@ -575,7 +575,7 @@
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
-		M.druggy = max(M.druggy, 55)
+		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
@@ -591,7 +591,7 @@
 
 /datum/reagent/consumable/hippies_delight/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -607,7 +607,7 @@
 				M.stuttering = 1
 			M.make_jittery(20)
 			M.make_dizzy(20)
-			M.druggy = max(M.druggy, 45)
+			M.adjustDrugginess(4)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to 200)
@@ -615,7 +615,7 @@
 				M.stuttering = 1
 			M.make_jittery(40)
 			M.make_dizzy(40)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
@@ -623,7 +623,7 @@
 				M.stuttering = 1
 			M.make_jittery(60)
 			M.make_dizzy(60)
-			M.druggy = max(M.druggy, 75)
+			M.adjustDrugginess(7)
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
@@ -828,7 +828,7 @@
 
 /datum/reagent/consumable/ethanol/threemileisland/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -941,7 +941,7 @@
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -959,7 +959,7 @@
 			M.hallucination = max(M.hallucination, 10)
 			M.make_jittery(2)
 			M.make_dizzy(2)
-			M.druggy = max(M.druggy, 45)
+			M.adjustDrugginess(4)
 			if(prob(5))
 				M.emote(pick("twitch","giggle"))
 		if(75 to 150)
@@ -968,7 +968,7 @@
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
@@ -979,7 +979,7 @@
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
@@ -1235,7 +1235,7 @@
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
