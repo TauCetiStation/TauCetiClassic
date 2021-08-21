@@ -26,6 +26,7 @@
 	desc = "A .38 bullet casing."
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
+	m_amt = 200
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
@@ -206,6 +207,7 @@
 	desc = "A .38 bullet casing."
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
+	m_amt = 400
 
 /obj/item/ammo_box/c38m
 	name = "speedloader (.38)"

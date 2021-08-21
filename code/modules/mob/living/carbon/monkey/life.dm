@@ -530,7 +530,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 	return 1
 
 

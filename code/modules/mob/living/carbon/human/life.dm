@@ -1209,7 +1209,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
@@ -1443,11 +1443,6 @@
 			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 		else
 			clear_fullscreen("blurry")
-
-		if(druggy)
-			overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		else
-			clear_fullscreen("high")
 		if(nearsighted)
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else

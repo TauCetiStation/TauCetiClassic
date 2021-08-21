@@ -298,7 +298,7 @@
 		src.eye_blurry = 0
 
 	if (src.druggy > 0)
-		src.druggy = 0
+		setDrugginess(0)
 
 	return 1
 
