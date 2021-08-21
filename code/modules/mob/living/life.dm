@@ -88,11 +88,6 @@
 				else
 					clear_fullscreen("blurry")
 
-				if(druggy)
-					overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
-
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)

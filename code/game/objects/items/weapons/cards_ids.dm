@@ -436,3 +436,13 @@
 	icon_state = "ert"
 	assignment = "Emergency Response Team"
 	rank = "Emergency Response Team"
+
+/obj/item/weapon/card/id/space_police
+	assignment = "Organized Crimes Department"
+	rank = "Organized Crimes Department"
+
+	icon_state = "ert"
+
+/obj/item/weapon/card/id/space_police/atom_init()
+	. = ..()
+	access = get_all_accesses()

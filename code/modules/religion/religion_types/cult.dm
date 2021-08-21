@@ -218,7 +218,7 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
