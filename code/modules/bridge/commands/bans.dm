@@ -123,7 +123,7 @@
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
 		attachment_title = "Bridge: Unban",
-		attachment_msg = "**<@![params["bridge_from_uid"]]> has lifted **[ckey]**\'s ban:\n[bantype][job ? "([job])" : ""] by [admin] with reason:\n*[reason]*",
+		attachment_msg = "<@![params["bridge_from_uid"]]> has lifted **[ckey]**\'s ban:\n[bantype][job ? "([job])" : ""] by [admin] with reason:\n*[reason]*",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
@@ -143,7 +143,7 @@
 
 	var/DBQuery/select_query 
 	if(active_only)
-		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, round_id, job, reason
+		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason
 			FROM erro_ban 
 			WHERE ckey='[ckey]' 
 				AND (bantype = 'PERMABAN' OR bantype = 'JOB_PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()) OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now()))
@@ -151,7 +151,7 @@
 			ORDER BY bantime DESC 
 			LIMIT 10 OFFSET [offset]"})
 	else
-		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, round_id, job, reason
+		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason
 			FROM erro_ban 
 			WHERE ckey='[ckey]'
 			ORDER BY bantime DESC 
@@ -166,11 +166,15 @@
 		var/bantype  = select_query.item[2]
 		var/admin = select_query.item[3]
 		var/bantime  = select_query.item[4]
-		var/roundid  = select_query.item[5]
-		var/job = select_query.item[6]
-		var/reason = select_query.item[7]
+		var/duration  = select_query.item[5]
+		var/roundid  = select_query.item[6]
+		var/job = select_query.item[7]
+		var/reason = select_query.item[8]
 
-		message += "**ID**: [banid];  **Type**: [bantype]; **Admin**: [admin]; **Ban time**: [bantime]; **Round**: [roundid]; [job ? "**Job**: [job]; ": ""]\n**Reason**: *[reason]*\n\n"
+		if(duration == -1)
+			duration = null // premaban
+
+		message += "**ID**: [banid];  **Type**: [bantype]; **Admin**: [admin]; **Ban time**: [bantime]; [duration ? "**Duration**: [duration]; " : ""]**Round**: [roundid]; [job ? "**Job**: [job]; ": ""]\n**Reason**: *[reason]*\n\n"
 
 	if(!length(message))
 		world.send2bridge(

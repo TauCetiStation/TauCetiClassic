@@ -1286,6 +1286,7 @@
 #include "code\modules\bridge\commands\notes.dm"
 #include "code\modules\bridge\commands\ooc_chat.dm"
 #include "code\modules\bridge\commands\player_panel.dm"
+#include "code\modules\bridge\commands\round.dm"
 #include "code\modules\bridge\commands\status.dm"
 #include "code\modules\bridge\commands\tickets.dm"
 #include "code\modules\bridge\commands\who.dm"
