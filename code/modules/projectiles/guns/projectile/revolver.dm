@@ -237,8 +237,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
 /obj/item/weapon/gun/projectile/revolver/detective/dungeon
-	desc = "A a six-shot double-action revolver."
-	name = "Smith & Wesson Model 10"
+	desc = "A six-shot double-action revolver."
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
