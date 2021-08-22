@@ -20,8 +20,6 @@
 	var/minimum_players_bundles
 	var/probability = 100 // this is the weight
 
-	var/newscaster_announcements = null
-
 	var/completition_text = ""
 
 	var/list/factions = list()
