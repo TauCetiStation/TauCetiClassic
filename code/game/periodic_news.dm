@@ -12,35 +12,6 @@
 	if(channel_name == "Tau Ceti Daily")
 		channel_name = "[system_name()] Daily" // meh but whatever
 
-/datum/news_announcement/revolution_inciting_event/paycuts_suspicion
-	author = "Unauthorized"
-
-	message = {"Reports have leaked that Nanotrasen Inc. is planning to put paycuts into
-				effect on many of its Research Stations in Tau Ceti. Apparently these research
-				stations haven't been able to yield the expected revenue, and thus adjustments
-				have to be made."}
-	round_time = 60*10
-
-/datum/news_announcement/revolution_inciting_event/paycuts_confirmation
-	author = "Unauthorized"
-
-	message = {"Earlier rumours about paycuts on Research Stations in the Tau Ceti system have
-				been confirmed. Shockingly, however, the cuts will only affect lower tier
-				personnel. Heads of Staff will, according to our sources, not be affected."}
-	round_time = 60*40
-
-/datum/news_announcement/revolution_inciting_event/human_experiments
-	author = "Unauthorized"
-
-	message = {"Unbelievable reports about human experimentation have reached our ears. According
-	 			to a refugee from one of the Tau Ceti Research Stations, their station, in order
-	 			to increase revenue, has refactored several of their facilities to perform experiments
-	 			on live humans, including virology research, genetic manipulation, and \"feeding them
-	 			to the slimes to see what happens\". Allegedly, these test subjects were neither
-	 			humanified monkeys nor volunteers, but rather unqualified staff that were forced into
-	 			the experiments, and reported to have died in a \"work accident\" by Nanotrasen Inc."}
-	round_time = 60*90
-
 /datum/news_announcement/bluespace_research/announcement
 	message = {"The new field of research trying to explain several interesting spacetime oddities,
 				also known as \"Bluespace Research\", has reached new heights. Of the several
