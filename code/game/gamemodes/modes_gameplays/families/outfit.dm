@@ -117,7 +117,6 @@
 	belt = /obj/item/device/pda
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
-		/obj/item/device/radio/uplink/dealer,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/weapon/extraction_pack/syndicate,
 		)

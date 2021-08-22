@@ -45,7 +45,7 @@
 	var/obj/effect/extraction_holder/holder_obj = new(AM.loc)
 	holder_obj.appearance = AM.appearance
 	AM.forceMove(holder_obj)
-	balloon = image(icon,"extraction_balloon")
+	balloon = image('icons/obj/fulton.dmi', "extraction_balloon")
 	balloon.pixel_y = 10
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon)
@@ -125,8 +125,22 @@
 
 // used for accept telecrystal for costly items
 /obj/item/weapon/extraction_pack/syndicate
-	name = "syndicate fulton"
+	name = "station bounced radio"
+	desc = null
+
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
+
 	del_target = TRUE
+
+/obj/item/weapon/extraction_pack/syndicate/atom_init(mapload, ...)
+	. = ..()
+	hidden_uplink = new(src)
+	hidden_uplink.uplink_type = "dealer"
+
+/obj/item/weapon/extraction_pack/syndicate/attack_self(mob/user)
+	if(hidden_uplink)
+		hidden_uplink.trigger(user)
 
 /obj/item/weapon/extraction_pack/syndicate/can_use_to(atom/movable/target)
 	if(!..())
@@ -137,7 +151,6 @@
 
 /obj/item/weapon/extraction_pack/syndicate/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
-		to_chat(user, "<span class='warning'>Вы не знаете как это использовать.</span>")
 		return FALSE
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
 	if(!..())
