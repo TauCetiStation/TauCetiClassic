@@ -50,7 +50,7 @@
 	suit_store = /obj/item/weapon/gun/projectile/shotgun/dungeon
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
+		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/ammo_box/magazine/c45r = 3,
 		/obj/item/ammo_box/c45 = 2,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
