@@ -87,10 +87,6 @@
 	vision_flags = SEE_MOBS
 	alpha = 0
 	darkness_view = 3
-	var/vision = 1
-	//invis_view = 2
-	//invisa_view = 2
-	//flash_protect = 2
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
@@ -107,17 +103,23 @@
 	set name = "Toggle Vision"
 	set src in usr
 
-	if(!usr.incapacitated())
-		if(src.vision)
-			src.vision = !src.vision
-			src.icon_state = "ling_vision_on"
-			//usr << ""
+	if(usr.incapacitated())
+		return
+	switch(usr.lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_alpha = usr.lighting_alpha
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			lighting_alpha = usr.lighting_alpha
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			lighting_alpha = usr.lighting_alpha
 		else
-			src.vision = !src.vision
-			src.icon_state = "ling_vision_off"
-			//usr << ""
-
-		usr.update_inv_glasses()
+			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_alpha = usr.lighting_alpha
+	usr.update_sight()
+	usr.update_inv_glasses()
 
 /obj/structure/shadow_vortex
 	name = "vortex"

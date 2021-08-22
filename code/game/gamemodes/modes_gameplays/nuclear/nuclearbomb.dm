@@ -451,7 +451,7 @@ var/bomb_set
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	item_state = "card-id"
 	icon_state = "datadisk0"
 

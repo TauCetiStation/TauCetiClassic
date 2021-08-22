@@ -7,7 +7,7 @@
 	desc = "The perfect showcase for your favorite memories."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame_item"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/photo/displayed
 	var/frame_type = /obj/structure/picture_frame/wooden
 	var/frame_glass = FALSE

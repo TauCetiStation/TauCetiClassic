@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -69,7 +69,7 @@
 	item_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()

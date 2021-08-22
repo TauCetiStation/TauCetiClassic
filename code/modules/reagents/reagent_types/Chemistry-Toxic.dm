@@ -764,7 +764,7 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 15)
+	M.adjustDrugginess(2)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))

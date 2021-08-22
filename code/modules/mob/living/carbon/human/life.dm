@@ -1023,6 +1023,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
@@ -1032,6 +1033,7 @@
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+				update_size_class()
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
@@ -1207,7 +1209,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
@@ -1303,14 +1305,8 @@
 				see_in_dark += G.darkness_view
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/shadowling/S = G
-				if(S.vision)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_MINIMUM
+				if(!isnull(G.lighting_alpha))
+					lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
@@ -1318,27 +1314,30 @@
 				if(0)
 					O.togge_huds()
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LIVING
 				if(1)
-					see_in_dark = 5
+					see_in_dark = 8
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 				if(2)
 					sight |= SEE_MOBS
+					see_in_dark = initial(see_in_dark)
 					//client.screen += global_hud.thermal
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 				if(3)
 					sight |= SEE_TURFS
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(changeling_aug)
 			sight |= SEE_MOBS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(blinded)
 			see_in_dark = 8
@@ -1444,11 +1443,6 @@
 			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 		else
 			clear_fullscreen("blurry")
-
-		if(druggy)
-			overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		else
-			clear_fullscreen("high")
 		if(nearsighted)
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
@@ -1509,6 +1503,7 @@
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
+	return ..()
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
