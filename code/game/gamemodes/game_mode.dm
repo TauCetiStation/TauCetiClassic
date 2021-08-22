@@ -157,7 +157,7 @@
 			if(!F.can_join_faction(P))
 				log_mode("[P] failed [F] can_join_faction!")
 				continue
-			if(!F.HandleNewMind(P.mind))
+			if(!F.HandleNewMind(P.mind, FALSE))
 				log_mode("[P] failed [F] HandleNewMind!")
 				continue
 			available_players -= P // One player cannot be a borero-ninja-malf
