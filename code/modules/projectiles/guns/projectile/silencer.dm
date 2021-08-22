@@ -10,6 +10,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 	icon_state = "silencer"
 	w_class = SIZE_TINY
 	var/oldsound = 0 //Stores the true sound the gun made before it was silenced
+	var/oldsize = 0 //Stores the true size of the gun before it was silenced
 
 /obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
@@ -22,7 +23,8 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		var/obj/item/weapon/silencer/S = I
 		S.oldsound = fire_sound
 		fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
-		w_class = SIZE_SMALL
+		S.oldsize = w_class
+		w_class = max(w_class, SIZE_SMALL) //silencer makes tiny weapons bigger, but doesn't make any difference for bigger ones
 		update_icon()
 		return
 
@@ -36,6 +38,6 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 			var/obj/item/weapon/silencer/S = silenced
 			fire_sound = S.oldsound
 			silenced = 0
-			w_class = SIZE_TINY
+			w_class = S.oldsize
 			update_icon()
 			return
