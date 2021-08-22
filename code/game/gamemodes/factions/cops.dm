@@ -79,10 +79,6 @@
 	var/list/all_gangs = find_factions_by_type(/datum/faction/gang)
 	if(!all_gangs.len)
 		return
-	var/list/all_gangsters = list()
-	for(var/G in all_gangs)
-		var/datum/faction/gang/GG = G
-		all_gangsters |= GG.members
 
 	var/report
 	var/highest_point_value = 0
@@ -107,7 +103,7 @@
 
 	var/alive_gangsters = 0
 	var/alive_cops = 0
-	for(var/M in all_gangsters)
+	for(var/M in highest_gang.members)
 		var/datum/role/gangster/gangbanger = M
 		if(!gangbanger.antag)
 			continue
@@ -130,13 +126,11 @@
 				continue
 			alive_cops++
 
-	if(highest_gang.members > alive_cops)
+	if(alive_gangsters > alive_cops)
 		if(!objective_failures)
 			report = "<span class='red'>[highest_gang.name] побеждает, выполнив свою свою задачу и набрав наибольшее количество очков!</span>"
 		else
 			report = "<span class='red'>[highest_gang.name] побеждает, набрав наибольшее количество очков!</span>"
-	else if(alive_gangsters == alive_cops)
-		report = "<span class='orange'>Легенды гласят, что у НаноТрейзен и семей до сих пор идет конфликт!</span>"
 	else
 		report = "<span class='green'>НаноТрейзен смогла остановить деятельность банд!</span>"
 
