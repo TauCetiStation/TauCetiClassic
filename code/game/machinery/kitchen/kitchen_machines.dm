@@ -114,7 +114,7 @@
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
-			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+			playsound(src, 'sound/effects/sprays/cleaner.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \

@@ -246,7 +246,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
+			playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
 			qdel(src)
 		else
 			integrity--

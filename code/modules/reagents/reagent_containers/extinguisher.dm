@@ -23,7 +23,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	amount_per_transfer_from_this = 10
 	volume = 600
 
-	spray_sound = 'sound/effects/refill.ogg'
+	spray_sound = 'sound/effects/extinguisher.ogg'
 	volume_modifier = -3
 
 	chempuff_dense = FALSE

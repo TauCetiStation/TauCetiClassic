@@ -73,7 +73,7 @@
 		//It's import to clone the pixel layout information
 		//Otherwise signs revert to being on the turf and
 		//move jarringly
-		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/sprays/aerosol.ogg', VOL_EFFECTS_MASTER)
 		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y

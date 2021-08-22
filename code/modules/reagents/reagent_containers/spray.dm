@@ -14,7 +14,7 @@
 	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
 	var/spray_size = 3
 	var/list/spray_sizes = list(1,3) // When building this list, take into considiration what's written above.
-	volume = 250
+	volume = 400
 	var/safety = FALSE
 	var/triple_shot = FALSE
 
@@ -22,7 +22,7 @@
 
 	var/chempuff_dense = TRUE // Whether the chempuff can pass through closets and such(and it should).
 
-	var/spray_sound = 'sound/effects/spray2.ogg'
+	var/spray_sound = 'sound/effects/sprays/cleaner.ogg'
 	var/volume_modifier = -6
 
 	var/spray_cloud_move_delay = 3
@@ -239,6 +239,7 @@
 	possible_transfer_amounts = list(1, 5, 10)
 	spray_size = 1
 	spray_sizes = list(1)
+	spray_sound = 'sound/effects/sprays/spray.ogg'
 	volume = 100
 	var/lit = FALSE
 	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
@@ -401,6 +402,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
 	possible_transfer_amounts = null
+	spray_sound = 'sound/effects/sprays/aerosol.ogg'
 	volume = 40
 	safety = 1
 
@@ -443,6 +445,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	throwforce = 3
 	w_class = SIZE_SMALL
 	possible_transfer_amounts = null
+	spray_sound = 'sound/effects/sprays/pressure_washer.ogg'
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
 	triple_shot = TRUE

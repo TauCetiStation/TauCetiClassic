@@ -50,7 +50,7 @@
 			if(i < 7) usr.pixel_y += 8
 			else usr.pixel_y -= 8
 			sleep(1)
-		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr, 'sound/effects/Explosion2.ogg', VOL_EFFECTS_MASTER)
 		for(tile in range(1, usr))
 			if(prob(50))
 				tile.break_tile()
@@ -312,7 +312,7 @@
 		sleep(30)
 		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
-		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr, 'sound/effects/Explosion2.ogg', VOL_EFFECTS_MASTER)
 		var/cur_dir = usr.dir
 		var/turf/T = get_turf(get_step(usr,cur_dir))
 		var/turf/simulated/floor/tile = T

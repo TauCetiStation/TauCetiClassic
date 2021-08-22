@@ -325,7 +325,7 @@
 						'sound/effects/electric_shock.ogg',
 						'sound/effects/EMPulse.ogg',
 						'sound/effects/Explosion1.ogg',
-						'sound/effects/extinguish.ogg',
+						'sound/effects/extinguisher.ogg',
 						'sound/effects/extinguish_mob.ogg',
 						'sound/effects/forcefield_destroy.ogg',
 						'sound/effects/forcefield_hit2.ogg',

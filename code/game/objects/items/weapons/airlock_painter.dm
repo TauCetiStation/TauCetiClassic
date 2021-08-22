@@ -34,7 +34,7 @@
 		return 0
 	if(can_use(usr, cost))
 		ink.charges -= cost
-		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/sprays/aerosol.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	else
 		return 0

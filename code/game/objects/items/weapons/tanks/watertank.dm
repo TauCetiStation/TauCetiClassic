@@ -111,6 +111,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	spray_size = 1
 	spray_sizes = list(1, 3, 5)
+	spray_sound = 'sound/effects/sprays/pressure_washer.ogg'
 	volume = 500
 	slot_flags = null
 

@@ -147,7 +147,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/machines/airlock/close.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(2) // EXPLOSIONS
-						var/list/hallsound = list('sound/effects/explosionfar.ogg',
+						var/list/hallsound = list(pick(SOUNDIN_EXPLOSIONFAR),
 						                          'sound/effects/Explosion2.ogg',
 						                          'sound/effects/Explosion1.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
