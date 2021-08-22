@@ -26,7 +26,7 @@ var/global/deaths_during_shift = 0
 	if(gang_tags.len == 0)
 		adjust_points(-20)
 	else
-		adjust_points(5 * gang_tags.len)
+		adjust_points(2 * gang_tags.len)
 
 /// Internal. Assigns points to families according to clothing of all currently living humans.
 /datum/faction/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
