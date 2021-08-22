@@ -126,41 +126,37 @@
 	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	switch(tgui_alert(usr, "Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.", list("Toggle cover","Change grip")))
-		if("Toggle cover")
-			if(wielded || user.get_inactive_hand())
-				to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-				return
-			else
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if(!H.can_use_two_hands())
-						to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
-						return
-				cover_open = !cover_open
-				to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
-				update_icon()
-				return
-		if("Change grip")
-			if(wielded) //Trying to unwield it
-				unwield()
-				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-				if(user.hand)
-					user.update_inv_l_hand()
-				else
-					user.update_inv_r_hand()
-
-				var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-				if(O && istype(O))
-					O.unwield()
-				return
-
-			else //Trying to wield it
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					var/W = H.wield(src, initial(name))
-					if(W)
-						wield()
+	if(wielded)
+		unwield()
+		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
+		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
+		if(O && istype(O))
+			O.unwield()
+		return
+	else if(cover_open)
+		if(user.get_inactive_hand())
+			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
+			return
+		else
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(!H.can_use_two_hands())
+					to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+					return
+			cover_open = !cover_open
+			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
+			update_icon()
+			return
+	else //Trying to wield it
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/W = H.wield(src, initial(name))
+			if(W)
+				wield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
@@ -179,8 +175,19 @@
 	if(loc != user)
 		..()
 		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
+	if(user.get_inactive_hand() != src)
 		..()
+		return //let them take it from inventory
+	if(!cover_open)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(!H.can_use_two_hands())
+				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+				return
+		cover_open = !cover_open
+		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
+		update_icon()
+		return
 	else if(cover_open && magazine)
 		//drop the mag
 		magazine.update_icon()
@@ -189,6 +196,10 @@
 		magazine = null
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+	else
+		if(chambered)
+			playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
+			process_chamber()
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
