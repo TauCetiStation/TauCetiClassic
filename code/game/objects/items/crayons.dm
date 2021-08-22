@@ -43,7 +43,8 @@
 
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity || !target.CanPass(null, target))
+		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(!instant)
