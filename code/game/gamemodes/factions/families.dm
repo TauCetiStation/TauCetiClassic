@@ -58,6 +58,7 @@
 /datum/faction/gang/GetScoreboard()
 	. = ..()
 	. += "Очки: [round(points)]"
+	. += "<br>Граффити: [gang_tags.len]"
 
 /datum/faction/gang/AdminPanelEntry()
 	. = ..()
@@ -66,6 +67,9 @@
 
 /// Adds points to the points var.
 /datum/faction/gang/proc/adjust_points(points_to_adjust)
+	if(points + points_to_adjust < 0)
+		return
+
 	points += points_to_adjust
 
 /datum/faction/gang/red

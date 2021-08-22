@@ -177,7 +177,7 @@
 	if(enemy_tag)
 		if(!do_after(user, 40, target = target))
 			return
-		gang.adjust_points(2)
+		gang.adjust_points(10)
 
 	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 		qdel(old_marking)

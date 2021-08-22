@@ -23,20 +23,28 @@ var/global/deaths_during_shift = 0
 
 /// Internal. Assigns points to families according to gang tags.
 /datum/faction/gang/proc/check_tagged_turfs()
-	adjust_points(5 * gang_tags.len)
+	if(gang_tags.len == 0)
+		adjust_points(-20)
+	else
+		adjust_points(5 * gang_tags.len)
 
 /// Internal. Assigns points to families according to clothing of all currently living humans.
 /datum/faction/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
+	var/members_in_clothing = 0
+	var/valid_members = 0
 	for(var/role in members)
 		var/datum/role/gangster/G = role
 		if(!G.antag || !G.antag.current || !G.antag.current.client || !ishuman(G.antag.current))
 			continue
 		var/mob/living/carbon/human/H = G.antag.current
+		valid_members++
 		for(var/clothing in H.get_all_slots())
 			if(is_type_in_list(clothing, acceptable_clothes))
-				adjust_points(1)
-
+				members_in_clothing++
 		CHECK_TICK
+
+	var/points_to_add = members_in_clothing >= valid_members ? members_in_clothing : -valid_members
+	adjust_points(points_to_add)
 
 /// Internal. Assigns points to families according to groups of nearby family members.
 /datum/faction/gang/proc/check_rollin_with_crews()

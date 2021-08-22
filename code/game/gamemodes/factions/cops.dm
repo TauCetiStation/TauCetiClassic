@@ -86,7 +86,7 @@
 
 	var/report
 	var/highest_point_value = 0
-	var/highest_gang = "Leet Like Jeff K"
+	var/datum/faction/gang/highest_gang
 	var/objective_failures = TRUE
 
 	for(var/G in all_gangs)
@@ -99,11 +99,11 @@
 		if(!objective_failures)
 			if(GG.points >= highest_point_value && GG.members.len && GG.IsSuccessful())
 				highest_point_value = GG.points
-				highest_gang = GG.name
+				highest_gang = GG
 		else
 			if(GG.points >= highest_point_value && GG.members.len)
 				highest_point_value = GG.points
-				highest_gang = GG.name
+				highest_gang = GG
 
 	var/alive_gangsters = 0
 	var/alive_cops = 0
@@ -130,11 +130,11 @@
 				continue
 			alive_cops++
 
-	if(alive_gangsters > alive_cops)
+	if(highest_gang.members > alive_cops)
 		if(!objective_failures)
-			report = "<span class='red'>[highest_gang] побеждает, выполнив свою свою задачу и набрав наибольшее количество очков!</span>"
+			report = "<span class='red'>[highest_gang.name] побеждает, выполнив свою свою задачу и набрав наибольшее количество очков!</span>"
 		else
-			report = "<span class='red'>[highest_gang] побеждает, набрав наибольшее количество очков!</span>"
+			report = "<span class='red'>[highest_gang.name] побеждает, набрав наибольшее количество очков!</span>"
 	else if(alive_gangsters == alive_cops)
 		report = "<span class='orange'>Легенды гласят, что у НаноТрейзен и семей до сих пор идет конфликт!</span>"
 	else
