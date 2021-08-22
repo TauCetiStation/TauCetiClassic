@@ -55,17 +55,12 @@
 		alarmed = 1
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user)
-	if(silenced)
-		switch(tgui_alert(usr, "Would you like to unscrew silencer, or extract magazine?","Choose.", list("Silencer","Magazine")))
-			if("Silencer")
-				if(loc == user)
-					if(silenced)
-						silencer_attack_hand(user)
-			if("Magazine")
-				..()
-	else
-		..()
+/obj/item/weapon/gun/projectile/automatic/c20r/attack_hand(mob/user)
+	if(loc == user)
+		if(silenced)
+			if(silencer_attack_hand(user))
+				return
+	..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
