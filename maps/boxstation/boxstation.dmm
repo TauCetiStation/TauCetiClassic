@@ -70950,11 +70950,10 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "faS" = (
-/obj/machinery/camera/motion{
-	c_tag = "Secure Tech Storage";
-	network = list("SS13","Engineering")
-	},
 /obj/structure/closet/secure_closet/blueshield/weaponry,
+/obj/machinery/camera/motion{
+	c_tag = "Blueshield Storage Motion Sensor"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73659,9 +73658,7 @@
 	pixel_x = -29
 	},
 /obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
