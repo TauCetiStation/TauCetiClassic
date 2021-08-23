@@ -414,6 +414,38 @@
 				to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
 				V.splitting(D)
 
+	if(istype(D.wear_suit, /obj/item/clothing/suit/straight_jacket))
+		var/obj/item/clothing/suit/straight_jacket/SJ = D.wear_suit
+		if(SJ && (D.last_special <= world.time))
+			if(!D.canmove && !D.resting)	return
+			D.next_move = world.time + 100
+			D.last_special = world.time + 100
+			if(isxenoadult(D) || (HULK in usr.mutations))
+				to_chat(usr, )
+				D.visible_message("<span class='danger'>[D] is trying to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around 5 seconds and you need to stand still)</span>")
+				spawn(0)
+					if(do_after(D, 50, target = usr))
+						if(!SJ || D.buckled)
+							return
+						D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You successfully get out of \the [SJ].</span>")
+						D.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						qdel(SJ)
+						D.update_inv_wear_suit()
+			else
+				var/breakouttime = 1800
+				var/displaytime = 3
+				if(istype(SJ))
+					breakouttime = SJ.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				D.visible_message("<span class='danger'>[usr] attempts to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+				spawn(0)
+					if(do_after(D, breakouttime, target = usr))
+						if(!SJ || D.buckled) return
+						else
+							D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", \
+							"<span class='notice'>You successfully got out of \the [SJ].</span>")
+						D.drop_from_inventory(SJ)
+
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
@@ -2138,9 +2170,9 @@
 	return TRUE
 
 /mob/living/carbon/human/update_size_class()
-	
+
 	var/new_w_class = initial(w_class)
-	
+
 	if(SMALLSIZE in mutations)
 		new_w_class -= 1
 
