@@ -5,6 +5,13 @@
 			heads += player.mind
 	return heads
 
+/proc/get_all_heads()
+	var/list/heads = list()
+	for(var/mob/living/carbon/human/player in human_list)
+		if(player.mind && (player.mind.assigned_role in command_positions))
+			heads += player.mind
+	return heads
+
 /datum/faction/revolution
 	name = "Revolutionaries"
 	ID = F_REVOLUTION
@@ -20,13 +27,6 @@
 
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
-
-/datum/faction/revolution/proc/get_all_heads()
-	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in human_list)
-		if(player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
 
 /datum/faction/revolution/OnPostSetup()
 	if(SSshuttle)
