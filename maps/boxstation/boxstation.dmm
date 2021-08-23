@@ -56050,7 +56050,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_access = list(10);
-	req_one_access = list(11,24)
+	req_one_access = list()
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -56507,7 +56507,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_access = list(10);
-	req_one_access = list(11,24)
+	req_one_access = list()
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -81437,7 +81437,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_access = list(10);
-	req_one_access = list(11,24)
+	req_one_access = list()
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
