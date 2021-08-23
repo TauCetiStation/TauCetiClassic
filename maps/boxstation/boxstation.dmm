@@ -70954,6 +70954,7 @@
 	c_tag = "Secure Tech Storage";
 	network = list("SS13","Engineering")
 	},
+/obj/structure/closet/secure_closet/blueshield/weaponry,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73654,7 +73655,13 @@
 	},
 /area/station/hallway/primary/central)
 "iSp" = (
-/obj/structure/closet/secure_closet/blueshield/weaponry,
+/obj/structure/closet/medical_wall{
+	pixel_x = -29
+	},
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

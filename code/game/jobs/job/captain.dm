@@ -71,7 +71,7 @@
 	idtype = /obj/item/weapon/card/id/blu
 	access = list(access_blueshield, access_heads, access_maint_tunnels,
 				  access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby,
-				  access_security, access_engine, access_engine_equip) // needed accesses to reach heads
+				  access_security, access_engine) // needed accesses to reach heads
 	salary = 200
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400

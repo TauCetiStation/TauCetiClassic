@@ -247,10 +247,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/blueshield/weaponry
 	name = "Blueshield Officer's Weapons Locker"
-	req_access = list(access_blueshield)
 
 /obj/structure/closet/secure_closet/blueshield/weaponry/PopulateContents()
-	new /obj/item/weapon/melee/telebaton(src)
+	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/gun/projectile/glock/spec(src)
 	for (var/i in 1 to 4)
 		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
