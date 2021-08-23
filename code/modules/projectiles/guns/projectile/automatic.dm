@@ -105,7 +105,6 @@
 	if(wielded)
 		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
-
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
@@ -124,10 +123,7 @@
 	if(wielded)
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		update_inv_mob()
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
 			O.unwield()
