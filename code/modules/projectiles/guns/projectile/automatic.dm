@@ -130,15 +130,15 @@
 	else if(cover_open)
 		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-		else
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(!H.can_use_two_hands())
-					to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
-					return
-			cover_open = !cover_open
-			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
-			update_icon()
+			return
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(!H.can_use_two_hands())
+				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+				return
+		cover_open = !cover_open
+		to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
+		update_icon()
 	else //Trying to wield it
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
