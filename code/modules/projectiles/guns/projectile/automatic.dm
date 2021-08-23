@@ -131,11 +131,9 @@
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
 			O.unwield()
-		return
 	else if(cover_open)
 		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-			return
 		else
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -145,7 +143,6 @@
 			cover_open = !cover_open
 			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
 			update_icon()
-			return
 	else //Trying to wield it
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -168,11 +165,9 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
-		..()
-		return	//let them pick it up
+		return ..()//let them pick it up
 	if(user.get_inactive_hand() != src)
-		..()
-		return //let them take it from inventory
+		return ..()//let them take it from inventory
 	if(!cover_open)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -182,7 +177,6 @@
 		cover_open = !cover_open
 		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
 		update_icon()
-		return
 	else if(cover_open && magazine)
 		//drop the mag
 		magazine.update_icon()
