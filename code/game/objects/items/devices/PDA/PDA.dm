@@ -17,6 +17,9 @@
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 
+	var/default_pen = /obj/item/weapon/pen
+	var/obj/item/weapon/pen/pen = null
+
 	var/lastmode = 0
 	var/ui_tick = 0
 	var/nanoUI[0]
@@ -73,7 +76,8 @@
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	if(default_pen)
+		pen = new default_pen(src)
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
@@ -204,6 +208,7 @@
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
+	default_pen = /obj/item/weapon/pen/edagger
 	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
@@ -1105,6 +1110,17 @@
 			id.loc = get_turf(src)
 		id = null
 
+/obj/item/device/pda/proc/remove_pen()
+	if (pen)
+		if (ismob(loc))
+			var/mob/M = loc
+			M.put_in_hands(pen)
+			to_chat(usr, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
+			playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
+		else
+			pen.loc = get_turf(src)
+		pen = null
+
 /obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
 	var/pda_ref = null
 
@@ -1272,16 +1288,8 @@
 		return
 
 	if ( can_use(usr) )
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			if (istype(loc, /mob))
-				var/mob/M = loc
-				if(M.get_active_hand() == null)
-					M.put_in_hands(O)
-					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
-					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
-					return
-			O.loc = get_turf(src)
+		if(pen)
+			remove_pen()
 		else
 			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
@@ -1352,10 +1360,10 @@
 		to_chat(user, "<span class='notice'>You slot \the [I] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 	else if(istype(I, /obj/item/weapon/pen))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
+		if(pen)
 			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
+			pen = I
 			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
 	else
