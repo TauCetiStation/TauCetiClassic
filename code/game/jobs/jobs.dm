@@ -51,6 +51,7 @@ var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 var/const/RECYCLER			=(1<<14)
 var/const/BARBER			=(1<<15)
+var/const/BLUESHIELD		=(1<<16)
 
 var/list/assistant_occupations = list(
 )
@@ -110,6 +111,7 @@ var/list/civilian_positions = list(
 	"Shaft Miner",
 	"Recycler",
 	"Internal Affairs Agent",
+	"Blueshield Officer",
 	"Chaplain",
 	"Test Subject",
 	"Clown",
@@ -189,6 +191,8 @@ var/list/nonhuman_positions = list(
 				continue
 			if(department == "civ")
 				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
+					continue
+				if(head_rank != "Admin" && person["rank"] == "Blueshield Officer")	//only CentCom can change BS's salary
 					continue
 				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue

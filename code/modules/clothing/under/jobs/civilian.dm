@@ -114,6 +114,16 @@
 	flags = ONESIZEFITSALL
 
 
+/obj/item/clothing/under/rank/blueshield
+	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	name = "blueshield officer uniform"
+	icon_state = "blueshield"
+	item_state = "blueshield"
+	item_color = "blueshield"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+
 /obj/item/clothing/under/rank/internalaffairs
 	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."
 	name = "internal affairs uniform"

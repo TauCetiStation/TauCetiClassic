@@ -200,6 +200,12 @@
 	icon_state = "sec"
 	item_state = "sec_id"
 
+/obj/item/weapon/card/id/blu
+	name = "identification card"
+	desc = "A card issued to blueshield officer."
+	icon_state = "blu"
+	item_state = "blu_id"
+
 /obj/item/weapon/card/id/int
 	name = "identification card"
 	desc = "A card issued to internal affairs agent."

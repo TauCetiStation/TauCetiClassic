@@ -29,6 +29,7 @@
 
 /obj/structure/safe/atom_init()
 	. = ..()
+	safes_list += src
 
 	// Combination generation
 	for(var/i in 1 to number_of_tumblers)
@@ -41,6 +42,10 @@
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			I.forceMove(src)
+
+/obj/structure/safe/Destroy()
+	. = ..()
+	safes_list -= src
 
 /obj/structure/safe/update_icon()
 	if(open)

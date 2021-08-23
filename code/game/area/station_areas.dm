@@ -543,6 +543,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Vacant Office"
 	icon_state = "security"
 
+/area/station/security/blueshield
+	name = "Blueshield"
+	icon_state = "blueshield"
+
 /area/station/security/lawoffice
 	name = "Internal Affairs"
 	icon_state = "law"

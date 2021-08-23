@@ -34,7 +34,7 @@
 	channels = list("Security" = 1)
 
 /obj/item/device/encryptionkey/headset_int
-	name = "Internal Affairs Agent's Encryption Key"
+	name = "NanoTrasen Representative's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "int_cypherkey"
 	channels = list("Security" = 1, "Command" = 1)

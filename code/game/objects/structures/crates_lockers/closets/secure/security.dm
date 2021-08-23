@@ -222,6 +222,40 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
 
+/obj/structure/closet/secure_closet/blueshield
+	name = "Blueshield Officer's Locker"
+	req_access = list(access_blueshield)
+	icon_state = "blu1"
+	icon_closed = "blu"
+	icon_locked = "blu1"
+	icon_opened = "bluopen"
+	icon_broken = "blubroken"
+	icon_off = "bluoff"
+
+/obj/structure/closet/secure_closet/blueshield/PopulateContents()
+	new /obj/item/weapon/storage/backpack/security(src)
+	new /obj/item/clothing/suit/storage/flak(src)
+	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/weapon/storage/belt/security(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/device/radio/headset/headset_int(src)
+	new /obj/item/device/flash(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
+	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
+
+/obj/structure/closet/secure_closet/blueshield/weaponry
+	name = "Blueshield Officer's Weapons Locker"
+	req_access = list(access_blueshield)
+
+/obj/structure/closet/secure_closet/blueshield/weaponry/PopulateContents()
+	new /obj/item/weapon/melee/telebaton(src)
+	new /obj/item/weapon/gun/projectile/glock/spec(src)
+	for (var/i in 1 to 4)
+		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
+	for (var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m9mm_2(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 

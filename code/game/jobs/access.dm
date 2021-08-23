@@ -39,7 +39,7 @@
 /var/const/access_virology = 39
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
-//var/const/access_ = 42 // FREE SPACE, USE THIS FIRST
+/var/const/access_blueshield = 42
 /var/const/access_clown = 43
 /var/const/access_mime = 44
 /var/const/access_surgery = 45
@@ -198,7 +198,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_virology, access_psychiatrist, access_cmo, access_qm, access_lawyer, access_surgery,
+	            access_hydroponics, access_library, access_virology, access_psychiatrist, access_cmo, access_qm, access_blueshield, access_lawyer, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic, access_medbay_storage, access_engineering_lobby)
@@ -224,7 +224,7 @@
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_lawyer, access_theatre)
+			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_blueshield, access_lawyer, access_theatre)
 		if(7) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
 
@@ -324,6 +324,8 @@
 			return "Hydroponics"
 		if(access_library)
 			return "Library"
+		if(access_blueshield)
+			return "Blueshield Office"
 		if(access_lawyer)
 			return "IAA Office"
 		if(access_robotics)
