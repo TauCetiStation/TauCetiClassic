@@ -783,6 +783,9 @@ var/list/net_announcer_secret = list()
 		if (global.master_last_mode == M.name)
 			qdel(M)
 			continue
+		if (global.modes_failed_start[M.name])
+			qdel(M)
+			continue
 		var/mod_prob = probabilities[M.name]
 		if (M.can_start())
 			runnable_modes[M] = mod_prob
