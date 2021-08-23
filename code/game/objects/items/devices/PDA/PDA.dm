@@ -105,11 +105,11 @@
 
 /obj/item/device/pda/AltClick(mob/user)
 	if (can_use(user) && id)
-		verb_remove_id()
+		remove_id(user)
 
 /obj/item/device/pda/CtrlClick(mob/user)
 	if (can_use(user))
-		verb_remove_pen()
+		remove_pen(user)
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -1110,23 +1110,45 @@
 		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
 /obj/item/device/pda/proc/remove_id(mob/user)
-	if (id)
-		if (loc == user)
-			user.put_in_hands(id)
+	if(issilicon(user))
+		return
+
+	if (can_use(user))
+		if (id)
+			if (loc == user)
+				user.put_in_hands(id)
+			else
+				id.forceMove(get_turf(src))
+			to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
+			id = null
+			update_icon()
 		else
-			id.forceMove(get_turf(src))
-		to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
-		id = null
+			to_chat(user, "<span class='notice'>This PDA does not have an ID in it.</span>")
+	else
+		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
 
 /obj/item/device/pda/proc/remove_pen(mob/user)
-	if (pen)
-		if (loc == user)
-			user.put_in_hands(pen)
-			playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
+	if(issilicon(user))
+		return
+
+	if (can_use(user))
+		if(pen)
+			if (loc == user)
+				user.put_in_hands(pen)
+				playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
+			else
+				pen.forceMove(get_turf(src))
+			to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
+			pen = null
 		else
-			pen.forceMove(get_turf(src))
-		to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
-		pen = null
+			to_chat(user, "<span class='notice'>This PDA does not have a pen in it.</span>")
+	else
+		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
 
 /obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
 	var/pda_ref = null
@@ -1268,22 +1290,7 @@
 	set name = "Remove id"
 	set src in usr
 
-	if(issilicon(usr))
-		return
-
-	if ( can_use(usr) )
-		if(id)
-			remove_id(usr)
-			update_icon()
-		else
-			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.wear_id == src)
-			H.sec_hud_set_ID()
+	remove_id(usr)
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -1291,16 +1298,7 @@
 	set name = "Remove pen"
 	set src in usr
 
-	if(issilicon(usr))
-		return
-
-	if ( can_use(usr) )
-		if(pen)
-			remove_pen(usr)
-		else
-			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+	remove_pen(usr)
 
 
 /obj/item/device/pda/proc/id_check(mob/user, choice)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
