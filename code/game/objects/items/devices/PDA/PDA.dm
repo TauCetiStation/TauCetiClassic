@@ -81,8 +81,18 @@
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id && prob(90)) //IDs are kept in 90% of the cases
-		src.id.loc = get_turf(src.loc)
+	if (id)
+		if (prob(90)) //IDs are kept in 90% of the cases
+			id.forceMove(get_turf(loc))
+			id = null
+		else
+			QDEL_NULL(id)
+	if (pen)
+		if (prob(50)) //Pens are kept in 50% of the cases
+			pen.forceMove(get_turf(loc))
+			pen = null
+		else
+			QDEL_NULL(pen)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
@@ -95,8 +105,7 @@
 
 /obj/item/device/pda/AltClick(mob/user)
 	if (can_use(user) && id)
-		remove_id()
-		update_icon()
+		verb_remove_id()
 
 /obj/item/device/pda/CtrlClick(mob/user)
 	if (can_use(user))
@@ -1100,25 +1109,23 @@
 		message = "<span class='warning'></span>" + message
 		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
-/obj/item/device/pda/proc/remove_id()
+/obj/item/device/pda/proc/remove_id(mob/user)
 	if (id)
-		if (ismob(loc))
-			var/mob/M = loc
-			M.put_in_hands(id)
-			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+		if (loc == user)
+			user.put_in_hands(id)
 		else
-			id.loc = get_turf(src)
+			id.forceMove(get_turf(src))
+		to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
 		id = null
 
-/obj/item/device/pda/proc/remove_pen()
+/obj/item/device/pda/proc/remove_pen(mob/user)
 	if (pen)
-		if (ismob(loc))
-			var/mob/M = loc
-			M.put_in_hands(pen)
-			to_chat(usr, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
+		if (loc == user)
+			user.put_in_hands(pen)
 			playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
 		else
-			pen.loc = get_turf(src)
+			pen.forceMove(get_turf(src))
+		to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
 		pen = null
 
 /obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
@@ -1266,7 +1273,7 @@
 
 	if ( can_use(usr) )
 		if(id)
-			remove_id()
+			remove_id(usr)
 			update_icon()
 		else
 			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
@@ -1289,7 +1296,7 @@
 
 	if ( can_use(usr) )
 		if(pen)
-			remove_pen()
+			remove_pen(usr)
 		else
 			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
