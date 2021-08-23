@@ -216,6 +216,12 @@
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh."
 			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
+			if(!species.flags[NO_BREATHE])
+				switch(gender)
+					if(MALE)
+						playsound(src, pick(SOUNDIN_LAUGH_MALE), VOL_EFFECTS_MASTER, 400, FALSE)
+					if(FEMALE)
+						playsound(src, pick(SOUNDIN_LAUGH_FEMALE), VOL_EFFECTS_MASTER, 400, FALSE)
 
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
