@@ -180,6 +180,7 @@
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 	else
 		if(chambered)
