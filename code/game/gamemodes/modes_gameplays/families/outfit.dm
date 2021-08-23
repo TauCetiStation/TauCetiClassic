@@ -118,6 +118,6 @@
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/weapon/extraction_pack/syndicate,
+		/obj/item/weapon/extraction_pack/dealer,
 		)
 	survival_box = TRUE

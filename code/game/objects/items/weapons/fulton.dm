@@ -124,32 +124,34 @@
 	var/atom/movable/stored_obj
 
 // used for accept telecrystal for costly items
-/obj/item/weapon/extraction_pack/syndicate
+/obj/item/weapon/extraction_pack/dealer
 	name = "station bounced radio"
 	desc = null
 
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "walkietalkie"
 
+	w_class = SIZE_TINY
+
 	del_target = TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/atom_init(mapload, ...)
+/obj/item/weapon/extraction_pack/dealer/atom_init(mapload, ...)
 	. = ..()
 	hidden_uplink = new(src)
 	hidden_uplink.uplink_type = "dealer"
 
-/obj/item/weapon/extraction_pack/syndicate/attack_self(mob/user)
+/obj/item/weapon/extraction_pack/dealer/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
-/obj/item/weapon/extraction_pack/syndicate/can_use_to(atom/movable/target)
+/obj/item/weapon/extraction_pack/dealer/can_use_to(atom/movable/target)
 	if(!..())
 		return FALSE
 	if(ismob(target) || istype(target, /obj/structure/closet))
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/try_use_fulton(atom/movable/target, mob/user)
+/obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
 		return FALSE
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
@@ -158,7 +160,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/proc/give_telecrystal(atom/movable/target_type, mob/user)
+/obj/item/weapon/extraction_pack/dealer/proc/give_telecrystal(atom/movable/target_type, mob/user)
 	sleep(10 SECONDS) // signals are called async
 	var/datum/role/traitor/dealer/is_traitor = isgundealer(user)
 	if(!is_traitor)
