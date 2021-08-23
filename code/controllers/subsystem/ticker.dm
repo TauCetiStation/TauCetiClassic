@@ -207,6 +207,7 @@ SUBSYSTEM_DEF(ticker)
 	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = mode.Setup() //Setup special modes
 	if(!can_continue)
+		global.modes_failed_start[mode.name] = TRUE
 		current_state = GAME_STATE_PREGAME
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
