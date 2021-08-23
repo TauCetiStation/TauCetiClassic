@@ -52,7 +52,6 @@
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/ammo_box/magazine/c45r = 3,
-		/obj/item/ammo_box/c45 = 2,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
 
@@ -66,9 +65,9 @@
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/shield/riot/tele = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
+		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
+		/obj/item/ammo_box/magazine/c45r = 3,
 	)
 
 /datum/outfit/families_police/beatcop/fbi
@@ -98,7 +97,6 @@
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/flashbangs = 1,
-		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/a357 = 2,
 		/obj/item/weapon/gun/projectile/revolver/mateba = 1,
 	)
