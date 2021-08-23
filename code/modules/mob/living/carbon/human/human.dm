@@ -402,8 +402,8 @@
 
 /mob/living/carbon/human/resist()
 	..()
+	var/mob/living/carbon/human/D = usr
 	if(usr && !usr.incapacitated())
-		var/mob/living/carbon/human/D = usr
 		if(D.get_species() == DIONA)
 			var/list/choices = list()
 			for(var/mob/living/carbon/monkey/diona/V in contents)
@@ -417,16 +417,14 @@
 	if(istype(D.wear_suit, /obj/item/clothing/suit/straight_jacket))
 		var/obj/item/clothing/suit/straight_jacket/SJ = D.wear_suit
 		if(SJ && (D.last_special <= world.time))
-			if(!D.canmove && !D.resting)	return
+			if(!D.canmove && !D.resting) return
 			D.next_move = world.time + 100
 			D.last_special = world.time + 100
 			if(isxenoadult(D) || (HULK in usr.mutations))
-				to_chat(usr, )
 				D.visible_message("<span class='danger'>[D] is trying to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(D, 50, target = usr))
-						if(!SJ || D.buckled)
-							return
+						if(!SJ || D.buckled) return
 						D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You successfully get out of \the [SJ].</span>")
 						D.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(SJ)
@@ -440,7 +438,7 @@
 				D.visible_message("<span class='danger'>[usr] attempts to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(D, breakouttime, target = usr))
-						if(!SJ || D.buckled) return
+						if(!H.wear_suit || D.buckled) return
 						else
 							D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", \
 							"<span class='notice'>You successfully got out of \the [SJ].</span>")
