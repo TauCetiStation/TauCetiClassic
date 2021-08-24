@@ -513,6 +513,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0

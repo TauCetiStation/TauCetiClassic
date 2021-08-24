@@ -82,3 +82,5 @@ var/cmp_field = "name"
 	var/abs_b = abs(B.mood_change)
 
 	return abs_b - abs_a
+/proc/cmp_bridge_commands(a,b)
+	return bridge_commands[a].position - bridge_commands[b].position
