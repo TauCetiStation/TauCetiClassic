@@ -177,14 +177,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
-/obj/item/device/radio/uplink/dealer
-	icon_state = "walkietalkie"
-
-/obj/item/device/radio/uplink/dealer/atom_init()
-	. = ..()
-	hidden_uplink = new(src)
-	hidden_uplink.uplink_type = "dealer"
-
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)

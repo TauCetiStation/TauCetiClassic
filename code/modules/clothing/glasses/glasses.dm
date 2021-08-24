@@ -67,8 +67,6 @@
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
-//	darkness_view = 3
-//	vision_flags = SEE_SELF
 	darkness_view = 7
 	toggleable = 1
 	sightglassesmod = "nvg"

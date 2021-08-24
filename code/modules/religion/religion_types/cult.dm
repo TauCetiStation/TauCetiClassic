@@ -235,6 +235,11 @@
 		add_faction_member(mode, M, TRUE)
 	return TRUE
 
+/datum/religion/cult/add_deity(mob/M)
+	..()
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
+
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
 		M.RemoveSpell(C)
