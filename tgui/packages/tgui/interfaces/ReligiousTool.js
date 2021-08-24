@@ -694,24 +694,22 @@ const RiteTab = (props, context) => {
                     })} >
                     Invoke
                   </Button>
-                  {can_talismaning && (
-                    <Button
-                      fontColor="white"
-                      tooltip="x2 costs"
-                      disabled={!rite.can_talismaned || favor < rite.favor_cost * 2 || piety < rite.piety_cost * 2}
-                      icon="scroll"
-                      onClick={() => act('talismaning_rite', {
-                        rite_name: rite.name,
-                      })} >
-                      Talismaning
-                    </Button>
-                  )}
+                  <Button
+                    fontColor="white"
+                    tooltip={rite.favor_cost * 2 + " favor" + (rite.piety_cost > 0 ? " " + rite.piety_cost + " piety" : "")}
+                    disabled={!can_talismaning || !rite.can_talismaned || favor < rite.favor_cost * 2 || piety < rite.piety_cost * 2}
+                    icon="scroll"
+                    onClick={() => act('talismaning_rite', {
+                      rite_name: rite.name,
+                    })} >
+                    Talismaning
+                  </Button>
                 </>
               )}>
               <Box
                 color={favor < rite.favor_cost ? "red" : "yellow"}
                 mb={0.5}>
-                <Icon name="star" /> Costs {rite.favor_cost} favor.
+                <Icon name="star" /> Costs: {rite.favor_cost} favor{rite.piety_cost > 0 ? " and " + rite.piety_cost + " piety" : ""}.
               </Box>
               <BlockQuote>
                 <Box>
