@@ -125,7 +125,8 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
-			silencer_attack_hand(user)
+			if(silencer_attack_hand(user))
+				return
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
@@ -144,7 +145,7 @@
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
 	can_be_holstered = TRUE
