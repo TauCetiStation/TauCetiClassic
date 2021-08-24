@@ -41,7 +41,7 @@
 
 /datum/bridge_command/ert
 	name = "ert"
-	desc = "Call ERT, optionally set custom objective for the team\n||and be unpedalled for any shit they do while you sit in Discord and do not look after them||"
+	desc = "Call ERT, optionally set custom objective for the team"
 	format = "@Bot ert %objective%"
 	example = "@Bot ert"
 

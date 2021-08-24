@@ -3,7 +3,7 @@
 	desc = "Show round information by ID"
 	format = "@Bot round %roundid%"
 	example = "@Bot round 123"
-	position = 70
+	position = 90
 
 /datum/bridge_command/round/execute(list/params)
 	var/target_round = text2num(params["bridge_arg_1"])
@@ -54,10 +54,10 @@
 
 /datum/bridge_command/roundfinder
 	name = "roundfinder"
-	desc = "Find round by date"
+	desc = "Show rounds by date"
 	format = "@Bot round %day% %mounth% %year%"
 	example = "@Bot round 30 12 2020"
-	position = 71
+	position = 91
 
 /datum/bridge_command/roundfinder/execute(list/params)
 	var/day = text2num(params["bridge_arg_1"])

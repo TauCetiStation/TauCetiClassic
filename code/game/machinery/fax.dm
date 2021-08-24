@@ -205,6 +205,7 @@ var/list/alldepartments = list("Central Command")
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
 		attachment_msg = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n")),
+		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 

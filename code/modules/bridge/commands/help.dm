@@ -30,10 +30,10 @@
 		return
 	
 	var/footer = {"Where:
-%message% or %reason% - Just text. New line is allowed.
+%message%, %reason%, %objective% - Just text. New line is allowed.
 %ckey% - Player key in ckey format: without spaces and \\_-
 %duration% - Number for minutes or perma
-%banid% or %noteid% - ID number, look in banslist/noteslist command
+%banid%, %noteid% - ID number, look in banslist/noteslist command
 %offset% - optional offset for lists, default 0"}
 
 	world.send2bridge(

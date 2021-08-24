@@ -771,7 +771,7 @@ var/global/BSACooldown = 0
 	ooc_allowed = !ooc_allowed
 
 	world.send2bridge(
-		type = list(BRIDGE_OOC, BRIDGE_ADMINCOM),
+		type = list(BRIDGE_OOC),
 		attachment_msg = "[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)

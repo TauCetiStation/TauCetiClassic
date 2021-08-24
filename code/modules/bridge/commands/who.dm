@@ -46,7 +46,7 @@
 		message = "No players online"
 	else
 		message = "**CREW**:\n[crew]**OBSERVERS**:\n[observers]"
-		footer = "Abbreviations: (O)bserver, (D)ead, (U)nconscious, (A)ntagonist\nJobs shown at the time of spawn and may be different"
+		footer = "Abbreviations: (O)bserver, (D)ead, (U)nconscious, (A)ntagonist\nJobs is shown at the time of spawn and may differ from the actual"
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),

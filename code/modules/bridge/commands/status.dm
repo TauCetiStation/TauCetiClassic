@@ -30,28 +30,7 @@
 	// todo: code, antags
 	
 	// admins
-	var/list/adm = get_admin_counts()
-	var/admins_online_flag = FALSE
-
-	message += "**Admins**: "
-
-	if(!length(adm["afk"]) && !length(adm["stealth"]) && !length(adm["noflags"]) && !length(adm["present"]))
-		message += "No admins online"
-	else
-		admins_online_flag = TRUE
-		if(length(adm["present"]))
-			message += "\[[get_english_list(adm["present"])]\]; "
-
-		if(length(adm["stealth"]))
-			message += "Stealthed\[[get_english_list(adm["stealth"])]\]; "
-
-		if(length(adm["afk"]))
-			message += "AFK\[[get_english_list(adm["afk"])]\]; "
-
-		if(length(adm["noflags"]))
-			message += "without +BAN\[[get_english_list(adm["noflags"])]\]; "
-
-	message += "\n"
+	message += "**Admins**: [get_admin_counts_formatted()]\n"
 
 	// mentors
 	message += "**Mentors**: [length(mentors)] mentors online\n"
@@ -63,7 +42,7 @@
 	if(!length(global.ahelp_tickets.active_tickets))
 		message += "**Tickets**: No active tickets"
 	else
-		message += "**Tickets**: [global.ahelp_tickets.active_tickets] active tickets" + (admins_online_flag ? "" : " and no admins online! :warning:")
+		message += "**Tickets**: [length(global.ahelp_tickets.active_tickets)] active tickets"
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),

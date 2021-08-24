@@ -1,12 +1,12 @@
 /datum/bridge_command/banslist
 	name = "banslist"
-	desc = "Show active player bans."
+	desc = "Show active player bans"
 	format = "@Bot banslist %ckey% %offset%"
 	example = "@Bot banslist taukitty"
 	position = 50
 
 /datum/bridge_command/banslist/execute(list/params)
-	return bridge_command_banlist_handler(params, TRUE)
+	return bridge_command_banslist_handler(params, TRUE)
 
 /datum/bridge_command/bansarchive
 	name = "bansarchive"
@@ -16,11 +16,11 @@
 	position = 51
 
 /datum/bridge_command/bansarchive/execute(list/params)
-	return bridge_command_banlist_handler(params)
+	return bridge_command_banslist_handler(params)
 
 /datum/bridge_command/ban
 	name = "ban"
-	desc = "Ban player."
+	desc = "Ban player"
 	format = "@Bot ban ckey %duration% %reason%"
 	example = "@Bot ban taukitty 1440 For no reason"
 	position = 52
@@ -64,6 +64,7 @@
 		ban_unban_log_save("[BRIDGE_FROM_SNIPPET_TEXT] has banned [ckey]. - Reason: [reason]")
 		log_admin("[BRIDGE_FROM_SNIPPET_TEXT] has banned [ckey].\nReason: [reason]")
 		message_admins("[BRIDGE_FROM_SNIPPET_HTML] has banned [ckey].\nReason: [reason]")
+
 	else
 		world.send2bridge(
 			type = list(BRIDGE_ADMINBAN),
@@ -83,7 +84,7 @@
 
 /datum/bridge_command/unban
 	name = "unban"
-	desc = "Unban player ban by ID. You can find ID with ``banlist``"
+	desc = "Unban player ban by ID. You can find ID with ``banslist``"
 	format = "@Bot unban ckey %banid%"
 	example = "@Bot unban taukitty 123"
 	position = 53
@@ -131,7 +132,7 @@
 	log_admin("[BRIDGE_FROM_SNIPPET_TEXT] has lifted [ckey] ban.")
 	message_admins("[BRIDGE_FROM_SNIPPET_HTML] has lifted [ckey] ban.")
 
-/proc/bridge_command_banlist_handler(list/params, active_only = FALSE)
+/proc/bridge_command_banslist_handler(list/params, active_only = FALSE)
 	var/ckey = ckey(params["bridge_arg_1"])
 	var/offset = text2num(params["bridge_arg_2"]) // offset
 
