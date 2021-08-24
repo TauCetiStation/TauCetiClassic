@@ -428,34 +428,14 @@
 							PDARec = P
 					//Sender isn't faking as someone who exists
 					if(isnull(PDARec))
-						linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
-						if (!customrecepient.message_silent)
-							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
-							if( customrecepient.loc && ishuman(customrecepient.loc) )
-								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
-							log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.cut_overlays()
-							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+						PDARec = new /obj/item/device/pda/silicon(src)
+						PDARec.owner = customsender
+						PDARec.ownjob = customjob
+						PDARec.send_message(usr, customrecepient, custommessage, linkedServer, TRUE, TRUE)
+						QDEL_NULL(PDARec)
 					//Sender is faking as someone who exists
 					else
-
-						linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
-						customrecepient.tnote.Add(list(list("sent" = 0, "owner" = "[PDARec.owner]", "job" = "[customjob]", "message" = "[custommessage]", "target" ="\ref[PDARec]")))
-
-						if(!customrecepient.conversations.Find("\ref[PDARec]"))
-							customrecepient.conversations.Add("\ref[PDARec]")
-
-						if (!customrecepient.message_silent)
-							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
-							if( customrecepient.loc && ishuman(customrecepient.loc) )
-								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
-							log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.cut_overlays()
-							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+						PDARec.send_message(usr, customrecepient, custommessage, linkedServer, FALSE, TRUE)
 					//Finally..
 					ResetMessage()
 

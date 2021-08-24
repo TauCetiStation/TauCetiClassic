@@ -1160,6 +1160,9 @@
 				useMS = MS
 				break
 
+	send_message(U, P, t, useMS)
+
+/obj/item/device/pda/proc/send_message(mob/living/U = usr, obj/item/device/pda/P = null, var/text, obj/machinery/message_server/useMS = null, fake = FALSE, system = FALSE)
 	var/datum/signal/signal = telecomms_process()
 
 	var/useTC = 0
@@ -1171,35 +1174,36 @@
 				useTC = 2
 				//Let's make this barely readable
 				if(signal.data["compression"] > 0)
-					t = Gibberish(t, signal.data["compression"] + 50)
+					text = Gibberish(text, signal.data["compression"] + 50)
 
 	if(useMS && useTC) // only send the message if it's stable
 		if(useTC != 2) // Does our recipient have a broadcaster on their level?
 			to_chat(U, "ERROR: Cannot reach recipient.")
 			return
 
-		useMS.send_pda_message("[P.owner]","[owner]","[t]")
-		tnote.Add(list(list("sent" = 1, "owner" = "[P.owner]", "job" = "[P.ownjob]", "message" = "[t]", "target" = "\ref[P]")))
-		P.tnote.Add(list(list("sent" = 0, "owner" = "[owner]", "job" = "[ownjob]", "message" = "[t]", "target" = "\ref[src]")))
+		useMS.send_pda_message("[P.owner]","[owner]","[text]")
+		if (!fake)
+			tnote.Add(list(list("sent" = 1, "owner" = "[P.owner]", "job" = "[P.ownjob]", "message" = "[text]", "target" = "\ref[P]")))
+			P.tnote.Add(list(list("sent" = 0, "owner" = "[owner]", "job" = "[ownjob]", "message" = "[text]", "target" = "\ref[src]")))
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 				if(isnewplayer(M))
 					continue
-				to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
+				to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[text]</span></span>")
 
 		if(!conversations.Find("\ref[P]"))
 			conversations.Add("\ref[P]")
 		if(!P.conversations.Find("\ref[src]"))
 			P.conversations.Add("\ref[src]")
 
-		if (prob(15)) //Give the AI a chance of intercepting the message
+		if (prob(15) && !system) //Give the AI a chance of intercepting the message
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
 			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
-					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
+					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[text]</span></i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
@@ -1211,19 +1215,19 @@
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
 			L = P.loc
-			t = highlight_traitor_codewords(t, L.mind)
+			text = highlight_traitor_codewords(text, L.mind)
 		//Maybe they are a pAI!
 		else
 			L = get(P, /mob/living/silicon)
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[text]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
-		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+		log_pda("[usr] (PDA: [src.name]) sent \"[text]\" to [P.name]")
 		P.cut_overlays()
 		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
