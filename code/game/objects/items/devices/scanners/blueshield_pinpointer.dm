@@ -25,10 +25,12 @@
 	name = "heads of staff pinpointer"
 	desc = "A larger version of the normal pinpointer. Includes quantuum connection to the database of the Station Heads of Staff to point to."
 
-	var/_target = null
+	var/list/_target = null
+	var/target_dna = null
 
 /obj/item/weapon/pinpointer/heads/process()
-	_target = get_humans_by_dna(target_dna)
+	if (target_dna)
+		_target = get_humans_by_dna(target_dna)
 
 	if (active && !_target.len)
 		icon_state = "pinonnull"
