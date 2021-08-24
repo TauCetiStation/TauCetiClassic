@@ -60,7 +60,7 @@
 	votable = TRUE
 
 /datum/modesbundle/mix/New()
-	for(var/type in subtypesof(/datum/game_mode/mix) + /datum/game_mode/casual_shift)
+	for(var/type in subtypesof(/datum/game_mode/mix))
 		var/datum/game_mode/M = type
 		if(initial(M.name))
 			possible_gamemodes += type
@@ -89,7 +89,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended)
 	..()
 
 /datum/modesbundle/run_anyway

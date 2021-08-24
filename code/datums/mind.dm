@@ -85,14 +85,11 @@
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	if(current?.my_religion)
-		current.my_religion.add_member(new_character, holy_role)
-
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 
-	if(old_character.my_religion)
+	if(old_character?.my_religion)
 		old_character.my_religion.add_member(current, holy_role)
 
 	for(var/role in antag_roles)
