@@ -165,7 +165,7 @@
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	tools = list()
-	flags |= NOBLOODY
+	flags = NOBLOODY
 	var/on = 0
 	var/hacked = 0
 
