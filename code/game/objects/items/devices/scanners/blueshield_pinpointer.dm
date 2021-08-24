@@ -31,13 +31,14 @@
 	var/target_dna = null
 
 /obj/item/weapon/pinpointer/heads/process()
+	if (active && !target_dna)
+		icon_state = "pinonnull"
+		return
+
 	if (target_dna)
 		_target = get_humans_by_dna(target_dna)
-	else
-		to_chat(usr, "No target selected yet")
-		return
 	
-	if (active && !!_target.len)
+	if (active && !_target.len)
 		icon_state = "pinonnull"
 		return
 	
