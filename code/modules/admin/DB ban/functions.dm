@@ -253,41 +253,39 @@
 	if(!isnum(id))
 		return
 
-	var/sql = "SELECT ckey FROM erro_ban WHERE id = [id]"
-
 	if(!establish_db_connection("erro_ban"))
 		return
 
-	var/ban_number = 0 //failsafe
-
-	var/pckey
-	var/DBQuery/query = dbcon.NewQuery(sql)
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, bantype, a_ckey, job, reason FROM erro_ban WHERE id = [id]")
 	query.Execute()
-	while(query.NextRow())
-		pckey = query.item[1]
-		ban_number++;
 
-	if(ban_number == 0)
+	if(!query.NextRow())
 		to_chat(usr, "<span class='warning'>Database update failed due to a ban id not being present in the database.</span>")
 		return
 
-	if(ban_number > 1)
-		to_chat(usr, "<span class='warning'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
-		return
+	var/pckey = query.item[1]
+	var/pbantype  = query.item[2]
+	var/padmin = query.item[3]
+	var/pjob = query.item[4]
+	var/preason = query.item[5]
 
 	if(!src.owner || !istype(src.owner, /client))
 		return
 
-	var/unban_ckey = ckey(src.owner:ckey)
-	var/unban_computerid = sanitize_sql(src.owner:computer_id)
-	var/unban_ip = sanitize_sql(src.owner:address)
+	var/unban_ckey = ckey(src.owner.ckey)
+	var/unban_computerid = sanitize_sql(src.owner.computer_id)
+	var/unban_ip = sanitize_sql(src.owner.address)
 
 	var/sql_update = "UPDATE erro_ban SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = '[unban_ip]' WHERE id = [id]"
+
+	ban_unban_log_save("[key_name(usr)] has lifted [pckey] ban.")
+	log_admin("[key_name(usr)] has lifted [pckey] ban.")
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.")
+
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
 		attachment_title = "UNBAN",
-		attachment_msg = "**[key_name(usr)]** has lifted **[pckey]**'s ban",
+		attachment_msg = "**[key_name(usr)]** has lifted **[pckey]**'s ban:\n[pbantype][pjob ? "([pjob])" : ""] by [padmin] with reason:\n*[preason]*",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
 
@@ -512,7 +510,7 @@
 //Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 	if(!establish_db_connection("erro_player"))
-		return
+		return 0
 
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 	var/bantype_pass = 0
@@ -532,9 +530,9 @@
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
 			bantype_pass = 1
-	if( !bantype_pass ) return
-	if( !istext(reason) ) return
-	if( !isnum(duration) ) return
+	if( !bantype_pass ) return 0
+	if( !istext(reason) ) return 0
+	if( !isnum(duration) ) return 0
 
 	var/ckey
 	var/computerid
@@ -558,7 +556,7 @@
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
 			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>")
-			return
+			return 0
 
 	var/a_ckey = "taukitty"
 	var/a_computerid = "0000000000"
@@ -594,3 +592,5 @@
 	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
 		// servers use data from DB
 		world.send_ban_announce(ckey, ip, computerid)
+
+	return 1
