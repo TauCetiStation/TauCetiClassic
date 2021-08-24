@@ -1162,7 +1162,7 @@
 
 	send_message(U, P, t, useMS)
 
-/obj/item/device/pda/proc/send_message(mob/living/U = usr, obj/item/device/pda/P = null, var/text, obj/machinery/message_server/useMS = null, fake = FALSE, system = FALSE)
+/obj/item/device/pda/proc/send_message(mob/living/U = usr, obj/item/device/pda/P = null, text, obj/machinery/message_server/useMS = null, fake = FALSE, system = FALSE)
 	var/datum/signal/signal = telecomms_process()
 
 	var/useTC = 0
