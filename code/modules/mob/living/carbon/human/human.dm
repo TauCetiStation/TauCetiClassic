@@ -438,7 +438,7 @@
 				D.visible_message("<span class='danger'>[usr] attempts to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(D, breakouttime, target = usr))
-						if(!H.wear_suit || D.buckled) return
+						if(!D.wear_suit || D.buckled) return
 						else
 							D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", \
 							"<span class='notice'>You successfully got out of \the [SJ].</span>")
