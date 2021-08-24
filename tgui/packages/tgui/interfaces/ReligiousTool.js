@@ -696,8 +696,14 @@ const RiteTab = (props, context) => {
                   </Button>
                   <Button
                     fontColor="white"
-                    tooltip={rite.favor_cost * 2 + " favor" + (rite.piety_cost > 0 ? " " + rite.piety_cost + " piety" : "")}
-                    disabled={!can_talismaning || !rite.can_talismaned || favor < rite.favor_cost * 2 || piety < rite.piety_cost * 2}
+                    tooltip={
+                      rite.favor_cost * 2 + " favor"
+                      + (rite.piety_cost > 0 ? " " + rite.piety_cost + " piety" : "")
+                    }
+                    disabled={
+                      !can_talismaning || !rite.can_talismaned
+                      || favor < rite.favor_cost * 2 || piety < rite.piety_cost * 2
+                    }
                     icon="scroll"
                     onClick={() => act('talismaning_rite', {
                       rite_name: rite.name,
@@ -709,7 +715,8 @@ const RiteTab = (props, context) => {
               <Box
                 color={favor < rite.favor_cost ? "red" : "yellow"}
                 mb={0.5}>
-                <Icon name="star" /> Costs: {rite.favor_cost} favor{rite.piety_cost > 0 ? " and " + rite.piety_cost + " piety" : ""}.
+                <Icon name="star" /> Costs: {rite.favor_cost} favor{rite.piety_cost > 0
+                  ? " and " + rite.piety_cost + " piety" : ""}.
               </Box>
               <BlockQuote>
                 <Box>
