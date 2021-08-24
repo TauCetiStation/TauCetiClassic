@@ -58,7 +58,7 @@
 		if (contents.len)
 			visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
 		for (var/obj/item/I in contents)
-			I.loc = src.loc
+			I.forceMove(loc)
 		icon_state = icon_empty
 	return ..()
 
