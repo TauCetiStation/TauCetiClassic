@@ -65,7 +65,7 @@
 /obj/item/ashtray/proc/die()
 	visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
 	for (var/obj/item/I in contents)
-		I.loc = src.loc
+		I.forceMove(loc)
 	icon_state = icon_broken
 
 /obj/item/ashtray/plastic
