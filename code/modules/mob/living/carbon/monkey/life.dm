@@ -550,7 +550,7 @@
 			sight |= SEE_MOBS
 			sight &= ~SEE_OBJS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		else
 			sight &= ~SEE_TURFS
 			sight &= ~SEE_MOBS

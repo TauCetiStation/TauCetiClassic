@@ -29,6 +29,7 @@
 
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	update_sight()
 	return TRUE
 
 // TOTAL SHITCODE
