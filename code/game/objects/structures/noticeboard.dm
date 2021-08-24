@@ -14,13 +14,13 @@
 /obj/item/noticeboard_frame/attackby(obj/item/I, mob/user, params)
 	if(iswrench(I))
 		user.SetNextMove(CLICK_CD_RAPID)
-		new material(loc, 2)
+		new material(loc, 10)
 		qdel(src)
 		return
 	return ..()
 
 /obj/item/noticeboard_frame/proc/try_build(mob/user, turf/on_wall)
-	if (get_dist(on_wall,user) > 1)
+	if(on_wall.Adjacent(user))
 		return
 
 	var/ndir = get_dir(on_wall,user)
