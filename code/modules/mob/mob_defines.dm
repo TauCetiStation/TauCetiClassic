@@ -5,6 +5,7 @@
 	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 

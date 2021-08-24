@@ -95,8 +95,6 @@
 			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
-/mob/living/proc/update_sight()
-	return
 
 /mob/living/update_action_buttons()
 	if(!hud_used) return
