@@ -1,3 +1,36 @@
+#define BLUESHIELD_MIND (1<<0)
+#define BLUESHIELD_TARGET (1<<1)
+#define BLUESHIELD_ALERT (1<<2)
+
+#define EXTRA_TC_INTERCEPT 8
+#define EXTRA_TC_BS_MIND 4
+#define EXTRA_TC_BS_TARGET 4
+#define EXTRA_TC_BS_ALERT 8
+
+/datum/game_mode/proc/alert_antagonist(mob/living/carbon/human/man, msg, extra_TC)
+	var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink(man)
+	if(suplink)
+		suplink.uses += extra_TC
+		for(var/role in man.mind.antag_roles)
+			var/datum/role/R = man.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(S)
+				S.total_TC += extra_TC
+		to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects [msg]. We have thus invested significant resources to increase your uplink's capacity.</span>")
+	else
+		to_chat(man, "<span class='warning'>They are on to you!</span>")
+
+/datum/game_mode/proc/check_blueshield(list/datum/objective/objectives, list/datum/mind/suspect_heads)
+	var/flags = 0
+	for (var/datum/objective/target/objective in objectives)
+		if (istype(objective, /datum/objective/target/protect))
+			continue
+		if (objective.target.assigned_role in command_positions)
+			flags |= BLUESHIELD_TARGET
+		if (objective.target in suspect_heads)
+			flags |= BLUESHIELD_ALERT
+	return flags
+
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
 	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
@@ -30,21 +63,8 @@
 				isrevhead(man) && prob(30) || isshadowling(man) && prob(20))
 
 			suspects += man
-
 			// If they're a traitor or likewise, give them extra TC in exchange.
-			var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink(man)
-			if(suplink)
-				var/extra = 8
-				suplink.uses += extra
-				for(var/role in man.mind.antag_roles)
-					var/datum/role/R = man.mind.antag_roles[role]
-					var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
-					if(S)
-						S.total_TC += extra
-				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
-			else
-				// Give them a warning!
-				to_chat(man, "<span class='warning'>They are on to you!</span>")
+			alert_antagonist(man, "you to be linked with us", EXTRA_TC_INTERCEPT)
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -68,6 +88,73 @@
 
 	announcement_ping.play()
 
+/datum/game_mode/proc/send_pda(obj/item/device/pda/pda)
+	if (!centcomm_blueshield_intercept)
+		var/list/datum/mind/alive_heads = get_living_heads()
+		
+		var/suspects = 0
+		var/list/datum/mind/suspect_heads = list()
+		switch (alive_heads.len)
+			if (1 to 3)
+				suspects = 1
+			if (4 to 6)
+				suspects = 2
+		for (var/i in 1 to suspects)
+			var/suspect_head = pick(alive_heads)
+			alive_heads -= suspect_head
+			suspect_heads += suspect_head
+		if (!suspect_heads.len)
+			centcomm_blueshield_intercept = "Наши надёжные источники (тм) обнаружили, что агенты Синдиката решили на данный момент залечь на дно."
+		else
+			centcomm_blueshield_intercept = "Наши надёжные источники (тм) обнаружили, что данные лица могут быть следующими целями агентов Синдиката:"
+			for (var/datum/mind/suspect_head in suspect_heads)
+				centcomm_blueshield_intercept += "<br>[suspect_head.current.name], занимающий(-ая) должность [suspect_head.assigned_role]"
+			
+			var/list/datum/role/all_roles = list()
+			for (var/datum/faction/faction in factions)
+				all_roles += faction.members
+			all_roles += orphaned_roles
+
+			for (var/datum/role/role in all_roles)
+				if (!role.antag)
+					all_roles -= role
+			
+			var/list/datum/mind/antag_flags = list()
+			for (var/datum/role/role in all_roles)
+				antag_flags[role.antag] = 0
+				if (role.antag.assigned_role in command_positions)
+					antag_flags[role.antag] |= BLUESHIELD_MIND
+				antag_flags[role.antag] |= check_blueshield(role.objectives.objectives, suspect_heads)
+			
+			for (var/datum/faction/faction in factions)
+				for (var/datum/role/role in faction.members)
+					if (role in all_roles)
+						antag_flags[role.antag] |= check_blueshield(faction.objective_holder.objectives, suspect_heads)
+
+			for (var/datum/mind/antag in antag_flags)
+				var/msg = ""
+				var/extra_TC = 0
+
+				if (antag_flags[antag] & BLUESHIELD_MIND)
+					extra_TC += EXTRA_TC_BS_MIND
+					msg = "that new corporate dog will chase you"
+				if (antag_flags[antag] & BLUESHIELD_TARGET)
+					extra_TC += EXTRA_TC_BS_TARGET
+					msg = "that you are trying to cut one of their heads"
+				if (antag_flags[antag] & BLUESHIELD_ALERT)
+					extra_TC += EXTRA_TC_BS_ALERT
+					msg = "that especially that head will be attacked today"
+
+				alert_antagonist(antag.current, msg, extra_TC)
+	
+	if (message_servers)
+		if (message_servers.len)
+			var/obj/machinery/message_server/MS = message_servers[1]
+			var/obj/item/device/pda/fakePDA = new /obj/item/device/pda/silicon(MS)
+			fakePDA.owner = "CentComm Security Department"
+			fakePDA.ownjob = "Dispatch"
+			fakePDA.send_message(null, pda, centcomm_blueshield_intercept, MS, TRUE, TRUE)
+			QDEL_NULL(fakePDA)
 
 // refactor to /datum/stat_collector from vg
 // https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/datums/statistics/stat_helpers.dm
@@ -215,3 +302,12 @@
 	if(dudes.len == 0)
 		return null
 	return pick(dudes)
+
+#undef EXTRA_TC_BS_ALERT
+#undef EXTRA_TC_BS_TARGET
+#undef EXTRA_TC_BS_MIND
+#undef EXTRA_TC_INTERCEPT
+
+#undef BLUESHIELD_ALERT
+#undef BLUESHIELD_TARGET
+#undef BLUESHIELD_MIND

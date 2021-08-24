@@ -214,9 +214,13 @@
 	ttone = "holy"
 
 /obj/item/device/pda/blueshield
-	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-blueshield"
 	ttone = "..."
+
+/obj/item/device/pda/blueshield/atom_init()
+	. = ..()
+	if (ishuman(loc) && get_turf(src)) // We will be spawned with mob in most cases with this
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode/proc/send_pda, src), 10)
 
 /obj/item/device/pda/lawyer
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
@@ -1178,7 +1182,8 @@
 
 	if(useMS && useTC) // only send the message if it's stable
 		if(useTC != 2) // Does our recipient have a broadcaster on their level?
-			to_chat(U, "ERROR: Cannot reach recipient.")
+			if (U)
+				to_chat(U, "ERROR: Cannot reach recipient.")
 			return
 
 		useMS.send_pda_message("[P.owner]","[owner]","[text]")
@@ -1205,7 +1210,8 @@
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[text]</span></i>")
 
-		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
+		if (U && !system)
+			nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
@@ -1225,14 +1231,16 @@
 			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[text]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
-		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
+		if (U && !system)
+			nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
-		log_pda("[usr] (PDA: [src.name]) sent \"[text]\" to [P.name]")
+		log_pda("[U] (PDA: [src.name]) sent \"[text]\" to [P.name]")
 		P.cut_overlays()
 		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else
-		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
+		if (U && !system)
+			to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
 /obj/item/device/pda/verb/verb_reset_pda()
 	set category = "Object"

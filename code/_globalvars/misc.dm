@@ -73,6 +73,9 @@ var/global/list/achievements = list()
 //line format: type, title, time, content
 var/global/list/centcomm_communications = list()
 
+// String to send to new blueshield agents
+var/global/centcomm_blueshield_intercept = null
+
 //line format: mode, html
 var/global/list/antagonists_completion = list()
 

@@ -426,16 +426,17 @@
 						if (!P.owner || P.toff || P.hidden)	continue
 						if(P.owner == customsender)
 							PDARec = P
+					var/obj/machinery/message_server/activeMS = linkedServer.active ? linkedServer : null
 					//Sender isn't faking as someone who exists
 					if(isnull(PDARec))
 						PDARec = new /obj/item/device/pda/silicon(src)
 						PDARec.owner = customsender
 						PDARec.ownjob = customjob
-						PDARec.send_message(usr, customrecepient, custommessage, linkedServer, TRUE, TRUE)
+						PDARec.send_message(usr, customrecepient, custommessage, activeMS, TRUE, TRUE)
 						QDEL_NULL(PDARec)
 					//Sender is faking as someone who exists
 					else
-						PDARec.send_message(usr, customrecepient, custommessage, linkedServer, FALSE, TRUE)
+						PDARec.send_message(usr, customrecepient, custommessage, activeMS, FALSE, TRUE)
 					//Finally..
 					ResetMessage()
 
