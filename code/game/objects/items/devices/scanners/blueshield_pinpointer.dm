@@ -9,14 +9,16 @@
 	var/list/dnas = list()
 	for (var/datum/data/record/R in data_core.medical)
 		if (R.fields["id"] in heads) // There will be fun thing, if ID's are overlapping
-			dnas[R.fields["name"]] = R.fields["b_dna"]
+			dnas[R.fields["name"]] = R.fields["b_dna"] // If Head is IPC there will be ""
 	return dnas
 
 /proc/get_humans_by_dna(dna)
 	var/list/result = list()
 	for(var/mob/living/carbon/human/player in human_list)
-		if(!player.dna)
+		if (!player.dna)
 			continue
+		if (!player.dna.unique_enzymes)
+			continue // IPC will produce "?" on pinpointer, because there is no DNA
 		if (player.dna.unique_enzymes == dna)
 			result += player
 	return result
@@ -65,6 +67,6 @@
 	if (!target_head)
 		return
 	target_dna = heads_dna[target_head]
-	to_chat(usr, "You set the pinpointer to locate [target_head] ([target_dna])")
+	to_chat(usr, "You set the pinpointer to locate [target_head]")
 
 	return attack_self(usr)
