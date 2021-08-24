@@ -45,7 +45,7 @@
 	var/obj/effect/extraction_holder/holder_obj = new(AM.loc)
 	holder_obj.appearance = AM.appearance
 	AM.forceMove(holder_obj)
-	balloon = image(icon,"extraction_balloon")
+	balloon = image('icons/obj/fulton.dmi', "extraction_balloon")
 	balloon.pixel_y = 10
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon)
@@ -124,20 +124,35 @@
 	var/atom/movable/stored_obj
 
 // used for accept telecrystal for costly items
-/obj/item/weapon/extraction_pack/syndicate
-	name = "syndicate fulton"
+/obj/item/weapon/extraction_pack/dealer
+	name = "station bounced radio"
+	desc = null
+
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
+
+	w_class = SIZE_TINY
+
 	del_target = TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/can_use_to(atom/movable/target)
+/obj/item/weapon/extraction_pack/dealer/atom_init(mapload, ...)
+	. = ..()
+	hidden_uplink = new(src)
+	hidden_uplink.uplink_type = "dealer"
+
+/obj/item/weapon/extraction_pack/dealer/attack_self(mob/user)
+	if(hidden_uplink)
+		hidden_uplink.trigger(user)
+
+/obj/item/weapon/extraction_pack/dealer/can_use_to(atom/movable/target)
 	if(!..())
 		return FALSE
 	if(ismob(target) || istype(target, /obj/structure/closet))
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/try_use_fulton(atom/movable/target, mob/user)
+/obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
-		to_chat(user, "<span class='warning'>Вы не знаете как это использовать.</span>")
 		return FALSE
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
 	if(!..())
@@ -145,7 +160,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/extraction_pack/syndicate/proc/give_telecrystal(atom/movable/target_type, mob/user)
+/obj/item/weapon/extraction_pack/dealer/proc/give_telecrystal(atom/movable/target_type, mob/user)
 	sleep(10 SECONDS) // signals are called async
 	var/datum/role/traitor/dealer/is_traitor = isgundealer(user)
 	if(!is_traitor)
