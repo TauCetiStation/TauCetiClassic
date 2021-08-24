@@ -2,25 +2,23 @@
 
 /proc/get_heads_dna()
 	var/list/heads = list()
-	for (var/datum/data/record/R in sortRecord(data_core.general))
+	for (var/datum/data/record/R in data_core.general)
 		if (R.fields["rank"] in command_positions)
 			heads[R.fields["id"]] = R.fields["name"]
 	
 	var/list/dnas = list()
-	for (var/datum/data/record/R in sortRecord(data_core.medical))
+	for (var/datum/data/record/R in data_core.medical)
 		if (R.fields["id"] in heads) // There will be fun thing, if ID's are overlapping
 			dnas[R.fields["name"]] = R.fields["b_dna"]
 	return dnas
 
-/proc/get_humans_by_dna(var/dna)
+/proc/get_humans_by_dna(dna)
 	var/list/result = list()
 	for(var/mob/living/carbon/human/player in human_list)
 		if(!player.dna)
 			continue
 		if (player.dna.unique_enzymes == dna)
 			result += player
-	if (result.len == 1)
-		result = result[1]
 	return result
 
 /obj/item/weapon/pinpointer/heads
@@ -32,14 +30,14 @@
 /obj/item/weapon/pinpointer/heads/process()
 	_target = get_humans_by_dna(target_dna)
 
-	if (active && !_target)
+	if (active && !_target.len)
 		icon_state = "pinonnull"
 		return
 	
-	if (islist(_target))
+	if (_target.len > 1)
 		target = get_closest_atom(/mob/living/carbon/human, _target, src)
 	else
-		target = _target
+		target = pick(_target)
 
 	. = ..()
 
