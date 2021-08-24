@@ -31,8 +31,11 @@
 /obj/item/weapon/pinpointer/heads/process()
 	if (target_dna)
 		_target = get_humans_by_dna(target_dna)
-
-	if (active && !_target.len)
+	else
+		to_chat(usr, "No target selected yet")
+		return
+	
+	if (active && !!_target.len)
 		icon_state = "pinonnull"
 		return
 	
@@ -61,7 +64,7 @@
 
 	if (!target_head)
 		return
-	var/target_dna = heads_dna[target_head]
+	target_dna = heads_dna[target_head]
 	to_chat(usr, "You set the pinpointer to locate [target_head] ([target_dna])")
 
 	return attack_self(usr)
