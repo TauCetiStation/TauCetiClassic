@@ -54,6 +54,16 @@
 	flags = BLOCKHAIR
 	siemens_coefficient = 0.9
 
+//Blueshield
+/obj/item/clothing/head/blueshieldcap
+	name = "blueshield officer peaked cap"
+	desc = "The peaked cap of the Blueshield officer with the blue kite shield with an engraved sword of the NanoTrasen security forces."
+	icon_state = "blueshieldofficercap"
+	item_state = "blueshieldofficercap"
+	w_class = SIZE_TINY
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
+
 //HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"

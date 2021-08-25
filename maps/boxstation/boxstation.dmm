@@ -60954,6 +60954,7 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "cqh" = (
+/obj/structure/closet/wardrobe/blueshield,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -73659,6 +73660,8 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
+/obj/item/weapon/implantcase/death_alarm,
+/obj/item/weapon/implanter,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
