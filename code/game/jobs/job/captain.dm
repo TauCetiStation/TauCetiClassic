@@ -66,7 +66,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "The Central Command"
+	supervisors = "The Central Command and NanoTrasen Representatives"
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/blu
 	access = list(access_blueshield, access_heads, access_maint_tunnels,
