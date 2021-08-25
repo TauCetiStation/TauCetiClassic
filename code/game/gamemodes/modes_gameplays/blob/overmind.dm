@@ -16,6 +16,7 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
+	var/image/ghostimage = null
 
 	var/datum/faction/blob_conglomerate/b_congl
 
@@ -23,6 +24,9 @@
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
+	updateallghostimages()
 	. = ..()
 
 /mob/camera/blob/Login()
@@ -104,3 +108,11 @@
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
+
+/mob/camera/blob/Destroy()
+	if(ghostimage)
+		ghost_sightless_images -= ghostimage
+		qdel(ghostimage)
+		ghostimage = null
+		updateallghostimages()
+	return ..()

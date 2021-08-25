@@ -28,14 +28,12 @@
 
 /mob/camera/Eye/atom_init()
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
 	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
 	. = ..()
 
 /mob/camera/Eye/Destroy()
 	if (ghostimage)
-		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null
