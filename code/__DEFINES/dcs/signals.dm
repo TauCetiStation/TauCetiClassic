@@ -41,6 +41,8 @@
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
 #define COMSIG_REL_ADD_MEMBER "rel_add_member"
+/// from base of religion/remove_member(): (/mob)
+#define COMSIG_REL_REMOVE_MEMBER "rel_remove_member"
 
 // /datum/role signals
 /// from base of role/GetScoreboard(): ()
