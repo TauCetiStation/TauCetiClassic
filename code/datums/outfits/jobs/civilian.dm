@@ -108,7 +108,6 @@
 	r_pocket = /obj/item/device/flash
 	r_pocket_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/weapon/pinpointer/heads
-	l_pocket_back = /obj/item/weapon/pen/edagger
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty

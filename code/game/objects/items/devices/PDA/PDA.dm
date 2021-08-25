@@ -230,6 +230,7 @@
 /obj/item/device/pda/blueshield
 	icon_state = "pda-blueshield"
 	ttone = "..."
+	default_pen = /obj/item/weapon/pen/edagger/legitimate
 
 /obj/item/device/pda/blueshield/atom_init()
 	. = ..()
