@@ -1051,7 +1051,7 @@
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
 
-		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, frequency = null, -3)
+		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
 		log_message("[mob_container] moved out.")
 		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
 		occupant.reset_view()

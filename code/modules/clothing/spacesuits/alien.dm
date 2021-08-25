@@ -322,7 +322,7 @@
 			return
 		last_try = world.time + 4 SECONDS
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, frequency = null, -5)
+		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(do_after(wearer, 20, target = wearer))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return

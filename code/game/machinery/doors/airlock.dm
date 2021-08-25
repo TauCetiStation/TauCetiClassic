@@ -196,14 +196,14 @@ var/list/airlock_overlays = list()
 	if(locked)
 		return
 	locked = 1
-	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 40, FALSE, frequency = null, -4)
+	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
-	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 40, FALSE, frequency = null, -4)
+	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
 
 // shock user with probability prb (if all connections & power are working)
@@ -413,7 +413,7 @@ var/list/airlock_overlays = list()
 			if(deny_animation_check())
 				denying = TRUE
 				update_icon(AIRLOCK_DENY)
-				playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 40, FALSE, frequency = null, 3)
+				playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, 3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
 				icon_state = "closed"

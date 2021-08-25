@@ -201,7 +201,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/over_here3.ogg',
 			                          'sound/hallucinations/turn_around1.ogg',
 			                          'sound/hallucinations/turn_around2.ogg')
-			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, frequency = null, -3)
+			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
 			src.loc = null
 	else

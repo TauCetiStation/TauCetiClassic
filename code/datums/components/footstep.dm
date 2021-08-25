@@ -84,7 +84,7 @@
 			turf_footstep = T.footstep
 	if(!turf_footstep)
 		return
-	playsound(T, pick(footstep_sounds[turf_footstep][1]), VOL_EFFECTS_MASTER, footstep_sounds[turf_footstep][2] * volume, TRUE, frequency = null, footstep_sounds[turf_footstep][3] + e_range)
+	playsound(T, pick(footstep_sounds[turf_footstep][1]), VOL_EFFECTS_MASTER, footstep_sounds[turf_footstep][2] * volume, TRUE, null, footstep_sounds[turf_footstep][3] + e_range)
 
 /datum/component/footstep/proc/play_humanstep()
 	var/turf/simulated/T = prepare_step()
@@ -101,7 +101,7 @@
 		return
 
 	if(H.shoes) //are we wearing shoes
-		playsound(T, pick(global.footstep[T.footstep][1]), VOL_EFFECTS_MASTER, global.footstep[T.footstep][2] * volume, TRUE, frequency = null, global.footstep[T.footstep][3] + e_range)
+		playsound(T, pick(global.footstep[T.footstep][1]), VOL_EFFECTS_MASTER, global.footstep[T.footstep][2] * volume, TRUE, null, global.footstep[T.footstep][3] + e_range)
 		H.shoes.play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	else
-		playsound(T, pick(global.barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, global.barefootstep[T.barefootstep][2] * volume, TRUE, frequency = null, global.barefootstep[T.barefootstep][3] + e_range)
+		playsound(T, pick(global.barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, global.barefootstep[T.barefootstep][2] * volume, TRUE, null, global.barefootstep[T.barefootstep][3] + e_range)

@@ -391,5 +391,5 @@
 	flick("sound_button_up",src)
 	icon_state = "sound_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, frequency = null, -4)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
 	return

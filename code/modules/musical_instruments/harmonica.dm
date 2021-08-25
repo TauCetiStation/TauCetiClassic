@@ -40,7 +40,7 @@
 		"plays a upbeat"
 		)
 	last_played = world.time + cooldown
-	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, frequency = null, falloff = 5, channel = channel)
+	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, null, falloff = 5, channel = channel)
 	user.visible_message("<span class='notice'>[user] [pick(message)] tune with his harmonica!</span>")
 
 /obj/item/device/harmonica/dropped(mob/user)

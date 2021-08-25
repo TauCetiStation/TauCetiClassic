@@ -235,7 +235,7 @@
 	if(href_list["select_equip"])
 		if(usr != src.occupant)
 			return
-		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, frequency = null, -3)
+		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
 			selected = equip

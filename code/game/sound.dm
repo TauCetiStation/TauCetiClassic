@@ -52,14 +52,12 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
-	if (frequency)
+	
+	if (frequency != null)
 		S.frequency = frequency
-		to_chat(world, "frequency = [frequency] | [soundin]")
 
-	if(vary)
-		S.frequency = vary_frequency(frequency)
-		to_chat(world, "vary frequency = [frequency] | [soundin]")
-	to_chat(world, "S.frequency = [S.frequency] | [soundin]")
+	if(vary == TRUE)
+		S.frequency = rand(8, 12)/10
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
@@ -248,9 +246,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		return
 
 	set_sound_volume(slider, vol_raw)
-
-/proc/vary_frequency(frequency)
-	return rand(frequency/1.5, frequency*1.5) //Frequency stuff only works with 45kbps oggs.
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"

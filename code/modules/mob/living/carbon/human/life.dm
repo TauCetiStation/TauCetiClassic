@@ -433,7 +433,7 @@
 					breathsound = pick(SOUNDIN_RIGBREATH)
 				if(alpha < 50)
 					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
-				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, frequency = null, -6)
+				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
