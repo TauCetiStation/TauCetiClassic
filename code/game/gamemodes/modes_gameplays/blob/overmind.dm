@@ -25,7 +25,7 @@
 	name = new_name
 	real_name = new_name
 	ghostimage = image(icon, src, icon_state)
-	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
+	ghost_sightless_images |= ghostimage //so ghosts can see the blob eye when they disable ghost sight
 	updateallghostimages()
 	. = ..()
 
@@ -112,7 +112,6 @@
 /mob/camera/blob/Destroy()
 	if(ghostimage)
 		ghost_sightless_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
+		QDEL_NULL(ghostimage)
 		updateallghostimages()
 	return ..()
