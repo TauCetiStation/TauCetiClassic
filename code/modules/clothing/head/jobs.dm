@@ -58,8 +58,8 @@
 /obj/item/clothing/head/blueshieldcap
 	name = "blueshield officer peaked cap"
 	desc = "The peaked cap of the Blueshield officer with the blue kite shield with an engraved sword of the NanoTrasen security forces."
-	icon_state = "blueshieldofficercap"
-	item_state = "blueshieldofficercap"
+	icon_state = "blueshieldcap"
+	item_state = "blueshieldcap"
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0

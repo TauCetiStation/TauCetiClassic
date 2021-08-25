@@ -595,4 +595,9 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/structure/sign/poster/official/blueshield_enlist
+	name = "\improper Blueshield Initiative"
+	desc = "A poster about Blueshield Initiative. It's says \"Enlist now!\""
+	icon_state = "poster42_legit"
+
 #undef PLACE_SPEED

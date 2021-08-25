@@ -25,10 +25,10 @@
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 
-/obj/item/clothing/head/beret/blueshieldofficer
+/obj/item/clothing/head/beret/blueshield
 	name = "blueshield officers beret"
 	desc = "A black beret adorned with the blue kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
-	icon_state = "blueshieldofficerberet"
+	icon_state = "blueshieldberet"
 
 /obj/item/clothing/head/beret/centcomofficer
 	name = "officers beret"

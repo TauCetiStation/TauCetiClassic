@@ -65,6 +65,13 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/suit/armor/vest/blueshield
+	name = "Blueshield Officer's jacket"
+	desc = "An armoured jacket with with the blue kite shield with an engraved sword of the NanoTrasen security forces."
+	icon_state = "blueshield_jacket"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /obj/item/clothing/suit/storage/flak/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."

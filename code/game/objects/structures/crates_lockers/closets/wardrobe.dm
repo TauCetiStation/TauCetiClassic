@@ -41,16 +41,11 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/wardrobe/blueshield/PopulateContents()
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/under/rank/blueshield(src)
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/shoes/boots(src)
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/head/beret/blueshieldofficer(src)
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/head/blueshieldcap(src)
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/under/rank/blueshield(src)
+	new /obj/item/clothing/shoes/boots(src)
+	new /obj/item/clothing/head/beret/blueshield(src)
+	new /obj/item/clothing/head/blueshieldcap(src)
+	new /obj/item/clothing/gloves/black(src)
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"

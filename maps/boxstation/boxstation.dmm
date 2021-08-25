@@ -60955,6 +60955,9 @@
 /area/station/rnd/robotics)
 "cqh" = (
 /obj/structure/closet/wardrobe/blueshield,
+/obj/structure/sign/poster/official/blueshield_enlist{
+	pixel_x = -29
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -78342,7 +78345,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/safe/floor/blueshield,
+/obj/structure/safe/floor/blueshield{
+	number_of_tumblers = 4
+	},
 /obj/item/weapon/paper/blueshieldsafe_wip,
 /turf/simulated/floor{
 	icon_state = "dark"
