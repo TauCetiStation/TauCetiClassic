@@ -117,6 +117,21 @@
 		for(var/datum/quirk/Q in H.roundstart_quirks)
 			if(Q.disability)
 				disabilities += Q.name
+		update_label()
+
+/// Updates the name based on the card's vars and state.
+/obj/item/weapon/card/id/proc/update_label()
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
+		registered_name = ishuman(user) ? user.real_name : user.name
+
+	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/assignment_string
+
+	if(assignment)
+		assignment_string = " ([assignment])"
+
+	name = "[name_string][assignment_string]"
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -175,12 +190,24 @@
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
+	access = list(
+		access_security, access_sec_doors, access_brig, access_forensics_lockers,
+		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
+		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
+		access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
+		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
+		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
+	)
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
+
+/obj/item/weapon/card/id/gold/atom_init()
+	. = ..()
+	access = get_all_accesses()
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
@@ -199,90 +226,120 @@
 	desc = "A card issued to security staff."
 	icon_state = "sec"
 	item_state = "sec_id"
+	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
 
 /obj/item/weapon/card/id/int
 	name = "identification card"
 	desc = "A card issued to internal affairs agent."
 	icon_state = "int"
 	item_state = "int_id"
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
 	desc = "A card which represents honor and protection."
 	icon_state = "secGold"
 	item_state = "secGold_id"
+	access = list(
+		access_security, access_sec_doors, access_brig, access_armory,
+		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
+		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
+		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
+	)
 
 /obj/item/weapon/card/id/eng
 	name = "identification card"
 	desc = "A card issued to engineering staff."
 	icon_state = "eng"
 	item_state = "eng_id"
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 
 /obj/item/weapon/card/id/engGold
 	name = "identification card"
 	desc = "A card which represents creativity and ingenuity."
 	icon_state = "engGold"
 	item_state = "engGold_id"
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 
 /obj/item/weapon/card/id/med
 	name = "identification card"
 	desc = "A card issued to medical staff."
 	icon_state = "med"
 	item_state = "med_id"
+	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
 	desc = "A card which represents care and compassion."
 	icon_state = "medGold"
 	item_state = "medGold_id"
+	access = list(
+		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
+		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels,
+		access_medbay_storage
+	)
 
 /obj/item/weapon/card/id/sci
 	name = "identification card"
 	desc = "A card issued to science staff."
 	icon_state = "sci"
 	item_state = "sci_id"
+	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 
 /obj/item/weapon/card/id/sciGold
 	name = "identification card"
 	desc = "A card which represents knowledge and reasoning."
 	icon_state = "sciGold"
 	item_state = "sciGold_id"
+	access = list(
+		access_rd, access_heads, access_tox, access_genetics, access_morgue,
+		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
+		access_research, access_robotics, access_xenobiology, access_ai_upload,
+		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
+	)
 
 /obj/item/weapon/card/id/clown
 	name = "identification card"
 	desc = "A card which represents laugh and robust."
 	icon_state = "clown"
 	item_state = "clown_id"
+	access = list(access_clown, access_theatre)
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents laugh and robust."
 	icon_state = "clownGold"
 	item_state = "clownGold_id"
+	access = list(access_clown, access_theatre)
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
 	desc = "A card which represents tears and silence."
 	icon_state = "mime"
 	item_state = "mime_id"
+	access = list(access_mime, access_theatre)
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents tears and silence."
 	icon_state = "mimeGold"
 	item_state = "mimeGold_id"
+	access = list(access_mime, access_theatre)
 
 /obj/item/weapon/card/id/cargo
 	name = "identification card"
 	desc = "A card issued to cargo staff."
 	icon_state = "cargo"
 	item_state = "cargo_id"
+	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
 	desc = "A card which represents service and planning."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"

@@ -342,6 +342,32 @@
 	.["survival_box"] = survival_box
 	.["implants"] = implants
 
+/// Copy most vars from another outfit to this one
+/datum/outfit/proc/copy_from(datum/outfit/target)
+	name = target.name
+	uniform = target.uniform
+	suit = target.suit
+	back = target.back
+	belt = target.belt
+	gloves = target.gloves
+	shoes = target.shoes
+	head = target.head
+	mask = target.mask
+	neck = target.neck
+	l_ear = target.l_ear
+	r_ear = target.r_ear
+	glasses = target.glasses
+	id = target.id
+	l_pocket = target.l_pocket
+	r_pocket = target.r_pocket
+	suit_store = target.suit_store
+	r_hand = target.r_hand
+	l_hand = target.l_hand
+	internals_slot = target.internals_slot
+	backpack_contents = target.backpack_contents
+	survival_box = target.survival_box
+	implants = target.implants
+
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
 	var/stored_data = get_json_data()

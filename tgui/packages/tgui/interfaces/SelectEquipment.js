@@ -68,7 +68,7 @@ export const SelectEquipment = (props, context) => {
       height={415}>
       <Window.Content>
         <Flex direction="row" height="100%" >
-          <Flex.Item mr={1}>
+          <Flex.Item mr={1} width="250px">
             <Flex direction="column" height="100%">
               <Flex.Item>
                 <Input

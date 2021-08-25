@@ -884,6 +884,8 @@ var/global/list/humanoid_icon_cache = list()
 			S.before_job_equip(body, J, TRUE)
 		if(J)
 			J.equip(body, TRUE)
+		else if (outfit_override)
+			body.equipOutfit(outfit_override, visualsOnly = TRUE)
 		if(S)
 			S.after_job_equip(body, J, TRUE)
 

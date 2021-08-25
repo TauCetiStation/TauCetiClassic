@@ -1,5 +1,3 @@
-var/global/custom_outfits = list()
-
 /client/proc/cmd_select_equipment(mob/living/carbon/human/target in global.mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
@@ -68,12 +66,7 @@ var/global/custom_outfits = list()
 
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target_mob]"
-	dummy = generate_or_wait_for_human_dummy(dummy_key)
-	/*var/mob/living/carbon/carbon_target = target_mob
-	if(istype(carbon_target))
-		carbon_target.dna.transfer_identity(dummy)
-		dummy.updateappearance()*/
-
+	generate_or_wait_for_human_dummy(dummy_key, target_mob.get_species())
 	unset_busy_human_dummy(dummy_key)
 	return
 
@@ -120,11 +113,11 @@ var/global/custom_outfits = list()
 	if(!dummy)
 		init_dummy()
 
-	var/datum/preferences/prefs = target_mob?.client?.prefs
-	var/icon/dummysprite = get_flat_human_icon(null, prefs=prefs, dummy_key = dummy_key)
+	var/icon/dummysprite = get_flat_human_icon(null, dummy_key = dummy_key, outfit_override = selected_outfit)
 	data["icon64"] = icon2base64(dummysprite)
 	data["name"] = target_mob
 
+	var/datum/preferences/prefs = user?.client?.prefs
 	data["favorites"] = list()
 	if(prefs)
 		data["favorites"] = prefs.favorite_outfits
@@ -189,7 +182,7 @@ var/global/custom_outfits = list()
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			//user.outfit_manager()
+			user.outfit_manager()
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

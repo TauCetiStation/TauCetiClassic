@@ -40,3 +40,9 @@
 		busy_right_hand = FALSE
 	if(!busy_left_hand && !busy_right_hand)
 		busy_with_action = FALSE
+
+///copies over clothing preferences like underwear to another human
+/mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)
+	destination.underwear = underwear
+	destination.undershirt = undershirt
+	destination.socks = socks
