@@ -29,7 +29,7 @@
 		return /datum/role/cultist/leader
 	return ..()
 
-/datum/faction/cult/HandleRecruitedMind(datum/mind/M, override)
+/datum/faction/cult/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
 	if(.)
 		M.current.Paralyse(5)
@@ -126,18 +126,6 @@
 		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 			active_leads++
 	return active_leads
-
-/datum/faction/cult/proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))
-		return FALSE
-	if(ishuman(mind.current))
-		if((mind.assigned_role in list("Captain", "Chaplain")))
-			return FALSE
-		if(mind.current.get_species() == GOLEM)
-			return FALSE
-	if(mind.current.ismindshielded())
-		return FALSE
-	return TRUE
 
 /datum/faction/cult/proc/get_cultists_out()
 	var/acolytes_out = 0

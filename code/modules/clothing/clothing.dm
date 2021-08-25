@@ -284,6 +284,7 @@ var/global/list/icon_state_allowed_cache = list()
 	// Default huds for fix
 	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
+	var/lighting_alpha = null
 
 /obj/item/clothing/glasses/atom_init()
 	. = ..()
