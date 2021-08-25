@@ -1,12 +1,3 @@
-#define BLUESHIELD_MIND (1<<0)
-#define BLUESHIELD_TARGET (1<<1)
-#define BLUESHIELD_ALERT (1<<2)
-
-#define EXTRA_TC_INTERCEPT 8
-#define EXTRA_TC_BS_MIND 4
-#define EXTRA_TC_BS_TARGET 4
-#define EXTRA_TC_BS_ALERT 8
-
 /datum/game_mode/proc/alert_antagonist(mob/living/carbon/human/man, msg, extra_TC)
 	var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink(man)
 	if(suplink)
@@ -88,7 +79,7 @@
 
 	announcement_ping.play()
 
-/datum/game_mode/proc/send_pda(obj/item/device/pda/pda)
+/datum/game_mode/proc/send_pda(mob/living/carbon/human/H)
 	if (!centcomm_blueshield_intercept)
 		var/list/datum/mind/alive_heads = get_living_heads()
 		
@@ -147,14 +138,23 @@
 
 				alert_antagonist(antag.current, msg, extra_TC)
 	
-	if (message_servers)
-		if (message_servers.len)
-			var/obj/machinery/message_server/MS = message_servers[1]
-			var/obj/item/device/pda/fakePDA = new /obj/item/device/pda/silicon(MS)
-			fakePDA.owner = "CentComm Security Department"
-			fakePDA.ownjob = "Dispatch"
-			fakePDA.send_message(null, pda, centcomm_blueshield_intercept, MS, TRUE, TRUE)
-			QDEL_NULL(fakePDA)
+	var/obj/item/device/pda/blueshield_PDA = null
+	for (var/obj/item/device/pda/P in PDAs)
+		if (!P.owner || P.toff || P.hidden)
+			continue
+		if(P.owner == H.real_name)
+			blueshield_PDA = P
+	if (!blueshield_PDA)
+		return
+	if (!message_servers)
+		return
+	if (message_servers.len)
+		var/obj/machinery/message_server/MS = message_servers[1]
+		var/obj/item/device/pda/fakePDA = new /obj/item/device/pda/silicon(MS)
+		fakePDA.owner = "CentComm Security Department"
+		fakePDA.ownjob = "Dispatch"
+		fakePDA.send_message(null, blueshield_PDA, centcomm_blueshield_intercept, MS, TRUE, TRUE)
+		QDEL_NULL(fakePDA)
 
 // refactor to /datum/stat_collector from vg
 // https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/datums/statistics/stat_helpers.dm
@@ -302,12 +302,3 @@
 	if(dudes.len == 0)
 		return null
 	return pick(dudes)
-
-#undef EXTRA_TC_BS_ALERT
-#undef EXTRA_TC_BS_TARGET
-#undef EXTRA_TC_BS_MIND
-#undef EXTRA_TC_INTERCEPT
-
-#undef BLUESHIELD_ALERT
-#undef BLUESHIELD_TARGET
-#undef BLUESHIELD_MIND

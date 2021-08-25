@@ -232,11 +232,6 @@
 	ttone = "..."
 	default_pen = /obj/item/weapon/pen/edagger/legitimate
 
-/obj/item/device/pda/blueshield/atom_init()
-	. = ..()
-	if (ishuman(loc) && get_turf(src)) // We will be spawned with mob in most cases with this
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode/proc/send_pda, src), 10)
-
 /obj/item/device/pda/lawyer
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-lawyer"
