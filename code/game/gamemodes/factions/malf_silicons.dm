@@ -52,9 +52,6 @@
 
 	..()
 
-	if(malf_mode_declared)
-		return
-
 /datum/faction/malf_silicons/proc/capture_the_station()
 	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")
 	to_chat(world, "<B>It has fully taken control of all of [station_name()]'s systems.</B>")
