@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(ticker)
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
+	var/ert_call_in_progress = FALSE //when true players can join ERT
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
