@@ -13,7 +13,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 =======================================================================================================================================*/
 
-/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
 
@@ -22,7 +22,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		return
 
 	var/max_distance = (world.view + extrarange) * 3
-	var/frequency = get_rand_frequency() // Same frequency for everybody
 
 	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -38,7 +37,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
 
 //todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
-/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
 
@@ -53,12 +52,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
+	if (frequency)
+		S.frequency = frequency
+		to_chat(world, "frequency = [frequency] | [soundin]")
 
-	if (vary)
-		if(frequency)
-			S.frequency = frequency
-		else
-			S.frequency = get_rand_frequency()
+	if(vary)
+		S.frequency = vary_frequency(frequency)
+		to_chat(world, "vary frequency = [frequency] | [soundin]")
+	to_chat(world, "S.frequency = [S.frequency] | [soundin]")
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
@@ -105,7 +106,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			S.environment = 10
 	src << S
 
-/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!host || host.ear_deaf > 0)
 		return
 	return ..()
@@ -248,8 +249,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 	set_sound_volume(slider, vol_raw)
 
-/proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+/proc/vary_frequency(frequency)
+	return rand(frequency/1.5, frequency*1.5) //Frequency stuff only works with 45kbps oggs.
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"

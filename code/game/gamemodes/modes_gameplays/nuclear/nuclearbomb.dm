@@ -355,7 +355,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, frequency = null, 5)
 	if (SSticker)
 		SSticker.explosion_in_progress = 1
 	sleep(100)
