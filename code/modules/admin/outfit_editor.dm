@@ -99,7 +99,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = sanitize_text(input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME))
+			var/newname = sanitize(input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME))
 			if(newname)
 				drip.name = newname
 		if("save")
