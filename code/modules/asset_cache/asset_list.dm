@@ -154,6 +154,18 @@ var/global/list/asset_datums = list()
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
 
+/datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
+	if (length(prefix))
+		prefix = "[prefix]-"
+
+	if (!directions)
+		directions = list(SOUTH)
+
+	for (var/icon_state_name in icon_states(I))
+		for (var/direction in directions)
+			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]-" : ""
+			insert_icon_in_list("[prefix][prefix2][icon_state_name]", I, icon_state=icon_state_name, dir=direction)
+
 /datum/asset/spritesheet/get_url_mappings()
 	if (!name)
 		return

@@ -288,59 +288,6 @@
 /mob/living/proc/regular_hud_updates()
 	update_action_buttons()
 
-/mob/living/update_action_buttons()
-	if(!hud_used) return
-	if(!client) return
-
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
-		return
-
-	client.screen -= hud_used.hide_actions_toggle
-	for(var/datum/action/A in actions)
-		if(A.button)
-			client.screen -= A.button
-
-	if(hud_used.action_buttons_hidden)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.UpdateIcon()
-
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
-
-		client.screen += hud_used.hide_actions_toggle
-		return
-
-	var/button_number = 0
-	for(var/datum/action/A in actions)
-		button_number++
-		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
-			N.owner = A
-			A.button = N
-
-		var/obj/screen/movable/action_button/B = A.button
-
-		B.UpdateIcon()
-
-		B.name = A.UpdateName()
-
-		client.screen += B
-
-		if(!B.moved)
-			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
-
-	if(button_number > 0)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.InitialiseIcon(src)
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
-		client.screen += hud_used.hide_actions_toggle
-
 /mob/living/incapacitated(restrained_type = ARMS)
 	return stat || paralysis || stunned || weakened || restrained(restrained_type)
 
@@ -370,19 +317,3 @@
 			return has_bodypart(targetzone)
 		else
 			return TRUE
-
-// This proc guarantees no mouse vs queen tomfuckery.
-/mob/living/proc/is_bigger_than(mob/living/target)
-	if(target.small && !small)
-		return TRUE
-	if(maxHealth > target.maxHealth)
-		return TRUE
-	return FALSE
-
-/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
-	var/ratio = dividend.maxHealth / divisor.maxHealth
-	if(dividend.small && !divisor.small)
-		ratio *= 0.5
-	else if(!dividend.small && divisor.small)
-		ratio *= 2.0
-	return ratio

@@ -21,7 +21,7 @@
 /datum/announcement/centcomm/blob/biohazard_station_unlock
 	name = "Biohazard Level Updated - Lock Down Lifted"
 	subtitle = "Biohazard Alert"
-	message = "Biohazard outbreak contained successfully. Quarantine lifted. Please clean up biohazardous material and proceed with standard station duties."
+	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Удалите биологически опасные материалы и возвращайтесь к исполнению своих обязанностей."
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
@@ -61,7 +61,7 @@
 	sound = "malf1"
 /datum/announcement/centcomm/malf/first/play()
 	message = "Осторожно, [station_name_ru()]. Мы фиксируем необычные показатели в вашей сети. " + \
-			"Похоже, кто-то пытается взломать ваши системы. Сообщим вам позже, когда получим больше информации."
+			"Похоже, кто-то пытается взломать ваши электронные системы. Мы сообщим вам, когда у нас будет больше информации."
 	..()
 
 /datum/announcement/centcomm/malf/second
@@ -84,9 +84,89 @@
 /* Cult */
 /datum/announcement/station/cult/capture_area
 	name = "Anomaly: Bluespace"
-	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: неизвестно."
+	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
 	sound = "bluspaceanom"
 /datum/announcement/station/cult/capture_area/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: [A.name]."
+		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
+	..()
+
+/* Gang */
+/datum/announcement/centcomm/gang/announce_gamemode
+	name = "Gang: Announce"
+	flags = ANNOUNCE_ALL
+/datum/announcement/centcomm/gang/announce_gamemode/play(gang_names)
+	message = "Нам поступила информация из достоверного источника, что на [station_name()] зафиксирована деятельность банд:" + \
+	" [gang_names]. Управлению станции поручается обеспечить безопасность экипажа.\n" + \
+	" В течение часа должны прибыть сотрудники Отдела по Борьбе с Организованной Преступностью.\n\n" + \
+	" Шаттл Транспортировки Экипажа сейчас находится на техобслуживании, поэтому вам придётся подождать час с лишним.\n"
+	..()
+
+/datum/announcement/centcomm/gang/cops_closely
+	name = "Gang: Cops Closely"
+/datum/announcement/centcomm/gang/cops_closely/play(gang_names)
+	message = "Нам поступила информация, что сотрудники ОБОП уже приближаются к [station_name()]." + \
+	" Они прибудут примерно через 5 минут. Напоминаем еще раз, они находятся выше вас по иерархии" + \
+	" и имеют право арестовать любого. Они будут действовать в интересах корпоративного закона."
+	..()
+
+/datum/announcement/centcomm/gang/cops_1
+	subtitle = "Отдел по Борьбе с Организованной Преступностью"
+	announcer = "Дежурный офицер"
+	name = "Gang: Wanted Level 1"
+/datum/announcement/centcomm/gang/cops_1/play()
+	message = "Здравствуйте, члены экипажа [station_name()]!" + \
+	" Мы получили несколько звонков о какой-то там потенциальной деятельности банды насильников на борту вашей станции," + \
+	" поэтому мы послали несколько офицеров для оценки ситуации. Ничего экстраординарного, вам не о чем беспокоиться." + \
+	" Однако, пока идёт десятиминутная проверка, мы попросили не отсылать вам шаттл.\n\nПриятного дня!"
+	..()
+
+/datum/announcement/centcomm/gang/cops_2
+	subtitle = "Отдел по Борьбе с Организованной Преступностью"
+	announcer = "Дежурный офицер"
+	name = "Gang: Wanted Level 2"
+/datum/announcement/centcomm/gang/cops_2/play()
+	message = "Экипаж [station_name()]. Мы получили подтверждённые сообщения о насильственной деятельности банд" + \
+	" с вашего участка. Мы направили несколько вооружённых офицеров, чтобы помочь поддержать порядок и расследовать дела." + \
+	" Не пытайтесь им помешать и выполняйте любые их требования. Мы попросили в течение десяти минут не отсылать вам шаттл.\n\nБезопасного дня!"
+	..()
+
+/datum/announcement/centcomm/gang/cops_3
+	subtitle = "Отдел по Борьбе с Организованной Преступностью"
+	announcer = "Дежурный офицер"
+	name = "Gang: Wanted Level 3"
+/datum/announcement/centcomm/gang/cops_3/play()
+	message = "Экипаж [station_name()]. Мы получили подтверждённые сообщения об экстремальной деятельности банд" + \
+	" с вашей станции, что привело к жертвам среди гражданского персонала. НТ не потерпит такой халатности," + \
+	" высланный отряд будет дейстовать в полную силу, чтобы сохранить мир и сократить количество жертв.\nСтанция окружена!" + \
+	" Все бандиты должны бросить оружие и мирно сдаться!\n\nБезопасного дня!"
+	..()
+
+/datum/announcement/centcomm/gang/cops_4
+	subtitle = "Отдел по Борьбе с Организованной Преступностью"
+	announcer = "Дежурный офицер"
+	name = "Gang: Wanted Level 4"
+/datum/announcement/centcomm/gang/cops_4/play()
+	message = "Мы отправили наших лучших агентов на [station_name()]" + \
+	" в связи с угрозой террористического характера, направленной против нашей станции." + \
+	" Все террористы должны НЕМЕДЛЕННО сдаться! Несоблюдение этого требования может привести и ПРИВЕДЁТ к смерти." + \
+	" Мы надеемся, что успеем все решить в течение десяти минут, иначе же ждите шаттл и корпорация НаноТрейзен сама всё решит своим обычным методом.\n\nСдавайтесь сейчас или пожалеете!"
+	..()
+
+/datum/announcement/centcomm/gang/cops_5
+	subtitle = "Отдел по Борьбе с Организованной Преступностью"
+	announcer = "Дежурный офицер"
+	name = "Gang: Wanted Level 5"
+/datum/announcement/centcomm/gang/cops_5/play()
+	message = "Из-за безумного количества жертв среди гражданского персонажа на борту [station_name()]" + \
+	" мы направили бойцов Вооружённых Сил НаноТрейзен, чтобы присечь любую деятельность банд на станции." + \
+	" Наша блюспейс артиллерия направлена на станцию и спасательный шаттл.\n\nЗря вы убили столько людей."
+	..()
+
+/datum/announcement/centcomm/gang/change_wanted_level
+	title = "Система Обнаружения Кораблей Станции"
+	subtitle = null
+	name = "Gang: Change Wanted Level"
+/datum/announcement/centcomm/gang/change_wanted_level/play(_message)
+	message = _message
 	..()

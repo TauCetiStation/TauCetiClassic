@@ -7,7 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
@@ -505,6 +506,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -688,7 +690,7 @@
 		if(moving_diagonally)
 			return .
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
@@ -710,9 +712,7 @@
 
 /mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(..())
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-		if(blood_volume > 0)
-			vessel.remove_reagent("blood", 1)
+		blood_remove(1)
 
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
@@ -772,7 +772,7 @@
 	return "trails_1"
 
 /mob/living/carbon/human/getTrail()
-	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+	if(blood_amount() > 0)
 		return ..()
 
 /mob/living/verb/resist()
@@ -1017,7 +1017,7 @@
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
@@ -1168,16 +1168,17 @@
 			harvest(user)
 		return TRUE
 
-/mob/living/proc/harvest(mob/user)
+/mob/living/proc/harvest(mob/user, turf/newloc = loc)
 	if(QDELETED(src))
 		return
 	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
-				new path(src.loc)
+				new path(newloc)
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		if(user)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1338,3 +1339,6 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return

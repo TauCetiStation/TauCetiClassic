@@ -12,7 +12,7 @@
 	door_close_sound = 'sound/machines/blast_door.ogg'
 
 /obj/machinery/door/poddoor/cargo
-	icon = 'code/modules/locations/shuttles/cargo.dmi'
+	icon = 'icons/locations/shuttles/cargo.dmi'
 
 /obj/machinery/door/poddoor/atom_init()
 	. = ..()
@@ -55,12 +55,12 @@
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
 			to_chat(user, "<span class='warning'>This poddoor cannot be connected!</span>")
-		else if(src in M.poddoors_buffer)
+		else if(src in M.doors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
-		else if(M.poddoors_buffer.len >= M.buffer_limit)
+		else if(M.doors_buffer.len >= M.buffer_limit)
 			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")
 		else
-			M.poddoors_buffer += src
+			M.doors_buffer += src
 			to_chat(user, "<span class='notice'>You add this poddoor to the buffer of your multitool.</span>")
 
 
@@ -112,3 +112,13 @@
 		if("closing")
 			flick("pdoorc1", src)
 	return
+
+/obj/machinery/door/poddoor/mafia
+	name = "Station Night Shutters"
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream."
+	id = "mafia"
+	icon_state = "pdoor0"
+	layer = BELOW_TURF_LAYER
+	base_layer = BELOW_TURF_LAYER
+	opacity = FALSE
+	density = FALSE

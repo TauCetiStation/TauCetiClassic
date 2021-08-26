@@ -11,7 +11,7 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
-	small = TRUE
+	w_class = SIZE_MINUSCULE
 	speak_chance = 1
 	melee_damage = 0
 	turns_per_move = 8
@@ -32,8 +32,8 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
-	faction = "neutral"
-	
+	faction = "untouchable"
+
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
@@ -190,13 +190,10 @@
 	holder_type = /obj/item/weapon/holder/mouse/brown
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
-
-/mob/living/simple_animal/mouse/brown/Tom/atom_init()
-	. = ..()
-	chief_animal_list += src

@@ -15,6 +15,7 @@
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
+	w_class = SIZE_SMALL
 	typing_indicator_type = "machine"
 
 	// We need to keep track of a few module items so we don't need to do list operations
@@ -124,7 +125,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)
@@ -333,7 +334,7 @@
 		..()
 	else if(istype(AM,/obj/item))
 		var/obj/item/O = AM
-		if(O.w_class > ITEM_SIZE_SMALL)
+		if(O.w_class > SIZE_TINY)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 			return
 		else

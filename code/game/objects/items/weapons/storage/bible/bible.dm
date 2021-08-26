@@ -4,7 +4,7 @@
 	icon_state = "bible"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 	var/god_lore = ""
@@ -43,7 +43,7 @@
 		return FALSE
 	if(!target.reagents)
 		return FALSE
-	if(!in_range(user, target))
+	if(!user.Adjacent(target))
 		return FALSE
 	return TRUE
 

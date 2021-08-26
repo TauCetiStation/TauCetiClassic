@@ -12,6 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
@@ -24,10 +25,7 @@
 	has_leg = TRUE
 
 //Captain fox
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/fox/Renault, chief_animal_list)
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
-
-/mob/living/simple_animal/fox/Renault/atom_init()
-	. = ..()
-	chief_animal_list += src

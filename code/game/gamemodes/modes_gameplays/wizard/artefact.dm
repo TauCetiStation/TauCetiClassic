@@ -11,7 +11,7 @@
 	icon_state = "necrostone"
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -80,7 +80,7 @@
 /obj/item/weapon/contract
 	name = "contract"
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/datum/mind/wizard
@@ -126,7 +126,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(ismindshielded(H))
+	if(H.ismindprotect())
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 
@@ -134,10 +134,11 @@
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
+
 	if(H.incapacitated())
 		return
 
-	if(loc == H || (in_range(src, H) && isturf(loc)))
+	if(Adjacent(H))
 		H.set_machine(src)
 		if(href_list["school"])
 			if(!uses)

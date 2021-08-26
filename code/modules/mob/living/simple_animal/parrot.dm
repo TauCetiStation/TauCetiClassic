@@ -33,7 +33,7 @@
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
-	small = 1
+	w_class = SIZE_TINY
 
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
@@ -137,7 +137,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -399,8 +399,8 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))
-
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
+											// ! and i'm not going to invent new alg for this
 			if(isliving(parrot_interest))
 				steal_from_mob()
 
@@ -425,7 +425,8 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))
+		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it
+										// ! and i'm not going to invent new alg for this
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
@@ -457,8 +458,8 @@
 		var/mob/living/L = parrot_interest
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))
-
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
+											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
 				parrot_interest = null
@@ -517,12 +518,12 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class < ITEM_SIZE_SMALL)
+			if(I.w_class < SIZE_TINY)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL) || (C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL))
+			if((C.l_hand && C.l_hand.w_class <= SIZE_TINY) || (C.r_hand && C.r_hand.w_class <= SIZE_TINY))
 				return C
 	return null
 
@@ -546,12 +547,12 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class <= ITEM_SIZE_SMALL)
+			if(I.w_class <= SIZE_TINY)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL || C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL)
+			if(C.l_hand && C.l_hand.w_class <= SIZE_TINY || C.r_hand && C.r_hand.w_class <= SIZE_TINY)
 				return C
 	return null
 
@@ -573,7 +574,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
+		if(I.loc != src && I.w_class <= SIZE_TINY)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -602,10 +603,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL)
+		if(C.l_hand && C.l_hand.w_class <= SIZE_TINY)
 			stolen_item = C.l_hand
 
-		if(C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL)
+		if(C.r_hand && C.r_hand.w_class <= SIZE_TINY)
 			stolen_item = C.r_hand
 
 		if(stolen_item)
@@ -678,6 +679,7 @@
 /*
  * Sub-types
  */
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
@@ -707,7 +709,6 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

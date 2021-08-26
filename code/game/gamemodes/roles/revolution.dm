@@ -10,9 +10,7 @@
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())
 		return FALSE
-	if(ismindshielded(M.current) || isloyal(M.current))
-		return FALSE
-	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate"))
+	if(M.current.ismindprotect())
 		return FALSE
 	return TRUE
 
@@ -75,8 +73,8 @@
 
 	if(isrevhead(M) || isrev(M))
 		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
-	else if(ismindshielded(M))
-		to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
+	else if(M.ismindprotect())
+		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else

@@ -124,18 +124,18 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = clamp(newtime, 60, 60000)
-	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
+	if(Adjacent(user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
-	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
+		loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
+	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && Adjacent(user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
 			else if(defused)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
 			return
 		else
-			src.loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
+			loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 30)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"
@@ -159,7 +159,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
@@ -172,7 +172,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

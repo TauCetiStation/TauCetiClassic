@@ -58,8 +58,11 @@
 		src.attached = null
 		update_icon()
 		return
-
-	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
+		
+	if(!(Adjacent(usr) || Adjacent(over_object) || usr.Adjacent(over_object)))
+		return
+		
+	if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		update_icon()
@@ -100,7 +103,7 @@
 				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
-				src.beaker.reagents.trans_to(src.attached, transfer_amount)
+				beaker.reagents.trans_to(src.attached, transfer_amount)
 				update_icon()
 
 		// Take blood
@@ -124,7 +127,7 @@
 				return
 
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
+			if(T.blood_amount() < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("\The [src] beeps loudly.")
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)

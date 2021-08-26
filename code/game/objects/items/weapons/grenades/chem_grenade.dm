@@ -3,13 +3,13 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 2.0
 	var/stage = 0
 	var/state = 0
 	var/path = 0
 	var/obj/item/device/assembly_holder/detonator = null
-	var/list/beakers = new/list()
+	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
@@ -163,7 +163,7 @@
 
 		for(var/atom/A in view(affected_area, src.loc))
 			if( A == src ) continue
-			src.reagents.reaction(A, 1, 10)
+			reagents.reaction(A, 1, 10)
 
 	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc

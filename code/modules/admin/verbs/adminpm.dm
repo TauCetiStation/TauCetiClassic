@@ -164,30 +164,4 @@
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in global.admins)
 		if(X.key != key && X.key != recipient.key) //check client/X is an admin and isn't the sender or recipient
-			to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>" )
-
-
-/client/proc/cmd_admin_irc_pm()
-	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
-		return
-
-	var/msg = sanitize(input(src,"Message:", "Private message to admins on IRC / 400 character limit") as text|null)
-
-	if(!msg)
-		return
-
-	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		to_chat(src, "<span class='warning'>Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting</span>")
-		to_chat(src, "<span class='notice'>[msg]</span>")
-		return
-
-	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
-
-	log_admin("PM: [key_name(src)]->IRC: [msg]")
-	for(var/client/X in admins)
-		if(X == src)
-			continue
-		if(X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> <span class='notice'>[msg]</span></font>")
-
+			to_chat(X, "<font color='blue'><B>PM: [key_name(src, 1, 0)]-&gt;[key_name(recipient, 1, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>" )

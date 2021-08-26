@@ -1,7 +1,7 @@
 /obj/item/device/traitor_caller
 	name = "Suspicious phone"
 	desc = "Make a call for to attract an extra agent at station"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "programming=4;materials=4"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
@@ -20,7 +20,7 @@
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player.client && player.mind && player.stat != DEAD && !player.mind.special_role \
 		&& (ROLE_TRAITOR in player.client.prefs.be_role) && !jobban_isbanned(player, "Syndicate") \
-		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
+		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !player.ismindprotect())
 
 			possible_traitors += player
 			for(var/job in list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain"))

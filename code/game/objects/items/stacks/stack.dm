@@ -18,7 +18,7 @@
 	var/amount = 1
 	var/max_amount = 50                 // also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/merge_type = null               // This path and its children should merge with this stack, defaults to src.type
-	var/full_w_class = ITEM_SIZE_NORMAL // The weight class the stack should have at amount > 2/3rds max_amount
+	var/full_w_class = SIZE_SMALL // The weight class the stack should have at amount > 2/3rds max_amount
 	var/is_fusion_fuel
 
 /obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 2, SIZE_MINUSCULE, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 1, SIZE_MINUSCULE, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -283,7 +283,7 @@
 	if(!istype(user) || !CanUseTopic(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(!in_range(src, user))
+	if(!Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")

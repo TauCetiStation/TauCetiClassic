@@ -93,7 +93,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = ITEM_SIZE_LARGE // Can't be put in backpacks. Oh well.
+	w_class = SIZE_NORMAL // Can't be put in backpacks. Oh well.
 	var/type_bed = /obj/structure/stool/bed/roller
 	var/type_holder = /obj/item/roller_holder
 
@@ -151,7 +151,7 @@
 
 /obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
 			return
 		if(buckled_mob)

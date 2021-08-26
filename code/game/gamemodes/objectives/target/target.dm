@@ -19,6 +19,8 @@ var/global/list/target_objectives = list()
 		return FALSE
 	if(possible_target.current.stat == DEAD)
 		return FALSE
+	if(is_centcom_level(possible_target.current.z))
+		return FALSE
 	if(possible_target.assigned_role in protected_jobs)
 		return FALSE
 	return TRUE

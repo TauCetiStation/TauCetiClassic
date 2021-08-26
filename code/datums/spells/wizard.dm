@@ -33,7 +33,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
-	if(loc && in_range(usr, src))
+	if(loc && Adjacent(usr))
 		qdel(src)
 	else if(cast_check())
 		choose_targets()

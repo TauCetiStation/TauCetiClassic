@@ -41,7 +41,7 @@
 	var/datum/reagent/self = src
 	src = null //of the reagent to the mob on TOUCHING it.
 
-	if(self.holder) //for catching rare runtimes
+	if(self.holder && self.holder.my_atom) //for catching rare runtimes
 		if(!istype(self.holder.my_atom, /obj/effect/effect/smoke/chem) && !istype(self.holder.my_atom.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			// If the chemicals are in a smoke cloud or a cryo cell, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
 			if(method == TOUCH)
@@ -151,7 +151,7 @@
 	return TRUE
 
 /datum/reagent/proc/on_golem_digest(mob/living/M)
-	return TRUE
+	return FALSE
 
 /datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE

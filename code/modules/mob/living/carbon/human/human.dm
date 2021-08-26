@@ -6,8 +6,8 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	faction = "station"
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
+	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
@@ -50,6 +50,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
+	AddComponent(/datum/component/mood)
 	human_list += src
 
 	if(dna)
@@ -353,10 +354,9 @@
 	return FALSE // In case we didn't find anything.
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
-	if(vessel && regenerating_bodypart) // start fixing broken/destroyed limb
+	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)
-			for(var/datum/reagent/blood/B in vessel.reagent_list)
-				B.volume -= remove_blood_amount
+			blood_remove(remove_blood_amount)
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
@@ -699,7 +699,7 @@
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
@@ -1104,7 +1104,7 @@
 	s_tone =  -s_tone + 35
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
 	var/list/hairs = list()
 
 	// loop through potential hairs
@@ -1120,7 +1120,7 @@
 		h_style = new_style
 
 	// facial hair
-	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/all_fhairs = subtypesof(/datum/sprite_accessory/facial_hair)
 	var/list/fhairs = list()
 
 	for(var/x in all_fhairs)
@@ -1598,7 +1598,7 @@
 
 	return TRUE
 
-/obj/screen/leap
+/atom/movable/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
@@ -1608,15 +1608,15 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/atom_init()
+/atom/movable/screen/leap/atom_init()
 	. = ..()
 	add_overlay(image(icon, "leap"))
 	update_icon()
 
-/obj/screen/leap/update_icon()
+/atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/obj/screen/leap/Click()
+/atom/movable/screen/leap/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.toggle_leap()
@@ -1845,6 +1845,7 @@
 
 	if(BP.ipc_head != "Default")
 		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
+		return
 
 	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
 	if(!S)
@@ -2135,6 +2136,20 @@
 		return FALSE
 
 	return TRUE
+
+/mob/living/carbon/human/update_size_class()
+	
+	var/new_w_class = initial(w_class)
+	
+	if(SMALLSIZE in mutations)
+		new_w_class -= 1
+
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		new_w_class += 1
+
+	w_class = new_w_class
+
+	return w_class
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR

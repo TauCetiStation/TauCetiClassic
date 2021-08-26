@@ -27,14 +27,14 @@
 
 	var/message_mode = parse_message_mode(message, "headset")
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
+	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
 	if(message[1] == "*")
 		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
-	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -57,7 +57,7 @@
 			speaking = USL
 
 	//check if we're muted and not using gestures
-	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		if (!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
@@ -87,7 +87,7 @@
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
 				for(var/mob/living/carbon/human/H in human_list)
-					if(H.species.name != ABDUCTOR)
+					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
 					if(!(human in A.faction.members))
@@ -207,6 +207,13 @@
 
 				to_chat(src, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
 				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
+			return
+		if("mafia")
+			if(global.mafia_game)
+				var/datum/mafia_controller/MF = global.mafia_game
+				var/datum/mafia_role/R = MF.player_role_lookup[src]
+				if(R && R.team == "mafia")
+					MF.send_message("<span class='shadowling'><b>[R.body.real_name]:</b> [message]</span>", "mafia")
 			return
 		else
 			if(message_mode)

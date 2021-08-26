@@ -58,7 +58,10 @@
 
 	changeling.absorb_dna(target)
 
-	if(user.get_nutrition() < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	var/nutr = user.get_nutrition()
+	if(nutr < 400)
+		user.nutrition += min(target.nutrition, 400 - nutr)
+
 	//Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))
@@ -104,9 +107,7 @@
 		changeling.chem_charges += 10
 
 	changeling.isabsorbing = 0
-	for(var/datum/reagent/blood/B in target.vessel.reagent_list) //We are vamplings, so we drink blood!
-		if(B.id == "blood")
-			B.volume = 0
+	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)
 	target.Drain()
 	return 1

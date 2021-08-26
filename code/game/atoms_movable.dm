@@ -16,6 +16,8 @@
 
 	var/moving_diagonally = 0
 
+	var/w_class = 0
+
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
@@ -71,7 +73,7 @@
 	if(loc != NewLoc)
 		if (!is_diagonal) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal 
+		else //Diagonal move, split it into cardinal
 			var/v = Dir & NORTH_SOUTH
 			var/h = Dir & EAST_WEST
 
@@ -94,7 +96,7 @@
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
-	
+
 	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
@@ -241,18 +243,7 @@
 			if (speed <= 0)
 				return //no throw speed, the user was moving too fast.
 
-	var/datum/thrownthing/TT = new()
-	TT.thrownthing = src
-	RegisterSignal(TT, COMSIG_PARENT_QDELETED, /datum/thrownthing.proc/on_thrownthing_qdel)
-	TT.target = target
-	TT.target_turf = get_turf(target)
-	TT.init_dir = get_dir(src, target)
-	TT.maxrange = range
-	TT.speed = speed
-	TT.thrower = thrower
-	TT.diagonals_first = diagonals_first
-	TT.callback = callback
-	TT.early_callback = early_callback
+	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, callback, early_callback)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -337,17 +328,17 @@
 
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)
-		return src.master.attackby(a, b)
+		return master.attackby(a, b)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)
-		return src.master.attack_paw(a, b, c)
+		return master.attack_paw(a, b, c)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
 	if (src.master)
-		return src.master.attack_hand(a, b, c)
+		return master.attack_hand(a, b, c)
 	return
 
 /atom/movable/proc/handle_rotation()
@@ -374,3 +365,38 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	return
+
+/* Sizes stuff */
+
+/atom/movable/proc/get_size_flavor()
+	switch(w_class)
+		if(SIZE_MINUSCULE)
+			. = "minuscule"
+		if(SIZE_TINY)
+			. = "tiny"
+		if(SIZE_SMALL)
+			. = "small"
+		if(SIZE_NORMAL to SIZE_LARGE)
+			. = "medium"
+		if(SIZE_HUMAN)
+			. = "human"
+		if(SIZE_BIG_HUMAN to SIZE_MASSIVE)
+			. = "huge"
+		if(SIZE_GYGANT to SIZE_GARGANTUAN)
+			. = "gygant"
+		else
+			. = "unknown"
+
+	. = EMBED_TIP_MINI(., repeat_string_times("*", w_class))
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/atom/movable/proc/is_bigger_than(mob/living/target)
+	if(w_class - target.w_class >= 3)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(atom/movable/dividend, atom/movable/divisor)
+	return (dividend.w_class / divisor.w_class)
+
+/atom/movable/proc/update_size_class()
+	return w_class

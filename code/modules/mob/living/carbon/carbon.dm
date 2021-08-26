@@ -147,7 +147,7 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
+/mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
@@ -352,7 +352,7 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(eyecheck() < intensity || override_blindness_check)
 		return ..()
 
@@ -408,7 +408,7 @@
 	throw_mode_off()
 	if(usr.incapacitated() || !target)
 		return
-	if(target.type == /obj/screen)
+	if(target.type == /atom/movable/screen)
 		return
 
 	var/atom/movable/item = get_active_hand()
@@ -444,7 +444,7 @@
 
 		if(isitem(item))
 			var/obj/item/O = item
-			if(O.w_class >= ITEM_SIZE_NORMAL)
+			if(O.w_class >= SIZE_SMALL)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
@@ -752,7 +752,11 @@
 	return
 
 /mob/living/carbon/get_nutrition()
-	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
+	return nutrition + (reagents.get_reagent_amount("nutriment") \
+					+ reagents.get_reagent_amount("plantmatter") \
+					+ reagents.get_reagent_amount("protein") \
+					+ reagents.get_reagent_amount("dairy") \
+				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
 	. = metabolism_factor
@@ -811,14 +815,14 @@
 			item_to_add = null
 
 		if(item_to_add && get_slot_ref(slot))
-			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+			if(item_to_add.w_class > SIZE_TINY)
 				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
 				return
 			item_to_add = null
 
 		stripPanelUnEquip(usr, slot, item_to_add)
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 		else
 			usr << browse(null, "window=mob\ref[src]")

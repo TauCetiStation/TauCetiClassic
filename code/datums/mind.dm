@@ -85,14 +85,11 @@
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	if(current?.my_religion)
-		current.my_religion.add_member(new_character, holy_role)
-
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 
-	if(old_character.my_religion)
+	if(old_character?.my_religion)
 		old_character.my_religion.add_member(current, holy_role)
 
 	for(var/role in antag_roles)
@@ -145,12 +142,12 @@
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
 		if(ishuman(current))
-			if(ismindshielded(H, TRUE))
+			if(H.ismindshielded())
 				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(isloyal(H))
+			if(H.isloyal())
 				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
@@ -424,22 +421,22 @@
 			href_list["implant"] = copytext(href_list["implant"], 3)
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
-				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			else
-				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
-			var/obj/item/weapon/implant/mindshield/L
+			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
 				L = new(H)
 				L.inject(H)
 			else
-				L = new /obj/item/weapon/implant/mindshield/loyalty(H)
+				L = new /obj/item/weapon/implant/mind_protect/loyalty(H)
 				L.inject(H)
 
 			H.sec_hud_set_implants()

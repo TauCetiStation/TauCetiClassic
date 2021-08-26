@@ -20,7 +20,7 @@
 	max_plasma = 50
 
 	density = FALSE
-	small = TRUE
+	w_class = SIZE_TINY
 
 	var/amount_grown = 0
 	var/max_grown = 200
@@ -163,25 +163,25 @@
 This is chestburster mechanic for damaging
  victim chest to get out from stomach
 ----------------------------------------*/
-/obj/screen/larva_bite
+/atom/movable/screen/larva_bite
 	name = "larva_bite"
 
-/obj/screen/larva_bite/Click()
+/atom/movable/screen/larva_bite/Click()
 	var/obj/item/weapon/larva_bite/G = master
 	if(G)
 		G.s_click(src)
 		return TRUE
 
-/obj/screen/larva_bite/attack_hand()
+/atom/movable/screen/larva_bite/attack_hand()
 	return
 
-/obj/screen/larva_bite/attackby()
+/atom/movable/screen/larva_bite/attackby()
 	return
 
 /obj/item/weapon/larva_bite
 	name = "larva_bite"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	var/obj/screen/larva_bite/hud = null
+	var/atom/movable/screen/larva_bite/hud = null
 	var/mob/affecting = null
 	var/mob/chestburster = null
 	var/state = null
@@ -191,7 +191,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -199,7 +199,7 @@ This is chestburster mechanic for damaging
 	chestburster = loc
 	affecting = victim
 
-	hud = new /obj/screen/larva_bite(src)
+	hud = new /atom/movable/screen/larva_bite(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Burst thru chest"
@@ -223,7 +223,7 @@ This is chestburster mechanic for damaging
 		chestburster.client.screen -= hud
 		chestburster.client.screen += hud
 
-/obj/item/weapon/larva_bite/proc/s_click(obj/screen/S)
+/obj/item/weapon/larva_bite/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!chestburster)
@@ -319,25 +319,25 @@ With third step, we start to reinforce grip to its maximum phase and when that p
 With fourth step, we just confirm embryo injection and with firth, we actually start injecting embryo.
 When we finish, facehugger's player will be transfered inside embryo.
 ----------------------------------------*/
-/obj/screen/fh_grab
+/atom/movable/screen/fh_grab
 	name = "fh_grab"
 
-/obj/screen/fh_grab/Click()
+/atom/movable/screen/fh_grab/Click()
 	var/obj/item/weapon/fh_grab/G = master
 	if(G)
 		G.s_click(src)
 		return TRUE
 
-/obj/screen/fh_grab/attack_hand()
+/atom/movable/screen/fh_grab/attack_hand()
 	return
 
-/obj/screen/fh_grab/attackby()
+/atom/movable/screen/fh_grab/attackby()
 	return
 
 /obj/item/weapon/fh_grab
 	name = "grab"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	var/obj/screen/fh_grab/hud = null
+	var/atom/movable/screen/fh_grab/hud = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
 	var/state = GRAB_LEAP
@@ -346,7 +346,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)
@@ -354,7 +354,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	assailant = loc
 	affecting = victim
 
-	hud = new /obj/screen/fh_grab(src)
+	hud = new /atom/movable/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
@@ -412,7 +412,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(iscarbon(affecting))
 			affecting.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
 
-/obj/item/weapon/fh_grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/fh_grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(affecting.stat == DEAD)

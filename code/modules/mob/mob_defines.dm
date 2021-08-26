@@ -2,8 +2,10 @@
 	density = TRUE
 	layer = 4.0
 	animate_movement = 2
+	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -13,19 +15,19 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-	var/obj/screen/hands = null
-	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
-	var/obj/screen/i_select = null
-	var/obj/screen/m_select = null
-	var/obj/screen/healths = null
-	var/obj/screen/throw_icon = null
-	var/obj/screen/pressure = null
-	var/obj/screen/pain = null
-	var/obj/screen/gun/item/item_use_icon = null
-	var/obj/screen/gun/move/gun_move_icon = null
-	var/obj/screen/gun/run/gun_run_icon = null
-	var/obj/screen/gun/mode/gun_setting_icon = null
+	var/atom/movable/screen/hands = null
+	var/atom/movable/screen/pullin = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/i_select = null
+	var/atom/movable/screen/m_select = null
+	var/atom/movable/screen/healths = null
+	var/atom/movable/screen/throw_icon = null
+	var/atom/movable/screen/pressure = null
+	var/atom/movable/screen/pain = null
+	var/atom/movable/screen/gun/item/item_use_icon = null
+	var/atom/movable/screen/gun/move/gun_move_icon = null
+	var/atom/movable/screen/gun/run/gun_run_icon = null
+	var/atom/movable/screen/gun/mode/gun_setting_icon = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -33,15 +35,15 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap/leap_icon = null
-	var/obj/screen/neurotoxin_icon = null
-	var/obj/screen/healthdoll = null
-	var/obj/screen/nutrition_icon = null
-	var/obj/screen/charge_icon = null
+	var/atom/movable/screen/zone_sel/zone_sel = null
+	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/neurotoxin_icon = null
+	var/atom/movable/screen/healthdoll = null
+	var/atom/movable/screen/nutrition_icon = null
+	var/atom/movable/screen/charge_icon = null
 
-	var/obj/screen/xenomorph_plasma_display = null
-	var/obj/screen/nightvisionicon = null
+	var/atom/movable/screen/xenomorph_plasma_display = null
+	var/atom/movable/screen/nightvisionicon = null
 
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
@@ -87,7 +89,6 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
 	var/list/languages = list()         // For speaking/listening.
@@ -162,6 +163,18 @@
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
+
+	// Determines how mood affects actionspeed.
+	// If ever used by anything else but mood, please
+	// port /datum/actionspeed_modifier system from /tg.
+	// The value is multiplicative.
+	var/mood_multiplicative_actionspeed_modifier = 0.0
+	// Determines how mood affects movespeed.
+	// used only in humans, because mood only is.
+	// If ever used by anything else but mood, please
+	// port /datum/movespeed_modifier system from /tg.
+	// The value is additive.
+	var/mood_additive_speed_modifier = 0.0
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.

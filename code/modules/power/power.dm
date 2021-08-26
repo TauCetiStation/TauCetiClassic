@@ -23,26 +23,49 @@
 // General procedures
 //////////////////////////////
 
-// common helper procs for all power machines
+// Common helper procs for all power machines:
+// All power generation handled in add_avail()
+// Machines (in proc/process()) should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/power/proc/add_load(amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
-	else
-		return 0
+		return powernet.avail - powernet.load
+
+	return 0
 
 /obj/machinery/power/proc/avail()
 	if(powernet)
 		return powernet.avail
-	else
-		return 0
+
+	return 0
+
+/obj/machinery/power/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/machinery/power/proc/delayed_surplus()
+	if(powernet)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+
+	return 0
+
+/obj/machinery/power/proc/newavail()
+	if(powernet)
+		return powernet.newavail
+
+	return 0
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -69,16 +92,14 @@
 	return A.powered(chan)	// return power status of the area
 
 // increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = -1, autocalled = 0) // defaults to power_channel
-	var/area/A = get_area(src)		// make sure it's in an area
+/obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
-		return
+		return FALSE
 	if(chan == -1)
 		chan = power_channel
 	A.use_power(amount, chan)
-	if(!autocalled)
-		A.powerupdate = 2	// Decremented by 2 each GC tick, since it's not auto power change we're going to update power twice.
-	return 1
+	return TRUE
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
@@ -131,7 +152,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return
 
 		coil.turf_place(T, user)
@@ -226,7 +247,6 @@
 
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(obj/O, datum/powernet/PN)
-	//world.log << "propagating new network"
 	var/list/worklist = list()
 	var/list/found_machines = list()
 	var/index = 1
@@ -258,7 +278,6 @@
 
 
 //Merge two powernets, the bigger (in cable length term) absorbing the other
-//TODO: rewrite so the larger net absorbs the smaller net
 /proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
 	if(!net1 || !net2) //if one of the powernet doesn't exist, return
 		return
@@ -267,7 +286,7 @@
 		return
 
 	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
+	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp
@@ -344,8 +363,8 @@
 	if (source_area)
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
-		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
-		PN.newload+=drained_power
+		var/drained_power = drained_energy/CELLRATE // Convert from "joules" to "watts"
+		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

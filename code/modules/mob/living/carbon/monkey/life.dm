@@ -49,12 +49,8 @@
 	handle_fire()
 
 	//Status updates, death etc.
-	handle_combat() // Even in death we still fight.
 	handle_regular_status_updates()
 	update_canmove()
-
-	if(client)
-		handle_regular_hud_updates()
 
 	if(!client && stat == CONSCIOUS)
 
@@ -410,19 +406,19 @@
 	switch(adjusted_pressure)
 		if(hazard_high_pressure to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(warning_low_pressure to warning_high_pressure)
 			clear_alert("pressure")
 		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 	return
 
@@ -534,7 +530,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 	return 1
 
 
@@ -554,7 +550,7 @@
 			sight |= SEE_MOBS
 			sight &= ~SEE_OBJS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		else
 			sight &= ~SEE_TURFS
 			sight &= ~SEE_MOBS

@@ -8,10 +8,10 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
@@ -41,7 +41,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
@@ -78,8 +78,8 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = 80 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/chaplain
@@ -177,6 +177,11 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/satchel/sec/cops
+	name = "police satchel"
+	desc = "A robust satchel for police related needs."
+	icon_state = "satchel-cops"
 
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "hydroponics satchel"
@@ -311,7 +316,7 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	w_class = SIZE_SMALL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
@@ -379,3 +384,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+
+/obj/item/weapon/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+
+/obj/item/weapon/storage/backpack/dufflebag/cops
+	name = "NanoTrasen bag"
+	desc = "A large duffel bag for holding extra NanoTrasen gear."
+	slowdown = 0

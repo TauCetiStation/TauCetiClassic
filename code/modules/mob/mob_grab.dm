@@ -12,7 +12,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
-	var/obj/screen/grab/hud = null
+	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
 	var/state = GRAB_NONE
@@ -25,7 +25,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
@@ -71,7 +71,7 @@
 	assailant = loc
 	affecting = victim
 
-	hud = new /obj/screen/grab(src)
+	hud = new /atom/movable/screen/grab(src)
 	hud.master = src
 
 	victim.grabbed_by += src
@@ -324,7 +324,7 @@
 				affecting.pixel_y = 0
 			animate(affecting, pixel_x =-shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 
-/obj/item/weapon/grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!assailant)

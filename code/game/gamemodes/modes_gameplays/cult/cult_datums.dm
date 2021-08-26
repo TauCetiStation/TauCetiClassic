@@ -67,7 +67,7 @@
 	user.eject_from_wall(TRUE, companions = companions)
 	for(var/mob/M in companions + user)
 		if(M.client)
-			new /obj/screen/temp/cult_teleportation(M, M)
+			new /atom/movable/screen/temp/cult_teleportation(M, M)
 
 	after_tp(get_turf(user), user, companions)
 
@@ -217,14 +217,20 @@
 
 	var/datum/religion/cult/R = global.cult_religion
 	R.capturing_area = TRUE
+
 	var/datum/announcement/station/cult/capture_area/announce = new
 	announce.play(area)
-	statue = new(get_turf(holder), holder)
+	var/turf/rune_turf = get_turf(holder)
+	message_admins("Cult has started capture: [area] in [COORD(rune_turf)] - [ADMIN_JMP(rune_turf)]")
+
+	statue = new(rune_turf, holder)
 	R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
 	R.capturing_area = FALSE
+	message_admins("Capture of [get_area(holder)] successful.")
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
+		message_admins("Capture of [get_area(holder)] failed.")
 		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)

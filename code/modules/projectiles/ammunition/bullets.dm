@@ -9,6 +9,9 @@
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a50/weakened
+	projectile_type = /obj/item/projectile/bullet/midbullet3
+
 /obj/item/ammo_casing/a418
 	desc = "A .418 bullet casing."
 	caliber = "357"
@@ -23,6 +26,7 @@
 	desc = "A .38 bullet casing."
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
+	m_amt = 200
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
@@ -203,6 +207,7 @@
 	desc = "A .38 bullet casing."
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
+	m_amt = 400
 
 /obj/item/ammo_box/c38m
 	name = "speedloader (.38)"

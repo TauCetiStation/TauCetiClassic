@@ -58,7 +58,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/datum/dna2/record/buf=null
 	var/read_only = 0 //Well,it's still a floppy disk
 
@@ -258,26 +258,26 @@
 			return
 
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
-			src.occupant.Paralyse(4)
+			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-((speed_coeff/2)))
+			occupant.adjustCloneLoss(-((speed_coeff/2)))
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
+			occupant.adjustBrainLoss(-((speed_coeff/2)))
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
-				src.occupant.reagents.add_reagent("inaprovaline", 60)
+			if (occupant.reagents.get_reagent_amount("inaprovaline") < 30)
+				occupant.reagents.add_reagent("inaprovaline", 60)
 
 			//So clones will remain asleep for long enough to get them into cryo (Bay RP edit)
-			if (src.occupant.reagents.get_reagent_amount("stoxin") < 10)
-				src.occupant.reagents.add_reagent("stoxin", 5)
-			if (src.occupant.reagents.get_reagent_amount("chloralhydrate") < 1)
-				src.occupant.reagents.add_reagent("chloralhydrate", 1)
+			if (occupant.reagents.get_reagent_amount("stoxin") < 10)
+				occupant.reagents.add_reagent("stoxin", 5)
+			if (occupant.reagents.get_reagent_amount("chloralhydrate") < 1)
+				occupant.reagents.add_reagent("chloralhydrate", 1)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.adjustOxyLoss(-4)
+			occupant.adjustOxyLoss(-4)
 
 			use_power(7500) //This might need tweaking.
 			return
@@ -347,7 +347,7 @@
 		return 0
 
 	src.connected.temp = message
-	src.connected.updateUsrDialog()
+	connected.updateUsrDialog()
 	return 1
 
 /obj/machinery/clonepod/verb/eject()
@@ -382,7 +382,7 @@
 	src.icon_state = "pod_0"
 	src.eject_wait = 0 //If it's still set somehow.
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
-//	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
+//	occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
 	src.biomass -= CLONE_BIOMASS
@@ -394,7 +394,7 @@
 		connected_message("Critical Error!")
 		src.mess = 1
 		src.icon_state = "pod_g"
-		src.occupant.ghostize()
+		occupant.ghostize()
 		spawn(5)
 			qdel(src.occupant)
 			src.occupant = null

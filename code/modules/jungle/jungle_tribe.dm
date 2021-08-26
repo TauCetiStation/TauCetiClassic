@@ -8,7 +8,7 @@
 /obj/effect/jungle_tribe_spawn
 	name = "campfire"
 	desc = "Looks cosy, in an alien sort of way."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "campfire"
 	anchored = TRUE
 	var/list/tribesmen = list()
@@ -48,7 +48,7 @@
 /mob/living/simple_animal/hostile/tribesman
 	name = "tribesman"
 	desc = "A noble savage, doesn't seem to know what to make of you."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "native1"
 	icon_living = "native1"
 	icon_dead = "native1_dead"
@@ -60,6 +60,7 @@
 	melee_damage = 10
 	turns_per_move = 1
 	stop_automated_movement_when_pulled = FALSE
+	w_class= SIZE_HUMAN
 	var/my_type = 1
 
 /mob/living/simple_animal/hostile/tribesman/atom_init()

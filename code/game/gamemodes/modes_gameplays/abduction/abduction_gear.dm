@@ -393,7 +393,7 @@
 	origin_tech = "materials=6;combat=5;biotech=7"
 	slot_flags = SLOT_FLAGS_BELT
 	force = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
@@ -548,10 +548,13 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
-	flags = DROPDEL // no CONDUCT
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 
+/obj/item/weapon/handcuffs/alien/place_handcuffs()
+	. = ..()
+	if(.)
+		flags = DROPDEL // no CONDUCT
 
 // SURGICAL INSTRUMENTS
 /obj/item/weapon/scalpel/alien

@@ -70,28 +70,23 @@
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			throw_alert("blind", /atom/movable/screen/alert/blind)
+			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else if(is_vision_obstructed() && !(XRAY in mutations))
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
 			if(!ishuman(src))
 				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+					overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, 1)
 				else
 					clear_fullscreen("impaired")
 
 				if(eye_blurry)
-					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+					overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 				else
 					clear_fullscreen("blurry")
-
-				if(druggy)
-					overlay_fullscreen("high", /obj/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
 
 		if(machine)
 			if (!(machine.check_eye(src)))
@@ -100,8 +95,6 @@
 			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
-/mob/living/proc/update_sight()
-	return
 
 /mob/living/update_action_buttons()
 	if(!hud_used) return
@@ -134,11 +127,11 @@
 	for(var/datum/action/A in actions)
 		button_number++
 		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
+			var/atom/movable/screen/movable/action_button/N = new(hud_used)
 			N.owner = A
 			A.button = N
 
-		var/obj/screen/movable/action_button/B = A.button
+		var/atom/movable/screen/movable/action_button/B = A.button
 
 		B.UpdateIcon()
 

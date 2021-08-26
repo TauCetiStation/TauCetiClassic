@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_NO_CONTAINER
+	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()
@@ -127,7 +127,7 @@
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/splint(src, 10)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
@@ -251,7 +251,7 @@
 	M.matter = 30
 	modules += M
 
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1

@@ -820,8 +820,10 @@
 							Blood = L
 							break
 					var/list/res = Blood.data["resistances"]
-					spawn(res.len * 200)
-						src.wait = null
+					if(res)
+						VARSET_IN(src, wait, null, res.len * 200)
+					else
+						wait = null
 		else
 			src.temphtml = "The replicator is not ready yet."
 	else if (href_list["create_virus_culture"])
@@ -842,11 +844,10 @@
 			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
-			B.reagents.add_reagent("blood",20,data)
+			B.reagents.add_reagent("blood", 20, data)
 			updateUsrDialog()
 			wait = 1
-			spawn(1000)
-				src.wait = null
+			VARSET_IN(src, wait, null, 1000)
 		else
 			src.temphtml = "The replicator is not ready yet."
 	else if (href_list["empty_beaker"])
@@ -865,7 +866,7 @@
 			return
 		if(usr.incapacitated())
 			return
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/id = href_list["name_disease"]
 		if(archive_diseases[id])
@@ -908,7 +909,7 @@
 			if(Blood.data["viruses"])
 				var/list/vir = Blood.data["viruses"]
 				if(vir.len)
-					for(var/datum/disease/D in Blood.data["viruses"])
+					for(var/datum/disease/D in vir)
 						if(!D.hidden[PANDEMIC])
 
 

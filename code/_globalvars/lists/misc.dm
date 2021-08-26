@@ -11,7 +11,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	)
 
 // Posters
-//var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster
+//var/global/list/datum/poster/poster_designs = subtypesof(/datum/poster)
 
 var/list/roles_ingame_minute_unlock = list(
 	ROLE_PAI = 0,
@@ -31,6 +31,7 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_MALF = 3600,
 	ROLE_SHADOWLING = 4320,
 	ROLE_ABDUCTOR = 2880,
+	ROLE_FAMILIES = 2160,
 	ROLE_GHOSTLY = 360,
 )
 

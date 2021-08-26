@@ -16,7 +16,7 @@
 	icon = 'icons/obj/tabletop_assistant.dmi'
 	icon_state = "tabletop"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -104,7 +104,7 @@
 	if(usr.incapacitated())
 		return
 
-	if(!(usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))))
+	if(!Adjacent(usr))
 		return
 
 	if(href_list["mode"])

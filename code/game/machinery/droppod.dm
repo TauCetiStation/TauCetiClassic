@@ -475,7 +475,7 @@
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
-	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
+	if(do_after(usr, 100, 1, src) && Stored_Nuclear)
 		EjectNuclear()
 
 /obj/structure/droppod/proc/EjectNuclear()
@@ -792,4 +792,4 @@
 	desc = "Simple Aim system, can be installed in poor Drop pods"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY

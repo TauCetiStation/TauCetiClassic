@@ -226,9 +226,9 @@ What a mess.*/
 		// RECORD FUNCTIONS
 		if("Search Records")
 			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text, ascii_only = TRUE)
-			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))))
+			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))))
 				return FALSE
-			Perp = new/list()
+			Perp = list()
 			t1 = lowertext(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
@@ -237,7 +237,7 @@ What a mess.*/
 				var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
 				for(var/i = 1, i<=components.len, i++)
 					if(findtext(temptext,components[i]))
-						var/prelist = new/list(2)
+						var/list/prelist[2]
 						prelist[1] = R
 						Perp += prelist
 			for(var/i = 1, i<=Perp.len, i+=2)
@@ -318,19 +318,19 @@ What a mess.*/
 				if("name")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, MAX_NAME_LEN)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
+						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
 				if("id")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
+						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["id"] = t1
 				if("fingerprint")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
+						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["fingerprint"] = t1
 				if("sex")
@@ -342,7 +342,7 @@ What a mess.*/
 				if("age")
 					if (istype(active1, /datum/data/record))
 						var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
+						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["age"] = t1
 				if("rank")
@@ -359,7 +359,7 @@ What a mess.*/
 				if("species")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please enter race:", "General records", input_default(active1.fields["species"]), null) as message)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
+						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1
 

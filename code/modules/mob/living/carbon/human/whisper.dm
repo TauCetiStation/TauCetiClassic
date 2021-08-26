@@ -14,7 +14,7 @@
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
 
 	if(!speech_allowed && usr == src)

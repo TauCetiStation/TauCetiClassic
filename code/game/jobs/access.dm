@@ -437,7 +437,9 @@
 		"Supreme Commander",
 		"Emergency Response Team",
 		"Emergency Response Team Leader",
-		"NanoTrasen Representative")
+		"Organized Crimes Department",
+		"NanoTrasen Representative",
+		)
 
 /proc/get_all_velocity_jobs()
 	return list("Velocity Chief",

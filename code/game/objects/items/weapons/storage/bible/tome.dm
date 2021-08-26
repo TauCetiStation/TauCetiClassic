@@ -8,7 +8,7 @@
 	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	religify_cd = 5 MINUTES
 
@@ -144,7 +144,7 @@
 	if(religion.runes_by_mob[H])
 		var/list/L = religion.runes_by_mob[H]
 		if(L.len > religion.max_runes_on_mob)
-			to_chat(H, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+			to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
 			return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
@@ -156,7 +156,7 @@
 		return
 	scribing = FALSE
 
-	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), ((rand(9) + 1) / 10))
+	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 
 	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion, H)
 	R.icon = rune_choices_image[choice]

@@ -114,7 +114,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	max_storage_space = 21
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
@@ -133,7 +133,7 @@
 		var/new_color = input(user, "Choose color!") as color|null
 		if(!new_color)
 			return
-		if(!in_range(src, usr) || !A.use(1))
+		if(!Adjacent(usr) || !A.use(1))
 			return
 		wrapper_color = new_color
 		update_icon()

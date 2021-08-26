@@ -13,6 +13,7 @@
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
+	w_class = SIZE_MINUSCULE
 	var/obj/machinery/hydroponics/my_hydrotray
 
 /mob/living/simple_animal/bee/atom_init(mapload, obj/machinery/apiary/new_parent)
@@ -75,7 +76,7 @@
 				B.icon_state = "bees[B.strength]"
 				if(src.parent)
 					B.parent = src.parent
-					src.parent.owned_bee_swarms.Add(B)
+					parent.owned_bee_swarms.Add(B)
 
 		//make some noise
 		if(prob(0.5))

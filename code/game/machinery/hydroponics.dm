@@ -753,7 +753,7 @@
 	if(issilicon(user))//AI doesn't know what is planted
 		return TRUE
 	if(harvest)
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return TRUE
 		myseed.harvest()
 	else if(dead)
