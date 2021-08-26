@@ -122,7 +122,7 @@
 		return
 	var/turf/newLoc = get_step(src,direction)
 	for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/J in master.spell_list)
-		if(!(newLoc.flags & NOJAUNT) || J.ignore_NOJAUNT == TRUE)
+		if(!(newLoc.flags & NOJAUNT) || J.ignore_NOJAUNT)
 			if(canmove)
 				loc = newLoc
 		else
