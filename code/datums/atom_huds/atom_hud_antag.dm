@@ -1,3 +1,16 @@
+/proc/get_all_antag_huds()
+	RETURN_TYPE(/list)
+	var/static/list/all_antag_huds
+
+	if(!all_antag_huds)
+		all_antag_huds = list()
+		for(var/hud_name in global.huds)
+			if(!istype(global.huds[hud_name], /datum/atom_hud/antag))
+				continue
+			all_antag_huds += global.huds[hud_name]
+
+	return all_antag_huds
+
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
 	var/self_visible = TRUE
@@ -52,6 +65,7 @@
 		newhud.join_hud(current)
 
 /datum/mind/proc/leave_all_antag_huds()
-	for(var/datum/atom_hud/antag/hud in global.huds)
-		if(hud.hudusers[current])
-			hud.leave_hud(current)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
+		if(H.hudusers[current])
+			H.leave_hud(current)

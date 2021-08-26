@@ -7,7 +7,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = TRUE
 	var/toggled = FALSE

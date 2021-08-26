@@ -76,7 +76,7 @@
 		else
 			SSshuttle.moving = 1
 			SSshuttle.buy()
-			SSshuttle.eta_timeofday = (world.timeofday + SSshuttle.movetime) % 864000
+			SSshuttle.eta_timeofday = (REALTIMEOFDAY + SSshuttle.movetime) % MIDNIGHT_ROLLOVER
 			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
 

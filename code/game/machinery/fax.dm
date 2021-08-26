@@ -84,7 +84,7 @@ var/list/alldepartments = list("Central Command")
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/faxmachine/is_operational_topic()
+/obj/machinery/faxmachine/is_operational()
 	return TRUE
 
 /obj/machinery/faxmachine/Topic(href, href_list)
@@ -205,10 +205,11 @@ var/list/alldepartments = list("Central Command")
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
 		attachment_msg = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n")),
+		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 
-/proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
+/proc/send_fax(sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
 			F.print_fax(P.create_self_copy())

@@ -99,10 +99,10 @@
 		if(filtering > 0)
 			if(beaker)
 				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-					H.vessel.trans_to(beaker, 1)
+					H.blood_trans_to(beaker, 1)
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
-						H.vessel.trans_to(beaker, 1)
+						H.blood_trans_to(beaker, 1)
 	return
 
 /obj/machinery/sleeper/blob_act()
@@ -310,7 +310,7 @@
 		remove_beaker()
 	else if(href_list["togglefilter"])
 		toggle_filter()
-	else if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD)
 		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else

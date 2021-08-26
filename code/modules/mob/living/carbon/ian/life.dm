@@ -123,8 +123,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
-
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
 		return FALSE
@@ -592,7 +590,7 @@
 			silent = max(silent - 1, 0)
 
 		if(druggy)
-			druggy = max(druggy - 1, 0)
+			adjustDrugginess(-1)
 	return TRUE
 
 /mob/living/carbon/ian/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)

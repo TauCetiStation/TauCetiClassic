@@ -30,7 +30,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
@@ -398,9 +398,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 			R.receive_signal(signal)
-
-
-		sleep(rand(10,25)) // wait a little...
 
 		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
@@ -841,7 +838,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio_grid
 	name = "Shielded grid"
 	desc = "A metal grid, attached to circuit to protect it from emitting."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 
