@@ -91,7 +91,7 @@
 	school = "transmutation"
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
 	dissapear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "liquify")
-	appear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "liquifybckup")
+	appear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "reappear")
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard/cast(list/targets)	
 	..()
