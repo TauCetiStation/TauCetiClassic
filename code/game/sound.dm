@@ -57,7 +57,10 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		S.frequency = frequency
 
 	if(vary == TRUE)
-		S.frequency = rand(8, 12)/10
+		if(S.frequency == 0)
+			S.frequency = rand(8, 12)/10
+		else
+			S.frequency *= rand(8, 12)/10
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
