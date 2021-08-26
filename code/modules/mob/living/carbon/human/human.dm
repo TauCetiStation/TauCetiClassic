@@ -426,10 +426,9 @@
 			if(do_after(D, SJ.breakouttime, target = usr))
 				if(!D.wear_suit || D.buckled) 
 					return
-				else
-					D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", \
+				D.visible_message("<span class='danger'>[D] manages to get out of \the [SJ]!</span>", \
 					"<span class='notice'>You successfully got out of \the [SJ].</span>")
-					D.drop_from_inventory(SJ)
+				D.drop_from_inventory(SJ)
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
