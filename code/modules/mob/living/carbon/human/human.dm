@@ -421,12 +421,9 @@
 				return
 			D.next_move = world.time + 100
 			D.last_special = world.time + 100
-			var/breakouttime = 1800
-			var/displaytime = 3
-			breakouttime = SJ.breakouttime
-			displaytime = breakouttime / 600 //Minutes
+			var/displaytime = SJ.breakouttime / 600 //Minutes  
 			D.visible_message("<span class='danger'>[usr] attempts to get out of \the [SJ]!</span>", self_message = "<span class='notice'>You attempt to get out of \the [SJ]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-			if(do_after(D, breakouttime, target = usr))
+			if(do_after(D, SJ.breakouttime, target = usr))
 				if(!D.wear_suit || D.buckled) 
 					return
 				else
