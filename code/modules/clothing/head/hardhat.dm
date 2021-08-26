@@ -21,9 +21,9 @@
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
 
-	update_icon()
-
 	set_light_on(!light_on)
+
+	update_icon()
 
 	user.update_inv_head()
 
