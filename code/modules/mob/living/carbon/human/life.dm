@@ -996,23 +996,22 @@
 	if(dna && dna.mutantrace == "shadowling")
 		var/light_amount = 0
 		nutrition = 450 //i aint never get hongry
-		if(!alpha == 0) //if you are fully invisible light shenanigans wont work
-			if(isturf(loc))
-				var/turf/T = loc
-				light_amount = round(T.get_lumcount()*10)
+		if(isturf(loc))
+			var/turf/T = loc
+			light_amount = round(T.get_lumcount()*10)
 
-			if(light_amount > LIGHT_DAM_THRESHOLD)
-				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
-				to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-				playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
-				heal_overall_damage(5,5)
-				adjustToxLoss(-3)
-				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
-				adjustCloneLoss(-1)
-				adjustOxyLoss(-10)
-				SetWeakened(0)
-				SetStunned(0)
+		if(light_amount > LIGHT_DAM_THRESHOLD)
+			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
+			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
+			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+			heal_overall_damage(5,5)
+			adjustToxLoss(-3)
+			adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+			adjustCloneLoss(-1)
+			adjustOxyLoss(-10)
+			SetWeakened(0)
+			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
