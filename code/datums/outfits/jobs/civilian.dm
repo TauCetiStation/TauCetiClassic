@@ -102,7 +102,7 @@
 	shoes = /obj/item/clothing/shoes/boots
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
-	l_ear = /obj/item/device/radio/headset/headset_int
+	l_ear = /obj/item/device/radio/headset/headset_blu
 	belt = /obj/item/device/pda/blueshield
 
 	r_pocket = /obj/item/device/flash

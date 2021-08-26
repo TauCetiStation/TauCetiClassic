@@ -94,12 +94,21 @@
 	desc = "Buzzz.... That's nine-nine charlie, requesting backup. Buzzz.... To access the security channel, use :s."
 
 /obj/item/device/radio/headset/headset_int
-	name = "NanoTrasen representative headset"
+	name = "internal affairs radio headset"
 	desc = "The headset of the NanoTrasen dog. To access the security channel, use :s. For command, use :c."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "int_headset"
 	item_state = "int_headset"
 	ks2type = /obj/item/device/encryptionkey/headset_int
+
+/obj/item/device/radio/headset/headset_blu
+	name = "Blueshield officer's radio headset"
+	desc = "The headset of the NanoTrasen dog. To access the security channel, use :s. For command, use :c."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "blu_headset"
+	item_state = "blu_headset"
+	ks2type = /obj/item/device/encryptionkey/headset_int
+	grid = TRUE
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
