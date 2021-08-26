@@ -261,8 +261,8 @@
 	animation.icon_state = icon_state
 	animation.pixel_y = 32
 	animation.alpha = 0
-	animation.layer = LIGHTING_LAYER + 1
-	animation.plane = LIGHTING_PLANE + 1
+	animation.layer = ABOVE_LIGHTING_LAYER
+	animation.plane = ABOVE_LIGHTING_PLANE
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)

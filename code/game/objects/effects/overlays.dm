@@ -60,8 +60,8 @@
 	name = "Slice"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "Slice"
-	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 	anchored = TRUE
 
 /obj/effect/overlay/droppod_open
