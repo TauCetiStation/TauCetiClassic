@@ -509,7 +509,9 @@
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
 			CS.complete()
 		if("global_sound_speed")
-			playsound_frequency_admin = input(usr, "Any value from -100 to 100 will play this sound at a multiple of its normal frequency. Set to 2 to play at double speed, for example, or -1 to play backwards. A value of 0 or 1 will play the sound at its normal frequency.", "Set Sound Speed", 0)
+			if(!check_rights(R_SOUNDS))
+				return
+			playsound_frequency_admin = clamp(input(usr, "Any value from -100 to 100 will play this sound at a multiple of its normal frequency. Set to 2 to play at double speed, for example, or -1 to play backwards. A value of 0 or 1 will play the sound at its normal frequency.", "Set Sound Speed", 0), -100, 100)
 			message_admins("[key_name_admin(usr)] has modified global sound speed to [playsound_frequency_admin]")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","Global Sound Frequency")
