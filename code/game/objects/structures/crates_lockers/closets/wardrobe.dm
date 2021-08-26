@@ -46,6 +46,7 @@
 	new /obj/item/clothing/head/beret/blueshield(src)
 	new /obj/item/clothing/head/blueshieldcap(src)
 	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"

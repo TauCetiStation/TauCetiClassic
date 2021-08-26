@@ -243,14 +243,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/flash(src)
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 
 /obj/structure/closet/secure_closet/blueshield/weaponry
 	name = "Blueshield Officer's Weapons Locker"
 
 /obj/structure/closet/secure_closet/blueshield/weaponry/PopulateContents()
-	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/weapon/gun/projectile/glock/spec(src)
 	for (var/i in 1 to 4)
 		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
