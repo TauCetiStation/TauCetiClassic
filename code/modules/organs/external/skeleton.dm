@@ -17,7 +17,7 @@
 	if(brute <= 0)
 		return 0
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 
 	var/lose_bone_chance = 100
 	if(brute < BP.min_broken_damage)

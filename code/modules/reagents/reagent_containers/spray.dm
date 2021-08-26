@@ -66,7 +66,7 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, null, volume_modifier)
+	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
@@ -307,7 +307,7 @@
 				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 				S.attach(location)
 				S.set_up(evaporate, evaporated_volume, 0, location)
-				playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+				playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 				S.start()
 				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
 		fuel = max(fuel - 1, 0)

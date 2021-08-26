@@ -124,7 +124,7 @@
 		var/mob/M = usr
 		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
-		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
@@ -302,7 +302,7 @@
 		return
 	captureimage(target, user, proximity)
 
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	pictures_left--
 	update_desc()

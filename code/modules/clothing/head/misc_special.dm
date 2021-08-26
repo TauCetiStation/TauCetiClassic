@@ -106,19 +106,38 @@
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
-	icon_state = "ushankadown"
-	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
+	var/ushanka_state = "ushanka_black_brown"
+
+/obj/item/clothing/head/ushanka/atom_init()
+	. = ..()
+	icon_state = "[ushanka_state]-down"
+	item_state = "[ushanka_state]-down"
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
-	if(src.icon_state == "ushankadown")
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
+	if(flags_inv & HIDEEARS)
+		icon_state = "[ushanka_state]-up"
+		item_state = "[ushanka_state]-up"
+		flags_inv &= ~HIDEEARS
 		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
+		icon_state = "[ushanka_state]-down"
+		item_state = "[ushanka_state]-down"
+		flags_inv |= HIDEEARS
 		to_chat(user, "You lower the ear flaps on the ushanka.")
+
+/obj/item/clothing/head/ushanka/black
+	ushanka_state = "ushanka_black"
+
+/obj/item/clothing/head/ushanka/brown
+	ushanka_state = "ushanka_brown_brown"
+
+/obj/item/clothing/head/ushanka/black_white
+	ushanka_state = "ushanka_black_white"
+
+/obj/item/clothing/head/ushanka/brown_white
+	ushanka_state = "ushanka_brown_white"
 
 /*
  * Pumpkin head

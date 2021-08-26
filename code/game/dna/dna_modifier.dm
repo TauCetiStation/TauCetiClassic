@@ -129,12 +129,12 @@
 
 				if (occupant.stat == DEAD)
 					if (occupant.client) //Ghost in body?
-						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 					else
 						for(var/mob/dead/observer/ghost in player_list)
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
-									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 									var/answer = tgui_alert(ghost, "Do you want to return to corpse for cloning?", "Cloning", list("Yes","No"))
 									if(answer == "Yes")
 										ghost.reenter_corpse()

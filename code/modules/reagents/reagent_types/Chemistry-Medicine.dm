@@ -122,7 +122,7 @@
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
-		M.druggy = max(M.druggy, 10)
+		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
 
 /datum/reagent/sterilizine

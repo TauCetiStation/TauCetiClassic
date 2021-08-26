@@ -59,8 +59,9 @@ var/global/regex/IP_pattern = regex(@"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.
 		return addr
 	return null
 
-/proc/sanitize_cid(cid)
-	var/static/regex/cid_regex = regex(@"^[0-9]*$")
-	if(!istext(cid) || !cid_regex.Find(cid))
+// check long numbers in text type
+/proc/sanitize_numbers(num)
+	var/static/regex/num_regex = regex(@"^[0-9]*$")
+	if(!istext(num) || !num_regex.Find(num))
 		return FALSE
-	return cid
+	return num

@@ -162,12 +162,12 @@
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_MINIMUM
+		src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (src.sight_mode & BORGMESON)
 		set_EyesVision("meson")
 		src.sight |= SEE_TURFS
 		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (src.sight_mode & BORGNIGHT)
 		set_EyesVision("nvg")
 		src.see_in_dark = 8
