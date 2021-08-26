@@ -146,7 +146,7 @@
 
 /mob/camera/Eye/remote/atom_init()
 	if(!user_image && user_camera_icon)
-		user_image = image(icon = user_camera_icon,loc = src,icon_state = icon_state,layer = LIGHTING_LAYER+1)
+		user_image = image(icon = user_camera_icon,loc = src,icon_state = icon_state,layer = ABOVE_LIGHTING_LAYER)
 	. = ..()
 
 /mob/camera/Eye/remote/Destroy()
