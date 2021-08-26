@@ -35,7 +35,7 @@
 	//an object if the selected outfit is a custom outfit
 	var/datum/outfit/selected_outfit = /datum/outfit
 	//serializable string for the UI to keep track of which outfit is selected
-	var/selected_identifier = "[/datum/outfit]"
+	var/selected_identifier = /datum/outfit
 
 /datum/select_equipment/New(client/user, mob/target)
 	src.user = user
@@ -125,7 +125,7 @@
 	var/list/custom
 	custom += make_custom_outfit_entries(global.custom_outfits)
 	data["custom_outfits"] = custom
-	data["current_outfit"] = selected_identifier
+	data["current_outfit"] = "[selected_identifier]"
 	return data
 
 
