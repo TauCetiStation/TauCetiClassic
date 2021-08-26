@@ -391,7 +391,7 @@ var/list/ghostteleportlocs = list()
 		L.playsound_stop(CHANNEL_AMBIENT_LOOP)
 	else if (L.client.sound_old_looped_ambience != looped_ambience)
 		L.client.sound_old_looped_ambience = looped_ambience
-		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, null, CHANNEL_AMBIENT_LOOP)
+		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
 
 	if (!compare_list(old_area.ambience, new_area.ambience))
 		L.playsound_stop(CHANNEL_AMBIENT)

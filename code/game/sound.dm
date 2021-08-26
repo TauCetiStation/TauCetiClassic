@@ -52,15 +52,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
+	S.frequency = 1
 	
-	if (frequency != null)
+	if(frequency)
 		S.frequency = frequency
-
-	if(vary == TRUE)
-		if(S.frequency == 0)
-			S.frequency = rand(8, 12)/10
-		else
-			S.frequency *= rand(8, 12)/10
+	if(playsound_frequency_admin)
+		S.frequency *= playsound_frequency_admin
+	if(vary)
+		S.frequency *= rand(8, 12)/10
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
@@ -132,7 +131,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	if(!vol)
 		return
 	*/
-
 	var/sound/S = new
 
 	S.file = soundin
