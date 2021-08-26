@@ -151,11 +151,11 @@ var/list/ghostteleportlocs = list()
 		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
 	update_areasize()
+	power_change() // all machines set to current power level, also updates lighting icon
 
 	return INITIALIZE_HINT_LATELOAD
 
 /area/atom_init_late()
-	power_change() // all machines set to current power level, also updates lighting icon
 	update_beauty()
 
 /**
