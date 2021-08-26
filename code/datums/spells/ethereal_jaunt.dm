@@ -83,7 +83,7 @@
 	clothes_req = 0
 	action_icon_state = "jaunt"
 	jaunt_duration = 6 SECONDS
-	movement_cooldown = 1
+	movement_cooldown = 0
 	ignore_NOJAUNT = TRUE
 	action_icon_state = "spell_default"
 
