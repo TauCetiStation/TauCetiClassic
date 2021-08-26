@@ -13,7 +13,7 @@
 	var/image/appear_animation //what animation is gonna get played on spell end
 	var/movement_cooldown = 2 //movement speed, less is faster
 	var/ignore_NOJAUNT = FALSE //ignores NOJAUNT turf flag
-	var/jaunt_duration = 6 SECONDS //
+	var/jaunt_duration = 6 SECONDS //how long jaunt will last
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	set waitfor = FALSE
