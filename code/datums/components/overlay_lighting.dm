@@ -198,7 +198,12 @@
 
 ///Adds the luminosity and source for the afected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
-	LAZYSET(current_holder.affected_dynamic_lights, src, lumcount_range + 1)
+	// lazy fix of weak luminosity for directional light
+	// this is necessary because luminosity is always determined from current_holder
+	// and not from physical location of light, thx tg
+	var/lazy_lumcount_range = directional ? lumcount_range + cast_range : lumcount_range
+
+	LAZYSET(current_holder.affected_dynamic_lights, src, lazy_lumcount_range)
 	current_holder.underlays += visible_mask
 	current_holder.update_dynamic_luminosity()
 	if(directional)
