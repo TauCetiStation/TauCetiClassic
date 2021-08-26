@@ -101,7 +101,6 @@ var/list/admin_verbs_sounds = list(
 var/list/admin_verbs_fun = list(
 	/client/proc/change_title_screen,
 	/client/proc/object_talk,
-	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_select_equipment,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -247,7 +246,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
 	/client/proc/object_talk,
-	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_select_equipment,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
