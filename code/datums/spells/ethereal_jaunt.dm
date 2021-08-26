@@ -85,7 +85,7 @@
 	jaunt_duration = 6 SECONDS
 	movement_cooldown = 1
 	ignore_NOJAUNT = TRUE
-	action_icon_state = null //no sprite yet
+	action_icon_state = "spell_default"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	school = "transmutation"
