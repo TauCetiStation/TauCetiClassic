@@ -20,7 +20,6 @@
 	. = ..()
 
 /obj/machinery/floodlight/proc/toggle(on = !on)
-	light_on = on
 	set_light_on(on)
 	update_icon()
 
