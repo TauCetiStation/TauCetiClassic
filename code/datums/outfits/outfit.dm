@@ -378,40 +378,59 @@
 	WRITE_FILE(f,json)
 	admin << ftp(f,"[name].json")
 
+#define SANITIZE_PATH(X, type) istype(X, type) ? X : null
+#define SANITIZE_TEXTPATH(X, type) SANITIZE_PATH(text2path(X), type)
 /// Create an outfit datum from a list of json data
 /datum/outfit/proc/load_from(list/outfit_data)
-	//This could probably use more strict validation
-	name = outfit_data["name"]
-	uniform = text2path(outfit_data["uniform"])
-	suit = text2path(outfit_data["suit"])
-	back = text2path(outfit_data["back"])
-	belt = text2path(outfit_data["belt"])
-	gloves = text2path(outfit_data["gloves"])
-	shoes = text2path(outfit_data["shoes"])
-	head = text2path(outfit_data["head"])
-	mask = text2path(outfit_data["mask"])
-	neck = text2path(outfit_data["neck"])
-	l_ear = text2path(outfit_data["l_ear"])
-	r_ear = text2path(outfit_data["r_ear"])
-	glasses = text2path(outfit_data["glasses"])
-	id = text2path(outfit_data["id"])
-	l_pocket = text2path(outfit_data["l_pocket"])
-	r_pocket = text2path(outfit_data["r_pocket"])
-	suit_store = text2path(outfit_data["suit_store"])
-	r_hand = text2path(outfit_data["r_hand"])
-	l_hand = text2path(outfit_data["l_hand"])
-	internals_slot = outfit_data["internals_slot"]
-	var/list/backpack = outfit_data["backpack_contents"]
+	name           = sanitize_text(outfit_data["name"])
+	uniform        = SANITIZE_TEXTPATH(outfit_data["uniform"], /obj/item/clothing/under)
+	suit           = SANITIZE_TEXTPATH(outfit_data["suit"], /obj/item/clothing/suit)
+	back           = SANITIZE_TEXTPATH(outfit_data["back"], /obj/item/weapon/storage/backpack)
+	belt           = SANITIZE_TEXTPATH(outfit_data["belt"], /obj/item/weapon/storage/belt)
+	gloves         = SANITIZE_TEXTPATH(outfit_data["gloves"], /obj/item/clothing/gloves)
+	shoes          = SANITIZE_TEXTPATH(outfit_data["shoes"], /obj/item/clothing/shoes)
+	head           = SANITIZE_TEXTPATH(outfit_data["head"], /obj/item/clothing/head)
+	mask           = SANITIZE_TEXTPATH(outfit_data["mask"], /obj/item/clothing/mask)
+	neck           = SANITIZE_TEXTPATH(outfit_data["neck"], /obj/item/clothing/accessory)
+	l_ear          = SANITIZE_TEXTPATH(outfit_data["l_ear"], /obj/item/device/radio/headset)
+	r_ear          = SANITIZE_TEXTPATH(outfit_data["r_ear"], /obj/item/device/radio/headset)
+	glasses        = SANITIZE_TEXTPATH(outfit_data["glasses"], /obj/item/clothing/glasses)
+	id             = SANITIZE_TEXTPATH(outfit_data["id"], /obj/item/weapon/card/id)
+	l_pocket       = sanitize_item(SANITIZE_TEXTPATH(outfit_data["l_pocket"], /obj/item))
+	r_pocket       = sanitize_item(SANITIZE_TEXTPATH(outfit_data["r_pocket"], /obj/item))
+	suit_store     = sanitize_suit_store(SANITIZE_TEXTPATH(outfit_data["suit_store"], /obj/item), suit)
+	r_hand         = sanitize_item(SANITIZE_TEXTPATH(outfit_data["r_hand"], /obj/item))
+	l_hand         = sanitize_item(SANITIZE_TEXTPATH(outfit_data["l_hand"], /obj/item))
+	internals_slot = sanitize_text(outfit_data["internals_slot"], /obj/item)
+	var/list/backpack = SANITIZE_LIST(outfit_data["backpack_contents"])
 	backpack_contents = list()
 	for(var/item in backpack)
-		var/itype = text2path(item)
+		var/itype = SANITIZE_TEXTPATH(item, /obj/item)
 		if(itype)
 			backpack_contents[itype] = backpack[item]
-	survival_box = outfit_data["survival_box"]
+	survival_box = sanitize_integer(outfit_data["survival_box"])
 	var/list/impl = outfit_data["implants"]
 	implants = list()
 	for(var/I in impl)
-		var/imptype = text2path(I)
+		var/imptype = SANITIZE_TEXTPATH(I, /obj/item/weapon/implant)
 		if(imptype)
 			implants += imptype
 	return TRUE
+
+#undef SANITIZE_PATH
+#undef SANITIZE_TEXTPATH
+
+/proc/sanitize_suit_store(obj/item/I, obj/item/clothing/suit/suit)
+	if(!istype(I) || !istype(suit))
+		return
+	suit = new suit //initial() doesn't like lists
+	if(!length(suit.allowed))
+		return
+	if(I in suit.allowed)
+		return I
+
+/proc/sanitize_item(obj/item/I)
+	if(!I || I.abstract || I.flags & (ABSTRACT|DROPDEL))
+		return
+	return I
+
