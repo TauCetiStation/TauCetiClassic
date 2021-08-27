@@ -1071,14 +1071,14 @@
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
 	if(i>=65 && i<=75) //Weaken

@@ -847,7 +847,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternaloff.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
@@ -858,7 +858,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 					if(ITEM.air_contents && length(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"
