@@ -210,7 +210,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	// This check will check for an icon object that already has a cool key.
 	if (istype(obj, /icon))
 		var/icon/I = obj
-		if (!bicon_cache[I.icon_info]) // Doesn't exist yet, make it.
+		if (!bicon_cache[I.icon_info])
 			bicon_cache[I.icon_info] = icon2base64(obj)
 		return "[bicon_cache[I.icon_info]]"
 
@@ -221,9 +221,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			bicon_cache[key] = icon2base64(obj)
 		return "[bicon_cache[key]]"
 
-	if (!isatom(obj)) // we don't need datums here. no runtimes :<
+	if(!isatom(obj) && !istype(obj, /image)) // we don't need datums here. no runtimes :<
 		return
 
+	// Thanks to dynamic typing, this atom can be both an image and a mutable_apperance
 	var/atom/A = obj
 	var/key = "\ref[A.icon]#[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
