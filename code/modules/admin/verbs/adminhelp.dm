@@ -614,6 +614,16 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			.["present"] += X
 
+/proc/get_admin_counts_formatted(requiredflags = R_BAN)
+	var/list/adm = get_admin_counts(requiredflags)
+
+	if(!length(adm["total"]))
+		. = "No admins online"
+	else if (!length(adm["present"]))
+		. = "No active admins online; Stealthed\[[get_english_list(adm["stealth"])]\]; AFK\[[get_english_list(adm["afk"])]\]; Powerless\[[get_english_list(adm["noflags"])]\];"
+	else
+		. = "Active\[[get_english_list(adm["present"])]\]; Stealthed\[[get_english_list(adm["stealth"])]\]; AFK\[[get_english_list(adm["afk"])]\]; Powerless\[[get_english_list(adm["noflags"])]\];"
+
 /proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN, type, mention)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]

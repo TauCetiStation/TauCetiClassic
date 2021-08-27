@@ -105,7 +105,7 @@
 	remove_role(newRole)
 
 // Basically, they are members of the new faction
-/datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
+/datum/faction/proc/HandleNewMind(datum/mind/M, laterole) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -116,13 +116,13 @@
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src)
-	if(!newRole.AssignToRole(M))
+	if(!newRole.AssignToRole(M, laterole = laterole))
 		newRole.Drop()
 		return null
 	return newRole
 
 // Basically, these are the new members of the faction during the round
-/datum/faction/proc/HandleRecruitedMind(datum/mind/M, override = FALSE)
+/datum/faction/proc/HandleRecruitedMind(datum/mind/M, laterole)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -133,7 +133,7 @@
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
 	var/datum/role/R = new role_type(null, src) // Add him to our roles
-	if(!R.AssignToRole(M, override))
+	if(!R.AssignToRole(M, laterole = laterole))
 		R.Drop()
 		return null
 	return R

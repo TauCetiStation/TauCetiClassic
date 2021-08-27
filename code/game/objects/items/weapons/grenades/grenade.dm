@@ -54,7 +54,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
-	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/proc/prime()

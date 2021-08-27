@@ -41,7 +41,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 			return
 
 	var/display_colour = normal_ooc_colour
-	var/display_name = key
+	var/ooc_name = key
 
 	if(holder && !holder.fakekey)
 		display_colour = "#704f80"
@@ -53,15 +53,15 @@ var/global/bridge_ooc_colour = "#7b804f"
 			else
 				display_colour = "#b82e00"	//orange
 
-	send2ooc(msg, display_name, display_colour, src)
+	send2ooc(msg, ooc_name, display_colour, src)
 
 	world.send2bridge(
 		type = list(BRIDGE_OOC),
-		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : display_name ]**: [msg]",
+		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : ooc_name ]**: [msg]",
 		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
 	)
 
-/proc/send2ooc(msg, name, colour, client/sender)
+/proc/send2ooc(msg, name, colour, client/sender, display_name)
 	if(sender)
 		log_ooc("[key_name(sender)] : [msg]")
 	else
@@ -71,7 +71,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue
-		var/display_name = name
+		
+		if(!display_name) 
+			display_name = name
 
 		if(sender)
 			if(sender.supporter && sender.prefs.ooccolor)

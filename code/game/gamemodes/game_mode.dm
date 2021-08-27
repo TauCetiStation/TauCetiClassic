@@ -20,8 +20,6 @@
 	var/minimum_players_bundles
 	var/probability = 100 // this is the weight
 
-	var/newscaster_announcements = null
-
 	var/completition_text = ""
 
 	var/list/factions = list()
@@ -148,7 +146,7 @@
 				log_mode("[P] failed [F] can_join_faction!")
 				continue
 			if(give_role)
-				if(!F.HandleNewMind(P.mind))
+				if(!F.HandleNewMind(P.mind, FALSE))
 					log_mode("[P] failed [F] HandleNewMind!")
 					continue
 			else
