@@ -632,7 +632,7 @@
 	return candidates
 
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
-	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
 	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("No", "Yes", "Not This Round"))
 	switch(ans)
@@ -640,7 +640,7 @@
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
 				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 				return
 			candidates += M
 		if("No")

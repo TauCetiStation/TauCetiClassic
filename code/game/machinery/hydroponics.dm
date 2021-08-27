@@ -428,7 +428,7 @@
 					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
-				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
@@ -668,7 +668,7 @@
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 
@@ -719,7 +719,7 @@
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))

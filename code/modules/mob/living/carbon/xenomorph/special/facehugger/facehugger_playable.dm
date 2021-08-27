@@ -246,7 +246,7 @@ This is chestburster mechanic for damaging
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
@@ -268,7 +268,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
