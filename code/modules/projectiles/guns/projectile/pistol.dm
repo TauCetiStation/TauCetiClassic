@@ -121,8 +121,7 @@
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	can_be_holstered = TRUE
-	mag_type = /obj/item/ammo_box/magazine/m9mm_2
-	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2/rubber
+	mag_type = /obj/item/ammo_box/magazine/m9mm
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
