@@ -42,7 +42,7 @@
 	if(user.is_busy(target))
 		return FALSE
 
-	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
+	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, FALSE, -2)
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.log_combat(user, "handcuffed (attempt) with [name]")
