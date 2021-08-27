@@ -348,9 +348,9 @@
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
-	desc = "An additional 8-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+	desc = "An additional 12-round 9mm magazine; compatible with the Stechkin Pistol and standard security Glock 17 pistols. These subsonic rounds \
 			are dirt cheap but are half as effective as .357 rounds."
-	item = /obj/item/ammo_box/magazine/m9mm
+	item = /obj/item/ammo_box/magazine/m9mm_2
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
