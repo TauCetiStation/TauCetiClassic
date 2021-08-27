@@ -18,6 +18,10 @@
 			if(I.last)
 				last += I
 				continue
+			if(uplink.uplink_type == "dealer" && I.need_wanted_level)
+				var/datum/faction/cops/cops = find_faction_by_type(/datum/faction/cops)
+				if(cops && I.need_wanted_level > cops.wanted_level)
+					continue
 
 			if(!uplink.uplink_items[I.category])
 				uplink.uplink_items[I.category] = list()
@@ -45,6 +49,8 @@
 	var/last = 0 // Appear last
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
+	// used for dealer items
+	var/need_wanted_level
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 	if(item)
@@ -140,12 +146,16 @@
 	cost = 8
 	uplink_types = list("dealer")
 
+	need_wanted_level = 3
+
 /datum/uplink_item/dangerous/deagle_gold
 	name = "Desert Eagle Gold"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
 	cost = 9
 	uplink_types = list("dealer")
+
+	need_wanted_level = 3
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -161,12 +171,16 @@
 	cost = 12
 	uplink_types = list("dealer")
 
+	need_wanted_level = 3
+
 /datum/uplink_item/dangerous/tommygun
 	name = "Tommygun"
 	desc = "Based on the classic 'Chicago Typewriter'. Uses 9mm rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/tommygun
-	cost = 15
+	cost = 10
 	uplink_types = list("dealer")
+
+	need_wanted_level = 2
 
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
@@ -202,6 +216,8 @@
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
 	uplink_types = list("nuclear", "dealer")
+
+	need_wanted_level = 5
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -714,6 +730,8 @@
 	item = /obj/item/clothing/glasses/thermal/dealer
 	cost = 8
 	uplink_types = list("dealer")
+
+	need_wanted_level = 3
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
