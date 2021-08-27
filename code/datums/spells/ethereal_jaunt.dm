@@ -83,7 +83,7 @@
 	clothes_req = 0
 	action_icon_state = "jaunt"
 	jaunt_duration = 6 SECONDS
-	movement_cooldown = 0
+	movement_cooldown = -1
 	ignore_NOJAUNT = TRUE
 	action_icon_state = "spell_default"
 
@@ -96,10 +96,10 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard/cast(list/targets)	
 	..()
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-	steam.set_up(10, 0, get_turf(loc))
+	steam.set_up(10, 0, get_turf(usr.loc))
 	steam.start()
 	sleep(jaunt_duration)
-	steam.location = get_turf(loc)
+	steam.location = get_turf(usr.loc)
 	steam.start()
 
 /obj/effect/dummy/spell_jaunt
