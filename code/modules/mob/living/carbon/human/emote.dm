@@ -217,8 +217,9 @@
 			miming_message = "acts out a laugh."
 			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 			if(!species.flags[NO_BREATHE])
-				var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.6, 1.4)
-				voice_frequency = 1.4 - voice_frequency
+				var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
+				to_chat(world, "pre voice_frequency = [voice_frequency]")
+				voice_frequency = 1.05 - (voice_frequency - 0.85)
 				to_chat(world, "age = [age] | voice_frequency = [voice_frequency]")
 				switch(get_species())
 					if(SKRELL)
