@@ -728,7 +728,7 @@
 
 		C.stop_pulling()
 		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		if(!C.buckled)
 			C.Stun(8)
 			C.Weaken(5)

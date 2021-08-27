@@ -70,3 +70,6 @@ var/cmp_field = "name"
 		return a_sign - b_sign
 	else
 		return sorttext(b_name, a_name)
+
+/proc/cmp_bridge_commands(a,b)
+	return bridge_commands[a].position - bridge_commands[b].position
