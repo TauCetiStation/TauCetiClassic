@@ -129,6 +129,12 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
+		if(user)
+			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
+		return FALSE
+
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
