@@ -78,6 +78,9 @@ What is the naming convention for planes or layers?
 #define ABOVE_LIGHTING_PLANE   17
 #define ABOVE_LIGHTING_LAYER   17
 
+#define ABOVE_ALL_LIGHT_PLANE  18
+#define ABOVE_ALL_LIGHT_LAYER  18
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 18
