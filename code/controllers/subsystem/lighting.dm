@@ -48,23 +48,23 @@ SUBSYSTEM_DEF(lighting)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
-	var/i = 0
-	for (i in 1 to length(sources_queue))
-		var/datum/light_source/L = sources_queue[i]
+	while (sources_queue.len)
+		var/datum/light_source/L = sources_queue[sources_queue.len]
+		sources_queue.len--
 
 		L.update_corners()
+
 		L.needs_update = LIGHTING_NO_UPDATE
 
 		if(init_tick_checks)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break
-	if (i)
-		sources_queue.Cut(1, i+1)
-		i = 0
 
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
+
+	var/i = 0
 
 	for (i in 1 to corners_queue.len)
 		var/datum/lighting_corner/C = corners_queue[i]
