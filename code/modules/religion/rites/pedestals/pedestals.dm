@@ -129,11 +129,6 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
-	if(!religion.can_convert(AOG.buckled_mob))
-		if(user)
-			to_chat(user, "<span class='warning'>Неподходящее существо.</span>")
-		return FALSE
-
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
