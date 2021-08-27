@@ -574,7 +574,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
 		BP.owner.try_mutate_to_hulk()
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
 	BP.broken_description = pick("broken", "fracture", "hairline fracture")
 	BP.perma_injury = BP.brute_dam

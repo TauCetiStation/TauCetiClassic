@@ -266,7 +266,7 @@
 		adjustFireLoss(rand(10, 20))
 		Weaken(rand(10, 15))
 		eye_blind += rand(20, 25)
-		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)
 		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
 		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)

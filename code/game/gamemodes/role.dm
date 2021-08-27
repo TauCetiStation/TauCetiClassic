@@ -51,11 +51,11 @@
 	objectives.owner = M
 	..()
 
-/datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE)
+/datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
 		return FALSE
-	if(!CanBeAssigned(M) && !override)
+	if(!CanBeAssigned(M, laterole) && !override)
 		log_mode("[key_name(M)] was to be assigned to [name] but failed CanBeAssigned!")
 		return FALSE
 
@@ -105,7 +105,7 @@
 	qdel(O)
 
 // General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
-/datum/role/proc/CanBeAssigned(datum/mind/M)
+/datum/role/proc/CanBeAssigned(datum/mind/M, laterole)
 	var/ckey_of_antag = key_name(M)
 	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
 		log_mode("[ckey_of_antag] has a protected job, his job - [M.assigned_role]")

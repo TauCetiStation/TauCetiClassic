@@ -459,7 +459,7 @@
 	var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
 	S.attach(location)
 	S.set_up(10, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 		sleep(10)
@@ -486,7 +486,7 @@
 	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 	S.attach(location)
 	S.set_up(holder, created_volume, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 	holder.clear_reagents()
