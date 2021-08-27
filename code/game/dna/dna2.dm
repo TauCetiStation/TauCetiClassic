@@ -351,24 +351,3 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	else
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, global.hex_characters)
 	return .
-
-/datum/dna/proc/transfer_identity(mob/living/carbon/human/destination, transfer_SE = FALSE)
-	if(!istype(destination))
-		return
-	destination.dna.unique_enzymes = unique_enzymes
-	destination.dna.uni_identity = uni_identity
-	destination.dna.b_type = b_type
-	destination.set_species(species)
-	destination.dna.real_name = real_name
-	destination.dna.mutantrace = mutantrace
-	if(transfer_SE)
-		for (var/i in 1 to DNA_SE_LENGTH)
-			destination.dna.SE[i]=SE[i]
-			if(i <= DNA_UI_LENGTH)
-				destination.dna.UI[i]=UI[i]
-		destination.dna.UpdateUI()
-		destination.dna.UpdateSE()
-	else
-		for (var/i in 1 to DNA_UI_LENGTH)
-			destination.dna.UI[i]=UI[i]
-		destination.dna.ResetSE() // just to set some values (has UpdateSE())
