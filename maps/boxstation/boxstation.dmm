@@ -68550,13 +68550,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"cKd" = (
-/obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "cKe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -90912,7 +90905,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 boX
 aro
 fab
@@ -91169,7 +91162,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 aro
 aro
 fab
