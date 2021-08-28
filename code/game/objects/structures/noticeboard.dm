@@ -97,6 +97,8 @@
 		var/list/icons = paper_icons[hash]
 		QDEL_LIST(icons)
 
+	QDEL_NULL(quest)
+
 	return ..()
 
 /obj/structure/noticeboard/proc/get_content(atom/movable/note)
@@ -187,7 +189,7 @@
 
 	LAZYSET(notice_hashes, note_hash, world.time)
 
-	for(var/viewer in (list() + quest.blinds))
+	for(var/viewer in quest.blinds.Copy())
 		remove_viewer(viewer)
 
 /obj/structure/noticeboard/proc/remove_note(atom/movable/note)
