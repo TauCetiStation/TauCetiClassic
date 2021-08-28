@@ -222,8 +222,8 @@ REQ_CULT_GHOSTWRITER 6
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
 ##by default will be used build RECOMMENDED_VERSION (latest compatible major version)
-# BYOND_VERSION_MIN 513
-# BYOND_VERSION_RECOMMEND 513
+# BYOND_VERSION_MIN 514
+# BYOND_VERSION_RECOMMEND 514
 
 ## Changelog link
 CHANGELOG_LINK https://changelog.taucetistation.org
