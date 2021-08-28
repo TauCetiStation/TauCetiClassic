@@ -728,7 +728,7 @@
 
 		C.stop_pulling()
 		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		if(!C.buckled)
 			C.Stun(8)
 			C.Weaken(5)
@@ -1054,7 +1054,7 @@
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)

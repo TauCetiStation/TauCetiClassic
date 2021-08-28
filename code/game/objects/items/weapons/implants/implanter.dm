@@ -5,7 +5,7 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
@@ -38,7 +38,7 @@
 	name = "implanter-mind shield"
 
 /obj/item/weapon/implanter/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 	update()
 
@@ -46,7 +46,7 @@
 	name = "implanter-loyalty"
 
 /obj/item/weapon/implanter/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 	update()
 

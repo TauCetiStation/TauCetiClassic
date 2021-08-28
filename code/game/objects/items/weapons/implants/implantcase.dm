@@ -5,7 +5,7 @@
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implantcase/proc/update()
@@ -108,7 +108,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/loyalty
@@ -118,7 +118,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/death_alarm

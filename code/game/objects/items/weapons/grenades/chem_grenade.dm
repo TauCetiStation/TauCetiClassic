@@ -3,13 +3,13 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 2.0
 	var/stage = 0
 	var/state = 0
 	var/path = 0
 	var/obj/item/device/assembly_holder/detonator = null
-	var/list/beakers = new/list()
+	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
@@ -124,7 +124,7 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
-		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)

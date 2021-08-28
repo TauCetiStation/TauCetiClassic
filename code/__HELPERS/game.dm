@@ -14,12 +14,6 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
@@ -71,7 +65,7 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/T in range(radius, centerturf))
@@ -86,7 +80,7 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/A in view(radius, centerturf))
@@ -109,7 +103,7 @@
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
@@ -122,7 +116,7 @@
 /proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in view(radius, centerturf))
@@ -349,6 +343,14 @@
 			return M
 	return null
 
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
+	if(M?.current)
+		if(enforce_human)
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current)
+		if(isliving(M.current))
+			return M.current.stat != DEAD
+	return FALSE
+
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /atom/movable/screen/text()
 	O.maptext = maptext
@@ -504,8 +506,8 @@
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
-	var/list/processed_list = new/list()
-	var/found_atoms = new/list()
+	var/list/processed_list = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -526,7 +528,7 @@
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
-		return new/list()
+		return list()
 
 //============TG PORTS============
 /proc/remove_images_from_clients(image/I, list/show_to)
@@ -553,7 +555,7 @@
 	return ((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
-	var/list/temps = new/list(4)
+	var/list/temps[4]
 	for(var/dir in cardinal)
 		var/direction
 		switch(dir)
@@ -566,7 +568,7 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		var/list/rstats = new /list(stats.len)
+		var/list/rstats[stats.len]
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			for(var/i in 1 to stats.len)
@@ -630,7 +632,7 @@
 	return candidates
 
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
-	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
 	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("No", "Yes", "Not This Round"))
 	switch(ans)
@@ -638,7 +640,7 @@
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
 				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 				return
 			candidates += M
 		if("No")

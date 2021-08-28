@@ -218,13 +218,13 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
 			return FALSE
-	if(ismindshielded(M) || isloyal(M))
+	if(M.ismindprotect())
 		return FALSE
 	return TRUE
 
@@ -234,6 +234,11 @@
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
 	return TRUE
+
+/datum/religion/cult/add_deity(mob/M)
+	..()
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
 
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)

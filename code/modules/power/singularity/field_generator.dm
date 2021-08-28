@@ -330,7 +330,7 @@ field_generator power level display
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
 				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
-		O.last_warning = world.time
+			O.last_warning = world.time
 
 
 #undef FG_MAX_POWER

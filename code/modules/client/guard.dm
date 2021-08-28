@@ -52,14 +52,17 @@
 		send2bridge_adminless_only("GUARD: [key_name(holder)]", short_report, type = list(BRIDGE_ADMINIMPORTANT))
 
 /datum/guard/proc/print_report()
-	if(!geoip_processed)
-		load_geoip()
-
-	do_tests()
+	prepare()
 
 	var/datum/browser/popup = new(usr, "guard_report_[holder.ckey]", "Guard report on [holder.key]", 350)
 	popup.set_content(src.report)
 	popup.open()
+
+/datum/guard/proc/prepare()
+	if(!geoip_processed)
+		load_geoip()
+
+	do_tests()
 
 //todo: pending tests
 /datum/guard/proc/do_tests()
