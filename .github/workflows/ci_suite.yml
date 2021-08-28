@@ -9,7 +9,7 @@ on:
 env:
   BYOND_MAJOR: 514
   BYOND_MINOR: 1564
-  SPACEMAN_DMM_VERSION: suite-1.6
+  SPACEMAN_DMM_VERSION: suite-1.7
 jobs:
   DreamChecker:
     runs-on: ubuntu-16.04
