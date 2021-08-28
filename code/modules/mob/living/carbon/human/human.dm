@@ -626,11 +626,6 @@
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
 		try_mutate_to_hulk()
 
-	if(!def_zone)
-		def_zone = pick(BP_L_ARM , BP_R_ARM)
-
-	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
-
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -642,7 +637,8 @@
 			if(S.siemens_coefficient <= 0)
 				total_coeff -= 0.95
 		siemens_coeff = total_coeff
-	else
+	else if(def_zone)
+		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
 
 	if(species)
