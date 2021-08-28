@@ -87,18 +87,24 @@
 	ignore_NOJAUNT = TRUE
 	action_icon_state = "spell_default"
 
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/cast(list/targets)
+	..()
+	usr.visible_message("<span class='warning'>[usr] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
+	sleep(jaunt_duration)
+	usr.visible_message("<span class='warning'>[usr] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	school = "transmutation"
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
 	dissapear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "liquify")
 	appear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "reappear")
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard/cast(list/targets)	
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard/cast(list/targets)
 	..()
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 	steam.set_up(10, 0, get_turf(usr.loc))
 	steam.start()
-	sleep(jaunt_duration)
+	sleep(jaunt_duration + FLICK_OVERLAY_JAUNT_DURATION)
 	steam.location = get_turf(usr.loc)
 	steam.start()
 
