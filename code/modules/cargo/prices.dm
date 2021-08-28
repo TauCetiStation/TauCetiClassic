@@ -279,8 +279,8 @@
 /obj/item/weapon/scalpel/price = 1250
 /obj/item/weapon/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
-/obj/item/weapon/stamp/captain/price = 990
-/obj/item/weapon/stamp/clown/price = 2000
+/obj/item/weapon/stamp/captain/price = 25000
+/obj/item/weapon/stamp/clown/price = 9900
 /obj/item/weapon/stock_parts/price = 350
 /obj/item/weapon/storage/backpack/clown/price = 3000
 /obj/item/weapon/storage/belt/champion/price = 8500
