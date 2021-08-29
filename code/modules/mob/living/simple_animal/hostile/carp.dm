@@ -136,4 +136,4 @@
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
-		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, FALSE, null, -3)

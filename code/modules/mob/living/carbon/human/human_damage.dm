@@ -287,10 +287,13 @@
 	while(parts.len && (brute > 0 || burn > 0) )
 		var/obj/item/organ/external/BP = pick(parts)
 
+		var/brute_per_part = round(brute / parts.len)
+		var/burn_per_part = round(burn / parts.len)
+
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
 
-		BP.take_damage(brute, burn, damage_flags, used_weapon)
+		BP.take_damage(brute_per_part, burn_per_part, damage_flags, used_weapon)
 		brute -= (BP.brute_dam - brute_was)
 		burn -= (BP.burn_dam - burn_was)
 
