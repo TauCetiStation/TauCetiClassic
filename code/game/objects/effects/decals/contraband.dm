@@ -597,7 +597,7 @@
 
 /obj/structure/sign/poster/official/blueshield_enlist
 	name = "\improper Blueshield Initiative"
-	desc = "A poster about Blueshield Initiative. It's says \"Enlist now!\""
+	desc = "A poster about Blueshield Initiative. It says \"Enlist now!\""
 	icon_state = "poster42_legit"
 
 #undef PLACE_SPEED

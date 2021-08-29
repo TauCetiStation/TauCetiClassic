@@ -58,7 +58,7 @@
 /datum/job/blueshield/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
 	if(!visualsOnly)
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode/proc/send_pda, H), rand(10, 10))
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode/proc/send_pda, H), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
 /datum/job/hop
 	title = "Head of Personnel"

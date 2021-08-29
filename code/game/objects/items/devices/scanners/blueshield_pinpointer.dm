@@ -1,15 +1,15 @@
 // Pinpointer to detect Heads of Staff
 
-/proc/get_heads_dna()
-	var/list/heads = list()
+/proc/get_jobs_dna(list/required_positions)
+	var/list/players = list()
 	for (var/datum/data/record/R in data_core.general)
-		if (R.fields["rank"] in command_positions)
-			heads[R.fields["id"]] = R.fields["name"]
+		if (R.fields["rank"] in required_positions)
+			players[R.fields["id"]] = R.fields["name"]
 	
 	var/list/dnas = list()
 	for (var/datum/data/record/R in data_core.medical)
-		if (R.fields["id"] in heads) // There will be fun thing, if ID's are overlapping
-			dnas[R.fields["name"]] = R.fields["b_dna"] // If Head is IPC there will be ""
+		if (R.fields["id"] in players) // There will be fun thing, if ID's are overlapping
+			dnas[players[R.fields["id"]]] = R.fields["b_dna"] // If Head is IPC there will be ""
 	return dnas
 
 /proc/get_humans_by_dna(dna)
@@ -27,7 +27,6 @@
 	name = "heads of staff pinpointer"
 	desc = "A larger version of the normal pinpointer. Includes quantuum connection to the database of the Station Heads of Staff to point to."
 
-	var/list/_target = null
 	var/target_dna = null
 
 /obj/item/weapon/pinpointer/heads/process()
@@ -35,6 +34,7 @@
 		icon_state = "pinonnull"
 		return
 
+	var/_target = null
 	if (target_dna)
 		_target = get_humans_by_dna(target_dna)
 	
@@ -47,7 +47,7 @@
 	else
 		target = pick(_target)
 
-	. = ..()
+	return ..()
 
 /obj/item/weapon/pinpointer/heads/verb/toggle_mode()
 	set category = "Object"
@@ -57,11 +57,10 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj, src)
 	icon_state = "pinoff"
-	_target = null
 
-	var/list/heads_dna = get_heads_dna()
+	var/list/heads_dna = get_jobs_dna(command_positions + "Internal Affairs Agent")
 	if (!heads_dna.len)
-		to_chat(usr, "There is no Heads of staff on the station!")
+		to_chat(usr, "There is no command staff on the station!")
 		return
 	var/target_head = tgui_input_list(usr, "Head to point to", "Target selection", heads_dna)
 

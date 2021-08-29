@@ -1,5 +1,6 @@
 /// Chance for a sound clue
 #define SOUND_CHANCE 10
+ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)
 
 //SAFES
 /obj/structure/safe
@@ -29,8 +30,6 @@
 
 /obj/structure/safe/atom_init()
 	. = ..()
-	safes_list += src
-
 	// Combination generation
 	for(var/i in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
