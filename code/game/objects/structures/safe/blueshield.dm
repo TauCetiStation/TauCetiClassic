@@ -9,7 +9,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/weapon/paper/blueshieldsafe/atom_init_late()
-	var/obj/structure/safe/floor/blueshield/safes = list()
+	var/list/obj/structure/safe/floor/blueshield/safes = list()
 	if(safes_list.len)
 		for (var/obj/structure/safe/floor/blueshield/safe in safes_list)
 			safes += safe

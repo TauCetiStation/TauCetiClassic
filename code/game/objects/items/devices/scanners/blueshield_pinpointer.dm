@@ -34,7 +34,7 @@
 		icon_state = "pinonnull"
 		return
 
-	var/_target = null
+	var/list/_target = null
 	if (target_dna)
 		_target = get_humans_by_dna(target_dna)
 	
