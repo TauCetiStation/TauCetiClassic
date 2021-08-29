@@ -19,7 +19,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = 1
+	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
 	var/parts = /obj/item/weapon/table_parts
@@ -593,7 +593,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
-	climbable = 1
+	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/atom_init()
