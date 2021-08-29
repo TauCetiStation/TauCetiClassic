@@ -200,6 +200,8 @@
 
 /obj/structure/altar_of_gods/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
+	if(.)
+		return FALSE
 	var/mob/user = ui.user
 	if(!can_interact(user))
 		return FALSE
