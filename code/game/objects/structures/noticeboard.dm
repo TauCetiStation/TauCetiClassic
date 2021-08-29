@@ -94,7 +94,7 @@
 		var/list/icons = paper_icons[hash]
 		QDEL_LIST(icons)
 	for(var/hash in photo_icons)
-		var/list/icons = paper_icons[hash]
+		var/list/icons = photo_icons[hash]
 		QDEL_LIST(icons)
 
 	QDEL_NULL(quest)
