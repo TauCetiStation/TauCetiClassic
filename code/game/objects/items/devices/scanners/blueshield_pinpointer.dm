@@ -58,7 +58,7 @@
 	STOP_PROCESSING(SSobj, src)
 	icon_state = "pinoff"
 
-	var/list/heads_dna = get_jobs_dna(command_positions + "Internal Affairs Agent")
+	var/list/heads_dna = get_jobs_dna(heads_positions + "Internal Affairs Agent")
 	if (!heads_dna.len)
 		to_chat(usr, "There is no command staff on the station!")
 		return

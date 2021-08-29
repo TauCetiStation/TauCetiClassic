@@ -42,10 +42,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)
 			space += I.w_class
 			I.forceMove(src)
 
-/obj/structure/safe/Destroy()
-	. = ..()
-	safes_list -= src
-
 /obj/structure/safe/update_icon()
 	if(open)
 		icon_state = "[initial(icon_state)]-open"

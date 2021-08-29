@@ -69473,7 +69473,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/weapon/paper/blueshieldsafe{
+/obj/item/weapon/paper/blueshield/safe_codes{
 	pixel_x = 6
 	},
 /obj/item/ashtray/plastic{
@@ -78348,7 +78348,7 @@
 /obj/structure/safe/floor/blueshield{
 	number_of_tumblers = 4
 	},
-/obj/item/weapon/paper/blueshieldsafe_wip,
+/obj/item/weapon/paper/blueshield/wip,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

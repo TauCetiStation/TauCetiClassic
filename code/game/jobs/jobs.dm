@@ -68,6 +68,16 @@ var/list/command_positions = list(
 )
 
 
+var/list/heads_positions = list(
+	"Captain",
+	"Head of Personnel",
+	"Head of Security",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+)
+
+
 var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
