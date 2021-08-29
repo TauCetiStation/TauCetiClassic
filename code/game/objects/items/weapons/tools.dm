@@ -309,7 +309,7 @@
 			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
 			if(tank.reagents.trans_id_to(src, R.id, max_fuel))
 				to_chat(user, "<span class='notice'>[src] refueled by [tank].</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return
 		else if(tank.explode(user))
 			message_admins("[key_name_admin(user)] triggered a [tank] explosion. [ADMIN_JMP(user)]")

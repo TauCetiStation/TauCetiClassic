@@ -102,7 +102,7 @@
 		chassis.occupant_message("<span class='notice'>You select [chassis.selected].</span>")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
-		playsound(chassis, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, -3)
+		playsound(chassis, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 		updateicon()
 		return
 	var/number = 0
@@ -115,7 +115,7 @@
 			else
 				chassis.selected = available_equipment[number + 1]
 				chassis.occupant_message("<span class='notice'>You switch to [chassis.selected].</span>")
-				playsound(chassis, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, -3)
+				playsound(chassis, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 			updateicon()
 			return

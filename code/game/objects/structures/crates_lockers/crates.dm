@@ -30,7 +30,7 @@
 				s.start()
 				return 2
 
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
 	icon_state = icon_opened
@@ -47,7 +47,7 @@
 	if(!can_close())
 		return 0
 
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	var/itemcount = 0
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
