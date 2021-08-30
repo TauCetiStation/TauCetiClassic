@@ -30,9 +30,8 @@
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = 1
-				vision_flags = initial(vision_flags)
-				lighting_alpha = initial(lighting_alpha)
 				icon_state = initial(icon_state)
+				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
