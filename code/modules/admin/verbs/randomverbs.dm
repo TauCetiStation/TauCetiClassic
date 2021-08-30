@@ -1031,28 +1031,27 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!department)
 		return
 
-	var/list/stamp_list = list("CentComm", "Syndicate", "Clown", "FakeCentComm", "None")
-	var/stamp_name = input(usr, "Please, choose the stamp you want to send with.") as null|anything in stamp_list
-	if(!stamp_name)
+	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - /obj/item/weapon/stamp/chameleon
+	var/list/stamp_list = list()
+	for(var/stamp_type in stamp_types)
+		var/obj/item/weapon/stamp/S = new stamp_type
+		stamp_list[capitalize(S.name)] = S // the list that will be shown to the user to pick from
+	var/stamp_type = input(usr, "Please, choose the stamp you want to send with.") as null|anything in sortList(stamp_list)
+	if(!stamp_type)
 		return
-
-	var/stamp_type = null
-	if(stamp_name != "None")
-		stamp_type = text2path("/obj/item/weapon/stamp/[lowertext(stamp_name)]")
 
 	var/stamp_text = null
 	if(stamp_type)
-		stamp_text = sanitize(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay). In case of empty field there will be default stamp text.") as text)
+		stamp_text = sanitize(input(usr, "Pick a message for stamp text (e.g. Central Command). In case of empty field there will be default stamp text.") as text)
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
 	var/parsed_text = parsebbcode(sent_text)
-	parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
 	P.info = parsed_text
 	P.update_icon()
 
 	if(stamp_type)
-		var/obj/item/weapon/stamp/S = new stamp_type
+		var/obj/item/weapon/stamp/S = stamp_list[capitalize(stamp_type)]
 
 		if(stamp_text)
 			S.stamp_paper(P, stamp_text)

@@ -11835,13 +11835,7 @@
 /area/asteroid/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
-	name = "research outpost rubber stamp";
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
-	stamp_message = "Research Outpost"
-	},
+/obj/item/weapon/stamp/research_outpost,
 /obj/item/weapon/pen,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)

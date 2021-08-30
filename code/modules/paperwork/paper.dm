@@ -291,6 +291,9 @@
 		t = replacetext(t, "\[/list\]", "")
 		t = "<b>[t]</b>"
 		font = crayonfont
+	
+	if(!istype(P, /obj/item/weapon/pen/chameleon))
+		t = replacetext(t, "\[nt\]", "")
 
 	t = parsebbcode(t, P.colour)
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")

@@ -39814,11 +39814,9 @@
 "bsL" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
-/obj/item/weapon/stamp{
-	name = "cargo rubber stamp";
+/obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
-	pixel_y = 3;
-	stamp_message = "Cargo"
+	pixel_y = 3
 	},
 /obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
@@ -41053,10 +41051,6 @@
 "buV" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp{
-	name = "recycler's rubber stamp";
-	stamp_message = "Recycler"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 20

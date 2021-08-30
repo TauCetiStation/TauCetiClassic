@@ -390,6 +390,9 @@
 	t = replacetext(t, "\[date\]", "[current_date_string]")
 	t = replacetext(t, "\[time\]", "[worldtime2text()]")
 
+	// Nanotrasen logo
+	t = replacetext(t, "\[nt\]", "<img src = bluentlogo.png />")
+
 	return t
 
 // Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as

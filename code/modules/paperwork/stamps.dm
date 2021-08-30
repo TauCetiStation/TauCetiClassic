@@ -1,6 +1,6 @@
 /obj/item/weapon/stamp
-	name = "rubber stamp"
-	desc = "A rubber stamp for stamping important documents."
+	name = "печать"
+	desc = "Резиновый оттиск для установки печати на важные документы."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"
@@ -12,89 +12,105 @@
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
 	item_color = "cargo"
 	attack_verb = list("stamped")
-	var/stamp_message = "Stamp"
+	var/stamp_message = "Печать"
 	var/stamp_color = "#a23e3e"
 	var/stamp_border = "#660000"
 	var/big_stamp = FALSE
 
+/obj/item/weapon/stamp/cargo
+	name = "печать отдела поставок"
+	stamp_message = "Отдел Поставок"
+
+/obj/item/weapon/stamp/cargo/atom_init()
+	. = ..()
+	stamp_message += " [station_name_ru()]"
+
 /obj/item/weapon/stamp/captain
-	name = "captain's rubber stamp"
+	name = "печать капитана"
 	icon_state = "stamp-cap"
 	item_color = "captain"
-	stamp_message = "Captain"
+	stamp_message = "Капитан"
 	stamp_color = "#3681bb"
 	stamp_border = "#1f66a0"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/captain/atom_init()
 	. = ..()
-	stamp_message = "[station_name()]"
+	stamp_message = "[station_name_ru()]"
 
 /obj/item/weapon/stamp/hop
-	name = "head of personnel's rubber stamp"
+	name = "печать главы персонала"
 	icon_state = "stamp-hop"
 	item_color = "hop"
-	stamp_message = "Head of Personnel"
+	stamp_message = "Глава Персонала"
 	stamp_color = "#6ec0ea"
 	stamp_border = "#1f66a0"
 
 /obj/item/weapon/stamp/hos
-	name = "head of security's rubber stamp"
+	name = "печать главы службы безопасности"
 	icon_state = "stamp-hos"
 	item_color = "hosred"
-	stamp_message = "Head of Security"
+	stamp_message = "Глава Службы Безопасности"
 	stamp_color = "#cc0000"
 	stamp_border = "#990000"
 
 /obj/item/weapon/stamp/ce
-	name = "chief engineer's rubber stamp"
+	name = "печать главного инженера"
 	icon_state = "stamp-ce"
 	item_color = "chief"
-	stamp_message = "Chief Engineer"
+	stamp_message = "Главный Инженер"
 	stamp_color = "#ffcc00"
 	stamp_border = "#cc9900"
 
 /obj/item/weapon/stamp/rd
-	name = "research director's rubber stamp"
+	name = "печать директора отдела R&D"
 	icon_state = "stamp-rd"
 	item_color = "director"
-	stamp_message = "Research Director"
+	stamp_message = "Директор Отдела R&D" // https://wiki.taucetistation.org/Guide_to_Paperwork
+	stamp_color = "#9361b5"
+	stamp_border = "#7f4ba2"
+
+/obj/item/weapon/stamp/research_outpost
+	name = "печать исследовательского аванпоста"
+	icon_state = "stamp-rd"
+	item_color = "director"
+	stamp_message = "Исследовательский Аванпост"
 	stamp_color = "#9361b5"
 	stamp_border = "#7f4ba2"
 
 /obj/item/weapon/stamp/cmo
-	name = "chief medical officer's rubber stamp"
+	name = "печать главного врача"
 	icon_state = "stamp-cmo"
 	item_color = "cmo"
-	stamp_message = "Chief Medical Officer"
+	stamp_message = "Главный Врач"
 	stamp_color = "#00cccc"
 	stamp_border = "#3399ff"
 
 /obj/item/weapon/stamp/qm
-	name = "quartermaster's rubber stamp"
+	name = "печать завхоза"
 	item_color = "qm"
-	stamp_message = "Quartermaster"
+	stamp_message = "Завхоз"
 
 /obj/item/weapon/stamp/approve
-	name = "APPROVED rubber stamp"
+	name = "печать ОДОБРЕНО"
 	icon_state = "stamp-approve"
 	item_color = "greencoat"
-	stamp_message = "APPROVED"
+	stamp_message = "ОДОБРЕНО"
 	stamp_color = "#007b00"
 	stamp_border = "#1d5215"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/denied
-	name = "DENIED rubber stamp"
+	name = "печать ОТКЛОНЕНО"
 	icon_state = "stamp-deny"
 	item_color = "redcoat"
-	stamp_message = "DENIED"
+	stamp_message = "ОТКЛОНЕНО"
 	stamp_color = "#a23e3e"
 	stamp_border = "#660000"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/clown
-	name = "clown's rubber stamp"
+	name = "печать клоуна"
 	icon_state = "stamp-clown"
 	item_color = "clown"
 	stamp_message = "HONK!"
@@ -103,43 +119,44 @@
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/internalaffairs
-	name = "internal affairs rubber stamp"
+	name = "печать Отдела Внутренних Дел"
 	icon_state = "stamp-intaff"
 	item_color = "intaff"
-	stamp_message = "Internal Affairs"
+	stamp_message = "Отдел Внутренних Дел"
 	stamp_color = "black"
 	stamp_border = "black"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/centcomm
-	name = "centcomm rubber stamp"
+	name = "печать СН Центком"
 	icon_state = "stamp-cent"
 	item_color = "centcomm"
-	stamp_message = "Central Command"
+	stamp_message = "СН Центком"
 	stamp_color = "#006600"
 	stamp_border = "#174111"
 	big_stamp = TRUE
 
-/obj/item/weapon/stamp/fakecentcomm
-	name = "cantcom rubber stamp"
-	icon_state = "stamp-fakecentcom"
-	item_color = "fakecentcom"
-	stamp_message = "Central Compound"
-	stamp_color = "#006600"
+/obj/item/weapon/stamp/centcomm/bullshit
+	name = "матерная печать"
+	stamp_message = "Хуйня, переделывай"
+	big_stamp = FALSE
+
+/obj/item/weapon/stamp/centcomm/fake
+	name = "печать СН Центкомм"
+	stamp_message = "СН Центкомм"
 	stamp_border = "#006600"
-	big_stamp = TRUE
 
 /obj/item/weapon/stamp/syndicate
-	name = "syndicate rubber stamp"
+	name = "печать Синдиката"
 	icon_state = "stamp-syndicate"
 	item_color = "syndicate"
-	stamp_message = "Syndicate Command"
+	stamp_message = "Синдикат"
 	stamp_color = "#990000"
 	stamp_border = "#ff3300"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/cargo_industries
-	name = "cargo industries rubber stamp"
+	name = "печать Cargo Industries"
 	icon_state = "stamp-cargo-industries"
 	stamp_message = "Cargo Industries"
 	stamp_color = "#a23e3e"
@@ -147,9 +164,9 @@
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/velocity
-	name = "velocity rubber stamp"
+	name = "печать НТС Велосити"
 	icon_state = "stamp-velocity"
-	stamp_message = "NTS Velocity"
+	stamp_message = "НТС Велосити"
 	stamp_color = "#999999"
 	stamp_border = "#257cc3"
 	big_stamp = TRUE
@@ -170,7 +187,6 @@
 	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") as null|anything in show_stamps
 
 	if(user && loc == user)
-
 		var/obj/item/weapon/stamp/chosen_stamp = stamps[capitalize(input_stamp)]
 
 		if(chosen_stamp)
