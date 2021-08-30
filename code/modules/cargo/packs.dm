@@ -1107,7 +1107,10 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/civ_medkit
     name = "Civilian Medkits"
-    contains = list(/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian)
+    contains = list(/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+	               /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+				   /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+				   /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian)
     cost = 700
     crate_type = /obj/structure/closet/crate/medical
     crate_name = "Civilian Medkits"
