@@ -39,7 +39,6 @@
 	var/obj/item/weapon/paper/P = new
 	P.name = "NanoTrasen Update"
 	var/parsed_text = parsebbcode(message)
-	parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
 	P.info = parsed_text
 	P.update_icon()
 

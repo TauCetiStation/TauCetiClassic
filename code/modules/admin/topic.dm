@@ -1686,7 +1686,6 @@
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
 		var/parsed_text = parsebbcode(input)
-		parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
 		P.info = parsed_text
 		P.update_icon()
 
