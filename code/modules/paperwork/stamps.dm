@@ -128,10 +128,10 @@
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/centcomm
-	name = "печать СН Центком"
+	name = "печать Центрального Командования"
 	icon_state = "stamp-cent"
 	item_color = "centcomm"
-	stamp_message = "СН Центком"
+	stamp_message = "Центральное Командование"
 	stamp_color = "#006600"
 	stamp_border = "#174111"
 	big_stamp = TRUE
@@ -142,8 +142,8 @@
 	big_stamp = FALSE
 
 /obj/item/weapon/stamp/centcomm/fake
-	name = "печать СН Центкомм"
-	stamp_message = "СН Центкомм"
+	name = "печать Центрального Каммандования"
+	stamp_message = "Центральное Каммандования"
 	stamp_border = "#006600"
 
 /obj/item/weapon/stamp/syndicate
