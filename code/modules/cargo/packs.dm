@@ -1088,10 +1088,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/autoinjectors,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-					/obj/item/weapon/gun/energy/pyrometer/medical,)
+					/obj/item/weapon/gun/energy/pyrometer/medical)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "Medical crate"
@@ -1106,6 +1103,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
     cost = 1500
     crate_type = /obj/structure/closet/crate/medical
     crate_name = "Space First-Aid crate"
+    group = "Medical / Science"
+
+/datum/supply_pack/civ_medkit
+    name = "Civilian Medkits"
+    contains = list(/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian)
+    cost = 700
+    crate_type = /obj/structure/closet/crate/medical
+    crate_name = "Civilian Medkits"
     group = "Medical / Science"
 
 /datum/supply_pack/roller_beds
