@@ -57,7 +57,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
-		if(try_start) to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
+		if(try_start)
+			to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
 		return 0
 
 	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
@@ -67,43 +68,49 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
-					if(try_start) to_chat(user, "[name] is still recharging.")
+					if(try_start)
+						to_chat(user, "[name] is still recharging.")
 					return 0
 			if("charges")
 				if(!charge_counter)
-					if(try_start) to_chat(user, "[name] has no charges left.")
+					if(try_start)
+						to_chat(user, "[name] has no charges left.")
 					return 0
 
 		if(favor_cost > 0 && user.mind.holy_role)
-			if(user.my_religion.aspects.len == 0)
-				if(try_start) to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
-				return 0
 			if(user.my_religion.favor < favor_cost)
-				if(try_start) to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
+				if(try_start)
+					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
 				return 0
 
 	if(user.stat && !stat_allowed)
-		if(try_start) to_chat(user, "Not when you're incapacitated.")
+		if(try_start)
+			to_chat(user, "Not when you're incapacitated.")
 		return 0
 
 	if(ishuman(user) || ismonkey(user))
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			if(try_start) user.say("Mmmf mrrfff!")
+			if(try_start)
+				user.say("Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check
 		if(!ishuman(user))
-			if(try_start) to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
+			if(try_start)
+				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return 0
 		var/mob/living/carbon/human/H = user
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-			if(try_start) to_chat(user, "I don't feel strong enough without my robe.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
 		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-			if(try_start) to_chat(user, "I don't feel strong enough without my sandals.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
 		if(!is_type_in_typecache(H.head, casting_clothes))
-			if(try_start) to_chat(user, "I don't feel strong enough without my hat.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my hat.")
 			return 0
 
 	if(try_start && !skipcharge)
@@ -188,7 +195,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(isliving(target))
 			location = target.loc
 			if(message)
-				to_chat(target, text("[message]"))
+				to_chat(target, message)
 		else if(isturf(target))
 			location = target
 
@@ -285,7 +292,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if(!include_user && (user in possible_targets))
 				possible_targets -= user
 
-			for(var/i=1, i<=max_targets, i++)
+			for(var/i in 1 to max_targets)
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
