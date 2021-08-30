@@ -1677,18 +1677,33 @@
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
-		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
-		if(!input)
-			return
+		var/obj/item/weapon/paper/P = new
+		var/obj/item/weapon/stamp/bad_S = null
+		switch(tgui_alert(usr, "Всё настолько плохо?",, list("Да","ДА!","Нет")))
+			if("Да")
+				bad_S = new /obj/item/weapon/stamp/denied
+			if("ДА!")
+				bad_S = new /obj/item/weapon/stamp/centcomm/bullshit
+		
+		if (bad_S)
+			switch(tgui_alert(usr, "Всё НАСТОЛЬКО плохо? (злоупотреблять этой фичей плохо)",, list("ДА!1!","Отмена")))
+				if("ДА!1!")
+					P.info = locate(href_list["CentcommFaxReplyInfo"])
+					P.stamp_text = locate(href_list["CentcommFaxReplyStamps"])
+					bad_S.stamp_paper(P)
+				if("Отмена")
+					return
+		else
+			var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+			if(!input)
+				return
+
+			var/parsed_text = parsebbcode(input)
+			P.info = parsed_text
+			P.update_icon()
 
 		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
-
-		var/obj/item/weapon/paper/P = new
-		P.name = "[command_name()]- [customname]"
-		var/parsed_text = parsebbcode(input)
-		P.info = parsed_text
-		P.update_icon()
-
+		P.name = "[command_name()] - [customname]"
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P)
 
@@ -1698,15 +1713,16 @@
 			if("No")
 				send_fax(usr, P, "[department]")
 
-		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+		var/display_text = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n"))
+		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = display_text)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
-		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
+		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [display_text]")
 		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
 			attachment_title = ":fax: **[key_name(src.owner)]** replied to a fax message from **[key_name(H)]**",
-			attachment_msg = input,
+			attachment_msg = display_text,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
 

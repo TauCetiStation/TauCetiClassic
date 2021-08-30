@@ -188,7 +188,7 @@ var/list/alldepartments = list("Central Command")
 	"(<a href='?_src_=holder;subtlemessage=\ref[sender]'>SM</a>)",
 	ADMIN_JMP(sender),
 	"(<a href='?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
-	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
+	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department];CentcommFaxReplyInfo=\ref[P.info];CentcommFaxReplyStamps=\ref[P.stamp_text]'>RPLY</a>)",
 	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
 	for(var/client/C in admins)
