@@ -3,7 +3,7 @@
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"

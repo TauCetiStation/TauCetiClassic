@@ -7,7 +7,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = TRUE
 	var/toggled = FALSE
@@ -70,7 +70,7 @@
 		active_dummy = new
 	if(active_dummy.current_type != target.type)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
 			copy_item(target)
 	else
@@ -99,7 +99,7 @@
 	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
 
 /obj/item/device/chameleon/proc/play_transform_effect()
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
 	flick("emppulse",T)

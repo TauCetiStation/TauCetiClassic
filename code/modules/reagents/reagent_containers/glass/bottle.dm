@@ -116,6 +116,7 @@
 	icon_state = "bottle1"
 	list_reagents = list("diethylamine" = 30)
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
@@ -127,6 +128,7 @@
 	var/datum/disease/F = new /datum/disease/advance/flu(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion
 	name = "Epiglottis virion culture bottle"
@@ -140,6 +142,7 @@
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion
 	name = "Liver enhancement virion culture bottle"
 	desc = "A small bottle. Contains liver enhancement virion culture in synthblood medium."
@@ -151,6 +154,7 @@
 	var/datum/disease/F = new /datum/disease/advance/heal(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion
 	name = "Hullucigen virion culture bottle"
@@ -164,6 +168,7 @@
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
 	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
@@ -175,6 +180,7 @@
 	var/datum/disease/F = new /datum/disease/pierrot_throat(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/cold
 	name = "Rhinovirus culture bottle"
@@ -188,6 +194,7 @@
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/random
 	name = "Random culture bottle"
 	desc = "A small bottle. Contains a random disease."
@@ -199,6 +206,7 @@
 	var/datum/disease/advance/F = new(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/retrovirus
 	name = "Retrovirus culture bottle"
@@ -222,12 +230,10 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/gbs/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(20)
-	reagents = R
-	R.my_atom = src
 	var/datum/disease/F = new /datum/disease/gbs
-	var/list/data = list("virus"= F)
-	R.add_reagent("blood", 20, data)
+	var/list/data = list("viruses"= list(F))
+	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
 	name = "GBS culture bottle"
@@ -240,23 +246,7 @@
 	var/datum/disease/F = new /datum/disease/fake_gbs(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
-/*
-/obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat
-	name = "Rhumba Beat culture bottle"
-	desc = "A small bottle. Contains The Rhumba Beat culture in synthblood medium."//Or simply - General BullShit
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 
-/obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat/atom_init()
-	. = ..()
-	var/datum/reagents/R = new/datum/reagents(20)
-	reagents = R
-	R.my_atom = src
-	var/datum/disease/F = new /datum/disease/rhumba_beat
-	var/list/data = list("virus"= F)
-	R.add_reagent("blood", 20, data)
-*/
 
 /obj/item/weapon/reagent_containers/glass/bottle/brainrot
 	name = "Brainrot culture bottle"
@@ -269,6 +259,7 @@
 	var/datum/disease/F = new /datum/disease/brainrot(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/magnitis
 	name = "Magnitis culture bottle"
@@ -294,6 +285,7 @@
 	var/datum/disease/F = new /datum/disease/wizarditis(0)
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 20, data)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
 	name = "Polytrinic Acid Bottle"
@@ -330,7 +322,6 @@
 	icon_state = "bottle1"
 	list_reagents = list("frostoil" = 30)
 
-
 /obj/item/weapon/reagent_containers/glass/bottle/chefspecial
 	name = "Chef's Special bottle"
 	desc = "A small bottle of Chef's Special. How fragrantly!"
@@ -345,7 +336,6 @@
 	icon_state = "bottle2"
 	list_reagents = list("alphaamanitin" = 30)
 
-
 /obj/item/weapon/reagent_containers/glass/bottle/carpotoxin
 	name = "carpotoxin bottle"
 	desc = "A small bottle of carpotoxin. Upon receipt of substance no carp was not injured."
@@ -353,14 +343,12 @@
 	icon_state = "bottle2"
 	list_reagents = list("carpotoxin" = 30)
 
-
 /obj/item/weapon/reagent_containers/glass/bottle/zombiepowder
 	name = "zombiepowder bottle"
 	desc = "A small bottle of zombiepowder. We are not responsible for the uprising of dead."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("zombiepowder" = 30)
-
 
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon
 	name = "peridaxon bottle"

@@ -308,7 +308,7 @@
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
@@ -323,7 +323,7 @@
 				M.stuttering = 1
 			M.make_jittery(10)
 			M.make_dizzy(10)
-			M.druggy = max(M.druggy, 35)
+			M.adjustDrugginess(3)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
@@ -331,7 +331,7 @@
 				M.stuttering = 1
 			M.make_jittery(20)
 			M.make_dizzy(20)
-			M.druggy = max(M.druggy, 40)
+			M.adjustDrugginess(4)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++

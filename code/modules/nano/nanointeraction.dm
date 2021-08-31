@@ -1,6 +1,9 @@
 /datum/proc/nano_host()
 	return src
 
+/obj/nano_module
+	flags = ABSTRACT
+
 /obj/nano_module/nano_host()
 	return loc
 

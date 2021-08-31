@@ -61,6 +61,7 @@
 #define SS_PRIORITY_SPACEDRIFT    30
 #define SS_PRIORITY_THROWING      25
 #define SS_PRIORITY_FASTPROCESS   25
+#define SS_PRIORITY_PROCESS       25
 #define SS_PRIORITY_AIR           20
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15
@@ -88,6 +89,8 @@
 #define SS_WAIT_VOTE         10
 #define SS_WAIT_AIR          10
 #define SS_WAIT_QUIRKS       10
+#define SS_WAIT_PROCESSING   10
+#define SS_WAIT_MOOD         10
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600

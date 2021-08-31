@@ -195,6 +195,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/library_debug_read,
 	/client/proc/regisration_panic_bunker,
 	/client/proc/host_announcements,
+	/client/proc/add_round_admin,
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,

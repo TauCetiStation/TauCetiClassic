@@ -12,8 +12,6 @@
 		return FALSE
 	if(M.current.ismindprotect())
 		return FALSE
-	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate"))
-		return FALSE
 	return TRUE
 
 /datum/role/rev/Greet(greeting, custom)
