@@ -110,8 +110,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/folder/red)
 	cost = 1500
 	group = "Operations"
-
-
 //----------------------------------------------
 //-----------------SECURITY---------------------
 //----------------------------------------------
@@ -309,7 +307,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (slug) crate"
 	access = access_armory
 	group = "Security"
 
@@ -327,7 +324,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells/buckshot)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (buckshot) crate"
 	access = access_armory
 	group = "Security"
 
