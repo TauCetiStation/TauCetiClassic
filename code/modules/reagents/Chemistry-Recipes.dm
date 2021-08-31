@@ -294,12 +294,14 @@
 	required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanobots" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
 	result_amount = 5
 
+/*
 /datum/chemical_reaction/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
 	result = "hyperzine"
 	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
 	result_amount = 3
+*/
 
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
