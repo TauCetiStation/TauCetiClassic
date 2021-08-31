@@ -82670,11 +82670,6 @@
 	name = "Chemistry Lab";
 	sortType = "Chemistry Lab"
 	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 1;
-	name = "Chemistry Lab";
-	sortType = "Chemistry Lab"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "xWb" = (
