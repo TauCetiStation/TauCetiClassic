@@ -97,7 +97,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/bureaucracy
 	name = "Bureaucracy Crate"
-    contains = list(/obj/item/weapon/stamp/denied,	
+	contains = list(/obj/item/weapon/stamp/denied,	
 					/obj/item/weapon/stamp/approve,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/paper_bin,
