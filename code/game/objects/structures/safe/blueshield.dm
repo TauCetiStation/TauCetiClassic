@@ -30,10 +30,12 @@
 
 /obj/item/weapon/paper/blueshield/safe_codes/atom_init()
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/item/weapon/paper/blueshield/safe_codes/atom_init_late()
 	var/list/obj/structure/safe/floor/blueshield/safes = list()
 	if(safes_list.len)
-		for (var/obj/structure/safe/floor/blueshield/safe in safes_list)
+		for (var/obj/structure/safe/floor/blueshield/safe in global.safes_list)
 			safes += safe
 	
 	info += "<center>"
