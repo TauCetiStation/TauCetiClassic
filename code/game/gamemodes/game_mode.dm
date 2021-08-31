@@ -56,7 +56,7 @@
 		return FALSE
 	if(check_ready)
 		if(!CanSetup(check_ready))
-			log_mode("[name] not start because pre-filling of the faction failed.")
+			log_mode("[name] hasn't started because pre-filling of the faction failed.")
 			return FALSE
 	return TRUE
 
