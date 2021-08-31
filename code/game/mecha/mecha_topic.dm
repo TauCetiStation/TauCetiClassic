@@ -424,18 +424,12 @@
 		occupant_message("Recalibrating coordination system.")
 		log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/stationary_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/calibration_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
 
 	return
 
-///Repairs internal damage if the mech hasn't moved.
-/obj/mecha/proc/stationary_repair(location)
-	if(location == loc)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
-		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		occupant_message("<font color='blue'>Recalibration successful.</font>")
-		log_message("Recalibration of coordination system finished with 0 errors.")
-	else
-		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		occupant_message("<font color='red'>Recalibration failed.</font>")
-		log_message("Recalibration of coordination system failed with 1 error.", 1)
+/obj/mecha/proc/calibration_repair(location)
+	clearInternalDamage(MECHA_INT_CONTROL_LOST)
+	occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	occupant_message("<font color='blue'>Recalibration successful.</font>")
+	log_message("Recalibration of coordination system finished with 0 errors.")
