@@ -1236,12 +1236,12 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
-/datum/supply_pack/weelchair
-    name = "Weelchair crate"
+/datum/supply_pack/wheelchair
+    name = "Wheelchair crate"
     cost = 2000
     contains = list(/obj/structure/stool/bed/chair/wheelchair)
     crate_type = /obj/structure/largecrate
-    crate_name = "Weelchair crate"
+    crate_name = "Wheelchair crate"
     group = "Medical / Science"
 
 /datum/supply_pack/artifical_ventilation_machine 
