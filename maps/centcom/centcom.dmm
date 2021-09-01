@@ -14464,7 +14464,7 @@
 "aVM" = (
 /obj/machinery/door/poddoor{
 	id = "chapelgunshuttle";
-	name = "Chapel Launcher Door"
+	name = "Eto tipo PR-prikol, but.. mozhet i ne prikol"
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
