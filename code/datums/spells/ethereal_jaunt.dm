@@ -9,8 +9,8 @@
 	range = -1
 	include_user = 1
 	action_icon_state = "jaunt"
-	var/image/dissapear_animation //what animation is gonna get played on spell cast
-	var/image/appear_animation //what animation is gonna get played on spell end
+	var/icon/dissapear_animation //what animation is gonna get played on spell cast
+	var/icon/appear_animation //what animation is gonna get played on spell end
 	var/movement_cooldown = 2 //movement speed, less is faster
 	var/ignore_NOJAUNT = FALSE //ignores NOJAUNT turf flag
 	var/jaunt_duration = 6 SECONDS //how long jaunt will last
