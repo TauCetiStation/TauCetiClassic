@@ -1701,6 +1701,9 @@
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aeC" = (
