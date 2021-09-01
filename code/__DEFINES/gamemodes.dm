@@ -83,14 +83,13 @@
 #define INTERCEPT_TIME_LOW 1 MINUTE
 #define INTERCEPT_TIME_HIGH 3 MINUTE
 
-#define BLUESHIELD_MIND (1<<0)
-#define BLUESHIELD_TARGET (1<<1)
-#define BLUESHIELD_ALERT (1<<2)
+// -- Blueshield Officer-related
 
-#define EXTRA_TC_INTERCEPT 8
-#define EXTRA_TC_BS_MIND 4
-#define EXTRA_TC_BS_TARGET 4
-#define EXTRA_TC_BS_ALERT 8
+#define BLUESHIELD_MIND (1<<0) // is antag mind head of staff?
+#define BLUESHIELD_TARGET (1<<1) // is antag target a head of staff?
+#define BLUESHIELD_ALERT (1<<2) // is blueshield alerted about antag target?
+
+// -- Abductors
 
 #define ABDUCTOR_SCALING_COEFF 15 //how many players per abductor team
 #define MAX_ABDUCTOR_TEAMS 4

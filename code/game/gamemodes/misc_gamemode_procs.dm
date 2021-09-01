@@ -55,7 +55,7 @@
 
 			suspects += man
 			// If they're a traitor or likewise, give them extra TC in exchange.
-			alert_antagonist(man, "you to be linked with us", EXTRA_TC_INTERCEPT)
+			alert_antagonist(man, "you to be linked with us", 8)
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -127,13 +127,13 @@
 				var/extra_TC = 0
 
 				if (antag_flags[antag] & BLUESHIELD_MIND)
-					extra_TC += EXTRA_TC_BS_MIND
+					extra_TC += 4 // if antag mind also a head of staff
 					msg = "that new corporate dog will chase you"
 				if (antag_flags[antag] & BLUESHIELD_TARGET)
-					extra_TC += EXTRA_TC_BS_TARGET
+					extra_TC += 4 // if antag have one of heads of staff as target
 					msg = "that you are trying to cut one of their heads"
 				if (antag_flags[antag] & BLUESHIELD_ALERT)
-					extra_TC += EXTRA_TC_BS_ALERT
+					extra_TC += 8 // if antag's target was displayed to blueshield
 					msg = "that especially that head will be attacked today"
 
 				alert_antagonist(antag.current, msg, extra_TC)
