@@ -19,7 +19,7 @@
 "aac" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	id = "chapelgunshuttle"
+	id = "toxinsdriver"
 	},
 /obj/machinery/door/window{
 	name = "AI Satellite";
@@ -14463,8 +14463,8 @@
 /area/centcom/evac)
 "aVM" = (
 /obj/machinery/door/poddoor{
-	id = "chapelgunshuttle";
-	name = "Eto tipo PR-prikol, but.. mozhet i ne prikol"
+	id = "chapelgun";
+	name = "Chapel Launcher Door"
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
