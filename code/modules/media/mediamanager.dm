@@ -74,6 +74,7 @@ function SetVolume(volume) {
 		return // Nope.
 	var/playtime = round((world.time - start_time) / 10)
 	owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
+	update_volume()
 
 /datum/media_manager/proc/stop_music()
 	url=""
@@ -112,4 +113,3 @@ function SetVolume(volume) {
 /datum/media_manager/proc/update_volume()
 	volume = owner.prefs.snd_jukebox_vol
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
-	//send_update()

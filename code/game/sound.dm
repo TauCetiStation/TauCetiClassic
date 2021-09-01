@@ -238,7 +238,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				to_chat(src, "Preferences saving failed due to unknown reason.")
 			return
 		if("testVolume")
-			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), channel = CHANNEL_VOLUMETEST)
+			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
 			return
 		else
 			return
