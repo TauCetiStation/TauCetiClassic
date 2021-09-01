@@ -17,11 +17,15 @@
 /turf/space,
 /area/space)
 "aac" = (
-/obj/structure/stool/bed/chair/schair/wagon,
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpetsymbol"
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "toxinsdriver"
 	},
+/obj/machinery/door/window{
+	name = "AI Satellite";
+	req_access = list(66)
+	},
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aad" = (
 /obj/structure/object_wall/evac{
@@ -1470,8 +1474,8 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/item/weapon/twohanded/flora/pottedplant/orientaltree,
-/turf/simulated/shuttle/floor/evac,
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "adX" = (
 /obj/structure/sign/mark{
@@ -1698,16 +1702,7 @@
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
-/obj/structure/window/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/structure/table,
-/obj/item/toy/plushie/space_whale{
-	name = "Plushie Oculus"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
+/turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aeC" = (
 /turf/simulated/shuttle/floor/evac/sec1,
@@ -1823,19 +1818,12 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "aeU" = (
-/obj/structure/window/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/friedbanana,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/driver_button{
+	id = "chapelgun";
+	name = "Chapel Mass Driver";
+	pixel_x = 25
 	},
-/obj/item/toy/plushie/tabby_cat{
-	name = "Plushie Bucherck"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
+/turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aeV" = (
 /obj/structure/object_wall/evac{
@@ -1934,10 +1922,13 @@
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "afj" = (
-/obj/structure/object_wall/evac{
-	icon_state = "5,16"
+/obj/structure/window/reinforced,
+/obj/structure/table/woodentable,
+/obj/item/weapon/nullrod{
+	pixel_x = -8
 	},
-/turf/space,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "afk" = (
 /obj/machinery/flasher{
@@ -2048,18 +2039,10 @@
 /area/shuttle/escape/centcom)
 "afz" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/applepie,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/machinery/light{
-	dir = 8
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/structure/table,
-/obj/item/toy/plushie/orange_fox{
-	name = "Plushie Wendy"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
+/turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "afA" = (
 /obj/structure/object_wall/standart{
@@ -2235,16 +2218,30 @@
 /obj/effect/landmark/mafia_game_area,
 /turf/space,
 /area/space)
-"aga" = (
-/obj/structure/window/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/carrotfries,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/structure/table,
-/obj/item/toy/plushie/white_cat{
-	name = "Plushie Scinia"
+"afW" = (
+/obj/structure/stool/bed/chair/pew/left,
+/turf/simulated/floor/carpet,
+/area/shuttle/escape/centcom)
+"afX" = (
+/obj/structure/stool/bed/chair/pew/right,
+/turf/simulated/floor/carpet,
+/area/shuttle/escape/centcom)
+"afY" = (
+/turf/simulated/floor/carpet,
+/area/shuttle/escape/centcom)
+"afZ" = (
+/obj/machinery/light{
+	dir = 8
 	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
+/obj/structure/stool/bed/chair/pew/left,
+/turf/simulated/floor/carpet,
+/area/shuttle/escape/centcom)
+"aga" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "wood_stairs2"
 	},
 /area/shuttle/escape/centcom)
 "agb" = (
@@ -2256,6 +2253,17 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"agc" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/shuttle/escape/centcom)
+"agd" = (
+/obj/structure/object_wall/evac{
+	icon_state = "5,16"
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
@@ -14450,8 +14458,9 @@
 	},
 /area/centcom/evac)
 "aVM" = (
-/obj/structure/window/reinforced/shuttle/evac{
-	icon_state = "14,20"
+/obj/machinery/door/poddoor{
+	id = "chapelgun";
+	name = "Chapel Launcher Door"
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
@@ -44001,11 +44010,11 @@ aaM
 aaM
 aaM
 aRs
-aac
-aeB
-aac
-afz
 adW
+afj
+afW
+afZ
+afW
 aRG
 oFb
 oLb
@@ -44257,12 +44266,12 @@ aaM
 aaM
 aaM
 aaM
-aUE
-aRG
-aRG
-aRG
-aRG
-aRG
+aRs
+aeB
+afz
+afX
+afX
+afX
 aRG
 adf
 oLb
@@ -44513,13 +44522,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aVM
 aac
 aeU
-aac
 aga
-aRG
+afY
+afY
+agc
 aRG
 bOb
 oTb
@@ -44775,8 +44784,8 @@ aQV
 aUT
 aae
 aed
-afj
-oCb
+aed
+agd
 oCb
 alg
 oNb
