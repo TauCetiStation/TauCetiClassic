@@ -43143,11 +43143,11 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
-/area/station/security/blueshield)
+/area/station/maintenance/eva)
 "byl" = (
 /obj/structure/stool,
 /turf/simulated/floor/plating,
-/area/station/security/blueshield)
+/area/station/maintenance/eva)
 "bym" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -43226,7 +43226,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
-/area/station/security/blueshield)
+/area/station/maintenance/eva)
 "byt" = (
 /obj/machinery/message_server,
 /turf/simulated/floor/bluegrid,
@@ -43430,10 +43430,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/altar)
-"byL" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating,
-/area/station/security/blueshield)
 "byM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -108108,11 +108104,11 @@ agO
 agO
 aym
 fzu
-adW
+agO
 faS
 aNd
 avI
-adW
+agO
 dgb
 aCq
 aPr
@@ -109135,7 +109131,7 @@ arw
 agO
 aYi
 cfP
-adW
+iUo
 iUo
 aEo
 iUo
@@ -110168,7 +110164,7 @@ dtS
 kAj
 cVe
 iUo
-byL
+aqd
 aYi
 aCu
 aIM
@@ -110425,7 +110421,7 @@ vsU
 vAk
 wxg
 iUo
-byL
+aqd
 avQ
 hGb
 aCx
