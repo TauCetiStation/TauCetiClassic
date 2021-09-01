@@ -151,6 +151,8 @@ var/global/list/image/fluidtrack_cache=list()
 	going_state  = "human2"
 	amount = 0
 
+	beauty = -50
+
 /obj/effect/decal/cleanable/blood/tracks/footprints/paws
 	coming_state = "paw1"
 	going_state  = "paw2"
