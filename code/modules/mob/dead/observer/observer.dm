@@ -1,4 +1,3 @@
-var/global/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness
 var/global/list/image/ghost_sightless_images = list() //this is a list of images for things ghosts should still be able to see even without ghost sight
 
 /mob/dead/observer
@@ -30,7 +29,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
-	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/datum/orbit_menu/orbit_menu
@@ -42,8 +40,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	ghostimage = image(icon, src, "ghost")
-	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
@@ -98,11 +94,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(data_hud)
 		remove_data_huds()
 	observer_list -= src
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
 	if(orbit_menu)
 		SStgui.close_uis(orbit_menu)
 		QDEL_NULL(orbit_menu)
@@ -646,14 +637,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!client)
 		return
 	if (!ghostvision)
-		client.images -= ghost_darkness_images
 		client.images |= ghost_sightless_images
 	else
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		client.images -= ghost_sightless_images
-		client.images |= ghost_darkness_images
-		if (ghostimage)
-			client.images -= ghostimage //remove ourself
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)

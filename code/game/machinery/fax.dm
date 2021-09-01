@@ -199,7 +199,7 @@ var/list/alldepartments = list("Central Command")
 	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
-		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
