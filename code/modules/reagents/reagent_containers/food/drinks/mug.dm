@@ -37,7 +37,8 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/mug/random/atom_init()
 	. = ..()
-	var/list/mug_types = typesof(/obj/item/weapon/reagent_containers/food/drinks/mug) - src.type
+	var/list/mug_blacklist = list(src.type, /obj/item/weapon/reagent_containers/food/drinks/mug/golden)
+	var/list/mug_types = typesof(/obj/item/weapon/reagent_containers/food/drinks/mug) - mug_blacklist
 	var/mug_type = pick(mug_types)
 	var/obj/item/src_mug = new mug_type
 	name = src_mug.name
