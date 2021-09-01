@@ -17,15 +17,9 @@
 /turf/space,
 /area/space)
 "aac" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "toxinsdriver"
+/obj/structure/window/reinforced/shuttle/evac{
+	icon_state = "14,20"
 	},
-/obj/machinery/door/window{
-	name = "AI Satellite";
-	req_access = list(66)
-	},
-/obj/structure/closet/coffin,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aad" = (
@@ -1475,7 +1469,11 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/machinery/vending/holy,
+/obj/machinery/door/window{
+	dir = 4;
+	name = "Mass Driver";
+	req_access = list(22)
+	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "adX" = (
@@ -1703,9 +1701,6 @@
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aeC" = (
@@ -1927,12 +1922,20 @@
 /area/shuttle/escape/centcom)
 "afj" = (
 /obj/structure/window/reinforced,
-/obj/structure/table/woodentable,
-/obj/item/weapon/nullrod{
-	pixel_x = -8
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "toxinsdriver"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
-/turf/simulated/floor/carpet/black,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/closet/coffin,
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Mass Driver";
+	req_access = list(22)
+	},
+/turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "afk" = (
 /obj/machinery/flasher{
@@ -2045,6 +2048,11 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
@@ -14462,11 +14470,8 @@
 	},
 /area/centcom/evac)
 "aVM" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "Chapel Launcher Door"
-	},
-/turf/simulated/shuttle/floor/evac,
+/obj/machinery/vending/holy,
+/turf/simulated/floor/carpet,
 /area/shuttle/escape/centcom)
 "aVO" = (
 /obj/structure/object_wall/cargo{
@@ -15591,10 +15596,11 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aZb" = (
-/obj/structure/object_wall/evac{
-	icon_state = "1,18"
+/obj/machinery/door/poddoor{
+	id = "chapelgun";
+	name = "Chapel Launcher Door"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "aZc" = (
 /obj/structure/rack,
@@ -44019,7 +44025,7 @@ afj
 afW
 afZ
 afW
-aRG
+aVM
 oFb
 oLb
 kcE
@@ -44276,7 +44282,7 @@ afz
 afX
 afX
 afX
-aRG
+afY
 adf
 oLb
 oLb
@@ -44526,14 +44532,14 @@ aaM
 aaM
 aaM
 aaM
-aVM
+aaM
 aac
 aeU
 aga
 afY
 afY
 agc
-aRG
+agc
 bOb
 oTb
 pHb
@@ -44788,8 +44794,8 @@ aQV
 aUT
 aae
 aed
-aed
 agd
+oCb
 oCb
 alg
 oNb
@@ -46903,7 +46909,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+aaM
 oeb
 acb
 acb
@@ -47161,7 +47167,7 @@ aaM
 oeb
 oeb
 oeb
-acb
+oeb
 acb
 acb
 acb
