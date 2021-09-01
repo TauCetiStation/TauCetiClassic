@@ -14463,7 +14463,7 @@
 /area/centcom/evac)
 "aVM" = (
 /obj/machinery/door/poddoor{
-	id = "chapelgun";
+	id = "chapelgunshuttle";
 	name = "Chapel Launcher Door"
 	},
 /turf/simulated/shuttle/floor/evac,
