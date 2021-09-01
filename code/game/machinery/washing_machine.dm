@@ -82,6 +82,9 @@
 			var/new_softcap_icon_state = ""
 			var/new_softcap_name = ""
 			var/new_desc = "The colors are a bit dodgy."
+			/*
+				ADD /proc/machine_wash TO CLOTHING AND REMOVE THIS SPAGHETTI HELL WE HAVE BEEN DOOMED TO.
+			*/
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
 				//world << "DEBUG: [color] == [J.color]"
@@ -199,6 +202,8 @@
 		qdel(crayon)
 		crayon = null
 
+	for(var/obj/item/clothing/under/U in contents)
+		U.fresh_laundered_until = world.time + 5 MINUTES
 
 	if( locate(/mob,contents) )
 		state = 7
