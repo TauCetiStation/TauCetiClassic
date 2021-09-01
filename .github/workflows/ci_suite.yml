@@ -7,9 +7,9 @@ on:
     branches:
       - master
 env:
-  BYOND_MAJOR: 513
-  BYOND_MINOR: 1533
-  SPACEMAN_DMM_VERSION: suite-1.6
+  BYOND_MAJOR: 514
+  BYOND_MINOR: 1565
+  SPACEMAN_DMM_VERSION: suite-1.7
 jobs:
   DreamChecker:
     runs-on: ubuntu-16.04

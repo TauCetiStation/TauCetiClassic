@@ -40,6 +40,8 @@
 	icon_state = "decal_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
+	beauty = 100
+
 /obj/structure/cellular_biomass/wall/bluespace/atom_init()
 	. = ..()
 	icon_state = "bluewall_1"
@@ -67,6 +69,8 @@
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "creep_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
+
+	beauty = 100
 
 /mob/living/simple_animal/hostile/cellular/bluespace
 	name = "Moving Glitch"

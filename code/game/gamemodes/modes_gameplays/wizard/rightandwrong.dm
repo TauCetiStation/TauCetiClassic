@@ -30,7 +30,7 @@
 					S.clothes_req = 0
 	if(!summon_type)
 		for(var/mob/M in player_list)
-			M.playsound_local(null, 'sound/magic/Summon_guns.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, 'sound/magic/Summon_guns.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	else
 		for(var/mob/M in player_list)
-			M.playsound_local(null, 'sound/magic/Summon_Magic.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, 'sound/magic/Summon_Magic.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)

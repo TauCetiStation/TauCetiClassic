@@ -84,7 +84,7 @@ var/list/bad_messages = list("Never take me off, please!",
 				charges += 0.25
 			else
 				charges += 1
-				playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+				playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	// use up stored charges
 	if(charges >= 10)
@@ -96,12 +96,12 @@ var/list/bad_messages = list("Never take me off, please!",
 			charges -= 1
 			var/spawn_type = pick(/mob/living/simple_animal/hostile/creature)
 			new spawn_type(pick(view(1,src)))
-			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	if(charges >= 1)
 		if(shadow_wights.len < 5 && prob(5))
 			shadow_wights.Add(new /obj/effect/shadow_wight(src.loc))
-			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			charges -= 0.1
 
 	if(charges >= 0.1)
@@ -131,7 +131,7 @@ var/list/bad_messages = list("Never take me off, please!",
 /obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)
 	last_bloodcall = world.time
 	if(istype(M))
-		playsound(src, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		nearby_mobs.Add(M)
 
 		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
@@ -201,7 +201,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/over_here3.ogg',
 			                          'sound/hallucinations/turn_around1.ogg',
 			                          'sound/hallucinations/turn_around2.ogg')
-			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
+			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
 			src.loc = null
 	else
