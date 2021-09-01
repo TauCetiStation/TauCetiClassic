@@ -61,7 +61,7 @@ function SetVolume(volume) {
 		return
 	mob = holder
 	owner = mob.client
-	volume = owner.get_sound_volume(VOL_JUKEBOX)
+	volume = owner.prefs.snd_jukebox_vol
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
@@ -70,11 +70,10 @@ function SetVolume(volume) {
 
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()
-	if(!owner.get_sound_volume(VOL_JUKEBOX) && url != "")
+	if(!volume && !length(url))
 		return // Nope.
 	var/playtime = round((world.time - start_time) / 10)
 	owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
-	update_volume()
 
 /datum/media_manager/proc/stop_music()
 	url=""
