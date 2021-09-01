@@ -3230,7 +3230,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britain{
 	pixel_x = -4
 	},
 /turf/simulated/floor{
@@ -70040,7 +70040,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britain{
 	pixel_x = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -76427,7 +76427,7 @@
 /area/station/hallway/primary/central)
 "xcF" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britain{
 	pixel_x = 4;
 	pixel_y = 5
 	},

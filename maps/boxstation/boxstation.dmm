@@ -22792,7 +22792,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britain{
 	pixel_x = -4
 	},
 /turf/simulated/floor{
@@ -72279,7 +72279,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britain{
 	pixel_x = -4
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,

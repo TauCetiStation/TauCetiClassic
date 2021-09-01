@@ -2,7 +2,7 @@
 	name = "mug"
 	desc = "Just a plain mug for drinks."
 	icon = 'icons/obj/mugs.dmi'
-	icon_state = null
+	icon_state = "mug"
 	volume = 30
 
 /obj/item/weapon/reagent_containers/food/drinks/mug/golden
