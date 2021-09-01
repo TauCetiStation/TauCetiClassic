@@ -424,7 +424,7 @@
 		occupant_message("Recalibrating coordination system.")
 		log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/calibration_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/calibration_repair, occupant.loc), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
 
 	return
 
