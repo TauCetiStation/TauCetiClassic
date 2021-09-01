@@ -19,12 +19,13 @@
 "aac" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	id = "toxinsdriver"
+	id = "chapelgunshuttle"
 	},
 /obj/machinery/door/window{
 	name = "AI Satellite";
 	req_access = list(66)
 	},
+/obj/structure/closet/coffin,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aad" = (
@@ -1474,7 +1475,7 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/structure/closet/coffin,
+/obj/machinery/vending/holy,
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "adX" = (
@@ -1702,6 +1703,9 @@
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aeC" = (
@@ -1819,7 +1823,7 @@
 /area/shuttle/escape/centcom)
 "aeU" = (
 /obj/machinery/driver_button{
-	id = "chapelgun";
+	id = "chapelgunshuttle";
 	name = "Chapel Mass Driver";
 	pixel_x = 25
 	},
