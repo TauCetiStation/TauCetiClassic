@@ -74974,10 +74974,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/ntcup{
-	pixel_x = -5;
-	pixel_y = -1
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
