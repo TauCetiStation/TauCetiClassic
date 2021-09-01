@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(ticker)
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
-	var/MALF_revealed = 0//Used for announcement
+	var/Malf_announce_stage = 0//Used for announcement
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
