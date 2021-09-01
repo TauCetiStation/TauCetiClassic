@@ -34,4 +34,4 @@
 /obj/item/weapon/reagent_containers/food/drinks/mug/ireland
 	name = "Ireland mug"
 	desc = "A mug with the Irish flag emblazoned on it."
-	icon_state = "mug_ia"
+	icon_state = "mug_ie"
