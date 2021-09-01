@@ -14405,7 +14405,7 @@
 /area/shuttle/supply/velocity)
 "aVy" = (
 /obj/structure/closet/medical_wall/erokez,
-/turf/simulated/shuttle/floor/erokez,
+/turf/space,
 /area/shuttle/transport1/centcom)
 "aVz" = (
 /obj/structure/object_wall/cargo{
@@ -46899,7 +46899,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+oeb
 oeb
 acb
 acb
@@ -47157,7 +47157,7 @@ aaM
 oeb
 oeb
 oeb
-oeb
+acb
 acb
 acb
 acb
