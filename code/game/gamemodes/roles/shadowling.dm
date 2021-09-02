@@ -42,4 +42,5 @@
 /datum/role/thrall/OnPreSetup(greeting, custom)
 	..()
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
 	return TRUE
