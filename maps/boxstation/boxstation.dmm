@@ -43127,7 +43127,13 @@
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
 	pixel_x = -4;
-	pixel_y = -4
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "represent_blast";
+	name = "Inter-office Shutters";
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43832,7 +43838,13 @@
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
 	pixel_x = 4;
-	pixel_y = -4
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "represent_blast";
+	name = "Inter-office Shutters";
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -80626,19 +80638,20 @@
 /area/station/medical/virology)
 "syt" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	name = "Internal Affairs Agent's Office";
-	req_access = list(38)
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
-	name = "Blueshield Officer's Office";
-	req_access = list(42)
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "represent_blast";
+	name = "Inter-Office Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/window/eastright{
+	name = "Internal Affairs Office"
+	},
+/obj/machinery/door/window/westleft{
+	name = "Blueshield Office"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -82001,7 +82014,14 @@
 /obj/machinery/door_control{
 	id = "blueshield_blast";
 	name = "Privacy Shutters";
-	pixel_x = 22
+	pixel_x = 22;
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "represent_blast";
+	name = "Inter-office Shutters";
+	pixel_x = 22;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -110676,7 +110696,7 @@ iUo
 xJW
 xJW
 syt
-iUo
+xJW
 iUo
 iUo
 aYi
