@@ -24,7 +24,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		switch(rank)
 			if(null,"")
 				continue
-			if("Removed")
+			if(ADMIN_RANK_REMOVED)
 				continue				//Reserved
 
 		var/rights = 0
@@ -114,7 +114,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")
+			if(rank == ADMIN_RANK_REMOVED)
 				continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]

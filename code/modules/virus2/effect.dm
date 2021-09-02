@@ -389,7 +389,7 @@
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
 		M.confused = max(0, M.confused - 2)
-		M.druggy = max(M.druggy - 5, 0)
+		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		if(M.reagents.has_reagent("mindbreaker"))
@@ -1139,7 +1139,7 @@
 			var/mob/living/carbon/human/H = mob
 			if(prob(drop_item_chance))
 				var/obj/item/I = H.get_active_hand()
-				if(I && I.w_class <= ITEM_SIZE_SMALL)
+				if(I && I.w_class <= SIZE_TINY)
 					H.drop_item()
 			if(prob(couthing_fit_chance))
 				to_chat(mob, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")

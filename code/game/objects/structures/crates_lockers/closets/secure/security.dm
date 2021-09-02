@@ -263,11 +263,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
-	for (var/i in 1 to 2)
-		new /obj/item/ammo_box/magazine/c45r(src)
+	if(prob(50))
+		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/magazine/c45r(src)
+	else
+		new /obj/item/weapon/gun/projectile/revolver/detective(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/c38(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
-	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 
@@ -362,3 +367,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
+
+/obj/structure/closet/secure_closet/pistols
+	name = "Pistol Secure Closet"
+	req_access = list(access_armory)
+	icon_state = "syndicatealtsecure1"
+	icon_closed = "syndicatealtsecure"
+	icon_locked = "syndicatealtsecure1"
+	icon_opened = "syndicatealtsecureopen"
+	icon_broken = "syndicatealtsecurebroken"
+	icon_off = "syndicatealtsecureoff"
+
+/obj/structure/closet/secure_closet/pistols/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/gun/projectile/glock(src)

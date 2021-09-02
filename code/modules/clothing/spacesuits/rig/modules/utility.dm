@@ -95,7 +95,7 @@
 	if(device_type)
 		device = new device_type(src)
 		device.canremove = FALSE // so we can't place mounted devices on tables/racks
-		device.w_class = ITEM_SIZE_NO_CONTAINER // so we can't put mounted devices into backpacks
+		device.flags |= ABSTRACT // so we can't put mounted devices into backpacks
 		device.origin_tech = null // so we can't put them into destructive analyzer
 		device.m_amt = 0 // so we can't put them into autolathe
 		device.g_amt = 0
@@ -606,7 +606,7 @@
 		return FALSE
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
-	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	INVOKE_ASYNC(src, .proc/spray_at, T)
 
 	return TRUE

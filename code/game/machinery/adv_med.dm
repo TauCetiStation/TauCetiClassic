@@ -210,11 +210,10 @@
 				if(occupant.has_brain_worms())
 					dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<BR/>"
 
-				if(occupant.vessel)
-					var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
-					var/blood_percent =  blood_volume / 560
-					blood_percent *= 100
-					dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume > 448 ? "blue" : "red"), blood_percent, blood_volume)
+				var/blood_volume = occupant.blood_amount()
+				var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+				dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume >= BLOOD_VOLUME_SAFE ? "blue" : "red"), blood_percent, blood_volume)
+
 				if(occupant.reagents)
 					dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
 					dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))

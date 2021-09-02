@@ -52,12 +52,12 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		var/obj/item/I = usr.get_active_hand()
 		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
-			if(holder in M.airlocks_buffer)
-				to_chat(usr, "<span class='warning'>This airlock is already in the buffer!</span>")
-			else if(M.airlocks_buffer.len >= M.buffer_limit)
+			if(holder in M.doors_buffer)
+				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
+			else if(M.doors_buffer.len >= M.buffer_limit)
 				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
 			else
-				M.airlocks_buffer += holder
+				M.doors_buffer += holder
 				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
 			. = TRUE
 		else
