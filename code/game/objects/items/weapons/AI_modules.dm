@@ -74,7 +74,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender] загрузил законы, которыми вы теперь должны следовать, используя [src].")
+		to_chat(target, "[sender] используя [src] загрузил обновления законов, которым вы должны следовать.")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -121,12 +121,12 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которого считать за человека.", "Кто это?", input_default(user.real_name)))
+	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, кто является единственным человеком.", "Кто это?", input_default(user.real_name)))
 	desc = text("Модуль ИИ 'one human': 'Только [] считается человеком.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
 	if(!targetName)
-		to_chat(usr, "Имя не найдено в модуле, пожалуйста введите его.")
+		to_chat(usr, "Имя не указано в модуле, пожалуйста введите его.")
 		return 0
 	..()
 
