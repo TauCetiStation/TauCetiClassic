@@ -262,9 +262,11 @@
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	while(parts.len && (brute > 0 || burn > 0))
 		var/obj/item/organ/external/BP = pick(parts)
+		var/brute_per_part = round(brute / parts.len)
+		var/burn_per_part = round(burn / parts.len)
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
-		BP.heal_damage(brute, burn)
+		BP.heal_damage(brute_per_part, burn_per_part)
 		brute -= (brute_was - BP.brute_dam)
 		burn -= (burn_was - BP.burn_dam)
 		parts -= BP

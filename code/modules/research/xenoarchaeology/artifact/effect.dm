@@ -14,9 +14,10 @@
 
 /datum/artifact_effect/New(atom/location)
 	..()
-	holder = location
-	effect = rand(0,ARTIFACT_MAX_EFFECT)
-	trigger = rand(0,MAX_TRIGGER)
+	holder = location 
+	effect = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA, ARTIFACT_EFFECT_PULSE)
+	trigger = pick(TRIGGER_TOUCH, TRIGGER_WATER, TRIGGER_ACID, TRIGGER_VOLATILE, TRIGGER_TOXIN, TRIGGER_FORCE, TRIGGER_ENERGY,\
+	                      TRIGGER_HEAT, TRIGGER_HEAT, TRIGGER_COLD, TRIGGER_PHORON, TRIGGER_OXY, TRIGGER_CO2, TRIGGER_NITRO, TRIGGER_VIEW)
 
 	// this will be replaced by the excavation code later, but it's here just in case
 	artifact_id = "[pick("kappa", "sigma", "antaeres", "beta", "omicron", "iota", "epsilon", "omega", "gamma", "delta", "tau", "alpha")]-[rand(100, 999)]"
@@ -61,9 +62,17 @@
 				toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
+
+
 /datum/artifact_effect/proc/DoEffectAura(atom/holder)
+
+
 /datum/artifact_effect/proc/DoEffectPulse(atom/holder)
+
+
 /datum/artifact_effect/proc/UpdateMove()
+
+
 
 /datum/artifact_effect/process()
 	if(chargelevel < chargelevelmax)
@@ -145,4 +154,4 @@
 	if(istype(H.glasses,/obj/item/clothing/glasses/science))
 		protected += 0.1
 
-	return 1 - protected
+	return 1 - protected // why can this be -0.1

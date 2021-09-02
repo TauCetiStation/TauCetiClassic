@@ -5,38 +5,35 @@
 	effect_type = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
-	if(user)
-		if(istype(user, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/R = user
-			for (var/obj/item/weapon/stock_parts/cell/D in R.contents)
-				D.charge += rand() * 100 + 50
-				to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
-			return 1
+	if(!user)
+		return FALSE
+	if(!isrobot(user))
+		return FALSE
+	var/mob/living/silicon/robot/R = user
+	for(var/obj/item/weapon/stock_parts/cell/D in R.contents)
+		D.charge += 150
+		to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
+	return TRUE
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += 25
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 25
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += 25
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
-		return 1
+	if(!holder)
+		return FALSE
+	recharge_everything_in_range(25, effectrange, holder)
+	return TRUE
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += rand() * 100
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 250
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += rand() * 100
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
-		return 1
+	if(!holder)
+		return FALSE
+	recharge_everything_in_range(250, effectrange, holder)
+	return TRUE
+
+/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)	
+	for(var/obj/machinery/power/apc/C in range(range, center))
+		for(var/obj/item/weapon/stock_parts/cell/B in C.contents)
+			B.charge += power
+	for(var/obj/machinery/power/smes/S in range(range, center))
+		S.charge += power
+	for(var/mob/living/silicon/robot/M in range(range, center))
+		for(var/obj/item/weapon/stock_parts/cell/D in M.contents)
+			D.charge += power
+			to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")

@@ -1,65 +1,38 @@
-
 /datum/artifact_effect/teleport
 	effect_name = "Teleport"
 	effect_type = ARTIFACT_EFFECT_BLUESPACE
 
 /datum/artifact_effect/teleport/DoEffectTouch(mob/user)
-	var/weakness = GetAnomalySusceptibility(user)
-	if(prob(100 * weakness))
+	if(teleport_around(user, 50))
 		to_chat(user, "<span class='warning'>You are suddenly zapped away elsewhere!</span>")
-		if (user.buckled)
-			user.buckled.unbuckle_mob()
-
-		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-		sparks.set_up(3, 0, get_turf(user))
-		sparks.start()
-		//
-	//	user.loc = pick(orange(get_turf(holder), 50))
-		var/turf/N = pick(orange(get_turf(holder), 50))
-		do_teleport(user, N, 4)
-		sparks = new /datum/effect/effect/system/spark_spread()
-		sparks.set_up(3, 0, get_turf(user))
-		sparks.start()
 
 /datum/artifact_effect/teleport/DoEffectAura()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/mob/living/M in range(src.effectrange,T))
-			var/weakness = GetAnomalySusceptibility(M)
-			if(prob(100 * weakness))
-				to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
-				if(M.buckled)
-					M.buckled.unbuckle_mob()
-
-				var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-				sparks.set_up(3, 0, get_turf(M))
-				sparks.start()
-				//
-				var/turf/N = pick(orange(get_turf(T), 50))
-				//M.Move(N)
-				do_teleport(M, N, 4)
-			//	M.loc = pick(orange(get_turf(T), 50))
-				sparks = new /datum/effect/effect/system/spark_spread()
-				sparks.set_up(3, 0, get_turf(M))
-				sparks.start()
+	if(!holder)
+		return FALSE
+	for(var/mob/living/M in range(effectrange, holder))
+		if(teleport_around(M, 20))
+			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
 /datum/artifact_effect/teleport/DoEffectPulse()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/mob/living/M in range(src.effectrange, T))
-			var/weakness = GetAnomalySusceptibility(M)
-			if(prob(100 * weakness))
-				to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
-				if(M.buckled)
-					M.buckled.unbuckle_mob()
+	if(!holder)
+		return
+	for(var/mob/living/M in range(effectrange, holder))
+		if(teleport_around(M, 30))
+			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
-				var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-				sparks.set_up(3, 0, get_turf(M))
-				sparks.start()
-				//
-				var/turf/N = pick(orange(get_turf(T), 50))
-			//	M.Move(N)
-				do_teleport(M, N, 4)
-				sparks = new /datum/effect/effect/system/spark_spread()
-				sparks.set_up(3, 0, get_turf(M))
-				sparks.start()
+/datum/artifact_effect/teleport/proc/teleport_around(mob/receiver, max_range)
+	var/weakness = 1
+	if(ishuman(receiver))
+		var/mob/living/carbon/human/H = receiver
+		weakness = GetAnomalySusceptibility(H)
+		if(!weakness)
+			return FALSE
+	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+	sparks.set_up(3, 0, get_turf(receiver))
+	sparks.start()
+	var/turf/target_turf = pick(orange(get_turf(receiver), max_range * weakness))
+	do_teleport(receiver, target_turf, 4)
+	sparks = new /datum/effect/effect/system/spark_spread()
+	sparks.set_up(3, 0, get_turf(receiver))
+	sparks.start()
+	return TRUE

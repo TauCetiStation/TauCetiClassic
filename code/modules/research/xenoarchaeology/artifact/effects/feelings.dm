@@ -1,0 +1,120 @@
+#define ARTIFACT_BAD_MESSAGES_MINOR list(\
+		"You feel worried.",\
+		"Something doesn't feel right.",\
+		"You get a strange feeling in your gut.",\
+		"Your instincts are trying to warn you about something.",\
+		"Someone just walked over your grave.",\
+		"There's a strange feeling in the air.",\
+		"There's a strange smell in the air.",\
+		"The tips of your fingers feel tingly.",\
+		"You feel witchy.",\
+		"You have a terrible sense of foreboding.",\
+		"You've got a bad feeling about this.",\
+		"Your scalp prickles.",\
+		"The light seems to flicker.",\
+		"The shadows seem to lengthen.",\
+		"The walls are getting closer.",\
+		"Something is wrong")
+
+#define ARTIFACT_BAD_MESSAGES_MAJOR list(\
+		"You've got to get out of here!",\
+		"Someone's trying to kill you!",\
+		"There's something out there!",\
+		"What's happening to you?",\
+		"OH GOD!",\
+		"HELP ME!")
+
+#define ARTIFACT_GOOD_MESSAGES_MINOR list(\
+		"You feel good.",\
+		"Everything seems to be going alright",\
+		"You've got a good feeling about this",\
+		"Your instincts tell you everything is going to be getting better.",\
+		"There's a good feeling in the air.",\
+		"Something smells... good.",\
+		"The tips of your fingers feel tingly.",\
+		"You've got a good feeling about this.",\
+		"You feel happy.",\
+		"You fight the urge to smile.",\
+		"Your scalp prickles.",\
+		"All the colours seem a bit more vibrant.",\
+		"Everything seems a little lighter.",\
+		"The troubles of the world seem to fade away.")
+
+#define ARTIFACT_GOOD_MESSAGES_MAJOR list(\
+		"You want to hug everyone you meet!",\
+		"Everything is going so well!",\
+		"You feel euphoric.",\
+		"You feel giddy.",\
+		"You're so happy suddenly, you almost want to dance and sing.",\
+		"You feel like the world is out to help you.")
+
+/datum/artifact_effect/feelings
+	effect_type = ARTIFACT_EFFECT_PSIONIC
+	var/list/drastic_message_list
+	var/list/normal_message_list
+
+/datum/artifact_effect/feelings/DoEffectTouch(mob/user)
+	if(!user)
+		return FALSE
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	run_send_messages(H, 50, 80)
+	H.dizziness += rand(3, 5)
+	return TRUE
+
+/datum/artifact_effect/feelings/DoEffectAura()
+	if(!holder)
+		return FALSE
+	for(var/mob/living/carbon/human/H in range(effectrange, holder))
+		run_send_messages(H, 5, 10)
+		H.dizziness += rand(3, 5)
+	return TRUE
+
+/datum/artifact_effect/feelings/DoEffectPulse()
+	if(!holder)
+		return FALSE
+	for(var/mob/living/carbon/human/H in range(effectrange, holder))
+		run_send_messages(H, 80, 100)
+		H.dizziness += rand(1, 3)
+		if(prob(25))
+			H.dizziness += rand(5, 15)
+	return TRUE
+
+/datum/artifact_effect/feelings/proc/run_send_messages(mob/receiver, drastic_message_chance = 0, normal_message_chance = 0)
+	if(prob(drastic_message_chance))
+		send_drastic_message(receiver)
+		return
+	if(prob(normal_message_chance))
+		send_minor_message(receiver)
+		return
+
+/datum/artifact_effect/feelings/proc/send_drastic_message(mob/receiver)
+/datum/artifact_effect/feelings/proc/send_minor_message(mob/receiver)
+
+/datum/artifact_effect/feelings/bad
+	effect_name = "Bad Feeling"
+	drastic_message_list = ARTIFACT_BAD_MESSAGES_MAJOR
+	normal_message_list = ARTIFACT_BAD_MESSAGES_MINOR
+
+/datum/artifact_effect/feelings/bad/send_drastic_message(mob/receiver)
+	to_chat(receiver, "<font color='red' size='[num2text(rand(3, 5))]'><b>[pick_n_take(drastic_message_list)]</b></font>")
+
+/datum/artifact_effect/feelings/bad/send_minor_message(mob/receiver)
+	to_chat(receiver, "<font color='red'>[pick_n_take(normal_message_list)]</font>")
+
+/datum/artifact_effect/feelings/good
+	effect_name = "Good Feeling"
+	drastic_message_list = ARTIFACT_GOOD_MESSAGES_MAJOR
+	normal_message_list = ARTIFACT_GOOD_MESSAGES_MINOR
+
+/datum/artifact_effect/feelings/good/send_drastic_message(mob/receiver)
+	to_chat(receiver, "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick_n_take(drastic_message_list)]</b></font>")
+
+/datum/artifact_effect/feelings/good/send_minor_message(mob/receiver)
+	to_chat(receiver, "<font color='blue'>[pick_n_take(normal_message_list)]</font>")
+
+#undef ARTIFACT_BAD_MESSAGES_MINOR
+#undef ARTIFACT_BAD_MESSAGES_MAJOR
+#undef ARTIFACT_GOOD_MESSAGES_MINOR
+#undef ARTIFACT_GOOD_MESSAGES_MAJOR
