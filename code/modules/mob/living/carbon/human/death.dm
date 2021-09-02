@@ -74,8 +74,7 @@
 		my_master = null
 
 	if(mind?.GetRole(SHADOW))
-		var/mob/M
-		for(M in alive_mob_list)
+		for(var/mob/M in alive_mob_list)
 			if(isshadowthrall(M))
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "thralled")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
