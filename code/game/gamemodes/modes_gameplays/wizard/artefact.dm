@@ -169,7 +169,7 @@
 			if(free_school_flags & SCHOOL_BLUESPACE)
 				free_school_flags &= ~SCHOOL_BLUESPACE
 				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(M))
-				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard(M))
 				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(M))
 				to_chat(M, "<span class='notice'>Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt, forcewall.</span>")
 		if("healing")
