@@ -8244,6 +8244,9 @@
 /area/station/maintenance/eva)
 "bDP" = (
 /obj/random/vending/cola,
+/obj/structure/noticeboard/bar{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -21620,12 +21623,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "fLy" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/noticeboard/chaplain{
+	pixel_x = 32
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
@@ -61221,7 +61223,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -61915,7 +61917,7 @@
 /area/station/medical/cmo)
 "syc" = (
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /obj/machinery/light{
 	dir = 1
