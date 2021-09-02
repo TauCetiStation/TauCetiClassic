@@ -467,6 +467,12 @@
 		AH.try_build(src)
 		return
 
+	// why is all of this here help me
+	else if(istype(W, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = W
+		NF.try_build(user, src)
+		return
+
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
