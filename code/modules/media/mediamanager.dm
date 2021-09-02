@@ -112,5 +112,6 @@ function SetVolume(volume) {
 /datum/media_manager/proc/update_volume()
 	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
+	send_update()
 
 #undef MEDIA_VOLUME
