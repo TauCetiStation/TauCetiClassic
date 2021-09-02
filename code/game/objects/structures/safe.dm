@@ -41,6 +41,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			I.forceMove(src)
+	
+	PopulateContents()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/safe/proc/PopulateContents()
+	return
 
 /obj/structure/safe/update_icon()
 	if(open)

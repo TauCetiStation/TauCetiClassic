@@ -10217,10 +10217,7 @@
 /obj/machinery/light/small/emergency{
 	dir = 8
 	},
-/obj/structure/safe/floor/blueshield{
-	number_of_tumblers = 4
-	},
-/obj/item/weapon/paper/blueshield/wip,
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -10968,6 +10965,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "asj" = (
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warndark"
@@ -13784,6 +13782,7 @@
 	},
 /area/station/rnd/xenobiology)
 "axw" = (
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
@@ -14369,6 +14368,7 @@
 /area/station/storage/tech/north)
 "ayD" = (
 /obj/structure/closet/secure_closet/blueshield,
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warndark"
@@ -74971,16 +74971,15 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "kAj" = (
 /obj/structure/table,
-/obj/item/weapon/paper/blueshield/safe_codes{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /obj/item/ashtray/plastic{
 	pixel_x = -8;
 	pixel_y = 7
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/effect/landmark/blueshield{
+	name = "Blueshield Paper"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -78626,6 +78625,7 @@
 /area/station/hallway/primary/central)
 "pKx" = (
 /obj/structure/closet/secure_closet/blueshield/weaponry,
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -79359,6 +79359,7 @@
 /obj/item/bodybag/cryobag,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/storage/firstaid/adv,
+/obj/effect/landmark/blueshield,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warndark"

@@ -1,5 +1,29 @@
+
+// SAFE SPAWN RANDOMIZER
+/proc/blueshield_safe_spawner()
+	var/list/safe_locations = list()
+	var/list/paper_locations = list()
+	for (var/obj/effect/landmark/blueshield/L in landmarks_list)
+		if (L.name == "Blueshield Safe")
+			safe_locations += L
+		if (L.name == "Blueshield Paper")
+			paper_locations += L
+	var/obj/effect/landmark/safe_location = pick(safe_locations)
+	new /obj/structure/safe/floor/blueshield(get_turf(safe_location))
+
+	for (var/obj/effect/landmark/L in paper_locations)
+		new /obj/item/weapon/paper/blueshield/safe_codes(get_turf(L))
+
+/obj/effect/landmark/blueshield
+	name = "Blueshield Safe"
+
+// SAFE ITSELF
 /obj/structure/safe/floor/blueshield
-	name = "code red safe" // WIP
+	name = "blueshield safe" // WIP
+	number_of_tumblers = 4
+
+/obj/structure/safe/floor/blueshield/PopulateContents()
+	new /obj/item/weapon/paper/blueshield/wip(src)
 
 /obj/structure/safe/floor/blueshield/check_unlocked()
 	if(current_tumbler_index > number_of_tumblers)
@@ -8,6 +32,7 @@
 			return FALSE
 	return ..()
 
+// SAFE PAPERS
 /obj/item/weapon/paper/blueshield
 	name = "Инициатива \"Синий Щит\""
 	var/subname = ""
@@ -34,9 +59,8 @@
 
 /obj/item/weapon/paper/blueshield/safe_codes/atom_init_late()
 	var/list/obj/structure/safe/floor/blueshield/safes = list()
-	if(safes_list.len)
-		for (var/obj/structure/safe/floor/blueshield/safe in global.safes_list)
-			safes += safe
+	for (var/obj/structure/safe/floor/blueshield/safe in global.safes_list)
+		safes += safe
 	
 	info += "<center>"
 	if (safes.len)

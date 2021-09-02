@@ -137,6 +137,13 @@
 					msg = "that especially that head will be attacked today"
 
 				alert_antagonist(antag.current, msg, extra_TC)
+		var/list/obj/structure/safe/floor/blueshield/safes = list()
+		for (var/obj/structure/safe/floor/blueshield/safe in global.safes_list)
+			safes += safe
+		if (safes.len)
+			centcomm_blueshield_intercept += " Код от сейфа в хранилище: "
+			for (var/obj/structure/safe/safe as anything in safes)
+				centcomm_blueshield_intercept += "[safe.get_combination()]"
 	
 	var/obj/item/device/pda/blueshield_PDA = null
 	for (var/obj/item/device/pda/P in PDAs)

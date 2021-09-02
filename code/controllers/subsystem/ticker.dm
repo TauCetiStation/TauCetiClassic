@@ -269,11 +269,17 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
+		
+		blueshield_safe_spawner()
+
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
+		
+		for (var/obj/effect/landmark/blueshield/L in landmarks_list)
+			qdel(L)
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
