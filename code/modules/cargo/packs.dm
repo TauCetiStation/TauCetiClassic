@@ -1236,13 +1236,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
-/datum/supply_pack/wheelchair
-	name = "Wheelchair crate"
-	cost = 2000
-	contains = list(/obj/structure/stool/bed/chair/wheelchair)
-	crate_type = /obj/structure/largecrate
-	group = "Medical / Science"
-
 /datum/supply_pack/artifical_ventilation_machine 
 	name = "Artifical Ventilation Machine"
 	cost = 3000
@@ -1674,7 +1667,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/clown 
 	name = "Clown supply crate"
 	contains = list(/obj/item/weapon/bikehorn,
-	                /obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
 					/obj/item/weapon/bikehorn,
 					/obj/item/weapon/bikehorn,
 					/obj/item/weapon/reagent_containers/food/snacks/pie,
@@ -1754,34 +1747,10 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "EFTPOS crate"
 	group = "Miscellaneous"
 
-/datum/supply_pack/costume_clown
-	contains = list(/obj/item/clothing/mask/gas/clown_hat,
-					/obj/item/clothing/under/rank/clown,
-					/obj/item/clothing/shoes/clown_shoes,
-					/obj/item/weapon/storage/backpack/clown,
-					/obj/item/weapon/bikehorn)
-	name = "Clown costume"
-	cost = 3000
-	crate_name = "Clown costume crate"
-	group = "Miscellaneous"
-
-/datum/supply_pack/costume_mime
-	contains = list(/obj/item/clothing/head/beret/red,
-					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/under/mime,
-					/obj/item/clothing/shoes/black,
-					/obj/item/weapon/storage/backpack/mime,
-					/obj/item/clothing/suit/suspenders,
-					/obj/item/clothing/gloves/white)
-	name = "Mime costume"
-	cost = 3000
-	crate name = "Mime costume crate"
-	group = "Miscellaneous"
-
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
 	contains = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-	                /obj/item/weapon/gun/energy/laser/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
 					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
