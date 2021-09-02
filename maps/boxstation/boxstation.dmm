@@ -82016,13 +82016,13 @@
 	id = "blueshield_blast";
 	name = "Privacy Shutters";
 	pixel_x = 22;
-	pixel_y = -6
+	pixel_y = 6
 	},
 /obj/machinery/door_control{
 	id = "represent_blast";
 	name = "Inter-office Shutters";
 	pixel_x = 22;
-	pixel_y = 6
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	dir = 4;
