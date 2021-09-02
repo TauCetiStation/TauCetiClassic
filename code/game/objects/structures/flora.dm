@@ -10,6 +10,7 @@
 /obj/item/weapon/twohanded/flora/atom_init()
 	. = ..()
 	AddComponent(/datum/component/tactical, null, FALSE)
+	AddElement(/datum/element/beauty, 300)
 
 /obj/item/weapon/twohanded/flora/random/atom_init()
 	. = ..()

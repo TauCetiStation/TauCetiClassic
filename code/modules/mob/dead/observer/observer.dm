@@ -1,4 +1,3 @@
-var/global/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness
 var/global/list/image/ghost_sightless_images = list() //this is a list of images for things ghosts should still be able to see even without ghost sight
 
 /mob/dead/observer
@@ -30,9 +29,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
-	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/datum/orbit_menu/orbit_menu
 
@@ -43,8 +40,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	ghostimage = image(icon, src, "ghost")
-	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
@@ -99,11 +94,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(data_hud)
 		remove_data_huds()
 	observer_list -= src
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
 	if(orbit_menu)
 		SStgui.close_uis(orbit_menu)
 		QDEL_NULL(orbit_menu)
@@ -610,23 +600,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts."
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
-	updateghostsight()
+	update_sight()
 	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
-	seedarkness = !(seedarkness)
 	updateghostsight()
 
 /mob/dead/observer/proc/updateghostsight()
-	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	switch(lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	update_sight()
+	
+
+/mob/dead/observer/update_sight()
+	if (!ghostvision)
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING
 	updateghostimages()
+	..()
 
 /proc/updateallghostimages()
 	for (var/mob/dead/observer/O in player_list)
@@ -635,15 +636,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-	if (seedarkness || !ghostvision)
-		client.images -= ghost_darkness_images
+	if (!ghostvision)
 		client.images |= ghost_sightless_images
 	else
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		client.images -= ghost_sightless_images
-		client.images |= ghost_darkness_images
-		if (ghostimage)
-			client.images -= ghostimage //remove ourself
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)
