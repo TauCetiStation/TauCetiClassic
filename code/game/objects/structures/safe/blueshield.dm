@@ -8,8 +8,9 @@
 			safe_locations += L
 		if (L.name == "Blueshield Paper")
 			paper_locations += L
-	var/obj/effect/landmark/safe_location = pick(safe_locations)
-	new /obj/structure/safe/floor/blueshield(get_turf(safe_location))
+	if (safe_locations.len)
+		var/obj/effect/landmark/safe_location = pick(safe_locations)
+		new /obj/structure/safe/floor/blueshield(get_turf(safe_location))
 
 	for (var/obj/effect/landmark/L in paper_locations)
 		new /obj/item/weapon/paper/blueshield/safe_codes(get_turf(L))
