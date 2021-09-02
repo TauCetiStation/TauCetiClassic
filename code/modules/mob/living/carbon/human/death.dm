@@ -73,7 +73,7 @@
 		my_master.my_golem = null
 		my_master = null
 
-	if(mind?.GetRole(SHADOW))
+	if(isshadowling(src))
 		for(var/mob/M in alive_mob_list)
 			if(isshadowthrall(M))
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "thralled")
