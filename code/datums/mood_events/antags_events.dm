@@ -10,3 +10,4 @@
 /datum/mood_event/rev
 	description = "<span class='bold nicegreen'>Viva la Revolucion!</span>"
 	mood_change = 5
+	hidden = TRUE

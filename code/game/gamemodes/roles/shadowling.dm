@@ -44,3 +44,7 @@
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
 	return TRUE
+
+/datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
+	..()
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "thralled")

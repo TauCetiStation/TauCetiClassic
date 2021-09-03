@@ -18,6 +18,10 @@
 	..()
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "rev_convert", /datum/mood_event/rev)
 
+/datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
+	..()
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
+
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
