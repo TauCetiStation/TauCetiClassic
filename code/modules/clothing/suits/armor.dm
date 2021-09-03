@@ -133,7 +133,7 @@
 	pockets.set_slots(slots = 5, slot_size = SIZE_TINY)
 
 /obj/item/clothing/suit/armor/laserproof
-	name = "ablative armor vest"
+	name = "ablative fullbody armor"
 	desc = "A set of armor covering the entire body that excels in protecting the wearer against energy projectiles."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
