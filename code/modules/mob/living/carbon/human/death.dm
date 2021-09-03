@@ -76,6 +76,8 @@
 	if(isshadowling(src))
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		for(var/datum/role/thrall/T in faction.members)
+			if(!T.antag || !T.antag.current)
+				continue
 			SEND_SIGNAL(T.antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
 			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
