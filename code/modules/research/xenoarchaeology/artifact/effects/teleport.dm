@@ -3,20 +3,27 @@
 	effect_type = ARTIFACT_EFFECT_BLUESPACE
 
 /datum/artifact_effect/teleport/DoEffectTouch(mob/user)
+	. = ..()
+	if(!.)
+		return
 	if(teleport_around(user, 50))
 		to_chat(user, "<span class='warning'>You are suddenly zapped away elsewhere!</span>")
 
 /datum/artifact_effect/teleport/DoEffectAura()
-	if(!holder)
-		return FALSE
-	for(var/mob/living/M in range(effectrange, holder))
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/M in range(effectrange, curr_turf))
 		if(teleport_around(M, 20))
 			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
 /datum/artifact_effect/teleport/DoEffectPulse()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
-	for(var/mob/living/M in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/M in range(effectrange, curr_turf))
 		if(teleport_around(M, 30))
 			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 

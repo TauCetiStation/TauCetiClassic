@@ -13,17 +13,19 @@
 	current_gas_type = pick_n_take(gas_types)
 
 /datum/artifact_effect/gas/DoEffectTouch(mob/user)
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	var/turf/holder_loc = holder.loc
 	if(isturf(holder_loc))
 		holder_loc.assume_gas(current_gas_type, rand(2, 15))
 
 /datum/artifact_effect/gas/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	var/turf/holder_loc = holder.loc
-	if(isturf(holder.loc))
+	if(isturf(holder_loc))
 		holder_loc.assume_gas(current_gas_type, pick(0, 0, 0.1, rand()))
 
 /datum/artifact_effect/gasco2

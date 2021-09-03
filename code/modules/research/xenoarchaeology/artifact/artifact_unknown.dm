@@ -13,94 +13,110 @@
 	var/scan_radius = 3
 	var/last_scan = 0
 	var/scan_delay = 20
+	var/list/turf/turfs_around = list()
+	var/list/mob/mobs_around = list()
+	var/are_mobs_inside_area = FALSE
+
+/obj/machinery/artifact/Destroy()
+	UnregisterSignal(src, list(COMSIG_PARENT_EXAMINE))
+	clear_turfs_around()
+	return ..()
 
 /obj/machinery/artifact/atom_init()
 	. = ..()
+	RegisterSignal(src, list(COMSIG_PARENT_EXAMINE), .proc/check_trigger_view)
+	init_turfs_around()
+	
+	if(!need_inicial)//asteroid crystals doesnt need init, they are prebuild
+		return
+	//setup primary effect - these are the main ones (mixed)
+	var/effecttype = pick(global.valid_primary_effect_types)
+	my_effect = new effecttype(src)
 
-	// setup primary effect - these are the main ones (mixed)
-	if(need_inicial == 1)
-		var/effecttype = pick(global.valid_primary_effect_types)
-		my_effect = new effecttype(src)
-
-		// 50% chance to have a secondary stealthy (and mostly bad) effect
+	//50% chance to have a secondary stealthy effect
+	if(prob(50))
+		effecttype = pick(global.valid_secondary_effect_types)
+		secondary_effect = new effecttype(src)
 		if(prob(50))
-			effecttype = pick(global.valid_secondary_effect_types)
-			secondary_effect = new effecttype(src)
+			secondary_effect.ToggleActivate(0)
+
+	init_artifact_type()
+
+/obj/machinery/artifact/proc/check_effects_start_processing()
+	if(my_effect)
+		START_PROCESSING(SSobj, my_effect)
+	if(secondary_effect)
+		START_PROCESSING(SSobj, secondary_effect)
+
+/obj/machinery/artifact/proc/init_turfs_around()
+	for(var/turf/T in orange(3, src))
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		turfs_around += T
+
+/obj/machinery/artifact/proc/clear_turfs_around()
+	for(var/turf/T in turfs_around)
+		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+		turfs_around -= T
+	for(var/M in mobs_around)
+		mobs_around -= M
+
+/obj/machinery/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
+	if(istype(mover, /mob))
+		mobs_around |= mover
+	are_mobs_inside_area = TRUE
+
+/obj/machinery/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
+	mobs_around -= mover
+	if(mobs_around.len == 0)
+		are_mobs_inside_area = TRUE
+	else
+		are_mobs_inside_area =  FALSE
+
+/obj/machinery/artifact/proc/init_artifact_type()
+	icon_num = pick(ARTIFACT_WIZARD_LARGE,  ARTIFACT_WIZARD_SMALL, ARTIFACT_MARTIAN_LARGE,
+                    ARTIFACT_MARTIAN_SMALL, ARTIFACT_MARTIAN_PINK, ARTIFACT_CUBE,
+                    ARTIFACT_PILLAR,        ARTIFACT_COMPUTER,	   ARTIFACT_VENTS, ARTIFACT_FLOATING,
+                    ARTIFACT_CRYSTAL_GREEN) // 12th and 13th are just types of crystals, please ignore them at THAT point
+
+	switch(icon_num)
+		if(ARTIFACT_COMPUTER)
+			name = "alien computer"
+			desc = "It is covered in strange markings."
+			if(prob(75))
+				my_effect.trigger = TRIGGER_TOUCH
+
+		if(ARTIFACT_PILLAR)
+			name = "alien device"
+			desc = "A large pillar, made of strange shiny metal."
+
+		if(ARTIFACT_VENTS)
+			name = "alien device"
+			desc = "A large alien device, there appear to be some kind of vents in the side."
 			if(prob(50))
-				secondary_effect.ToggleActivate(0)
+				my_effect.trigger = pick(TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD,
+                                         TRIGGER_PHORON, TRIGGER_OXY,  TRIGGER_CO2,
+                                         TRIGGER_NITRO,  TRIGGER_VIEW)
+		if(ARTIFACT_FLOATING)
+			name = "strange metal object"
+			desc = "A large object made of tough green-shaded alien metal."
+			if(prob(25))
+				my_effect.trigger = pick(TRIGGER_WATER, TRIGGER_ACID, TRIGGER_VOLATILE, TRIGGER_TOXIN)
 
-		icon_num = pick(ARTIFACT_WIZARD_LARGE,
-						ARTIFACT_WIZARD_SMALL,
-						ARTIFACT_MARTIAN_LARGE,
-						ARTIFACT_MARTIAN_SMALL,
-						ARTIFACT_MARTIAN_PINK,
-						ARTIFACT_CUBE,
-						ARTIFACT_PILLAR,
-						ARTIFACT_COMPUTER,
-						ARTIFACT_VENTS,
-						ARTIFACT_FLOATING,
-						ARTIFACT_CRYSTAL_GREEN) // 12th and 13th are just types of crystals, please ignore them at THAT point
+		if(ARTIFACT_CRYSTAL_GREEN)
+			icon_num = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
+			name = "large crystal"
+			desc = pick("It shines faintly as it catches the light.",
+			"It appears to have a faint inner glow.",
+			"It seems to draw you inward as you look it at.",
+			"Something twinkles faintly as you look at it.",
+			"It's mesmerizing to behold.")
+			if(prob(50))
+				my_effect.trigger = TRIGGER_ENERGY
 
-		switch(icon_num)
-			if(ARTIFACT_COMPUTER)
-				name = "alien computer"
-				desc = "It is covered in strange markings."
-				if(prob(75))
-					my_effect.trigger = TRIGGER_TOUCH
-
-			if(ARTIFACT_PILLAR)
-				name = "alien device"
-				desc = "A large pillar, made of strange shiny metal."
-
-			if(ARTIFACT_VENTS)
-				name = "alien device"
-				desc = "A large alien device, there appear to be some kind of vents in the side."
-				if(prob(50))
-					my_effect.trigger = pick(	TRIGGER_ENERGY,
-												TRIGGER_HEAT,
-												TRIGGER_COLD,
-												TRIGGER_PHORON,
-												TRIGGER_OXY,
-												TRIGGER_CO2,
-												TRIGGER_NITRO,
-												TRIGGER_VIEW)
-
-			if(ARTIFACT_FLOATING)
-				name = "strange metal object"
-				desc = "A large object made of tough green-shaded alien metal."
-				if(prob(25))
-					my_effect.trigger = pick(	TRIGGER_WATER,
-												TRIGGER_ACID,
-												TRIGGER_VOLATILE,
-												TRIGGER_TOXIN)
-
-			if(ARTIFACT_CRYSTAL_GREEN)
-				icon_num = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
-				name = "large crystal"
-				desc = pick("It shines faintly as it catches the light.",
-				"It appears to have a faint inner glow.",
-				"It seems to draw you inward as you look it at.",
-				"Something twinkles faintly as you look at it.",
-				"It's mesmerizing to behold.")
-				if(prob(50))
-					my_effect.trigger = TRIGGER_ENERGY
-
-		update_icon()
+	update_icon()
 
 /obj/machinery/artifact/process()
-
-	var/turf/L = loc
-	if(isnull(L) || !istype(L)) 	// We're inside a container or on null turf, either way stop processing effects
-		return
-
-	if(my_effect)
-		my_effect.process()
-	if(secondary_effect)
-		secondary_effect.process()
-
-	if(pulledby)
-		Bumped(pulledby)
-
 	// if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = FALSE
 	var/trigger_hot = FALSE
@@ -108,7 +124,7 @@
 	var/trigger_oxy = FALSE
 	var/trigger_co2 = FALSE
 	var/trigger_nitro = FALSE
-	if( (my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) || (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO) )
+	if((my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) || (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO) )
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
 		if(env)
@@ -128,113 +144,79 @@
 
 	// COLD ACTIVATION
 	if(trigger_cold)
-		if(my_effect.trigger == TRIGGER_COLD && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_COLD && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-	else
-		if(my_effect.trigger == TRIGGER_COLD && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_COLD && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_on(TRIGGER_COLD)
+	else 
+		toggle_effects_off(TRIGGER_COLD)
 	// HEAT ACTIVATION
 	if(trigger_hot)
-		if(my_effect.trigger == TRIGGER_HEAT && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
+		toggle_effects_on(TRIGGER_HEAT)
 	else
-		if(my_effect.trigger == TRIGGER_HEAT && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_off(TRIGGER_HEAT)
 	// PHORON GAS ACTIVATION
 	if(trigger_phoron)
-		if(my_effect.trigger == TRIGGER_PHORON && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_PHORON && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
+		toggle_effects_on(TRIGGER_PHORON)
 	else
-		if(my_effect.trigger == TRIGGER_PHORON && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_PHORON && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_off(TRIGGER_PHORON)
 	// OXYGEN GAS ACTIVATION
 	if(trigger_oxy)
-		if(my_effect.trigger == TRIGGER_OXY && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_OXY && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
+		toggle_effects_on(TRIGGER_OXY)
 	else
-		if(my_effect.trigger == TRIGGER_OXY && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_OXY && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_off(TRIGGER_OXY)
 	// CO2 GAS ACTIVATION
 	if(trigger_co2)
-		if(my_effect.trigger == TRIGGER_CO2 && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_CO2 && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
+		toggle_effects_on(TRIGGER_CO2)
 	else
-		if(my_effect.trigger == TRIGGER_CO2 && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_CO2 && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_off(TRIGGER_CO2)
 	// NITROGEN GAS ACTIVATION
 	if(trigger_nitro)
-		if(my_effect.trigger == TRIGGER_NITRO && !my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && !secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
+		toggle_effects_on(TRIGGER_NITRO)
 	else
-		if(my_effect.trigger == TRIGGER_NITRO && my_effect.activated)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && secondary_effect.activated)
-			secondary_effect.ToggleActivate(0)
-
+		toggle_effects_off(TRIGGER_NITRO)
 	// TRIGGER_PROXY ACTIVATION
-	if(my_effect.trigger == TRIGGER_VIEW)
+	if(are_mobs_inside_area)
 		if(world.time >= last_scan + scan_delay)
 			last_scan = world.time
-			var/trigger_near = 0
-			var/turf/mainloc = get_turf(src)
-			for(var/mob/living/A in view(scan_radius,mainloc))
-				if ((A)&&(A.stat != DEAD))
-					trigger_near = 1
-					break
-				else
-					trigger_near = 0
+			toggle_effects_on(TRIGGER_VIEW)
+	else
+		toggle_effects_off(TRIGGER_VIEW)
 
-			if(trigger_near)
-				if(my_effect.trigger == TRIGGER_VIEW && !my_effect.activated)
-					my_effect.ToggleActivate()
-				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
-					secondary_effect.ToggleActivate(0)
-			else
-				if(my_effect.trigger == TRIGGER_VIEW && my_effect.activated)
-					my_effect.ToggleActivate()
-				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && secondary_effect.activated)
-					secondary_effect.ToggleActivate(0)
+/obj/machinery/artifact/proc/try_toggle_effects(var/trigger)
+	if(my_effect)
+		if(my_effect.trigger == trigger)
+			my_effect.ToggleActivate()
+	if(secondary_effect)
+		if(secondary_effect.trigger == trigger)
+			secondary_effect.ToggleActivate(0)
+
+/obj/machinery/artifact/proc/toggle_effects_on(var/trigger)
+	if(my_effect)
+		try_turn_on_effect(trigger, my_effect)
+	if(secondary_effect)
+		try_turn_on_effect(trigger, secondary_effect, FALSE)
+
+/obj/machinery/artifact/proc/try_turn_on_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
+	if(my_effect.trigger == trigger && !my_effect.activated)
+		my_effect.ToggleActivate(announce_triggered)
+
+/obj/machinery/artifact/proc/toggle_effects_off(var/trigger)
+	if(my_effect)
+		try_turn_off_effect(trigger, my_effect)
+	if(secondary_effect)
+		try_turn_off_effect(trigger, secondary_effect, FALSE)
+
+/obj/machinery/artifact/proc/try_turn_off_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
+	if(my_effect.trigger == trigger && my_effect.activated)
+		my_effect.ToggleActivate(announce_triggered)
+
+/obj/machinery/artifact/proc/check_trigger_view()
 
 /obj/machinery/artifact/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
-
 	if(!Adjacent(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
-		return 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.gloves)
-			to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens", "but nothing happens", "but nothing interesting happens", "but you notice nothing different", "but nothing seems to have happened")].")
-			return
+		return TRUE
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].</b>")
@@ -245,7 +227,7 @@
 	if(prob(25) && secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH)
 		secondary_effect.ToggleActivate(0)
 
-	if (my_effect.effect == ARTIFACT_EFFECT_TOUCH)
+	if(my_effect.effect == ARTIFACT_EFFECT_TOUCH)
 		my_effect.DoEffectTouch(user)
 
 	if(secondary_effect && secondary_effect.effect == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated)
@@ -255,49 +237,27 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
-			if(my_effect.trigger == TRIGGER_WATER)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_WATER && prob(25))
-				secondary_effect.ToggleActivate(0)
+			try_toggle_effects(TRIGGER_WATER)
 		else if(W.reagents.has_reagent("acid", 1) || W.reagents.has_reagent("pacid", 1) || W.reagents.has_reagent("diethylamine", 1))
-			if(my_effect.trigger == TRIGGER_ACID)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_ACID && prob(25))
-				secondary_effect.ToggleActivate(0)
+			try_toggle_effects(TRIGGER_ACID)
 		else if(W.reagents.has_reagent("phoron", 1) || W.reagents.has_reagent("thermite", 1))
-			if(my_effect.trigger == TRIGGER_VOLATILE)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_VOLATILE && prob(25))
-				secondary_effect.ToggleActivate(0)
+			try_toggle_effects(TRIGGER_VOLATILE)
 		else if(W.reagents.has_reagent("toxin", 1) || W.reagents.has_reagent("cyanide", 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent("neurotoxin", 1))
-			if(my_effect.trigger == TRIGGER_TOXIN)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_TOXIN && prob(25))
-				secondary_effect.ToggleActivate(0)
+			try_toggle_effects(TRIGGER_TOXIN)
 	else if(istype(W,/obj/item/weapon/melee/baton) && W:status ||\
 			istype(W,/obj/item/weapon/melee/energy) ||\
 			istype(W,/obj/item/weapon/melee/cultblade) ||\
 			istype(W,/obj/item/weapon/card/emag) ||\
 			ismultitool(W))
+		try_toggle_effects(TRIGGER_ENERGY)
 
-		if (my_effect.trigger == TRIGGER_ENERGY)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))
-			secondary_effect.ToggleActivate(0)
-
-	else if (istype(W,/obj/item/weapon/match) && W:lit ||\
+	else if(istype(W,/obj/item/weapon/match) && W:lit ||\
 			iswelder(W) && W:isOn() ||\
 			istype(W,/obj/item/weapon/lighter) && W:lit)
-		if(my_effect.trigger == TRIGGER_HEAT)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && prob(25))
-			secondary_effect.ToggleActivate(0)
+		try_toggle_effects(TRIGGER_HEAT)
 	else
 		..()
-		if (my_effect.trigger == TRIGGER_FORCE && W.force >= 10)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && W.force >= 10 && prob(25))
-			secondary_effect.ToggleActivate(0)
+		try_toggle_effects(TRIGGER_FORCE)
 
 /obj/machinery/artifact/Bumped(M)
 	..()
@@ -370,6 +330,8 @@
 	if(ISDIAGONALDIR(Dir))
 		return .
 
+	if(pulledby)
+		Bumped(pulledby)
 	if(my_effect)
 		my_effect.UpdateMove()
 	if(secondary_effect)

@@ -54,32 +54,34 @@
 	var/list/normal_message_list
 
 /datum/artifact_effect/feelings/DoEffectTouch(mob/user)
-	if(!user)
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if(!ishuman(user))
-		return FALSE
+		return
 	var/mob/living/carbon/human/H = user
 	run_send_messages(H, 50, 80)
 	H.dizziness += rand(3, 5)
-	return TRUE
 
 /datum/artifact_effect/feelings/DoEffectAura()
-	if(!holder)
-		return FALSE
-	for(var/mob/living/carbon/human/H in range(effectrange, holder))
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/carbon/human/H in range(effectrange, curr_turf))
 		run_send_messages(H, 5, 10)
 		H.dizziness += rand(3, 5)
-	return TRUE
 
 /datum/artifact_effect/feelings/DoEffectPulse()
-	if(!holder)
-		return FALSE
-	for(var/mob/living/carbon/human/H in range(effectrange, holder))
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/carbon/human/H in range(effectrange, curr_turf))
 		run_send_messages(H, 80, 100)
 		H.dizziness += rand(1, 3)
 		if(prob(25))
 			H.dizziness += rand(5, 15)
-	return TRUE
 
 /datum/artifact_effect/feelings/proc/run_send_messages(mob/receiver, drastic_message_chance = 0, normal_message_chance = 0)
 	if(prob(drastic_message_chance))

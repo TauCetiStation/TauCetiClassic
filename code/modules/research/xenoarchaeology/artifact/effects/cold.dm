@@ -1,4 +1,3 @@
-
 /datum/artifact_effect/temperature
 	var/target_temp
 	var/target_temp_low
@@ -11,7 +10,8 @@
 	effect_type = pick(ARTIFACT_EFFECT_ORGANIC, ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
 
 /datum/artifact_effect/temperature/DoEffectTouch(mob/user)
-	if(!user)
+	. = ..()
+	if(!.)
 		return FALSE
 	var/datum/gas_mixture/env = holder.loc.return_air()
 	if(!env)
@@ -20,7 +20,8 @@
 
 
 /datum/artifact_effect/temperature/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return FALSE
 	var/datum/gas_mixture/env = holder.loc.return_air()
 	if(!env)

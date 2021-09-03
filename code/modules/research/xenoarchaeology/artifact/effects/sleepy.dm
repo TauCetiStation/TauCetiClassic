@@ -1,5 +1,3 @@
-
-//todo
 /datum/artifact_effect/sleepy
 	effect_name = "Sleepy"
 
@@ -7,26 +5,28 @@
 	..()
 	effect_type = pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
 
-/datum/artifact_effect/sleepy/DoEffectTouch(mob/toucher)
-	if(!toucher)
-		return FALSE
-	apply_effect(toucher)
-	return TRUE
+/datum/artifact_effect/sleepy/DoEffectTouch(mob/user)
+	. = ..()
+	if(!.)
+		return
+	apply_effect(user)
 
 /datum/artifact_effect/sleepy/DoEffectAura()
-	if(!holder)
-		return FALSE
-	for(var/mob/living/L in range(effectrange, holder))
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/L in range(effectrange, curr_turf))
 		if(prob(50))
 			apply_effect(L)
-	return TRUE
 
 /datum/artifact_effect/sleepy/DoEffectPulse()
-	if(!holder)
-		return FALSE
-	for(var/mob/living/L in range(effectrange, holder))
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/L in range(effectrange, curr_turf))
 		apply_effect(L)
-	return TRUE
 
 /datum/artifact_effect/sleepy/proc/apply_effect(mob/receiver)
 	if(ishuman(receiver))

@@ -16,7 +16,7 @@
 	. = ..()
 	health = rand(150, 300)
 	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = TRIGGER_VIEW // TRIGGER_NEAR
+	my_effect.trigger = TRIGGER_VIEW
 	desc = "A blue strange crystal"
 	icon_num = ARTIFACT_CRYSTAL_BLUE
 	set_light(4)

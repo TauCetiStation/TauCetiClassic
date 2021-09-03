@@ -18,22 +18,24 @@
 	receiver.heal_overall_damage(healing_power ,healing_power)
 	receiver.updatehealth()
 
-/datum/artifact_effect/heal/DoEffectTouch(mob/toucher)
-	if(!toucher)
-		return FALSE
-	to_chat(toucher, "<span class='notice'>A soothing energy invigorate you.</span>")
-	adjust_health(toucher, 25)
-	return TRUE
+/datum/artifact_effect/heal/DoEffectTouch(mob/user)
+	. = ..()
+	if(!.)
+		return
+	to_chat(user, "<span class='notice'>A soothing energy invigorate you.</span>")
+	adjust_health(user, 25)
 
 /datum/artifact_effect/heal/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	for(var/mob/living/receiver in range(effectrange, holder))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		adjust_health(receiver, 1)
 
 /datum/artifact_effect/heal/DoEffectPulse()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	for(var/mob/living/receiver in range(effectrange, holder))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
@@ -46,24 +48,26 @@
 	..()
 	effect_type = pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
 
-/datum/artifact_effect/heal/roboheal/DoEffectTouch(mob/toucher)
-	if(!toucher)
-		return FALSE
-	if(!issilicon(toucher))
+/datum/artifact_effect/heal/roboheal/DoEffectTouch(mob/user)
+	. = ..()
+	if(!.)
 		return
-	to_chat(toucher, "<span class='notice'>Your systems report damaged components mending by themselves!</span>")
-	adjust_health(toucher, 25)
-	return TRUE
+	if(!issilicon(user))
+		return
+	to_chat(user, "<span class='notice'>Your systems report damaged components mending by themselves!</span>")
+	adjust_health(user, 25)
 
 /datum/artifact_effect/heal/roboheal/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	for(var/mob/living/silicon/receiver in range(effectrange, holder))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Beneficial energy field detected!</span>")
 		adjust_health(receiver, 1)
 
 /datum/artifact_effect/heal/roboheal/DoEffectPulse()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
 	for(var/mob/living/silicon/receiver in range(effectrange, holder))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
@@ -89,23 +93,28 @@
 	receiver.updatehealth()
 
 /datum/artifact_effect/hurt/DoEffectTouch(mob/user)
-	if(!user)
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	to_chat(user, "<span class='warning'>A painful discharge of energy strikes you!</span>")
 	deal_damage(user, 20)
 	return TRUE
 
 /datum/artifact_effect/hurt/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
-	for(var/mob/living/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='warning'>You feel a painful force radiating from something nearby.</span>")
 		deal_damage(receiver, 1)
 
 /datum/artifact_effect/hurt/DoEffectPulse()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
-	for(var/mob/living/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		deal_damage(receiver, 5)
 
@@ -116,25 +125,29 @@
 	..()
 	effect_type = pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
 
-/datum/artifact_effect/hurt/robohurt/DoEffectTouch(mob/toucher)
-	if(!toucher)
-		return FALSE
-	if(!issilicon(toucher))
+/datum/artifact_effect/hurt/robohurt/DoEffectTouch(mob/user)
+	. = ..()
+	if(!.)
 		return
-	to_chat(toucher, "<span class='warning'>Your systems report severe damage has been inflicted!</span>")
-	deal_damage(toucher, 25)
-	return TRUE
+	if(!issilicon(user))
+		return
+	to_chat(user, "<span class='warning'>Your systems report severe damage has been inflicted!</span>")
+	deal_damage(user, 25)
 
 /datum/artifact_effect/hurt/robohurt/DoEffectAura()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
-	for(var/mob/living/silicon/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/silicon/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Harmful energy field detected!</span>")
 		deal_damage(receiver, 1)
 
 /datum/artifact_effect/hurt/robohurt/DoEffectPulse()
-	if(!holder)
+	. = ..()
+	if(!.)
 		return
-	for(var/mob/living/silicon/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/silicon/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")
 		deal_damage(receiver, 10)

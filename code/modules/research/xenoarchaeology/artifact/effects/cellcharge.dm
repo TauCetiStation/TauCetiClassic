@@ -1,31 +1,31 @@
-
-//todo
 /datum/artifact_effect/cellcharge
 	effect_name = "Cell Charge"
 	effect_type = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
-	if(!user)
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if(!isrobot(user))
-		return FALSE
+		return
 	var/mob/living/silicon/robot/R = user
 	for(var/obj/item/weapon/stock_parts/cell/D in R.contents)
 		D.charge += 150
 		to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
-	return TRUE
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
-	if(!holder)
-		return FALSE
-	recharge_everything_in_range(25, effectrange, holder)
-	return TRUE
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	recharge_everything_in_range(25, effectrange, curr_turf)
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
-	if(!holder)
-		return FALSE
-	recharge_everything_in_range(250, effectrange, holder)
-	return TRUE
+	. = ..()
+	if(!.)
+		return
+	var/turf/curr_turf = get_turf(holder)
+	recharge_everything_in_range(250, effectrange, curr_turf)
 
 /datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)	
 	for(var/obj/machinery/power/apc/C in range(range, center))

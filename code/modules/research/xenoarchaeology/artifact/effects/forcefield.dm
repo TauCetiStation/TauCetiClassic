@@ -1,4 +1,3 @@
-
 /datum/artifact_effect/forcefield
 	effect_name = "Force Field"
 	var/list/created_field = list()
