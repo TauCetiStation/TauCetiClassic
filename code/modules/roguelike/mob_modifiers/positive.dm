@@ -67,6 +67,7 @@
 	)
 
 	// USE FILTER AFTER 513
+	/// Already 514
 	// var/ghostly_filter
 	var/saved_color
 

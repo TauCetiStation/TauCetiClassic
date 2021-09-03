@@ -355,7 +355,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 	if (SSticker)
 		SSticker.explosion_in_progress = 1
 	sleep(100)
@@ -451,7 +451,7 @@ var/bomb_set
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	item_state = "card-id"
 	icon_state = "datadisk0"
 

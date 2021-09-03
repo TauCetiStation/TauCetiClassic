@@ -35,6 +35,8 @@
 	icon_state = "creep_1"
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
 
+	beauty = -250
+
 /obj/structure/cellular_biomass/wall/meat/atom_init()
 	. = ..()
 	icon_state = "bloodwall_[pick(1,1,2,2,3,4)]"
@@ -58,6 +60,7 @@
 	speak_emote = list("gibbers")
 	attacktext = "brutally chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
+	w_class = SIZE_HUMAN
 	faction = "meat"
 
 /mob/living/simple_animal/hostile/cellular/meat/creep_standing

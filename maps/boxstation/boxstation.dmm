@@ -840,7 +840,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -979,6 +979,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1021,6 +1022,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1077,6 +1079,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1099,6 +1102,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1124,6 +1128,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1177,6 +1182,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1469,8 +1475,8 @@
 /obj/machinery/door_control{
 	id = "Armoury0";
 	name = "Armoury Access";
-	pixel_x = 28;
-	pixel_y = -28;
+	pixel_x = 26;
+	pixel_y = -29;
 	req_access = list(2)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1850,9 +1856,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1861,6 +1864,9 @@
 	},
 /obj/item/weapon/gun/energy/ionrifle{
 	pixel_y = -3
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -1904,10 +1910,17 @@
 /area/station/security/main)
 "adj" = (
 /obj/machinery/door_control{
+	id = "ArmorDoors";
+	name = "Open Armor";
+	pixel_x = -25;
+	pixel_y = -5;
+	req_access = list(3)
+	},
+/obj/machinery/door_control{
 	id = "Armoury0";
 	name = "Emergency Access";
-	pixel_x = -28;
-	pixel_y = 3;
+	pixel_x = -25;
+	pixel_y = 7;
 	req_access = list(2)
 	},
 /turf/simulated/floor{
@@ -2060,7 +2073,7 @@
 /obj/machinery/door_control{
 	id = "Armoury";
 	name = "Emergency Access";
-	pixel_x = -28;
+	pixel_x = -26;
 	pixel_y = 3;
 	req_access = list(3)
 	},
@@ -2372,9 +2385,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 4
 	},
@@ -2383,6 +2393,9 @@
 	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2393,15 +2406,15 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2416,14 +2429,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
-	},
 /obj/structure/rack,
 /obj/item/weapon/storage/box/flashbangs,
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3205,8 +3217,8 @@
 /obj/machinery/door_control{
 	id = "Armoury";
 	name = "Armoury Access";
-	pixel_x = 28;
-	pixel_y = -28;
+	pixel_x = 26;
+	pixel_y = -29;
 	req_access = list(3)
 	},
 /turf/simulated/floor{
@@ -3231,9 +3243,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/weapon/gun/plasma/p104sass{
@@ -3241,6 +3250,9 @@
 	},
 /obj/item/weapon/gun/plasma{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -3252,16 +3264,16 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3272,11 +3284,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/gun/projectile/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/m79,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3533,15 +3545,15 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4740,14 +4752,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_y = 4
 	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -14433,7 +14445,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/structure/noticeboard{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -33756,8 +33768,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/obj/structure/noticeboard/bar{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -37389,7 +37401,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -40518,7 +40530,7 @@
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -43005,6 +43017,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
+"byi" = (
+/obj/effect/landmark/dealer_spawn,
+/turf/space,
+/area/space)
 "bym" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -56033,8 +56049,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -56490,8 +56505,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -68536,13 +68550,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"cKd" = (
-/obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "cKe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -81420,8 +81427,7 @@
 "uob" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -82225,8 +82231,8 @@
 	},
 /area/station/civilian/chapel)
 "xbF" = (
-/obj/structure/noticeboard{
-	pixel_y = 27
+/obj/structure/noticeboard/chaplain{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -90899,7 +90905,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 boX
 aro
 fab
@@ -91156,7 +91162,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 aro
 aro
 fab
@@ -95810,7 +95816,7 @@ aaa
 aaa
 aaa
 aag
-aaa
+byi
 aaa
 aaa
 aaa
@@ -100070,7 +100076,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -122920,7 +122926,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -135914,7 +135920,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa

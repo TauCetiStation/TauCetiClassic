@@ -304,6 +304,9 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/magazine/m50/weakened
+	ammo_type = /obj/item/ammo_casing/a50/weakened
+
 /obj/item/ammo_box/magazine/m75
 	name = "magazine (.75)"
 	icon_state = "75"

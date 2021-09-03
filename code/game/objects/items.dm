@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
@@ -13,7 +14,6 @@
 	var/list/hitsound = list()
 	var/usesound = null
 	var/wet = 0
-	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -57,7 +57,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/uncleanable = 0
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
@@ -79,6 +78,9 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+/obj/item/atom_init()
+	. = ..()
+	AddElement(/datum/element/beauty, -w_class)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -263,25 +265,15 @@
 
 /obj/item/examine(mob/user)
 	. = ..()
-	var/size
-	switch(src.w_class)
-		if(1.0)
-			size = "tiny"
-		if(2.0)
-			size = "small"
-		if(3.0)
-			size = "normal-sized"
-		if(4.0)
-			size = "bulky"
-		if(5.0)
-			size = "huge"
-		else
 
-	var/open_span  = "[src.wet ? "<span class='wet'>" : ""]"
-	var/close_span = "[src.wet ? "</span>" : ""]"
-	var/wet_status = "[src.wet ? " wet" : ""]"
+	if(w_class || wet)
 
-	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
+		var/stat_flavor = "It is a[wet ? "wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
+
+		if(wet)
+			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
+
+		to_chat(user, stat_flavor)
 
 /obj/item/attack_hand(mob/user)
 	if (!user || anchored)
@@ -289,7 +281,7 @@
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < ITEM_SIZE_LARGE)
+			if(src.w_class < SIZE_NORMAL)
 				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 				return
 		else if(istype(src, /obj/item/weapon/gun))
@@ -310,7 +302,7 @@
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
 				to_chat(user, "<span class='warning'>I LOVE FOOD!!</span>")
-		else if(src.w_class < ITEM_SIZE_LARGE)
+		else if(src.w_class < SIZE_NORMAL)
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
@@ -467,6 +459,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -561,7 +554,7 @@
 					return 0
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
 					return 0
-				if( w_class < ITEM_SIZE_SMALL	)
+				if( w_class < SIZE_TINY	)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -571,7 +564,7 @@
 					return 0
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
 					return 0
-				if( w_class < ITEM_SIZE_SMALL )
+				if( w_class < SIZE_TINY )
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -601,7 +594,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 			if(SLOT_R_STORE)
 				if(H.r_store)
@@ -612,7 +605,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 				return 0
 			if(SLOT_S_STORE)

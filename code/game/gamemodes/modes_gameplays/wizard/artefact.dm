@@ -11,7 +11,7 @@
 	icon_state = "necrostone"
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -80,7 +80,7 @@
 /obj/item/weapon/contract
 	name = "contract"
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/datum/mind/wizard
@@ -169,7 +169,7 @@
 			if(free_school_flags & SCHOOL_BLUESPACE)
 				free_school_flags &= ~SCHOOL_BLUESPACE
 				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(M))
-				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard(M))
 				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(M))
 				to_chat(M, "<span class='notice'>Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt, forcewall.</span>")
 		if("healing")

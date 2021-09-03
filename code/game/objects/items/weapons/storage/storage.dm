@@ -8,11 +8,11 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 
-	var/max_w_class = ITEM_SIZE_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_w_class = SIZE_TINY //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = null //Total storage cost of items this can hold. Will be autoset based on storage_slots if left null.
 	var/storage_slots = null //The number of storage slots in this container.
 
@@ -151,7 +151,7 @@
 
 /obj/item/weapon/storage/proc/open(mob/user)
 	if (length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 	prepare_ui()
 	storage_ui.on_open(user)
@@ -230,12 +230,14 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 
-	var/total_storage_space = W.get_storage_cost()
-	if(total_storage_space == ITEM_SIZE_NO_CONTAINER)
+	// by design SIZE_LARGE can't be placed in storages
+	// and now this check works correctly
+	if(W.w_class >= SIZE_LARGE)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
 		return FALSE
 
+	var/total_storage_space = W.get_storage_cost()
 	total_storage_space += storage_space_used() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(total_storage_space > max_storage_space)
 		if(!stop_messages)
@@ -267,7 +269,7 @@
 					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
-				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
+				else if (W && W.w_class >= SIZE_SMALL) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))

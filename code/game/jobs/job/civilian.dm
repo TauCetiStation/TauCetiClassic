@@ -208,7 +208,7 @@
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
