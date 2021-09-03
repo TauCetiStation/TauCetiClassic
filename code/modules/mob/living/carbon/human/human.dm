@@ -1553,12 +1553,12 @@
 
 		var/hunt_injection_port = FALSE
 
-		switch(check_thickmaterial(target_zone = user.get_targetzone()))
+		switch(check_pierce_protection(target_zone = user.get_targetzone()))
 			if(NOLIMB)
 				if(error_msg)
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
-			if(THICKMATERIAL)
+			if(NOPIERCE)
 				if(!pierce_armor)
 					if(error_msg)
 						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
@@ -2015,7 +2015,7 @@
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
-	if(check_thickmaterial(target_zone = BP_CHEST))
+	if(check_pierce_protection(target_zone = BP_CHEST))
 		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
 		return
 
@@ -2126,7 +2126,7 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(!penetrate_thick)
-		if(check_thickmaterial(target_zone = def_zone))
+		if(check_pierce_protection(target_zone = def_zone))
 			if(show_message)
 				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 			return FALSE
