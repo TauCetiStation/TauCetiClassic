@@ -315,8 +315,6 @@
 	return TRUE
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	if(..())
-		return
 	if(issilicon(user))
 		to_chat(user, "This drill didn`t support your iterface")
 		return
@@ -334,7 +332,6 @@
 		need_player_check = 0
 		if(anchored)
 			need_update_field = 1
-		update_icon()
 		return
 	else if(supported && !panel_open)
 		if(use_cell_power())
@@ -348,7 +345,7 @@
 			to_chat(user, "<span class='notice'>The drill is unpowered.</span>")
 	else
 		to_chat(user, "<span class='notice'>Turning on a piece of industrial machinery without sufficient bracing or wires exposed is a bad idea.</span>")
-
+		
 	update_icon()
 
 /obj/machinery/mining/drill/proc/shock(mob/user)
@@ -419,6 +416,5 @@
 		to_chat(usr, "<span class='notice'>You unload the drill's storage cache into the ore box.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
-
 
 
