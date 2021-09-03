@@ -7,6 +7,7 @@
 	effect = ARTIFACT_EFFECT_PULSE
 	chargelevel = 0
 	chargelevelmax = 30
+	activation_pulse_cost = chargelevelmax
 	artifact_id = "tesla"
 
 /datum/artifact_effect/tesla/DoEffectPulse()

@@ -22,6 +22,7 @@
 	var/activated = FALSE
 	var/chargelevel = 0
 	var/chargelevelmax = 10
+	var/recharge_speed = 1
 	var/artifact_id = ""
 	var/effect_type = ARTIFACT_EFFECT_UNKNOWN
 	var/activation_touch_cost = 5
@@ -89,20 +90,17 @@
 /datum/artifact_effect/proc/UpdateMove()
 
 /datum/artifact_effect/proc/try_drain_charge(var/charges_drained)
-	if((chargelevel - charges_drained) == 0)
+	if((chargelevel - charges_drained) < 0)
 		return FALSE
 	chargelevel -= charges_drained
 	return TRUE
 
 /datum/artifact_effect/process()
-	chargelevel = min(chargelevel + 1, chargelevelmax)
-
-	if(activated)
-		if(effect == ARTIFACT_EFFECT_AURA)
-			DoEffectAura()
-		else if(effect == ARTIFACT_EFFECT_PULSE && chargelevel >= chargelevelmax)
-			chargelevel = 0
-			DoEffectPulse()
+	chargelevel = min(chargelevel + recharge_speed, chargelevelmax)
+	if(effect == ARTIFACT_EFFECT_AURA)
+		DoEffectAura()
+	else if(effect == ARTIFACT_EFFECT_PULSE)
+		DoEffectPulse()
 
 /datum/artifact_effect/proc/getDescription()
 	. = "<b>"
