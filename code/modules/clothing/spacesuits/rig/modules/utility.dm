@@ -290,7 +290,6 @@
 	charges["dermaline"]     = new /datum/rig_charge("dermaline",     "dermaline",     0)
 	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    0)
 	charges["oxycodone"]     = new /datum/rig_charge("oxycodone",     "oxycodone",     0)
-	charges["hyperzine"]     = new /datum/rig_charge("hyperzine",     "hyperzine",     0)
 
 /obj/item/rig_module/chem_dispenser/medical/ert // variant for the medical ert rigs
 	name = "hardsuit mounted chemical injector"

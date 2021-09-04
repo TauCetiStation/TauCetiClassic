@@ -1962,7 +1962,7 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
 "el" = (
-/obj/structure/noticeboard/anomaly{
+/obj/structure/noticeboard/plastic/anomaly{
 	pixel_y = 32
 	},
 /turf/simulated/floor,

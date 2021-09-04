@@ -66,6 +66,25 @@
 		'sound/ambience/general_12.ogg'
 	)
 
+	/// All beauty in this area combined, only includes indoor area.
+	var/totalbeauty = 0
+	/// Beauty average per open turf in the area
+	var/beauty = 0
+	/// If a room is too big it doesn't have beauty.
+	var/beauty_threshold = BEAUTY_MAX_AREA_SIZE
+
+	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE
+
+	/// Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = 0
+
+	/// Bonus mood for being in this area
+	var/mood_bonus = 0
+	/// Mood message for being here, only shows up if mood_bonus != 0
+	var/mood_message = "<span class='nicegreen'>This area is pretty nice!</span>\n"
+	/// Does the mood bonus require a trait?
+	var/mood_trait
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -118,7 +137,7 @@ var/list/ghostteleportlocs = list()
 /area/atom_init()
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
-	. = ..()
+	..()
 
 	if(requires_power)
 		luminosity = 0
@@ -131,9 +150,41 @@ var/list/ghostteleportlocs = list()
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
-
+	update_areasize()
 	power_change() // all machines set to current power level, also updates lighting icon
 
+	return INITIALIZE_HINT_LATELOAD
+
+/area/atom_init_late()
+	update_beauty()
+
+/**
+ * Set the area size of the area
+ *
+ * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
+ *
+ */
+/area/proc/update_areasize()
+	if(outdoors)
+		return FALSE
+	areasize = 0
+	for(var/turf/simulated/floor/F in contents)
+		areasize++
+
+/// Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
+		return FALSE
+
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
+		return FALSE
+
+	beauty = totalbeauty / areasize
+	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -355,10 +406,19 @@ var/list/ghostteleportlocs = list()
 		if(STATIC_ENVIRON)
 			used_environ += amount
 
+/**
+ * Call back when an atom enters an area
+ *
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to a list of atoms)
+ *
+ * If the area has ambience, then it plays some ambience music to the ambience channel
+ */
+/area/Entered(atom/movable/A, atom/OldLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A, OldLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
+		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src, OldLoc)
 
-/area/Entered(atom/movable/A)
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
-	SEND_SIGNAL(A, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if (!isliving(A))
 		return
 
@@ -403,11 +463,13 @@ var/list/ghostteleportlocs = list()
 /**
   * Called when an atom exits an area
   *
-  * Sends signals COMSIG_EXIT_AREA (to the atom)
+  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
+  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
   */
-/area/Exited(atom/movable/A)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A)
-	SEND_SIGNAL(A, COMSIG_EXIT_AREA, src) //The atom that exits the area
+/area/Exited(atom/movable/A, atom/NewLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A, NewLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src, NewLoc)
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate
