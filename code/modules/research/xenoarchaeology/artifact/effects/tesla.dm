@@ -17,3 +17,6 @@
 	var/radius = rand(0,4)
 	radius = radius + 2
 	tesla_zap(holder, radius, radius * 25000)
+
+/datum/artifact_effect/tesla/DoEffectDestroy()
+	tesla_zap(holder, 7, 2500000)

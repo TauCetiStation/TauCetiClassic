@@ -8,7 +8,7 @@
 	need_inicial = 0
 	anchored = TRUE
 	light_color = "#24c1ff"
-	var/health = 200
+	health = 200
 	var/anomaly_spawn_list = list ("gravitational anomaly" = 1, "flux wave anomaly" = 1, "bluespace anomaly" = 6, "pyroclastic anomaly" = 1, "vortex anomaly" = 1,)
 
 
@@ -22,7 +22,7 @@
 	set_light(4)
 
 /obj/machinery/artifact/bluespace_crystal/tesla_act(power)
-	tesla_zap(src, 1, power/2)
+	tesla_zap(src, 1, power / 2)
 	return
 
 /obj/machinery/artifact/bluespace_crystal/Destroy()
@@ -44,8 +44,6 @@
 				anom.origin_tech = "phorontech=[rand(3,7)];powerstorage=[rand(2,5)];biotech=[rand(3,7)]"
 			if("vortex anomaly")
 				anom.origin_tech = "materials=[rand(3,7)];combat=[rand(2,5)];engineering=[rand(2,5)]"
-
-	tesla_zap(src,7,2500000)
 	if(prob(50))
 		teleport()
 	return ..()

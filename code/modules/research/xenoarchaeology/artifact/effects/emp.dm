@@ -11,3 +11,6 @@
 	if(!.)
 		return
 	empulse(get_turf(holder), effectrange / 2, effectrange)
+
+/datum/artifact_effect/emp/DoEffectDestroy()
+	empulse(get_turf(holder), 7, effectrange)

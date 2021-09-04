@@ -7,11 +7,15 @@
 	"flickers slightly!",\
 	"vibrates!",\
 	"shimmers slightly for a moment!")
+
 #define ARTIFACT_DEACTIVATION_MESSAGES list(\
 	"grows dull!",\
 	"fades in intensity!",\
 	"suddenly becomes very still!",\
 	"suddenly becomes very quiet!")
+
+#define NO_ANOMALY_PROTECTION 1
+#define FULL_ANOMALY_PROTECTION 0
 
 /datum/artifact_effect
 	var/effect_name = "unknown" // purely used for admin checks ingame
@@ -50,7 +54,8 @@
 			effectrange = rand(7, 10)
 
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
-	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
+	if(!QDELING(holder))
+		INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
 
 /datum/artifact_effect/proc/toggle_artifact_effect(reveal_toggle)
 	activated = !activated
@@ -58,11 +63,11 @@
 		START_PROCESSING(SSobj, src)
 	if(!activated)
 		STOP_PROCESSING(SSobj, src)
-	if(!reveal_toggle && !holder)
-		return
 	if(istype(holder, /obj/machinery/artifact))
 		var/obj/machinery/artifact/A = holder
 		A.update_icon()
+	if(!reveal_toggle && !holder)
+		return
 	var/display_msg = activated ? pick_n_take(ARTIFACT_ACTIVATION_MESSAGES): pick_n_take(ARTIFACT_DEACTIVATION_MESSAGES)
 	var/atom/toplevelholder = holder
 	while(!istype(toplevelholder.loc, /turf))
@@ -73,20 +78,29 @@
 		toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
+	if(!user)	
+		return FALSE
+	if(!GetAnomalySusceptibility(user)) //we ignore things with full anomaly protection
+		return
 	if(try_drain_charge(activation_touch_cost))
 		return TRUE
 	return FALSE
 
 /datum/artifact_effect/proc/DoEffectAura(atom/holder)
+	if(!holder)	
+		return FALSE
 	if(try_drain_charge(activation_aura_cost))
 		return TRUE
 	return FALSE
 
 /datum/artifact_effect/proc/DoEffectPulse(atom/holder)
+	if(!holder)	
+		return FALSE
 	if(try_drain_charge(activation_pulse_cost))
 		return TRUE
 	return FALSE
 
+/datum/artifact_effect/proc/DoEffectDestroy()
 /datum/artifact_effect/proc/UpdateMove()
 
 /datum/artifact_effect/proc/try_drain_charge(var/charges_drained)
@@ -146,33 +160,34 @@
 
 // returns 0..1, with 1 being no protection and 0 being fully protected
 /proc/GetAnomalySusceptibility(mob/living/carbon/human/H) 
-	if(!H || !istype(H)) //damn im blind, i should cut all of the not needed parts bcos of this like when i return the thing if its non human and later check it fo human
-		return 1
+	if(!H || !istype(H))
+		return NO_ANOMALY_PROTECTION
 
-	var/protected = 0
+	var/protection = NO_ANOMALY_PROTECTION
 
 	// particle protection suits give best protection, but science space suits are almost as good
 	if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/particle_protection))
-		protected += 0.6
+		protection += 0.6
 	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/globose/science))
-		protected += 0.5
+		protection += 0.5
 
 	if(istype(H.head, /obj/item/clothing/head/bio_hood/particle_protection))
-		protected += 0.3
+		protection += 0.3
 	else if(istype(H.head, /obj/item/clothing/head/helmet/space/globose/science))
-		protected += 0.2
+		protection += 0.2
 
 	// latex gloves and science goggles also give a bit of bonus protection
 	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
-		protected += 0.1
-
+		protection += 0.1
 	if(istype(H.glasses,/obj/item/clothing/glasses/science))
-		protected += 0.1
+		protection += 0.1
 
-	return 1 - protected
+	return clamp(NO_ANOMALY_PROTECTION - protection, FULL_ANOMALY_PROTECTION, NO_ANOMALY_PROTECTION)
 
 #undef ARTIFACT_SMALL_POWER
 #undef ARTIFACT_MEDIUM_POWER
 #undef ARTIFACT_LARGE_POWER
 #undef ARTIFACT_ACTIVATION_MESSAGES
 #undef ARTIFACT_DEACTIVATION_MESSAGES
+#undef NO_ANOMALY_PROTECTION
+#undef FULL_ANOMALY_PROTECTION

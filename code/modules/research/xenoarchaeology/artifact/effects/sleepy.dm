@@ -28,6 +28,15 @@
 	for(var/mob/living/L in range(effectrange, curr_turf))
 		apply_effect(L)
 
+
+/datum/artifact_effect/sleepy/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/L in range(7, curr_turf))
+		var/weakness = GetAnomalySusceptibility(L)
+		if(!weakness)
+			continue
+		L.SetSleeping(weakness * (10 SECONDS)) //0 resistance gives you 10 seconds of sleep
+
 /datum/artifact_effect/sleepy/proc/apply_effect(mob/receiver)
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver

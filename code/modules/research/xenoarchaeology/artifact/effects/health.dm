@@ -6,16 +6,10 @@
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = GetAnomalySusceptibility(H)
-		H.adjustBrainLoss(-healing_power * weakness)
-		H.radiation -= min(H.radiation, healing_power * weakness)
 		H.heal_overall_damage(healing_power * weakness, healing_power * weakness)
-		H.adjustOxyLoss(-healing_power * weakness)
-		H.adjustToxLoss(-healing_power * weakness)
 		H.updatehealth()
 		return
-	receiver.adjustOxyLoss(healing_power)
-	receiver.adjustToxLoss(healing_power)
-	receiver.heal_overall_damage(healing_power ,healing_power)
+	receiver.heal_overall_damage(healing_power, healing_power)
 	receiver.updatehealth()
 
 /datum/artifact_effect/heal/DoEffectTouch(mob/user)
@@ -29,7 +23,8 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/mob/living/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		adjust_health(receiver, 1)
 
@@ -37,9 +32,16 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/mob/living/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		adjust_health(receiver, 5)
+
+/datum/artifact_effect/heal/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(7, curr_turf))
+		to_chat(receiver, "<span class='notice'>A wave of energy healed your wounds.</span>")
+		adjust_health(receiver, 50)
 
 /datum/artifact_effect/heal/roboheal
 	effect_name = "Robo-heal"
@@ -61,7 +63,8 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/mob/living/silicon/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/silicon/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Beneficial energy field detected!</span>")
 		adjust_health(receiver, 1)
 
@@ -69,9 +72,16 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/mob/living/silicon/receiver in range(effectrange, holder))
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/silicon/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
 		adjust_health(receiver, 5)
+
+/datum/artifact_effect/heal/roboheal/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/silicon/receiver in range(7, curr_turf))
+		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
+		adjust_health(receiver, 50)
 
 /datum/artifact_effect/hurt
 	effect_name = "Hurt"
@@ -80,15 +90,9 @@
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = GetAnomalySusceptibility(H)
-		H.adjustBrainLoss(damage_power * weakness)
-		H.radiation += min(H.radiation, damage_power * weakness)
 		H.take_overall_damage(damage_power * weakness, damage_power * weakness)
-		H.adjustOxyLoss(damage_power * weakness)
-		H.adjustToxLoss(damage_power * weakness)
 		H.updatehealth()
 		return
-	receiver.adjustOxyLoss(damage_power)
-	receiver.adjustToxLoss(damage_power)
 	receiver.heal_overall_damage(damage_power, damage_power)
 	receiver.updatehealth()
 
@@ -97,7 +101,7 @@
 	if(!.)
 		return
 	to_chat(user, "<span class='warning'>A painful discharge of energy strikes you!</span>")
-	deal_damage(user, 20)
+	deal_damage(user, 10)
 	return TRUE
 
 /datum/artifact_effect/hurt/DoEffectAura()
@@ -118,6 +122,12 @@
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		deal_damage(receiver, 5)
 
+/datum/artifact_effect/hurt/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(7, curr_turf))
+		to_chat(receiver, "<span class='warning'>You feel tremendous pain</span>")
+		deal_damage(receiver, 50)
+
 /datum/artifact_effect/hurt/robohurt
 	effect_name = "Robo-hurt"
 
@@ -132,7 +142,7 @@
 	if(!issilicon(user))
 		return
 	to_chat(user, "<span class='warning'>Your systems report severe damage has been inflicted!</span>")
-	deal_damage(user, 25)
+	deal_damage(user, 10)
 
 /datum/artifact_effect/hurt/robohurt/DoEffectAura()
 	. = ..()
@@ -150,4 +160,10 @@
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/silicon/receiver in range(effectrange, curr_turf))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")
-		deal_damage(receiver, 10)
+		deal_damage(receiver, 5)
+
+/datum/artifact_effect/hurt/robohurt/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/receiver in range(7, curr_turf))
+		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Critical structural damage inflicted by energy pulse!</span>")
+		deal_damage(receiver, 50)

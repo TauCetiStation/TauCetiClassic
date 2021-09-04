@@ -35,15 +35,9 @@
 			to_chat(L, "<span class='warning'>A wave of energy overwhelms your senses!</span>")
 
 /datum/artifact_effect/stun/proc/apply_effect(mob/receiver, power)
-	if(ishuman(receiver))
-		var/mob/living/carbon/human/H = receiver
-		var/weakened = GetAnomalySusceptibility(H)
-		if(!weakened)
-			return FALSE
-		H.AdjustWeakened(power * weakened)
-		H.AdjustStunned(power * weakened)
-		H.stuttering += power * weakened
-		return TRUE
+	var/weakened = GetAnomalySusceptibility(receiver)
+	if(!weakened)
+		return FALSE
 	receiver.AdjustWeakened(power)
 	receiver.AdjustStunned(power)
 	receiver.stuttering += power

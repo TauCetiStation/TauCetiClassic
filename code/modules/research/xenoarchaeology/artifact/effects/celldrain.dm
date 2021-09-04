@@ -26,6 +26,10 @@
 	var/turf/curr_turf = get_turf(holder)
 	discharge_everything_in_range(250, effectrange, curr_turf)
 
+/datum/artifact_effect/celldrain/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	discharge_everything_in_range(10000, 7, curr_turf)
+
 /datum/artifact_effect/celldrain/proc/discharge_everything_in_range(power, range, center)	
 	for(var/obj/item/weapon/stock_parts/cell/C in range(range, center))
 		C.charge = max(C.charge - power, 0)

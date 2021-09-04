@@ -12,19 +12,20 @@
 	var/need_inicial = 1
 	var/scan_radius = 3
 	var/last_scan = 0
-	var/scan_delay = 20
+	var/scan_delay = 2 SECONDS
 	var/list/turf/turfs_around = list()
 	var/list/mob/mobs_around = list()
 	var/are_mobs_inside_area = FALSE
+	var/health = 1000
 
 /obj/machinery/artifact/Destroy()
-	UnregisterSignal(src, list(COMSIG_PARENT_EXAMINE))
 	clear_turfs_around()
+	do_destroy_effects()
+	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
 	return ..()
 
 /obj/machinery/artifact/atom_init()
 	. = ..()
-	RegisterSignal(src, list(COMSIG_PARENT_EXAMINE), .proc/check_trigger_view)
 	init_turfs_around()
 	
 	if(!need_inicial)//asteroid crystals doesnt need init, they are prebuild
@@ -41,12 +42,6 @@
 			secondary_effect.ToggleActivate(0)
 
 	init_artifact_type()
-
-/obj/machinery/artifact/proc/check_effects_start_processing()
-	if(my_effect)
-		START_PROCESSING(SSobj, my_effect)
-	if(secondary_effect)
-		START_PROCESSING(SSobj, secondary_effect)
 
 /obj/machinery/artifact/proc/init_turfs_around()
 	for(var/turf/T in orange(3, src))
@@ -68,7 +63,7 @@
 
 /obj/machinery/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
 	mobs_around -= mover
-	if(mobs_around.len == 0)
+	if(mobs_around.len != 0)
 		are_mobs_inside_area = TRUE
 	else
 		are_mobs_inside_area =  FALSE
@@ -116,7 +111,16 @@
 
 	update_icon()
 
+/obj/machinery/artifact/proc/do_destroy_effects()
+	if(my_effect)
+		my_effect.DoEffectDestroy()
+	if(secondary_effect)
+		secondary_effect.DoEffectDestroy()
+
 /obj/machinery/artifact/process()
+	if(health <= 0)
+		if(!QDELING(src))
+			qdel(src)
 	// if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = FALSE
 	var/trigger_hot = FALSE
@@ -210,6 +214,18 @@
 
 /obj/machinery/artifact/proc/check_trigger_view()
 
+/obj/machinery/artifact/examine(mob/user)
+	..()
+	switch(round(100 - (initial(health) / health)))
+		if(85 to 100)
+			to_chat(user, "Looks brand new")
+		if(65 to 85)
+			to_chat(user, "Looks slightly damaged.")
+		if(45 to 65)
+			to_chat(user, "Looks badly damaged.")
+		if(0 to 45)
+			to_chat(user, "Looks heavily damaged.")
+
 /obj/machinery/artifact/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -259,69 +275,45 @@
 		..()
 		try_toggle_effects(TRIGGER_FORCE)
 
-/obj/machinery/artifact/Bumped(M)
+/obj/machinery/artifact/Bumped(atom/AM)
 	..()
-	if(istype(M,/obj))
-		if(M:throwforce >= 10)
-			if(my_effect.trigger == TRIGGER_FORCE)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25))
-				secondary_effect.ToggleActivate(0)
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!istype(H.gloves, /obj/item/clothing/gloves) && !(H.wear_suit && H.wear_suit.body_parts_covered & ARMS))
-			var/warn = 0
-
-			if (my_effect.trigger == TRIGGER_TOUCH && prob(50))
-				my_effect.ToggleActivate()
-				warn = 1
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH && prob(25))
-				secondary_effect.ToggleActivate(0)
-				warn = 1
-
-			if (my_effect.effect == ARTIFACT_EFFECT_TOUCH && prob(50))
-				my_effect.DoEffectTouch(M)
-				warn = 1
-			if(secondary_effect && secondary_effect.effect == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
-				secondary_effect.DoEffectTouch(M)
-				warn = 1
-
-			if(warn)
-				to_chat(M, "<b>You accidentally touch [src].</b>")
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.throwforce >= 10)
+			try_toggle_effects(TRIGGER_FORCE)
+	try_toggle_effects(TRIGGER_TOUCH)
+	if(my_effect.effect == ARTIFACT_EFFECT_TOUCH && my_effect.activated && prob(50))
+		my_effect.DoEffectTouch(AM)
+	if(secondary_effect && secondary_effect.effect == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
+		secondary_effect.DoEffectTouch(AM)
+	to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)
 	if(istype(P,/obj/item/projectile/bullet) ||\
 		istype(P,/obj/item/projectile/hivebotbullet))
-		if(my_effect.trigger == TRIGGER_FORCE)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25))
-			secondary_effect.ToggleActivate(0)
+		try_toggle_effects(TRIGGER_FORCE)
+		health -= P.damage
 
 	else if(istype(P,/obj/item/projectile/beam) ||\
 		istype(P,/obj/item/projectile/ion) ||\
 		istype(P,/obj/item/projectile/energy))
-		if(my_effect.trigger == TRIGGER_ENERGY)
-			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))
-			secondary_effect.ToggleActivate(0)
+		try_toggle_effects(TRIGGER_ENERGY)
+		health -= P.damage
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) qdel(src)
+		if(1.0) 
+			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 			else
-				if(my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
-					my_effect.ToggleActivate()
-				if(secondary_effect && (secondary_effect.trigger == TRIGGER_FORCE || secondary_effect.trigger == TRIGGER_HEAT) && prob(25))
-					secondary_effect.ToggleActivate(0)
+				try_toggle_effects(TRIGGER_FORCE)
+				try_toggle_effects(TRIGGER_HEAT)
 		if(3.0)
-			if (my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
-				my_effect.ToggleActivate()
-			if(secondary_effect && (secondary_effect.trigger == TRIGGER_FORCE || secondary_effect.trigger == TRIGGER_HEAT) && prob(25))
-				secondary_effect.ToggleActivate(0)
+			try_toggle_effects(TRIGGER_FORCE)
+			try_toggle_effects(TRIGGER_HEAT)
 	return
 
 /obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

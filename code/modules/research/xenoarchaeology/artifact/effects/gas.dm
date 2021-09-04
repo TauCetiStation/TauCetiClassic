@@ -28,7 +28,9 @@
 	if(isturf(holder_loc))
 		holder_loc.assume_gas(current_gas_type, pick(0, 0, 0.1, rand()))
 
-/datum/artifact_effect/gasco2
-	effect_name = "Gas CO2"
-	var/max_pressure
-	var/target_percentage
+/datum/artifact_effect/gas/DoEffectDestroy()
+	. = ..()
+	var/turf/holder_loc = holder.loc
+	if(isturf(holder_loc))
+		holder_loc.assume_gas(current_gas_type, 150)
+

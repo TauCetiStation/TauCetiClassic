@@ -6,7 +6,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(teleport_around(user, 50))
+	if(teleport_around(user, 10))
 		to_chat(user, "<span class='warning'>You are suddenly zapped away elsewhere!</span>")
 
 /datum/artifact_effect/teleport/DoEffectAura()
@@ -27,13 +27,16 @@
 		if(teleport_around(M, 30))
 			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
+/datum/artifact_effect/teleport/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/M in range(7, curr_turf))
+		if(teleport_around(M, 50))
+			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
+
 /datum/artifact_effect/teleport/proc/teleport_around(mob/receiver, max_range)
-	var/weakness = 1
-	if(ishuman(receiver))
-		var/mob/living/carbon/human/H = receiver
-		weakness = GetAnomalySusceptibility(H)
-		if(!weakness)
-			return FALSE
+	var/weakness = GetAnomalySusceptibility(receiver)
+	if(!weakness)
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 	sparks.set_up(3, 0, get_turf(receiver))
 	sparks.start()

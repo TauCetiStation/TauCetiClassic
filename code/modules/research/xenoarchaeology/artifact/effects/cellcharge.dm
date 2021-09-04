@@ -27,6 +27,10 @@
 	var/turf/curr_turf = get_turf(holder)
 	recharge_everything_in_range(250, effectrange, curr_turf)
 
+/datum/artifact_effect/cellcharge/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	recharge_everything_in_range(10000, 7, curr_turf)
+
 /datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)	
 	for(var/obj/machinery/power/apc/C in range(range, center))
 		for(var/obj/item/weapon/stock_parts/cell/B in C.contents)

@@ -28,6 +28,12 @@
 		return FALSE
 	return env
 
+/datum/artifact_effect/temperature/DoEffectDestroy()
+	var/datum/gas_mixture/env = holder.loc.return_air()
+	if(!env)
+		return FALSE
+	return env
+
 /datum/artifact_effect/temperature/cold
 	effect_name = "Cold"
 	target_temp_low = 40
@@ -49,6 +55,13 @@
 	if(env.temperature > target_temp)
 		env.temperature -= pick(0, 0, 1)
 
+/datum/artifact_effect/temperature/cold/DoEffectDestroy()
+	. = ..()
+	if(!.)
+		return
+	var/datum/gas_mixture/env = .
+	env.temperature = target_temp_low
+
 /datum/artifact_effect/temperature/heat
 	effect_name = "Heat"
 	target_temp_low = 300
@@ -69,3 +82,10 @@
 	var/datum/gas_mixture/env = .
 	if(env.temperature > target_temp)
 		env.temperature += pick(0, 0, 1)
+
+/datum/artifact_effect/temperature/heat/DoEffectDestroy()
+	. = ..()
+	if(!.)
+		return
+	var/datum/gas_mixture/env = .
+	env.temperature = target_temp_high
