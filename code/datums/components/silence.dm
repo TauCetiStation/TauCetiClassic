@@ -6,14 +6,13 @@
 	var/list/old_locs = list()
 	var/enabled = FALSE
 
-/datum/component/silence/Initialize(_dist, _coeff, _vis_radius = FALSE)
+/datum/component/silence/Initialize(_dist, _coeff)
 	var/atom/movable/AM = parent
 	if (isnull(AM.loc))
 		return COMPONENT_NOT_ATTACHED
-	var/bound_size = 32 + 32 * 2 * _dist
-	var/bound_disp = 32 * -1 * _dist
+	var/bound_size = world.icon_size + world.icon_size * 2 * _dist
+	var/bound_disp = world.icon_size * -1 * _dist
 	coeff = _coeff
-	vis_radius = _vis_radius
 
 	radius_obj = new(get_turf(AM))
 	radius_obj.appearance_flags &= ~TILE_BOUND
@@ -23,23 +22,18 @@
 	radius_obj.bound_width = bound_size
 	radius_obj.bound_height = bound_size
 	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
+	radius_obj.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/update_sound_suppression)
 	RegisterSignal(parent, COMSIG_START_SUPPRESSING, .proc/enable_suppresion)
 	RegisterSignal(parent, COMSIG_STOP_SUPPRESSING, .proc/disable_suppression)
 
-	if(vis_radius)
-		radius_obj.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
-		SEND_SIGNAL(radius_obj, COMSIG_SHOW_RADIUS, human_list)
-
 /datum/component/silence/Destroy()
 	. = ..()
-	var/atom/movable/AM = parent
-	if (isnull(AM.loc))
+	if (isnull(parent))
 		return
 	disable_suppression()
-	if(vis_radius)
-		qdel(radius_obj.GetComponent(/datum/component/vis_radius))
+	qdel(radius_obj.GetComponent(/datum/component/vis_radius))
 	QDEL_NULL(radius_obj)
 
 /datum/component/silence/proc/enable_suppresion()

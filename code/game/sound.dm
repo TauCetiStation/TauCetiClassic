@@ -92,7 +92,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		S.volume *= pressure_factor
 		S.volume *= turf_source.sound_coefficient
-		S.volume *= T.sound_coefficient
+		S.volume *= max(T.sound_coefficient, 0.0)
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
