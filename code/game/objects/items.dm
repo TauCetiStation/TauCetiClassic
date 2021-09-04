@@ -57,7 +57,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/uncleanable = 0
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
@@ -79,6 +78,9 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+/obj/item/atom_init()
+	. = ..()
+	AddElement(/datum/element/beauty, -w_class)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -457,6 +459,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
