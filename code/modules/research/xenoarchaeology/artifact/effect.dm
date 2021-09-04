@@ -155,6 +155,8 @@
 			. += " Activation index involves <b>physical interaction</b> with artifact surface."
 		if(TRIGGER_FORCE, TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD)
 			. += " Activation index involves <b>energetic interaction</b> with artifact surface."
+		if(TRIGGER_PHORON, TRIGGER_OXY, TRIGGER_CO2, TRIGGER_NITRO)
+			. += " Activation index involves <b>precise local atmospheric conditions</b>."
 		else
 			. += " Unable to determine any data about activation trigger."
 
