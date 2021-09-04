@@ -300,12 +300,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells,
-					/obj/item/ammo_box/eight_shells,
-					/obj/item/ammo_box/eight_shells,
-					/obj/item/ammo_box/eight_shells,
-					/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells)
-	cost = 1000
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	access = access_armory
 	group = "Security"
@@ -317,12 +313,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot,
-					/obj/item/ammo_box/eight_shells/buckshot,
-					/obj/item/ammo_box/eight_shells/buckshot,
-					/obj/item/ammo_box/eight_shells/buckshot,
-					/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot)
-	cost = 1000
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	access = access_armory
 	group = "Security"
@@ -334,7 +326,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells/incendiary,
 					/obj/item/ammo_box/eight_shells/incendiary,
 					/obj/item/ammo_box/eight_shells/incendiary,)
-	cost = 1000
+	cost = 2000
 	hidden = TRUE
 	group = "Security"
 
