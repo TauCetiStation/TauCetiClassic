@@ -473,6 +473,7 @@ SUBSYSTEM_DEF(ticker)
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
+					// For some reason, player can be in null
 					if(!playerTurf)
 						continue
 					if(!is_centcom_level(playerTurf.z))
