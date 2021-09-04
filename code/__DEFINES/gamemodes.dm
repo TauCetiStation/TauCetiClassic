@@ -85,9 +85,9 @@
 
 // -- Blueshield Officer-related
 
-#define BLUESHIELD_MIND (1<<0) // is antag mind head of staff?
-#define BLUESHIELD_TARGET (1<<1) // is antag target a head of staff?
-#define BLUESHIELD_ALERT (1<<2) // is blueshield alerted about antag target?
+#define BLUESHIELD_MIND (1<<0) // is antag mind head of staff
+#define BLUESHIELD_TARGET (1<<1) // is antag target a head of staff
+#define BLUESHIELD_ALERT (1<<2) // is blueshield alerted about antag target
 
 // -- Abductors
 
