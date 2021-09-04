@@ -16,6 +16,6 @@
 
 /obj/item/clothing/gloves/black/silence/dropped(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You are disabling the silence gloves!</span>")
+	to_chat(user, "<span class='red'>You are disabling the silence gloves!</span>")
 	SEND_SIGNAL(src, COMSIG_STOP_SUPPRESSING)
 	SEND_SIGNAL(src, COMSIG_HIDE_RADIUS)
