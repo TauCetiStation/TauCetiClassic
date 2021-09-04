@@ -78,7 +78,7 @@
 		toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
-	if(!user)	
+	if(!user)
 		return FALSE
 	if(!GetAnomalySusceptibility(user)) //we ignore things with full anomaly protection
 		return
@@ -162,10 +162,12 @@
 
 // returns 0..1, with 1 being no protection and 0 being fully protected
 /proc/GetAnomalySusceptibility(mob/living/carbon/human/H) 
-	if(!H || !istype(H))
+	if(!H)
+		return
+	if(!ishuman(H))
 		return NO_ANOMALY_PROTECTION
 
-	var/protection = NO_ANOMALY_PROTECTION
+	var/protection = 0
 
 	// particle protection suits give best protection, but science space suits are almost as good
 	if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/particle_protection))
