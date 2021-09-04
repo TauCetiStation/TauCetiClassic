@@ -128,7 +128,8 @@
 	var/trigger_oxy = FALSE
 	var/trigger_co2 = FALSE
 	var/trigger_nitro = FALSE
-	if((my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) || (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO) )
+	if((my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) ||\
+	 (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
 		if(env)
@@ -147,35 +148,17 @@
 				trigger_nitro = TRUE
 
 	// COLD ACTIVATION
-	if(trigger_cold)
-		toggle_effects_on(TRIGGER_COLD)
-	else 
-		toggle_effects_off(TRIGGER_COLD)
+	trigger_cold ? toggle_effects_on(TRIGGER_COLD) : toggle_effects_off(TRIGGER_COLD)
 	// HEAT ACTIVATION
-	if(trigger_hot)
-		toggle_effects_on(TRIGGER_HEAT)
-	else
-		toggle_effects_off(TRIGGER_HEAT)
+	trigger_hot ? toggle_effects_on(TRIGGER_HEAT) : toggle_effects_off(TRIGGER_HEAT)
 	// PHORON GAS ACTIVATION
-	if(trigger_phoron)
-		toggle_effects_on(TRIGGER_PHORON)
-	else
-		toggle_effects_off(TRIGGER_PHORON)
+	trigger_phoron ? toggle_effects_on(TRIGGER_PHORON) : toggle_effects_off(TRIGGER_PHORON)
 	// OXYGEN GAS ACTIVATION
-	if(trigger_oxy)
-		toggle_effects_on(TRIGGER_OXY)
-	else
-		toggle_effects_off(TRIGGER_OXY)
+	trigger_oxy ? toggle_effects_on(TRIGGER_OXY) : toggle_effects_off(TRIGGER_OXY)
 	// CO2 GAS ACTIVATION
-	if(trigger_co2)
-		toggle_effects_on(TRIGGER_CO2)
-	else
-		toggle_effects_off(TRIGGER_CO2)
+	trigger_co2 ? toggle_effects_on(TRIGGER_CO2) : toggle_effects_off(TRIGGER_CO2)
 	// NITROGEN GAS ACTIVATION
-	if(trigger_nitro)
-		toggle_effects_on(TRIGGER_NITRO)
-	else
-		toggle_effects_off(TRIGGER_NITRO)
+	trigger_nitro ? toggle_effects_on(TRIGGER_NITRO) : toggle_effects_off(TRIGGER_NITRO)
 	// TRIGGER_PROXY ACTIVATION
 	if(are_mobs_inside_area)
 		if(world.time >= last_scan + scan_delay)
@@ -234,14 +217,12 @@
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
 		return TRUE
 	user.SetNextMove(CLICK_CD_MELEE)
+	try_toggle_effects(TRIGGER_TOUCH)
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].</b>")
 		my_effect.ToggleActivate()
 	else
 		to_chat(user, "<b>You touch [src],</b> [pick("but nothing of note happens", "but nothing happens", "but nothing interesting happens", "but you notice nothing different", "but nothing seems to have happened")].")
-
-	if(prob(25) && secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH)
-		secondary_effect.ToggleActivate(0)
 
 	if(my_effect.effect == ARTIFACT_EFFECT_TOUCH)
 		my_effect.DoEffectTouch(user)
