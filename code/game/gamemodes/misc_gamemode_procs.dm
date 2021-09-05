@@ -153,15 +153,7 @@
 			blueshield_PDA = P
 	if (!blueshield_PDA)
 		return
-	if (!message_servers)
-		return
-	if (message_servers.len)
-		var/obj/machinery/message_server/MS = message_servers[1]
-		var/obj/item/device/pda/fakePDA = new /obj/item/device/pda/silicon(MS)
-		fakePDA.owner = "CentComm Security Department"
-		fakePDA.ownjob = "Dispatch"
-		fakePDA.send_message(null, blueshield_PDA, centcomm_blueshield_intercept, MS, TRUE, TRUE)
-		QDEL_NULL(fakePDA)
+	send_pda_message(null, "Разведовательное Управление СН Центком", blueshield_PDA, centcomm_blueshield_intercept, null, TRUE)
 
 // refactor to /datum/stat_collector from vg
 // https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/datums/statistics/stat_helpers.dm

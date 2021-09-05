@@ -63,7 +63,7 @@
 /obj/machinery/message_server/atom_init()
 	message_servers += src
 	decryptkey = GenerateKey()
-	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+	save_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
 	. = ..()
 
 /obj/machinery/message_server/Destroy()
@@ -87,7 +87,7 @@
 	update_icon()
 	return
 
-/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "")
+/obj/machinery/message_server/proc/save_pda_message(recipient = "",sender = "",message = "")
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 
 /obj/machinery/message_server/proc/send_rc_message(recipient = "", sender = "", message = "", stamp = "", id_auth = "", priority = 1, from="")

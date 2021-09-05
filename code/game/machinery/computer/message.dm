@@ -421,22 +421,18 @@
 						message = "<div class='NoticeBox'>NOTICE: No message entered!</div>"
 						return attack_hand(usr)
 
-					var/obj/item/device/pda/PDARec = null
+					var/obj/item/device/pda/PDA = null
 					for (var/obj/item/device/pda/P in PDAs)
 						if (!P.owner || P.toff || P.hidden)	continue
 						if(P.owner == customsender)
-							PDARec = P
+							PDA = P
 					var/obj/machinery/message_server/activeMS = linkedServer.active ? linkedServer : null
 					//Sender isn't faking as someone who exists
-					if(isnull(PDARec))
-						PDARec = new /obj/item/device/pda/silicon(src)
-						PDARec.owner = customsender
-						PDARec.ownjob = customjob
-						PDARec.send_message(usr, customrecepient, custommessage, activeMS, TRUE, TRUE)
-						QDEL_NULL(PDARec)
+					if(isnull(PDA))
+						send_pda_message(usr, "[customsender] ([customjob])", customrecepient, custommessage, activeMS, TRUE)
 					//Sender is faking as someone who exists
 					else
-						PDARec.send_message(usr, customrecepient, custommessage, activeMS, FALSE, TRUE)
+						send_pda_message(usr, PDA, customrecepient, custommessage, activeMS, TRUE)
 					//Finally..
 					ResetMessage()
 

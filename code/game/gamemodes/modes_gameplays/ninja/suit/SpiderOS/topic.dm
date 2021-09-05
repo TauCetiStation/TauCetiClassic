@@ -58,40 +58,8 @@
 				to_chat(display_to, "<span class='warning'>Error: unable to deliver message.</span>")
 				display_spideros()
 				return
-			var/obj/machinery/message_server/useMS = null
-			if(!useMS || !useMS.active)
-				useMS = null
-				if(message_servers)
-					for (var/obj/machinery/message_server/MS in message_servers)
-						if(MS.active)
-							useMS = MS
-							break
-			if(useMS)
-				var/sender = "an unknown source"
-				useMS.send_pda_message("[P.owner]",sender,"[t]")
+			send_pda_message(usr, "an unknown source", P, t)
 
-				for(var/mob/M in player_list)
-					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
-						if(isnewplayer(M))
-							continue
-						to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
-
-				if (!P.message_silent)
-					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-					P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
-				P.cut_overlays()
-				P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
-				var/mob/living/L = null
-				if(P.loc && isliving(P.loc))
-					L = P.loc
-				//Maybe they are a pAI!
-				else
-					L = get(P, /mob/living/silicon)
-
-				if(L)
-					to_chat(L, "[bicon(P)] <b>Message from [sender], </b>\"[t]\" (Unable to Reply)")
-			else
-				to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
