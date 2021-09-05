@@ -10,24 +10,25 @@
 	var/atom/movable/AM = parent
 	if (isnull(AM.loc))
 		return COMPONENT_NOT_ATTACHED
-	var/bound_size = world.icon_size + world.icon_size * 2 * _dist
-	var/bound_disp = world.icon_size * -1 * _dist
+	var/bound_width = AM.bound_width + world.icon_size * 2 * _dist
+	var/bound_height = AM.bound_height + world.icon_size * 2 * _dist
+	var/bound_x = AM.bound_x + world.icon_size * -1 * _dist
+	var/bound_y = AM.bound_y + world.icon_size * -1 * _dist
 	coeff = _coeff
 
 	radius_obj = new(get_turf(AM))
 	radius_obj.appearance_flags &= ~TILE_BOUND
 	radius_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	radius_obj.bound_x = bound_disp
-	radius_obj.bound_y = bound_disp
-	radius_obj.bound_width = bound_size
-	radius_obj.bound_height = bound_size
+	radius_obj.bound_x = bound_x
+	radius_obj.bound_y = bound_y
+	radius_obj.bound_width = bound_width
+	radius_obj.bound_height = bound_height
 	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
 	AM.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/update_sound_suppression)
 	RegisterSignal(parent, list(COMSIG_START_SUPPRESSING), .proc/enable_suppresion)
 	RegisterSignal(parent, list(COMSIG_STOP_SUPPRESSING), .proc/disable_suppression)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/on_deletion)
 
 /datum/component/silence/Destroy()
 	. = ..()
@@ -65,7 +66,3 @@
 		T.sound_coefficient -= coeff
 
 	old_locs = radius_obj.locs
-
-/datum/component/silence/proc/on_deletion()
-	SIGNAL_HANDLER
-	qdel(src)
