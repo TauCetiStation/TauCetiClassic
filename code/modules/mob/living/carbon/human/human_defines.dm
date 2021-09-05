@@ -115,3 +115,7 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Clothes count. Used in mood.
+	var/wet_clothes = 0
+	var/dirty_clothes = 0
