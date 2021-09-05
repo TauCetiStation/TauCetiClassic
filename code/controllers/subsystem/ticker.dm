@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(ticker)
 	var/Malf_announce_stage = 0//Used for announcement
 
 /datum/controller/subsystem/ticker/PreInit()
+	login_music = 'sound/long-title3.mp3'
 	login_music = pick(\
 	/*
 	'sound/music/space.ogg',\
