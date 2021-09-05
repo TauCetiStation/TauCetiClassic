@@ -70080,6 +70080,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/weapon/book/manual/wiki/blueshield{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -74971,15 +74975,15 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "kAj" = (
 /obj/structure/table,
-/obj/item/ashtray/plastic{
-	pixel_x = -8;
-	pixel_y = 7
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/effect/landmark/blueshield{
 	name = "Blueshield Paper"
+	},
+/obj/item/ashtray/plastic{
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

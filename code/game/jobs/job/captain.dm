@@ -36,7 +36,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "The Central Command and NanoTrasen Representatives"
+	supervisors = "NanoTrasen officials"
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/blu
 	access = list(access_blueshield, access_heads, access_maint_tunnels,
@@ -59,6 +59,8 @@
 	. = ..()
 	if(!visualsOnly)
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode/proc/send_pda, H), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
+		// For Test Merge
+		to_chat(H, "<b>Данная профессия <span class='red'>экспериментальная</span> и на стадии балансировки и проверки.</b><br>Поэтому не стесняйтесь писать фидбек <a href='https://forum.taucetistation.org/t/wip-blueshield-officer-i-ego-sudba/27761'>на форуме</a>, в <a href='https://github.com/TauCetiStation/TauCetiClassic/pull/7822'>пулл-реквесте (#7822)</a> и на нашем Discord-сервере. Книга с гайдом на вики находится в офисе на столе.")
 
 /datum/job/hop
 	title = "Head of Personnel"

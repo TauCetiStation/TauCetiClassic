@@ -232,6 +232,15 @@
 	title = "Standard Operating Procedure"
 	wiki_page = "Standard_Operating_Procedure"
 
+/obj/item/weapon/book/manual/wiki/blueshield
+	name = "Blueshield Initiative"
+	desc = "A Nanotrasen briefing recording for new Blueshield Initiative Officers. There is a label \"Work in Progress\"."
+	icon_state = "bookBS"
+	item_state = "book9"
+	author = "NanoTrasen"
+	title = "Blueshield Initiative Briefing"
+	wiki_page = "Участник:PervertGenius/Blueshield_Officer" // For Test Merge, link to be changed
+
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookDetective"
