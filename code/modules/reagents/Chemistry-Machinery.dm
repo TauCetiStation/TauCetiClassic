@@ -1,5 +1,6 @@
 #define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
+#define MAX_INJECTOR_SPRITE 10
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
@@ -342,6 +343,7 @@
 	var/pillamount = 10
 	var/bottlesprite = 1
 	var/pillsprite = 1
+	var/injectorsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
 
@@ -447,6 +449,23 @@
 		popup.open()
 		return
 
+	else if(href_list["changeinjector"])
+		var/dat = "<B>Choose injector colour</B><BR>"
+
+		dat += "<TABLE><TR>"
+		for(var/i = 1 to MAX_INJECTOR_SPRITE)
+			if(!((i-1)%9)) //New row every 9 icons
+				dat +="</TR><TR>"
+			dat += "<TD><A href='?src=\ref[src];set=2;value=[i] '><IMG src=autoinjector[i].png></A></TD>"
+		dat += "</TR></TABLE>"
+
+		dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+
+		var/datum/browser/popup = new(usr, "chem_master", name)
+		popup.set_content(dat)
+		popup.open()
+		return
+
 	else if(href_list["changebottle"])
 		var/dat = "<B>Choose bottle</B><BR>"
 
@@ -454,7 +473,7 @@
 		for(var/i = 1 to MAX_BOTTLE_SPRITE)
 			if(!((i-1)%9)) //New row every 9 icons
 				dat += "</TR><TR>"
-			dat += "<TD><A href='?src=\ref[src];set=2;value=[i] '><IMG src=bottle[i].png></A></TD>"
+			dat += "<TD><A href='?src=\ref[src];set=3;value=[i] '><IMG src=bottle[i].png></A></TD>"
 
 		dat += "</TR></TABLE>"
 
@@ -469,7 +488,9 @@
 		if(href_list["value"])
 			if(href_list["set"] == "1")
 				src.pillsprite = text2num(href_list["value"])
-			else
+			else if (href_list["set"] == "2")
+				src.injectorsprite = text2num(href_list["value"])
+			else if (href_list["set"] == "3")
 				src.bottlesprite = text2num(href_list["value"])
 		attack_hand(usr)
 		return
@@ -595,6 +616,30 @@
 					P.pixel_y = rand(-7, 7)
 					reagents.trans_to(P,vol_each)
 
+		else if(href_list["createinjector"])
+			if(reagents.total_volume == 0)
+				return FALSE
+			if(!condi)
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 15)
+				if(text2num(href_list["many"]))
+					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many injectors?", amount) as num|null), 0), 10)
+					if(!amount)
+						return FALSE
+					vol_each = min(reagents.total_volume / amount, 15)
+				var/name = sanitize_safe(input(usr,"Name:","Name your injector!", "[reagents.get_master_reagent_name()] ([vol_each]u)") as text|null, MAX_NAME_LEN)
+				if(!name || !reagents.total_volume)
+					return FALSE
+				var/obj/item/weapon/reagent_containers/hypospray/autoinjector/P
+
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/weapon/reagent_containers/hypospray/autoinjector(src.loc)
+					P.name = "[name] injector"
+					P.icon_state = "autoinjector[injectorsprite]"
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					reagents.trans_to(P,vol_each)
+
 	updateUsrDialog()
 
 /obj/machinery/chem_master/ui_interact(mob/user)
@@ -605,6 +650,8 @@
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill[i]"), "pill[i].png")
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle[i]"), "bottle[i].png")
+			for(var/i = 1 to MAX_INJECTOR_SPRITE)
+				usr << browse_rsc(icon('icons/obj/syringe.dmi', "autoinjector[i]"), "autoinjector[i].png")
 			updateUsrDialog()
 
 	var/dat = ""
@@ -645,8 +692,8 @@
 
 
 	dat += "<A href='?src=\ref[src];changepill=1'><img src='pill[src.pillsprite].png'></A>"
+	dat += "<A href='?src=\ref[src];changeinjector=1'><img src='autoinjector[src.injectorsprite].png'></A>"
 	dat += "<A href='?src=\ref[src];changebottle=1'><img src='bottle[src.bottlesprite].png'></A>"
-
 
 	dat += "<HR>"
 	if(!condi)
@@ -662,9 +709,13 @@
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
+			dat += "<LI><A href='?src=\ref[src];createinjector=1;many=0'>Create injector</A> (15 units max)"
+			dat += "<LI><A href='?src=\ref[src];createinjector=1;many=1'>Create multiple injectors</A><BR>"
 		else
 			dat += "<LI><span class='disabled'>Create pill</span> (50 units max)"
 			dat += "<LI><span class='disabled'>Create multiple pills</span><BR>"
+			dat += "<LI><span class='disabled'>Create injector</span> (15 units max)"
+			dat += "<LI><span class='disabled'>Create multiple injectors</span><BR>"
 	else
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"

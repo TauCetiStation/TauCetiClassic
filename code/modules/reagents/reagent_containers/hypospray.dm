@@ -49,10 +49,17 @@
 
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	name = "autoinjector"
+	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
+	icon_state = "autoinjector_empty"
+	item_state = "autoinjector_empty"
+	volume = 15
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline
 	name = "inaprovaline autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
-	icon_state = "autoinjector"
-	item_state = "autoinjector"
+	icon_state = "autoinjector1"
+	item_state = "autoinjector1"
 	volume = 5
 	list_reagents = list("inaprovaline" = 5)
 

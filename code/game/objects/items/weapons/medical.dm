@@ -28,7 +28,7 @@
 	new /obj/item/weapon/storage/pill_bottle/dermaline(src)
 	new /obj/item/weapon/storage/pill_bottle/dylovene(src)
 	new /obj/item/weapon/storage/pill_bottle/tramadol(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
@@ -49,7 +49,7 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
@@ -70,7 +70,7 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian
@@ -90,7 +90,7 @@
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
 	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment

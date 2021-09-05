@@ -40,7 +40,7 @@
 	products = list(
 		/obj/item/stack/medical/bruise_pack = 2,
 		/obj/item/stack/medical/ointment = 2,
-		/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline = 4,
 		/obj/item/device/healthanalyzer = 1,
 		/obj/item/stack/medical/suture = 2,
 	)
@@ -60,7 +60,7 @@
 	req_access = list(5)
 	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(
-		/obj/item/weapon/reagent_containers/hypospray/autoinjector = 5,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline = 5,
 		/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment =3,

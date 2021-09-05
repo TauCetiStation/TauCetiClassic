@@ -487,7 +487,7 @@
 /obj/item/weapon/storage/box/autoinjectors/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 
 //Replacement bulbs
 /obj/item/weapon/storage/box/lights

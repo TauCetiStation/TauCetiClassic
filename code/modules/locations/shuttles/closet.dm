@@ -48,7 +48,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline(src)
 
 /obj/structure/closet/erokez
 	name = "Closet"
