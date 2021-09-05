@@ -153,7 +153,7 @@
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
-		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift,
 		)
 
 
