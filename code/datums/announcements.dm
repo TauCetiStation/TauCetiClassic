@@ -80,36 +80,59 @@ var/list/announcement_sounds = list(
 	var/announcer
 	var/sound
 
+	var/always_random = FALSE
+	var/custom = FALSE
 	var/volume = 100
 	var/flags
 
+/datum/announcement/New()
+	randomize()
+
 /datum/announcement/proc/copy(announce_type)
-	var/datum/announcement/AT = announce_type
-	ASSERT(ispath(AT))
+	var/datum/announcement/A = new announce_type
 
-	name = initial(AT.name)
-	title = initial(AT.title)
-	subtitle = initial(AT.subtitle)
-	message = initial(AT.message)
-	announcer = initial(AT.announcer)
-	sound = initial(AT.sound)
+	name = A.name
+	title = A.title
+	subtitle = A.subtitle
+	message = A.message
+	announcer = A.announcer
+	sound = A.sound
 
-	volume = initial(AT.volume)
-	flags = initial(AT.flags)
+	volume = A.volume
+	flags = A.flags
+
+/datum/announcement/proc/randomize()
+	return
 
 /datum/announcement/proc/play()
+	var/_title = title
+	var/_subtitle = subtitle
+	var/_message_annou = message
+	var/_message_paper = message
+	var/_announcer = announcer
 	var/announce_text
 	var/announce_sound
 
+	if(always_random)
+		randomize()
+
+	// Sanitizing only there, because it will break everything not here
+	if(custom)
+		_title = sanitize_safe(title)
+		_subtitle = sanitize_safe(subtitle)
+		_message_annou = sanitize_safe(message)
+		_message_paper = sanitize(message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+		_announcer = sanitize_safe(announcer)
+
 	if(flags & ANNOUNCE_TEXT)
-		if(title)
-			announce_text += "<h1 class='alert'>[title]</h1><br>"
-		if(subtitle)
-			announce_text += "<h2 class='alert'>[subtitle]</h2><br>"
-		if(message)
-			announce_text += "<span class='alert'>[message]</span><br>"
-		if(announcer)
-			announce_text += "<span class='alert'> -[announcer]</span><br>"
+		if(_title)
+			announce_text += "<h1>[_title]</h1>"
+		if(_subtitle)
+			announce_text += "<h2>[_subtitle]</h2>"
+		if(_message_annou)
+			announce_text += "<p class='alert'>[_message_annou]</p>"
+		if(_announcer)
+			announce_text += "<p class='alert'> -[_announcer]</p>"
 
 	if(flags & ANNOUNCE_SOUND)
 		if(sound)
@@ -135,18 +158,18 @@ var/list/announcement_sounds = list(
 	if(flags & ANNOUNCE_COMMS)
 		for (var/obj/machinery/computer/communications/C in communications_list)
 			if(!(C.stat & (BROKEN | NOPOWER)))
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-				if(title && subtitle)
-					P.name = "[title] - [subtitle]"
-				else if(title)
-					P.name = "[title]"
-				else if(subtitle)
-					P.name = "[subtitle]"
+				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
+				if(_title && _subtitle)
+					P.name = "[_title] - [_subtitle]"
+				else if(_title)
+					P.name = "[_title]"
+				else if(_subtitle)
+					P.name = "[_subtitle]"
 				else
 					P.name = "Report"
-				P.info = replacetext(message, "\n", "<br/>")
+				P.info = replacetext(_message_paper, "\n", "<br/>")
 				P.update_icon()
-				C.messagetitle.Add("[subtitle]")
+				C.messagetitle.Add("[P.name]")
 				C.messagetext.Add(P.info)
 
 
@@ -159,6 +182,3 @@ var/list/announcement_sounds = list(
 	..()
 
 /var/datum/announcement/announcement_ping = new /datum/announcement/ping // For sound-only
-
-/datum/announcement/proc/randomize_message()
-	return

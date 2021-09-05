@@ -39,13 +39,13 @@ var/list/datum/announcement/announcements_list
 
 	switch(action)
 		if("title")
-			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", input_default(A.title)) as text)
+			A.title = input(ui.user, "Pick a title for the report.", "Title", A.title)
 		if("subtitle")
-			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", input_default(A.subtitle)) as text)
+			A.subtitle = input(ui.user, "Pick a subtitle for the report.", "Subtitle", A.subtitle)
 		if("message")
-			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", input_default(A.message)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+			A.message = input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", A.message)
 		if("announcer")
-			A.announcer = sanitize(input(ui.user, "Pick a announcer for the report.", "Announcer", input_default(A.announcer)) as text)
+			A.announcer = input(ui.user, "Pick a announcer for the report.", "Announcer", A.announcer)
 		if("flag_text")
 			A.flags ^= ANNOUNCE_TEXT
 		if("flag_sound")
