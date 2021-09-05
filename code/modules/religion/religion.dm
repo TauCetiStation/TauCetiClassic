@@ -608,6 +608,8 @@
 	if(!is_member(M))
 		return FALSE
 
+	SEND_SIGNAL(src, COMSIG_REL_REMOVE_MEMBER, M)
+
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	if(M.mind)

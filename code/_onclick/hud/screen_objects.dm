@@ -11,6 +11,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
+	flags = ABSTRACT
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
@@ -287,7 +288,10 @@
 		icon_state = "pull0"
 
 /atom/movable/screen/Click(location, control, params)
-	if(!usr)	return 1
+	if(!usr)
+		return 1
+
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	switch(name)
 		if("toggle")
@@ -340,7 +344,7 @@
 							var/mob/living/carbon/human/H = C
 							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 								internalsound = 'sound/misc/riginternaloff.ogg'
-						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
@@ -421,7 +425,7 @@
 										var/mob/living/carbon/human/H = C
 										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 											internalsound = 'sound/misc/riginternalon.ogg'
-									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 								if(C.internal)
 									if(C.internals)
@@ -844,3 +848,8 @@
 		cooldown.callback = callback
 	cooldown.start_cooldown(time)
 	return cooldown
+
+/atom/movable/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood

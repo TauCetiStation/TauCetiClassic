@@ -840,7 +840,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -979,6 +979,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1010,23 +1011,7 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock,
-/obj/item/weapon/gun/projectile/glock,
-/obj/item/weapon/gun/projectile/glock,
+/obj/structure/closet/secure_closet/pistols,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1037,6 +1022,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1093,6 +1079,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1115,6 +1102,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1140,6 +1128,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1193,6 +1182,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -1485,8 +1475,8 @@
 /obj/machinery/door_control{
 	id = "Armoury0";
 	name = "Armoury Access";
-	pixel_x = 28;
-	pixel_y = -28;
+	pixel_x = 26;
+	pixel_y = -29;
 	req_access = list(2)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1866,9 +1856,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1877,6 +1864,9 @@
 	},
 /obj/item/weapon/gun/energy/ionrifle{
 	pixel_y = -3
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -1920,10 +1910,17 @@
 /area/station/security/main)
 "adj" = (
 /obj/machinery/door_control{
+	id = "ArmorDoors";
+	name = "Open Armor";
+	pixel_x = -25;
+	pixel_y = -5;
+	req_access = list(3)
+	},
+/obj/machinery/door_control{
 	id = "Armoury0";
 	name = "Emergency Access";
-	pixel_x = -28;
-	pixel_y = 3;
+	pixel_x = -25;
+	pixel_y = 7;
 	req_access = list(2)
 	},
 /turf/simulated/floor{
@@ -2076,7 +2073,7 @@
 /obj/machinery/door_control{
 	id = "Armoury";
 	name = "Emergency Access";
-	pixel_x = -28;
+	pixel_x = -26;
 	pixel_y = 3;
 	req_access = list(3)
 	},
@@ -2388,9 +2385,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 4
 	},
@@ -2399,6 +2393,9 @@
 	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2409,15 +2406,15 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2432,14 +2429,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
-	},
 /obj/structure/rack,
 /obj/item/weapon/storage/box/flashbangs,
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3221,8 +3217,8 @@
 /obj/machinery/door_control{
 	id = "Armoury";
 	name = "Armoury Access";
-	pixel_x = 28;
-	pixel_y = -28;
+	pixel_x = 26;
+	pixel_y = -29;
 	req_access = list(3)
 	},
 /turf/simulated/floor{
@@ -3247,9 +3243,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/weapon/gun/plasma/p104sass{
@@ -3257,6 +3250,9 @@
 	},
 /obj/item/weapon/gun/plasma{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -3268,16 +3264,16 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3288,11 +3284,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/gun/projectile/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/m79,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3549,15 +3545,15 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4756,14 +4752,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_y = 4
 	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -9845,16 +9841,15 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "aqh" = (
@@ -14450,7 +14445,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/structure/noticeboard{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -15614,12 +15609,12 @@
 /obj/machinery/alarm{
 	pixel_y = 28
 	},
-/mob/living/simple_animal/parrot/Poly,
 /obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "aBa" = (
@@ -16982,11 +16977,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "aDA" = (
@@ -17153,11 +17147,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "aDR" = (
@@ -26891,11 +26884,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -28492,6 +28484,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -28528,12 +28523,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump/on,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "Private AI Channel";
-	pixel_x = 26
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -28787,11 +28776,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "AI Satellite";
-	name = "Aisat Turret Control";
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -28802,6 +28786,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "Secure Storage";
+	name = "Aistor Turret Control";
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -29462,11 +29451,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "Secure Storage";
-	name = "Aistor Turret Control";
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -29474,6 +29458,11 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite";
+	name = "Aisat Turret Control";
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -31314,6 +31303,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -32129,11 +32121,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -33777,8 +33768,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/obj/structure/noticeboard/bar{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -34133,6 +34124,23 @@
 	icon_state = "platebotc"
 	},
 /area/station/maintenance/escape)
+"bij" = (
+/obj/machinery/telecomms/bus/preset_four,
+/obj/machinery/camera{
+	c_tag = "Central Compartment East";
+	dir = 8;
+	network = list("Tcomsat")
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "bik" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -37393,7 +37401,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -40522,7 +40530,7 @@
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -43009,6 +43017,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
+"byi" = (
+/obj/effect/landmark/dealer_spawn,
+/turf/space,
+/area/space)
 "bym" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -54022,14 +54034,13 @@
 	},
 /area/station/hallway/primary/central)
 "bXv" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/window/southright{
 	dir = 4;
 	name = "Medbay Storage";
 	req_access = list(72)
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -56038,8 +56049,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -56495,8 +56505,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -60208,13 +60217,19 @@
 	},
 /area/station/aisat/ai_chamber)
 "cow" = (
-/obj/machinery/power/apc/smallcell{
-	name = "MiniSat External Power APC";
-	pixel_y = -25
-	},
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
+	dir = 10
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "interior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access = list(66)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -60358,16 +60373,17 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "coP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "exterior access button";
+	pixel_x = 20;
+	pixel_y = -20;
+	req_access = list(66)
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "coQ" = (
 /obj/machinery/bookbinder,
 /turf/simulated/floor/wood,
@@ -61670,21 +61686,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "crx" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/power/apc/smallcell{
+	name = "MiniSat External Power APC";
+	pixel_y = -25
 	},
-/obj/machinery/alarm/server{
-	dir = 4;
-	pixel_x = -22
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
 	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_x = 26
 	},
-/area/station/tcommsat/chamber)
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
 "cry" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -62406,9 +62426,6 @@
 	frequency = 1447;
 	name = "Private AI Channel";
 	pixel_x = -26
-	},
-/obj/machinery/light/small{
-	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63998,6 +64015,7 @@
 	dir = 1
 	},
 /obj/item/stack/nanopaste,
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67188,6 +67206,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cFw" = (
@@ -67336,6 +67357,9 @@
 /area/station/tcommsat/computer)
 "cFT" = (
 /obj/machinery/atmospherics/components/unary/tank/nitrogen,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67434,17 +67458,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cGj" = (
-/obj/machinery/power/apc{
+/obj/machinery/alarm/server{
 	dir = 4;
-	name = "Telecoms Sat. Central Compartment APC";
-	pixel_x = 28
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	pixel_x = -22
 	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
@@ -68109,14 +68125,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cIp" = (
-/obj/machinery/telecomms/bus/preset_two,
-/obj/machinery/camera{
-	c_tag = "Central Compartment West";
+/obj/machinery/power/apc{
 	dir = 4;
-	network = list("Tcomsat")
+	name = "Telecoms Sat. Central Compartment APC";
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/bluegrid{
-	name = "Server Base";
+	icon_state = "dark";
+	name = "Server Walkway";
 	nitrogen = 500;
 	oxygen = 0;
 	temperature = 80
@@ -68530,13 +68550,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"cKd" = (
-/obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "cKe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -80838,11 +80851,14 @@
 	},
 /area/station/tcommsat/computer)
 "tbb" = (
-/obj/machinery/telecomms/bus/preset_four,
+/obj/machinery/telecomms/bus/preset_two,
 /obj/machinery/camera{
-	c_tag = "Central Compartment East";
-	dir = 8;
+	c_tag = "Central Compartment West";
+	dir = 4;
 	network = list("Tcomsat")
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -81411,8 +81427,7 @@
 "uob" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(10);
-	req_one_access = list(11,24)
+	req_access = list(10)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -82216,8 +82231,8 @@
 	},
 /area/station/civilian/chapel)
 "xbF" = (
-/obj/structure/noticeboard{
-	pixel_y = 27
+/obj/structure/noticeboard/chaplain{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -90890,7 +90905,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 boX
 aro
 fab
@@ -91147,7 +91162,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 aro
 aro
 fab
@@ -95801,7 +95816,7 @@ aaa
 aaa
 aaa
 aag
-aaa
+byi
 aaa
 aaa
 aaa
@@ -100061,7 +100076,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -119994,7 +120009,7 @@ aaa
 aaa
 aaa
 aaa
-bWt
+coP
 aaa
 aaa
 aaa
@@ -121279,7 +121294,7 @@ bdl
 cHK
 cnL
 coE
-coP
+cow
 cpD
 cot
 cpl
@@ -121538,7 +121553,7 @@ aZH
 aYc
 aYt
 aYw
-cow
+crx
 cCW
 cEL
 cEL
@@ -122578,8 +122593,8 @@ cEY
 aaa
 cIe
 cDE
-crx
-cIp
+cGj
+tbb
 cqO
 cIe
 aaa
@@ -122911,7 +122926,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -123848,7 +123863,7 @@ cFP
 cFP
 cnJ
 cnM
-cGa
+cpt
 coR
 cok
 cov
@@ -126176,8 +126191,8 @@ cEW
 aaa
 cIe
 cEJ
-cGj
-tbb
+cIp
+bij
 cqX
 cIe
 aaa
@@ -135905,7 +135920,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa

@@ -64,6 +64,10 @@
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+			if(failed_last_breath)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			else
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -99,9 +103,7 @@
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(blood_volume > 0)
-					handle_blood(blood_volume)
+				handle_blood()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -435,7 +437,7 @@
 					breathsound = pick(SOUNDIN_RIGBREATH)
 				if(alpha < 50)
 					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
-				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
+				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -662,8 +664,15 @@
 	if(status_flags & GODMODE)
 		return 1	//godmode
 
+	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > species.heat_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 3)
@@ -679,6 +688,9 @@
 			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
@@ -1025,6 +1037,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
@@ -1034,6 +1047,7 @@
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+				update_size_class()
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
@@ -1209,7 +1223,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
@@ -1282,6 +1296,7 @@
 						s.toggle_zoom()
 
 	else
+		lighting_alpha = initial(lighting_alpha)
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
@@ -1305,14 +1320,8 @@
 				see_in_dark += G.darkness_view
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/shadowling/S = G
-				if(S.vision)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_MINIMUM
+				if(!isnull(G.lighting_alpha))
+					lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
@@ -1320,27 +1329,30 @@
 				if(0)
 					O.togge_huds()
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LIVING
 				if(1)
-					see_in_dark = 5
+					see_in_dark = 8
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 				if(2)
 					sight |= SEE_MOBS
+					see_in_dark = initial(see_in_dark)
 					//client.screen += global_hud.thermal
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 				if(3)
 					sight |= SEE_TURFS
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(changeling_aug)
 			sight |= SEE_MOBS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(blinded)
 			see_in_dark = 8
@@ -1446,11 +1458,6 @@
 			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 		else
 			clear_fullscreen("blurry")
-
-		if(druggy)
-			overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		else
-			clear_fullscreen("high")
 		if(nearsighted)
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
@@ -1511,6 +1518,7 @@
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
+	return ..()
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
@@ -1656,7 +1664,7 @@
 
 	var/temp = PULSE_NORM
 
-	if(round(vessel.get_reagent_amount("blood")) <= BLOOD_VOLUME_BAD)	//how much blood do we have
+	if(blood_amount() <= BLOOD_VOLUME_BAD)	//how much blood do we have
 		temp = PULSE_THREADY	//not enough :(
 
 	if(status_flags & FAKEDEATH)

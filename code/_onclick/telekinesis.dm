@@ -67,7 +67,6 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
-	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
