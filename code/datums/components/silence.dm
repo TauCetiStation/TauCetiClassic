@@ -22,7 +22,7 @@
 	radius_obj.bound_width = bound_size
 	radius_obj.bound_height = bound_size
 	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
-	radius_obj.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
+	AM.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/update_sound_suppression)
 	RegisterSignal(parent, COMSIG_START_SUPPRESSING, .proc/enable_suppresion)
@@ -38,14 +38,17 @@
 
 /datum/component/silence/proc/enable_suppresion()
 	SIGNAL_HANDLER
-	enabled = TRUE
-	update_sound_suppression()
+	if (!enabled)
+		enabled = TRUE
+		update_sound_suppression()
 
 /datum/component/silence/proc/disable_suppression()
 	SIGNAL_HANDLER
-	enabled = FALSE
-	for (var/turf/T in radius_obj.locs)
-		T.sound_coefficient += coeff
+	if (enabled)
+		enabled = FALSE
+		for (var/turf/T in old_locs)
+			T.sound_coefficient += coeff
+		old_locs = list()
 
 /datum/component/silence/proc/update_sound_suppression()
 	SIGNAL_HANDLER
@@ -54,10 +57,10 @@
 	var/list/entered_locs = radius_obj.locs - old_locs
 	var/list/left_locs = old_locs - radius_obj.locs
 
-	for (var/turf/T in entered_locs)
-		T.sound_coefficient -= coeff
-	
 	for (var/turf/T in left_locs)
 		T.sound_coefficient += coeff
+
+	for (var/turf/T in entered_locs)
+		T.sound_coefficient -= coeff
 
 	old_locs = radius_obj.locs

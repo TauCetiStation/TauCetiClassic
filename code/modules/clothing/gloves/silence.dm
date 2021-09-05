@@ -1,11 +1,13 @@
-/obj/item/clothing/gloves/black/silence // gloves for creating silence
+// SILENCE GLOVES
+// Traitor's item to nearly mute everything in one tile
+/obj/item/clothing/gloves/black/silence
 	siemens_coefficient = 0.2
 	var/distance = 1
 	var/sound_coefficient = 0.9
 
 /obj/item/clothing/gloves/black/silence/atom_init()
 	. = ..()
-	AddComponent(/datum/component/silence, distance, sound_coefficient, TRUE)
+	AddComponent(/datum/component/silence, distance, sound_coefficient)
 
 /obj/item/clothing/gloves/black/silence/equipped(mob/user, slot)
 	. = ..()
@@ -19,3 +21,55 @@
 	to_chat(user, "<span class='red'>You are disabling the silence gloves!</span>")
 	SEND_SIGNAL(src, COMSIG_STOP_SUPPRESSING)
 	SEND_SIGNAL(src, COMSIG_HIDE_RADIUS)
+
+// FURIOSO GLOVES
+// Gloves with silence and storage capabilities
+/obj/item/weapon/storage/internal/furioso
+	var/list/storaged_types = list()
+
+/obj/item/weapon/storage/internal/furioso/attackby(obj/item/I, mob/user, params)
+	if (I.type in storaged_types)
+		to_chat(user, "<span class='red'>There is already one [I] in storage!</span>")
+		return FALSE
+	
+	. = ..()
+
+	if(.)
+		storaged_types += I.type
+
+/obj/item/weapon/storage/internal/furioso/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	. = ..()
+	if (.)
+		storaged_types -= W.type
+
+/obj/item/clothing/gloves/black/silence/furioso //gloves for badminery purposes
+	name = "the Black Silence gloves"
+	desc = "Gloves that suppresses all sound around it's wearer and can hold up to nine different types of weaponry."
+	var/obj/item/weapon/storage/internal/pockets // oh yeah
+	distance = 3
+	siemens_coefficient = 0.0
+	sound_coefficient = 1.0
+
+/obj/item/clothing/gloves/black/silence/furioso/atom_init()
+	. = ..()
+	pockets = new /obj/item/weapon/storage/internal/furioso(src)
+	pockets.set_slots(slots = 9, slot_size = SIZE_LARGE)
+	pockets.can_hold = list(/obj/item/weapon/melee, /obj/item/weapon/gun)
+
+/obj/item/clothing/gloves/black/silence/furioso/attack_hand(mob/user)
+	if (pockets && pockets.handle_attack_hand(user))
+		..(user)
+
+/obj/item/clothing/gloves/black/silence/furioso/MouseDrop(obj/over_object as obj)
+	if (pockets && pockets.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/clothing/gloves/black/silence/furioso/attackby(obj/item/I, mob/user, params)
+	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(I, user, params))
+		return
+	return ..()
+
+/obj/item/clothing/gloves/black/silence/furioso/emp_act(severity)
+	if(pockets)
+		pockets.emplode(severity)
+	..()
