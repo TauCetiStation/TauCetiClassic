@@ -62,7 +62,7 @@
 /obj/item/clothing/gloves/black/silence/furioso/atom_init()
 	. = ..()
 	pockets = new /obj/item/weapon/storage/internal/furioso(src)
-	pockets.set_slots(slots = 9, slot_size = SIZE_LARGE)
+	pockets.set_slots(slots = 7, slot_size = SIZE_LARGE)
 	pockets.can_hold = list(/obj/item/weapon/melee, /obj/item/weapon/gun)
 
 /obj/item/clothing/gloves/black/silence/furioso/Destroy()
