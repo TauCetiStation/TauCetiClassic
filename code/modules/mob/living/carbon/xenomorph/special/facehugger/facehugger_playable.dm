@@ -20,7 +20,7 @@
 	max_plasma = 50
 
 	density = FALSE
-	small = TRUE
+	w_class = SIZE_TINY
 
 	var/amount_grown = 0
 	var/max_grown = 200
@@ -191,7 +191,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -246,7 +246,7 @@ This is chestburster mechanic for damaging
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
@@ -268,7 +268,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -346,7 +346,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)

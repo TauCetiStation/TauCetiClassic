@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
@@ -60,7 +60,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 		announce_shot(user)

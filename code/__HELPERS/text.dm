@@ -217,6 +217,10 @@
 		t = "[t] "
 	return t
 
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
+
 // Returns a string with reserved characters and spaces before the first letter removed
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)
@@ -447,3 +451,6 @@
 			return two
 		else
 			return five
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}
