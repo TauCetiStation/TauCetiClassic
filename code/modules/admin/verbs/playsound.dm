@@ -97,6 +97,25 @@ var/global/list/sounds_cache_local = list()
 	log_admin("[key_name(src)] has stopped the global sound.")
 	message_admins("[key_name_admin(src)] has stopped the global sound.")
 
+/client/proc/play_server_sound()
+	set category = "Fun"
+	set name = "Play Server Sound"
+	if(!check_rights(R_SOUNDS))
+		return
+
+	var/sound_path = browse_files(root="sound/", max_iterations=10, valid_extensions=list("ogg", "wav", "mp3"))
+
+	if(!sound_path)
+		return
+
+	log_admin("[key_name(src)] played server sound [sound_path].")
+	message_admins("[key_name_admin(src)] played server sound [sound_path].")
+
+	for(var/mob/M in player_list)
+		M.playsound_music(sound_path, VOL_ADMIN, null, TRUE, CHANNEL_ADMIN, 250, SOUND_STREAM)
+	
+	feedback_add_details("admin_verb","PSS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/set_bwoink_sound()
 	set category = "Fun"
 	set name = "Set Own Bwoink Sound"
