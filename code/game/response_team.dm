@@ -22,16 +22,16 @@ var/can_call_ert
 		return
 
 	if(SSticker.ert_call_in_progress)
-		to_chat(usr, "<span class='warning'>Центральное командование уже отправило отряд быстрого реагирования!</span>")
+		to_chat(usr, "<span class='warning'>Центральное Командование уже отправило отряд быстрого реагирования!</span>")
 		return
 
 	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		switch(tgui_alert(usr, "На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
+		switch(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
 			if("Нет")
 				return
-	
+
 	var/objective = sanitize(input(usr, "Custom ERT objective", "Setup objective", "Help the station crew"))
 
 	if(SSticker.ert_call_in_progress)
@@ -80,7 +80,7 @@ var/can_call_ert
 			new_commando.key = usr.key
 			create_random_account_and_store_in_mind(new_commando)
 
-			to_chat(new_commando, "<span class='notice'>Вы являетесь [!leader_selected?"членом":"<B>ЛИДЕРОМ</B>"] отряда быстрого реагирования, видом военного подразделения, под управлением ЦК.<BR>На станции [station_name()] (<B>[get_security_level()]</B>) код, ваша задача найти и устранить проблему.</span>")
+			to_chat(new_commando, "<span class='notice'>Вы являетесь [!leader_selected?"членом":"<B>ЛИДЕРОМ</B>"] отряда быстрого реагирования, видом военного подразделения, под управлением ЦК.<BR>На станции [station_name_ru()] (<B>[get_security_level()]</B>) код, ваша задача найти и устранить проблему.</span>")
 			to_chat(new_commando, "<b>Для начала вооружитесь и обсудите план со своей командой. Другие члены могут присоединиться позже. Не выдвигайтесь, пока не будете полностью готовы.</b>")
 			if(!leader_selected)
 				to_chat(new_commando, "<b>Как член отряда быстрого реагирования, вы отвечаете перед лидером и представителями ЦК с более высоким приоритетом и перед капитаном с более низким.</b>")
