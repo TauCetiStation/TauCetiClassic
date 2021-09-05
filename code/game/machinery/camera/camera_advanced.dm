@@ -111,8 +111,6 @@
 
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
-	if(!is_operational())
-		return
 	if(current_user)
 		to_chat(user, "<span class='warning'>The console is already in use!</span>")
 		return

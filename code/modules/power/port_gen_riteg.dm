@@ -49,7 +49,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/power/port_gen/riteg/is_operational_topic()
+/obj/machinery/power/port_gen/riteg/is_operational()
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/Topic(href, href_list)

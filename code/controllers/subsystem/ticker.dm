@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(ticker)
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
+	var/ert_call_in_progress = FALSE //when true players can join ERT
+	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
+	var/Malf_announce_stage = 0//Used for announcement
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -207,6 +210,7 @@ SUBSYSTEM_DEF(ticker)
 	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = mode.Setup() //Setup special modes
 	if(!can_continue)
+		global.modes_failed_start[mode.name] = TRUE
 		current_state = GAME_STATE_PREGAME
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
@@ -250,13 +254,18 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
-	//Holiday Round-start stuff	~Carn
-	Holiday_Game_Start()
+	if(length(SSholiday.holidays))
+		to_chat(world, "<span clas='notice'>and...</span>")
+		for(var/holidayname in SSholiday.holidays)
+			var/datum/holiday/holiday = SSholiday.holidays[holidayname]
+			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
+		show_blurbs()
+
 		SSevents.start_roundstart_event()
 
 		for(var/mob/dead/new_player/N in new_player_list)
@@ -273,6 +282,9 @@ SUBSYSTEM_DEF(ticker)
 
 	return 1
 
+/datum/controller/subsystem/ticker/proc/show_blurbs()
+	for(var/datum/mind/M in SSticker.minds)
+		show_location_blurb(M.current.client)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
@@ -328,7 +340,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
 	for(var/mob/M in mob_list) //search any goodest
-		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	if(explosion)
 		flick(explosion,cinematic)
 	if(summary)
@@ -493,7 +505,8 @@ SUBSYSTEM_DEF(ticker)
 	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in global.huds)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)
@@ -516,7 +529,7 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		var/mob/living/carbon/human/L = new(pick(eorgwarp))
 		M.mind.transfer_to(L)
-		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, ignore_environment = TRUE)
+		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		L.equipOutfit(/datum/outfit/arena)
 		L.name = "Gladiator ([rand(1, 1000)])"
 		L.real_name = L.name

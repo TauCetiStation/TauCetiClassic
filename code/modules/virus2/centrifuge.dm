@@ -185,7 +185,7 @@
 
 		var/list/virus = B.data["virus2"]
 		P.info += "<u>Pathogens:</u> <br>"
-		if (virus.len > 0)
+		if (virus && virus.len > 0)
 			for (var/ID in virus)
 				var/datum/disease2/disease/V = virus[ID]
 				P.info += "[V.name()]<br>"

@@ -347,12 +347,12 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/xenomorph/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
 			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
-			if("runtime")			M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
+			if("dusty")				M.change_mob_type( /mob/living/simple_animal/cat/dusty , null, null, delmob )
 			if("corgi")				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
 			if("crab")				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
 			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
@@ -741,13 +741,19 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 
-		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+		//Families
+		if(jobban_isbanned(M, ROLE_FAMILIES) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
 
 		//Xenomorph
 		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		jobs += "</tr></table>"
 
@@ -1013,13 +1019,13 @@
 				return
 			var/reason = sanitize(input("Please enter reason"))
 			if(!reason)
-				to_chat(M, "<span class='warning'>You have been kicked from the server</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin</span>")
 			else
-				to_chat(M, "<span class='warning'>You have been kicked from the server: [reason]</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin: [reason]</span>")
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("<span class='notice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
-			qdel(M.client)
+			QDEL_IN(M.client, 2 SECONDS)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return

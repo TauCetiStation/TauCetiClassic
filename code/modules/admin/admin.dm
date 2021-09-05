@@ -170,7 +170,7 @@ var/global/BSACooldown = 0
 				Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A>|
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A>
-				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A>
+				<A href='?src=\ref[src];simplemake=dusty;mob=\ref[M]'>Dusty</A>
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A>
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A>
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A>|
@@ -756,21 +756,31 @@ var/global/BSACooldown = 0
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
-		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
+		do_admin_announce(message, (usr.client.holder.fakekey ? "Administrator" : usr.key))
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/do_admin_announce(message, from)
+	to_chat(world, "<span class='admin_announce'><b>[from] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
-	else
-		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.")
+
+	ooc_allowed = !ooc_allowed
+
+	world.send2bridge(
+		type = list(BRIDGE_OOC),
+		attachment_msg = "[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"]!</B>")
+
+	log_admin("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()

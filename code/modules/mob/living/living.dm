@@ -7,11 +7,17 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
+
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -496,6 +502,8 @@
 	if(reagents)
 		reagents.clear_reagents()
 
+	beauty.AddModifier("stat", additive=beauty_living)
+
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -505,6 +513,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -710,9 +719,7 @@
 
 /mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(..())
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-		if(blood_volume > 0)
-			vessel.remove_reagent("blood", 1)
+		blood_remove(1)
 
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
@@ -772,7 +779,7 @@
 	return "trails_1"
 
 /mob/living/carbon/human/getTrail()
-	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+	if(blood_amount() > 0)
 		return ..()
 
 /mob/living/verb/resist()
@@ -1342,3 +1349,14 @@
 
 /mob/living/proc/swap_hand()
 	return
+
+/mob/living/death(gibbed)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())

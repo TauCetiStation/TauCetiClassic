@@ -214,7 +214,12 @@
 
 	populate_gear_list()
 
-	init_hud_list()
+	global.bridge_commands = list()
+	for(var/command in subtypesof(/datum/bridge_command))
+		var/datum/bridge_command/C = new command
+		global.bridge_commands[C.name] = C
+
+	sortTim(bridge_commands, /proc/cmp_bridge_commands)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

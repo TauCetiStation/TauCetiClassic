@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -42,7 +42,7 @@
 	if(user.is_busy(target))
 		return FALSE
 
-	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
+	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -2)
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.log_combat(user, "handcuffed (attempt) with [name]")

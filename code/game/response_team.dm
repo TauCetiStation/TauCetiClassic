@@ -2,8 +2,7 @@
 //Thanks to Kilakk for the admin-button portion of this code.
 
 var/list/response_team_members = list()
-var/global/send_emergency_team = 0 // Used for automagic response teams
-                                   // 'admin_emergency_team' for admin-spawned response teams
+
 var/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
 var/can_call_ert
 
@@ -21,7 +20,8 @@ var/can_call_ert
 	if(SSticker.current_state == 1)
 		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
 		return
-	if(send_emergency_team)
+
+	if(SSticker.ert_call_in_progress)
 		to_chat(usr, "<span class='warning'>Центральное командование уже отправило отряд быстрого реагирования!</span>")
 		return
 
@@ -31,15 +31,17 @@ var/can_call_ert
 		switch(tgui_alert(usr, "На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
 			if("Нет")
 				return
-        
-	if(send_emergency_team)
+	
+	var/objective = sanitize(input(usr, "Custom ERT objective", "Setup objective", "Help the station crew"))
+
+	if(SSticker.ert_call_in_progress)
 		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 		return
 
-	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
-	log_admin("[key_name(usr)] used Dispatch Response Team.")
+	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team with objective: [objective].")
+	log_admin("[key_name(usr)] used Dispatch Response Team with objective: [objective].")
 	feedback_set_details("ERT", "Admin dispatch")
-	trigger_armed_response_team(1)
+	trigger_armed_response_team(1, objective)
 
 
 /client/verb/JoinResponseTeam()
@@ -47,7 +49,7 @@ var/can_call_ert
 	set category = "IC"
 
 	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
-		if(!send_emergency_team)
+		if(!SSticker.ert_call_in_progress)
 			to_chat(usr, "В данный момент нет вызванного отряда быстрого реагирования.")
 			return
 	/*	if(admin_emergency_team)
@@ -119,7 +121,7 @@ var/can_call_ert
 // Increments the ERT chance automatically, so that the later it is in the round,
 // the more likely an ERT is to be able to be called.
 /proc/increment_ert_chance()
-	while(send_emergency_team == 0) // There is no ERT at the time.
+	while(SSticker.ert_call_in_progress == FALSE) // There is no ERT at the time.
 		if(get_security_level() == "green")
 			ert_base_chance += 1
 		if(get_security_level() == "blue")
@@ -131,11 +133,14 @@ var/can_call_ert
 		sleep(600 * 3) // Minute * Number of Minutes
 
 
-/proc/trigger_armed_response_team(force = 0)
+/proc/trigger_armed_response_team(force = 0, objective_text)
 	if(!can_call_ert && !force)
-		return
-	if(send_emergency_team)
-		return
+		return 0
+	if(SSticker.ert_call_in_progress)
+		return 0
+
+	if(!objective_text)
+		objective_text = "Help the station crew"
 
 	var/send_team_chance = ert_base_chance // Is incremented by increment_ert_chance.
 	send_team_chance += 2*percentage_dead() // the more people are dead, the higher the chance
@@ -149,50 +154,45 @@ var/can_call_ert
 		var/datum/announcement/centcomm/noert/announcement = new
 		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
-		return
+		return 0
 
 	var/datum/announcement/centcomm/yesert/announcement = new
 	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
-	send_emergency_team = 1
+	SSticker.ert_call_in_progress = TRUE
 	var/datum/faction/strike_team/ert/ERT = SSticker.mode.CreateFaction(/datum/faction/strike_team/ert)
-	ERT.forgeObjectives("Help the station crew")
+	ERT.forgeObjectives(objective_text)
 
-	sleep(600 * 5)
-	send_emergency_team = 0 // Can no longer join the ERT.
+	VARSET_IN(SSticker, ert_call_in_progress, FALSE, 5 MINUTES) // Can no longer join the ERT.
+	return 1
 
-/client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
-
-
-	var/mob/living/carbon/human/M = new(null)
-	response_team_members |= M
-
+/client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input("Выберите цвет растительности на лице.", "Создание персонажа") as color
+	var/new_facial = input(src, "Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
+		H.r_facial = hex2num(copytext(new_facial, 2, 4))
+		H.g_facial = hex2num(copytext(new_facial, 4, 6))
+		H.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Выберите цвет прически.", "Создание персонажа") as color
+	var/new_hair = input(src, "Выберите цвет прически.", "Создание персонажа") as color
 	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+		H.r_hair = hex2num(copytext(new_hair, 2, 4))
+		H.g_hair = hex2num(copytext(new_hair, 4, 6))
+		H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Выберите цвет глаз.", "Создание персонажа") as color
+	var/new_eyes = input(src, "Выберите цвет глаз.", "Создание персонажа") as color
 	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Создание персонажа")  as text
+	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Создание персонажа")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.s_tone =  -M.s_tone + 35
+	H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+	H.s_tone = -H.s_tone + 35
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
@@ -200,40 +200,50 @@ var/can_call_ert
 
 	// loop through potential hairs
 	for(var/x in all_hairs)
-		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-		hairs.Add(H.name) // add hair name to hairs
-		qdel(H) // delete the hair after it's all done
+		var/datum/sprite_accessory/hair/hair = new x // create new hair datum based on type x
+		hairs.Add(hair.name) // add hair name to hairs
+		qdel(hair) // delete the hair after it's all done
 
-	var/new_gender = tgui_alert(usr, "Выберите пол.", "Создание персонажа", list("Мужской", "Женский"))
-
+	var/new_gender = tgui_alert(src, "Выберите пол.", "Создание персонажа", list("Мужской", "Женский"))
 	if (new_gender)
 		if(new_gender == "Мужской")
-			M.gender = MALE
+			H.gender = MALE
 		else
-			M.gender = FEMALE
+			H.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(usr, "Выберите прическу", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	var/new_hstyle = input(src, "Выберите прическу", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 	if(new_hstyle)
-		M.h_style = new_hstyle
+		H.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(usr, "Выберите стиль лицевой растительности", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	var/new_fstyle = input(src, "Выберите стиль растительности на лице", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 	if(new_fstyle)
-		M.f_style = new_fstyle
+		H.f_style = new_fstyle
 
+	H.apply_recolor()
+	H.update_hair()
+	H.update_body()
+	H.check_dna(H)
 
-	//M.rebuild_appearance()
-	M.apply_recolor()
-	M.update_hair()
-	M.update_body()
-	M.check_dna(M)
+	if(!_name)
+		_name = H.gender == FEMALE ? pick(global.first_names_female) : pick(global.first_names_male)
 
-	M.real_name = commando_name
-	M.name = commando_name
+	H.real_name = _name
+	H.name = _name
+	if(H.mind)
+		H.mind.name = _name
+	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
+
+	H.dna.ready_dna(H)//Creates DNA.
+
+/client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
+
+	var/mob/living/carbon/human/M = new(null)
+	response_team_members |= M
+
+	create_human_apperance(M, commando_name)
 	M.age = !leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
-
-	M.dna.ready_dna(M)//Creates DNA.
 
 	//Creates mind stuff.
 	M.mind = new

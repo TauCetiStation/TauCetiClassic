@@ -10,7 +10,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 6
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	origin_tech = list("biotech" = 2, "powerstorage" = 1)
 	action_button_name = "Remove/Replace Paddles"
 
@@ -175,7 +175,7 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = list("biotech" = 3, "powerstorage" = 2)
 	charge_time = 0.5 SECONDS
@@ -212,7 +212,7 @@
 	force_unwielded = 2
 	force_wielded = 2
 	throwforce = 6
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	offhand_item = /obj/item/weapon/twohanded/offhand/shockpaddles
 
 	var/safety = TRUE //if you can zap people with the paddles on harm mode
@@ -291,7 +291,7 @@
 	if(!H.should_have_organ(O_HEART))
 		return TRUE
 	var/obj/item/organ/internal/heart/heart = H.organs_by_name[O_HEART]
-	if(!heart || H.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SURVIVE)
+	if(!heart || H.blood_amount() < BLOOD_VOLUME_SURVIVE)
 		return FALSE
 	return TRUE
 
@@ -395,6 +395,7 @@
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
+			H.beauty.AddModifier("stat", additive=H.beauty_living)
 			H.return_to_body_dialog(src)
 		else
 			IO.heart_normalize()
@@ -534,7 +535,7 @@
 /obj/item/weapon/twohanded/shockpaddles/standalone
 	desc = "A pair of shockpaddles with integrated capacitor" //Good old defib
 	var/charges = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/twohanded/shockpaddles/standalone/set_prototype_qualities(rel_val=100, mark=0)
 	..()

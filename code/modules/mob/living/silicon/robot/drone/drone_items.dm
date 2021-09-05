@@ -216,26 +216,11 @@
 			wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
-
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."
 	set category = "Drone"
 
-	if(!wrapped)
-		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
-		for(var/obj/item/thing in src.contents)
-			thing.loc = get_turf(src)
-		return
-
-	if(wrapped.loc != src)
-		wrapped = null
-		return
-
-	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
-	var/obj/item/I = wrapped
-	I.forceMove(get_turf(src))
-	wrapped = null
-	//update_icon()
+	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return

@@ -50,6 +50,7 @@
 	wander = FALSE
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	w_class = SIZE_MINUSCULE
 
 	var/truename // Name used for brainworm-speak.
 	var/generation = 1
@@ -60,7 +61,7 @@
 
 	var/static/list/banned_species = list(IPC, GOLEM, SLIME, DIONA)
 
-	var/dominate_cd = 0                        // Calldown for dominate victim
+	var/dominate_cd = 0                        // Cooldown for dominate victim
 	var/assuming = FALSE
 	var/chemicals = 10                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/const/max_chemicals = 250              // Maximum chemicals

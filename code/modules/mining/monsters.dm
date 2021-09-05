@@ -17,6 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
+	w_class = SIZE_HUMAN
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -117,6 +118,7 @@
 	health = 400
 	maxHealth = 400
 	faction = "mining"
+	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
 
 
@@ -141,6 +143,7 @@
 	health = 60
 	harm_intent_damage = 5
 	melee_damage = 0
+	w_class = SIZE_MASSIVE
 	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
@@ -253,6 +256,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	w_class = SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
@@ -389,6 +393,7 @@
 	health = 300
 	harm_intent_damage = 0
 	melee_damage = 25
+	w_class = SIZE_MASSIVE
 	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
@@ -475,7 +480,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)

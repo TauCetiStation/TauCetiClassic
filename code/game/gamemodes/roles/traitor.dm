@@ -8,11 +8,13 @@
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
-	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART)
+	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
+
+	var/telecrystals = 20
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -69,7 +71,7 @@
 		killer.aiRadio.keyslot1 = new /obj/item/device/encryptionkey/syndicate()
 		killer.aiRadio.recalculateChannels()
 
-/datum/role/traitor/Greet(greeting, custom)
+/datum/role/traitor/Greet(greeting = GREET_DEFAULT, custom)
 	antag.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!greeting)

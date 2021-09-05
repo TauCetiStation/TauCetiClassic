@@ -4,14 +4,6 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-//singularity defines
-#define STAGE_ONE	1
-#define STAGE_TWO	3
-#define STAGE_THREE	5
-#define STAGE_FOUR	7
-#define STAGE_FIVE	9
-#define STAGE_SIX	11 //From supermatter shard
-
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -122,9 +114,6 @@
 #define APC_MIN_TO_MALF_DECLARE 5
 //if malf apcs < than this, malf can't begin the takeover attempt
 
-#define APC_BONUS_WITH_INTERCEPT 4
-//If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
-
 #define MALF_SMALL_MODULE_PRICE 10
 #define MALF_LARGE_MODULE_PRICE 50
 //Malf modules prices
@@ -167,9 +156,20 @@
 #define TELE_CHECK_TURFS 1
 #define TELE_CHECK_ALL 2
 
-//get_turf(): Returns the turf that contains the atom.
-//Example: A fork inside a box inside a locker will return the turf the locker is standing on.
+/**
+ * Get the turf that `A` resides in, regardless of any containers.
+ *
+ * Use in favor of `A.loc` or `src.loc` so that things work correctly when
+ * stored inside an inventory, locker, or other container.
+ */
 #define get_turf(A) (get_step(A, 0))
+
+/**
+ * Get the ultimate area of `A`, similarly to [get_turf].
+ *
+ * Use instead of `A.loc.loc`.
+ */
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
 // Door assembly states
 #define ASSEMBLY_SECURED       0
