@@ -54,10 +54,12 @@
 /obj/item/clothing/gloves/black/silence/furioso //gloves for badminery purposes
 	name = "the Black Silence gloves"
 	desc = "Gloves that suppresses all sound around it's wearer and can hold up to seven different types of weaponry."
-	var/obj/item/weapon/storage/internal/pockets // oh yeah
+
 	distance = 3
 	siemens_coefficient = 0.0
 	sound_coefficient = 1.0
+
+	var/obj/item/weapon/storage/internal/pockets // oh yeah
 
 /obj/item/clothing/gloves/black/silence/furioso/atom_init()
 	. = ..()
