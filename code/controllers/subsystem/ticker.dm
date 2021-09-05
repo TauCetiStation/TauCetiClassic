@@ -277,9 +277,6 @@ SUBSYSTEM_DEF(ticker)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		
-		for (var/obj/effect/landmark/blueshield/L in landmarks_list)
-			qdel(L)
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()

@@ -11,7 +11,14 @@
 					useMS = MS
 					break
 	
-	var/atom/signal_user = isnull(user) ? recepient : isnull(senderPDA) ? useMS : senderPDA
+	var/atom/signal_user = null
+	if (isnull(user))
+		signal_user = recepient
+	else
+		if (isnull(senderPDA))
+			signal_user = useMS
+		else
+			signal_user = senderPDA
 	if (!signal_user)
 		return
 	var/datum/signal/signal = signal_user.telecomms_process()

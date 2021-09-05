@@ -14,6 +14,8 @@
 
 	for (var/obj/effect/landmark/L in paper_locations)
 		new /obj/item/weapon/paper/blueshield/safe_codes(get_turf(L))
+	
+	QDEL_LIST(safe_locations + paper_locations)
 
 /obj/effect/landmark/blueshield
 	name = "Blueshield Safe"

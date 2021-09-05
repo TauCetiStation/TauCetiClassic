@@ -17,9 +17,9 @@
 		if (istype(objective, /datum/objective/target/protect))
 			continue
 		if (objective.target.assigned_role in command_positions)
-			flags |= BLUESHIELD_TARGET
+			flags |= BLUESHIELD_TARGET_IS_HEAD
 		if (objective.target in suspect_heads)
-			flags |= BLUESHIELD_ALERT
+			flags |= BLUESHIELD_WAS_ALERTED
 	return flags
 
 /datum/game_mode/proc/send_intercept()
@@ -79,7 +79,7 @@
 
 	announcement_ping.play()
 
-/datum/game_mode/proc/send_pda(mob/living/carbon/human/H)
+/datum/game_mode/proc/send_blueshield_intercept(mob/living/carbon/human/H)
 	if (!centcomm_blueshield_intercept)
 		var/list/datum/mind/alive_heads = get_living_heads()
 		
@@ -114,7 +114,7 @@
 			for (var/datum/role/role in all_roles)
 				antag_flags[role.antag] = 0
 				if (role.antag.assigned_role in command_positions)
-					antag_flags[role.antag] |= BLUESHIELD_MIND
+					antag_flags[role.antag] |= BLUESHIELD_HEAD_IS_ANTAG
 				antag_flags[role.antag] |= check_blueshield(role.objectives.objectives, suspect_heads)
 			
 			for (var/datum/faction/faction in factions)
@@ -126,13 +126,13 @@
 				var/msg = ""
 				var/extra_TC = 0
 
-				if (antag_flags[antag] & BLUESHIELD_MIND)
+				if (antag_flags[antag] & BLUESHIELD_HEAD_IS_ANTAG)
 					extra_TC += 4 // if antag mind also a head of staff
 					msg = "that new corporate dog will chase you"
-				if (antag_flags[antag] & BLUESHIELD_TARGET)
+				if (antag_flags[antag] & BLUESHIELD_TARGET_IS_HEAD)
 					extra_TC += 4 // if antag have one of heads of staff as target
 					msg = "that you are trying to cut one of their heads"
-				if (antag_flags[antag] & BLUESHIELD_ALERT)
+				if (antag_flags[antag] & BLUESHIELD_WAS_ALERTED)
 					extra_TC += 8 // if antag's target was displayed to blueshield
 					msg = "that especially that head will be attacked today"
 
