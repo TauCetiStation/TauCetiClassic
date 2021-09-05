@@ -38,7 +38,7 @@
 	if (useMS && useTC) // only send the message if it's stable
 		if (useTC != 2) // Does our recipient have a broadcaster on their level?
 			if (user)
-				to_chat(user, "ERROR: Cannot reach recipient.")
+				to_chat(user, "ОШИБКА: Не найден маршрут до адресата.")
 			return
 		if (senderPDA)
 			senderPDA.tnote.Add(list(list("sent" = 1, "owner" = "[recepient.owner]", "job" = "[recepient.ownjob]", "message" = "[text]", "target" = "\ref[recepient]")))
@@ -51,9 +51,9 @@
 				if (isnewplayer(M))
 					continue
 				if (senderPDA)
-					to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[senderPDA.owner]</span> -> <span class='name'>[recepient.owner]</span>: <span class='message emojify linkify'>[text]</span></span>")
+					to_chat(M, "<span class='game say'>Сообщение КПК - <span class='name'>[senderPDA.owner] ([senderPDA.ownjob])</span> -> <span class='name'>[recepient.owner] ([recepient.ownjob])</span>: <span class='message emojify linkify'>[text]</span></span>")
 				else
-					to_chat(M, "<span class='game say'>Fake PDA Message - <span class='name'>[sender]</span> -> <span class='name'>[recepient.owner]</span>: <span class='message emojify linkify'>[text]</span></span>")
+					to_chat(M, "<span class='game say'>Фейковое сообщение КПК - <span class='name'>[sender]</span> -> <span class='name'>[recepient.owner] ([recepient.ownjob])</span>: <span class='message emojify linkify'>[text]</span></span>")
 
 		if (senderPDA)
 			if (!senderPDA.conversations.Find("\ref[recepient]"))
@@ -68,7 +68,7 @@
 			for (var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if (ai.pda != recepient && ai.pda != senderPDA)
-					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[text]</span></i>")
+					to_chat(ai, "<i>Перехваченное сообщение от <b>[who]</b>: <span class='emojify linkify'>[text]</span></i>")
 
 		if (user && senderPDA)
 			nanomanager.update_user_uis(user, senderPDA) // Update the sending user's PDA UI so that they can see the new message
@@ -89,9 +89,9 @@
 
 		if (L)
 			if (senderPDA)
-				to_chat(L, "[bicon(recepient)] <b>Message from [senderPDA.owner] ([senderPDA.ownjob]), </b>\"<span class='message emojify linkify'>[text]</span>\" (<a href='byond://?src=\ref[recepient];choice=Message;notap=[istype(senderPDA.loc, /mob/living/silicon)];skiprefresh=1;target=\ref[sender]'>Reply</a>)")
+				to_chat(L, "[bicon(recepient)] <b>Сообщение от [senderPDA.owner] ([senderPDA.ownjob]), </b>\"<span class='message emojify linkify'>[text]</span>\" (<a href='byond://?src=\ref[recepient];choice=Message;notap=[istype(senderPDA.loc, /mob/living/silicon)];skiprefresh=1;target=\ref[sender]'>Ответить</a>)")
 			else
-				to_chat(L, "[bicon(recepient)] <b>Message from [sender], </b>\"<span class='message emojify linkify'>[text]</span>\"")
+				to_chat(L, "[bicon(recepient)] <b>Сообщение от [sender], </b>\"<span class='message emojify linkify'>[text]</span>\" (Невозможно ответить)")
 			nanomanager.update_user_uis(L, recepient) // Update the receiving user's PDA UI so that they can see the new message
 
 		if (user && senderPDA)
@@ -106,4 +106,4 @@
 		recepient.newmessage = 1
 	else
 		if (user && !system)
-			to_chat(user, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
+			to_chat(user, "<span class='notice'>ОШИБКА: Сервер сообщений не отвечает.</span>")

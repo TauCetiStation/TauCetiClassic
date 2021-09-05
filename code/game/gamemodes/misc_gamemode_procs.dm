@@ -153,7 +153,7 @@
 			blueshield_PDA = P
 	if (!blueshield_PDA)
 		return
-	send_pda_message(null, "Разведовательное Управление СН Центком", blueshield_PDA, centcomm_blueshield_intercept, null, TRUE)
+	send_pda_message(null, "Разведывательное Управление СН Центком", blueshield_PDA, centcomm_blueshield_intercept, null, TRUE)
 
 // refactor to /datum/stat_collector from vg
 // https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/datums/statistics/stat_helpers.dm
