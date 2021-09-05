@@ -92,8 +92,8 @@
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.slot_equipped = SLOT_MOUTH
 		W.equipped(src,SLOT_MOUTH)
+		W.slot_equipped = SLOT_MOUTH
 		if(client)
 			client.screen |= W
 		if(pulling == W)

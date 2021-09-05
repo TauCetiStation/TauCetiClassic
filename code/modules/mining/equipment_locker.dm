@@ -963,4 +963,3 @@
 	icon_state = "xeno_warning"
 
 #undef EQUIPMENT
-#undef MAX_NOTICES

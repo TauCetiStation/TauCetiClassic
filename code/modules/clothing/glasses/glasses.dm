@@ -26,11 +26,13 @@
 				active = 0
 				icon_state = off_state
 				vision_flags = 0
+				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = 1
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
+				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			H.update_inv_glasses()
@@ -253,6 +255,7 @@
 	toggleable = 1
 	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
