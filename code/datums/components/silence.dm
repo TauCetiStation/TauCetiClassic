@@ -25,8 +25,9 @@
 	AM.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/update_sound_suppression)
-	RegisterSignal(parent, COMSIG_START_SUPPRESSING, .proc/enable_suppresion)
-	RegisterSignal(parent, COMSIG_STOP_SUPPRESSING, .proc/disable_suppression)
+	RegisterSignal(parent, list(COMSIG_START_SUPPRESSING), .proc/enable_suppresion)
+	RegisterSignal(parent, list(COMSIG_STOP_SUPPRESSING), .proc/disable_suppression)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/on_deletion)
 
 /datum/component/silence/Destroy()
 	. = ..()
@@ -64,3 +65,7 @@
 		T.sound_coefficient -= coeff
 
 	old_locs = radius_obj.locs
+
+/datum/component/silence/proc/on_deletion()
+	SIGNAL_HANDLER
+	qdel(src)
