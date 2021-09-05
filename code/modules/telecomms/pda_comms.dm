@@ -40,12 +40,20 @@
 			if (user)
 				to_chat(user, "ОШИБКА: Не найден маршрут до адресата.")
 			return
+
 		if (senderPDA)
 			senderPDA.tnote.Add(list(list("sent" = 1, "owner" = "[recepient.owner]", "job" = "[recepient.ownjob]", "message" = "[text]", "target" = "\ref[recepient]")))
 			recepient.tnote.Add(list(list("sent" = 0, "owner" = "[senderPDA.owner]", "job" = "[senderPDA.ownjob]", "message" = "[text]", "target" = "\ref[senderPDA]")))
 			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob])","[senderPDA.owner]","[text]")
+			if (!senderPDA.conversations.Find("\ref[recepient]"))
+				senderPDA.conversations.Add("\ref[recepient]")
+			if (!recepient.conversations.Find("\ref[senderPDA]"))
+				recepient.conversations.Add("\ref[senderPDA]")
+			log_pda("[user] (PDA: [senderPDA.name]) sent \"[text]\" to [recepient.name]")
 		else
 			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob]","[sender]","[text]")
+			log_pda("[user] (PDA: [sender]) sent \"[text]\" to [recepient.name]")
+
 		for (var/mob/M in player_list)
 			if (M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // sender.client is so that ghosts don't have to listen to mice
 				if (isnewplayer(M))
@@ -54,12 +62,6 @@
 					to_chat(M, "<span class='game say'>Сообщение КПК - <span class='name'>[senderPDA.owner] ([senderPDA.ownjob])</span> -> <span class='name'>[recepient.owner] ([recepient.ownjob])</span>: <span class='message emojify linkify'>[text]</span></span>")
 				else
 					to_chat(M, "<span class='game say'>Фейковое сообщение КПК - <span class='name'>[sender]</span> -> <span class='name'>[recepient.owner] ([recepient.ownjob])</span>: <span class='message emojify linkify'>[text]</span></span>")
-
-		if (senderPDA)
-			if (!senderPDA.conversations.Find("\ref[recepient]"))
-				senderPDA.conversations.Add("\ref[recepient]")
-			if (!recepient.conversations.Find("\ref[senderPDA]"))
-				recepient.conversations.Add("\ref[senderPDA]")
 
 		if (prob(15) && !system) //Give the AI a chance of intercepting the message
 			var/who = senderPDA ? senderPDA.owner : sender
@@ -97,10 +99,6 @@
 		if (user && senderPDA)
 			nanomanager.update_user_uis(user, recepient) // Update the sending user's PDA UI so that they can see the new message
 
-		if (senderPDA)
-			log_pda("[user] (PDA: [senderPDA.name]) sent \"[text]\" to [recepient.name]")
-		else
-			log_pda("[user] (PDA: [sender]) sent \"[text]\" to [recepient.name]")
 		recepient.cut_overlays()
 		recepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		recepient.newmessage = 1
