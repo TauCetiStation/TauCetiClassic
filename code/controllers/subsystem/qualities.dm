@@ -21,4 +21,5 @@ SUBSYSTEM_DEF(qualities)
 		return
 
 	var/datum/quality/quality = qualities_pool[pick(qualities_pool)]
-	quality.add_effect(H)
+	if(quality.restriction_check(H))
+		quality.add_effect(H)
