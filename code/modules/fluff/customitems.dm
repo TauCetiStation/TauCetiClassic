@@ -6,6 +6,28 @@
 /obj/item/weapon/lighter/zippo/custom
 	name = "Custom zippo"
 
+/obj/item/weapon/storage/fancy/custom
+	name = "Custom Storage"
+
+	w_class = SIZE_TINY
+
+	max_w_class = SIZE_MINUSCULE
+	storage_slots = 6
+
+	var/default_icon_state
+
+/obj/item/weapon/storage/fancy/custom/update_icon()
+	if(!contents.len)
+		icon_state = default_icon_state
+	else
+		var/list/icon_states = icon_states(icon)
+		icon_state = "[default_icon_state][min(contents.len, icon_states.len)]"
+
+/obj/item/weapon/storage/fancy/custom/open(mob/user)
+	if(!user.is_in_hands(type))
+		return
+	return ..()
+
 /obj/item/clothing/head/custom
 	name = "Custom hat"
 	body_parts_covered = 0
@@ -216,10 +238,14 @@
 			if("normal", "small")
 				item = new /obj/item/customitem()
 			if("lighter")
-				var/obj/item/weapon/lighter/zippo/custom/zippo = new /obj/item/weapon/lighter/zippo/custom()
+				var/obj/item/weapon/lighter/zippo/custom/zippo = new
 				zippo.icon_on = "[custom_item_info.icon_state]_on"
 				zippo.icon_off = custom_item_info.icon_state
 				item = zippo
+			if("storage")
+				var/obj/item/weapon/storage/fancy/custom/storage = new
+				storage.default_icon_state = custom_item_info.icon_state
+				item = storage
 			if("hat")
 				item = new /obj/item/clothing/head/custom()
 			if("uniform")

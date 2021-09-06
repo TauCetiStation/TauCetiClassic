@@ -198,7 +198,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat", "storage"))
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -306,7 +306,10 @@ var/list/editing_item_oldname_list = list()
 		if(icon_states.len == 0)
 			to_chat(user, "This icon has no states")
 			return
-		if(icon_states.len > 6)
+		var/icon_state_limit = 6
+		if(editing_item.item_type == "storage")
+			icon_state_limit = 9 // 6 slots + 2 inhands + 1 default name
+		if(icon_states.len > icon_state_limit)
 			to_chat(user, "This icon has too many states")
 			return
 		if(I.Width() != 32 || I.Height() != 32)
