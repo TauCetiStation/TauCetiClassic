@@ -571,7 +571,6 @@
 					randomslot = !randomslot
 
 				if("quality")
-					have_quality = TRUE
 					SSqualities.registration_client(parent)
 
 				if("name")

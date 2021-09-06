@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(qualities)
 		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [quality.desc]</font>")
 		to_chat(M, "<font color='green'><b>Ограничение:</b> [quality.restriction]</font>")
 
+		C.prefs.have_quality = TRUE
+
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H)
 	if(!H.client.prefs.have_quality)
 		return
