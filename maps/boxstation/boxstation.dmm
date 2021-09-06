@@ -23474,7 +23474,7 @@
 	},
 /area/station/maintenance/engineering)
 "aPr" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -29609,10 +29609,10 @@
 	},
 /area/station/gateway)
 "bak" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -30721,8 +30721,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/gateway)
 "bch" = (
