@@ -8,6 +8,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
 
+	beauty = -50
+
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."
@@ -15,6 +17,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = TRUE
+
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
@@ -41,6 +45,8 @@
 	icon_state = "dirt"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+	beauty = -50
+
 /obj/effect/decal/cleanable/flour
 	name = "flour"
 	desc = "It's still good. Four second rule!"
@@ -50,6 +56,8 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "flour"
+
+	beauty = -25
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -62,6 +70,8 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenglow"
 
+	beauty = -100
+
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."
@@ -72,6 +82,8 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
 
+	beauty = -25
+
 /obj/effect/decal/cleanable/molten_item
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
@@ -80,6 +92,8 @@
 	layer = 3
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+
+	beauty = -300
 
 /obj/effect/decal/cleanable/cobweb2
 	name = "cobweb"
@@ -90,6 +104,8 @@
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
+
+	beauty = -25
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -103,6 +119,8 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
+
+	beauty = -250
 
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
@@ -124,6 +142,8 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
 
+	beauty = -100
+
 /obj/effect/decal/cleanable/egg_smudge
 	name = "smashed egg"
 	desc = "Seems like this one won't hatch."
@@ -132,6 +152,8 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
+
+	beauty = -100
 
 /obj/effect/decal/cleanable/pie_smudge //honk
 	name = "smashed pie"
@@ -142,11 +164,15 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
+	beauty = -100
+
 /obj/effect/decal/cleanable/toilet_paint
 	name = "lettering"
 	desc = "A lettering."
 	layer = 2.1
 	anchored = TRUE
+
+	beauty = -100
 
 var/list/toilet_overlay_cache = list()
 

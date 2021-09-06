@@ -87,12 +87,7 @@
 			id = null
 		else
 			QDEL_NULL(id)
-	if (pen)
-		if (prob(50)) //Pens are kept in 50% of the cases
-			pen.forceMove(get_turf(loc))
-			pen = null
-		else
-			QDEL_NULL(pen)
+	QDEL_NULL(pen)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)

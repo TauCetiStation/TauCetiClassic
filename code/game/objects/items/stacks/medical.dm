@@ -61,6 +61,9 @@
 	if(!can_heal(L, user))
 		return
 
+	if(L == user)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
+
 	var/delay = L == user ? self_delay : other_delay
 	if(delay)
 		if(!silent)

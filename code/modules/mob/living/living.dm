@@ -14,6 +14,11 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
+
 /mob/living/Destroy()
 	allowed_combos = null
 	known_combos = null
@@ -496,6 +501,8 @@
 
 	if(reagents)
 		reagents.clear_reagents()
+
+	beauty.AddModifier("stat", additive=beauty_living)
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -1342,3 +1349,14 @@
 
 /mob/living/proc/swap_hand()
 	return
+
+/mob/living/death(gibbed)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())
