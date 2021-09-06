@@ -34,8 +34,8 @@
 	var/effecttype = pick(global.valid_primary_effect_types)
 	my_effect = new effecttype(src)
 
-	//50% chance to have a secondary effect
-	if(prob(50))
+	//65% chance to have a secondary effect
+	if(prob(65))
 		effecttype = pick(global.valid_secondary_effect_types)
 		secondary_effect = new effecttype(src)
 

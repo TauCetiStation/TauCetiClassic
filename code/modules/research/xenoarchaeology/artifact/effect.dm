@@ -175,8 +175,6 @@
 
 // returns 0..1, with 1 being no protection and 0 being fully protected
 /proc/GetAnomalySusceptibility(mob/living/carbon/human/H) 
-	if(!H)
-		return
 	if(!ishuman(H))
 		return NO_ANOMALY_PROTECTION
 
