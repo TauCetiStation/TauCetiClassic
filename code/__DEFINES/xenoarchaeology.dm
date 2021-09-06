@@ -1,16 +1,15 @@
-// Artifact effect type (based on range) defines
+///artifact energy release method
 #define ARTIFACT_EFFECT_TOUCH 0
 #define ARTIFACT_EFFECT_AURA 1
 #define ARTIFACT_EFFECT_PULSE 2
-#define ARTIFACT_MAX_EFFECT 2
 
-#define ARTIFACT_ALL_EFECTS list(\
+///list of possible release methods to get
+#define ARTIFACT_ALL_RELEASE_METHODS list(\
     ARTIFACT_EFFECT_TOUCH,\
     ARTIFACT_EFFECT_AURA,\
-    ARTIFACT_EFFECT_PULSE,\
-    ARTIFACT_MAX_EFFECT)
+    ARTIFACT_EFFECT_PULSE)
 
-// Artifact trigger defines
+//artifact trigger types
 #define TRIGGER_TOUCH 0
 #define TRIGGER_WATER 1
 #define TRIGGER_ACID 2
@@ -24,8 +23,7 @@
 #define TRIGGER_OXY 10
 #define TRIGGER_CO2 11
 #define TRIGGER_NITRO 12
-#define TRIGGER_VIEW 13
-#define MAX_TRIGGER 13
+#define TRIGGER_PROXY 13
 
 #define ARTIFACT_POSSIBLE_TRIGGERS list(\
     TRIGGER_TOUCH,\
@@ -40,9 +38,7 @@
     TRIGGER_PHORON,\
     TRIGGER_OXY,\
     TRIGGER_CO2,\
-    TRIGGER_NITRO,\
-    TRIGGER_VIEW,\
-    MAX_TRIGGER)
+    TRIGGER_NITRO)
 
 // Artifact icon_num defines
 #define ARTIFACT_WIZARD_LARGE 1
@@ -59,7 +55,7 @@
 #define ARTIFACT_CRYSTAL_PURPLE 12
 #define ARTIFACT_CRYSTAL_BLUE 13
 
-// Artifact effect_type
+// Artifact type_name
 #define ARTIFACT_EFFECT_UNKNOWN 0 // Unknown / none detectable
 #define ARTIFACT_EFFECT_ENERGY 1 // Concentrated energy
 #define ARTIFACT_EFFECT_PSIONIC 2 // Intermittent psionic wavefront

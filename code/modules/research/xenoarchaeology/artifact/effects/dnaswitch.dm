@@ -1,11 +1,11 @@
 /datum/artifact_effect/dnaswitch
-	effect_name = "Dna Switch"
-	effect_type = ARTIFACT_EFFECT_ORGANIC
+	log_name = "Dna Switch"
+	type_name= ARTIFACT_EFFECT_ORGANIC
 	var/severity
 
 /datum/artifact_effect/dnaswitch/New()
 	..()
-	if(effect == ARTIFACT_EFFECT_AURA)
+	if(release_method == ARTIFACT_EFFECT_AURA)
 		severity = rand(5,30)
 	else
 		severity = rand(25,95)
@@ -23,7 +23,7 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/carbon/human/H in range(effectrange, curr_turf))
+	for(var/mob/living/carbon/human/H in range(range, curr_turf))
 		roll_and_change_genes(H, 50, severity)
 
 /datum/artifact_effect/dnaswitch/DoEffectPulse()
@@ -31,7 +31,7 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/carbon/human/H in range(200, curr_turf))
+	for(var/mob/living/carbon/human/H in range(range, curr_turf))
 		roll_and_change_genes(H, 20, severity)
 
 /datum/artifact_effect/dnaswitch/proc/roll_and_change_genes(mob/receiver, chance, severity)

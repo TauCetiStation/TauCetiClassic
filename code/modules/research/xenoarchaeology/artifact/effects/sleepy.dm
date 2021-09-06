@@ -1,32 +1,34 @@
 /datum/artifact_effect/sleepy
-	effect_name = "Sleepy"
+	log_name = "Sleepy"
 
 /datum/artifact_effect/sleepy/New()
 	..()
-	effect_type = pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
+	type_name= pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/sleepy/DoEffectTouch(mob/user)
 	. = ..()
 	if(!.)
 		return
-	apply_effect(user)
+	apply_sleepy(user, 25)
 
 /datum/artifact_effect/sleepy/DoEffectAura()
 	. = ..()
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/L in range(effectrange, curr_turf))
+	for(var/mob/living/L in range(range, curr_turf))
 		if(prob(50))
-			apply_effect(L)
+			apply_sleepy(L, 5)
 
 /datum/artifact_effect/sleepy/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
+	var/used_power
+	used_power = .
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/L in range(effectrange, curr_turf))
-		apply_effect(L)
+	for(var/mob/living/L in range(range, curr_turf))
+		apply_sleepy(L, used_power)
 
 
 /datum/artifact_effect/sleepy/DoEffectDestroy()
@@ -37,14 +39,14 @@
 			continue
 		L.SetSleeping(weakness * (10 SECONDS)) //0 resistance gives you 10 seconds of sleep
 
-/datum/artifact_effect/sleepy/proc/apply_effect(mob/receiver)
+/datum/artifact_effect/sleepy/proc/apply_sleepy(mob/receiver, power)
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = GetAnomalySusceptibility(H)
 		if(!weakness)
 			return
 		to_chat(H, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
-		H.drowsyness = min(H.drowsyness + 10 * weakness, 50 * weakness)
-		H.eye_blurry = min(H.eye_blurry + 10 * weakness, 50 * weakness)
+		H.drowsyness = H.drowsyness + power * weakness
+		H.eye_blurry = H.eye_blurry + power * weakness
 	if(isrobot(receiver))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")

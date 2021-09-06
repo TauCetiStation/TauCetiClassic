@@ -5,7 +5,7 @@
 	icon_num = 0
 	density = TRUE
 	being_used = 0
-	need_inicial = 0
+	need_init = FALSE
 	anchored = TRUE
 	light_color = "#24c1ff"
 	health = 200
@@ -14,9 +14,10 @@
 
 /obj/machinery/artifact/bluespace_crystal/atom_init()
 	. = ..()
+	init_turfs_around()
 	health = rand(150, 300)
 	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = TRIGGER_VIEW
+	my_effect.trigger = TRIGGER_PROXY
 	desc = "A blue strange crystal"
 	icon_num = ARTIFACT_CRYSTAL_BLUE
 	set_light(4)

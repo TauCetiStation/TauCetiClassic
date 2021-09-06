@@ -6,8 +6,8 @@
 /datum/artifact_effect/temperature/New()
 	..()
 	target_temp = rand(target_temp_low, target_temp_high)
-	effect = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
-	effect_type = pick(ARTIFACT_EFFECT_ORGANIC, ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
+	release_method = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
+	type_name= pick(ARTIFACT_EFFECT_ORGANIC, ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
 
 /datum/artifact_effect/temperature/DoEffectTouch(mob/user)
 	. = ..()
@@ -35,7 +35,7 @@
 	return env
 
 /datum/artifact_effect/temperature/cold
-	effect_name = "Cold"
+	log_name = "Cold"
 	target_temp_low = 40
 	target_temp_high = 180
 
@@ -63,7 +63,7 @@
 	env.temperature = target_temp_low
 
 /datum/artifact_effect/temperature/heat
-	effect_name = "Heat"
+	log_name = "Heat"
 	target_temp_low = 300
 	target_temp_high = 600
 

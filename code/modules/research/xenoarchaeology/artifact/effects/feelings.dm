@@ -49,7 +49,7 @@
 		"You feel like the world is out to help you.")
 
 /datum/artifact_effect/feelings
-	effect_type = ARTIFACT_EFFECT_PSIONIC
+	type_name= ARTIFACT_EFFECT_PSIONIC
 	var/list/drastic_message_list
 	var/list/normal_message_list
 
@@ -68,7 +68,7 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/carbon/human/H in range(effectrange, curr_turf))
+	for(var/mob/living/carbon/human/H in range(range, curr_turf))
 		run_send_messages(H, 5, 10)
 		H.dizziness += rand(3, 5)
 
@@ -77,11 +77,17 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/carbon/human/H in range(effectrange, curr_turf))
+	for(var/mob/living/carbon/human/H in range(range, curr_turf))
 		run_send_messages(H, 80, 100)
 		H.dizziness += rand(1, 3)
 		if(prob(25))
 			H.dizziness += rand(5, 15)
+
+/datum/artifact_effect/feelings/DoEffectDestroy()
+	var/turf/curr_turf = get_turf(holder)
+	for(var/mob/living/carbon/human/H in range(7, curr_turf))
+		run_send_messages(H, 100, 0)
+		H.dizziness += 30
 
 /datum/artifact_effect/feelings/proc/run_send_messages(mob/receiver, drastic_message_chance = 0, normal_message_chance = 0)
 	if(prob(drastic_message_chance))
@@ -95,7 +101,7 @@
 /datum/artifact_effect/feelings/proc/send_minor_message(mob/receiver)
 
 /datum/artifact_effect/feelings/bad
-	effect_name = "Bad Feeling"
+	log_name = "Bad Feeling"
 	drastic_message_list = ARTIFACT_BAD_MESSAGES_MAJOR
 	normal_message_list = ARTIFACT_BAD_MESSAGES_MINOR
 
@@ -106,7 +112,7 @@
 	to_chat(receiver, "<font color='red'>[pick_n_take(normal_message_list)]</font>")
 
 /datum/artifact_effect/feelings/good
-	effect_name = "Good Feeling"
+	log_name = "Good Feeling"
 	drastic_message_list = ARTIFACT_GOOD_MESSAGES_MAJOR
 	normal_message_list = ARTIFACT_GOOD_MESSAGES_MINOR
 

@@ -1,11 +1,11 @@
 /datum/artifact_effect/radiate
-	effect_name = "Radiate"
+	log_name = "Radiate"
 	var/radiation_amount
 
 /datum/artifact_effect/radiate/New()
 	..()
 	radiation_amount = rand(1, 10)
-	effect_type = pick(ARTIFACT_EFFECT_PARTICLE, ARTIFACT_EFFECT_ORGANIC)
+	type_name= pick(ARTIFACT_EFFECT_PARTICLE, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/radiate/DoEffectTouch(mob/living/user)
 	. = ..()
@@ -19,7 +19,7 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in range(effectrange, curr_turf))
+	for(var/mob/living/M in range(range, curr_turf))
 		M.apply_effect(radiation_amount, IRRADIATE, 0)
 		M.updatehealth()
 
@@ -27,7 +27,9 @@
 	. = ..()
 	if(!.)
 		return
+	var/used_power
+	used_power = .
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in range(effectrange, curr_turf))
-		M.apply_effect(radiation_amount * 25, IRRADIATE, 0)
+	for(var/mob/living/M in range(range, curr_turf))
+		M.apply_effect(radiation_amount * used_power, IRRADIATE, 0)
 		M.updatehealth()

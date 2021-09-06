@@ -9,13 +9,15 @@
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
 	var/being_used = 0
-	var/need_inicial = 1
+	var/need_init = TRUE
 	var/scan_radius = 3
 	var/last_scan = 0
 	var/scan_delay = 2 SECONDS
 	var/list/turf/turfs_around = list()
 	var/list/mob/mobs_around = list()
 	var/are_mobs_inside_area = FALSE
+	var/touch_cooldown = 3 SECONDS
+	var/last_time_touched = 0
 	var/health = 1000
 
 /obj/machinery/artifact/Destroy()
@@ -26,22 +28,20 @@
 
 /obj/machinery/artifact/atom_init()
 	. = ..()
-	init_turfs_around()
-	
-	if(!need_inicial)//asteroid crystals doesnt need init, they are prebuild
+	if(!need_init)
 		return
 	//setup primary effect - these are the main ones (mixed)
 	var/effecttype = pick(global.valid_primary_effect_types)
 	my_effect = new effecttype(src)
 
-	//50% chance to have a secondary stealthy effect
+	//50% chance to have a secondary effect
 	if(prob(50))
 		effecttype = pick(global.valid_secondary_effect_types)
 		secondary_effect = new effecttype(src)
-		if(prob(50))
-			secondary_effect.ToggleActivate(0)
 
 	init_artifact_type()
+	if(my_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
+		init_turfs_around()
 
 /obj/machinery/artifact/proc/init_turfs_around()
 	for(var/turf/T in orange(3, src))
@@ -68,6 +68,60 @@
 	else
 		are_mobs_inside_area =  FALSE
 
+/obj/machinery/artifact/proc/rebuild_zone()
+	clear_turfs_around()
+	init_turfs_around()
+
+/**
+ * Tries to toggle both effects on or off if trigger is correct
+ */
+/obj/machinery/artifact/proc/try_toggle_effects(trigger)
+	if(my_effect?.trigger == trigger)
+		my_effect.ToggleActivate()
+	if(secondary_effect?.trigger == trigger)
+		secondary_effect.ToggleActivate(0)
+
+/**
+ * Tries to toggle both effects on if trigger is correct
+ */
+/obj/machinery/artifact/proc/toggle_effects_on(trigger)
+	if(my_effect)
+		try_turn_on_effect(trigger, my_effect)
+	if(secondary_effect)
+		try_turn_on_effect(trigger, secondary_effect, FALSE)
+
+/**
+ * Activates passed effect if trigger is correct and effect is not activated
+ */
+/obj/machinery/artifact/proc/try_turn_on_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
+	if(my_effect.trigger == trigger && !my_effect.activated)
+		my_effect.ToggleActivate(announce_triggered)
+
+/**
+ * Deactivates both effects if trigger is correct
+ */
+/obj/machinery/artifact/proc/toggle_effects_off(trigger)
+	if(my_effect)
+		try_turn_off_effect(trigger, my_effect)
+	if(secondary_effect)
+		try_turn_off_effect(trigger, secondary_effect, FALSE)
+
+/**
+ * Deactivates passed effect if trigger is correct and effect is activated
+ */
+/obj/machinery/artifact/proc/try_turn_off_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
+	if(my_effect.trigger == trigger && my_effect.activated)
+		my_effect.ToggleActivate(announce_triggered)
+
+/**
+ * Tries to do the destroy reaction of BOTH effects
+ */
+/obj/machinery/artifact/proc/do_destroy_effects()
+	if(my_effect)
+		my_effect.DoEffectDestroy()
+	if(secondary_effect)
+		secondary_effect.DoEffectDestroy()
+
 /obj/machinery/artifact/proc/init_artifact_type()
 	icon_num = pick(ARTIFACT_WIZARD_LARGE,  ARTIFACT_WIZARD_SMALL, ARTIFACT_MARTIAN_LARGE,
                     ARTIFACT_MARTIAN_SMALL, ARTIFACT_MARTIAN_PINK, ARTIFACT_CUBE,
@@ -91,7 +145,7 @@
 			if(prob(50))
 				my_effect.trigger = pick(TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD,
                                          TRIGGER_PHORON, TRIGGER_OXY,  TRIGGER_CO2,
-                                         TRIGGER_NITRO,  TRIGGER_VIEW)
+                                         TRIGGER_NITRO)
 		if(ARTIFACT_FLOATING)
 			name = "strange metal object"
 			desc = "A large object made of tough green-shaded alien metal."
@@ -111,12 +165,6 @@
 
 	update_icon()
 
-/obj/machinery/artifact/proc/do_destroy_effects()
-	if(my_effect)
-		my_effect.DoEffectDestroy()
-	if(secondary_effect)
-		secondary_effect.DoEffectDestroy()
-
 /obj/machinery/artifact/process()
 	if(health <= 0)
 		if(!QDELING(src))
@@ -129,7 +177,7 @@
 	var/trigger_co2 = FALSE
 	var/trigger_nitro = FALSE
 	if((my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) ||\
-	 (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
+	 (secondary_effect?.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
 		if(env)
@@ -163,39 +211,9 @@
 	if(are_mobs_inside_area)
 		if(world.time >= last_scan + scan_delay)
 			last_scan = world.time
-			toggle_effects_on(TRIGGER_VIEW)
+			toggle_effects_on(TRIGGER_PROXY)
 	else
-		toggle_effects_off(TRIGGER_VIEW)
-
-/obj/machinery/artifact/proc/try_toggle_effects(var/trigger)
-	if(my_effect)
-		if(my_effect.trigger == trigger)
-			my_effect.ToggleActivate()
-	if(secondary_effect)
-		if(secondary_effect.trigger == trigger)
-			secondary_effect.ToggleActivate(0)
-
-/obj/machinery/artifact/proc/toggle_effects_on(var/trigger)
-	if(my_effect)
-		try_turn_on_effect(trigger, my_effect)
-	if(secondary_effect)
-		try_turn_on_effect(trigger, secondary_effect, FALSE)
-
-/obj/machinery/artifact/proc/try_turn_on_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
-	if(my_effect.trigger == trigger && !my_effect.activated)
-		my_effect.ToggleActivate(announce_triggered)
-
-/obj/machinery/artifact/proc/toggle_effects_off(var/trigger)
-	if(my_effect)
-		try_turn_off_effect(trigger, my_effect)
-	if(secondary_effect)
-		try_turn_off_effect(trigger, secondary_effect, FALSE)
-
-/obj/machinery/artifact/proc/try_turn_off_effect(trigger, datum/artifact_effect/my_effect, announce_triggered = TRUE)
-	if(my_effect.trigger == trigger && my_effect.activated)
-		my_effect.ToggleActivate(announce_triggered)
-
-/obj/machinery/artifact/proc/check_trigger_view()
+		toggle_effects_off(TRIGGER_PROXY)
 
 /obj/machinery/artifact/examine(mob/user)
 	..()
@@ -223,10 +241,10 @@
 	else
 		to_chat(user, "<b>You touch [src],</b> [pick("but nothing of note happens", "but nothing happens", "but nothing interesting happens", "but you notice nothing different", "but nothing seems to have happened")].")
 
-	if(my_effect.effect == ARTIFACT_EFFECT_TOUCH)
+	if(my_effect.release_method == ARTIFACT_EFFECT_TOUCH)
 		my_effect.DoEffectTouch(user)
 
-	if(secondary_effect && secondary_effect.effect == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated)
+	if(secondary_effect?.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated)
 		secondary_effect.DoEffectTouch(user)
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
@@ -253,6 +271,7 @@
 		try_toggle_effects(TRIGGER_HEAT)
 	else
 		..()
+		health -= W.force
 		try_toggle_effects(TRIGGER_FORCE)
 
 /obj/machinery/artifact/Bumped(atom/AM)
@@ -261,11 +280,13 @@
 		var/obj/O = AM
 		if(O.throwforce >= 10)
 			try_toggle_effects(TRIGGER_FORCE)
-	try_toggle_effects(TRIGGER_TOUCH)
-	if(my_effect.effect == ARTIFACT_EFFECT_TOUCH && my_effect.activated && prob(50))
-		my_effect.DoEffectTouch(AM)
-	if(secondary_effect && secondary_effect.effect == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
-		secondary_effect.DoEffectTouch(AM)
+	if(world.time >= last_time_touched + touch_cooldown)
+		last_time_touched = world.time
+		try_toggle_effects(TRIGGER_TOUCH)
+		if(my_effect.release_method == ARTIFACT_EFFECT_TOUCH && my_effect.activated && prob(50))
+			my_effect.DoEffectTouch(AM)
+		if(secondary_effect && secondary_effect.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
+			secondary_effect.DoEffectTouch(AM)
 	to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
@@ -304,10 +325,11 @@
 
 	if(pulledby)
 		Bumped(pulledby)
-	if(my_effect)
-		my_effect.UpdateMove()
-	if(secondary_effect)
-		secondary_effect.UpdateMove()
+	my_effect?.UpdateMove()
+	secondary_effect?.UpdateMove()
+
+	if(my_effect?.release_method == TRIGGER_PROXY || secondary_effect?.release_method == TRIGGER_PROXY)
+		rebuild_zone()
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null

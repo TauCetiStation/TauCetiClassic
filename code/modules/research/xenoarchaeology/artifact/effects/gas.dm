@@ -1,5 +1,5 @@
 /datum/artifact_effect/gas
-	effect_name = "Gas"
+	log_name = "Gas"
 	var/max_pressure
 	var/target_percentage
 	var/list/gas_types = list("carbon_dioxide", "nitrogen", "oxygen", "phoron", "sleeping_agent")
@@ -7,8 +7,8 @@
 
 /datum/artifact_effect/gas/New()
 	..()
-	effect = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
-	effect_type = pick(ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
+	release_method = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
+	type_name= pick(ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
 	max_pressure = rand(115, 1000)
 	current_gas_type = pick_n_take(gas_types)
 

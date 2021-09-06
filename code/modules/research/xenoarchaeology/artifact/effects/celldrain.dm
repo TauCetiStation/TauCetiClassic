@@ -1,30 +1,31 @@
 /datum/artifact_effect/celldrain
-	effect_name = "Cell Drain"
-	effect_type = ARTIFACT_EFFECT_ELECTRO
+	log_name = "Cell Drain"
+	type_name= ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/celldrain/DoEffectTouch(mob/user)
 	. = ..()
 	if(!.)
 		return
-	if(istype(user, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = user
-		for(var/obj/item/weapon/stock_parts/cell/D in R.contents)
-			D.charge = max(D.charge - 100, 0)
-			to_chat(R, "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>")
+	for(var/obj/item/weapon/stock_parts/cell/D in user.contents)
+		D.charge = max(D.charge - 100, 0)
+		if(isrobot(user))
+			to_chat(user, "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>")
 
 /datum/artifact_effect/celldrain/DoEffectAura()
 	. = ..()
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	discharge_everything_in_range(150, effectrange, curr_turf)
+	discharge_everything_in_range(150, range, curr_turf)
 
 /datum/artifact_effect/celldrain/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
+	var/used_power
+	used_power = .
 	var/turf/curr_turf = get_turf(holder)
-	discharge_everything_in_range(250, effectrange, curr_turf)
+	discharge_everything_in_range(200 * used_power, range, curr_turf)
 
 /datum/artifact_effect/celldrain/DoEffectDestroy()
 	var/turf/curr_turf = get_turf(holder)

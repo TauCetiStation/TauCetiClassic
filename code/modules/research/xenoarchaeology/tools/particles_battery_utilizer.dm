@@ -115,7 +115,7 @@
 			// process the effect
 			inserted_battery.battery_effect.process()
 			// if someone is holding the device, do the effect on them
-			if(inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
+			if(inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
 				inserted_battery.battery_effect.DoEffectTouch(src.loc)
 
 			// handle charge
@@ -229,7 +229,7 @@
 	if (!istype(M))
 		return
 
-	if(!isnull(inserted_battery) && activated && inserted_battery.battery_effect && inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH )
+	if(!isnull(inserted_battery) && activated && inserted_battery.battery_effect && inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH )
 		inserted_battery.battery_effect.DoEffectTouch(M)
 		inserted_battery.stored_charge -= min(inserted_battery.stored_charge, 20) // we are spending quite a big amount of energy doing this
 		user.visible_message("<span class='notice'>[user] taps [M] with [src], and it shudders on contact.</span>")
@@ -241,4 +241,4 @@
 	M.lastattacker = user
 
 	if(inserted_battery.battery_effect)
-		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.effect_name]) ")
+		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.log_name]) ")

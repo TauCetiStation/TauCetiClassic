@@ -105,7 +105,7 @@
 			inserted_battery.battery_effect.process()
 
 			// if the effect works by touch, activate it on anyone viewing the console
-			if(inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH)
+			if(inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH)
 				var/list/nearby = viewers(1, src)
 				for(var/mob/M in nearby)
 					if(M.machine == src)
@@ -228,11 +228,11 @@
 
 							// duplicate the artifact's effect datum
 							if(!inserted_battery.battery_effect)
-								var/new_effect_type = source_effect.type
-								var/datum/artifact_effect/E = new new_effect_type(inserted_battery)
+								var/new_type_name = source_effect.type_name
+								var/datum/artifact_effect/E = new new_type_name(inserted_battery)
 
 								// duplicate it's unique settings
-								for(var/varname in list("chargelevelmax", "artifact_id", "effect", "effectrange", "trigger"))
+								for(var/varname in list("maximum_charges", "artifact_id", "effect", "range", "trigger"))
 									E.vars[varname] = source_effect.vars[varname]
 
 								// copy the new datum into the battery
