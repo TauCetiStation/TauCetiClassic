@@ -81,7 +81,6 @@ var/list/announcement_sounds = list(
 	var/sound
 
 	var/always_random = FALSE
-	var/custom = FALSE
 	var/volume = 100
 	var/flags
 

@@ -13,7 +13,6 @@
 /datum/announcement/centcomm/admin
 	name = "Centcomm: Admin Stub"
 	message = "\[Введите свое сообщение здесь.\]"
-	custom = TRUE
 	flags = ANNOUNCE_ALL
 
 /datum/announcement/centcomm/yesert
