@@ -7438,11 +7438,10 @@
 	},
 /obj/item/device/gps/science{
 	pixel_x = 2;
-	pixel_y = 6
+	pixel_y = 2
 	},
 /obj/item/device/gps/science{
-	pixel_x = -2;
-	pixel_y = 7
+	pixel_x = -4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73313,12 +73312,12 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/device/taperecorder{
-	pixel_x = -7;
-	pixel_y = 5
+	pixel_x = -14;
+	pixel_y = 3
 	},
 /obj/item/device/camera{
-	pixel_x = 7;
-	pixel_y = -4
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
