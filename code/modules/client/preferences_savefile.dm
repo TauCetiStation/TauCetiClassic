@@ -473,7 +473,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["age"]				>> age
 	S["species"]			>> species
 	S["language"]			>> language
-	S["have_quality"]		>> have_quality
 
 	//colors to be consolidated into hex strings (requires some work with dna code)
 	S["hair_red"]			>> r_hair
@@ -554,7 +553,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
-	have_quality	= sanitize_integer(have_quality, 0, 1, initial(have_quality))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -657,7 +655,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["gender"]				<< gender
 	S["age"]				<< age
 	S["species"]			<< species
-	S["have_quality"]		<< have_quality
 	S["language"]			<< language
 	S["hair_red"]			<< r_hair
 	S["hair_green"]			<< g_hair

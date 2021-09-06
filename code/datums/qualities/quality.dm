@@ -1,5 +1,4 @@
 /datum/quality
-	var/name
 	var/desc
 
 	var/restriction
@@ -11,8 +10,7 @@
 	return
 
 /datum/quality/test
-	name = "Test"
-	desc = "Write 'lol' in chat before quirks"
+	desc = "Write 'lol' in chat after quirks"
 
 	restriction = "Dont be a dick"
 
