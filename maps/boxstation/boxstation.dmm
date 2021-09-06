@@ -7429,20 +7429,20 @@
 	pixel_y = 5
 	},
 /obj/structure/rack,
-/obj/item/device/gps/science{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/device/gps/science{
-	pixel_x = 2;
-	pixel_y = 1
-	},
 /obj/machinery/door_control{
 	id = "Gateway_shutters";
 	name = "Gateway Shutters";
-	pixel_x = -25;
-	pixel_y = -5;
+	pixel_x = 6;
+	pixel_y = -26;
 	req_access = list(57)
+	},
+/obj/item/device/gps/science{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/device/gps/science{
+	pixel_x = -2;
+	pixel_y = 7
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23484,15 +23484,16 @@
 	},
 /area/station/maintenance/engineering)
 "aPr" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 32
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
 /area/station/gateway)
 "aPs" = (
 /obj/structure/disposalpipe/segment,
@@ -23852,9 +23853,18 @@
 	},
 /area/station/gateway)
 "aQg" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 34;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "warning"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/gateway)
 "aQh" = (
@@ -23965,9 +23975,6 @@
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aQr" = (
-/obj/structure/stool{
-	pixel_y = 8
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -26002,6 +26009,9 @@
 	},
 /area/station/civilian/garden)
 "aTY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/gateway)
 "aTZ" = (
@@ -26036,8 +26046,13 @@
 /area/station/civilian/garden)
 "aUd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
 /area/station/gateway)
 "aUe" = (
 /obj/machinery/sparker{
@@ -26250,7 +26265,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "aUy" = (
@@ -26452,9 +26467,22 @@
 	},
 /area/station/medical/storage)
 "aUR" = (
+/obj/machinery/door_control{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters";
+	pixel_x = -27;
+	pixel_y = 6;
+	req_access = list(57)
+	},
+/obj/machinery/door_control{
+	id = "Gateway_shutters_entrance";
+	name = "Gateway Shutters";
+	pixel_x = -27;
+	pixel_y = -6;
+	req_access = list(57)
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "aUS" = (
@@ -26575,7 +26603,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "aVb" = (
@@ -27204,19 +27232,14 @@
 	},
 /area/station/rnd/mixing)
 "aWf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/door/poddoor/shutters{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/plating,
 /area/station/gateway)
 "aWg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -27417,7 +27440,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/gateway)
 "aWt" = (
 /turf/simulated/floor{
@@ -27587,7 +27612,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "aWM" = (
@@ -28047,13 +28072,14 @@
 	},
 /area/station/rnd/mixing)
 "aXC" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
 /area/station/gateway)
 "aXD" = (
 /obj/structure/closet/emcloset,
@@ -28230,19 +28256,14 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "aXU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/door/airlock/command{
+	name = "Gateway Access";
+	req_access = list(62)
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/plating,
 /area/station/gateway)
 "aXV" = (
 /obj/machinery/light/small,
@@ -28318,12 +28339,6 @@
 	icon_state = "vault"
 	},
 /area/station/aisat)
-"aYd" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/gateway)
 "aYe" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -28391,24 +28406,14 @@
 /obj/machinery/door_control{
 	id = "Gateway_shutters";
 	name = "Gateway Shutters";
-	pixel_x = -25;
-	pixel_y = 9;
+	pixel_x = 6;
+	pixel_y = 26;
 	req_access = list(57)
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/gateway)
-"aYk" = (
-/obj/machinery/door/airlock/command{
-	name = "Gateway Access";
-	req_access = list(62)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
 /area/station/gateway)
 "aYl" = (
 /obj/machinery/mineral/equipment_vendor,
@@ -29123,7 +29128,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "warning"
 	},
 /area/station/gateway)
@@ -29590,12 +29595,18 @@
 	},
 /area/station/hallway/primary/port)
 "bag" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "Gateway_shutters";
-	name = "Gateway Shutters"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/station/gateway)
 "bah" = (
 /obj/structure/sign/warning/nosmoking,
@@ -29620,6 +29631,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
+	dir = 6;
 	icon_state = "warning"
 	},
 /area/station/gateway)
@@ -29627,7 +29639,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/closet/secure_closet/exile,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -29860,7 +29872,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/structure/closet/secure_closet/exile,
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -29991,11 +30003,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -26;
-	pixel_y = -9
-	},
-/obj/structure/closet/secure_closet/exile,
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -30041,8 +30049,12 @@
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters";
 	pixel_x = 3;
-	pixel_y = -24;
+	pixel_y = -26;
 	req_access = list(57)
+	},
+/obj/machinery/camera{
+	c_tag = "Gateway Entrance";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -30201,18 +30213,21 @@
 	},
 /area/station/civilian/garden)
 "bbk" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Gateway Entrance";
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
+/turf/simulated/floor/plating,
 /area/station/gateway)
 "bbl" = (
 /obj/structure/cable{
@@ -30711,8 +30726,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "warning"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "bcf" = (
@@ -30732,11 +30746,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/closet/l3closet/scientist,
 /obj/machinery/light_switch{
 	pixel_x = -5;
 	pixel_y = -24
 	},
+/obj/structure/closet/secure_closet/exile,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -31643,7 +31657,7 @@
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters";
 	pixel_x = 3;
-	pixel_y = 28;
+	pixel_y = 26;
 	req_access = list(57)
 	},
 /turf/simulated/floor{
@@ -73296,12 +73310,15 @@
 /area/station/civilian/library)
 "igb" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = 8;
-	pixel_y = 3
-	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/device/taperecorder{
-	pixel_x = -2
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/device/camera{
+	pixel_x = 7;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -107108,7 +107125,7 @@ ihb
 aFb
 aVK
 aUx
-bag
+aWf
 aZn
 baL
 aTY
@@ -107623,9 +107640,9 @@ aFd
 aUl
 aWL
 bag
-aZn
-aYd
-aTY
+aPr
+aCq
+bag
 bbk
 aCq
 byj
@@ -107880,11 +107897,11 @@ aQs
 aUZ
 aUZ
 aXU
-aQg
+aUZ
 aUR
-aUR
+aUZ
 bce
-aYk
+aXU
 bdR
 aKj
 bgb
@@ -108137,7 +108154,7 @@ aSF
 aVS
 aWd
 aCq
-aPr
+aQg
 baO
 bak
 bcg
