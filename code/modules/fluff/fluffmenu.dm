@@ -308,7 +308,7 @@ var/list/editing_item_oldname_list = list()
 			return
 		var/icon_state_limit = 6
 		if(editing_item.item_type == "storage")
-			icon_state_limit = 9 // 6 slots + 2 inhands + 1 default name
+			icon_state_limit = 7 // 6 slots + 1 default name
 		if(icon_states.len > icon_state_limit)
 			to_chat(user, "This icon has too many states")
 			return

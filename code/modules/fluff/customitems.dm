@@ -25,8 +25,15 @@
 
 /obj/item/weapon/storage/fancy/custom/open(mob/user)
 	if(!user.is_in_hands(type))
+		user.u_equip(src)
+		user.put_in_hands(src)
 		return
 	return ..()
+
+/obj/item/weapon/storage/fancy/custom/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+		close_all()
 
 /obj/item/clothing/head/custom
 	name = "Custom hat"
