@@ -1,7 +1,9 @@
 
 /client
 	var/list/parallax_layers
+	var/list/parallax_static_layers
 	var/list/parallax_layers_cached
+	var/list/parallax_static_layers_cached
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
@@ -20,6 +22,7 @@
 	if(!length(C.parallax_layers_cached) || C.parallax_theme != C.prefs.parallax_theme)
 		C.parallax_theme = C.prefs.parallax_theme
 		C.parallax_layers_cached = list()
+		C.parallax_static_layers_cached = list()
 		switch(C.prefs.parallax_theme)
 			if(PARALLAX_THEME_CLASSIC)
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view)
@@ -29,13 +32,21 @@
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view, 'icons/effects/parallax_tg.dmi')
 				//C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view, 'icons/effects/parallax_tg.dmi') awaiting for new planet image in replace for lavaland
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view, 'icons/effects/parallax_tg.dmi')
+			if(PARALLAX_THEME_ELITE)
+				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_1(null, C.view)
+				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_2(null, C.view)
+				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_3(null, C.view)
+				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/planet(null, C.view)
+				C.parallax_static_layers_cached += new /atom/movable/screen/parallax_layer/elite/milky_way(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
+	C.parallax_static_layers = C.parallax_static_layers_cached.Copy()
 
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
+	C.screen |= (C.parallax_static_layers)
 
 	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
 
@@ -191,8 +202,8 @@
 			L.update_o(C.view)
 
 		if(L.absolute)
-			L.offset_x = -(posobj.x - SSparallax.planet_x_offset) * L.speed
-			L.offset_y = -(posobj.y - SSparallax.planet_y_offset) * L.speed
+			L.offset_x = L.absolute_offset_x - posobj.x * L.speed
+			L.offset_y = L.absolute_offset_y - posobj.y * L.speed
 		else
 			L.offset_x -= offset_x * L.speed
 			L.offset_y -= offset_y * L.speed
@@ -227,6 +238,8 @@
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
+	var/absolute_offset_x = 0
+	var/absolute_offset_y = 0
 	var/view_sized
 	var/absolute = FALSE
 	blend_mode = BLEND_ADD
@@ -266,17 +279,17 @@
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
-	speed = 0.6
+	speed = 0.5
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "layer2"
-	speed = 1
+	speed = 0.7
 	layer = 2
 
 /atom/movable/screen/parallax_layer/layer_3
 	icon_state = "layer3"
-	speed = 1.4
+	speed = 0.9
 	layer = 3
 
 /atom/movable/screen/parallax_layer/planet
@@ -285,6 +298,11 @@
 	absolute = TRUE //Status of seperation
 	speed = 3
 	layer = 30
+
+/atom/movable/screen/parallax_layer/planet/New()
+	absolute_offset_x = rand(100, 160)
+	absolute_offset_y = rand(100, 160)
+	..()
 
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)

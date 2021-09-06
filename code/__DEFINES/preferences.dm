@@ -29,6 +29,7 @@
 
 #define PARALLAX_THEME_CLASSIC "classic"
 #define PARALLAX_THEME_TG      "tgstation"
+#define PARALLAX_THEME_ELITE   "elite"
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1

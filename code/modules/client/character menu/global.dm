@@ -197,6 +197,8 @@
 				if(PARALLAX_THEME_CLASSIC)
 					parallax_theme = PARALLAX_THEME_TG
 				if(PARALLAX_THEME_TG)
+					parallax_theme = PARALLAX_THEME_ELITE
+				if(PARALLAX_THEME_ELITE)
 					parallax_theme = PARALLAX_THEME_CLASSIC
 
 		if("ghost_sight")

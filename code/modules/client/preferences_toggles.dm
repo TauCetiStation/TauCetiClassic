@@ -234,7 +234,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = "Set space parallax theme."
 
-	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
+	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG, PARALLAX_THEME_ELITE)
 	if(!new_setting)
 		return
 
