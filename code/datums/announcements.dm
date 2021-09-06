@@ -120,7 +120,7 @@ var/list/announcement_sounds = list(
 	if(custom)
 		_title = sanitize_safe(title)
 		_subtitle = sanitize_safe(subtitle)
-		_message_annou = sanitize_safe(message)
+		_message_annou = sanitize_safe(message, extra = FALSE)
 		_message_paper = sanitize(message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 		_announcer = sanitize_safe(announcer)
 
