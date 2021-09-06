@@ -302,7 +302,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
 	S["parallax"]			>> parallax
-	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
 	S["auto_fit_viewport"]	>> auto_fit_viewport
 	S["tooltip"]			>> tooltip
@@ -356,7 +355,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
-	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
@@ -424,7 +422,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
 	S["parallax"]			<< parallax
-	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
 	S["auto_fit_viewport"]	<< auto_fit_viewport
 	S["tooltip"]			<< tooltip
