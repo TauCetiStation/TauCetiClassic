@@ -2092,6 +2092,7 @@
 #include "code\modules\research\xenoarchaeology\artifact\effects\forcefield.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\gas.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\health.dm"
+#include "code\modules\research\xenoarchaeology\artifact\effects\light.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\radiate.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\sleepy.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\stun.dm"
