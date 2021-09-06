@@ -63,8 +63,8 @@
 	name = "Sleep Toxin"
 	id = "stoxin"
 	result = "stoxin"
-	required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
-	result_amount = 5
+	required_reagents = list("cryptobiolin" = 1, "sugar" = 2)
+	result_amount = 3
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
@@ -493,14 +493,14 @@
 		S.start()
 	holder.clear_reagents()
 	return
-
+/*
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
 	result = "chloralhydrate"
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 	result_amount = 1
-
+*/
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v @ TG Port
 	name = "Mute toxin"
 	id = "mutetoxin"
@@ -519,15 +519,8 @@
 	name = "Potassium Chlorophoride"
 	id = "potassium_chlorophoride"
 	result = "potassium_chlorophoride"
-	required_reagents = list("potassium_chloride" = 1, "phoron" = 1, "chloralhydrate" = 1)
+	required_reagents = list("potassium_chloride" = 1, "phoron" = 1, "chlorine" = 1)
 	result_amount = 4
-
-/datum/chemical_reaction/stoxin
-	name = "Sleep Toxin"
-	id = "stoxin"
-	result = "stoxin"
-	required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
-	result_amount = 5
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
