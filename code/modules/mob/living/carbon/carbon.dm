@@ -120,7 +120,11 @@
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
 		return 0
-	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
+	if(def_zone)
+		apply_damage(shock_damage, BURN, def_zone, used_weapon = "Electrocution")
+	else
+		take_overall_damage(burn = shock_damage, used_weapon = "Electrocution")
+
 	if(shock_damage > 10)
 		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(

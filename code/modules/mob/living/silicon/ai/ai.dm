@@ -301,8 +301,8 @@ var/list/ai_verbs_default = list(
 	var/datum/role/malfAI/M = ismalf(src)
 	if(M)
 		var/datum/faction/malf_silicons/malf = M.GetFaction()
-		if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
+		if (SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
