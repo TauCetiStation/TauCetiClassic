@@ -39,6 +39,7 @@
 #define SS_INIT_ICON_SMOOTH   -5
 #define SS_INIT_ORDER_OVERLAY -6
 #define SS_INIT_STICKY_BAN    -7
+#define SS_INIT_QUALITIES     -93
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
 #define SS_INIT_UNIT_TESTS    -100
