@@ -126,9 +126,9 @@ var/list/announcement_sounds = list(
 
 	if(flags & ANNOUNCE_TEXT)
 		if(_title)
-			announce_text += "<h1>[_title]</h1>"
+			announce_text += "<div><h1>[_title]</h1></div>"
 		if(_subtitle)
-			announce_text += "<h2>[_subtitle]</h2>"
+			announce_text += "<div><h2>[_subtitle]</h2></div>"
 		if(_message_annou)
 			announce_text += "<p class='alert'>[_message_annou]</p>"
 		if(_announcer)
@@ -147,7 +147,7 @@ var/list/announcement_sounds = list(
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			if(announce_text)
-				to_chat(M, announce_text + "<br>")
+				to_chat(M, announce_text)
 
 			if(announce_sound)
 				if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
