@@ -29964,6 +29964,10 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/item/device/camera{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73314,10 +73318,6 @@
 /obj/item/device/taperecorder{
 	pixel_x = -14;
 	pixel_y = 3
-	},
-/obj/item/device/camera{
-	pixel_x = 5;
-	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
