@@ -105,34 +105,21 @@ var/list/announcement_sounds = list(
 	return
 
 /datum/announcement/proc/play()
-	var/_title = title
-	var/_subtitle = subtitle
-	var/_message_annou = message
-	var/_message_paper = message
-	var/_announcer = announcer
 	var/announce_text
 	var/announce_sound
 
 	if(always_random)
 		randomize()
 
-	// Sanitizing only there, because it will break everything not here
-	if(custom)
-		_title = sanitize_safe(title)
-		_subtitle = sanitize_safe(subtitle)
-		_message_annou = sanitize_safe(message, extra = FALSE)
-		_message_paper = sanitize(message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
-		_announcer = sanitize_safe(announcer)
-
 	if(flags & ANNOUNCE_TEXT)
-		if(_title)
-			announce_text += "<div><h1>[_title]</h1></div>"
-		if(_subtitle)
-			announce_text += "<div><h2>[_subtitle]</h2></div>"
-		if(_message_annou)
-			announce_text += "<p class='alert'>[_message_annou]</p>"
-		if(_announcer)
-			announce_text += "<p class='alert'> -[_announcer]</p>"
+		if(title)
+			announce_text += "<div><h1>[title]</h1></div>"
+		if(subtitle)
+			announce_text += "<div><h2>[subtitle]</h2></div>"
+		if(message)
+			announce_text += "<p class='alert'>[message]</p>"
+		if(announcer)
+			announce_text += "<p class='alert'> -[announcer]</p>"
 
 	if(flags & ANNOUNCE_SOUND)
 		if(sound)
@@ -159,15 +146,15 @@ var/list/announcement_sounds = list(
 		for (var/obj/machinery/computer/communications/C in communications_list)
 			if(!(C.stat & (BROKEN | NOPOWER)))
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
-				if(_title && _subtitle)
-					P.name = "[_title] - [_subtitle]"
-				else if(_title)
-					P.name = "[_title]"
-				else if(_subtitle)
-					P.name = "[_subtitle]"
+				if(title && subtitle)
+					P.name = "[title] - [subtitle]"
+				else if(title)
+					P.name = "[title]"
+				else if(subtitle)
+					P.name = "[subtitle]"
 				else
 					P.name = "Report"
-				P.info = replacetext(_message_paper, "\n", "<br/>")
+				P.info = replacetext(message, "\n", "<br/>")
 				P.update_icon()
 				C.messagetitle.Add("[P.name]")
 				C.messagetext.Add(P.info)
