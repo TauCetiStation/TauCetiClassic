@@ -27,7 +27,7 @@
 		return
 	if(!istype(M))
 		return
-	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
+	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, FALSE))
 		reagents.reaction(M, INGEST)
 		if(M.reagents)
 
