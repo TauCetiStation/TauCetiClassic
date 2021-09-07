@@ -346,6 +346,7 @@
 	var/injectorsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	var/forbidden_chem = FALSE
 
 
 /obj/machinery/chem_master/atom_init()
@@ -543,6 +544,11 @@
 				var/amount = text2num(href_list["amount"])
 				if (amount > 0)
 					beaker.reagents.trans_id_to(src, id, amount)
+				for(var/datum/reagent/N in reagents.reagent_list)
+					if(N.name == "Chloral Hydrate")
+						forbidden_chem = TRUE
+						break
+					else forbidden_chem = FALSE
 
 		else if(href_list["addcustom"])
 			var/id = href_list["addcustom"]
@@ -709,8 +715,12 @@
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];createinjector=1;many=0'>Create injector</A> (15 units max)"
-			dat += "<LI><A href='?src=\ref[src];createinjector=1;many=1'>Create multiple injectors</A><BR>"
+			if(!forbidden_chem)
+				dat += "<LI><A href='?src=\ref[src];createinjector=1;many=0'>Create injector</A> (15 units max)"
+				dat += "<LI><A href='?src=\ref[src];createinjector=1;many=1'>Create multiple injectors</A><BR>"
+			else
+				dat += "<LI><span class='disabled'>Create injector</span> (15 units max)"
+				dat += "<LI><span class='disabled'>Create multiple injectors</span><BR>"
 		else
 			dat += "<LI><span class='disabled'>Create pill</span> (50 units max)"
 			dat += "<LI><span class='disabled'>Create multiple pills</span><BR>"
