@@ -3,7 +3,7 @@
 
 /datum/artifact_effect/stun/New()
 	..()
-	type_name= pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
+	type_name = pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/stun/DoEffectTouch(mob/user)
 	. = ..()

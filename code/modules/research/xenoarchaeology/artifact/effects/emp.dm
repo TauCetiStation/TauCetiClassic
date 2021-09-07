@@ -1,6 +1,6 @@
 /datum/artifact_effect/emp
 	log_name = "EMP"
-	type_name= ARTIFACT_EFFECT_ELECTRO
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/emp/New()
 	..()

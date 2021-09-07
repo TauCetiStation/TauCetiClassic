@@ -5,7 +5,7 @@
 /datum/artifact_effect/radiate/New()
 	..()
 	radiation_amount = rand(1, 10)
-	type_name= pick(ARTIFACT_EFFECT_PARTICLE, ARTIFACT_EFFECT_ORGANIC)
+	type_name = pick(ARTIFACT_EFFECT_PARTICLE, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/radiate/DoEffectTouch(mob/living/user)
 	. = ..()

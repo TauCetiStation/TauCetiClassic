@@ -6,6 +6,7 @@
 	color = "#0064c8" // rgb: 0, 100, 200
 	custom_metabolism = 0.01
 	taste_message = null
+	random_unrestricted = FALSE
 
 /datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
 	if(method == TOUCH)
@@ -90,6 +91,7 @@
 	id = "holywater"
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
+	random_unrestricted = FALSE
 
 	needed_aspects = list(ASPECT_RESCUE = 1)
 
@@ -150,6 +152,7 @@
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
 	color = "#c80064" // rgb: 200,0, 100
+	random_unrestricted = FALSE
 
 	data = list()
 
@@ -234,6 +237,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/oxygen/on_vox_digest(mob/living/M)
 	..()
@@ -248,6 +252,7 @@
 	color = "#6e3b08" // rgb: 110, 59, 8
 	taste_message = null
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
@@ -257,6 +262,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/nitrogen/on_diona_digest(mob/living/M)
 	..()
@@ -281,6 +287,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -290,6 +297,7 @@
 	color = "#a0a0a0" // rgb: 160, 160, 160
 	taste_message = "bad ideas"
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/mercury
 	name = "Mercury"
@@ -300,6 +308,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "druggie poison"
 	restrict_species = list(IPC, DIONA)
+	random_unrestricted = FALSE
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
@@ -317,6 +326,7 @@
 	color = "#bf8c00" // rgb: 191, 140, 0
 	taste_message = "impulsive decisions"
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -326,6 +336,7 @@
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
@@ -345,6 +356,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "characteristic taste"
+	random_unrestricted = FALSE
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M)
 	..()
@@ -358,6 +370,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "toothpaste"
+	random_unrestricted = FALSE
 
 /datum/reagent/fluorine/on_general_digest(mob/living/M)
 	..()
@@ -371,6 +384,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "horrible misjudgement"
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -380,6 +394,7 @@
 	color = "#832828" // rgb: 131, 40, 40
 	taste_message = "misguided choices"
 	custom_metabolism = 0.01
+	random_unrestricted = FALSE
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M)
 	..()
@@ -399,6 +414,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "happiness"
 	restrict_species = list(IPC, DIONA)
+	random_unrestricted = FALSE
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
@@ -414,6 +430,7 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
+	random_unrestricted = FALSE
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
@@ -428,6 +445,7 @@
 	reagent_state = SOLID
 	color = "#c7c7c7" // rgb: 199,199,199
 	taste_message = "bonehurting juice"
+	random_unrestricted = FALSE
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
@@ -464,6 +482,7 @@
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
+	random_unrestricted = FALSE
 
 /datum/reagent/gold
 	name = "Gold"
@@ -472,6 +491,7 @@
 	reagent_state = SOLID
 	color = "#f7c430" // rgb: 247, 196, 48
 	taste_message = "bling"
+	random_unrestricted = FALSE
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -482,6 +502,7 @@
 	reagent_state = SOLID
 	color = "#d0d0d0" // rgb: 208, 208, 208
 	taste_message = "sub-par bling"
+	random_unrestricted = FALSE
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -492,6 +513,7 @@
 	reagent_state = SOLID
 	color = "#b8b8c0" // rgb: 184, 184, 192
 	taste_message = "bonehurting juice"
+	random_unrestricted = FALSE
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
@@ -512,6 +534,7 @@
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = null
+	random_unrestricted = FALSE
 
 /datum/reagent/silicon
 	name = "Silicon"
@@ -520,3 +543,4 @@
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = "a CPU"
+	random_unrestricted = FALSE

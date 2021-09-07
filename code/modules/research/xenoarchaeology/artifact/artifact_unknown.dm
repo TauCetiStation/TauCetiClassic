@@ -6,18 +6,27 @@
 	interact_offline = TRUE
 	var/icon_num = 0
 	density = TRUE
+	///artifact first effect
 	var/datum/artifact_effect/my_effect
+	///artifact second effect
 	var/datum/artifact_effect/secondary_effect
+	///is artifact busy right now, used it harvester code
 	var/being_used = 0
+	///does our artifact needs an init, dont forget to init turfs in prebuild artifacts if needed
 	var/need_init = TRUE
-	var/scan_radius = 3
+	///last scan time, used in process for proxy trigger
 	var/last_scan = 0
+	///how often do we scan
 	var/scan_delay = 2 SECONDS
+	///list of turfs around us
 	var/list/turf/turfs_around = list()
+	///list of mobs inside of turfs around us
 	var/list/mob/mobs_around = list()
-	var/are_mobs_inside_area = FALSE
+	///touch cooldown to prevent spam in /bumped
 	var/touch_cooldown = 3 SECONDS
+	///last time mob touched us
 	var/last_time_touched = 0
+	///our health
 	var/health = 1000
 
 /obj/machinery/artifact/Destroy()
@@ -43,12 +52,18 @@
 	if(my_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		init_turfs_around()
 
+/**
+ * Adds a entered/exited signal to each turf around orange 3
+ */
 /obj/machinery/artifact/proc/init_turfs_around()
 	for(var/turf/T in orange(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
 		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
 		turfs_around += T
 
+/**
+ * Clears both mob/turf lists, unregisters entered sinal
+ */
 /obj/machinery/artifact/proc/clear_turfs_around()
 	for(var/turf/T in turfs_around)
 		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
@@ -56,18 +71,22 @@
 	for(var/M in mobs_around)
 		mobs_around -= M
 
+/**
+ * Checks if entered atom is mob, adds it to proxy list
+ */
 /obj/machinery/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
 	if(istype(mover, /mob))
 		mobs_around |= mover
-	are_mobs_inside_area = TRUE
 
+/**
+ * Checks if exited atom is mob, removes it from proxy list
+ */
 /obj/machinery/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
 	mobs_around -= mover
-	if(mobs_around.len != 0)
-		are_mobs_inside_area = TRUE
-	else
-		are_mobs_inside_area =  FALSE
 
+/**
+ * Rebuilds proxy trigger zone, does this on a move
+ */
 /obj/machinery/artifact/proc/rebuild_zone()
 	clear_turfs_around()
 	init_turfs_around()
@@ -122,6 +141,9 @@
 	if(secondary_effect)
 		secondary_effect.DoEffectDestroy()
 
+/**
+ * Picks random artifact icon, changes its name, description, trigger method corresponding to a sprite
+ */
 /obj/machinery/artifact/proc/init_artifact_type()
 	icon_num = pick(ARTIFACT_WIZARD_LARGE,  ARTIFACT_WIZARD_SMALL, ARTIFACT_MARTIAN_LARGE,
                     ARTIFACT_MARTIAN_SMALL, ARTIFACT_MARTIAN_PINK, ARTIFACT_CUBE,
@@ -208,7 +230,7 @@
 	// NITROGEN GAS ACTIVATION
 	trigger_nitro ? toggle_effects_on(TRIGGER_NITRO) : toggle_effects_off(TRIGGER_NITRO)
 	// TRIGGER_PROXY ACTIVATION
-	if(are_mobs_inside_area)
+	if(mobs_around.len != 0)
 		if(world.time >= last_scan + scan_delay)
 			last_scan = world.time
 			toggle_effects_on(TRIGGER_PROXY)
@@ -258,21 +280,32 @@
 			try_toggle_effects(TRIGGER_VOLATILE)
 		else if(W.reagents.has_reagent("toxin", 1) || W.reagents.has_reagent("cyanide", 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent("neurotoxin", 1))
 			try_toggle_effects(TRIGGER_TOXIN)
-	else if(istype(W,/obj/item/weapon/melee/baton) && W:status ||\
-			istype(W,/obj/item/weapon/melee/energy) ||\
-			istype(W,/obj/item/weapon/melee/cultblade) ||\
-			istype(W,/obj/item/weapon/card/emag) ||\
-			ismultitool(W))
-		try_toggle_effects(TRIGGER_ENERGY)
-
-	else if(istype(W,/obj/item/weapon/match) && W:lit ||\
-			iswelder(W) && W:isOn() ||\
-			istype(W,/obj/item/weapon/lighter) && W:lit)
-		try_toggle_effects(TRIGGER_HEAT)
 	else
-		..()
-		health -= W.force
-		try_toggle_effects(TRIGGER_FORCE)
+		if(istype(W, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = W
+			if(B.status)
+				try_toggle_effects(TRIGGER_ENERGY)
+		if(istype(W, /obj/item/weapon/melee/energy) ||\
+			istype(W, /obj/item/weapon/melee/cultblade) ||\
+			istype(W, /obj/item/weapon/card/emag) ||\
+			ismultitool(W))
+			try_toggle_effects(TRIGGER_ENERGY)
+	if(my_effect?.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
+		if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				try_toggle_effects(TRIGGER_HEAT)
+		if(iswelder(W))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				try_toggle_effects(TRIGGER_HEAT)
+		if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				try_toggle_effects(TRIGGER_HEAT)
+	..()
+	health -= W.force
+	try_toggle_effects(TRIGGER_FORCE)
 
 /obj/machinery/artifact/Bumped(atom/AM)
 	..()
@@ -287,7 +320,7 @@
 			my_effect.DoEffectTouch(AM)
 		if(secondary_effect && secondary_effect.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
 			secondary_effect.DoEffectTouch(AM)
-	to_chat(AM, "<b>You accidentally touch [src].</b>")
+		to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)

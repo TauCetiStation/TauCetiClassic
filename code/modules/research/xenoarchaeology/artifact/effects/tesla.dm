@@ -3,7 +3,7 @@
 
 /datum/artifact_effect/tesla/New(atom/location)
 	..()
-	type_name= 8
+	type_name = ARTIFACT_EFFECT_ELECTRO
 	release_method = ARTIFACT_EFFECT_PULSE
 	current_charge = 0
 	maximum_charges = 30

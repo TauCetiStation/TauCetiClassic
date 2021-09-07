@@ -133,6 +133,18 @@
 	icon_state = "waterbottle"
 	list_reagents = list("water" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic
+	desc = "A bottle of water filled with unknown liquids. It seems to be radiating some kind of energy."
+	list_reagents = list()
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic/atom_init()
+	var/reagents = volume
+	while(reagents)
+		var/newreagent = rand(1, min(reagents, 30))
+		list_reagents += list(get_unrestricted_random_reagent_id() = newreagent)
+		reagents -= newreagent
+	..()
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."

@@ -1,6 +1,6 @@
 /datum/artifact_effect/cellcharge
 	log_name = "Cell Charge"
-	type_name= ARTIFACT_EFFECT_ELECTRO
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
 	. = ..()

@@ -1,6 +1,6 @@
 /datum/artifact_effect/heal
 	log_name = "Heal"
-	type_name= ARTIFACT_EFFECT_ORGANIC
+	type_name = ARTIFACT_EFFECT_ORGANIC
 
 /datum/artifact_effect/heal/proc/heal_target(mob/living/receiver, healing_power)
 	if(ishuman(receiver))
@@ -50,7 +50,7 @@
 
 /datum/artifact_effect/roboheal/New()
 	..()
-	type_name= pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
+	type_name = pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
 
 /datum/artifact_effect/roboheal/proc/heal_target(mob/living/receiver, healing_power)
 	receiver.heal_overall_damage(healing_power, healing_power)
@@ -143,7 +143,7 @@
 
 /datum/artifact_effect/robohurt/New()
 	..()
-	type_name= pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
+	type_name = pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
 
 /datum/artifact_effect/robohurt/proc/deal_damage(mob/living/receiver, damage_power)
 	receiver.take_overall_damage(damage_power, damage_power)

@@ -35,7 +35,21 @@
 #define ARCHAEO_REMAINS_XENO 34
 #define ARCHAEO_GASMASK 35
 #define ARCHAEO_STRANGETOOL 36
-#define MAX_ARCHAEO 36
+#define ARCHAEO_WATER 37
+
+#define FINDS_MERCURY list(ARCHAEO_BOWL, ARCHAEO_URN, ARCHAEO_CUTLERY, ARCHAEO_STATUETTE, ARCHAEO_INSTRUMENT, ARCHAEO_HANDCUFFS,\
+                           ARCHAEO_BEARTRAP, ARCHAEO_BOX, ARCHAEO_GASTANK, ARCHAEO_UNKNOWN, ARCHAEO_STRANGETOOL)
+
+#define FINDS_CARBON list(ARCHAEO_FOSSIL, ARCHAEO_SHELL, ARCHAEO_PLANT, ARCHAEO_REMAINS_HUMANOID,ARCHAEO_REMAINS_ROBOT,\
+                          ARCHAEO_REMAINS_XENO, ARCHAEO_GASMASK, ARCHAEO_WATER)
+
+#define FINDS_IRON list(ARCHAEO_COIN, ARCHAEO_KNIFE, ARCHAEO_TOOL, ARCHAEO_METAL,ARCHAEO_CLAYMORE,ARCHAEO_RODS, ARCHAEO_KATANA,\
+                         ARCHAEO_LASER, ARCHAEO_GUN)
+
+#define FINDS_NITRO list(ARCHAEO_CRYSTAL, ARCHAEO_SOULSTONE, ARCHAEO_MINER_HUD)
+
+#define FINDS_POTASSIUM list(ARCHAEO_CULTBLADE, ARCHAEO_TELEBEACON, ARCHAEO_CULTROBES, ARCHAEO_STOCKPARTS)
+
 //eggs
 //droppings
 //footprints
@@ -52,79 +66,14 @@
 #define DIGSITE_WAR 6
 
 /proc/get_responsive_reagent(find_type)
-	switch(find_type)
-		if(ARCHAEO_BOWL)
-			return "mercury"
-		if(ARCHAEO_URN)
-			return "mercury"
-		if(ARCHAEO_CUTLERY)
-			return "mercury"
-		if(ARCHAEO_STATUETTE)
-			return "mercury"
-		if(ARCHAEO_INSTRUMENT)
-			return "mercury"
-		if(ARCHAEO_COIN)
-			return "iron"
-		if(ARCHAEO_KNIFE)
-			return "iron"
-		if(ARCHAEO_HANDCUFFS)
-			return "mercury"
-		if(ARCHAEO_BEARTRAP)
-			return "mercury"
-		if(ARCHAEO_PIPBOY)
-			return "mercury"
-		if(ARCHAEO_BOX)
-			return "mercury"
-		if(ARCHAEO_GASTANK)
-			return "mercury"
-		if(ARCHAEO_TOOL)
-			return "iron"
-		if(ARCHAEO_METAL)
-			return "iron"
-		if(ARCHAEO_PEN)
-			return "mercury"
-		if(ARCHAEO_CRYSTAL)
-			return "nitrogen"
-		if(ARCHAEO_CULTBLADE)
-			return "potassium"
-		if(ARCHAEO_TELEBEACON)
-			return "potassium"
-		if(ARCHAEO_CLAYMORE)
-			return "iron"
-		if(ARCHAEO_CULTROBES)
-			return "potassium"
-		if(ARCHAEO_SOULSTONE)
-			return "nitrogen"
-		if(ARCHAEO_MINER_HUD)
-			return "nitrogen"
-		if(ARCHAEO_RODS)
-			return "iron"
-		if(ARCHAEO_STOCKPARTS)
-			return "potassium"
-		if(ARCHAEO_KATANA)
-			return "iron"
-		if(ARCHAEO_LASER)
-			return "iron"
-		if(ARCHAEO_GUN)
-			return "iron"
-		if(ARCHAEO_UNKNOWN)
-			return "mercury"
-		if(ARCHAEO_FOSSIL)
-			return "carbon"
-		if(ARCHAEO_SHELL)
-			return "carbon"
-		if(ARCHAEO_PLANT)
-			return "carbon"
-		if(ARCHAEO_REMAINS_HUMANOID)
-			return "carbon"
-		if(ARCHAEO_REMAINS_ROBOT)
-			return "carbon"
-		if(ARCHAEO_REMAINS_XENO)
-			return "carbon"
-		if(ARCHAEO_GASMASK)
-			return "carbon"
-		if(ARCHAEO_STRANGETOOL)
-			return "mercury"
+	if(find_type in FINDS_MERCURY)
+		return "mercury"
+	if(find_type in FINDS_IRON)
+		return "iron"
+	if(find_type in FINDS_NITRO)
+		return "nitrogen"
+	if(find_type in FINDS_POTASSIUM)
+		return "potassium"
 	return "phoron"
 
 // see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
@@ -140,14 +89,13 @@
 			100;ARCHAEO_PLANT,
 			25;ARCHAEO_SHELL,
 			25;ARCHAEO_FOSSIL,
-			5;ARCHAEO_BEARTRAP
 			)
 		if(DIGSITE_ANIMAL)
 			find_type = pick(
 			100;ARCHAEO_FOSSIL,
 			50;ARCHAEO_SHELL,
 			50;ARCHAEO_PLANT,
-			25;ARCHAEO_BEARTRAP
+			25;ARCHAEO_BEARTRAP,
 			)
 		if(DIGSITE_HOUSE)
 			find_type = pick(
@@ -164,7 +112,8 @@
 			75;ARCHAEO_UNKNOWN,
 			50;ARCHAEO_MINER_HUD,
 			50;ARCHAEO_RODS,
-			25;ARCHAEO_METAL
+			25;ARCHAEO_METAL,
+			10;ARCHAEO_WATER,
 			)
 		if(DIGSITE_TECHNICAL)
 			find_type = pick(
@@ -179,7 +128,6 @@
 			75;ARCHAEO_RODS,
 			75;ARCHAEO_UNKNOWN,
 			50;ARCHAEO_HANDCUFFS,
-			50;ARCHAEO_BEARTRAP,
 			)
 		if(DIGSITE_TEMPLE)
 			find_type = pick(
@@ -277,7 +225,11 @@ var/list/finds_as_strings = list(
 #undef ARCHAEO_GASMASK
 #undef ARCHAEO_STRANGETOOL
 #undef MAX_ARCHAEO
-
+#undef FINDS_MERCURY
+#undef FINDS_CARBON
+#undef FINDS_IRON
+#undef FINDS_NITRO
+#undef FINDS_POTASSIUM
 #undef DIGSITE_GARDEN
 #undef DIGSITE_ANIMAL
 #undef DIGSITE_HOUSE

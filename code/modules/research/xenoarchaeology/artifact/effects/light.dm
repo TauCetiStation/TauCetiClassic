@@ -4,7 +4,7 @@
 /datum/artifact_effect/light/New()
 	..()
 	release_method = ARTIFACT_EFFECT_TOUCH
-	type_name= ARTIFACT_EFFECT_PARTICLE
+	type_name = ARTIFACT_EFFECT_PARTICLE
 	trigger = TRIGGER_TOUCH
 
 /datum/artifact_effect/light/DoEffectTouch(mob/living/user)

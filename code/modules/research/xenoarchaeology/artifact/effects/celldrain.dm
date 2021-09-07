@@ -1,6 +1,6 @@
 /datum/artifact_effect/celldrain
 	log_name = "Cell Drain"
-	type_name= ARTIFACT_EFFECT_ELECTRO
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/celldrain/DoEffectTouch(mob/user)
 	. = ..()

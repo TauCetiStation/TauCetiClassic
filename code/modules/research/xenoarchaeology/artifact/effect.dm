@@ -56,6 +56,9 @@
 	create_artifact_type(50, 70, 30)
 	activation_pulse_cost = maximum_charges
 
+/**
+ * Picks artifact type
+ */
 /datum/artifact_effect/proc/create_artifact_type(chance_small, chance_medium, chance_large)
 	switch(pick(chance_small;ARTIFACT_SMALL_POWER, chance_medium;ARTIFACT_MEDIUM_POWER, chance_large;ARTIFACT_LARGE_POWER))
 		if(ARTIFACT_SMALL_POWER)
@@ -68,10 +71,16 @@
 			maximum_charges = rand(20, 50)
 			range = rand(7, 10)
 
+/**
+ * Invokes async toggle artifact
+ */
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
 	if(!QDELING(holder))
 		INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
 
+/**
+ * Stops/starts processing, sets up a holder, displays visible_message
+ */
 /datum/artifact_effect/proc/toggle_artifact_effect(reveal_toggle)
 	activated = !activated
 	if(activated)
@@ -92,6 +101,10 @@
 	else
 		toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
+/**
+ * Checks for a user, anomaly protection, tries to drain artifact charg
+ * returns true if charge was drained, otherwise returns false
+ */
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
 	if(!user)
 		return FALSE
@@ -101,19 +114,38 @@
 		return TRUE
 	return FALSE
 
+/**
+ * Tries to drain charge
+ * returns true if charge was drained, otherwise returns false
+ */
 /datum/artifact_effect/proc/DoEffectAura(atom/holder)
 	if(try_drain_charge(activation_aura_cost))
 		return TRUE
 	return FALSE
 
+/**
+ * Tries to drain charge
+ * returns true if charge was drained, otherwise returns false
+ */
 /datum/artifact_effect/proc/DoEffectPulse(atom/holder)
 	if(try_drain_charge(activation_pulse_cost))
 		return activation_pulse_cost
 	return FALSE
 
+/**
+ * Only called in artifact_unknown code on qdel
+ */
 /datum/artifact_effect/proc/DoEffectDestroy()
+
+/**
+ * Updates effect on /move
+ */
 /datum/artifact_effect/proc/UpdateMove()
 
+/**
+ * Tries to subtract given numbre from current_charge
+ * returns true if the result above zero, returns false otherwise
+ */
 /datum/artifact_effect/proc/try_drain_charge(var/charges_drained)
 	if((current_charge - charges_drained) < 0)
 		return FALSE
@@ -123,12 +155,14 @@
 /datum/artifact_effect/process()
 	current_charge = min(current_charge + recharge_speed, maximum_charges)
 	if(release_method == ARTIFACT_EFFECT_AURA)
-		to_chat(world, "1our release method = [release_method]")
 		DoEffectAura()
 	if(release_method == ARTIFACT_EFFECT_PULSE)
-		to_chat(world, "2our release method = [release_method]")
 		DoEffectPulse()
 
+/**
+ * Returns type effect
+ * used in artifact analyser
+ */
 /datum/artifact_effect/proc/getDescription()
 	. = "<b>"
 	switch(type_name)
@@ -173,7 +207,11 @@
 		else
 			. += " Unable to determine any data about activation trigger."
 
-// returns 0..1, with 1 being no protection and 0 being fully protected
+
+/**
+ * Calculates mob effect protection
+ * returns NO_ANOMALY_PROTECTION if not human, returns calculated protection otherwise
+ */
 /proc/GetAnomalySusceptibility(mob/living/carbon/human/H) 
 	if(!ishuman(H))
 		return NO_ANOMALY_PROTECTION

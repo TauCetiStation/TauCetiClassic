@@ -1,6 +1,6 @@
 /datum/artifact_effect/teleport
 	log_name = "Teleport"
-	type_name= ARTIFACT_EFFECT_BLUESPACE
+	type_name = ARTIFACT_EFFECT_BLUESPACE
 
 /datum/artifact_effect/teleport/DoEffectTouch(mob/user)
 	. = ..()

@@ -1,6 +1,6 @@
 /datum/artifact_effect/dnaswitch
 	log_name = "Dna Switch"
-	type_name= ARTIFACT_EFFECT_ORGANIC
+	type_name = ARTIFACT_EFFECT_ORGANIC
 	var/severity
 
 /datum/artifact_effect/dnaswitch/New()

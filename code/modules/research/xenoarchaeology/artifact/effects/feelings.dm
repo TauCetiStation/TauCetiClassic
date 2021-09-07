@@ -49,7 +49,7 @@
 		"You feel like the world is out to help you.")
 
 /datum/artifact_effect/feelings
-	type_name= ARTIFACT_EFFECT_PSIONIC
+	type_name = ARTIFACT_EFFECT_PSIONIC
 	var/list/drastic_message_list
 	var/list/normal_message_list
 

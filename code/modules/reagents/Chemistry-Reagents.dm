@@ -22,6 +22,8 @@
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 	var/list/flags = list()
+	///is reagent unrestricted to get from random
+	var/random_unrestricted = TRUE
 
 	var/overdose = 0
 	var/overdose_dam = 1
