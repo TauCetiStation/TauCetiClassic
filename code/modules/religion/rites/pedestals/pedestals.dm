@@ -129,7 +129,8 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
-	if(!religion.can_convert(AOG.buckled_mob))
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
 		if(user)
 			to_chat(user, "<span class='warning'>Неподходящее существо.</span>")
 		return FALSE
