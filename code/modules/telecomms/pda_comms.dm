@@ -1,4 +1,4 @@
-/proc/send_pda_message(mob/living/user, sender, obj/item/device/pda/recepient, text, obj/machinery/message_server/useMS = null, system = FALSE)
+/proc/send_pda_message(mob/living/user, sender, obj/item/device/pda/recepient, text, obj/machinery/message_server/useMS = null, system = FALSE, hide_from_ghost = FALSE)
 	var/obj/item/device/pda/senderPDA = null
 	if (istype(sender, /obj/item/device/pda))
 		senderPDA = sender
@@ -55,7 +55,7 @@
 			log_pda("[user] (PDA: [sender]) sent \"[text]\" to [recepient.name]")
 
 		for (var/mob/M in player_list)
-			if (M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // sender.client is so that ghosts don't have to listen to mice
+			if (M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS) && (!hide_from_ghost || M.client.holder)) // sender.client is so that ghosts don't have to listen to mice
 				if (isnewplayer(M))
 					continue
 				if (senderPDA)
