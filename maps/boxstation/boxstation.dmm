@@ -47855,9 +47855,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -54200,9 +54197,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -55081,6 +55075,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"cav" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "caA" = (
 /obj/machinery/vending/eva/engineering,
 /turf/simulated/floor,
@@ -69987,6 +69990,9 @@
 /area/station/storage/emergency)
 "dub" = (
 /obj/machinery/chem_dispenser,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -117362,7 +117368,7 @@ jAb
 bWl
 aPE
 bXR
-aPE
+cav
 aPE
 aPE
 qMb

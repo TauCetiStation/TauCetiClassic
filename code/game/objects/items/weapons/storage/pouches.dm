@@ -231,12 +231,7 @@
 	max_w_class = SIZE_NORMAL
 
 	can_hold = list(
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/melee/classic_baton,
-		/obj/item/weapon/melee/telebaton,
-		/obj/item/weapon/wirerod,
-		/obj/item/weapon/melee/cattleprod,
-		/obj/item/weapon/minihoe,
+		/obj/item/weapon/melee,
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
 		)
