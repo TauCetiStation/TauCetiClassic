@@ -47,4 +47,4 @@
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	..()
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "thralled")
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")

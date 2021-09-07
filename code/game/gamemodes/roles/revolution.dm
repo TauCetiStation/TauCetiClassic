@@ -20,7 +20,7 @@
 
 /datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
 	..()
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
