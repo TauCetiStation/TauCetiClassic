@@ -99,7 +99,7 @@
 		else
 			centcomm_blueshield_intercept = "Наши надёжные источники (тм) обнаружили, что данные лица могут быть следующими целями агентов Синдиката:"
 			for (var/datum/mind/suspect_head in suspect_heads)
-				centcomm_blueshield_intercept += "<br>[suspect_head.current.name], занимающий(-ая) должность [suspect_head.assigned_role]"
+				centcomm_blueshield_intercept += "[suspect_head.current.name], занимающий(-ая) должность [suspect_head.assigned_role]; "
 			
 			var/list/datum/role/all_roles = list()
 			for (var/datum/faction/faction in factions)
@@ -141,9 +141,9 @@
 		for (var/obj/structure/safe/floor/blueshield/safe in global.safes_list)
 			safes += safe
 		if (safes.len)
-			centcomm_blueshield_intercept += " Код от сейфа в хранилище: "
+			centcomm_blueshield_intercept += "Код от сейфа в хранилище: "
 			for (var/obj/structure/safe/safe as anything in safes)
-				centcomm_blueshield_intercept += "[safe.get_combination()]"
+				centcomm_blueshield_intercept += "[safe.get_combination()]; "
 	
 	var/obj/item/device/pda/blueshield_PDA = null
 	for (var/obj/item/device/pda/P in PDAs)
