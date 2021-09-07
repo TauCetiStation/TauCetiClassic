@@ -38,7 +38,7 @@
 
 // SAFE PAPERS
 /obj/item/weapon/paper/blueshield
-	name = "Инициатива \"Синий Щит\""
+	name = "Инициатива Синий Щит"
 	var/subname = ""
 
 /obj/item/weapon/paper/blueshield/atom_init()
