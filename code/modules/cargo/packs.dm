@@ -289,7 +289,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells/stunslug,
 					/obj/item/ammo_box/eight_shells/stunslug,
 					/obj/item/ammo_box/eight_shells/stunslug)
-	cost = 1000
+	cost = 2000
 	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
 
