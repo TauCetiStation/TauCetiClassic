@@ -271,7 +271,6 @@
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
 		holo_obj.flags_2 |= HOLOGRAM_2
-		holo_obj.price = 0
 
 	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 

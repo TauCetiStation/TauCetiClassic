@@ -6,8 +6,6 @@
  * Rewritten (except for player HTML) by N3X15
  ***********************/
 
-#define MEDIA_VOLUME SANITIZE_VOL(50)
-
 // Open up VLC and play musique.
 // Converted to VLC for cross-platform and ogg support. - N3X
 var/const/PLAYER_HTML={"
@@ -50,7 +48,7 @@ function SetVolume(volume) {
 /datum/media_manager
 	var/url = ""
 	var/start_time = 0
-	var/volume = MEDIA_VOLUME
+	var/volume = 25
 
 	var/client/owner
 	var/mob/living/mob
@@ -63,7 +61,7 @@ function SetVolume(volume) {
 		return
 	mob = holder
 	owner = mob.client
-	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
+	volume = owner.get_sound_volume(VOL_JUKEBOX)
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
@@ -72,7 +70,7 @@ function SetVolume(volume) {
 
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()
-	if(!volume && !length(url))
+	if(!owner.get_sound_volume(VOL_JUKEBOX) && url != "")
 		return // Nope.
 	var/playtime = round((world.time - start_time) / 10)
 	owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
@@ -86,6 +84,7 @@ function SetVolume(volume) {
 /datum/media_manager/proc/update_music()
 	var/targetURL = ""
 	var/targetStartTime = 0
+	//var/targetVolume = volume
 
 	if (!owner)
 		//testing("owner is null")
@@ -107,11 +106,10 @@ function SetVolume(volume) {
 	if (url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime
+		//volume = targetVolume
 		send_update()
 
 /datum/media_manager/proc/update_volume()
-	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
+	volume = owner.prefs.snd_jukebox_vol
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
-	send_update()
-
-#undef MEDIA_VOLUME
+	//send_update()

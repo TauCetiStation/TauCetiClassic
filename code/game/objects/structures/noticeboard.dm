@@ -1,5 +1,5 @@
 
-#define NOTICEBOARD_MAX_NOTICES	30
+#define MAX_NOTICES	30
 
 /obj/item/noticeboard_frame
 	name = "noticeboard frame"
@@ -204,14 +204,14 @@
 
 	LAZYSET(hash_removal_timers, note_hash, addtimer(CALLBACK(src, .proc/remove_hash, note_hash), 2 MINUTES, TIMER_STOPPABLE))
 
-/obj/structure/noticeboard/proc/add_viewer(mob/viewer)
+/obj/structure/noticeboard/proc/add_viewer(mob/living/viewer)
 	if(!quest.mobShouldSee(viewer))
 		return
 
 	LAZYADD(quest.blinds, viewer)
 	quest.remove_hud_from(viewer)
 
-/obj/structure/noticeboard/proc/remove_viewer(mob/viewer)
+/obj/structure/noticeboard/proc/remove_viewer(mob/living/viewer)
 	LAZYREMOVE(quest.blinds, viewer)
 	quest.add_hud_to(viewer)
 
@@ -233,10 +233,10 @@
 	if(!is_type_in_list(I, note_types))
 		return ..()
 
-	if(length(notices) >= NOTICEBOARD_MAX_NOTICES)
+	if(length(notices) >= MAX_NOTICES)
 		to_chat(user, "<span class='warning'>You hesitate, certain [I] will not be seen among the many others already attached to \the [src].</span>")
 		return
-	if(length(hash_removal_timers) >= NOTICEBOARD_MAX_NOTICES)
+	if(length(hash_removal_timers) >= MAX_NOTICES)
 		to_chat(user, "<span class='warning'>You hesitate, certain [I] will not be noticed when so many papers were attached and remove from \the [src].</span>")
 		return
 	if(!user.drop_from_inventory(I, src))
@@ -249,6 +249,7 @@
 /obj/structure/noticeboard/examine(mob/user)
 	add_viewer(user)
 	tgui_interact(user)
+	return list()
 
 /obj/structure/noticeboard/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -276,9 +277,8 @@
 	return data
 
 /obj/structure/noticeboard/tgui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	if(!in_range(src, usr))
 		return FALSE
@@ -333,5 +333,3 @@
 /obj/structure/noticeboard/chaplain
 	icon_state = "notice_board_chapel"
 	frame_type = /obj/item/noticeboard_frame/wood
-
-#undef NOTICEBOARD_MAX_NOTICES

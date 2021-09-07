@@ -11,8 +11,6 @@
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
 
-	var/add_religion_name = TRUE
-
 /// Activates once selected
 /datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
 	give_binding_rites(L, R)
@@ -42,8 +40,6 @@
 /********************/
 /*    CHAPLAIN      */
 /********************/
-/datum/religion_sect/preset/chaplain
-
 /datum/religion_sect/preset/chaplain/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
@@ -59,10 +55,10 @@
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
-		/datum/aspect/death = 1,
+	    /datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
-	)
+    )
 
 /datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
@@ -137,9 +133,6 @@
 /********************/
 /*        CULT      */
 /********************/
-/datum/religion_sect/preset/cult
-	add_religion_name = FALSE
-
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."
@@ -157,5 +150,3 @@
 	convert_opener = "Chaos is power."
 
 	aspects_count = 5
-
-	add_religion_name = FALSE

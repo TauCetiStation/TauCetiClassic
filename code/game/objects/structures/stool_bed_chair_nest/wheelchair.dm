@@ -88,9 +88,9 @@
 		if(get_dist(src, pulling) >= 1)
 			step(pulling, get_dir(pulling.loc, src.loc))
 	//--3--Move wheelchair--3--//
-	if(!buckled_mob)
-		step(src, direction)
-	Move(buckled_mob.loc)
+	step(src, direction)
+	if(buckled_mob) // Make sure it stays beneath the occupant
+		Move(buckled_mob.loc)
 	set_dir(direction)
 	handle_rotation()
 	if(pulling) // Driver
@@ -130,7 +130,7 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
-	if(has_gravity(src))
+	else if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
@@ -163,6 +163,35 @@
 			pulling.pulledby = null
 			pulling = null
 		return
+
+/obj/structure/stool/bed/chair/wheelchair/Bump(atom/A)
+	if(brake)
+		return
+	..()
+	if(!buckled_mob)	return
+
+	if(propelled || (pulling && (pulling.a_intent == INTENT_HARM)))
+		var/mob/living/occupant = unbuckle_mob()
+		if (pulling && (pulling.a_intent == INTENT_HARM))
+			occupant.throw_at(A, 3, 3, pulling)
+		else if (propelled)
+			occupant.throw_at(A, 3, propelled)
+		occupant.apply_effect(6, STUN, 0)
+		occupant.apply_effect(6, WEAKEN, 0)
+		occupant.apply_effect(6, STUTTER, 0)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
+		if(istype(A, /mob/living))
+			var/mob/living/victim = A
+			victim.apply_effect(6, STUN, 0)
+			victim.apply_effect(6, WEAKEN, 0)
+			victim.apply_effect(6, STUTTER, 0)
+			victim.take_bodypart_damage(10)
+		if(pulling)
+			occupant.visible_message("<span class='danger'>[pulling] has thrusted \the [name] into \the [A], throwing \the [occupant] out of it!</span>")
+
+			occupant.log_combat(pulling, "crashed [name] into [A]")
+		else
+			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 
 /obj/structure/stool/bed/chair/wheelchair/proc/create_track()
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)

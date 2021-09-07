@@ -140,10 +140,7 @@
 		in_use = is_in_use|ai_in_use
 
 /obj/attack_ghost(mob/dead/observer/user)
-	if(user.client.machine_interactive_ghost)
-		if(ui_interact(user) != -1)
-			return
-		tgui_interact(user)
+	if(user.client.machine_interactive_ghost && ui_interact(user) != -1)
 		return
 	..()
 

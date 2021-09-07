@@ -2,7 +2,7 @@
 //---- Noticeboard
 
 /obj/structure/noticeboard/plastic/anomaly
-	icon_state = "notice_board_plastic"
+	icon_state = "nboard05"
 
 /obj/structure/noticeboard/plastic/anomaly/atom_init()
 	. = ..()

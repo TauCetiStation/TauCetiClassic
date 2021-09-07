@@ -403,7 +403,6 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/lightreplacer(src)
-	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)

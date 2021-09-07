@@ -123,16 +123,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	if(!client || !client.prefs_ready)
 		return
 
-	var/vol = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel)
-
 	/*
-	This will stop stealth sending of ambient music to the client,
-	but still keep ability to resume admin music on the fly mid position
-	*/
+	This will stop stealth sending of music to the client,
+	but will kill the feature with the ability to resume music on the fly mid position, especially the ones that started by an admin.
 
-	if(!vol && volume_channel != VOL_ADMIN) 
+	var/vol = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel)
+	if(!vol)
 		return
-
+	*/
 	var/sound/S = new
 
 	S.file = soundin
@@ -141,7 +139,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.channel = channel
 	S.priority = priority
 	S.status = status
-	S.volume = vol
+	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // S.volume = vol <- replace line with this while uncommenting block of code from above.
 	S.environment = 2
 	src << S
 
@@ -240,7 +238,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				to_chat(src, "Preferences saving failed due to unknown reason.")
 			return
 		if("testVolume")
-			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
+			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), channel = CHANNEL_VOLUMETEST)
 			return
 		else
 			return

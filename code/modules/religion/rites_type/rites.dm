@@ -5,9 +5,9 @@
  */
 /datum/religion_rites
 	/// Name of the religious rite
-	var/name
+	var/name = "religious rite"
 	/// Description of the religious rite
-	var/desc
+	var/desc = "immm gonna rooon"
 	/// Rite of this religion
 	var/datum/religion/religion
 	// Ritе only for a certain religion
