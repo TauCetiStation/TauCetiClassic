@@ -12352,7 +12352,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkbluefull"
 	},
 /area/station/security/blueshield)
 "auK" = (
