@@ -54200,6 +54200,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -55078,15 +55081,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cav" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "caA" = (
 /obj/machinery/vending/eva/engineering,
 /turf/simulated/floor,
@@ -117368,7 +117362,7 @@ jAb
 bWl
 aPE
 bXR
-cav
+aPE
 aPE
 aPE
 qMb
