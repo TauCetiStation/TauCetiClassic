@@ -218,7 +218,16 @@
 	var/datum/religion/cult/R = global.cult_religion
 	R.capturing_area = TRUE
 
-	var/datum/announcement/station/cult/capture_area/announce = new
+	var/list/blacklisted_announcements = list(
+		/datum/announcement/centcomm/anomaly,
+		/datum/announcement/centcomm/anomaly/frost,
+		/datum/announcement/centcomm/anomaly/massive_portals,
+		/datum/announcement/centcomm/anomaly/bluespace_trigger,
+		/datum/announcement/centcomm/anomaly/radstorm,
+		/datum/announcement/centcomm/anomaly/radstorm_passed
+	)
+	var/announcement_type = pick(typesof(/datum/announcement/centcomm/anomaly) - blacklisted_announcements)
+	var/datum/announcement/announce = new announcement_type
 	announce.play(area)
 	var/turf/rune_turf = get_turf(holder)
 	message_admins("Cult has started capture: [area] in [COORD(rune_turf)] - [ADMIN_JMP(rune_turf)]")
