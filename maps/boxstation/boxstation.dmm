@@ -14368,8 +14368,8 @@
 	},
 /area/station/storage/tech/north)
 "ayD" = (
-/obj/structure/closet/secure_closet/blueshield,
 /obj/effect/landmark/blueshield,
+/obj/structure/closet/secure_closet/blueshield/weaponry,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warndark"
@@ -78638,8 +78638,8 @@
 	},
 /area/station/hallway/primary/central)
 "pKx" = (
-/obj/structure/closet/secure_closet/blueshield/weaponry,
 /obj/effect/landmark/blueshield,
+/obj/structure/closet/secure_closet/blueshield,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
