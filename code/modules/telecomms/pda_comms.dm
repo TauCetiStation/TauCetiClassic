@@ -1,4 +1,4 @@
-/proc/send_pda_message(mob/living/user, sender, obj/item/device/pda/recepient, text, obj/machinery/message_server/useMS = null, system = FALSE, hide_from_ghost = FALSE)
+/proc/send_pda_message(mob/living/user, sender, obj/item/device/pda/recepient, text, obj/machinery/message_server/useMS = null, system = FALSE, encrypted = FALSE, hide_from_ghost = FALSE)
 	var/obj/item/device/pda/senderPDA = null
 	if (istype(sender, /obj/item/device/pda))
 		senderPDA = sender
@@ -40,18 +40,22 @@
 			if (user)
 				to_chat(user, "ОШИБКА: Не найден маршрут до адресата.")
 			return
+		
+		var/encrypted_text = text
+		if (encrypted)
+			encrypted_text = GibberishAll(text)
 
 		if (senderPDA)
 			senderPDA.tnote.Add(list(list("sent" = 1, "owner" = "[recepient.owner]", "job" = "[recepient.ownjob]", "message" = "[text]", "target" = "\ref[recepient]")))
 			recepient.tnote.Add(list(list("sent" = 0, "owner" = "[senderPDA.owner]", "job" = "[senderPDA.ownjob]", "message" = "[text]", "target" = "\ref[senderPDA]")))
-			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob])","[senderPDA.owner]","[text]")
+			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob])","[senderPDA.owner]","[encrypted_text]")
 			if (!senderPDA.conversations.Find("\ref[recepient]"))
 				senderPDA.conversations.Add("\ref[recepient]")
 			if (!recepient.conversations.Find("\ref[senderPDA]"))
 				recepient.conversations.Add("\ref[senderPDA]")
 			log_pda("[user] (PDA: [senderPDA.name]) sent \"[text]\" to [recepient.name]")
 		else
-			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob]","[sender]","[text]")
+			useMS.save_pda_message("[recepient.owner] ([recepient.ownjob]","[sender]","[encrypted_text]")
 			log_pda("[user] (PDA: [sender]) sent \"[text]\" to [recepient.name]")
 
 		for (var/mob/M in player_list)
@@ -70,7 +74,7 @@
 			for (var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if (ai.pda != recepient && ai.pda != senderPDA)
-					to_chat(ai, "<i>Перехваченное сообщение от <b>[who]</b>: <span class='emojify linkify'>[text]</span></i>")
+					to_chat(ai, "<i>Перехваченное сообщение от <b>[who]</b>: <span class='emojify linkify'>[encrypted_text]</span></i>")
 
 		if (user && senderPDA)
 			nanomanager.update_user_uis(user, senderPDA) // Update the sending user's PDA UI so that they can see the new message
