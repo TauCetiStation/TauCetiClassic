@@ -136,13 +136,11 @@
  * Tries to do the destroy reaction of BOTH effects
  */
 /obj/machinery/artifact/proc/do_destroy_effects()
-	if(my_effect)
-		my_effect.DoEffectDestroy()
-	if(secondary_effect)
-		secondary_effect.DoEffectDestroy()
+	my_effect?.DoEffectDestroy()
+	secondary_effect?.DoEffectDestroy()
 
 /**
- * Picks random artifact icon, changes its name, description, trigger method corresponding to a sprite
+ * Picks random artifact icon, changes its name, description
  */
 /obj/machinery/artifact/proc/init_artifact_type()
 	icon_num = pick(ARTIFACT_WIZARD_LARGE,  ARTIFACT_WIZARD_SMALL, ARTIFACT_MARTIAN_LARGE,
