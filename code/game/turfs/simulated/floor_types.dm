@@ -414,13 +414,9 @@
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
-	update_icon(1)
-	set_light(1.5)
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/simulated/floor/plating/airless/catwalk/atom_init_late()
-	. = ..()
 	make_transparent()
+	update_icon(1)
+	set_light(1.5)	
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	var/dirs = 0
