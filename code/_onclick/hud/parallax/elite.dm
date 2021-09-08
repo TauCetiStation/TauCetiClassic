@@ -24,9 +24,9 @@
 	layer = 30
 
 /atom/movable/screen/parallax_layer/elite/asteroid/New()
-	absolute_offset_x = rand(60, 200)
-	absolute_offset_y = rand(60, 200)
-	var/rotary_speed = rand(1.0, 3.0) MINUTES
+	absolute_offset_x = SSparallax.planet_x_offset
+	absolute_offset_y = SSparallax.planet_y_offset
+	var/rotary_speed = rand(3.0, 5.0) MINUTES
 	SpinAnimation(rotary_speed, -1, prob(50))
 	..()
 

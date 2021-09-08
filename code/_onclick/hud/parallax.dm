@@ -278,17 +278,17 @@
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
-	speed = 0.5
+	speed = 0.6
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "layer2"
-	speed = 0.7
+	speed = 1
 	layer = 2
 
 /atom/movable/screen/parallax_layer/layer_3
 	icon_state = "layer3"
-	speed = 0.9
+	speed = 1.4
 	layer = 3
 
 /atom/movable/screen/parallax_layer/planet
@@ -299,9 +299,8 @@
 	layer = 30
 
 /atom/movable/screen/parallax_layer/planet/New()
-	absolute_offset_x = rand(100, 160)
-	absolute_offset_y = rand(100, 160)
-	..()
+	absolute_offset_x = SSparallax.planet_x_offset
+	absolute_offset_y = SSparallax.planet_y_offset
 
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
