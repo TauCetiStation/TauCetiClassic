@@ -30,6 +30,7 @@
 	var/rigged = 0
 	var/spam_flag = FALSE
 	var/crumpled = FALSE
+	var/ntlogo = FALSE // For chameleon spam control
 
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
@@ -292,8 +293,14 @@
 		t = "<b>[t]</b>"
 		font = crayonfont
 	
-	if(!istype(P, /obj/item/weapon/pen/chameleon))
+	if(!istype(P, /obj/item/weapon/pen/chameleon) || ntlogo)
 		t = replacetext(t, "\[nt\]", "")
+	
+	var/ntlogo_position = findtext(t, "\[nt\]")
+	if (ntlogo_position)
+		ntlogo = TRUE
+		var/ntlogo_end = findtext(t, "\]", ntlogo_position)
+		t = replacetext(t, "\[nt\]", "", ntlogo_end)
 
 	t = parsebbcode(t, P.colour)
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")

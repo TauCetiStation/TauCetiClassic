@@ -1683,16 +1683,16 @@
 			if("Да")
 				bad_S = new /obj/item/weapon/stamp/denied
 			if("ДА!")
-				bad_S = new /obj/item/weapon/stamp/centcomm/bullshit
+				switch(tgui_alert(usr, "Всё НАСТОЛЬКО плохо? (злоупотреблять этой фичей плохо)",, list("ДА!1!","Отмена")))
+					if("ДА!1!")
+						bad_S = new /obj/item/weapon/stamp/centcomm/bullshit
+					if("Отмена")
+						return
 		
 		if (bad_S)
-			switch(tgui_alert(usr, "Всё НАСТОЛЬКО плохо? (злоупотреблять этой фичей плохо)",, list("ДА!1!","Отмена")))
-				if("ДА!1!")
-					P.info = locate(href_list["CentcommFaxReplyInfo"])
-					P.stamp_text = locate(href_list["CentcommFaxReplyStamps"])
-					bad_S.stamp_paper(P)
-				if("Отмена")
-					return
+			P.info = locate(href_list["CentcommFaxReplyInfo"])
+			P.stamp_text = locate(href_list["CentcommFaxReplyStamps"])
+			bad_S.stamp_paper(P)
 		else
 			var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 			if(!input)

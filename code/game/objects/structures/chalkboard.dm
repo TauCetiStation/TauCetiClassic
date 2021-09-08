@@ -70,6 +70,7 @@
 			return
 
 	//t = replacetext(t, "\n", "<BR>")
+	t = replacetext(t, "\[nt\]", "") // We don't want NT logo to be here
 	t = parsebbcode(t) // Encode everything from pencode to html
 
 	if(!t)
