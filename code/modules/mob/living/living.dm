@@ -1257,7 +1257,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1304,6 +1303,7 @@
 
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 

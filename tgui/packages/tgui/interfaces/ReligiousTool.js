@@ -6,6 +6,24 @@ import { Window } from '../layouts';
 
 const ASPECT2COLOR = [];
 
+const GetTab = (tab, sects) => {
+  if (tab === 3) {
+    return <Encyclopedia />;
+  }
+
+  if (sects) {
+    return <SectSelectTab />;
+  }
+
+  if (tab === 1) {
+    return <ReligionTab />;
+  }
+
+  if (tab === 2) {
+    return <RiteTab />;
+  }
+};
+
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 1);
@@ -52,19 +70,7 @@ export const ReligiousTool = (props, context) => {
           </Flex>
         </Tabs>
         <Flex.Item>
-          {tab === 1 && (
-            !!sects && (
-              <SectSelectTab />
-            ) || (
-              <ReligionTab />
-            )
-          )}
-          {tab === 2 && (
-            <RiteTab />
-          )}
-          {tab === 3 && (
-            <Encyclopedia />
-          )}
+          {GetTab(tab, sects)}
         </Flex.Item>
       </Window.Content>
     </Window>
