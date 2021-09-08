@@ -35,7 +35,7 @@
 			to_chat(L, "<span class='warning'>A wave of energy overwhelms your senses!</span>")
 
 /datum/artifact_effect/stun/proc/apply_stun(mob/receiver, power)
-	var/weakened = GetAnomalySusceptibility(receiver)
+	var/weakened = get_anomaly_protection(receiver)
 	if(!weakened)
 		return FALSE
 	receiver.AdjustWeakened(power)

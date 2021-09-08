@@ -391,25 +391,6 @@
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
 				new_gun.magazine.stored_ammo.len = num_bullets
-/*				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
-				if(num_bullets < new_gun.magazine.stored_ammo.len)
-					new_gun.loaded.Cut()
-					for(var/i = 1, i <= num_bullets, i++)
-						var/A = text2path(new_gun.ammo_type)
-						new_gun.loaded += new A(new_gun)
-				else
-					for(var/obj/item/I in new_gun)
-						if(new_gun.loaded.len > num_bullets)
-							if(I in new_gun.loaded)
-								new_gun.loaded.Remove(I)
-								I.loc = null
-						else
-							break
-			else
-				for(var/obj/item/I in new_gun)
-					if(I in new_gun.loaded)
-						new_gun.loaded.Remove(I)
-						I.loc = null  */
 			else
 				new_gun.magazine.stored_ammo.len = 0
 

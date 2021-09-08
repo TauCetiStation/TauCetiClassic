@@ -149,105 +149,84 @@
                     ARTIFACT_MARTIAN_SMALL, ARTIFACT_MARTIAN_PINK, ARTIFACT_CUBE,
                     ARTIFACT_PILLAR,        ARTIFACT_COMPUTER,	   ARTIFACT_VENTS, ARTIFACT_FLOATING,
                     ARTIFACT_CRYSTAL_GREEN) // 12th and 13th are just types of crystals, please ignore them at THAT point
-
 	switch(icon_num)
 		if(ARTIFACT_COMPUTER)
 			name = "alien computer"
 			desc = "It is covered in strange markings."
-			if(prob(75))
-				my_effect.trigger = TRIGGER_TOUCH
-
 		if(ARTIFACT_PILLAR)
 			name = "alien device"
 			desc = "A large pillar, made of strange shiny metal."
-
 		if(ARTIFACT_VENTS)
 			name = "alien device"
 			desc = "A large alien device, there appear to be some kind of vents in the side."
-			if(prob(50))
-				my_effect.trigger = pick(TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD,
-                                         TRIGGER_PHORON, TRIGGER_OXY,  TRIGGER_CO2,
-                                         TRIGGER_NITRO)
 		if(ARTIFACT_FLOATING)
 			name = "strange metal object"
 			desc = "A large object made of tough green-shaded alien metal."
-			if(prob(25))
-				my_effect.trigger = pick(TRIGGER_WATER, TRIGGER_ACID, TRIGGER_VOLATILE, TRIGGER_TOXIN)
-
 		if(ARTIFACT_CRYSTAL_GREEN)
 			icon_num = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
 			name = "large crystal"
-			desc = pick("It shines faintly as it catches the light.",
-			"It appears to have a faint inner glow.",
-			"It seems to draw you inward as you look it at.",
-			"Something twinkles faintly as you look at it.",
-			"It's mesmerizing to behold.")
-			if(prob(50))
-				my_effect.trigger = TRIGGER_ENERGY
-
+			desc = pick("It shines faintly as it catches the light.", "It appears to have a faint inner glow.",
+                        "It seems to draw you inward as you look it at.", "Something twinkles faintly as you look at it.",
+                        "It's mesmerizing to behold.")
 	update_icon()
 
 /obj/machinery/artifact/process()
 	if(health <= 0)
 		if(!QDELING(src))
 			qdel(src)
-	// if either of our effects rely on environmental factors, work that out
-	var/trigger_cold = FALSE
-	var/trigger_hot = FALSE
-	var/trigger_phoron = FALSE
-	var/trigger_oxy = FALSE
-	var/trigger_co2 = FALSE
-	var/trigger_nitro = FALSE
-	if((my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) ||\
+	//if either of our effects rely on environmental factors, work that out
+	if((my_effect?.trigger >= TRIGGER_HEAT && my_effect?.trigger <= TRIGGER_NITRO) ||\
 	 (secondary_effect?.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
 		if(env)
+			//COLD ACTIVATION
 			if(env.temperature < 225)
-				trigger_cold = TRUE
-			else if(env.temperature > 375)
-				trigger_hot = TRUE
-
+				toggle_effects_on(TRIGGER_COLD)
+			else toggle_effects_off(TRIGGER_COLD)
+			if(env.temperature > 375)
+			//HEAT ACTIVATION
+				toggle_effects_on(TRIGGER_HEAT)
+			else toggle_effects_off(TRIGGER_HEAT)
+			//PHORON GAS ACTIVATION
 			if(env.gas["phoron"] >= 10)
-				trigger_phoron = TRUE
+				toggle_effects_on(TRIGGER_PHORON)
+			else toggle_effects_off(TRIGGER_PHORON)
+			//OXYGEN GAS ACTIVATION
 			if(env.gas["oxygen"] >= 10)
-				trigger_oxy = TRUE
+				toggle_effects_on(TRIGGER_OXY)
+			else toggle_effects_off(TRIGGER_OXY)
+			//CO2 GAS ACTIVATION
 			if(env.gas["carbon_dioxide"] >= 10)
-				trigger_co2 = TRUE
+				toggle_effects_on(TRIGGER_CO2)
+			else toggle_effects_off(TRIGGER_CO2)
+			//NITROGEN GAS ACTIVATION
 			if(env.gas["nitrogen"] >= 10)
-				trigger_nitro = TRUE
-
-	// COLD ACTIVATION
-	trigger_cold ? toggle_effects_on(TRIGGER_COLD) : toggle_effects_off(TRIGGER_COLD)
-	// HEAT ACTIVATION
-	trigger_hot ? toggle_effects_on(TRIGGER_HEAT) : toggle_effects_off(TRIGGER_HEAT)
-	// PHORON GAS ACTIVATION
-	trigger_phoron ? toggle_effects_on(TRIGGER_PHORON) : toggle_effects_off(TRIGGER_PHORON)
-	// OXYGEN GAS ACTIVATION
-	trigger_oxy ? toggle_effects_on(TRIGGER_OXY) : toggle_effects_off(TRIGGER_OXY)
-	// CO2 GAS ACTIVATION
-	trigger_co2 ? toggle_effects_on(TRIGGER_CO2) : toggle_effects_off(TRIGGER_CO2)
-	// NITROGEN GAS ACTIVATION
-	trigger_nitro ? toggle_effects_on(TRIGGER_NITRO) : toggle_effects_off(TRIGGER_NITRO)
-	// TRIGGER_PROXY ACTIVATION
-	if(mobs_around.len != 0)
-		if(world.time >= last_scan + scan_delay)
-			last_scan = world.time
-			toggle_effects_on(TRIGGER_PROXY)
-	else
-		toggle_effects_off(TRIGGER_PROXY)
+				toggle_effects_on(TRIGGER_NITRO)
+			else toggle_effects_off(TRIGGER_NITRO)
+	
+	if((my_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
+		//TRIGGER_PROXY ACTIVATION
+		if(mobs_around.len != 0)
+			if(world.time >= last_scan + scan_delay)
+				last_scan = world.time
+				toggle_effects_on(TRIGGER_PROXY)
+		else
+			toggle_effects_off(TRIGGER_PROXY)
 
 /obj/machinery/artifact/examine(mob/user)
 	..()
 	switch(round(100 - (initial(health) / health)))
 		if(85 to 100)
-			to_chat(user, "Looks brand new")
+			to_chat(user, "Appears to have no structural damage.")
 		if(65 to 85)
-			to_chat(user, "Looks slightly damaged.")
+			to_chat(user, "Appears to have light structural damage.")
 		if(45 to 65)
-			to_chat(user, "Looks badly damaged.")
-		if(0 to 45)
-			to_chat(user, "Looks heavily damaged.")
+			to_chat(user, "Appears to have heavy structural damage.")
+		if(10 to 45)
+			to_chat(user, "Appears to have immirsed structural damage.")
+		if(0 to 10)
+			to_chat(user, "Appears to have to be barely intanct.")
 
 /obj/machinery/artifact/attack_hand(mob/user)
 	. = ..()

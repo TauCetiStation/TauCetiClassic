@@ -34,7 +34,7 @@
 /datum/artifact_effect/sleepy/DoEffectDestroy()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/L in range(7, curr_turf))
-		var/weakness = GetAnomalySusceptibility(L)
+		var/weakness = get_anomaly_protection(L)
 		if(!weakness)
 			continue
 		L.SetSleeping(weakness * (10 SECONDS)) //0 resistance gives you 10 seconds of sleep
@@ -42,7 +42,7 @@
 /datum/artifact_effect/sleepy/proc/apply_sleepy(mob/receiver, power)
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
-		var/weakness = GetAnomalySusceptibility(H)
+		var/weakness = get_anomaly_protection(H)
 		if(!weakness)
 			return
 		to_chat(H, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))

@@ -35,7 +35,7 @@
 		roll_and_change_genes(H, 20, severity)
 
 /datum/artifact_effect/dnaswitch/proc/roll_and_change_genes(mob/receiver, chance, severity)
-	var/weakness = GetAnomalySusceptibility(receiver)
+	var/weakness = get_anomaly_protection(receiver)
 	if(!prob(weakness * 100))
 		return
 	if(prob(chance))

@@ -33,4 +33,3 @@
 	var/turf/holder_loc = holder.loc
 	if(isturf(holder_loc))
 		holder_loc.assume_gas(current_gas_type, 150)
-

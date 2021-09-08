@@ -58,19 +58,18 @@ var/global/list/all_artifact_effect_types = list(
 	/datum/artifact_effect/tesla,
 	/datum/artifact_effect/teleport,
 	/datum/artifact_effect/light,
-	/datum/artifact_effect/light/darkness)
+	/datum/artifact_effect/light/darkness,
+	/datum/artifact_effect/gravity,
+	/datum/artifact_effect/noise,
+	/datum/artifact_effect/powernet)
 
 var/global/list/valid_primary_effect_types = list(
 	/datum/artifact_effect/temperature/cold,
 	/datum/artifact_effect/temperature/heat,
-	/datum/artifact_effect/cellcharge,
-	/datum/artifact_effect/celldrain,
 	/datum/artifact_effect/dnaswitch,
 	/datum/artifact_effect/emp,
 	/datum/artifact_effect/gas,
 	/datum/artifact_effect/forcefield,
-	/datum/artifact_effect/heal,
-	/datum/artifact_effect/hurt,
 	/datum/artifact_effect/radiate,
 	/datum/artifact_effect/sleepy,
 	/datum/artifact_effect/stun,
@@ -78,18 +77,16 @@ var/global/list/valid_primary_effect_types = list(
 	/datum/artifact_effect/teleport)
 
 var/global/list/valid_secondary_effect_types = list(
-	/datum/artifact_effect/temperature/cold,
 	/datum/artifact_effect/feelings/bad,
 	/datum/artifact_effect/feelings/good,
 	/datum/artifact_effect/cellcharge,
 	/datum/artifact_effect/celldrain,
-	/datum/artifact_effect/gas,
 	/datum/artifact_effect/heal,
-	/datum/artifact_effect/temperature/heat,
 	/datum/artifact_effect/hurt,
-	/datum/artifact_effect/radiate,
 	/datum/artifact_effect/light,
-	/datum/artifact_effect/light/darkness)
+	/datum/artifact_effect/light/darkness,
+	/datum/artifact_effect/gravity,
+	/datum/artifact_effect/noise)
 
 
 //used in rituals to determine the value of things

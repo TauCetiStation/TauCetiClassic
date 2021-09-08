@@ -5,7 +5,7 @@
 /datum/artifact_effect/heal/proc/heal_target(mob/living/receiver, healing_power)
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
-		var/weakness = GetAnomalySusceptibility(H)
+		var/weakness = get_anomaly_protection(H)
 		H.heal_overall_damage(healing_power * weakness, healing_power * weakness)
 		H.updatehealth()
 		return
@@ -97,7 +97,7 @@
 /datum/artifact_effect/hurt/proc/deal_damage(mob/living/receiver, damage_power)
 	if(ishuman(receiver))
 		var/mob/living/carbon/human/H = receiver
-		var/weakness = GetAnomalySusceptibility(H)
+		var/weakness = get_anomaly_protection(H)
 		H.take_overall_damage(damage_power * weakness, damage_power * weakness)
 		H.updatehealth()
 		return

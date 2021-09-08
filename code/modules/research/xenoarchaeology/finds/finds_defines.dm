@@ -1,4 +1,3 @@
-
 #define ARCHAEO_BOWL 1
 #define ARCHAEO_URN 2
 #define ARCHAEO_CUTLERY 3
@@ -88,14 +87,14 @@
 			find_type = pick(
 			100;ARCHAEO_PLANT,
 			25;ARCHAEO_SHELL,
-			25;ARCHAEO_FOSSIL,
+			25;ARCHAEO_FOSSIL
 			)
 		if(DIGSITE_ANIMAL)
 			find_type = pick(
 			100;ARCHAEO_FOSSIL,
 			50;ARCHAEO_SHELL,
 			50;ARCHAEO_PLANT,
-			25;ARCHAEO_BEARTRAP,
+			25;ARCHAEO_BEARTRAP
 			)
 		if(DIGSITE_HOUSE)
 			find_type = pick(
@@ -113,7 +112,7 @@
 			50;ARCHAEO_MINER_HUD,
 			50;ARCHAEO_RODS,
 			25;ARCHAEO_METAL,
-			10;ARCHAEO_WATER,
+			10;ARCHAEO_WATER
 			)
 		if(DIGSITE_TECHNICAL)
 			find_type = pick(
@@ -127,7 +126,7 @@
 			75;ARCHAEO_STRANGETOOL,
 			75;ARCHAEO_RODS,
 			75;ARCHAEO_UNKNOWN,
-			50;ARCHAEO_HANDCUFFS,
+			50;ARCHAEO_HANDCUFFS
 			)
 		if(DIGSITE_TEMPLE)
 			find_type = pick(
@@ -147,7 +146,7 @@
 			10;ARCHAEO_MINER_HUD,
 			10;ARCHAEO_RODS,
 			10;ARCHAEO_METAL,
-			10;ARCHAEO_GASMASK,
+			10;ARCHAEO_GASMASK
 			)
 		if(DIGSITE_WAR)
 			find_type = pick(
@@ -224,7 +223,6 @@ var/list/finds_as_strings = list(
 #undef ARCHAEO_REMAINS_XENO
 #undef ARCHAEO_GASMASK
 #undef ARCHAEO_STRANGETOOL
-#undef MAX_ARCHAEO
 #undef FINDS_MERCURY
 #undef FINDS_CARBON
 #undef FINDS_IRON

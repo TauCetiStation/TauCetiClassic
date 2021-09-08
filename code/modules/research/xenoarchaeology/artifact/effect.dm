@@ -108,7 +108,7 @@
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
 	if(!user)
 		return FALSE
-	if(!GetAnomalySusceptibility(user)) //we ignore things with full anomaly protection
+	if(!get_anomaly_protection(user)) //we ignore things with full anomaly protection
 		return FALSE
 	if(try_drain_charge(activation_touch_cost))
 		return TRUE
@@ -211,8 +211,9 @@
 /**
  * Calculates mob effect protection
  * returns NO_ANOMALY_PROTECTION if not human, returns calculated protection otherwise
+ * higher returning number means less protection
  */
-/proc/GetAnomalySusceptibility(mob/living/carbon/human/H) 
+/proc/get_anomaly_protection(mob/living/carbon/human/H) 
 	if(!ishuman(H))
 		return NO_ANOMALY_PROTECTION
 

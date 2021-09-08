@@ -36,7 +36,7 @@
 			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
 /datum/artifact_effect/teleport/proc/teleport_around(mob/receiver, max_range)
-	var/weakness = GetAnomalySusceptibility(receiver)
+	var/weakness = get_anomaly_protection(receiver)
 	if(!weakness)
 		return FALSE
 	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
