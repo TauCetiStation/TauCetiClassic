@@ -195,9 +195,9 @@
 		on = 1
 		force = 18
 		w_class = SIZE_SMALL
-		edge = 1
-		sharp = 1
-		can_embed = 0
+		edge = TRUE
+		sharp = TRUE
+		can_embed = FALSE
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
