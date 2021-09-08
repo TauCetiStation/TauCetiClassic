@@ -196,6 +196,10 @@
 		to_chat(user, "<span class='warning'>AV tool works only through the mouth.</span>")
 		return FALSE
 
+	if((M.head.flags & HEADCOVERSMOUTH) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+		to_chat(user, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+		return FALSE
+
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
