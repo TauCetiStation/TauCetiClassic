@@ -79,7 +79,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "skrell_helmet_white"
 /obj/random/cloth/spacehelmet/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling, /obj/item/clothing/head/helmet/space/rig/ert/stealth))
+	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling, /obj/item/clothing/head/helmet/space/rig/ert/stealth, /obj/item/clothing/head/helmet/space/rig/syndi/elite, /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander))
 
 /obj/random/cloth/helmet
 	name = "random helmet"
