@@ -72,7 +72,9 @@
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
 		return TRUE
 	user.SetNextMove(CLICK_CD_MELEE)
-	my_effect.ToggleActivate()
+	if(wired && anchored)
+		my_effect.ToggleActivate()
+		update_crystal()
 	to_chat(user, "<b>You touch [src].</b>")
 
 /obj/machinery/power/crystal/Destroy()
@@ -92,7 +94,7 @@
 	return ..()
 
 /obj/machinery/power/crystal/proc/update_crystal()
-	if(wired && anchored)
+	if(wired && anchored && my_effect.activated)
 		icon_state = "[icon_custom_crystal]_active"
 	else
 		icon_state = icon_custom_crystal
