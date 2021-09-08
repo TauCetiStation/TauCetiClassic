@@ -416,7 +416,7 @@
 	. = ..()
 	make_transparent()
 	update_icon(1)
-	set_light(1.5)	
+	set_light(1.5)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	var/dirs = 0
