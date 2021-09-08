@@ -647,7 +647,8 @@
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
-
+	
+	make_transparent()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
@@ -692,7 +693,6 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
-	make_transparent()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
