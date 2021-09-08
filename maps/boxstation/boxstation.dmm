@@ -12338,6 +12338,13 @@
 	},
 /area/station/security/blueshield)
 "auJ" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "blueshield_blast";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/command/glass{
 	name = "Blueshield Officer";
 	req_access = list(42)
@@ -15333,6 +15340,13 @@
 	},
 /area/station/civilian/dormitories/female)
 "aAs" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/command/glass{
 	name = "Internal Affairs";
 	req_access = list(38)
