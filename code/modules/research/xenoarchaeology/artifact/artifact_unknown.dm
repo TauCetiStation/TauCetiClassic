@@ -339,8 +339,8 @@
 	my_effect?.UpdateMove()
 	secondary_effect?.UpdateMove()
 
-	if(my_effect?.release_method == TRIGGER_PROXY || secondary_effect?.release_method == TRIGGER_PROXY)
-		rebuild_zone()
+	if(my_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
+		addtimer(CALLBACK(src, .proc/rebuild_zone), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null
