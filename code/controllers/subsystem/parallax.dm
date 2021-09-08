@@ -7,13 +7,6 @@ SUBSYSTEM_DEF(parallax)
 	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
 
 	var/list/currentrun
-	var/planet_x_offset = 128
-	var/planet_y_offset = 128
-
-/datum/controller/subsystem/parallax/Initialize(timeofday)
-	planet_y_offset = rand(-60, 60)
-	planet_x_offset = rand(-60, 60)
-	..()
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)

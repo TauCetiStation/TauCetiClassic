@@ -24,11 +24,11 @@
 	layer = 30
 
 /atom/movable/screen/parallax_layer/elite/asteroid/New()
-	absolute_offset_x = SSparallax.planet_x_offset
-	absolute_offset_y = SSparallax.planet_y_offset
+	. = ..()
 	var/rotary_speed = rand(3.0, 5.0) MINUTES
 	SpinAnimation(rotary_speed, -1, prob(50))
-	..()
+	absolute_offset_x = rand(100, 160)
+	absolute_offset_y = rand(100, 160)
 
 /atom/movable/screen/parallax_layer/elite/asteroid/update_status(mob/M)
 	var/turf/T = get_turf(M)
@@ -66,7 +66,7 @@
 	transform.TurnTo(0, 90 * turn_step)
 	animate(src, transform = transform)
 
-	_offset = rand(60, 200)
+	_offset = rand(-60, 60)
 	if (turn_step % 2)
 		absolute_offset_x = _offset
 	else

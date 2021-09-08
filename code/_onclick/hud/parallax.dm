@@ -299,8 +299,9 @@
 	layer = 30
 
 /atom/movable/screen/parallax_layer/planet/New()
-	absolute_offset_x = SSparallax.planet_x_offset
-	absolute_offset_y = SSparallax.planet_y_offset
+	. = ..()
+	absolute_offset_x = rand(100, 160)
+	absolute_offset_y = rand(100, 160)
 
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
