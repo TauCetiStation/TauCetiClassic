@@ -75,7 +75,7 @@
  * Checks if entered atom is mob, adds it to proxy list
  */
 /obj/machinery/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
-	if(istype(mover, /mob))
+	if(ismob(mover))
 		mobs_around |= mover
 
 /**
@@ -98,7 +98,7 @@
 	if(my_effect?.trigger == trigger)
 		my_effect.ToggleActivate()
 	if(secondary_effect?.trigger == trigger)
-		secondary_effect.ToggleActivate(0)
+		secondary_effect.ToggleActivate(FALSE)
 
 /**
  * Tries to toggle both effects on if trigger is correct
@@ -169,9 +169,6 @@
 	update_icon()
 
 /obj/machinery/artifact/process()
-	if(health <= 0)
-		if(!QDELING(src))
-			qdel(src)
 	//if either of our effects rely on environmental factors, work that out
 	if((my_effect?.trigger >= TRIGGER_HEAT && my_effect?.trigger <= TRIGGER_NITRO) ||\
 	 (secondary_effect?.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
@@ -182,8 +179,8 @@
 			if(env.temperature < 225)
 				toggle_effects_on(TRIGGER_COLD)
 			else toggle_effects_off(TRIGGER_COLD)
-			if(env.temperature > 375)
 			//HEAT ACTIVATION
+			if(env.temperature > 375)
 				toggle_effects_on(TRIGGER_HEAT)
 			else toggle_effects_off(TRIGGER_HEAT)
 			//PHORON GAS ACTIVATION
@@ -202,9 +199,8 @@
 			if(env.gas["nitrogen"] >= 10)
 				toggle_effects_on(TRIGGER_NITRO)
 			else toggle_effects_off(TRIGGER_NITRO)
-	
+	//TRIGGER_PROXY ACTIVATION
 	if((my_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
-		//TRIGGER_PROXY ACTIVATION
 		if(mobs_around.len != 0)
 			if(world.time >= last_scan + scan_delay)
 				last_scan = world.time
@@ -259,7 +255,7 @@
 			var/obj/item/weapon/melee/baton/B = W
 			if(B.status)
 				try_toggle_effects(TRIGGER_ENERGY)
-		if(istype(W, /obj/item/weapon/melee/energy) ||\
+		else if(istype(W, /obj/item/weapon/melee/energy) ||\
 			istype(W, /obj/item/weapon/melee/cultblade) ||\
 			istype(W, /obj/item/weapon/card/emag) ||\
 			ismultitool(W))
@@ -269,17 +265,27 @@
 			var/obj/item/weapon/match/M = W
 			if(M.lit)
 				try_toggle_effects(TRIGGER_HEAT)
-		if(iswelder(W))
+		else if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				try_toggle_effects(TRIGGER_HEAT)
-		if(istype(W, /obj/item/weapon/lighter))
+		else if(istype(W, /obj/item/weapon/lighter))
 			var/obj/item/weapon/lighter/L = W
 			if(L.lit)
 				try_toggle_effects(TRIGGER_HEAT)
 	..()
 	health -= W.force
 	try_toggle_effects(TRIGGER_FORCE)
+
+/obj/machinery/artifact/proc/adjusthealth(to_adjust)
+	health += to_adjust
+	updatehealth()
+
+/obj/machinery/artifact/proc/updatehealth()
+	if(health > 0)
+		return
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/machinery/artifact/Bumped(atom/AM)
 	..()
@@ -294,7 +300,8 @@
 			my_effect.DoEffectTouch(AM)
 		if(secondary_effect && secondary_effect.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
 			secondary_effect.DoEffectTouch(AM)
-		to_chat(AM, "<b>You accidentally touch [src].</b>")
+		if(ismob(AM))
+			to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)
@@ -311,7 +318,7 @@
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) 
+		if(1.0)
 			qdel(src)
 		if(2.0)
 			if(prob(50))

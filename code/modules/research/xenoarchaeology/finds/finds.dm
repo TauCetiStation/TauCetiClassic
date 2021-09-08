@@ -489,7 +489,7 @@
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
-			
+
 		if(37)
 			//relic water bottle
 			new_item = new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic(loc)

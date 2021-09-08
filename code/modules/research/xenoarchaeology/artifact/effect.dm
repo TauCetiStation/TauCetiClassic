@@ -45,12 +45,12 @@
 	var/activation_pulse_cost = 0
 	///purely used in logs
 	var/log_name = "unknown"
-	///purely used for getDescription 
+	///purely used for getDescription
 	var/type_name = ARTIFACT_EFFECT_UNKNOWN
 
 /datum/artifact_effect/New(atom/location)
 	..()
-	holder = location 
+	holder = location
 	release_method = pick_n_take(ARTIFACT_ALL_RELEASE_METHODS)
 	trigger = pick_n_take(ARTIFACT_POSSIBLE_TRIGGERS)
 	create_artifact_type(50, 70, 30)
@@ -213,7 +213,7 @@
  * returns NO_ANOMALY_PROTECTION if not human, returns calculated protection otherwise
  * higher returning number means less protection
  */
-/proc/get_anomaly_protection(mob/living/carbon/human/H) 
+/proc/get_anomaly_protection(mob/living/carbon/human/H)
 	if(!ishuman(H))
 		return NO_ANOMALY_PROTECTION
 

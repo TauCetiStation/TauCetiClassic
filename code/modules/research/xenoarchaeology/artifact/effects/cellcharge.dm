@@ -9,7 +9,7 @@
 	for(var/obj/item/weapon/stock_parts/cell/D in user.contents)
 		D.charge += 150
 		if(isrobot(user))
-			to_chat(user, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
+			to_chat(user, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
 	. = ..()
@@ -31,7 +31,7 @@
 	var/turf/curr_turf = get_turf(holder)
 	recharge_everything_in_range(10000, 7, curr_turf)
 
-/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)	
+/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)
 	for(var/obj/item/weapon/stock_parts/cell/C in range(range, center))
 		C.charge += power
 	for(var/obj/machinery/power/apc/A in range(range, center))

@@ -20,7 +20,7 @@
 		return
 	holder.light_power = initial(holder.light_power)
 	holder.light_range = initial(holder.light_range)
-    
+
 /datum/artifact_effect/light/darkness
 	log_name = "Darkness"
 

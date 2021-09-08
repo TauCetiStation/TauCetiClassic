@@ -104,7 +104,7 @@
 		if(inserted_battery && inserted_battery.battery_effect)
 			// make sure the effect is active
 			if(!inserted_battery.battery_effect.activated)
-				inserted_battery.battery_effect.ToggleActivate(1)
+				inserted_battery.battery_effect.ToggleActivate(TRUE)
 
 			// update the effect loc
 			var/turf/T = get_turf(src)
@@ -140,7 +140,7 @@
 		cooldown = archived_time / 2
 
 		if(inserted_battery.battery_effect.activated)
-			inserted_battery.battery_effect.ToggleActivate(1)
+			inserted_battery.battery_effect.ToggleActivate(TRUE)
 	updateDialog()
 
 /obj/item/weapon/xenoarch_utilizer/Topic(href, href_list)
@@ -184,7 +184,7 @@
 		update_icon()
 		if(!inserted_battery.battery_effect.activated)
 			message_admins("anomaly battery [inserted_battery.battery_effect.artifact_id]([inserted_battery.battery_effect]) emission started by [key_name(usr)]")
-			inserted_battery.battery_effect.ToggleActivate(1)
+			inserted_battery.battery_effect.ToggleActivate(TRUE)
 	if(href_list["shutdown"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		activated = FALSE

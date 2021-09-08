@@ -31,7 +31,7 @@
 	var/turf/curr_turf = get_turf(holder)
 	discharge_everything_in_range(10000, 7, curr_turf)
 
-/datum/artifact_effect/celldrain/proc/discharge_everything_in_range(power, range, center)	
+/datum/artifact_effect/celldrain/proc/discharge_everything_in_range(power, range, center)
 	for(var/obj/item/weapon/stock_parts/cell/C in range(range, center))
 		C.charge = max(C.charge - power, 0)
 	for(var/obj/machinery/power/apc/C in range(range, center))
@@ -43,4 +43,3 @@
 		for(var/obj/item/weapon/stock_parts/cell/D in M.contents)
 			D.charge = max(D.charge - power, 0)
 			to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
-

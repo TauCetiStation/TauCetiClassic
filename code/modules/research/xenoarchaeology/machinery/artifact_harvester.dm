@@ -266,7 +266,7 @@
 			if(inserted_battery.battery_effect && inserted_battery.stored_charge > 0)
 				if(tgui_alert(usr, "This action will dump all charge, safety gear is recommended before proceeding", "Warning", list("Continue", "Cancel")))
 					if(!inserted_battery.battery_effect.activated)
-						inserted_battery.battery_effect.ToggleActivate(1)
+						inserted_battery.battery_effect.ToggleActivate(TRUE)
 					last_process = world.time
 					harvesting = -1
 					set_power_use(ACTIVE_POWER_USE)
