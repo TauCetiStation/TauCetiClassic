@@ -1,6 +1,6 @@
 /datum/artifact_effect/noise
 	log_name = "Noise"
-	var/static/list/possible_noises = list(SOUNDIN_EXPLOSION, SOUNDIN_SHATTER, SOUNDIN_CLOWNSTEP, SOUNDIN_SCARYSOUNDS)
+	var/static/list/possible_noises = list(SOUNDIN_EXPLOSION, SOUNDIN_SHATTER, SOUNDIN_SCARYSOUNDS)
 
 /datum/artifact_effect/noise/New()
 	..()

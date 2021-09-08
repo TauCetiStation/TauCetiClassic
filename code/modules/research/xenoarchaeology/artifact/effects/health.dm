@@ -7,10 +7,8 @@
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = get_anomaly_protection(H)
 		H.heal_overall_damage(healing_power * weakness, healing_power * weakness)
-		H.updatehealth()
 		return
 	receiver.heal_overall_damage(healing_power, healing_power)
-	receiver.updatehealth()
 
 /datum/artifact_effect/heal/DoEffectTouch(mob/user)
 	. = ..()
@@ -53,7 +51,6 @@
 
 /datum/artifact_effect/roboheal/proc/heal_target(mob/living/receiver, healing_power)
 	receiver.heal_overall_damage(healing_power, healing_power)
-	receiver.updatehealth()
 
 /datum/artifact_effect/roboheal/DoEffectTouch(mob/user)
 	. = ..()
@@ -97,10 +94,8 @@
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = get_anomaly_protection(H)
 		H.take_overall_damage(damage_power * weakness, damage_power * weakness)
-		H.updatehealth()
 		return
 	receiver.take_overall_damage(damage_power, damage_power)
-	receiver.updatehealth()
 
 /datum/artifact_effect/hurt/DoEffectTouch(mob/user)
 	. = ..()
@@ -144,7 +139,6 @@
 
 /datum/artifact_effect/robohurt/proc/deal_damage(mob/living/receiver, damage_power)
 	receiver.take_overall_damage(damage_power, damage_power)
-	receiver.updatehealth()
 
 /datum/artifact_effect/robohurt/DoEffectTouch(mob/user)
 	. = ..()

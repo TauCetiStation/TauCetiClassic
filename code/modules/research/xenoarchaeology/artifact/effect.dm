@@ -56,6 +56,10 @@
 	create_artifact_type(50, 70, 30)
 	activation_pulse_cost = maximum_charges
 
+/datum/artifact_effect/Destroy(force, ...)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /**
  * Picks artifact type
  */
@@ -74,9 +78,8 @@
 /**
  * Invokes async toggle artifact
  */
-/datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
-	if(!QDELING(holder))
-		INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
+/datum/artifact_effect/proc/ToggleActivate(reveal_toggle = TRUE)
+	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
 
 /**
  * Stops/starts processing, sets up a holder, displays visible_message

@@ -17,7 +17,7 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in oview(5))
+	for(var/mob/living/M in range(range, curr_turf))
 		step_towards(M, curr_turf)
 
 /datum/artifact_effect/gravity/proc/calc_protection_and_step(mob/living/M, turf/T)
