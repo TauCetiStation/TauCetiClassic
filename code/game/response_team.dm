@@ -20,11 +20,9 @@ var/can_call_ert
 	if(SSticker.current_state == 1)
 		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
 		return
-
 	if(SSticker.ert_call_in_progress)
 		to_chat(usr, "<span class='warning'>Центральное Командование уже отправило отряд быстрого реагирования!</span>")
 		return
-
 	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red

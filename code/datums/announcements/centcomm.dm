@@ -19,7 +19,6 @@
 	name = "Centcomm: ERT Approved"
 	subtitle = "Центральное Командование"
 	sound = "yesert"
-  
 /datum/announcement/centcomm/yesert/play()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. Мы подготовим и отправим его в кратчайшие сроки."
 	..()
