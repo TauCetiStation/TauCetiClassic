@@ -28,7 +28,6 @@
 	name = "Centcomm: ERT Denied"
 	subtitle = "Центральное Командование"
 	sound = "yesert"
-  
 /datum/announcement/centcomm/noert/play()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
 	..()
