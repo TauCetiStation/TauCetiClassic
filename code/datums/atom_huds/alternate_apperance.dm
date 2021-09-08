@@ -228,6 +228,22 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/group_exclude
+	var/list/blinds
+
+	add_ghost_version = FALSE
+
+/datum/atom_hud/alternate_appearance/basic/group_exclude/New(key, image/I, mob_or_mobs)
+	..(key, I, FALSE)
+	var/list/mobs = islist(mob_or_mobs) ? mob_or_mobs : list(mob_or_mobs)
+	blinds = mobs
+	for(var/mob in global.mob_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/group_exclude/mobShouldSee(mob/M)
+	return !(M in blinds)
+
 // Fake-image can see only mime
 /datum/atom_hud/alternate_appearance/basic/mime
 
