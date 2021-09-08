@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(sun)
 	var/dx
 	var/dy
 	var/rate
+	var/lastRate
 	var/list/solars	= list()
 	var/nexttime = 3600		// Replacement for var/counter to force the sun to move every X IC minutes
 	var/lastAngleUpdate
@@ -17,6 +18,7 @@ SUBSYSTEM_DEF(sun)
 /datum/controller/subsystem/sun/PreInit()
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(500,2000)/1000			// 50% - 200% of standard rotation
+	lastRate = rate
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
@@ -25,6 +27,9 @@ SUBSYSTEM_DEF(sun)
 
 /datum/controller/subsystem/sun/fire()
 	angle = ((rate*world.time/100)%360 + 360)%360
+	if (rate != lastRate)
+		SEND_GLOBAL_SIGNAL(COMSIG_SUN_RATECHANGED, angle, rate)
+		lastRate = rate
 
 	/*
 		Yields a 45 - 75 IC minute rotational period

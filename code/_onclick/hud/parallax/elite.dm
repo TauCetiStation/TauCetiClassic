@@ -47,13 +47,9 @@
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
 	absolute = TRUE //Status of seperation
-	var/angle = null
-	var/angle_to = null //For debug
-	var/angle_last = null //For debug
-	var/ticks = null //For debug
-	var/next_fire = null
 	speed = 0.5
 	layer = 30
+	var/rotary_speed = null
 
 /atom/movable/screen/parallax_layer/elite/planet/New()
 	absolute_offset_x = rand(60, 200)
@@ -62,7 +58,8 @@
 
 /atom/movable/screen/parallax_layer/elite/planet/atom_init()
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	RegisterSignal(SSdcs, list(COMSIG_SUN_RATECHANGED), .proc/update_rotation)
+	update_rotation(SSsun.angle, SSsun.rate)
 
 /atom/movable/screen/parallax_layer/elite/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
@@ -79,32 +76,10 @@
 /atom/movable/screen/parallax_layer/elite/planet/update_o()
 	return //Shit wont move
 
-/atom/movable/screen/parallax_layer/elite/planet/process()
-	if (!SSsun)
-		return
-	if (world.time < next_fire)
-		return
-	if (SSsun.nexttime == 3600)
-		return // skip when Sun SS not started yet
-	if (angle != SSsun.angle)
-		if (angle == null)
-			rotate(SSsun.angle)
-			return // skip when we are not rotated yet
-		rotate(SSsun.angle, SSsun.rate > 0, SSsun.next_fire - world.time)
-		next_fire = SSsun.next_fire + 1
-
-/atom/movable/screen/parallax_layer/elite/planet/proc/rotate(_angle, cw = TRUE, _ticks = null)
-	var/_angle_to = _angle
-	if (cw)
-		if (angle > _angle)
-			_angle += 360
-	else
-		if (angle < _angle)
-			_angle -= 360
+/atom/movable/screen/parallax_layer/elite/planet/proc/update_rotation(angle, rate)
+	SpinAnimation(0, 0)
 	var/matrix/transform = matrix()
-	transform.TurnTo(angle, _angle)
-	angle_last = angle
-	angle = _angle_to
-	angle_to = _angle
-	ticks = _ticks
-	animate(src, _ticks, transform = transform)
+	transform.TurnTo(0, angle)
+	animate(src, transform = transform, time = 0)
+	rotary_speed = 60 / abs(SSsun.rate) MINUTES
+	SpinAnimation(rotary_speed, -1, rate > 0)

@@ -299,3 +299,6 @@
 #define COMSIG_SHOW_RADIUS "show_radius"
 /// send this signal to remove /datum/component/vis_radius to a mobs: ()
 #define COMSIG_HIDE_RADIUS "hide_radius"
+
+/// send this signal to alert subscribers that sun rotation speed has changed: (angle, rate)
+#define COMSIG_SUN_RATECHANGED "sub_sun_ratechange"
