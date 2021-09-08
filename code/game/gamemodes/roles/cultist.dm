@@ -3,7 +3,7 @@
 	id = CULTIST
 
 	required_pref = ROLE_CULTIST
-	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Blueshield Officer", "Head of Security", "Captain", "Internal Affairs Agent")
 	restricted_species_flags = list(NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_CULT

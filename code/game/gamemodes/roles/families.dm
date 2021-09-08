@@ -3,7 +3,7 @@
 	id = GANGSTER
 
 	required_pref = ROLE_FAMILIES
-	restricted_jobs = list("Head of Personnel", "Security Cadet", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Head of Personnel", "Security Cadet", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Blueshield Officer", "Head of Security", "Captain", "Internal Affairs Agent")
 
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"

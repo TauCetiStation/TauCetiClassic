@@ -3,7 +3,7 @@
 	id = SHADOW
 
 	required_pref = ROLE_SHADOWLING
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Blueshield Officer", "Head of Security", "Captain")
 	restricted_species_flags = list(IS_SYNTHETIC)
 
 	antag_hud_type = ANTAG_HUD_SHADOW
