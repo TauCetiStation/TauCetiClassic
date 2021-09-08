@@ -19,6 +19,10 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define LIGHT_DAM_THRESHOLD 3
+#define LIGHT_HEAL_THRESHOLD 3
+#define LIGHT_DAMAGE_TAKEN 10
+
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 
@@ -56,12 +60,14 @@
 
 	voice = GetVoice()
 
-	handle_combat()
-
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+			if(failed_last_breath)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			else
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -97,9 +103,7 @@
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(blood_volume > 0)
-					handle_blood(blood_volume)
+				handle_blood()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -116,11 +120,6 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	handle_regular_hud_updates()
-
-	//Updates the number of stored chemicals for powers and essentials
-	handle_changeling()
 
 	//Species-specific update.
 	if(species)
@@ -420,7 +419,7 @@
 			if (prob(10) && get_infection_chance(src))
 //					log_debug("[src] : Exhaling some viruses")
 				for(var/mob/living/carbon/M in view(1,src))
-					src.spread_disease_to(M)
+					spread_disease_to(M)
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -438,7 +437,7 @@
 					breathsound = pick(SOUNDIN_RIGBREATH)
 				if(alpha < 50)
 					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
-				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
+				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -452,7 +451,7 @@
 		if(suiciding)
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
-			throw_alert("oxy", /obj/screen/alert/oxy)
+			throw_alert("oxy", /atom/movable/screen/alert/oxy)
 			return 0
 		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -461,7 +460,7 @@
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 		return 0
 
@@ -499,7 +498,7 @@
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 	else
 		// We're in safe limits
@@ -545,7 +544,7 @@
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		throw_alert("tox_in_air", /atom/movable/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -665,32 +664,42 @@
 	if(status_flags & GODMODE)
 		return 1	//godmode
 
+	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > species.heat_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
-			throw_alert("temp", /obj/screen/alert/hot, 3)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 		else if(bodytemperature > species.heat_level_2)
 			if(on_fire)
-				throw_alert("temp", /obj/screen/alert/hot, 3)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 			else
-				throw_alert("temp", /obj/screen/alert/hot, 2)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
 		else
-			throw_alert("temp", /obj/screen/alert/hot, 1)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp", /obj/screen/alert/cold, 3)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
 			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp", /obj/screen/alert/cold, 2)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 			else
-				throw_alert("temp", /obj/screen/alert/cold, 1)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 		else
 			clear_alert("temp")
@@ -711,15 +720,15 @@
 	if(adjusted_pressure >= species.hazard_high_pressure)
 		var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
 		take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
-		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 	else if(adjusted_pressure >= species.warning_high_pressure)
-		throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
 	else if(adjusted_pressure >= species.hazard_low_pressure)
-		throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 	else
-		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
@@ -1028,6 +1037,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
@@ -1037,6 +1047,7 @@
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+				update_size_class()
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
@@ -1212,7 +1223,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
@@ -1238,7 +1249,7 @@
 			if(-90 to -80)			severity = 8
 			if(-95 to -90)			severity = 9
 			if(-INFINITY to -95)	severity = 10
-		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
 		//Oxygen damage overlay
@@ -1252,12 +1263,12 @@
 				if(35 to 40)		severity = 5
 				if(40 to 45)		severity = 6
 				if(45 to INFINITY)	severity = 7
-			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+			overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 		else
 			clear_fullscreen("oxy")
 
 		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
+		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 		if(hurtdamage)
 			var/severity = 0
@@ -1268,7 +1279,7 @@
 				if(55 to 70)		severity = 4
 				if(70 to 85)		severity = 5
 				if(85 to INFINITY)	severity = 6
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+			overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
 
@@ -1285,6 +1296,7 @@
 						s.toggle_zoom()
 
 	else
+		lighting_alpha = initial(lighting_alpha)
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
@@ -1302,31 +1314,14 @@
 			see_in_dark = 8
 			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if(seer)
-			var/obj/effect/rune/R = locate() in loc
-			if(R && istype(R.power, /datum/cult/seer))
-				see_invisible = SEE_INVISIBLE_CULT
-			else
-				see_invisible = SEE_INVISIBLE_LIVING
-				seer = FALSE
-
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
 				see_in_dark += G.darkness_view
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
-					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
-			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/shadowling/S = G
-				if(S.vision)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_MINIMUM
-
-		else if(!seer)
-			see_invisible = SEE_INVISIBLE_LIVING
+				if(!isnull(G.lighting_alpha))
+					lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
@@ -1334,27 +1329,30 @@
 				if(0)
 					O.togge_huds()
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LIVING
 				if(1)
-					see_in_dark = 5
+					see_in_dark = 8
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 				if(2)
 					sight |= SEE_MOBS
+					see_in_dark = initial(see_in_dark)
 					//client.screen += global_hud.thermal
 					if(!druggy)
+						lighting_alpha = initial(lighting_alpha)
 						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 				if(3)
 					sight |= SEE_TURFS
 					//client.screen += global_hud.meson
 					if(!druggy)
-						see_invisible = SEE_INVISIBLE_MINIMUM
+						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(changeling_aug)
 			sight |= SEE_MOBS
 			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 		if(blinded)
 			see_in_dark = 8
@@ -1457,21 +1455,16 @@
 				impaired = max(impaired, 2)
 
 		if(eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 		else
 			clear_fullscreen("blurry")
-
-		if(druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-		else
-			clear_fullscreen("high")
 		if(nearsighted)
-			overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
 			clear_fullscreen("nearsighted")
 
 		if(impaired)
-			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
+			overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
 		else
 			clear_fullscreen("impaired")
 
@@ -1494,13 +1487,6 @@
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
-
-
-		if(mind && mind.changeling)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
 
 	..()
 
@@ -1532,6 +1518,7 @@
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
+	return ..()
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
@@ -1588,10 +1575,6 @@
 
 	return
 
-/mob/living/carbon/human/proc/handle_changeling()
-	if(mind && mind.changeling)
-		mind.changeling.regenerate()
-
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -1621,7 +1604,8 @@
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
-		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+		if(shock_stage == 60)
+			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
@@ -1680,7 +1664,7 @@
 
 	var/temp = PULSE_NORM
 
-	if(round(vessel.get_reagent_amount("blood")) <= BLOOD_VOLUME_BAD)	//how much blood do we have
+	if(blood_amount() <= BLOOD_VOLUME_BAD)	//how much blood do we have
 		temp = PULSE_THREADY	//not enough :(
 
 	if(status_flags & FAKEDEATH)
@@ -1710,3 +1694,7 @@
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
+
+#undef LIGHT_DAM_THRESHOLD
+#undef LIGHT_HEAL_THRESHOLD
+#undef LIGHT_DAMAGE_TAKEN

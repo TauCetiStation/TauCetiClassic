@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
@@ -46,7 +46,7 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind && M.mind.special_role == "Wizard")
+	if(iswizard(M))
 		return FALSE
 	return TRUE
 
@@ -60,7 +60,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 		announce_shot(user)
@@ -80,17 +80,20 @@
 /obj/item/weapon/gun/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-	if(user && user.client && user.client.gun_mode && !(target in target))
+	if(user && user.client && user.client.gun_mode && !(target in src.target))
 		PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(target,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
+	if(next_move > world.time) // CD for clicks is checked before clicks with modifiers(shift, alt)
+		return
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(src.client.gun_mode)
-			G.Fire(A, src)
+		if(client.gun_mode)
+			if(G.can_fire())
+				G.Fire(A, src)
 		else
 			if(isliving(A))
 				var/mob/living/M = A
@@ -134,7 +137,6 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
-					H.drop_item()
 					qdel(src)
 					return
 
@@ -179,7 +181,7 @@
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	else
-		src.visible_message("*click click*")
+		visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)

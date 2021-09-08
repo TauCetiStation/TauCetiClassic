@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/cancasing
 	name = "can explosive"
 	desc = "A weak, improvised incendiary device."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
 	item_state = "flashbang"

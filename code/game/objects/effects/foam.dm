@@ -39,7 +39,7 @@
 
 	pixel_x = -6
 	pixel_y = -6 //so the sprites line up right in the map editor
-	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/effect/aqueous_foam/atom_init_late()
@@ -112,12 +112,9 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
-	if(AM.anchored || !AM.density)
-		return
-
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		if(I.w_class <= ITEM_SIZE_TINY)
+		if(I.w_class <= SIZE_MINUSCULE)
 			return
 
 	if(isliving(AM))
@@ -137,7 +134,7 @@
 	disolve()
 
 /obj/effect/effect/aqueous_foam/attackby(obj/item/I, mob/user)
-	if(I.w_class > ITEM_SIZE_TINY)
+	if(I.w_class > SIZE_MINUSCULE)
 		disolve()
 
 /obj/effect/effect/aqueous_foam/proc/performAction()

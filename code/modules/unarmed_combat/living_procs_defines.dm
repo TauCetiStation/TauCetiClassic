@@ -21,6 +21,10 @@
 	var/attack_animation = FALSE
 	var/combo_animation = FALSE
 
+	/// Override for the visual attack effect shown on 'do_attack_animation()'.
+	var/attack_push_vis_effect
+	var/attack_disarm_vis_effect
+
 /mob/living/verb/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
@@ -220,9 +224,9 @@
 	return TRUE
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
+	attacker.do_attack_animation(src, visual_effect_icon = attacker.attack_disarm_vis_effect)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
@@ -248,7 +252,7 @@
 	return attacker.tryGrab(src)
 
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
+	attacker.do_attack_animation(src, visual_effect_icon = attacker.attack_push_vis_effect)
 
 	// terrible. deprecate in favour of a data-class handling all of this. ~Luduk
 	var/attack_obj = attacker.get_unarmed_attack()

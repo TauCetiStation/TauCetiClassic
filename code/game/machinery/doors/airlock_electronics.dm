@@ -2,7 +2,7 @@
 	name = "airlock electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
-	w_class = ITEM_SIZE_SMALL //It should be tiny! -Agouri
+	w_class = SIZE_TINY //It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
 
@@ -68,7 +68,7 @@
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && src.check_access(I))
+			if (I && check_access(I))
 				src.locked = 0
 				src.last_configurator = I:registered_name
 

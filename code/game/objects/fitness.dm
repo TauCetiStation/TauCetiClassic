@@ -3,8 +3,8 @@
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "fitnesslifter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/structure/stacklifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))
@@ -61,8 +61,8 @@
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "fitnessweight"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/structure/weightlifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))

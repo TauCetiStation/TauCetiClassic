@@ -39,7 +39,7 @@
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
 	if(severity && prob(30))
-		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
+		visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pickaxe/brush))
@@ -79,7 +79,7 @@
 
 	. = ..()
 	if(prob(33))
-		src.visible_message("<span class='warning'>[src] crumbles away, leaving some dust and gravel behind.</span>")
+		visible_message("<span class='warning'>[src] crumbles away, leaving some dust and gravel behind.</span>")
 		qdel(src)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -314,7 +314,7 @@
 			apply_prefix = 0
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
-			/obj/item/clothing/head/culthood/alt,
+			/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/helmet/space/cult)
 
 			var/new_type = pick(possible_spawns)

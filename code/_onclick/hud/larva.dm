@@ -3,10 +3,10 @@
 	src.adding = list()
 	src.other = list()
 
-	var/obj/screen/using
-	var/obj/screen/inventory/inv_box
+	var/atom/movable/screen/using
+	var/atom/movable/screen/inventory/inv_box
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "act_intent"
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
@@ -22,7 +22,7 @@
 	ico = new/icon(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -34,7 +34,7 @@
 	ico = new/icon(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -46,7 +46,7 @@
 	ico = new/icon(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -58,7 +58,7 @@
 	ico = new/icon(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -67,7 +67,7 @@
 	src.adding += using
 	harm_intent = using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "mov_intent"
 	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
@@ -78,7 +78,7 @@
 	src.adding += using
 	move_intent = using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "mouth"
 	inv_box.set_dir(WEST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
@@ -90,24 +90,24 @@
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
+	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
-	mymob.healths = new /obj/screen()
+	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
-	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting)))
+	mymob.zone_sel.add_overlay(image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.get_targetzone())))
 
 	mymob.client.screen = list()
 

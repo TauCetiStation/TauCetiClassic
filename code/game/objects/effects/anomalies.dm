@@ -6,8 +6,8 @@
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "vortex"
 	unacidable = 1
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/atom_init()
@@ -49,7 +49,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
-	density = 1
+	density = TRUE
 	var/boing = 0
 
 /obj/effect/anomaly/grav/atom_init()
@@ -98,7 +98,7 @@
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
-	density = 1
+	density = TRUE
 	light_color = "#009eff"
 
 /obj/effect/anomaly/bluespace/atom_init()
@@ -188,3 +188,163 @@
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return
+
+/////// CULT ///////
+/obj/effect/anomaly/bluespace/cult_portal
+	name = "ужасающий портал"
+	desc = "Никто не знает Что или Кто создало этот портал: может самая развитая раса, а может чудовище из глубин галактики."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "portal"
+	light_color = "#ff69b4"
+	layer = INFRONT_MOB_LAYER
+
+	var/next_spawn = 0
+	var/spawn_cd = 30 SECONDS
+	var/spawns = -1
+	var/need_bound = FALSE
+
+	var/extencion_cd = 1 MINUTE
+	var/list/extencion_timers = list()
+
+	var/enabled = TRUE
+	var/coef_max_size = 0.3333 // When this coefficient decreases, the sprite size increases
+	var/old_size = 1
+	var/list/coord_of_pylons = list(1, 1)
+	var/list/beams = list()
+
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE)
+	. = ..()
+	need_bound = bound
+
+	enable()
+	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.")
+
+/obj/effect/anomaly/bluespace/cult_portal/Destroy()
+	disable()
+	for(var/timer in extencion_timers)
+		deltimer(timer)
+	return ..()
+
+/obj/effect/anomaly/bluespace/cult_portal/examine(mob/user, distance)
+	..()
+	if(spawns > -1) // otherwise infinite
+		if(isobserver(user) || iscultist(user))
+			to_chat(user, "Оболочек для будущих рабов осталось: [spawns]")
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/extencion(datum/component/bounded/B)
+	B.change_max_dist(B.max_dist + 1)
+
+	if(ismob(B.parent))
+		var/mob/M = B.parent
+		if(M.ckey)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/enable()
+	for(var/i in 1 to 4)
+		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
+		var/turf/F = get_turf(pick(L))
+		if(F && istype(F, /turf/simulated/floor))
+			for(var/obj in L)
+				if(istype(obj, /turf))
+					continue
+				if(ismob(obj)) // unlucky
+					var/mob/M = obj
+					M.gib()
+				else
+					qdel(obj)
+			var/obj/structure/cult/pylon/P = new(F)
+			P.icon_state = "pylon_glow"
+			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
+				P = P.activate(null, global.cult_religion)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			beams += B
+
+		// Iterating through all possible coordinates
+		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1
+
+	enabled = TRUE
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/disable()
+	enabled = FALSE
+	make_old(FALSE)
+	if(beams.len)
+		for(var/datum/beam/B in beams)
+			B.origin.icon_state = "pylon"
+			B.End()
+
+/obj/effect/anomaly/bluespace/cult_portal/anomalyEffect()
+	if(prob(20))
+		if(old_size > coef_max_size)
+			var/matrix/M = matrix()
+			M.Scale(1.2)
+			old_size *= 1/1.2
+			transform = M
+
+/obj/effect/anomaly/bluespace/cult_portal/attack_hand(mob/living/user)
+	do_teleport(user, locate(user.x, user.y, user.z), 10)
+
+/obj/effect/anomaly/bluespace/cult_portal/attack_ghost(mob/dead/observer/user)
+	if(!enabled)
+		to_chat(user, "<span class='warning'>Портал уже неактивен.</span>")
+		return
+	if(next_spawn > world.time)
+		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
+		return
+
+	var/type = pick(200; /mob/living/simple_animal/construct/harvester,\
+					50; /mob/living/simple_animal/construct/wraith,\
+					30; /mob/living/simple_animal/construct/armoured,\
+					40; /mob/living/simple_animal/construct/proteon,\
+					70; /mob/living/simple_animal/construct/builder,\
+					1;  /mob/living/simple_animal/construct/behemoth)
+	create_shell(user, type)
+	next_spawn = world.time + spawn_cd
+	spawns -= 1
+
+	if(spawns == 0)
+		disable()
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
+	var/list/candidates = pollGhostCandidates("Хотите стать рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	if(!candidates.len)
+		return
+
+	while(candidates.len && spawns != 0)
+		var/mob/slave = pick_n_take(candidates)
+		if(!slave) // I dont know why or how it can be null, but it can be null
+			continue
+		var/type = pick(
+				200;/mob/living/simple_animal/construct/harvester,\
+				50; /mob/living/simple_animal/construct/wraith,\
+				50; /mob/living/simple_animal/construct/armoured,\
+				40; /mob/living/simple_animal/construct/proteon,\
+				30; /mob/living/simple_animal/construct/builder,\
+				1;  /mob/living/simple_animal/construct/behemoth)
+		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
+		spawns--
+
+	if(spawns == 0)
+		disable()
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/create_shell(mob/slave, type)
+	var/turf/T = get_turf(src)
+	var/mob/living/simple_animal/construct/C = new type(T)
+
+	new /obj/effect/temp_visual/cult/sparks(T)
+
+	C.key = slave.key
+
+	if(global.cult_religion)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
+	else
+		SSticker.mode.CreateFaction(/datum/faction/cult)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
+
+	var/rand_num = rand(1, 3)
+	for(var/i in 1 to rand_num)
+		step(C, pick(alldirs))
+	if(need_bound)
+		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
+		var/mob/M = B.parent
+		if(M.ckey)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)

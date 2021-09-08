@@ -12,16 +12,16 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Special Role Preference:</b></td></tr>"
 	if(jobban_isbanned(user, "Syndicate"))
-		. += 			"<tr><td><font color='red'><b>You are banned from antagonist roles.</b></font></td></tr>"
+		. += 			"<tr><td><font color='red'><b>You are banned from antagonist roles.</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=Syndicate'>Show details</a></td></tr>"
 		src.be_role = list()
 	else
 		for (var/i in special_roles)
 			var/available_in_minutes = role_available_in_minutes(user, i)
 			if(jobban_isbanned(user, i))
-				. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
+				. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=[i]'>Show details</a></td></tr>"
 			else if(i == "pai candidate")
 				if(jobban_isbanned(user, "pAI"))
-					. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br></td></tr>"
+					. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=pAI'>Show details</a><br></td></tr>"
 			else if(available_in_minutes && !(i == ROLE_PLANT && is_alien_whitelisted(user, DIONA)))
 				. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
 			else if(!CanBeRole(i))

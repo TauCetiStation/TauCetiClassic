@@ -4,7 +4,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "welderpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/max_fuel = 350
 
 /obj/item/weapon/weldpack/atom_init()
@@ -30,7 +30,7 @@
 				to_chat(user, "<span class='warning'>That was close!</span>")
 			reagents.trans_to(I, T.max_fuel)
 			to_chat(user, "<span class='notice'>Welder refilled!</span>")
-			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return
 
 	to_chat(user, "<span class='notice'>The tank scoffs at your insolence.  It only provides services to welders.</span>")
@@ -41,7 +41,7 @@
 	if(istype(target, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume < max_fuel)
 		target.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>You crack the cap off the top of the pack and fill it back up again from the tank.</span>")
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		return
 	else if(istype(target, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume == max_fuel)
 		to_chat(user, "<span class='notice'>The pack is already full!</span>")
@@ -70,9 +70,9 @@
 			Connected_Flamethrower.unequip(user)
 			//explosion(get_turf(src),-1,0,2)
 			//NAPALM GRENADE CODE HERE
-		src.reagents.reaction(get_turf(src), TOUCH)
-		spawn(5)
-		src.reagents.clear_reagents()
+
+		reagents.standard_splash(get_turf(src), user=user)
+
 		if(src)
 			qdel(src)
 		return
@@ -81,7 +81,7 @@
 		if(src.loc == user)
 			if(!Connected_Flamethrower)
 				to_chat(user, "You connected your M2 flamethrower to fuel backpack.")
-				src.equip(user, I)
+				equip(user, I)
 			else
 				to_chat(user, "Flamethrower allready connected.")
 		else

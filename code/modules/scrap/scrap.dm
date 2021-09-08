@@ -1,13 +1,13 @@
 var/global/list/scrap_base_cache = list()
 
-
+ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
 	appearance_flags = TILE_BOUND
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	var/loot_generated = 0
 	var/icontype = "general"
 	icon_state = "small"
@@ -45,13 +45,14 @@ var/global/list/scrap_base_cache = list()
 	. = ..()
 	update_icon(1)
 
+	AddElement(/datum/element/beauty, -300)
 
 /obj/effect/scrapshot
 	name = "This thins shoots scrap everywhere with a delay"
 	desc = "no data"
 	invisibility = 101
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/effect/scrapshot/atom_init(mapload, severity = 1)
 	..()
@@ -112,7 +113,7 @@ var/global/list/scrap_base_cache = list()
 		if(prob(66))
 			I.make_old()
 	loot = new(src)
-	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
+	loot.set_slots(slots = 7, slot_size = SIZE_BIG)
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()
@@ -263,7 +264,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/large
 	name = "large scrap pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -402,7 +403,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/poor/large
 	name = "large mixed rubbish"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -414,7 +415,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/vehicle/large
 	name = "large industrial debris pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -427,7 +428,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/food/large
 	name = "large food trash pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -440,7 +441,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/medical/large
 	name = "large medical refuse pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -453,7 +454,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/guns/large
 	name = "large gun refuse pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 15
@@ -466,7 +467,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/science/large
 	name = "large scientific trash pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
@@ -479,7 +480,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/cloth/large
 	name = "large cloth pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 8
 	loot_max = 14
@@ -492,7 +493,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/syndie/large
 	name = "large strange pile"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "big"
 	loot_min = 4
 	loot_max = 12
@@ -505,7 +506,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/poor/structure
 	name = "large mixed rubbish"
 	opacity = 1
-	density = 1
+	density = TRUE
 	icon_state = "med"
 	loot_min = 3
 	loot_max = 6
@@ -537,5 +538,6 @@ var/global/list/scrap_base_cache = list()
 		master_item.update_icon()
 
 /obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
-	if(..())
+	. = ..()
+	if(.)
 		SSjunkyard.add_junk_to_stats("[W.type]")

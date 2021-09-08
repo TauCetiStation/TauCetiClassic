@@ -3,13 +3,14 @@
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = SINGULARITY_LAYER
 	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
-	var/current_size = 1
+	w_class = SIZE_MASSIVE
+	var/current_size = 1 // todo: merge with w_class
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
@@ -44,6 +45,7 @@
 			break
 
 /obj/singularity/Destroy()
+	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	return ..()
@@ -106,7 +108,7 @@
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) [ADMIN_JMP(src)]")
+		message_admins("A singulo has been created without containment fields active [COORD(src)] [ADMIN_JMP(src)]")
 	log_investigate("was created. [count?"":"<font color='red'>No containment fields were active</font>"]",INVESTIGATE_SINGULO)
 
 /obj/singularity/proc/dissipate()
@@ -125,6 +127,7 @@
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
+			w_class = SIZE_HUMAN
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
@@ -136,6 +139,7 @@
 			dissipate_strength = 1
 		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
 			current_size = STAGE_TWO
+			w_class = SIZE_MASSIVE
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
@@ -148,6 +152,7 @@
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
+				w_class = SIZE_GYGANT
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
 				pixel_x = -64
@@ -160,6 +165,7 @@
 		if(STAGE_FOUR)
 			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
 				current_size = STAGE_FOUR
+				w_class = SIZE_GARGANTUAN
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
 				pixel_x = -96
@@ -171,6 +177,7 @@
 				dissipate_strength = 10
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
+			w_class = SIZE_GARGANTUAN
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
 			pixel_x = -128
@@ -353,6 +360,9 @@
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
+
+/obj/singularity/proc/deduce_energy(deduce)
+	energy -= deduce
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

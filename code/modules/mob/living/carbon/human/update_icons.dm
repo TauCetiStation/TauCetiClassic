@@ -265,7 +265,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)) || (w_uniform && (w_uniform.flags & BLOCKHAIR)))
 		return
 
 	//base icons
@@ -712,7 +712,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		client.screen |= contents
 		if(hud_used)
 			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-			hud_used.reload_fullscreen()
+			reload_fullscreen()
 
 
 /mob/living/carbon/human/update_inv_handcuffed()

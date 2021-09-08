@@ -12,6 +12,7 @@
 	. += 				"<tr><td>TGUI Window Placement:</b> <a href='?_src_=prefs;preference=tgui_lock'><b>[tgui_lock ? "Primary Monitor" : "Free (default)"]</a></td></tr>"
 	. += 				"<tr><td>Outline: <a href='?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
 	. += 				"<tr><td>Outline Color: <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
+	. += 				"<tr><td>FPS: <a href='?_src_=prefs;preference=change_fps'>[clientfps]</a></td></tr>"
 	. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
 	//	if(user.client.holder)
@@ -78,6 +79,10 @@
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Fit Viewport:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=auto_fit_viewport'><b>[auto_fit_viewport ? "Auto" : "Manual"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -129,7 +134,7 @@
 
 		if("UIalpha")
 			var/UI_style_alpha_new = input(user, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num|null
-			if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
+			if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
@@ -160,6 +165,12 @@
 			if(pickedOutlineColor)
 				outline_color = pickedOutlineColor
 
+		if("change_fps")
+			var/desiredfps = input(user, "Choose your desired fps.\n-1 means recommended value (currently:[RECOMMENDED_FPS])\n0 means world fps (currently:[world.fps])", "Character Preference", clientfps)  as null|num
+			if (!isnull(desiredfps))
+				clientfps = sanitize_integer(desiredfps, -1, 1000, clientfps)
+				parent.fps = (clientfps < 0) ? RECOMMENDED_FPS : clientfps
+
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 			if (parent && parent.mob && parent.mob.hud_used)
@@ -173,8 +184,13 @@
 		if("ambientocclusion")
 			ambientocclusion = !ambientocclusion
 			if(parent && parent.screen && parent.screen.len)
-				var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+				var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in parent.screen
 				PM.backdrop(parent.mob)
+
+		if("auto_fit_viewport")
+			auto_fit_viewport = !auto_fit_viewport
+			if(auto_fit_viewport && parent)
+				parent.fit_viewport()
 
 		if("parallax_theme")
 			switch(parallax_theme)

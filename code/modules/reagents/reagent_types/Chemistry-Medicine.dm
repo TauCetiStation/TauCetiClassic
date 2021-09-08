@@ -122,7 +122,7 @@
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
-		M.druggy = max(M.druggy, 10)
+		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
 
 /datum/reagent/sterilizine
@@ -439,7 +439,7 @@
 /datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -456,6 +456,20 @@
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
+
+/datum/reagent/aurisine
+	name = "Aurisine"
+	id = "aurisine"
+	description = "Aurisine is a chemical compound used to heal ear damage."
+	reagent_state = LIQUID
+	color = "#87cefa" // rgb: 135, 206, 250
+	overdose = REAGENTS_OVERDOSE
+	taste_message = "earwax"
+
+/datum/reagent/aurisine/on_general_digest(mob/living/M)
+	..()
+	M.ear_damage = max(M.ear_damage - 1, 0)
+	M.ear_deaf = max(M.ear_deaf - 3, 0)
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -654,11 +668,9 @@
 		M.nutrition += 30*/  //will remain commented until we can deal with fat
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/blood_volume = H.vessel.get_reagent_amount("blood")
-		if(!(NO_BLOOD in H.species.flags))//do not restore blood on things with no blood by nature.
-			if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
-				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
-				B.volume += 0.5
+		if(!(NO_BLOOD in H.species.flags)) // Do not restore blood on things with no blood by nature
+			if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
+				H.blood_add(0.5)
 
 /datum/reagent/lipozine
 	name = "Lipozine" // The anti-nutriment.
@@ -714,7 +726,7 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	switch(data)
+	switch(data["ticks"])
 		if(1 to 10)
 			M.make_dizzy(1)
 			if(prob(10))
@@ -730,5 +742,6 @@
 					if(prob(50))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
-						E.status &= ~BROKEN
+						E.status &= ~ORGAN_BROKEN
+						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)

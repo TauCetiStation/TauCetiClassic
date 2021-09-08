@@ -35,8 +35,8 @@
 			H.cl = M.client
 
 /obj/effect/bmode//Cleaning up the tree a bit
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	dir = NORTH
@@ -115,8 +115,8 @@
 	return 1
 
 /obj/effect/bmode/buildholder
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/client/cl = null
 	var/obj/effect/bmode/builddir/builddir = null
 	var/obj/effect/bmode/buildhelp/buildhelp = null
@@ -157,7 +157,7 @@
 				objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","[/obj/structure/closet]"))
 				if(!ispath(objholder))
 					objholder = /obj/structure/closet
-					alert("That path is not allowed.")
+					tgui_alert(usr, "That path is not allowed.")
 				else
 					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet

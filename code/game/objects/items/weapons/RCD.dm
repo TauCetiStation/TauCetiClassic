@@ -8,14 +8,14 @@ RCD
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -210,8 +210,8 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000

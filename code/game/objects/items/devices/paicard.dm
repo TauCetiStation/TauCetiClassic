@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2"
 	var/obj/item/device/radio/radio
@@ -43,7 +43,7 @@
 		return ..()
 
 /obj/item/device/paicard/attack_self(mob/user)
-	if (!in_range(src, user))
+	if (!Adjacent(user))
 		return
 	user.set_machine(src)
 	var/dat = {"
@@ -295,26 +295,26 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.add_overlay("pai-happy")
+	add_overlay("pai-happy")
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	src.cut_overlays()
-	src.add_overlay("pai-off")
+	cut_overlays()
+	add_overlay("pai-off")
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.cut_overlays()
+		cut_overlays()
 		switch(emotion)
-			if(1) src.add_overlay("pai-happy")
-			if(2) src.add_overlay("pai-cat")
-			if(3) src.add_overlay("pai-extremely-happy")
-			if(4) src.add_overlay("pai-face")
-			if(5) src.add_overlay("pai-laugh")
-			if(6) src.add_overlay("pai-off")
-			if(7) src.add_overlay("pai-sad")
-			if(8) src.add_overlay("pai-angry")
-			if(9) src.add_overlay("pai-what")
+			if(1) add_overlay("pai-happy")
+			if(2) add_overlay("pai-cat")
+			if(3) add_overlay("pai-extremely-happy")
+			if(4) add_overlay("pai-face")
+			if(5) add_overlay("pai-laugh")
+			if(6) add_overlay("pai-off")
+			if(7) add_overlay("pai-sad")
+			if(8) add_overlay("pai-angry")
+			if(9) add_overlay("pai-what")
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")

@@ -77,7 +77,7 @@
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
-
+	H.update_size_class()
 
 
 /datum/quirk/tourette
@@ -224,3 +224,17 @@
 		become_afraid()
 	else
 		chill()
+
+/datum/quirk/genetic_degradation
+	name = QUIRK_GENETIC_DEGRADATION
+	desc = "An incurable genetic disease prevents your DNA from being reconstructed artificially."
+	value = -1
+
+	mob_trait = TRAIT_NO_CLONE
+	
+	req_species_flags = list(
+		NO_DNA = FALSE,
+		NO_SCAN = FALSE,
+		IS_PLANT = FALSE,
+		IS_SYNTHETIC = FALSE,
+	)

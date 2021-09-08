@@ -372,6 +372,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Investigation Crate"
 	group = "Security"
 
+/datum/supply_pack/shockmines
+	name = "Shock Mines"
+	cost = 3000
+	contains = list(/obj/item/weapon/storage/box/mines/shock)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Shock Mines Crate"
+	group = "Security"
+
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------
@@ -524,6 +532,16 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 10999
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/vending_donut
+	name = "Monkin' Donuts supply crate"
+	contains = list(/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut)
+	cost = 7599
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Monkin' Donuts supply crate"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_assist
@@ -984,7 +1002,18 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Disposal Dispenser Crate"
 	group = "Engineering"
-	access = access_atmospherics
+	access = access_engine
+
+/datum/supply_pack/anti_singulo
+	name = "Singularity Buster Rockets crate"
+	cost = 5000
+	contains  = list(/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo)
+	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_name = "Singularity Buster Rockets Crate"
+	group = "Engineering"
 
 //----------------------------------------------
 //------------MEDICAL / SCIENCE-----------------

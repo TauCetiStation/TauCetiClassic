@@ -29,7 +29,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	move_self = 1
 	grav_pull = 0
 	contained = 0
-	density = 1
+	density = TRUE
 	energy = 0
 
 	var/list/orbiting_balls = list()
@@ -55,7 +55,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
-		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -95,7 +95,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.5
 
-		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)

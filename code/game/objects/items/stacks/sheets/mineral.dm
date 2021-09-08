@@ -43,6 +43,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic spoon", /obj/item/weapon/kitchen/utensil/pspoon, 1, on_floor = TRUE), \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchenknife/plastic, 1, on_floor = TRUE), \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, on_floor = TRUE), \
+	new/datum/stack_recipe("plastic noticeboard", /obj/item/noticeboard_frame/plastic, 10, time = 20, on_floor = TRUE), \
 	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, on_floor = TRUE)
 	)
 
@@ -64,7 +65,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral
 	force = 5.0
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 3
 	throw_range = 3
 
@@ -180,7 +181,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-gold"
 	force = 5.0
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -219,7 +220,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-clown"
 	force = 5.0
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"

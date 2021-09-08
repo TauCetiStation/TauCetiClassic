@@ -6,7 +6,7 @@
 	item_state = "" // no inhands
 	item_color = "bluetie"
 	slot_flags = SLOT_FLAGS_TIE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	var/slot = "decor"
 	var/obj/item/clothing/under/has_suit = null // the suit the tie may be attached to
@@ -87,7 +87,7 @@
 	if(ishuman(M) && isliving(user))
 		var/obj/item/organ/internal/heart/H = M.organs_by_name[O_HEART]
 		if(user.a_intent == INTENT_HELP)
-			var/target_zone = parse_zone(user.zone_sel.selecting)
+			var/target_zone = parse_zone(user.get_targetzone())
 			if(target_zone)
 				var/their = "their"
 				switch(M.gender)

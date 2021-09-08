@@ -30,7 +30,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
@@ -121,7 +121,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if ((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
-	if (!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
@@ -206,14 +206,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/talk_into(mob/living/M, message, channel, verb = "says", datum/language/speaking = null)
-	if(!on) return // the device has to be on
+	if(!on) return FALSE // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!M || !message) return
+	if(!M || !message) return FALSE
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(wires.is_index_cut(RADIO_WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
-		return
+		return FALSE
 
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
@@ -240,18 +240,19 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					channel = channels[1]
 				connection = secure_radio_connections[channel]
 				if (!channels[channel]) // if the channel is turned off, don't broadcast
-					return
+					return FALSE
 			else
 				// If we were to send to a channel we don't have, drop it.
 		else // If a channel isn't specified, send to common.
 			connection = radio_connection
 			channel = null
 		if (!istype(connection))
-			return
+			return FALSE
 		if (!connection)
-			return
+			return FALSE
 
 		var/turf/position = get_turf(src)
+
 
 		//#### Tagging the signal with all appropriate identity values ####//
 
@@ -262,7 +263,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/voicemask = 0 // the speaker is wearing a voice mask
 		if(M.client)
 			mobkey = M.key // assign the mob's key
-
 
 		var/jobname // the mob's "job"
 
@@ -351,7 +351,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				R.receive_signal(signal)
 
 			// Receiving code can be located in Telecommunications.dm
-			return
+			return TRUE
 
 
 	  /* ###### Intercoms and station-bounced radios ###### */
@@ -399,22 +399,21 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 			R.receive_signal(signal)
 
-
-		sleep(rand(10,25)) // wait a little...
-
 		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
-			return
+			return TRUE
 
 	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 	  	// Send a mundane broadcast with limited targets:
 
-		//THIS IS TEMPORARY.
-		if(!connection)	return	//~Carn
+		//THIS IS TEMPORARY. YEA? NAME EVERY TEMPORARY LINE OF CODE
+		if(!connection)	return FALSE //~Carn
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
+		
+		return TRUE
 
 
 
@@ -430,7 +429,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			connection = radio_connection
 			channel = null
 		if (!istype(connection))
-			return
+			return FALSE
 		var/display_freq = connection.frequency
 
 		//world << "DEBUG: used channel=\"[channel]\" frequency= \"[display_freq]\" connection.devices.len = [connection.devices.len]"
@@ -451,7 +450,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			eqjobname = "Unknown"
 
 		if (wires.is_index_cut(RADIO_WIRE_TRANSMIT))
-			return
+			return FALSE
 
 		var/list/receive = list()
 
@@ -484,6 +483,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			switch(display_freq)
 				if(SYND_FREQ)
 					freq_text = "#unkn"
+				if(HEIST_FREQ)
+					freq_text = "Shoal"
 				if(COMM_FREQ)
 					freq_text = "Command"
 				if(1351)
@@ -505,6 +506,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			if (display_freq==SYND_FREQ)
 				part_a_span = "syndradio"
+			else if(display_freq == HEIST_FREQ)
+				part_a_span = "voxradio"
 			else if (display_freq==COMM_FREQ)
 				part_a_span = "comradio"
 			else if (display_freq in DEPT_FREQS)
@@ -540,6 +543,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						blackbox.msg_deathsquad += blackbox_msg
 					if(1213)
 						blackbox.msg_syndicate += blackbox_msg
+					if(1206)
+						blackbox.msg_heist += blackbox_msg
 					if(1349)
 						blackbox.msg_mining += blackbox_msg
 					if(1347)
@@ -623,7 +628,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == SYND_FREQ)
+	if(freq == SYND_FREQ || freq == HEIST_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if (!on)
@@ -833,7 +838,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio_grid
 	name = "Shielded grid"
 	desc = "A metal grid, attached to circuit to protect it from emitting."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 

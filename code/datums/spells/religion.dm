@@ -5,7 +5,7 @@
 	charge_max = 2 MINUTES
 	favor_cost = 100
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
 
 	range = 0
 	invocation = "none"
@@ -14,13 +14,13 @@
 	action_icon_state = "spawn_bible"
 	sound = 'sound/effects/phasein.ogg'
 
-/obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
+/obj/effect/proc_holder/spell/targeted/spawn_bible/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	for(var/i in 1 to divine_power)
-		global.chaplain_religion.spawn_bible(usr.loc)
+		user.my_religion.spawn_bible(usr.loc)
 
 /obj/effect/proc_holder/spell/targeted/heal
 	name = "Heal"
@@ -28,7 +28,7 @@
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
 	divine_power = -5 //power
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
 
 	clothes_req = 0
 	invocation = "none"
@@ -61,7 +61,7 @@
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
 	divine_power = 5 //power
-	needed_aspect = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
+	needed_aspects = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
 
 	action_icon_state = "god_default"
 	sound = 'sound/magic/Repulse.ogg'
@@ -71,8 +71,8 @@
 
 	favor_cost = 200
 	charge_max = 1 MINUTES
-	divine_power = 5 //power
-	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
+	divine_power = 8 //power
+	needed_aspects = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
 
 	range = 0
 	invocation = "none"
@@ -83,17 +83,21 @@
 
 /obj/effect/proc_holder/spell/dumbfire/blessing/cast()
 	var/list/possible_targets = list()
-	var/obj/item/weapon/target
+	var/obj/item/target
 
 	for(var/obj/item/W in orange(3))
-		if(!W.blessed)
-			possible_targets += W
+		if(W.blessed == 0)
+			possible_targets[W] = image(W.icon, W.icon_state)
 
 	if(possible_targets.len == 0)
 		revert_cast()
+		to_chat(usr, "<span class='warning'>Рядом с вами не обнаружено подходящих предметов.</span>")
 		return
 
-	target = input("Choose the target for the spell.", "Targeting") in possible_targets
+	target = show_radial_menu(usr, usr, possible_targets, radius = 36, tooltips = TRUE)
+	if(!target)
+		revert_cast()
+		return
 
 	target.visible_message("<span class='notice'>[target] has been blessed by [usr]!</span>")
 	target.name = "blessed [target.name]"
@@ -101,7 +105,7 @@
 	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
 	target.filters += holy_outline
 
-	target.blessed = TRUE
+	target.blessed = divine_power
 
 /obj/effect/proc_holder/spell/targeted/charge/religion
 	name = "Electric Charge Pulse"
@@ -109,7 +113,7 @@
 	favor_cost = 400
 	charge_max = 4 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_TECH = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_TECH = 1)
 
 	range = 0
 	invocation = "none"
@@ -177,7 +181,7 @@
 	favor_cost = 250
 	charge_max = 3 MINUTES
 	divine_power = 2 //count
-	needed_aspect = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
+	needed_aspects = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
 
 	range = 0
 	invocation = "none"
@@ -199,7 +203,7 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_SPAWN = 1)
+	needed_aspects = list(ASPECT_SPAWN = 1)
 	summon_amt = 1
 
 	invocation = "none"
@@ -225,7 +229,7 @@
 	favor_cost = 500
 	charge_max = 5 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_WACKY = 3)
+	needed_aspects = list(ASPECT_WACKY = 3)
 
 	invocation = "none"
 	range = 0
@@ -245,7 +249,7 @@
 	favor_cost = 300
 	charge_max = 3 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
 
 	range = 0
 	invocation = "none"
@@ -295,7 +299,7 @@
 	name = "Spread a evil infection"
 	desc = "Evil infection with viruses cough and headache"
 
-	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
 
 	action_icon_state = "infection_evil"
 
@@ -346,7 +350,7 @@
 	favor_cost = 150
 	charge_max = 3 MINUTES
 	divine_power = 1 //count gibs
-	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
 
 	range = 0
 	invocation = "none"
@@ -368,3 +372,72 @@
 		gibs(usr.loc)
 		if(divine_power >= 2)
 			hgibs(usr.loc)
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune
+	name = "Руна"
+	desc = "Рисовать запомненную руну."
+
+	charge_max = 1 MINUTE
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "rune"
+	action_background_icon_state = "bg_cult"
+
+	var/datum/building_agent/rune/agent
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune/Destroy()
+	agent = null
+	return ..()
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune/cast()
+	if(!usr.my_religion)
+		usr.RemoveSpell(src)
+		return
+
+	if(usr.my_religion.runes_by_mob[usr])
+		var/list/L = usr.my_religion.runes_by_mob[usr]
+		if(L.len > usr.my_religion.max_runes_on_mob)
+			to_chat(usr, "<span class='warning'>Вуаль пространства не сможет сдержать больше рун!</span>")
+			return
+
+	var/obj/effect/rune/R = new agent.building_type(get_turf(usr), usr.my_religion, usr)
+	var/datum/rune/rune = new agent.rune_type(R)
+	rune.religion = usr.my_religion
+	R.power = rune
+	R.icon = get_uristrune_cult(TRUE, rune.words)
+
+/obj/effect/proc_holder/spell/dumbfire/memorize_rune
+	name = "Запомнить руну"
+	desc = "Запоминает руну и позволяет её рисовать без тома."
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "rune"
+	action_background_icon_state = "bg_cult"
+
+	var/choosing = FALSE
+
+/obj/effect/proc_holder/spell/dumbfire/memorize_rune/cast()
+	if(!usr.my_religion)
+		usr.RemoveSpell(src)
+		return
+	if(choosing)
+		return
+
+	choosing = TRUE
+	var/datum/building_agent/rune/B = input("Выберите руну", name, "") as null|anything in usr.my_religion.available_runes
+	if(!B)
+		choosing = FALSE
+		revert_cast()
+		return
+
+	var/obj/effect/proc_holder/spell/dumbfire/scribe_rune/S = new
+	S.agent = B
+	S.name = initial(B.name)
+	usr.AddSpell(S)
+	usr.RemoveSpell(src)

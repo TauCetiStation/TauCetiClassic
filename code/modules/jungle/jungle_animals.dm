@@ -9,7 +9,7 @@
 	. = ..()
 
 	if(!spawn_type)
-		var/new_type = pick(typesof(/obj/effect/landmark/animal_spawner) - /obj/effect/landmark/animal_spawner)
+		var/new_type = pick(subtypesof(/obj/effect/landmark/animal_spawner))
 		new new_type(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -51,7 +51,7 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
 	icon_dead = "panther_dead"
@@ -65,6 +65,7 @@
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 50
 	health = 50
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -108,7 +109,7 @@
 /mob/living/simple_animal/hostile/snake
 	name = "snake"
 	desc = "A sinuously coiled, venomous looking reptile."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
@@ -122,6 +123,7 @@
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 25
 	health = 25
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 2
 	melee_damage = 7

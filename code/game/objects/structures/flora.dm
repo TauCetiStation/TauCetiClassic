@@ -10,6 +10,7 @@
 /obj/item/weapon/twohanded/flora/atom_init()
 	. = ..()
 	AddComponent(/datum/component/tactical, null, FALSE)
+	AddElement(/datum/element/beauty, 300)
 
 /obj/item/weapon/twohanded/flora/random/atom_init()
 	. = ..()
@@ -232,8 +233,8 @@
 // trees
 /obj/structure/flora/tree
 	name = "tree"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	pixel_x = -16
 	layer = 9
 	health_flora = 150
@@ -296,7 +297,7 @@
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 60
 
@@ -328,7 +329,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 50
 
@@ -342,7 +343,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 50
 
@@ -477,7 +478,7 @@
 	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 40
 
@@ -502,7 +503,7 @@
 	name = "rocks"
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	pixel_y = -16
 

@@ -8,10 +8,10 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
@@ -24,12 +24,12 @@
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == SLOT_BACK && length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	..(user, slot)
 
 /*
@@ -41,7 +41,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
@@ -78,14 +78,9 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = 80 // can store a ton of shit!
-
-/obj/item/weapon/storage/backpack/cultpack
-	name = "trophy rack"
-	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
-	icon_state = "cultpack"
 
 /obj/item/weapon/storage/backpack/chaplain
 	name = "chaplain's backpack"
@@ -182,6 +177,11 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/satchel/sec/cops
+	name = "police satchel"
+	desc = "A robust satchel for police related needs."
+	icon_state = "satchel-cops"
 
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "hydroponics satchel"
@@ -316,7 +316,7 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	w_class = SIZE_SMALL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
@@ -324,11 +324,11 @@
 /obj/item/weapon/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
 		invisibility = 101
-		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
 		invisibility = initial(invisibility)
-		anchored = 0
+		anchored = FALSE
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/atom_init()
@@ -384,3 +384,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+
+/obj/item/weapon/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+
+/obj/item/weapon/storage/backpack/dufflebag/cops
+	name = "NanoTrasen bag"
+	desc = "A large duffel bag for holding extra NanoTrasen gear."
+	slowdown = 0

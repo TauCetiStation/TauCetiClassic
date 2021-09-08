@@ -23,6 +23,12 @@
 	icon_state = "armorsec"
 	item_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/fullbody
+	name = "fullbody armor"
+	desc = "A set of armor covering the entire body. Primarily used by various law-enforcements across the galaxy."
+	icon_state = "armor_fullbody"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
@@ -41,9 +47,9 @@
 /obj/item/clothing/suit/storage/flak/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.set_slots(slots = 4, slot_size = ITEM_SIZE_SMALL)
+	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
 
-/obj/item/clothing/suit/storage/flak/marinad
+/obj/item/clothing/suit/marinad
 	name = "marine armor"
 	desc = "This thing will protect you from any angry flora or fauna."
 	icon_state = "marinad"
@@ -51,6 +57,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
@@ -113,7 +120,7 @@
 /obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.set_slots(slots = 5, slot_size = ITEM_SIZE_SMALL)
+	pockets.set_slots(slots = 5, slot_size = SIZE_TINY)
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative armor vest"
@@ -194,7 +201,7 @@
 		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
@@ -212,7 +219,7 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
@@ -224,7 +231,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 3
@@ -276,8 +283,7 @@
 			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
-		usr.drop_item()
-		holstered.loc = src
+		usr.drop_from_inventory(holstered, src)
 		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))

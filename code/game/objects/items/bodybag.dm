@@ -5,7 +5,7 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/bodybag/attack_self(mob/user)
 	var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
@@ -20,7 +20,7 @@
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
 	var/item_path = /obj/item/bodybag
-	density = 0
+	density = FALSE
 
 
 /obj/structure/closet/body_bag/attackby(W, mob/user)
@@ -28,12 +28,12 @@
 		var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != W)
 			return
-		if (!in_range(src, user) && src.loc != user)
+		if (!Adjacent(user) && src.loc != user)
 			return
 		if (t)
 			src.name = "body bag - "
 			src.name += t
-			src.add_overlay(image(src.icon, "bodybag_label"))
+			add_overlay(image(src.icon, "bodybag_label"))
 		else
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
@@ -42,13 +42,13 @@
 	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.cut_overlays()
+		cut_overlays()
 		return
 
 
 /obj/structure/closet/body_bag/close()
 	if(..())
-		density = 0
+		density = FALSE
 		return 1
 	return 0
 
@@ -57,7 +57,7 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if((over_object == usr && (Adjacent(usr) || usr.contents.Find(src))))
 		if(opened)	return 0
 		if(contents.len)	return 0
 		visible_message("[usr] folds up the [src.name]")
@@ -118,6 +118,6 @@
 /obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if((over_object == usr && (Adjacent(usr) || usr.contents.Find(src))))
 		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

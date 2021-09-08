@@ -3,7 +3,7 @@
 	desc = "A hand-held reagent scanner which identifies chemical agents."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -17,9 +17,6 @@
 
 /obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
-		return
-	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))
 		return

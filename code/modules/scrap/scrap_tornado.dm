@@ -15,7 +15,7 @@
 	contained = 0
 	consume_range = 3
 	layer = 8
-	density = 1
+	density = TRUE
 /obj/singularity/scrap_ball/admin_investigate_setup()
 	return
 

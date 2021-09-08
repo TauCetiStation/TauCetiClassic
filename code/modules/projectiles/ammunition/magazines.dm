@@ -87,6 +87,14 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	name = "bazooka internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket/anti_singulo
+	caliber = "rocket_as"
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
 	desc = "Oh god, this shouldn't be here."
@@ -295,6 +303,9 @@
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m50/weakened
+	ammo_type = /obj/item/ammo_casing/a50/weakened
 
 /obj/item/ammo_box/magazine/m75
 	name = "magazine (.75)"

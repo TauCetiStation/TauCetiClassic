@@ -16,15 +16,30 @@
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
-#define ROLE_MEME              "Meme"
-#define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
+#define ROLE_FAMILIES          "Families"
 #define ROLE_GHOSTLY           "Ghostly Roles"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
 
+var/global/list/antag_roles = list(
+	ROLE_TRAITOR,
+	ROLE_OPERATIVE,
+	ROLE_CHANGELING,
+	ROLE_WIZARD,
+	ROLE_MALF,
+	ROLE_REV,
+	ROLE_ALIEN,
+	ROLE_CULTIST,
+	ROLE_BLOB,
+	ROLE_NINJA,
+	ROLE_RAIDER,
+	ROLE_SHADOWLING,
+	ROLE_ABDUCTOR,
+	ROLE_FAMILIES,
+)
 
 var/global/list/special_roles = list(
 	ROLE_TRAITOR,
@@ -38,19 +53,19 @@ var/global/list/special_roles = list(
 	ROLE_BLOB ,
 	ROLE_NINJA,
 	ROLE_RAIDER,
-	ROLE_MEME,
-	ROLE_MUTINEER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
 	ROLE_GHOSTLY,
+	ROLE_FAMILIES,
 )
 
 //Prefs for ignore a question which give ghosty roles
-#define IGNORE_PLANT       "diona"
-#define IGNORE_PAI         "pai"
-#define IGNORE_TSTAFF      "chstaff"
-#define IGNORE_SURVIVOR    "survivor"
-#define IGNORE_POSBRAIN    "posibrain"
-#define IGNORE_DRONE       "drone"
-#define IGNORE_BORER       "borer"
-#define IGNORE_FAMILIAR    "chfamiliar"
+#define IGNORE_PLANT        "diona"
+#define IGNORE_PAI          "pai"
+#define IGNORE_TSTAFF       "chstaff"
+#define IGNORE_SURVIVOR     "survivor"
+#define IGNORE_POSBRAIN     "posibrain"
+#define IGNORE_DRONE        "drone"
+#define IGNORE_BORER        "borer"
+#define IGNORE_FAMILIAR     "chfamiliar"
+#define IGNORE_NARSIE_SLAVE "nar-sieslave"

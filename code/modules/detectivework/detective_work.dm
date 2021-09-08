@@ -153,8 +153,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 					I.icon_state = "evidenceobj"
 				else
 					scanning = I
-					M.drop_item()
-					I.loc = src
+					M.drop_from_inventory(I, src)
 			else
 				to_chat(usr, "Invalid Object Rejected.")
 		if("card")  //Processing a fingerprint card.
@@ -172,8 +171,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 						card.loc = src.loc
 					card = null
 					return
-				M.drop_item()
-				I.loc = src
+				M.drop_from_inventory(I, src)
 				process_card()
 			else
 				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")

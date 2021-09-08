@@ -5,13 +5,13 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 0

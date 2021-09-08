@@ -7,7 +7,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell."
 	panel = "Spells"//What panel the proc holder needs to go on.
-	density = 0
+	density = FALSE
 	opacity = 0
 	var/sound = null //The sound the spell makes when it is cast
 
@@ -21,7 +21,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	/****RELIGIOUS ASPECT****/
 	var/favor_cost = 0 //cost
 	var/divine_power = 0 //control of spell power depending on the aspect
-	var/list/needed_aspect
+	var/list/needed_aspects
 	/****RELIGIOUS ASPECT****/
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
@@ -75,11 +75,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					return 0
 
 	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(favor_cost > 0 && global.chaplain_religion.aspects.len == 0)
+		if(favor_cost > 0 && user.my_religion.aspects.len == 0)
 			to_chat(usr, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return 0
-		if(favor_cost > 0 && global.chaplain_religion.favor < favor_cost)
-			to_chat(usr, "<span class ='warning'>You need [favor_cost - global.chaplain_religion.favor] more favors.</span>")
+		if(favor_cost > 0 && user.my_religion.favor < favor_cost)
+			to_chat(usr, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
 			return 0
 
 	if(usr.stat && !stat_allowed)
@@ -115,8 +115,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 
-		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			global.chaplain_religion.favor -= favor_cost //steals favor from spells per favor
+		if(favor_cost > 0 && user.mind.holy_role)
+			user.my_religion.adjust_favor(-favor_cost)  //steals favor from spells per favor
 
 	return 1
 
@@ -178,8 +178,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = 1
-			spell.density = 0
+			spell.anchored = TRUE
+			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
@@ -220,8 +220,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
-	if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		global.chaplain_religion.favor += favor_cost
+	if(favor_cost > 0 && user.mind.holy_role)
+		user.my_religion.adjust_favor(favor_cost)
 
 	return
 

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
@@ -428,7 +428,7 @@
 					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
-				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
@@ -668,7 +668,7 @@
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 
@@ -688,11 +688,11 @@
 
 		if(!anchored && !isinspace())
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "You wrench [src] in place.")
 		else if(anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "You unwrench [src].")
 
 		wrenched_change()
@@ -702,12 +702,12 @@
 		if(anchored)
 			if(anchored == 2)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 1
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
 			else if(anchored == 1)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 2
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
 			wrenched_change()
@@ -719,7 +719,7 @@
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))
@@ -753,7 +753,7 @@
 	if(issilicon(user))//AI doesn't know what is planted
 		return TRUE
 	if(harvest)
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return TRUE
 		myseed.harvest()
 	else if(dead)

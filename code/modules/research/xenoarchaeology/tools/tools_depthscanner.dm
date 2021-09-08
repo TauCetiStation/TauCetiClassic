@@ -9,7 +9,7 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "depth_analysis_scanner"
 	item_state = "depth_scanner"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/list/positive_locations = list()
 	var/datum/depth_scan/current
@@ -68,7 +68,7 @@
 				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick("madly", "wildly", "excitedly", "crazily")]!.</span>")
 
 /obj/item/device/depth_scanner/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/device/depth_scanner/interact(mob/user)
 	var/dat = "<b>Co-ordinates with positive matches</b><br>"

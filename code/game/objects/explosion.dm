@@ -1,5 +1,3 @@
-//TODO: Flash range does nothing currently
-
 //A very crude linear approximatiaon of pythagoras theorem.
 /proc/cheap_pythag(dx, dy)
 	dx = abs(dx); dy = abs(dy);
@@ -17,6 +15,13 @@
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
 	stoplag(1) //tldr, let the calling proc call qdel(src) before we explode
+
+	if(isnull(flash_range))
+		flash_range = devastation_range
+	if(flash_range)
+		flash_range = min(flash_range, MAX_EXPLOSION_RANGE)
+		for(var/mob/living/Mob_to_flash in viewers(flash_range, epicenter))
+			Mob_to_flash.flash_eyes()
 
 	var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
 	explosion_rec(epicenter, power)

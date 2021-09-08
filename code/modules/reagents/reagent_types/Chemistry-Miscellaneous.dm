@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
+	data = list()
 	name = "Blood"
 	id = "blood"
 	reagent_state = LIQUID
@@ -11,7 +11,6 @@
 	src = null
 	if(self.data && self.data["viruses"])
 		for(var/datum/disease/D in self.data["viruses"])
-			//var/datum/disease/virus = new D.type(0, D, 1)
 			// We don't spread.
 			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
 				continue
@@ -46,12 +45,16 @@
 	var/datum/reagent/blood/self = src
 	if(!(volume >= 3))
 		return
-	//var/datum/disease/D = self.data["virus"]
+
 	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
-			blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
+			if(self.data["blood_DNA"])
+				if(self.data["blood_type"])
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
+				else
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
 
 		for(var/datum/disease/D in self.data["viruses"])
 			var/datum/disease/newVirus = D.Copy(1)
@@ -60,7 +63,6 @@
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
-
 
 	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
@@ -314,7 +316,7 @@
 	color = "#9e6b38" // rgb: 158, 107, 56
 	taste_message = null
 
-/datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+/datum/reagent/foaming_agent // Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
@@ -930,21 +932,21 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4)
-			M.druggy = max(M.druggy, 15)
+			M.adjustDrugginess(1)
 			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(45 to 90)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 30)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(90 to 180)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 35)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")

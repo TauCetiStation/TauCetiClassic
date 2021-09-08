@@ -13,8 +13,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = NO_POWER_USE
 
 	var/chargesa = 1
@@ -26,19 +26,19 @@
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(chargesa <= 0)
-		user << "The Wish Granter lies silent."
+		to_chat(user, "The Wish Granter lies silent.")
 		return 1
 
 	else if(!ishuman(user))
-		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
+		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
 		return 1
 
 	else if(is_special_character(user))
-		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
+		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
 		return 1
 
 	else if (!insistinga)
-		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
+		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
 		insistinga++
 
 	else
@@ -47,53 +47,43 @@
 		var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","Immortality","To Kill","Peace")
 		switch(wish)
 			if("Power")
-				user << "<B>Your wish is granted, but at a terrible cost...</B>"
-				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
+				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
+				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				if (!(LASEREYES in user.mutations))
 					user.mutations.Add(LASEREYES)
-					user << "<span class='notice'>You feel pressure building behind your eyes.</span>"
+					to_chat(user, "<span class='notice'>You feel pressure building behind your eyes.</span>")
 				if (!(COLD_RESISTANCE in user.mutations))
 					user.mutations.Add(COLD_RESISTANCE)
-					user << "<span class='notice'>Your body feels warm.</span>"
+					to_chat(user, "<span class='notice'>Your body feels warm.</span>")
 				if (!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
 					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 					user.see_in_dark = 8
 					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					user << "<span class='notice'>The walls suddenly disappear.</span>"
+					to_chat(user, "<span class='notice'>The walls suddenly disappear.</span>")
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("Wealth")
-				user << "<B>Your wish is granted, but at a terrible cost...</B>"
-				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
+				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
+				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				new /obj/structure/closet/syndicate/resources/everything(loc)
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("Immortality")
-				user << "<B>Your wish is granted, but at a terrible cost...</B>"
-				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
+				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
+				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.verbs += /mob/living/carbon/proc/immortality
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("To Kill")
-				user << "<B>Your wish is granted, but at a terrible cost...</B>"
-				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
-				SSticker.mode.traitors += user.mind
-				user.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", user)
-				var/datum/objective/hijack/hijack = new
-				hijack.owner = user.mind
-				user.mind.objectives += hijack
-				user << "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>"
-				var/obj_count = 1
-				for(var/datum/objective/OBJ in user.mind.objectives)
-					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-					obj_count++
+				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
+				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
+				create_and_setup_role(/datum/role/traitor/wishgranter, user)
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("Peace")
-				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
-				user << "You feel as if you just narrowly avoided a terrible fate..."
+				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")
+				to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")
 				for(var/mob/living/simple_animal/hostile/faithless/F in alive_mob_list)
 					F.health = -10
 					F.stat = DEAD
@@ -106,8 +96,8 @@
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	desc = "What is that thing?"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = 3
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "blob"

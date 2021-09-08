@@ -74,7 +74,7 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
@@ -132,7 +132,7 @@ var/list/airlock_overlays = list()
 	return FALSE
 
 /obj/machinery/door/airlock/proc/isWireCut(wireIndex)
-	return wires.is_index_cut(wireIndex)
+	return wires?.is_index_cut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
 	return ((aiControlDisabled != 1) && !isAllPowerCut());
@@ -196,14 +196,14 @@ var/list/airlock_overlays = list()
 	if(locked)
 		return
 	locked = 1
-	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 40, FALSE, -4)
+	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
-	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 40, FALSE, -4)
+	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
 
 // shock user with probability prb (if all connections & power are working)
@@ -413,7 +413,7 @@ var/list/airlock_overlays = list()
 			if(deny_animation_check())
 				denying = TRUE
 				update_icon(AIRLOCK_DENY)
-				playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 40, FALSE, 3)
+				playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, 3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
 				icon_state = "closed"
@@ -608,7 +608,7 @@ var/list/airlock_overlays = list()
 			return
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
-			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
+			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 			if(do_after(user,40, target = src) && src)
 				open(1)
 	return
@@ -620,10 +620,11 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
-	da.anchored = 0
+	da.anchored = FALSE
 	var/target = da.loc
-	for(var/i in 1 to 4)
-		target = get_turf(get_step(target,user.dir))
+	if(user)
+		for(var/i in 1 to 4)
+			target = get_turf(get_step(target,user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
@@ -832,7 +833,7 @@ var/list/airlock_overlays = list()
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
+						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
 						secondsElectrified = 30
 						diag_hud_set_electrified()
 						START_PROCESSING(SSmachines, src)
@@ -847,7 +848,7 @@ var/list/airlock_overlays = list()
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
+						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
 						secondsElectrified = -1
 						diag_hud_set_electrified()
 
@@ -960,7 +961,7 @@ var/list/airlock_overlays = list()
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
-				da.anchored = 1
+				da.anchored = TRUE
 				if(mineral)
 					da.change_mineral_airlock_type(mineral)
 				if(glass && da.can_insert_glass)
@@ -1127,7 +1128,7 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && loc != usr) || !W.use(10))
+	if((!Adjacent(usr) && loc != usr) || !W.use(10))
 		return
 	switch(paintjob)
 		if("Public")
@@ -1168,6 +1169,15 @@ var/list/airlock_overlays = list()
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/machinery/door/airlock/emp_act(severity)
+	if(!wires)
+		return
+	for(var/i in 1 to severity)
+		if(!prob(50 / severity))
+			continue
+		var/wire = 1 << rand(0, wires.wire_count - 1)
+		wires.pulse_index(wire)
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

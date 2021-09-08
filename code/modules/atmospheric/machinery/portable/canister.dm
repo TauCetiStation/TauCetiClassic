@@ -240,7 +240,7 @@ update_flag
 
 			var/returnval = pump_gas_passive(src, air_contents, environment, transfer_moles)
 			if(returnval >= 0)
-				src.update_icon()
+				update_icon()
 
 	if(air_contents.return_pressure() < 1)
 		can_label = 1
@@ -250,13 +250,13 @@ update_flag
 	air_contents.react() //cooking up air cans - add phoron and oxygen, then heat above PHORON_MINIMUM_BURN_TEMPERATURE
 
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
-	var/datum/gas_mixture/GM = src.return_air()
+	var/datum/gas_mixture/GM = return_air()
 	if(GM && GM.volume > 0)
 		return GM.temperature
 	return 0
 
 /obj/machinery/portable_atmospherics/canister/proc/return_pressure()
-	var/datum/gas_mixture/GM = src.return_air()
+	var/datum/gas_mixture/GM = return_air()
 	if(GM && GM.volume > 0)
 		return GM.return_pressure()
 	return 0
@@ -299,7 +299,7 @@ update_flag
 
 	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("<span class='warning'>[user] hits the [src] with a [W]!</span>")
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		log_investigate("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
@@ -330,7 +330,7 @@ update_flag
 
 	stat |= BROKEN
 	density = FALSE
-	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
+	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
 	update_icon()
 	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
@@ -366,7 +366,7 @@ update_flag
 		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
 	return data
 
-/obj/machinery/portable_atmospherics/canister/is_operational_topic()
+/obj/machinery/portable_atmospherics/canister/is_operational()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/tgui_state(mob/user)

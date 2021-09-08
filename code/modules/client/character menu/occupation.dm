@@ -46,7 +46,7 @@
 			. += "<del>[rank]</del></td><td><b> \[DISABLED]</b></td></tr>"
 			continue
 		if(jobban_isbanned(user, rank))
-			. += "<del>[rank]</del></td><td><b> \[BANNED]</b></td></tr>"
+			. += "<del>[rank]</del></td><td><b> \[BANNED]</b><br><a href='?_src_=prefs;preference=open_jobban_info;position=[rank]'>Show details</a></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
 			if(config.use_ingame_minutes_restriction_for_jobs)

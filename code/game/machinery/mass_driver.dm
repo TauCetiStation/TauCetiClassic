@@ -3,7 +3,8 @@
 	desc = "Shoots things into space."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mass_driver"
-	anchored = 1.0
+	layer = BELOW_CONTAINERS_LAYER
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 50

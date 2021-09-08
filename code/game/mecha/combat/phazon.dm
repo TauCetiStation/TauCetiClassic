@@ -22,6 +22,11 @@
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
 	max_equip = 4
 
+/obj/mecha/combat/phazon/Destroy()
+	QDEL_NULL(switch_damtype_action)
+	QDEL_NULL(phasing_action)
+	return ..()
+
 /obj/mecha/combat/phazon/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	switch_damtype_action.Grant(user, src)
@@ -44,7 +49,7 @@
 			can_move = 0
 			flick("phazon-phase", src)
 			src.loc = get_step(src,src.dir)
-			src.use_power(phasing_energy_drain)
+			use_power(phasing_energy_drain)
 			sleep(step_in*3)
 			can_move = 1
 	else
@@ -97,7 +102,7 @@
 /obj/mecha/combat/phazon/Topic(href, href_list)
 	..()
 	if (href_list["switch_damtype"])
-		src.switch_damtype()
+		switch_damtype()
 	if (href_list["phasing"])
-		src.switch_phasing()
+		switch_phasing()
 	return

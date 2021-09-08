@@ -5,7 +5,8 @@
 #define X_R_HAND_LAYER			4
 #define TARGETED_LAYER			5
 #define X_FIRE_LAYER			6
-#define X_TOTAL_LAYERS			6
+#define X_SHRIEC_LAYER			7
+#define X_TOTAL_LAYERS			7
 /////////////////////////////////
 
 /mob/living/carbon/xenomorph
@@ -189,6 +190,16 @@
 		return
 	overlays_standing[X_FIRE_LAYER] = null
 
+/mob/living/carbon/xenomorph/humanoid/proc/create_shriekwave()
+	overlays_standing[X_SHRIEC_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "shriek_waves")
+	add_overlay(overlays_standing[X_SHRIEC_LAYER])
+	addtimer(CALLBACK(src, .proc/remove_xeno_overlay, X_SHRIEC_LAYER), 30)
+
+/mob/living/carbon/xenomorph/proc/remove_xeno_overlay(cache_index)
+	if(overlays_standing[cache_index])
+		cut_overlay(overlays_standing[cache_index])
+		overlays_standing[cache_index] = null
+
 //Xeno Overlays Indexes//////////
 #undef X_HEAD_LAYER
 #undef X_SUIT_LAYER
@@ -196,4 +207,5 @@
 #undef X_R_HAND_LAYER
 #undef TARGETED_LAYER
 #undef X_FIRE_LAYER
+#undef X_SHRIEC_LAYER
 #undef X_TOTAL_LAYERS

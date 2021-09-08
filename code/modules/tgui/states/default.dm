@@ -43,7 +43,7 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
-	//hook our scary old nanoui topic check cos it handles all the states appropriately 
+	//hook our scary old nanoui topic check cos it handles all the states appropriately
 	switch(can_use_topic(src_object))
 		if(STATUS_INTERACTIVE)
 			. = UI_INTERACTIVE

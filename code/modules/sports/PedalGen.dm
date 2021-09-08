@@ -19,10 +19,10 @@
 /obj/structure/stool/bed/chair/pedalgen
 	name = "Pedal Generator"
 	desc = "Push it to the limit!"
-	icon = 'code/modules/sports/pedalgen.dmi'
+	icon = 'icons/obj/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
@@ -68,7 +68,7 @@
 				"You were unbuckled from [src] by [user.name].",\
 				"You hear metal clanking")
 			unbuckle_mob()
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 		else
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(buckled_mob.nutrition > 10)
@@ -100,7 +100,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(buckled_mob)
+	if(buckled_mob && !moving_diagonally)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc
 			update_mob(buckled_mob)

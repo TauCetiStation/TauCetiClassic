@@ -13,6 +13,7 @@
 	item_color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	var/obj/item/clothing/suit/space/rig/rig_connect
 
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
@@ -46,6 +47,12 @@
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
 
+/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
+	if(rig_connect)
+		rig_connect.helmet = null
+		rig_connect = null
+	return ..()
+
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
@@ -78,19 +85,19 @@
 	can_breach = 1
 
 	//Component/device holders.
-	var/obj/item/weapon/stock_parts/gloves = null     // Basic capacitor allows insulation, upgrades allow shock gloves etc.
+	var/obj/item/weapon/stock_parts/gloves = null               // Basic capacitor allows insulation, upgrades allow shock gloves etc.
 
-	var/attached_boots = 1                            // Can't wear boots if some are attached
-	var/obj/item/clothing/shoes/magboots/boots = null // Deployable boots, if any.
-	var/attached_helmet = 1                           // Can't wear a helmet if one is deployable.
-	var/obj/item/clothing/head/helmet/helmet = null   // Deployable helmet, if any.
+	var/attached_boots = 1                                      // Can't wear boots if some are attached
+	var/obj/item/clothing/shoes/magboots/boots = null           // Deployable boots, if any.
+	var/attached_helmet = 1                                     // Can't wear a helmet if one is deployable.
+	var/obj/item/clothing/head/helmet/space/rig/helmet = null   // Deployable helmet, if any.
 
-	var/max_mounted_devices = 4                       // Maximum devices. Easy.
-	var/list/can_mount = null                         // Types of device that can be hardpoint mounted.
-	var/list/mounted_devices = null                   // Holder for the above device.
-	var/obj/item/active_device = null                 // Currently deployed device, if any.
+	var/max_mounted_devices = 4                                 // Maximum devices. Easy.
+	var/list/can_mount = null                                   // Types of device that can be hardpoint mounted.
+	var/list/mounted_devices = null                             // Holder for the above device.
+	var/obj/item/active_device = null                           // Currently deployed device, if any.
 
-	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
+	var/mob/living/carbon/human/wearer                          // The person currently wearing the rig.
 	var/offline = TRUE
 	var/passive_energy_use = 1
 	var/move_energy_use = 1
@@ -381,7 +388,9 @@
 		if(istype(H))
 			if(helmet && H.head == helmet)
 				helmet.canremove = 1
+				var/dropped_helmet = helmet
 				H.drop_from_inventory(helmet)
+				helmet = dropped_helmet		//attach the helmet back to the suit
 				helmet.loc = src
 
 	if(boots)
@@ -420,7 +429,9 @@
 
 	if(H.head == helmet)
 		helmet.canremove = 1
+		var/dropped_helmet = helmet
 		H.drop_from_inventory(helmet)
+		helmet = dropped_helmet		//attach the helmet back to the suit
 		helmet.loc = src
 		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 
@@ -534,7 +545,7 @@
 		source = "hit"
 
 	if(wearer)
-		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai/)
+		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai)
 		if(ai && ai.active)
 			ai.handle_module_damage(source, dam_module)
 		else

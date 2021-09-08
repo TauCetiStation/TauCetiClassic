@@ -51,8 +51,8 @@ var/list/ingredients_source = list(
 	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
 	icon = 'icons/obj/icecream.dmi'
 	icon_state = "icecream_vat"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/list/ingredients = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container
@@ -95,7 +95,7 @@ var/list/ingredients_source = list(
 				if(ingredients[ICECREAM_VANILLA] > 0)
 					var/flavour_name = get_icecream_flavour_string(dispense_flavour)
 					if(ingredients[dispense_flavour] > 0)
-						src.visible_message("[bicon(src)] <span class='info'>[user] scoops delicious [flavour_name] flavoured icecream into [I].</span>")
+						visible_message("[bicon(src)] <span class='info'>[user] scoops delicious [flavour_name] flavoured icecream into [I].</span>")
 						ingredients[dispense_flavour] -= 1
 						ingredients[ICECREAM_VANILLA] -= 1
 
@@ -115,13 +115,12 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You must remove [held_container] from [src] first.</span>")
 			else
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
-				user.drop_item()
-				O.loc = src
+				user.drop_from_inventory(O, src)
 				held_container = O
 		else
 			var/obj/item/weapon/reagent_containers/R = O
 			if(R.reagents)
-				src.visible_message("<span class='info'>[user] has emptied all of [R] into [src].</span>")
+				visible_message("<span class='info'>[user] has emptied all of [R] into [src].</span>")
 				for (var/datum/reagent/current_reagent in R.reagents.reagent_list)
 					if(ingredients_source[current_reagent.id])
 						add(ingredients_source[current_reagent.id], current_reagent.volume / 2)
@@ -145,7 +144,7 @@ var/list/ingredients_source = list(
 				ingredients[INGR_FLOUR] -= amount
 				ingredients[INGR_SUGAR] -= amount
 				ingredients[CONE_WAFFLE] += amount
-				src.visible_message("<span class='info'>[user] cooks up some waffle cones.</span>")
+				visible_message("<span class='info'>[user] cooks up some waffle cones.</span>")
 			else
 				to_chat(user, "<span class='notice'>You require sugar and flour to make waffle cones.</span>")
 		if(CONE_CHOC)
@@ -154,7 +153,7 @@ var/list/ingredients_source = list(
 				ingredients[CONE_WAFFLE] -= amount
 				ingredients[FLAVOUR_CHOCOLATE] -= amount
 				ingredients[CONE_CHOC] += amount
-				src.visible_message("<span class='info'>[user] cooks up some chocolate cones.</span>")
+				visible_message("<span class='info'>[user] cooks up some chocolate cones.</span>")
 			else
 				to_chat(user, "<span class='notice'>You require waffle cones and chocolate flavouring to make chocolate cones.</span>")
 		if(ICECREAM_VANILLA)
@@ -163,12 +162,12 @@ var/list/ingredients_source = list(
 				ingredients[INGR_ICE] -= amount
 				ingredients[INGR_MILK] -= amount
 				ingredients[ICECREAM_VANILLA] += amount
-				src.visible_message("<span class='info'>[user] whips up some vanilla icecream.</span>")
+				visible_message("<span class='info'>[user] whips up some vanilla icecream.</span>")
 			else
 				to_chat(user, "<span class='notice'>You require milk and ice to make vanilla icecream.</span>")
 	updateDialog()
 
-/obj/machinery/icecream_vat/is_operational_topic()
+/obj/machinery/icecream_vat/is_operational()
 	return TRUE
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
@@ -178,7 +177,7 @@ var/list/ingredients_source = list(
 
 	if(href_list["dispense"])
 		dispense_flavour = text2num(href_list["dispense"])
-		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
+		visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
 		if(ingredients[dispense_cone] <= ingredients.len)
@@ -189,7 +188,7 @@ var/list/ingredients_source = list(
 				I.cone_type = cone_name
 				I.icon_state = "icecream_cone_[cone_name]"
 				I.desc = "Delicious [cone_name] cone, but no ice cream."
-				src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
+				visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 			else
 				to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
 	else if(href_list["make"])
@@ -219,7 +218,7 @@ var/list/ingredients_source = list(
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
 	name = "[flavour_name] icecream"
-	src.add_overlay("icecream_[flavour_name]")
+	add_overlay("icecream_[flavour_name]")
 	desc = "Delicious [cone_type] cone with a dollop of [flavour_name] ice cream."
 	ice_creamed = 1
 

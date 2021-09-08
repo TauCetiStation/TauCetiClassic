@@ -1,19 +1,19 @@
 /datum/storage_ui/default
-	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
+	var/list/is_seeing = list() //List of mobs which are currently seeing the contents of this item's storage
 
-	var/obj/screen/storage/boxes
-	var/obj/screen/storage/storage_start //storage UI
-	var/obj/screen/storage/storage_continue
-	var/obj/screen/storage/storage_end
-	var/obj/screen/stored_start
-	var/obj/screen/stored_continue
-	var/obj/screen/stored_end
-	var/obj/screen/close/closer
+	var/atom/movable/screen/storage/boxes
+	var/atom/movable/screen/storage/storage_start //storage UI
+	var/atom/movable/screen/storage/storage_continue
+	var/atom/movable/screen/storage/storage_end
+	var/atom/movable/screen/stored_start
+	var/atom/movable/screen/stored_continue
+	var/atom/movable/screen/stored_end
+	var/atom/movable/screen/close/closer
 
 
 /datum/storage_ui/default/New(storage)
 	..()
-	boxes = new /obj/screen/storage(  )
+	boxes = new /atom/movable/screen/storage(  )
 	boxes.name = "storage"
 	boxes.master = storage
 	boxes.icon_state = "block"
@@ -21,21 +21,21 @@
 	boxes.layer = HUD_LAYER
 	boxes.plane = HUD_PLANE
 
-	storage_start = new /obj/screen/storage(  )
+	storage_start = new /atom/movable/screen/storage(  )
 	storage_start.name = "storage"
 	storage_start.master = storage
 	storage_start.icon_state = "storage_start"
 	storage_start.screen_loc = "7,7 to 10,8"
 	storage_start.layer = HUD_LAYER
 	storage_start.plane = HUD_PLANE
-	storage_continue = new /obj/screen/storage(  )
+	storage_continue = new /atom/movable/screen/storage(  )
 	storage_continue.name = "storage"
 	storage_continue.master = storage
 	storage_continue.icon_state = "storage_continue"
 	storage_continue.screen_loc = "7,7 to 10,8"
 	storage_continue.layer = HUD_LAYER
 	storage_continue.plane = HUD_PLANE
-	storage_end = new /obj/screen/storage(  )
+	storage_end = new /atom/movable/screen/storage(  )
 	storage_end.name = "storage"
 	storage_end.master = storage
 	storage_end.icon_state = "storage_end"
@@ -56,7 +56,7 @@
 	stored_end.layer = HUD_LAYER
 	stored_end.plane = HUD_PLANE
 
-	closer = new /obj/screen/close(  )
+	closer = new /atom/movable/screen/close(  )
 	closer.master = storage
 	closer.icon_state = "x"
 	closer.layer = HUD_LAYER
@@ -171,7 +171,6 @@
 		//O.hud_layerise()
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
-		O.set_alt_apperances_layers()
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -223,7 +222,6 @@
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
-			ND.sample_object.set_alt_apperances_layers()
 			click_border_start[ND.sample_object_index] = (cx-4)*32
 			click_border_end[ND.sample_object_index] = (cx-4)*32+32
 			cx++
@@ -236,7 +234,6 @@
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
-			O.set_alt_apperances_layers()
 			click_border_start += (cx-4)*32
 			click_border_end += (cx-4)*32+32
 			cx++
@@ -305,6 +302,5 @@
 		O.maptext = ""
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = HUD_PLANE
-		O.set_alt_apperances_layers()
 
 	closer.screen_loc = "4:[storage_width+19],2:16"

@@ -173,7 +173,7 @@
 /obj/item/weapon/storage/box/r4046/rubber/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046/rubber(src)
+		new /obj/item/ammo_casing/r4046(src)
 
 //Teargas 40x46mm
 /obj/item/weapon/storage/box/r4046/teargas
@@ -444,7 +444,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
 	can_hold = list(/obj/item/weapon/match)
 
@@ -691,6 +691,29 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/toy/plushie/girly_corgi(src)
+
+/obj/item/weapon/storage/box/mines
+	name = "box of mines"
+	desc = "Full of military-grade mines, just add a foot."
+	icon_state = "mine_box"
+
+/obj/item/weapon/storage/box/mines/explosive
+	name = "box of HE mines"
+
+/obj/item/weapon/storage/box/mines/explosive/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/mines/shock
+	name = "box of shock mines"
+
+/obj/item/weapon/storage/box/mines/shock/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine/shock(src)
+	make_exact_fit()
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

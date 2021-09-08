@@ -73,11 +73,10 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			src.diskette = W
 			to_chat(user, "You insert [W].")
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 	else
 		..()
@@ -216,13 +215,13 @@
 		scantemp = ""
 
 		loading = 1
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 		spawn(20)
-			src.scan_mob(src.scanner.occupant)
+			scan_mob(src.scanner.occupant)
 
 			loading = 0
-			src.updateUsrDialog()
+			updateUsrDialog()
 
 
 		//No locking an open scanner.
@@ -254,8 +253,8 @@
 		else if (src.menu == 4)
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
 			if (istype(C)||istype(C, /obj/item/device/pda))
-				if(src.check_access(C))
-					src.records.Remove(src.active_record)
+				if(check_access(C))
+					records.Remove(src.active_record)
 					qdel(src.active_record)
 					src.temp = "Record deleted."
 					src.menu = 2
@@ -267,12 +266,12 @@
 			if("load")
 				if ((isnull(src.diskette)) || isnull(src.diskette.buf))
 					src.temp = "Load error."
-					src.updateUsrDialog()
+					updateUsrDialog()
 					return
 				if (isnull(src.active_record))
 					src.temp = "Record error."
 					src.menu = 1
-					src.updateUsrDialog()
+					updateUsrDialog()
 					return
 
 				src.active_record = src.diskette.buf
@@ -286,7 +285,7 @@
 	else if (href_list["save_disk"]) //Save to disk!
 		if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(src.active_record)))
 			src.temp = "Save error."
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 
 		// DNA2 makes things a little simpler.
@@ -303,7 +302,7 @@
 		src.temp = "Save \[[href_list["save_disk"]]\] successful."
 
 	else if (href_list["refresh"])
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 	else if (href_list["clone"])
 		var/datum/dna2/record/C = locate(href_list["clone"])
@@ -330,7 +329,7 @@
 				var/mob/selected = find_dead_player("[C.ckey]")
 				if(selected)
 					selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-					var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+					var/answer = tgui_alert(selected,"Do you want to return to life?","Cloning", list("Yes","No"))
 					if(answer != "No" && pod1.growclone(C))
 						temp = "Initiating cloning cycle..."
 						records.Remove(C)
@@ -347,7 +346,7 @@
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
 	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
@@ -362,7 +361,7 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	if (NOCLONE in subject.mutations && src.scanner.scan_level < 4)
+	if ((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</span>"
 		return
 	if (!isnull(find_record(subject.ckey)))

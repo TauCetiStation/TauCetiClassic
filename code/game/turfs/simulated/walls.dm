@@ -19,7 +19,7 @@
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -128,19 +128,19 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam)
+/turf/simulated/wall/proc/take_damage(dam, devastated)
 	if(dam)
 		damage = max(0, damage + dam)
-		update_damage()
+		update_damage(devastated)
 	return
 
-/turf/simulated/wall/proc/update_damage()
+/turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
 	if(rotting)
 		cap = cap / 10
 
 	if(damage >= cap)
-		dismantle_wall()
+		dismantle_wall(devastated)
 	else
 		update_icon()
 
@@ -173,7 +173,7 @@
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
-		return (new /obj/structure/cultgirder(src))
+		return (new /obj/structure/girder/cult(src))
 
 	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
@@ -189,7 +189,7 @@
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1)
-			src.ChangeTurf(basetype)
+			ChangeTurf(basetype)
 		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
@@ -220,11 +220,11 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
+	O.anchored = TRUE
+	O.density = TRUE
 	O.layer = 5
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
@@ -240,7 +240,7 @@
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -281,6 +281,8 @@
 			else
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
+				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
+				dismantle_wall(TRUE)
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -299,15 +301,10 @@
 
 	to_chat(user, "<span class='notice'>Вы толкаете стену, но ничего не происходит!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>Вам не хватает ловкости!</span>")
-		return
-
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -325,10 +322,10 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>Стена рассыпается под воздействием [W.name].</span>")
-			src.dismantle_wall(1)
+			dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -470,6 +467,12 @@
 	else if(istype(W,/obj/item/door_control_frame))
 		var/obj/item/door_control_frame/AH = W
 		AH.try_build(src)
+		return
+
+	// why is all of this here help me
+	else if(istype(W, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = W
+		NF.try_build(user, src)
 		return
 
 	//Poster stuff

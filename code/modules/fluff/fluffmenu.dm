@@ -143,7 +143,7 @@ var/list/editing_item_oldname_list = list()
 		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
-			alert(user, "You don't have free custom item slots", "Info", "OK")
+			tgui_alert(user, "You don't have free custom item slots", "Info")
 			return
 
 		editing_item_oldname_list[user.client.ckey] = null
@@ -172,7 +172,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN, ascii_only = TRUE)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
@@ -206,7 +206,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["author_info"])
-		alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info", "OK")
+		tgui_alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info")
 		return
 
 	if(href_list["change_author"])
@@ -225,7 +225,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["ooc_info"])
-		alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info", "OK")
+		tgui_alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info")
 		return
 
 	if(href_list["change_oocinfo"])
@@ -253,7 +253,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname) //editing
 			if(slotCount < itemCount) // can't edit, we have too much custom items
-				alert(user, "You have too much custom items, remove old ones before being able to edit", "Info", "OK")
+				tgui_alert(user, "You have too much custom items, remove old ones before being able to edit", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -266,10 +266,10 @@ var/list/editing_item_oldname_list = list()
 		else //adding new
 			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
 			if(old_item)
-				alert(user, "You already have an item with name [editing_item.name]", "Info", "OK")
+				tgui_alert(user, "You already have an item with name [editing_item.name]", "Info")
 				return
 			if(slotCount <= itemCount) // can't create, we have too much custom items
-				alert(user, "You don't have free custom item slots", "Info", "OK")
+				tgui_alert(user, "You don't have free custom item slots", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -282,7 +282,7 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
 			return
 
-		if(alert(usr, "Are you sure?", "Item deletion confirmation", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Are you sure?", "Item deletion confirmation", list("Yes", "No")) == "Yes")
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "")
 			user.client.remove_custom_item(editing_item_oldname)
 			user << browse(null, "window=edit_custom_item")
@@ -459,7 +459,7 @@ var/list/editing_item_oldname_list = list()
 	if(!target_ckey)
 		return
 
-	if(alert(usr, "Are you sure?", "Confirm deletion", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Are you sure?", "Confirm deletion", list("Yes", "No")) == "Yes")
 		remove_custom_items_history(target_ckey, index)
 		customitems_panel()
 		customs_items_history(target_ckey)

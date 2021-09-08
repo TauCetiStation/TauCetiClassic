@@ -34,8 +34,6 @@
 		if(M.buckled)
 			M.buckled.user_unbuckle_mob(M)
 
-		M.apply_effect(2, STUN, 0)
-		M.apply_effect(2, WEAKEN, 0)
 		M.apply_effect(4, STUTTER, 0)
 		shake_camera(M, 1, 1)
 
@@ -65,8 +63,6 @@
 				if(M.buckled)
 					M.buckled.user_unbuckle_mob(M)
 
-				M.apply_effect(2, STUN, 0)
-				M.apply_effect(2, WEAKEN, 0)
 				M.apply_effect(6, STUTTER, 0)
 				shake_camera(M, 1, 1)
 
@@ -82,7 +78,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	g_amt = 7500
 	m_amt = 1000
 	origin_tech = "materials=2"
@@ -111,7 +107,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	block_chance = 30
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
@@ -171,7 +167,7 @@
 	throw_speed = 3
 	throw_range = 4
 	block_chance = 50
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/atom_init()
@@ -212,14 +208,14 @@
 		force = 8
 		throwforce = 5
 		throw_speed = 2
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		slot_flags = SLOT_FLAGS_BACK
 		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		slot_flags = null
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
@@ -241,7 +237,7 @@
 	throw_speed = 3
 	throw_range = 5
 	block_chance = 45
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 1000
 	g_amt = 0
 	origin_tech = "materials=2"
@@ -301,7 +297,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 10
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
@@ -312,7 +308,7 @@
 	else
 		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/cloaking_device/emp_act(severity)

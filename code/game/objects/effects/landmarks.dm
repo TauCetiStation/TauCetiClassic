@@ -70,6 +70,9 @@
 		if("ninjastart")
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
+		if("eorgwarp")
+			eorgwarp += loc
+			return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/sound_source
 	name = "Sound Source"
@@ -99,6 +102,22 @@
 
 /obj/effect/landmark/start/new_player/atom_init(mapload)
 	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/cops_spawn
+	name = "Space Cops"
+
+/obj/effect/landmark/cops_spawn/atom_init(mapload)
+	..()
+	global.copsstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/dealer_spawn
+	name = "Dealer"
+
+/obj/effect/landmark/dealer_spawn/atom_init(mapload)
+	..()
+	global.dealerstart += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/latejoin
@@ -263,7 +282,7 @@
 	..()
 	new /obj/item/clothing/suit/wizrobe/fake(loc)
 	new /obj/item/clothing/head/wizard/fake(loc)
-	new /obj/item/weapon/staff/(loc)
+	new /obj/item/weapon/staff(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/sexyclown/atom_init()

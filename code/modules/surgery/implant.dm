@@ -135,13 +135,12 @@
 			return
 		else
 			var/obj/item/gland/gland = tool
-			user.drop_item()
+			user.drop_from_inventory(gland, target)
 			gland.Inject(target)
 			BP.cavity = 0
 			return
-	user.drop_item()
+	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
-	tool.loc = target
 	BP.cavity = 0
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -252,6 +251,6 @@
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
 			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
-			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			spawn(25)
 				imp.activate()

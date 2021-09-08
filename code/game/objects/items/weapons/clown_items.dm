@@ -15,7 +15,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana_peel"
 	item_state = "h-banana_peel"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -48,7 +48,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -192,7 +192,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	throwforce = 3
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
@@ -211,7 +211,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		honk(user)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
 	. = ..()
@@ -236,7 +236,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/static/list/actions = list(
 		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
 		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
@@ -391,5 +391,5 @@
 	flick("sound_button_up",src)
 	icon_state = "sound_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -4)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
 	return

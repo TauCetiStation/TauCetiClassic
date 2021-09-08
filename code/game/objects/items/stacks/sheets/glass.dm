@@ -98,7 +98,7 @@
 			if(src.loc != user)
 				return 1
 
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for(var/obj/structure/window/win in user.loc)
 				i++
@@ -121,7 +121,7 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -129,7 +129,7 @@
 			W = new created_window(user.loc)
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
 				return 1
@@ -141,7 +141,7 @@
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -149,14 +149,14 @@
 			W = new created_window(step)
 			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -214,7 +214,7 @@
 				return 1
 			if(src.loc != user)
 				return 1
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
@@ -237,7 +237,7 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -246,7 +246,7 @@
 			W.state = 0
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Full Window")
 			if(QDELETED(src))
@@ -258,7 +258,7 @@
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 			var/obj/structure/window/W
@@ -267,7 +267,7 @@
 			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
 			W.state = 0
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
@@ -281,14 +281,14 @@
 				to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
 				return 1
 
-			if(!src.use(5))
+			if(!use(5))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchored = FALSE
 			switch(user.dir)
 				if(SOUTH)
 					WD.set_dir(SOUTH)

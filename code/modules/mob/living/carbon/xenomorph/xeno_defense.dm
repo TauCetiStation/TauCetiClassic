@@ -1,5 +1,5 @@
 /mob/living/carbon/xenomorph/get_unarmed_attack()
-	var/retDam = 23
+	var/retDam = 20
 	var/retDamType = BRUTE
 	var/retFlags = DAM_SHARP
 	var/retVerb = "slash"

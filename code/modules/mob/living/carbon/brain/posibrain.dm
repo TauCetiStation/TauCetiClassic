@@ -3,7 +3,7 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
@@ -56,9 +56,7 @@
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 
 	src.searching = FALSE
-	src.brainmob.mind = candidate.mind
-	//src.brainmob.key = candidate.key
-	src.brainmob.ckey = candidate.ckey
+	src.brainmob.key = candidate.key
 	src.name = "positronic brain ([src.brainmob.name])"
 
 	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")

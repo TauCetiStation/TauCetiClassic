@@ -52,7 +52,7 @@
 	name = "cross me"
 	desc = "for crossing"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"

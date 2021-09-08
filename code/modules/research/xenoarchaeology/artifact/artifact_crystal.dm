@@ -85,7 +85,7 @@
 			return
 
 /obj/machinery/power/crystal/Destroy()
-	src.visible_message("<span class='warning'>[src] shatters!</span>")
+	visible_message("<span class='warning'>[src] shatters!</span>")
 	if(prob(75))
 		new /obj/item/weapon/shard/phoron(src.loc)
 	if(prob(50))
@@ -119,7 +119,7 @@
 		icon_state = icon_custom_crystal
 		generate_power_stop()
 	if(wired)
-		src.add_overlay(image('icons/obj/xenoarchaeology/artifacts.dmi', "crystal_overlay"))
+		add_overlay(image('icons/obj/xenoarchaeology/artifacts.dmi', "crystal_overlay"))
 	else
 		cut_overlays()
 	return

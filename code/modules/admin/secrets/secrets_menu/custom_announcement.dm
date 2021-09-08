@@ -36,16 +36,16 @@ var/list/datum/announcement/announcements_list
 	. = ..()
 	if(.)
 		return
-	
+
 	switch(action)
 		if("title")
-			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", A.title) as text)
+			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", input_default(A.title)) as text)
 		if("subtitle")
-			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", A.subtitle) as text)
+			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", input_default(A.subtitle)) as text)
 		if("message")
-			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", A.message) as message, MAX_PAPER_MESSAGE_LEN, extra = TRUE)
+			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", input_default(A.message)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 		if("announcer")
-			A.announcer = sanitize_safe(input(ui.user, "Pick a announcer for the report.", "Announcer", A.announcer) as text)
+			A.announcer = sanitize(input(ui.user, "Pick a announcer for the report.", "Announcer", input_default(A.announcer)) as text)
 		if("flag_text")
 			A.flags ^= ANNOUNCE_TEXT
 		if("flag_sound")
@@ -98,7 +98,7 @@ var/list/datum/announcement/announcements_list
 			if(!(holder.rights & (R_FUN | R_EVENT)))
 				return
 			var/list/announcement_types = typesof(/datum/announcement)
-			
+
 			if (!announcements_list)
 				announcements_list = list()
 				for(var/announcement_type in announcement_types)
@@ -110,7 +110,7 @@ var/list/datum/announcement/announcements_list
 			var/user_input = input(ui.user, "Choose a template.", "Template", A.name) as anything in announcements_list
 			A.copy(announcements_list[user_input])
 		if("announce")
-			if(alert("Are you sure?", "Announcement", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Are you sure?", "Announcement", list("Yes", "No")) == "Yes")
 				A.play()
 				log_admin("[key_name(ui.user)] has created a command report with sound [A.sound]. [A.title] - [A.subtitle]: [A.message].")
 				message_admins("[key_name_admin(ui.user)] has created a command report.")

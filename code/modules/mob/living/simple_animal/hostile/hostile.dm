@@ -125,7 +125,7 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return FALSE
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		if(L.faction == "untouchable" || L.faction == faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return FALSE
 		if(L in friends)
 			return FALSE
@@ -159,17 +159,17 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
-		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
+		if(canmove && retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
 			else
 				Goto(target, move_to_delay, minimum_distance)//Otherwise, get to our minimum distance so we chase them
-		else
+		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
 		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
 			AttackingTarget()
 		return
-	if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
+	if(canmove && target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
 			var/atom/A = target.loc
 			Goto(A,move_to_delay, minimum_distance)

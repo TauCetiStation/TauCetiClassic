@@ -15,18 +15,18 @@
 	// reaction to be permitted.
 	var/list/needed_aspects
 
-/datum/faith_reaction/proc/react(atom/container, mob/user)
-	if(do_reaction(container, user))
+/datum/faith_reaction/proc/react(atom/container, mob/user, datum/religion/religion)
+	if(do_reaction(container, user, religion))
 		INVOKE_ASYNC(src, .proc/after_reaction, container, user)
 
-/datum/faith_reaction/proc/get_amount(atom/container, mob/user)
+/datum/faith_reaction/proc/get_amount(atom/container, mob/user, datum/religion/religion)
 	var/to_convert = container.reagents.get_reagent_amount(convertable_id)
 	if(favor_cost != 0)
-		to_convert = min(global.chaplain_religion.favor / favor_cost, to_convert)
+		to_convert = min(religion.favor / favor_cost, to_convert)
 	return to_convert
 
-/datum/faith_reaction/proc/get_description(atom/container, mob/user)
-	var/to_convert = get_amount(container, user)
+/datum/faith_reaction/proc/get_description(atom/container, mob/user, datum/religion/religion)
+	var/to_convert = get_amount(container, user, religion)
 	if(to_convert <= 0)
 		return ""
 
@@ -36,15 +36,15 @@
 	return "Convert [convertable.name] into [result.name] ([to_convert * favor_cost] favor)"
 
 // Return TRUE if reaction went alright.
-/datum/faith_reaction/proc/do_reaction(atom/container, mob/user)
-	var/to_convert = get_amount(container, user)
+/datum/faith_reaction/proc/do_reaction(atom/container, mob/user, datum/religion/religion)
+	var/to_convert = get_amount(container, user, religion)
 	if(to_convert <= 0)
 		return FALSE
 
-	global.chaplain_religion.favor -= to_convert * favor_cost
+	religion.adjust_favor(-(to_convert * favor_cost))
 
 	container.reagents.remove_reagent(convertable_id, to_convert)
-	container.reagents.add_reagent(result_id, to_convert)
+	container.reagents.add_reagent(result_id, to_convert, _religion = religion)
 	return TRUE
 
 /datum/faith_reaction/proc/after_reaction(atom/container, mob/user)

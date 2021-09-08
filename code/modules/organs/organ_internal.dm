@@ -294,7 +294,7 @@
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
 	..()
-	new/obj/item/weapon/stock_parts/cell/crap/(src)
+	new/obj/item/weapon/stock_parts/cell/crap(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 
 /obj/item/organ/internal/liver/process()
@@ -337,7 +337,7 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	
+
 	if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")

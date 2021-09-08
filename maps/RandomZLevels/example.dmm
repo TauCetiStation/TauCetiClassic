@@ -15,9 +15,7 @@
 /turf/simulated/floor,
 /area/awaymission/example)
 "ae" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";

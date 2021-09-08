@@ -2,8 +2,8 @@
 	Restart
 **********************/
 /datum/poll/restart
-	name = "Restart"
-	question = "Restart Round"
+	name = "Рестарт"
+	question = "Рестарт раунда"
 	color = "red"
 	choice_types = list(
 		/datum/vote_choice/restart,
@@ -19,14 +19,15 @@
 	cooldown = 60 MINUTES
 	minimum_win_percentage = 0.75
 
-	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
+	description = "У вас будет больше вес голоса, если вы глава или антагонист, и меньше, если вы мертвы или призрак."
+	warning_message = "Рестарт не подводит итоги раунда и не сохраняет статистику, поэтому используйте его как экстренное средство в случае технических проблем. Для корректного завершения раунда используйте голосование за Crew Transfer!"
 
 /datum/poll/restart/get_force_blocking_reason()
 	. = ..()
 	if(!world.has_round_started())
-		return "Round has not started"
+		return "Раунд ещё не началася"
 	if(world.has_round_finished())
-		return "Round has finished"
+		return "Раунд закончен"
 
 /datum/poll/restart/get_blocking_reason()
 	. = ..()
@@ -34,16 +35,16 @@
 		return
 	for(var/client/C in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
-			return "Admins Online"
+			return "Администрация сейчас в сети"
 
 /datum/poll/restart/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
 
 /datum/vote_choice/restart
-	text = "Restart Round"
+	text = "Рестарт"
 
 /datum/vote_choice/continue_round
-	text = "Continue Round"
+	text = "Продолжить раунд"
 
 /datum/vote_choice/restart/on_win()
 	var/active_admins = FALSE
@@ -52,7 +53,7 @@
 			active_admins = TRUE
 			break
 	if(!active_admins)
-		to_chat(world, "<span class='boldannounce'>World restarting due to vote...</span>")
+		to_chat(world, "<span class='boldannounce'>По результатам голосования мир будет перезагружен ...</span>")
 		sleep(50)
 		world.Reboot(end_state = "restart vote")
 	else
@@ -64,8 +65,8 @@
 	Crew Transfer
 **********************/
 /datum/poll/crew_transfer
-	name = "Crew Transfer"
-	question = "Do you want to initiate crew transfer and call the shuttle?"
+	name = "Конец смены"
+	question = "Вы хотите инициировать конец смены и вызвать шаттл для транспортировки экипажа?"
 	choice_types = list(
 		/datum/vote_choice/crew_transfer,
 		/datum/vote_choice/no_crew_transfer
@@ -81,55 +82,62 @@
 	cooldown = 30 MINUTES
 	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
 
-	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
+	description = "У вас будет больше вес голоса, если вы глава или антагонист, и меньше, если вы мертвы или если вы призрак."
 
 /datum/poll/crew_transfer/get_force_blocking_reason()
 	. = ..()
 	if(.)
 		return
 	if(!world.has_round_started())
-		return "Round has not started"
+		return "Раунд ещё не начался"
 	if(world.has_round_finished())
-		return "Round has finished"
+		return "Раунд закончен"
 
 /datum/poll/crew_transfer/get_blocking_reason()
 	. = ..()
 	if(.)
 		return
 	if(SSshuttle.online || SSshuttle.location != 0)
-		return "Shuttle is online"
+		return "Шаттл используется"
 	if(security_level >= SEC_LEVEL_RED)
-		return "Security Level is RED or higher"
+		return "Код безопасности КРАСНЫЙ или выше"
 
 /datum/poll/crew_transfer/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
 
 /datum/vote_choice/crew_transfer
-	text = "End Shift"
+	text = "Конец смены"
 
 /datum/vote_choice/no_crew_transfer
-	text = "Continue Playing"
+	text = "Продолжить играть"
 
 /datum/vote_choice/crew_transfer/on_win()
 	if(!SSshuttle.online && SSshuttle.location == 0)
+		message_admins("A crew transfer vote has passed, calling the shuttle.")
+		log_admin("A crew transfer vote has passed, calling the shuttle.")
+
+		if(SSshuttle.fake_recall || SSshuttle.time_for_fake_recall)
+			message_admins("The shuttle fake recall was supressed because of crew transfer vote.")
+			log_admin("The shuttle fake recall was supressed because of crew transfer vote.")
+			SSshuttle.fake_recall = FALSE
+			SSshuttle.time_for_fake_recall = 0
+
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
-		message_admins("A crew transfer vote has passed, calling the shuttle.")
-		log_admin("A crew transfer vote has passed, calling the shuttle.")
 
 
 /*********************
 	GameMode
 **********************/
 /datum/poll/gamemode
-	name = "GameMode"
-	question = "Choose GameMode"
+	name = "Режим Игры"
+	question = "Выбрать режим игры"
 	choice_types = list()
 	minimum_voters = 0
 	only_admin = FALSE
 
-	multiple_votes = FALSE
+	multiple_votes = TRUE
 	can_revote = TRUE
 	can_unvote = TRUE
 	see_votes = FALSE
@@ -141,7 +149,7 @@
 	if(.)
 		return
 	if(!world.is_round_preparing())
-		return "Pregame only"
+		return "Доступно только перед началом игры"
 
 /datum/poll/gamemode/get_blocking_reason()
 	. = ..()
@@ -149,41 +157,41 @@
 		return
 
 /datum/poll/gamemode/init_choices()
-	for(var/M in config.votable_modes)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(!initial(M.votable))
+			continue
+		var/datum/modesbundle/bundle = new type()
 		var/datum/vote_choice/gamemode/vc = new
-		vc.text = M
-		vc.new_gamemode = M
+		vc.text = bundle.name
+		vc.new_gamemode = bundle.name
 		choices.Add(vc)
-		// Gamemodes preview in gamemodesets
-		if(config.is_modeset(M))
-			var/list/submodes = list()
-			for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
-				submodes.Add(D.name)
-			if(length(submodes) > 0)
-				description += "<b>[M]</b>: "
-				description += submodes.Join(", ")
-				description += "<br>"
+		var/list/submodes = bundle.get_gamemodes_name()
+		if(length(submodes) > 0)
+			description += "<b>[bundle]</b>: "
+			description += submodes.Join(", ")
+			description += "<br>"
+		qdel(bundle)
 
 /datum/poll/gamemode/process()
 	if(pregame && SSticker.current_state > GAME_STATE_PREGAME)
 		pregame = FALSE
 		SSvote.stop_vote()
-		to_chat(world, "<b>Voting aborted due to game start.</b>")
-	return
+		to_chat(world, "<b>Голосование прервано из-за начала игры.</b>")
 
 /datum/poll/gamemode/on_start()
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		pregame = TRUE
 		if(SSticker.timeLeft < config.vote_period + 15 SECONDS)
 			SSticker.timeLeft = config.vote_period + 15 SECONDS
-			to_chat(world, "<b>Game start has been delayed due to voting.</b>")
+			to_chat(world, "<b>Начало игры отложено из-за голосования.</b>")
 
 /datum/poll/gamemode/on_end()
 	..()
 	pregame = FALSE
 
 /datum/vote_choice/gamemode
-	text = "GameMode Name"
+	text = "Название режима игры"
 	var/new_gamemode = "extended"
 
 /datum/vote_choice/gamemode/on_win()
@@ -196,8 +204,8 @@
 	Custom
 **********************/
 /datum/poll/custom
-	name = "Custom"
-	question = "Why is there no text here?"
+	name = "Пользовательское"
+	question = "Почему здесь нет текста?"
 	choice_types = list()
 
 	only_admin = TRUE
@@ -212,12 +220,12 @@
 	can_unvote = FALSE
 	see_votes = TRUE
 
-	question = input("What's your vote question?", "Custom vote", "Custom vote question")
+	question = sanitize(input("Какой вопрос голосования?", "Пользовательское голосование", "Вопрос пользовательского голосования"))
 
 	var/choice_text = ""
 	var/ch_num = 1
 	do
-		choice_text = input("Vote choice [ch_num]. Type nothing to stop.", "Custom vote", "")
+		choice_text = sanitize(input("Вариант ответа [ch_num]. Оставьте пустым, чтобы закончить ввод вариантов ответа и перейти дальше.", "Пользовательское голосование", ""))
 		ch_num += 1
 		if(choice_text != "")
 			var/datum/vote_choice/custom/C = new
@@ -225,20 +233,20 @@
 			choices.Add(C)
 	while(choice_text != "" && ch_num < 10)
 
-	if(alert("Should the voters be able to vote multiple options?", "Custom vote", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Можно ли проголосовать за несколько вариантов ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Да")
 		multiple_votes = TRUE
 
-	if(alert("Should the voters be able to change their choice?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Можно ли изменять вариант ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		can_revote = FALSE
 
-	if(alert("Should the voters be able to remove their votes?", "Custom vote", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Можно ли отменить выбранный вариант ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Да")
 		can_unvote = TRUE
 
-	if(alert("Should the voters see another voters votes?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Можно ли видеть, сколько проголосовало за варианты ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		see_votes = FALSE
 
-	if(alert("Are you sure you want to continue?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Завершить создание голосования?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		choices.Cut()
 
 /datum/vote_choice/custom
-	text = "Vote choice"
+	text = "Вариант ответа"

@@ -52,12 +52,12 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		var/obj/item/I = usr.get_active_hand()
 		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
-			if(holder in M.airlocks_buffer)
-				to_chat(usr, "<span class='warning'>This airlock is already in the buffer!</span>")
-			else if(M.airlocks_buffer.len >= M.buffer_limit)
+			if(holder in M.doors_buffer)
+				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
+			else if(M.doors_buffer.len >= M.buffer_limit)
 				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
 			else
-				M.airlocks_buffer += holder
+				M.doors_buffer += holder
 				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
 			. = TRUE
 		else
@@ -104,7 +104,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 			if(!mended)
 				if(A.secondsElectrified != -1)
 					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
@@ -159,8 +159,11 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(A.secondsElectrified == 0)
-				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+				if(ismob(usr)) // EMP can do this
+					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+				else
+					A.shockedby += "\[[time_stamp()]\]EMP or smth else"
 				A.secondsElectrified = 30
 				A.diag_hud_set_electrified()
 				START_PROCESSING(SSmachines, A)

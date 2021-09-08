@@ -103,9 +103,13 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	for(var/datum/disease/D in O.viruses)
-		if(D.spread_type != SPECIAL)
-			B.data["viruses"] += D.Copy()
+	if(O.viruses && O.viruses.len > 0)
+		if(!B.data["viruses"])
+			B.data["viruses"] = list()
+
+		for(var/datum/disease/D in O.viruses)
+			if(D.spread_type != SPECIAL)
+				B.data["viruses"] += D.Copy()
 
 	B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 	if(O.resistances&&O.resistances.len)
@@ -119,7 +123,7 @@
 
 
 /obj/machinery/processor/proc/select_recipe(X)
-	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
+	for (var/Type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))
 			continue
@@ -147,7 +151,7 @@
 	if(contents.len > 0) //TODO: several items at once? several different items?
 		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
-	var/what = O
+	var/obj/item/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
@@ -158,9 +162,7 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_item()
-	what:loc = src
-	return
+	user.drop_from_inventory(what, src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()

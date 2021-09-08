@@ -38,15 +38,6 @@ This is emryo growth procs
 	baby = null
 	return ..()
 
-/obj/item/clothing/mask/facehugger/proc/host_is_dead()
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		var/atom/movable/mob_container
-		mob_container = FH
-		mob_container.forceMove(get_turf(src))
-		FH.reset_view()
-		qdel(src)
-
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
 		STOP_PROCESSING(SSobj, src)
@@ -92,7 +83,7 @@ This is emryo growth procs
 
 	if(baby && baby.client)
 		if(growth_rate == 1)
-			baby.throw_alert("alien_embryo", /obj/screen/alert/alien_embryo)
+			baby.throw_alert("alien_embryo", /atom/movable/screen/alert/alien_embryo)
 		else
 			baby.clear_alert("alien_embryo")
 
@@ -172,9 +163,8 @@ This is emryo growth procs
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
-		new_xeno.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
+		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))

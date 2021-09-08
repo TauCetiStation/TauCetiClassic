@@ -23,6 +23,7 @@
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 	pull_size_ratio = 1.5
+	w_class = SIZE_BIG
 
 	moveset_type = /datum/combat_moveset/human
 
@@ -158,9 +159,10 @@
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
 			stat(null, "Nutriment: [nutrition]/400")
-		CHANGELING_STATPANEL_STATS(null)
-
-	CHANGELING_STATPANEL_POWERS(null)
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

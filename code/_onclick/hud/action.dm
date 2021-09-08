@@ -1,7 +1,7 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-//#define AB_GENERIC 4
+#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
@@ -17,14 +17,18 @@
 	var/check_flags = 0
 	var/processing = 0
 	var/active = 0
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+	var/transparent_when_unavailable = TRUE
 	var/mob/living/owner
 
 /datum/action/New(Target)
 	target = Target
+	button = new
+	button.owner = src
+	button.name = name
 
 /datum/action/Destroy()
 	if(owner)
@@ -86,10 +90,17 @@
 /datum/action/proc/IsAvailable()
 	return Checks()
 
-/obj/screen/movable/action_button/MouseEntered(location,control,params)
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	if(button)
+		if(!IsAvailable())
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		else
+			button.color = rgb(255,255,255,255)
+
+/atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
 
-/obj/screen/movable/action_button/MouseExited()
+/atom/movable/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
 /datum/action/proc/Checks()// returns 1 if all checks pass
@@ -115,17 +126,61 @@
 /datum/action/proc/UpdateName()
 	return name
 
-/obj/screen/movable/action_button
+//Preset for an action with a cooldown
+/datum/action/cooldown
+	action_type = AB_GENERIC
+	check_flags = NONE
+	transparent_when_unavailable = FALSE
+	var/cooldown_time = 0
+	var/next_use_time = 0
+
+/datum/action/cooldown/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/cooldown/IsAvailable()
+	return next_use_time <= world.time
+
+/datum/action/cooldown/proc/StartCooldown()
+	next_use_time = world.time + cooldown_time
+	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
+	UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+	var/timeleft = max(next_use_time - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
+
+/atom/movable/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
 
-/obj/screen/movable/action_button/Destroy()
+/atom/movable/screen/movable/action_button/Destroy()
 	owner = null
 	return ..()
 
-/obj/screen/movable/action_button/Click(location,control,params)
+/atom/movable/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		moved = 0
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
@@ -133,7 +188,7 @@
 	owner.Trigger()
 	return 1
 
-/obj/screen/movable/action_button/proc/UpdateIcon()
+/atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
 		return
 	icon = owner.button_icon
@@ -156,13 +211,13 @@
 		color = rgb(255,255,255,255)
 
 //Hide/Show Action Buttons ... Button
-/obj/screen/movable/action_button/hide_toggle
+/atom/movable/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
 
-/obj/screen/movable/action_button/hide_toggle/Click()
+/atom/movable/screen/movable/action_button/hide_toggle/Click()
 	usr.hud_used.action_buttons_hidden = !usr.hud_used.action_buttons_hidden
 
 	hidden = usr.hud_used.action_buttons_hidden
@@ -173,7 +228,7 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
-/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
 	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
@@ -181,19 +236,30 @@
 	UpdateIcon()
 	return
 
-/obj/screen/movable/action_button/hide_toggle/UpdateIcon()
+/atom/movable/screen/movable/action_button/hide_toggle/UpdateIcon()
 	cut_overlays()
 	var/image/img = image(icon,src,hidden?"show":"hide")
 	add_overlay(img)
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+//This is the proc used to update all the action buttons. Properly defined in /mob/living
 /mob/proc/update_action_buttons()
 	return
 
 #define AB_WEST_OFFSET 4
 #define AB_NORTH_OFFSET 26
 #define AB_MAX_COLUMNS 10
+
+/mob/proc/update_sight()
+	SHOULD_CALL_PARENT(TRUE)
+	sync_lighting_plane_alpha()
+
+///Set the lighting plane hud alpha to the mobs lighting_alpha var
+/mob/proc/sync_lighting_plane_alpha()
+	if(hud_used)
+		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if(L)
+			L.alpha = lighting_alpha
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
@@ -204,7 +270,7 @@
 	var/coord_row_offset = AB_NORTH_OFFSET
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
 
-/datum/hud/proc/SetButtonCoords(obj/screen/button,number)
+/datum/hud/proc/SetButtonCoords(atom/movable/screen/button,number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 	var/x_offset = 32*(col-1) + AB_WEST_OFFSET + 2*col

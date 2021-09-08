@@ -19,14 +19,13 @@
 	var/fire = null
 	var/atmos = 1
 	var/atmosalm = 0
-	var/poweralm = 1
+	var/poweralm = FALSE
 	var/party = null
 	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim or religion capture
 
 	var/eject = null
 
-	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
 
@@ -40,6 +39,8 @@
 	var/static_equip
 	var/static_light = 0
 	var/static_environ
+
+	var/datum/religion/religion
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
@@ -65,6 +66,25 @@
 		'sound/ambience/general_12.ogg'
 	)
 
+	/// All beauty in this area combined, only includes indoor area.
+	var/totalbeauty = 0
+	/// Beauty average per open turf in the area
+	var/beauty = 0
+	/// If a room is too big it doesn't have beauty.
+	var/beauty_threshold = BEAUTY_MAX_AREA_SIZE
+
+	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE
+
+	/// Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = 0
+
+	/// Bonus mood for being in this area
+	var/mood_bonus = 0
+	/// Mood message for being here, only shows up if mood_bonus != 0
+	var/mood_message = "<span class='nicegreen'>This area is pretty nice!</span>\n"
+	/// Does the mood bonus require a trait?
+	var/mood_trait
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -90,7 +110,7 @@ var/list/ghostteleportlocs = list()
 	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name))
 			continue
-		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome))
+		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome) || istype(AR, /area/custom/cult))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -117,7 +137,7 @@ var/list/ghostteleportlocs = list()
 /area/atom_init()
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
-	. = ..()
+	..()
 
 	if(requires_power)
 		luminosity = 0
@@ -130,36 +150,68 @@ var/list/ghostteleportlocs = list()
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
-
+	update_areasize()
 	power_change() // all machines set to current power level, also updates lighting icon
 
+	return INITIALIZE_HINT_LATELOAD
+
+/area/atom_init_late()
+	update_beauty()
+
+/**
+ * Set the area size of the area
+ *
+ * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
+ *
+ */
+/area/proc/update_areasize()
+	if(outdoors)
+		return FALSE
+	areasize = 0
+	for(var/turf/simulated/floor/F in contents)
+		areasize++
+
+/// Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
+		return FALSE
+
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
+		return FALSE
+
+	beauty = totalbeauty / areasize
+	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+		// Only report power alarms on the z-level where the source is located.
+		if(istype(source))
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
-				if(state == 1)
-					C.remove_network("Power Alarms")
-				else
+				if(state)
 					C.add_network("Power Alarms")
+				else
+					C.remove_network("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
-					if (state == 1)
-						aiPlayer.cancelAlarm("Power", src, source)
-					else
+					if(state)
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
+					else
+						aiPlayer.cancelAlarm("Power", src, source)
 			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				if(a.z == source.z)
-					if(state == 1)
-						a.cancelAlarm("Power", src, source)
-					else
+					if(state)
 						a.triggerAlarm("Power", src, cameras, source)
-	return
+					else
+						a.cancelAlarm("Power", src, source)
 
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
@@ -308,10 +360,9 @@ var/list/ghostteleportlocs = list()
 
 // called when power status changes
 /area/proc/power_change()
-	powerupdate = 2
 	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
-	for(var/obj/item/device/radio/intercom/I in src)	// Intercoms are not machinery so we need a different loop
+		M.power_change() // reverify power status (to update icons etc.)
+	for(var/obj/item/device/radio/intercom/I in src) // Intercoms are not machinery so we need a different loop
 		I.power_change()
 	if (fire || eject || party)
 		updateicon()
@@ -355,8 +406,19 @@ var/list/ghostteleportlocs = list()
 		if(STATIC_ENVIRON)
 			used_environ += amount
 
+/**
+ * Call back when an atom enters an area
+ *
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to a list of atoms)
+ *
+ * If the area has ambience, then it plays some ambience music to the ambience channel
+ */
+/area/Entered(atom/movable/A, atom/OldLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A, OldLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
+		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src, OldLoc)
 
-/area/Entered(A)
 	if (!isliving(A))
 		return
 
@@ -398,6 +460,16 @@ var/list/ghostteleportlocs = list()
 		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
+/**
+  * Called when an atom exits an area
+  *
+  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
+  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
+  */
+/area/Exited(atom/movable/A, atom/NewLoc)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A, NewLoc)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src, NewLoc)
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate

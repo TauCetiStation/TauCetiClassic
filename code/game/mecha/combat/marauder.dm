@@ -27,6 +27,13 @@
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
+/obj/mecha/combat/marauder/Destroy()
+	QDEL_NULL(smoke_system)
+	QDEL_NULL(smoke_action)
+	QDEL_NULL(zoom_action)
+	QDEL_NULL(thrusters_action)
+	return ..()
+
 /obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
@@ -132,7 +139,7 @@
 	if(src.occupant)
 		if(get_charge() > 0)
 			thrusters_active = !thrusters_active
-			src.log_message("Toggled thrusters.")
+			log_message("Toggled thrusters.")
 			occupant_message("<font color='[src.thrusters_active? "blue" : "red"]'>Thrusters [thrusters_active? "en" : "dis"]abled.</font>")
 	return
 
@@ -140,7 +147,7 @@
 	if(usr != src.occupant)
 		return
 	if(smoke_ready && smoke>0)
-		src.smoke_system.start()
+		smoke_system.start()
 		smoke--
 		smoke_ready = 0
 		spawn(smoke_cooldown)
@@ -152,19 +159,19 @@
 		return
 	if(src.occupant.client)
 		src.zoom_mode = !src.zoom_mode
-		src.log_message("Toggled zoom mode.")
+		log_message("Toggled zoom mode.")
 		occupant_message("<font color='[src.zoom_mode?"blue":"red"]'>Zoom mode [zoom_mode?"en":"dis"]abled.</font>")
 		if(zoom_mode)
-			src.occupant.client.view = 12
+			occupant.client.change_view(12)
 			occupant.playsound_local(null, 'sound/mecha/imag_enh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
-			src.occupant.client.view = world.view//world.view - default mob view size
+			occupant.client.change_view(world.view)
 	return
 
 
 /obj/mecha/combat/marauder/go_out()
 	if(src.occupant && src.occupant.client)
-		src.occupant.client.view = world.view
+		occupant.client.change_view(world.view)
 		src.zoom_mode = FALSE
 	..()
 	return
@@ -193,11 +200,11 @@
 /obj/mecha/combat/marauder/Topic(href, href_list)
 	..()
 	if(href_list["smoke"])
-		src.smoke()
+		smoke()
 	if(href_list["toggle_zoom"])
-		src.zoom()
+		zoom()
 	if(href_list["toggle_thrusters"])
-		src.toggle_thrusters()
+		toggle_thrusters()
 	return
 
 #undef ENERGY_USE_WITH_THRUSTERS

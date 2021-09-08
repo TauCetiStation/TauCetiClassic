@@ -1,7 +1,7 @@
 /obj/effect/fluid
 	name = ""
 	icon = 'icons/effects/liquids.dmi'
-	anchored = 1
+	anchored = TRUE
 	simulated = 0
 	opacity = 0
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

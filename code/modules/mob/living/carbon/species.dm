@@ -219,8 +219,12 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
-/datum/species/proc/on_loose(mob/living/carbon/human/H)
+	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -555,7 +559,7 @@
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
-		H.leap_icon = new /obj/screen/leap()
+		H.leap_icon = new /atom/movable/screen/leap()
 		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
@@ -848,6 +852,7 @@
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
@@ -855,6 +860,7 @@
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
@@ -931,6 +937,7 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	has_bodypart = list(
@@ -953,6 +960,8 @@
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
+
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
 
 	return ..()
 
@@ -1099,7 +1108,8 @@
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE
+		NO_MUTATION = TRUE,
+		NO_FAT = TRUE,
 		)
 
 	has_organ = list(

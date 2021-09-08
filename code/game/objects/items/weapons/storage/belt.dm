@@ -81,7 +81,8 @@
 	    /obj/item/weapon/reagent_containers/hypospray,
 	    /obj/item/device/sensor_device,
 	    /obj/item/device/mass_spectrometer,
-	    /obj/item/device/reagent_scanner
+	    /obj/item/device/reagent_scanner,
+		/obj/item/device/antibody_scanner,
 	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
@@ -89,7 +90,7 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	storage_slots = 9
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/reagent_containers/glass/beaker,
@@ -132,7 +133,7 @@
 	item_state = "security"//Could likely use a better one.
 	force = 5
 	storage_slots = 7
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -141,7 +142,7 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
+		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/lighter,
@@ -195,7 +196,7 @@
 	icon_state = "swatbelt"
 	item_state = "swatbelt"
 	storage_slots = 9
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -203,7 +204,7 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
+		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/gun/energy/taser/stunrevolver,

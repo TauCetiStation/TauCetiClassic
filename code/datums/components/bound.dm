@@ -41,8 +41,8 @@
 	resolve_callback = _resolve_callback
 
 	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
-	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETED), .proc/on_bound_destroyed)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/on_bound_destroyed)
+	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
@@ -154,6 +154,15 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
 
+/datum/component/bounded/proc/change_max_dist(dist)
+	max_dist = dist
+	if(vis_radius && ismob(parent))
+		// Del old
+		qdel(bound_to.GetComponent(/datum/component/vis_radius))
+		deltimer(hide_radius_timer)
+		// Create new
+		bound_to.AddComponent(/datum/component/vis_radius, max_dist)
+
 /datum/component/bounded/proc/try_show_radius()
 	if(!ismob(parent))
 		return
@@ -168,7 +177,7 @@
 /datum/component/bounded/proc/hide_radius()
 	SEND_SIGNAL(bound_to, COMSIG_HIDE_RADIUS)
 
-/datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
+/datum/component/bounded/proc/on_bound_destroyed(force)
 	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk
 	qdel(src)
 

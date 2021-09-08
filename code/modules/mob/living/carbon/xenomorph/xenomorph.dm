@@ -10,6 +10,7 @@
 	speak_emote = list("hisses")
 	typing_indicator_type = "alien"
 
+	see_in_dark = 8
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -25,6 +26,9 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 	ventcrawler = 2
+
+	attack_push_vis_effect = ATTACK_EFFECT_CLAW
+	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
@@ -68,23 +72,27 @@
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
+		else if(resting)
+			adjustBruteLoss(-heal_rate*2)
+			adjustFireLoss(-heal_rate*2)
+			adjustOxyLoss(-heal_rate*2)
+			adjustCloneLoss(-heal_rate*2)
+			adjustToxLoss(plasma_rate)
 		else
-			if(storedPlasma >= max_plasma)
-				adjustBruteLoss(-heal_rate*2)
-				adjustFireLoss(-heal_rate*2)
-				adjustOxyLoss(-heal_rate*2)
-				adjustCloneLoss(-heal_rate*2)
-			else
-				adjustBruteLoss(-heal_rate)
-				adjustFireLoss(-heal_rate)
-				adjustOxyLoss(-heal_rate)
-				adjustCloneLoss(-heal_rate)
-				adjustToxLoss(plasma_rate/2)
+			adjustBruteLoss(-heal_rate)
+			adjustFireLoss(-heal_rate)
+			adjustOxyLoss(-heal_rate)
+			adjustCloneLoss(-heal_rate)
+			adjustToxLoss(plasma_rate/2)
 
 	if(!environment)
 		return
 
+	if(istype(loc, /obj/machinery/atmospherics/pipe) || istype(loc, /obj/item/alien_embryo))
+		return
+
 	var/loc_temp = get_temperature(environment)
+	var/pressure = environment.return_pressure()
 
 	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
 
@@ -103,7 +111,7 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(400 to 600)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -113,6 +121,17 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 	else
 		clear_alert("alien_fire")
+
+//xenomorphs will take damage from high and low pressure
+	var/pressure_damage = heal_rate		//aliens won't take damage from pressure if stay on weeds
+	if(pressure >= WARNING_HIGH_PRESSURE)
+		apply_damage(pressure_damage, BRUTE)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+	else if(pressure >= WARNING_LOW_PRESSURE)
+		clear_alert("pressure")
+	else
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+		apply_damage(pressure_damage, BRUTE)
 
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 
@@ -258,8 +277,11 @@ Hit Procs
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/xenomorph/crawl()
+	return
+
 /mob/living/carbon/xenomorph/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)

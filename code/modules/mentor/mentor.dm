@@ -4,7 +4,17 @@
 /world/proc/load_mentors()
 	mentor_ckeys.Cut()
 	mentors.Cut()
+
+	var/legacy_system = FALSE
+
 	if(config.admin_legacy_system)
+		legacy_system = TRUE
+	else if(!establish_db_connection("erro_mentor"))
+		legacy_system = TRUE
+		error("Failed to connect to database in load_mentors(). Reverting to legacy system.")
+		log_misc("Failed to connect to database in load_mentors(). Reverting to legacy system.")
+
+	if(legacy_system)
 		var/text = file2text("config/mentors.txt")
 		if (!text)
 			error("Failed to load config/mentors.txt")
@@ -17,21 +27,16 @@
 					continue
 				var/ckey = copytext(line, 1)
 				mentor_ckeys += ckey
-				mentors += directory[ckey]
+				if(directory[ckey])
+					mentors += directory[ckey]
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			error("Failed to connect to database in load_mentors(). Reverting to legacy system.")
-			log_misc("Failed to connect to database in load_mentors(). Reverting to legacy system.")
-			config.admin_legacy_system = 1
-			load_mentors()
-			return
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM erro_mentor")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			mentor_ckeys += ckey
-			mentors += directory[ckey]
+			if(directory[ckey])
+				mentors += directory[ckey]
 
 /proc/message_mentors(msg, observer_only = 0)
 	msg = "<span class=\"admin\"><span class=\"prefix\">MENTOR LOG:</span> <span class=\"message\">[msg]</span></span>"

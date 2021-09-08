@@ -44,7 +44,7 @@
 
 	var/obj/machinery/camera/C = track.cameras[camera]
 	track = null
-	src.eyeobj.setLoc(C)
+	eyeobj.setLoc(C)
 
 	return
 
@@ -66,7 +66,7 @@
 		to_chat(src, "<span class='warning'>There is already a stored location by this name</span>")
 		return
 
-	var/L = src.eyeobj.getLoc()
+	var/L = eyeobj.getLoc()
 	if (InvalidTurf(get_turf(L)))
 		to_chat(src, "<span class='warning'>Unable to store this location</span>")
 		return
@@ -87,7 +87,7 @@
 		return
 
 	var/L = stored_locations[loc]
-	src.eyeobj.setLoc(L)
+	eyeobj.setLoc(L)
 
 /mob/living/silicon/ai/proc/ai_remove_location(loc in sorted_stored_locations())
 	set category = "AI Commands"
@@ -245,7 +245,7 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!src.can_use())
+	if (!can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 

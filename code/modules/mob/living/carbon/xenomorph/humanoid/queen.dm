@@ -12,6 +12,7 @@
 	plasma_rate = 20
 	neurotoxin_delay = 10
 	ventcrawler = 0
+	w_class = SIZE_GYGANT
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()
@@ -20,30 +21,14 @@
 	R.my_atom = src
 	name = "alien queen ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid,/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin,/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/screech)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin, /mob/living/carbon/xenomorph/humanoid/proc/resin, /mob/living/carbon/xenomorph/humanoid/proc/screech, /mob/living/carbon/xenomorph/humanoid/proc/air_plant, /mob/living/carbon/xenomorph/humanoid/queen/proc/lay_egg)
 	alien_list[ALIEN_QUEEN] += src
+	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 	. = ..()
 
 /mob/living/carbon/xenomorph/humanoid/queen/Destroy()
 	alien_list[ALIEN_QUEEN] -= src
 	return ..()
-
-//Queen verbs
-/mob/living/carbon/xenomorph/humanoid/queen/verb/lay_egg()
-
-	set name = "Lay Egg (75)"
-	set desc = "Lay an egg to produce huggers to impregnate prey with."
-	set category = "Alien"
-
-	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		to_chat(src, "There's already an egg here.")
-		return
-
-	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-75)
-		visible_message("<span class='notice'><B>[src] has laid an egg!</B></span>")
-		new /obj/structure/alien/egg(loc)
-	return
 
 /mob/living/carbon/xenomorph/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here

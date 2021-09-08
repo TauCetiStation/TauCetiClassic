@@ -7,12 +7,27 @@
 
 /* DATA HUD DATUMS */
 /atom/proc/add_to_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.remove_from_hud(src)
+
+/proc/get_all_data_huds()
+	RETURN_TYPE(/list)
+	var/static/list/all_data_huds
+
+	if(!all_data_huds)
+		all_data_huds = list()
+		for(var/hud_name in global.huds)
+			if(!istype(global.huds[hud_name], /datum/atom_hud/data))
+				continue
+			all_data_huds += global.huds[hud_name]
+
+	return all_data_huds
 
 /datum/atom_hud/data
 	hud_icons = null
@@ -59,6 +74,9 @@
 
 /datum/atom_hud/golem
 	hud_icons = list(GOLEM_MASTER_HUD)
+
+/datum/atom_hud/holy
+	hud_icons = list(HOLY_HUD)
 
 /datum/atom_hud/embryo
 	hud_icons = list(ALIEN_EMBRYO_HUD)
@@ -153,12 +171,12 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(isloyal(src))
+	if(isloyal())
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(ismindshielded(src))
+	if(ismindshielded())
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 		holder.pixel_y = y
@@ -362,3 +380,10 @@
 /mob/living/proc/set_golem_hud()
 	var/image/holder = hud_list[GOLEM_MASTER_HUD]
 	holder.icon_state = "agolem_master"
+
+/*~~~~~~~~~~~~
+    ✟HOLY✟
+~~~~~~~~~~~~~*/
+/mob/proc/set_holy_hud()
+	var/image/holder = hud_list[HOLY_HUD]
+	holder.icon_state = my_religion?.symbol_icon_state

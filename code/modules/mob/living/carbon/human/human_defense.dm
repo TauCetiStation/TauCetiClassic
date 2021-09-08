@@ -127,15 +127,6 @@
 			SP.loc = BP
 			BP.embed(SP)
 
-	if(istype(P, /obj/item/projectile/neurotoxin))
-		var/obj/item/projectile/neurotoxin/B = P
-
-		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, "bio")
-		if (armor < 100)
-			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
-			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
-
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -240,7 +231,7 @@
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = new/list()
+			var/list/turfs = list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
 				if(T.density) continue
@@ -360,8 +351,10 @@
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
-						SSticker.mode.remove_revolutionary(mind)
-						SSticker.mode.remove_gangster(mind, exclude_bosses=1)
+						for(var/id in list(HEADREV, REV))
+							var/datum/role/R = mind.GetRole(id)
+							if(R)
+								R.RemoveFromRole(mind)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

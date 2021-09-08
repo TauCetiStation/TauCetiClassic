@@ -22,13 +22,13 @@
 		msg += "<span class='deadsay'>It is limp and unresponsive, with no signs of life.</span>\n"
 	else
 		msg += "<span class='warning'>"
-		if (src.getBruteLoss())
-			if (src.getBruteLoss() < 30)
+		if (getBruteLoss())
+			if (getBruteLoss() < 30)
 				msg += "It has minor bruising.\n"
 			else
 				msg += "<B>It has severe bruising!</B>\n"
-		if (src.getFireLoss())
-			if (src.getFireLoss() < 30)
+		if (getFireLoss())
+			if (getFireLoss() < 30)
 				msg += "It has minor burns.\n"
 			else
 				msg += "<B>It has severe burns!</B>\n"
@@ -38,6 +38,9 @@
 
 	if (src.digitalcamo)
 		msg += "<span class='warning'>It is moving its body in an unnatural and blatantly unsimian manner.</span>\n"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
 
 	msg += "*---------*</span>"
 

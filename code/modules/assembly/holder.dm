@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 10
 
@@ -65,7 +65,7 @@
 		for(var/O in a_left.attached_overlays)
 			add_overlay("[O]_l")
 	if(a_right)
-		src.add_overlay("[a_right.icon_state]_right")
+		add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
 			add_overlay("[O]_r")
 	if(master)
@@ -152,13 +152,13 @@
 		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
-			switch(alert("Which side would you like to use?",,"Left","Right"))
+			switch(tgui_alert(usr, "Which side would you like to use?",, list("Left","Right")))
 				if("Left")	a_left.attack_self(user)
 				if("Right")	a_right.attack_self(user)
 			return

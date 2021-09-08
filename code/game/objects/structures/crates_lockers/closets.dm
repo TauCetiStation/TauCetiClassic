@@ -3,7 +3,7 @@
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
-	density = 1
+	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
@@ -102,26 +102,26 @@
 	if(src.opened)
 		return 0
 
-	if(!src.can_open())
+	if(!can_open())
 		return 0
 
 	src.icon_state = src.icon_opened
 	src.opened = 1
 
-	src.dump_contents()
+	dump_contents()
 
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 0
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
+	density = FALSE
 	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/close()
 	if(!src.opened)
 		return 0
-	if(!src.can_close())
+	if(!can_close())
 		return 0
 
 	collect_contents()
@@ -129,15 +129,15 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 1
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
+	density = TRUE
 	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/toggle(mob/user)
-	if(!(src.opened ? src.close() : src.open()))
+	if(!(src.opened ? close() : open()))
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
@@ -192,7 +192,7 @@
 	else if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
+	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
 	else
@@ -213,7 +213,7 @@
 				return TRUE
 			else
 				src.welded = !src.welded
-				src.update_icon()
+				update_icon()
 				user.visible_message("[user] [welded?"welded":"unwelded"] [src]'s shutter with [WT].",
 				                     "<span class='notice'>You [welded?"welded":"remove weld from"] [src]'s shutter with [WT].</span>")
 				return TRUE
@@ -229,7 +229,7 @@
 	if(user.incapacitated() || !isturf(src.loc))
 		return
 
-	if(!src.open())
+	if(!open())
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
 			lastbang = 1
@@ -240,17 +240,17 @@
 
 
 /obj/structure/closet/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	src.toggle(user)
+	toggle(user)
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
-	src.add_fingerprint(user)
-	if(!src.toggle())
+	add_fingerprint(user)
+	if(!toggle())
 		to_chat(usr, "<span class='notice'>It won't budge!</span>")
 
 /obj/structure/closet/verb/verb_toggleopen()
@@ -262,8 +262,8 @@
 		return
 
 	if(ishuman(usr))
-		src.add_fingerprint(usr)
-		src.toggle(usr)
+		add_fingerprint(usr)
+		toggle(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 

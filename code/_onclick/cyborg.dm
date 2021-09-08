@@ -21,19 +21,19 @@
 		cob_click(client, modifiers)
 		return
 
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 
@@ -80,7 +80,7 @@
 		return W.attack_self(src)
 
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
-	if(A == loc || (A in loc) || (A in contents))
+	if(A == loc || (A.loc == loc) || (A.loc == src))
 		// No adjacency checks
 		var/resolved = A.attackby(W, src, params)
 		if(!resolved && A && W)

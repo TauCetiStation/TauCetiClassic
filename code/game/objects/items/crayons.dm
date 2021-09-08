@@ -3,7 +3,7 @@
 	desc = "A colourful crayon. Please refrain from eating it or putting it in your nose."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#ff0000" // RGB
 	var/shadeColour = "#220000" // RGB
@@ -11,7 +11,6 @@
 	var/instant = 0
 	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
-	var/gang = 0 // For marking territory
 	var/edible = 1
 
 	var/list/actions
@@ -42,20 +41,12 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
-	var/occupying_gang
-	if(territory.type in (SSticker.mode.A_territory | SSticker.mode.A_territory_new))
-		occupying_gang = gang_name("A")
-	if(territory.type in (SSticker.mode.B_territory | SSticker.mode.B_territory_new))
-		occupying_gang = gang_name("B")
-	if(occupying_gang)
-		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
-		return TRUE
-	return FALSE
-
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
+	if(!istype(target, /turf/simulated/wall) && !target.CanPass(null, target))
+		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(!instant)
@@ -64,6 +55,13 @@
 	var/obj/item/i = usr.get_active_hand()
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
+
+	var/datum/faction/gang/gang_mode
+	if(user.mind)
+		var/datum/role/R = isanygangster(user)
+		if(R && istype(R.faction, /datum/faction/gang))
+			gang_mode = R.faction
+
 	if(is_type_in_list(target,validSurfaces))
 		if(!actions)
 			actions = list()
@@ -74,6 +72,12 @@
 			"arrow" = "up")
 			for(var/action in action_icon)
 				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
+		if(gang_mode)
+			var/static/list/gang_tags = list()
+			if(!gang_tags[gang_mode.gang_id])
+				gang_tags[gang_mode.gang_id] = image(icon = 'icons/obj/gang/tags.dmi', icon_state = "[gang_mode.gang_id]_tag")
+
+			actions["family"] = gang_tags[gang_mode.gang_id]
 
 		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
 		var/sub = ""
@@ -108,60 +112,20 @@
 			if("rune")
 				sub = "a"
 
-		if(!in_range(src, target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
+		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
-		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
-		////////////////////////// GANG FUNCTIONS
-		var/area/territory
-		var/gangID
-		if(gang)
-			//Determine gang affiliation
-			if(user.mind in (SSticker.mode.A_bosses | SSticker.mode.A_gang))
-				gangID = "A"
-			else if(user.mind in (SSticker.mode.B_bosses | SSticker.mode.B_gang))
-				gangID = "B"
+		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 
-			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if (gangID)
-				territory = get_area(target)
-				if(territory && is_station_level(territory.z) && territory.valid_territory)
-					//Check if this area is already tagged by a gang
-					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-						if(territory_claimed(territory, user))
-							return
-					/*
-					//Prevent people spraying from outside of the territory (ie. Maint walls)
-					var/area/user_area = get_area(user.loc)
-					if(istype(user_area) && (user_area.type != territory.type))
-						to_chat(user, "<span class='warning'>You cannot tag [territory] from the outside.</span>")
-						return
-					*/
-					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
-						to_chat(user, "<span class='warning'>You cannot tag here.</span>")
-						return
-				else
-					to_chat(user, "<span class='warning'>[territory] is unsuitable for tagging.</span>")
-					return
-		/////////////////////////////////////////
-
-		if(!in_range(user, target))
+		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
 		if(instant)
 			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
-
-			//Gang functions
-			if(gangID)
-				//Delete any old markings on this tile, including other gang tags
-				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-					if(territory_claimed(territory, user))
-						return
-				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti")
-				to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
-
+			if(gang_mode && drawtype == "family")
+				if(!can_claim_for_gang(user, target, gang_mode))
+					return
+				tag_for_gang(user, target, gang_mode)
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
@@ -176,7 +140,57 @@
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
-	return
+
+/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
+	var/area/A = get_area(target)
+	if(!A || !is_station_level(A.z) || !A.valid_territory)
+		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
+		return FALSE
+
+	var/spraying_over = FALSE
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
+		if(G.my_gang != gang)
+			spraying_over = TRUE
+			break
+
+	var/obj/effect/decal/cleanable/crayon/gang/occupying_gang = territory_claimed(A, user)
+	if(occupying_gang && !spraying_over)
+		if(occupying_gang.my_gang == gang)
+			to_chat(user, "<span class='danger'>[A] has already been tagged by our gang!</span>")
+		else
+			to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag instead!</span>")
+		return FALSE
+
+	// stolen from oldgang lmao
+	return TRUE
+
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
+	var/list/gangs = find_factions_by_type(/datum/faction/gang)
+	for(var/gang in gangs)
+		var/datum/faction/gang/G = gang
+		for(var/obj/effect/decal/cleanable/crayon/gang/tag in G.gang_tags)
+			if(get_area(tag) == territory)
+				return tag
+
+/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/faction/gang/gang)
+	var/obj/effect/decal/cleanable/crayon/gang/enemy_tag = locate() in target
+	if(enemy_tag)
+		if(!do_after(user, 40, target = target))
+			return
+		gang.adjust_points(2)
+
+	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+		qdel(old_marking)
+
+	var/area/territory = get_area(target)
+
+	var/obj/effect/decal/cleanable/crayon/gang/tag = new /obj/effect/decal/cleanable/crayon/gang(target)
+	tag.my_gang = gang
+	tag.my_gang.gang_tags += tag
+	tag.icon_state = "[gang.gang_id]_tag"
+	tag.name = "[gang.name] gang tag"
+	tag.desc = "Looks like someone's claimed this area for [gang.name]."
+	to_chat(user, "<span class='notice'>You tagged [territory] for [gang.name]!</span>")
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -325,9 +339,3 @@
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	add_overlay(I)
-
-/obj/item/toy/crayon/spraycan/gang
-	desc = "A modified container containing suspicious paint."
-	gang = 1
-	uses = 20
-	instant = -1

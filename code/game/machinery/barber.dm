@@ -92,9 +92,6 @@
 /obj/machinery/color_mixer/is_operational()
 	return ..() && !isWireCut(COLOR_MIXER_POWER)
 
-/obj/machinery/color_mixer/is_operational_topic()
-	return ..() && !isWireCut(COLOR_MIXER_POWER)
-
 /obj/machinery/color_mixer/proc/Spray_at(atom/A, quantity)
 	var/obj/item/weapon/reagent_containers/glass/B
 	for(var/tank in tanks)
@@ -268,7 +265,8 @@ A proc that does all the animations before mix()-ing.
 
 /obj/machinery/color_mixer/attackby(obj/item/O, mob/user)
 	if(processing)
-		if(user.a_intent != INTENT_HARM)
+		. = ..()
+		if(!.)
 			to_chat(user, "<span class='warning'>Doing this while [src] is working would be mighty dangerous!</span>")
 			if(prob(10))
 				to_chat(user, "<span class='warning'>You feel determined to harm this machine!</span>")
@@ -339,7 +337,7 @@ A proc that does all the animations before mix()-ing.
 		return
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !in_range(user, src) || !in_range(user, target))
+	if(target.buckled)
 		return
 	if(!user.IsAdvancedToolUser() && target != user)
 		return
@@ -380,9 +378,6 @@ A proc that does all the animations before mix()-ing.
 			L.adjustBruteLoss(50)
 
 /obj/machinery/color_mixer/ui_interact(mob/user)
-	if(!is_operational())
-		return
-
 	var/dat
 	dat += "<div class='Section'>"
 	for(var/tab in tabs)

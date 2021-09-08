@@ -699,6 +699,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
+"bK" = (
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway South";
+	dir = 1;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "bL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -1360,24 +1370,26 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "de" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 9;
 	icon_state = "pwall"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/alien/mine)
 "df" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
+/obj/structure/object_wall/standart{
 	icon_state = "pwall"
 	},
+/turf/space,
 /area/shuttle/alien/mine)
 "dg" = (
-/turf/simulated/floor/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 10;
 	icon_state = "pwall"
 	},
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "dh" = (
 /obj/item/stack/rods,
@@ -1641,11 +1653,12 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "dE" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tinted{
 	dir = 4
+	},
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/alien/mine)
@@ -1912,18 +1925,20 @@
 /turf/simulated/mineral,
 /area/asteroid/research_outpost/atmos)
 "ef" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 5;
 	icon_state = "pwall"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/alien/mine)
 "eg" = (
-/turf/simulated/floor/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 6;
 	icon_state = "pwall"
 	},
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "eh" = (
 /obj/item/weapon/shard,
@@ -1941,16 +1956,13 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_x = -30
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
 "el" = (
-/obj/structure/noticeboard/anomaly{
+/obj/structure/noticeboard/plastic/anomaly{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -2898,9 +2910,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "fT" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -3014,6 +3024,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
+"gg" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "gh" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
@@ -7257,7 +7273,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pc" = (
 /obj/machinery/floodlight,
 /turf/simulated/floor{
@@ -7431,10 +7447,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 25
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -7572,7 +7590,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -8849,9 +8867,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -10238,13 +10254,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "wr" = (
+/obj/structure/closet/secure_closet/miner,
 /obj/machinery/camera{
 	c_tag = "Storage Room";
-	dir = 1;
+	dir = 6;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	icon_state = "warning"
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "ws" = (
@@ -10967,10 +10984,10 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	dir = 1;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -11393,14 +11410,12 @@
 	},
 /area/asteroid/mine/eva)
 "zF" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway West";
-	dir = 4;
-	network = list("MINE")
+/obj/structure/closet/secure_closet/miner,
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "zG" = (
@@ -12639,9 +12654,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "Kd" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -12862,10 +12875,17 @@
 /obj/machinery/artifact_scanpad,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
-"Ob" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
+"NR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
+"Ob" = (
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -45798,7 +45818,7 @@ ad
 ad
 ac
 ac
-rE
+oE
 pK
 ac
 ac
@@ -46057,7 +46077,7 @@ ac
 ac
 um
 un
-rE
+oE
 pb
 uB
 Hc
@@ -46068,7 +46088,7 @@ vU
 tc
 zb
 wl
-zF
+pX
 Nc
 uo
 kO
@@ -46315,7 +46335,7 @@ ac
 un
 ur
 jS
-kO
+ac
 ac
 uo
 va
@@ -46569,9 +46589,9 @@ ad
 ac
 ac
 ac
-kO
-kO
-kO
+ac
+ac
+ac
 ac
 ac
 uo
@@ -47097,7 +47117,7 @@ pw
 uo
 ww
 yv
-Pc
+bK
 uo
 Kd
 Wd
@@ -47860,7 +47880,7 @@ pX
 pX
 qG
 uH
-pX
+NR
 qG
 pX
 pX
@@ -48382,7 +48402,7 @@ uo
 uo
 ww
 vN
-yi
+Pc
 uo
 uo
 uo
@@ -49145,7 +49165,7 @@ kO
 kO
 lA
 uo
-vB
+zF
 qv
 Au
 Au
@@ -49402,7 +49422,7 @@ ac
 kO
 lA
 uo
-vB
+wr
 qv
 Au
 Au
@@ -49663,11 +49683,11 @@ vB
 qv
 tS
 vX
-wr
+vq
 uo
-ww
+yi
 vN
-Pc
+gg
 yd
 Nd
 Zd

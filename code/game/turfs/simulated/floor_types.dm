@@ -72,10 +72,6 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/simulated/floor/engine/cult
-	name = "engraved floor"
-	icon_state = "cult"
-
 /turf/simulated/floor/engine/airmix
 	oxygen = MOLES_O2ATMOS
 	nitrogen = MOLES_N2ATMOS
@@ -160,7 +156,7 @@
 	name = "wall"
 	icon_state = "wall1"
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 /turf/simulated/shuttle/floor
@@ -270,7 +266,7 @@
 		adjustFireLoss(rand(10, 20))
 		Weaken(rand(10, 15))
 		eye_blind += rand(20, 25)
-		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)
 		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
 		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
@@ -413,11 +409,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-
-//	accepts_lighting=0 			// Don't apply overlays
-
 	intact = 0
-
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
@@ -440,18 +432,6 @@
 			if(propogate)
 				C.update_icon(0)
 	icon_state="catwalk[dirs]"
-
-
-/turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(isscrewdriver(C))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		ReplaceWithLattice()
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		return
-
-	if(iscoil(C))
-		var/obj/item/stack/cable_coil/coil = C
-		coil.turf_place(src, user)
 
 /turf/simulated/floor/plating/airless/catwalk/is_catwalk()
 	return TRUE

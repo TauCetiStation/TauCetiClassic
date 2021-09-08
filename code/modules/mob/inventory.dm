@@ -170,19 +170,26 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
+		var/atom/old_loc = W.loc
+
 		W.forceMove(src)		//TODO: move to equipped?
+
+		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
+			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.equipped(src,SLOT_L_HAND)
 		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
+
 		return 1
 	return 0
 
@@ -192,20 +199,26 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
+		var/atom/old_loc = W.loc
+
 		W.forceMove(src)
+
+		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
+			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.set_alt_apperances_layers()
+		W.equipped(src,SLOT_R_HAND)
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
+
 		return 1
 	return 0
 
@@ -238,11 +251,17 @@ var/list/slot_equipment_priority = list(
 		return 0
 
 // Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target = null)
+/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0)
 	if(W)
+		var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
+
 		remove_from_mob(W, target)
 		if(!(W && W.loc))
 			return 1 // self destroying objects (tk, grabs)
+
+		if(target && was_holding && target != src && target.loc != src)
+			INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+
 		update_icons()
 		return 1
 	return 0
@@ -312,22 +331,26 @@ var/list/slot_equipment_priority = list(
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
-	src.u_equip(O)
+	u_equip(O)
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
 	O.appearance_flags = initial(O.appearance_flags)
-	O.set_alt_apperances_layers()
 	O.screen_loc = null
+
 	if(istype(O, /obj/item))
+		if(!target)
+			target = loc
+
 		var/obj/item/I = O
-		if(target)
+
+		if(I.loc != target)
 			I.forceMove(target)
-		else
-			I.forceMove(loc)
+
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
+
 	return 1
 
 /mob/proc/get_hand_slots()
@@ -502,7 +525,7 @@ var/list/slot_equipment_priority = list(
 		return TRUE
 
 //Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
+/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing
 
 	if(!istype(C))
 		return 0

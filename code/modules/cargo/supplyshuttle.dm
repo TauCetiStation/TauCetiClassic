@@ -20,8 +20,8 @@ var/list/mechtoys = list(
 	desc = "Completely impassable - or are they?"
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 4
 	explosion_resistance = 5
 

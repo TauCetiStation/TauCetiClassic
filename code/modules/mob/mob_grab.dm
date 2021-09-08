@@ -12,7 +12,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
-	var/obj/screen/grab/hud = null
+	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
 	var/state = GRAB_NONE
@@ -25,7 +25,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
@@ -71,7 +71,7 @@
 	assailant = loc
 	affecting = victim
 
-	hud = new /obj/screen/grab(src)
+	hud = new /atom/movable/screen/grab(src)
 	hud.master = src
 
 	victim.grabbed_by += src
@@ -207,7 +207,7 @@
 		affecting.drop_l_hand()
 		affecting.drop_r_hand()
 
-		var/hit_zone = assailant.zone_sel.selecting
+		var/hit_zone = assailant.get_targetzone()
 		var/announce = 0
 		if(hit_zone != last_hit_zone)
 			announce = 1
@@ -236,10 +236,10 @@
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 			if(!BP || BP.is_stump)
 				qdel(src)
 				return PROCESS_KILL
+			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
@@ -324,7 +324,7 @@
 				affecting.pixel_y = 0
 			animate(affecting, pixel_x =-shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 
-/obj/item/weapon/grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!assailant)
@@ -413,7 +413,7 @@
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/hit_zone = assailant.zone_sel.selecting
+			var/hit_zone = assailant.get_targetzone()
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
 				if(INTENT_HELP)

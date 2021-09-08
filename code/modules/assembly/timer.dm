@@ -52,9 +52,9 @@
 
 	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
-	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
+	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location [COORD(T)]")
+	message_admins("[src] activated  @ location [COORD(T)] [ADMIN_JMP(T)]")
+	log_game("[src] activated  @ location [COORD(T)]")
 	return
 
 
@@ -96,7 +96,7 @@
 
 /obj/item/device/assembly/timer/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		usr << browse(null, "window=timer")
 		onclose(usr, "timer")
 		return
@@ -106,13 +106,13 @@
 		var/time_start = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
-			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location [COORD(T)] <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
+			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location [COORD(T)],time set: [time]")
 		else
-			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
-			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location [COORD(T)] <B>:</B> time set: [time]",0,1)
+			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location [COORD(T)],time set: [time]")
 		update_icon()
 
 	if(href_list["tp"])

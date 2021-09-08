@@ -40,7 +40,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	//send text directly to a player with no padding. Useful for narratives and fluff-text,
 	/client/proc/cmd_admin_world_narrate,	//sends text to all players with no padding,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words,			//displays cult-words,
 	/client/proc/check_ai_laws,			//shows AI and borg laws,
 	/client/proc/check_antagonists,
 	/client/proc/admin_memo,			//admin memo system. show/delete/write. +SERVER needed to delete admin memos of others,
@@ -73,6 +72,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
 	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
+	/client/proc/send_gods_message,
 	)
 var/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -130,7 +130,6 @@ var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_fluid_verb
 	)
 var/list/admin_verbs_server = list(
-	/client/proc/Set_Holiday,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -151,10 +150,12 @@ var/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -171,7 +172,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/reload_config,
-	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
@@ -182,6 +182,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
+	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	)
 var/list/admin_verbs_possess = list(
@@ -190,11 +191,11 @@ var/list/admin_verbs_possess = list(
 	)
 var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
-	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
 	/client/proc/regisration_panic_bunker,
 	/client/proc/host_announcements,
+	/client/proc/add_round_admin,
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,
@@ -242,7 +243,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/admin_cancel_shuttle,
 	/client/proc/cmd_admin_direct_narrate,
 	/client/proc/cmd_admin_world_narrate,
-	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
 	/client/proc/object_talk,
@@ -252,7 +252,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
-	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
@@ -262,7 +261,6 @@ var/list/admin_verbs_hideable = list(
 //	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/Set_Holiday,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -273,6 +271,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -347,25 +346,11 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
+		admin_verbs_whitelist,
 		admin_verbs_event,
 		admin_verbs_log,
 		admin_verbs_variables,
-		//Debug verbs added by "show debug verbs",
-		/client/proc/Cell,
-		/client/proc/do_not_use_these,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/splash,
-		/client/proc/cmd_admin_areatest
+		debug_verbs
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -511,23 +496,26 @@ var/list/admin_verbs_hideable = list(
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = 127//initial(mob.alpha)
-			mob.name = initial(mob.name)
-		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
-			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
-			holder.fakekey = new_key
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+
+	if(!holder || !(holder.rights & R_STEALTH))
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = 127//initial(mob.alpha)
+		mob.name = initial(mob.name)
+	else
+		var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+		if(!new_key)	return
+		if(length(new_key) >= 26)
+			new_key = copytext(new_key, 1, 26)
+		holder.fakekey = new_key
+		mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/warn(warned_ckey)
@@ -561,7 +549,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/list/params = admin_spawn_status_effect(usr)
 	if(params)
-		if(alert("Confirm applying the status effect to every mob?", , "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Confirm applying the status effect to every mob?",, list("Yes", "No")) == "Yes")
 			for(var/mob/living/L in global.living_list)
 				L.apply_status_effect(arglist(params))
 
@@ -701,16 +689,18 @@ var/list/admin_verbs_hideable = list(
 			return
 		for (var/mob/V in hearers(O))
 			V.show_messageold(message, 2)
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
+		log_admin("[key_name(usr)] made [O] at [COORD(O)]. make a sound")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-	if(src.mob)
-		togglebuildmode(src.mob)
+	if(!mob || !(holder.rights & R_BUILDMODE))
+		return
+
+	togglebuildmode(mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/change_title_screen()
@@ -724,7 +714,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(usr)] try change the title screen.")
 	feedback_add_details("admin_verb", "CTS")
 
-	switch(alert(usr, "How change Title Screen?", "Title Screen", "Change", "Reset", "Cancel"))
+	switch(tgui_alert(usr, "How change Title Screen?", "Title Screen", list("Change", "Reset", "Cancel")))
 		if("Change")
 			var/file = input(usr) as icon|null
 			if(!file)
@@ -767,7 +757,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
+	if(tgui_alert(usr, "Confirm self-deadmin for the round?",, list("Yes","No")) == "Yes")
 		if(has_antag_hud())
 			toggle_combo_hud()
 
@@ -794,7 +784,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check AI Laws"
 	set category = "Admin"
 	if(holder)
-		src.holder.output_ai_laws()
+		holder.output_ai_laws()
 
 //---- bs12 verbs ----
 
@@ -816,7 +806,7 @@ var/list/admin_verbs_hideable = list(
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
+	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -849,7 +839,7 @@ var/list/admin_verbs_hideable = list(
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
@@ -908,10 +898,11 @@ var/list/admin_verbs_hideable = list(
 
 	var/adding_hud = !has_antag_hud()
 
-	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC)) // add data huds
+	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY)) // add data huds
 		var/datum/atom_hud/H = global.huds[hudtype]
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	if(ishuman(mob))
@@ -1008,6 +999,7 @@ var/list/admin_verbs_hideable = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
+	mob.eject_from_wall()
 
 /client/proc/achievement()
 	set name = "Give Achievement"
@@ -1027,9 +1019,9 @@ var/list/admin_verbs_hideable = list(
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
 	if(istype(winner, /mob/living))
-		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
-	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
 
 	if(achoice == "Confirm")
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
@@ -1068,7 +1060,7 @@ var/list/admin_verbs_hideable = list(
 		display_name = holder.fakekey
 
 	for(var/mob/M in player_list)
-		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
+		if((isanyantag(M)) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
@@ -1095,11 +1087,15 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
+		if(!conglomerate)
+			return
+
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", conglomerate.blobwincount) as num|null
 		if(new_count)
-			blobwincount = new_count
-			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			conglomerate.blobwincount = new_count
+			log_admin("[key_name(usr)] changed blobwincount to [conglomerate.blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -1160,30 +1156,6 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
 //////////////////////////////
-// Noir event
-//////////////////////////////
-/*
-/client/proc/Noir_anomaly()
-	set category = "Event"
-	set name = "Noir event(in dev!)"
-	if(!check_rights(R_PERMISSIONS))	return
-
-	if(alert("Are you really sure?",,"Yes","No") != "Yes")
-		return
-
-	for(var/atom/O in not_world)
-		if(O.icon)
-			if(O.color)
-				O.color = null
-
-			var/icon/newIcon = icon(O.icon)
-			newIcon.GrayScale()
-			O.icon = newIcon
-
-	log_admin("[key_name(src)] started noir event!", 1)
-	message_admins("<span class='notice'>[key_name_admin(src)] started noir event!</span>", 1)
-*/
-//////////////////////////////
 // Gateway
 //////////////////////////////
 
@@ -1236,8 +1208,8 @@ var/centcom_barriers_stat = 1
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"

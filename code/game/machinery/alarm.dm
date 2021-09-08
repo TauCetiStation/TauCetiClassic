@@ -37,7 +37,6 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -96,7 +95,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.set_dir(dir)
+			set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -883,7 +882,7 @@ Just a object used in constructing air alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 
@@ -945,7 +944,7 @@ FIRE ALARM
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -1184,7 +1183,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	if(building)
 		buildstage = 0
@@ -1213,7 +1212,7 @@ Just a object used in constructing fire alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 

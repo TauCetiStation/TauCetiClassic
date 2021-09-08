@@ -7,6 +7,7 @@ var/global/list/SOUNDIN_PAGETURN  = list('sound/effects/pageturn1.ogg', 'sound/e
 var/global/list/SOUNDIN_CAN_OPEN  = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 var/global/list/SOUNDIN_BONEBREAK = list('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
 var/global/list/SOUNDIN_RUSTLE    = list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
+var/global/list/SOUNDIN_HORROR    = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/hallucinations/wail.ogg', 'sound/effects/screech.ogg', 'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/i_see_you_3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you_1.ogg', 'sound/hallucinations/i_see_you_2.ogg', 'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg', 'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg')
 // Simple footsteps
 var/global/list/SOUNDIN_CLOWNSTEP     = list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
 var/global/list/SOUNDIN_FOOTSTEPS     = list('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
@@ -47,6 +48,10 @@ var/global/list/SOUNDIN_XENOMORPH_TALK  = list('sound/voice/xenomorph/talk_1.ogg
 var/global/list/SOUNDIN_XENOMORPH_ROAR  = list('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
 var/global/list/SOUNDIN_XENOMORPH_HISS  = list('sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg')
 var/global/list/SOUNDIN_XENOMORPH_GROWL = list('sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg')
+//Xenomorph's sound
+var/global/list/SOUNDIN_HUNTER_LEAP = list('sound/voice/xenomorph/leap_1.ogg', 'sound/voice/xenomorph/leap_2.ogg')
+var/global/list/SOUNDIN_XENOMORPH_CHESTBURST = list('sound/voice/xenomorph/chestburst_1.ogg', 'sound/voice/xenomorph/chestburst_2.ogg')
+var/global/list/SOUNDIN_XENOMORPH_SPLITACID = list('sound/voice/xenomorph/spitacid_1.ogg', 'sound/voice/xenomorph/spitacid_2.ogg')
 // Beepsky
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 

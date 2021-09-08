@@ -9,8 +9,11 @@
  * Misc
  */
 
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+	return get_english_list(input, nothing_text, and_text, comma_text, final_comma_text)
+
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/get_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -54,12 +57,12 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return 0
+	if(!length(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -133,7 +136,7 @@
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
@@ -724,6 +727,14 @@
 		if (typecache[A.type])
 			. += A
 
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -801,3 +812,9 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

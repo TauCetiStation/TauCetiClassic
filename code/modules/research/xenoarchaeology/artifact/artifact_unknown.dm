@@ -5,7 +5,7 @@
 	icon_state = "artifact_1"
 	interact_offline = TRUE
 	var/icon_num = 0
-	density = 1
+	density = TRUE
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
 	var/being_used = 0
@@ -227,7 +227,7 @@
 	if(.)
 		return
 
-	if(!in_range(src, user) && !IsAdminGhost(user))
+	if(!Adjacent(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
 		return 1
 	if(ishuman(user))
@@ -366,6 +366,10 @@
 
 /obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(ISDIAGONALDIR(Dir))
+		return .
+
 	if(my_effect)
 		my_effect.UpdateMove()
 	if(secondary_effect)

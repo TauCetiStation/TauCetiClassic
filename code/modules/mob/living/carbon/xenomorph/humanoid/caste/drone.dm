@@ -5,7 +5,6 @@
 	health = 160
 	icon_state = "aliend_s"
 	plasma_rate = 15
-	heal_rate = 2
 
 /mob/living/carbon/xenomorph/humanoid/drone/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -13,7 +12,7 @@
 	R.my_atom = src
 	name = "alien drone ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/resin, /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
 	alien_list[ALIEN_DRONE] += src
 	. = ..()
 
@@ -40,16 +39,19 @@
 				continue
 			no_queen = FALSE
 
-		if(src.has_brain_worms())
+		if(has_brain_worms())
 			to_chat(src, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 			return
 
 		if(no_queen)
-			adjustToxLoss(-500)
 			to_chat(src, "<span class='notice'>You begin to evolve!</span>")
 			visible_message("<span class='notice'><B>[src] begins to twist and contort!</B></span>")
+			if(!do_after(src, 10 SECONDS, target = src))
+				return
+			adjustToxLoss(-500)
 			var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
+			new_xeno.mind.name = new_xeno.real_name
 			qdel(src)
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")

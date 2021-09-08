@@ -1,6 +1,6 @@
 /obj/structure/computerframe
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	name = "Computer-frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
@@ -9,9 +9,9 @@
 //	weight = 1.0E8
 
 /obj/item/weapon/circuitboard
-	density = 0
-	anchored = 0
-	w_class = ITEM_SIZE_SMALL
+	density = FALSE
+	anchored = FALSE
+	w_class = SIZE_TINY
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -103,7 +103,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(SSticker.mode.name == "revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)
@@ -288,8 +288,7 @@
 			opposite_catastasis = "BROAD"
 			catastasis = "STANDARD"
 
-		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
+		switch(tgui_alert(usr, "Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface", list("Switch to [opposite_catastasis]","Cancel")) )
 			if("Switch to STANDARD","Switch to BROAD")
 				src.contraband_enabled = !src.contraband_enabled
 
@@ -413,7 +412,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					src.anchored = 1
+					src.anchored = TRUE
 					src.state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -429,7 +428,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					src.anchored = 0
+					src.anchored = FALSE
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
@@ -511,7 +510,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())

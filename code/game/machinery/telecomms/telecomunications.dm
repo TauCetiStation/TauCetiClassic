@@ -12,25 +12,25 @@
 */
 
 /obj/machinery/telecomms
-	var/list/links = list() // list of machines this machine is linked to
-	var/traffic = 0 // value increases as traffic increases
-	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+	var/list/links = list()     // list of machines this machine is linked to
+	var/traffic = 0             // value increases as traffic increases
+	var/netspeed = 5            // how much traffic to lose per tick (50 gigabytes/second * netspeed)
 	var/list/autolinkers = list() // list of text/number values to link with
-	var/id = "NULL" // identification string
-	var/network = "NULL" // the network of the machinery
+	var/id = "NULL"             // identification string
+	var/network = "NULL"        // the network of the machinery
 
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
-	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
-	var/toggled = 1 	// Is it toggled on
-	var/on = 1
-	var/integrity = 100 // basically HP, loses integrity by heat
-	var/heatgen = 20 // how much heat to transfer to the environment
-	var/delay = 10 // how many process() ticks to delay per heat
+	var/machinetype = 0         // just a hacky way of preventing alike machines from pairing
+	var/toggled = TRUE          // Is it toggled on
+	var/on = TRUE
+	var/integrity = 100         // basically HP, loses integrity by heat
+	var/heatgen = 20            // how much heat to transfer to the environment
+	var/delay = 10              // how many process() ticks to delay per heat
 	var/heating_power = 40000
-	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
-	var/hide = 0				// Is it a hidden machine?
-	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
+	var/long_range_link = FALSE // Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
+	var/hide = FALSE            // Is it a hidden machine?
+	var/listening_level = 0     // 0 = auto set in New() - this is the z level that the machine is listening to.
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -181,11 +181,11 @@
 
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
-			on = 0
+			on = FALSE
 		else
-			on = 1
+			on = TRUE
 	else
-		on = 0
+		on = FALSE
 
 /obj/machinery/telecomms/process()
 	update_power()
@@ -260,8 +260,8 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 1
@@ -306,9 +306,9 @@
 				if(R.can_receive(signal))
 					connected_levels |= R.listening_level
 			if(signal.data["level"] in connected_levels)
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 
 /*
@@ -326,13 +326,13 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	machinetype = 7
 	heatgen = 40
-	long_range_link = 1
+	long_range_link = TRUE
 	netspeed = 40
 
 /obj/machinery/telecomms/hub/atom_init()
@@ -369,16 +369,16 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 8
 	heatgen = 0
 	netspeed = 5
-	long_range_link = 1
-	var/broadcasting = 1
-	var/receiving = 1
+	long_range_link = TRUE
+	var/broadcasting = TRUE
+	var/receiving = TRUE
 
 /obj/machinery/telecomms/relay/atom_init()
 	. = ..()
@@ -400,19 +400,19 @@
 
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)
 	if(!on)
-		return 0
+		return FALSE
 	if(!is_freq_listening(signal))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/telecomms/relay/proc/can_send(datum/signal/signal)
 	if(!can(signal))
-		return 0
+		return FALSE
 	return broadcasting
 
 /obj/machinery/telecomms/relay/proc/can_receive(datum/signal/signal)
 	if(!can(signal))
-		return 0
+		return FALSE
 	return receiving
 
 /*
@@ -430,8 +430,8 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	machinetype = 2
@@ -463,7 +463,7 @@
 				return
 			// failed to send to a processor, relay information anyway
 			signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
-			src.receive_information(signal, src)
+			receive_information(signal, src)
 
 		// Try sending it!
 		var/list/try_send = list(/obj/machinery/telecomms/server, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
@@ -491,8 +491,8 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 3
@@ -543,8 +543,8 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	machinetype = 4
@@ -658,5 +658,5 @@
 /datum/comm_log_entry
 	var/parameters = list() // carbon-copy to signal.data[]
 	var/name = "data packet (#)"
-	var/garbage_collector = 1 // if set to 0, will not be garbage collected
+	var/garbage_collector = TRUE // if set to 0, will not be garbage collected
 	var/input_type = "Speech File"

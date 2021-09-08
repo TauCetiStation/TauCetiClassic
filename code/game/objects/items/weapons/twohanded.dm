@@ -66,8 +66,9 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
-	return	unwield()
+			O.unwield()
+
+	return unwield()
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -96,7 +97,7 @@
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
+			O.unwield()
 		return
 
 	else if(ishuman(user))
@@ -107,13 +108,14 @@
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	icon_state = "offhand"
 	name = "offhand"
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	qdel(src)
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
@@ -128,7 +130,7 @@
 	force = 5
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 40
@@ -186,7 +188,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_color = "green"
 	force_unwielded = 3
 	force_wielded = 45
@@ -334,7 +336,7 @@
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
 	hitsound = list('sound/weapons/blade1.ogg')
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	return ..()
 
 #undef DUALSABER_BLOCK_CHANCE_MODIFIER

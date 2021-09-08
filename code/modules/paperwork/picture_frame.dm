@@ -7,7 +7,7 @@
 	desc = "The perfect showcase for your favorite memories."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame_item"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/photo/displayed
 	var/frame_type = /obj/structure/picture_frame/wooden
 	var/frame_glass = FALSE
@@ -100,7 +100,7 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/item/weapon/picture_frame/attack_self(mob/user)
@@ -330,7 +330,7 @@
 				else
 					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
 
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/structure/picture_frame/update_icon()

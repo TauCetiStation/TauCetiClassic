@@ -37,12 +37,7 @@
 /obj/effect/effect/forcefield/rune
 	name = "blood aura"
 
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "1"
-
-/obj/effect/effect/forcefield/rune/atom_init()
-	. = ..()
-	icon_state = "[rand(1, 6)]"
+	icon_state = "shield-cult"
 
 /obj/effect/effect/forcefield/eva
 	name = "AT field"
@@ -370,7 +365,7 @@
 /// A wrapper function to add A to protected list from a signal.
 /datum/component/forcefield/proc/add_protected(datum/source, atom/A)
 	LAZYADD(protected, A)
-	RegisterSignal(A, list(COMSIG_PARENT_QDELETED), CALLBACK(src, .proc/stop_protecting, A))
+	RegisterSignal(A, list(COMSIG_PARENT_QDELETING), CALLBACK(src, .proc/stop_protecting, A))
 
 	if(active)
 		start_protecting(A)
@@ -380,7 +375,7 @@
 	if(active)
 		stop_protecting(A)
 
-	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
+	UnregisterSignal(A, list(COMSIG_PARENT_QDELETING))
 	LAZYREMOVE(protected, A)
 
 #undef FORCEFIELDING_TIP

@@ -69,7 +69,7 @@
 /obj/machinery/computer/communications/process()
 	if(..())
 		if(state != STATE_STATUSDISPLAY)
-			src.updateDialog()
+			updateDialog()
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)
@@ -98,7 +98,7 @@
 					var/obj/item/device/pda/pda = I
 					I = pda.id
 				if (I && istype(I))
-					if(src.check_access(I))
+					if(check_access(I))
 						authenticated = 1
 					if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
 						authenticated = 2
@@ -189,8 +189,8 @@
 				if(src.currmsg)
 					var/title = src.messagetitle[src.currmsg]
 					var/text  = src.messagetext[src.currmsg]
-					src.messagetitle.Remove(title)
-					src.messagetext.Remove(text)
+					messagetitle.Remove(title)
+					messagetext.Remove(text)
 					if(src.currmsg == src.aicurrmsg)
 						src.aicurrmsg = 0
 					src.currmsg = 0
@@ -214,10 +214,10 @@
 
 		if("setmsg1")
 			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
-			src.updateDialog()
+			updateDialog()
 		if("setmsg2")
 			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
-			src.updateDialog()
+			updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
@@ -251,7 +251,7 @@
 		if("RestoreBackup")
 			to_chat(usr, "Backup routing data restored!")
 			src.emagged = 0
-			src.updateDialog()
+			updateDialog()
 
 
 
@@ -280,8 +280,8 @@
 			if(src.aicurrmsg)
 				var/title = src.messagetitle[src.aicurrmsg]
 				var/text  = src.messagetext[src.aicurrmsg]
-				src.messagetitle.Remove(title)
-				src.messagetext.Remove(text)
+				messagetitle.Remove(title)
+				messagetext.Remove(text)
 				if(src.currmsg == src.aicurrmsg)
 					src.currmsg = 0
 				src.aicurrmsg = 0
@@ -296,7 +296,7 @@
 
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(emagged)
@@ -315,7 +315,7 @@
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
-		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
+		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
 			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
@@ -361,14 +361,14 @@
 					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Delete"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
 				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A>"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
@@ -420,14 +420,14 @@
 				dat += "<BR><BR><A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
 				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)
@@ -466,10 +466,6 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(SSticker.mode.name == "blob")
-		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-		return
-
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
@@ -505,10 +501,6 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(SSticker.mode.name == "blob" || SSticker.mode.name == "epidemic")
-			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-			return
-
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
@@ -523,9 +515,6 @@
 		return
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
-		return
-	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
-		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm

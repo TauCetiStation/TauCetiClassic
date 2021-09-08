@@ -3,7 +3,7 @@
 	name = "large parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	var/sortTag = ""
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -95,7 +95,7 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/amount = 25.0
 
 
@@ -127,11 +127,11 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= ITEM_SIZE_TINY)
+			if(P.w_class <= SIZE_MINUSCULE)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= ITEM_SIZE_SMALL)
+			else if (P.w_class <= SIZE_TINY)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= ITEM_SIZE_NORMAL)
+			else if (P.w_class <= SIZE_SMALL)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
@@ -141,7 +141,7 @@
 				P.icon_state = "deliverycrate[i]"
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 			src.amount -= 1
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
@@ -185,7 +185,7 @@
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -215,7 +215,7 @@
 	return
 
 /obj/item/device/destTagger/Topic(href, href_list)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
 	openwindow(usr)
@@ -223,7 +223,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 1
+	density = TRUE
 	icon_state = "intake"
 
 	var/c_mode = 0
@@ -266,7 +266,7 @@
 	else if(istype(AM, /mob))
 		var/mob/M = AM
 		M.loc = src
-	src.flush()
+	flush()
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
@@ -314,8 +314,8 @@
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
-				C.anchored = 1
-				C.density = 1
+				C.anchored = TRUE
+				C.density = TRUE
 				qdel(src)
 			return
 		else

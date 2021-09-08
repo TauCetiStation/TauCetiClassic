@@ -12,4 +12,4 @@
 		for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 			O.mode = 1
 			O.emotion = "Neutral"
-	src.view_core()
+	view_core()

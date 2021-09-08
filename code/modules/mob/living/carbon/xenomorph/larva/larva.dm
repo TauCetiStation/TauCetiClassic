@@ -9,8 +9,8 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	density = 0
-	small = 1
+	density = FALSE
+	w_class = SIZE_TINY
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth

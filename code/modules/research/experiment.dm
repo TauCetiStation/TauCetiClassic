@@ -7,6 +7,17 @@
 		"Anomalous means" = 0,
 	)
 
+	var/list/earned_score = list(
+		"Explosion" = 0,
+		"Empulse" = 0,
+		"Anomalous means" = 0,
+	)
+
+
+	//Determines maximum amount of points that can be earned by certain methods. 
+	//Total points that can be earned equal highest score multiplied by this number
+	var/cap_coeff = 2 
+
 	var/list/tech_points = list(
 		"materials" = 200,
 		"engineering" = 250,
@@ -206,6 +217,8 @@
 
 	channels = list("Science" = 1)
 
+	var/message_scientists = TRUE
+
 	// This thing should be really hard to destroy by any means.
 	// Some destruction methods(Lord Singuloo) are expected, and not considered anomalous.
 	var/anomalous_destruction = TRUE
@@ -223,6 +236,15 @@
 /obj/item/device/radio/beacon/interaction_watcher/atom_init()
 	. = ..()
 	global.interaction_watcher_list += src
+
+/obj/item/device/radio/beacon/interaction_watcher/attack_self(mob/living/carbon/human/user)
+	message_scientists = !message_scientists
+	to_chat(user, "<span class='notice'>You toggle [src]'s messaging module [message_scientists ? "on" : "off"]</span>")
+
+/obj/item/device/radio/beacon/interaction_watcher/autosay(message, from, channel, freq = 1459)
+	if(!message_scientists)
+		return
+	return ..()
 
 /obj/item/device/radio/beacon/interaction_watcher/Destroy()
 	global.interaction_watcher_list -= src
@@ -242,15 +264,20 @@
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == 1)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
+			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
 			var/added_score = max(0, score - saved_interaction_score)
 			var/already_earned_score = min(saved_interaction_score, score)
+			var/repetition_cap = max(score, saved_interaction_score) * RD.files.experiments.cap_coeff * new_score_coeff
 
-			calculated_research_points = added_score * new_score_coeff + already_earned_score * repeat_score_coeff
+			var/softcap_coeff = max(repetition_cap / saved_earned_points - 1, 0)
+
+			calculated_research_points = added_score * new_score_coeff + min(already_earned_score * round(repeat_score_coeff * softcap_coeff), repetition_cap - saved_earned_points)
 
 			if(score > saved_interaction_score)
 				RD.files.experiments.saved_best_score[inter_type] = score
 
+			RD.files.experiments.earned_score[inter_type] += calculated_research_points
 			RD.files.research_points += calculated_research_points
 
 	return calculated_research_points
@@ -261,6 +288,8 @@
 
 	if(calculated_research_points > 0)
 		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+	else if (calculated_research_points == 0)
+		autosay("Detected explosion with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -270,6 +299,8 @@
 
 	if(calculated_research_points > 0)
 		autosay("Detected EMP with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+	else if (calculated_research_points == 0)
+		autosay("Detected EMP with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected EMP with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -282,7 +313,7 @@
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -368,7 +399,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/stored_points

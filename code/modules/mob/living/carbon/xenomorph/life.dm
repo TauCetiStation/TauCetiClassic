@@ -31,27 +31,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	if(client)
-		handle_regular_hud_updates()
-
-/mob/living/carbon/xenomorph/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(!on_fire)
-		if(difference > 50)
-			increments = difference/5
-		else
-			increments = difference/10
-		var/change = increments*boost	// Get the amount to change by (x per increment)
-		var/temp_change
-		if(current < loc_temp)
-			temperature = min(loc_temp, temperature+change)
-		else if(current > loc_temp)
-			temperature = max(loc_temp, temperature-change)
-		temp_change = (temperature - current)
-		return temp_change
-
 /mob/living/carbon/xenomorph/proc/handle_regular_status_updates()
 	updatehealth()
 
@@ -60,14 +39,14 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(isxenoadult(src))
-			if(health < config.health_threshold_dead || !has_brain())
+			if(health < config.health_threshold_dead)
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
 				return 1
 		else if(isfacehugger(src) || isxenolarva(src))
-			if(health < 0 || !has_brain())
+			if(health < 0)
 				death()
 				blinded = 1
 				stat = DEAD
@@ -124,7 +103,7 @@
 			silent = 0
 
 		if(druggy)
-			druggy = 0
+			setDrugginess(0)
 	return 1
 
 
@@ -164,11 +143,11 @@
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
 		if(nightvision)
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			see_invisible = SEE_INVISIBLE_LIVING
 		else if(!nightvision)
-			see_in_dark = 4
-			see_invisible = 45
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	..()
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
@@ -201,3 +180,9 @@
 	adjustFireLoss(12)
 	return
 //END FIRE CODE
+
+//Xenomorphs will not be blind in ventilation
+/mob/living/carbon/xenomorph/is_vision_obstructed()
+	if(istype(loc, /obj/machinery/atmospherics/pipe))
+		return FALSE
+	return ..()

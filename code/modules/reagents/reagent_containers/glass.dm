@@ -80,14 +80,14 @@
 		var/list/injected = list()
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
-		var/contained = english_list(injected)
+		var/contained = get_english_list(injected)
 
 		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-		user.visible_message("<span class = 'rose'>[target] has been splashed with something by [user]!</span>")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
+		user.visible_message("<span class='rose'>[target] has been splashed with something by [user]!</span>")
+		reagents.standard_splash(target, user=user)
 		return
+
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
 		var/obj/structure/reagent_dispensers/T = target
 		if(T.transfer_from)
@@ -103,7 +103,7 @@
 			to_chat(user, "<span class = 'rose'>[target] is full.</span>")
 			return
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
 		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 15) // Sound taken from "Eris" build
 
@@ -139,11 +139,7 @@
 
 	else if(reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
-		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		reagents.standard_splash(target, user=user)
 		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
@@ -178,12 +174,18 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. Can hold up to 50 units."
+	desc = "A beaker."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
+	volume = 60
+	possible_transfer_amounts = list(5,10,15,25,30,60)
+
+/obj/item/weapon/reagent_containers/glass/beaker/atom_init()
+	. = ..()
+	desc += " Can hold up to [volume] units."
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
@@ -217,7 +219,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 150 units."
+	desc = "A large beaker."
 	icon_state = "beakerlarge"
 	g_amt = 5000
 	volume = 150
@@ -227,16 +229,15 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	icon_state = "beakernoreact"
 	g_amt = 500
-	volume = 50
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology. Can hold up to 300 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology."
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 300
@@ -247,7 +248,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
-	desc = "A small glass vial. Can hold up to 25 units."
+	desc = "A small glass vial."
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25
@@ -284,7 +285,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70

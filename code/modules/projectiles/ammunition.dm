@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -18,10 +18,14 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-	set_dir(pick(alldirs))
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	transform = turn(transform,rand(0,360))
 	update_icon()
+
+/obj/item/ammo_casing/Destroy()
+	QDEL_NULL(BB)
+	return ..()
 
 /obj/item/ammo_casing/update_icon()
 	..()
@@ -65,7 +69,7 @@
 	item_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()
@@ -100,6 +104,16 @@
 			return 1
 	return 0
 
+/obj/item/ammo_box/proc/make_empty(deleting = TRUE)
+	if(deleting)
+		stored_ammo = list()
+		update_icon()
+	else
+		var/turf/T = get_turf(src)
+		for(var/obj/ammo in stored_ammo)
+			stored_ammo -= ammo
+			ammo.forceMove(T)
+
 /obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
 	if(istype(I, /obj/item/ammo_box))
@@ -117,7 +131,7 @@
 			user.drop_from_inventory(AC, src)
 			num_loaded++
 	if(num_loaded)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		playsound(src, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		I.update_icon()
 		update_icon()
 		return num_loaded

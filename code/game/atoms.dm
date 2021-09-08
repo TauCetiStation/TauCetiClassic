@@ -11,6 +11,8 @@
 	var/list/blood_DNA      //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
+	var/uncleanable = 0
+
 	var/last_bumped = 0
 	var/pass_flags = NONE
 	var/throwpass = 0
@@ -99,7 +101,12 @@
 
 /atom/Destroy()
 	if(alternate_appearances)
+		var/prev_key // There is a runtime when the index remains in list, but the type or other devilry disappears
 		for(var/K in alternate_appearances)
+			// ghost apperance qdeling in main apperance
+			if(K == "[prev_key]_observer")
+				continue
+			prev_key = K
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			AA.remove_from_hud(src)
 
@@ -109,6 +116,9 @@
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
+
+	var/area/A = get_area(src)
+	A?.Exited(src, null)
 
 	return ..()
 
@@ -499,15 +509,25 @@
 	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
-	if(flags & NOBLOODY) return 0
-	if(!dirt_datum) return 0
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(flags & NOBLOODY)
+		return FALSE
+	if(!dirt_datum)
+		return FALSE
 	if(!dirt_overlay)
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)
-	return 1
+	SEND_SIGNAL(src, COMSIG_ATOM_ADD_DIRT, dirt_datum)
+	return TRUE
 
 /atom/proc/clean_blood()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(uncleanable)
+		return 0
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEAN_BLOOD)
 	src.germ_level = 0
 	if(dirt_overlay)
 		dirt_overlay = null
@@ -580,7 +600,7 @@
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 		var/olddir = C.dir
 
@@ -595,11 +615,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			step(C, olddir)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
@@ -608,7 +624,9 @@
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
 			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
-				step(C, olddir)
+				if(C.force_moving) //If we're already slipping extend it
+					qdel(C.force_moving)
+				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 			else
 				C.inertia_dir = 0
 		return TRUE
@@ -669,7 +687,7 @@
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
-		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+		INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 /atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
@@ -677,7 +695,7 @@
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)
-	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+	INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 	if(severity >= 3)
 		for(var/dir_ in cardinal)
@@ -688,15 +706,6 @@
 	..()
 	shake_camera(src, 0.5 SECONDS, severity)
 
-/atom/proc/set_alt_apperances_layers()
-	if(alternate_appearances)
-		for(var/key in alternate_appearances)
-			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
-			if(AA.theImage)
-				AA.theImage.layer = layer
-				AA.theImage.plane = plane
-				AA.theImage.appearance_flags = appearance_flags
-
 /atom/proc/get_name(mob/user)
 	if(alternate_appearances)
 		for(var/key in alternate_appearances)
@@ -705,3 +714,39 @@
 				continue
 			return AA.alternate_obj.name
 	return name
+
+/*
+ * Returns:
+ * An assoc list of kind image = list(viewers)
+ */
+/atom/proc/get_perceived_images(list/viewers)
+	var/list/imgs = list()
+
+	for(var/key in alternate_appearances)
+		var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+
+		var/image/I = image(AA.theImage.icon, AA.theImage.icon_state)
+		I.appearance = AA.theImage
+		I.dir = AA.theImage.dir
+
+		var/list/img_viewers = list()
+		for(var/v in viewers)
+			if(v in AA.hudusers)
+				img_viewers += v
+
+		imgs[I] = img_viewers
+
+		if(AA.theImage.override)
+			for(var/v in img_viewers)
+				viewers -= v
+
+	var/image/I = image(icon, icon_state)
+	I.appearance = src
+	I.dir = dir
+
+	imgs[I] = viewers
+
+	return imgs
+
+/atom/proc/update_icon()
+	return

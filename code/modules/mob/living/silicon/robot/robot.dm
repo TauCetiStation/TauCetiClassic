@@ -7,7 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
 	typing_indicator_type = "robot"
 
@@ -20,14 +20,14 @@
 
 //Hud stuff
 
-	var/obj/screen/inv1 = null
-	var/obj/screen/inv2 = null
-	var/obj/screen/inv3 = null
+	var/atom/movable/screen/inv1 = null
+	var/atom/movable/screen/inv2 = null
+	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/shown_robot_pda = 0
 	var/shown_robot_foto = 0
-	var/obj/screen/robot_modules_background
+	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -77,7 +77,7 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
-/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -92,7 +92,7 @@
 	updatename(name_prefix)
 	updateicon()
 
-	init(laws_type, ai_link)
+	init(laws_type, ai_link, R)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -123,11 +123,16 @@
 
 	diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/proc/init(laws_type, ai_link)
+/mob/living/silicon/robot/proc/set_ai_link(link)
+	if (connected_ai != link)
+		connected_ai = link
+		update_manifest()
+
+/mob/living/silicon/robot/proc/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new laws_type()
+	laws = new laws_type(R)
 	if(ai_link)
-		connected_ai = select_active_ai_with_fewest_borgs()
+		set_ai_link(select_active_ai_with_fewest_borgs())
 		if(connected_ai)
 			connected_ai.connected_robots += src
 			lawsync()
@@ -162,8 +167,7 @@
 		var/list/modules = list(
 				"Standard" = "robot_old",
 				"Engineering" = "Engineering",
-				"Surgeon" = "medicalrobot",
-				"Crisis" = "Medbot",
+				"Medical" = "medicalrobot",
 				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
@@ -232,8 +236,8 @@
 			module_sprites["Kodiak"] = "kodiak-miner"
 			give_hud(DATA_HUD_MINER)
 
-		if("Crisis")
-			module = new /obj/item/weapon/robot_module/crisis(src)
+		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			module.channels = list("Medical" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
@@ -241,19 +245,8 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-medical"
-			module_sprites["Acheron"] = "mechoid-Medical"
-
-		if("Surgeon")
-			module = new /obj/item/weapon/robot_module/surgeon(src)
-			module.channels = list("Medical" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Medical")
-			module_sprites["Basic"] = "Medbot"
-			module_sprites["Standard"] = "surgeon"
-			module_sprites["Advanced Droid"] = "droid-medical"
-			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-surgery"
+			module_sprites["Drone Red"] = "drone-surgery"
+			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
@@ -303,7 +296,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
 	// Radial menu for choose icon_state
@@ -335,7 +328,7 @@
 	if(custom_name)
 		changed_name = custom_name
 		if(client)
-			for(var/obj/screen/screen in client.screen)
+			for(var/atom/movable/screen/screen in client.screen)
 				if(screen.name == "Namepick")
 					client.screen -= screen
 					qdel(screen)
@@ -347,6 +340,7 @@
 
 	// if we've changed our name, we also need to update the display name for our PDA
 	setup_PDA()
+	update_manifest()
 
 	//We also need to update name of internal camera.
 	if (camera)
@@ -444,15 +438,14 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = SSticker.mode
-		for (var/datum/mind/malfai in malf.malf_ai)
-			if(connected_ai)
-				if(connected_ai.mind == malfai)
-					if(malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-			else if(SSticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(SSticker.mode:AI_win_timeleft/(SSticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+	if(ismalf(connected_ai))
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(SSticker.hacked_apcs >= 3)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
+	else
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(malf?.malf_mode_declared)
+			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -472,6 +465,9 @@
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
 				stat("Internal Atmosphere Info: [current_jetpack.name]")
 				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
+		if(locate(/obj/item/device/gps/cyborg))
+			var/turf/T = get_turf(src)
+			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
@@ -606,7 +602,7 @@
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
-				src.Destroy()
+				Destroy()
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -648,8 +644,7 @@
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
@@ -710,8 +705,7 @@
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
-				usr.drop_item()
-				U.loc = src
+				usr.drop_from_inventory(U, src)
 			else
 				to_chat(usr, "Upgrade error!")
 
@@ -742,10 +736,10 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked", /obj/screen/alert/hacked)
+				throw_alert("hacked", /atom/movable/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
-				connected_ai = null
+				set_ai_link(null)
 				to_chat(user, "You emag [src]'s interface.")
 				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
@@ -778,7 +772,7 @@
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 						qdel(D)
 					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					src.module.rebuild()
+					module.rebuild()
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -1024,7 +1018,7 @@
 
 	. = ..()
 
-	if(module)
+	if(module && !ISDIAGONALDIR(Dir))
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
@@ -1066,15 +1060,16 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.connected_ai = null
+		set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.clear_all_networks()
+		camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
+	update_manifest()
 
 
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
@@ -1126,3 +1121,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

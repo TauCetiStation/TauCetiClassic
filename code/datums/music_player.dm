@@ -75,7 +75,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	return ..()
 
 /datum/music_player/proc/interact(mob/living/user)
-	if(!istype(user) || !in_range(instrument, user) || issilicon(user) || user.incapacitated())
+	if(!istype(user) || !instrument.Adjacent(user) || issilicon(user) || user.incapacitated())
 		return
 
 	var/html = ""
@@ -272,7 +272,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						if(!S)
 							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
 
-						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
+						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, null, null, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 

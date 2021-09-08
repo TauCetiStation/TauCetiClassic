@@ -77,7 +77,7 @@
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
+			AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
 			var/turf/simulated/from = get_step(M, turn(M.dir, 180))
 			if(istype(from) && from)
 				from.AddTracks(M,bloodDNA,0,M.dir,blooddatum) // Going

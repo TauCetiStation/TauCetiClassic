@@ -48,15 +48,14 @@
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
-		user.drop_item()
-		W.loc = src.loc
+		user.drop_from_inventory(W, loc)
 		switch(scan_fossil(W))
 			if(1)
-				src.visible_message("<span class='red'> [bicon(src)] [src] scans the fossil and rejects it.</span>")
+				visible_message("<span class='red'> [bicon(src)] [src] scans the fossil and rejects it.</span>")
 			if(2)
 				visible_message("<span class='red'> [bicon(src)] [src] can not extract any more genetic data from new fossils.</span>")
 			if(4)
-				src.visible_message("<span class='notice'>[bicon(src)] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
+				visible_message("<span class='notice'>[bicon(src)] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
 				qdel(W)
 				updateDialog()
 	else if (istype(W, /obj/item/weapon/storage))
@@ -215,7 +214,7 @@
 	if(world.time > src.last_used + 150)
 		var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
 		visible_message("<span class='notice'>[bicon(src)] [src] clones a packet of seeds from a reconstituted gene sequence!</span>")
-		playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		new cloned_genesequence.spawned_type(src.loc)
 		src.last_used = world.time
 	else
@@ -232,7 +231,7 @@
 			visible_message("<span class='red'>[bicon(src)] Error: clonepod malfunction.</span>")
 		else
 			visible_message("<span class='notice'>[bicon(src)] [src] clones something from a reconstituted gene sequence!</span>")
-			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			pod1.occupant = new cloned_genesequence.spawned_type(pod1)
 			pod1.locked = 1
 			pod1.icon_state = "pod_1"

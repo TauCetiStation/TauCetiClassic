@@ -13,9 +13,9 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 1
+	density = TRUE
 	unacidable = 1
-	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
+	anchored = TRUE //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
@@ -242,7 +242,7 @@
 	//stop flying
 	on_impact(A)
 
-	density = 0
+	density = FALSE
 	invisibility = 101
 	qdel(src)
 	return 1
@@ -371,7 +371,7 @@
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
-	def_zone = check_zone(user.zone_sel.selecting)
+	def_zone = check_zone(user.get_targetzone())
 	starting = T
 	original = A
 	current = T

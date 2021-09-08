@@ -86,7 +86,7 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.set_machine(src)
+	set_machine(src)
 
 	if(temp)
 		left_part = temp
@@ -98,31 +98,31 @@
 			if("main")
 				left_part = ""
 			if("directives")
-				left_part = src.directives()
+				left_part = directives()
 			if("pdamessage")
-				left_part = src.pdamessage()
+				left_part = pdamessage()
 			if("buy")
 				left_part = downloadSoftware()
 			if("manifest")
-				left_part = src.softwareManifest()
+				left_part = softwareManifest()
 			if("medicalrecord")
-				left_part = src.softwareMedicalRecord()
+				left_part = softwareMedicalRecord()
 			if("securityrecord")
-				left_part = src.softwareSecurityRecord()
+				left_part = softwareSecurityRecord()
 			if("translator")
-				left_part = src.softwareTranslator()
+				left_part = softwareTranslator()
 			if("atmosensor")
-				left_part = src.softwareAtmo()
+				left_part = softwareAtmo()
 			if("securityhud")
-				left_part = src.facialRecognition()
+				left_part = facialRecognition()
 			if("medicalhud")
-				left_part = src.medicalAnalysis()
+				left_part = medicalAnalysis()
 			if("interaction")
-				left_part = src.softwareInteraction()
+				left_part = softwareInteraction()
 			if("signaller")
-				left_part = src.softwareSignal()
+				left_part = softwareSignal()
 			if("radio")
-				left_part = src.softwareRadio()
+				left_part = softwareRadio()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -216,7 +216,7 @@
 					var/cost = src.available_software[target]
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.software.Add(target)
+						software.Add(target)
 					else
 						src.temp = "Insufficient RAM available."
 				else
@@ -258,7 +258,7 @@
 					pID = 8
 				if("What")
 					pID = 9
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 
@@ -299,7 +299,7 @@
 					pda.message_silent = !pda.message_silent
 				else if(href_list["target"])
 					if(silence_time)
-						return alert("Communications circuits remain uninitialized.")
+						return tgui_alert(usr, "Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)
@@ -355,7 +355,7 @@
 
 		if("translator")
 			if(href_list["toggle"])
-				src.translator_toggle()
+				translator_toggle()
 		if("interaction")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -399,8 +399,8 @@
 						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
 						QDEL_NULL(cable)
 					hackobj = null
-	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
+	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
 // Interaction module - proc
@@ -727,7 +727,7 @@
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><hr>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.html_manifest(monochrome=0)
 	dat += "<br>"
 	return dat
 
@@ -1018,7 +1018,7 @@
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
 		if(src.screen == "interaction" && src.subscreen == 0) // Update our view, if appropriate
-			src.paiInterface()
+			paiInterface()
 		if(hackprogress == 100)
 			hackprogress = 0
 			src.hacksuccess = TRUE

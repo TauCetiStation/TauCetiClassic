@@ -14,7 +14,7 @@
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
 
 	if(!speech_allowed && usr == src)
@@ -24,7 +24,7 @@
 	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return FALSE
-		return src.say_dead(message)
+		return say_dead(message)
 
 	if(src.stat)
 		return FALSE

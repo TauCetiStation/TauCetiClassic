@@ -11,7 +11,7 @@
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
@@ -112,7 +112,7 @@
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
@@ -160,10 +160,6 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
-		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -567,7 +563,7 @@
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
-					new src.type(tunnel, rand(10, 15), 0, dir)
+					new type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -683,7 +679,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.add_overlay(I)
+				add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A

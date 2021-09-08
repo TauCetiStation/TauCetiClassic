@@ -3,7 +3,7 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	icon_state = "torch"
 	item_state = "torch"
 	light_color = LIGHT_COLOR_FIRE
@@ -129,11 +129,11 @@
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)
 				//Center the icon where the user clicked.
-				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else */
 	return ..()
 

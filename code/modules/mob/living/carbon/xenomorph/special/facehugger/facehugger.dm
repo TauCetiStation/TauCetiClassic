@@ -7,7 +7,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
@@ -173,11 +173,15 @@
 
 /obj/item/clothing/mask/facehugger/dropped()
 	..()
+	get_off()
+
 //If the facehugger was removed from the face and the player controls the facehugger
+/obj/item/clothing/mask/facehugger/proc/get_off()
 	if(current_hugger)
-		var/atom/movable/mob_container = current_hugger
-		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
 		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+		var/atom/movable/mob_container = FH
+		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
+		current_hugger = null
 		FH.reset_view()
 		qdel(FH.get_active_hand())	//delete a grab
 		qdel(src)
@@ -225,11 +229,19 @@
 
 /obj/item/clothing/mask/facehugger/proc/mouth_is_protected(obj/item/clothing/I)
 	if(istype(I, /obj/item/clothing/head))
-		if(I.flags & HEADCOVERSMOUTH)
+		if((I.flags & HEADCOVERSMOUTH) || (I.flags_inv & HIDEMASK))
 			return TRUE
 	if(istype(I, /obj/item/clothing/mask))
 		if(I.flags & MASKCOVERSMOUTH)
 			return TRUE
+	return FALSE
+
+/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
+	var/obj/item/clothing/head/helmet/space/rig/R = I
+	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
+		R.canremove = TRUE
+	if(C.unEquip(I))
+		return TRUE
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
@@ -242,7 +254,7 @@
 	var/target_mask = C.wear_mask
 	var/fail_rip_off = FALSE
 	if(target_head && mouth_is_protected(target_head))
-		if(prob(50) && C.unEquip(target_head))
+		if(prob(50) && unequip_head(target_head, C))
 			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
 		else
 			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")
@@ -302,7 +314,6 @@
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
 			qdel(current_hugger)
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()
@@ -334,9 +345,8 @@
 	stat = DEAD
 	STOP_PROCESSING(SSobj, src)
 
+	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
-
-	return
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"

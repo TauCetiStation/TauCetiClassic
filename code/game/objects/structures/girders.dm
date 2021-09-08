@@ -1,8 +1,8 @@
 /obj/structure/girder
 	icon = 'icons/obj/smooth_structures/girder.dmi'
 	icon_state = "box"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = 2.9
 	var/state = 0
 	var/health = 200
@@ -12,7 +12,8 @@
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
 		/obj/structure/girder,
-		/obj/structure/girder/reinforced
+		/obj/structure/girder/reinforced,
+		/obj/structure/girder/cult,
 	)
 	smooth = SMOOTH_TRUE
 
@@ -171,8 +172,7 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
-			user.drop_item()
-			P.loc = src.loc
+			user.drop_from_inventory(P, loc)
 			to_chat(user, "<span class='notice'>Вы встроили трубу в каркас!</span>")
 	else
 		..()
@@ -210,7 +210,7 @@
 			 "<span class='warning'>Вы крушите каркас.</span>", \
 			 "Вы слышите скрежет металла.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= attacker.melee_damage
+		health -= attacker.melee_damage * 10
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
@@ -218,7 +218,7 @@
 /obj/structure/girder/displaced
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
-	anchored = 0
+	anchored = FALSE
 	health = 50
 	smooth = SMOOTH_FALSE
 
@@ -228,64 +228,15 @@
 	state = 2
 	health = 500
 
-/obj/structure/cultgirder
-	icon= 'icons/obj/cult.dmi'
-	icon_state= "cultgirder"
-	anchored = 1
-	density = 1
+/obj/structure/girder/cult
+	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
+	icon_state= "box"
+	anchored = TRUE
+	density = TRUE
 	layer = 2.9
-	var/health = 250
-	smooth = SMOOTH_FALSE
+	health = 250
+	smooth = SMOOTH_TRUE
 
-/obj/structure/cultgirder/attackby(obj/item/W, mob/user)
-	if(user.is_busy(src))
-		return
-	if(iswrench(W))
-		to_chat(user, "<span class='notice'>Вы начинаете разбирать каркас.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
-			to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
-			new /obj/effect/decal/remains/human(get_turf(src))
-			qdel(src)
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		to_chat(user, "<span class='notice'>Вы начинаете разрезать каркас на куски.</span>")
-		if(W.use_tool(src, user, 30, volume = 100))
-			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
-		new /obj/effect/decal/remains/human(get_turf(src))
-		qdel(src)
-
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
-		new /obj/effect/decal/remains/human(get_turf(src))
-		qdel(src)
-
-/obj/structure/cultgirder/blob_act()
-	if(prob(40))
-		qdel(src)
-
-/obj/structure/cultgirder/bullet_act(obj/item/projectile/Proj) //No beam check- How else will you destroy the cult girder with silver bullets?????
-	health -= Proj.damage
-	..()
-	if(health <= 0)
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
-
-	return
-
-/obj/structure/cultgirder/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(30))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)
-			return
-		if(3.0)
-			if (prob(5))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)
-			return
-		else
-	return
+/obj/structure/girder/cult/Destroy()
+	new /obj/effect/decal/remains/human(get_turf(src))
+	return ..()
