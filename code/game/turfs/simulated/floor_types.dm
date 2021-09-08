@@ -420,7 +420,7 @@
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init_late()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, TRUE)
+	AddElement(/datum/element/turf_transparency, TRUE)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	var/dirs = 0
