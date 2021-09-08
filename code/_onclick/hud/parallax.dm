@@ -1,7 +1,6 @@
 
 /client
 	var/list/parallax_layers
-	var/list/parallax_static_layers
 	var/list/parallax_layers_cached
 	var/list/parallax_static_layers_cached
 	var/atom/movable/movingmob
@@ -36,17 +35,17 @@
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_1(null, C.view)
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_2(null, C.view)
 				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/layer_3(null, C.view)
-				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/planet(null, C.view)
+				C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/elite/asteroid(null, C.view)
 				C.parallax_static_layers_cached += new /atom/movable/screen/parallax_layer/elite/milky_way(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
-	C.parallax_static_layers = C.parallax_static_layers_cached.Copy()
+	var/list/parallax_static_layers = C.parallax_static_layers_cached.Copy()
 
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
 
+	C.parallax_layers |= parallax_static_layers
 	C.screen |= (C.parallax_layers)
-	C.screen |= (C.parallax_static_layers)
 
 	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
 
@@ -73,7 +72,7 @@
 	switch(C.prefs.parallax)
 		if (PARALLAX_INSANE)
 			C.parallax_throttle = FALSE
-			C.parallax_layers_max = 4
+			C.parallax_layers_max = INFINITY
 			return TRUE
 
 		if (PARALLAX_MED)
