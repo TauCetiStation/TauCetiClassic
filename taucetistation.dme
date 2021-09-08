@@ -304,7 +304,6 @@
 #include "code\datums\diseases\advance\symptoms\weight.dm"
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\beauty.dm"
-#include "code\datums\elements\turf_transparency.dm"
 #include "code\datums\helper_datums\construction_datum.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"

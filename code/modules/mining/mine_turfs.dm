@@ -672,7 +672,6 @@
 	..()
 	var/turf/T
 	var/icon/I = new(base_icon, icon_state)
-	RemoveElement(/datum/element/turf_transparency)
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(T && istype(T, /turf/space))
@@ -681,7 +680,6 @@
 				if(istype(O, /obj/structure/lattice))
 					lattice = 1
 			if(!lattice)
-				AddElement(/datum/element/turf_transparency)
 				var/icon/B = new(base_icon, "asteroid_edge_[direction_to_check]")
 				I.Blend(B, ICON_MULTIPLY)
 	icon = I
@@ -694,6 +692,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
+	make_transparent()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
