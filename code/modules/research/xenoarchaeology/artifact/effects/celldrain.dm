@@ -22,8 +22,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	discharge_everything_in_range(200 * used_power, range, curr_turf)
 

@@ -32,8 +32,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/receiver in range(range, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
@@ -78,8 +77,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/silicon/receiver in range(range, curr_turf))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
@@ -125,8 +123,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/receiver in range(range, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
@@ -171,8 +168,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/silicon/receiver in range(range, curr_turf))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")

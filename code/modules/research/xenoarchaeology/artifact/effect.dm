@@ -136,11 +136,13 @@
  * Only called in artifact_unknown code on qdel
  */
 /datum/artifact_effect/proc/DoEffectDestroy()
+	return
 
 /**
  * Updates effect on /move
  */
 /datum/artifact_effect/proc/UpdateMove()
+	return
 
 /**
  * Tries to subtract given numbre from current_charge

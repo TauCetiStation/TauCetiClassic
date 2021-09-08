@@ -27,8 +27,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/M in range(range, curr_turf))
 		M.apply_effect(radiation_amount * used_power, IRRADIATE, 0)

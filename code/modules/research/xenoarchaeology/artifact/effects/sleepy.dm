@@ -24,8 +24,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/L in range(range, curr_turf))
 		apply_sleepy(L, used_power)

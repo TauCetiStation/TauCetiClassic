@@ -22,8 +22,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/used_power
-	used_power = .
+	var/used_power = .
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/M in range(range, curr_turf))
 		if(teleport_around(M, round(1 * used_power)))

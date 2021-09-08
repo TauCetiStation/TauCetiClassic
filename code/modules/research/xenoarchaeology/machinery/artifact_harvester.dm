@@ -1,4 +1,3 @@
-
 /obj/machinery/artifact_harvester
 	name = "Exotic Particle Harvester"
 	desc = "It is used to drain the energy out of the artifacts."
