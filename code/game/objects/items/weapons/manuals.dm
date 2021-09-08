@@ -239,7 +239,7 @@
 	item_state = "book9"
 	author = "NanoTrasen"
 	title = "Blueshield Initiative Briefing"
-	wiki_page = "Участник:PervertGenius/Blueshield_Officer" // For Test Merge, link to be changed
+	wiki_page = "Blueshield_Officer"
 
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
