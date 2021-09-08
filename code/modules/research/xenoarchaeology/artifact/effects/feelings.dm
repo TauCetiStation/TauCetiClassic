@@ -107,11 +107,11 @@
 
 /datum/artifact_effect/feelings/bad/send_drastic_message(mob/receiver)
 	to_chat(receiver, "<font color='red' size='[num2text(rand(3, 5))]'><b>[pick_n_take(drastic_message_list)]</b></font>")
-	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "drastic_effect_bad", /datum/mood_event/bad_major)
+	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "drastic_effect_bad", /datum/mood_event/artifact_effect_bad_major)
 
 /datum/artifact_effect/feelings/bad/send_minor_message(mob/receiver)
 	to_chat(receiver, "<font color='red'>[pick_n_take(normal_message_list)]</font>")
-	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "minor_effect_bad", /datum/mood_event/bad_minor)
+	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "minor_effect_bad", /datum/mood_event/artifact_effect_bad_minor)
 
 /datum/artifact_effect/feelings/good
 	log_name = "Good Feeling"
@@ -120,11 +120,11 @@
 
 /datum/artifact_effect/feelings/good/send_drastic_message(mob/receiver)
 	to_chat(receiver, "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick_n_take(drastic_message_list)]</b></font>")
-	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "drastic_effect_good", /datum/mood_event/good_major)
+	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "drastic_effect_good", /datum/mood_event/artifact_effect_good_major)
 
 /datum/artifact_effect/feelings/good/send_minor_message(mob/receiver)
 	to_chat(receiver, "<font color='blue'>[pick_n_take(normal_message_list)]</font>")
-	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "minor_effect_good", /datum/mood_event/good_minor)
+	SEND_SIGNAL(receiver, COMSIG_ADD_MOOD_EVENT, "minor_effect_good", /datum/mood_event/artifact_effect_good_minor)
 
 #undef ARTIFACT_BAD_MESSAGES_MINOR
 #undef ARTIFACT_BAD_MESSAGES_MAJOR
