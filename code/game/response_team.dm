@@ -29,7 +29,6 @@ var/can_call_ert
 		switch(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
 			if("Нет")
 				return
-
 	var/objective = sanitize(input(usr, "Custom ERT objective", "Setup objective", "Help the station crew"))
 
 	if(SSticker.ert_call_in_progress)
