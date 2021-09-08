@@ -416,13 +416,13 @@
 	. = ..()
 	update_icon(1)
 	set_light(1.5)
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/plating/airless/catwalk/atom_init_late()
+	. = ..()
+	AddElement(/datum/element/turf_z_transparency, TRUE)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
-	underlays.Cut()
-	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-	I.plane = PLANE_SPACE
-	underlays += I
-
 	var/dirs = 0
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src,direction)

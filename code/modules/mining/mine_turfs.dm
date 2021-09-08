@@ -619,6 +619,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
 	name = "Asteroid"
+	var/base_icon = 'icons/turf/asteroid.dmi'
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	oxygen = 0.01
@@ -670,6 +671,8 @@
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
 	var/turf/T
+	var/icon/I = new(base_icon, icon_state)
+	RemoveElement(/datum/element/turf_z_transparency)
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(T && istype(T, /turf/space))
@@ -678,8 +681,10 @@
 				if(istype(O, /obj/structure/lattice))
 					lattice = 1
 			if(!lattice)
-				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				add_overlay(I)
+				AddElement(/datum/element/turf_z_transparency, TRUE)
+				var/icon/B = new(base_icon, "asteroid_edge_[direction_to_check]")
+				I.Blend(B, ICON_MULTIPLY)
+	icon = I
 
 /turf/proc/update_overlays_full()
 	var/turf/A
