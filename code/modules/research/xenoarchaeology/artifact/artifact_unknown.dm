@@ -216,7 +216,7 @@
 
 /obj/machinery/artifact/examine(mob/user)
 	..()
-	switch(round(100 - (initial(health) / health)))
+	switch(round(100 * (health / initial(health))))
 		if(85 to 100)
 			to_chat(user, "Appears to have no structural damage.")
 		if(65 to 85)
