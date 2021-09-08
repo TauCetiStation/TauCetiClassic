@@ -146,7 +146,7 @@
  * Tries to subtract given numbre from current_charge
  * returns true if the result above zero, returns false otherwise
  */
-/datum/artifact_effect/proc/try_drain_charge(var/charges_drained)
+/datum/artifact_effect/proc/try_drain_charge(charges_drained)
 	if((current_charge - charges_drained) < 0)
 		return FALSE
 	current_charge -= charges_drained
