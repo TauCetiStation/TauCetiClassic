@@ -14,8 +14,6 @@
 	var/being_used = 0
 	///does our artifact needs an init, dont forget to init turfs in prebuild artifacts if needed
 	var/need_init = TRUE
-	///last scan time, used in process for proxy trigger
-	var/last_scan = 0
 	///how often do we scan
 	var/scan_delay = 2 SECONDS
 	///list of turfs around us
@@ -202,8 +200,7 @@
 	//TRIGGER_PROXY ACTIVATION
 	if((my_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
 		if(mobs_around.len != 0)
-			if(world.time >= last_scan + scan_delay)
-				last_scan = world.time
+			if(world.time >= scan_delay)
 				toggle_effects_on(TRIGGER_PROXY)
 		else
 			toggle_effects_off(TRIGGER_PROXY)
