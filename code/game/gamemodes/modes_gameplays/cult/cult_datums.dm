@@ -218,7 +218,7 @@
 	var/datum/religion/cult/R = global.cult_religion
 	R.capturing_area = TRUE
 
-		var/list/blacklisted_announcements = list(
+	var/list/blacklisted_announcements = list(
 		/datum/announcement/centcomm/anomaly,
 		/datum/announcement/centcomm/anomaly/frost,
 		/datum/announcement/centcomm/anomaly/massive_portals,
