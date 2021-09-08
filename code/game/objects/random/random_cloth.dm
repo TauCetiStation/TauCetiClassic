@@ -21,7 +21,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "syndicate"
 /obj/random/cloth/spacesuit/item_to_spawn()
-return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling, /obj/item/clothing/suit/space/rig/ert/stealth, /obj/item/clothing/suit/space/rig/syndi/elite, /obj/item/clothing/suit/space/rig/syndi/elite/comander))
+	return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling, /obj/item/clothing/suit/space/rig/ert/stealth, /obj/item/clothing/suit/space/rig/syndi/elite, /obj/item/clothing/suit/space/rig/syndi/elite/comander))
 
 /obj/random/cloth/storagesuit
 	name = "random storagesuit"
