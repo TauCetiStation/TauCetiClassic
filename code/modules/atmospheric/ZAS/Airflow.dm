@@ -131,6 +131,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(ismob(src))
 		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
+	playsound(airflow_dest, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER)
 	last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
