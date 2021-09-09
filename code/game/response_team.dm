@@ -58,7 +58,7 @@ var/can_call_ert
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
 		if(available_in_minutes)
-			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [pluralize_russian(available_in_minutes, "[available_in_minutes] минуту", "[available_in_minutes] минуты", "[available_in_minutes] минут")]. Продолжайте играть для получения доступа.</span>")
+			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [available_in_minutes] [pluralize_russian(available_in_minutes, "минуту", "минуты", "минут")]. Продолжайте играть для получения доступа.</span>")
 			return
 
 		if(response_team_members.len > 5)

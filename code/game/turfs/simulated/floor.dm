@@ -572,7 +572,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='warning'>Нужно больше стержней.</span>")
 		else if (is_catwalk())
-			to_chat(user, "<span class='warning'>Объект на 100% завершен, стержней больше не нужно.</span>")
+			to_chat(user, "<span class='warning'>Объект уже на 100% состоит из стержней, больше не нужно.</span>")
 		else
 			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 		return
