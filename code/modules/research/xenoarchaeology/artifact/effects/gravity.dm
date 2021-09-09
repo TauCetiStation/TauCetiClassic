@@ -12,7 +12,7 @@
 	type_name = ARTIFACT_EFFECT_BLUESPACE
 	grav_type = pick(GRAVITY_PULL, GRAVITY_REPELL)
 
-/datum/artifact_effect/gravity/DoEffectPulse(atom/holder)
+/datum/artifact_effect/gravity/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return

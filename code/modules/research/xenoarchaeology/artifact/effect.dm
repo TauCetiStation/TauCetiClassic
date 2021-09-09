@@ -121,7 +121,7 @@
  * Tries to drain charge
  * returns true if charge was drained, otherwise returns false
  */
-/datum/artifact_effect/proc/DoEffectAura(atom/holder)
+/datum/artifact_effect/proc/DoEffectAura()
 	if(try_drain_charge(activation_aura_cost))
 		return TRUE
 	return FALSE
@@ -130,7 +130,7 @@
  * Tries to drain charge
  * returns true if charge was drained, otherwise returns false
  */
-/datum/artifact_effect/proc/DoEffectPulse(atom/holder)
+/datum/artifact_effect/proc/DoEffectPulse()
 	if(try_drain_charge(activation_pulse_cost))
 		return activation_pulse_cost
 	return FALSE

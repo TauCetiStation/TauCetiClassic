@@ -8,7 +8,7 @@
 	release_method = ARTIFACT_EFFECT_PULSE
 	type_name = ARTIFACT_EFFECT_PSIONIC
 
-/datum/artifact_effect/noise/DoEffectPulse(atom/holder)
+/datum/artifact_effect/noise/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
