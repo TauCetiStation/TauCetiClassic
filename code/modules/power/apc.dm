@@ -118,6 +118,7 @@
 	powernet = 0 //HACK: set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
+	var/mob/living/traitor = null // Who emagged ~ PervertGenius
 	var/debug = 0
 	var/autoflag = 0 // For optimization. 0 = off, 1 = eqp and lights off, 2 = eqp off, 3 = all on, other = re-autoset
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
@@ -170,7 +171,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			SSticker.hacked_apcs--
+			SSticker.hacked_apcs -= src
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -538,9 +539,10 @@
 				if(prob(50))
 					emagged = 1
 					locked = 0
+					traitor = user
 					to_chat(user, "You emag the APC interface.")
 					update_icon()
-					SSticker.hacked_apcs++
+					SSticker.hacked_apcs += src
 					announce_hacker()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
@@ -611,6 +613,7 @@
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
 		emagged = 0
+		traitor = null
 		if(opened == APC_COVER_REMOVED)
 			opened = APC_COVER_OPENED
 		user.visible_message(\
@@ -921,7 +924,10 @@
 	if(malfai)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			operating ? SSticker.hacked_apcs++ : SSticker.hacked_apcs--
+			if(operating)
+				SSticker.hacked_apcs += src
+			else
+				SSticker.hacked_apcs -= src
 	update()
 	update_icon()
 
@@ -940,7 +946,7 @@
 		ai.malfhacking = FALSE
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			SSticker.hacked_apcs++
+			SSticker.hacked_apcs += src
 		if(ai.parent)
 			malfai = ai.parent
 		else
@@ -950,36 +956,70 @@
 		update_icon()
 
 /obj/machinery/power/apc/proc/announce_hacker()
-	var/hacked_amount = SSticker.hacked_apcs
-	var/lowest_treshold = 3//lowest treshold in hacked apcs for an announcement to start
-	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
-	if(malf_ai && malf_ai.intercept_hacked)
-		hacked_amount += malf_ai.intercept_apcs
-		lowest_treshold += malf_ai.intercept_apcs
-	switch (SSticker.Malf_announce_stage)
-		if(0)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 1
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/first/announce_first = new
-				announce_first.play()
-		if(1)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 2
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/second/announce_second = new
-				announce_second.play()
-		if(2)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 3
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/third/announce_third = new
-				announce_third.play()
-		if(3)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 4
-				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-				announce_forth.play()
+	var/hacked_amount = length(SSticker.hacked_apcs)
+	var/hacked_by_antag = 0
+	var/hacked_by_drill = 0
+	var/amount_to_announce = SSticker.malf_announce_stage * 2 + 3 
+
+	for (var/obj/machinery/power/apc/A in SSticker.hacked_apcs)
+		if (!A.emagged)
+			continue
+		if (A.traitor)
+			hacked_by_antag += 1
+		else
+			hacked_by_drill += 1
+		
+	var/datum/faction/malf_silicons/faction_malf = find_faction_by_type(/datum/faction/malf_silicons)
+	if (faction_malf)
+		amount_to_announce += faction_malf.intercept_apcs * faction_malf.intercept_hacked
+
+	if (hacked_amount >= amount_to_announce)
+		var/datum/announcement/announce = null
+		switch (SSticker.malf_announce_stage)
+			if(0)
+				SSticker.malf_announce_stage = 1
+				announce = new /datum/announcement/centcomm/malf/first
+			if(1)
+				SSticker.malf_announce_stage = 2
+				announce = new /datum/announcement/centcomm/malf/second
+			if(2)
+				SSticker.malf_announce_stage = 3
+				announce = new /datum/announcement/centcomm/malf/third
+			if(3)
+				SSticker.malf_announce_stage = 4
+				if (faction_malf)
+					faction_malf.takeover()
+				else
+					if (hacked_by_antag > hacked_by_drill)
+						antag_act()
+					else
+						drill_act()
+		if (announce)
+			announce.play()
+
+/obj/machinery/power/apc/proc/antag_act()
+	var/datum/announcement/centcomm/malf/fourth_antag/announce = new
+	announce.play()
+	for (var/obj/machinery/power/apc/A in SSticker.hacked_apcs)
+		if (A.emagged && A.traitor)
+			addtimer(CALLBACK(A, .proc/repair_emag), 3 MINUTES + rand(0, 15) SECONDS)
+
+/obj/machinery/power/apc/proc/drill_act()
+	var/datum/announcement/centcomm/malf/fourth_drill/announce_hacker = new
+	var/datum/announcement/station/code/delta/drill/announce_drill = new
+	announce_hacker.play()
+	addtimer(CALLBACK(announce_drill, /datum/announcement/proc/play), 10 SECONDS)
+	for (var/obj/machinery/power/apc/A in SSticker.hacked_apcs)
+		if (A.emagged && !A.traitor)
+			addtimer(CALLBACK(A, .proc/repair_emag), 3 MINUTES)
+
+/obj/machinery/power/apc/proc/repair_emag()
+	if (emagged)
+		SSticker.hacked_apcs -= src
+		emagged = FALSE
+		traitor = null
+		locked = TRUE
+		update_icon()
 ////////////////////////////////
 
 
@@ -1225,7 +1265,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			SSticker.hacked_apcs--
+			SSticker.hacked_apcs -= src
 	stat |= BROKEN
 	operating = 0
 	update_icon()

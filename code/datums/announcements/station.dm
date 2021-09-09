@@ -172,3 +172,10 @@
 			"Все приказы глав станции должны выполняться беспрекословно, любое неповиновение карается смертью! " + \
 			"Всему персоналу перевести датчики костюмов в третий режим! Это не учебная тревога!"
 	sound = "delta"
+
+/datum/announcement/station/code/delta/drill
+	name = "Code: Drill delta"
+	sound = "delta_drill"
+/datum/announcement/station/code/delta/drill/New()
+	message = "Это учебная тревога! " + message
+	message = replacetext(message, "это не учебная тревога", "это учебная тревога")

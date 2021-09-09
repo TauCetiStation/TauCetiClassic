@@ -42,13 +42,16 @@
 		if(takeover_module)
 			qdel(takeover_module)
 
+	SSticker.malf_announce_stage = 4 // To stop announces
+	var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 	var/datum/announcement/centcomm/malf/declared/announce_declared = new
-	announce_declared.play()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
+	announce_forth.play()
+	addtimer(CALLBACK(announce_declared, /datum/announcement/proc/play), 19 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 27 SECONDS)
 
 /datum/faction/malf_silicons/process()
-	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+	if(length(SSticker.hacked_apcs) >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (length(SSticker.hacked_apcs) / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
 

@@ -81,6 +81,16 @@
 	message = "Мы отследили взломшик#, это каже@&# ва3) сист7ма ИИ, он# *#@амыает меха#7зм самоун@чт$#енiя. Оста*##ивте )то по*@!)$#&&@@  <СВЯЗЬ ПОТЕРЯНА>"
 	sound = "malf4"
 
+/datum/announcement/centcomm/malf/fourth_antag
+	name = "Malf: Hacker announce"
+	message = "Мы отследили взломшика и наша команда по кибер-безопасности смогла отключить его от вашей сети. ПО ваших систем было обновлено."
+	sound = "malf4_antag"
+
+/datum/announcement/centcomm/malf/fourth_drill
+	name = "Malf: Drill announce"
+	message = "Мы отследили взломшика и похоже, что он вламывает механизм самоуничтожения. Остановите его, пока не поздно."
+	sound = "malf4_drill"
+
 /* Gang */
 /datum/announcement/centcomm/gang/announce_gamemode
 	name = "Gang: Announce"

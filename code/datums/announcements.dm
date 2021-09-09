@@ -63,12 +63,15 @@ var/list/announcement_sounds = list(
 	"red" = 'sound/AI/red.ogg',
 	"downtored" = 'sound/AI/downtored.ogg',
 	"delta" = 'sound/AI/delta.ogg',
+	"delta_drill" = 'sound/AI/delta_drill.ogg',
 
 	"malf" = 'sound/AI/aimalf.ogg',
 	"malf1" = 'sound/AI/ai_malf_1.ogg',
 	"malf2" = 'sound/AI/ai_malf_2.ogg',
 	"malf3" = 'sound/AI/ai_malf_3.ogg',
 	"malf4" = 'sound/AI/ai_malf_4.ogg',
+	"malf4_antag" = 'sound/AI/ai_malf_4_antag.ogg',
+	"malf4_drill" = 'sound/AI/ai_malf_4_drill.ogg',
 )
 
 /* General announcement */

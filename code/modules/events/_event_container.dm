@@ -168,7 +168,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgottens Tanks",        /datum/event/roundstart/tank_dispenser,                          10, list(ASSIGNMENT_ENGINEER = 5, ASSIGNMENT_SCIENTIST = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Sec. Equimp.",  /datum/event/roundstart/sec_equipment,                           10, list(ASSIGNMENT_SECURITY = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Products Inflation",      /datum/event/roundstart/vending_products,                        10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     1000000, list(ASSIGNMENT_ENGINEER = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chiefs Animals",          /datum/event/roundstart/head_animals,                            10),

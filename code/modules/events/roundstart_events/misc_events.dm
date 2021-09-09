@@ -109,16 +109,58 @@ var/global/list/sec_closets_list = list()
 			message_admins("RoundStart Event: [VP.product_name] has changed amount and price in [V] [COORD(V)].")
 			log_game("RoundStart Event: [VP.product_name] has changed amount and price in [V] [COORD(V)].")
 
-/datum/event/roundstart/apc/start()
-	for(var/obj/machinery/power/apc/A in apc_list)
-		if(!prob(3))
+/datum/event/roundstart/apc
+	noAutoEnd = TRUE
+	var/nextFire = 0
+
+/datum/event/roundstart/apc/proc/hack(probability = 100, amount = 1)
+	var/counter = 0
+	for(var/obj/machinery/power/apc/A in shuffle(apc_list))
+		if (!is_station_level(A.z))
 			continue
-		// bluescreen
+		if (!prob(probability))
+			continue
+		if (A.emagged)
+			continue
+		counter += 1
 		A.emagged = TRUE
 		A.locked = FALSE
+		SSticker.hacked_apcs += A
 		A.update_icon()
+		A.announce_hacker()
 		message_admins("RoundStart Event: [A] has bluescreen in [COORD(A)].")
 		log_game("RoundStart Event: [A] bluescreen in [COORD(A)].")
+
+		if (counter == amount)
+			return
+
+/datum/event/roundstart/apc/start()
+	var/datum/faction/malf_silicons/faction_malf = find_faction_by_type(/datum/faction/malf_silicons)
+	if (faction_malf)
+		end()
+		message_admins("RoundStart Event: Malf AI detected.")
+		log_game("RoundStart Event: Malf AI detected.")
+		hack(3)
+	else if(prob(50))
+		hack(5)
+		end()
+
+/datum/event/roundstart/apc/tick()
+	var/datum/faction/malf_silicons/faction_malf = find_faction_by_type(/datum/faction/malf_silicons)
+	if (faction_malf)
+		end()
+		message_admins("RoundStart Event: Malf AI detected.")
+		log_game("RoundStart Event: Malf AI detected.")
+	if (SSticker.malf_announce_stage == 4)
+		end()
+		return
+	if (activeFor < nextFire)
+		return
+	nextFire += rand(3 MINUTES, 5 MINUTES) / 10 // Converting ticks to real seconds
+	hack()
+
+/datum/event/roundstart/apc/end()
+	kill()
 
 /datum/event/roundstart/dead_monkeys/start()
 	for(var/mob/M in monkey_list)
