@@ -323,6 +323,7 @@
 #include "code\datums\keybinding\robot.dm"
 #include "code\datums\modifiable_value\_modifiable_value.dm"
 #include "code\datums\mood_events\_mood_event.dm"
+#include "code\datums\mood_events\antags_events.dm"
 #include "code\datums\mood_events\beauty_events.dm"
 #include "code\datums\mood_events\generic_negative_events.dm"
 #include "code\datums\mood_events\generic_positive_events.dm"
