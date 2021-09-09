@@ -215,7 +215,24 @@
 			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh."
-			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
+			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
+			if(!species.flags[NO_BREATHE])
+				var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
+				voice_frequency = 1.05 - (voice_frequency - 0.85)
+				switch(get_species())
+					if(SKRELL)
+						switch(gender)
+							if(FEMALE)
+								playsound(src, pick(SOUNDIN_LAUGH_SKRELL_FEMALE), VOL_EFFECTS_MASTER, 100, FALSE, voice_frequency)
+							else
+								playsound(src, pick(SOUNDIN_LAUGH_SKRELL_MALE), VOL_EFFECTS_MASTER, 100, FALSE, voice_frequency)
+					else
+						switch(gender)
+							if(FEMALE)
+								playsound(src, pick(SOUNDIN_LAUGH_FEMALE), VOL_EFFECTS_MASTER, 100, FALSE, voice_frequency)
+							else
+								playsound(src, pick(SOUNDIN_LAUGH_MALE), VOL_EFFECTS_MASTER, 100, FALSE, voice_frequency)
+
 
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
