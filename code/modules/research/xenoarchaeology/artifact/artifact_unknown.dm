@@ -200,7 +200,6 @@
 	//TRIGGER_PROXY ACTIVATION
 	if((my_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
 		if(mobs_around.len != 0)
-			if(world.time >= scan_delay)
 				toggle_effects_on(TRIGGER_PROXY)
 		else
 			toggle_effects_off(TRIGGER_PROXY)
