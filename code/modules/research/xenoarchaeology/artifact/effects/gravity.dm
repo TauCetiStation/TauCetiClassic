@@ -27,7 +27,6 @@
 	var/turfs_to_step = 0
 	turfs_to_step = round(protection * 10 / 2) //5 turfs in no protection, 1 turf in 0,1 protection
 	grav_type ? step_away(M, T, turfs_to_step) : step_towards(M, T, turfs_to_step)
-	to_chat(world, "turfs to step [turfs_to_step]")
 
 #undef GRAVITY_PULL
 #undef GRAVITY_REPELL
