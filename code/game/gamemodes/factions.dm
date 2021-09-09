@@ -100,6 +100,7 @@
 	var/datum/role/newRole = new role_type(null, src)
 	if(!newRole.CanBeAssigned(M))
 		log_mode("[key_name(M)] failed the test CanBeAssigned!")
+		remove_role(newRole)
 		return FALSE
 	log_mode("[key_name(M)] passed the test CanGiveRole!")
 	return TRUE
