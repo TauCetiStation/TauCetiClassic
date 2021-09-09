@@ -637,7 +637,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(!can_deconstruct)
 			return
 		if(!W.use(0, user))
-			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
+			to_chat(user, "<span class='notice'>Нужно больше топлива для сварки.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)
 			if(!broken && !burnt)
