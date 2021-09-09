@@ -157,6 +157,9 @@
 		if(F.members.len < F.min_roles)
 			log_mode("Not enought players for [F]!")
 			return FALSE
+		if(!give_role)
+			for(var/datum/role/R in F.members)
+				F.remove_role(R)
 	return TRUE
 
 /*=====ROLE RELATED STUFF=====*/
