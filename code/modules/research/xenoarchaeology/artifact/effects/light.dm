@@ -6,6 +6,7 @@
 	release_method = ARTIFACT_EFFECT_TOUCH
 	type_name = ARTIFACT_EFFECT_PARTICLE
 	trigger = TRIGGER_TOUCH
+	activation_touch_cost = 0
 
 /datum/artifact_effect/light/DoEffectTouch(mob/living/user)
 	. = ..()
@@ -17,9 +18,11 @@
 	if(holder.light_power == initial(holder.light_power) && holder.light_range == initial(holder.light_range))
 		holder.light_power = light_power
 		holder.light_range = light_range
+		holder.update_light()
 		return
 	holder.light_power = initial(holder.light_power)
 	holder.light_range = initial(holder.light_range)
+	holder.update_light()
 
 /datum/artifact_effect/light/darkness
 	log_name = "Darkness"

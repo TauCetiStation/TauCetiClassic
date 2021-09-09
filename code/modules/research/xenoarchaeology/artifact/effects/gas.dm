@@ -10,7 +10,7 @@
 	release_method = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
 	type_name = pick(ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
 	max_pressure = rand(115, 1000)
-	current_gas_type = pick_n_take(gas_types)
+	current_gas_type = pick(gas_types)
 
 /datum/artifact_effect/gas/DoEffectTouch(mob/user)
 	. = ..()

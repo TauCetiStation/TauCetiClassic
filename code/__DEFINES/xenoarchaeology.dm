@@ -58,7 +58,7 @@
 
 ///artifact type_name
 
-///unknown/none 
+///unknown/none
 #define ARTIFACT_EFFECT_UNKNOWN 0
 ///concentrated energy
 #define ARTIFACT_EFFECT_ENERGY 1

@@ -17,8 +17,8 @@
 	if(!.)
 		return
 	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in range(range, curr_turf))
-		step_towards(M, curr_turf)
+	for(var/mob/living/receiver in range(range, curr_turf))
+		calc_protection_and_step(receiver, curr_turf)
 
 /datum/artifact_effect/gravity/proc/calc_protection_and_step(mob/living/M, turf/T)
 	var/protection = get_anomaly_protection(M)
@@ -27,6 +27,7 @@
 	var/turfs_to_step = 0
 	turfs_to_step = round(protection * 10 / 2) //5 turfs in no protection, 1 turf in 0,1 protection
 	grav_type ? step_away(M, T, turfs_to_step) : step_towards(M, T, turfs_to_step)
+	to_chat(world, "turfs to step [turfs_to_step]")
 
 #undef GRAVITY_PULL
 #undef GRAVITY_REPELL

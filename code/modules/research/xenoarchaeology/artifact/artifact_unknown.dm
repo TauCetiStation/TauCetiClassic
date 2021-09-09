@@ -31,6 +31,10 @@
 	clear_turfs_around()
 	do_destroy_effects()
 	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
+	if(my_effect)
+		QDEL_NULL(my_effect)
+	if(secondary_effect)
+		QDEL_NULL(secondary_effect)
 	return ..()
 
 /obj/machinery/artifact/atom_init()

@@ -86,7 +86,9 @@ var/global/list/valid_secondary_effect_types = list(
 	/datum/artifact_effect/light,
 	/datum/artifact_effect/light/darkness,
 	/datum/artifact_effect/gravity,
-	/datum/artifact_effect/noise)
+	/datum/artifact_effect/noise,
+	/datum/artifact_effect/roboheal,
+	/datum/artifact_effect/robohurt)
 
 
 //used in rituals to determine the value of things

@@ -12,5 +12,5 @@
 	. = ..()
 	if(!.)
 		return
-	var/list/sound_type = pick_n_take(possible_noises)
+	var/list/sound_type = pick(possible_noises)
 	playsound(holder, pick(sound_type), VOL_EFFECTS_MASTER)

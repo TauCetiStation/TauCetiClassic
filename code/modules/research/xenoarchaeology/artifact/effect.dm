@@ -51,8 +51,8 @@
 /datum/artifact_effect/New(atom/location)
 	..()
 	holder = location
-	release_method = pick_n_take(ARTIFACT_ALL_RELEASE_METHODS)
-	trigger = pick_n_take(ARTIFACT_POSSIBLE_TRIGGERS)
+	release_method = pick(ARTIFACT_ALL_RELEASE_METHODS)
+	trigger = pick(ARTIFACT_POSSIBLE_TRIGGERS)
 	create_artifact_type(50, 70, 30)
 	activation_pulse_cost = maximum_charges
 
@@ -95,7 +95,7 @@
 		A.update_icon()
 	if(!reveal_toggle && !holder)
 		return
-	var/display_msg = activated ? pick_n_take(ARTIFACT_ACTIVATION_MESSAGES): pick_n_take(ARTIFACT_DEACTIVATION_MESSAGES)
+	var/display_msg = activated ? pick(ARTIFACT_ACTIVATION_MESSAGES): pick(ARTIFACT_DEACTIVATION_MESSAGES)
 	var/atom/toplevelholder = holder
 	while(!istype(toplevelholder.loc, /turf))
 		toplevelholder = toplevelholder.loc
