@@ -36,7 +36,7 @@
 		for(var/obj/item/weapon/stock_parts/cell/B in A.contents)
 			B.give(power)
 	for(var/obj/machinery/power/smes/S in captured_atoms)
-		S.charge += power
+		S.give(power)
 	for(var/mob/living/silicon/robot/M in captured_atoms)
 		for(var/obj/item/weapon/stock_parts/cell/D in M.contents)
 			D.give(power)
