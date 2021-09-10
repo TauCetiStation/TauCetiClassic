@@ -150,7 +150,6 @@
 	color = "#9c3636"
 	toxpwr = 0
 	custom_metabolism = 1
-	random_unrestricted = FALSE
 
 /datum/reagent/toxin/harvester/on_general_digest(mob/living/carbon/M)
 	..()

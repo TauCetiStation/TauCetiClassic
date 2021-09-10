@@ -141,7 +141,7 @@
 	var/reagents = volume
 	while(reagents)
 		var/newreagent = rand(1, min(reagents, 30))
-		list_reagents += list(get_unrestricted_random_reagent_id() = newreagent)
+		list_reagents += list(pick(RESTRICTED_CHEM_LIST) = newreagent)
 		reagents -= newreagent
 	..()
 

@@ -5,7 +5,6 @@
 	nutriment_factor = 1
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
-	random_unrestricted = FALSE
 
 	data = list()
 

@@ -353,7 +353,6 @@
 	color = "#000000" //Complete black (RGB: 0, 0, 0)
 	//metabolization_rate = 100 //lel
 	custom_metabolism = 100
-	random_unrestricted = FALSE
 
 /datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
 	..()

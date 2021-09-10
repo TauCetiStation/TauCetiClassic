@@ -7,7 +7,7 @@
 	if(!.)
 		return
 	for(var/obj/item/weapon/stock_parts/cell/D in user.contents)
-		D.charge += 150
+		D.give(150)
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 
@@ -15,30 +15,29 @@
 	. = ..()
 	if(!.)
 		return
-	var/turf/curr_turf = get_turf(holder)
-	recharge_everything_in_range(25, range, curr_turf)
+	recharge_everything_in_range(25, range, holder)
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
 	var/used_power = .
-	var/turf/curr_turf = get_turf(holder)
-	recharge_everything_in_range(200 * used_power, range, curr_turf)
+	recharge_everything_in_range(200 * used_power, range, holder)
 
 /datum/artifact_effect/cellcharge/DoEffectDestroy()
-	var/turf/curr_turf = get_turf(holder)
-	recharge_everything_in_range(10000, 7, curr_turf)
+	recharge_everything_in_range(10000, 7, holder)
 
-/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range, center)
-	for(var/obj/item/weapon/stock_parts/cell/C in range(range, center))
-		C.charge += power
-	for(var/obj/machinery/power/apc/A in range(range, center))
+/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range)
+	var/turf/curr_turf = get_turf(holder)
+	var/list/captured_atoms = range(range, curr_turf)
+	for(var/obj/item/weapon/stock_parts/cell/C in captured_atoms)
+		C.give(power)
+	for(var/obj/machinery/power/apc/A in captured_atoms)
 		for(var/obj/item/weapon/stock_parts/cell/B in A.contents)
-			B.charge += power
-	for(var/obj/machinery/power/smes/S in range(range, center))
+			B.give(power)
+	for(var/obj/machinery/power/smes/S in captured_atoms)
 		S.charge += power
-	for(var/mob/living/silicon/robot/M in range(range, center))
+	for(var/mob/living/silicon/robot/M in captured_atoms)
 		for(var/obj/item/weapon/stock_parts/cell/D in M.contents)
-			D.charge += power
+			D.give(power)
 			to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")

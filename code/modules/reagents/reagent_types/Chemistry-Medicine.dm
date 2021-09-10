@@ -338,7 +338,6 @@
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	taste_message = "admin abuse"
-	random_unrestricted = FALSE
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
 	..()

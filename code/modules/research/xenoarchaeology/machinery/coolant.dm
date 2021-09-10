@@ -4,7 +4,6 @@
 	description = "Industrial cooling substance."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	random_unrestricted = FALSE
 
 /datum/chemical_reaction/coolant
 	name = "Coolant"

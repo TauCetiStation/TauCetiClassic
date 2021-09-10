@@ -6,7 +6,6 @@
 	description = "A chemical element, and a strong oxidising agent."
 	reagent_state = SOLID
 	color = "#dcdcdc"  // rgb: 220, 220, 220, silver
-	random_unrestricted = FALSE
 
 /datum/reagent/lithiumsodiumtungstate
 	name = "Lithium Sodium Tungstate"
@@ -14,7 +13,6 @@
 	description = "A reducing agent for geological compounds."
 	reagent_state = LIQUID
 	color = "#c0c0c0"  // rgb: 192, 192, 192, darker silver
-	random_unrestricted = FALSE
 
 /datum/reagent/ground_rock
 	name = "Ground Rock"
@@ -22,7 +20,6 @@
 	description = "A fine dust made of ground up rock."
 	reagent_state = SOLID
 	color = "#a0522d"   //rgb: 160, 82, 45, brown
-	random_unrestricted = FALSE
 
 /datum/reagent/density_separated_sample
 	name = "Density separated sample"
@@ -30,7 +27,6 @@
 	description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 	reagent_state = LIQUID
 	color = "#deb887"   //rgb: 222, 184, 135, light brown
-	random_unrestricted = FALSE
 
 /datum/reagent/analysis_sample
 	name = "Analysis liquid"
@@ -38,7 +34,6 @@
 	description = "A watery paste used in chemical analysis."
 	reagent_state = LIQUID
 	color = "#f5fffa"   //rgb: 245, 255, 250, almost white
-	random_unrestricted = FALSE
 
 /datum/reagent/chemical_waste
 	name = "Chemical Waste"
@@ -46,7 +41,6 @@
 	description = "A viscous, toxic liquid left over from many chemical processes."
 	reagent_state = LIQUID
 	color = "#adff2f"   //rgb: 173, 255, 47, toxic green
-	random_unrestricted = FALSE
 
 /datum/chemical_reaction/lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
 	name = "Lithium Sodium Tungstate"

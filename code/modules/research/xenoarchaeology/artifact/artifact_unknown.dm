@@ -55,10 +55,10 @@
 		init_turfs_around()
 
 /**
- * Adds a entered/exited signal to each turf around orange 3
+ * Adds a entered/exited signal to each turf around RANGE_TURFS(3 , src)
  */
 /obj/machinery/artifact/proc/init_turfs_around()
-	for(var/turf/T in orange(3, src))
+	for(var/turf/T in RANGE_TURFS(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
 		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
 		turfs_around += T
@@ -87,7 +87,7 @@
 	mobs_around -= mover
 
 /**
- * Rebuilds proxy trigger zone, does this on a move
+ * Rebuilds proxy trigger zone, does this if after moved then stayed in one place for 3 seconds
  */
 /obj/machinery/artifact/proc/rebuild_zone()
 	clear_turfs_around()
@@ -343,7 +343,9 @@
 	secondary_effect?.UpdateMove()
 
 	if(my_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
-		addtimer(CALLBACK(src, .proc/rebuild_zone), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		if(turfs_around.len != 0)
+			clear_turfs_around()
+		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null

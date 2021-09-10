@@ -629,7 +629,6 @@
 	color = "#808080"
 	color_weight = 20
 	taste_message = "strong liquid colour"
-	random_unrestricted = FALSE
 
 /datum/reagent/paint/red
 	name = "Red Paint"

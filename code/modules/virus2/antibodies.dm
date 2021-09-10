@@ -34,7 +34,6 @@ var/global/list/ANTIGENS = list(
 	id = "antibodies"
 	reagent_state = LIQUID
 	color = "#0050f0"
-	random_unrestricted = FALSE
 
 /datum/reagent/antibodies/reaction_mob(mob/living/carbon/C, method=TOUCH, volume)
 	if (istype(C) && data && method == INGEST)
