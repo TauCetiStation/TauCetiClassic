@@ -737,7 +737,9 @@
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	smooth_subtype = "asteroid_dug"
+	smooth_bake_overlay = icon(base_icon, "asteroid_dug")
+	queue_smooth(src)
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
