@@ -34893,12 +34893,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bjO" = (
-/obj/machinery/door/airlock/medical/glass{
-	req_access = list(5)
-	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	dir = 1;
+	icon_state = "whitegreen"
 	},
 /area/station/medical/hallway)
 "bjP" = (
@@ -36866,7 +36863,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whiteblue"
+	icon_state = "whitegreen"
 	},
 /area/station/medical/hallway)
 "bno" = (
@@ -43066,6 +43063,30 @@
 /obj/effect/landmark/dealer_spawn,
 /turf/space,
 /area/space)
+"byj" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitegreencorner"
+	},
+/area/station/medical/hallway)
+"byk" = (
+/obj/machinery/door/airlock/medical/glass{
+	req_access = list(5)
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unrestricted{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/station/medical/hallway)
+"byl" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreen"
+	},
+/area/station/medical/hallway)
 "bym" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -71383,6 +71404,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unrestricted{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -72549,7 +72573,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "whiteblue"
+	icon_state = "whitegreen"
 	},
 /area/station/medical/hallway)
 "gYf" = (
@@ -75494,8 +75518,8 @@
 /area/station/storage/tech)
 "lFb" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whiteblue"
+	dir = 4;
+	icon_state = "whitegreencorner"
 	},
 /area/station/medical/hallway)
 "lFl" = (
@@ -117672,7 +117696,7 @@ bkE
 bkE
 bkE
 fwb
-bjO
+byk
 bxi
 aRD
 aMS
@@ -117929,7 +117953,7 @@ bpB
 keb
 ePb
 gYb
-bzo
+byl
 aPH
 bIS
 bIS
@@ -120498,7 +120522,7 @@ gMb
 dxb
 jdb
 bjk
-bTK
+lFb
 ldb
 bjl
 byr
@@ -120755,7 +120779,7 @@ ccu
 bkH
 bAT
 bfa
-lFb
+bjO
 mFb
 mQb
 bAp
@@ -121269,7 +121293,7 @@ bkH
 fMb
 caT
 qZb
-lIb
+byj
 mGb
 buC
 bvx
