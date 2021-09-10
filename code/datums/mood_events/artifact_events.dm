@@ -1,5 +1,5 @@
 /datum/mood_event/artifact_effect_good_major
-	description = "<span class='nicegreen'>Wooo! What is going on?.</span>"
+	description = "<span class='nicegreen'>Wooo! What is going on?</span>"
 	mood_change = 10
 
 /datum/mood_event/artifact_effect_good_minor
