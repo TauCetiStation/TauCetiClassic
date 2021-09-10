@@ -4,6 +4,8 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /mob/var/tmp/last_airflow_stun = 0
 /mob/proc/airflow_stun()
+	playsound_local(null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, vol = 80, vary = FALSE)
+
 	if(stat == 2)
 		return FALSE
 
@@ -131,7 +133,8 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(ismob(src))
 		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
-	playsound(airflow_dest, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER)
+		var/mob/M = src
+		M.playsound_local(airflow_dest, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
@@ -195,7 +198,8 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(ismob(src))
 		to_chat(src, "<span clas='danger'>You are pushed away by airflow!</span>")
-	playsound(airflow_dest, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER)
+		var/mob/M = src
+		M.playsound_local(airflow_dest, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
