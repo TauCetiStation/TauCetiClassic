@@ -2099,7 +2099,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_tool_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -2760,7 +2759,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_tool_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -3314,7 +3312,6 @@
 /obj/machinery/door/airlock/virology{
 	frequency = 1379;
 	id_tag = "virology_airlock_interior";
-	locked = 0;
 	name = "Virology Interior Airlock";
 	req_access = list(39)
 	},
@@ -9958,7 +9955,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "security_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -10342,7 +10338,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_chapel_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -11725,7 +11720,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_chapel_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -14487,7 +14481,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "security_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -14792,7 +14785,6 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "xeno_airlock_interior";
-	locked = 0;
 	name = "Xenobiology Internal Airlock";
 	req_access = list(55)
 	},
@@ -15661,7 +15653,6 @@
 "aBb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
-	locked = 0;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
@@ -16584,7 +16575,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "toxin_test_inner";
-	locked = 0;
 	name = "Garden External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -16686,7 +16676,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "toxin_test_outer";
-	locked = 0;
 	name = "Garden External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -17650,7 +17639,6 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "xeno_airlock_exterior";
-	locked = 0;
 	name = "Xenobiology External Airlock";
 	req_access = list(55)
 	},
@@ -23547,7 +23535,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "chapel_inner";
-	locked = 0;
 	name = "Chapel External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -25726,7 +25713,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_1";
-	locked = 0;
 	name = "Arrival Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -27306,6 +27292,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37473,7 +37460,6 @@
 /area/station/bridge/hop_office)
 "box" = (
 /obj/machinery/door/airlock/vault{
-	locked = 0;
 	req_access = list(53)
 	},
 /obj/structure/cable{
@@ -42128,7 +42114,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "arrival_dock_inner";
-	locked = 0;
 	name = "Arrival Dock External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -43537,7 +43522,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "arrival_dock_outer";
-	locked = 0;
 	name = "Arrival Dock External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -45127,7 +45111,6 @@
 "bCw" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "supply_dock";
-	locked = 0;
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
@@ -45522,7 +45505,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "chapel_outer";
-	locked = 0;
 	name = "Chapel External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -46026,7 +46008,6 @@
 /obj/machinery/door/airlock/virology{
 	frequency = 1379;
 	id_tag = "virology_airlock_exterior";
-	locked = 0;
 	name = "Virology Exterior Airlock";
 	req_access = list(39)
 	},
@@ -52783,7 +52764,6 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "tox_airlock_interior";
-	locked = 0;
 	name = "Mixing Room Interior Airlock";
 	req_access = list(8)
 	},
@@ -54373,10 +54353,10 @@
 "bYk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	locked = 1;
 	name = "Assembly Line (KEEP OUT)";
 	req_access = list(32)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -54827,7 +54807,6 @@
 "bZz" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_officer";
-	locked = 0;
 	name = "Arrival Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -57099,7 +57078,6 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "tox_airlock_exterior";
-	locked = 0;
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(8)
 	},
@@ -59709,7 +59687,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "satellite_aux_inner";
-	locked = 0;
 	name = "Satellite External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
@@ -59882,10 +59859,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	locked = 1;
 	name = "AI Chamber";
 	req_access = list(16)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -60849,7 +60826,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "robotics_solar_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -60914,7 +60890,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "robotics_solar_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -63626,7 +63601,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_xeno_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -63776,7 +63750,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_xeno_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -65399,7 +65372,6 @@
 	frequency = 1379;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_exterior";
-	locked = 0;
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(12)
 	},
@@ -65412,7 +65384,6 @@
 	frequency = 1379;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_interior";
-	locked = 0;
 	name = "Mixing Room Interior Airlock";
 	req_access = list(12)
 	},
@@ -65764,7 +65735,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_west_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -65889,7 +65859,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_east_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -66974,7 +66943,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_aux_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
@@ -67283,7 +67251,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engin_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -67370,7 +67337,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engin_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -67779,7 +67745,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_west_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -67932,7 +67897,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "virology_outer";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -67955,7 +67919,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_east_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -69870,7 +69833,6 @@
 "dhb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
-	locked = 0;
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -70197,7 +70159,6 @@
 "dEb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_ferry";
-	locked = 0;
 	name = "Arrival Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -70547,7 +70508,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "satellite_aux_outer";
-	locked = 0;
 	name = "Satellite External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
@@ -70718,7 +70678,6 @@
 "evb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
-	locked = 0;
 	name = "Arrival Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -71167,7 +71126,6 @@
 "fab" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_admin";
-	locked = 0;
 	name = "Arrival Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/bolted,
@@ -71378,7 +71336,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "recycler_inner";
-	locked = 0;
 	name = "Recycler External Access";
 	req_access = list(67)
 	},
@@ -75416,7 +75373,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "recycler_outer";
-	locked = 0;
 	name = "Recycler External Access";
 	req_access = list(67)
 	},
@@ -76782,7 +76738,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "virology_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -80893,7 +80848,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_aux_inner";
-	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
