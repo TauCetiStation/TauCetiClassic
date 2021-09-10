@@ -24,7 +24,7 @@
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
-	var/unres_sides = 0
+	var/unrestricted_sides = 0
 
 	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
 	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
@@ -63,7 +63,7 @@
 	if (emergency)
 		return TRUE
 	
-	if (get_dir(src, M) & unres_sides)
+	if (get_dir(src, M) & unrestricted_sides)
 		return TRUE
 	
 	return ..()

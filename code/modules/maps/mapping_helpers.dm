@@ -40,7 +40,7 @@
 	icon_state = "unrestricted"
 
 /obj/effect/mapping_helpers/airlock/unrestricted/payload(obj/machinery/door/airlock/airlock)
-	airlock.unres_sides ^= dir
+	airlock.unrestricted_sides ^= dir
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
