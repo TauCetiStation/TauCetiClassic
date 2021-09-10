@@ -1584,6 +1584,7 @@
 #include "code\modules\mafia\outfits.dm"
 #include "code\modules\mafia\roles.dm"
 #include "code\modules\maps\dmm_suite.dm"
+#include "code\modules\maps\mapping_helpers.dm"
 #include "code\modules\maps\reader_optimized.dm"
 #include "code\modules\maps\writer.dm"
 #include "code\modules\maps\maps_code\Academy.dm"

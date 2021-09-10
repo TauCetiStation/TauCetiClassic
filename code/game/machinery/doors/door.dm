@@ -24,6 +24,7 @@
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
+	var/unres_sides = 0
 
 	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
 	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
@@ -58,6 +59,15 @@
 //process()
 	//return
 
+/obj/machinery/door/allowed(mob/M)
+	if (emergency)
+		return TRUE
+	
+	if (get_dir(src, M) & unres_sides)
+		return TRUE
+	
+	return ..()
+
 /obj/machinery/door/Bumped(atom/AM)
 	if(p_open || operating) return
 	if(ismob(AM))
@@ -78,7 +88,7 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)) || emergency)
+			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 				open()
 			else
 				do_animate("deny")
@@ -87,7 +97,7 @@
 	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
 		if(density)
-			if((wheel.pulling && allowed(wheel.pulling)) || emergency)
+			if((wheel.pulling && allowed(wheel.pulling)))
 				open()
 			else
 				do_animate("deny")

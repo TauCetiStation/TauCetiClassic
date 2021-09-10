@@ -100,7 +100,8 @@ What is the naming convention for planes or layers?
 #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
 #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
 #define DOOR_LAYER                      2.82
-#define BELOW_MACHINERY_LAYER           2.83  // Currently for grilles only, because they should be below machinery
+#define DOOR_HELPER_LAYER               2.83
+#define BELOW_MACHINERY_LAYER           2.84  // Currently for grilles only, because they should be below machinery
 #define DEFAULT_MACHINERY_LAYER         2.85  // Every /obj/machinery by default have this layer
 //efine OBJ_LAYER                       3     // For easy recordkeeping; this is a byond define
 #define SHUTTERS_LAYER                  3.1

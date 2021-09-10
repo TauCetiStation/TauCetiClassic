@@ -26,13 +26,14 @@ var/list/airlock_overlays = list()
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = FALSE
-	var/locked = 0
+	var/locked = FALSE
+	var/abandoned = FALSE
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
+	var/closeOtherDir = 0
 	var/obj/machinery/door/airlock/closeOther = null
-	var/closeOtherId = null
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/assembly_type = /obj/structure/door_assembly
@@ -80,11 +81,52 @@ var/list/airlock_overlays = list()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/airlock/atom_init_late()
-	if(closeOtherId != null)
-		for (var/obj/machinery/door/airlock/A in airlock_list)
-			if(A.closeOtherId == closeOtherId && A != src)
-				closeOther = A
-				break
+	if(abandoned)
+		var/outcome = rand(1,100)
+		switch(outcome)
+			if(1 to 9)
+				var/turf/here = get_turf(src)
+				for (var/turf/simulated/wall/T in range(2, src))
+					here.ChangeTurf(T.type)
+					qdel(src)
+					return
+				here.ChangeTurf(/turf/simulated/wall)
+				log_debug("ABANDON: [src] at [src.loc] is wall now.")
+				qdel(src)
+				return
+			if(9 to 11)
+				lights = FALSE
+				locked = TRUE
+				log_debug("ABANDON: [src] at [src.loc] is stealthy bolted now.")
+			if(12 to 15)
+				locked = TRUE
+				log_debug("ABANDON: [src] at [src.loc] is bolted now.")
+			if(16 to 23)
+				welded = TRUE
+				log_debug("ABANDON: [src] at [src.loc] is welded now.")
+			if(24 to 30)
+				panel_open = TRUE
+				log_debug("ABANDON: [src] at [src.loc] have opened panel now.")
+	if (closeOtherDir)
+		if (closeOther)
+			closeOther.closeOther = null
+			closeOther = null
+		var/limit = 11
+		var/turf/T = get_turf(src)
+		var/obj/machinery/door/airlock/found = null
+		do
+			T = get_step(T, closeOtherDir)
+			found = locate() in T
+			if (found && found.closeOtherDir != get_dir(found, src))
+				found = null
+			limit--
+		while (!found && limit)
+		if (!found)
+			log_debug("[src] at [src.loc] failed to find a valid airlock to closeOther with!")
+			return
+		found.closeOther = src
+		closeOther = found
+	update_icon()
 
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src

@@ -2099,7 +2099,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_tool_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -2112,6 +2112,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "adz" = (
@@ -2759,7 +2760,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_tool_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -2768,6 +2769,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "aeA" = (
@@ -3312,11 +3314,12 @@
 /obj/machinery/door/airlock/virology{
 	frequency = 1379;
 	id_tag = "virology_airlock_interior";
-	locked = 1;
+	locked = 0;
 	name = "Virology Interior Airlock";
 	req_access = list(39)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -3634,6 +3637,9 @@
 /area/shuttle/escape_pod3/station)
 "aga" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "agb" = (
@@ -6841,6 +6847,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/mapping_helpers/airlock/close_other,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "redfull"
@@ -7030,6 +7037,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/mapping_helpers/airlock/close_other,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "alp" = (
@@ -7779,6 +7787,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "amD" = (
@@ -8349,6 +8360,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "redfull"
@@ -9026,6 +9040,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aoB" = (
@@ -9943,7 +9958,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "security_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -9951,6 +9966,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aqq" = (
@@ -10326,7 +10342,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_chapel_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -10335,6 +10351,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "aqZ" = (
@@ -11630,6 +11647,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "atu" = (
@@ -11707,12 +11725,13 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_chapel_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "atB" = (
@@ -12775,17 +12794,17 @@
 	},
 /area/station/hallway/primary/fore)
 "avF" = (
-/obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "External Construction Airlock";
-	req_access = list(32)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
+/obj/machinery/door/airlock/external{
+	name = "External Construction Airlock";
+	req_access = list(32)
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "avG" = (
@@ -14320,6 +14339,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access = list(11,12)
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ayL" = (
@@ -14467,10 +14487,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "security_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "azc" = (
@@ -14771,7 +14792,7 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "xeno_airlock_interior";
-	locked = 1;
+	locked = 0;
 	name = "Xenobiology Internal Airlock";
 	req_access = list(55)
 	},
@@ -14784,6 +14805,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -15639,10 +15661,11 @@
 "aBb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
-	locked = 1;
+	locked = 0;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aBc" = (
@@ -16384,6 +16407,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aCp" = (
@@ -16560,13 +16584,14 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "toxin_test_inner";
-	locked = 1;
+	locked = 0;
 	name = "Garden External Access";
 	req_one_access = list(13,45,1)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aCL" = (
@@ -16661,10 +16686,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "toxin_test_outer";
-	locked = 1;
+	locked = 0;
 	name = "Garden External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aCW" = (
@@ -17624,7 +17650,7 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "xeno_airlock_exterior";
-	locked = 1;
+	locked = 0;
 	name = "Xenobiology External Airlock";
 	req_access = list(55)
 	},
@@ -17644,6 +17670,7 @@
 	req_access = list(55)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -17743,6 +17770,9 @@
 "aEX" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aEY" = (
@@ -19031,6 +19061,9 @@
 "aHt" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod1"
+	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -23514,7 +23547,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "chapel_inner";
-	locked = 1;
+	locked = 0;
 	name = "Chapel External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -23522,6 +23555,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aPx" = (
@@ -25417,6 +25451,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "aTd" = (
@@ -25452,6 +25489,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
@@ -25686,9 +25726,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_1";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "aTz" = (
@@ -26924,6 +26965,9 @@
 "aVJ" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aVK" = (
@@ -28418,6 +28462,9 @@
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2"
 	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aYo" = (
@@ -29718,6 +29765,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -29859,6 +29909,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "baF" = (
@@ -30044,6 +30095,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -31792,6 +31846,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod 5"
 	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "beg" = (
@@ -32349,6 +32406,7 @@
 	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unrestricted,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -37415,7 +37473,7 @@
 /area/station/bridge/hop_office)
 "box" = (
 /obj/machinery/door/airlock/vault{
-	locked = 1;
+	locked = 0;
 	req_access = list(53)
 	},
 /obj/structure/cable{
@@ -37426,6 +37484,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -42069,13 +42128,14 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "arrival_dock_inner";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Dock External Access";
 	req_one_access = list(13,45,1)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bwA" = (
@@ -43477,11 +43537,12 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "arrival_dock_outer";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Dock External Access";
 	req_one_access = list(13,45,1)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bzd" = (
@@ -44475,6 +44536,7 @@
 	req_access = list(31)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/close_other,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bBm" = (
@@ -45065,11 +45127,15 @@
 "bCw" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "supply_dock";
-	locked = 1;
+	locked = 0;
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bCx" = (
@@ -45456,10 +45522,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "chapel_outer";
-	locked = 1;
+	locked = 0;
 	name = "Chapel External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "bDi" = (
@@ -45959,11 +46026,12 @@
 /obj/machinery/door/airlock/virology{
 	frequency = 1379;
 	id_tag = "virology_airlock_exterior";
-	locked = 1;
+	locked = 0;
 	name = "Virology Exterior Airlock";
 	req_access = list(39)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -48021,19 +48089,6 @@
 	icon_state = "purplechecker"
 	},
 /area/station/civilian/barbershop)
-"bHX" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer1";
-	name = "Medbay Doors Control";
-	pixel_y = 28;
-	range = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitebluecorner"
-	},
-/area/station/medical/hallway)
 "bHY" = (
 /turf/simulated/wall,
 /area/station/medical/medbreak)
@@ -51916,6 +51971,7 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bRM" = (
@@ -52727,7 +52783,7 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "tox_airlock_interior";
-	locked = 1;
+	locked = 0;
 	name = "Mixing Room Interior Airlock";
 	req_access = list(8)
 	},
@@ -52737,6 +52793,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "bTO" = (
@@ -54770,9 +54827,10 @@
 "bZz" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_officer";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "bZB" = (
@@ -55079,6 +55137,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "caA" = (
@@ -56024,6 +56083,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "cdT" = (
@@ -57039,10 +57099,11 @@
 	autoclose = 0;
 	frequency = 1379;
 	id_tag = "tox_airlock_exterior";
-	locked = 1;
+	locked = 0;
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(8)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "cgE" = (
@@ -59648,11 +59709,12 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "satellite_aux_inner";
-	locked = 1;
+	locked = 0;
 	name = "Satellite External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/aisat)
 "cnp" = (
@@ -60787,10 +60849,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "robotics_solar_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cpG" = (
@@ -60851,7 +60914,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "robotics_solar_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
@@ -60859,6 +60922,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cpL" = (
@@ -63562,12 +63626,13 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_xeno_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "cwz" = (
@@ -63711,7 +63776,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "solar_xeno_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
@@ -63720,6 +63785,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "cwV" = (
@@ -65333,10 +65399,11 @@
 	frequency = 1379;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_exterior";
-	locked = 1;
+	locked = 0;
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(12)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "cAW" = (
@@ -65345,11 +65412,12 @@
 	frequency = 1379;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_interior";
-	locked = 1;
+	locked = 0;
 	name = "Mixing Room Interior Airlock";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "cAX" = (
@@ -65696,10 +65764,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_west_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBL" = (
@@ -65820,10 +65889,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_east_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBX" = (
@@ -66904,11 +66974,12 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_aux_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cEy" = (
@@ -67212,10 +67283,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engin_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFA" = (
@@ -67298,7 +67370,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engin_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
@@ -67306,6 +67378,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFP" = (
@@ -67706,12 +67779,13 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_west_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cGX" = (
@@ -67858,10 +67932,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "virology_outer";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cHr" = (
@@ -67880,12 +67955,13 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_east_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cHy" = (
@@ -69794,9 +69870,10 @@
 "dhb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
-	locked = 1;
+	locked = 0;
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "dib" = (
@@ -69878,6 +69955,9 @@
 "doG" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod3"
+	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -70117,9 +70197,10 @@
 "dEb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_ferry";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "dFb" = (
@@ -70466,11 +70547,12 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "satellite_aux_outer";
-	locked = 1;
+	locked = 0;
 	name = "Satellite External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/aisat)
 "ekb" = (
@@ -70636,9 +70718,10 @@
 "evb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "ewb" = (
@@ -71084,9 +71167,10 @@
 "fab" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_admin";
-	locked = 1;
+	locked = 0;
 	name = "Arrival Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "fbb" = (
@@ -71294,10 +71378,11 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "recycler_inner";
-	locked = 1;
+	locked = 0;
 	name = "Recycler External Access";
 	req_access = list(67)
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "ftb" = (
@@ -74446,6 +74531,7 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
+/obj/effect/mapping_helpers/airlock/unrestricted,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -74885,6 +74971,7 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kGb" = (
@@ -75281,6 +75368,9 @@
 	dock_tag = "pod4";
 	name = "Escape Pod 4"
 	},
+/obj/effect/mapping_helpers/airlock/close_other{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "lub" = (
@@ -75326,7 +75416,7 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "recycler_outer";
-	locked = 1;
+	locked = 0;
 	name = "Recycler External Access";
 	req_access = list(67)
 	},
@@ -75335,6 +75425,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "lyb" = (
@@ -76266,6 +76357,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mNb" = (
@@ -76690,11 +76782,12 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "virology_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nub" = (
@@ -80800,13 +80893,14 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_aux_inner";
-	locked = 1;
+	locked = 0;
 	name = "Engineering External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/bolted,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "sZb" = (
@@ -120450,7 +120544,7 @@ gMb
 dxb
 jdb
 bjk
-bHX
+bTK
 ldb
 bjl
 byr
