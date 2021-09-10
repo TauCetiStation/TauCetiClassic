@@ -1,5 +1,3 @@
-var/global/list/aspect_name_by_type = list()
-
 /datum/aspect
 	var/name
 	var/desc = "This aspect not used in game"

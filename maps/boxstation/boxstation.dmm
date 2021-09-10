@@ -840,7 +840,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -14445,7 +14445,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/structure/noticeboard{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -33768,8 +33768,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/obj/structure/noticeboard/bar{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -37401,7 +37401,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -40530,7 +40530,7 @@
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -47855,6 +47855,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -54197,6 +54200,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -55075,15 +55081,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cav" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "caA" = (
 /obj/machinery/vending/eva/engineering,
 /turf/simulated/floor,
@@ -69990,9 +69987,6 @@
 /area/station/storage/emergency)
 "dub" = (
 /obj/machinery/chem_dispenser,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -82231,8 +82225,8 @@
 	},
 /area/station/civilian/chapel)
 "xbF" = (
-/obj/structure/noticeboard{
-	pixel_y = 27
+/obj/structure/noticeboard/chaplain{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -117368,7 +117362,7 @@ jAb
 bWl
 aPE
 bXR
-cav
+aPE
 aPE
 aPE
 qMb

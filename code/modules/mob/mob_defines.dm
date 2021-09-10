@@ -102,7 +102,6 @@
 
 	var/timeofdeath = 0.0//Living
 
-
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
 	var/dizziness = 0//Carbon

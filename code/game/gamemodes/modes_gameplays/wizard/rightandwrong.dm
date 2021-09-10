@@ -7,7 +7,7 @@
 		gunslist = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile))
 	else
 		magiclist = list(/obj/effect/proc_holder/spell/targeted/area_teleport/teleport, /obj/effect/proc_holder/spell/targeted/gnomecurse, /obj/effect/proc_holder/spell/targeted/barnyardcurse, /obj/effect/proc_holder/spell/targeted/lighting_shock, /obj/effect/proc_holder/spell/no_target/charge,
-	/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt,
+	/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard,
 	/obj/effect/proc_holder/spell/in_hand/fireball, /obj/effect/proc_holder/spell/in_hand/tesla, /obj/effect/proc_holder/spell/in_hand/arcane_barrage,
 	/obj/effect/proc_holder/spell/aoe_turf/knock, /obj/effect/proc_holder/spell/targeted/mind_transfer, /obj/effect/proc_holder/spell/aoe_turf/repulse,
 	/obj/effect/proc_holder/spell/targeted/spacetime_dist, /obj/effect/proc_holder/spell/targeted/summonitem, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop,

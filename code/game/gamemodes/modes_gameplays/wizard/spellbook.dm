@@ -153,7 +153,7 @@
 
 /datum/spellbook_entry/jaunt
 	name = "Выход из тела"
-	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
+	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	log_name = "EJ"
 	category = "Мобильность"
 
