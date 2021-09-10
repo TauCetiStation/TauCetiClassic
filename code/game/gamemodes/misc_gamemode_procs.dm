@@ -128,7 +128,7 @@
 
 				if (antag_flags[antag] & BLUESHIELD_HEAD_IS_ANTAG)
 					extra_TC += 4 // if antag mind also a head of staff
-					msg = "that new corporate dog will chase you"
+					msg = "that you are not as loyal as they expect"
 				if (antag_flags[antag] & BLUESHIELD_TARGET_IS_HEAD)
 					extra_TC += 4 // if antag have one of heads of staff as target
 					msg = "that you are trying to cut one of their heads"
