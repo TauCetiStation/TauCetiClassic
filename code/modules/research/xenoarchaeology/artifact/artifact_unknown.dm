@@ -58,7 +58,7 @@
  * Adds a entered/exited signal to each turf around RANGE_TURFS(3 , src)
  */
 /obj/machinery/artifact/proc/init_turfs_around()
-	for(var/turf/T in RANGE_TURFS(3, src))
+	for(var/turf/T as anything in RANGE_TURFS(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
 		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
 		turfs_around += T
