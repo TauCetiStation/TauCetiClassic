@@ -83,7 +83,7 @@ var/list/ingredients_source = list(
 		dat += "No beaker inserted. "
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
-	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400, src)
+	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400)
 	popup.set_content(dat)
 	popup.open()
 
