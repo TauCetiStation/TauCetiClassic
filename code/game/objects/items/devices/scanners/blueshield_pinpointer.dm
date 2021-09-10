@@ -30,7 +30,11 @@
 	var/target_dna = null
 
 /obj/item/weapon/pinpointer/heads/process()
-	if (active && !target_dna)
+	if (!active)
+		STOP_PROCESSING(SSobj, src) // Just to be sure
+		return
+
+	if (!target_dna)
 		icon_state = "pinonnull"
 		return
 
