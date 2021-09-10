@@ -431,7 +431,7 @@
 		mobs_around -= M
 
 /obj/structure/altar_of_gods/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
-	if(istype(mover, /mob))
+	if(ismob(mover))
 		mobs_around |= mover
 
 /obj/structure/altar_of_gods/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
