@@ -229,6 +229,23 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
 
+/client/verb/set_parallax_theme()
+	set name = "Set Parallax Theme"
+	set category = "Preferences"
+	set desc = "Set space parallax theme."
+
+	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_TAUCETI, PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
+	if(!new_setting)
+		return
+
+	prefs.parallax_theme = new_setting
+	to_chat(src, "Parallax theme: [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","SPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()
+
 /client/verb/toggle_ghost_sight()
 	set name = "Change Ghost Sight Options"
 	set category = "Preferences"

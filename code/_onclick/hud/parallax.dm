@@ -10,18 +10,35 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+	var/parallax_theme
 
 /datum/hud/proc/create_parallax()
 	var/client/C = mymob.client
 	if (!apply_parallax_pref())
 		return
 
-	if(!length(C.parallax_layers_cached))
-		C.parallax_layers_cached = list()
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view, 'icons/effects/parallax.dmi')
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view, 'icons/effects/parallax.dmi')
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view, 'icons/effects/parallax.dmi')
-		//C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view, 'icons/effects/parallax.dmi') awaiting for new planet image in replace for lavaland
+	if(!length(C.parallax_layers_cached) || C.parallax_theme != C.prefs.parallax_theme)
+		C.parallax_theme = C.prefs.parallax_theme
+		C.parallax_layers_cached = null
+		switch(C.prefs.parallax_theme)
+			if(PARALLAX_THEME_TAUCETI)
+				C.parallax_layers_cached = list(
+					new /atom/movable/screen/parallax_layer/tauceti/layer_1(null, C.view),
+					new /atom/movable/screen/parallax_layer/tauceti/layer_2(null, C.view),
+					new /atom/movable/screen/parallax_layer/tauceti/layer_3(null, C.view)
+				)
+			if(PARALLAX_THEME_CLASSIC)
+				C.parallax_layers_cached = list(
+					new /atom/movable/screen/parallax_layer/classic/layer_1(null, C.view),
+					new /atom/movable/screen/parallax_layer/classic/layer_2(null, C.view),
+					new /atom/movable/screen/parallax_layer/classic/layer_3(null, C.view)
+				)
+			if(PARALLAX_THEME_TG)
+				C.parallax_layers_cached = list(
+					new /atom/movable/screen/parallax_layer/tgstation/layer_1(null, C.view),
+					new /atom/movable/screen/parallax_layer/tgstation/layer_2(null, C.view),
+					new /atom/movable/screen/parallax_layer/tgstation/layer_3(null, C.view)
+				)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -254,27 +271,6 @@
 
 /atom/movable/screen/parallax_layer/proc/update_status(mob/M)
 	return
-
-/atom/movable/screen/parallax_layer/layer_1
-	icon_state = "layer1"
-	speed = 0.6
-	layer = 1
-
-/atom/movable/screen/parallax_layer/layer_2
-	icon_state = "layer2"
-	speed = 1
-	layer = 2
-
-/atom/movable/screen/parallax_layer/layer_3
-	icon_state = "layer3"
-	speed = 1.2
-	layer = 3
-
-/atom/movable/screen/parallax_layer/planet
-	icon_state = "planet"
-	absolute = TRUE //Status of seperation
-	speed = 3
-	layer = 30
 
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
