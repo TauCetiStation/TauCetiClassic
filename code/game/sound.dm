@@ -13,6 +13,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 =======================================================================================================================================*/
 
+/turf
+	var/sound_coefficient = 1.0
+
 /proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
@@ -88,6 +91,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
 
 		S.volume *= pressure_factor
+		S.volume *= turf_source.sound_coefficient
+		S.volume *= max(T.sound_coefficient, 0.0)
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
