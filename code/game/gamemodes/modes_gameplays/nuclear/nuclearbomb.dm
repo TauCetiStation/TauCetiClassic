@@ -460,8 +460,8 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/atom_init()
 	. = ..()
-	START_PROCESSING(SSobj, src)
 	poi_list += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
