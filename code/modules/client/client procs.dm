@@ -270,6 +270,8 @@ var/list/blacklisted_builds = list(
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
+	update_supporter_status()
+
 	. = ..()	//calls mob.Login()
 
 	if(SSinput.initialized)
@@ -279,8 +281,6 @@ var/list/blacklisted_builds = list(
 		chatOutput.start()
 
 	connection_time = world.time
-
-	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
