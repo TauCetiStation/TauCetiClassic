@@ -4,6 +4,8 @@
 	name = "Asteroid"
 	icon_state = "unexplored"
 
+	outdoors = TRUE
+
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
@@ -47,24 +49,38 @@
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
 
+	outdoors = FALSE
+
 /area/asteroid/mine/abandoned
 	name = "Abandoned Mining Station"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+	outdoors = FALSE
 
 /area/asteroid/mine/living_quarters
 	name = "Mining Station Port Wing"
 	icon_state = "mining_living"
 
+	outdoors = FALSE
+
 /area/asteroid/mine/eva
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
 
+	outdoors = FALSE
+
 /area/asteroid/mine/maintenance
 	name = "Mining Station Communications"
+
+	outdoors = FALSE
 
 /area/asteroid/mine/west_outpost
 	name = "West Mining Outpost"
 
+	outdoors = FALSE
+
 /area/asteroid/mine/dwarf
 	name = "Dwarf"
 	icon_state = "dwarf"
+
+	outdoors = FALSE

@@ -153,7 +153,7 @@
 
 /datum/spellbook_entry/jaunt
 	name = "Выход из тела"
-	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
+	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	log_name = "EJ"
 	category = "Мобильность"
 
@@ -209,7 +209,7 @@
 
 /datum/spellbook_entry/charge
 	name = "Заряд"
-	spell_type = /obj/effect/proc_holder/spell/targeted/charge
+	spell_type = /obj/effect/proc_holder/spell/no_target/charge
 	log_name = "CH"
 	category = "Помощь"
 	cost = 1

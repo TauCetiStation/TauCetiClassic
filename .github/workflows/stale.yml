@@ -22,7 +22,7 @@ jobs:
           close-pr-message: >
             ПР закрыт из-за длительного отсуствия активности. Для переоткрытия ПРа, пожалуйста, обратитесь к
             кому-либо из мейнтейнеров. Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.
-          exempt-pr-labels: 'Pinned, Awaiting Review [Translation Dep], Awaiting Review [Sprite Dep]'
+          exempt-pr-labels: 'Pinned, Awaiting Review [Translation Dep], Awaiting Review [Sprite Dep], Test Merge Candidate'
           stale-pr-label: 'Stalled PR'
           days-before-pr-stale: 7
           days-before-pr-close: 7

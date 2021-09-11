@@ -20,6 +20,8 @@ var/global/list/image/splatter_cache=list()
 	var/amount = 5
 	var/drytime
 
+	beauty = -100
+
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
@@ -177,6 +179,8 @@ var/global/list/image/splatter_cache=list()
 	var/list/existing_dirs = list()
 	blood_DNA = list()
 
+	beauty = -50
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
@@ -259,6 +263,8 @@ var/global/list/image/splatter_cache=list()
 
 	var/list/datum/disease2/disease/virus2 = list()
 	var/dry = 0 // Keeps the lag down
+
+	beauty = -50
 
 /obj/effect/decal/cleanable/mucus/atom_init()
 	. = ..()
