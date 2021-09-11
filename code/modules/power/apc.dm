@@ -961,7 +961,7 @@
 	var/hacked_by_drill = 0
 	var/amount_to_announce = SSticker.malf_announce_stage * 2 + 3 
 
-	for (var/obj/machinery/power/apc/A in SSticker.hacked_apcs)
+	for (var/obj/machinery/power/apc/A as anything in SSticker.hacked_apcs)
 		if (!A.emagged)
 			continue
 		if (A.traitor)
