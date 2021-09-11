@@ -840,7 +840,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -11828,24 +11828,9 @@
 	},
 /area/station/rnd/xenobiology)
 "atN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 1;
-	name = "Internal Affairs";
-	sortType = "Internal Affairs"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "atO" = (
 /obj/machinery/door/window/northleft{
@@ -12430,22 +12415,8 @@
 	},
 /area/station/civilian/kitchen)
 "auQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/turf/simulated/floor/carpet/black,
+/area/station/security/lawoffice)
 "auR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14580,7 +14551,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/structure/noticeboard{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -33885,8 +33856,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/obj/structure/noticeboard/bar{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -37508,7 +37479,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -40637,7 +40608,7 @@
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -43451,6 +43422,23 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/altar)
+"byL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "byM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -43839,6 +43827,26 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/cold_room)
+"bzy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/sortjunction{
+	dir = 1;
+	name = "Internal Affairs";
+	sortType = "Internal Affairs"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "bzA" = (
 /obj/structure/table,
 /obj/item/device/taperecorder{
@@ -48042,6 +48050,9 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -54385,6 +54396,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -55263,15 +55277,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cav" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "caA" = (
 /obj/machinery/vending/eva/engineering,
 /turf/simulated/floor,
@@ -68622,13 +68627,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"cKd" = (
-/obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "cKe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -70109,9 +70107,6 @@
 /area/station/security/blueshield)
 "dub" = (
 /obj/machinery/chem_dispenser,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -81320,11 +81315,6 @@
 	icon_state = "greencorner"
 	},
 /area/station/hallway/primary/port)
-"tqb" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/station/maintenance/eva)
 "tyb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -82558,8 +82548,8 @@
 	},
 /area/station/civilian/chapel)
 "xbF" = (
-/obj/structure/noticeboard{
-	pixel_y = 27
+/obj/structure/noticeboard/chaplain{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -91235,7 +91225,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 boX
 aro
 fab
@@ -91492,7 +91482,7 @@ bgj
 bgj
 bgj
 bgj
-cKd
+evb
 aro
 aro
 fab
@@ -107642,7 +107632,7 @@ crz
 aEj
 pEo
 aEp
-atN
+bzy
 bbb
 biL
 aCq
@@ -108923,7 +108913,7 @@ agO
 agO
 dgb
 alZ
-tqb
+atN
 iUo
 qOb
 asj
@@ -109957,7 +109947,7 @@ iSp
 auI
 iUo
 bys
-auQ
+byL
 aCu
 aCv
 aDF
@@ -117698,7 +117688,7 @@ jAb
 bWl
 aPE
 bXR
-cav
+aPE
 aPE
 aPE
 qMb

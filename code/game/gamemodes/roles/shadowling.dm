@@ -40,6 +40,10 @@
 	logo_state = "thrall-logo"
 
 /datum/role/thrall/OnPreSetup(greeting, custom)
-	..()
+	. = ..()
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
-	return TRUE
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
+
+/datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
+	..()
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
