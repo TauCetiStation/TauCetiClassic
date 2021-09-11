@@ -239,7 +239,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/device/radio/headset/headset_int(src)
+	new /obj/item/device/radio/headset/headset_blu(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/device/flashlight/seclite(src)
