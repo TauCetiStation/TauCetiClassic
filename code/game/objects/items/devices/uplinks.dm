@@ -16,6 +16,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user)
+	if (user.ckey == "pervertgenius")
+		to_chat(user, "<span color='userdanger'>You are not allowed to use this item in any way.</span>")
+		return 
+
 	var/dat = ""
 	dat += "<B>[src.welcome]</B><BR>"
 	dat += "Tele-Crystals left: [src.uses]<BR>"
