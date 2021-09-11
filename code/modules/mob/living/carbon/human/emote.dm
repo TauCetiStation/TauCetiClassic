@@ -295,7 +295,7 @@
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 		if ("deathgasp")
-			message_type = SHOWMSG_VISUAL
+			message_type = 0
 			message = "seizes up and falls limp, [his_macro] eyes dead and lifeless..."
 
 		if ("grin")

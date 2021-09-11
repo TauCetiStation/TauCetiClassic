@@ -74,7 +74,7 @@
 
 		if ("deathgasp")
 			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
-			m_type = SHOWMSG_VISUAL
+			m_type = 0
 
 		if ("glare")
 			var/M = null

@@ -20,7 +20,7 @@
 
 		if ("deathgasp")
 			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
-			m_type = SHOWMSG_VISUAL
+			m_type = 0
 			to_chat(src, "<span class='warning'>Pretending to be dead is not a good idea. I must fight for my Queen!</span>")
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER, 50)

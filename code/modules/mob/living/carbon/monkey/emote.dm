@@ -117,7 +117,7 @@
 			m_type = SHOWMSG_AUDIO
 		if("deathgasp")
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
-			m_type = SHOWMSG_VISUAL
+			m_type = 0
 		if("cough")
 			if(istype(src,/mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> shrinks and twitches slightly"
