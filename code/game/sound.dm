@@ -122,9 +122,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
-	if(!isfile(soundin))
-		CRASH("wrong type in \"soundin\" argument [soundin]")
-
 	if(!client || !client.prefs_ready)
 		return
 
@@ -138,9 +135,18 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	if(!vol && volume_channel != VOL_ADMIN) 
 		return
 
-	var/sound/S = new
+	var/sound/S
 
-	S.file = soundin
+	if(istext(soundin))
+		S = new(soundin) // for S.file byond expects 'files', dinamic path works only in new/sound
+		if(!S)
+			CRASH("wrong path in \"soundin\" argument [soundin]")
+	else if(isfile(soundin))
+		S = new
+		S.file = soundin
+	else
+		CRASH("wrong type in \"soundin\" argument [soundin]")
+
 	S.repeat = repeat
 	S.wait = wait
 	S.channel = channel
