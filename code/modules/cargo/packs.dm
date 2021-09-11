@@ -1624,7 +1624,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
-					/obj/item/weapon/soap/nanotrasen)
+					/obj/structure/mopbucket))
 	cost = 1000
 	crate_name = "Janitorial supplies"
 	group = "Supply"
@@ -1668,16 +1668,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 2500
 	crate_name = "HONK supplies"
 	group = "Supply"
-
-/datum/supply_pack/janitorialcart
-	name = "Janitorial cart"
-	contains = list(/obj/structure/mopbucket,
-					/obj/structure/stool/bed/chair/janitorialcart)
-	cost = 1500
-	crate_type = /obj/structure/largecrate
-	crate_name = "Janitorial cart crate"
-	group = "Supply"
-
 //----------------------------------------------
 //--------------MISCELLANEOUS-------------------
 //----------------------------------------------
