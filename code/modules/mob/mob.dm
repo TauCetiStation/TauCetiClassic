@@ -163,11 +163,7 @@
 			to_chat(M, self_message)
 			continue
 
-		var/turf/T = get_turf(M)
-		if (T.sound_coefficient == 0.0)
-			M.show_message(deaf_message, SHOWMSG_VISUAL)
-		else
-			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
