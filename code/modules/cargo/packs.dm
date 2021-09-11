@@ -1624,7 +1624,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
-					/obj/structure/mopbucket))
+					/obj/structure/mopbucket)
 	cost = 1000
 	crate_name = "Janitorial supplies"
 	group = "Supply"
