@@ -17,6 +17,9 @@
 	var/end_time = null
 	/// Whether the gamemode-announcing announcement has been sent. Used and set internally.
 	var/sent_announcement = FALSE
+	/// time in ticks when the dealer will arrive
+	var/dealer_timer
+
 	var/datum/announcement/centcomm/gang/announce_gamemode/first_announce = new
 
 /datum/faction/cops/OnPostSetup()
@@ -24,7 +27,7 @@
 	start_time = world.time
 	end_time = start_time + 80 MINUTES
 
-	addtimer(CALLBACK(src, .proc/send_syndicate), 30 MINUTES) // called here because cops are only faction
+	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES)) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
@@ -35,16 +38,15 @@
 /datum/faction/cops/proc/send_syndicate()
 	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES)
 	var/spawncount = 2
-	var/indx = 1
 	while(spawncount > 0 && candidates.len)
-		var/spawnloc = dealerstart[indx]
+		var/spawnloc = pick(dealerstart)
 		var/mob/candidate = pick(candidates)
 
 		INVOKE_ASYNC(src, .proc/traitor_create_apperance, spawnloc, candidate.client)
 
 		candidates -= candidate
 		spawncount--
-		indx++
+		dealerstart -= spawnloc
 
 /datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
 	var/mob/living/carbon/human/H = new(null)
@@ -73,6 +75,9 @@
 	var/time_to_cops = max(((end_time - world.time) / 600), 0)
 	var/minutes = pluralize_russian(time_to_cops, "[time_to_cops] минута", "[time_to_cops] минуты", "[time_to_cops] минут")
 	. += "<br>До прилёта полиции: [minutes]"
+	var/dealer_time = timeleft(dealer_timer)
+	var/time_to_dealer = dealer_time ? max((dealer_time / 600), 0) : 0
+	. += "<br>До прилёта дилера: [time_to_dealer]"
 	. += "<br>Смертей: [global.deaths_during_shift]"
 
 /datum/faction/cops/custom_result()

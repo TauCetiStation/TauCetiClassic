@@ -21,7 +21,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "syndicate"
 /obj/random/cloth/spacesuit/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling, /obj/item/clothing/suit/space/rig/ert/stealth))
+	return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling, /obj/item/clothing/suit/space/rig/ert/stealth, /obj/item/clothing/suit/space/rig/syndi/elite, /obj/item/clothing/suit/space/rig/syndi/elite/comander))
 
 /obj/random/cloth/storagesuit
 	name = "random storagesuit"
@@ -79,7 +79,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "skrell_helmet_white"
 /obj/random/cloth/spacehelmet/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling, /obj/item/clothing/head/helmet/space/rig/ert/stealth))
+	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling, /obj/item/clothing/head/helmet/space/rig/ert/stealth, /obj/item/clothing/head/helmet/space/rig/syndi/elite, /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander))
 
 /obj/random/cloth/helmet
 	name = "random helmet"
@@ -103,7 +103,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso))
 
 /obj/random/cloth/glasses
 	name = "random glasses"

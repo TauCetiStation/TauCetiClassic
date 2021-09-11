@@ -36,7 +36,7 @@
 						Bump(O)
 			else
 				unbuckle_mob()
-	else if(has_gravity(src) && roll_sound)
+	if(has_gravity(src) && roll_sound)
 		playsound(src, roll_sound, VOL_EFFECTS_MASTER)
 	handle_rotation()
 

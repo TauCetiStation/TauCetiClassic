@@ -302,7 +302,7 @@
 
 /obj/item/clothing/gloves/chameleon/atom_init()
 	. = ..()
-	var/blocked = list(/obj/item/clothing/gloves/chameleon)//Prevent infinite loops and bad hats.
+	var/blocked = list(/obj/item/clothing/gloves/chameleon, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/black/silence)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/gloves)-blocked)
 		var/obj/item/clothing/gloves/V = new U
 		clothing_choices[V.name] = U

@@ -57,6 +57,7 @@
 	prob(33);/obj/item/ammo_box/a357,\
 	prob(33);/obj/item/device/encryptionkey/binary,\
 	prob(33);/obj/item/clothing/mask/gas/voice,\
+	prob(33);/obj/item/clothing/gloves/black/silence,\
 	prob(33);/obj/item/clothing/gloves/black/strip,\
 	prob(50);/obj/item/device/encryptionkey/syndicate,\
 	prob(50);/obj/item/device/multitool/ai_detect,\
