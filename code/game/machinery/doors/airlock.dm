@@ -608,7 +608,7 @@ var/list/airlock_overlays = list()
 			return
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
-			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
+			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 			if(do_after(user,40, target = src) && src)
 				open(1)
 	return

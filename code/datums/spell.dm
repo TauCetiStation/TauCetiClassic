@@ -27,8 +27,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
-	var/clothes_req = 1 //see if it requires clothes
-	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
+	var/clothes_req = TRUE //see if it requires clothes
+	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_type = "none" //can be none, whisper and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
@@ -46,7 +46,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/smoke_amt = 0 //cropped at 10
 
 	var/critfailchance = 0
-	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
+	var/centcomm_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	var/datum/action/spell_action/action = null
 	var/action_icon = 'icons/mob/actions.dmi'
@@ -54,59 +54,66 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
-		to_chat(usr, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
+		if(try_start)
+			to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
 		return 0
 
-	if(is_centcom_level(usr.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
+	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
-					to_chat(usr, "[name] is still recharging.")
+					if(try_start)
+						to_chat(user, "[name] is still recharging.")
 					return 0
 			if("charges")
 				if(!charge_counter)
-					to_chat(usr, "[name] has no charges left.")
+					if(try_start)
+						to_chat(user, "[name] has no charges left.")
 					return 0
 
-	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(favor_cost > 0 && user.my_religion.aspects.len == 0)
-			to_chat(usr, "<span class ='warning'>First choose aspects in your religion!</span>")
-			return 0
-		if(favor_cost > 0 && user.my_religion.favor < favor_cost)
-			to_chat(usr, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
-			return 0
+		if(favor_cost > 0 && user.mind.holy_role)
+			if(user.my_religion.favor < favor_cost)
+				if(try_start)
+					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
+				return 0
 
-	if(usr.stat && !stat_allowed)
-		to_chat(usr, "Not when you're incapacitated.")
+	if(user.stat && !stat_allowed)
+		if(try_start)
+			to_chat(user, "Not when you're incapacitated.")
 		return 0
 
-	if(ishuman(usr) || ismonkey(usr))
-		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			usr.say("Mmmf mrrfff!")
+	if(ishuman(user) || ismonkey(user))
+		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+			if(try_start)
+				user.say("Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check
-		if(!istype(user, /mob/living/carbon/human))
-			to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
+		if(!ishuman(user))
+			if(try_start)
+				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return 0
 		var/mob/living/carbon/human/H = user
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-			to_chat(user, "I don't feel strong enough without my robe.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
 		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-			to_chat(user, "I don't feel strong enough without my sandals.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
 		if(!is_type_in_typecache(H.head, casting_clothes))
-			to_chat(user, "I don't feel strong enough without my hat.")
+			if(try_start)
+				to_chat(user, "I don't feel strong enough without my hat.")
 			return 0
 
-	if(!skipcharge)
+	if(try_start && !skipcharge)
 		switch(charge_type)
 			if("recharge")
 				charge_counter = 0 //doesn't start recharging until the targets selecting ends
@@ -171,9 +178,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
-			if(istype(target,/mob/living))
+			if(isliving(target))
 				location = target.loc
-			else if(istype(target,/turf))
+			else if(isturf(target))
 				location = target
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
@@ -185,12 +192,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
 	for(var/atom/target in targets)
 		var/location
-		if(istype(target,/mob/living))
+		if(isliving(target))
 			location = target.loc
-		else if(istype(target,/turf))
+			if(message)
+				to_chat(target, message)
+		else if(isturf(target))
 			location = target
-		if(istype(target,/mob/living) && message)
-			to_chat(target, text("[message]"))
+
 		if(sparks_spread)
 			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
@@ -223,8 +231,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(favor_cost > 0 && user.mind.holy_role)
 		user.my_religion.adjust_favor(favor_cost)
 
-	return
-
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
@@ -247,8 +253,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
-	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
-	var/include_user = 0 //if it includes usr in the target list
+	var/target_ignore_prev = TRUE //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
+	var/include_user = FALSE //if it includes usr in the target list
 
 /obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs
@@ -260,9 +266,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				targets += target
+
+			if(!include_user && (user in targets))
+				targets -= user
 		if(1) //single target can be picked
 			if(range < 0)
-				targets += user
+				targets += user // use spell/no_target instead
 			else
 				var/possible_targets = list()
 
@@ -280,7 +289,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				possible_targets += target
-			for(var/i=1,i<=max_targets,i++)
+			if(!include_user && (user in possible_targets))
+				possible_targets -= user
+
+			for(var/i in 1 to max_targets)
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
@@ -288,67 +300,28 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				else
 					targets += pick(possible_targets)
 
-	if(!include_user && (user in targets))
-		targets -= user
+	if(!targets.len) //doesn't waste the spell
+		revert_cast(user)
+		return
+
+	perform(targets, user=user)
+
+/obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
+	var/list/targets = list()
+
+	for(var/turf/target in view_or_range(range, user, selection_type))
+		if(!(target in view_or_range(inner_radius, user, selection_type)))
+			targets += target
 
 	if(!targets.len) //doesn't waste the spell
 		revert_cast(user)
 		return
 
-	perform(targets, user)
+	perform(targets, user=user)
 
-	return
+/obj/effect/proc_holder/spell/no_target/choose_targets(mob/user = usr)
+	perform(list(user), user=user)
 
-/obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
-	var/list/targets = list()
-
-	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!(target in view_or_range(inner_radius,user,selection_type)))
-			targets += target
-
-	if(!targets.len) //doesn't waste the spell
-		revert_cast()
-		return
-
-	perform(targets, user)
-
-	return
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
-	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
-		return 0
-
-	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
-		return 0
-
-	switch(charge_type)
-		if("recharge")
-			if(charge_counter < charge_max)
-				return 0
-		if("charges")
-			if(!charge_counter)
-				return 0
-
-	if(user.stat && !stat_allowed)
-		return 0
-
-	if(ishuman(user))
-
-		var/mob/living/carbon/human/H = user
-
-		if((invocation_type == "whisper" || invocation_type == "shout") && istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
-			return 0
-
-		if(clothes_req)	//clothes check
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
-				return 0
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-				return 0
-			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
-				return 0
-	else
-		if(clothes_req)
-			return 0
-		if(isbrain(user) || ispAI(user))
-			return 0
-	return 1
+	return cast_check(FALSE, user, FALSE)
