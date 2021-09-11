@@ -513,7 +513,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/mob/living/carbon/ian/phoron_dog
 	for(var/mob/living/carbon/ian/IAN in alive_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
-		if(IAN.mind) // Mind means someone was or is in a body.
+		if(IAN.client)
 			continue
 		phoron_dog = IAN
 		break
