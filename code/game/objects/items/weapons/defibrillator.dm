@@ -281,7 +281,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_contact(mob/living/carbon/human/H, sel_zone = BP_CHEST)
 	if(!combat)
-		if(H.check_thickmaterial(target_zone = sel_zone))
+		if(H.check_pierce_protection(target_zone = sel_zone))
 			return FALSE
 	if(H.get_siemens_coefficient_organ(H.get_bodypart(sel_zone)) <= 0)
 		return FALSE
@@ -395,6 +395,7 @@
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
+			H.beauty.AddModifier("stat", additive=H.beauty_living)
 			H.return_to_body_dialog(src)
 		else
 			IO.heart_normalize()

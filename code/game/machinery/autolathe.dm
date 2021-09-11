@@ -127,6 +127,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
 	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
 	R(/obj/item/ammo_box/a357, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/m9mm, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/c38m,                    CATEGORY_AMMO),

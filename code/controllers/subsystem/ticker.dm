@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(ticker)
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
+	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
+	var/Malf_announce_stage = 0//Used for announcement
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -462,6 +464,9 @@ SUBSYSTEM_DEF(ticker)
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
+					// For some reason, player can be in null
+					if(!playerTurf)
+						continue
 					if(!is_centcom_level(playerTurf.z))
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else

@@ -71,5 +71,16 @@ var/cmp_field = "name"
 	else
 		return sorttext(b_name, a_name)
 
+/proc/cmp_abs_mood_asc(datum/mood_event/A, datum/mood_event/B)
+	var/abs_a = abs(A.mood_change)
+	var/abs_b = abs(B.mood_change)
+
+	return abs_a - abs_b
+
+/proc/cmp_abs_mood_dsc(datum/mood_event/A, datum/mood_event/B)
+	var/abs_a = abs(A.mood_change)
+	var/abs_b = abs(B.mood_change)
+
+	return abs_b - abs_a
 /proc/cmp_bridge_commands(a,b)
 	return bridge_commands[a].position - bridge_commands[b].position

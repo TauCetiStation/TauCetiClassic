@@ -163,7 +163,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -673,7 +677,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 				if(GM?.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
