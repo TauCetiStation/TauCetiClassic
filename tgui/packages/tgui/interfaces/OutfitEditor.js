@@ -21,7 +21,7 @@ export const OutfitEditor = (props, context) => {
                   <OutfitSlot name="Mask" icon="theater-masks" slot="mask" />
                 </Flex>
                 <Flex mb={2}>
-                  <OutfitSlot name="Accessory" icon="stethoscope" slot="accessory" />
+                  <OutfitSlot name="Accessory" icon="stethoscope" slot="neck" />
                   <OutfitSlot name="L Ear" icon="headphones-alt" slot="l_ear" />
                   <OutfitSlot name="R Ear" icon="headphones-alt" slot="r_ear" />
                 </Flex>

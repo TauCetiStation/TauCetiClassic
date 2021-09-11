@@ -66,7 +66,7 @@
 
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target_mob]"
-	generate_or_wait_for_human_dummy(dummy_key, target_mob.get_species())
+	generate_dummy_lookalike(dummy_key, target_mob)
 	unset_busy_human_dummy(dummy_key)
 	return
 

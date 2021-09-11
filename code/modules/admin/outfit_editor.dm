@@ -37,7 +37,7 @@
 
 /datum/outfit_editor/proc/init_dummy()
 	dummy_key = "outfit_editor_[owner]"
-	generate_or_wait_for_human_dummy(dummy_key)
+	generate_dummy_lookalike(dummy_key, owner.mob)
 	unset_busy_human_dummy(dummy_key)
 
 /datum/outfit_editor/tgui_interact(mob/user, datum/tgui/ui)
@@ -142,7 +142,7 @@
 			"glasses",
 			"l_ear",
 			"r_ear",
-			"accessory",
+			"neck",
 			"mask",
 			"uniform",
 			"suit",
@@ -175,7 +175,7 @@
 			options = typesof(/obj/item/device/radio/headset)
 		if("r_ear")
 			options = typesof(/obj/item/device/radio/headset)
-		if("accessory")
+		if("neck")
 			options = typesof(/obj/item/clothing/accessory)
 		if("mask")
 			options = typesof(/obj/item/clothing/mask)

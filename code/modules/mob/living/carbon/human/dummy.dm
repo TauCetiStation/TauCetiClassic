@@ -35,6 +35,28 @@ var/global/list/dummy_mob_list = list()
 	D.in_use = TRUE
 	return D
 
+/proc/generate_dummy_lookalike(slotkey, mob/target)
+	if(!istype(target))
+		return generate_or_wait_for_human_dummy(slotkey)
+
+	var/mob/living/carbon/human/dummy/copycat = generate_or_wait_for_human_dummy(slotkey)
+
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		copycat.dna = carbon_target.dna.Clone()
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			human_target.copy_clothing_prefs(copycat)
+
+		copycat.UpdateAppearance()
+	else
+		//even if target isn't a carbon, if they have a client we can make the
+		//dummy look like what their human would look like based on their prefs
+		target?.client?.prefs?.copy_to(copycat, icon_updates=TRUE)
+
+	return copycat
+
 /proc/unset_busy_human_dummy(slotkey)
 	if(!slotkey)
 		return
