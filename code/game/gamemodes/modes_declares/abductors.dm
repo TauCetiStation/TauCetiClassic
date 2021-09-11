@@ -18,6 +18,14 @@
 	var/abductor_teams = clamp(round(get_player_count(TRUE) / ABDUCTOR_SCALING_COEFF), 1, MAX_ABDUCTOR_TEAMS)
 	factions_allowed[/datum/faction/abductors] = abductor_teams
 
+// its stupid
+/datum/game_mode/abduction/PostSetup()
+	var/team_counter = 1
+	for(var/datum/faction/abductors/A in factions)
+		A.team_number = team_counter
+		team_counter = team_counter + 1 <= 4 ? team_counter + 1 : 1
+	. = ..()
+
 /datum/game_mode/abduction/announce()
 	to_chat(world, "<B>The current game mode is - Abduction!</B>")
 	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
