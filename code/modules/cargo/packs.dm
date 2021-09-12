@@ -253,7 +253,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/weapon/gun/energy/sniperrifle,
 					/obj/item/weapon/gun/energy/sniperrifle)
-	cost = 5000
+	cost = 8200
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Energy marksman crate"
 	access = access_armory
