@@ -245,6 +245,20 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/erifle
+	name = "Energy marksman crate"
+	contains = list(/obj/item/clothing/suit/armor/laserproof,
+					/obj/item/clothing/suit/armor/laserproof,
+					/obj/item/clothing/head/helmet/laserproof,
+					/obj/item/clothing/head/helmet/laserproof,
+					/obj/item/weapon/gun/energy/sniperrifle,
+					/obj/item/weapon/gun/energy/sniperrifle)
+	cost = 5000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Energy marksman crate"
+	access = access_armory
+	group = "Security"
+
 /datum/supply_pack/shotgunammo_beanbag
 	name = "Shotgun shells (Beanbag)"
 	contains = list(/obj/item/weapon/storage/box/shotgun/beanbag)
