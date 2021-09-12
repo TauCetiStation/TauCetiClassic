@@ -77,7 +77,7 @@ var/global/abductor_landmarks_setuped = FALSE
 	if(!..())
 		return FALSE
 	team_number = team_count
-	team_count = team_count + 1 <= 4 ? team_count + 1 : 1
+	team_count = team_count + 1 <= MAX_ABDUCTOR_TEAMS ? team_count + 1 : 1
 	name = "Mothership [pick(greek_pronunciation)]"
 	return TRUE
 
