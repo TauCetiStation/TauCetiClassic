@@ -75,8 +75,8 @@
 	flag = XENOBIOLOGIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
