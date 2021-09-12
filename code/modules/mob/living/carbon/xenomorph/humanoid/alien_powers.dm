@@ -216,7 +216,7 @@ Doesn't work on other aliens/AI.*/
 			adjustToxLoss(-75)
 
 	visible_message("<span class='danger'>[src] spits [BB.name] at [target]!</span>")
-	playsound(src, pick(SOUNDIN_XENOMORPH_SPLITACID), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+	playsound(src, pick(SOUNDIN_XENOMORPH_SPLITACID), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	//prepare "bullet"
 	BB.original = target
 	BB.firer = src

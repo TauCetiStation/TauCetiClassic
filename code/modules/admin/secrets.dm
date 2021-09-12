@@ -67,6 +67,7 @@
 					<h4>Teams</h4>
 					<A href='?src=\ref[src];secretsfun=syndstriketeam'>Send in a Syndicate Strike Team</A><BR>
 					<A href='?src=\ref[src];secretsfun=striketeam'>Send in a Deathsquad</A><BR>
+					<A href='?src=\ref[src];secretsfun=police'>Send in a Space Police</A><BR>
 					<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a Space Ninja</A><BR>
 					<h4>Change Security Level</h4>
 					<A href='?src=\ref[src];secretsfun=securitylevel0'>Security Level - Green</A><BR>
@@ -115,6 +116,7 @@
 					<A href='?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
 					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 					<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
+					<A href='?src=\ref[src];secretsfun=global_sound_speed'>Set global sound speed modifier</A><BR>
 					"}
 
 	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 812)
@@ -184,6 +186,11 @@
 			if(usr.client.syndicate_strike_team())
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","Syndi Strike")
+		// Send in a Space Police
+		if("police")
+			if(usr.client.send_space_police())
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Space Police")
 		// Triple AI mode (needs to be used in the lobby)
 		if("tripleAI")
 			usr.client.triple_ai()
@@ -501,6 +508,13 @@
 			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
 			CS.complete()
+		if("global_sound_speed")
+			if(!check_rights(R_SOUNDS))
+				return
+			playsound_frequency_admin = clamp(input(usr, "Any value from -100 to 100 will play this sound at a multiple of its normal frequency. Set to 2 to play at double speed, for example, or -1 to play backwards. A value of 0 or 1 will play the sound at its normal frequency.", "Set Sound Speed", 0), -100, 100)
+			message_admins("[key_name_admin(usr)] has modified global sound speed to [playsound_frequency_admin]")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","Global Sound Frequency")
 		else
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)

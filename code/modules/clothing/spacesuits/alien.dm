@@ -308,7 +308,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/toggle_stealth(deactive = FALSE)
 	if(on)
-		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, null, -4)
+		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 		on = FALSE
 		slowdown = 0.5
 		wearer.alpha = 255
@@ -322,13 +322,13 @@
 			return
 		last_try = world.time + 4 SECONDS
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, -5)
+		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(do_after(wearer, 20, target = wearer))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return
 			if(is_damaged(TRUE))
 				return
-			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, null, -5)
+			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
 			slowdown = 2

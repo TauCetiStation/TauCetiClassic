@@ -10,7 +10,7 @@
 	max_roles = 2
 
 /datum/faction/wizards/can_setup(num_players)
-	max_roles = max(1, round(num_players/30))
+	max_roles = max(1, round(num_players/20))
 	return (..() && wizardstart.len != 0)
 
 /datum/faction/wizards/OnPostSetup()

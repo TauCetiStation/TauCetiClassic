@@ -9,7 +9,7 @@
 		return null
 
 	var/list/L = list()
-	for(var/datum/faction/F in SSticker.mode.factions)
+	for(var/F in SSticker.mode.factions)
 		if(istype(F, faction_type))
 			L += F
 
@@ -58,13 +58,13 @@
 	if(post_setup)
 		R.OnPostSetup()
 
-/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE)
+/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE, laterole = TRUE)
 	ASSERT(faction)
 
 	if(recruit)
-		. = faction.HandleRecruitedMind(M.mind)
+		. = faction.HandleRecruitedMind(M.mind, laterole)
 	else
-		. = faction.HandleNewMind(M.mind)
+		. = faction.HandleNewMind(M.mind, laterole)
 
 	if(.)
 		setup_role(., M, post_setup)

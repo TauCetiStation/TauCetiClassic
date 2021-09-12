@@ -5,7 +5,8 @@
 /datum/event/roundstart/area/dirt/start()
 	var/list/black_types = list(
 	/obj/effect/decal/cleanable/cellular/bluespace, /obj/effect/decal/cleanable/cellular/necro,
-	/obj/effect/decal/cleanable/bluespace, /obj/effect/decal/cleanable/blood/trail_holder
+	/obj/effect/decal/cleanable/bluespace, /obj/effect/decal/cleanable/blood/trail_holder,
+	/obj/effect/decal/cleanable/crayon/gang,
 	)
 	black_types += typesof(/obj/effect/decal/cleanable/blood/tracks)
 

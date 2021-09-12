@@ -389,11 +389,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("bicaridine", 1+round(potency / 8, 1))
-	reagents.add_reagent("synaptizine", 1+round(potency / 8, 1))
-	reagents.add_reagent("hyperzine", 1+round(potency / 10, 1))
-	reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("bicaridine", 1+round(potency / 6, 1))
+	reagents.add_reagent("synaptizine", 1+round(potency / 6, 1))
+	reagents.add_reagent("space_drugs", 1+round(potency / 9, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -728,7 +727,7 @@
 
 		C.stop_pulling()
 		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		if(!C.buckled)
 			C.Stun(8)
 			C.Weaken(5)

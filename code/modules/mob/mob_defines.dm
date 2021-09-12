@@ -5,6 +5,7 @@
 	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -100,10 +101,6 @@
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-
-	// Clothes count. Used in mood.
-	var/wet_clothes = 0
-	var/dirty_clothes = 0
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
