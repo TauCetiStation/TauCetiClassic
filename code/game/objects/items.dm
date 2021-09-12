@@ -269,7 +269,7 @@
 
 	if(w_class || wet)
 
-		var/stat_flavor = "It is a[wet ? "wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
+		var/stat_flavor = "It is a [wet ? "wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
 
 		if(wet)
 			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
