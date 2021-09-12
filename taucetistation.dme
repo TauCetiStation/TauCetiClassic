@@ -1823,6 +1823,7 @@
 #include "code\modules\mob\living\silicon\robot\drone\drone_damage.dm"
 #include "code\modules\mob\living\silicon\robot\drone\drone_items.dm"
 #include "code\modules\mob\living\silicon\robot\drone\drone_manufacturer.dm"
+#include "code\modules\mob\living\silicon\robot\drone\maintenance.dm"
 #include "code\modules\mob\living\silicon\robot\syndi\component.dm"
 #include "code\modules\mob\living\silicon\robot\syndi\syndiborg.dm"
 #include "code\modules\mob\living\simple_animal\bees.dm"
