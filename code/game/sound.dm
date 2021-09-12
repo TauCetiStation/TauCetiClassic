@@ -13,6 +13,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 =======================================================================================================================================*/
 
+/turf
+	var/sound_coefficient = 1.0
+
 /proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
@@ -88,6 +91,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
 
 		S.volume *= pressure_factor
+		S.volume *= turf_source.sound_coefficient
+		S.volume *= max(T.sound_coefficient, 0.0)
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
@@ -117,29 +122,37 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
-	if(!isfile(soundin))
-		CRASH("wrong type in \"soundin\" argument [soundin]")
-
 	if(!client || !client.prefs_ready)
 		return
 
-	/*
-	This will stop stealth sending of music to the client,
-	but will kill the feature with the ability to resume music on the fly mid position, especially the ones that started by an admin.
-
 	var/vol = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel)
-	if(!vol)
-		return
-	*/
-	var/sound/S = new
 
-	S.file = soundin
+	/*
+	This will stop stealth sending of ambient music to the client,
+	but still keep ability to resume admin music on the fly mid position
+	*/
+
+	if(!vol && volume_channel != VOL_ADMIN) 
+		return
+
+	var/sound/S
+
+	if(istext(soundin))
+		S = new(soundin) // for S.file byond expects 'files', dinamic path works only in new/sound
+		if(!S)
+			CRASH("wrong path in \"soundin\" argument [soundin]")
+	else if(isfile(soundin))
+		S = new
+		S.file = soundin
+	else
+		CRASH("wrong type in \"soundin\" argument [soundin]")
+
 	S.repeat = repeat
 	S.wait = wait
 	S.channel = channel
 	S.priority = priority
 	S.status = status
-	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // S.volume = vol <- replace line with this while uncommenting block of code from above.
+	S.volume = vol
 	S.environment = 2
 	src << S
 
@@ -238,7 +251,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				to_chat(src, "Preferences saving failed due to unknown reason.")
 			return
 		if("testVolume")
-			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), channel = CHANNEL_VOLUMETEST)
+			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
 			return
 		else
 			return
