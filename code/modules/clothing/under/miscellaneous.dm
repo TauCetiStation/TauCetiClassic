@@ -858,7 +858,8 @@
 	icon_state = "beret_cops"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	body_parts_covered = 1
-	flags = HEADCOVERSEYES | THICKMATERIAL
+	pierce_protection = HEAD
+	flags = HEADCOVERSEYES
 
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"
