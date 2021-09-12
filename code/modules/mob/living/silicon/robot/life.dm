@@ -188,38 +188,21 @@
 
 	if (src.healths)
 		if (src.stat != DEAD)
-			if(istype(src,/mob/living/silicon/robot/drone))
-				switch(health)
-					if(15 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(10 to 14)
-						src.healths.icon_state = "health1"
-					if(8 to 10)
-						src.healths.icon_state = "health2"
-					if(5 to 8)
-						src.healths.icon_state = "health3"
-					if(0 to 5)
-						src.healths.icon_state = "health4"
-					if(-15 to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
-			else
-				switch(health)
-					if(200 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(150 to 200)
-						src.healths.icon_state = "health1"
-					if(100 to 150)
-						src.healths.icon_state = "health2"
-					if(50 to 100)
-						src.healths.icon_state = "health3"
-					if(0 to 50)
-						src.healths.icon_state = "health4"
-					if(config.health_threshold_dead to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
+			switch(health)
+				if(maxHealth to INFINITY)
+					src.healths.icon_state = "health0"
+				if(maxHealth * 0.75 to maxHealth)
+					src.healths.icon_state = "health1"
+				if(maxHealth * 0.5 to maxHealth * 0.75)
+					src.healths.icon_state = "health2"
+				if(maxHealth * 0.25 to maxHealth * 0.5)
+					src.healths.icon_state = "health3"
+				if(0 to maxHealth * 0.25)
+					src.healths.icon_state = "health4"
+				if(config.health_threshold_dead to 0)
+					src.healths.icon_state = "health5"
+				else
+					src.healths.icon_state = "health6"
 		else
 			src.healths.icon_state = "health7"
 
