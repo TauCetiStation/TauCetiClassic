@@ -34,7 +34,6 @@ var/global/abductor_landmarks_setuped = FALSE
 	var/team_number
 	var/list/datum/role/abducted/abductees = list()
 	var/static/team_count = 1
-	var/static/finished = FALSE
 
 /datum/faction/abductors/New()
 	..()
@@ -77,19 +76,20 @@ var/global/abductor_landmarks_setuped = FALSE
 /datum/faction/abductors/can_setup()
 	if(!..())
 		return FALSE
-	team_number = team_count++
+	team_number = team_count
+	team_count = team_count + 1 <= 4 ? team_count + 1 : 1
 	name = "Mothership [pick(greek_pronunciation)]"
 	return TRUE
 
 /datum/faction/abductors/check_win()
-	if(finished)
+	if(SSticker.abductors_finished_researchs)
 		return FALSE
 
 	for(var/datum/objective/experiment/E in objective_holder.GetObjectives())
 		if(E.check_completion())
 			SSshuttle.incall(0.5)
 			SSshuttle.announce_emer_called.play()
-			finished = TRUE
+			SSticker.abductors_finished_researchs = TRUE
 			return FALSE
 
 	return FALSE
