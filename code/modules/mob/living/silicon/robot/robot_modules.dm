@@ -200,19 +200,6 @@
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
-/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
-	..()
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in src.modules
-	if(T.power_supply.charge < T.power_supply.maxcharge)
-		var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-		T.power_supply.give(S.e_cost)
-		T.update_icon()
-	else
-		T.charge_tick = 0
-	var/obj/item/weapon/melee/baton/B = locate() in src.modules
-	if(B.charges < 10)
-		B.charges += 1
-
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 
@@ -306,7 +293,7 @@
 	modules += new /obj/item/device/geoscanner(src)
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
 	modules += new /obj/item/device/gps/cyborg(src)
-	emag = new /obj/item/borg/stun(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"
