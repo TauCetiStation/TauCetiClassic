@@ -20,6 +20,10 @@ var/global/list/datum/area_group/observer_groups
 	return ..()
 
 /datum/area_group/proc/refresh_observer(mob/living/L, delay)
+	var/timer = LAZYACCESS(observers, L)
+	if(timer)
+		deltimer(timer)
+
 	var/spawn_timer = addtimer(
 		CALLBACK(
 			src,
@@ -35,6 +39,8 @@ var/global/list/datum/area_group/observer_groups
 /datum/area_group/proc/add_observer(mob/living/L, delay)
 	refresh_observer(L, delay)
 
+	if(LAZYACCESS(observers, L))
+		return
 	RegisterSignal(L, list(COMSIG_PARENT_QDELETING), .proc/on_observer_qdel)
 
 /datum/area_group/proc/remove_observer(mob/living/L)
@@ -149,12 +155,14 @@ var/global/list/datum/area_group/observer_groups
 
 	register_observer(entering)
 
-/datum/component/spawn_area/proc/on_exit(datum/source, atom/movable/exiting, atom/newLoc)
+/datum/component/spawn_area/proc/on_exit(datum/source, area/exited, atom/NewLoc)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(exiting, list(COMSIG_ATOM_EXITED))
+	var/mob/exiting = source
 
-	var/area/A = get_area(newLoc)
+	UnregisterSignal(exiting, list(COMSIG_EXIT_AREA))
+
+	var/area/A = get_area(NewLoc)
 	if(!A)
 		REMOVE_TRAIT(source, TRAIT_AREA_SENSITIVE, SPAWN_AREA_TRAIT)
 		return
@@ -186,7 +194,7 @@ var/global/list/datum/area_group/observer_groups
 
 	LAZYREMOVE(despawn_timers, source)
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_ATOM_EXITED))
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
 
 /datum/component/spawn_area/proc/register_observer(mob/living/L)
 	// No need to group areas on different Z-levels, since MultiZ travel is not present. CURRENTLY ~Luduk
@@ -200,7 +208,7 @@ var/global/list/datum/area_group/observer_groups
 
 	AG.add_observer(L, spawn_frequency)
 
-	RegisterSignal(L, list(COMSIG_ATOM_EXITED), .proc/on_exit)
+	RegisterSignal(L, list(COMSIG_EXIT_AREA), .proc/on_exit)
 
 	L.become_area_sensitive(SPAWN_AREA_TRAIT)
 
@@ -212,21 +220,27 @@ var/global/list/datum/area_group/observer_groups
 	AG.remove_observer(L)
 
 /datum/component/spawn_area/proc/refresh_instance(atom/movable/instance)
-	despawn_timers[instance] = addtimer(
+	var/timer = LAZYACCESS(despawn_timers, instance)
+	if(timer)
+		deltimer(timer)
+
+	var/despawn_timer = addtimer(
 		CALLBACK(src, .proc/TryDespawn, instance),
 		despawn_frequency,
 		TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE
 	)
 
+	LAZYSET(despawn_timers, instance, despawn_timer)
+
 /datum/component/spawn_area/proc/register_instance(atom/movable/instance)
 	RegisterSignal(instance, list(COMSIG_PARENT_QDELETING), .proc/on_instance_qdel)
-	RegisterSignal(instance, list(COMSIG_ATOM_EXITED), .proc/on_instance_exit)
+	RegisterSignal(instance, list(COMSIG_EXIT_AREA), .proc/on_instance_exit)
 
 /datum/component/spawn_area/proc/transfer_instance(datum/component/spawn_area/new_spawn_area, atom/movable/instance)
 	new_spawn_area.register_instance(instance)
 	LAZYSET(new_spawn_area.despawn_timers, instance, despawn_timers[instance])
 	LAZYREMOVE(despawn_timers, instance)
-	UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_ATOM_EXITED))
+	UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
 
 /datum/component/spawn_area/proc/TrySpawn(mob/living/L)
 	var/list/pos_turfs = list()
@@ -268,7 +282,7 @@ var/global/list/datum/area_group/observer_groups
 			break
 
 	if(despawning)
-		UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_ATOM_EXITED))
+		UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
 		INVOKE_ASYNC(src, .proc/Despawn, instance)
 		return
 
