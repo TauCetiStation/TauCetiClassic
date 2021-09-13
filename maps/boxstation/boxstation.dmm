@@ -46761,6 +46761,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/teleporter,
+/obj/item/borg/upgrade/security,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

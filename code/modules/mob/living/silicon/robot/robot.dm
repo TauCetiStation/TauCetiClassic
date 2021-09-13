@@ -265,7 +265,7 @@
 				module_sprites["Acheron"] = "mechoid-Security"
 				module_sprites["Kodiak"] = "kodiak-sec"
 			else
-				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.")
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
 
 		if("Engineering")
