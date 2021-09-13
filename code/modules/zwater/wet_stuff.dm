@@ -4,7 +4,7 @@
 /obj/item/proc/make_wet(shower = 0)
 	if(!src)
 		return
-	if(src.flags & THICKMATERIAL)
+	if(src.pierce_protection)
 		return
 
 	var/wet_weight = rand(18,28)
