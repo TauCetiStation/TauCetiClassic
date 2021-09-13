@@ -301,3 +301,15 @@
 	new /obj/item/weapon/reagent_containers/watertank_backpack/syndie(src)
 	new /obj/item/weapon/storage/box/matches(src)
 	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/drone
+	name = "box (D)"
+	desc = "Box containing a brand-new Cybersun Industries RC drone."
+	icon_state = "syndie_box"
+
+/obj/item/weapon/storage/box/syndie_kit/drone/atom_init()
+	. = ..()
+	var/obj/item/weapon/holder/drone/syndi/H = new /obj/item/weapon/holder/drone/syndi(src)
+	var/obj/item/clothing/glasses/syndidroneRC/G = new /obj/item/clothing/glasses/syndidroneRC(src)
+	G.slave = new /mob/living/silicon/robot/drone/syndi(H)
+	make_exact_fit()

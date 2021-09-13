@@ -68,6 +68,9 @@
 	icon_state = "drone"
 	origin_tech = "magnets=3;engineering=5"
 
+/obj/item/weapon/holder/drone/syndi
+	desc = "It's a small maintenance robot. It has a Cybersun Ind. logo engraved on its panel."
+	origin_tech = "programming=2;engineering=5;syndicate=6"
 
 /obj/item/weapon/holder/cat
 	name = "cat"

@@ -850,6 +850,13 @@
 	cost = 55
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/syndidrone
+	name = "Syndicate drone"
+	desc = "A remote control drone disguised as a NT maintenance drone. Comes with a RC interface."
+	item = /obj/item/weapon/storage/box/syndie_kit/drone
+	cost = 10
+	uplink_types = list("nuclear", "traitor")
+
 // IMPLANTS
 
 /datum/uplink_item/implants

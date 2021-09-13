@@ -114,6 +114,10 @@
 
 	..()
 
+/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/attacker)
+	if(attacker.a_intent == INTENT_HELP)
+		helpReaction(attacker)
+
 /mob/living/silicon/robot/drone/emag_act(mob/user)
 	if(!client || stat == DEAD)
 		to_chat(user, "<span class='warning'>There's not much point subverting this heap of junk.</span>")
