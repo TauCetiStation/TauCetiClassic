@@ -171,13 +171,14 @@
 	name = "security safety protocols module"
 	desc = "Unlocks the ability to become a security cyborg."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = FALSE
 
 /obj/item/borg/upgrade/security/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return FALSE
 
 	if(R.can_be_security)
-		return 0
+		return FALSE
 
 	R.can_be_security = TRUE
-	return 1
+	return TRUE
