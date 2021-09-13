@@ -15,7 +15,7 @@
 	return TRUE
 
 /datum/role/rev/OnPreSetup(greeting, custom)
-	..()
+	. = ..()
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "rev_convert", /datum/mood_event/rev)
 
 /datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
