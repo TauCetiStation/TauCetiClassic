@@ -16,11 +16,17 @@
 	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
 	return ..()
+
+
+/mob/examine(mob/user)
+	. = ..()
+	if(w_class)
+		to_chat(user, "It is a [get_size_flavor()] sized creature.")
 
 /mob/atom_init()
 	spawn()
@@ -157,7 +163,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -667,7 +677,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 				if(GM?.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -921,6 +931,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+// ========== DRUGGINESS ==========
+/mob/proc/adjustDrugginess(amount)
+	druggy = max(druggy + amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/setDrugginess(amount)
+	druggy = max(amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/updateDrugginesOverlay()
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
 
 // =============================
 
@@ -1073,14 +1099,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
-	if(ishuman(src) && druggy)
-		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
-		var/multiplied
-		if(preset)
-			var/datum/ColorMatrix/CM = new(preset)
-			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
-		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
-	else if(preset)
+	if(preset)
 		var/datum/ColorMatrix/CM = new(preset)
 		animate(client, color = CM.matrix, time = transition_time)
 	else

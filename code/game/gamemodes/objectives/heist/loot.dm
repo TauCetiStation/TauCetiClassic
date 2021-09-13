@@ -49,7 +49,7 @@
 
 	for(var/datum/role/raider in faction.members)
 		if(raider.antag.current)
-			for(var/obj/O in raider.antag.current.get_contents())
+			for(var/obj/O in raider.antag.current.GetAllContents())
 				if(istype(O,loot_type))
 					total_amount++
 				if(total_amount >= target_amount)

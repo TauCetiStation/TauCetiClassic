@@ -47,12 +47,10 @@
 
 // Destroy fraction and her members
 /datum/faction/proc/Dismantle()
-	for(var/datum/role/R in members)
-		var/datum/game_mode/G = SSticker.mode
-		G.orphaned_roles += R
-		remove_role(R)
-	qdel(objective_holder)
 	var/datum/game_mode/G = SSticker.mode
+	for(var/datum/role/R in members)
+		HandleRemovedRole(R)
+	qdel(objective_holder)
 	G.factions -= src
 	qdel(src)
 
@@ -98,7 +96,7 @@
 	return TRUE
 
 // Basically, they are members of the new faction
-/datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
+/datum/faction/proc/HandleNewMind(datum/mind/M, laterole) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -109,13 +107,13 @@
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src)
-	if(!newRole.AssignToRole(M))
+	if(!newRole.AssignToRole(M, laterole = laterole))
 		newRole.Drop()
 		return null
 	return newRole
 
 // Basically, these are the new members of the faction during the round
-/datum/faction/proc/HandleRecruitedMind(datum/mind/M, override = FALSE)
+/datum/faction/proc/HandleRecruitedMind(datum/mind/M, laterole)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -126,7 +124,7 @@
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
 	var/datum/role/R = new role_type(null, src) // Add him to our roles
-	if(!R.AssignToRole(M, override))
+	if(!R.AssignToRole(M, laterole = laterole))
 		R.Drop()
 		return null
 	return R
@@ -196,11 +194,11 @@
 			score_results += custom_result
 		else
 			if (IsSuccessful())
-				score_results += "<font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
+				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
 				score["roleswon"]++
 			else if (minor_victory)
-				score_results += "<font color='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
 			else
 				score_results += "<span class='red'><B>\The [capitalize(name)] has failed.</B></span>"

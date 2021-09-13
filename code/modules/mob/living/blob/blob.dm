@@ -59,7 +59,7 @@
 		ghost.key = key
 		if (ghost.client)
 			ghost.client.eye = ghost
-		return ..(gibbed)
+	return ..(gibbed)
 
 
 /mob/living/blob/blob_act()

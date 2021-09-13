@@ -8,23 +8,24 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
-	var/poster_type
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/random_basetype
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
 	icon_state = "rolled_poster"
-	poster_type = /obj/structure/sign/poster/contraband/random
+	random_basetype = /obj/structure/sign/poster/contraband
 
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
-	poster_type = /obj/structure/sign/poster/official/random
+	random_basetype = /obj/structure/sign/poster/official
 
 /obj/item/weapon/poster/atom_init(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 	resulting_poster = new_poster_structure
-	if(!new_poster_structure && poster_type)
+	if(!resulting_poster && random_basetype)
+		var/poster_type = get_random_poster_type(random_basetype)
 		resulting_poster = new poster_type(src)
 
 	// posters store what name and description they would like their
@@ -36,6 +37,7 @@
 
 		name = "[name] - [resulting_poster.original_name]"
 
+	AddElement(/datum/element/beauty, 300)
 
 // The poster sign/structure
 
@@ -48,7 +50,6 @@
 	var/ruined = FALSE
 
 	var/random_basetype
-	var/never_random = FALSE // used for the 'random' subclasses.
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -58,30 +59,26 @@
 /obj/structure/sign/poster/atom_init(mapload, rolled_official)
 	. = ..()
 	if(random_basetype)
-		randomise(random_basetype)
+		var/poster_type = get_random_poster_type(random_basetype)
+		var/obj/structure/sign/poster/new_poster = new poster_type(loc)
+		new_poster.pixel_x = pixel_x
+		new_poster.pixel_y = pixel_y
+		return INITIALIZE_HINT_QDEL
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 
-/obj/structure/sign/poster/proc/randomise(base_type)
+/proc/get_random_poster_type(base_type)
 	var/list/poster_types = subtypesof(base_type)
 	var/list/approved_types = list()
 	for(var/t in poster_types)
 		var/obj/structure/sign/poster/T = t
-		if(initial(T.icon_state) && !initial(T.never_random))
+		if(initial(T.icon_state) && !initial(T.random_basetype))
 			approved_types |= T
 
-	var/obj/structure/sign/poster/selected = pick(approved_types)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	poster_item_name = initial(selected.poster_item_name)
-	poster_item_desc = initial(selected.poster_item_desc)
-	poster_item_icon_state = initial(selected.poster_item_icon_state)
-	ruined = initial(selected.ruined)
+	return pick(approved_types)
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
@@ -161,7 +158,6 @@
 /obj/structure/sign/poster/random
 	name = "random poster" // could even be ripped
 	icon_state = "random_anything"
-	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/contraband
@@ -172,7 +168,6 @@
 /obj/structure/sign/poster/contraband/random
 	name = "random contraband poster"
 	icon_state = "random_contraband"
-	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
 
 /obj/structure/sign/poster/contraband/free_tonto
@@ -413,9 +408,8 @@
 
 /obj/structure/sign/poster/official/random
 	name = "random official poster"
-	random_basetype = /obj/structure/sign/poster/official
 	icon_state = "random_official"
-	never_random = TRUE
+	random_basetype = /obj/structure/sign/poster/official
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"
@@ -436,6 +430,10 @@
 	name = "Help Others"
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
+
+/obj/structure/sign/poster/official/help_others/examine(mob/user)
+	. = ..()
+	user.a_intent_change(INTENT_HELP)
 
 /obj/structure/sign/poster/official/build
 	name = "Build"
@@ -466,6 +464,12 @@
 	name = "Walk"
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
+
+/obj/structure/sign/poster/official/walk/examine(mob/user)
+	. = ..()
+	if(isliving(user))
+		var/mob/living/L = user
+		L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"

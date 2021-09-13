@@ -18,8 +18,18 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
-/// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
-#define COMSIG_PARENT_QDELETED "parent_qdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_PARENT_QDELETING "parent_qdeleting"
+
+// /datum/element signals
+/// fires on the target datum when an element is attached to it (/datum/element)
+#define COMSIG_ELEMENT_ATTACH "element_attach"
+/// fires on the target datum when an element is attached to it  (/datum/element)
+#define COMSIG_ELEMENT_DETACH "element_detach"
+
+// /datum/modval
+/// from base of datum/modval/Update(): (old_value)
+#define COMSIG_MODVAL_UPDATE "modval_update"
 
 // /datum/religion_rites signals
 /// from base of religion_rites/on_chosen(): (/mob, /obj)
@@ -41,6 +51,8 @@
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
 #define COMSIG_REL_ADD_MEMBER "rel_add_member"
+/// from base of religion/remove_member(): (/mob)
+#define COMSIG_REL_REMOVE_MEMBER "rel_remove_member"
 
 // /datum/role signals
 /// from base of role/GetScoreboard(): ()
@@ -61,7 +73,6 @@
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
 
 // /datum/species signals
-
 ///from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
 #define COMSIG_SPECIES_GAIN "species_gain"
 ///from datum/species/on_species_loss(): (datum/species/lost_species)
@@ -79,16 +90,20 @@
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited"
+///from base of area/update_beauty()
+#define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty"
 
 // /atom signals
+///from base of atom/Click(): (location, control, params, mob/user)
+#define COMSIG_CLICK "atom_click"
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
 /// from base of mob/living/carbon/human/electrocute_act(): (shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 #define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
-/// from base of atom/Entered(): (atom/movable/entering, /atom)
+/// from base of atom/Entered(): (atom/movable/entering, /atom/OldLoc)
 #define COMSIG_ATOM_ENTERED "atom_entered"
-/// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
+/// from base of atom/Exited(): (atom/movable/exiting, /atom/NewLoc)
 #define COMSIG_ATOM_EXITED "atom_exited"
 /// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
@@ -117,6 +132,10 @@
 	#define COMPONENT_NO_MOUSEDROP 1
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+/// from base of atom/add_dirt_cover: (datum/dirt_cover/dirt_datum)
+#define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
+/// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
+#define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
 
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
@@ -143,9 +162,9 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
-///from base of area/Entered(): (/area)
+///from base of area/Entered(): (/area, /atom/OldLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_ENTER_AREA "enter_area"
-///from base of area/Exited(): (/area)
+///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 
 // /obj
@@ -181,6 +200,10 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+/// from base of obj/item/make_wet
+#define COMSIG_ITEM_MAKE_WET "item_make_wet"
+/// from obj/item/dry_process
+#define COMSIG_ITEM_MAKE_DRY "item_make_dry"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -194,6 +217,12 @@
 /// from mob/living/silicon/robot/get_active_hand(): (mob/user)
 #define COMSIG_HAND_GET_ITEM "hand_get_item"
 
+//Mood (/datum/component/mood) signals
+///called when you send a mood event from anywhere in the code.
+#define COMSIG_ADD_MOOD_EVENT "add_mood"
+///called when you clear a mood event from anywhere in the code.
+#define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
+
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
@@ -202,6 +231,10 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/create_mob_hud(): ()
+#define COMSIG_MOB_HUD_CREATED "mob_hud_created"
+///from base of item/equipped(): (obj/item/I, slot)
+#define COMSIG_MOB_EQUIPPED "mob_equipped"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -266,3 +299,8 @@
 #define COMSIG_SHOW_RADIUS "show_radius"
 /// send this signal to remove /datum/component/vis_radius to a mobs: ()
 #define COMSIG_HIDE_RADIUS "hide_radius"
+
+// send this signal to stop suppressing in /datum/component/silence: ()
+#define COMSIG_START_SUPPRESSING "start_suppressing"
+// send this signal to stop suppressing in /datum/component/silence: ()
+#define COMSIG_STOP_SUPPRESSING "stop_suppressing"

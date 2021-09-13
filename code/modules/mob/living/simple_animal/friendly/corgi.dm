@@ -17,6 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	w_class = SIZE_BIG
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -54,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	w_class = SIZE_SMALL
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
@@ -104,6 +106,7 @@
 					set_dir(i)
 					sleep(1)
 
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 /mob/living/simple_animal/corgi/borgi
 	name = "E-N"
 	real_name = "E-N"	//Intended to hold the name without altering it.
@@ -113,10 +116,6 @@
 	icon_dead = "borgi_dead"
 	butcher_results = list()
 	var/emagged = 0
-
-/mob/living/simple_animal/corgi/borgi/atom_init()
-	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
 	if(!emagged && emagged < 2)

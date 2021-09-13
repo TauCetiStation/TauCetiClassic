@@ -18,13 +18,14 @@
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
+	implanted = FALSE
+	imp_in = null
 	if(part)
 		part.implants.Remove(src)
+		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
-		part = null
-	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -520,7 +521,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 

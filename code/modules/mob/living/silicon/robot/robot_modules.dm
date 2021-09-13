@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_NO_CONTAINER
+	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()
@@ -403,6 +403,7 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)

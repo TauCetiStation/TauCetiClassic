@@ -13,7 +13,7 @@ var/global/sent_strike_team = FALSE
 		to_chat(usr, "<span class='red'>CentCom is already sending a team.</span>")
 		return FALSE
 
-	if (tgui_alert(usr, "Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No") != "Yes")
+	if (tgui_alert(usr, "Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,list("Yes","No")) != "Yes")
 		return FALSE
 
 	tgui_alert(usr, "This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
@@ -161,7 +161,7 @@ var/global/sent_strike_team = FALSE
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 
 	var/obj/item/weapon/card/id/centcom/C = new(src)

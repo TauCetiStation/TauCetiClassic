@@ -51,12 +51,12 @@
 	objectives.owner = M
 	..()
 
-/datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE)
+/datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
 		return FALSE
-	if(!CanBeAssigned(M) && !override)
-		log_mode("[M.name] was to be assigned to [name] but failed CanBeAssigned!")
+	if(!CanBeAssigned(M, laterole) && !override)
+		log_mode("[key_name(M)] was to be assigned to [name] but failed CanBeAssigned!")
 		return FALSE
 
 	antag = M
@@ -105,30 +105,42 @@
 	qdel(O)
 
 // General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
-/datum/role/proc/CanBeAssigned(datum/mind/M)
+/datum/role/proc/CanBeAssigned(datum/mind/M, laterole)
+	var/ckey_of_antag = key_name(M)
 	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
+		log_mode("[ckey_of_antag] has a protected job, his job - [M.assigned_role]")
 		return FALSE
 
 	if(restricted_jobs.len > 0)
 		if(M.assigned_role in restricted_jobs)
+			log_mode("[ckey_of_antag] has a restricted job, his job - [M.assigned_role]")
 			return FALSE
 
 	if(required_jobs.len > 0)
 		if(!(M.assigned_role in required_jobs))
+			log_mode("[ckey_of_antag] doesn't have a required job, his job - [M.assigned_role]")
 			return FALSE
 
 	if(M?.current?.client)
+
+		if(jobban_isbanned(M.current, required_pref) || jobban_isbanned(M.current, "Syndicate"))
+			log_mode("[ckey_of_antag] have jobban.")
+			return FALSE
+
 		var/datum/preferences/prefs = M.current.client.prefs
 		var/datum/species/S = all_species[prefs.species]
 
 		if(!S.can_be_role(required_pref))
+			log_mode("[ckey_of_antag] his species \"[S.name]\" can't be a role")
 			return FALSE
 
 		for(var/specie_flag in restricted_species_flags)
 			if(S.flags[specie_flag])
+				log_mode("[ckey_of_antag] his species \"[S.name]\" has restricted flag")
 				return FALSE
 
 	if(is_type_in_list(src, M.antag_roles)) //No double double agent agent
+		log_mode("[ckey_of_antag] already has this role.")
 		return FALSE
 
 	return TRUE
@@ -158,7 +170,6 @@
 
 // Create objectives here.
 /datum/role/proc/forgeObjectives()
-	SHOULD_CALL_PARENT(TRUE)
 	if(config.objectives_disabled)
 		return FALSE
 	return TRUE

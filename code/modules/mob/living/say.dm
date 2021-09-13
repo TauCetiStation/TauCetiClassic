@@ -1,4 +1,4 @@
-var/list/department_radio_keys = list(
+var/global/list/department_radio_keys = list(
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -15,6 +15,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":d" = "dronechat",	"#d" = "dronechat",		".d" = "dronechat",
+	  ":z" = "mafia",		"#z" = "mafia",			".z" = "mafia",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
@@ -32,6 +33,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":D" = "dronechat",	"#D" = "dronechat",		".D" = "dronechat",
+	  ":Z" = "mafia",		"#Z" = "mafia",			".Z" = "mafia",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -51,6 +53,7 @@ var/list/department_radio_keys = list(
 	  ":г" = "Supply",		"#г" = "Supply",		".г" = "Supply",
 	  ":п" = "changeling",	"#п" = "changeling",	".п" = "changeling",
 	  ":в" = "dronechat",	"#в" = "dronechat",		".в" = "dronechat",
+	  ":я" = "mafia",		"#я" = "mafia",			".я" = "mafia",
 
 	  ":К" = "right ear",	"#К" = "right ear",		".К" = "right ear",
 	  ":Д" = "left ear",	"#Д" = "left ear",		".Д" = "left ear",
@@ -67,7 +70,8 @@ var/list/department_radio_keys = list(
 	  ":Е" = "Syndicate",	"#Е" = "Syndicate",		".Е" = "Syndicate",
 	  ":Г" = "Supply",		"#Г" = "Supply",		".Г" = "Supply",
 	  ":П" = "changeling",	"#П" = "changeling",	".П" = "changeling",
-	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat"
+	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat",
+	  ":Я" = "mafia",		"#Я" = "mafia",			".Я" = "mafia",
 )
 
 /mob/living/proc/binarycheck()
@@ -141,6 +145,10 @@ var/list/department_radio_keys = list(
 
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+	
+	//make sure we actually can hear there
+	if (T.sound_coefficient < 0.5)
+		message = Gibberish(message, (1.0 - max(0.0, T.sound_coefficient)) * 100 + 20)
 
 	var/list/listening = list()
 	var/list/listening_obj = list()

@@ -178,7 +178,7 @@
 /obj/machinery/bot/attack_ai(mob/user)
 	attack_hand(user)
 
-/obj/machinery/bot/is_operational_topic()
+/obj/machinery/bot/is_operational()
 	return TRUE
 
 /obj/machinery/bot/proc/inaction_check()

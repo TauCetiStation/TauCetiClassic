@@ -311,7 +311,7 @@
 		return
 	..()
 
-/obj/machinery/mining/drill/is_interactable()
+/obj/machinery/mining/drill/is_operational()
 	return TRUE
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
@@ -419,6 +419,5 @@
 		to_chat(usr, "<span class='notice'>You unload the drill's storage cache into the ore box.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
-
 
 

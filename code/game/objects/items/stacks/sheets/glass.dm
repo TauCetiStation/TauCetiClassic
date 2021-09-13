@@ -98,7 +98,7 @@
 			if(src.loc != user)
 				return 1
 
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for(var/obj/structure/window/win in user.loc)
 				i++
@@ -214,7 +214,7 @@
 				return 1
 			if(src.loc != user)
 				return 1
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
@@ -361,7 +361,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
 			if(H.species.flags[NO_MINORCUTS])

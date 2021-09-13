@@ -113,7 +113,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -229,7 +229,7 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	flags = DROPDEL // No PHORONGUARD or THICKMATERIAL, because it's organic tissue, so syringes or other things can get thru easily.
+	flags = DROPDEL // No PHORONGUARD, because it's organic tissue, so syringes or other things can get thru easily.
 	canremove = 0
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) // No armor at all.
@@ -281,8 +281,9 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
 	canremove = 0
-	flags = THICKMATERIAL | DROPDEL
+	flags = DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -300,7 +301,8 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon = 'icons/mob/head.dmi'
 	icon_state = "lingarmorhelmet"
-	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL | DROPDEL
+	flags = HEADCOVERSEYES | BLOCKHAIR | DROPDEL
+	pierce_protection = HEAD
 	canremove = 0
 	armor = list(melee = 70, bullet = 45, laser = 45, energy = 35, bomb = 25, bio = 2, rad = 0)
 	flags_inv = HIDEEARS

@@ -91,6 +91,13 @@ var/list/blacklisted_builds = list(
 		js_error_manager.log_error(file, message, src)
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
+
 	//byond bug ID:2256651
 	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
@@ -117,10 +124,6 @@ var/list/blacklisted_builds = list(
 			keyUp(keycode)
 		return
 
-	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
-		return
-
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -135,9 +138,6 @@ var/list/blacklisted_builds = list(
 			return
 		cmd_admin_pm(C,null)
 		return
-
-	//Logs all hrefs
-	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -230,7 +230,7 @@ var/list/blacklisted_builds = list(
 	if(config.sandbox)
 		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
 		if(!holder)
-			new /datum/admins("Sandbox Admin", sandbox_permissions, ckey)
+			new /datum/admins(ADMIN_RANK_SANDBOX, sandbox_permissions, ckey)
 			holder = admin_datums[ckey]
 		else
 			holder.rights = (holder.rights | sandbox_permissions)
@@ -270,6 +270,8 @@ var/list/blacklisted_builds = list(
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
+	update_supporter_status()
+
 	. = ..()	//calls mob.Login()
 
 	if(SSinput.initialized)
@@ -279,8 +281,6 @@ var/list/blacklisted_builds = list(
 		chatOutput.start()
 
 	connection_time = world.time
-
-	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
@@ -610,7 +610,11 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
-	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	if (prefs.hotkeys)
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -666,17 +670,22 @@ var/list/blacklisted_builds = list(
 	if(byond_registration)
 		return byond_registration
 
+	return get_byond_registration_from_pager(ckey)
+
+/proc/get_byond_registration_from_pager(ckey)
+	ckey = ckey(ckey)
+	if(!ckey)
+		return
+
 	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
 
 	if (!user_page)
 		return
 
-	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	var/static/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
 	joined_date_regex.Find(user_page)
 
-	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
-
-	return byond_registration
+	return list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 /client/proc/GetRolePrefs()
 	var/list/roleprefs = list()
@@ -728,3 +737,39 @@ var/list/blacklisted_builds = list(
 		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
+
+#define MAXIMAZED  (1<<0)
+#define FULLSCREEN (1<<1)
+
+/client/verb/toggle_fullscreen()
+	set name = "Toggle Fullscreen"
+	set category = "OOC"
+
+	fullscreen ^= FULLSCREEN
+
+	if(fullscreen & FULLSCREEN)
+		if(winget(usr, "mainwindow", "is-maximized") == "true")
+			fullscreen |= MAXIMAZED
+		else
+			fullscreen &= ~MAXIMAZED
+		winset(usr, "mainwindow", "titlebar=false")
+		winset(usr, "mainwindow", "can-resize=false")
+		winset(usr, "mainwindow", "is-maximized=false")
+		winset(usr, "mainwindow", "is-maximized=true")
+		winset(usr, "mainwindow", "menu=")
+	else
+		if(!(fullscreen & MAXIMAZED))
+			winset(usr, "mainwindow", "is-maximized=false")
+		winset(usr, "mainwindow", "titlebar=true")
+		winset(usr, "mainwindow", "can-resize=true")
+		winset(usr, "mainwindow", "menu=menu")
+
+#undef MAXIMAZED
+#undef FULLSCREEN
+
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size
+	mob.reload_fullscreen()

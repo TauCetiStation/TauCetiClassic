@@ -32,9 +32,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	if(client)
-		handle_regular_hud_updates()
-
 
 /mob/living/carbon/brain/proc/handle_mutations_and_radiation()
 
@@ -202,7 +199,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 	return 1
 
 /mob/living/carbon/brain/handle_regular_hud_updates()

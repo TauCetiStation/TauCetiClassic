@@ -125,3 +125,5 @@
 
 	// Last world.time that the player tried to request their resources.
 	var/last_ui_resource_send = 0
+
+	var/fullscreen = NONE
