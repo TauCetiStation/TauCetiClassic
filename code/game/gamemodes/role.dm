@@ -197,13 +197,13 @@
 	var/icon/logo = get_logo_icon()
 	var/mob/M = antag?.current
 	if (M)
-		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
+		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
 	 - <a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
 	else if(antag)
-		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
+		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] [antag.name]/[antag.key]<b><font color=red> - (DESTROYED)</font></b>
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
@@ -214,10 +214,10 @@
 	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_CUSTOM)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 			to_chat(antag.current, "[custom]")
 		else
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 
 	return TRUE
 
@@ -244,7 +244,7 @@
 	var/mob/M = mind.current
 	if(!M)
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
-		text += "<img src='data:image/png;base64,[icon2base64(sprotch)]' style='position:relative; top:10px;'/>"
+		text += "[bicon(sprotch, css = "style='position: relative;top:10px;'")]"
 	else
 		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
@@ -259,7 +259,7 @@
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>" // change to base64?
 
 	var/icon/logo = get_logo_icon()
-	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[mind.key]</b> was <b>[mind.name]</b> ("
+	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> was <b>[mind.name]</b> ("
 	if(M)
 		if(M.stat == DEAD)
 			text += "died"
@@ -336,7 +336,7 @@
 				text += "</ul>"
 
 	var/icon/logo = get_logo_icon()
-	text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+	text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
@@ -404,7 +404,7 @@
 
 	if(objectives.objectives.len)
 		var/icon/logo = get_logo_icon()
-		text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+		text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
 		text += "<ul><b>[capitalize(name)] objectives:</b><br>"
 		var/obj_count = 1
 		for(var/datum/objective/O in objectives.objectives)

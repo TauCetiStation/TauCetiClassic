@@ -299,3 +299,8 @@
 #define COMSIG_SHOW_RADIUS "show_radius"
 /// send this signal to remove /datum/component/vis_radius to a mobs: ()
 #define COMSIG_HIDE_RADIUS "hide_radius"
+
+// send this signal to stop suppressing in /datum/component/silence: ()
+#define COMSIG_START_SUPPRESSING "start_suppressing"
+// send this signal to stop suppressing in /datum/component/silence: ()
+#define COMSIG_STOP_SUPPRESSING "stop_suppressing"
