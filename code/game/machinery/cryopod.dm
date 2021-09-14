@@ -222,6 +222,9 @@ var/global/list/frozen_items = list()
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
 
+				if(occupant.mind.assigned_job)
+					feedback_add_details("job_left_while_alive", "[occupant.mind.assigned_job.title]")
+
 				SSjob.FreeRole(job)
 
 			// Delete them from datacore.

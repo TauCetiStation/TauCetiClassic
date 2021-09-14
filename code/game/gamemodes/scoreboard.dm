@@ -23,6 +23,10 @@
 	for(var/mob/living/carbon/human/E in human_list)
 		if(E.stat == DEAD)
 			continue
+
+		if(E.mind && E.mind.assigned_role && E.mind.assigned_job)
+			feedback_add_details("job_left_while_alive", "[E.mind.assigned_job.title]")
+
 		cashscore = 0
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)

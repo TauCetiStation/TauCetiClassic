@@ -22,6 +22,8 @@ var/global/list/empty_playable_ai_cores = list()
 	//Handle job slot/tater cleanup.
 	if(mind)
 		var/job = mind.assigned_role
+		if(mind.assigned_job)
+			feedback_add_details("job_left_while_alive", "[mind.assigned_job.title]")
 		SSjob.FreeRole(job)
 		if(isanyantag(src))
 			mind.special_role = null
