@@ -330,6 +330,13 @@
 
 	R.add_language("Sy-Code", TRUE)
 
+/obj/item/weapon/robot_module/syndidrone
+	name = "syndicate drone module"
+
+/obj/item/weapon/robot_module/syndidrone/add_languages(mob/living/silicon/robot/R)
+	. = ..()
+	R.add_language("Sy-Code", TRUE)
+
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"
 

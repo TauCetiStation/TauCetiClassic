@@ -9,15 +9,16 @@
     req_access = list(access_syndicate)
     holder_type = /obj/item/weapon/holder/drone/syndi
 
-    var/points = 10 //internal uplink points for upgrade purchase
+    var/obj/item/device/drone_uplink/uplink = null
     var/mob/living/carbon/human/operator = null //Mob controlling the drone
 
 /mob/living/silicon/robot/drone/syndi/atom_init()
 	. = ..()
 	set_ai_link(null)
 	radio = new /obj/item/device/radio/borg/syndicate(src)
-	//module = new /obj/item/weapon/robot_module/___(src)
+	module = new /obj/item/weapon/robot_module/syndidrone(src)
 	laws = new /datum/ai_laws/syndicate_override()
+	uplink = new /obj/item/device/drone_uplink()
 
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -27,3 +28,6 @@
 	var/N = rand(100,999)
 	real_name = "syndicate drone ([N])"
 	name = "maintenance drone ([N])"
+
+/mob/living/silicon/robot/drone/syndi/pick_module()
+    uplink.interact(src)
