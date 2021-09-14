@@ -16,8 +16,8 @@
 	. = ..()
 	init_turfs_around()
 	health = rand(150, 300)
-	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = TRIGGER_PROXY
+	first_effect = new /datum/artifact_effect/tesla(src)
+	first_effect.trigger = TRIGGER_PROXY
 	desc = "A blue strange crystal"
 	icon_num = ARTIFACT_CRYSTAL_BLUE
 	set_light(4)

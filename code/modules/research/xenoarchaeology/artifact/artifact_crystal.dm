@@ -11,13 +11,13 @@
 	icon_state = "artifact_11"
 	density = TRUE
 	anchored = FALSE
-	var/datum/artifact_effect/my_effect
+	var/datum/artifact_effect/first_effect
 	var/wired = FALSE
 	var/icon_custom_crystal = null
 
 /obj/machinery/power/crystal/atom_init()
 	. = ..()
-	my_effect = new /datum/artifact_effect/powernet(src)
+	first_effect = new /datum/artifact_effect/powernet(src)
 	if(anchored)
 		connect_to_network()
 	icon_custom_crystal = pick("artifact_11", "artifact_12", "artifact_13")
@@ -73,7 +73,7 @@
 		return TRUE
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(wired && anchored)
-		my_effect.ToggleActivate()
+		first_effect.ToggleActivate()
 		update_crystal()
 	to_chat(user, "<b>You touch [src].</b>")
 
@@ -94,7 +94,7 @@
 	return ..()
 
 /obj/machinery/power/crystal/proc/update_crystal()
-	if(wired && anchored && my_effect.activated)
+	if(wired && anchored && first_effect.activated)
 		icon_state = "[icon_custom_crystal]_active"
 	else
 		icon_state = icon_custom_crystal

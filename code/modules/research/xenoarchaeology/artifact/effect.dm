@@ -43,7 +43,7 @@
 	var/activation_aura_cost = 0
 	///activation cost for pulse cast
 	var/activation_pulse_cost = 0
-	///purely used in logs
+	///used for logs and science tool
 	var/log_name = "unknown"
 	///purely used for getDescription
 	var/type_name = ARTIFACT_EFFECT_UNKNOWN
@@ -82,7 +82,7 @@
 	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
 
 /**
- * Stops/starts processing, sets up a holder, displays visible_message
+ * Stops/starts processing, updates artifact icon, displays visible_message
  */
 /datum/artifact_effect/proc/toggle_artifact_effect(reveal_toggle)
 	activated = !activated

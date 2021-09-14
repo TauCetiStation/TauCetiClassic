@@ -104,8 +104,8 @@
 				var/obj/O = new spawn_type(get_turf(src))
 				if(istype(O,/obj/machinery/artifact))
 					var/obj/machinery/artifact/A = O
-					if(A.my_effect)
-						A.my_effect.artifact_id = artifact_find.artifact_id
+					if(A.first_effect)
+						A.first_effect.artifact_id = artifact_find.artifact_id
 				visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
 			else
 				user.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>",\
