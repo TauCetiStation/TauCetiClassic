@@ -172,6 +172,8 @@
 
 	//no living players, follow a clientless instead.
 	for(var/mob/mob in alive_mob_list)
+		if(mob.faction == "cult")
+			continue
 		var/turf/pos = get_turf(mob)
 		if(!pos)
 			continue
