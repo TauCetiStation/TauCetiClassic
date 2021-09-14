@@ -156,7 +156,7 @@
 			if(!altars.len)
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
-			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/narsie, altar)
+			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/movable/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow

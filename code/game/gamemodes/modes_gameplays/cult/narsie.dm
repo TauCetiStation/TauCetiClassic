@@ -1,5 +1,5 @@
 // illusion of nar-sie
-/atom/narsie
+/atom/movable/narsie
 	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
@@ -40,7 +40,6 @@
 	. = ..()
 	my_religion = religion
 	INVOKE_ASYNC(src, .proc/begin_the_end)
-	playsound_frequency_admin = -1
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
@@ -54,6 +53,8 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.")
+
+	playsound_frequency_admin = -1
 
 /obj/singularity/narsie/proc/begin_the_end()
 	narsie_spawn_animation()
@@ -118,7 +119,7 @@
 		qdel(A)
 		return
 
-	if(istype(T, /turf/simulated/floor))
+	if(istype(A, /turf/simulated/floor))
 		var/turf/T = A
 		if(prob(50))
 			T.ChangeTurf(pick(my_religion.floor_types))
@@ -128,7 +129,8 @@
 		var/area/area = get_area(A)
 		area.religion = global.cult_religion
 		return
-	if(istype(T, /turf/simulated/wall))
+	if(istype(A, /turf/simulated/wall))
+		var/turf/T = A
 		if(prob(20))
 			T.ChangeTurf(pick(my_religion.wall_types))
 		return
