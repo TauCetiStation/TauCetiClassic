@@ -28,4 +28,4 @@
 	log_name = "Darkness"
 
 /datum/artifact_effect/light/darkness/DoEffectTouch(mob/living/user)
-	switch_light(-3 , 8)
+	switch_light(-4 , 8)

@@ -105,6 +105,14 @@
 		toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /**
+ * Turns effect off, no icon update, doesnt display message
+ */
+/datum/artifact_effect/proc/turn_effect_off()
+	if(activated)
+		STOP_PROCESSING(SSobj, src)
+		activated = FALSE
+
+/**
  * Checks for a user, anomaly protection, tries to drain artifact charg
  * returns true if charge was drained, otherwise returns false
  */

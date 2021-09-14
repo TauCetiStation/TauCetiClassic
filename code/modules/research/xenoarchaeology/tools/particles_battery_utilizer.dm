@@ -139,8 +139,8 @@
 
 		cooldown = archived_time / 2
 
-		if(inserted_battery.battery_effect.activated)
-			inserted_battery.battery_effect.ToggleActivate(TRUE)
+	to_chat(world,"test")
+	inserted_battery.battery_effect.turn_effect_off()
 	updateDialog()
 
 /obj/item/weapon/xenoarch_utilizer/Topic(href, href_list)
@@ -200,6 +200,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!H.get_active_hand())
 				H.put_in_hands(inserted_battery)
+		inserted_battery.battery_effect.turn_effect_off()
 		inserted_battery = null
 		update_icon()
 	interact(usr)
