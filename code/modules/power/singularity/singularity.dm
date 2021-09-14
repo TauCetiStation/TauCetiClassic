@@ -35,7 +35,6 @@
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
-	poi_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/singularity/atom_init_late()
@@ -47,7 +46,6 @@
 /obj/singularity/Destroy()
 	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
-	poi_list -= src
 	return ..()
 
 /obj/singularity/attack_hand(mob/user)
