@@ -149,6 +149,12 @@
 
 	step(src, movement_dir)
 
+/obj/singularity/narsie/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	return TRUE
+
+/obj/singularity/narsie/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
 /obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
 
