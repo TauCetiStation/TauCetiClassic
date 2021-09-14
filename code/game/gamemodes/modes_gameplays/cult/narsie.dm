@@ -28,7 +28,7 @@
 	light_range = 1
 	light_color = "#3e0000"
 	current_size = 12
-	move_self = 1 //Do we move on our own?
+	move_self = TRUE //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 	contained = 0 //Are we going to move around?
@@ -79,7 +79,7 @@
 	return
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in orange(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='warning'>Вы чувствуете, как ваш рассудок мгновенно рассеивается, когда вы посмотрели на [name]...</span>")
@@ -105,6 +105,7 @@
 	religions_structures += my_religion.wall_types
 	religions_structures += my_religion.floor_types
 	religions_structures += my_religion.door_types
+
 	for(var/type in religions_structures)
 		if(istype(A, type))
 			return
@@ -117,20 +118,20 @@
 		qdel(A)
 		return
 
-	if(isturf(A))
+	if(istype(T, /turf/simulated/floor))
 		var/turf/T = A
-		if(istype(T, /turf/simulated/floor))
-			if(prob(50))
-				T.ChangeTurf(pick(my_religion.floor_types))
-			if(prob(5))
-				var/obj = pick(subtypesof(/obj/structure/cult/anomaly))
-				new obj(T)
-			var/area/area = get_area(A)
-			area.religion = global.cult_religion
-			return
-		if(istype(T, /turf/simulated/wall))
-			if(prob(20))
-				T.ChangeTurf(pick(my_religion.wall_types))
+		if(prob(50))
+			T.ChangeTurf(pick(my_religion.floor_types))
+		if(prob(5))
+			var/obj = pick(subtypesof(/obj/structure/cult/anomaly))
+			new obj(T)
+		var/area/area = get_area(A)
+		area.religion = global.cult_religion
+		return
+	if(istype(T, /turf/simulated/wall))
+		if(prob(20))
+			T.ChangeTurf(pick(my_religion.wall_types))
+		return
 
 /obj/singularity/narsie/move()
 	if(!move_self)
@@ -208,8 +209,8 @@
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/effects/narsie_spawn_anim.dmi'
 	set_dir(SOUTH)
-	move_self = 0
+	move_self = FALSE
 	flick("narsie_spawn_anim",src)
 	sleep(11)
-	move_self = 1
+	move_self = TRUE
 	icon = initial(icon)
