@@ -181,7 +181,7 @@
 		if(!inserted_battery.battery_effect)
 			var/new_effect_type = harvested_effect.type
 			var/datum/artifact_effect/E = new new_effect_type(inserted_battery)
-			for(var/varname in list("maximum_charges", "release_method", "range", "trigger"))
+			for(var/varname in list("maximum_charges", "artifact_id", "release_method", "range", "trigger"))
 				E.vars[varname] = harvested_effect.vars[varname]
 			inserted_battery.battery_effect = E
 
