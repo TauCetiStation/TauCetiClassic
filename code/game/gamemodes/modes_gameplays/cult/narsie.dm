@@ -162,7 +162,7 @@
 	if(!alive_mob_list.len || !player_list.len)
 		return
 	var/list/noncultists = list()
-	for(var/mob/food in player_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
+	for(var/mob/living/food in player_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(!pos)
 			continue
