@@ -139,7 +139,6 @@
 
 		cooldown = archived_time / 2
 
-	to_chat(world,"test")
 	inserted_battery.battery_effect.turn_effect_off()
 	updateDialog()
 
