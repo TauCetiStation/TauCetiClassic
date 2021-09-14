@@ -102,6 +102,9 @@
 		L.gib()
 		return
 
+	if(!my_religion)
+		return
+
 	var/list/religions_structures = list()
 	religions_structures += my_religion.wall_types
 	religions_structures += my_religion.floor_types
@@ -152,7 +155,6 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
 	if(!alive_mob_list.len || !player_list.len)
 		return
-	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/mob/food in player_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
@@ -161,17 +163,11 @@
 		if(pos.z != z)
 			continue
 
-		if(iscultist(food))
-			cultists += food
-		else
+		if(!iscultist(food))
 			noncultists += food
 
 		if(noncultists.len) //crew get higher priority
 			acquire(pick(noncultists))
-			return
-
-		if(cultists.len)
-			acquire(pick(cultists))
 			return
 
 	//no living players, follow a clientless instead.
@@ -193,9 +189,9 @@
 		var/turf/pos = get_turf(ghost)
 		if(pos.z != z)
 			continue
-		cultists += ghost
-	if(cultists.len)
-		acquire(pick(cultists))
+		noncultists += ghost
+	if(noncultists.len)
+		acquire(pick(noncultists))
 		return
 
 
