@@ -70,7 +70,7 @@
 
 /area/asteroid/mine/unexplored/proc/Spawn(turf/T)
 	var/to_spawn = pickweight(mob_spawn_list)
-	new to_spawn(T)
+	return list(new to_spawn(T))
 
 /area/asteroid/mine/unexplored/proc/Despawn(atom/movable/instance)
 	qdel(instance)
