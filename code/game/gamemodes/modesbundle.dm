@@ -11,9 +11,7 @@
 		if(M.potential_runnable())
 			L += M.name
 		qdel(M)
-	if(!L.len) // if no mode can start, then the modes that will always start
-		var/datum/modesbundle/run_anyway/super_bundle = new
-		L = super_bundle.get_gamemodes_name()
+
 	return L
 
 /*
