@@ -21,6 +21,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	var/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
@@ -102,11 +103,13 @@
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						if(istype(active1.fields["photo_f"], /icon))
 							var/icon/front = active1.fields["photo_f"]
+							front.Blend(mugshot,ICON_UNDERLAY,1,1)
 							user << browse_rsc(front, "front.png")
 						if(istype(active1.fields["photo_s"], /icon))
 							var/icon/side = active1.fields["photo_s"]
+							side.Blend(mugshot,ICON_UNDERLAY,1,1)
 							user << browse_rsc(side, "side.png")
-						dat += text("<table><tr><td>	\
+						dat += text("<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>	\
 							Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
 							ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
 							Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
@@ -119,8 +122,8 @@
 							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 							Mental Status: [active1.fields["m_stat"]]<BR></td>	\
-							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-							<img src=side.png height=80 width=80 border=4><BR>\n	\
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>	\
+							<img src=side.png height=80 width=80 border=4 class=nearest><BR>\n	\
 							Upload new photo: <A href='?src=\ref[src];choice=Edit Field;field=photo_f'>front</A> <A href='?src=\ref[src];choice=Edit Field;field=photo_s'>side</A></td></tr></table>")
 					else
 						dat += "<B>General Record Lost!</B><BR>"
@@ -135,7 +138,7 @@
 					else
 						dat += "<B>Security Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
-					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Print Photos'>Print Photos</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src, src)
 				if(4.0)
 					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
@@ -351,6 +354,43 @@ What a mess.*/
 					P.info += "<B>Security Record Lost!</B><BR>"
 				P.info += "</TT>"
 				P.update_icon()
+				printing = null
+				updateUsrDialog()
+		if("Print Photos")
+			if(!printing)
+				printing = 1
+				var/datum/data/record/record1 = null
+				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+					record1 = active1
+					var/list/record_name = new/list()
+					record_name += list(record1.fields["name"]=/mob/living/carbon/human)
+					if(istype(record1.fields["photo_f"], /icon))
+						var/datum/picture/P = new()
+						P.fields["img"] = record1.fields["photo_f"]
+						P.fields["author"] = /mob/living/simple_animal/corgi/borgi
+						P.fields["mob_names"] = record_name
+						P.fields["desc"] = "You can see [record1.fields["name"]] on the photo"
+						P.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
+						P.fields["tiny"] = icon('icons/obj/mugshot.dmi', "small_photo")
+						P.fields["pixel_x"] = rand(-10, 10)
+						P.fields["pixel_y"] = rand(-10, 10)
+						var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+						Photo.loc = src.loc
+						Photo.construct(P)
+					if(istype(record1.fields["photo_s"], /icon))
+						var/datum/picture/P = new()
+						P.fields["img"] = record1.fields["photo_s"]
+						P.fields["author"] = /mob/living/simple_animal/corgi/borgi
+						P.fields["mob_names"] = record_name
+						P.fields["desc"] = "You can see [record1.fields["name"]] on the photo"
+						P.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
+						P.fields["tiny"] = icon('icons/obj/mugshot.dmi', "small_photo")
+						P.fields["pixel_x"] = rand(-10, 10)
+						P.fields["pixel_y"] = rand(-10, 10)
+						var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+						Photo.loc = src.loc
+						Photo.construct(P)
+					sleep(50)
 				printing = null
 				updateUsrDialog()
 //RECORD DELETE
