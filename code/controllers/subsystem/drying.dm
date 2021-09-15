@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(drying)
 		if(!QDELETED(thing) && thing.wet > 0)
 			thing.dry_process()
 		else
+			SEND_SIGNAL(thing, COMSIG_ITEM_MAKE_DRY)
 			drying -= thing
 
 		if (MC_TICK_CHECK)
