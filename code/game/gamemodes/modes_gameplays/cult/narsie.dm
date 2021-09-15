@@ -85,7 +85,7 @@
 	return
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in orange(8, src))
+	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='warning'>Вы чувствуете, как ваш рассудок мгновенно рассеивается, когда вы посмотрели на [name]...</span>")
