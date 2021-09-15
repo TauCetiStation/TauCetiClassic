@@ -82,14 +82,14 @@ var/global/abductor_landmarks_setuped = FALSE
 	return TRUE
 
 /datum/faction/abductors/check_win()
-	if(SSticker.abductors_finished_researchs)
+	if(SSticker.abductors_finished_researches)
 		return FALSE
 
 	for(var/datum/objective/experiment/E in objective_holder.GetObjectives())
 		if(E.check_completion())
 			SSshuttle.incall(0.5)
 			SSshuttle.announce_emer_called.play()
-			SSticker.abductors_finished_researchs = TRUE
+			SSticker.abductors_finished_researches = TRUE
 			return FALSE
 
 	return FALSE
