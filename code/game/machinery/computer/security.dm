@@ -14,15 +14,14 @@
 	var/datum/data/record/active2 = null
 	var/a_id = null
 	var/temp = null
-	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
 	var/tempname = null
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	var/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
-
+	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
+	var/next_print = 0
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -325,74 +324,44 @@ What a mess.*/
 				active1 = R
 				active2 = S
 				screen = 3
-
+//PRINTING
 		if("Print Record")
-			if(!printing)
-				printing = 1
-				var/datum/data/record/record1 = null
-				var/datum/data/record/record2 = null
-				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-					record1 = active1
-				if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
-					record2 = active2
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-				if (record1)
-					P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
-					P.name = text("Security Record ([])", record1.fields["name"])
-				else
-					P.info += "<B>General Record Lost!</B><BR>"
-					P.name = "Security Record"
-				if (record2)
-					P.info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []<BR>\n<BR>\nMinor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nMajor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["criminal"], record2.fields["mi_crim"], record2.fields["mi_crim_d"], record2.fields["ma_crim"], record2.fields["ma_crim_d"], decode(record2.fields["notes"]))
-					var/counter = 1
-					while(record2.fields[text("com_[]", counter)])
-						P.info += text("[]<BR>", record2.fields[text("com_[]", counter)])
-						counter++
-				else
-					P.info += "<B>Security Record Lost!</B><BR>"
-				P.info += "</TT>"
-				P.update_icon()
-				printing = null
-				updateUsrDialog()
+			if(next_print > world.time)
+				return
+			var/datum/data/record/record1 = null
+			var/datum/data/record/record2 = null
+			var/name = "Security Record"
+			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				record1 = active1
+			if (istype(active2, /datum/data/record) && data_core.security.Find(active2))
+				record2 = active2
+			var/info = "<CENTER><B>Security Record</B></CENTER><BR>"
+			if (record1)
+				info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
+				name = text("Security Record ([])", record1.fields["name"])
+			else
+				info += "<B>General Record Lost!</B><BR>"
+			if (record2)
+				info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []<BR>\n<BR>\nMinor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nMajor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["criminal"], record2.fields["mi_crim"], record2.fields["mi_crim_d"], record2.fields["ma_crim"], record2.fields["ma_crim_d"], decode(record2.fields["notes"]))
+				var/counter = 1
+				while(record2.fields[text("com_[]", counter)])
+					info += text("[]<BR>", record2.fields[text("com_[]", counter)])
+					counter++
+			else
+				info += "<B>Security Record Lost!</B><BR>"
+			info += "</TT>"
+			Print(TRUE, info, name, null)
+			next_print = world.time + 50
+			updateUsrDialog()
 		if("Print Photos")
-			if(!printing)
-				printing = 1
-				var/datum/data/record/record1 = null
-				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-					record1 = active1
-					var/list/record_name = new/list()
-					record_name += list(record1.fields["name"]=/mob/living/carbon/human)
-					if(istype(record1.fields["photo_f"], /icon))
-						var/datum/picture/P = new()
-						P.fields["img"] = record1.fields["photo_f"]
-						P.fields["author"] = /mob/living/simple_animal/corgi/borgi
-						P.fields["mob_names"] = record_name
-						P.fields["desc"] = "You can see [record1.fields["name"]] on the photo"
-						P.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
-						P.fields["tiny"] = icon('icons/obj/mugshot.dmi', "small_photo")
-						P.fields["pixel_x"] = rand(-10, 10)
-						P.fields["pixel_y"] = rand(-10, 10)
-						var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
-						Photo.loc = src.loc
-						Photo.construct(P)
-					if(istype(record1.fields["photo_s"], /icon))
-						var/datum/picture/P = new()
-						P.fields["img"] = record1.fields["photo_s"]
-						P.fields["author"] = /mob/living/simple_animal/corgi/borgi
-						P.fields["mob_names"] = record_name
-						P.fields["desc"] = "You can see [record1.fields["name"]] on the photo"
-						P.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
-						P.fields["tiny"] = icon('icons/obj/mugshot.dmi', "small_photo")
-						P.fields["pixel_x"] = rand(-10, 10)
-						P.fields["pixel_y"] = rand(-10, 10)
-						var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
-						Photo.loc = src.loc
-						Photo.construct(P)
-					sleep(50)
-				printing = null
-				updateUsrDialog()
+			if(next_print > world.time)
+				return
+			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/name = "Security Record's photo"
+				Print(FALSE, null, name, active1)
+				next_print = world.time + 50
+			updateUsrDialog()
+
 //RECORD DELETE
 		if("Delete All Records")
 			temp = ""

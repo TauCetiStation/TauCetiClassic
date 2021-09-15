@@ -16,7 +16,8 @@
 	var/datum/data/record/active2 = null
 	var/a_id = null
 	var/temp = null
-	var/printing = null
+	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
+	var/next_print = 0
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -55,19 +56,21 @@
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
 				if(4.0)
 					var/icon/front = active1.fields["photo_f"]
+					front.Blend(mugshot,ICON_UNDERLAY,1,1)
 					var/icon/side = active1.fields["photo_s"]
+					side.Blend(mugshot,ICON_UNDERLAY,1,1)
 					user << browse_rsc(front, "front.png")
 					user << browse_rsc(side, "side.png")
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
-						dat += "<table><tr><td>Name: [active1.fields["name"]] \
+						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>Name: [active1.fields["name"]] \
 								ID: [active1.fields["id"]]<BR>\n	\
 								Sex: <A href='?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
 								Age: <A href='?src=\ref[src];field=age'>[active1.fields["age"]]</A><BR>\n	\
 								Fingerprint: <A href='?src=\ref[src];field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 								Physical Status: <A href='?src=\ref[src];field=p_stat'>[active1.fields["p_stat"]]</A><BR>\n	\
 								Mental Status: <A href='?src=\ref[src];field=m_stat'>[active1.fields["m_stat"]]</A><BR></td><td align = center valign = top> \
-								Photo:<br><img src=front.png height=64 width=64 border=5><img src=side.png height=64 width=64 border=5></td></tr></table>"
+								Photo:<br><img src=front.png height=64 width=64 border=5 class=nearest><img src=side.png height=64 width=64 border=5 class=nearest></td></tr></table>"
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
@@ -81,7 +84,7 @@
 					else
 						dat += "<B>Medical Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[src];new=1'>New Record</A><BR><BR>")
-					dat += text("\n<A href='?src=\ref[];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[];screen=2'>Back</A><BR>", src, src)
+					dat += text("\n<A href='?src=\ref[];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[];print_photos=1'>Print Photos</A><BR>\n<A href='?src=\ref[];screen=2'>Back</A><BR>", src, src, src)
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					/*	Advanced diseases is weak! Feeble! Glory to virus2!
@@ -469,36 +472,41 @@
 					else
 						//Foreach continue //goto(3334)
 				src.screen = 4
-
+//PRINTING
 		if (href_list["print_p"])
-			if (!( src.printing ))
-				src.printing = 1
-				var/datum/data/record/record1 = null
-				var/datum/data/record/record2 = null
-				if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
-					record1 = active1
-				if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
-					record2 = active2
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-				P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-				if (record1)
-					P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
-					P.name = text("Medical Record ([])", record1.fields["name"])
-				else
-					P.info += "<B>General Record Lost!</B><BR>"
-					P.name = "Medical Record"
-				if (record2)
-					P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["b_type"], record2.fields["b_dna"], record2.fields["mi_dis"], record2.fields["mi_dis_d"], record2.fields["ma_dis"], record2.fields["ma_dis_d"], record2.fields["alg"], record2.fields["alg_d"], record2.fields["cdi"], record2.fields["cdi_d"], decode(record2.fields["notes"]))
-					var/counter = 1
-					while(record2.fields[text("com_[]", counter)])
-						P.info += text("[]<BR>", record2.fields[text("com_[]", counter)])
-						counter++
-				else
-					P.info += "<B>Medical Record Lost!</B><BR>"
-				P.info += "</TT>"
-				P.update_icon()
-				src.printing = null
+			if(next_print > world.time)
+				return
+			var/datum/data/record/record1 = null
+			var/datum/data/record/record2 = null
+			var/name = "Medical Record"
+			if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
+				record1 = active1
+			if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
+				record2 = active2
+			var/info = "<CENTER><B>Medical Record</B></CENTER><BR>"
+			if (record1)
+				info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
+				name = text("Medical Record ([])", record1.fields["name"])
+			else
+				info += "<B>General Record Lost!</B><BR>"
+			if (record2)
+				info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["b_type"], record2.fields["b_dna"], record2.fields["mi_dis"], record2.fields["mi_dis_d"], record2.fields["ma_dis"], record2.fields["ma_dis_d"], record2.fields["alg"], record2.fields["alg_d"], record2.fields["cdi"], record2.fields["cdi_d"], decode(record2.fields["notes"]))
+				var/counter = 1
+				while(record2.fields[text("com_[]", counter)])
+					info += text("[]<BR>", record2.fields[text("com_[]", counter)])
+					counter++
+			else
+				info += "<B>Medical Record Lost!</B><BR>"
+			info += "</TT>"
+			Print(TRUE, info, name, null)
+
+		if (href_list["print_photos"])
+			if(next_print > world.time)
+				return
+			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/name = "Medical Record's photo"
+				Print(FALSE, null, name, active1)
+				next_print = world.time + 50
 
 	updateUsrDialog()
 

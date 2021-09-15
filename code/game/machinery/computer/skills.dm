@@ -20,7 +20,8 @@
 	var/screen = null                        // What type of screen now output
 	var/datum/data/record/active1 = null     // Current using record
 	var/temp = null                          // Buffer for temporary menu show
-	var/printing = FALSE                     // Printing action lock
+	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
+	var/next_print = 0
 	var/list/Perp                            // Buffer for searched results
 	var/searched_text = null                 // Name of found person
 	var/sortBy = "name"                      // field to sort
@@ -81,10 +82,12 @@
 					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						var/icon/front = active1.fields["photo_f"]
+						front.Blend(mugshot,ICON_UNDERLAY,1,1)
 						var/icon/side = active1.fields["photo_s"]
+						side.Blend(mugshot,ICON_UNDERLAY,1,1)
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
-						dat += text({"<table><tr><td>
+						dat += text({"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
 							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
 							ID: <a href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</a><br>
 							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
@@ -98,13 +101,14 @@
 							Physical Status: [active1.fields["p_stat"]]<br>
 							Mental Status: [active1.fields["m_stat"]]<br><br>
 							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<br></td>
-							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>
-							<img src=side.png height=80 width=80 border=4></td></tr></table>"})
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>
+							<img src=side.png height=80 width=80 border=4 class=nearest></td></tr></table>"})
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					dat += {"
 					<a href='?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
 					<a href='?src=\ref[src];choice=Print Record'>Print Record</a><br>
+					<a href='?src=\ref[src];choice=Print Photos'>Print Photos</a><br>
 					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
 				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
@@ -262,26 +266,34 @@ What a mess.*/
 				screen = SKILLS_MODE_EDIT_SCREEN
 
 		if ("Print Record")
-			if (!( printing ))
-				printing = TRUE
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				P.info = "<center><b>Employment Record</b></center><BR>"
-				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-					P.info += text("Name: []<BR>\n",active1.fields["name"])
-					P.info += text("ID: []<BR>\n", active1.fields["id"])
-					P.info += text("Sex: []<BR>\n",  active1.fields["sex"])
-					P.info += text("Age: []<BR>\n", active1.fields["age"])
-					P.info += text("Fingerprint: []<BR>\n", active1.fields["fingerprint"])
-					P.info += text("Physical Status: []<BR>\n", active1.fields["p_stat"])
-					P.info += text("Mental Status: []<BR>\n", active1.fields["m_stat"])
-					P.info += text("Employment/Skills Summary:<BR>\n[]<BR>",decode(active1.fields["notes"]))
-				else
-					P.info += "<b>General Record Lost!</b><br>"
-				P.info += "</tt>"
-				P.name = "Employment Record ([active1.fields["name"]])"
-				P.update_icon()
-				printing = FALSE
+			if(next_print > world.time)
+				return
+			var/info = "<center><b>Employment Record</b></center><BR>"
+			if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+				info += text("Name: []<BR>\n",active1.fields["name"])
+				info += text("ID: []<BR>\n", active1.fields["id"])
+				info += text("Sex: []<BR>\n",  active1.fields["sex"])
+				info += text("Age: []<BR>\n", active1.fields["age"])
+				info += text("Fingerprint: []<BR>\n", active1.fields["fingerprint"])
+				info += text("Physical Status: []<BR>\n", active1.fields["p_stat"])
+				info += text("Mental Status: []<BR>\n", active1.fields["m_stat"])
+				info += text("Employment/Skills Summary:<BR>\n[]<BR>",decode(active1.fields["notes"]))
+			else
+				info += "<b>General Record Lost!</b><br>"
+			info += "</tt>"
+			var/name = "Employment Record ([active1.fields["name"]])"
+			Print(TRUE, info, name, active1)
+			next_print = world.time + 50
+
+		if("Print Photos")
+			if(next_print > world.time)
+				return
+			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/name = "Employment Record's photo"
+				Print(FALSE, null, name, active1)
+				next_print = world.time + 50
+			updateUsrDialog()
+
 		// RECORD DELETE
 		if ("Delete All Records")
 			//FIXME: Now only removing security records, not general
