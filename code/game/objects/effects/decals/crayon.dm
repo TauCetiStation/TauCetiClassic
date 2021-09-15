@@ -8,8 +8,6 @@
 
 	beauty = -25
 
-	beauty = -25
-
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
 	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
