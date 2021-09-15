@@ -74,16 +74,26 @@
 /datum/role/wizard/forgeObjectives()
 	if(!..())
 		return FALSE
-	switch(rand(1,100))
+	switch(rand(1,120))
 		if(1 to 30)
+			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/survive)
 
 		if(31 to 60)
 			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
 		if(61 to 99)
+			AppendObjective(/datum/objective/target/assassinate)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/survive)
+
+		if(100 to 119)
+			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
