@@ -56,6 +56,11 @@
 
 	playsound_frequency_admin = -1
 
+/obj/singularity/narsie/Destroy()
+	for(var/mob/M in player_list)
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "narsie")
+	return ..()
+
 /obj/singularity/narsie/proc/begin_the_end()
 	narsie_spawn_animation()
 
