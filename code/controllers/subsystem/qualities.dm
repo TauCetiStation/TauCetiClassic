@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(qualities)
 		var/datum/quality/quality = new quality_type
 		qualities_pool[quality_type] = quality
 
-/datum/controller/subsystem/qualities/proc/registration_client(client/C)
+/datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
 		if(C.mob)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
