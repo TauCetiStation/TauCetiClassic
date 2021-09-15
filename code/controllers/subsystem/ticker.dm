@@ -173,6 +173,9 @@ SUBSYSTEM_DEF(ticker)
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
+			runnable_modes = config.get_always_runnable_modes()
+
+		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again

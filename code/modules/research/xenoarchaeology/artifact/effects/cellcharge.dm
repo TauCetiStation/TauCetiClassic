@@ -1,42 +1,49 @@
-
-//todo
 /datum/artifact_effect/cellcharge
-	effect_name = "Cell Charge"
-	effect_type = ARTIFACT_EFFECT_ELECTRO
+	log_name = "Cell Charge"
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
-	if(user)
-		if(istype(user, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/R = user
-			for (var/obj/item/weapon/stock_parts/cell/D in R.contents)
-				D.charge += rand() * 100 + 50
-				to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
-			return 1
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/item/weapon/stock_parts/cell/D in user.contents)
+		D.give(150)
+		if(isrobot(user))
+			to_chat(user, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += 25
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 25
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += 25
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
-		return 1
+	. = ..()
+	if(!.)
+		return
+	recharge_everything_in_range(25, range, holder)
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += rand() * 100
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 250
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += rand() * 100
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
-		return 1
+	. = ..()
+	if(!.)
+		return
+	var/used_power = .
+	recharge_everything_in_range(200 * used_power, range, holder)
+
+/datum/artifact_effect/cellcharge/DoEffectDestroy()
+	recharge_everything_in_range(10000, 7, holder)
+
+/datum/artifact_effect/cellcharge/proc/try_give_charge(atom/reciever_atmon, power)
+	if(istype(reciever_atmon, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = reciever_atmon
+		C.give(power)
+	if(istype(reciever_atmon, /obj/machinery/power/apc))
+		for(var/obj/item/weapon/stock_parts/cell/C in reciever_atmon.contents)
+			C.give(power)
+	if(istype(reciever_atmon, /obj/machinery/power/smes))
+		for(var/obj/item/weapon/stock_parts/cell/C in reciever_atmon.contents)
+			C.give(power)
+	if(isrobot(reciever_atmon))
+		for(var/obj/item/weapon/stock_parts/cell/D in reciever_atmon.contents)
+			D.give(power)
+		to_chat(reciever_atmon, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
+
+/datum/artifact_effect/cellcharge/proc/recharge_everything_in_range(power, range)
+	var/turf/curr_turf = get_turf(holder)
+	var/list/captured_atoms = range(range, curr_turf)
+	for(var/atom/A in captured_atoms)
+		try_give_charge(A, power)
