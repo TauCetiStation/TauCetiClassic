@@ -17,10 +17,11 @@
 		wet = wet_weight
 		SSdrying.drying |= src
 
-	SEND_SIGNAL(src, COMSIG_ITEM_MAKE_WET)
+		SEND_SIGNAL(src, COMSIG_ITEM_MAKE_WET)
 
 
 /obj/item/Destroy()
+	SEND_SIGNAL(src, COMSIG_ITEM_MAKE_DRY)
 	SSdrying.drying -= src
 	return ..()
 
