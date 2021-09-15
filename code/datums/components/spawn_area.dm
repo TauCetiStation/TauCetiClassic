@@ -137,8 +137,8 @@ var/global/list/datum/area_group/observer_groups
 /datum/component/spawn_area/Destroy()
 	UnregisterSignal(parent, list(COMSIG_AREA_ENTERED))
 
-	for(var/timer in despawn_timers)
-		deltimer(timer)
+	for(var/instance in despawn_timers)
+		deltimer(despawn_timers[instance])
 
 	despawn_timers = null
 
