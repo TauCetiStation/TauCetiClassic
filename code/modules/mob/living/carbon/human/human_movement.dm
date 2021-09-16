@@ -70,14 +70,14 @@
 				chem_slowdown_coeff = 1.0 - H.hyp_tol
 
 	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 ))
-		tally += wear_suit.slowdown*chem_slowdown_coeff
+		tally += wear_suit.slowdown * chem_slowdown_coeff
 
 	if(back && back.slowdown && !(back.slowdown > 0 ))
-		tally += back.slowdown*chem_slowdown_coeff
+		tally += back.slowdown * chem_slowdown_coeff
 
 	if (shoes)
 		if (shoes.slowdown && !(shoes.slowdown > 0 ))
-			tally += shoes.slowdown*chem_slowdown_coeff
+			tally += shoes.slowdown * chem_slowdown_coeff
 	else
 		tally += species.speed_mod_no_shoes
 
