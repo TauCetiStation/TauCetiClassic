@@ -544,7 +544,6 @@
 	M.heal_bodypart_damage(2 * REM, 0)
 
 /datum/reagent/hyperzine
-	var/hyp_tol = 0
 	name = "Hyperzine"
 	id = "hyperzine"
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
@@ -554,12 +553,13 @@
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
+	var/hyp_tolerance = 0
 /datum/reagent/hyperzine/on_general_digest(mob/living/M)
 	..()
-	hyp_tol += 0.01
-	if(hyp_tol > 1.0)
-		hyp_tol = 1.0
-	if(hyp_tol > 0.8)
+	hyp_tolerance += 0.01
+	if(hyp_tolerance > 1.0)
+		hyp_tolerance = 1.0
+	if(hyp_tolerance > 0.8)
 		M.adjustToxLoss(1)
 	if(prob(5))
 		M.emote(pick("twitch","blink","shiver"))
