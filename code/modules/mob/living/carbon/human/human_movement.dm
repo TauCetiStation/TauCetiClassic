@@ -60,23 +60,28 @@
 			tally += 3
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
-	var/chem_nullify_debuff = FALSE
-	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
-		chem_nullify_debuff = TRUE
+	var/chem_slowdown_coeff = 1.0
+	if(!species.flags[NO_BLOOD])
+		if(reagents.has_reagent("nuka_cola"))
+			chem_slowdown_coeff = 0.0
+		else
+			var/datum/reagent/hyperzine/H = reagents.get_reagent("hyperzine")
+			if(H)
+				chem_slowdown_coeff = 1.0 - H.hyp_tol
 
-	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-		tally += wear_suit.slowdown
+	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 ))
+		tally += wear_suit.slowdown*chem_slowdown_coeff
 
-	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-		tally += back.slowdown
+	if(back && back.slowdown && !(back.slowdown > 0 ))
+		tally += back.slowdown*chem_slowdown_coeff
 
 	if (shoes)
-		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-			tally += shoes.slowdown
+		if (shoes.slowdown && !(shoes.slowdown > 0 ))
+			tally += shoes.slowdown*chem_slowdown_coeff
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(!chem_nullify_debuff)
+	if(!chem_slowdown_coeff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
 			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)

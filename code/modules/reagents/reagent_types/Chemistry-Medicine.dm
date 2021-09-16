@@ -1,3 +1,4 @@
+
 /datum/reagent/srejuvenate
 	name = "Soporific Rejuvenant"
 	id = "stoxin2"
@@ -543,6 +544,7 @@
 	M.heal_bodypart_damage(2 * REM, 0)
 
 /datum/reagent/hyperzine
+	var/hyp_tol = 0
 	name = "Hyperzine"
 	id = "hyperzine"
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
@@ -552,9 +554,13 @@
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
-
-/datum/reagent/hyperizine/on_general_digest(mob/living/M)
+/datum/reagent/hyperzine/on_general_digest(mob/living/M)
 	..()
+	hyp_tol += 0.01
+	if(hyp_tol > 1.0)
+		hyp_tol = 1.0
+	if(hyp_tol > 0.8)
+		M.adjustToxLoss(1)
 	if(prob(5))
 		M.emote(pick("twitch","blink","shiver"))
 
