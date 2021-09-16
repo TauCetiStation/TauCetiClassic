@@ -1,3 +1,244 @@
+var/global/list/contraband_listings
+
+/datum/contraband_listing
+	var/default_color = "green"
+	var/max_priority = "red"
+
+	var/list/color_to_priority = list(
+		"red" = 4,
+		"orange" = 3,
+		"yellow" = 2,
+		"green" = 1,
+	)
+
+	var/list/items_to_color
+
+	var/list/reagents_to_color
+	var/list/reagent_type_to_color
+
+	var/list/tech_to_color
+
+/datum/contraband_listing/proc/ConvertReqString2List(list/source_list)
+	var/list/temp_list = params2list(source_list)
+	for(var/O in temp_list)
+		temp_list[O] = text2num(temp_list[O])
+	return temp_list
+
+/datum/contraband_listing/proc/get_danger_color(atom/target, mob/user)
+	. = default_color
+
+	if(target.blood_DNA)
+		return "orange"
+
+	if(color_to_priority[.] < color_to_priority["orange"])
+		if(istype(target, /obj/item))
+			var/obj/item/I = target
+			if(I.is_sharp())
+				. = "orange"
+			if(I.force >= 10)
+				. = "orange"
+
+	for(var/c in items_to_color)
+		if(is_type_in_typecache(target, items_to_color[c]))
+			. = c
+
+			if(. == max_priority)
+				return
+
+	if(!target.reagents)
+		return
+
+	for(var/c in reagent_type_to_color)
+		for(var/r in reagent_type_to_color[c])
+			if(locate(r) in target.reagents.reagent_list)
+				. = c
+
+				if(. == max_priority)
+					return
+
+	for(var/c in reagents_to_color)
+		for(var/r in reagents_to_color[c])
+			if(target.reagents.has_reagent(r))
+				. = c
+
+				if(. == max_priority)
+					return
+
+	if(!isobj(target))
+		return
+	var/obj/O = target
+
+	var/list/temp_tech = ConvertReqString2List(O.origin_tech)
+
+	for(var/c in tech_to_color)
+		for(var/t in tech_to_color[c])
+			if(temp_tech[t])
+				. = c
+
+				if(. == max_priority)
+					return
+
+/datum/contraband_listing/velocity
+	items_to_color = list(
+		"yellow" = list(
+			/obj/item/weapon/storage/box/syndie_kit/merch,
+			/obj/item/weapon/match,
+			/obj/item/clothing/mask/cigarette,
+			/obj/item/weapon/lighter,
+			/obj/item/weapon/storage/fancy/cigarettes,
+			/obj/item/weapon/storage/secure/briefcase,
+			/obj/item/weapon/storage/pouch/pistol_holster,
+			/obj/item/weapon/storage/pouch/baton_holster,
+			/obj/item/clothing/accessory/holster,
+			/obj/item/device/flash,
+			/obj/item/weapon/reagent_containers/hypospray,
+			/obj/item/weapon/reagent_containers/syringe,
+			/obj/item/weapon/reagent_containers/glass/bottle,
+			/obj/item/weapon/reagent_containers/food,
+			/obj/item/weapon/cartridge/clown,
+			/obj/item/weapon/bananapeel,
+			/obj/item/weapon/soap,
+			/obj/item/weapon/bikehorn,
+			/obj/item/toy/sound_button,
+			/obj/item/device/tabletop_assistant,
+			/obj/item/weapon/storage/pill_bottle,
+			/obj/item/device/paicard,
+			/obj/item/clothing/mask/ecig,
+			/obj/item/weapon/game_kit,
+			/obj/item/weapon/legcuffs,
+			/obj/item/weapon/handcuffs,
+			/obj/item/weapon/reagent_containers/spray/pepper
+		),
+		"red" = list(
+			/obj/item/device/uplink,
+			/obj/item/weapon/gun,
+			/obj/item/weapon/shield,
+			/obj/item/clothing/head/helmet,
+			/obj/item/clothing/suit/armor,
+			/obj/item/weapon/melee/powerfist,
+			/obj/item/weapon/melee/energy/sword,
+			/obj/item/weapon/storage/box/emps,
+			/obj/item/weapon/grenade/empgrenade,
+			/obj/item/weapon/grenade/syndieminibomb,
+			/obj/item/weapon/grenade/spawnergrenade/manhacks,
+			/obj/item/weapon/antag_spawner/borg_tele,
+			/obj/item/ammo_box,
+			/obj/item/ammo_casing,
+			/obj/item/weapon/storage/box/syndie_kit/cutouts,
+			/obj/item/cardboard_cutout,
+			/obj/item/clothing/gloves/black/strip,
+			/obj/item/weapon/soap/syndie,
+			/obj/item/weapon/cartridge/syndicate,
+			/obj/item/toy/carpplushie/dehy_carp,
+			/obj/item/weapon/storage/box/syndie_kit/chameleon,
+			/obj/item/weapon/storage/box/syndie_kit/fake,
+			/obj/item/weapon/storage/backpack/satchel/flat,
+			/obj/item/clothing/shoes/syndigaloshes,
+			/obj/item/clothing/mask/gas/voice,
+			/obj/item/device/chameleon,
+			/obj/item/device/camera_bug,
+			/obj/item/weapon/silencer,
+			/obj/item/weapon/storage/box/syndie_kit/throwing_weapon,
+			/obj/item/weapon/pen/edagger,
+			/obj/item/weapon/grenade/clusterbuster/soap,
+			/obj/item/device/healthanalyzer/rad_laser,
+			/obj/item/weapon/card/emag,
+			/obj/item/weapon/storage/toolbox/syndicate,
+			/obj/item/weapon/storage/backpack/dufflebag/surgery,
+			/obj/item/weapon/storage/backpack/dufflebag/c4,
+			/obj/item/weapon/plastique,
+			/obj/item/weapon/storage/belt/military,
+			/obj/item/weapon/storage/firstaid/tactical,
+			/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+			/obj/item/weapon/storage/box/syndie_kit/space,
+			/obj/item/clothing/glasses/thermal/syndi,
+			/obj/item/device/flashlight/emp,
+			/obj/item/device/encryptionkey/binary,
+			/obj/item/device/encryptionkey/syndicate,
+			/obj/item/weapon/storage/box/syndie_kit/posters,
+			/obj/item/device/biocan,
+			/obj/item/device/multitool/ai_detect,
+			/obj/item/weapon/aiModule/freeform/syndicate,
+			/obj/item/device/powersink,
+			/obj/item/device/radio/beacon/syndicate,
+			/obj/item/device/radio/beacon/syndicate_bomb,
+			/obj/item/device/syndicatedetonator,
+			/obj/item/weapon/shield/energy,
+			/obj/item/device/traitor_caller,
+			/obj/item/weapon/storage/box/syndie_kit/imp_freedom,
+			/obj/item/weapon/storage/box/syndie_kit/imp_uplink,
+			/obj/item/weapon/implanter/storage,
+			/obj/item/weapon/storage/box/syndicate,
+			/obj/item/device/assembly/mousetrap
+		),
+	)
+
+	reagents_to_color = list(
+		"yellow" = list(
+			"sugar",
+			"serotrotium",
+			"kyphotorin",
+			"lube",
+			"glycerol",
+			"nicotine",
+			"nanites",
+			"nanites2",
+			"nanobots",
+			"mednanobots"
+		),
+		"red" = list(
+			"potassium",
+			"mercury",
+			"chlorine",
+			"radium",
+			"uranium",
+			"alphaamanitin",
+			"aflatoxin",
+			"chefspecial",
+			"dioxin",
+			"mulligan",
+			"mutationtoxin",
+			"amutationtoxin",
+			"space_drugs",
+			"cryptobiolin",
+			"impedrezene",
+			"stoxin2",
+			"hyperzine",
+			"blood",
+			"nitroglycerin",
+			"thermite",
+			"fuel",
+			"xenomicrobes",
+			"ectoplasm"
+		),
+	)
+
+	reagent_type_to_color = list(
+		"yellow" = list(/datum/reagent/consumable),
+		"red" = list(/datum/reagent/toxin),
+	)
+
+	tech_to_color = list(
+		"yellow" = list("phorontech", "bluespace"),
+		"orange" = list("combat"),
+		"red" = list("syndicate"),
+	)
+
+/datum/contraband_listing/New()
+	..()
+	if(!items_to_color)
+		return
+
+	var/list/temp_items_to_color = items_to_color.Copy()
+	items_to_color = list()
+
+	for(var/c in temp_items_to_color)
+		items_to_color[c] = list()
+		for(var/t in temp_items_to_color[c])
+			items_to_color[c] += typecacheof(t)
+
+
+
 /obj/item/device/contraband_finder
 	name = "Contrband Finder"
 	icon_state = "contraband_scanner"
@@ -10,217 +251,193 @@
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
-	origin_tech = "magnets=4"
+	origin_tech = "magnets=4;biotech=4"
 
-	var/can_scan = TRUE
+	var/scanner_ready = TRUE
 
-	var/list/contraband_items = list(/obj/item/weapon/storage/box/syndie_kit/merch,
-	                                 /obj/item/weapon/match,
-	                                 /obj/item/clothing/mask/cigarette,
-	                                 /obj/item/weapon/lighter,
-	                                 /obj/item/weapon/storage/fancy/cigarettes,
-	                                 /obj/item/weapon/storage/secure/briefcase,
-	                                 /obj/item/weapon/storage/pouch/pistol_holster,
-	                                 /obj/item/weapon/storage/pouch/baton_holster,
-	                                 /obj/item/clothing/accessory/holster,
-	                                 /obj/item/device/flash,
-	                                 /obj/item/weapon/reagent_containers/hypospray,
-	                                 /obj/item/weapon/reagent_containers/syringe,
-	                                 /obj/item/weapon/reagent_containers/glass/bottle,
-	                                 /obj/item/weapon/reagent_containers/food,
-	                                 /obj/item/weapon/cartridge/clown,
-	                                 /obj/item/weapon/bananapeel,
-	                                 /obj/item/weapon/soap,
-	                                 /obj/item/weapon/bikehorn,
-	                                 /obj/item/toy/sound_button,
-	                                 /obj/item/device/tabletop_assistant,
-	                                 /obj/item/weapon/storage/pill_bottle,
-	                                 /obj/item/device/paicard,
-	                                 /obj/item/clothing/mask/ecig,
-	                                 /obj/item/weapon/game_kit,
-	                                 /obj/item/weapon/legcuffs,
-	                                 /obj/item/weapon/handcuffs,
-	                                 /obj/item/weapon/reagent_containers/spray/pepper
-	                                 )
+	var/contraband_listing = /datum/contraband_listing/velocity
 
-	var/list/danger_items = list(/obj/item/device/uplink,
-	                             /obj/item/weapon/gun,
-	                             /obj/item/weapon/shield,
-	                             /obj/item/clothing/head/helmet,
-	                             /obj/item/clothing/suit/armor,
-	                             /obj/item/weapon/melee/powerfist,
-	                             /obj/item/weapon/melee/energy/sword,
-	                             /obj/item/weapon/storage/box/emps,
-	                             /obj/item/weapon/grenade/empgrenade,
-	                             /obj/item/weapon/grenade/syndieminibomb,
-	                             /obj/item/weapon/grenade/spawnergrenade/manhacks,
-	                             /obj/item/weapon/antag_spawner/borg_tele,
-	                             /obj/item/ammo_box,
-	                             /obj/item/ammo_casing,
-	                             /obj/item/weapon/storage/box/syndie_kit/cutouts,
-	                             /obj/item/cardboard_cutout,
-	                             /obj/item/clothing/gloves/black/strip,
-	                             /obj/item/weapon/soap/syndie,
-	                             /obj/item/weapon/cartridge/syndicate,
-	                             /obj/item/toy/carpplushie/dehy_carp,
-	                             /obj/item/weapon/storage/box/syndie_kit/chameleon,
-	                             /obj/item/weapon/storage/box/syndie_kit/fake,
-	                             /obj/item/weapon/storage/backpack/satchel/flat,
-	                             /obj/item/clothing/shoes/syndigaloshes,
-	                             /obj/item/clothing/mask/gas/voice,
-	                             /obj/item/device/chameleon,
-	                             /obj/item/device/camera_bug,
-	                             /obj/item/weapon/silencer,
-	                             /obj/item/weapon/storage/box/syndie_kit/throwing_weapon,
-	                             /obj/item/weapon/pen/edagger,
-	                             /obj/item/weapon/grenade/clusterbuster/soap,
-	                             /obj/item/device/healthanalyzer/rad_laser,
-	                             /obj/item/weapon/card/emag,
-	                             /obj/item/weapon/storage/toolbox/syndicate,
-	                             /obj/item/weapon/storage/backpack/dufflebag/surgery,
-	                             /obj/item/weapon/storage/backpack/dufflebag/c4,
-	                             /obj/item/weapon/plastique,
-	                             /obj/item/weapon/storage/belt/military,
-	                             /obj/item/weapon/storage/firstaid/tactical,
-	                             /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-	                             /obj/item/weapon/storage/box/syndie_kit/space,
-	                             /obj/item/clothing/glasses/thermal/syndi,
-	                             /obj/item/device/flashlight/emp,
-	                             /obj/item/device/encryptionkey/binary,
-	                             /obj/item/device/encryptionkey/syndicate,
-	                             /obj/item/weapon/storage/box/syndie_kit/posters,
-	                             /obj/item/device/biocan,
-	                             /obj/item/device/multitool/ai_detect,
-	                             /obj/item/weapon/aiModule/freeform/syndicate,
-	                             /obj/item/device/powersink,
-	                             /obj/item/device/radio/beacon/syndicate,
-	                             /obj/item/device/radio/beacon/syndicate_bomb,
-	                             /obj/item/device/syndicatedetonator,
-	                             /obj/item/weapon/shield/energy,
-	                             /obj/item/device/traitor_caller,
-	                             /obj/item/weapon/storage/box/syndie_kit/imp_freedom,
-	                             /obj/item/weapon/storage/box/syndie_kit/imp_uplink,
-	                             /obj/item/weapon/implanter/storage,
-	                             /obj/item/weapon/storage/box/syndicate,
-	                             /obj/item/device/assembly/mousetrap
-	                             )
+	var/flash_danger_color = TRUE
+	var/display_item = TRUE
 
-	var/list/contraband_reagents = list("sugar",
-	                                    "serotrotium",
-	                                    "kyphotorin",
-	                                    "lube",
-	                                    "glycerol",
-	                                    "nicotine",
-	                                    "nanites",
-	                                    "nanites2",
-	                                    "nanobots",
-	                                    "mednanobots"
-	                                    )
+	var/display_item_delay = 2
 
-	var/list/contraband_reagents_types = list(/datum/reagent/consumable)
+	var/obj/effect/overlay/item_image
 
-	var/list/danger_reagents_types = list(/datum/reagent/toxin)
+/obj/item/device/contraband_finder/atom_init()
+	. = ..()
 
-	var/list/danger_reagents = list("potassium",
-	                                "mercury",
-	                                "chlorine",
-	                                "radium",
-	                                "uranium",
-	                                "alphaamanitin",
-	                                "aflatoxin",
-	                                "chefspecial",
-	                                "dioxin",
-	                                "mulligan",
-	                                "mutationtoxin",
-	                                "amutationtoxin",
-	                                "space_drugs",
-	                                "cryptobiolin",
-	                                "impedrezene",
-	                                "stoxin2",
-	                                "hyperzine",
-	                                "blood",
-	                                "nitroglycerin",
-	                                "thermite",
-	                                "fuel",
-	                                "xenomicrobes",
-	                                "ectoplasm"
-	                                )
+	set_light(2)
+
+/obj/item/device/contraband_finder/Destroy()
+	set_item_image(null)
+	return ..()
 
 /obj/item/device/contraband_finder/proc/reset_color()
 	icon_state = "contraband_scanner"
 	item_state = "contraband_scanner"
-	if(ismob(loc))
-		var/mob/M = loc
-		if(M.is_in_hands(src))
-			if(M.hand)
-				M.update_inv_l_hand()
-			else
-				M.update_inv_r_hand()
-	can_scan = TRUE
+	set_item_image(null)
+	update_inv_mob()
+	scanner_ready = TRUE
 
-/obj/item/device/contraband_finder/attack(mob/M, mob/user)
-	return
-
-/obj/item/device/contraband_finder/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return
-	scan(target, user)
-
-/obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+/obj/item/device/contraband_finder/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	if(!ismob(loc))
+		return ..()
+	if(!CanMouseDrop(src))
 		return
 
-	scan(dropping, user)
+	var/mob/M = loc
+
+	if(M.get_active_hand() != src)
+		return
+
+	if(!M.IsAdvancedToolUser())
+		to_chat(M, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return FALSE
+
+	add_fingerprint(M)
+	INVOKE_ASYNC(src, .proc/scan, over, M)
+	return TRUE
+
+/obj/item/device/contraband_finder/proc/can_scan(atom/target, mob/user)
+	if(!scanner_ready)
+		return FALSE
+
+	if(!ishuman(target))
+		return TRUE
+
+	if(!PDA_Manifest.len)
+		return TRUE
+
+	var/mob/living/carbon/human/H = target
+
+	if(H.incapacitated())
+		return TRUE
+
+	var/obj/item/weapon/card/id/I = H.get_idcard()
+	if(!I)
+		return TRUE
+
+	for(var/dep in PDA_Manifest)
+		for(var/person in PDA_Manifest[dep])
+			if(person["name"] == I.registered_name)
+				return FALSE
+
+	return TRUE
+
+/obj/item/device/contraband_finder/proc/get_item_image(atom/target)
+	var/obj/effect/overlay/mask = new
+	mask.icon = 'icons/obj/device.dmi'
+	mask.icon_state = "contraband_scanner_mask"
+
+	mask.plane = plane
+	mask.layer = layer + 0.1
+
+	mask.appearance_flags |= KEEP_TOGETHER
+
+	mask.blend_mode = BLEND_MULTIPLY
+
+	var/image/I = image(target.icon, mask, target.icon_state)
+
+	I.pixel_x = -target.pixel_x
+	I.pixel_y = -target.pixel_y
+
+	I.appearance = target
+
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+	I.name = target.name
+
+	I.plane = plane
+	I.layer = layer + 0.1
+
+	I.blend_mode = BLEND_MULTIPLY
+
+	I.appearance_flags |= KEEP_TOGETHER|PIXEL_SCALE
+
+	I.color = rgb(125, 180, 225)
+	I.alpha = 200
+
+	var/matrix/M = matrix()
+	M.Scale(0.6, 0.6)
+	I.transform = M
+
+	var/image/holo_mask = image('icons/effects/effects.dmi', I, "scanline")
+	holo_mask.plane = plane
+	holo_mask.layer = layer + 0.1
+	holo_mask.blend_mode = BLEND_MULTIPLY
+	I.overlays += holo_mask
+
+	mask.overlays += I
+
+	return mask
+
+/obj/item/device/contraband_finder/proc/set_item_image(atom/target)
+	if(item_image)
+		vis_contents -= item_image
+		QDEL_NULL(item_image)
+
+	if(!target)
+		return
+
+	var/image/I = get_item_image(target)
+	item_image = I
+
+	vis_contents += item_image
+
+/obj/item/device/contraband_finder/proc/scan_item(atom/target, mob/user, datum/contraband_listing/CL)
+	return CL.get_danger_color(target, user)
 
 /obj/item/device/contraband_finder/proc/scan(atom/target, mob/user)
-	if(!can_scan)
+	if(!can_scan(target, user))
 		return
+
+	scanner_ready = FALSE
+
+	var/datum/contraband_listing/CL = global.contraband_listings[contraband_listing]
+
+	var/max_priority_danger_color = CL.default_color
+	var/max_priority_item = null
 
 	var/list/to_check = target.get_contents()
 	to_check += target
 
-	var/danger_color = "green"
+	for(var/atom/A as anything in to_check)
+		var/danger_color = scan_item(A, user, CL)
 
-	to_check_loop:
-		for(var/atom/A in to_check)
-			if(danger_color == "green" && is_type_in_list(A, contraband_items))
-				danger_color = "yellow"
-			if(A.blood_DNA)
-				danger_color = "red"
-				break
-			if(istype(A, /obj/item))
-				var/obj/item/I = A
-				if(I.is_sharp())
-					danger_color = "red"
-					break
-				if(I.force >= 10)
-					danger_color = "red"
-					break
-			if(is_type_in_list(A, danger_items))
-				danger_color = "red"
+		if(CL.color_to_priority[danger_color] > CL.color_to_priority[max_priority_danger_color])
+			max_priority_danger_color = danger_color
+			max_priority_item = A
+
+		if(display_item)
+			set_item_image(A)
+
+		if(!flash_danger_color)
+			if(danger_color == CL.max_priority)
 				break
 
-			if(A.reagents)
-				if(danger_color == "green")
-					for(var/reagent in contraband_reagents_types)
-						if(locate(reagent) in A.reagents.reagent_list)
-							danger_color = "yellow"
+			continue
 
-					for(var/reagent_id in contraband_reagents)
-						if(A.reagents.has_reagent(reagent_id))
-							danger_color = "yellow"
+		icon_state = "contraband_scanner_[danger_color]"
+		item_state = "contraband_scanner_[danger_color]"
 
-				for(var/reagent in danger_reagents_types)
-					if(locate(reagent) in A.reagents.reagent_list)
-						danger_color = "red"
-						break to_check_loop
+		update_inv_mob()
 
-				for(var/reagent_id in danger_reagents)
-					if(A.reagents.has_reagent(reagent_id))
-						danger_color = "red"
-						break to_check_loop
+		if(!do_after(user, display_item_delay, TRUE, A, FALSE, FALSE))
+			scanner_ready = TRUE
+			reset_color()
+			return
 
+	ping(user, max_priority_danger_color)
+
+	icon_state = "contraband_scanner_[max_priority_danger_color]"
+	item_state = "contraband_scanner_[max_priority_danger_color]"
+
+	set_item_image(max_priority_item)
+
+	update_inv_mob()
+	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)
+
+/obj/item/device/contraband_finder/proc/ping(mob/living/user, danger_color)
 	switch(danger_color)
 		if("green")
 			user.visible_message("[bicon(src)] <span class='notice'>Ping.</span>")
@@ -228,15 +445,9 @@
 		if("yellow")
 			user.visible_message("[bicon(src)] <span class='warning'>Beep!</span>")
 			playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+		if("orange")
+			user.visible_message("[bicon(src)] <span class='warning'>BEEP!</span>")
+			playsound(user, 'sound/rig/loudbeep.ogg', VOL_EFFECTS_MASTER)
 		if("red")
 			user.visible_message("[bicon(src)] <span class='warning bold'>BE-E-E-EP!</span>")
 			playsound(user, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
-
-	icon_state = "contraband_scanner_[danger_color]"
-	item_state = "contraband_scanner_[danger_color]"
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
-	can_scan = FALSE
-	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)

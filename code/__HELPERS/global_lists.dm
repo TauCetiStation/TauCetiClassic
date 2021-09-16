@@ -212,6 +212,10 @@
 			global.faith_reactions_by_aspects[aspect_type] = list()
 		global.faith_reactions_by_aspects[aspect_type] += id
 
+	global.contraband_listings = list()
+	for(var/listing in subtypesof(/datum/contraband_listing))
+		global.contraband_listings[listing] = new listing
+
 	populate_gear_list()
 
 	global.bridge_commands = list()
