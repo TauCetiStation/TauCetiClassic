@@ -19,9 +19,12 @@
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
-	if(adj_temp)
-		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(adj_temp < 0)
+		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT)
+			M.bodytemperature += adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT
+	else if(adj_temp > 0)
+		if(M.bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+			M.bodytemperature += adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
