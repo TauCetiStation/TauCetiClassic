@@ -67,7 +67,7 @@
 		else
 			var/datum/reagent/hyperzine/H = reagents.get_reagent("hyperzine")
 			if(H)
-				chem_slowdown_coeff = 1.0 - H.hyp_tol
+				chem_slowdown_coeff = 1.0 - H.hyp_tolerance
 
 	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 ))
 		tally += wear_suit.slowdown * chem_slowdown_coeff
@@ -81,11 +81,10 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(!chem_slowdown_coeff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
 			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
-				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+				tally += 0.5 * (I.w_class - 2) * chem_slowdown_coeff // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
