@@ -325,45 +325,43 @@ var/global/list/contraband_listings
 
 	return TRUE
 
-/obj/item/device/contraband_finder/proc/get_item_image(atom/target)
+/obj/item/device/contraband_finder/proc/get_item_image(atom/target, danger_color)
 	var/obj/effect/overlay/mask = new
 	mask.icon = 'icons/obj/device.dmi'
-	mask.icon_state = "contraband_scanner_mask"
+	mask.icon_state = "contraband_scanner_mask_[danger_color]"
 
 	mask.plane = plane
 	mask.layer = layer + 0.1
 
+	mask.blend_mode = BLEND_INSET_OVERLAY
+
 	mask.appearance_flags |= KEEP_TOGETHER
 
-	mask.blend_mode = BLEND_MULTIPLY
+	mask.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+	mask.name = target.name
 
 	var/image/I = image(target.icon, mask, target.icon_state)
+
+	I.appearance = target
 
 	I.pixel_x = -target.pixel_x
 	I.pixel_y = -target.pixel_y
 
-	I.appearance = target
-
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-	I.name = target.name
-
 	I.plane = plane
 	I.layer = layer + 0.1
 
-	I.blend_mode = BLEND_MULTIPLY
+	I.blend_mode = BLEND_INSET_OVERLAY
 
-	I.appearance_flags |= KEEP_TOGETHER|PIXEL_SCALE
+	I.appearance_flags |= RESET_ALPHA|RESET_COLOR|KEEP_TOGETHER
 
 	I.color = rgb(125, 180, 225)
 	I.alpha = 200
 
 	var/matrix/M = matrix()
-	M.Scale(0.6, 0.6)
+	M.Scale(0.5, 0.5)
 	I.transform = M
 
 	var/image/holo_mask = image('icons/effects/effects.dmi', I, "scanline")
-	holo_mask.plane = plane
-	holo_mask.layer = layer + 0.1
 	holo_mask.blend_mode = BLEND_MULTIPLY
 	I.overlays += holo_mask
 
@@ -371,7 +369,7 @@ var/global/list/contraband_listings
 
 	return mask
 
-/obj/item/device/contraband_finder/proc/set_item_image(atom/target)
+/obj/item/device/contraband_finder/proc/set_item_image(atom/target, danger_color)
 	if(item_image)
 		vis_contents -= item_image
 		QDEL_NULL(item_image)
@@ -379,7 +377,7 @@ var/global/list/contraband_listings
 	if(!target)
 		return
 
-	var/image/I = get_item_image(target)
+	var/image/I = get_item_image(target, danger_color)
 	item_image = I
 
 	vis_contents += item_image
@@ -409,7 +407,7 @@ var/global/list/contraband_listings
 			max_priority_item = A
 
 		if(display_item)
-			set_item_image(A)
+			set_item_image(A, danger_color)
 
 		if(!flash_danger_color)
 			if(danger_color == CL.max_priority)
@@ -432,7 +430,8 @@ var/global/list/contraband_listings
 	icon_state = "contraband_scanner_[max_priority_danger_color]"
 	item_state = "contraband_scanner_[max_priority_danger_color]"
 
-	set_item_image(max_priority_item)
+	if(display_item)
+		set_item_image(max_priority_item, max_priority_danger_color)
 
 	update_inv_mob()
 	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)
