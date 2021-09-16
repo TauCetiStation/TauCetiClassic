@@ -19,12 +19,9 @@
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
-	if(adj_temp < 0)
-		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT)
-			M.bodytemperature += adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT
-	else if(adj_temp > 0)
-		if(M.bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
-			M.bodytemperature += adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT
+	if(adj_temp)
+		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
