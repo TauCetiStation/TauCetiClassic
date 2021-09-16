@@ -18,6 +18,7 @@
 	var/temp = null
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
+	var/docname
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -478,7 +479,6 @@
 				return
 			var/datum/data/record/record1 = null
 			var/datum/data/record/record2 = null
-			var/name = "Medical Record"
 			if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
 				record1 = active1
 			if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
@@ -486,9 +486,10 @@
 			var/info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if (record1)
 				info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
-				name = text("Medical Record ([])", record1.fields["name"])
+				docname = text("Medical Record ([])", record1.fields["name"])
 			else
 				info += "<B>General Record Lost!</B><BR>"
+				docname = "Medical Record"
 			if (record2)
 				info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["b_type"], record2.fields["b_dna"], record2.fields["mi_dis"], record2.fields["mi_dis_d"], record2.fields["ma_dis"], record2.fields["ma_dis_d"], record2.fields["alg"], record2.fields["alg_d"], record2.fields["cdi"], record2.fields["cdi_d"], decode(record2.fields["notes"]))
 				var/counter = 1
@@ -498,7 +499,7 @@
 			else
 				info += "<B>Medical Record Lost!</B><BR>"
 			info += "</TT>"
-			Print(info, name, null)
+			Print(info, docname, null)
 
 		if (href_list["print_photos"])
 			if(next_print > world.time)
@@ -506,7 +507,7 @@
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
-				var/name = "Medical Record's photo"
+				docname = "Medical Record's photo"
 				photo.fields["author"] = /mob/living/simple_animal/cat/dusty
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
@@ -514,7 +515,7 @@
 					Print(null, name, photo)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					Print(null, name, photo)
+					Print(null, docname, photo)
 				next_print = world.time + 50
 
 	updateUsrDialog()

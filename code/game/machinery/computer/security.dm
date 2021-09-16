@@ -22,6 +22,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
+	var/docname
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -330,7 +331,6 @@ What a mess.*/
 				return
 			var/datum/data/record/record1 = null
 			var/datum/data/record/record2 = null
-			var/name = "Security Record"
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
 				record1 = active1
 			if (istype(active2, /datum/data/record) && data_core.security.Find(active2))
@@ -338,9 +338,10 @@ What a mess.*/
 			var/info = "<CENTER><B>Security Record</B></CENTER><BR>"
 			if (record1)
 				info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", record1.fields["name"], record1.fields["id"], record1.fields["sex"], record1.fields["age"], record1.fields["fingerprint"], record1.fields["p_stat"], record1.fields["m_stat"])
-				name = text("Security Record ([])", record1.fields["name"])
+				docname = text("Security Record ([])", record1.fields["name"])
 			else
 				info += "<B>General Record Lost!</B><BR>"
+				docname = "Security Record"
 			if (record2)
 				info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []<BR>\n<BR>\nMinor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nMajor Crimes: []<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", record2.fields["criminal"], record2.fields["mi_crim"], record2.fields["mi_crim_d"], record2.fields["ma_crim"], record2.fields["ma_crim_d"], decode(record2.fields["notes"]))
 				var/counter = 1
@@ -350,7 +351,7 @@ What a mess.*/
 			else
 				info += "<B>Security Record Lost!</B><BR>"
 			info += "</TT>"
-			Print(info, name, null)
+			Print(info, docname, null)
 			next_print = world.time + 50
 			updateUsrDialog()
 		if("Print Photos")

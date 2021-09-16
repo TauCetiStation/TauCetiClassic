@@ -26,6 +26,7 @@
 	var/searched_text = null                 // Name of found person
 	var/sortBy = "name"                      // field to sort
 	var/order = 1                            // -1 = Descending - 1 = Ascending
+	var/docname
 
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -281,8 +282,8 @@ What a mess.*/
 			else
 				info += "<b>General Record Lost!</b><br>"
 			info += "</tt>"
-			var/name = "Employment Record ([active1.fields["name"]])"
-			Print(info, name, null)
+			docname = "Employment Record ([active1.fields["name"]])"
+			Print(info, docname, null)
 			next_print = world.time + 50
 
 		if("Print Photos")
@@ -291,15 +292,15 @@ What a mess.*/
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
-				var/name = "Employment Record's photo"
+				docname = "Employment Record's photo"
 				photo.fields["author"] = /mob/living/carbon/ian/
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
-					Print(null, name, photo)
+					Print(null, docname, photo)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					Print(null, name, photo)
+					Print(null, docname, photo)
 			updateUsrDialog()
 
 		// RECORD DELETE

@@ -255,11 +255,11 @@
 		Pho.fields["pixel_y"] = rand(-10, 10)
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		P.name = docname
-		P.loc = src.loc
+		P.forceMove(loc)
 		P.construct(Pho)
 	else
 		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper()
 		P.info = information
 		P.update_icon()
 		P.name = docname
-		P.loc = src.loc
+		P.forceMove(loc)
