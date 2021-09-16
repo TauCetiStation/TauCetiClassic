@@ -282,16 +282,24 @@ What a mess.*/
 				info += "<b>General Record Lost!</b><br>"
 			info += "</tt>"
 			var/name = "Employment Record ([active1.fields["name"]])"
-			Print(TRUE, info, name, active1)
+			Print(info, name, null)
 			next_print = world.time + 50
 
 		if("Print Photos")
 			if(next_print > world.time)
 				return
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/datum/data/record/photo = active1
+				photo.fields["image"] = photo.fields["photo_f"]
 				var/name = "Employment Record's photo"
-				Print(FALSE, null, name, active1)
-				next_print = world.time + 50
+				photo.fields["author"] = /mob/living/carbon/ian/
+				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
+				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
+				if(istype(active1.fields["photo_f"], /icon))
+					Print(null, name, photo)
+				if(istype(active1.fields["photo_s"], /icon))
+					photo.fields["image"] = active1.fields["photo_s"]
+					Print(null, name, photo)
 			updateUsrDialog()
 
 		// RECORD DELETE

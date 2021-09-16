@@ -350,15 +350,24 @@ What a mess.*/
 			else
 				info += "<B>Security Record Lost!</B><BR>"
 			info += "</TT>"
-			Print(TRUE, info, name, null)
+			Print(info, name, null)
 			next_print = world.time + 50
 			updateUsrDialog()
 		if("Print Photos")
 			if(next_print > world.time)
 				return
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/datum/data/record/photo = active1
+				photo.fields["image"] = photo.fields["photo_f"]
 				var/name = "Security Record's photo"
-				Print(FALSE, null, name, active1)
+				photo.fields["author"] = /mob/living/simple_animal/corgi/borgi
+				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
+				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
+				if(istype(active1.fields["photo_f"], /icon))
+					Print(null, name, photo)
+				if(istype(active1.fields["photo_s"], /icon))
+					photo.fields["image"] = active1.fields["photo_s"]
+					Print(null, name, photo)
 				next_print = world.time + 50
 			updateUsrDialog()
 

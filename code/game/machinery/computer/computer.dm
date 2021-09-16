@@ -242,32 +242,24 @@
 
 
 
-/obj/machinery/computer/proc/Print(Paper, information, docname, datum/data/record/record)
-	if(Paper)
+/obj/machinery/computer/proc/Print(information, docname, datum/data/record/record)
+	if(record)
+		var/datum/picture/Pho = new()
+		Pho.fields["img"] = record.fields["image"]
+		Pho.fields["author"] = record.fields["author"]
+		Pho.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+		Pho.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+		Pho.fields["icon"] = record.fields["icon"]
+		Pho.fields["tiny"] = record.fields["small_icon"]
+		Pho.fields["pixel_x"] = rand(-10, 10)
+		Pho.fields["pixel_y"] = rand(-10, 10)
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+		P.name = docname
+		P.loc = src.loc
+		P.construct(Pho)
+	else
 		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper()
 		P.info = information
 		P.update_icon()
 		P.name = docname
 		P.loc = src.loc
-	else
-		var/list/record_name = list(record.fields["name"]=/mob/living/carbon/human)
-		var/datum/picture/Pho = new()
-		Pho.fields["author"] = /mob/living/simple_animal/corgi/borgi
-		Pho.fields["mob_names"] = record_name
-		Pho.fields["desc"] = "You can see [record.fields["name"]] on the photo"
-		Pho.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
-		Pho.fields["tiny"] = icon('icons/obj/mugshot.dmi', "small_photo")
-		Pho.fields["pixel_x"] = rand(-10, 10)
-		Pho.fields["pixel_y"] = rand(-10, 10)
-		if(istype(record.fields["photo_f"], /icon))
-			var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-			P.name = docname
-			P.loc = src.loc
-			Pho.fields["img"] = record.fields["photo_f"]
-			P.construct(Pho)
-		if(istype(record.fields["photo_s"], /icon))
-			var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-			P.name = docname
-			P.loc = src.loc
-			Pho.fields["img"] = record.fields["photo_s"]
-			P.construct(Pho)
