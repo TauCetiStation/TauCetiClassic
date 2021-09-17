@@ -23,13 +23,10 @@ SUBSYSTEM_DEF(qualities)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/datum/quality/quality
-	if(registered_clients[C.ckey])
-		quality = qualities_pool[registered_clients[C.ckey]]
-	else
-		var/quality_type = pick(qualities_pool)
-		registered_clients[C.ckey] = quality_type
-		quality = qualities_pool[quality_type]
+	var/quality_type = pick(qualities_pool)
+	var/datum/quality/quality = qualities_pool[quality_type]
+
+	registered_clients[C.ckey] = quality_type
 
 	if(C.mob && quality)
 		var/mob/M = C.mob

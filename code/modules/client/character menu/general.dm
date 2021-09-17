@@ -571,7 +571,8 @@
 					randomslot = !randomslot
 
 				if("quality")
-					SSqualities.register_client(parent)
+					if(!have_quality)
+						SSqualities.register_client(parent)
 
 				if("name")
 					be_random_name = !be_random_name
