@@ -260,7 +260,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		if(user.get_active_hand() != I)
 			return //Person has switched hands or the item in their hands
 
-		O.wet = FALSE
+		O.wet = 0
 		user.visible_message( \
 			"<span class='notice'>[user] drying \a [I] using \the [src].</span>", \
 			"<span class='notice'>You dry \a [I] using \the [src].</span>")
