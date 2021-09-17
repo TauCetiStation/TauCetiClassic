@@ -20,7 +20,7 @@
 	return ..()
 
 /obj/item/noticeboard_frame/proc/try_build(mob/user, turf/on_wall)
-	if(on_wall.Adjacent(user))
+	if(!in_range(user, on_wall))
 		return
 
 	var/ndir = get_dir(on_wall,user)
@@ -48,6 +48,8 @@
 	material = /obj/item/stack/sheet/mineral/plastic
 	noticeboard = /obj/structure/noticeboard/plastic
 
+
+
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon."
@@ -56,19 +58,22 @@
 	density = FALSE
 	anchored = TRUE
 
-	var/list/notice_hashes
+	var/list/notices
+
+	var/list/notice_hashes_to_notes
+	var/list/notice_hashes_to_ckeys
 
 	var/list/hash_removal_timers
-
-	var/list/notices
 
 	var/list/icon/paper_icons
 
 	var/list/icon/photo_icons
 
-	var/datum/atom_hud/alternate_appearance/basic/group_exclude/quest
+	var/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/quest
 
 	var/frame_type = /obj/item/noticeboard_frame/wood
+
+	var/static/list/note_typecache
 
 /obj/structure/noticeboard/atom_init(mapload, dir, building)
 	. = ..()
@@ -82,8 +87,18 @@
 
 	var/image/quest_image = image(icon, src, "notice_board_attention_mark")
 	quest_image.layer = layer + 0.1
-	quest = new("quest\ref[src]", quest_image, list())
+	quest = new("quest\ref[src]", quest_image, null)
 	quest.theImage.alpha = 0
+
+	if(!note_typecache)
+		var/list/note_types = list(
+			/obj/item/weapon/paper,
+			/obj/item/weapon/photo,
+			/obj/item/weapon/paper_bundle,
+		)
+		note_typecache = list()
+		for(var/type in note_types)
+			note_typecache += typecacheof(type)
 
 /obj/structure/noticeboard/Destroy()
 	for(var/timer in hash_removal_timers)
@@ -165,18 +180,14 @@
 	qdel(pop_from[note_ref])
 	LAZYREMOVE(pop_from, note_ref)
 
-/obj/structure/noticeboard/proc/remove_hash(note_hash)
-	LAZYREMOVE(hash_removal_timers, note_hash)
-	LAZYREMOVE(notice_hashes, note_hash)
-
 // Note is a photo, paper, or a bundle.
 /obj/structure/noticeboard/proc/add_note(atom/movable/note)
-	LAZYADD(notices, note)
+	var/note_hash = md5(get_content(note))
+
+	LAZYSET(notices, note, note_hash)
 	note.forceMove(src)
 
 	quest.theImage.alpha = 255
-
-	var/note_hash = md5(get_content(note))
 
 	add_icon(note)
 
@@ -184,13 +195,20 @@
 	if(timer)
 		deltimer(timer)
 
-	if(LAZYACCESS(notice_hashes, note_hash))
-		return
+	LAZYINITLIST(notice_hashes_to_notes)
+	LAZYADD(notice_hashes_to_notes[note_hash], note)
 
-	LAZYSET(notice_hashes, note_hash, world.time)
+	var/list/already_seen = LAZYACCESS(notice_hashes_to_ckeys, note_hash)
 
-	for(var/viewer in quest.blinds.Copy())
-		remove_viewer(viewer)
+	if(already_seen)
+		quest.ckeys = already_seen.Copy()
+	else
+		quest.ckeys = null
+
+	for(var/viewer in player_list)
+		var/mob/M = viewer
+		if(quest.mobShouldSee(M))
+			quest.add_hud_to(M)
 
 /obj/structure/noticeboard/proc/remove_note(atom/movable/note)
 	note.forceMove(get_turf(src))
@@ -202,27 +220,32 @@
 
 	var/note_hash = md5(get_content(note))
 
-	LAZYSET(hash_removal_timers, note_hash, addtimer(CALLBACK(src, .proc/remove_hash, note_hash), 2 MINUTES, TIMER_STOPPABLE))
+	LAZYREMOVE(notice_hashes_to_notes[note_hash], note)
+	UNSETEMPTY(notice_hashes_to_notes)
+
+	if(!notice_hashes_to_notes)
+		LAZYSET(hash_removal_timers, note_hash, addtimer(CALLBACK(src, .proc/remove_hash, note_hash), 2 MINUTES, TIMER_STOPPABLE))
+
+/obj/structure/noticeboard/proc/remove_hash(note_hash)
+	LAZYREMOVE(hash_removal_timers, note_hash)
+	LAZYREMOVE(notice_hashes_to_ckeys, note_hash)
 
 /obj/structure/noticeboard/proc/add_viewer(mob/viewer)
+	if(!viewer.ckey)
+		return
 	if(!quest.mobShouldSee(viewer))
 		return
 
-	LAZYADD(quest.blinds, viewer)
-	quest.remove_hud_from(viewer)
+	LAZYINITLIST(notice_hashes_to_ckeys)
+	for(var/note in notices)
+		var/note_hash = notices[note]
+		LAZYSET(notice_hashes_to_ckeys[note_hash], viewer.ckey, TRUE)
 
-/obj/structure/noticeboard/proc/remove_viewer(mob/viewer)
-	LAZYREMOVE(quest.blinds, viewer)
-	quest.add_hud_to(viewer)
+	quest.remove_hud_from(viewer, TRUE)
+	LAZYSET(quest.ckeys, viewer.ckey, TRUE)
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/I, mob/user)
-	var/static/list/note_types = list(
-		/obj/item/weapon/paper,
-		/obj/item/weapon/photo,
-		/obj/item/weapon/paper_bundle,
-	)
-
 	if(iswrench(I) && !user.is_busy() && do_after(user, 40, TRUE, src, FALSE, TRUE))
 		for(var/notice in notices)
 			remove_note(notices[notice])
@@ -230,7 +253,7 @@
 		qdel(src)
 		return
 
-	if(!is_type_in_list(I, note_types))
+	if(!is_type_in_typecache(I, note_typecache))
 		return ..()
 
 	if(length(notices) >= NOTICEBOARD_MAX_NOTICES)
