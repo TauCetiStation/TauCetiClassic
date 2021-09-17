@@ -35,6 +35,15 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+	///"Cache" of maximum of 100 signatures on this paper
+	var/list/signed_by
+	///"Cache" of maximum of 100 stamp messages on this paper
+	var/list/stamped_by
+	///Last world.time tick the name of this paper was changed.
+	var/last_name_change = 0
+	///Last world.time tick the contents of this paper was changed.
+	var/last_info_change = 0
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -225,6 +234,7 @@
 		var/before = copytext(info, 1, textindex)
 		var/after = copytext(info, textindex)
 		info = before + text + after
+		last_info_change = world.time
 		updateinfolinks()
 
 /obj/item/weapon/paper/proc/updateinfolinks()
@@ -239,6 +249,7 @@
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
+	last_info_change = world.time
 	stamp_text = null
 	free_space = MAX_PAPER_MESSAGE_LEN
 	LAZYCLEARLIST(stamped)
@@ -274,12 +285,24 @@
 		return P.get_signature(user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
 
+/obj/item/weapon/paper/proc/add_signature(signature)
+	LAZYSET(signed_by, signature, world.time)
+	if(signed_by.len > 100)
+		signed_by.Cut(1, 2)
+
+/obj/item/weapon/paper/proc/add_stamp(stamp)
+	LAZYSET(stamped_by, stamp, world.time)
+	if(stamped_by.len > 100)
+		stamped_by.Cut(1, 2)
+
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 	if(length(t) == 0)
 		return ""
 
 	if(findtext(t, "\[sign\]"))
-		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
+		var/signature = get_signature(P, user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[signature]</i></font>")
+		add_signature(signature)
 
 	var/font = deffont
 	if(iscrayon) // If it is a crayon, and he still tries to use these, make them empty!
@@ -431,6 +454,7 @@
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
+			last_info_change = world.time
 			updateinfolinks()
 
 		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
@@ -529,6 +553,7 @@
 
 		var/obj/item/weapon/stamp/S = I
 		S.stamp_paper(src)
+		add_stamp(S.stamp_message)
 
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")

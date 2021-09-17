@@ -784,7 +784,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			new /obj/item/device/flash(back_storage)
 			new /obj/item/weapon/storage/belt/security(back_storage)
 			new /obj/item/device/megaphone(back_storage)
-			new /obj/item/device/contraband_finder(back_storage)
+			new /obj/item/device/contraband_finder/chad(back_storage)
 			new /obj/item/device/reagent_scanner(back_storage)
 			new /obj/item/weapon/stamp/cargo_industries(back_storage)
 
