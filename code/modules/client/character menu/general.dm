@@ -15,7 +15,6 @@
 	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
-	. += 						"<br><b>Be special:</b> [have_quality ? "<b>YES!!!</b>" : "<a href='?_src_=prefs;preference=quality'>No</a>"]"
 	. += 						"<hr>"
 	. += 					"</td>"
 	. += 				"</tr>"
@@ -569,10 +568,6 @@
 
 				if("randomslot")
 					randomslot = !randomslot
-
-				if("quality")
-					if(!have_quality)
-						SSqualities.register_client(parent)
 
 				if("name")
 					be_random_name = !be_random_name

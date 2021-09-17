@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(qualities)
 		to_chat(M, "<font color='green'><b>Ограничение:</b> [quality.restriction]</font>")
 
 		C.prefs.have_quality = TRUE
+		C << output(TRUE, "lobbybrowser:set_quality")
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
 	for(var/mob/living/carbon/human/player in player_list)

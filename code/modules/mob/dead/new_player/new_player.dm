@@ -79,8 +79,15 @@
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
-			client << output(null, "lobbybrowser:imgsrc")
+			client << output(null, "lobbybrowser:set_ready")
 			ready = !ready
+		return
+
+	if(href_list["lobby_be_special"])
+		if(!client.prefs.have_quality)
+			SSqualities.register_client(client)
+		else
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 		return
 
 	if(href_list["lobby_observe"])
