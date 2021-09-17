@@ -42,10 +42,21 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td>"
 	. += 					"<b>Antag setup:</b>"
-	. += 				"</tr></td>"
+	. += 				"</td></tr>"
 	. += 				"<tr><td>"
 	. += 					"Uplink Type : <a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
-	. += 				"</tr></td>"
+	. += 				"</td></tr>"
+
+	if(ROLE_GHOSTLY in be_role)
+		. += 				"<tr><td>"
+		. += 					"<b>Ghost Role Preference:</b>"
+		. += 				"</td></tr>"
+		for (var/i in full_ignore_question)
+			if(i in ignore_question)
+				. += 				"<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>Yes</a> / <b>No</b></td></tr>"
+			else
+				. += 				"<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>No</a></td></tr>"
+
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -68,3 +79,10 @@
 				be_role -= be_role_type
 			else
 				be_role += be_role_type
+
+		if("ignore_question")
+			var/ghost_role = href_list["ghost_role"]
+			if(ghost_role in ignore_question)
+				ignore_question -= ghost_role
+			else
+				ignore_question += ghost_role

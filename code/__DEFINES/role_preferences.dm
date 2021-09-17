@@ -69,3 +69,15 @@ var/global/list/special_roles = list(
 #define IGNORE_BORER        "borer"
 #define IGNORE_FAMILIAR     "chfamiliar"
 #define IGNORE_NARSIE_SLAVE "nar-sieslave"
+
+var/global/list/full_ignore_question = list(
+	IGNORE_PAI,
+	IGNORE_BORER,
+	IGNORE_DRONE,
+	IGNORE_PLANT,
+	IGNORE_TSTAFF,
+	IGNORE_FAMILIAR,
+	IGNORE_POSBRAIN,
+	IGNORE_SURVIVOR,
+	IGNORE_NARSIE_SLAVE,
+)
