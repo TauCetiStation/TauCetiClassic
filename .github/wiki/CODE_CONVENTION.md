@@ -277,7 +277,7 @@ for(var/atom/thing as anything in bag_of_atoms)
 	highest_alpha = thing.alpha
 
 
-//Допустимо
+//Допустимо:
 for(var/atom in bag_of_atoms)
 	var/atom/thing = atom
 	if(thing.alpha <= highest_alpha)
