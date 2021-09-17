@@ -36,6 +36,10 @@ SUBSYSTEM_DEF(qualities)
 
 		C.prefs.have_quality = TRUE
 
+/datum/controller/subsystem/qualities/proc/give_all_qualities()
+	for(var/mob/living/carbon/human/player in player_list)
+		SSqualities.give_quality(player)
+
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H)
 	if(!H.client.prefs.have_quality)
 		return
