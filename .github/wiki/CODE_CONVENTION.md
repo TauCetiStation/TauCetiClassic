@@ -252,6 +252,38 @@ var/count = L.len
 	src.another_var =  another_var
 ```
 
+### Избегайте ненужных проверок типов в циклах
+Приведение типов в циклах `for(var/some/foo in bar)` содержит внутреннюю проверку `istype()`, которая отсеивает неподходящие типы, включая `null`. Ключевое слово `as anything` позволяет пропустить ненужные проверки.
+
+Если вы знаете, что лист содержит только нужные типы, то вы бы хотели не только пропустить лишние проверки ради небольшой оптимизации, но и для обнаружения любых `null`-элементов, которые могут быть в этом листе.
+
+Обычно, `null` в листе означает, что как-то неправильно были обработаны ссылки, что затрудняет отладку хард делов.
+
+```dm
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+
+//Плохо:
+for(var/atom/thing in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+
+
+//Хорошо:
+for(var/atom/thing as anything in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+
+
+//Допустимо
+for(var/atom in bag_of_atoms)
+	var/atom/thing = atom
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
 
 ### Особенности BYOND
 #### Использование `spawn()`
