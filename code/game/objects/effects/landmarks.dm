@@ -120,6 +120,14 @@
 	global.dealerstart += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/prisoner_spawn
+	name = "Prisoner"
+
+/obj/effect/landmark/prisoner_spawn/atom_init(mapload)
+	..()
+	global.prisonerstart += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 

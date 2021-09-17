@@ -118,6 +118,9 @@ var/list/diseases = subtypesof(/datum/disease)
 	if(how_spread == SPECIAL || how_spread == NON_CONTAGIOUS || how_spread == BLOOD)//does not spread
 		return
 
+	if(HAS_TRAIT(affected_mob, TRAIT_VACCINATED))
+		return
+
 	if(stage < contagious_period) //the disease is not contagious at this stage
 		return
 

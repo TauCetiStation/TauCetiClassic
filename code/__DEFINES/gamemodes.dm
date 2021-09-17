@@ -54,6 +54,7 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define PROTECTOR "Protector"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

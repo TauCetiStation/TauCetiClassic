@@ -8676,12 +8676,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
 /area/station/security/prison)
 "anT" = (
 /obj/structure/stool,
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor,
 /area/station/security/prison)
 "anU" = (
@@ -8988,6 +8990,7 @@
 /area/station/security/prison)
 "aow" = (
 /obj/structure/stool,
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -9552,6 +9555,7 @@
 /area/station/security/prison)
 "apH" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -9862,6 +9866,7 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "aqj" = (
@@ -10648,6 +10653,7 @@
 "arH" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor,
 /area/station/security/prison)
 "arI" = (
@@ -11584,6 +11590,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor,
 /area/station/security/prison)
 "ato" = (
@@ -14748,6 +14755,7 @@
 "azD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/drain,
+/obj/effect/landmark/prisoner_spawn,
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},

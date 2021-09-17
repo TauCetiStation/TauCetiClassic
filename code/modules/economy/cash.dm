@@ -87,3 +87,7 @@
 	..()
 	if(src in view(1, user))
 		to_chat(user, "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>")
+
+/obj/item/weapon/spacecash/ewallet/roundstart_quality
+	owner_name = "External Private Account"
+	worth = 1000000

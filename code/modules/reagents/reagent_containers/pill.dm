@@ -290,3 +290,12 @@
 	. = ..()
 	reagents.add_reagent("hyronalin", 5)
 	reagents.add_reagent("anti_toxin", 10)
+
+/obj/item/weapon/reagent_containers/pill/adminodrazine
+	name = "AB-X-7921 compound pill."
+	desc = "Experimental chemical agent which is believed to completely heal a human being of any damage upon consumption."
+	icon_state = "pillA"
+
+/obj/item/weapon/reagent_containers/pill/adminodrazine/atom_init()
+	. = ..()
+	reagents.add_reagent("adminodrazine", 1)

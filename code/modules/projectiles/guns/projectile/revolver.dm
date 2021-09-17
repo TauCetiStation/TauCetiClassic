@@ -214,7 +214,8 @@
 	name = "Colt SAA"
 	desc = "A legend of Wild West."
 	icon_state = "peacemaker"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
+	item_state = "peacemaker"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -229,6 +230,8 @@
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+
+/obj/item/weapon/gun/projectile/revolver/peacemaker/detective
 
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"

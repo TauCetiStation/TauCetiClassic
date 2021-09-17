@@ -176,6 +176,7 @@
 			return CreateStrictNumOfRoles(role, roles_allowed[role])
 		else
 			CreateNumOfRoles(role, FilterAvailablePlayers(role))
+
 			return TRUE
 
 /datum/game_mode/proc/CreateNumOfRoles(role_type, list/candidates)
@@ -222,6 +223,7 @@
 	return players_to_choose
 
 /datum/game_mode/proc/CreateRole(role_type, mob/P)
+	message_admins("Created Role")
 	var/datum/role/newRole = CreateBasicRole(role_type)
 
 	if(!newRole)

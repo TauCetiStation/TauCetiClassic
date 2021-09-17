@@ -15,6 +15,14 @@
 	max_ammo = 6
 	multiple_sprites = 1
 
+/obj/item/ammo_box/c45rubber
+	name = "speedloader (.45 rubber)"
+	desc = "A .45 speedloader."
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c45r
+	max_ammo = 6
+	multiple_sprites = 1
+
 /obj/item/ammo_box/a418
 	name = "ammo box (.418)"
 	icon_state = "418"

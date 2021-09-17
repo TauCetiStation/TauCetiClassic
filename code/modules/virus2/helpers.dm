@@ -3,6 +3,8 @@
 	var/score = 0
 	if (!istype(M))
 		return 0
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
+		return 0
 
 	if(istype(M, /mob/living/carbon/human))
 
@@ -76,6 +78,8 @@
 		return
 	if(!istype(M))
 //		log_debug("Bad mob")
+		return
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
 		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return

@@ -40,9 +40,18 @@ SUBSYSTEM_DEF(qualities)
 		C.prefs.have_quality = TRUE
 
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H)
+	message_admins("Gave Quality")
 	if(!H.client.prefs.have_quality)
 		return
 
 	var/datum/quality/quality = qualities_pool[registered_clients[H.client.ckey]]
 	if(quality.restriction_check(H))
 		quality.add_effect(H)
+
+/datum/controller/subsystem/qualities/proc/give_post_quality(mob/living/carbon/human/H)
+	if(!H.client.prefs.have_quality)
+		return
+
+	var/datum/quality/quality = qualities_pool[registered_clients[H.client.ckey]]
+	if(quality.restriction_check(H))
+		quality.add_post_effect(H)

@@ -31,3 +31,7 @@
 
 /datum/mood_event/deep_conversation/add_effects(_speaker)
 	description = "<span class='bold nicegreen'>I just had the deepest conversation of my life with [_speaker]. Lots to ponder about...</span>"
+
+/datum/mood_event/happiness
+	mood_change = 6
+	description = "<span class='bold nicegreen'>For no apparent reason I feel great! I love life!</span>"
