@@ -196,7 +196,7 @@
 		to_chat(user, "<span class='warning'>AV tool works only through the mouth.</span>")
 		return FALSE
 
-	if((M.head.flags & HEADCOVERSMOUTH) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+	if(M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH)
 		to_chat(user, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 		return FALSE
 
@@ -229,6 +229,10 @@
 		var/heal_check = H.health
 
 		if(!do_mob(user, H, 2 SECONDS))
+			break
+
+		if(!user.cell || (user.cell.charge < charge_cost))
+			to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 			break
 
 		var/suff = min(H.getOxyLoss(), 5)
