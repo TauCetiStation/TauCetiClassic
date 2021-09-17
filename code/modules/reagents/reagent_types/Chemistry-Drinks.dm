@@ -20,8 +20,8 @@
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
