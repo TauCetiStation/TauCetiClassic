@@ -285,6 +285,8 @@ var/global/list/datum/area_group/observer_groups
 
 	if(despawning)
 		UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
+		deltimer(despawn_timers[instance])
+		LAZYREMOVE(despawn_timers, instance)
 		INVOKE_ASYNC(src, .proc/Despawn, instance)
 		return
 
