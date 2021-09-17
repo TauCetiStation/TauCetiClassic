@@ -72,8 +72,8 @@
 							<td>[R.fields["fingerprint"]]</td>
 							</tr>"}
 						dat += "</table><hr width='75%' />"
-					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
+					dat += "<A href='?src=\ref[src];choice=Record Maintenance'>Record Maintenance</A><br><br>"
+					dat += "<A href='?src=\ref[src];choice=Log Out'>Log Out</A>"
 				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
@@ -88,7 +88,7 @@
 						side.Blend(mugshot,ICON_UNDERLAY,1,1)
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
-						dat += text({"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
+						dat += {"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
 							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
 							ID: <a href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</a><br>
 							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
@@ -103,7 +103,7 @@
 							Mental Status: [active1.fields["m_stat"]]<br><br>
 							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<br></td>
 							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>
-							<img src=side.png height=80 width=80 border=4 class=nearest></td></tr></table>"})
+							<img src=side.png height=80 width=80 border=4 class=nearest></td></tr></table>"}
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					dat += {"
@@ -113,7 +113,7 @@
 					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
 				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
-						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
+						dat += "ERROR.  String could not be located.<br><br><A href='?src=\ref[src];choice=Return'>Back</A>"
 					else
 						dat += {"
 							<table style="text-align:center;" cellspacing="0" width="100%">
@@ -136,16 +136,16 @@
 								crimstat = E.fields["criminal"]
 							var/background
 							background = "'background-color:#00FF7F;'"
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>[]</td>", R.fields["rank"])
-							dat += text("<td>[]</td>", R.fields["fingerprint"])
-							dat += text("<td>[]</td></tr>", crimstat)
+							dat += "<tr style=[background]><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
+							dat += "<td>[R.fields["id"]]</td>"
+							dat += "<td>[R.fields["rank"]]</td>"
+							dat += "<td>[R.fields["fingerprint"]]</td>"
+							dat += "<td>[crimstat]</td></tr>"
 						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</A>", src)
+						dat += "<br><A href='?src=\ref[src];choice=Return'>Return to index</A>"
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
+			dat += "<A href='?src=\ref[src];choice=Log In'>Log In</A>"
 
 	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")
@@ -271,14 +271,14 @@ What a mess.*/
 				return
 			var/info = "<center><b>Employment Record</b></center><BR>"
 			if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-				info += text("Name: []<BR>\n",active1.fields["name"])
-				info += text("ID: []<BR>\n", active1.fields["id"])
-				info += text("Sex: []<BR>\n",  active1.fields["sex"])
-				info += text("Age: []<BR>\n", active1.fields["age"])
-				info += text("Fingerprint: []<BR>\n", active1.fields["fingerprint"])
-				info += text("Physical Status: []<BR>\n", active1.fields["p_stat"])
-				info += text("Mental Status: []<BR>\n", active1.fields["m_stat"])
-				info += text("Employment/Skills Summary:<BR>\n[]<BR>",decode(active1.fields["notes"]))
+				info += "Name: [active1.fields["name"]]<BR>\n"
+				info += "ID: [active1.fields["id"]]<BR>\n"
+				info += "Sex: [active1.fields["sex"]]<BR>\n"
+				info += "Age: [active1.fields["age"]]<BR>\n"
+				info += "Fingerprint: [active1.fields["fingerprint"]]<BR>\n"
+				info += "Physical Status: [active1.fields["p_stat"]]<BR>\n"
+				info += "Mental Status: [active1.fields["m_stat"]]<BR>\n"
+				info += "Employment/Skills Summary:<BR>\n[decode(active1.fields["notes"])]<BR>"
 			else
 				info += "<b>General Record Lost!</b><br>"
 			info += "</tt>"
