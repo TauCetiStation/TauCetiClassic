@@ -93,6 +93,10 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>
 	"}
 
+	var/have_q = client.prefs.have_quality
+	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>QUALITY [have_q ? "☑" : "☒"]</a>
+	"}
+
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>
 	"}
 	dat += {"<br><br><a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>
@@ -103,18 +107,28 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	dat += {"
 	<script language="JavaScript">
 		var i=0;
-		var mark=document.getElementById("ready");
-		var marks=new Array('READY ☒', 'READY ☑');
-		function imgsrc(setReady) {
+		var ready_mark=document.getElementById("ready");
+		var ready_marks=new Array('READY ☒', 'READY ☑');
+
+		var quality_mark=document.getElementById("quality");
+		function set_ready(setReady) {
 			if(setReady) {
 				i = setReady;
-				mark.textContent = marks\[i\];
+				ready_mark.textContent = ready_marks\[i\];
 			}
 			else {
 				i++;
-				if (i == marks.length)
+				if (i == ready_marks.length)
 					i = 0;
-				mark.textContent = marks\[i\];
+				ready_mark.textContent = ready_marks\[i\];
+			}
+		}
+		function set_quality(setQuality) {
+			if(setQuality) {
+				quality_mark.textContent = 'QUALITY ☑';
+			}
+			else {
+				quality_mark.textContent = 'QUALITY ☒';
 			}
 		}
 	</script>

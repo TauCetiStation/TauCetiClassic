@@ -17,19 +17,16 @@ SUBSYSTEM_DEF(qualities)
 		var/datum/quality/quality = new quality_type
 		qualities_pool[quality_type] = quality
 
-/datum/controller/subsystem/qualities/proc/registration_client(client/C)
+/datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
 		if(C.mob)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/datum/quality/quality
-	if(registered_clients[C.ckey])
-		quality = qualities_pool[registered_clients[C.ckey]]
-	else
-		var/quality_type = pick(qualities_pool)
-		registered_clients[C.ckey] = quality_type
-		quality = qualities_pool[quality_type]
+	var/quality_type = pick(qualities_pool)
+	var/datum/quality/quality = qualities_pool[quality_type]
+
+	registered_clients[C.ckey] = quality_type
 
 	if(C.mob && quality)
 		var/mob/M = C.mob
@@ -38,6 +35,11 @@ SUBSYSTEM_DEF(qualities)
 		to_chat(M, "<font color='green'><b>Ограничение:</b> [quality.restriction]</font>")
 
 		C.prefs.have_quality = TRUE
+		C << output(TRUE, "lobbybrowser:set_quality")
+
+/datum/controller/subsystem/qualities/proc/give_all_qualities()
+	for(var/mob/living/carbon/human/player in player_list)
+		SSqualities.give_quality(player)
 
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H)
 	message_admins("Gave Quality")
