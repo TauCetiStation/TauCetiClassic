@@ -177,55 +177,42 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-
-	var/find_prob = 0
-
-	if (BP.implants.len)
-
-		var/obj/item/obj = BP.implants[1]
-
-		if(istype(obj,/obj/item/weapon/implant))
-			var/obj/item/weapon/implant/imp = obj
-			if (imp.islegal())
-				find_prob +=60
-			else
-				find_prob +=40
-		else
-			find_prob +=50
-
-		if (prob(find_prob))
+	var/list/radial_objects_list = list()
+	if(BP.implants.len)
+		for(var/atom/embed_object as anything in BP.implants)
+			radial_objects_list[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		var/choosen_object = show_radial_menu(user, target, radial_objects_list, radius = 50, require_near = TRUE, tooltips = TRUE)
+		if(choosen_object)
 			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-			BP.implants -= obj
+			"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+			BP.implants -= choosen_object
+
 			for(var/datum/wound/W in BP.wounds)
-				if(obj in W.embedded_objects)
-					W.embedded_objects -= obj
+				if(choosen_object in W.embedded_objects)
+					W.embedded_objects -= choosen_object
 					break
 
-
-			//Handle possessive brain borers.
-			if(istype(obj,/mob/living/simple_animal/borer))
-				var/mob/living/simple_animal/borer/worm = obj
+			if(istype(choosen_object, /mob/living/simple_animal/borer))
+				var/mob/living/simple_animal/borer/worm = choosen_object
 				if(worm.controlling)
 					target.release_control()
 				worm.detatch()
 
-			if(obj)
-				obj.loc = get_turf(target)
+			if(istype(choosen_object, /obj/item/weapon/implant))
+				var/obj/item/weapon/implant/imp = choosen_object
+				imp.imp_in = null
+				imp.implanted = 0
+				if(istype(imp, /obj/item/weapon/implant/storage))
+					var/obj/item/weapon/implant/storage/Simp = imp
+					Simp.removed()
 
-				if(istype(obj,/obj/item/weapon/implant))
-					var/obj/item/weapon/implant/imp = obj
-					imp.imp_in = null
-					imp.implanted = 0
-					if(istype(imp,/obj/item/weapon/implant/storage))
-						var/obj/item/weapon/implant/storage/Simp = imp
-						Simp.removed()
+			var/obj/item/obj_to_remove = choosen_object
+			obj_to_remove.loc = get_turf(target)
+			target.sec_hud_set_implants()
 			playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 		else
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
-			"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
-
-		target.sec_hud_set_implants()
+			"<span class='notice'>There's something inside [target]'s [BP.name], but you decided not to touch it.</span>" )
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
@@ -235,7 +222,6 @@
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
 		BP.hidden.update_icon()
 		BP.hidden = null
-
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
 		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
