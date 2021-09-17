@@ -71,6 +71,7 @@ var/global/list/datum/area_group/observer_groups
 	refresh_observer(L, SA.spawn_frequency)
 
 
+
 /*
  * Spawns atoms nearby sentient players, despawns mobs if player is gone for too long.
  *
@@ -288,7 +289,6 @@ var/global/list/datum/area_group/observer_groups
 		return
 
 	refresh_instance(instance)
-	register_instance(instance)
 
 /datum/component/spawn_area/proc/get_observers(atom/movable/AM)
 	var/g = "[group]_[AM.z]"

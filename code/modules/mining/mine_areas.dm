@@ -64,8 +64,8 @@
 		CALLBACK(src, .proc/CheckSpawn),
 		8,
 		16,
-		2 MINUTES,
-		1.5 MINUTES
+		1.2 MINUTES,
+		1 MINUTE,
 	)
 
 /area/asteroid/mine/unexplored/proc/Spawn(turf/T)
@@ -76,6 +76,8 @@
 	qdel(instance)
 
 /area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
+	if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		return FALSE
 	return T.is_mob_placeable(null)
 
 /area/asteroid/mine/production
