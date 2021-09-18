@@ -191,8 +191,6 @@
 				embed_object_implants += embed_object
 				continue
 			embed_object_else += embed_object
-		for(var/atom/embed_object as anything in embed_object_shrapnel)
-			embed_object_shrapnel[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
