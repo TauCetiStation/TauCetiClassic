@@ -262,12 +262,15 @@ var/global/list/frozen_items = list()
 
 	if(istype(G, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/grab = G
+		if(!user.IsAdvancedToolUser())
+			to_chat(user, "<span class='notice'>You have no idea how to do that.</span>")
+			return
 
 		if(occupant)
 			to_chat(user, "<span class='notice'>The cryo pod is in use.</span>")
 			return
 
-		if(!ismob(grab.affecting))
+		if(!ishuman(grab.affecting))
 			return
 
 		var/willing = null //We don't want to allow people to be forced into despawning.
@@ -354,7 +357,11 @@ var/global/list/frozen_items = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.incapacitated() || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !(ishuman(usr)))
+		return
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='notice'>You have no idea how to do that.</span>")
 		return
 
 	if(occupant)

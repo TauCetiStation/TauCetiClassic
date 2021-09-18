@@ -270,14 +270,18 @@
 	to_chat(user, "<span class='notice'>You pin [I] to [src].</span>")
 
 /obj/structure/noticeboard/examine(mob/user)
+	var/datum/tgui/ui = tgui_interact(user)
+	if(ui.status < UI_UPDATE)
+		return
 	add_viewer(user)
-	tgui_interact(user)
 
 /obj/structure/noticeboard/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "NoticeBoard", name)
 		ui.open()
+
+	return ui
 
 /obj/structure/noticeboard/attack_hand(user)
 	examine(user)
