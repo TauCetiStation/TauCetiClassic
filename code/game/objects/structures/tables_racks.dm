@@ -264,11 +264,7 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
-		if(istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
