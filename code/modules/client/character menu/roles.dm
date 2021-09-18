@@ -52,7 +52,7 @@
 			. += 					"<tr><td colspan='2'>"
 			. += 						"<b>Ghost Role Preference:</b>"
 			. += 					"</td></tr>"
-			for (var/i in full_ignore_question)
+			for (var/i in global.full_ignore_question)
 				if(i in ignore_question)
 					. += 				"<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>Yes</a> / <b>No</b></td></tr>"
 				else
@@ -84,7 +84,7 @@
 
 		if("ignore_question")
 			var/ghost_role = href_list["ghost_role"]
-			if(!(ghost_role in full_ignore_question))
+			if(!(ghost_role in global.full_ignore_question))
 				return
 			if(ghost_role in ignore_question)
 				ignore_question -= ghost_role
