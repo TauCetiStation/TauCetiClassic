@@ -220,6 +220,8 @@
 					if(picked_obj in W.embedded_objects)
 						W.embedded_objects -= picked_obj
 						break
+				user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+				"<span class='notice'>You take [picked_obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 				BP.implants -= picked_obj
 				picked_obj.loc = get_turf(target)
 			if("Implants")
@@ -237,6 +239,8 @@
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
 					target.sec_hud_set_implants()
+					user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+					"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 					var/obj/item/obj_to_remove = imp
 					obj_to_remove.loc = get_turf(target)
 			if("Else")
@@ -247,13 +251,15 @@
 							W.embedded_objects -= choosen_object
 							break
 					BP.implants -= choosen_object
-					var/obj/item/obj_to_remove = choosen_object
-					obj_to_remove.loc = get_turf(target)
 					if(istype(choosen_object, /mob/living/simple_animal/borer))
 						var/mob/living/simple_animal/borer/worm = choosen_object
 						if(worm.controlling)
 							target.release_control()
 						worm.detatch()
+						user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+						"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+						var/obj/item/obj_to_remove = choosen_object
+						obj_to_remove.loc = get_turf(target)
 		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 
 	else if (BP.hidden)
