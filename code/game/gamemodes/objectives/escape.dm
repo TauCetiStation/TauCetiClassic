@@ -14,12 +14,10 @@
 	if(!location)
 		return OBJECTIVE_LOSS
 
-	if(istype(location, /turf/simulated/shuttle/floor/evac/sec1) || istype(location, /turf/simulated/shuttle/floor/evac/sec2))
-		if(iscarbon(owner.current))
-			var/mob/living/carbon/C = owner.current
-			if(!C.restrained())
-				return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
+	if(iscarbon(owner.current))
+		var/mob/living/carbon/C = owner.current
+		if(C.restrained())
+			return OBJECTIVE_LOSS
 
 	var/area/check_area = location.loc
 	if(istype(check_area, /area/shuttle/escape/centcom))
