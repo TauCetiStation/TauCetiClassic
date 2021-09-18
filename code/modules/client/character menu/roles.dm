@@ -43,18 +43,23 @@
 	. += 				"<tr><td colspan='2'>"
 	. += 					"Uplink Type : <a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
 	. += 				"</td></tr>"
-
-	if(ROLE_GHOSTLY in be_role)
-		. += 				"<tr><td colspan='2'>"
-		. += 					"<b>Ghost Role Preference:</b>"
-		. += 				"</td></tr>"
-		for (var/i in full_ignore_question)
-			if(i in ignore_question)
-				. += 				"<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>Yes</a> / <b>No</b></td></tr>"
-			else
-				. += 				"<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>No</a></td></tr>"
-
 	. += 			"</table>"
+
+	if(!jobban_isbanned(user, ROLE_GHOSTLY))
+		if(ROLE_GHOSTLY in be_role)
+			. +=				"<br>"
+			. +=				"<table width='100%'>"
+			. += 					"<tr><td colspan='2'>"
+			. += 						"<b>Ghost Role Preference:</b>"
+			. += 					"</td></tr>"
+			for (var/i in full_ignore_question)
+				if(i in ignore_question)
+					. += 				"<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>Yes</a> / <b>No</b></td></tr>"
+				else
+					. += 				"<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>No</a></td></tr>"
+			. +=				"</table>"
+
+
 	. += 		"</td>"
 	. += 	"</tr>"
 	. += "</table>"
@@ -79,6 +84,8 @@
 
 		if("ignore_question")
 			var/ghost_role = href_list["ghost_role"]
+			if(!(ghost_role in full_ignore_question))
+				return
 			if(ghost_role in ignore_question)
 				ignore_question -= ghost_role
 			else
