@@ -169,7 +169,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		//This is necessary so that old players remove unnecessary roles
 		//and automatically set the preference "ROLE_GHOSTLY"
 		var/role_removed = FALSE
-		var/static/list/deleted_selectable_roles = list(ROLE_PAI, ROLE_PLANT, "Survivor", "Talking staff", "Religion familiar")
+		var/static/list/deleted_selectable_roles = list("pAI", "Diona", "Survivor", "Talking staff", "Religion familiar")
 		for(var/role in deleted_selectable_roles)
 			if(role in be_role)
 				be_role -= role

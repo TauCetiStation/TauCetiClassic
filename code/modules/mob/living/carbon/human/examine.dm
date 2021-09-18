@@ -513,7 +513,7 @@
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(mood)
+	if(!skipface && mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)
 				msg += "[t_He] appears to be depressed.\n"
@@ -559,7 +559,7 @@
 		if(O.started_as_observer)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
-	if(user != src && !check_covered_bodypart(src, LOWER_TORSO))
+	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)

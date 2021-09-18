@@ -10,12 +10,10 @@
 #define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
 #define ROLE_ALIEN             "Xenomorph"
-#define ROLE_PAI               "pAI"
 #define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
-#define ROLE_PLANT             "Diona"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
@@ -50,13 +48,13 @@ var/global/list/special_roles = list(
 	ROLE_REV,
 	ROLE_ALIEN,
 	ROLE_CULTIST,
-	ROLE_BLOB ,
+	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_RAIDER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
-	ROLE_GHOSTLY,
 	ROLE_FAMILIES,
+	ROLE_GHOSTLY,
 )
 
 //Prefs for ignore a question which give ghosty roles

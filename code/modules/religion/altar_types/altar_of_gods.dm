@@ -38,8 +38,6 @@
 	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
 	init_turfs_around()
 
-	poi_list += src
-
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
