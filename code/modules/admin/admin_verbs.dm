@@ -96,7 +96,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
-	/client/proc/stop_server_sound
+	/client/proc/stop_server_sound,
+	/client/proc/play_server_sound
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/change_title_screen,

@@ -201,6 +201,13 @@
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
+// Port from /tg/
+// We have no multi-z now, so ported only this proc ~ Pervert
+/turf/proc/make_transparent(turf/base = /turf/space)
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(base.icon), initial(base.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
+	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
+	underlays += underlay_appearance
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
