@@ -208,7 +208,8 @@ var/global/list/frozen_items = list()
 			return
 
 		if(!occupant.client && occupant.stat != DEAD) //Occupant is living and has no client.
-
+			if(occupant.key[1] == "@")
+				return
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
 				occupant.drop_from_inventory(W)
