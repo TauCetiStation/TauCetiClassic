@@ -516,6 +516,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
 	S["be_role"]			>> be_role
+	S["ignore_question"] >> ignore_question
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["ipc_head"]			>> ipc_head
@@ -588,6 +589,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!organ_data) src.organ_data = list()
 	if(!ipc_head) src.ipc_head = "Default"
 	if(!be_role) src.be_role = list()
+	if(!ignore_question) src.ignore_question = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -697,6 +699,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
 	S["be_role"]			<< be_role
+	S["ignore_question"]			<< ignore_question
 	S["player_alt_titles"]		<< player_alt_titles
 	S["organ_data"]			<< organ_data
 	S["ipc_head"]			<< ipc_head
