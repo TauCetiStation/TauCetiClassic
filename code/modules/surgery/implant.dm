@@ -178,41 +178,86 @@
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	if(BP.implants.len)
-		var/list/radial_objects_list = list()
-		for(var/atom/embed_object as anything in BP.implants)
-			radial_objects_list[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
-		var/choosen_object = show_radial_menu(user, target, radial_objects_list, radius = 50, require_near = TRUE, tooltips = TRUE)
-		if(choosen_object)
-			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-			"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-			BP.implants -= choosen_object
+		var/image/img
+		var/list/embed_obj_to_choose = list()
+		var/list/embed_object_shrapnel = list()
+		var/list/embed_object_implants = list()
+		var/list/embed_object_else = list()
+		for(var/embed_object as anything in BP.implants)
+			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
+				embed_object_shrapnel += embed_object
+				continue
+			if(istype(embed_object, /obj/item/weapon/implant))
+				embed_object_implants += embed_object
+				continue
+			embed_object_else += embed_object
+		for(var/atom/embed_object as anything in embed_object_shrapnel)
+			embed_object_shrapnel[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		for(var/atom/embed_object as anything in embed_object_implants)
+			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		for(var/atom/embed_object as anything in embed_object_else)
+			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		if(embed_object_shrapnel.len)
+			var/obj/picked_obj = pick(embed_object_shrapnel)
+			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
+			embed_obj_to_choose += list("Shrapnel" = img)
+		if(embed_object_implants.len)
+			var/obj/picked_obj = pick(embed_object_implants)
+			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
+			embed_obj_to_choose += list("Implants" = img)
+		if(embed_object_else.len)
+			var/obj/picked_obj = pick(embed_object_else)
+			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
+			embed_obj_to_choose += list("Else" = img)
 
-			for(var/datum/wound/W in BP.wounds)
-				if(choosen_object in W.embedded_objects)
-					W.embedded_objects -= choosen_object
-					break
+		var/list_to_choose = show_radial_menu(user, target, embed_obj_to_choose, radius = 30, require_near = TRUE, tooltips = TRUE)
 
-			if(istype(choosen_object, /mob/living/simple_animal/borer))
-				var/mob/living/simple_animal/borer/worm = choosen_object
-				if(worm.controlling)
-					target.release_control()
-				worm.detatch()
-
-			if(istype(choosen_object, /obj/item/weapon/implant))
-				var/obj/item/weapon/implant/imp = choosen_object
-				imp.imp_in = null
-				imp.implanted = 0
-				if(istype(imp, /obj/item/weapon/implant/storage))
-					var/obj/item/weapon/implant/storage/Simp = imp
-					Simp.removed()
-
-			var/obj/item/obj_to_remove = choosen_object
-			obj_to_remove.loc = get_turf(target)
-			target.sec_hud_set_implants()
-			playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-		else
+		if(!list_to_choose)
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you decided not to touch it.</span>" )
+		switch(list_to_choose)
+			if("Shrapnel")
+				var/obj/picked_obj = pick(embed_object_shrapnel)
+				for(var/datum/wound/W in BP.wounds)
+					if(picked_obj in W.embedded_objects)
+						W.embedded_objects -= picked_obj
+						break
+				BP.implants -= picked_obj
+				picked_obj.loc = get_turf(target)
+			if("Implants")
+				var/choosen_object = show_radial_menu(user, target, embed_object_implants, radius = 50, require_near = TRUE, tooltips = TRUE)
+				if(choosen_object)
+					var/obj/item/weapon/implant/imp = choosen_object
+					for(var/datum/wound/W in BP.wounds)
+						if(imp in W.embedded_objects)
+							W.embedded_objects -= imp
+							break
+					BP.implants -= imp
+					imp.imp_in = null
+					imp.implanted = FALSE
+					if(istype(imp, /obj/item/weapon/implant/storage))
+						var/obj/item/weapon/implant/storage/Simp = imp
+						Simp.removed()
+					target.sec_hud_set_implants()
+					var/obj/item/obj_to_remove = imp
+					obj_to_remove.loc = get_turf(target)
+			if("Else")
+				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
+				if(choosen_object)
+					for(var/datum/wound/W in BP.wounds)
+						if(choosen_object in W.embedded_objects)
+							W.embedded_objects -= choosen_object
+							break
+					BP.implants -= choosen_object
+					var/obj/item/obj_to_remove = choosen_object
+					obj_to_remove.loc = get_turf(target)
+					if(istype(choosen_object, /mob/living/simple_animal/borer))
+						var/mob/living/simple_animal/borer/worm = choosen_object
+						if(worm.controlling)
+							target.release_control()
+						worm.detatch()
+		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
+
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
