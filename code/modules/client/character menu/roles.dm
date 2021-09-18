@@ -43,12 +43,12 @@
 	. += 				"<tr><td>"
 	. += 					"<b>Antag setup:</b>"
 	. += 				"</td></tr>"
-	. += 				"<tr><td>"
+	. += 				"<tr><td colspan='2'>"
 	. += 					"Uplink Type : <a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
 	. += 				"</td></tr>"
 
 	if(ROLE_GHOSTLY in be_role)
-		. += 				"<tr><td>"
+		. += 				"<tr><td colspan='2'>"
 		. += 					"<b>Ghost Role Preference:</b>"
 		. += 				"</td></tr>"
 		for (var/i in full_ignore_question)

@@ -60,15 +60,15 @@ var/global/list/special_roles = list(
 )
 
 //Prefs for ignore a question which give ghosty roles
-#define IGNORE_PLANT        "diona"
-#define IGNORE_PAI          "pai"
-#define IGNORE_TSTAFF       "chstaff"
-#define IGNORE_SURVIVOR     "survivor"
-#define IGNORE_POSBRAIN     "posibrain"
-#define IGNORE_DRONE        "drone"
-#define IGNORE_BORER        "borer"
-#define IGNORE_FAMILIAR     "chfamiliar"
-#define IGNORE_NARSIE_SLAVE "nar-sieslave"
+#define IGNORE_PLANT        "Diona"
+#define IGNORE_PAI          "Pai"
+#define IGNORE_TSTAFF       "Chaplain staff"
+#define IGNORE_SURVIVOR     "Survivor"
+#define IGNORE_POSBRAIN     "Positronic brain"
+#define IGNORE_DRONE        "Drone"
+#define IGNORE_BORER        "Borer"
+#define IGNORE_FAMILIAR     "Chaplain familiar"
+#define IGNORE_NARSIE_SLAVE "Nar-sie slave"
 
 var/global/list/full_ignore_question = list(
 	IGNORE_PAI,
