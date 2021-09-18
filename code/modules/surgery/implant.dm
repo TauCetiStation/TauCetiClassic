@@ -179,7 +179,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	if(BP.implants.len)
 		var/image/img
-		var/list/embed_obj_to_choose = list()
+		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
 		var/list/embed_object_implants = list()
 		var/list/embed_object_else = list()
@@ -198,17 +198,17 @@
 		if(embed_object_shrapnel.len)
 			var/obj/picked_obj = pick(embed_object_shrapnel)
 			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			embed_obj_to_choose += list("Shrapnel" = img)
+			list_of_embed_types += list("Shrapnel" = img)
 		if(embed_object_implants.len)
 			var/obj/picked_obj = pick(embed_object_implants)
 			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			embed_obj_to_choose += list("Implants" = img)
+			list_of_embed_types += list("Implants" = img)
 		if(embed_object_else.len)
 			var/obj/picked_obj = pick(embed_object_else)
 			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			embed_obj_to_choose += list("Else" = img)
+			list_of_embed_types += list("Else" = img)
 
-		var/list_to_choose = show_radial_menu(user, target, embed_obj_to_choose, radius = 30, require_near = TRUE, tooltips = TRUE)
+		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
 
 		if(!list_to_choose)
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
