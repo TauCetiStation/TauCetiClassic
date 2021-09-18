@@ -183,7 +183,7 @@
 		var/list/embed_object_shrapnel = list()
 		var/list/embed_object_implants = list()
 		var/list/embed_object_else = list()
-		for(var/embed_object as anything in BP.implants)
+		for(var/embed_object in BP.implants)
 			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
 				embed_object_shrapnel += embed_object
 				continue
