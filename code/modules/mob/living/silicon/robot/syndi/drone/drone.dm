@@ -31,3 +31,24 @@
 
 /mob/living/silicon/robot/drone/syndi/pick_module()
     uplink.interact(src)
+
+/mob/living/silicon/robot/drone/syndi/proc/control(mob/living/carbon/human/M)
+    operator = M
+    key = M.key
+    M.key = "@[key]"
+    to_chat(src, "You're now controlling the [src.name].")
+
+/mob/living/silicon/robot/drone/syndi/proc/loose_control()
+    if(operator)
+        operator.key = key
+        key = null
+        to_chat(operator, "You've lost control of the [src.name].")
+        operator = null
+
+//========Verbs========
+/mob/living/silicon/robot/drone/syndi/verb/stop_control()
+    set name = "Stop controling"
+    set desc = "Toggles RC off."
+    set category = "Drone"
+
+    loose_control()
