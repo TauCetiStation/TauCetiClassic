@@ -376,7 +376,7 @@ What a mess.*/
 			else
 				info += "<B>Security Record Lost!</B><BR>"
 			info += "</TT>"
-			Print_Document(info, docname)
+			print_document(info, docname)
 			next_print = world.time + 50
 			updateUsrDialog()
 		if("Print Photos")
@@ -386,16 +386,15 @@ What a mess.*/
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
 				docname = "Security Record's photo"
-				photo.fields["author"] = /mob/living/simple_animal/corgi/borgi
+				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
-					Print_Photo(photo, docname)
+					print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					Print_Photo(photo, docname)
+					print_photo(photo, docname)
 				next_print = world.time + 50
-			updateUsrDialog()
 
 //RECORD DELETE
 		if("Delete All Records")

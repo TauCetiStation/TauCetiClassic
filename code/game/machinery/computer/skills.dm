@@ -283,7 +283,8 @@ What a mess.*/
 				info += "<b>General Record Lost!</b><br>"
 			info += "</tt>"
 			docname = "Employment Record ([active1.fields["name"]])"
-			Print_Document(info, docname)
+			print_document(info, docname)
+			updateUsrDialog()
 			next_print = world.time + 50
 
 		if("Print Photos")
@@ -293,15 +294,15 @@ What a mess.*/
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
 				docname = "Employment Record's photo"
-				photo.fields["author"] = /mob/living/carbon/ian/
+				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
-					Print_Photo(photo, docname)
+					print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					Print_Photo(photo, docname)
-			updateUsrDialog()
+					print_photo(photo, docname)
+				next_print = world.time + 50
 
 		// RECORD DELETE
 		if ("Delete All Records")

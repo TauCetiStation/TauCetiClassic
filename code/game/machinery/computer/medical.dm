@@ -534,7 +534,9 @@
 			else
 				info += "<B>Medical Record Lost!</B><BR>"
 			info += "</TT>"
-			Print_Document(info, docname)
+			print_document(info, docname)
+			updateUsrDialog()
+			next_print = world.time + 50
 
 		if (href_list["print_photos"])
 			if(next_print > world.time)
@@ -543,17 +545,15 @@
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
 				docname = "Medical Record's photo"
-				photo.fields["author"] = /mob/living/simple_animal/cat/dusty
+				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
-					Print_Photo(photo, docname)
+					print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					Print_Photo(photo, docname)
+					print_photo(photo, docname)
 				next_print = world.time + 50
-
-	updateUsrDialog()
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

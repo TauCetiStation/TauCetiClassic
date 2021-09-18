@@ -240,24 +240,24 @@
 			to_chat(M, "<span class='warning'>You broke the computer.</span>")
 			return
 
-/obj/machinery/computer/proc/Print_Document(text, docname)
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper()
-	P.info = text
-	P.update_icon()
-	P.name = docname
-	P.forceMove(loc)
+/obj/machinery/computer/proc/print_document(text, docname)
+	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()
+	Paper.info = text
+	Paper.update_icon()
+	Paper.name = docname
+	Paper.forceMove(loc)
 
-/obj/machinery/computer/proc/Print_Photo(datum/data/record/record, docname)
-	var/datum/picture/Pho = new()
-	Pho.fields["img"] = record.fields["image"]
-	Pho.fields["author"] = record.fields["author"]
-	Pho.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
-	Pho.fields["desc"] = "You can see [record.fields["name"]] on the photo"
-	Pho.fields["icon"] = record.fields["icon"]
-	Pho.fields["tiny"] = record.fields["small_icon"]
-	Pho.fields["pixel_x"] = rand(-10, 10)
-	Pho.fields["pixel_y"] = rand(-10, 10)
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	P.name = docname
-	P.forceMove(loc)
-	P.construct(Pho)
+/obj/machinery/computer/proc/print_photo(datum/data/record/record, docname)
+	var/datum/picture/Picture = new()
+	Picture.fields["img"] = record.fields["image"]
+	Picture.fields["author"] = record.fields["author"]
+	Picture.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+	Picture.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+	Picture.fields["icon"] = record.fields["icon"]
+	Picture.fields["tiny"] = record.fields["small_icon"]
+	Picture.fields["pixel_x"] = rand(-10, 10)
+	Picture.fields["pixel_y"] = rand(-10, 10)
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+	Photo.name = docname
+	Photo.forceMove(loc)
+	Photo.construct(Picture)
