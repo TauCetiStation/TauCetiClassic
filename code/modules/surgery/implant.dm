@@ -178,7 +178,6 @@
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	if(BP.implants.len)
-		var/image/img
 		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
 		var/list/embed_object_implants = list()
@@ -197,16 +196,13 @@
 			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		if(embed_object_shrapnel.len)
 			var/obj/picked_obj = pick(embed_object_shrapnel)
-			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			list_of_embed_types += list("Shrapnel" = img)
+			list_of_embed_types += list("Shrapnel" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
 		if(embed_object_implants.len)
 			var/obj/picked_obj = pick(embed_object_implants)
-			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			list_of_embed_types += list("Implants" = img)
+			list_of_embed_types += list("Implants" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
 		if(embed_object_else.len)
 			var/obj/picked_obj = pick(embed_object_else)
-			img = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state)
-			list_of_embed_types += list("Else" = img)
+			list_of_embed_types += list("Else" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
 
 		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
 
