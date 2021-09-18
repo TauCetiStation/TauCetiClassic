@@ -177,8 +177,8 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	var/list/radial_objects_list = list()
 	if(BP.implants.len)
+		var/list/radial_objects_list = list()
 		for(var/atom/embed_object as anything in BP.implants)
 			radial_objects_list[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		var/choosen_object = show_radial_menu(user, target, radial_objects_list, radius = 50, require_near = TRUE, tooltips = TRUE)
