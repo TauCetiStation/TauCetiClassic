@@ -21,6 +21,10 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	uplink = new /obj/item/device/drone_uplink()
 
+/mob/living/silicon/robot/drone/syndi/Destroy()
+    loose_control()
+    . = ..()
+
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	laws = new laws_type(R)
@@ -52,6 +56,8 @@
     uplink.interact(src)
 
 /mob/living/silicon/robot/drone/syndi/proc/control(mob/living/carbon/human/M)
+    if(!laws.zeroth)
+        set_zeroth_law("Only [M.real_name] and people he designates as being such are Syndicate Agents.")
     operator = M
     operator_health_last = M.health
     cooldown = 5//in seconds

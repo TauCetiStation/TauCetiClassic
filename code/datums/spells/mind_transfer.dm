@@ -93,6 +93,12 @@ Also, you never added distance checking after target is selected. I've went ahea
 	user.mind.spell_list = checked_spells//Set user mind list to the same spells
 	//SPELL LOSS END
 
+	//Additional safety checks
+	if(victim.key[1] == "@" && istype(victim.get_item_by_slot(SLOT_GLASSES), /obj/item/clothing/glasses/syndidroneRC)) //if the victim is controlling a drone
+		var/obj/item/clothing/glasses/syndidroneRC/G = victim.get_item_by_slot(SLOT_GLASSES)
+		if(G.slave) //if not- it's just aghosted mob with those glasses equiped
+			G.slave.loose_control()
+
 	//MIND TRANSFER BEGIN
 	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.
 		for(var/V in caster.mind.special_verbs)//Since the caster is using an object spell system, this is mostly moot.
