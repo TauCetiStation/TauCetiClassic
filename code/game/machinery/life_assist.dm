@@ -25,6 +25,8 @@
 		icon_state = icon_state_detached
 
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
+	if(get_dist(src, H) > 1)
+		return
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, .proc/resolve_stranded))
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
