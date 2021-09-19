@@ -141,6 +141,17 @@
 			if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
 				Stun(8)
 				Weaken(8)
+		if(ishuman(src))
+			if(prob(5))
+				var/mob/living/carbon/human/Human = src
+				var/obj/item/organ/internal/heart/Heart = Human.organs_by_name[O_HEART]
+				if(Heart.heart_status == HEART_NORMAL)
+					Heart.heart_fibrillate()
+				if(Heart.heart_status == HEART_FIBR)
+					if(prob(50))
+						Heart.heart_stop()
+					else
+						Heart.heart_normalize()
 	else
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(

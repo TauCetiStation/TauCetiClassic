@@ -404,4 +404,14 @@
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
+	if(ishuman(victim))
+		if(prob(2))
+			var/mob/living/carbon/human/Human = victim
+			var/obj/item/organ/internal/heart/Heart = Human.organs_by_name[O_HEART]
+			if(!Heart || !Heart.parent_bodypart == BP_CHEST)
+				return
+			if(Heart.heart_status == HEART_NORMAL)
+				Heart.heart_fibrillate()
+			else if(Heart.heart_status == HEART_FIBR)
+				Heart.heart_stop()
 	return
