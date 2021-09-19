@@ -172,6 +172,9 @@ SUBSYSTEM_DEF(ticker)
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
+			runnable_modes = config.get_always_runnable_modes()
+
+		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
@@ -473,6 +476,9 @@ SUBSYSTEM_DEF(ticker)
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
+					// For some reason, player can be in null
+					if(!playerTurf)
+						continue
 					if(!is_centcom_level(playerTurf.z))
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
