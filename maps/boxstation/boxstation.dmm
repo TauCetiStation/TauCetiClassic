@@ -19094,8 +19094,12 @@
 /area/station/maintenance/eva)
 "aHz" = (
 /obj/structure/table,
-/obj/item/device/taperecorder{
-	pixel_y = 3
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/item/device/healthanalyzer{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23382,6 +23386,10 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
+/obj/machinery/alarm{
+	pixel_x = 2;
+	pixel_y = 21
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23794,6 +23802,10 @@
 "aQf" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/structure/table,
+/obj/item/device/taperecorder{
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -26434,27 +26446,15 @@
 	},
 /area/station/medical/storage)
 "aUR" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/door/poddoor/shutters{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters"
 	},
-/obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/weapon/paper/pamphlet{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/weapon/crowbar,
-/obj/machinery/camera{
-	c_tag = "Gateway Control";
-	dir = 5
-	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "aUS" = (
@@ -27417,15 +27417,27 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "aWs" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "Gateway_shutters";
-	name = "Gateway Shutters"
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -24
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/table,
+/obj/item/device/camera{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/weapon/paper/pamphlet{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/weapon/crowbar,
+/obj/machinery/camera{
+	c_tag = "Gateway Control";
+	dir = 5
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/gateway)
 "aWt" = (
@@ -29569,8 +29581,8 @@
 "bac" = (
 /obj/structure/closet/secure_closet/exile,
 /obj/machinery/light_switch{
-	pixel_x = 5;
-	pixel_y = -24
+	pixel_x = -24;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -29594,12 +29606,14 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "baf" = (
-/obj/machinery/door/airlock/command{
-	name = "Gateway Access";
-	req_access = list(62)
+/obj/machinery/door/poddoor/shutters{
+	id = "Gateway_shutters_entrance";
+	name = "Gateway Shutters"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
 /area/station/gateway)
 "bag" = (
 /obj/structure/grille,
@@ -30541,13 +30555,6 @@
 	},
 /area/station/hallway/primary/port)
 "bbQ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters"
@@ -30558,7 +30565,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
 /area/station/gateway)
 "bbR" = (
 /obj/structure/disposalpipe/junction,
@@ -30774,14 +30783,16 @@
 	},
 /area/shuttle/escape_pod1/station)
 "bci" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
 /area/station/gateway)
 "bcj" = (
 /obj/machinery/status_display{
@@ -31311,9 +31322,6 @@
 	},
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -43158,6 +43166,12 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/sleeper)
+"bys" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/port)
 "byt" = (
 /obj/machinery/message_server,
 /turf/simulated/floor/bluegrid,
@@ -73054,12 +73068,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "hOb" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Crematorium APC";
-	pixel_x = 26
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "hOV" = (
@@ -73343,6 +73353,14 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "ihb" = (
@@ -73368,13 +73386,14 @@
 	},
 /area/station/civilian/chapel)
 "iib" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "Gateway_shutters_entrance";
-	name = "Gateway Shutters"
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "EVA Maintenance APC";
+	pixel_x = 26
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/station/gateway)
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "ijb" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -73446,14 +73465,16 @@
 	},
 /area/station/hallway/primary/port)
 "iqb" = (
-/obj/structure/table,
-/obj/item/device/healthanalyzer{
-	pixel_y = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/station/gateway)
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "iry" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -105597,10 +105618,10 @@ cab
 aDo
 aKY
 agO
-aKY
+hOb
 asj
 alZ
-aKY
+iqb
 aKY
 alZ
 aOP
@@ -106113,7 +106134,7 @@ aNh
 aNh
 baE
 bhI
-aCq
+alZ
 aCq
 aCq
 aCq
@@ -106371,13 +106392,13 @@ agO
 agO
 aIV
 aCq
-iqb
+aCq
 aQf
 aOC
 aQg
 aCq
 aSH
-aUR
+aWs
 alX
 bac
 aCq
@@ -106637,7 +106658,7 @@ aUZ
 baF
 aUZ
 aUZ
-baf
+aXU
 bdR
 aKd
 bgE
@@ -107151,10 +107172,10 @@ aQr
 baL
 baS
 bay
-iib
+baf
 bea
 aKd
-bgE
+bys
 aGn
 bCd
 aEh
@@ -107403,7 +107424,7 @@ aPi
 hLb
 aFU
 aVa
-aWf
+aUR
 aZt
 aXC
 baW
@@ -107660,7 +107681,7 @@ aDD
 aFd
 aUl
 aWL
-aWs
+aWf
 aZn
 aUd
 aUd
@@ -108940,7 +108961,7 @@ cgt
 agO
 agO
 hNb
-hOb
+iib
 hJb
 aAn
 aBj
