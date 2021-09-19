@@ -209,6 +209,7 @@
 		if(!list_to_choose)
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you decided not to touch it.</span>" )
+			return
 		switch(list_to_choose)
 			if("Shrapnel")
 				var/obj/picked_obj = pick(embed_object_shrapnel)
