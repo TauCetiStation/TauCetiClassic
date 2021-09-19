@@ -203,7 +203,7 @@
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
-			embed_object_else[embed_object] = image(icon = 'icons/obj/shards.dmi', icon_state = embed_object.icon_state)
+			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		if(embed_object_shrapnel.len)
 			list_of_embed_types += list("Shrapnel" = image(icon = 'icons/obj/shards.dmi', icon_state = "shrapnellarge"))
 		if(embed_object_implants.len)
