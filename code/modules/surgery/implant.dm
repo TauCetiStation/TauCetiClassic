@@ -198,11 +198,9 @@
 			var/obj/picked_obj = pick(embed_object_shrapnel)
 			list_of_embed_types += list("Shrapnel" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
 		if(embed_object_implants.len)
-			var/obj/picked_obj = pick(embed_object_implants)
-			list_of_embed_types += list("Implants" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
+			list_of_embed_types += list("Implants" = embed_object_implants[pick(embed_object_implants)])
 		if(embed_object_else.len)
-			var/obj/picked_obj = pick(embed_object_else)
-			list_of_embed_types += list("Else" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
+			list_of_embed_types += list("Else" = embed_object_else[pick(embed_object_else)])
 
 		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
 
