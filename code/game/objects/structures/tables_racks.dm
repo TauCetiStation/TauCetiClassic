@@ -19,7 +19,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = 1
+	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
 	var/parts = /obj/item/weapon/table_parts
@@ -264,11 +264,7 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
-		if(istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
@@ -593,6 +589,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/atom_init()

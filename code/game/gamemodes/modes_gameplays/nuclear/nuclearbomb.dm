@@ -35,12 +35,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
-	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
-	poi_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(auth)
 	return ..()
@@ -355,7 +353,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 	if (SSticker)
 		SSticker.explosion_in_progress = 1
 	sleep(100)

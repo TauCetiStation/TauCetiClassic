@@ -43,7 +43,10 @@
 
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
+	if(!istype(target, /turf/simulated/wall) && !target.CanPass(null, target))
+		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(!instant)
@@ -113,6 +116,12 @@
 			return
 		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 
+		var/list/click_params = params2list(params)
+		var/p_x
+		var/p_y
+		if(click_params && click_params[ICON_X] && click_params[ICON_Y])
+			p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
+			p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
@@ -124,7 +133,9 @@
 					return
 				tag_for_gang(user, target, gang_mode)
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				var/obj/effect/decal/cleanable/crayon/Q = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				Q.pixel_x = p_x
+				Q.pixel_y = p_y
 
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")

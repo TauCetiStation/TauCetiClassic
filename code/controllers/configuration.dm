@@ -1,4 +1,5 @@
 var/list/net_announcer_secret = list()
+var/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -783,14 +784,16 @@ var/list/net_announcer_secret = list()
 		if (global.master_last_mode == M.name)
 			qdel(M)
 			continue
+		if (global.modes_failed_start[M.name])
+			qdel(M)
+			continue
 		var/mod_prob = probabilities[M.name]
 		if (M.can_start())
 			runnable_modes[M] = mod_prob
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
 	log_mode(get_english_list(runnable_modes_names))
-	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
-		return get_always_runnable_modes()
+
 	return runnable_modes
 
 /datum/configuration/proc/get_always_runnable_modes()

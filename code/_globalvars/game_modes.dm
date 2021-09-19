@@ -3,3 +3,7 @@ var/secret_force_mode = "Secret" // if this is anything but "Secret", the secret
 
 var/wavesecret = 0
 var/master_last_mode = null // this variable contain the last played mode from previous round
+
+// List of modes that failed on start, as to not repeatedly choose the same mode
+// that keeps failing over and over.
+var/global/list/modes_failed_start = list()

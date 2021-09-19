@@ -59,7 +59,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -3)
+	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -3)
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
