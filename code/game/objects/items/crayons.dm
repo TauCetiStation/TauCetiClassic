@@ -152,8 +152,9 @@
 					qdel(src)
 
 /obj/item/toy/crayon/AltClick(mob/user)
-	draw_at_center = !draw_at_center
-	to_chat(user, "<span class = 'notice'>Your painting will [draw_at_center ? "be centered" : "not be centered"].</span>")
+	if(!user.incapacitated() && Adjacent(user))
+		draw_at_center = !draw_at_center
+		to_chat(user, "<span class = 'notice'>Your painting will [draw_at_center ? "be centered" : "not be centered"].</span>")
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
