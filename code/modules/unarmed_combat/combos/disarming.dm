@@ -404,6 +404,4 @@
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
-	var/mob/living/carbon/human/Human = victim
-	Human.attack_heart(2,0)
 	return
