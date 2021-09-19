@@ -45,20 +45,21 @@
 	. += 				"</td></tr>"
 	. += 			"</table>"
 
-	if(!jobban_isbanned(user, ROLE_GHOSTLY))
-		if(ROLE_GHOSTLY in be_role)
-			. +=				"<br>"
-			. +=				"<table width='100%'>"
-			. += 					"<tr><td colspan='2'>"
-			. += 						"<b>Ghost Role Preference:</b>"
-			. += 					"</td></tr>"
-			for (var/i in global.full_ignore_question)
-				if(i in ignore_question)
-					. += 				"<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>Yes</a> / <b>No</b></td></tr>"
-				else
-					. += 				"<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[i]'>No</a></td></tr>"
-			. +=				"</table>"
-
+	. += 			"<br>"
+	
+	. += 			"<table width='100%'>"
+	. += 				"<tr><td colspan='2'>"
+	. += 					"<b>Ghost Poll Preference:</b>"
+	. += 				"</td></tr>"
+	for (var/i in global.special_roles_ignore_question)
+		if(i in be_role)
+			if(!jobban_isbanned(user, i))
+				for (var/k in global.special_roles_ignore_question[i])
+					if(k in ignore_question)
+						. += 				"<tr><td width='45%'>[k]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[k]'>Yes</a> / <b>No</b></td></tr>"
+					else
+						. += 				"<tr><td width='45%'>[k]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[k]'>No</a></td></tr>"
+	. += 			"</table>"
 
 	. += 		"</td>"
 	. += 	"</tr>"

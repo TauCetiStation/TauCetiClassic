@@ -57,7 +57,7 @@ var/global/list/special_roles = list(
 	ROLE_GHOSTLY,
 )
 
-//Prefs for ignore a question which give ghosty roles
+//Prefs for ignore a question which give special_roles
 #define IGNORE_PLANT        "Diona"
 #define IGNORE_PAI          "Pai"
 #define IGNORE_TSTAFF       "Religion staff"
@@ -67,6 +67,12 @@ var/global/list/special_roles = list(
 #define IGNORE_BORER        "Borer"
 #define IGNORE_FAMILIAR     "Religion familiar"
 #define IGNORE_NARSIE_SLAVE "Nar-sie slave"
+#define IGNORE_COPS         "OBOP"
+#define IGNORE_SMUGGLER     "Smuggler"
+#define IGNORE_SYNDI_BORG   "Syndicate robot"
+#define IGNORE_FACEHUGGER   "Facehugger"
+#define IGNORE_LAVRA        "Lavra"
+#define IGNORE_EVENT_BLOB   "Event blob"
 
 var/global/list/full_ignore_question = list(
 	IGNORE_PAI,
@@ -78,4 +84,20 @@ var/global/list/full_ignore_question = list(
 	IGNORE_POSBRAIN,
 	IGNORE_SURVIVOR,
 	IGNORE_NARSIE_SLAVE,
+	IGNORE_COPS
+	IGNORE_SMUGGLER
+	IGNORE_SYNDI_BORG
+	IGNORE_FACEHUGGER
+	IGNORE_LAVRA
+	IGNORE_BORER
+	IGNORE_EVENT_BLOB
+)
+
+var/global/list/special_roles_ignore_question = list(
+	ROLE_OPERATIVE = list(IGNORE_SYNDI_BORG),
+	ROLE_ALIEN     = list(IGNORE_FACEHUGGER,IGNORE_LAVRA),
+	ROLE_CULTIST   = list(IGNORE_NARSIE_SLAVE),
+	ROLE_BLOB      = list(IGNORE_EVENT_BLOB),
+	ROLE_FAMILIES  = list(IGNORE_COPS,IGNORE_SMUGGLER),
+	ROLE_GHOSTLY   = list(IGNORE_PLANT,IGNORE_PAI,IGNORE_TSTAFF,IGNORE_SURVIVOR,IGNORE_POSBRAIN,IGNORE_DRONE,IGNORE_FAMILIAR,IGNORE_BORER),
 )
