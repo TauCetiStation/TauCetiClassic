@@ -34,6 +34,16 @@
 			return "abdominal"
 	return ""
 
+/datum/surgery_step/cavity/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/BP, obj/tool)
+	BP.implants -= obj_to_remove
+	for(var/datum/wound/W in BP.wounds)
+		if(obj_to_remove in W.embedded_objects)
+			W.embedded_objects -= obj_to_remove
+			break
+	obj_to_remove.loc = get_turf(target)
+	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+
 /datum/surgery_step/cavity/make_space
 	allowed_tools = list(
 	/obj/item/weapon/surgicaldrill = 100,	\
@@ -193,32 +203,22 @@
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
-			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+			embed_object_else[embed_object] = image(icon = 'icons/obj/shards.dmi', icon_state = embed_object.icon_state)
 		if(embed_object_shrapnel.len)
-			var/obj/picked_obj = pick(embed_object_shrapnel)
-			list_of_embed_types += list("Shrapnel" = image(icon = picked_obj.icon, icon_state = picked_obj.icon_state))
+			list_of_embed_types += list("Shrapnel" = image(icon = 'icons/obj/shards.dmi', icon_state = "shrapnellarge"))
 		if(embed_object_implants.len)
 			list_of_embed_types += list("Implants" = embed_object_implants[pick(embed_object_implants)])
 		if(embed_object_else.len)
 			list_of_embed_types += list("Else" = embed_object_else[pick(embed_object_else)])
-
 		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
-
 		if(!list_to_choose)
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you decided not to touch it.</span>" )
 			return
 		switch(list_to_choose)
 			if("Shrapnel")
-				var/obj/picked_obj = pick(embed_object_shrapnel)
-				for(var/datum/wound/W in BP.wounds)
-					if(picked_obj in W.embedded_objects)
-						W.embedded_objects -= picked_obj
-						break
-				user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-				"<span class='notice'>You take [picked_obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-				BP.implants -= picked_obj
-				picked_obj.loc = get_turf(target)
+				var/atom/picked_obj = pick(embed_object_shrapnel)
+				remove_from_cavity(user, target, picked_obj, BP, tool)
 			if("Implants")
 				var/choosen_object = show_radial_menu(user, target, embed_object_implants, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
@@ -227,34 +227,22 @@
 						if(imp in W.embedded_objects)
 							W.embedded_objects -= imp
 							break
-					BP.implants -= imp
 					imp.imp_in = null
 					imp.implanted = FALSE
 					if(istype(imp, /obj/item/weapon/implant/storage))
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
+					remove_from_cavity(user, target, choosen_object, BP, tool)
 					target.sec_hud_set_implants()
-					user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-					"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-					var/obj/item/obj_to_remove = imp
-					obj_to_remove.loc = get_turf(target)
 			if("Else")
 				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
-					for(var/datum/wound/W in BP.wounds)
-						if(choosen_object in W.embedded_objects)
-							W.embedded_objects -= choosen_object
-							break
-					BP.implants -= choosen_object
 					if(istype(choosen_object, /mob/living/simple_animal/borer))
 						var/mob/living/simple_animal/borer/worm = choosen_object
 						if(worm.controlling)
 							target.release_control()
 						worm.detatch()
-						user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-						"<span class='notice'>You take [choosen_object] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-						var/obj/item/obj_to_remove = choosen_object
-						obj_to_remove.loc = get_turf(target)
+					remove_from_cavity(user, target, choosen_object, BP, tool)
 		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 
 	else if (BP.hidden)
