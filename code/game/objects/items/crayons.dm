@@ -12,6 +12,7 @@
 	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
+	var/draw_at_center = FALSE // will painting be centered
 
 	var/list/actions
 	var/list/arrows
@@ -115,13 +116,6 @@
 		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
-
-		var/list/click_params = params2list(params)
-		var/p_x
-		var/p_y
-		if(click_params && click_params[ICON_X] && click_params[ICON_Y])
-			p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
-			p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
@@ -132,7 +126,15 @@
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)
+			else if(draw_at_center)
+				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			else
+				var/list/click_params = params2list(params)
+				var/p_x
+				var/p_y
+				if(click_params && click_params[ICON_X] && click_params[ICON_Y])
+					p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
+					p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
 				var/obj/effect/decal/cleanable/crayon/Q = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 				Q.pixel_x = p_x
 				Q.pixel_y = p_y
@@ -148,6 +150,10 @@
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
+
+/obj/item/toy/crayon/AltClick(mob/user)
+	draw_at_center = !draw_at_center
+	to_chat(user, "<span class = 'notice'>Your painting will [draw_at_center ? "be centered" : "not be centered"].</span>")
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
