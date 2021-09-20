@@ -12,11 +12,14 @@
 	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
-	var/draw_at_center = FALSE // will painting be centered
 
 	var/list/actions
 	var/list/arrows
 	var/list/letters
+
+/obj/item/toy/crayon/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), .proc/afterattack_no_params)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
@@ -126,9 +129,10 @@
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)
-			else if(draw_at_center)
+			else if(!params)
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			else
+				draw_at_center = FALSE
 				var/list/click_params = params2list(params)
 				var/p_x
 				var/p_y
@@ -151,10 +155,8 @@
 				if(!instant)
 					qdel(src)
 
-/obj/item/toy/crayon/AltClick(mob/user)
-	if(!user.incapacitated() && Adjacent(user))
-		draw_at_center = !draw_at_center
-		to_chat(user, "<span class = 'notice'>Your painting will [draw_at_center ? "be centered" : "not be centered"].</span>")
+/obj/item/toy/crayon/proc/afterattack_no_params(obj/spraycan, atom/target, mob/user)
+	afterattack(target, user, TRUE)
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
