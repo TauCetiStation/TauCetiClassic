@@ -132,7 +132,6 @@
 			else if(!params)
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			else
-				draw_at_center = FALSE
 				var/list/click_params = params2list(params)
 				var/p_x
 				var/p_y
