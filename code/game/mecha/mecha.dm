@@ -101,7 +101,6 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
-	poi_list += src
 	START_PROCESSING(SSobj, src)
 	log_message("[src.name] created.")
 	loc.Entered(src)
@@ -115,9 +114,7 @@
 	diag_hud_set_mechstat()
 
 /obj/mecha/Destroy()
-	poi_list -= src
 	go_out()
-	poi_list.Remove(src)
 	for(var/mob/M in src)
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
@@ -1051,7 +1048,7 @@
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
 
-		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, -3)
+		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
 		log_message("[mob_container] moved out.")
 		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
 		occupant.reset_view()

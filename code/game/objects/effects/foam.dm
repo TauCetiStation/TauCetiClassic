@@ -39,7 +39,7 @@
 
 	pixel_x = -6
 	pixel_y = -6 //so the sprites line up right in the map editor
-	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/effect/aqueous_foam/atom_init_late()

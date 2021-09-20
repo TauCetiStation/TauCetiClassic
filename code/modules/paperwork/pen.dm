@@ -165,15 +165,26 @@
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	tools = list()
+	flags = NOBLOODY
 	var/on = 0
+	var/hacked = 0
+
+/obj/item/weapon/pen/edagger/atom_init()
+	. = ..()
+	item_color = pick("blue", "red", "green", "purple", "yellow", "pink", "black")
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
 	..()
+	toggle(user)
+
+/obj/item/weapon/pen/edagger/proc/toggle(mob/living/user)
 	if(on)
 		on = 0
 		force = initial(force)
 		w_class = initial(w_class)
 		edge = initial(edge)
+		sharp = initial(sharp)
+		can_embed = initial(can_embed)
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
@@ -184,7 +195,9 @@
 		on = 1
 		force = 18
 		w_class = SIZE_SMALL
-		edge = 1
+		edge = TRUE
+		sharp = TRUE
+		can_embed = FALSE
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
@@ -195,14 +208,70 @@
 			)
 	update_icon()
 
+/obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(ismultitool(I))
+		if(!hacked)
+			hacked = TRUE
+			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
+			item_color = "rainbow"
+			if (on)
+				toggle(user)
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+
+
 /obj/item/weapon/pen/edagger/update_icon()
 	if(on)
-		icon_state = "edagger"
-		item_state = "edagger"
+		icon_state = "edagger[item_color]"
+		item_state = "edagger[item_color]"
 	else
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+/*
+ * Colors of edagger
+*/
+
+/obj/item/weapon/pen/edagger/blue/atom_init()
+	. = ..()
+	item_color = "blue"
+
+/obj/item/weapon/pen/edagger/red/atom_init()
+	. = ..()
+	item_color = "red"
+
+/obj/item/weapon/pen/edagger/green/atom_init()
+	. = ..()
+	item_color = "green"
+
+/obj/item/weapon/pen/edagger/purple/atom_init()
+	. = ..()
+	item_color = "purple"
+
+/obj/item/weapon/pen/edagger/yellow/atom_init()
+	. = ..()
+	item_color = "yellow"
+
+/obj/item/weapon/pen/edagger/pink/atom_init()
+	. = ..()
+	item_color = "pink"
+
+/obj/item/weapon/pen/edagger/black/atom_init()
+	. = ..()
+	item_color = "black"
+
+/*
+ * Legit edagger for NT boys
+ */
+
+/obj/item/weapon/pen/edagger/legitimate
+	origin_tech = "combat=3"
+
+/obj/item/weapon/pen/edagger/legitimate/atom_init()
+	. = ..()
+	item_color = "blue"
 
 /*
  * Chameleon pen

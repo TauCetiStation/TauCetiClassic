@@ -2,7 +2,6 @@
 /datum/announcement/centcomm/anomaly
 	subtitle = "Тревога. Аномалия"
 
-
 /datum/announcement/centcomm/anomaly/frost
 	name = "Anomaly: Frost"
 	message = "На сканерах дальнего действия обнаружена атмосферная аномалия. Ожидается снижение температуры станции."

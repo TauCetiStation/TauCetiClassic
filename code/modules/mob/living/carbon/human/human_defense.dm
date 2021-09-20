@@ -41,7 +41,7 @@
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		if(check_thickmaterial(BP))
+		if(check_pierce_protection(BP))
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
@@ -80,11 +80,10 @@
 				continue //Does this thing we're shooting even exist?
 			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-						qdel(P)
-						return PROJECTILE_ACTED
+				if(C.pierce_protection & BP.body_part) // Is that body part being targeted covered?
+					visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+					qdel(P)
+					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
@@ -433,10 +432,10 @@
 		add_dirt_cover(floor_blood.basedatum)
 	update_inv_gloves()
 
-/mob/living/carbon/proc/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+/mob/living/carbon/proc/check_pierce_protection(obj/item/organ/external/BP, target_zone)
 	return 0
 
-/mob/living/carbon/human/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+/mob/living/carbon/human/check_pierce_protection(obj/item/organ/external/BP, target_zone)
 	if(target_zone)
 		BP = get_bodypart(target_zone)
 
@@ -445,12 +444,12 @@
 
 	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
-		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
+		if(C.pierce_protection & BP.body_part)
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.
 				return PHORONGUARD // space suits and so on. (well, PHORONGUARD does not provide good readability, but i don't want to implement whole new define as this one is good, or maybe rename?)
 			else
-				return THICKMATERIAL // armors and so on.
-	return 0 // could be NOTHICKMATERIAL or smth, but zero is OK too.
+				return (NOPIERCE) // armors and so on.
+	return 0 // could be without pierce_protection or smth, but zero is OK too.
 
 /mob/living/carbon/human/proc/handle_suit_punctures(damtype, damage)
 

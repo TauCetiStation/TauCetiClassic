@@ -124,7 +124,7 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
-		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)

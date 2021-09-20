@@ -103,7 +103,7 @@
 			silent = 0
 
 		if(druggy)
-			druggy = 0
+			setDrugginess(0)
 	return 1
 
 
@@ -143,11 +143,11 @@
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
 		if(nightvision)
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			see_invisible = SEE_INVISIBLE_LIVING
 		else if(!nightvision)
-			see_in_dark = 4
-			see_invisible = 45
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	..()
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()

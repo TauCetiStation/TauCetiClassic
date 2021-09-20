@@ -37,11 +37,11 @@
 			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
 			return FALSE
 
-		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
+		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_GHOSTLY))
 			to_chat(user, "<span class='warning'>[AOG.buckled_mob]Тело [AOG.buckled_mob] слишком слабо!</span>")
 			return FALSE
 	else
-		if(jobban_isbanned(god, "Cyborg") || role_available_in_minutes(god, ROLE_PAI))
+		if(jobban_isbanned(god, "Cyborg") || role_available_in_minutes(god, ROLE_GHOSTLY))
 			to_chat(user, "<span class='warning'>[god] is too weak!</span>")
 			return FALSE
 
@@ -67,11 +67,12 @@
 	if(!istype(god))
 		return FALSE
 	god.visible_message("<span class='notice'>[god] has been converted by the rite of [pick(religion.deity_names)]!</span>")
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE)
+	religion.remove_deity(god)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
 	qdel(god)
-	religion.add_deity(god, HOLY_ROLE_PRIEST)
+	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE
 
 /*

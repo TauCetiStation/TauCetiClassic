@@ -132,47 +132,59 @@
 
 #define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
 
+#define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
+
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
-#define isabductorsci(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_SCI) : FALSE)
+#define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
 
-#define isabductoragent(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
+#define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
 
-#define isshadowling(H) (H?.mind ? H.mind.GetRole(SHADOW) : FALSE)
+#define isshadowling(H) isrole(SHADOW, H)
 
-#define isshadowthrall(H) (H?.mind ? H.mind.GetRole(SHADOW_THRALL) : FALSE)
+#define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
-#define isvoxraider(H) (H?.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
+#define isvoxraider(H) isrole(VOXRAIDER, H)
 
-#define ischangeling(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/changeling) : FALSE)
+#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
 #define isanyrev(H) (isrevnothead(H) || isrevhead(H))
 
-#define isrev(H) (H?.mind ? H.mind.GetRole(REV) : FALSE)
+#define isrev(H) isrole(REV, H)
 
-#define isrevhead(H) (H?.mind ? H.mind.GetRole(HEADREV) : FALSE)
+#define isrevhead(H) isrole(HEADREV, H)
 
-#define istraitor(H) (H?.mind ? H.mind.GetRole(TRAITOR) : FALSE)
+#define istraitor(H) isrole(TRAITOR, H)
 
-#define iselitesyndie(H) (H?.mind ? H.mind.GetRole(SYNDIESQUADIE) : FALSE)
+#define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
-#define ismalf(H) (H?.mind ? H.mind.GetRole(MALF) : FALSE)
+#define ismalf(H) isrole(MALF, H)
 
-#define isnukeop(H) (H?.mind ? H.mind.GetRole(NUKE_OP) : FALSE)
+#define isnukeop(H) isrole(NUKE_OP, H)
 
-#define iswizard(H) (H?.mind ? H.mind.GetRole(WIZARD) : FALSE)
+#define iswizard(H) isrole(WIZARD, H)
 
-#define isdeathsquad(H) (H?.mind ? H.mind.GetRole(DEATHSQUADIE) : FALSE)
+#define isdeathsquad(H) isrole(DEATHSQUADIE, H)
 
-#define isninja(H) (H?.mind ? H.mind.GetRole(NINJA) : FALSE)
+#define isninja(H) isrole(NINJA, H)
 
-#define isERT(H) (H?.mind ? H.mind.GetRole(RESPONDER) : FALSE)
+#define isERT(H) isrole(RESPONDER, H)
 
-#define isrolezombie(H) (H?.mind ? H.mind.GetRole(ZOMBIE) : FALSE)
+#define isrolezombie(H) isrole(ZOMBIE, H)
 
-#define isalien(H) (H?.mind ? H.mind.GetRole(XENOMORPH) : FALSE)
+#define isalien(H) isrole(XENOMORPH, H)
+
+#define isgangster(H) isrole(GANGSTER, H)
+
+#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+
+#define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 // BLOB
 

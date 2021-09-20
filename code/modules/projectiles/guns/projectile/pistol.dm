@@ -83,6 +83,14 @@
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	mag_type = /obj/item/ammo_box/magazine/m50/weakened
+
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	icon_state = "deagleg"
+	item_state = "deagleg"
+
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds."
@@ -107,7 +115,8 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon_state = "pistol"
+	icon_state = "stechkin"
+	item_state = "stechkin"
 	w_class = SIZE_TINY
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
@@ -117,7 +126,8 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
-			silencer_attack_hand(user)
+			if(silencer_attack_hand(user))
+				return
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
@@ -136,7 +146,7 @@
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
 	can_be_holstered = TRUE

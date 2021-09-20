@@ -330,7 +330,7 @@ update_flag
 
 	stat |= BROKEN
 	density = FALSE
-	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
+	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
 	update_icon()
 	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
