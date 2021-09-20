@@ -160,6 +160,13 @@
 	ASSERT(isnum(width))
 	ASSERT(isnum(height))
 
+	var/count = 0; // do we really need this?
+	var/regex/r = regex(@"#[0-9a-fA-F]{6}", "g")
+	while (r.Find(data))
+		to_chat(usr, "[r.index]")
+		count++;
+	ASSERT(count == width * height)
+
 	world.ext_python("create_png.py", "[png_filename] [width] [height] [data]")
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
