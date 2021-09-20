@@ -642,6 +642,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20,0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
