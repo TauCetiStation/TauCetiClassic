@@ -319,7 +319,7 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye)
 		else
 			seen = hear(world.view, user)
 	else
@@ -394,7 +394,7 @@
 
 	if(usr.incapacitated())
 		return
-	if(usr.get_active_hand() != src)
+	if(usr.get_active_hand() != src && !istype(usr, /mob/living/silicon/ai))
 		to_chat(usr, "You need to hold \the [src] in your active hand.")
 		return
 
