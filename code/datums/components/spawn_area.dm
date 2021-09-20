@@ -295,7 +295,11 @@ var/global/list/datum/area_group/observer_groups
 /datum/component/spawn_area/proc/get_observers(atom/movable/AM)
 	var/g = "[group]_[AM.z]"
 	var/datum/area_group/AG = global.observer_groups[g]
-	return AG.observers
+	. = list()
+	for(var/mob/obs as anything in AG.observers)
+		if(obs.stat == DEAD)
+			continue
+		. += obs
 
 /datum/component/spawn_area/proc/Spawn(turf/T)
 	var/list/atom/movable/instances = spawn_callback.Invoke(T)
