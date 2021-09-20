@@ -76,7 +76,10 @@
 	return null
 
 /area/asteroid/mine/unexplored/proc/Despawn(atom/movable/instance)
-	qdel(instance)
+	var/mob/M = instance
+	if(M.stat == DEAD)
+		return
+	qdel(M)
 
 /area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
 	if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
