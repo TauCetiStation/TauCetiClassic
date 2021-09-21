@@ -394,7 +394,7 @@
 
 	if(usr.incapacitated())
 		return
-	if(usr.get_active_hand() != src && !istype(usr, /mob/living/silicon/ai))
+	if(usr.get_active_hand() != src && !isAI(usr))
 		to_chat(usr, "You need to hold \the [src] in your active hand.")
 		return
 
