@@ -8,7 +8,7 @@
 /datum/preferences/proc/ShowRoles(mob/user)
 	. =  "<table cellspacing='0' width='100%'>"
 	. += 	"<tr>"
-	. += 		"<td width='50%'>"
+	. += 		"<td valign='top' width='50%'>"
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Special Role Preference:</b></td></tr>"
 	if(jobban_isbanned(user, "Syndicate"))
@@ -46,19 +46,18 @@
 	. += 			"</table>"
 
 	. += 			"<br>"
-	
+
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'>"
 	. += 					"<b>Ghost Poll Preference:</b>"
 	. += 				"</td></tr>"
-	for (var/i in global.special_roles_ignore_question)
-		if(i in be_role)
-			if(!jobban_isbanned(user, i))
-				for (var/k in global.special_roles_ignore_question[i])
-					if(k in ignore_question)
-						. += 				"<tr><td width='45%'>[k]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[k]'>Yes</a> / <b>No</b></td></tr>"
-					else
-						. += 				"<tr><td width='45%'>[k]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[k]'>No</a></td></tr>"
+	for (var/role in global.special_roles_ignore_question)
+		if((role in be_role) && !jobban_isbanned(user, role))
+			for (var/ignore in global.special_roles_ignore_question[role])
+				if(ignore in ignore_question)
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>Yes</a> / <b>No</b></td></tr>"
+				else
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>No</a></td></tr>"
 	. += 			"</table>"
 
 	. += 		"</td>"

@@ -36,7 +36,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_SMUGGLER)
+	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)
 	var/spawncount = 2
 	while(spawncount > 0 && candidates.len)
 		var/spawnloc = pick(dealerstart)
