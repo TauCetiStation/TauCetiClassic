@@ -1,16 +1,3 @@
-proc/ShowFirstParamsFromAssocList(assoc_list)
-	var/FirstParams = list()
-	for (var/param in assoc_list)
-		FirstParams += param
-	return FirstParams
-
-proc/ShowSecondParamsFromAssocList(assoc_list)
-	var/SecondParams = list()
-	for (var/FirstParam in assoc_list)
-		for (var/SecondParam in assoc_list[FirstParam])
-			SecondParams += SecondParam
-	return SecondParams
-
 //Values for antag preferences, event roles, etc. unified here
 
 //Any number of preferences could be.
@@ -70,6 +57,6 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE ,IGNORE_FAMILIAR, IGNORE_BORER),
 )
 
-var/global/list/special_roles = ShowFirstParamsFromAssocList(special_roles_ignore_question)
+var/global/list/special_roles = get_list_of_primary_keys_from_associative_list(special_roles_ignore_question)
 var/global/list/antag_roles = global.special_roles - ROLE_GHOSTLY
-var/global/list/full_ignore_question = ShowSecondParamsFromAssocList(special_roles_ignore_question)
+var/global/list/full_ignore_question = get_list_of_sub_keys_from_associative_list(special_roles_ignore_question)
