@@ -524,25 +524,22 @@ var/list/slot_equipment_priority = list(
 	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
 		return TRUE
 
-//Create delay for equipping
+//Create delay for unequipping
 /mob/proc/delay_clothing_unequip(obj/item/clothing/C)
-
 	if(!istype(C))
 		return FALSE
-
 	if(usr.is_busy())
 		return FALSE
-
 	if(C.equipping) // Item is already being (un)equipped
 		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
-	C.equipping = 1
+	C.equipping = TRUE
 	if(!do_after(usr, C.equip_time, target = C))
-		C.equipping = 0
+		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 		return FALSE
-	C.equipping = 0
+	C.equipping = FALSE
 	remove_from_mob(C)
 	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	return TRUE
