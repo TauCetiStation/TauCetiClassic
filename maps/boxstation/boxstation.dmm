@@ -9040,24 +9040,24 @@
 	},
 /area/station/security/lobby)
 "aoC" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -12421,9 +12421,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
-"auQ" = (
-/turf/simulated/floor/carpet/black,
-/area/station/security/lawoffice)
 "auR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -108756,7 +108753,7 @@ pKx
 aqK
 ayD
 iUo
-aoC
+bjz
 aKo
 aCq
 aCq
@@ -109270,7 +109267,7 @@ aEo
 iUo
 iUo
 iUo
-aYi
+aoC
 iib
 hJb
 aAn
