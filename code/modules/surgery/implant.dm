@@ -40,7 +40,7 @@
 		if(obj_to_remove in W.embedded_objects)
 			W.embedded_objects -= obj_to_remove
 			break
-	obj_to_remove.loc = get_turf(target)
+	obj_to_remove.forceMove(get_turf(target))
 	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 
