@@ -645,7 +645,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(5,5)
+	attack_heart(5, 5)
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -2259,15 +2259,17 @@
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
 
 
-/mob/living/carbon/human/proc/attack_heart(Damage_prob, Heal_prob)
+/mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
-	if(prob(Damage_prob))
-		if(Heart.heart_status == HEART_FIBR)
-			Heart.heart_stop()
-		else if(Heart.heart_status == HEART_NORMAL)
-			Heart.heart_fibrillate()
-	if(prob(Heal_prob))
-		if(Heart.heart_status == HEART_FIBR)
-			Heart.heart_normalize()
-		else if(Heart.heart_status == HEART_FAILURE)
-			Heart.heart_fibrillate()
+	switch(Heart.heart_status)
+		if(HEART_NORMAL)
+			if(prob(damage_prob))
+				Heart.heart_fibrillate()
+		if(HEART_FIBR)
+			if(prob(damage_prob))
+				Heart.heart_stop()
+			if(prob(heal_prob))
+				Heart.heart_normalize()
+		if(HEART_FAILURE)
+			if(prob(heal_prob))
+				Heart.heart_fibrillate()
