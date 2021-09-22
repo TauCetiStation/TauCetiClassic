@@ -188,18 +188,27 @@ var/global/list/icon_state_allowed_cache = list()
 			return
 		if (!over_object)
 			return
-
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
+		if (usr.incapacitated())
+			return
+		switch(over_object.name)
+			if("r_hand")
+				if(slot_equipped == SLOT_L_HAND) //item swap
+					if(M.unEquip(src))
+						M.put_in_r_hand(src)
+						add_fingerprint(usr)
 						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
+			if("l_hand")
+				if(slot_equipped == SLOT_R_HAND) //item swap
+					if(M.unEquip(src))
+						M.put_in_l_hand(src)
+						add_fingerprint(usr)
 						return
-					M.put_in_l_hand(src)
+		if(!equip_time) //taking item from other slots
+			usr.remove_from_mob(src)
 			add_fingerprint(usr)
+			return
+		usr.delay_clothing_unequip(src)
+		add_fingerprint(usr)
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears

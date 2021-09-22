@@ -525,25 +525,27 @@ var/list/slot_equipment_priority = list(
 		return TRUE
 
 //Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing
+/mob/proc/delay_clothing_unequip(obj/item/clothing/C)
 
 	if(!istype(C))
-		return 0
+		return FALSE
 
 	if(usr.is_busy())
-		return
+		return FALSE
 
 	if(C.equipping) // Item is already being (un)equipped
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
-		remove_from_mob(C)
-		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
-	else
+	if(!do_after(usr, C.equip_time, target = C))
+		C.equipping = 0
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
+		return FALSE
 	C.equipping = 0
+	remove_from_mob(C)
+	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	return TRUE
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C))
