@@ -324,7 +324,7 @@
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //item hands have no delay
+					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
 						if(!user.delay_clothing_unequip(src))
 							return
 
