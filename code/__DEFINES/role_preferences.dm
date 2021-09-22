@@ -57,6 +57,6 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE ,IGNORE_FAMILIAR, IGNORE_BORER),
 )
 
-var/global/list/special_roles = get_list_of_primary_keys_from_associative_list(special_roles_ignore_question)
-var/global/list/antag_roles = global.special_roles - ROLE_GHOSTLY
-var/global/list/full_ignore_question = get_list_of_sub_keys_from_associative_list(special_roles_ignore_question)
+var/global/list/special_roles
+var/global/list/antag_roles
+var/global/list/full_ignore_question
