@@ -158,7 +158,7 @@
 		var/newreagent = rand(1, min(reagents, 30))
 		list_reagents += list(pick(RELIC_WATER_CHEM_LIST) = newreagent)
 		reagents -= newreagent
-	..()
+	. = ..()
 
 #undef RELIC_WATER_CHEM_LIST
 

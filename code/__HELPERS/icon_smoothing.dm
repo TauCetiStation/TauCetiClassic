@@ -52,6 +52,8 @@
 /atom/var/smooth = SMOOTH_FALSE
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
 /atom/var/icon/smooth_icon_initial // don't touch this, value assigned automatically in the process.
+/atom/var/smooth_subtype // var to divide subtypes of icon
+/atom/var/icon/smooth_bake_overlay // type state name here in the same .dmi to bake with everything else
 /atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
 
@@ -315,9 +317,9 @@
 
 	if(!smooth_icon_initial)
 		smooth_icon_initial = icon
-	var/cache_string = "["[type]"]"
+	var/cache_string = smooth_subtype ? "["[type]_[smooth_subtype]"]" : "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = SliceNDice(smooth_icon_initial)
+		var/icon/I = SliceNDice(smooth_icon_initial, smooth_bake_overlay)
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
