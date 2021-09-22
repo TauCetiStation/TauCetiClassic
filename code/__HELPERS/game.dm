@@ -688,7 +688,7 @@
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question += IGNORE_BORER
+		M.client.prefs.ignore_question |= IGNORE_BORER
 		return
 
 	if(key || mind || stat != CONSCIOUS)
