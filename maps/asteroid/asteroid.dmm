@@ -13448,6 +13448,16 @@
 	icon_state = "cafeteria"
 	},
 /area/asteroid/research_outpost/hallway)
+"Ws" = (
+/obj/item/device/radio/intercom{
+	dir = 1;
+	name = "Asteroid Intercom (General)";
+	pixel_y = -24
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -47984,7 +47994,7 @@ qG
 vx
 wy
 vN
-Pc
+Ws
 uo
 zs
 Ag
