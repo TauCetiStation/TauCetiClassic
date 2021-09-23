@@ -287,12 +287,13 @@
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!sect_type)
+	if(!sect_type || chosen_aspect)
 		return
+
+	chosen_aspect = TRUE
 
 	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
-	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 	return
