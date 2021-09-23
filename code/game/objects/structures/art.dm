@@ -155,8 +155,12 @@
 /obj/item/canvas/proc/generate_proper_overlay()
 	if(icon_generated)
 		return
-	var/png_filename = "data/paintings/temp_painting.png"
-	world.ext_python("create_png.py", "[png_filename] [width] [height] [get_data_string()]")
+	var/data = get_data_string()
+	var/png_filename = "cache/paintings/painting[md5(lowertext(data))].png"
+	ASSERT(isnum(width))
+	ASSERT(isnum(height))
+
+	world.ext_python("create_png.py", "[png_filename] [width] [height] [data]")
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
 	update_overlays()
@@ -168,7 +172,7 @@
 			data += grid[x][y]
 	return data.Join("")
 
-//Todo make this element ?
+//Todo make this as element ?
 /obj/item/canvas/proc/get_paint_tool_color(obj/item/I)
 	if(!I)
 		return
@@ -404,13 +408,13 @@
 // 		if(!length(SSpersistence.paintings[persistence_id]))
 // 			return //aborts loading anything this category has no usable paintings
 // 		var/list/chosen = pick(painting_category)
-// 		if(!fexists("data/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
+// 		if(!fexists("cache/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
 // 			painting_category -= list(chosen)
 // 			continue //and try again
 // 		painting = chosen
 // 	var/title = painting["title"]
 // 	var/author = painting["ckey"]
-// 	var/png = "data/paintings/[persistence_id]/[painting["md5"]].png"
+// 	var/png = "cache/paintings/[persistence_id]/[painting["md5"]].png"
 // 	if(!title)
 // 		title = "Untitled Artwork" //legacy artwork allowed null names which was bad for the json, lets fix that
 // 		painting["title"] = title
@@ -450,7 +454,7 @@
 // 	for(var/list/entry in current)
 // 		if(entry["md5"] == md5)
 // 			return
-// 	var/png_directory = "data/paintings/[persistence_id]/"
+// 	var/png_directory = "cache/paintings/[persistence_id]/"
 // 	var/png_path = png_directory + "[md5].png"
 // 	var/result = rustg_dmi_create_png(png_path, "[current_canvas.width]", "[current_canvas.height]", data)
 // 	if(result)
@@ -503,7 +507,7 @@
 // 			for(var/list/entry in current)
 // 				if(entry["md5"] == md5)
 // 					current -= entry
-// 			var/png = "data/paintings/[persistence_id]/[md5].png"
+// 			var/png = "cache/paintings/[persistence_id]/[md5].png"
 // 			fdel(png)
 // 		for(var/obj/structure/sign/painting/P in SSpersistence.painting_frames)
 // 			if(P.current_canvas && md5(P.current_canvas.get_data_string()) == md5)
