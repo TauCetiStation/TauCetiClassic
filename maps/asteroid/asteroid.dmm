@@ -11872,9 +11872,8 @@
 	},
 /obj/item/weapon/pen,
 /obj/item/device/radio/intercom{
-	dir = 1;
 	name = "Asteroid Intercom (General)";
-	pixel_y = -24
+	pixel_y = -29
 	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
