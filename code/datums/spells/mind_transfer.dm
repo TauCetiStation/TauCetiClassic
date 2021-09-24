@@ -94,10 +94,12 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//SPELL LOSS END
 
 	//Additional safety checks
-	if(victim.key[1] == "@" && istype(victim.get_item_by_slot(SLOT_GLASSES), /obj/item/clothing/glasses/syndidroneRC)) //if the victim is controlling a drone
-		var/obj/item/clothing/glasses/syndidroneRC/G = victim.get_item_by_slot(SLOT_GLASSES)
-		if(G.slave) //if not- it's just aghosted mob with those glasses equiped
-			G.slave.loose_control()
+	if(victim.key[1] == "@") // If the victim is controlling a drone or aghosted. Still no safety for aghost, but it's none of my business ~TEXHAPb
+		if(istype(victim.get_equipped_item(SLOT_GLASSES), /obj/item/clothing/glasses/syndidroneRC))
+			var/obj/item/clothing/glasses/syndidroneRC/G = victim.get_equipped_item(SLOT_GLASSES)
+			if(G.slave) //if not- it's just aghosted mob with those glasses equiped
+				G.slave.loose_control()
+		//put 'else' statement here for aghost safety code
 
 	//MIND TRANSFER BEGIN
 	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.

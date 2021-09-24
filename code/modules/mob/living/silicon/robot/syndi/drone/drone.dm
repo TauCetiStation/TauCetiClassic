@@ -33,6 +33,9 @@
     . = ..()
     if(!operator)
         return
+    if(operator.stat != CONSCIOUS)
+        loose_control()
+        return
     if(operator.health < operator_health_last)
         to_chat(src, "<span class='warning'>You're getting damage! Secure yourself as soon as possible!</span>")
     if(cooldown)
@@ -43,8 +46,6 @@
                 to_chat(src, "You feel something moving around you.")
                 cooldown = 3//in seconds
                 break
-    if(operator.stat != CONSCIOUS)
-        loose_control()
     operator_health_last = operator.health
 
 /mob/living/silicon/robot/drone/syndi/updatename()
