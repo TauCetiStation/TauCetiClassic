@@ -802,6 +802,18 @@
 
 	return FALSE
 
+/proc/get_list_of_primary_keys(list/L)
+	var/primary_keys = list()
+	for (var/primary_key in L)
+		primary_keys += primary_key
+	return primary_keys
+
+/proc/get_list_of_keys_from_values_as_list_from_associative_list(list/assoc_list)
+	var/sub_keys = list()
+	for (var/primary_key in assoc_list)
+		sub_keys |= assoc_list[primary_key]
+	return sub_keys
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
