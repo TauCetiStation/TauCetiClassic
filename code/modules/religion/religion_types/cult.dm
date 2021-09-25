@@ -35,7 +35,7 @@
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
 	tech_agent_type = /datum/building_agent/tech/cult
-	wall_types = list(/turf/simulated/wall/cult)
+	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
 
@@ -156,7 +156,7 @@
 			if(!altars.len)
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
-			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
+			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/movable/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
