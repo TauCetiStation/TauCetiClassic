@@ -6,6 +6,7 @@
 	var/list/fields = list()
 
 /obj/item/device/camera/siliconcam
+	flash_enabled = FALSE
 	var/in_camera_mode = 0
 	var/photos_taken = 0
 	var/list/aipictures = list()
