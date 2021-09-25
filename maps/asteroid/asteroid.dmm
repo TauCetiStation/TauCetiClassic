@@ -1770,9 +1770,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/device/radio/intercom{
-	dir = 4;
 	name = "Asteroid Intercom (General)";
-	pixel_x = -24
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -9725,9 +9724,8 @@
 /obj/item/weapon/stock_parts/cell,
 /obj/item/weapon/stock_parts/cell,
 /obj/item/device/radio/intercom{
-	dir = 8;
 	name = "Asteroid Intercom (General)";
-	pixel_x = 24
+	pixel_x = 27
 	},
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -10379,9 +10377,8 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
 	name = "Asteroid Intercom (General)";
-	pixel_x = -24
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -13261,9 +13258,8 @@
 "Tj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/item/device/radio/intercom{
-	dir = 4;
 	name = "Asteroid Intercom (General)";
-	pixel_x = -27
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -13439,9 +13435,8 @@
 /area/asteroid/mine/production)
 "Wr" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	name = "Asteroid Intercom (General)";
-	pixel_x = 24
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
