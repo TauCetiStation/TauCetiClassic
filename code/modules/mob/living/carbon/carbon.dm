@@ -133,7 +133,7 @@
 			"<span class='rose'>You hear a heavy electrical crack.</span>" \
 		)
 		make_jittery(1000)
-		stuttering += 2
+		adjustStuttering(2)
 		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
 			Stun(2)
 		spawn(20)

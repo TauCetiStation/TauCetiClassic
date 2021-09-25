@@ -87,7 +87,7 @@
 				return
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
 
@@ -523,8 +523,8 @@
 		if(weakened)
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+		if(stuttering > 0)
+			adjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent-1, 0)

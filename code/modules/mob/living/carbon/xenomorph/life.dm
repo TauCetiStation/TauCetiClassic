@@ -96,8 +96,8 @@
 		if(weakened)
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = 0
+		if(stuttering > 0)
+			setStuttering(0)
 
 		if(silent)
 			silent = 0

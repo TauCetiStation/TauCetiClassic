@@ -190,7 +190,7 @@
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -1214,7 +1214,7 @@
 
 		if(stuttering)
 			speech_problem_flag = 1
-			stuttering = max(stuttering-1, 0)
+			adjustStuttering(-1)
 		if (slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)
@@ -1598,7 +1598,7 @@
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
 		eye_blurry = max(2, eye_blurry)
-		stuttering = max(stuttering, 5)
+		Stuttering(5)
 
 	if(shock_stage == 40)
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")

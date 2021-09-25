@@ -513,9 +513,7 @@
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
-	if(!M.stuttering)
-		M.stuttering = 1
-	M.stuttering += 3
+	M.adjustStuttering(4)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -542,9 +540,7 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
+		M.adjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
@@ -569,9 +565,7 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		if (!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
+		M.adjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
@@ -597,30 +591,26 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(10)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(20)
 			M.make_dizzy(20)
 			M.adjustDrugginess(4)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to 200)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(40)
 			M.make_dizzy(40)
 			M.adjustDrugginess(6)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(60)
 			M.make_dizzy(60)
 			M.adjustDrugginess(7)
@@ -947,15 +937,13 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 25)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(1)
 			M.hallucination = max(M.hallucination, 3)
 			if(prob(1))
 				M.emote(pick("twitch","giggle"))
 		if(25 to 75)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 10)
 			M.make_jittery(2)
 			M.make_dizzy(2)
@@ -963,8 +951,7 @@
 			if(prob(5))
 				M.emote(pick("twitch","giggle"))
 		if(75 to 150)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
@@ -974,8 +961,7 @@
 			if(prob(30))
 				M.adjustToxLoss(2)
 		if(150 to 300)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
@@ -1515,9 +1501,7 @@
 	data["ticks"]++
 	M.dizziness += 10
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 10
+		M.adjustStuttering(11)
 	else if(data["ticks"] >= 115 && prob(33))
 		M.confused = max(M.confused + 15, 15)
 

@@ -948,6 +948,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_fullscreen("high")
 		clear_alert("high")
 
+// ========== STUTTERING ==========
+/mob/proc/Stuttering(amount)
+	stuttering = max(max(stuttering, amount), 0)
+
+/mob/proc/adjustStuttering(amount)
+	stuttering = max(stuttering + amount, 0)
+
+/mob/proc/setStuttering(amount)
+	stuttering = max(amount, 0)
+
 // =============================
 
 /mob/proc/get_species()

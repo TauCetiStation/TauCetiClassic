@@ -30,7 +30,7 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.stuttering = 0
+			M.setStuttering(0)
 			M.confused = 0
 			M.jitteriness = 0
 
@@ -359,7 +359,7 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.setStuttering(0)
 	M.confused = 0
 	M.SetSleeping(0)
 	M.jitteriness = 0
@@ -647,7 +647,7 @@
 	..()
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.setStuttering(0)
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 

@@ -220,7 +220,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
-							H.stuttering += 15
+							H.adjustStuttering(15)
 							H.ear_deaf += 8
 							H.Weaken(5)
 							H.Stun(8)
