@@ -101,7 +101,6 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
-	poi_list += src
 	START_PROCESSING(SSobj, src)
 	log_message("[src.name] created.")
 	loc.Entered(src)
@@ -115,9 +114,7 @@
 	diag_hud_set_mechstat()
 
 /obj/mecha/Destroy()
-	poi_list -= src
 	go_out()
-	poi_list.Remove(src)
 	for(var/mob/M in src)
 		M.loc = get_turf(src)
 		M.loc.Entered(M)

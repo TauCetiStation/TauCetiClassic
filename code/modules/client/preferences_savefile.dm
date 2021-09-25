@@ -97,7 +97,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["all_quirks"] << all_quirks
 		S["positive_quirks"] << positive_quirks
 		S["negative_quirks"] << negative_quirks
-		S["neutral_quirks"] << neutral_quirks
+		S["neutral_quirks"]  << neutral_quirks
 
 	if(current_version < 23)
 		var/datum/job/assistant/J = new
@@ -121,15 +121,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/job_engsec_med = 0
 		var/job_engsec_low = 0
 
-		S["job_civilian_high"]	>> job_civilian_high
-		S["job_civilian_med"]	>> job_civilian_med
-		S["job_civilian_low"]	>> job_civilian_low
-		S["job_medsci_high"]	>> job_medsci_high
-		S["job_medsci_med"]		>> job_medsci_med
-		S["job_medsci_low"]		>> job_medsci_low
-		S["job_engsec_high"]	>> job_engsec_high
-		S["job_engsec_med"]		>> job_engsec_med
-		S["job_engsec_low"]		>> job_engsec_low
+		S["job_civilian_high"] >> job_civilian_high
+		S["job_civilian_med"]  >> job_civilian_med
+		S["job_civilian_low"]  >> job_civilian_low
+		S["job_medsci_high"]   >> job_medsci_high
+		S["job_medsci_med"]    >> job_medsci_med
+		S["job_medsci_low"]    >> job_medsci_low
+		S["job_engsec_high"]   >> job_engsec_high
+		S["job_engsec_med"]    >> job_engsec_med
+		S["job_engsec_low"]    >> job_engsec_low
 
 		//Can't use SSjob here since this happens right away on login
 		for(var/job in subtypesof(/datum/job))
@@ -163,13 +163,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						new_value = JP_LOW
 			if(new_value)
 				job_preferences[initial(J.title)] = new_value
-		S["job_preferences"]	<< job_preferences
+		S["job_preferences"] << job_preferences
 
 	if(current_version < 28)
 		//This is necessary so that old players remove unnecessary roles
 		//and automatically set the preference "ROLE_GHOSTLY"
 		var/role_removed = FALSE
-		var/static/list/deleted_selectable_roles = list(ROLE_PAI, ROLE_PLANT, "Survivor", "Talking staff", "Religion familiar")
+		var/static/list/deleted_selectable_roles = list("pAI", "Diona", "Survivor", "Talking staff", "Religion familiar")
 		for(var/role in deleted_selectable_roles)
 			if(role in be_role)
 				be_role -= role
@@ -223,7 +223,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		organ_data = list()
 		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
 			organ_data[i] = null
-	
+
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
@@ -289,50 +289,50 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignore_cid_warning"]	>> ignore_cid_warning
 
 	//General preferences
-	S["ooccolor"]			>> ooccolor
-	S["aooccolor"]			>> aooccolor
-	S["lastchangelog"]		>> lastchangelog
-	S["UI_style"]			>> UI_style
-	S["UI_style_color"]		>> UI_style_color
-	S["UI_style_alpha"]		>> UI_style_alpha
-	S["clientfps"]			>> clientfps
-	S["default_slot"]		>> default_slot
-	S["chat_toggles"]		>> chat_toggles
-	S["toggles"]			>> toggles
-	S["ghost_orbit"]		>> ghost_orbit
-	S["chat_ghostsight"]	>> chat_ghostsight
-	S["randomslot"]			>> randomslot
-	S["permamuted"]			>> permamuted
-	S["permamuted"]			>> muted
-	S["parallax"]			>> parallax
-	S["ambientocclusion"]	>> ambientocclusion
-	S["auto_fit_viewport"]	>> auto_fit_viewport
-	S["tooltip"]			>> tooltip
-	S["tooltip_size"]		>> tooltip_size
-	S["tooltip_font"]		>> tooltip_font
-	S["outline_enabled"]	>> outline_enabled
-	S["outline_color"]		>> outline_color
-	S["eorg_enabled"]		>> eorg_enabled
+	S["ooccolor"]          >> ooccolor
+	S["aooccolor"]         >> aooccolor
+	S["lastchangelog"]     >> lastchangelog
+	S["UI_style"]          >> UI_style
+	S["UI_style_color"]    >> UI_style_color
+	S["UI_style_alpha"]    >> UI_style_alpha
+	S["clientfps"]         >> clientfps
+	S["default_slot"]      >> default_slot
+	S["chat_toggles"]      >> chat_toggles
+	S["toggles"]           >> toggles
+	S["ghost_orbit"]       >> ghost_orbit
+	S["chat_ghostsight"]   >> chat_ghostsight
+	S["randomslot"]        >> randomslot
+	S["permamuted"]        >> permamuted
+	S["permamuted"]        >> muted
+	S["parallax"]          >> parallax
+	S["ambientocclusion"]  >> ambientocclusion
+	S["auto_fit_viewport"] >> auto_fit_viewport
+	S["tooltip"]           >> tooltip
+	S["tooltip_size"]      >> tooltip_size
+	S["tooltip_font"]      >> tooltip_font
+	S["outline_enabled"]   >> outline_enabled
+	S["outline_color"]     >> outline_color
+	S["eorg_enabled"]      >> eorg_enabled
 
 	// Custom hotkeys
-	S["key_bindings"]		>> key_bindings
+	S["key_bindings"] >> key_bindings
 	check_keybindings()
-	S["hotkeys"]		>> hotkeys
+	S["hotkeys"]      >> hotkeys
 
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
 	S["tgui_lock"]		>> tgui_lock
 
 	//Sound preferences
-	S["snd_music_vol"]						>> snd_music_vol
-	S["snd_ambient_vol"]					>> snd_ambient_vol
-	S["snd_effects_master_vol"]				>> snd_effects_master_vol
+	S["snd_music_vol"]                      >> snd_music_vol
+	S["snd_ambient_vol"]                    >> snd_ambient_vol
+	S["snd_effects_master_vol"]             >> snd_effects_master_vol
 	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
-	S["snd_effects_misc_vol"]				>> snd_effects_misc_vol
-	S["snd_effects_instrument_vol"]			>> snd_effects_instrument_vol
-	S["snd_notifications_vol"]				>> snd_notifications_vol
-	S["snd_admin_vol"]						>> snd_admin_vol
-	S["snd_jukebox_vol"]					>> snd_jukebox_vol
+	S["snd_effects_misc_vol"]               >> snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]         >> snd_effects_instrument_vol
+	S["snd_notifications_vol"]              >> snd_notifications_vol
+	S["snd_admin_vol"]                      >> snd_admin_vol
+	S["snd_jukebox_vol"]                    >> snd_jukebox_vol
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -406,53 +406,53 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["version"] << SAVEFILE_VERSION_MAX
 
 	//Account data
-	S["cid_list"]			<< cid_list
-	S["ignore_cid_warning"]	<< ignore_cid_warning
+	S["cid_list"]           << cid_list
+	S["ignore_cid_warning"] << ignore_cid_warning
 
 	//general preferences
-	S["ooccolor"]			<< ooccolor
-	S["aooccolor"]			<< aooccolor
-	S["lastchangelog"]		<< lastchangelog
-	S["UI_style"]			<< UI_style
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
-	S["clientfps"]			<< clientfps
-	S["default_slot"]		<< default_slot
-	S["toggles"]			<< toggles
-	S["chat_toggles"]		<< chat_toggles
-	S["ghost_orbit"]		<< ghost_orbit
-	S["chat_ghostsight"]	<< chat_ghostsight
-	S["randomslot"]			<< randomslot
-	S["permamuted"]			<< permamuted
-	S["parallax"]			<< parallax
-	S["ambientocclusion"]	<< ambientocclusion
-	S["auto_fit_viewport"]	<< auto_fit_viewport
-	S["tooltip"]			<< tooltip
-	S["tooltip_size"]		<< tooltip_size
-	S["tooltip_font"]		<< tooltip_font
+	S["ooccolor"]          << ooccolor
+	S["aooccolor"]         << aooccolor
+	S["lastchangelog"]     << lastchangelog
+	S["UI_style"]          << UI_style
+	S["UI_style_color"]    << UI_style_color
+	S["UI_style_alpha"]    << UI_style_alpha
+	S["clientfps"]         << clientfps
+	S["default_slot"]      << default_slot
+	S["toggles"]           << toggles
+	S["chat_toggles"]      << chat_toggles
+	S["ghost_orbit"]       << ghost_orbit
+	S["chat_ghostsight"]   << chat_ghostsight
+	S["randomslot"]        << randomslot
+	S["permamuted"]        << permamuted
+	S["parallax"]          << parallax
+	S["ambientocclusion"]	 << ambientocclusion
+	S["auto_fit_viewport"] << auto_fit_viewport
+	S["tooltip"]           << tooltip
+	S["tooltip_size"]      << tooltip_size
+	S["tooltip_font"]      << tooltip_font
 
 
 	// Custom hotkeys
-	S["key_bindings"]		<< key_bindings
-	S["hotkeys"]			<< hotkeys
+	S["key_bindings"] << key_bindings
+	S["hotkeys"]      << hotkeys
 
-	S["outline_enabled"]	<< outline_enabled
-	S["outline_color"]		<< outline_color
-	S["eorg_enabled"]		<< eorg_enabled
+	S["outline_enabled"] << outline_enabled
+	S["outline_color"]   << outline_color
+	S["eorg_enabled"]    << eorg_enabled
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
 
 	//Sound preferences
-	S["snd_music_vol"]						<< snd_music_vol
-	S["snd_ambient_vol"]					<< snd_ambient_vol
-	S["snd_effects_master_vol"]				<< snd_effects_master_vol
-	S["snd_effects_voice_announcement_vol"]	<< snd_effects_voice_announcement_vol
-	S["snd_effects_misc_vol"]				<< snd_effects_misc_vol
-	S["snd_effects_instrument_vol"]			<< snd_effects_instrument_vol
-	S["snd_notifications_vol"]				<< snd_notifications_vol
-	S["snd_admin_vol"]						<< snd_admin_vol
-	S["snd_jukebox_vol"]					<< snd_jukebox_vol
+	S["snd_music_vol"]                      << snd_music_vol
+	S["snd_ambient_vol"]                    << snd_ambient_vol
+	S["snd_effects_master_vol"]             << snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"] << snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]               << snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]         << snd_effects_instrument_vol
+	S["snd_notifications_vol"]              << snd_notifications_vol
+	S["snd_admin_vol"]                      << snd_admin_vol
+	S["snd_jukebox_vol"]                    << snd_jukebox_vol
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
@@ -466,69 +466,70 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//Character
-	S["OOC_Notes"]			>> metadata
-	S["real_name"]			>> real_name
+	S["OOC_Notes"]             >> metadata
+	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
-	S["gender"]				>> gender
-	S["age"]				>> age
-	S["species"]			>> species
-	S["language"]			>> language
+	S["gender"]                >> gender
+	S["age"]                   >> age
+	S["species"]               >> species
+	S["language"]              >> language
 
 	//colors to be consolidated into hex strings (requires some work with dna code)
-	S["hair_red"]			>> r_hair
-	S["hair_green"]			>> g_hair
-	S["hair_blue"]			>> b_hair
-	S["grad_red"]			>> r_grad
-	S["grad_green"]			>> g_grad
-	S["grad_blue"]			>> b_grad
-	S["facial_red"]			>> r_facial
-	S["facial_green"]		>> g_facial
-	S["facial_blue"]		>> b_facial
-	S["skin_tone"]			>> s_tone
-	S["skin_red"]			>> r_skin
-	S["skin_green"]			>> g_skin
-	S["skin_blue"]			>> b_skin
-	S["hair_style_name"]	>> h_style
-	S["grad_style_name"]	>> grad_style
-	S["facial_style_name"]	>> f_style
-	S["eyes_red"]			>> r_eyes
-	S["eyes_green"]			>> g_eyes
-	S["eyes_blue"]			>> b_eyes
-	S["underwear"]			>> underwear
-	S["undershirt"]			>> undershirt
-	S["socks"]				>> socks
-	S["backbag"]			>> backbag
-	S["b_type"]				>> b_type
-	S["use_skirt"]			>> use_skirt
+	S["hair_red"]          >> r_hair
+	S["hair_green"]        >> g_hair
+	S["hair_blue"]         >> b_hair
+	S["grad_red"]          >> r_grad
+	S["grad_green"]        >> g_grad
+	S["grad_blue"]         >> b_grad
+	S["facial_red"]        >> r_facial
+	S["facial_green"]      >> g_facial
+	S["facial_blue"]       >> b_facial
+	S["skin_tone"]         >> s_tone
+	S["skin_red"]          >> r_skin
+	S["skin_green"]        >> g_skin
+	S["skin_blue"]         >> b_skin
+	S["hair_style_name"]   >> h_style
+	S["grad_style_name"]   >> grad_style
+	S["facial_style_name"] >> f_style
+	S["eyes_red"]          >> r_eyes
+	S["eyes_green"]        >> g_eyes
+	S["eyes_blue"]         >> b_eyes
+	S["underwear"]         >> underwear
+	S["undershirt"]        >> undershirt
+	S["socks"]             >> socks
+	S["backbag"]           >> backbag
+	S["b_type"]            >> b_type
+	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
 	S["job_preferences"] >> job_preferences
 
 	//Traits
-	S["all_quirks"]			>> all_quirks
-	S["positive_quirks"]	>> positive_quirks
-	S["negative_quirks"]	>> negative_quirks
-	S["neutral_quirks"]		>> neutral_quirks
+	S["all_quirks"]       >> all_quirks
+	S["positive_quirks"]  >> positive_quirks
+	S["negative_quirks"]  >> negative_quirks
+	S["neutral_quirks"]   >> neutral_quirks
 
 	//Miscellaneous
-	S["flavor_text"]		>> flavor_text
-	S["med_record"]			>> med_record
-	S["sec_record"]			>> sec_record
-	S["gen_record"]			>> gen_record
-	S["be_role"]			>> be_role
-	S["player_alt_titles"]	>> player_alt_titles
-	S["organ_data"]			>> organ_data
-	S["ipc_head"]			>> ipc_head
-	S["gear"]				>> gear
-	S["custom_items"]		>> custom_items
+	S["flavor_text"]       >> flavor_text
+	S["med_record"]        >> med_record
+	S["sec_record"]        >> sec_record
+	S["gen_record"]        >> gen_record
+	S["be_role"]           >> be_role
+	S["ignore_question"]   >> ignore_question
+	S["player_alt_titles"] >> player_alt_titles
+	S["organ_data"]        >> organ_data
+	S["ipc_head"]          >> ipc_head
+	S["gear"]              >> gear
+	S["custom_items"]      >> custom_items
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
-	S["home_system"] 		>> home_system
-	S["citizenship"] 		>> citizenship
-	S["faction"] 			>> faction
-	S["religion"] 			>> religion
+	S["home_system"]         >> home_system
+	S["citizenship"]         >> citizenship
+	S["faction"]             >> faction
+	S["religion"]            >> religion
 
-	S["uplinklocation"] 	>> uplinklocation
+	S["uplinklocation"]      >> uplinklocation
 
 	UpdateAllowedQuirks()
 
@@ -588,6 +589,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!organ_data) src.organ_data = list()
 	if(!ipc_head) src.ipc_head = "Default"
 	if(!be_role) src.be_role = list()
+	if(!ignore_question) src.ignore_question = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -646,69 +648,70 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/character[default_slot]"
 
-	S["version"]			<< SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
+	S["version"] << SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
-	S["OOC_Notes"]			<< metadata
-	S["real_name"]			<< real_name
+	S["OOC_Notes"]             << metadata
+	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
-	S["gender"]				<< gender
-	S["age"]				<< age
-	S["species"]			<< species
-	S["language"]			<< language
-	S["hair_red"]			<< r_hair
-	S["hair_green"]			<< g_hair
-	S["hair_blue"]			<< b_hair
-	S["grad_red"]			<< r_grad
-	S["grad_green"]			<< g_grad
-	S["grad_blue"]			<< b_grad
-	S["facial_red"]			<< r_facial
-	S["facial_green"]		<< g_facial
-	S["facial_blue"]		<< b_facial
-	S["skin_tone"]			<< s_tone
-	S["skin_red"]			<< r_skin
-	S["skin_green"]			<< g_skin
-	S["skin_blue"]			<< b_skin
-	S["hair_style_name"]	<< h_style
-	S["grad_style_name"]	<< grad_style
-	S["facial_style_name"]	<< f_style
-	S["eyes_red"]			<< r_eyes
-	S["eyes_green"]			<< g_eyes
-	S["eyes_blue"]			<< b_eyes
-	S["underwear"]			<< underwear
-	S["undershirt"]			<< undershirt
-	S["socks"]				<< socks
-	S["backbag"]			<< backbag
-	S["b_type"]				<< b_type
-	S["use_skirt"]			<< use_skirt
+	S["gender"]                << gender
+	S["age"]                   << age
+	S["species"]               << species
+	S["language"]              << language
+	S["hair_red"]              << r_hair
+	S["hair_green"]            << g_hair
+	S["hair_blue"]             << b_hair
+	S["grad_red"]              << r_grad
+	S["grad_green"]            << g_grad
+	S["grad_blue"]             << b_grad
+	S["facial_red"]            << r_facial
+	S["facial_green"]          << g_facial
+	S["facial_blue"]           << b_facial
+	S["skin_tone"]             << s_tone
+	S["skin_red"]              << r_skin
+	S["skin_green"]            << g_skin
+	S["skin_blue"]             << b_skin
+	S["hair_style_name"]       << h_style
+	S["grad_style_name"]       << grad_style
+	S["facial_style_name"]     << f_style
+	S["eyes_red"]              << r_eyes
+	S["eyes_green"]            << g_eyes
+	S["eyes_blue"]             << b_eyes
+	S["underwear"]             << underwear
+	S["undershirt"]            << undershirt
+	S["socks"]                 << socks
+	S["backbag"]               << backbag
+	S["b_type"]                << b_type
+	S["use_skirt"]             << use_skirt
 	//Write prefs
-	S["alternate_option"]	<< alternate_option
-	S["job_preferences"]	<< job_preferences
+	S["alternate_option"]      << alternate_option
+	S["job_preferences"]       << job_preferences
 
 	//Traits
-	S["all_quirks"]			<< all_quirks
-	S["positive_quirks"]	<< positive_quirks
-	S["negative_quirks"]	<< negative_quirks
-	S["neutral_quirks"]		<< neutral_quirks
+	S["all_quirks"]      << all_quirks
+	S["positive_quirks"] << positive_quirks
+	S["negative_quirks"] << negative_quirks
+	S["neutral_quirks"]  << neutral_quirks
 
 	//Miscellaneous
-	S["flavor_text"]		<< flavor_text
-	S["med_record"]			<< med_record
-	S["sec_record"]			<< sec_record
-	S["gen_record"]			<< gen_record
-	S["be_role"]			<< be_role
-	S["player_alt_titles"]		<< player_alt_titles
-	S["organ_data"]			<< organ_data
-	S["ipc_head"]			<< ipc_head
-	S["gear"]				<< gear
-	S["custom_items"]		<< custom_items
+	S["flavor_text"]       << flavor_text
+	S["med_record"]        << med_record
+	S["sec_record"]        << sec_record
+	S["gen_record"]        << gen_record
+	S["be_role"]           << be_role
+	S["ignore_question"]   << ignore_question
+	S["player_alt_titles"] << player_alt_titles
+	S["organ_data"]        << organ_data
+	S["ipc_head"]          << ipc_head
+	S["gear"]              << gear
+	S["custom_items"]      << custom_items
 
 	S["nanotrasen_relation"] << nanotrasen_relation
-	S["home_system"] 		<< home_system
-	S["citizenship"] 		<< citizenship
-	S["faction"] 			<< faction
-	S["religion"] 			<< religion
-	S["uplinklocation"] << uplinklocation
+	S["home_system"]         << home_system
+	S["citizenship"]         << citizenship
+	S["faction"]             << faction
+	S["religion"]            << religion
+	S["uplinklocation"]      << uplinklocation
 
 	return 1
 

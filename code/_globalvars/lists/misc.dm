@@ -14,8 +14,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //var/global/list/datum/poster/poster_designs = subtypesof(/datum/poster)
 
 var/list/roles_ingame_minute_unlock = list(
-	ROLE_PAI = 0,
-	ROLE_PLANT = 40000,
 	ROLE_TRAITOR = 720,
 	ROLE_OPERATIVE = 2160,
 	ROLE_CHANGELING = 2160,
@@ -38,21 +36,17 @@ var/list/roles_ingame_minute_unlock = list(
 var/global/list/datum_alarm_list = list()
 
 var/global/list/all_artifact_effect_types = list(
-	/datum/artifact_effect/cold,
-	/datum/artifact_effect/badfeeling,
+	/datum/artifact_effect/temperature/cold,
+	/datum/artifact_effect/feelings/bad,
 	/datum/artifact_effect/cellcharge,
 	/datum/artifact_effect/celldrain,
 	/datum/artifact_effect/dnaswitch,
 	/datum/artifact_effect/emp,
-	/datum/artifact_effect/gasco2,
+	/datum/artifact_effect/gas,
 	/datum/artifact_effect/forcefield,
-	/datum/artifact_effect/gasnitro,
-	/datum/artifact_effect/gasoxy,
-	/datum/artifact_effect/gasphoron,
-	/datum/artifact_effect/gassleeping,
-	/datum/artifact_effect/goodfeeling,
+	/datum/artifact_effect/feelings/good,
 	/datum/artifact_effect/heal,
-	/datum/artifact_effect/heat,
+	/datum/artifact_effect/temperature/heat,
 	/datum/artifact_effect/hurt,
 	/datum/artifact_effect/radiate,
 	/datum/artifact_effect/roboheal,
@@ -60,23 +54,20 @@ var/global/list/all_artifact_effect_types = list(
 	/datum/artifact_effect/sleepy,
 	/datum/artifact_effect/stun,
 	/datum/artifact_effect/tesla,
-	/datum/artifact_effect/teleport)
+	/datum/artifact_effect/teleport,
+	/datum/artifact_effect/light,
+	/datum/artifact_effect/light/darkness,
+	/datum/artifact_effect/gravity,
+	/datum/artifact_effect/noise,
+	/datum/artifact_effect/powernet)
 
 var/global/list/valid_primary_effect_types = list(
-	/datum/artifact_effect/cold,
-	/datum/artifact_effect/cellcharge,
-	/datum/artifact_effect/celldrain,
+	/datum/artifact_effect/temperature/cold,
+	/datum/artifact_effect/temperature/heat,
 	/datum/artifact_effect/dnaswitch,
 	/datum/artifact_effect/emp,
-	/datum/artifact_effect/gasco2,
+	/datum/artifact_effect/gas,
 	/datum/artifact_effect/forcefield,
-	/datum/artifact_effect/gasnitro,
-	/datum/artifact_effect/gasoxy,
-	/datum/artifact_effect/gasphoron,
-	/datum/artifact_effect/gassleeping,
-	/datum/artifact_effect/heal,
-	/datum/artifact_effect/heat,
-	/datum/artifact_effect/hurt,
 	/datum/artifact_effect/radiate,
 	/datum/artifact_effect/sleepy,
 	/datum/artifact_effect/stun,
@@ -84,20 +75,18 @@ var/global/list/valid_primary_effect_types = list(
 	/datum/artifact_effect/teleport)
 
 var/global/list/valid_secondary_effect_types = list(
-	/datum/artifact_effect/cold,
-	/datum/artifact_effect/badfeeling,
+	/datum/artifact_effect/feelings/bad,
+	/datum/artifact_effect/feelings/good,
 	/datum/artifact_effect/cellcharge,
 	/datum/artifact_effect/celldrain,
-	/datum/artifact_effect/gasco2,
-	/datum/artifact_effect/gasnitro,
-	/datum/artifact_effect/gasoxy,
-	/datum/artifact_effect/gasphoron,
-	/datum/artifact_effect/gassleeping,
-	/datum/artifact_effect/goodfeeling,
 	/datum/artifact_effect/heal,
-	/datum/artifact_effect/heat,
 	/datum/artifact_effect/hurt,
-	/datum/artifact_effect/radiate)
+	/datum/artifact_effect/light,
+	/datum/artifact_effect/light/darkness,
+	/datum/artifact_effect/gravity,
+	/datum/artifact_effect/noise,
+	/datum/artifact_effect/roboheal,
+	/datum/artifact_effect/robohurt)
 
 
 //used in rituals to determine the value of things
