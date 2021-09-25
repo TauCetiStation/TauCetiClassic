@@ -202,6 +202,26 @@
 	else
 		..()
 
+// =============================================
+
+/mob/living/carbon/human/Stuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/adjustStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/setStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
