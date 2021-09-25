@@ -105,7 +105,7 @@
 	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (!(HULK in M.mutations)
+		if (!(HULK in M.mutations))
 			M.Stuttering(8)
 		M.Stun(8)
 		M.Weaken(8)
