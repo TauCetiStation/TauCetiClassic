@@ -2261,6 +2261,8 @@
 
 /mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	if(!Heart)
+		return
 	switch(Heart.heart_status)
 		if(HEART_NORMAL)
 			if(prob(damage_prob))
