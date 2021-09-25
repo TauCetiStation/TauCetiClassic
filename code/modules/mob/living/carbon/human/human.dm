@@ -645,7 +645,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-
+	attack_heart(5, 5)
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -2013,7 +2013,7 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
@@ -2257,3 +2257,21 @@
 
 	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+
+
+/mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	if(!Heart)
+		return
+	switch(Heart.heart_status)
+		if(HEART_NORMAL)
+			if(prob(damage_prob))
+				Heart.heart_fibrillate()
+		if(HEART_FIBR)
+			if(prob(damage_prob))
+				Heart.heart_stop()
+			if(prob(heal_prob))
+				Heart.heart_normalize()
+		if(HEART_FAILURE)
+			if(prob(heal_prob))
+				Heart.heart_fibrillate()
