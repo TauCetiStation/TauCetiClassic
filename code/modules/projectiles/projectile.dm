@@ -121,32 +121,22 @@
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
-	if(!istype(target) || !istype(user))
-		return 0
-	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
-	in_chamber.target = target
-	in_chamber.flags = flags //Set the flags...
-	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
-	in_chamber.firer = user
-	var/output = in_chamber.process() //Test it!
-	qdel(in_chamber) //No need for it anymore
-	return output //Send it back to the gun!
+	return check_trajectory(target, user, pass_flags, flags)
 
-/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) //Spherical test in vacuum
+/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
 	if(!istype(target) || !istype(firer))
 		return 0
 
-	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
-	if(!isnull(flags))
-		trace.flags = flags
+	trace.flags = flags
 	trace.target = target
 	trace.pass_flags = pass_flags
 
-	var/output = trace.process() //Test it!
+	var/atom/output = trace.process() //Test it!
 	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
+	return target == output ? 1 : 0 //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
@@ -384,7 +374,7 @@
 	yo = null
 	xo = null
 	var/target = null
-	var/result = 0 //To pass the message back to the gun.
+	var/atom/result = null //To pass the bumped atom back to the gun.
 
 /obj/item/projectile/test/Bump(atom/A)
 	if(A == firer)
@@ -393,14 +383,14 @@
 	if(istype(A, /obj/item/projectile))
 		return
 	if(istype(A, /mob/living))
-		result = 2 //We hit someone, return 1 (in process() 2 will be decremented to 1)!
+		result = A
 		bumped = TRUE
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
 		return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
-	result = 1
+	result = A
 	bumped = TRUE
 
 /obj/item/projectile/test/process()
@@ -418,8 +408,8 @@
 	setup_trajectory()
 
 	while(src) //Loop on through!
-		if(result)
-			return (result - 1)
+		if(bumped)
+			return result
 		if(!target || loc == target)
 			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
 		if(x == 1 || x == world.maxx || y == 1 || y == world.maxy || kill_count-- < 1)
@@ -439,15 +429,6 @@
 				Bump(original)
 			else
 				Bump(original.loc) //if target is in mecha/crate/MULE/etc
-
-/obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
-	..()
-	if(result != 1)
-		return
-	//bumped is already set to TRUE
-	if(is_type_in_list(A, list(/obj/structure/closet, /obj/mecha, /obj/machinery/bot/mulebot)))
-		result = 2
-	return
 
 /obj/item/projectile/proc/Range() ///tg/
 	return
