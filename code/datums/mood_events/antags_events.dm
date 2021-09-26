@@ -11,3 +11,11 @@
 	description = "<span class='bold nicegreen'>Viva la Revolucion!</span>"
 	mood_change = 5
 	hidden = TRUE
+
+/datum/mood_event/narsie
+	description = "<span class='bold nicegreen'>For some reason, I really want to die very much</span>"
+	mood_change = -666
+
+/datum/mood_event/narsie_cultists
+	description = "<span class='bold nicegreen'>Greetings to the Lord!</span>"
+	mood_change = 666
