@@ -11,7 +11,7 @@
 	name = "OOC"
 	full_name = "Out Of Character Say (OOC)"
 
-/datum/keybinding/client/communication/ooc
+/datum/keybinding/client/communication/looc
 	hotkey_keys = list("L")
 	name = "LOOC"
 	full_name = "Local Out Of Character Say (LOOC)"
