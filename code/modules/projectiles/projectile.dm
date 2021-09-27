@@ -125,7 +125,7 @@
 
 /proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
 	if(!istype(target) || !istype(firer))
-		return 0
+		return FALSE
 
 	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
 
@@ -136,7 +136,7 @@
 
 	var/atom/output = trace.process() //Test it!
 	qdel(trace) //No need for it anymore
-	return target == output ? 1 : 0 //Send it back to the gun!
+	return target == output //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
