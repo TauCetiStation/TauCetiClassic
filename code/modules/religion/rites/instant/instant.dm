@@ -679,8 +679,10 @@
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
 	if(!input)
 		return FALSE
+
+	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
+	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
 	for(var/mob/M in global.mob_list)
-		var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
 		if(isobserver(M))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
 		if(user.my_religion.is_member(M))
