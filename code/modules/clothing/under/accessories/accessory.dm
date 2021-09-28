@@ -229,7 +229,7 @@
 
 /obj/item/clothing/accessory/holobadge
 	name = "holobadge"
-	desc = "This glowing blue badge marks the holder as THE LAW."
+	desc = "This glowing blue badge marks the holder as THE LAW. Also has an in-built camera."
 	icon_state = "holobadge"
 	item_color = "holobadge"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
