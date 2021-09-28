@@ -228,7 +228,6 @@
 */
 
 /obj/item/clothing/accessory/holobadge
-
 	name = "holobadge"
 	desc = "This glowing blue badge marks the holder as THE LAW."
 	icon_state = "holobadge"
@@ -237,6 +236,7 @@
 
 	var/emagged = FALSE // Emagging removes Sec check.
 	var/stored_name = null
+	var/obj/machinery/camera/camera
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
@@ -268,6 +268,15 @@
 			stored_name = id_card.registered_name
 			name = "holobadge ([stored_name])"
 			desc = "This glowing blue badge marks [stored_name] as THE LAW."
+			if(camera)
+				..(user)
+			else
+				camera = new /obj/machinery/camera(src)
+				camera.replace_networks(list("SECURITY UNIT"))
+				cameranet.removeCamera(camera)
+				camera.c_tag = stored_name
+				camera.status = FALSE
+				to_chat(user, "<span class='notice'>User registered as [stored_name]. Camera will be activated upon attaching [src].</span>")
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
 		return TRUE
@@ -285,4 +294,22 @@
 		return FALSE
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
+	if(camera)
+		camera.status = FALSE
 	return TRUE
+
+/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
+	..()
+	if(camera)
+		if(camera.emagged)
+			return
+		camera.status = TRUE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+
+/obj/item/clothing/accessory/holobadge/on_removed(mob/user)
+	..()
+	if(camera)
+		if(camera.emagged)
+			return
+		camera.status = FALSE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")

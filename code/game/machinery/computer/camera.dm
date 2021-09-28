@@ -375,4 +375,12 @@
 	network = list("SS13")
 	light_color = "#642850"
 
+/obj/machinery/computer/security/bodycam
+	name = "bodycam monitoring computer"
+	desc = "Used to access the security body cameras."
+	icon_state = "laptop_security"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+	network = list("SECURITY UNIT")
+
 #undef DEFAULT_MAP_SIZE
