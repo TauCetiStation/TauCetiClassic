@@ -301,7 +301,7 @@
 /obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
 	..()
 	if(camera)
-		if(camera.emagged)
+		if(emagged)
 			return
 		camera.status = TRUE
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
@@ -309,7 +309,7 @@
 /obj/item/clothing/accessory/holobadge/on_removed(mob/user)
 	..()
 	if(camera)
-		if(camera.emagged)
+		if(emagged)
 			return
 		camera.status = FALSE
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")
