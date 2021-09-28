@@ -105,9 +105,10 @@
 						continue	//Have to send the type instead of a reference to
 				else if((N.hidden && !hacked) || (N.contraband && !contraband) || N.group != last_viewed_group)
 					continue
+				var/supply_hash = md5(supply_name)
 				temp += {"<div class="spoiler"><input type="checkbox" id='[supply_name]'>"}
 				temp += {"<table><tr><td><span class="cargo32x32 [replace_characters("[N.crate_type]",  list("[/obj]/" = "", "/" = "-"))]"></span></td>"}
-				temp += {"<td><label for='[supply_name]'><b>[supply_name]</b></label></td><td><A href='?src=\ref[src];doorder=[replace_characters("[supply_name]", list("'" = "&#39;"))]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
+				temp += {"<td><label for='[supply_name]'><b>[supply_name]</b></label></td><td><A href='?src=\ref[src];doorder=[supply_hash]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
 				temp += "<div><table>"
 				if(ispath(N.crate_type, /obj/structure/closet/critter))
 					var/obj/structure/closet/critter/C = N.crate_type
@@ -142,38 +143,38 @@
 			visible_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
 			return FALSE
 		//Find the correct supply_pack datum
-		var/datum/supply_pack/P = SSshuttle.supply_packs[href_list["doorder"]]
-		if(!istype(P))
-			return FALSE
-		var/timeout = world.time + 600
-		var/reason = sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text)
-		if(world.time > timeout)
-			return FALSE
-		if(!reason)
-			return FALSE
-		var/idname = "*None Provided*"
-		var/idrank = "*None Provided*"
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			idname = H.get_authentification_name()
-			idrank = H.get_assignment()
-		else if(issilicon(usr))
-			idname = usr.real_name
-			idrank = "Silicon"
+		for(var/supply_name in SSshuttle.supply_packs)
+			var/p = md5(supply_name)
+			if(p == href_list["doorder"])
+				var/timeout = world.time + 600
+				var/datum/supply_pack/P = SSshuttle.supply_packs[supply_name]
+				var/reason = sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text)
+				if(world.time > timeout)
+					return FALSE
+				if(!reason)
+					return FALSE
+				var/idname = "*None Provided*"
+				var/idrank = "*None Provided*"
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					idname = H.get_authentification_name()
+					idrank = H.get_assignment()
+				else if(issilicon(usr))
+					idname = usr.real_name
+					idrank = "Silicon"
 
-		reqtime = (world.time + 5) % 1e5
+				reqtime = (world.time + 5) % 1e5
 
-		//make our supply_order datum
-		var/datum/supply_order/O = new /datum/supply_order(P, idname, idrank, usr.ckey, reason)
-		SSshuttle.requestlist += O
-		O.generateRequisition(loc) //print supply request
-
-		if(requestonly)
-			temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
-			temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
-		else
-			temp = "Order request placed.<BR>"
-			temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.id]'>Authorize Order</A>"
+				//make our supply_order datum
+				var/datum/supply_order/O = new /datum/supply_order(P, idname, idrank, usr.ckey, reason)
+				SSshuttle.requestlist += O
+				O.generateRequisition(loc) //print supply request
+				if(requestonly)
+					temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
+					temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				else
+					temp = "Order request placed.<BR>"
+					temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.id]'>Authorize Order</A>"
 
 	if(href_list["confirmorder"])
 		//Find the correct supply_order datum
