@@ -120,7 +120,7 @@
 			muzzled_message = "beeps."
 			miming_message = "beeps."
 			if(species.flags[IS_SYNTHETIC])
-				emote_sound = 'sound/machines/twobeep.ogg'
+				playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if("ping")
 			message_type = SHOWMSG_AUDIO
@@ -129,7 +129,7 @@
 			muzzled_message = "pings."
 			miming_message = "pings."
 			if(species.flags[IS_SYNTHETIC])
-				emote_sound = 'sound/machines/ping.ogg'
+				playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if("buzz")
 			message_type = SHOWMSG_AUDIO
@@ -138,7 +138,7 @@
 			muzzled_message = "buzzes."
 			miming_message = "buzzes."
 			if(species.flags[IS_SYNTHETIC])
-				emote_sound = 'sound/machines/buzz-sigh.ogg'
+				playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 // ========== AUDIBLE ==========
 
