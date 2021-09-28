@@ -38,7 +38,23 @@
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
 
-	if(!W.mob_can_equip(src, slot, disable_warning))
+	if(!W.mob_can_equip(src, slot, disable_warning)) // Clipping shoes & gloves if that helps equipping the item
+		if(istype(W, /obj/item/clothing/shoes))
+			var/obj/item/clothing/shoes/S = W
+			if(S.clipped_status == CLIPPABLE)
+				S.clip()
+			if(S.mob_can_equip(src, slot, disable_warning))
+				equip_to_slot(S, slot, redraw_mob)
+				return 1
+
+		if(istype(W, /obj/item/clothing/gloves))
+			var/obj/item/clothing/gloves/S = W
+			if(!S.clipped)
+				S.clip()
+			if(S.mob_can_equip(src, slot, disable_warning))
+				equip_to_slot(S, slot, redraw_mob)
+				return 1
+
 		if(del_on_fail)
 			qdel(W)
 		else

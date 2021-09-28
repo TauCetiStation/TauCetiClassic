@@ -335,6 +335,15 @@ BLIND     // can't see anything
 	species_restricted_locked = TRUE
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
+/obj/item/clothing/gloves/proc/clip()
+	clipped = TRUE
+	name = "mangled [name]"
+	desc = "[desc]<br>They have had the fingertips cut off of them."
+	if("exclude" in species_restricted)
+		species_restricted -= UNATHI
+		species_restricted -= TAJARAN
+		species_restricted -= VOX
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -387,28 +396,31 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 //Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/shoes/proc/clip()
+	name = "mangled [name]"
+	desc = "[desc]<br>They have the toe caps cut off of them."
+	if("exclude" in species_restricted)
+		species_restricted -= UNATHI
+		species_restricted -= TAJARAN
+		species_restricted -= VOX
+	src.icon_state += "_cut"
+	clipped_status = CLIPPED
+
+/obj/item/clothing/shoes/attackby(obj/item/clothing/shoes/I, mob/user, params)
 	if(iswirecutter(I))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
-
-				name = "mangled [name]"
-				desc = "[desc]<br>They have the toe caps cut off of them."
-				if("exclude" in species_restricted)
-					species_restricted -= UNATHI
-					species_restricted -= TAJARAN
-					species_restricted -= VOX
-				src.icon_state += "_cut"
-				user.update_inv_shoes()
-				clipped_status = CLIPPED
+				clip()
 			if(NO_CLIPPING)
 				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
 	else
 		return ..()
+
+
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()

@@ -55,16 +55,9 @@
 
 		//clipping fingertips
 		if(!clipped)
+			clip()
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[user] cuts the fingertips off of the [src].</span>","<span class='warning'>You cut the fingertips off of the [src].</span>")
-
-			clipped = TRUE
-			name = "mangled [name]"
-			desc = "[desc]<br>They have had the fingertips cut off of them."
-			if("exclude" in species_restricted)
-				species_restricted -= UNATHI
-				species_restricted -= TAJARAN
-				species_restricted -= VOX
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 		return
