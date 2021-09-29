@@ -3,7 +3,10 @@
 	real_name = "host brain"
 
 /mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
-	return other == loc // loc should be borer
+	var/mob/living/simple_animal/borer/my_borer = loc
+	if(!istype(loc))
+		return FALSE
+	return other == my_borer.host
 
 /mob/living/captive_brain/say(message)
 
