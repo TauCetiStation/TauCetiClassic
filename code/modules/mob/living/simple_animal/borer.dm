@@ -2,6 +2,12 @@
 	name = "host brain"
 	real_name = "host brain"
 
+/mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
+	var/mob/living/simple_animal/borer/my_borer = loc
+	if(!istype(loc))
+		return FALSE
+	return my_borer?.host.say_understands(other, speaking)
+
 /mob/living/captive_brain/say(message)
 
 	if (client)
@@ -116,6 +122,11 @@
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
 			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+
+/mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
+	if(!host)
+		return FALSE
+	return host.say_understands(other, speaking)
 
 /mob/living/simple_animal/borer/say(message)
 
