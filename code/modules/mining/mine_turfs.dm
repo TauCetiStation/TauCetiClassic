@@ -39,6 +39,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/mineral/atom_init_late()
+	MineralSpread()
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
@@ -113,6 +114,16 @@
 		var/obj/mecha/M = AM
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
+
+/turf/simulated/mineral/proc/MineralSpread()
+	if(mineral && mineral.spread)
+		for(var/trydir in cardinal)
+			if(prob(mineral.spread_chance))
+				var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
+				if(istype(target_turf) && !target_turf.mineral)
+					target_turf.mineral = mineral
+					target_turf.UpdateMineral()
+					target_turf.MineralSpread()
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
