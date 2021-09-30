@@ -21,10 +21,10 @@ def automataIteration(grid, birth_limit, death_limit):
     for i in range(1, len(new_grid)-1):
         for j in range(1, len(new_grid[0])-1):
             count = 0
-            if j>0:
+            if j > 0:
                 if new_grid[i-1][j]==1:
                     count+=1
-            if i>0:
+            if i > 0:
                 if new_grid[i][j-1]==1:
                     count+=1
             if i > 0 and j > 0:
@@ -32,7 +32,7 @@ def automataIteration(grid, birth_limit, death_limit):
                     count+=1
 
             if j < len(new_grid[i])-1:
-                if new_grid[i-1][j+1]:
+                if new_grid[i+1][j]:
                     count+=1
 
             if i < len(new_grid)-1:

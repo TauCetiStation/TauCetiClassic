@@ -23,7 +23,7 @@
 	///Chance of cells starting closed
 	var/initial_closed_chance = 45
 	///Amount of smoothing iterations
-	var/smoothing_iterations = 13
+	var/smoothing_iterations = 50
 	///How much neighbours does a dead cell need to become alive
 	var/birth_limit = 4
 	///How little neighbours does a alive cell need to die
