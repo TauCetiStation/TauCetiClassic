@@ -66,6 +66,7 @@ var/global/loopModeNames=list(
 
 	anchored = TRUE
 	playing = 0
+	var/transmitting = FALSE
 
 	var/loop_mode = JUKEMODE_SHUFFLE
 
@@ -80,6 +81,7 @@ var/global/loopModeNames=list(
 	var/autoplay      = 0
 	var/last_reload   = 0
 	var/state_base = "jukebox2"
+	var/media_frequency = 1984
 
 /obj/machinery/media/jukebox/power_change()
 	..()
@@ -121,6 +123,8 @@ var/global/loopModeNames=list(
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
+	t += "<b>Transmitter:</b> <a href='?src=\ref[src];transmit=1'>[transmitting?"On":"Off"]</a><br />"
+	t += "Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>"
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
@@ -159,6 +163,12 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
+<<<<<<< Updated upstream
+=======
+			if(!anchored)
+				disconnect_media_source()
+				disconnect_frequency()
+>>>>>>> Stashed changes
 	else
 		..()
 
@@ -189,6 +199,25 @@ var/global/loopModeNames=list(
 		playing = !playing
 		update_music()
 		update_icon()
+
+	if (href_list["transmit"])
+		transmitting = !transmitting
+
+	if (href_list["set_freq"])
+		var/newfreq=media_frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq = text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
+		if(newfreq)
+			if(!IS_INTEGER(newfreq))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq > 900 && newfreq < 2000) // Between (90.0 and 100.0)
+				disconnect_frequency()
+				media_frequency = newfreq
+				connect_frequency()
+			else
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
 
 	if (href_list["playlist"])
 		if(!check_reload())
@@ -257,8 +286,18 @@ var/global/loopModeNames=list(
 					update_icon()
 					return
 			update_music()
+		if(transmitting)
+			var/freq = num2text(media_frequency)
+			if(!(freq in media_transmitters))
+				connect_frequency()
+			if(freq in media_receivers)
+				for(var/obj/machinery/media/speaker/Speaker in media_receivers[freq])
+					Speaker.receive_broadcast(media_url,media_start_time)
+		else
+			disconnect_frequency()
 
 /obj/machinery/media/jukebox/update_music()
+
 	if(current_song && current_song <= playlist.len && playing )
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
@@ -268,6 +307,11 @@ var/global/loopModeNames=list(
 	else
 		media_url=""
 		media_start_time = 0
+	if(transmitting)
+		var/freq = num2text(media_frequency)
+		if(freq in media_receivers)
+			for(var/obj/machinery/media/speaker/Speaker in media_receivers[freq])
+				Speaker.receive_broadcast(media_url,media_start_time)
 	..()
 
 /obj/machinery/media/jukebox/proc/stop_playing()
@@ -275,6 +319,34 @@ var/global/loopModeNames=list(
 	playing=0
 	update_music()
 	return
+
+/obj/machinery/media/jukebox/Destroy()
+	disconnect_frequency()
+	disconnect_media_source()
+	return ..()
+
+/obj/machinery/media/jukebox/setLoc(turf/T, teleported=0)
+	disconnect_frequency()
+	disconnect_media_source()
+	..(T)
+	if(anchored)
+		update_music()
+
+/obj/machinery/media/jukebox/proc/connect_frequency()
+	var/list/transmitters=list()
+	var/freq = num2text(media_frequency)
+	if(freq in media_transmitters)
+		transmitters = media_transmitters[freq]
+	transmitters.Add(src)
+	media_transmitters[freq]=transmitters
+
+/obj/machinery/media/jukebox/proc/disconnect_frequency()
+	var/list/transmitters=list()
+	var/freq = num2text(media_frequency)
+	if(freq in media_transmitters)
+		transmitters = media_transmitters[freq]
+	transmitters.Remove(src)
+	media_transmitters[freq]=transmitters
 
 /obj/machinery/media/jukebox/bar
 	playlist_id="bar"
@@ -359,3 +431,109 @@ var/global/loopModeNames=list(
 	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1
+
+/obj/machinery/media/speaker
+	name = "Speaker"
+	desc = "Stay tuned!"
+
+	icon = 'icons/obj/jukebox.dmi'
+
+	density = TRUE
+	anchored = FALSE
+
+	playing = 0
+	var/on=FALSE
+	var/media_frequency = 1984
+
+/obj/machinery/media/speaker/atom_init()
+	update_icon()
+
+/obj/machinery/media/speaker/ui_interact(mob/user)
+	var/dat = "<TT>"
+	dat += {"
+				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
+				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
+				"}
+	dat+={"</TT>"}
+
+	var/datum/browser/popup = new(user, "radio-recv", "[src]")
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/media/speaker/Topic(href,href_list)
+	if("power" in href_list)
+		if(!anchored)
+			return FALSE
+		if(on)
+			visible_message("\The [src] falls quiet.")
+			playing=0
+			disconnect_frequency()
+		else
+			visible_message("\The [src] hisses to life!")
+			playing=1
+			connect_frequency()
+		on = !on
+		update_icon()
+	if("set_freq" in href_list)
+		var/newfreq=media_frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq = text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
+		if(newfreq)
+			if(!IS_INTEGER(newfreq))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq > 900 && newfreq < 2000) // Between (90.0 and 100.0)
+				disconnect_frequency()
+				media_frequency = newfreq
+				connect_frequency()
+			else
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
+	updateDialog()
+
+/obj/machinery/media/speaker/proc/connect_frequency()
+	var/list/receivers=list()
+	var/freq = num2text(media_frequency)
+	if(freq in media_receivers)
+		receivers = media_receivers[freq]
+	receivers.Add(src)
+	media_receivers[freq]=receivers
+
+/obj/machinery/media/speaker/proc/disconnect_frequency()
+	var/list/receivers=list()
+	var/freq = num2text(media_frequency)
+	if(freq in media_receivers)
+		receivers = media_receivers[freq]
+	receivers.Remove(src)
+	media_receivers[freq]=receivers
+	receive_broadcast()
+
+/obj/machinery/media/speaker/proc/receive_broadcast(url="", start_time=0)
+	media_url = url
+	media_start_time = start_time
+	update_music()
+
+/obj/machinery/media/speaker/attackby(obj/item/W, mob/user, params)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(iswrench(W))
+		if(user.is_busy(src))
+			return
+		var/un = !anchored ? "" : "un"
+		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
+		if(W.use_tool(src, user, 30, volume = 50))
+			on = FALSE
+			anchored = !anchored
+			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
+			update_icon()
+			if(!anchored)
+				playing = 0
+				disconnect_frequency()
+				disconnect_media_source()
+
+/obj/machinery/media/speaker/update_icon()
+	if(!anchored)
+		icon_state = "speaker_idle"
+	else if(on)
+		icon_state = "speaker_playing"
+	else
+		icon_state = "speaker_anchored"

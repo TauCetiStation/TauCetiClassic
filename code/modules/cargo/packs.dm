@@ -638,6 +638,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Party equipment"
 	group = "Hospitality"
 
+/datum/supply_pack/media_speaker
+	name = "Media Speaker"
+	contains = list(/obj/machinery/media/speaker)
+	cost = 3000
+	crate_type = /obj/structure/largecrate
+	crate_name = "Media Speaker crate"
+	group = "Hospitality"
+
 //----------------------------------------------
 //-----------------ENGINEERING------------------
 //----------------------------------------------
