@@ -51,7 +51,7 @@
 	icon_state = "E-SW"
 	},
 /turf/simulated/wall/r_wall,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "ak" = (
 /obj/structure/transit_tube,
 /turf/simulated/floor/plating/airless{
@@ -73,11 +73,11 @@
 	icon_state = "D-SW"
 	},
 /turf/simulated/mineral,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "an" = (
 /obj/effect/glowshroom,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "ao" = (
 /obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-21"
@@ -152,7 +152,7 @@
 	icon_state = "D-SE"
 	},
 /turf/simulated/mineral,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "ay" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/blood/oil,
@@ -179,7 +179,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "aB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -2774,7 +2774,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "fG" = (
 /obj/machinery/vending/snack,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -3035,12 +3035,6 @@
 /obj/item/weapon/folder,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
-"gi" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NW"
-	},
-/turf/simulated/mineral,
-/area/asteroid/mine/unexplored)
 "gj" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -6884,14 +6878,6 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
-"om" = (
-/obj/structure/transit_tube{
-	icon_state = "S-NE"
-	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/asteroid/mine/unexplored)
 "on" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
@@ -6899,7 +6885,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "oo" = (
 /obj/machinery/camera{
 	c_tag = "Misc Test";
@@ -7220,7 +7206,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "oX" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -7616,7 +7602,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pO" = (
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
@@ -7624,7 +7610,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pP" = (
 /obj/item/weapon/rack_parts,
 /turf/simulated/floor/airless{
@@ -7772,18 +7758,10 @@
 "qh" = (
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/explored)
-"qi" = (
-/obj/structure/transit_tube{
-	icon_state = "NE-SW"
-	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/asteroid/mine/unexplored)
 "qj" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "qk" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/airless{
@@ -7994,16 +7972,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
-"qM" = (
-/obj/structure/transit_tube,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "qN" = (
 /obj/structure/transit_tube/station,
 /obj/machinery/light/small{
@@ -8013,7 +7982,7 @@
 	dir = 1;
 	icon_state = "bot"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "qO" = (
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
@@ -8024,10 +7993,7 @@
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/asteroid/mine/unexplored)
-"qP" = (
-/turf/simulated/wall,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "qQ" = (
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/abandoned)
@@ -8156,15 +8122,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
-"rf" = (
-/obj/machinery/door/window/westleft{
-	dir = 2
-	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "rg" = (
 /obj/machinery/door/window/westleft{
 	dir = 4
@@ -8173,7 +8131,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "rh" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -8376,9 +8334,6 @@
 /area/asteroid/mine/explored)
 "rK" = (
 /turf/simulated/mineral/random/low_chance,
-/area/asteroid/mine/explored)
-"rL" = (
-/turf/space,
 /area/asteroid/mine/explored)
 "rM" = (
 /obj/machinery/light/small{
@@ -11422,10 +11377,6 @@
 /obj/structure/pit/closed/grave,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
-"zH" = (
-/obj/structure/pit/closed/grave,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
 "zJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -11543,10 +11494,6 @@
 	icon_state = "vault"
 	},
 /area/asteroid/mine/living_quarters)
-"zX" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
 "zY" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
@@ -12338,7 +12285,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "Fd" = (
 /obj/machinery/mineral/unloading_machine{
 	icon_state = "unloader-corner"
@@ -31894,7 +31841,7 @@ lA
 lA
 lA
 lA
-ad
+ej
 ej
 ad
 ad
@@ -32925,7 +32872,7 @@ lA
 lA
 lA
 lA
-aI
+si
 ad
 ad
 ad
@@ -33175,15 +33122,15 @@ ad
 ad
 ad
 ad
-aI
 si
 si
+si
 lA
 lA
 lA
-pC
-pC
-aI
+lA
+lA
+si
 ad
 ad
 ad
@@ -33412,10 +33359,10 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
 ad
 ad
 ad
@@ -33432,17 +33379,17 @@ ad
 ad
 ad
 ad
-aI
-aI
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-aI
-aI
+si
+si
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+si
+si
 ad
 ad
 ad
@@ -33672,11 +33619,11 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
+lA
 ad
 ad
 ad
@@ -33687,19 +33634,19 @@ ad
 ad
 ad
 ad
-aI
-aI
-aI
-pC
-pC
-aI
-aI
-aI
-aI
-pC
-pC
-pC
-aI
+si
+si
+si
+lA
+lA
+si
+si
+si
+si
+lA
+lA
+lA
+si
 ad
 ad
 ad
@@ -33929,37 +33876,37 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+lA
 ad
 ad
 ad
 ad
-aI
-aI
-aI
-pC
-pC
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-pC
-aI
-aI
-aI
-aI
+si
+si
+si
+lA
+lA
+si
+si
+si
+si
+si
+si
+si
+lA
+si
+si
+si
+si
 ad
 ad
 ad
@@ -34192,32 +34139,32 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
-pC
-aI
-aI
-aI
-pC
-pC
-pC
-aI
-aI
+lA
+lA
+lA
+lA
+lA
+lA
+si
+si
+si
+lA
+lA
+lA
+si
+si
 ad
 ad
 ad
-aI
-aI
-aI
-pC
-pC
-pC
-aI
-aI
-aI
+si
+si
+si
+lA
+lA
+lA
+si
+si
+si
 ad
 ad
 ad
@@ -34452,29 +34399,29 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-aI
-aI
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+si
+si
 ad
 ad
 ad
 ad
 ad
 ad
-aI
-aI
-pC
-pC
-pC
-pC
-aI
+si
+si
+lA
+lA
+lA
+lA
+si
 ad
 ad
 ad
@@ -34712,12 +34659,12 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-aI
-aI
+lA
+lA
+lA
+lA
+si
+si
 ad
 ad
 ad
@@ -34728,10 +34675,10 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
 ad
 ad
 ad
@@ -34971,9 +34918,9 @@ ad
 ad
 ad
 ad
-pC
-aI
-aI
+lA
+si
+si
 ad
 ad
 ad
@@ -34988,9 +34935,9 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
+lA
+lA
+lA
 ad
 ad
 ac
@@ -35227,9 +35174,9 @@ ad
 ad
 ad
 ad
-pC
-aI
-aI
+lA
+si
+si
 ad
 ad
 ad
@@ -35247,7 +35194,7 @@ ad
 ad
 ad
 ad
-pC
+lA
 ad
 ad
 ac
@@ -35482,10 +35429,10 @@ ad
 ad
 aI
 ad
-pC
-pC
-pC
-aI
+lA
+lA
+lA
+si
 ad
 ad
 ad
@@ -47335,7 +47282,7 @@ ad
 ad
 ad
 ac
-zH
+zG
 ac
 ac
 ac
@@ -47591,12 +47538,12 @@ ad
 ad
 ad
 ac
-pC
-pC
+lA
+lA
 ac
-zH
-pC
-pC
+zG
+lA
+lA
 ac
 ac
 ac
@@ -47788,7 +47735,7 @@ aa
 aa
 aa
 aa
-mY
+ac
 ac
 ac
 ac
@@ -47848,15 +47795,15 @@ ad
 ad
 ad
 ac
-zH
-pC
-pC
-pC
-pC
-zX
-pC
-pC
-pC
+zG
+lA
+lA
+lA
+lA
+rS
+lA
+lA
+lA
 ac
 ad
 ad
@@ -48046,7 +47993,7 @@ aa
 aa
 aa
 aa
-mY
+ac
 ac
 ac
 ac
@@ -48105,15 +48052,15 @@ ac
 ad
 ad
 ac
-pC
-pC
-pC
-zX
-pC
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+rS
+lA
+lA
+lA
+lA
+lA
 ac
 ad
 ad
@@ -48303,8 +48250,8 @@ aa
 aa
 aa
 aa
-mY
-mY
+ac
+ac
 ac
 ac
 ac
@@ -48364,13 +48311,13 @@ ad
 ac
 ac
 ac
-zX
-pC
-pC
-pC
-pC
-zX
-pC
+rS
+lA
+lA
+lA
+lA
+rS
+lA
 ac
 ad
 ad
@@ -48620,14 +48567,14 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
+lA
+lA
+lA
+lA
 ac
 ad
 ad
@@ -48878,14 +48825,14 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-zX
-pC
-pC
-zX
-pC
+lA
+lA
+lA
+rS
+lA
+lA
+rS
+lA
 ac
 ad
 ad
@@ -49136,13 +49083,13 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
+lA
+lA
+lA
 ac
 ad
 ad
@@ -49393,12 +49340,12 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-zX
-pC
-pC
+lA
+lA
+lA
+rS
+lA
+lA
 ac
 ac
 ac
@@ -49603,40 +49550,40 @@ aa
 aa
 aa
 aa
-mY
-ac
-ac
-kO
-kO
-kO
-ac
-ac
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ac
 ac
 ac
 ac
 kO
 kO
 kO
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+kO
+kO
+kO
 aa
 aa
 aa
@@ -49651,10 +49598,10 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-pC
+lA
+lA
+lA
+lA
 ac
 ac
 ac
@@ -50119,7 +50066,7 @@ aa
 aa
 aa
 kO
-rL
+aa
 ar
 rN
 ar
@@ -50376,7 +50323,7 @@ aa
 aa
 rK
 rK
-mY
+ac
 ar
 rN
 ar
@@ -51864,11 +51811,11 @@ aa
 aF
 ar
 ar
-ac
-ac
-ac
-ac
-ac
+kO
+kO
+kO
+kO
+kO
 aa
 aa
 ar
@@ -52120,14 +52067,14 @@ aa
 aa
 aF
 ar
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+kO
+kO
+kO
+kO
+kO
+kO
+kO
+kO
 aX
 bh
 ap
@@ -52376,15 +52323,15 @@ aa
 aa
 aa
 ah
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+kO
+kO
+kO
+kO
+kO
+kO
+kO
+kO
+kO
 aX
 ek
 eQ
@@ -52633,15 +52580,15 @@ aa
 aa
 aa
 ah
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+kO
+kO
+kO
+kO
+kO
+kO
+kO
+kO
+kO
 aX
 el
 eR
@@ -52890,10 +52837,10 @@ aa
 aa
 aa
 ai
-ac
-ac
-ac
-ac
+kO
+kO
+kO
+kO
 aX
 aX
 aX
@@ -53147,9 +53094,9 @@ aa
 aa
 aa
 ai
-ac
-ac
-ac
+kO
+kO
+kO
 aX
 aX
 cd
@@ -53404,9 +53351,9 @@ aa
 aa
 aa
 ai
-ac
-ac
-ac
+kO
+kO
+kO
 aX
 bH
 ce
@@ -53661,9 +53608,9 @@ aa
 aa
 aa
 ai
-ac
-ac
-ac
+kO
+kO
+kO
 aX
 bA
 bQ
@@ -54430,7 +54377,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 ak
 au
 aL
@@ -54687,7 +54634,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 ak
 au
 ay
@@ -54944,7 +54891,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 ak
 au
 bb
@@ -55201,7 +55148,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 Am
 av
 cg
@@ -55458,7 +55405,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 am
 aw
 Bd
@@ -55715,8 +55662,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+kO
+kO
 aN
 bd
 aT
@@ -55972,8 +55919,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+kO
+kO
 au
 Bn
 Eb
@@ -56001,10 +55948,10 @@ nW
 ni
 lg
 lg
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 px
 px
@@ -56229,8 +56176,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+kO
+kO
 aO
 bf
 bg
@@ -56258,10 +56205,10 @@ oA
 po
 Eg
 Lg
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 ac
 px
@@ -56486,8 +56433,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+kO
+kO
 aj
 aQ
 bh
@@ -56515,10 +56462,10 @@ mH
 nj
 Fg
 lg
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 px
 px
@@ -56743,7 +56690,7 @@ aa
 aa
 aa
 aa
-ac
+kO
 an
 qL
 aR
@@ -56772,10 +56719,10 @@ nh
 pk
 Gg
 Lg
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 ac
 ac
@@ -57000,8 +56947,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+kO
+kO
 aA
 aR
 be
@@ -57029,10 +56976,10 @@ lm
 iJ
 iJ
 iJ
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 px
 px
@@ -57286,10 +57233,10 @@ nk
 ps
 du
 mn
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 ac
 px
@@ -57543,10 +57490,10 @@ oL
 oG
 jF
 iJ
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 ac
 ac
@@ -57800,10 +57747,10 @@ nm
 fi
 eq
 mn
-ac
-ac
+kO
+kO
 qL
-ac
+kO
 ac
 px
 px
@@ -58058,9 +58005,9 @@ lj
 lj
 lj
 lj
-ac
+kO
 qL
-ac
+kO
 ac
 ac
 ac
@@ -58317,9 +58264,9 @@ Mg
 pl
 lj
 qL
-ac
-qP
-ac
+kO
+jS
+kO
 ac
 ac
 ac
@@ -58576,7 +58523,7 @@ lj
 qL
 Fc
 an
-ac
+kO
 ac
 ac
 ac
@@ -58830,10 +58777,10 @@ Jg
 Og
 pl
 lj
-qM
+pW
 re
-pC
-ac
+lA
+kO
 ac
 ac
 px
@@ -59086,11 +59033,11 @@ lj
 lj
 lj
 lj
-ac
+kO
 qN
-rf
+qs
 an
-qP
+jS
 px
 ac
 px
@@ -59342,12 +59289,12 @@ oi
 lY
 mv
 oU
-ac
+kO
 ax
 qO
 rg
-pC
-ac
+lA
+kO
 ac
 px
 ac
@@ -59600,11 +59547,11 @@ oT
 pu
 oU
 ax
-qi
+kQ
 on
-pC
+lA
 an
-ac
+kO
 ac
 ac
 ac
@@ -59856,11 +59803,11 @@ ma
 oU
 oU
 nA
-qi
+kQ
 on
-pC
+lA
 an
-pC
+lA
 qj
 ac
 ac
@@ -60115,10 +60062,10 @@ ma
 pN
 on
 an
-pC
-pC
-pC
-ac
+lA
+lA
+lA
+kO
 ac
 px
 px
@@ -60370,12 +60317,12 @@ ok
 Dg
 ma
 qL
-rE
-pC
-pC
-pC
-pC
-ac
+oE
+lA
+lA
+lA
+lA
+kO
 ac
 ac
 ac
@@ -60627,12 +60574,12 @@ ok
 Dg
 ma
 qL
-rE
+oE
 an
 an
 an
-ac
-ac
+kO
+kO
 ac
 px
 px
@@ -60884,12 +60831,12 @@ pm
 Dg
 oV
 pO
-ac
-ac
-qP
-ac
-ac
-ac
+kO
+kO
+jS
+kO
+kO
+kO
 px
 px
 px
@@ -61141,7 +61088,7 @@ ma
 oV
 Kg
 on
-ac
+kO
 ac
 ac
 ac
@@ -61393,11 +61340,11 @@ kF
 yc
 Ar
 fB
-om
+lF
 fF
 oW
-gi
-ac
+lC
+kO
 ac
 ac
 px
@@ -61651,9 +61598,9 @@ fn
 Ar
 yU
 fD
-ac
-ac
-ac
+kO
+kO
+kO
 ac
 ac
 ac
