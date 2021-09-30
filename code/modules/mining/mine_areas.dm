@@ -33,6 +33,7 @@
 	name = "Mine"
 	icon_state = "unexplored"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
+	map_generator = /datum/map_generator/cave_generator
 	ambience = list(
 		'sound/ambience/space_1.ogg',
 		'sound/ambience/space_2.ogg',

@@ -41,6 +41,7 @@
 	var/static_environ
 
 	var/datum/religion/religion
+	var/datum/map_generator/map_generator
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
@@ -405,6 +406,14 @@ var/list/ghostteleportlocs = list()
 			used_light += amount
 		if(STATIC_ENVIRON)
 			used_environ += amount
+
+/area/proc/RunGeneration()
+	if(map_generator)
+		map_generator = new map_generator()
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.generate_terrain(turfs)
 
 /**
  * Call back when an atom enters an area

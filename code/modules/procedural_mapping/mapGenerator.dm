@@ -33,6 +33,9 @@
 		buildmode_name = copytext_char("[type]", 20) // / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
+/datum/map_generator/proc/generate_terrain(list/turfs)
+	return
+
 //Defines the region the map represents, sets map
 //Returns the map
 /datum/map_generator/proc/defineRegion(turf/Start, turf/End, replace = 0)

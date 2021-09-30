@@ -39,7 +39,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/mineral/atom_init_late()
-	MineralSpread()
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
@@ -115,16 +114,6 @@
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
-/turf/simulated/mineral/proc/MineralSpread()
-	if(mineral && mineral.spread)
-		for(var/trydir in cardinal)
-			if(prob(mineral.spread_chance))
-				var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
-				if(istype(target_turf) && !target_turf.mineral)
-					target_turf.mineral = mineral
-					target_turf.UpdateMineral()
-					target_turf.MineralSpread()
-
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
 		name = "Rock"
@@ -146,17 +135,6 @@
 		icon_state = "rock"
 
 	update_hud()
-
-/turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
-	if(mineral)
-		for(var/trydir in cardinal)
-			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
-			if(istype(target_turf, /turf/simulated/mineral/random/caves))
-				if(prob(2))
-					if(SSticker.current_state > GAME_STATE_SETTING_UP)
-						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
-					else
-						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -441,8 +419,6 @@
 			if(7)
 				new/obj/item/stack/sheet/mineral/uranium(src, rand(5,25))
 
-//this fucking caves works very badly with afterinit mapload (and with atominit generally)
-//todo: move cavespread from atominit for side trigger?
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
@@ -464,7 +440,6 @@
 		if (mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
-			CaveSpread()
 	. = ..()
 
 /turf/simulated/mineral/random/caves
@@ -510,25 +485,6 @@
 	var/length = 20
 	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
 	var/sanity = TRUE
-
-/turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
-	if(!length)
-		src.length = rand(MIN_TUNNEL_LENGTH, MAX_TUNNEL_LENGTH)
-	else
-		src.length = length
-
-	// Get our directiosn
-	var/forward_cave_dir = pick(alldirs - exclude_dir)
-	// Get the opposite direction of our facing direction
-	var/backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
-
-	// Make our tunnels
-	make_tunnel(forward_cave_dir)
-	if(go_backwards)
-		make_tunnel(backward_cave_dir)
-
-	..()
-	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init_late()
 	// Kill ourselves by replacing ourselves with a normal floor.

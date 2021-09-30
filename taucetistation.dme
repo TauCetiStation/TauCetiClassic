@@ -1953,6 +1953,7 @@
 #include "code\modules\power\tesla\coil.dm"
 #include "code\modules\power\tesla\energy_ball.dm"
 #include "code\modules\power\tesla\generator.dm"
+#include "code\modules\procedural_mapping\caveGenerator.dm"
 #include "code\modules\procedural_mapping\mapGenerator.dm"
 #include "code\modules\procedural_mapping\mapGeneratorModule.dm"
 #include "code\modules\procedural_mapping\mapGeneratorObj.dm"

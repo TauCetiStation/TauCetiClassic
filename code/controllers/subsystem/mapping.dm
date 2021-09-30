@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(mapping)
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	// Generate mining.
+	run_map_generation()
 	make_mining_asteroid_secrets()
 	populate_distribution_map()
 	// Load templates
@@ -52,6 +53,10 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
 		make_mining_asteroid_secret(3)
+
+/datum/controller/subsystem/mapping/proc/run_map_generation()
+	for(var/area/A in world)
+		A.RunGeneration()
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
