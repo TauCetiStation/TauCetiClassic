@@ -302,8 +302,6 @@
 /obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
 	..()
 	if(camera && !emagged)
-		if(emagged)
-			return
 		camera.status = TRUE
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
 
