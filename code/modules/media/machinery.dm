@@ -95,6 +95,8 @@
 
 /obj/machinery/media/atom_init()
 	. = ..()
+	if(!loc)
+		return
 	update_media_source()
 
 /obj/machinery/media/Destroy()

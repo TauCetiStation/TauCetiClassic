@@ -434,6 +434,7 @@ var/global/loopModeNames=list(
 	desc = "Stay tuned!"
 
 	icon = 'icons/obj/jukebox.dmi'
+	icon_state = "speaker_idle"
 
 	density = TRUE
 	anchored = FALSE
@@ -441,10 +442,6 @@ var/global/loopModeNames=list(
 	playing = 0
 	var/on=FALSE
 	var/media_frequency = 1984
-
-/obj/machinery/media/speaker/atom_init()
-	. = ..()
-	update_icon()
 
 /obj/machinery/media/speaker/ui_interact(mob/user)
 	var/dat = "<TT>"
