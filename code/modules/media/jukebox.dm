@@ -443,6 +443,7 @@ var/global/loopModeNames=list(
 	var/media_frequency = 1984
 
 /obj/machinery/media/speaker/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/machinery/media/speaker/ui_interact(mob/user)
