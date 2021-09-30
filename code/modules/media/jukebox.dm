@@ -163,12 +163,9 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
-<<<<<<< Updated upstream
-=======
 			if(!anchored)
 				disconnect_media_source()
 				disconnect_frequency()
->>>>>>> Stashed changes
 	else
 		..()
 
