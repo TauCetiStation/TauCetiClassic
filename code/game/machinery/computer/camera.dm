@@ -372,7 +372,7 @@
 	icon_state = "camera_alt"
 	state_broken_preset = null
 	state_nopower_preset = null
-	network = list("SS13")
+	network = list("SS13", "SECURITY UNIT")
 	light_color = "#642850"
 
 /obj/machinery/computer/security/bodycam
@@ -382,5 +382,6 @@
 	state_broken_preset = "laptopb"
 	state_nopower_preset = "laptop0"
 	network = list("SECURITY UNIT")
+	req_one_access = list(access_hos)
 
 #undef DEFAULT_MAP_SIZE
