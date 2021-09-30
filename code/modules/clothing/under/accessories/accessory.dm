@@ -309,9 +309,7 @@
 
 /obj/item/clothing/accessory/holobadge/on_removed(mob/user)
 	..()
-	if(camera)
-		if(emagged)
-			return
+	if(camera && !emagged)
 		camera.status = FALSE
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")
 
