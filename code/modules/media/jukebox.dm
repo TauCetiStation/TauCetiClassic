@@ -159,7 +159,7 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
-			if(!anchored)
+			if(!anchored && !emagged)
 				disconnect_media_source()
 	else
 		..()
