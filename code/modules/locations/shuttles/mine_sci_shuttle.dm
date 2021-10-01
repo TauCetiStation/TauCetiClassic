@@ -18,6 +18,13 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	state_nopower_preset = "comm0"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
 
+	var/lastMove = 0
+
+/obj/machinery/computer/mine_sci_shuttle/process()
+	if(..())
+		if(lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time >= -20)
+			updateUsrDialog()
+
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
 	var/dat
 	if(autopilot)
@@ -27,7 +34,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
 			shuttle_location = "Research Outpost"
 		dat += "<ul><li>Location: [shuttle_location]</li>"
-		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
+		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
 		dat += "</ul>"
 		dat += "<a href='?src=\ref[src];mine=1'>Mining Station</a> |"
 		dat += "<a href='?src=\ref[src];station=1'>[station_name()]</a> |"
@@ -60,6 +67,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	else if(href_list["station"])
 		result = autopilot.mine_sci_move_to(STATION_DOCK)
 	if(result)
+		lastMove = world.time
 		to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 
 	updateUsrDialog()
@@ -76,7 +84,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
 	var/area/asteroid/mine_sci_curr_location
 	var/moving = 0
-	var/lastMove = 0
+	lastMove = 0
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/atom_init()
 	. = ..()
@@ -87,6 +95,11 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		set_dir(WEST)
 		if(!mine_sci_curr_location)
 			mine_sci_curr_location = my_area
+
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/process()
+	if(..())
+		if(lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time >= -20)
+			updateUsrDialog()
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/Destroy()
 	if(autopilot == src) //if we have more than one flight comp! (look imbossible)

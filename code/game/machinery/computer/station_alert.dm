@@ -15,6 +15,10 @@
 	station_alert_list -= src
 	return ..()
 
+/obj/machinery/computer/station_alert/process()
+	if(..())
+		updateDialog()
+
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
 	var/dat = ""
 	for (var/cat in src.alarms)

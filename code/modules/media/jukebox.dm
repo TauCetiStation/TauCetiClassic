@@ -66,6 +66,7 @@ var/global/loopModeNames=list(
 
 	anchored = TRUE
 	playing = 0
+	var/playlistcooldowned = FALSE
 
 	var/loop_mode = JUKEMODE_SHUFFLE
 
@@ -144,9 +145,6 @@ var/global/loopModeNames=list(
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
 	popup.open()
-	sleep(10)
-	updateUsrDialog()
-
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -178,6 +176,10 @@ var/global/loopModeNames=list(
 		update_music()
 	return TRUE
 
+/obj/machinery/media/jukebox/proc/playlist_cooldown()
+	playlistcooldowned = FALSE
+	updateUsrDialog()
+
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -196,6 +198,9 @@ var/global/loopModeNames=list(
 		if(!check_reload())
 			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
+		if(!playlistcooldowned)
+			playlistcooldowned = TRUE
+			addtimer(CALLBACK(src, .proc/playlist_cooldown), 60 SECONDS)
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
 		playlist = null
@@ -238,6 +243,7 @@ var/global/loopModeNames=list(
 			if(autoplay)
 				playing=1
 				autoplay=0
+			updateUsrDialog()
 		else
 			//testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN

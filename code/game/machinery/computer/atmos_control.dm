@@ -14,6 +14,10 @@
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
 
+/obj/machinery/computer/atmoscontrol/process()
+	if(..())
+		updateUsrDialog()
+
 /obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
 	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.
 		overridden = TRUE
