@@ -32,30 +32,30 @@
 	length = text2num(json["length"])
 
 /datum/song_info/proc/display()
-	var/str="\"[title]\""
-	if(artist!="")
+	var/str = "\"[title]\""
+	if(artist != "")
 		str += ", by [artist]"
-	if(album!="")
+	if(album != "")
 		str += ", from '[album]'"
 	return str
 
 /datum/song_info/proc/displaytitle()
-	if(artist==""&&title=="")
+	if(artist == "" && title == "")
 		return "\[NO TAGS\]"
-	var/str=""
-	if(artist!="")
+	var/str = ""
+	if(artist != "")
 		str += "[artist] - "
-	if(title!="")
+	if(title != "")
 		str += "\"[title]\""
 	else
 		str += "Untitled"
 	return str
 
 
-var/global/loopModeNames=list(
+var/global/loopModeNames = list(
 	JUKEMODE_SHUFFLE = "Shuffle",
 	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
+	JUKEMODE_PLAY_ONCE = "Once",
 )
 /obj/machinery/media/jukebox
 	name = "Jukebox"
@@ -71,7 +71,7 @@ var/global/loopModeNames=list(
 	var/loop_mode = JUKEMODE_SHUFFLE
 
 	// Server-side playlist IDs this jukebox can play.
-	var/list/playlists=list() // ID = Label
+	var/list/playlists = list() // ID = Label
 
 	// Playlist to load at startup.
 	var/playlist_id = ""
@@ -136,7 +136,7 @@ var/global/loopModeNames=list(
 			t += "<i>Please wait before changing playlists.</i>"
 		t += "<br />"
 		if(current_song && current_song < playlist.len)
-			var/datum/song_info/song=playlist[current_song]
+			var/datum/song_info/song = playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
 		var/i
@@ -173,8 +173,8 @@ var/global/loopModeNames=list(
 	current_song = 0
 	if(!emagged)
 		playlist_id = "emagged"
-		last_reload=world.time
-		playlist=null
+		last_reload = world.time
+		playlist = null
 		loop_mode = JUKEMODE_SHUFFLE
 		emagged = 1
 		playing = 1
@@ -201,8 +201,8 @@ var/global/loopModeNames=list(
 		transmitting = !transmitting
 
 	if (href_list["set_freq"])
-		var/newfreq=media_frequency
-		if(href_list["set_freq"]!="-1")
+		var/newfreq = media_frequency
+		if(href_list["set_freq"] != "-1")
 			newfreq = text2num(href_list["set_freq"])
 		else
 			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
@@ -228,7 +228,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
-		current_song=clamp(text2num(href_list["song"]), 1, playlist.len)
+		current_song = clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
@@ -239,10 +239,10 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
-		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
+		var/url = "[config.media_base_url]/index.php?playlist=[playlist_id]"
 		//testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
-		playlist=list()
+		playlist = list()
 		if(response)
 			var/json = file2text(response["CONTENT"])
 			if("/>" in json)
@@ -253,15 +253,15 @@ var/global/loopModeNames=list(
 			var/songdata = json_decode(json)
 			for(var/list/record in songdata)
 				playlist += new /datum/song_info(record)
-			if(playlist.len==0)
+			if(playlist.len == 0)
 				visible_message("<span class='warning'>[bicon(src)] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
 				stat &= BROKEN
 				update_icon()
 				return
 			visible_message("<span class='notice'>[bicon(src)] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
 			if(autoplay)
-				playing=1
-				autoplay=0
+				playing = 1
+				autoplay = 0
 		else
 			//testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN
@@ -272,14 +272,14 @@ var/global/loopModeNames=list(
 		if(current_song && current_song <= playlist.len)
 			song = playlist[current_song]
 		if(!current_song || (song && world.time >= media_start_time + song.length))
-			current_song=1
+			current_song = 1
 			switch(loop_mode)
 				if(JUKEMODE_SHUFFLE)
-					current_song=rand(1,playlist.len)
+					current_song = rand(1,playlist.len)
 				if(JUKEMODE_REPEAT_SONG)
-					current_song=current_song
+					current_song = current_song
 				if(JUKEMODE_PLAY_ONCE)
-					playing=0
+					playing = 0
 					update_icon()
 					return
 			update_music()
@@ -302,7 +302,7 @@ var/global/loopModeNames=list(
 		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
 		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</span>")
 	else
-		media_url=""
+		media_url = ""
 		media_start_time = 0
 	if(transmitting)
 		var/freq = num2text(media_frequency)
@@ -313,7 +313,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/proc/stop_playing()
 	//current_song=0
-	playing=0
+	playing = 0
 	update_music()
 	return
 
@@ -330,25 +330,25 @@ var/global/loopModeNames=list(
 		update_music()
 
 /obj/machinery/media/jukebox/proc/connect_frequency()
-	var/list/transmitters=list()
+	var/list/transmitters = list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_transmitters)
 		transmitters = media_transmitters[freq]
 	transmitters.Add(src)
-	media_transmitters[freq]=transmitters
+	media_transmitters[freq] = transmitters
 
 /obj/machinery/media/jukebox/proc/disconnect_frequency()
-	var/list/transmitters=list()
+	var/list/transmitters = list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_transmitters)
 		transmitters = media_transmitters[freq]
 	transmitters.Remove(src)
-	media_transmitters[freq]=transmitters
+	media_transmitters[freq] = transmitters
 
 /obj/machinery/media/jukebox/bar
-	playlist_id="bar"
+	playlist_id = "bar"
 	// Must be defined on your server.
-	playlists=list(
+	playlists = list(
 		"bar"  = "Bar Mix",
 		"mogesfm84"  = "Moghes FM-84",
 		"moges" = "Moghes Club Music",
@@ -372,13 +372,13 @@ var/global/loopModeNames=list(
 // Relaxing elevator music~
 /obj/machinery/media/jukebox/dj
 
-	playlist_id="bar"
+	playlist_id = "bar"
 	autoplay = 1
 
-	id_tag="DJ Satellite" // For autolink
+	id_tag = "DJ Satellite" // For autolink
 
 	// Must be defined on your server.
-	playlists=list(
+	playlists = list(
 		"bar"  = "Bar Mix",
 		"mogesfm84"  = "Moghes FM-84",
 		"moges" = "Moghes Club Music",
@@ -403,30 +403,30 @@ var/global/loopModeNames=list(
 	name = "Techno disc"
 	desc = "Looks like an oldschool mixing board that somehow plays music, don't ask us how, we don't know."
 	state_base = "mixer"
-	playlist_id="club"
+	playlist_id = "club"
 
-	playlists=list(
+	playlists = list(
 		"club"	= "Club Mix",
 
 	)
 
 /obj/machinery/media/jukebox/shuttle
-	playlist_id="shuttle"
+	playlist_id = "shuttle"
 	// Must be defined on your server.
-	playlists=list(
+	playlists = list(
 		"shuttle"  = "Shuttle Mix"
 	)
-	invisibility=101 // FAK U NO SONG 4 U
+	invisibility = 101 // FAK U NO SONG 4 U
 
 /obj/machinery/media/jukebox/lobby
-	playlist_id="lobby"
+	playlist_id = "lobby"
 	// Must be defined on your server.
-	playlists=list(
+	playlists = list(
 		"lobby" = "Lobby Mix"
 	)
 	playlist_id = "lobby"
 	use_power = NO_POWER_USE
-	invisibility=101
+	invisibility = 101
 	autoplay = 1
 
 /obj/machinery/media/speaker
@@ -440,7 +440,7 @@ var/global/loopModeNames=list(
 	anchored = FALSE
 
 	playing = 0
-	var/on=FALSE
+	var/on = FALSE
 	var/media_frequency = 1984
 
 /obj/machinery/media/speaker/ui_interact(mob/user)
@@ -449,7 +449,7 @@ var/global/loopModeNames=list(
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
 				"}
-	dat+={"</TT>"}
+	dat += {"</TT>"}
 
 	var/datum/browser/popup = new(user, "radio-recv", "[src]")
 	popup.set_content(dat)
@@ -461,17 +461,17 @@ var/global/loopModeNames=list(
 			return FALSE
 		if(on)
 			visible_message("\The [src] falls quiet.")
-			playing=0
+			playing = 0
 			disconnect_frequency()
 		else
 			visible_message("\The [src] hisses to life!")
-			playing=1
+			playing = 1
 			connect_frequency()
 		on = !on
 		update_icon()
 	if("set_freq" in href_list)
-		var/newfreq=media_frequency
-		if(href_list["set_freq"]!="-1")
+		var/newfreq = media_frequency
+		if(href_list["set_freq"] != "-1")
 			newfreq = text2num(href_list["set_freq"])
 		else
 			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
@@ -487,23 +487,23 @@ var/global/loopModeNames=list(
 	updateDialog()
 
 /obj/machinery/media/speaker/proc/connect_frequency()
-	var/list/receivers=list()
+	var/list/receivers = list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_receivers)
 		receivers = media_receivers[freq]
 	receivers.Add(src)
-	media_receivers[freq]=receivers
+	media_receivers[freq] = receivers
 
 /obj/machinery/media/speaker/proc/disconnect_frequency()
-	var/list/receivers=list()
+	var/list/receivers = list()
 	var/freq = num2text(media_frequency)
 	if(freq in media_receivers)
 		receivers = media_receivers[freq]
 	receivers.Remove(src)
-	media_receivers[freq]=receivers
+	media_receivers[freq] = receivers
 	receive_broadcast()
 
-/obj/machinery/media/speaker/proc/receive_broadcast(url="", start_time=0)
+/obj/machinery/media/speaker/proc/receive_broadcast(url = "", start_time=0)
 	media_url = url
 	media_start_time = start_time
 	update_music()
