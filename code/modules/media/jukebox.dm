@@ -456,6 +456,10 @@ var/global/loopModeNames = list(
 	popup.open()
 
 /obj/machinery/media/speaker/Topic(href,href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if("power" in href_list)
 		if(!anchored)
 			return FALSE
