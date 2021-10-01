@@ -336,6 +336,8 @@
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
+	sleep(25)
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/set_extended_inventory(state)
 	extended_inventory = state

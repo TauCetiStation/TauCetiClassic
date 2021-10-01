@@ -144,6 +144,8 @@ var/global/loopModeNames=list(
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
 	popup.open()
+	sleep(10)
+	updateUsrDialog()
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
