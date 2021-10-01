@@ -19,7 +19,7 @@
 	var/feature_spawn_chance = 0.1
 
 	///Unique ID for this spawner
-	var/string_gen
+	var/string_gen = null
 	///Chance of cells starting closed
 	var/initial_closed_chance = 45
 	///Amount of smoothing iterations
@@ -33,7 +33,9 @@
 	. = ..()
 	var/start_time = REALTIMEOFDAY
 	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance]")//Generate the raw CA data
-
+	if(!string_gen)
+		var/message = "[name] failed to load!"
+		return log_game(message)
 	for(var/i as anything in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i
 
