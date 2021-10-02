@@ -6,7 +6,7 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
-#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
+#define NOLIMB           -1    // related to "pierce_protection" check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
@@ -23,7 +23,7 @@
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
-#define THICKMATERIAL          (1<<8)   // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
+#define NOPIERCE               (1<<8)
 #define GLASSESCOVERSEYES      (1<<8)
 #define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.

@@ -79,16 +79,6 @@
 	message = "Мы отследили взломшик#, это каже@&# ва3) сист7ма ИИ, он# *#@амыает меха#7зм самоун@чт$#енiя. Оста*##ивте )то по*@!)$#&&@@  <СВЯЗЬ ПОТЕРЯНА>"
 	sound = "malf4"
 
-/* Cult */
-/datum/announcement/station/cult/capture_area
-	name = "Anomaly: Bluespace"
-	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
-	sound = "bluspaceanom"
-/datum/announcement/station/cult/capture_area/play(area/A)
-	if(A)
-		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
-	..()
-
 /* Gang */
 /datum/announcement/centcomm/gang/announce_gamemode
 	name = "Gang: Announce"

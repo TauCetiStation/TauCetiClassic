@@ -385,6 +385,9 @@
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
 			M.Weaken(10)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -405,6 +408,8 @@
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
 			H.Weaken(10)
+		if(volume >= overdose)
+			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -637,6 +642,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan

@@ -131,7 +131,7 @@
 				continue
 
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-			if(H.check_thickmaterial(BP))
+			if(H.check_pierce_protection(BP))
 				power_calculated = 0
 			else
 				power_calculated *= H.get_siemens_coefficient_organ(BP)
