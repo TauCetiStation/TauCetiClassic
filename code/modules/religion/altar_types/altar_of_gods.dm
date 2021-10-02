@@ -38,8 +38,6 @@
 	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
 	init_turfs_around()
 
-	poi_list += src
-
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
@@ -289,12 +287,13 @@
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!sect_type)
+	if(!sect_type || chosen_aspect)
 		return
+
+	chosen_aspect = TRUE
 
 	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
-	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 	return
@@ -418,7 +417,7 @@
 	return ..()
 
 /obj/structure/altar_of_gods/proc/init_turfs_around()
-	for(var/turf/T in orange(3, src))
+	for(var/turf/T as anything in RANGE_TURFS(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
 		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
 		turfs_around += T
@@ -431,7 +430,7 @@
 		mobs_around -= M
 
 /obj/structure/altar_of_gods/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
-	if(istype(mover, /mob))
+	if(ismob(mover))
 		mobs_around |= mover
 
 /obj/structure/altar_of_gods/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)

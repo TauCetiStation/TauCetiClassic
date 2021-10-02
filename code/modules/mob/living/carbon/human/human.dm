@@ -645,7 +645,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-
+	attack_heart(5, 5)
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -1239,6 +1239,8 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
+		if(!temp_turf)
+			continue
 		if((!is_station_level(temp_turf.z) && !is_mining_level(temp_turf.z) || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
@@ -1553,12 +1555,12 @@
 
 		var/hunt_injection_port = FALSE
 
-		switch(check_thickmaterial(target_zone = user.get_targetzone()))
+		switch(check_pierce_protection(target_zone = user.get_targetzone()))
 			if(NOLIMB)
 				if(error_msg)
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
-			if(THICKMATERIAL)
+			if(NOPIERCE)
 				if(!pierce_armor)
 					if(error_msg)
 						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
@@ -2011,11 +2013,11 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
-	if(check_thickmaterial(target_zone = BP_CHEST))
+	if(check_pierce_protection(target_zone = BP_CHEST))
 		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
 		return
 
@@ -2126,7 +2128,7 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(!penetrate_thick)
-		if(check_thickmaterial(target_zone = def_zone))
+		if(check_pierce_protection(target_zone = def_zone))
 			if(show_message)
 				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 			return FALSE
@@ -2255,3 +2257,21 @@
 
 	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+
+
+/mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	if(!Heart)
+		return
+	switch(Heart.heart_status)
+		if(HEART_NORMAL)
+			if(prob(damage_prob))
+				Heart.heart_fibrillate()
+		if(HEART_FIBR)
+			if(prob(damage_prob))
+				Heart.heart_stop()
+			if(prob(heal_prob))
+				Heart.heart_normalize()
+		if(HEART_FAILURE)
+			if(prob(heal_prob))
+				Heart.heart_fibrillate()
