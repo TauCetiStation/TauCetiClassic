@@ -23,3 +23,8 @@
 			to_chat(user, "<span class='warning'>Только лидер культа может выбирать аспекты!</span>")
 			return
 	interact_nullrod(I, user)
+
+/obj/structure/altar_of_gods/cult/tgui_data(mob/user)
+	var/list/data = ..()
+	data["holds_nullrod"] = istype(user.get_active_hand(), /obj/item/weapon/storage/bible/tome)
+	return data

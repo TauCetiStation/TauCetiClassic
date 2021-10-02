@@ -240,9 +240,6 @@
 	return FALSE
 
 /obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
-	if(!istype(user.get_active_hand(), /obj/item/weapon/nullrod))
-		return
-
 	if(!rite_name)
 		return
 
@@ -292,9 +289,6 @@
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!istype(user.get_active_hand(), /obj/item/weapon/nullrod))
-		return
-
 	if(!sect_type || chosen_aspect)
 		return
 
