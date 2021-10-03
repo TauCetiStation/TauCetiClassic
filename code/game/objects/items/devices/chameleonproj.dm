@@ -76,7 +76,7 @@
 		active_dummy = new
 	if(active_dummy.current_type == target.type)
 		return
-	if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+	if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
 		playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
 		copy_item(target)
