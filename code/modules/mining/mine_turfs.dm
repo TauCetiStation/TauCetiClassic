@@ -494,53 +494,11 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
 	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init_late()
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
-
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/make_tunnel(dir)
-
-	var/turf/simulated/mineral/tunnel = src
-	var/next_angle = pick(45, -45)
-
-	for(var/i = 0; i < length; i++)
-		if(!sanity)
-			break
-
-		var/list/L = list(45)
-		if(IS_ODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
-			L += -45
-
-		// Expand the edges of our tunnel
-		for(var/edge_angle in L)
-			var/turf/simulated/mineral/edge = get_step(tunnel, angle2dir(dir2angle(dir) + edge_angle))
-			if(istype(edge))
-				SpawnFloor(edge)
-
-		// Move our tunnel forward
-		tunnel = get_step(tunnel, dir)
-
-		if(istype(tunnel))
-			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
-			if(i > 3 && prob(20))
-				if(SSticker.current_state > GAME_STATE_SETTING_UP)
-					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
-					ChangeTurf(src.type, arguments)
-				else
-					new type(tunnel, rand(10, 15), 0, dir)
-			else
-				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
-			break
-
-		// Chance to change our direction left or right.
-		if(i > 2 && prob(33))
-			// We can't go a full loop though
-			next_angle = -next_angle
-			dir = angle2dir(dir2angle(dir) + next_angle)
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2, T))
@@ -551,9 +509,6 @@
 	if(!sanity)
 		return
 
-	if(prob(30))
-		SpawnMonster(T)
-
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
@@ -561,26 +516,6 @@
 		t = T.ChangeTurf(basetype)
 	spawn(2)
 		t.update_overlays_full()
-
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
-	if(istype(loc, /area/asteroid/mine/explored))
-		return
-	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
-		return
-	var/randumb = pickweight(mob_spawn_list)
-	switch(randumb)
-		if("Goliath")
-			new /mob/living/simple_animal/hostile/asteroid/goliath(T)
-		if("Goldgrub")
-			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
-		if("Basilisk")
-			new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
-		if("Hivelord")
-			new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
-		if("Drone")
-			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
-	if(prob(20))
-		new /obj/machinery/artifact/bluespace_crystal(T)
 
 /**********************Asteroid**************************/
 
