@@ -98,7 +98,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/process()
 	if(..())
-		if(lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time >= -20)
+		if(lastMove + MINE_SCI_SHUTTLE_COOLDOWN + 20 >= world.time)
 			updateUsrDialog()
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/Destroy()

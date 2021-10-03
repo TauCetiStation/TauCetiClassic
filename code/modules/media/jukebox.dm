@@ -200,7 +200,7 @@ var/global/loopModeNames=list(
 			return FALSE
 		if(!playlistcooldowned)
 			playlistcooldowned = TRUE
-			addtimer(CALLBACK(src, .proc/playlist_cooldown), 60 SECONDS)
+			addtimer(CALLBACK(src, .proc/playlist_cooldown), JUKEBOX_RELOAD_COOLDOWN)
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
 		playlist = null
