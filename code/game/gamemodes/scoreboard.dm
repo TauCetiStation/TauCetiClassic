@@ -24,7 +24,7 @@
 		if(E.stat == DEAD)
 			continue
 
-		if(E.mind && E.mind.assigned_role && E.mind.assigned_job)
+		if(E.client && E.mind && E.mind.assigned_role && E.mind.assigned_job)
 			feedback_add_details("job_left_while_alive", "[E.mind.assigned_job.title]")
 
 		cashscore = 0
