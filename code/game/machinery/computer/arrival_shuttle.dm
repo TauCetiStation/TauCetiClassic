@@ -28,7 +28,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/process()
 	if(..())
-		if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time >= -20)
+		if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN + 20 - world.time >= 0)
 			updateUsrDialog()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()

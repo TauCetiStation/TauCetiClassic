@@ -15,10 +15,6 @@
 	station_alert_list -= src
 	return ..()
 
-/obj/machinery/computer/station_alert/process()
-	if(..())
-		updateDialog()
-
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
 	var/dat = ""
 	for (var/cat in src.alarms)
@@ -63,6 +59,7 @@
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
+	updateDialog()
 	return 1
 
 
@@ -80,6 +77,7 @@
 			if (srcs.len == 0)
 				cleared = 1
 				L -= I
+	updateDialog()
 	return !cleared
 
 

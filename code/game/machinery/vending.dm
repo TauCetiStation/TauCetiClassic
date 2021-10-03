@@ -504,8 +504,8 @@
 		new R.product_path(get_turf(src))
 		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		src.vend_ready = 1
-		updateUsrDialog()
-		return
+
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)

@@ -26,7 +26,7 @@
 
 /obj/machinery/computer/syndicate_station/process()
 	if(..())
-		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time >= -20)
+		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 - world.time >= 0)
 			updateUsrDialog()
 
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
