@@ -66,7 +66,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/process()
 	if(..())
-		if(lastMove + VOX_SHUTTLE_COOLDOWN + 20 - world.time >= 0)
+		if(lastMove + VOX_SHUTTLE_COOLDOWN + 20 >= world.time)
 			updateUsrDialog()
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
