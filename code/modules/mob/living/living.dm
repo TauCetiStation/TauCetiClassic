@@ -560,7 +560,7 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	set_blurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
@@ -1291,7 +1291,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	set_blurriness(max(5, eye_blurry))
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()

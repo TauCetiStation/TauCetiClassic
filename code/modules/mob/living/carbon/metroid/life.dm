@@ -295,7 +295,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry = 0
+		src.set_blurriness(0)
 
 	if (src.druggy > 0)
 		setDrugginess(0)
