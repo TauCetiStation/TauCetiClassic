@@ -66,7 +66,6 @@ var/global/loopModeNames=list(
 
 	anchored = TRUE
 	playing = 0
-	var/playlistcooldowned = FALSE
 
 	var/loop_mode = JUKEMODE_SHUFFLE
 
@@ -176,10 +175,6 @@ var/global/loopModeNames=list(
 		update_music()
 	return TRUE
 
-/obj/machinery/media/jukebox/proc/playlist_cooldown()
-	playlistcooldowned = FALSE
-	updateUsrDialog()
-
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -198,9 +193,7 @@ var/global/loopModeNames=list(
 		if(!check_reload())
 			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
-		if(!playlistcooldowned)
-			playlistcooldowned = TRUE
-			addtimer(CALLBACK(src, .proc/playlist_cooldown), JUKEBOX_RELOAD_COOLDOWN)
+		addtimer(CALLBACK(src, .proc/updateUsrDialog), JUKEBOX_RELOAD_COOLDOWN, TIMER_UNIQUE)
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
 		playlist = null
