@@ -170,7 +170,7 @@
 							internalsound = 'sound/misc/riginternaloff.ogg'
 					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 				else
-					if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+					if((C.wear_mask && (C.wear_mask.flags & MASKINTERNALS)) || (HAS_TRAIT(C, TRAIT_AV) && istype(src.loc, /obj/machinery/life_assist/artificial_ventilation)))
 						C.internal = src
 						to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
 						if (C.internals)

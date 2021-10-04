@@ -423,9 +423,9 @@
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if (!contents.Find(internal) && !HAS_TRAIT(src, TRAIT_AV))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+		if (!HAS_TRAIT(src, TRAIT_AV) && (!wear_mask || !(wear_mask.flags & MASKINTERNALS)))
 			internal = null
 		if(internal)
 					//internal breath sounds

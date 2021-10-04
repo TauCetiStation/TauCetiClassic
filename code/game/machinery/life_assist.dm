@@ -84,9 +84,53 @@
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
 
+	var/obj/item/weapon/tank/holding
+
 	my_trait = TRAIT_AV
 
+/obj/machinery/life_assist/artificial_ventilation/update_icon()
+	..()
+	if(holding)
+		add_overlay(holding.icon_state)
+	else
+		cut_overlays()
 
+/obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/weapon/tank/jetpack))
+		if(!(stat & BROKEN))
+			if (holding || !user.drop_from_inventory(W, src))
+				return
+			var/obj/item/weapon/tank/T = W
+			holding = T
+			user.drop_from_inventory(holding, src)
+			visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+			update_icon()
+
+/obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
+	if(holding)
+		user.put_in_hands(holding)
+		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
+		holding = null
+		if(attached)
+			var/attached_holder = attached
+			detach(FALSE)
+			attach(attached_holder)
+			attached_holder = null
+	update_icon()
+
+/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
+	..()
+	if(holding)
+		H.internal = holding
+		if(H.internals)
+			H.internals.icon_state = "internal1"
+	update_icon()
+
+/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
+	if(attached.internals)
+		attached.internals.icon_state = "internal0"
+	attached.internal = null
+	..()
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
