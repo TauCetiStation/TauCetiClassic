@@ -152,7 +152,7 @@
 	lying_illusions = list()
 
 /obj/structure/pedestal/proc/create_holy_outline(_color)
-	add_filter("pedestal_outline", 2, outline_filter(2, _color, 2))
+	add_filter("pedestal_outline", 2, outline_filter(2, _color))
 	have_outline = TRUE
 
 /obj/structure/pedestal/proc/del_holy_outline()
