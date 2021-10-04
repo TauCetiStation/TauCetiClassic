@@ -16,6 +16,10 @@
 	name = "LOOC"
 	full_name = "Local Out Of Character Say (LOOC)"
 
+/datum/keybinding/client/communication/looc/down(client/user)
+	user.looc()
+	return TRUE
+
 /datum/keybinding/client/communication/me
 	hotkey_keys = list("F4", "M")
 	name = "Me"
