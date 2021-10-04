@@ -25,7 +25,7 @@
 	icon_state = "glob_science"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit)
-	unacidable = 1
+	unacidable = TRUE
 
 /obj/item/clothing/head/helmet/space/globose/science
 	name = "science space helmet"
@@ -33,7 +33,7 @@
 	icon_state = "glob0_science"
 	mode = "science"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
-	unacidable = 1
+	unacidable = TRUE
 
 /***********-Black-***********/
 /obj/item/clothing/suit/space/globose/black
