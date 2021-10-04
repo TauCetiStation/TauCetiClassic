@@ -1050,3 +1050,24 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+//Science rig
+/obj/item/clothing/head/helmet/space/rig/science
+	desc = "A special helmet designed for work in a hazardous, low pressure environments full of unknown exotic particles. Has huge radiation shielding."
+	name = "science hardsuit helmet"
+	icon_state = "rig0-science"
+	item_state = "sceince_helm"
+	item_color = "science"
+	unacidable = TRUE
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 30, bio = 100, rad = 100)
+
+/obj/item/clothing/suit/space/rig/science
+	desc = "A special suit that protects against hazardous, low pressure environments and unknown exotic particles. Has huge radiation shielding and very low weight."
+	icon_state = "rig-science"
+	name = "science hardsuit"
+	item_state = "science_hardsuit"
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 30, bio = 100, rad = 100)
+	unacidable = TRUE
+	max_mounted_devices = 4
+	slowdown = 0.4
+	offline_slowdown = 7
+	initial_modules = list(/obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/anomaly_scanner )

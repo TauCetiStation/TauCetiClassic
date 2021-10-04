@@ -18,6 +18,35 @@
 	use_power_cost = 100
 	origin_tech = "biotech=2;programming=2"
 	device_type = /obj/item/device/healthanalyzer
+	
+
+
+/obj/item/device/analyzer/mounted
+	advanced_mode = 1
+
+/obj/item/rig_module/device/analyzer
+	name = "hardsuit analyzer module"
+	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
+	icon_state = "scanner"
+	interface_name = "Analyzer"
+	interface_desc = "Shows an anomalies frequencies and which reports current gas levels when used."
+	use_power_cost = 100
+	usable = TRUE
+	engage_string = "Analyze air"
+	origin_tech = "magnets=1;programming=2;engineering=1"
+	device_type = /obj/item/device/analyzer/mounted
+
+/obj/item/rig_module/device/science_tool
+	name = "hardsuit science tool module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	icon_state = "scanner"
+	interface_name = "Science tool"
+	interface_desc = "Used to collect research data from different sources."
+	use_power_cost = 100
+	selectable = TRUE
+	origin_tech = "engineering=1;programming=1;biotech=1"
+	device_type = /obj/item/device/science_tool
+
 
 /obj/item/rig_module/device/drill
 	name = "hardsuit drill mount"
