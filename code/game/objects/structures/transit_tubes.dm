@@ -46,6 +46,8 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
+	var/icon/Occupant = null
+	var/Occupant_angle = 0
 
 /obj/structure/transit_tube_pod/Destroy()
 	move_out_content()
@@ -69,9 +71,20 @@
 	if(istype(M))
 		M.forceMove(src)
 
+		Occupant_angle = dir2angle(dir)
+		Occupant = getFlatIcon(M)
+		Occupant.Scale(Occupant.Width() * 0.9, Occupant.Height() * 0.9)
+		Occupant.Shift(NORTH, abs(16 - Occupant.Height()/2))
+		Occupant.Shift(EAST, abs(16 - Occupant.Width()/2))
+		Occupant = turn(Occupant, Occupant_angle)
+		add_overlay(Occupant)
+
 /obj/structure/transit_tube_pod/proc/move_out_content()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(loc)
+		cut_overlays()
+		Occupant = null
+		Occupant_angle = 0
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -283,6 +296,8 @@
 	var/last_delay = 0
 	var/exit_delay
 
+	var/Angle = 0
+
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
 			current_tube = tube
@@ -315,6 +330,14 @@
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		set_dir(next_dir)
+
+		Angle = dir2angle(dir)
+		if(Occupant)
+			cut_overlays()
+			Occupant = turn(Occupant, Angle - Occupant_angle)
+			Occupant_angle = Angle
+			add_overlay(Occupant)
+
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -586,3 +609,25 @@
 			return "SW"
 		else
 	return
+
+/obj/structure/transit_tube_pod/proc/dir2angle(direction)
+	var/Angle = 0
+	switch(dir)
+		if(1)
+			Angle = 0
+		if(5)
+			Angle = 45
+		if(4)
+			Angle = 90
+		if(6)
+			Angle = 135
+		if(2)
+			Angle = 180
+		if(10)
+			Angle = 225
+		if(8)
+			Angle = 270
+		if(9)
+			Angle = 315
+		else
+	return Angle
