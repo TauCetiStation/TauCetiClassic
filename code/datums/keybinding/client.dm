@@ -23,16 +23,6 @@
 	user.get_mentorhelp()
 	return TRUE
 
-/datum/keybinding/client/looc
-	hotkey_keys = list("L")
-	name = "looc"
-	full_name = "LOOC"
-	description = "Local Out Of Character Say (LOOC)."
-
-/datum/keybinding/client/looc/down(client/user)
-	user.looc()
-	return TRUE
-
 /datum/keybinding/client/screenshot
 	hotkey_keys = list("None")
 	name = "screenshot"
