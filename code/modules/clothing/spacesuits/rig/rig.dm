@@ -1072,8 +1072,6 @@
 	offline_slowdown = 7
 	initial_modules = list(/obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/anomaly_scanner )
 
-
-
 /obj/item/clothing/head/helmet/space/rig/science/rd
 	desc = "A special helmet designed for work in a hazardous, low pressure environments full of unknown exotic particles. Has huge radiation shielding."
 	name = "advanced science hardsuit helmet"

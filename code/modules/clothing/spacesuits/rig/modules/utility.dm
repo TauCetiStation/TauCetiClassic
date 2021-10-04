@@ -560,10 +560,32 @@
 	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
 	icon_state = "relay"
 	suit_overlay = "mounted-relay"
-	usable = FALSE
-	selectable = FALSE
+	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
+	var/obj/machinery/telecomms/relay
 	toggleable = TRUE
-	passive_power_cost = 200
+	show_toggle_button = TRUE
+	module_cooldown = 0
+	activate_string = "Activate radio relay"
+	deactivate_string = "Deactivate radio relay"
+	active_power_cost = 250
+
+/obj/item/rig_module/mounted_relay/atom_init()
+	. = ..()
+	if(relay_type)
+		relay = new relay_type(src)
+		
+
+/obj/item/rig_module/mounted_relay/process_module()
+	if(!active)
+		relay.on = FALSE
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	relay.on = TRUE
+	relay.listening_level = H.z
+
+	return active_power_cost
+
 
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
