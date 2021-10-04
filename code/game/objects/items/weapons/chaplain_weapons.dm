@@ -424,7 +424,7 @@
 
 /obj/item/weapon/shield/riot/roman/religion/atom_init()
 	. = ..()
-	add_filter("shield_outline", 2, outline_filter(1,"#fffb0064"))
+	add_filter("shield_outline", 2, outline_filter(1, "#fffb0064"))
 	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
 
 	QDEL_IN(src, 1 MINUTE)
