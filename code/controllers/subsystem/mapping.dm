@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(mapping)
 		make_mining_asteroid_secret(3)
 
 /datum/controller/subsystem/mapping/proc/run_map_generation()
-	for(var/area/A in world)
+	for(var/area/A in global.all_areas)
 		A.RunGeneration()
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
