@@ -105,9 +105,9 @@
 						continue	//Have to send the type instead of a reference to
 				else if((N.hidden && !hacked) || (N.contraband && !contraband) || N.group != last_viewed_group)
 					continue
-				temp += {"<div class="spoiler"><input type="checkbox" id='[N]'>"}
+				temp += {"<div class="spoiler"><input type="checkbox" id='[supply_name]'>"}
 				temp += {"<table><tr><td><span class="cargo32x32 [replace_characters("[N.crate_type]",  list("[/obj]/" = "", "/" = "-"))]"></span></td>"}
-				temp += {"<td><label for='[N]'><b>[N]</b></label></td><td><A href='?src=\ref[src];doorder=[supply_name]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
+				temp += {"<td><label for='[supply_name]'><b>[N.name]</b></label></td><td><A href='?src=\ref[src];doorder=[supply_name]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
 				temp += "<div><table>"
 				if(ispath(N.crate_type, /obj/structure/closet/critter))
 					var/obj/structure/closet/critter/C = N.crate_type
