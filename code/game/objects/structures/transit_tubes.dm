@@ -46,8 +46,8 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
-	var/icon/Occupant = null
-	var/Occupant_angle = 0
+	var/icon/occupant = null
+	var/occupant_angle = 0
 
 /obj/structure/transit_tube_pod/Destroy()
 	move_out_content()
@@ -71,20 +71,21 @@
 	if(istype(M))
 		M.forceMove(src)
 
-		Occupant_angle = dir2angle(dir)
-		Occupant = getFlatIcon(M)
-		Occupant.Scale(Occupant.Width() * 0.9, Occupant.Height() * 0.9)
-		Occupant.Shift(NORTH, abs(16 - Occupant.Height()/2))
-		Occupant.Shift(EAST, abs(16 - Occupant.Width()/2))
-		Occupant = turn(Occupant, Occupant_angle)
-		add_overlay(Occupant)
+		occupant_angle = dir2angle(dir)
+		occupant = getFlatIcon(M)
+		if(M.w_class == SIZE_HUMAN)
+			occupant.Scale(occupant.Width() * 0.9, occupant.Height() * 0.9)
+			occupant.Shift(NORTH, abs(16 - occupant.Height()/2))
+			occupant.Shift(EAST, abs(16 - occupant.Width()/2))
+		occupant = turn(occupant, occupant_angle)
+		add_overlay(occupant)
 
 /obj/structure/transit_tube_pod/proc/move_out_content()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(loc)
-		cut_overlays()
-		Occupant = null
-		Occupant_angle = 0
+		cut_overlay(occupant)
+		occupant = null
+		occupant_angle = 0
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -117,6 +118,9 @@
 /obj/structure/transit_tube/station/Bumped(mob/M)
 	if(!pod_moving && icon_state == "open" && istype(M))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
+			if(M.w_class > SIZE_HUMAN)
+				to_chat(M, "<span class='notice'>You can't fit into a pod.</span>")
+				return
 			if(locate(/mob) in pod.contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
@@ -296,8 +300,6 @@
 	var/last_delay = 0
 	var/exit_delay
 
-	var/Angle = 0
-
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
 			current_tube = tube
@@ -331,12 +333,13 @@
 		sleep(last_delay)
 		set_dir(next_dir)
 
-		Angle = dir2angle(dir)
-		if(Occupant)
-			cut_overlays()
-			Occupant = turn(Occupant, Angle - Occupant_angle)
-			Occupant_angle = Angle
-			add_overlay(Occupant)
+		var/angle = 0
+		angle = dir2angle(dir)
+		if(occupant)
+			cut_overlay(occupant)
+			occupant = turn(occupant, angle - occupant_angle)
+			occupant_angle = angle
+			add_overlay(occupant)
 
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
@@ -611,23 +614,22 @@
 	return
 
 /obj/structure/transit_tube_pod/proc/dir2angle(direction)
-	var/Angle = 0
+	var/angle = 0
 	switch(dir)
 		if(1)
-			Angle = 0
+			angle = 0
 		if(5)
-			Angle = 45
+			angle = 45
 		if(4)
-			Angle = 90
+			angle = 90
 		if(6)
-			Angle = 135
+			angle = 135
 		if(2)
-			Angle = 180
+			angle = 180
 		if(10)
-			Angle = 225
+			angle = 225
 		if(8)
-			Angle = 270
+			angle = 270
 		if(9)
-			Angle = 315
-		else
-	return Angle
+			angle = 315
+	return angle
