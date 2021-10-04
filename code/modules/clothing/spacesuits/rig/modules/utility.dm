@@ -551,6 +551,19 @@
 			holder.installed_modules -= src
 		qdel(src)
 
+
+/obj/item/rig_module/mounted_relay
+	name = "hardsuit mounted relay module"
+	desc = "Can relay radio signals from other sectors"
+	origin_tech = "programming=6;engineering=6;bluespace=6"
+	interface_name = "portable radio relay"
+	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
+	icon_state = "relay"
+	suit_overlay = "mounted-relay"
+
+	passive_power_cost = 200
+
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
 	volume = 400
 
