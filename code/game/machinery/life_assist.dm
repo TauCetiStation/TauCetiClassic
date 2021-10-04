@@ -25,6 +25,9 @@
 		icon_state = icon_state_detached
 
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_AV))
+		visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
+		return
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, .proc/resolve_stranded))
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
@@ -121,6 +124,9 @@
 /obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
 	..()
 	if(holding)
+		if(H.internal)
+			visible_message("<span class='notice'>\the [H] is already attached to tank</span>")
+			return
 		H.internal = holding
 		if(H.internals)
 			H.internals.icon_state = "internal1"
