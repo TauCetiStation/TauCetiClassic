@@ -560,7 +560,9 @@
 	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
 	icon_state = "relay"
 	suit_overlay = "mounted-relay"
-
+	usable = FALSE
+	selectable = FALSE
+	toggleable = TRUE
 	passive_power_cost = 200
 
 

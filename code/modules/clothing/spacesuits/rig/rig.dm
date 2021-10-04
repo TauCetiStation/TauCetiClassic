@@ -1087,7 +1087,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments and unknown exotic particles. Has huge radiation shielding and very low weight."
 	icon_state = "rig-rd"
 	name = "advanced science hardsuit"
-	item_state = "science_hardsuit"
+	item_state = "rd_hardsuit"
 	armor = list(melee = 15, bullet = 7, laser = 15,energy = 7, bomb = 50, bio = 100, rad = 100)
 	max_mounted_devices = 6
 	slowdown = 0.4
