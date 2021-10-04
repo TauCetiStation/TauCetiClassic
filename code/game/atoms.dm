@@ -681,7 +681,7 @@
 					L += get_contents(AM)
 		return L
 
-/atom/proc/add_filter(name,priority,list/params)
+/atom/proc/add_filter(name, priority, list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
