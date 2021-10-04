@@ -1,8 +1,8 @@
 from sys import stdout, exit, argv
 from random import randint
 
-def makeGrid():
-    newgrid = [[0 for x in range(254)] for y in range(254)]
+def makeGrid(max_x, max_y):
+    newgrid = [[0 for x in range(max_x)] for y in range(max_y)]
     for i in range(len(newgrid)):
         for j in range(len(newgrid[i])):
             if i==0 or j==0 or i==len(newgrid)-1 or j==len(newgrid[0])-1:
@@ -68,7 +68,9 @@ def main():
     birthlimit = int(argv[2])
     deathlimit = int(argv[3])
     chance = int(argv[4])
-    grid = makeGrid()
+    max_x = int(argv[5])
+    max_y = int(argv[6])
+    grid = makeGrid(max_x, max_y)
     grid = populateGrid(grid, chance)
     for i in range(iterations):
         grid = automataIteration(grid, birthlimit, deathlimit)

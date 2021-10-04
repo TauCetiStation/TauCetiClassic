@@ -32,12 +32,12 @@
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
 	var/start_time = REALTIMEOFDAY
-	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance]")//Generate the raw CA data
+	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance] [world.maxx] [world.maxy]")//Generate the raw CA data
 	if(!string_gen)
 		var/message = "[name] failed to load!"
 		return log_game(message)
-	for(var/i as anything in turfs) //Go through all the turfs and generate them
-		var/turf/gen_turf = i
+
+	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 
 		var/closed = text2num(string_gen[world.maxx * (gen_turf.y-1) + gen_turf.x])
 
