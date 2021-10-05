@@ -113,10 +113,10 @@
 
 /obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
 	..()
-	update_internal(TRUE)
+	update_internal(H, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
-	update_internal(FALSE)
+	update_internal(attached, FALSE)
 	..()
 
 /obj/machinery/life_assist/artificial_ventilation/proc/update_internal(mob/living/carbon/human/H, connect = TRUE)
