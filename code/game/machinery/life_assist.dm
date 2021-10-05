@@ -107,6 +107,8 @@
 			holding = T
 			user.drop_from_inventory(holding, src)
 			visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+			if(attached)
+				attach(attached, TRUE)
 			update_icon()
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
@@ -115,14 +117,12 @@
 		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
 		holding = null
 		if(attached)
-			var/attached_holder = attached
-			detach(FALSE)
-			attach(attached_holder)
-			attached_holder = null
+			detach(FALSE, TRUE)
 	update_icon()
 
-/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
-	..()
+/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H, only_internals = FALSE)
+	if(!only_internals)
+		..()
 	if(holding)
 		if(H.internal)
 			visible_message("<span class='notice'>\the [H] is already attached to tank</span>")
@@ -132,10 +132,12 @@
 			H.internals.icon_state = "internal1"
 	update_icon()
 
-/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
+/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE, only_internals = FALSE)
 	if(attached.internals)
 		attached.internals.icon_state = "internal0"
 	attached.internal = null
+	if(only_internals)
+		return
 	..()
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
