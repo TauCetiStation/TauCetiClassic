@@ -361,6 +361,17 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/teleporter_stabilizer
+	name = "hardsuit teleporter stabilizer"
+	icon_state = "scanner"
+	origin_tech = "engineering=3;programming=3;bluespace=2;"
+	interface_name = "mounted wormhole stabilizer"
+	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	activate_on_start = TRUE
+	active_power_cost = 10
+	
+
+
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."

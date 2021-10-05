@@ -2723,7 +2723,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/rig_module/device/analyzer
 	category = list("Rig Modules")
 
-/datum/design/riganalyzer
+/datum/design/rigsciencetool
 	name = "Hardsuit Science Tool Module"
 	desc = "A hardsuit-mounted tool for gathering research points."
 	id = "rigsciencetool"
@@ -2732,7 +2732,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/rig_module/device/science_tool
 	category = list("Rig Modules")
 
-/datum/design/riganalyzer
+/datum/design/rigrelay
 	name = "Hardsuit Mounted Relay Module"
 	desc = "Can relay radio signals from other sectors."
 	id = "rigrelay"
@@ -2740,3 +2740,14 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/rig_module/mounted_relay
 	category = list("Rig Modules")
+
+
+/datum/design/rigstabilizer
+	name = "Hardsuit Teleporter stabilizer"
+	desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	id = "rigstabilizer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
+	build_path = /obj/item/rig_module/teleporter_stabilizer
+	category = list("Rig Modules")
+

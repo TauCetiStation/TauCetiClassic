@@ -202,6 +202,12 @@
 
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
+	var/list/stabilizer = teleatom.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+	var/obj/item/rig_module/teleporter_stabilizer/s
+	for(s in stabilizer)
+		if (s.active)
+			return 1
+	
 	if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
 		precision = rand(1,100)
 

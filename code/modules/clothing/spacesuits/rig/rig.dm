@@ -79,7 +79,7 @@
 		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
 	var/magpulse = 0
-
+	
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -96,6 +96,7 @@
 	var/list/can_mount = null                                   // Types of device that can be hardpoint mounted.
 	var/list/mounted_devices = null                             // Holder for the above device.
 	var/obj/item/active_device = null                           // Currently deployed device, if any.
+	var/insertion_time = 40									    // Time it takes to insert new module in the rig.
 
 	var/mob/living/carbon/human/wearer                          // The person currently wearing the rig.
 	var/offline = TRUE
@@ -1052,42 +1053,42 @@
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
 //Science rig
 /obj/item/clothing/head/helmet/space/rig/science
-	desc = "A special helmet designed for work in a hazardous, low pressure environments full of unknown exotic particles. Has huge radiation shielding."
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
 	name = "science hardsuit helmet"
 	icon_state = "rig0-science"
 	item_state = "sceince_helm"
 	item_color = "science"
 	unacidable = TRUE
-	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 30, bio = 100, rad = 100)
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 70)
 
 /obj/item/clothing/suit/space/rig/science
-	desc = "A special suit that protects against hazardous, low pressure environments and unknown exotic particles. Has huge radiation shielding and very low weight."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
 	icon_state = "rig-science"
 	name = "science hardsuit"
 	item_state = "science_hardsuit"
-	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 30, bio = 100, rad = 100)
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 70)
 	unacidable = TRUE
-	max_mounted_devices = 4
+	max_mounted_devices = 6
 	slowdown = 0.5
 	offline_slowdown = 7
-	initial_modules = list(/obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/anomaly_scanner )
+	insertion_time = 15
+	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer ,/obj/item/rig_module/simple_ai)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
-	desc = "A special helmet designed for work in a hazardous, low pressure environments full of unknown exotic particles. Has huge radiation shielding."
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
 	name = "advanced science hardsuit helmet"
 	icon_state = "rig0-rd"
 	item_state = "rd_helm"
 	item_color = "rd"
-	armor = list(melee = 15, bullet = 7, laser = 15,energy = 7, bomb = 50, bio = 100, rad = 100)
-
+	armor = list(melee = 10, bullet = 5, laser = 7, energy = 5, bomb = 55, bio = 100, rad = 80)
 
 /obj/item/clothing/suit/space/rig/science/rd
-	desc = "A special suit that protects against hazardous, low pressure environments and unknown exotic particles. Has huge radiation shielding and very low weight."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
 	icon_state = "rig-rd"
 	name = "advanced science hardsuit"
 	item_state = "rd_hardsuit"
-	armor = list(melee = 15, bullet = 7, laser = 15,energy = 7, bomb = 50, bio = 100, rad = 100)
-	max_mounted_devices = 6
+	armor = list(melee = 10, bullet = 5, laser = 7, energy = 5, bomb = 55, bio = 100, rad = 80)
+	max_mounted_devices = 8
 	slowdown = 0.4
 	offline_slowdown = 8
-	initial_modules = list(/obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/selfrepair, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/mounted_relay)
+	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer)

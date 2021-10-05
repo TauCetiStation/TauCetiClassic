@@ -59,7 +59,7 @@
 			return
 
 		to_chat(user, "You begin installing \the [mod] into \the [src].")
-		if(!I.use_tool(src, user, 40, volume = 50))
+		if(!I.use_tool(src, user, insertion_time, volume = 50))
 			return
 		if(!user || !I)
 			return

@@ -108,6 +108,13 @@
 		var/bad_effects = 0
 		if(H.species.flags[IS_SYNTHETIC])
 			return
+
+		var/list/stabilizer = H.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+		var/obj/item/rig_module/teleporter_stabilizer/s
+		for(s in stabilizer)
+			if (s.active)
+				return
+		
 		if(prob(20))
 			bad_effects += 1
 			H.confused += 3
