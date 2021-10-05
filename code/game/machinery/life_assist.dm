@@ -100,7 +100,7 @@
 		user.drop_from_inventory(holding, src)
 		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
 		if(attached)
-			update_internal(TRUE)
+			update_internal(attached, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
 	if(holding && do_after(user, 20, TRUE, src, FALSE, TRUE))
@@ -109,7 +109,7 @@
 		cut_overlay(holding.icon_state)
 		holding = null
 		if(attached)
-			update_internal(FALSE)
+			update_internal(attached, FALSE)
 
 /obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
 	..()
@@ -119,7 +119,7 @@
 	update_internal(FALSE)
 	..()
 
-/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(connect = TRUE)
+/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(mob/living/carbon/human/H, connect = TRUE)
 	if(connect && holding)
 		if(H.internal)
 			visible_message("<span class='notice'>\the [H] is already attached to tank</span>")
@@ -128,8 +128,8 @@
 		if(H.internals)
 			H.internals.icon_state = "internal1"
 	else if(attached.internals)
-		attached.internals.icon_state = "internal0"
-		attached.internal = null
+		H.internals.icon_state = "internal0"
+		H.internal = null
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
