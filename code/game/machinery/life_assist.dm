@@ -84,10 +84,10 @@
 	icon_state = "av_idle"
 	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
 
+	var/obj/item/weapon/tank/holding
+
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
-
-	var/obj/item/weapon/tank/holding
 
 	my_trait = TRAIT_AV
 
