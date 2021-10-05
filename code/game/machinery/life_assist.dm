@@ -128,8 +128,8 @@
 		if(H.internals)
 			H.internals.icon_state = "internal1"
 	else if(attached.internals)
-			attached.internals.icon_state = "internal0"
-			attached.internal = null
+		attached.internals.icon_state = "internal0"
+		attached.internal = null
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
