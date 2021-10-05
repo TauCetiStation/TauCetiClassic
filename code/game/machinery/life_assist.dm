@@ -91,54 +91,45 @@
 
 	my_trait = TRAIT_AV
 
-/obj/machinery/life_assist/artificial_ventilation/update_icon()
-	..()
-	if(holding)
-		add_overlay(holding.icon_state)
-	else
-		cut_overlays()
-
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/weapon/tank/jetpack))
-		if(!(stat & BROKEN))
-			if (holding || !user.drop_from_inventory(W, src))
-				return
-			var/obj/item/weapon/tank/T = W
-			holding = T
-			user.drop_from_inventory(holding, src)
-			visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
-			if(attached)
-				attach(attached, TRUE)
-			update_icon()
+	if (istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/weapon/tank/jetpack) && !(stat & BROKEN))
+		if (holding || !user.drop_from_inventory(W, src))
+			return
+		holding = W
+		add_overlay(holding.icon_state)
+		user.drop_from_inventory(holding, src)
+		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+		if(attached)
+			update_internal(TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
-	if(holding)
+	if(holding && do_after(user, 20, TRUE, src, FALSE, TRUE))
 		user.put_in_hands(holding)
 		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
+		cut_overlay(holding.icon_state)
 		holding = null
 		if(attached)
-			detach(FALSE, TRUE)
-	update_icon()
+			update_internal(FALSE)
 
-/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H, only_internals = FALSE)
-	if(!only_internals)
-		..()
-	if(holding)
+/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
+	..()
+	update_internal(TRUE)
+
+/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
+	update_internal(FALSE)
+	..()
+
+/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(connect = TRUE)
+	if(connect && holding)
 		if(H.internal)
 			visible_message("<span class='notice'>\the [H] is already attached to tank</span>")
 			return
 		H.internal = holding
 		if(H.internals)
 			H.internals.icon_state = "internal1"
-	update_icon()
-
-/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE, only_internals = FALSE)
-	if(attached.internals)
-		attached.internals.icon_state = "internal0"
-	attached.internal = null
-	if(only_internals)
-		return
-	..()
+	else if(attached.internals)
+			attached.internals.icon_state = "internal0"
+			attached.internal = null
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
