@@ -31,13 +31,13 @@
 	\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 	(1,1,1) = {\""
 
+	if(!side_x || !side_y)
+		return
+
 	//10% space from side
 	var/corner_x = round(side_x / 10)
 	var/corner_y = round(side_y / 10)
 	var/corner_rad = sqrt(corner_x**2 + corner_y**2)
-
-	if(!side_x || !side_y)
-		return
 
 	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance] [side_x] [side_y]")//Generate the raw CA data
 	if(!string_gen)
@@ -105,14 +105,6 @@
 			M.ex_act(pick(1,3))
 
 	asteroid.load(T)
-
-	addtimer(CALLBACK(src, .proc/fix_basetypes, bounds, T), max(side_x * side_y / 100, 1 SECOND))
-
-/proc/fix_basetypes(bounds, starting_turf)
-	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		if(istype(starting_turf, /turf/simulated/floor/plating/airless/asteroid) || istype(starting_turf, /turf/simulated/mineral))
-			T2.basetype = /turf/simulated/floor/plating/airless/asteroid
 
 
 #undef SPACETURF
