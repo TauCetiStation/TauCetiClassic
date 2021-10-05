@@ -103,6 +103,8 @@
 			update_internal(attached, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
+	if(user.is_busy())
+		return
 	if(holding && do_after(user, 20, TRUE, src, FALSE, TRUE))
 		user.put_in_hands(holding)
 		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
