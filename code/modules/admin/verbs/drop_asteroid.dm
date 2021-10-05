@@ -101,8 +101,8 @@
 			var/mob/living/carbon/human/H = M
 			if(prob(5))
 				H.gib()
-			else
-				H.ex_act(pick(1,3))
+		else
+			M.ex_act(pick(1,3))
 
 	asteroid.load(T)
 
