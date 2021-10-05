@@ -21,9 +21,6 @@
 	
 
 
-/obj/item/device/analyzer/mounted
-	advanced_mode = 1
-
 /obj/item/rig_module/device/analyzer
 	name = "hardsuit analyzer module"
 	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
@@ -35,7 +32,8 @@
 	engage_string = "Analyze air"
 	origin_tech = "magnets=1;programming=2;engineering=1"
 	device_type = /obj/item/device/analyzer/mounted
-
+/obj/item/device/analyzer/mounted
+	advanced_mode = 1
 /obj/item/rig_module/device/science_tool
 	name = "hardsuit science tool module"
 	desc = "A hardsuit-mounted tool for gathering research points."

@@ -2713,3 +2713,30 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
 	build_path = /obj/item/rig_module/metalfoam_spray
 	category = list("Rig Modules")
+
+/datum/design/riganalyzer
+	name = "Hardsuit Analyzer Module"
+	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
+	id = "riganalyzer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/analyzer
+	category = list("Rig Modules")
+
+/datum/design/riganalyzer
+	name = "Hardsuit Science Tool Module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	id = "rigsciencetool"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/science_tool
+	category = list("Rig Modules")
+
+/datum/design/riganalyzer
+	name = "Hardsuit Mounted Relay Module"
+	desc = "Can relay radio signals from other sectors."
+	id = "rigrelay"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/rig_module/mounted_relay
+	category = list("Rig Modules")
