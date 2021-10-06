@@ -676,7 +676,7 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 					continue
-			M.adjustStuttering(2)
+			M.AdjustStuttering(2)
 			M.ear_deaf += 2
 			M.Weaken(2)
 			M.make_jittery(500)

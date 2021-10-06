@@ -513,7 +513,7 @@
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
-	M.adjustStuttering(4)
+	M.AdjustStuttering(4)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -540,7 +540,7 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.adjustStuttering(4)
+		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
@@ -565,7 +565,7 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.adjustStuttering(4)
+		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
@@ -1501,7 +1501,7 @@
 	data["ticks"]++
 	M.dizziness += 10
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
-		M.adjustStuttering(11)
+		M.AdjustStuttering(11)
 	else if(data["ticks"] >= 115 && prob(33))
 		M.confused = max(M.confused + 15, 15)
 

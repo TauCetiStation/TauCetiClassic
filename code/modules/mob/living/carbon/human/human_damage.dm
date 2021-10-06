@@ -205,7 +205,7 @@
 	else
 		..()
 
-/mob/living/carbon/human/adjustStuttering()
+/mob/living/carbon/human/AdjustStuttering()
 	if(species.flags[NO_PAIN])
 		stuttering = 0
 	else

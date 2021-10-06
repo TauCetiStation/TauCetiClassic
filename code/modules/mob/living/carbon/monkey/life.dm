@@ -524,7 +524,7 @@
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering > 0)
-			adjustStuttering(-1)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent-1, 0)

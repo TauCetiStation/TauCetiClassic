@@ -954,7 +954,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 	stuttering = max(max(stuttering, amount), 0)
 
-/mob/proc/adjustStuttering(amount)
+/mob/proc/AdjustStuttering(amount)
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(stuttering + amount, 0)

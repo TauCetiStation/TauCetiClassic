@@ -102,7 +102,7 @@
 		src.stat = DEAD
 
 	if (src.stuttering > 0)
-		adjustStuttering(-1)
+		AdjustStuttering(-1)
 
 	if (src.eye_blind)
 		src.eye_blind--

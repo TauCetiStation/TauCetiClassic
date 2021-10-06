@@ -1214,7 +1214,7 @@
 
 		if(stuttering)
 			speech_problem_flag = 1
-			adjustStuttering(-1)
+			AdjustStuttering(-1)
 		if (slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)

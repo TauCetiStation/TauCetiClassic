@@ -40,5 +40,5 @@
 		return FALSE
 	receiver.AdjustWeakened(power)
 	receiver.AdjustStunned(power)
-	receiver.adjustStuttering(power)
+	receiver.AdjustStuttering(power)
 	return TRUE
