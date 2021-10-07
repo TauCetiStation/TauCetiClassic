@@ -90,7 +90,7 @@
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_GHOSTLY, IGNORE_BORER)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
+	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 	..()
