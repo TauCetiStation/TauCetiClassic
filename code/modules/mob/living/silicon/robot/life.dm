@@ -156,33 +156,34 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
+	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
 		set_EyesVision()
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	else if (sight_mode & BORGMESON)
+		src.sight |= SEE_TURFS
+		src.sight |= SEE_MOBS
+		src.sight |= SEE_OBJS
+		src.see_in_dark = 8
+		src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	else if (src.sight_mode & BORGMESON)
 		set_EyesVision("meson")
-		sight |= SEE_TURFS
-		see_in_dark = 8
+		src.sight |= SEE_TURFS
+		src.see_in_dark = 8
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	else if (sight_mode & BORGNIGHT)
+	else if (src.sight_mode & BORGNIGHT)
 		set_EyesVision("nvg")
-		see_in_dark = 8
-	else if (sight_mode & BORGTHERM)
+		src.see_in_dark = 8
+	else if (src.sight_mode & BORGTHERM)
 		set_EyesVision("thermal")
-		sight |= SEE_MOBS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	else if (stat != DEAD)
+		src.sight |= SEE_MOBS
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else if (src.stat != DEAD)
 		set_EyesVision()
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		src.sight &= ~SEE_MOBS
+		src.sight &= ~SEE_TURFS
+		src.sight &= ~SEE_OBJS
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
 	regular_hud_updates()
 
 	if (src.healths)

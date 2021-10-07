@@ -10,7 +10,6 @@
 	body_parts_covered = HEAD|FACE|EYES
 	pierce_protection = HEAD
 	siemens_coefficient = 0.4
-	unacidable = TRUE
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -28,7 +27,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	siemens_coefficient = 0.4
-	unacidable = TRUE
 
 
 //Standard biosuit, orange stripe
