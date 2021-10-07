@@ -123,7 +123,7 @@ Doesn't work on other aliens/AI.*/
 
 		to_chat(H, pick("<font color='red' size='7'>RRRRRRAAAAAAAAAAAAAAAAAAGHHHHHH! MY EA-A-ARS! ITS TOO LO-O-O-O-O-O-UD! NGGGHHHHHHH!</font>", "<font color='red' size='7'>VVNNNGGGGHHHHHHH! MY EARS! ITS TOO LOUD! HHHHHHOOO!</font>"))
 		H.SetSleeping(0)
-		H.stuttering += 20
+		H.AdjustStuttering(20)
 		H.Weaken(3)
 		if(prob(30)) // long stun
 			H.playsound_local(null, 'sound/effects/mob/earring_30s.ogg', VOL_EFFECTS_MASTER)
