@@ -19,7 +19,7 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.set_blurriness(max(M.eye_blurry, 10))
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
@@ -351,7 +351,7 @@
 	M.setBrainLoss(0)
 	M.disabilities = 0
 	M.sdisabilities = 0
-	M.eye_blurry = 0
+	M.set_blurriness(0)
 	M.eye_blind = 0
 	M.SetWeakened(0)
 	M.SetStunned(0)
@@ -448,7 +448,7 @@
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
 	..()
-	M.eye_blurry = max(M.eye_blurry - 5, 0)
+	M.adjust_blurriness(-5)
 	M.eye_blind = max(M.eye_blind - 5, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

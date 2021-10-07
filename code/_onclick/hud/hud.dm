@@ -52,6 +52,8 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
 	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
+	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -67,6 +69,10 @@ var/global/list/available_ui_styles = list(
 		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
+
+	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
+		var/atom/movable/plane_master_controller/controller_instance = new mytype(src)
+		plane_master_controllers[controller_instance.name] = controller_instance
 
 	instantiate()
 
@@ -88,10 +94,8 @@ var/global/list/available_ui_styles = list(
 	hotkeybuttons = null
 	hide_actions_toggle = null
 	mymob = null
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			qdel(plane_masters[thing])
-		plane_masters.Cut()
+	QDEL_LIST_ASSOC_VAL(plane_masters)
+	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
