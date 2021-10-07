@@ -10,7 +10,7 @@
 	controlled_planes = list(FLOOR_PLANE, GAME_PLANE, LIGHTING_PLANE)
 
 ///Ensures that all the planes are correctly in the controlled_planes list.
-/atom/movable/plane_master_controller/New(hud)
+/atom/movable/plane_master_controller/atom_init(hud)
 	. = ..()
 	owner_hud = hud
 	var/assoc_controlled_planes = list()
