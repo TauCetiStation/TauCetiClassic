@@ -66,15 +66,27 @@
 /obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
+	if(!check_sprite(target))
+		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
+		return
 	if(!active_dummy)
 		active_dummy = new
-	if(active_dummy.current_type != target.type)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
-			copy_item(target)
+	if(active_dummy.current_type == target.type)
+		return
+	if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
+		playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
+		to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
+		copy_item(target)
 	else
 		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
+
+/obj/item/device/chameleon/proc/check_sprite(atom/target)
+	if(target.icon_state in icon_states(target.icon))
+		return TRUE
+	return FALSE
 
 /obj/item/device/chameleon/proc/copy_item(obj/O)
 	var/obj/effect/dummy/chameleon/C = active_dummy
