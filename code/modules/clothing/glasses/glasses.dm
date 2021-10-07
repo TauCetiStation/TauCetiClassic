@@ -263,7 +263,7 @@
 		to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 		if(M.glasses == src)
 			M.eye_blind = 3
-			M.eye_blurry = 5
+			M.set_blurriness(5)
 			M.disabilities |= NEARSIGHTED
 			spawn(100)
 				M.disabilities &= ~NEARSIGHTED

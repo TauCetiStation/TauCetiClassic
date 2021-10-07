@@ -246,7 +246,7 @@
 	target.disabilities |= NEARSIGHTED
 	spawn(300)	target.disabilities &= ~NEARSIGHTED
 	target.eye_blind = 20
-	target.eye_blurry = 40
+	target.set_blurriness(40)
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
