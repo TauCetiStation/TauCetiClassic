@@ -189,6 +189,8 @@
 		data["faith_reactions"] = get_reactions_list()
 		data["can_talismaning"] = istype(user.get_active_hand(), /obj/item/weapon/paper/talisman)
 
+	data["holds_nullrod"] = istype(user.get_active_hand(), /obj/item/weapon/nullrod)
+
 	return data
 
 /obj/structure/altar_of_gods/tgui_static_data(mob/user)
@@ -238,6 +240,9 @@
 	return FALSE
 
 /obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
+	if(!istype(user.get_active_hand(), /obj/item/weapon/nullrod))
+		return
+
 	if(!rite_name)
 		return
 
@@ -287,12 +292,16 @@
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!sect_type)
+	if(!istype(user.get_active_hand(), /obj/item/weapon/nullrod))
 		return
+
+	if(!sect_type || chosen_aspect)
+		return
+
+	chosen_aspect = TRUE
 
 	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
-	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 	return

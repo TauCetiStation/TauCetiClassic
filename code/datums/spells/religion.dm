@@ -95,7 +95,7 @@
 		revert_cast()
 		return
 
-	cast(list(target), user)
+	perform(list(target), user=user)
 	
 /obj/effect/proc_holder/spell/blessing/cast(list/targets, mob/user = usr)
 	var/obj/item/target = targets[1]

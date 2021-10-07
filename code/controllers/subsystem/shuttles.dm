@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
-		supply_packs[P.name] = P
+		supply_packs[ckey(P.name)] = P		//Convert to canonical form to avoid possible problems resulting from punctuation
 
 	..()
 
