@@ -313,22 +313,19 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 5)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(10)
 			M.make_dizzy(10)
 			M.adjustDrugginess(3)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(20)
 			M.make_dizzy(20)
 			M.adjustDrugginess(4)

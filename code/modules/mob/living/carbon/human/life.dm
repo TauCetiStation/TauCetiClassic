@@ -190,7 +190,7 @@
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -1214,7 +1214,7 @@
 
 		if(stuttering)
 			speech_problem_flag = 1
-			stuttering = max(stuttering-1, 0)
+			AdjustStuttering(-1)
 		if (slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)
