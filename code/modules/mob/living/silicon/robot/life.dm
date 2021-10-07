@@ -120,8 +120,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
+		adjust_blurriness(-1)
 
 	if (src.druggy > 0)
 		src.druggy--

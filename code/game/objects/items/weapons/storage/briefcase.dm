@@ -38,7 +38,7 @@
 		visible_message("<span class='warning'><B>[M] has been knocked unconscious!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 	else
 		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
-		M.eye_blurry += 3
+		M.adjust_blurriness(3)
 
 	return
 

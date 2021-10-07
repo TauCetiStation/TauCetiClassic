@@ -380,6 +380,33 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== BLUR ==========
+/**
+ * Adjust the current blurriness of the mobs vision by amount
+ */
+/mob/proc/adjust_blurriness(amount)
+	eye_blurry = max(eye_blurry + amount, 0)
+	update_eye_blur()
+
+/**
+ * Set the mobs blurriness of vision to an amount
+ */
+/mob/proc/set_blurriness(amount)
+	eye_blurry = max(amount, 0)
+	update_eye_blur()
+
+/**
+ * Apply the blurry overlays to a mobs clients screen
+ */
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur")
+
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -533,7 +560,7 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	set_blurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
@@ -1264,7 +1291,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	set_blurriness(max(5, eye_blurry))
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()

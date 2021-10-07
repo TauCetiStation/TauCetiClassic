@@ -160,7 +160,7 @@
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
-					eye_blurry = 1
+					set_blurriness(1)
 					ear_damage = 1
 					if(!alert)
 						emote("alert")
@@ -170,7 +170,7 @@
 						emp_damage -= 1
 				if(10)
 					alert = 0
-					eye_blurry = 0
+					set_blurriness(0)
 					ear_damage = 0
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
