@@ -99,7 +99,7 @@
 	if(outline_color)
 		var/obj/item/I = parent
 		have_outline = FALSE
-		I.remove_filter("item_outline")
+		I.remove_filter("self_effect_outline")
 
 /datum/component/self_effect/proc/create_outline()
 	if(outline_color)
