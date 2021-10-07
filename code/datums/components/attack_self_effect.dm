@@ -105,7 +105,7 @@
 	if(outline_color)
 		var/obj/item/I = parent
 		have_outline = TRUE
-		I.add_filter("item_outline", 2, outline_filter(1, outline_color))
+		I.add_filter("self_effect_outline", 2, outline_filter(1, outline_color))
 
 /datum/component/self_effect/proc/ready_create_effect()
 	can_spawn_effect = TRUE
