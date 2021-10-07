@@ -50,7 +50,7 @@
 	for(var/gen_turf_x in 1 to side_x)
 		map += "\n"
 		for(var/gen_turf_y in 1 to side_y)
-			var/xy = sqrt(min(corner_x - gen_turf_x, gen_turf_x)**2 + min(corner_y - gen_turf_y, gen_turf_y)**2)
+			var/xy = sqrt(min(side_x - gen_turf_x, gen_turf_x)**2 + min(side_y - gen_turf_y, gen_turf_y)**2)
 			//corners
 			if(xy <= corner_rad)
 				map += SPACETURF
