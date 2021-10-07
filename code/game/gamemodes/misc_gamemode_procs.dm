@@ -195,6 +195,7 @@
 	for(var/client/M in admins)
 		if(M.holder)
 			to_chat(M, msg)
+	log_game(strip_html_properly(msg))
 
 /proc/find_syndicate_uplink(mob/living/carbon/human/human)
 	var/list/L = human.get_all_contents_type(/obj/item)

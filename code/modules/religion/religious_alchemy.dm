@@ -62,13 +62,12 @@
 	if(AM.can_waddle())
 		AM.waddle(pick(-28, 0, 28), 4)
 
-	var/holy_outline = filter(type = "outline", size = 1, color = "#FFD700EE")
-	container.filters += holy_outline
+	AM.add_filter("holy_outline", 2, outline_filter(1, "#fffb00a1"))
 	animate(container.filters[container.filters.len], color = "#FFD70000", time = 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/revert_effects, container, user, holy_outline), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/revert_effects, container, user), 2 SECONDS)
 
-/datum/faith_reaction/proc/revert_effects(atom/container, mob/user, holy_outline)
-	container.filters -= holy_outline
+/datum/faith_reaction/proc/revert_effects(atom/container, mob/user)
+	container.remove_filter("holy_outline")
 
 
 

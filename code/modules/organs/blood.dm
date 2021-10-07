@@ -130,7 +130,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = TRUE
 					update_body()
-				eye_blurry += 6
+				adjust_blurriness(6)
 				if(oxyloss < 50)
 					oxyloss += 10
 				oxyloss += 1
@@ -324,7 +324,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 								blinding = FALSE
 								break
 					if(blinding)
-						H.eye_blurry = max(H.eye_blurry, 10)
+						H.set_blurriness(max(H.eye_blurry, 10))
 						H.eye_blind = max(H.eye_blind, 5)
 						to_chat(H, "<span class='danger'>You are blinded by a spray of blood!</span>")
 					else

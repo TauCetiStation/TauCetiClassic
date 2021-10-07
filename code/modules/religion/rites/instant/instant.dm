@@ -578,7 +578,7 @@
 		return FALSE
 	var/blindless_modifier = clamp(90 / length(affected), 5 * divine_power, 30)
 	for(var/mob/living/carbon/C in affected)
-		C.eye_blurry += blindless_modifier
+		C.adjust_blurriness(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
 			C.disabilities |= NEARSIGHTED
@@ -655,8 +655,8 @@
 	var/stun_modifier = 12 / length(heretics) * divine_power
 	for(var/mob/living/carbon/C in heretics)
 		C.flash_eyes()
-		if(C.stuttering < 1 && (!(HULK in C.mutations)))
-			C.stuttering = 1
+		if(!(HULK in C.mutations))
+			C.Stuttering(1)
 			C.Weaken(stun_modifier)
 			C.Stun(stun_modifier)
 			C.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
