@@ -175,7 +175,7 @@
 
 /datum/uplink_item/dangerous/tommygun
 	name = "Tommygun"
-	desc = "Based on the classic 'Chicago Typewriter'. Uses 9mm rounds."
+	desc = "Based on the classic 'Chicago Typewriter'. Uses .45 ACP rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/tommygun
 	cost = 10
 	uplink_types = list("dealer")
@@ -375,8 +375,8 @@
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/tommygun
-	name = "9mm Tommygun Magazine"
-	desc = "A 50-round 9mm magazine for use in the tommygun."
+	name = ".45 ACP Tommygun Magazine"
+	desc = "A 50-round .45 ACP magazine for use in the tommygun."
 	item = /obj/item/ammo_box/magazine/tommygunm45
 	cost = 4
 	uplink_types = list("dealer")
