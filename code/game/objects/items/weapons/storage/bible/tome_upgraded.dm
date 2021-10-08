@@ -14,7 +14,7 @@
 		user.visible_message("<span class='warning'>При попытке открыть книгу, сквозь обложку просачивается яркий красный шар света, который через мгновенье рассеивается.</span>",
 		"<span class='warning'>При попытке открыть книгу, сквозь обложку просачивается яркий красный шар света, который невольно обжигает ваши руки и быстро рассеивается.</span>")
 		user.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), 0, 10)
-		user.eye_blurry += 3
+		user.adjust_blurriness(3)
 		return
 	return ..()
 
