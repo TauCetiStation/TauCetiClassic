@@ -85,7 +85,7 @@
 		else
 			shake_camera(C, 10, 2)
 			C.AdjustWeakened(8)
-			C.throw_at(get_step(C,pick(1, 2, 4, 8)), 16, 3)
+			C.throw_at(get_step(C, pick(1, 2, 4, 8)), 16, 3)
 
 	var/list/targetAtoms = list()
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
