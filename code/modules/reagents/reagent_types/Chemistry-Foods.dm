@@ -207,7 +207,7 @@
 				return
 			else if (mouth_covered)	// Reduced effects if partially protected
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
-				victim.set_blurriness(max(M.eye_blurry, 15))
+				victim.blurEyes(15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
@@ -215,12 +215,12 @@
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream")
-				victim.set_blurriness(max(M.eye_blurry, 5))
+				victim.blurEyes(5)
 				return
 			else // Oh dear :D
 				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
-				victim.set_blurriness(max(M.eye_blurry, 25))
+				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Stun(5)
 				victim.Weaken(5)
