@@ -138,4 +138,4 @@
 /datum/reagent/toxin/spore/on_general_digest(mob/living/M)
 	..()
 	M.damageoverlaytemp = 60
-	M.blurEyes(3)
+	M.blurEyes(15)
