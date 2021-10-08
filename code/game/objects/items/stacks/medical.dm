@@ -334,7 +334,7 @@
 	w_class = SIZE_TINY
 	full_w_class = SIZE_TINY
 
-	self_delay = 50
+	self_delay = 250
 	other_delay = 25
 
 	repeating = FALSE
@@ -350,9 +350,7 @@
 	var/mob/living/carbon/human/H = L
 	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-	if(BP.body_zone == BP_HEAD || BP.body_zone == BP_CHEST || BP.body_zone == BP_GROIN)
-		to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
-		return FALSE
+
 	if(BP.status & ORGAN_SPLINTED)
 		to_chat(user, "<span class='danger'>[H]'s [BP.name] is already splinted!</span>")
 		return FALSE
