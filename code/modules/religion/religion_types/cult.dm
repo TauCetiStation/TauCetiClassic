@@ -31,6 +31,7 @@
 	)
 
 	bible_type = /obj/item/weapon/storage/bible/tome
+	religious_tool_type = /obj/item/weapon/storage/bible/tome
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
