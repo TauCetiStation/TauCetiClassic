@@ -53,7 +53,7 @@
                 I.install(usr)
                 interact(usr)
 
-//==========Upgrade types==========
+//==========Datums==========
 /datum/drone_upgrade
     var/name = null
     var/category = "upgrade category"
@@ -63,11 +63,36 @@
 
 /datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
     if(!items.len)
-        return 0
+        return FALSE
     if(D.stat == DEAD)
-        to_chat(D, "You can't be upgraded while you're dead!")
-        return 0
+        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+        return FALSE
     for(var/item_type in items)
         D.module.modules += new item_type(D.module)
     D.uplink.points -= cost
-    return 1
+    return TRUE
+
+//==========UPGRADES==========
+/datum/drone_upgrade/internal
+    category = "Chassis and internal upgrades"
+
+/datum/drone_upgrade/internal/ai
+    name = "AI control"
+    desc = "Downloads personality to control the drone. Use your Syndicate Encryption Key if you want to give orders remotely."
+    cost = 2
+
+/datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
+    if(D.stat == DEAD)
+        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+        return FALSE
+    to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
+    var/list/drone_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate drone. Would you like to play as one?", ROLE_OPERATIVE)
+    if(drone_candicates.len)
+        var/mob/M = pick(drone_candicates)
+        D.loose_control()
+        D.key = M.key
+        D.uplink.points -= cost
+        return TRUE
+    else
+        to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
+        return FALSE
