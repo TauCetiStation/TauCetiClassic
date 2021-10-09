@@ -162,15 +162,20 @@
 		if(!initial(M.votable))
 			continue
 		var/datum/modesbundle/bundle = new type()
+
+		var/list/submodes = bundle.get_gamemodes_name()
+		if(!submodes.len)
+			continue
+
+		description += "<b>[bundle]</b>: "
+		description += submodes.Join(", ")
+		description += "<br>"
+
 		var/datum/vote_choice/gamemode/vc = new
 		vc.text = bundle.name
 		vc.new_gamemode = bundle.name
 		choices.Add(vc)
-		var/list/submodes = bundle.get_gamemodes_name()
-		if(length(submodes) > 0)
-			description += "<b>[bundle]</b>: "
-			description += submodes.Join(", ")
-			description += "<br>"
+
 		qdel(bundle)
 
 /datum/poll/gamemode/process()

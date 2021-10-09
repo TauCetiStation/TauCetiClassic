@@ -17,6 +17,10 @@
 	var/list/arrows
 	var/list/letters
 
+/obj/item/toy/crayon/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), .proc/afterattack_no_params)
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -115,7 +119,6 @@
 		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
-
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
@@ -126,8 +129,18 @@
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)
-			else
+			else if(!params)
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			else
+				var/list/click_params = params2list(params)
+				var/p_x
+				var/p_y
+				if(click_params && click_params[ICON_X] && click_params[ICON_Y])
+					p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
+					p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
+				var/obj/effect/decal/cleanable/crayon/Q = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				Q.pixel_x = p_x
+				Q.pixel_y = p_y
 
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
@@ -140,6 +153,9 @@
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
+
+/obj/item/toy/crayon/proc/afterattack_no_params(obj/spraycan, atom/target, mob/user)
+	afterattack(target, user, TRUE)
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
@@ -312,7 +328,7 @@
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 		if(C.client)
-			C.eye_blurry = max(C.eye_blurry, 3)
+			C.set_blurriness(max(C.eye_blurry, 3))
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

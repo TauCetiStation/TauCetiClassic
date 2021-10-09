@@ -20,7 +20,7 @@
 	announcement = new announcement_type
 
 /datum/event/anomaly/cult_portal/start()
-	var/list/turfs = get_area_turfs(impact_area)
+	var/list/turfs = get_area_turfs(impact_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))
 	if(!turfs)
 		return
 
@@ -53,7 +53,7 @@
 /datum/event/anomaly/cult_portal/massive/proc/spawn_portals()
 	for(var/i in 1 to 50)
 		impact_area = findEventArea()
-		var/list/turfs = get_area_turfs(impact_area)
+		var/list/turfs = get_area_turfs(impact_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))
 		if(!turfs)
 			continue
 		var/turf/T = pick(turfs)

@@ -95,7 +95,7 @@
 		revert_cast()
 		return
 
-	cast(list(target), user)
+	perform(list(target), user=user)
 	
 /obj/effect/proc_holder/spell/blessing/cast(list/targets, mob/user = usr)
 	var/obj/item/target = targets[1]
@@ -103,8 +103,7 @@
 	target.visible_message("<span class='notice'>[target] has been blessed by [user]!</span>")
 	target.name = "blessed [target.name]"
 	target.force += divine_power
-	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
-	target.filters += holy_outline
+	target.add_filter("holy_spell_outline", 2, outline_filter(1, "#fffb00a1"))
 
 	target.blessed = divine_power
 

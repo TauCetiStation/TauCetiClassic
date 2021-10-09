@@ -8,7 +8,7 @@
 /datum/preferences/proc/ShowRoles(mob/user)
 	. =  "<table cellspacing='0' width='100%'>"
 	. += 	"<tr>"
-	. += 		"<td width='50%'>"
+	. += 		"<td valign='top' width='50%'>"
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Special Role Preference:</b></td></tr>"
 	if(jobban_isbanned(user, "Syndicate"))
@@ -19,10 +19,7 @@
 			var/available_in_minutes = role_available_in_minutes(user, i)
 			if(jobban_isbanned(user, i))
 				. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=[i]'>Show details</a></td></tr>"
-			else if(i == "pai candidate")
-				if(jobban_isbanned(user, "pAI"))
-					. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=pAI'>Show details</a><br></td></tr>"
-			else if(available_in_minutes && !(i == ROLE_PLANT && is_alien_whitelisted(user, DIONA)))
+			else if(available_in_minutes)
 				. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
 			else if(!CanBeRole(i))
 				. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[RESTRICTED]</b></font><br></td></tr>"
@@ -42,11 +39,27 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td>"
 	. += 					"<b>Antag setup:</b>"
-	. += 				"</tr></td>"
-	. += 				"<tr><td>"
+	. += 				"</td></tr>"
+	. += 				"<tr><td colspan='2'>"
 	. += 					"Uplink Type : <a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
-	. += 				"</tr></td>"
+	. += 				"</td></tr>"
 	. += 			"</table>"
+
+	. += 			"<br>"
+
+	. += 			"<table width='100%'>"
+	. += 				"<tr><td colspan='2'>"
+	. += 					"<b>Ghost Poll Preference:</b>"
+	. += 				"</td></tr>"
+	for (var/role in global.special_roles_ignore_question)
+		if((role in be_role) && !jobban_isbanned(user, role))
+			for (var/ignore in global.special_roles_ignore_question[role])
+				if(ignore in ignore_question)
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>Yes</a> / <b>No</b></td></tr>"
+				else
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>No</a></td></tr>"
+	. += 			"</table>"
+
 	. += 		"</td>"
 	. += 	"</tr>"
 	. += "</table>"
@@ -68,3 +81,12 @@
 				be_role -= be_role_type
 			else
 				be_role += be_role_type
+
+		if("ignore_question")
+			var/ghost_role = href_list["ghost_role"]
+			if(!(ghost_role in global.full_ignore_question))
+				return
+			if(ghost_role in ignore_question)
+				ignore_question -= ghost_role
+			else
+				ignore_question += ghost_role

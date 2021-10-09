@@ -138,7 +138,7 @@
 							H.glasses.clean_blood()
 							H.update_inv_glasses()
 						else
-							H.eye_blurry = max(H.eye_blurry, 5)
+							H.set_blurriness(max(H.eye_blurry, 5))
 							H.eye_blind = max(H.eye_blind, 1)
 							to_chat(H, "<span class='warning'>Ouch! That hurts!</span>")
 				if("legs")
