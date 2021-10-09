@@ -41,10 +41,10 @@
 
 	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance] [side_x] [side_y]")//Generate the raw CA data
 	if(!string_gen)
-		var/message = "Asteroid failed to load!"
 		message_admins("<span class='notice'>[key_name_admin(usr)] tried to create the [side_x]x[side_y] asteroid but it failed to load</span>")
 		log_admin("[key_name(usr)] tried to creates the [side_x]x[side_y] asteroid but it failed to load]")
-		return log_game(message)
+		log_game("Asteroid failed to load!")
+		return
 
 	//Map filling
 	for(var/gen_turf_x in 1 to side_x)

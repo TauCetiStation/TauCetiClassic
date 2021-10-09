@@ -261,6 +261,10 @@
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
+/proc/delete_non_numbers(text)
+	var/static/regex/delete_non_numbers = regex(@"[^0-9]", "g")
+	return delete_non_numbers.Replace(text, "")
+
 /proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
 	t = copytext(t,1,limit)

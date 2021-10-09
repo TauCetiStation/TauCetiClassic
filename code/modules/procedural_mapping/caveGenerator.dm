@@ -31,11 +31,16 @@
 
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
+	var/list/vars_to_check = list(smoothing_iterations, birth_limit, death_limit, initial_closed_chance)
+	for(var/i = 1 to vars_to_check.len)
+		vars_to_check[i] = delete_non_numbers(vars_to_check[i])
+		ASSERT(isnum(vars_to_check[i]))
+
 	var/start_time = REALTIMEOFDAY
 	string_gen = world.ext_python("noise_generate.py", "[smoothing_iterations] [birth_limit] [death_limit] [initial_closed_chance] [world.maxx] [world.maxy]")//Generate the raw CA data
 	if(!string_gen)
-		var/message = "[name] failed to load!"
-		return log_game(message)
+		log_game("[name] failed to load!")
+		return
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 
