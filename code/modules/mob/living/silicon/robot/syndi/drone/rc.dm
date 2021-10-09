@@ -42,7 +42,7 @@
 	remote_view_off()
 
 
-/obj/item/clothing/glasses/syndidroneRC/proc/remote_view_on(/mob/living/carbon/human/user)
+/obj/item/clothing/glasses/syndidroneRC/proc/remote_view_on(mob/living/carbon/human/user)
 	if(!slave || QDELING(slave))
 		return FALSE
 	user.force_remote_viewing = TRUE
