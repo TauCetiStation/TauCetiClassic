@@ -412,9 +412,11 @@
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(eye_blurry)
-		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 2)))
+		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
 	else
-		game_plane_master_controller.remove_filter("eye_blur")
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
 
 // ============================================================
 
