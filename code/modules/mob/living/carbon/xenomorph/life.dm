@@ -77,7 +77,7 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry-1, 0)
+			adjust_blurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//No ear damage for aliums!
@@ -96,8 +96,8 @@
 		if(weakened)
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = 0
+		if(stuttering > 0)
+			setStuttering(0)
 
 		if(silent)
 			silent = 0

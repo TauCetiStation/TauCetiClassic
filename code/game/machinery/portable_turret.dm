@@ -512,7 +512,7 @@ var/list/turret_icons
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
-	if(isAI(L) || (lethal && (locate(/mob/living/silicon/ai) in get_turf(L))))		//don't accidentally kill the AI!
+	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
 	if(L.stat)		//if the perp is dead/dying...
