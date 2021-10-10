@@ -315,8 +315,8 @@
 	return TRUE
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	if(..())
-		return
+	//if(..())
+	//	return
 	if(issilicon(user))
 		to_chat(user, "This drill didn`t support your iterface")
 		return
