@@ -10,8 +10,9 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/weapon/melee/baton/command
 	l_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash
 
 	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
