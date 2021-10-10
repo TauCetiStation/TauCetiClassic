@@ -299,6 +299,7 @@
 	var/next_loc
 	var/last_delay = 0
 	var/exit_delay
+	var/angle = 0
 
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
@@ -334,7 +335,6 @@
 		set_dir(next_dir)
 
 		if(occupant)
-			var/angle = 0
 			angle = dir2angle(dir)
 			cut_overlay(occupant)
 			occupant = turn(occupant, angle - occupant_angle)
