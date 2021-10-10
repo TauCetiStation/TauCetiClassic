@@ -298,7 +298,7 @@ Class Procs:
 /obj/machinery/proc/can_interact_with(mob/user)
 	if(!is_operational() && !interact_offline)
 		return FALSE
-	if(panel_open && !interact_open)
+	if(panel_open && !interact_open && !/obj/machinery/mining/drill)
 		return FALSE
 	if(!can_mob_interact(user))
 		return FALSE
@@ -385,7 +385,7 @@ Class Procs:
 	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
-	if(!can_interact_with(user) && !/obj/machinery/mining/drill)
+	if(!can_interact_with(user))
 		return TRUE
 
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
