@@ -36,6 +36,7 @@
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -268,7 +269,7 @@
 
 	if(w_class || wet)
 
-		var/stat_flavor = "It is a[wet ? "wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
+		var/stat_flavor = "It is a[wet ? " wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
 
 		if(wet)
 			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
@@ -323,8 +324,9 @@
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(!user.delay_clothing_u_equip(src))
-						return 0
+					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
+						if(!user.delay_clothing_unequip(src))
+							return
 
 	else
 		if(isliving(src.loc))
@@ -893,7 +895,7 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
-				H.eye_blurry += 10
+				H.adjust_blurriness(10)
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
@@ -904,7 +906,7 @@
 	else
 		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(force * 0.5, force)
+	M.adjust_blurriness(rand(force * 0.5, force))
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`

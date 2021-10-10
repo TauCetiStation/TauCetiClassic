@@ -82,6 +82,8 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 	layer_priority = 0.1
+	m_amt = 150
+	g_amt = 20
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))

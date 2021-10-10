@@ -131,7 +131,7 @@
 	if(brain)
 		brain.damage = 0
 	H.setBrainLoss(0)
-	H.eye_blurry = 0
+	H.set_blurriness(0)
 	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))

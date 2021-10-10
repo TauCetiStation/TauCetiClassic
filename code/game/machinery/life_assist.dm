@@ -55,7 +55,7 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if(!(Adjacent(usr) || Adjacent(over_object) || usr.Adjacent(over_object)))
+	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
 	if(attached)

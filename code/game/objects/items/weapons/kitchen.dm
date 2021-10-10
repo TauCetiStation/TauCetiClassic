@@ -241,7 +241,7 @@
 				return
 			else
 				H.visible_message("<span class='warning'>[user] tried to knock [H] unconscious!</span>", "<span class='warning'>[user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
+				H.adjust_blurriness(3)
 	return ..()
 
 /obj/item/weapon/storage/visuals/tray

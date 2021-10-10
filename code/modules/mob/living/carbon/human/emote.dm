@@ -13,6 +13,7 @@
 	var/cloud_emote = ""
 	var/sound_priority = SOUND_PRIORITY_LOW
 	var/emote_sound
+	var/sound_frequency = null
 	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
 
 	var/mute_message = "" // high priority. usuially VISIBLE
@@ -210,12 +211,28 @@
 // ========== HYBRID ==========
 
 		if ("laugh")
-			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
+			message_type = can_make_a_sound ? SHOWMSG_AUDIO : SHOWMSG_VISUAL
 			message = "laughs."
 			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh."
-			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
+			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE) && !species.flags[NO_BREATHE]
+			var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
+			sound_frequency = 1.05 - (voice_frequency - 0.85)
+			switch(get_species())
+				if(SKRELL)
+					switch(gender)
+						if(FEMALE)
+							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_FEMALE)
+						else
+							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_MALE)
+				else
+					switch(gender)
+						if(FEMALE)
+							emote_sound = pick(SOUNDIN_LAUGH_FEMALE)
+						else
+							emote_sound = pick(SOUNDIN_LAUGH_MALE)
+
 
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
@@ -389,16 +406,16 @@
 	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
 			if(sound_priority == SOUND_PRIORITY_HIGH && next_high_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_high_priority_sound = world.time + 4 SECONDS
 				next_medium_priority_sound = next_high_priority_sound
 				next_low_priority_sound = next_high_priority_sound
 			else if(sound_priority == SOUND_PRIORITY_MEDIUM && next_medium_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_medium_priority_sound = world.time + 4 SECONDS
 				next_low_priority_sound = next_medium_priority_sound
 			else if(sound_priority == SOUND_PRIORITY_LOW && next_low_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_low_priority_sound = world.time + 4 SECONDS
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
