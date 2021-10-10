@@ -49,6 +49,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
+				updateDialog()
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
