@@ -158,5 +158,5 @@
 	H.apply_effect(20, AGONY)
 	to_chat(H, "<span class='danger'You feel something beep inside of you and a wave of electricion pierces your body!</span>")
 	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-	sparks.set_up(3, 0, H.loc)
+	sparks.set_up(3, 0, get_turf(H))
 	sparks.start()
