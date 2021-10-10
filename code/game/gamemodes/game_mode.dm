@@ -91,40 +91,26 @@
 
 /*===FACTION RELATED STUFF===*/
 
-/datum/game_mode/proc/CreateFactions(list/factions_to_process, populate_factions = TRUE)
-	if(factions_to_process == null)
-		factions_to_process = factions_allowed
-	var/pc = get_player_count(FALSE)
-	for(var/Fac in factions_to_process)
-		if(islist(Fac))
-			var/list/L = Fac
-			CreateFactions(L, pc, FALSE)
-		else if(isnum(factions_allowed[Fac]))
-			for(var/i in 1 to factions_allowed[Fac])
-				CreateFaction(Fac, pc)
+/datum/game_mode/proc/CreateFactions()
+	var/player_count = get_player_count(FALSE)
+	for(var/faction_type in factions_allowed)
+		if(isnum(factions_allowed[faction_type]))
+			for(var/i in 1 to factions_allowed[faction_type])
+				CreateFaction(faction_type, player_count)
 		else
-			CreateFaction(Fac, pc)
-	if(populate_factions)
-		return PopulateFactions()
+			CreateFaction(faction_type, player_count)
+	return PopulateFactions()
 
-/datum/game_mode/proc/CreateFaction(Fac, population, override = 0)
-	var/datum/faction/F = new Fac
-	if(F.can_setup(population) || override)
+/datum/game_mode/proc/CreateFaction(faction_type, player_count, override = FALSE)
+	var/datum/faction/F = new faction_type
+	if(F.can_setup(player_count) || override)
 		factions += F
 		log_mode("[F] was normally created.")
 		return F
-	else
-		log_mode("Faction ([F]) could not set up properly with given population.")
-		qdel(F)
-		return null
-/*
-	Get list of available players
-	Get list of active factions
-	Loop through the players to see if they're available for certain factions
-		Not available if they
-			don't have their preferences set accordingly
-			already in another faction
-*/
+
+	log_mode("Faction ([F]) could not set up properly with given population.")
+	qdel(F)
+	return null
 
 /datum/game_mode/proc/CanPopulateFaction(check_ready = TRUE)
 	var/list/L = get_ready_players(check_ready)
@@ -163,7 +149,6 @@
 	return TRUE
 
 /*=====ROLE RELATED STUFF=====*/
-
 /datum/game_mode/proc/CreateRole(role_type, mob/P)
 	var/datum/role/newRole = new role_type
 
