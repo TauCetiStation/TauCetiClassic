@@ -333,9 +333,9 @@
 		sleep(last_delay)
 		set_dir(next_dir)
 
-		var/angle = 0
-		angle = dir2angle(dir)
 		if(occupant)
+			var/angle = 0
+			angle = dir2angle(dir)
 			cut_overlay(occupant)
 			occupant = turn(occupant, angle - occupant_angle)
 			occupant_angle = angle
@@ -616,20 +616,20 @@
 /obj/structure/transit_tube_pod/proc/dir2angle(direction)
 	var/angle = 0
 	switch(dir)
-		if(1)
+		if(1) //NORTH
 			angle = 0
-		if(5)
+		if(5) //NORTH-EAST
 			angle = 45
-		if(4)
+		if(4) //EAST
 			angle = 90
-		if(6)
+		if(6) //SOUTH-EAST
 			angle = 135
-		if(2)
+		if(2) //SOUTH
 			angle = 180
-		if(10)
+		if(10)//SOUTH-WEST
 			angle = 225
-		if(8)
+		if(8) //WEST
 			angle = 270
-		if(9)
+		if(9) //NORTH-WEST
 			angle = 315
 	return angle
