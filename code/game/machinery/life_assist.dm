@@ -25,9 +25,6 @@
 		icon_state = icon_state_detached
 
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_AV))
-		visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
-		return
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, .proc/resolve_stranded))
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
@@ -61,10 +58,15 @@
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
-	if(attached)
-		detach()
-	else if(ishuman(over_object))
-		attach(over_object)
+	if(do_after(usr, 20, target = src))
+		if(attached)
+			detach()
+		else if(ishuman(over_object))
+			var/mob/living/carbon/human/H = over_object
+			if(HAS_TRAIT(H, TRAIT_AV))
+				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
+				return
+			attach(over_object)
 
 /obj/machinery/life_assist/proc/resolve_stranded(datum/component/bounded/bounds)
 	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
@@ -92,9 +94,11 @@
 	my_trait = TRAIT_AV
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/weapon/tank/jetpack) && !(stat & BROKEN))
-		if (holding || !user.drop_from_inventory(W, src))
-			return
+	if (!istype(W, /obj/item/weapon/tank) && istype(W, /obj/item/weapon/tank/jetpack) && (stat & BROKEN))
+		return
+	if (holding || !user.drop_from_inventory(W, src))
+		return
+	if(do_after(user, 10, target = src))
 		holding = W
 		add_overlay(holding.icon_state)
 		user.drop_from_inventory(holding, src)
@@ -105,7 +109,7 @@
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
 	if(user.is_busy())
 		return
-	if(holding && do_after(user, 20, TRUE, src, FALSE, TRUE))
+	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
 		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
 		cut_overlay(holding.icon_state)
@@ -115,23 +119,25 @@
 
 /obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
 	..()
-	update_internal(H, TRUE)
+	update_internal(TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
-	update_internal(attached, FALSE)
+	update_internal(FALSE)
 	..()
 
-/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(mob/living/carbon/human/H, connect = TRUE)
+/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(connect = TRUE)
+	if(!attached)
+		return
 	if(connect && holding)
-		if(H.internal)
-			visible_message("<span class='notice'>\the [H] is already attached to tank</span>")
+		if(attached.internal)
+			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
 			return
-		H.internal = holding
-		if(H.internals)
-			H.internals.icon_state = "internal1"
+		attached.internal = holding
+		if(attached.internals)
+			attached.internals.icon_state = "internal1"
 	else if(attached.internals)
-		H.internals.icon_state = "internal0"
-		H.internal = null
+		attached.internals.icon_state = "internal0"
+		attached.internal = null
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
