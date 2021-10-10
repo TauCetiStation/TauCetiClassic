@@ -6,7 +6,6 @@
 	@factions_allowed: List(object): what factions will the gamemode start with, or attempt to start with
 	@minimum_player_count: Integer: Minimum required players to start the gamemode
 	@minimum_players_bundles: Integer: Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
-	@roles_allowed: List(object): What roles will the gamemode start with, or attempt to start with
 	@probability: Integer: How likely it is to roll this gamemode
 	@orphaned_roles: List(reference): List of faction-less roles currently in the gamemode
 */
@@ -15,7 +14,6 @@
 	var/name
 	var/config_name // use only for config, without SSticker.mode.config_name == "malf", please
 	var/list/factions_allowed = list()
-	var/list/roles_allowed = list()
 	var/minimum_player_count
 	var/minimum_players_bundles
 	var/probability = 100 // this is the weight
@@ -77,11 +75,9 @@
 		return FALSE
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
-	var/RolesSuccess = CreateRoles()
-	var/GeneralSuccess = FactionSuccess && RolesSuccess
-	if(!GeneralSuccess)
+	if(!FactionSuccess)
 		DropAll()
-	return GeneralSuccess
+	return FactionSuccess
 
 // it is necessary in those rare cases when the gamemode did not start for those reasons
 // that cannot be detected BEFORE the creation of a human
@@ -168,67 +164,12 @@
 
 /*=====ROLE RELATED STUFF=====*/
 
-/datum/game_mode/proc/CreateRoles() //Must return TRUE in some way, else the gamemode is scrapped.
-	if(!roles_allowed.len) //No roles to handle
-		return TRUE
-	for(var/role in roles_allowed)
-		if(isnum(roles_allowed[role]))
-			return CreateStrictNumOfRoles(role, roles_allowed[role])
-		else
-			CreateNumOfRoles(role, FilterAvailablePlayers(role))
-			return TRUE
-
-/datum/game_mode/proc/CreateNumOfRoles(role_type, list/candidates)
-	if(!candidates || !candidates.len)
-		log_mode("Ran out of available players to fill role [role_type]!")
-		return
-	for(var/mob/M in candidates)
-		CreateRole(role_type, M)
-
-/datum/game_mode/proc/CreateStrictNumOfRoles(role_type, num)
-	var/number_of_roles = 0
-	var/list/available_players = FilterAvailablePlayers(role_type)
-	for(var/i = 0 to num)
-		if(!available_players.len)
-			log_mode("Ran out of available players to fill role [role_type]!")
-			break
-		shuffle(available_players)
-		var/mob/dead/new_player/P = pick(available_players)
-		available_players.Remove(P)
-		if(!CreateRole(role_type, P))
-			i--
-			continue
-		number_of_roles++ // Get the roles we created
-	return number_of_roles
-
-
-/datum/game_mode/proc/CreateBasicRole(type_role)
-	return new type_role
-
-/datum/game_mode/proc/FilterAvailablePlayers(datum/role/role_type, list/players_to_choose = get_ready_players())
-	var/pref = initial(role_type.required_pref)
-	if(!pref)
-		log_mode("[role_type] has no required_pref")
-
-	for(var/mob/dead/new_player/P in players_to_choose)
-		if(!P.client || !P.mind)
-			players_to_choose.Remove(P)
-			continue
-		if(!P.client.prefs.be_role.Find(pref) || jobban_isbanned(P, pref) || role_available_in_minutes(P, pref) || jobban_isbanned(P, "Syndicate"))
-			players_to_choose.Remove(P)
-			continue
-	if(!players_to_choose.len)
-		log_mode("No available players for [role_type]")
-	return players_to_choose
-
 /datum/game_mode/proc/CreateRole(role_type, mob/P)
-	var/datum/role/newRole = CreateBasicRole(role_type)
+	var/datum/role/newRole = new role_type
 
 	if(!newRole)
 		log_mode("Role killed itself or was otherwise missing!")
 		return FALSE
-
-	newRole.is_roundstart_role = TRUE
 
 	if(!newRole.AssignToRole(P.mind))
 		log_mode("Role refused mind and dropped!")
@@ -335,16 +276,6 @@
 			var/list/datum/faction/game_mode_factions = find_factions_by_type(type)
 			for(var/datum/faction/faction in game_mode_factions)
 				if(!faction.IsSuccessful())
-					return "lose"
-
-	if(roles_allowed.len)
-		for(var/type in roles_allowed)
-			var/list/datum/role/game_mode_roles = list()
-			for(var/datum/role/R in orphaned_roles)
-				if(istype(R, type) && R.is_roundstart_role)
-					game_mode_roles += R
-			for(var/datum/role/R in game_mode_roles)
-				if(!R.IsSuccessful())
 					return "lose"
 
 	return "win"
