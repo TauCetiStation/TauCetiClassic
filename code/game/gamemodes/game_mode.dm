@@ -1,26 +1,24 @@
-/*
-	Gamemode datums
-		Used for co-ordinating factions in a round, what factions should be in operation, etc.
-	@name: String: The name of the gamemode, e.g. Changelings
-	@factions: List(reference): What factions are currently in operation in the gamemode
-	@factions_allowed: List(object): what factions will the gamemode start with, or attempt to start with
-	@minimum_player_count: Integer: Minimum required players to start the gamemode
-	@minimum_players_bundles: Integer: Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
-	@probability: Integer: How likely it is to roll this gamemode
-	@orphaned_roles: List(reference): List of faction-less roles currently in the gamemode
-*/
-
+// Used for co-ordinating factions in a round, what factions should be in operation, etc
 /datum/game_mode
+	// The name of the gamemode, e.g. Changelings
 	var/name
-	var/config_name // use only for config, without SSticker.mode.config_name == "malf", please
+	// Use only for config, without SSticker.mode.config_name == "malf", please
+	var/config_name
+	// What factions will the gamemode start with, or attempt to start with
 	var/list/factions_allowed = list()
+	// Minimum required players to start the gamemode
 	var/minimum_player_count
+	// Minimum number of players for that gamemode to be chose in Secret|Team Based|Mix
 	var/minimum_players_bundles
-	var/probability = 100 // this is the weight
+	// How likely it is to roll this gamemode
+	var/probability = 100
 
+	// This is the html of all information about the current mode
 	var/completition_text = ""
 
+	// What factions are currently in operation in the gamemode
 	var/list/factions = list()
+	// List of faction-less roles currently in the gamemode
 	var/list/orphaned_roles = list()
 
 /datum/game_mode/proc/announce()
@@ -28,7 +26,7 @@
 
 /datum/game_mode/proc/get_player_count(check_ready = TRUE)
 	var/players = 0
-	for(var/mob/dead/new_player/P in new_player_list)
+	for(var/mob/dead/new_player/P as anything in new_player_list)
 		if(P.client && (!check_ready || P.ready))
 			players++
 
@@ -36,7 +34,7 @@
 
 /datum/game_mode/proc/get_ready_players(check_ready = TRUE)
 	var/list/players = list()
-	for(var/mob/dead/new_player/P in player_list)
+	for(var/mob/dead/new_player/P as anything in new_player_list)
 		if(P.client && (!check_ready || P.ready))
 			players.Add(P)
 
@@ -262,7 +260,6 @@
 			for(var/datum/faction/faction in game_mode_factions)
 				if(!faction.IsSuccessful())
 					return "lose"
-
 	return "win"
 
 //1 = station, 2 = centcomm
