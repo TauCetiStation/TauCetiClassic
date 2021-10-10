@@ -298,7 +298,7 @@ Class Procs:
 /obj/machinery/proc/can_interact_with(mob/user)
 	if(!is_operational() && !interact_offline)
 		return FALSE
-	if(panel_open && !interact_open && !/obj/machinery/mining/drill)
+	if((panel_open && !/obj/machinery/mining/drill) && !interact_open)
 		return FALSE
 	if(!can_mob_interact(user))
 		return FALSE
