@@ -283,7 +283,7 @@ Hit Procs
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
-		to_chat(src, "<span class='warning'> Your other hand is too busy holding [item_in_hand].")
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 		return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)

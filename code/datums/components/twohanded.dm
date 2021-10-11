@@ -119,24 +119,24 @@
 		return
 	if(ismonkey(user))
 		if(require_twohands)
-			to_chat(user, "<span class='notice'> [parent] is too heavy and cumbersome for you to carry!")
+			to_chat(user, "<span class='notice'>[parent] is too heavy and cumbersome for you to carry!</span>")
 			user.drop_from_inventory(parent)
 		else
-			to_chat(user, "<span class='notice'> It's too heavy for you to wield fully.")
+			to_chat(user, "<span class='notice'>It's too heavy for you to wield fully.</span>")
 		return
 	if(user.get_inactive_hand())
 		if(require_twohands)
-			to_chat(user, "<span class='notice'> [parent] is too cumbersome to carry in one hand!")
+			to_chat(user, "<span class='notice'>[parent] is too cumbersome to carry in one hand!</span>")
 			user.drop_from_inventory(parent)
 		else
-			to_chat(user, "<span class='warming'> You need your other hand to be empty!")
+			to_chat(user, "<span class='warming'>You need your other hand to be empty!</span>")
 		return
 	var/obj/item/organ/external/l_hand = user.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_hand = user.bodyparts_by_name[BP_R_ARM]
 	if((!l_hand || (l_hand.is_stump)) || (!r_hand || (r_hand.is_stump)))
 		if(require_twohands)
 			user.drop_from_inventory(parent)
-		to_chat(user, "<span class='warning'> You don't have enough intact hands.")
+		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 
 	// // wield update status
@@ -155,9 +155,9 @@
 	parent_item.update_icon()
 
 	if(isrobot(user))
-		to_chat(user, "<span class='notice'> You dedicate your module to [parent].")
+		to_chat(user, "<span class='notice'>You dedicate your module to [parent].</span>")
 	else
-		to_chat(user, "<span class='notice'> You grab [parent] with both hands.")
+		to_chat(user, "<span class='notice'>You grab [parent] with both hands.</span>")
 
 	// Play sound if one is set
 	if(wieldsound)
@@ -219,11 +219,11 @@
 		// Show message if requested
 		if(show_message)
 			if(isrobot(user))
-				to_chat(user, "<span class='notice'> You free up your module.")
+				to_chat(user, "<span class='notice'>You free up your module.</span>")
 			else if(require_twohands)
-				to_chat(user, "<span class='notice'> You drop [parent].")
+				to_chat(user, "<span class='notice'>You drop [parent].</span>")
 			else
-				to_chat(user, "<span class='notice'> You are now carrying [parent] with one hand.")
+				to_chat(user, "<span class='notice'>You are now carrying [parent] with one hand.</span>")
 
 	// Play sound if set
 	if(unwieldsound)

@@ -164,7 +164,7 @@
 				C.toggle_zoom()
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
-		to_chat(src, "<span class='warning'> Your other hand is too busy holding [item_in_hand].")
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 		return
 
 	src.hand = !( src.hand )
