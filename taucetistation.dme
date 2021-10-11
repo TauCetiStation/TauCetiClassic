@@ -264,6 +264,7 @@
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\swiping.dm"
 #include "code\datums\components\tactical.dm"
+#include "code\datums\components\twohanded.dm"
 #include "code\datums\components\visible_radius.dm"
 #include "code\datums\components\waddle.dm"
 #include "code\datums\components\gamemodes\gamemode.dm"

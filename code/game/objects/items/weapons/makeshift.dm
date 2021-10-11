@@ -1,4 +1,4 @@
-/obj/item/weapon/twohanded/spear
+/obj/item/weapon/spear
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "spearglass0"
 	name = "spear"
@@ -6,14 +6,13 @@
 	force = 10
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
 	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	var/wielded = FALSE
 
-/obj/item/weapon/twohanded/spear/atom_init()
+/obj/item/weapon/spear/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
@@ -21,21 +20,34 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
 
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 18, 10, FALSE)
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+/// triggered on wield of two handed item
+/obj/item/weapon/spear/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/weapon/spear/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+	wielded = FALSE
+
+/obj/item/weapon/spear/proc/can_sweep_push(atom/target, mob/user)
 	return wielded
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+/obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
 	return wielded
 
-/obj/item/weapon/twohanded/spear/update_icon()
+/obj/item/weapon/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)

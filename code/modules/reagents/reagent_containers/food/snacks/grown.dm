@@ -474,7 +474,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
+	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
 		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		qdel(src)

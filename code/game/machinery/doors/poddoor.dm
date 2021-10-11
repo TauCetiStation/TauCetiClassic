@@ -43,9 +43,9 @@
 		var/can_wedge = FALSE
 		if(iscrowbar(C))
 			can_wedge = TRUE
-		else if(istype(C, /obj/item/weapon/twohanded/fireaxe))
-			var/obj/item/weapon/twohanded/fireaxe/F = C
-			can_wedge = F.wielded
+		// else if(istype(C, /obj/item/weapon/fireaxe))
+			// var/obj/item/weapon/fireaxe/F = C
+			// can_wedge = F.wielded
 
 		if(can_wedge)
 			open(TRUE)

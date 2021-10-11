@@ -205,6 +205,14 @@
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
 
+// /datum/component/two_handed signals
+
+///from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
+#define COMSIG_TWOHANDED_WIELD "twohanded_wield"
+	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
+///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
+#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
+
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
 #define COMSIG_HAND_IS "hand_is"
@@ -291,6 +299,10 @@
 #define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
 /// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_REMOVE "comsig_mob_mod_remove"
+
+///from base of mob/living/carbon/swap_hand(): (obj/item)
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
+	#define COMPONENT_BLOCK_SWAP (1<<0)
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
