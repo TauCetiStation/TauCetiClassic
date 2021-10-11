@@ -11,12 +11,10 @@
 			priority_targets += possible_target
 
 	if(priority_targets.len > 0)
-		target = pick(priority_targets)
+		set_target(pick(priority_targets))
 	else if(possible_targets.len > 0)
-		target = pick(possible_targets)
+		set_target(pick(possible_targets))
 
-	if(target && target.current)
-		explanation_text = format_explanation()
 	return TRUE
 
 /datum/objective/target/kidnap/check_completion()

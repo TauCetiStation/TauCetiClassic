@@ -32,6 +32,10 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 #undef ADD_TO_POIFS_LIST
 
 /datum/objective/steal
+	conflicting_types = list(
+		/datum/objective/steal
+	)
+
 	var/obj/item/steal_target
 	var/target_name
 
@@ -70,7 +74,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
-/datum/objective/steal/proc/set_target(item_name)
+/datum/objective/steal/set_target(item_name)
 	target_name = item_name
 	steal_target = possible_items[target_name]
 	if (!steal_target )
@@ -83,6 +87,19 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	set_target(pick(possible_items))
 	return TRUE
 
+/datum/objective/steal/find_pseudorandom_target(list/all_objectives)
+	var/list/conflicting_objectives = list()
+	for(var/datum/objective/steal/O in all_objectives)
+		if(O.type in conflicting_types)
+			conflicting_objectives += O
+
+	if(!conflicting_objectives.len)
+		return FALSE
+
+	var/datum/objective/steal/enemy_objective = pick(conflicting_objectives)
+	set_target(enemy_objective.target_name)
+
+	return TRUE
 
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"

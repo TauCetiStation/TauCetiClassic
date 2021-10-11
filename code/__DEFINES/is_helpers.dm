@@ -128,8 +128,6 @@
 
 // ROLES / ANTAG
 
-#define isfaction(A) (istype(A, /datum/faction))
-
 #define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
 
 #define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)

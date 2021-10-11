@@ -1,3 +1,8 @@
+/datum/objective/target/assassinate
+	conflicting_types = list(
+		/datum/objective/target/protect
+	)
+
 /datum/objective/target/assassinate/format_explanation()
 	return "Assassinate [target.current.real_name], the [target.assigned_role]."
 

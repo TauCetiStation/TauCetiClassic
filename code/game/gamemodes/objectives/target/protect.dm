@@ -1,3 +1,10 @@
+/datum/objective/target/protect
+	conflicting_types = list(
+		/datum/objective/target/assassinate,
+		/datum/objective/target/dehead,
+		/datum/objective/target/debrain,
+	)
+
 /datum/objective/target/protect/format_explanation()
 	return "Protect [target.current.real_name], the [target.assigned_role]."
 

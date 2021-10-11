@@ -28,18 +28,14 @@ var/global/list/target_objectives = list()
 /datum/objective/target/find_target()
 	var/list/possible_targets = get_targets()
 	if(possible_targets.len > 0)
-		target = pick(possible_targets)
-		if(target && target.current)
-			explanation_text = format_explanation()
+		set_target(pick(possible_targets))
 		return TRUE
 	return FALSE
 
 /datum/objective/target/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if(can_be_target(possible_target) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
-			target = possible_target
-			if(target && target.current)
-				explanation_text = format_explanation()
+			set_target(possible_target)
 			return TRUE
 	return FALSE
 
@@ -50,13 +46,30 @@ var/global/list/target_objectives = list()
 			targets += possible_target
 	return targets
 
+/datum/objective/target/find_pseudorandom_target(list/all_objectives)
+	var/list/conflicting_objectives = list()
+	for(var/datum/objective/target/O in all_objectives)
+		if(O.type in conflicting_types)
+			conflicting_objectives += O
+
+	if(!conflicting_objectives.len)
+		return FALSE
+
+	var/datum/objective/target/enemy_objective = pick(conflicting_objectives)
+	set_target(enemy_objective.target)
+
+	return TRUE
+
+/datum/objective/target/set_target(new_target)
+	target = new_target
+	explanation_text = format_explanation()
+
 /datum/objective/target/select_target()
 	var/new_target = input("Select target:", "Objective target", null) as null|anything in get_targets()
 	if(!new_target)
 		return FALSE
 	auto_target = FALSE
-	target = new_target
-	explanation_text = format_explanation()
+	set_target(new_target)
 	return TRUE
 
 /datum/objective/target/proc/format_explanation()

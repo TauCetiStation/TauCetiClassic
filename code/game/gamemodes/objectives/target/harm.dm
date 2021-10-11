@@ -1,5 +1,8 @@
 /datum/objective/target/harm
 	var/already_completed = 0
+	conflicting_types = list(
+		/datum/objective/target/protect
+	)
 
 /datum/objective/target/harm/format_explanation()
 	return "Make an example of [target.current.real_name], the [target.assigned_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."

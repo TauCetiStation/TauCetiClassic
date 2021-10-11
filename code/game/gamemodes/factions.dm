@@ -27,6 +27,9 @@
 	// This is intended to be used on GetScoreboard() to list things like nuclear ops purchases.
 	var/list/faction_scoreboard_data = list()
 
+	// Allows you to randomly generate objectives according to rulesets, is optional
+	var/objectives_ruleset_type
+
 	// Ref to leader
 	var/datum/role/leader
 	// Who is a member of this faction - ROLES, NOT MINDS

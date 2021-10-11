@@ -24,6 +24,9 @@
 	// Logo of role
 	var/logo_state
 
+	// Allows you to randomly generate objectives according to rulesets, is optional
+	var/objectives_ruleset_type
+
 	// What faction this role is associated with.
 	var/datum/faction/faction
 	// The actual antag mind.

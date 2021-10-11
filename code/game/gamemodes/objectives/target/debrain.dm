@@ -1,3 +1,8 @@
+/datum/objective/target/debrain
+	conflicting_types = list(
+		/datum/objective/target/protect
+	)
+
 /datum/objective/target/debrain/format_explanation()
 	return "Steal the brain of [target.current.real_name]."
 
@@ -8,9 +13,7 @@
 		return OBJECTIVE_LOSS
 	if( !target.current || !isbrain(target.current) )
 		return OBJECTIVE_LOSS
-	var/atom/A = target.current
-	while(A.loc)			//check to see if the brainmob is on our person
-		A = A.loc
-		if(A == owner.current)
-			return OBJECTIVE_WIN
+	var/list/all_items = owner.current.GetAllContents()
+	if(target.current in all_items)
+		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

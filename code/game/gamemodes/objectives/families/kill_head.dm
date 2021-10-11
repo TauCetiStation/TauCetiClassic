@@ -13,11 +13,8 @@
 			heads += M
 
 	if(heads.len)
-		target = pick(heads)
+		set_target(pick(heads))
 	else
-		target = pick(possible_targets)
-
-	if(target && target.current)
-		explanation_text = format_explanation()
+		set_target(pick(possible_targets))
 
 	return TRUE

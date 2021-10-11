@@ -9,8 +9,7 @@
 	if(istype(C))
 		C.find_sacrifice_target()
 	if(C.sacrifice_target)
-		target = C.sacrifice_target
-		explanation_text = format_explanation()
+		set_target(C.sacrifice_target)
 	return TRUE
 
 /datum/objective/target/sacrifice/select_target()

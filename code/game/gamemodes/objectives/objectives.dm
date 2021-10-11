@@ -6,7 +6,8 @@
 	var/completed = OBJECTIVE_LOSS			//currently only used for custom objectives.
 
 	var/target_amount = 0					//If they are focused on a particular number. Steal objectives have their own counter.
-	var/auto_target = TRUE //Whether we pick a target automatically on PostAppend()
+	var/auto_target = TRUE					//Whether we pick a target automatically on PostAppend()
+	var/list/conflicting_types = list()		//Used for find pseudorandom target
 
 /datum/objective/New(text, _auto_target = TRUE)
 	auto_target = _auto_target
@@ -39,11 +40,17 @@
 /datum/objective/proc/find_target()
 	return TRUE
 
+/datum/objective/proc/find_pseudorandom_target(list/all_objectives)
+	return FALSE
+
 /datum/objective/proc/extra_info()
 	return
 
 /datum/objective/proc/select_target()
 	return FALSE
+
+/datum/objective/proc/set_target(new_target)
+	return
 
 /datum/objective/proc/PostAppend()
 	if(auto_target)

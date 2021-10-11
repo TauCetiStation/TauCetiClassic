@@ -1,3 +1,8 @@
+/datum/objective/target/dehead
+	conflicting_types = list(
+		/datum/objective/target/protect
+	)
+
 /datum/objective/target/dehead/format_explanation()
 	return "Put the head of [target.current.real_name] in biogel can and steal it."
 
