@@ -35,13 +35,9 @@
 		M.current.Paralyse(5)
 
 /datum/faction/cult/forgeObjectives()
-	if(!..())
-		return FALSE
-
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult)
 	for(var/i in 1 to rand(2, 3))
 		AppendObjective(pick_n_take(possibles_objectives))
-	return TRUE
 
 /datum/faction/cult/AdminPanelEntry()
 	. = ..()

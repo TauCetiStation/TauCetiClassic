@@ -7,5 +7,4 @@
 	logo_state = "zombie-logo"
 
 /datum/faction/zombie/forgeObjectives()
-	. = ..()
 	AppendObjective(/datum/objective/turn_into_zombie)

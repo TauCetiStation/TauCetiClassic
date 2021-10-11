@@ -28,8 +28,6 @@
 			AppendObjective(/datum/objective/target/dehead, TRUE)
 
 /datum/role/traitor/forgeObjectives()
-	if(!..())
-		return FALSE
 	if(istype(antag.current, /mob/living/silicon))
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
@@ -50,7 +48,6 @@
 				AppendObjective(/datum/objective/survive)
 			else
 				AppendObjective(/datum/objective/hijack)
-	return TRUE
 
 /datum/role/traitor/process()
 	// For objectives such as "Make an example of...", which require mid-game checks for completion
@@ -108,19 +105,13 @@
 /datum/role/traitor/wishgranter
 
 /datum/role/traitor/wishgranter/forgeObjectives()
-	if(!..())
-		return FALSE
 	AppendObjective(/datum/objective/custom/wishgranter)
 	AppendObjective(/datum/objective/escape)
-	return TRUE
 
 /datum/role/traitor/syndbeacon
 
 /datum/role/traitor/syndbeacon/forgeObjectives()
-	if(!..())
-		return FALSE
 	AppendObjective(/datum/objective/silence)
-	return TRUE
 
 /datum/role/traitor/syndcall
 

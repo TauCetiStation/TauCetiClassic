@@ -60,12 +60,14 @@
 
 //For when you want your faction to have specific objectives (Vampire, suck blood. Cult, sacrifice the head of personnel's dog, etc.)
 /datum/faction/proc/forgeObjectives()
-	SHOULD_CALL_PARENT(TRUE)
+	return
+
+/datum/faction/proc/GiveObjectives()
 	if(config.objectives_disabled)
-		return FALSE
+		return
+	forgeObjectives()
 	for(var/datum/role/R in members)
-		R.forgeObjectives()
-	return TRUE
+		R.GiveObjectives()
 
 /datum/faction/proc/AnnounceObjectives()
 	SHOULD_CALL_PARENT(TRUE)

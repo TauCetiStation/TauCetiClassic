@@ -28,8 +28,6 @@
 			return R
 
 /datum/role/ninja/forgeObjectives()
-	if(!..())
-		return FALSE
 	var/datum/role/second_ninja = get_other_ninja()
 	if(!antag.protector_role && !second_ninja)
 		var/objective_list = list(1,2,3)
@@ -76,8 +74,6 @@
 			if(ninja_objective)
 				ninja_objective.target = second_ninja.antag
 				ninja_objective.explanation_text = "Assassinate [second_ninja.antag.current.real_name], the [second_ninja.antag.special_role]."
-
-	return TRUE
 
 /datum/role/ninja/Greet(greeting, custom)
 	. = ..()

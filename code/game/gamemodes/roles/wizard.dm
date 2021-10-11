@@ -72,8 +72,6 @@
 	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
 
 /datum/role/wizard/forgeObjectives()
-	if(!..())
-		return FALSE
 	switch(rand(1,140))
 		if(1 to 30)
 			AppendObjective(/datum/objective/target/assassinate)
@@ -106,7 +104,6 @@
 
 		else
 			AppendObjective(/datum/objective/hijack)
-	return TRUE
 
 /datum/role/wizard/GetScoreboard()
 	. = ..()

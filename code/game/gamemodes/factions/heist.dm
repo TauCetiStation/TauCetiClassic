@@ -19,8 +19,6 @@
 	return FALSE
 
 /datum/faction/heist/forgeObjectives()
-	if(!..())
-		return FALSE
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/goals = list("kidnap","loot","salvage")
 
@@ -38,7 +36,6 @@
 	//-All- vox raids have these two (one) objectives. Failing them loses the game.
 	AppendObjective(/datum/objective/heist/inviolate_crew)
 	AppendObjective(/datum/objective/heist/inviolate_death)
-	return TRUE
 
 /datum/faction/heist/OnPostSetup()
 	//Build a list of spawn points.

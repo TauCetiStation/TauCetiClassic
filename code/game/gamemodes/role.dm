@@ -170,9 +170,12 @@
 
 // Create objectives here.
 /datum/role/proc/forgeObjectives()
+	return
+
+/datum/role/proc/GiveObjectives()
 	if(config.objectives_disabled)
-		return FALSE
-	return TRUE
+		return
+	forgeObjectives()
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)
 	if(!duplicates && locate(objective_type) in objectives)

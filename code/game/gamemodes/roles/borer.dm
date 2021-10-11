@@ -12,9 +12,6 @@
 	to_chat(antag.current, "Talk to your fellow borers with ;")
 
 /datum/role/borer/forgeObjectives()
-	if(!..())
-		return FALSE
 	AppendObjective(/datum/objective/borer_survive)
 	AppendObjective(/datum/objective/borer_reproduce)
 	AppendObjective(/datum/objective/escape)
-	return TRUE

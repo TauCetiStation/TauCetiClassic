@@ -137,7 +137,6 @@
 		HG.my_gang = G
 
 	AppendObjective(/datum/objective/survive)
-	return TRUE
 
 /datum/role/traitor/dealer/Greet(greeting,custom)
 	if(!..())

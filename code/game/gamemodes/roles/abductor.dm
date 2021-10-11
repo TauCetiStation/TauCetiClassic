@@ -116,7 +116,4 @@
 	antag_hud_name = "abductee"
 
 /datum/role/abducted/forgeObjectives()
-	if(!..())
-		return FALSE
 	AppendObjective(pick(subtypesof(/datum/objective/abductee)))
-	return TRUE

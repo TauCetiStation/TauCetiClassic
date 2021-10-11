@@ -69,8 +69,6 @@
 	return TRUE
 
 /datum/role/changeling/forgeObjectives()
-	if(!..())
-		return FALSE
 	AppendObjective(/datum/objective/absorb)
 	AppendObjective(/datum/objective/target/assassinate)
 	AppendObjective(/datum/objective/steal)
@@ -78,7 +76,6 @@
 		AppendObjective(/datum/objective/survive)
 	else
 		AppendObjective(/datum/objective/escape)
-	return TRUE
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	antag?.current?.hud_used.lingchemdisplay.invisibility = 101

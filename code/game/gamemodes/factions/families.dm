@@ -29,7 +29,6 @@
 	..()
 
 /datum/faction/gang/forgeObjectives()
-	. = ..()
 	AppendObjective(/datum/objective/gang/points)
 	AppendObjective(gang_objective_type)
 
