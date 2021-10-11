@@ -163,6 +163,7 @@
 /obj/machinery/telecomms/proc/add_link(obj/machinery/telecomms/T)
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
+	if (!T_position) return
 	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
 		for(var/x in autolinkers)
 			if(T.autolinkers.Find(x))
@@ -211,6 +212,7 @@
 /obj/machinery/telecomms/proc/checkheat()
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
+	if (!environment) return
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
 			integrity = between(0, integrity, 100)

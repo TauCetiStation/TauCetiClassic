@@ -577,7 +577,6 @@
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
 	active_power_cost = 250
-
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	if(relay_type)

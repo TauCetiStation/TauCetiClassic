@@ -96,7 +96,6 @@
 	var/list/can_mount = null                                   // Types of device that can be hardpoint mounted.
 	var/list/mounted_devices = null                             // Holder for the above device.
 	var/obj/item/active_device = null                           // Currently deployed device, if any.
-	var/insertion_time = 40									    // Time it takes to insert new module in the rig.
 
 	var/mob/living/carbon/human/wearer                          // The person currently wearing the rig.
 	var/offline = TRUE
@@ -1059,19 +1058,18 @@
 	item_state = "sceince_helm"
 	item_color = "science"
 	unacidable = TRUE
-	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 70)
+	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/science
 	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
 	icon_state = "rig-science"
 	name = "science hardsuit"
 	item_state = "science_hardsuit"
-	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 70)
+	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 	unacidable = TRUE
-	max_mounted_devices = 6
+	max_mounted_devices = 5
 	slowdown = 0.5
 	offline_slowdown = 7
-	insertion_time = 15
 	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer ,/obj/item/rig_module/simple_ai)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
@@ -1080,15 +1078,15 @@
 	icon_state = "rig0-rd"
 	item_state = "rd_helm"
 	item_color = "rd"
-	armor = list(melee = 10, bullet = 5, laser = 7, energy = 5, bomb = 55, bio = 100, rad = 80)
+	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
 
 /obj/item/clothing/suit/space/rig/science/rd
 	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
 	icon_state = "rig-rd"
 	name = "advanced science hardsuit"
 	item_state = "rd_hardsuit"
-	armor = list(melee = 10, bullet = 5, laser = 7, energy = 5, bomb = 55, bio = 100, rad = 80)
-	max_mounted_devices = 8
+	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
+	max_mounted_devices = 7
 	slowdown = 0.4
 	offline_slowdown = 8
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer)
