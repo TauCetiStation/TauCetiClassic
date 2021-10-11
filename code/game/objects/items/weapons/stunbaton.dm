@@ -138,28 +138,3 @@
 	if(charges < 1)
 		status = 0
 		update_icon()
-
-/obj/item/weapon/melee/baton/command
-	name = "command baton"
-	desc = "Latest creation of notorious Nanotrasen Loyalty and Motivation Division, this peculiarly colored stunbaton will allow anyone unfortunate enough to receive a loyalty implant to shock and stun their less loyal dogs at a distance!"
-	icon_state = "commandbaton"
-	item_state = "commandbaton"
-
-/obj/item/weapon/melee/baton/command/afterattack(atom/target, mob/user, proximity, params)
-	user.SetNextMove(CLICK_CD_INTERACT)
-
-	if(!ishuman(target))
-		return
-	if(!user.isloyal())
-		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
-		return
-	var/mob/living/carbon/human/H = target
-	user.visible_message("<span class='notice'>[user] points their [src] at [H]</span>")
-	if(!H.ismindshielded())
-		return
-	H.apply_effect(5, WEAKEN)
-	H.apply_effect(20, AGONY)
-	to_chat(H, "<span class='danger'You feel something beep inside of you and a wave of electricity pierces your body!</span>")
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-	sparks.set_up(3, 0, get_turf(H))
-	sparks.start()

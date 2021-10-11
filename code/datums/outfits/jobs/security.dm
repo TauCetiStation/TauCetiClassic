@@ -10,7 +10,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
-	belt = /obj/item/weapon/melee/baton/command
+	belt = /obj/item/weapon/melee/chainofcommand
 	l_pocket_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash

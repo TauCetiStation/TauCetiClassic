@@ -11,7 +11,7 @@
 	belt = /obj/item/device/pda/captain
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
-	l_pocket = /obj/item/weapon/melee/baton/command
+	l_pocket = /obj/item/weapon/melee/chainofcommand
 	back_style = BACKPACK_STYLE_CAPTAIN
 
 	implants = list(
