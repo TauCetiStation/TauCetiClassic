@@ -58,6 +58,11 @@
 	if(post_setup)
 		R.OnPostSetup()
 
+/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE)
+	. = SSticker.mode.CreateRole(role_type, M)
+	if(.)
+		setup_role(., M, post_setup)
+
 /proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE, laterole = TRUE)
 	ASSERT(faction)
 
@@ -69,7 +74,16 @@
 	if(.)
 		setup_role(., M, post_setup)
 
-/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE)
-	. = SSticker.mode.CreateRole(role_type, M)
-	if(.)
-		setup_role(., M, post_setup)
+/proc/create_faction(faction_type, post_setup = TRUE, forge_objectives = TRUE)
+	var/datum/faction/F = SSticker.mode.CreateFaction(faction_type, num_players())
+	if(post_setup)
+		F.OnPostSetup()
+	if(forge_objectives)
+		F.forgeObjectives()
+		F.AnnounceObjectives()
+	return F
+
+/proc/get_uniq_faction(faction_type, post_setup = TRUE, forge_objectives = TRUE)
+	. = find_faction_by_type(faction_type)
+	if(!.)
+		. = create_faction(faction_type, post_setup, forge_objectives)

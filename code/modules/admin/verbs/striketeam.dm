@@ -64,7 +64,7 @@ var/global/sent_strike_team = FALSE
 
 	var/is_leader_seleceted = FALSE
 
-	var/datum/faction/strike_team/deathsquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/deathsquad)
+	var/datum/faction/strike_team/deathsquad/S = create_faction(/datum/faction/strike_team/deathsquad, FALSE, FALSE)
 	S.forgeObjectives(input)
 	// Spawns commandos and equips them.
 	for (var/obj/effect/landmark/L in landmarks_list)

@@ -157,7 +157,7 @@ var/can_call_ert
 	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	SSticker.ert_call_in_progress = TRUE
-	var/datum/faction/strike_team/ert/ERT = SSticker.mode.CreateFaction(/datum/faction/strike_team/ert)
+	var/datum/faction/strike_team/ert/ERT = create_faction(/datum/faction/strike_team/ert, FALSE, FALSE)
 	ERT.forgeObjectives(objective_text)
 
 	VARSET_IN(SSticker, ert_call_in_progress, FALSE, 5 MINUTES) // Can no longer join the ERT.

@@ -78,7 +78,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(L.name == "Syndicate-Commando-Paper")
 			SCP = L
 
-	var/datum/faction/strike_team/syndiesquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/syndiesquad)
+	var/datum/faction/strike_team/syndiesquad/S = create_faction(/datum/faction/strike_team/syndiesquad, FALSE, FALSE)
 	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))

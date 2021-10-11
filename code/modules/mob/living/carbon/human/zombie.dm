@@ -297,13 +297,7 @@ var/list/zombie_list = list()
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
 
-	var/datum/faction/zombie/Z = find_faction_by_type(/datum/faction/zombie)
-	if(!Z)
-		Z = SSticker.mode.CreateFaction(/datum/faction/zombie)
-		Z.OnPostSetup()
-		Z.forgeObjectives()
-		Z.AnnounceObjectives()
-
+	var/datum/faction/zombie/Z = get_uniq_faction(/datum/faction/zombie, TRUE, TRUE)
 	add_faction_member(Z, H, FALSE)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
