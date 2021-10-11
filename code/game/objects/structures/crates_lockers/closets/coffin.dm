@@ -27,9 +27,9 @@
 	coffin_side.layer = 3.95
 	coffin_side.loc = src
 
-	AddComponent(/datum/component/multi_carry,\
-		12,\
-		/datum/carry_positions/coffin_four_man,\
+	AddComponent(/datum/component/multi_carry,
+		12,
+		/datum/carry_positions/coffin_four_man,
 		subtypesof(/datum/dance_move/coffin))
 
 /obj/structure/closet/coffin/can_open()

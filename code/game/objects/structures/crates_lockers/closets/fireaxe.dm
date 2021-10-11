@@ -60,10 +60,6 @@
 			update_icon()
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
-			// var/obj/item/weapon/fireaxe/FA = O
-			// if(FA.wielded)
-			// 	to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
-			// 	return
 			user.drop_from_inventory(O, src)
 			fireaxe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")

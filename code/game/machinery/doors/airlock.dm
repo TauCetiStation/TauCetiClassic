@@ -999,20 +999,20 @@ var/list/airlock_overlays = list()
 		else if( !welded && !operating )
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
-					// var/obj/item/weapon/fireaxe/F = C
-					// if(F:wielded)
-					// 	spawn(0)	open(1)
-					// else
-						// to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
+					var/obj/item/weapon/fireaxe/F = C
+					if(F.wielded)
+						spawn(0)	open(1)
+					else
+						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
 				else
 					spawn(0)	open(1)
 			else
 				if(beingcrowbarred == 0)
-					// var/obj/item/weapon/fireaxe/F = C
-					// if(F:wielded)
-					// 	spawn(0)	close(1)
-					// else
-					// 	to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
+					var/obj/item/weapon/fireaxe/F = C
+					if(F.wielded)
+						spawn(0)	close(1)
+					else
+						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
 				else
 					spawn(0)	close(1)
 

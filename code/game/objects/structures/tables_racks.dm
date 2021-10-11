@@ -645,9 +645,9 @@
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/E = W
 		can_cut = E.active
-	// else if(istype(W, /obj/item/weapon/dualsaber))
-		// var/obj/item/weapon/dualsaber/D = W
-		// can_cut = D.wielded
+	else if(istype(W, /obj/item/weapon/dualsaber))
+		var/obj/item/weapon/dualsaber/D = W
+		can_cut = D.wielded
 
 	if(!can_cut)
 		return ..()
