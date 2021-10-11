@@ -103,8 +103,6 @@
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
 
-/obj/item/weapon/gun/projectile/proc/load_mag()
-
 /obj/item/weapon/gun/projectile/Destroy()
 	qdel(magazine)
 	magazine = null
