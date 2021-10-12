@@ -232,9 +232,7 @@
 	// Remove the object in the offhand
 	if(offhand_item)
 		UnregisterSignal(offhand_item, COMSIG_ITEM_DROPPED)
-		qdel(offhand_item)
-	// Clear any old refrence to an item that should be gone now
-	offhand_item = null
+		QDEL_NULL(offhand_item)
 
 /**
  * on_attack triggers on attack with the parent item
@@ -271,13 +269,9 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = SIZE_LARGE
-	flags = ABSTRACT
+	flags = NODROP | ABSTRACT | DROPDEL
 	unacidable = TRUE
 	var/wielded = FALSE // Off Hand tracking of wielded status
-
-/obj/item/weapon/offhand/atom_init()
-	. = ..()
-	flags = NODROP | ABSTRACT | DROPDEL
 
 /obj/item/weapon/offhand/Destroy()
 	wielded = FALSE
