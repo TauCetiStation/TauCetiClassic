@@ -72,7 +72,7 @@
 		M.forceMove(src)
 
 		occupant_angle = dir2angle(dir)
-		occupant = image(M.appearance, loc)
+		occupant = image(M.appearance, loc, layer = 3.09)
 		if(M.w_class == SIZE_HUMAN)
 			occupant.transform = occupant.transform.Scale(0.9, 0.9)
 		occupant.transform = occupant.transform.Turn(occupant_angle)
@@ -614,20 +614,20 @@
 /obj/structure/transit_tube_pod/proc/dir2angle(direction)
 	var/angle = 0
 	switch(dir)
-		if(1) //NORTH
+		if(NORTH)
 			angle = 0
-		if(5) //NORTH-EAST
+		if(NORTHEAST)
 			angle = 45
-		if(4) //EAST
+		if(EAST)
 			angle = 90
-		if(6) //SOUTH-EAST
+		if(SOUTHEAST)
 			angle = 135
-		if(2) //SOUTH
+		if(SOUTH)
 			angle = 180
-		if(10)//SOUTH-WEST
+		if(SOUTHWEST)
 			angle = 225
-		if(8) //WEST
+		if(WEST)
 			angle = 270
-		if(9) //NORTH-WEST
+		if(NORTHWEST)
 			angle = 315
 	return angle
