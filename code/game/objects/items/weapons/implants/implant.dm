@@ -396,6 +396,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
+	var/static/list/secret_areas = list(/area/shuttle/syndicate, /area/custom/syndicate_mothership, /area/shuttle/syndicate_elite, /area/custom/cult)
 
 /obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
 	. = ..()
@@ -417,42 +418,43 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/death_alarm/process()
 	if (!implanted) return
 	var/mob/M = imp_in
-
+	var/area/death_area
 	if(isnull(M)) // If the mob got gibbed
-		activate()
+		death_area = get_area(src)
+		activate(area_to_announce = death_area)
+		STOP_PROCESSING(SSobj, src)
 	else if(M.stat == DEAD)
-		activate("death")
+		death_area = get_area(M)
+		activate("death", death_area)
+		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/implant/death_alarm/activate(cause)
-	var/mob/M = imp_in
-	var/area/t = get_area(M)
-	switch (cause)
+/obj/item/weapon/implant/death_alarm/activate(cause, area/area_to_announce)
+	var/obj/item/device/radio/headset/radio = new /obj/item/device/radio/headset(null)
+	if(!cause || !area_to_announce)
+		radio.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+		qdel(radio)
+		return
+	switch(cause)
 		if("death")
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) || istype(t, /area/custom/cult))
-				//give the syndies a bit of stealth
-				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+			//give some antags a bit of stealth
+			if(is_type_in_list(area_to_announce, secret_areas))
+				radio.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
-				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-			STOP_PROCESSING(SSobj, src)
-			qdel(a)
-		if ("emp")
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			var/name = prob(50) ? t.name : pick(teleportlocs)
-			a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
-			qdel(a)
-		else
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			STOP_PROCESSING(SSobj, src)
-			qdel(a)
+				radio.autosay("[mobname] has died in [area_to_announce.name]!", "[mobname]'s Death Alarm")
+		if("emp")
+			if(is_type_in_list(area_to_announce, secret_areas))
+				radio.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+			else
+				var/name = prob(50) ? area_to_announce.name : pick(teleportlocs)
+				radio.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
+	qdel(radio)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
 	if (malfunction)		//so I'm just going to add a meltdown chance here
 		return
 	malfunction = MALFUNCTION_TEMPORARY
-
-	activate("emp")	//let's shout that this dude is dead
+	var/area/death_area = get_area(imp_in)
+	activate("emp", death_area)	//let's shout that this dude is dead
 	if(severity == 1)
 		if(prob(40))	//small chance of obvious meltdown
 			meltdown()
