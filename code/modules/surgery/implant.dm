@@ -227,11 +227,7 @@
 						if(imp in W.embedded_objects)
 							W.embedded_objects -= imp
 							break
-					imp.imp_in = null
-					imp.implanted = FALSE
-					if(istype(imp, /obj/item/weapon/implant/storage))
-						var/obj/item/weapon/implant/storage/Simp = imp
-						Simp.removed()
+					imp.removed()
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 					target.sec_hud_set_implants()
 			if("Else")

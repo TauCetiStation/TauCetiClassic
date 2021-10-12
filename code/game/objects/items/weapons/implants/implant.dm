@@ -55,6 +55,11 @@
 		C.sec_hud_set_implants()
 		part = BP
 
+/obj/item/weapon/implant/proc/removed()
+	imp_in = null
+	implanted = FALSE
+	return
+
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
@@ -415,18 +420,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-/obj/item/weapon/implant/death_alarm/process()
-	if (!implanted) return
-	var/mob/M = imp_in
-	var/area/death_area
-	if(isnull(M)) // If the mob got gibbed
-		death_area = get_area(src)
-		activate(area_to_announce = death_area)
-		STOP_PROCESSING(SSobj, src)
-	else if(M.stat == DEAD)
-		death_area = get_area(M)
-		activate("death", death_area)
-		STOP_PROCESSING(SSobj, src)
+/obj/item/weapon/implant/death_alarm/proc/broadcast_death(datum/source, gibbed)
+	if(gibbed)
+		activate()
+		return
+	activate("death", get_area(imp_in))
 
 /obj/item/weapon/implant/death_alarm/activate(cause, area/area_to_announce)
 	var/obj/item/device/radio/headset/radio = new /obj/item/device/radio/headset(null)
@@ -460,15 +458,24 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			meltdown()
 		else if (prob(60))	//but more likely it will just quietly die
 			malfunction = MALFUNCTION_PERMANENT
-		STOP_PROCESSING(SSobj, src)
+		UnregisterSignal(imp_in, list(COMSIG_MOB_DIED))
 
 	spawn(20)
 		malfunction--
 
+/obj/item/weapon/implant/death_alarm/Destroy()
+	if(imp_in)
+		UnregisterSignal(imp_in, list(COMSIG_MOB_DIED))
+	return ..()
+
 /obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
-	START_PROCESSING(SSobj, src)
-	return 1
+	RegisterSignal(imp_in, list(COMSIG_MOB_DIED), .proc/broadcast_death)
+	return TRUE
+
+/obj/item/weapon/implant/death_alarm/removed()
+	UnregisterSignal(imp_in, list(COMSIG_MOB_DIED))
+	..()
 
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
@@ -542,10 +549,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/storage/ui_action_click()
 	storage.open(imp_in)
 
-/obj/item/weapon/implant/storage/proc/removed()
+/obj/item/weapon/implant/storage/removed()
 	storage.close_all()
 	for(var/obj/item/I in storage)
 		storage.remove_from_storage(I, get_turf(src))
+	..()
 
 /obj/item/weapon/implant/storage/Destroy()
 	removed()
