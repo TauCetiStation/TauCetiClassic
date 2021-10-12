@@ -190,7 +190,7 @@
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -225,7 +225,7 @@
 			if(4 to 6)
 				if(getBrainLoss() >= 15 && eye_blurry <= 0)
 					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
-					eye_blurry = 10
+					blurEyes(10)
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
@@ -1072,7 +1072,7 @@
 
 	if (drowsyness)
 		drowsyness = max(0, drowsyness - 1)
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if(prob(5))
 			emote("yawn")
 			Sleeping(10 SECONDS)
@@ -1188,10 +1188,10 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
-			eye_blurry = max(eye_blurry-3, 0)
+			adjustBlurriness(-3)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry-1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
@@ -1214,7 +1214,7 @@
 
 		if(stuttering)
 			speech_problem_flag = 1
-			stuttering = max(stuttering-1, 0)
+			AdjustStuttering(-1)
 		if (slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)
@@ -1455,9 +1455,9 @@
 				impaired = max(impaired, 2)
 
 		if(eye_blurry)
-			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
+			update_eye_blur()
 		else
-			clear_fullscreen("blurry")
+			update_eye_blur()
 		if(nearsighted)
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
@@ -1597,7 +1597,7 @@
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
