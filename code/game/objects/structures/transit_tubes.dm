@@ -46,7 +46,7 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
-	var/icon/occupant = null
+	var/image/occupant
 	var/occupant_angle = 0
 
 /obj/structure/transit_tube_pod/Destroy()
@@ -72,12 +72,10 @@
 		M.forceMove(src)
 
 		occupant_angle = dir2angle(dir)
-		occupant = getFlatIcon(M)
+		occupant = image(M.appearance, loc)
 		if(M.w_class == SIZE_HUMAN)
-			occupant.Scale(occupant.Width() * 0.9, occupant.Height() * 0.9)
-			occupant.Shift(NORTH, abs(16 - occupant.Height()/2))
-			occupant.Shift(EAST, abs(16 - occupant.Width()/2))
-		occupant = turn(occupant, occupant_angle)
+			occupant.transform = occupant.transform.Scale(0.9, 0.9)
+		occupant.transform = occupant.transform.Turn(occupant_angle)
 		add_overlay(occupant)
 
 /obj/structure/transit_tube_pod/proc/move_out_content()
@@ -337,7 +335,7 @@
 		if(occupant)
 			angle = dir2angle(dir)
 			cut_overlay(occupant)
-			occupant = turn(occupant, angle - occupant_angle)
+			occupant.transform = occupant.transform.Turn(angle - occupant_angle)
 			occupant_angle = angle
 			add_overlay(occupant)
 
