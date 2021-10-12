@@ -359,7 +359,7 @@ A proc that does all the animations before mix()-ing.
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.client)
-			C.set_blurriness(max(C.eye_blurry, 3))
+			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

@@ -118,12 +118,12 @@
 
 /datum/dna/gene/disability/blindness/OnMobLife(mob/living/carbon/human/M) //#Z2
 	if(!istype(M)) return
-	M.set_blurriness(200)
+	M.setBlurriness(200)
 	M.eye_blind = 200
 
 /datum/dna/gene/disability/blindness/deactivate(mob/living/carbon/human/M, connected, flags)
 	..(M,connected,flags)
-	M.set_blurriness(0)
+	M.setBlurriness(0)
 	M.eye_blind = 0 //##Z2
 
 /datum/dna/gene/disability/deaf
