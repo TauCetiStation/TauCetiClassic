@@ -161,21 +161,6 @@
 		guplink.uses = uplink_uses
 		total_TC = uplink_uses
 
-	var/datum/role/R = parent
-	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-		else
-			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)

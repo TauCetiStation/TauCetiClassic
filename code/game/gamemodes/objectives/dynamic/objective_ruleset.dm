@@ -32,7 +32,7 @@
 	var/list/survive_objectives = list(
 		/datum/objective/escape = 80,
 		/datum/objective/survive = 60,
-		/datum/objective/hijack = 10,
+		/datum/objective/hijack = 1,
 	)
 
 /datum/objective_ruleset/standart/get_main_objectives()

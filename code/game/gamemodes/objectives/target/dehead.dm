@@ -17,3 +17,20 @@
 			return OBJECTIVE_WIN
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_LOSS
+
+/datum/objective/target/dehead/equip_tools()
+	if(!owner)
+		return
+	var/mob/living/carbon/human/mob = owner.current
+	var/obj/item/device/biocan/B = new (mob.loc)
+	var/list/slots = list(
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
+	)
+	var/where = mob.equip_in_one_of_slots(B, slots)
+	mob.update_icons()
+	if (!where)
+		to_chat(mob, "You were unfortunately unable to provide with the brand new can for storing heads.")
+	else
+		to_chat(mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")

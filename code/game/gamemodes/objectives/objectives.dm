@@ -53,9 +53,13 @@
 	return
 
 /datum/objective/proc/PostAppend()
+	equip_tools()
 	if(auto_target)
 		return find_target()
 	return TRUE
 
 /datum/objective/proc/ShuttleDocked()
+	return
+
+/datum/objective/proc/equip_tools()
 	return
