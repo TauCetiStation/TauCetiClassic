@@ -83,7 +83,7 @@
 		AM.forceMove(loc)
 		cut_overlay(occupant)
 		occupant = null
-		occupant_angle = 0
+		occupant_angle = initial(occupant_angle)
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -297,7 +297,6 @@
 	var/next_loc
 	var/last_delay = 0
 	var/exit_delay
-	var/angle = 0
 
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
@@ -333,7 +332,7 @@
 		set_dir(next_dir)
 
 		if(occupant)
-			angle = dir2angle(dir)
+			var/angle = dir2angle(dir)
 			cut_overlay(occupant)
 			occupant.transform = occupant.transform.Turn(angle - occupant_angle)
 			occupant_angle = angle
@@ -611,7 +610,7 @@
 		else
 	return
 
-/obj/structure/transit_tube_pod/proc/dir2angle(direction)
+/obj/structure/transit_tube_pod/proc/dir2angle()
 	var/angle = 0
 	switch(dir)
 		if(NORTH)
