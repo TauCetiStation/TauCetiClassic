@@ -56,4 +56,4 @@
 		target.Stun(amt_stunned)
 
 		target.eye_blind += amt_eye_blind
-		target.adjust_blurriness(amt_eye_blurry)
+		target.blurEyes(amt_eye_blurry)

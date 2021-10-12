@@ -199,13 +199,15 @@
 /obj/item/projectile/bullet/stunslug
 	name = "stunslug"
 	icon_state = "spark"
+	flag = "energy"
 	damage = 5
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 60
+	agony = 40
 	embed = 0
 	sharp = 0
+	dispersion = 1.8
 
 /obj/item/projectile/bullet/stunslug/atom_init()
 	. = ..()
