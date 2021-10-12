@@ -46,6 +46,6 @@
 			return
 		to_chat(H, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
 		H.drowsyness = H.drowsyness + power * weakness
-		H.adjust_blurriness(power * weakness)
+		H.adjustBlurriness(power * weakness)
 	if(isrobot(receiver))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")
