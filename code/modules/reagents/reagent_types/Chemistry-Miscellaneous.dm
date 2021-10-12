@@ -702,7 +702,7 @@
 		var/hair_changes_occured = FALSE
 		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
-			H.set_blurriness(max(H.eye_blurry, volume))
+			H.blurEyes(volume)
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
