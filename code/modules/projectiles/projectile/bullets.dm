@@ -118,7 +118,7 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	explosion(target, 1,2,2)
+	explosion(target, 1, 2, 2)
 
 /obj/item/projectile/bullet/chem
 	damage = 5
