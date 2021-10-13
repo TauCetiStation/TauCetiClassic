@@ -440,14 +440,8 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd/afterattack(atom/target, mob/user, proximity, params)
 	if(!using_gl)
-		. = ..()
-	else
-		if(proximity)	return //It's adjacent, is the user, or is on the user's person
-		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-		if(user && user.client && user.client.gun_mode && !(target in src.target))
-			gl.PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
-		else
-			gl.Fire(target,user,params) //Otherwise, fire normally.
+		return ..()
+	g1.afterattack(target, user, proximity, params)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/attackby(obj/item/I, mob/user, params)
 	if(!using_gl)
