@@ -451,9 +451,8 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd/attackby(obj/item/I, mob/user, params)
 	if(!using_gl)
-		. = ..()
-	else
-		gl.attackby(I, user)
+		return ..()
+	gl.attackby(I, user)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
 	toggle_gl(usr)
