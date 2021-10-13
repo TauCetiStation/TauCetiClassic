@@ -339,6 +339,18 @@
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_ITEM_TAKE)
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(src, /obj/item/weapon/twohanded/flora))
+			var/C_U_T_H = H.can_use_two_hands()
+			var/G_I_H = H.get_inactive_hand()
+			if (!C_U_T_H)
+				to_chat(user, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
+				return
+			if (G_I_H)
+				to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
+				return
+
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
