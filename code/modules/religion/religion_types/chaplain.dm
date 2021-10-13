@@ -76,6 +76,7 @@
 
 	area_type = /area/station/civilian/chapel
 	bible_type = /obj/item/weapon/storage/bible
+	religious_tool_type = /obj/item/weapon/nullrod
 
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
@@ -136,10 +137,8 @@
 	gen_bible_info()
 
 	var/obj/item/weapon/storage/bible/B = spawn_bible(chaplain)
-	if(!B.god_lore)
-		var/new_lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
-		B.god_lore = new_lore
-		lore = new_lore
+
+	lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
 
 	chaplain.equip_to_slot_or_del(B, SLOT_L_HAND)
 
