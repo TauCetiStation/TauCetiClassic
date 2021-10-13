@@ -441,7 +441,7 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/afterattack(atom/target, mob/user, proximity, params)
 	if(!using_gl)
 		return ..()
-	g1.afterattack(target, user, proximity, params)
+	gl.afterattack(target, user, proximity, params)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/attackby(obj/item/I, mob/user, params)
 	if(!using_gl)
