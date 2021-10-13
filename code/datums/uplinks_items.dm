@@ -470,12 +470,14 @@
 	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
 	item = /obj/item/projectile/bullet/grenade/explosive
 	cost = 2
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/grenade_launcher_emp
 	name = "Ammo-40x46mm (EMP)"
 	desc = "A single grenade for use in underslung grenade launcher. This one creates EMP blast."
 	item = /obj/item/ammo_casing/r4046/chem/EMP
 	cost = 3
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/heavyrifle
 	name = "A 14.5mm shell."
