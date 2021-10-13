@@ -6,12 +6,18 @@
 /datum/objective_ruleset/New(datum/objectives_pool/_master_pool)
 	master_pool = _master_pool
 
-/datum/objective_ruleset/proc/get_main_objectives()
+/datum/objective_ruleset/proc/get_pseudorandom_objectives()
 	return
+
+/datum/objective_ruleset/proc/get_all_objectives()
+	return get_all_values_from_assoc_list(master_pool.main_objectives_pool)
 
 /datum/objective_ruleset/proc/get_objectives()
 	return
 
+/*
+ * Standart
+ */
 /datum/objective_ruleset/standart
 	objectives_amount = 3
 
@@ -35,8 +41,8 @@
 		/datum/objective/hijack = 1,
 	)
 
-/datum/objective_ruleset/standart/get_main_objectives()
-	var/list/all_objectives = get_all_values_from_list(master_pool.main_objectives_pool)
+/datum/objective_ruleset/standart/get_pseudorandom_objectives()
+	var/list/all_objectives = get_all_objectives()
 	var/list/new_objectives = list()
 
 	for(var/i = 1 to objectives_amount)
@@ -54,7 +60,7 @@
 /datum/objective_ruleset/standart/get_objectives()
 	var/objective_type = pickweight(survive_objectives)
 	var/datum/objective/survive_objective = new objective_type
-	return list(get_main_objectives() + survive_objective)
+	return list(get_pseudorandom_objectives() + survive_objective)
 
 /datum/objective_ruleset/standart/one
 	objectives_amount = 1
@@ -67,3 +73,27 @@
 
 /datum/objective_ruleset/standart/four
 	objectives_amount = 4
+
+/*
+ * Families
+ */
+/datum/objective_ruleset/families
+
+/datum/objective_ruleset/families/get_pseudorandom_objectives()
+	var/list/all_objectives = get_all_objectives()
+	var/list/all_objectives_types = make_associative(get_types_of_objects_list(all_objectives))
+
+	for(var/datum/objective/gang/objective in all_objectives)
+		if(!objective.conflicting_types.len)
+			continue
+		for(var/type in objective.conflicting_types)
+			if(!all_objectives_types[type])
+				return list(new type)
+
+	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) - /datum/objective/gang/points
+	var/picked_type = pick(gang_objectives_types)
+	return list(new picked_type)
+
+/datum/objective_ruleset/families/get_objectives()
+	var/datum/objective/points = new /datum/objective/gang/points
+	return list(get_pseudorandom_objectives() + points)

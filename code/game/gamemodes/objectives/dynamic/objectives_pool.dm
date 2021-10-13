@@ -11,6 +11,7 @@
 		if(faction_or_role.objectives_ruleset_type)
 			var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src)
 			main_objectives_pool[faction_or_role.type] += OR.get_objectives()
+			qdel(OR)
 
 /datum/objectives_pool/proc/give_all_objectives(list/datums_to_process)
 	for(var/datum/D in datums_to_process)

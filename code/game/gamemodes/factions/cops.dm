@@ -32,7 +32,7 @@
 	SSshuttle.fake_recall = TRUE
 
 /datum/faction/cops/forgeObjectives()
-	AppendObjective(/datum/objective/gang/destroy_gangs)
+	AppendObjective(/datum/objective/cops/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
 	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)

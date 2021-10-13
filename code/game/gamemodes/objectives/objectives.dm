@@ -7,7 +7,7 @@
 
 	var/target_amount = 0					//If they are focused on a particular number. Steal objectives have their own counter.
 	var/auto_target = TRUE					//Whether we pick a target automatically on PostAppend()
-	var/list/conflicting_types = list()		//Used for find pseudorandom target
+	var/list/conflicting_types = list()		//Used for pseudorandom distribution of objectives
 
 /datum/objective/New(text, _auto_target = TRUE)
 	auto_target = _auto_target

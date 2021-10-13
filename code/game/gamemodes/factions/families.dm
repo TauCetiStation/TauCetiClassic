@@ -9,6 +9,8 @@
 	min_roles = 1
 	max_roles = 2
 
+	objectives_ruleset_type = /datum/objective_ruleset/families
+
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
 	var/gang_balance_cap = 5
 	/// The abbreviation of this family.
@@ -19,8 +21,6 @@
 	var/list/acceptable_clothes = list()
 	/// The list of clothes that are given to family members upon induction into the family.
 	var/list/free_clothes = list()
-	/// Each gang has its own type of objective
-	var/gang_objective_type
 	/// Used for gun dealers
 	var/help_sent = FALSE
 
@@ -30,7 +30,6 @@
 
 /datum/faction/gang/forgeObjectives()
 	AppendObjective(/datum/objective/gang/points)
-	AppendObjective(gang_objective_type)
 
 /datum/faction/gang/custom_result()
 	var/alive_gangsters = 0
@@ -79,7 +78,6 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/kill_undercover_cops
 
 /datum/faction/gang/purple
 	name = "Ballas"
@@ -94,7 +92,6 @@
 	free_clothes = list(/obj/item/clothing/under/lightpurple,
 						/obj/item/clothing/gloves/purple,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/protect_security
 
 /datum/faction/gang/green
 	name = "Grove Street Families"
@@ -107,7 +104,6 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/green,
 						/obj/item/clothing/under/lightgreen,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/capture_station
 
 /datum/faction/gang/russian_mafia
 	name = "Russian Mafia"
@@ -121,7 +117,6 @@
 						/obj/item/clothing/suit/jacket,
 						/obj/item/clothing/under/suit_jacket/rouge,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/save_bottle
 
 /datum/faction/gang/italian_mob
 	name = "Italian Mob"
@@ -133,7 +128,6 @@
 	free_clothes = list(/obj/item/clothing/head/fedora,
 						/obj/item/clothing/under/mafia,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/church_tradition
 
 /datum/faction/gang/tunnel_snakes
 	name = "Tunnel Snakes"
@@ -144,7 +138,6 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket,
 						/obj/item/clothing/under/pants/classicjeans,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/tunnel_snake
 
 /datum/faction/gang/vagos
 	name = "Los Santos Vagos"
@@ -156,7 +149,6 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/rob_nt
 
 /datum/faction/gang/henchmen
 	name = "Monarch Crew"
@@ -169,7 +161,6 @@
 	free_clothes = list(/obj/item/weapon/storage/backpack/henchmen,
 						/obj/item/clothing/under/henchmen,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/target/assassinate/kill_head
 
 /datum/faction/gang/yakuza
 	name = "Tojo Clan"
@@ -184,7 +175,6 @@
 						/obj/item/clothing/shoes/yakuza,
 						/obj/item/clothing/suit/jacket/leather,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/save_station
 
 /datum/faction/gang/jackbros
 	name = "Jack Bros"
@@ -198,7 +188,6 @@
 						/obj/item/clothing/shoes/jackbros,
 						/obj/item/clothing/head/jackbros,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/become_captain
 
 /datum/faction/gang/dutch
 	name = "Dutch van der Linde's Gang"
@@ -212,4 +201,3 @@
 						/obj/item/clothing/head/bowler,
 						/obj/item/clothing/suit/dutch,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/steal_gold

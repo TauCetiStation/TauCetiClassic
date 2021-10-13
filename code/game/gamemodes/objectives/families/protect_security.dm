@@ -1,5 +1,8 @@
 /datum/objective/gang/protect_security
 	explanation_text = "Мы хотим заключить сделку со свиньями из службы безопасности после этой смены. Мы чешем им спину, они чешут нашу. Понимаешь? Оградите сотрудников безопасности от любых неприятностей и убедитесь, что они будут живыми."
+	conflicting_types = list(
+		/datum/objective/gang/kill_undercover_cops,
+	)
 
 /datum/objective/gang/protect_security/check_completion()
 	for(var/mob/M in global.player_list)

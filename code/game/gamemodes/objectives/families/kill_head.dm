@@ -1,5 +1,5 @@
 /datum/objective/target/assassinate/kill_head/format_explanation()
-	return "У меня есть ОЧЕНЬ ВЕСКИЕ ОСНОВАНИЯ полагать, что [target.assigned_role] на этой станции учился со мной в одном колледже! ПРОСЛЕДИТЕ, ЧТОБЫ ОН НЕ ПОКИНУЛ ЭТУ СТАНЦИЮ ЖИВЫМ, ПРИХВОСТНИ! МОГУЩЕСТВЕННЫЙ МОНАРХ ТРЕБУЕТ ЭТОГО!!!"
+	return "К нам поступил заказ на устранение [target.assigned_role] на этой станции. Убейте его любой ценой."
 
 // Refind new target if no heads
 /datum/objective/target/assassinate/kill_head/find_target()

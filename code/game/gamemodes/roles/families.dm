@@ -131,7 +131,7 @@
 
 	var/datum/faction/gang/G = pick(gangs)
 	G.help_sent = TRUE
-	var/datum/objective/gang/help_gang/HG = AppendObjective(/datum/objective/gang/help_gang)
+	var/datum/objective/cops/help_gang/HG = AppendObjective(/datum/objective/cops/help_gang)
 	if(HG)
 		HG.explanation_text = "Попытайтесь привести к победе [G.name]"
 		HG.my_gang = G

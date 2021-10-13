@@ -106,7 +106,7 @@
 	for(var/key in sub)
 		if(!main[key] && sub[key])
 			return FALSE
-		if(!predicate.Invoke(sub[key], main[key]))
+		if(!predicate?.Invoke(sub[key], main[key]))
 			return FALSE
 	return TRUE
 
@@ -755,13 +755,18 @@
 			.[i] = key
 			.[key] = value
 
-/proc/get_all_values_from_list(list/L)
+/proc/get_all_values_from_assoc_list(list/L)
 	. = list()
 	for(var/value in L)
-		if(islist(value))
-			. += get_all_values_from_list(value)
+		if(islist(L[value]) && is_associative_list(L))
+			. += get_all_values_from_assoc_list(L[value])
 		else
 			. += value
+
+/proc/get_types_of_objects_list(list/L)
+	. = list()
+	for(var/datum/D in L)
+		. += D.type
 
 //takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 //use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input

@@ -1,7 +1,7 @@
-/datum/objective/gang/destroy_gangs
+/datum/objective/cops/destroy_gangs
 	explanation_text = "Остановите действие банд на станции."
 
-/datum/objective/gang/destroy_gangs/check_completion()
+/datum/objective/cops/destroy_gangs/check_completion()
 	var/list/all_gangs = find_factions_by_type(/datum/faction/gang)
 	if(!all_gangs.len)
 		return
