@@ -251,7 +251,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	wielded = FALSE
 
 /obj/item/weapon/sledgehammer/update_icon()
-	icon_state ="sledgehammer[wielded]"
+	icon_state = "sledgehammer[wielded]"
 
 /obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
