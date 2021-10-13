@@ -223,7 +223,7 @@
 	name = "Drozd OTs-114 Assault Carbine"
 	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/drozd
-	cost = 24
+	cost = 20
 	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/dangerous/crossbow
