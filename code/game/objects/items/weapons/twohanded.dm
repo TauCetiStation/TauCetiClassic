@@ -1,9 +1,6 @@
 #define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
 
-/*
- * Fireaxe
- */
-/obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
+/obj/item/weapon/fireaxe
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
@@ -43,9 +40,6 @@
 	SIGNAL_HANDLER
 	wielded = FALSE
 
-/obj/item/weapon/sledgehammer/update_icon()
-	icon_state = "sledgehammer[wielded]"
-
 /obj/item/weapon/fireaxe/proc/can_sweep(mob/user)
 	return wielded
 
@@ -55,9 +49,6 @@
 /obj/item/weapon/fireaxe/update_icon()
 	icon_state = "fireaxe[wielded]"
 
-/*
- * Double-Bladed Energy Swords - Cheridan
- */
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0
 	icon_state = "dualsaber0"
