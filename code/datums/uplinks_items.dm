@@ -212,12 +212,19 @@
 
 /datum/uplink_item/dangerous/a74
 	name = "A74 Assault Rifle"
-	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
+	desc = "An automatic assault rifle. Great for ranged combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
 	uplink_types = list("nuclear", "dealer")
 
 	need_wanted_level = 5
+
+/datum/uplink_item/dangerous/drozd
+	name = "Drozd OTs-114 Assault Carbine"
+	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/drozd
+	cost = 24
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -450,6 +457,25 @@
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 14
 	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/drozd
+	name = "Ammo-12.7mm"
+	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
+	item = /obj/item/ammo_box/magazine/drozd127
+	cost = 4
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/grenade_launcher
+	name = "Ammo-40x46mm (explosive)"
+	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
+	item = /obj/item/projectile/bullet/grenade/explosive
+	cost = 2
+
+/datum/uplink_item/ammo/grenade_launcher_emp
+	name = "Ammo-40x46mm (EMP)"
+	desc = "A single grenade for use in underslung grenade launcher. This one creates EMP blast."
+	item = /obj/item/ammo_casing/r4046/chem/EMP
+	cost = 3
 
 /datum/uplink_item/ammo/heavyrifle
 	name = "A 14.5mm shell."

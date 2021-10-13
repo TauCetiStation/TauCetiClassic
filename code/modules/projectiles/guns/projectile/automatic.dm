@@ -396,3 +396,64 @@
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"
+
+/obj/item/weapon/gun/projectile/automatic/drozd
+	name = "OTs-114 assault rifle"
+	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
+	icon_state = "drozd"
+	item_state = "drozd"
+	mag_type = /obj/item/ammo_box/magazine/drozd127
+	w_class = SIZE_NORMAL
+	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
+	action_button_name = "Toggle GL"
+	fire_delay = 7
+	var/using_gl = FALSE
+	var/obj/item/weapon/gun/projectile/underslung/gl
+	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
+
+/obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
+	using_gl = !using_gl
+	if(using_gl)
+		user.visible_message("<span class='warning'>[user] flicks a little switch, activating their [gl]!</span>",\
+		"<span class='warning'>You activate your [gl].</span>",\
+		"You hear an ominous click.")
+	else
+		user.visible_message("<span class='notice'>[user] flicks a little switch, deciding to stop the bombings.</span>",\
+		"<span class='notice'>You deactivate your [gl].</span>",\
+		"You hear a click.")
+	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/drozd/atom_init()
+	. = ..()
+	update_icon()
+	gl = new /obj/item/weapon/gun/projectile/underslung(src)
+
+/obj/item/weapon/gun/projectile/automatic/drozd/update_icon()
+	cut_overlays()
+	if(magazine)
+		add_overlay(mag_icon)
+	if(using_gl)
+		icon_state = "[initial(icon_state)]-gl"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/weapon/gun/projectile/automatic/drozd/afterattack(atom/target, mob/user, proximity, params)
+	if(!using_gl)
+		. = ..()
+	else
+		if(proximity)	return //It's adjacent, is the user, or is on the user's person
+		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+		if(user && user.client && user.client.gun_mode && !(target in src.target))
+			gl.PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
+		else
+			gl.Fire(target,user,params) //Otherwise, fire normally.
+
+/obj/item/weapon/gun/projectile/automatic/drozd/attackby(obj/item/I, mob/user, params)
+	if(!using_gl)
+		. = ..()
+	else
+		gl.attackby(I, user)
+
+/obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
+	toggle_gl(usr)

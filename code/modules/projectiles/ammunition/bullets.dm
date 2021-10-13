@@ -135,6 +135,12 @@
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
+
+/obj/item/ammo_casing/r4046/explosive
+	desc = "A 40x46mm grenade (Exp)."
+	icon_state = "expl40x46"
+	projectile_type = /obj/item/projectile/bullet/grenade/explosive
+
 /obj/item/ammo_casing/r4046/chem/teargas
 	desc = "A 40x46mm grenade (teargas)."
 	icon_state = "gas40x46"
@@ -149,7 +155,6 @@
 	desc = "A 40x46mm grenade (Exp)."
 	icon_state = "expl40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
-
 
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
@@ -230,3 +235,8 @@
 	desc = "A 7.74mm bullet casing."
 	caliber = "7.74mm"
 	projectile_type = /obj/item/projectile/bullet/rifle3
+
+/obj/item/ammo_casing/drozd127
+	desc = "A 12.7 bullet casing."
+	caliber = "12.7mm"
+	projectile_type = /obj/item/projectile/bullet/rifle2
