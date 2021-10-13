@@ -58,7 +58,6 @@
 /obj/item/weapon/implant/proc/removed()
 	imp_in = null
 	implanted = FALSE
-	return
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
