@@ -47,7 +47,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	if(!SSticker)
 		return
 
-	SSticker.generate_scoreboard(mob)
+	SSticker.mode.PostSetup()
 	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
 
 // Debug verbs.

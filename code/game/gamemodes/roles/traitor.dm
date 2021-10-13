@@ -10,44 +10,13 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
+	objectives_ruleset_type = /datum/objective_ruleset/standart/three
+
 	var/telecrystals = 20
 
 /datum/role/traitor/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
-
-/datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
-	switch(rand(1,120))
-		if(1 to 20)
-			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(21 to 50)
-			AppendObjective(/datum/objective/target/harm, TRUE)
-		if(51 to 115)
-			AppendObjective(/datum/objective/steal, TRUE)
-		else
-			AppendObjective(/datum/objective/target/dehead, TRUE)
-
-/datum/role/traitor/forgeObjectives()
-	if(istype(antag.current, /mob/living/silicon))
-		AppendObjective(/datum/objective/target/assassinate, TRUE)
-		AppendObjective(/datum/objective/target/assassinate, TRUE)
-		AppendObjective(/datum/objective/survive)
-		if(prob(10))
-			AppendObjective(/datum/objective/block)
-	else
-		var/objectives_count = pick(1,2,2,3)
-
-		while(objectives_count > 0)
-			add_one_objective()
-			objectives_count--
-
-		switch(rand(1,120))
-			if(1 to 60)
-				AppendObjective(/datum/objective/escape)
-			if(61 to 119)
-				AppendObjective(/datum/objective/survive)
-			else
-				AppendObjective(/datum/objective/hijack)
 
 /datum/role/traitor/process()
 	// For objectives such as "Make an example of...", which require mid-game checks for completion
@@ -103,12 +72,14 @@
 	. = ..()
 
 /datum/role/traitor/wishgranter
+	objectives_ruleset_type = null
 
 /datum/role/traitor/wishgranter/forgeObjectives()
 	AppendObjective(/datum/objective/custom/wishgranter)
 	AppendObjective(/datum/objective/escape)
 
 /datum/role/traitor/syndbeacon
+	objectives_ruleset_type = null
 
 /datum/role/traitor/syndbeacon/forgeObjectives()
 	AppendObjective(/datum/objective/silence)

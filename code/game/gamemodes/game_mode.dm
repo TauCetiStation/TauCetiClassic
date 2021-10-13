@@ -254,17 +254,19 @@
 		var/datum/faction/F = pick(possible_factions)
 		add_faction_member(F, mob, TRUE)
 
-/datum/game_mode/proc/give_objectives_by_ruleset()
+/datum/game_mode/proc/create_objectives_by_ruleset()
 	objectives_pool = new
-	var/list/datums_to_process = list(orphaned_roles + factions)
+	var/list/datums_to_process = list()
+	datums_to_process += factions
+	datums_to_process += orphaned_roles
 	for(var/datum/faction/F in factions)
 		for(var/datum/role/R in F.members)
 			datums_to_process += R
 
 	objectives_pool.generate_objectives_pool(datums_to_process)
-	objectives_pool.give_all_objectives(datums_to_process)
 
-	//qdel(objectives_pool)
+/datum/game_mode/proc/give_objectives(datum/faction_or_role)
+	objectives_pool.give_objectives_to(faction_or_role)
 
 /datum/game_mode/proc/PostSetup()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)

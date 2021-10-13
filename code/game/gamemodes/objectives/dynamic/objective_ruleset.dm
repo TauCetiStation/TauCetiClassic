@@ -2,9 +2,11 @@
 	var/objectives_amount
 
 	var/datum/objectives_pool/master_pool
+	var/datum/faction_or_role
 
-/datum/objective_ruleset/New(datum/objectives_pool/_master_pool)
+/datum/objective_ruleset/New(datum/objectives_pool/_master_pool, datum/_faction_or_role)
 	master_pool = _master_pool
+	faction_or_role = _faction_or_role
 
 /datum/objective_ruleset/proc/get_pseudorandom_objectives()
 	return
@@ -40,6 +42,21 @@
 		/datum/objective/survive = 60,
 		/datum/objective/hijack = 1,
 	)
+
+/datum/objective_ruleset/standart/New()
+	..()
+	if(!istype(faction_or_role, /datum/role))
+		return
+	var/datum/role/R = faction_or_role
+	if(issilicon(R.antag.current))
+		main_objectives = list(
+			/datum/objective/target/assassinate = 10,
+		)
+
+		survive_objectives = list(
+			/datum/objective/survive = 90,
+			/datum/objective/block = 10,
+		)
 
 /datum/objective_ruleset/standart/get_pseudorandom_objectives()
 	var/list/all_objectives = get_all_objectives()

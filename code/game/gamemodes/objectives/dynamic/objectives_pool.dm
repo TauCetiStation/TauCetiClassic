@@ -8,14 +8,11 @@
 	for(var/some_datum in datums_to_process)
 		// /datum/faction and /datum/role have same syntax
 		var/datum/faction/faction_or_role = some_datum
-		if(faction_or_role.objectives_ruleset_type)
-			var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src)
-			main_objectives_pool[faction_or_role.type] += OR.get_objectives()
-			qdel(OR)
-
-/datum/objectives_pool/proc/give_all_objectives(list/datums_to_process)
-	for(var/datum/D in datums_to_process)
-		give_objectives_to(D)
+		if(!faction_or_role.objectives_ruleset_type)
+			continue
+		var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src, faction_or_role)
+		main_objectives_pool[faction_or_role.type] += OR.get_objectives()
+		qdel(OR)
 
 /datum/objectives_pool/proc/give_objectives_to(datum/faction_or_role)
 	if(!main_objectives_pool[faction_or_role.type])
