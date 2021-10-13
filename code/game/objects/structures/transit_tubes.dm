@@ -7,7 +7,7 @@
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = TRUE
-	layer = 3.1
+	layer = SHUTTERS_LAYER
 	anchored = TRUE
 	var/list/tube_dirs = null
 	var/exit_delay = 2
@@ -72,7 +72,7 @@
 		M.forceMove(src)
 
 		occupant_angle = dir2angle(dir)
-		occupant = image(M.appearance, loc, layer = 3.09)
+		occupant = image(M.appearance, loc, layer = (SHUTTERS_LAYER - 0.01))
 		if(M.w_class == SIZE_HUMAN)
 			occupant.transform = occupant.transform.Scale(0.9, 0.9)
 		occupant.transform = occupant.transform.Turn(occupant_angle)
