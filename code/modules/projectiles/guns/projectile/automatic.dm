@@ -430,7 +430,7 @@
 	gl = new /obj/item/weapon/gun/projectile/underslung(src)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/update_icon()
-	cut_overlays()
+	cut_overlays(mag_icon)
 	if(magazine)
 		add_overlay(mag_icon)
 	if(using_gl)
