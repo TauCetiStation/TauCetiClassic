@@ -87,6 +87,8 @@
 		wield(user)
 	if(!user.is_in_hands(parent) && wielded && !require_twohands)
 		unwield(user)
+	if(slot == SLOT_BACK)
+		unwield(user, FALSE, FALSE)
 
 /// Triggered on drop of item containing the component
 /datum/component/two_handed/proc/on_drop(datum/source, mob/user)
