@@ -214,7 +214,18 @@
 
 	populate_gear_list()
 
-	init_hud_list()
+	global.bridge_commands = list()
+	for(var/command in subtypesof(/datum/bridge_command))
+		var/datum/bridge_command/C = new command
+		global.bridge_commands[C.name] = C
+
+	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+
+	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
+
+	global.antag_roles = global.special_roles - ROLE_GHOSTLY
+
+	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

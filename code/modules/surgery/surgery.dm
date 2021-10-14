@@ -103,38 +103,30 @@
 			covered |= I.body_parts_covered
 	return covered
 
+/proc/check_covered_bodypart(mob/living/carbon/human/T, covered)
+	for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+		if(I && I.body_parts_covered & covered)
+			return TRUE
+	return FALSE
+
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
-	if(!covered)
-		covered = get_human_covering(T)
-	switch(user.get_targetzone())
-		if(BP_CHEST)
-			if(covered & UPPER_TORSO)
-				return FALSE
-		if(BP_GROIN)
-			if(covered & LOWER_TORSO)
-				return FALSE
-		if(BP_L_LEG)
-			if(covered & LEG_LEFT)
-				return FALSE
-		if(BP_R_LEG)
-			if(covered & LEG_RIGHT)
-				return FALSE
-		if(BP_L_ARM)
-			if(covered & ARM_LEFT)
-				return FALSE
-		if(BP_R_ARM)
-			if(covered & ARM_RIGHT)
-				return FALSE
-		if(BP_HEAD)
-			if(covered & HEAD)
-				return FALSE
-		if(O_MOUTH)
-			if(covered & FACE)
-				return FALSE
-		if(O_EYES)
-			if(covered & EYES)
-				return FALSE
-	return TRUE
+	var/static/list/zone_by_clothing_part = list(
+		BP_CHEST = UPPER_TORSO,
+		BP_GROIN = LOWER_TORSO,
+		BP_L_LEG = LEG_LEFT,
+		BP_R_LEG = LEG_RIGHT,
+		BP_L_ARM = ARM_LEFT,
+		BP_R_ARM = ARM_RIGHT,
+		BP_HEAD = HEAD,
+		O_MOUTH = FACE,
+		O_EYES = EYES,
+	)
+
+	var/zone = zone_by_clothing_part[user.get_targetzone()]
+	if(!zone)
+		return TRUE
+
+	return !check_covered_bodypart(T, zone)
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	checks_for_surgery(M, user, FALSE)
@@ -156,7 +148,7 @@
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
-			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
+			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")

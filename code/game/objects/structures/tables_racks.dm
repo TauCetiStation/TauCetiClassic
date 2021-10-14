@@ -19,7 +19,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = 1
+	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
 	var/parts = /obj/item/weapon/table_parts
@@ -119,6 +119,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -263,11 +264,7 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
-		if(istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
@@ -592,6 +589,7 @@
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/atom_init()
@@ -639,8 +637,9 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return ..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))

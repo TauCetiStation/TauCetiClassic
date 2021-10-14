@@ -166,7 +166,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
@@ -231,6 +231,7 @@
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = M
+		Hulk.do_attack_animation(src)
 		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
 		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
 		Hulk.health -= rand(2,4)
@@ -238,3 +239,25 @@
 			set_broken()
 			to_chat(M, "<span class='warning'>You broke the computer.</span>")
 			return
+
+/obj/machinery/computer/proc/print_document(text, docname)
+	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()
+	Paper.info = text
+	Paper.update_icon()
+	Paper.name = docname
+	Paper.forceMove(loc)
+
+/obj/machinery/computer/proc/print_photo(datum/data/record/record, docname)
+	var/datum/picture/Picture = new()
+	Picture.fields["img"] = record.fields["image"]
+	Picture.fields["author"] = record.fields["author"]
+	Picture.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+	Picture.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+	Picture.fields["icon"] = record.fields["icon"]
+	Picture.fields["tiny"] = record.fields["small_icon"]
+	Picture.fields["pixel_x"] = rand(-10, 10)
+	Picture.fields["pixel_y"] = rand(-10, 10)
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+	Photo.name = docname
+	Photo.forceMove(loc)
+	Photo.construct(Picture)

@@ -5,7 +5,7 @@
 	icon_state = "marker"
 
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	invisibility = INVISIBILITY_OBSERVER
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
@@ -16,6 +16,7 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
+	var/image/ghostimage = null
 
 	var/datum/faction/blob_conglomerate/b_congl
 
@@ -23,6 +24,9 @@
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	ghostimage = image(icon, src, icon_state)
+	ghost_sightless_images |= ghostimage //so ghosts can see the blob eye when they disable ghost sight
+	updateallghostimages()
 	. = ..()
 
 /mob/camera/blob/Login()
@@ -58,7 +62,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if (stat)
@@ -104,3 +108,10 @@
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
+
+/mob/camera/blob/Destroy()
+	if(ghostimage)
+		ghost_sightless_images -= ghostimage
+		QDEL_NULL(ghostimage)
+		updateallghostimages()
+	return ..()

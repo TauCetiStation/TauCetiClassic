@@ -14,7 +14,7 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
 	/// Whether the GPS is on.
@@ -153,6 +153,10 @@ var/list/GPS_list = list()
 /obj/item/device/gps/engineering
 	icon_state = "gps-e"
 	gpstag = "ENG0"
+
+/obj/item/device/gps/mining
+	icon_state = "gps-e"
+	gpstag = "MIN0"
 
 /obj/item/device/gps/cyborg
 	gpstag = "BORG0"

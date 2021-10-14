@@ -36,7 +36,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 	if(notify)
 		message_admins("[src] has spawned at [COORD(src)] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
-	poi_list += src
 	z_original = z
 	destination = end
 	if(end && end.z == z_original)
@@ -48,7 +47,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return ..()
 
 /obj/effect/immovable_rod/Destroy()
-	poi_list -= src
 	walk(src,0) //this cancels the walk_towards() proc
 	return ..()
 

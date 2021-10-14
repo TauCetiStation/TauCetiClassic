@@ -235,7 +235,7 @@
 	if(href_list["select_equip"])
 		if(usr != src.occupant)
 			return
-		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, -3)
+		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
 			selected = equip
@@ -348,13 +348,13 @@
 		return
 
 	if(href_list["req_access"] && add_req_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["maint_access"] && maint_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -368,7 +368,7 @@
 		return
 
 	if(href_list["set_internal_tank_valve"] && state >=1)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -378,21 +378,21 @@
 				to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
 	if(href_list["add_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access += F.getNum("add_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["del_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access -= F.getNum("del_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["finish_req_access"])
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		add_req_access = 0
 		var/mob/user = F.getMob("user")

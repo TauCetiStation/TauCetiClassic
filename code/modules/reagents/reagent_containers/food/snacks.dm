@@ -51,18 +51,19 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
-		if(C == user)								//If you're eating it yourself
-			if (fullness <= 50)
-				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
-			if (fullness > 50 && fullness <= 150)
-				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 350)
-				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 350 && fullness <= 550)
-				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+		if(C == user) // If you're eating it yourself
+			if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
+			else if(fullness > 350)
+				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
+			else if(fullness > 150)
+				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
+			else if(fullness > 50)
+				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
+			else
+				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
+
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
@@ -567,7 +568,7 @@
 	if (src.warm)
 		spawn( 4200 )
 			src.warm = 0
-			src.reagents.del_reagent("tricordrazine")
+			reagents.del_reagent("tricordrazine")
 			src.name = "donk-pocket"
 	return
 
@@ -1709,7 +1710,7 @@
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/obj/item/weapon/storage/internal/sliceable/storage
 
 /obj/item/weapon/storage/internal/sliceable
@@ -2228,7 +2229,7 @@
 				user.drop_from_inventory(box, src)
 
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
-				src.boxes.Add( boxestoadd )
+				boxes.Add( boxestoadd )
 
 				box.update_icon()
 				update_icon()
@@ -3270,3 +3271,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
 	icon_state = "cheesyfries_cardboard"
 	trash = /obj/item/trash/fries
+
+
+/// candy heart
+/obj/item/weapon/reagent_containers/food/snacks/candyheart
+	name = "candy heart"
+	icon = 'icons/obj/valentines.dmi'
+	icon_state = "candyheart"
+	desc = "A heart-shaped candy filled with love."
+	bitesize = 3
+	trash = /obj/item/weapon/paper/lovenote
+
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 3)
+	icon_state = pick("candyheart_pink", "candyheart_green", "candyheart_blue", "candyheart_yellow")

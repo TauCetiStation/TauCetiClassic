@@ -1,6 +1,7 @@
 /datum/game_mode/shadowling
 	name = "Shadowling"
 	config_name = "shadowling"
+	probability = 70
 
 	factions_allowed = list(/datum/faction/shadowlings)
 

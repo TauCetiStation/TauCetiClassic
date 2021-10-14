@@ -122,7 +122,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				xeno_queen_list += xeno_queen
 		if(xeno_queen_list.len && side == NANOTRASEN_SIDE)//If there are queen about and the probability is 50.
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
-				var/datum/objective/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/assassinate)
+				var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 				//We'll do some manual overrides to properly set it up.
 				ninja_objective.target = xeno_queen.mind
 				ninja_objective.explanation_text = "Kill \the [xeno_queen]."
@@ -133,7 +133,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				commando_list += current_mind
 		if(commando_list.len)//If there are living commandos still in play.
 			for(var/mob/living/carbon/human/commando in commando_list)
-				var/datum/objective/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/assassinate)
+				var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 				ninja_objective.find_target_by_role(commando.mind.special_role,1)
 	/*
 	If there are no antogonists left it could mean one of two things:
@@ -178,7 +178,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 					current_mind = pick(hostile_targets)
 
 					if(current_mind)
-						var/datum/objective/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/assassinate)
+						var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role ? 1 : 0))//If they have a special role, use that instead to find em.
 
 					else
@@ -196,7 +196,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 					if(current_mind)
 
-						var/datum/objective/protect/ninja_objective = ninja.AppendObjective(/datum/objective/protect)
+						var/datum/objective/target/protect/ninja_objective = ninja.AppendObjective(/datum/objective/target/protect)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role), (current_mind.special_role ? 1 : 0))
 
 					else
@@ -208,7 +208,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 					if(current_mind)
 
-						var/datum/objective/debrain/ninja_objective = ninja.AppendObjective(/datum/objective/debrain)
+						var/datum/objective/target/debrain/ninja_objective = ninja.AppendObjective(/datum/objective/target/debrain)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role), (current_mind.special_role ? 1 : 0))
 
 					else

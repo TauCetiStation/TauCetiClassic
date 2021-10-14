@@ -220,7 +220,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
-							H.stuttering += 15
+							H.AdjustStuttering(15)
 							H.ear_deaf += 8
 							H.Weaken(5)
 							H.Stun(8)
@@ -376,7 +376,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 8
-					if(prob(20)) my_target.eye_blurry += 3
+					if(prob(20)) my_target.blurEyes(10)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
@@ -425,7 +425,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 /proc/fake_attack(mob/living/target)
-//	var/list/possible_clones = new/list()
+//	var/list/possible_clones = list()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 

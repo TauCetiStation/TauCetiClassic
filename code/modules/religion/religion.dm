@@ -31,6 +31,8 @@
 	// Radial menu
 	var/list/bible_skins
 
+	var/religious_tool_type
+
 	/*
 	var/lecturn_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -126,6 +128,8 @@
 	var/style_text
 	// It`s hud
 	var/symbol_icon_state
+	// String information about rituals, sects, aspects, etc.
+	var/datum/religion_interface/encyclopedia = new
 
 	/*
 		Building
@@ -162,6 +166,8 @@
 	area_types = typesof(area_type)
 	religify_area(null, null, null, TRUE)
 
+	encyclopedia.init_encyclopedia(src)
+
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
 		STOP_PROCESSING(SSreligion, src)
@@ -190,7 +196,6 @@
 
 	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.choosing_sects = initial(altar.choosing_sects)
 		altar.religion = initial(altar.religion)
 		altar.performing_rite = initial(altar.performing_rite)
 
@@ -332,7 +337,6 @@
 		B = new bible_type(location)
 	bible_info.apply_to(B)
 	B.deity_name = pick(deity_names)
-	B.god_lore = lore
 	B.religion = src
 	return B
 
@@ -604,6 +608,8 @@
 /datum/religion/proc/remove_member(mob/M)
 	if(!is_member(M))
 		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_REL_REMOVE_MEMBER, M)
 
 	members -= M
 	M.my_religion = initial(M.my_religion)

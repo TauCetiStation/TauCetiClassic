@@ -12,7 +12,6 @@
 
 /obj/effect/anomaly/atom_init()
 	. = ..()
-	poi_list += src
 	set_light(3, 5, light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
@@ -21,10 +20,6 @@
 	aSignal.frequency = rand(1200, 1599)
 	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
-
-/obj/effect/anomaly/Destroy()
-	poi_list -= src
-	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
@@ -305,7 +300,7 @@
 		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
-	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Хотите стать рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		return
 

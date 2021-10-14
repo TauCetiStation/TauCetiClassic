@@ -41,7 +41,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 			return
 
 	var/display_colour = normal_ooc_colour
-	var/display_name = key
+	var/ooc_name = key
 
 	if(holder && !holder.fakekey)
 		display_colour = "#704f80"
@@ -53,15 +53,15 @@ var/global/bridge_ooc_colour = "#7b804f"
 			else
 				display_colour = "#b82e00"	//orange
 
-	send2ooc(msg, display_name, display_colour, src)
+	send2ooc(msg, ooc_name, display_colour, src)
 
 	world.send2bridge(
 		type = list(BRIDGE_OOC),
-		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : display_name ]**: [msg]",
+		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : ooc_name ]**: [msg]",
 		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
 	)
 
-/proc/send2ooc(msg, name, colour, client/sender)
+/proc/send2ooc(msg, name, colour, client/sender, display_name)
 	if(sender)
 		log_ooc("[key_name(sender)] : [msg]")
 	else
@@ -71,7 +71,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue
-		var/display_name = name
+
+		if(!display_name)
+			display_name = name
 
 		if(sender)
 			if(sender.supporter && sender.prefs.ooccolor)
@@ -108,7 +110,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
-/client/verb/looc(msg as text)
+/client/verb/looc()
+	var/msg = sanitize(input(src, null, "looc \"text\"") as text|null)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
@@ -260,3 +263,28 @@ var/global/bridge_ooc_colour = "#7b804f"
 					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
 					winset(src, "browseroutput", "is-disabled=true;is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after manually calling start() and forcing a load()")
+
+/client/verb/fix_ui()
+	set name = "Fix UI"
+	set desc = "Closes all opened NanoUI/TGUI and Reload your TGUI/NanoUI assets if they are not working"
+	set category = "OOC"
+
+	if(last_ui_resource_send > world.time)
+		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")
+		return
+	last_ui_resource_send = world.time + 60 SECONDS
+
+	// Close all NanoUI/TGUI windows
+	nanomanager.close_user_uis(usr)
+	SStgui.force_close_all_windows(usr)
+
+	// Clear the user's cache so they get resent.
+	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
+	sent_assets = list()
+
+	// Resend the resources
+	get_asset_datum(/datum/asset/nanoui)
+	get_asset_datum(/datum/asset/simple/tgui)
+
+	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
+

@@ -4,7 +4,7 @@
 	icon_state = "ionrifle"
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
@@ -89,7 +89,7 @@
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
 	item_state = "c20r"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = /obj/item/weapon/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
@@ -126,7 +126,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	can_be_holstered = TRUE
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "mind flayer"
@@ -138,7 +138,7 @@
 	name = "phoron pistol"
 	desc = "A specialized firearm designed to fire lethal bolts of phoron."
 	icon_state = "toxgun"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "combat=5;phorontech=4"
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
@@ -153,7 +153,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/zoom = 0
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
@@ -176,7 +176,7 @@
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
 	if(zoom)
 		if(user.client)
-			user.client.view = world.view
+			user.client.change_view(world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
@@ -208,10 +208,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(usr.client.view == world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
-		usr.client.view = 12
+		usr.client.change_view(12)
 		zoom = 1
 	else
-		usr.client.view = world.view
+		usr.client.change_view(world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
@@ -232,7 +232,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	origin_tech = "combat=5;materials=4;powerstorage=4;magnets=4;engineering=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
@@ -241,7 +241,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	can_be_holstered = FALSE
 	var/charge = 0
@@ -349,7 +349,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = null
 	toolspeed = 0.5
 
@@ -360,7 +360,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	name = "pyrometer"
 	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pyrometer"
 	item_state = "pyrometer"
@@ -472,7 +472,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
 	if(zoomed)
 		if(user.client)
-			user.client.view = world.view
+			user.client.change_view(world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoomed = FALSE
@@ -499,10 +499,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(user.client.view == world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_REDUCED)
-		user.client.view = 12
+		user.client.change_view(12)
 		zoomed = TRUE
 	else
-		usr.client.view = world.view
+		usr.client.change_view(world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoomed = FALSE

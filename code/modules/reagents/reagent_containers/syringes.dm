@@ -15,7 +15,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	sharp = 1
 	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
@@ -75,7 +75,7 @@
 				if(istype(target, /mob/living/carbon/slime))
 					to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 					return
-				if(src.reagents.has_reagent("blood"))
+				if(reagents.has_reagent("blood"))
 					to_chat(user, "<span class='warning'>There is already a blood sample in this syringe</span>")
 					return
 				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
@@ -100,9 +100,9 @@
 
 					if (B)
 						src.reagents.reagent_list += B
-						src.reagents.update_total()
+						reagents.update_total()
 						on_reagent_change()
-						src.reagents.handle_reactions()
+						reagents.handle_reactions()
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
 
@@ -152,27 +152,27 @@
 
 					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-					src.reagents.reaction(target, INGEST)
+					reagents.reaction(target, INGEST)
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")
-					src.reagents.reaction(target, INGEST)
+					reagents.reaction(target, INGEST)
 					infect_limb(user, target)
 			var/datum/reagent/blood/B
 			for(var/datum/reagent/blood/d in src.reagents.reagent_list)
 				B = d
 				break
-			var/trans
+			var/trans = 5
 			if(B && istype(target,/mob/living/carbon))
 				var/list/virus2 = B.data["virus2"]
-				if(virus2.len)
+				if(virus2 && virus2.len)
 					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
 					log_game("Injected blood with virus to [target] by [key_name(user)] in [COORD(user)]")
 				var/mob/living/carbon/C = target
-				C.inject_blood(src,5)
+				C.inject_blood(src, 5)
 			else
-				trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+				trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
@@ -340,11 +340,11 @@
 				user.visible_message("<span class='warning'><B>[user] is trying to inject [target] with a giant syringe!</B></span>")
 				if(!do_mob(user, target, 300)) return
 				user.visible_message("<span class='warning'>[user] injects [target] with a giant syringe!</span>")
-				src.reagents.reaction(target, INGEST)
+				reagents.reaction(target, INGEST)
 			if(ismob(target) && target == user)
-				src.reagents.reaction(target, INGEST)
+				reagents.reaction(target, INGEST)
 			spawn(5)
-				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+				var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 				to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
 				if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW

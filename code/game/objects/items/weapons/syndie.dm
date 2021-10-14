@@ -11,7 +11,7 @@
 	item_state = "c-4small"
 	name = "normal-sized package"
 	desc = "A small wrapped package."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	var/power = 1  /*Size of the explosion.*/
 	var/size = "small"  /*Used for the icon, this one will make c-4small_0 for the off state.*/
@@ -56,7 +56,7 @@
 	item_state = "c-4detonator"
 	name = "Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
 	desc = "The zippo."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 	var/obj/item/weapon/syndie/c4explosive/bomb
 	var/pr_open = 0  /*Is the "What do you want to do?" prompt open?*/
@@ -75,7 +75,7 @@
 						to_chat(user, "<span class='warning'>You press the button.</span>")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
-							src.bomb.detonate()
+							bomb.detonate()
 							log_admin("[user.real_name]([user.ckey]) has triggered [src.bomb] with [src].")
 							message_admins("<span class='warning'>[user.real_name]([user.ckey]) has triggered [src.bomb] with [src]. [ADMIN_JMP(src)]</span>")
 

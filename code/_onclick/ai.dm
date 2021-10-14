@@ -18,7 +18,7 @@
 
 	if(ismob(A))
 		ai_actual_track(A)
-	else if (!istype(A, /obj/screen))
+	else if (!istype(A, /atom/movable/screen))
 		A.move_camera_by_click()
 
 
@@ -115,8 +115,16 @@
 		return
 	return
 
-/atom/proc/AIShiftClick()
-	return
+/atom/proc/AIShiftClick(mob/living/silicon/ai/user)
+	user.examinate(src)
+
+/mob/living/silicon/ai/examinate(atom/A)
+	if((client.eye != src && cameranet && !cameranet.checkCameraVis(A)) || stat == UNCONSCIOUS)
+		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
+		return
+
+	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(density)

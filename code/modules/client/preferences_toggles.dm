@@ -132,7 +132,7 @@
 	var/ui_style = ui_style2icon(UI_style_new)
 	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
 
-	for(var/obj/screen/I in icons)
+	for(var/atom/movable/screen/I in icons)
 		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
 			I.icon = ui_style
 			I.color = UI_style_color_new
@@ -197,7 +197,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
 	if(screen && screen.len)
-		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
 
@@ -228,24 +228,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
-
-/client/verb/set_parallax_theme()
-	set name = "Set Parallax Theme"
-	set category = "Preferences"
-	set desc = "Set space parallax theme."
-
-	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
-	if(!new_setting)
-		return
-
-	prefs.parallax_theme = new_setting
-	to_chat(src, "Parallax theme: [new_setting].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","SPX")
-
-	if (mob && mob.hud_used)
-		mob.hud_used.update_parallax_pref()
-
 
 /client/verb/toggle_ghost_sight()
 	set name = "Change Ghost Sight Options"
@@ -358,3 +340,14 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
 	feedback_add_details("admin_verb", "ED")
+
+/client/verb/toggle_hotkeys_mode()
+	set name = "Toggle Hotkeys Mode"
+	set category = "Preferences"
+
+	prefs.toggle_hotkeys_mode()
+	if(prefs.hotkeys)
+		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус будет переключен на окно игры")
+	else
+		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
+	feedback_add_details("admin_verb", "thm")

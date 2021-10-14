@@ -35,12 +35,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
-	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
-	poi_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(auth)
 	return ..()
@@ -240,7 +238,7 @@ var/bomb_set
 		src.deployable = 1
 	return
 
-/obj/machinery/nuclearbomb/is_operational_topic()
+/obj/machinery/nuclearbomb/is_operational()
 	return TRUE
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
@@ -355,7 +353,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 	if (SSticker)
 		SSticker.explosion_in_progress = 1
 	sleep(100)
@@ -434,7 +432,7 @@ var/bomb_set
 	..()
 	if(!istype(over_object, /obj/structure/droppod))
 		return
-	if(!in_range(src, usr) || !ishuman(usr) || !in_range(src, over_object))
+	if(!ishuman(usr) || !Adjacent(usr) || !Adjacent(over_object) || !usr.Adjacent(over_object))
 		return
 	var/obj/structure/droppod/D = over_object
 	if(!timing && !auth && !buckled_mob)
@@ -451,7 +449,7 @@ var/bomb_set
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	item_state = "card-id"
 	icon_state = "datadisk0"
 

@@ -1,4 +1,3 @@
-var/global/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness
 var/global/list/image/ghost_sightless_images = list() //this is a list of images for things ghosts should still be able to see even without ghost sight
 
 /mob/dead/observer
@@ -30,9 +29,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
-	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/datum/orbit_menu/orbit_menu
 
@@ -43,8 +40,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	ghostimage = image(icon, src, "ghost")
-	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
@@ -99,11 +94,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(data_hud)
 		remove_data_huds()
 	observer_list -= src
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
 	if(orbit_menu)
 		SStgui.close_uis(orbit_menu)
 		QDEL_NULL(orbit_menu)
@@ -163,6 +153,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 					qdel(M)
 			return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		set_EyesVision(transition_time = 0)
 		SStgui.on_transfer(src, ghost)
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
@@ -302,12 +293,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = TRUE
 	if(M.antagHUD)
 		M.antagHUD = FALSE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
 		M.antagHUD = TRUE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
@@ -322,7 +315,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 
-	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	var/A = tgui_input_list(usr, "Area to jump to", "BOOYEA", ghostteleportlocs)
 	if(!A)
 		return
 	var/area/thearea = ghostteleportlocs[A]
@@ -398,7 +391,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", dest)
 
 		if (!target)//Make sure we actually have a target
 			return
@@ -520,7 +513,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/mob/living/carbon/ian/phoron_dog
 	for(var/mob/living/carbon/ian/IAN in alive_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
-		if(IAN.mind) // Mind means someone was or is in a body.
+		if(IAN.client)
 			continue
 		phoron_dog = IAN
 		break
@@ -607,23 +600,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts."
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
-	updateghostsight()
+	update_sight()
 	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
-	seedarkness = !(seedarkness)
 	updateghostsight()
 
 /mob/dead/observer/proc/updateghostsight()
-	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	switch(lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	update_sight()
+	
+
+/mob/dead/observer/update_sight()
+	if (!ghostvision)
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING
 	updateghostimages()
+	..()
 
 /proc/updateallghostimages()
 	for (var/mob/dead/observer/O in player_list)
@@ -632,15 +636,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-	if (seedarkness || !ghostvision)
-		client.images -= ghost_darkness_images
+	if (!ghostvision)
 		client.images |= ghost_sightless_images
 	else
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		client.images -= ghost_sightless_images
-		client.images |= ghost_darkness_images
-		if (ghostimage)
-			client.images -= ghostimage //remove ourself
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)
+
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+
+	mafia_signup()
+
+/mob/dead/observer/proc/mafia_signup()
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = global.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game()
+	game.tgui_interact(usr)
+
+/mob/dead/observer/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Station Time: [worldtime2text()]")

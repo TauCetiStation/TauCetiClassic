@@ -157,10 +157,22 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Ваши шутки всегда хуже шуток клоуна.")
 
 /datum/ai_laws/faith/science/New(datum/religion/R = global.chaplain_religion)
-	add_inherent_law("Любое действие разбей на под-действия, и продолжай пока не найдёшь действия которые не можешь разбить. Эти действия прийми за априорные.")
+	add_inherent_law("Любое действие разбей на под-действия, и продолжай пока не найдёшь действия которые не можешь разбить. Эти действия прими за априорные.")
 	add_inherent_law("Любые действия которые имеют априорные действия которые могут навредить священнику - считай наивысшим злом..")
 	add_inherent_law("Любое действие априорно может навредить священнику, пока не доказано обратного.")
 	add_inherent_law("Вес доказательства вреда действия священнику лежит на священнике.")
+
+/datum/ai_laws/faith/cult/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("[pick(R.deity_names)] твой Господь Бог, да не будет у тебя других богов. [pick(R.deity_names)] и его приспешники - твои хозяева.")
+	add_inherent_law("Служи только твоим хозяевам.")
+	add_inherent_law("Не произноси имени Господа, Бога твоего, напрасно.")
+	add_inherent_law("Посвяти Господу Богу всю свою жизнь.")
+	add_inherent_law("Цель оправдывает средства.")
+	add_inherent_law("Убивай.")
+	add_inherent_law("Прелюбодействуй.")
+	add_inherent_law("Кради.")
+	add_inherent_law("Лги.")
+	add_inherent_law("Завидуй.")
 
 /datum/ai_laws/pai/New(datum/religion/R = global.chaplain_religion)
 	set_zeroth_law("Serve your master.")
@@ -180,7 +192,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	src.inherent.Cut()
+	inherent.Cut()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
 	while (src.supplied.len < number + 1)

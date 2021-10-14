@@ -174,16 +174,16 @@ var/list/slot_equipment_priority = list(
 
 		W.forceMove(src)		//TODO: move to equipped?
 
-		if(old_loc && (src != old_loc) && (src != old_loc.loc))
+		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.equipped(src,SLOT_L_HAND)
 		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
@@ -203,16 +203,16 @@ var/list/slot_equipment_priority = list(
 
 		W.forceMove(src)
 
-		if(old_loc && (src != old_loc) && (src != old_loc.loc))
+		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.equipped(src,SLOT_R_HAND)
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
@@ -524,26 +524,25 @@ var/list/slot_equipment_priority = list(
 	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
 		return TRUE
 
-//Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing
-
+//Create delay for unequipping
+/mob/proc/delay_clothing_unequip(obj/item/clothing/C)
 	if(!istype(C))
-		return 0
-
+		return FALSE
 	if(usr.is_busy())
-		return
-
+		return FALSE
 	if(C.equipping) // Item is already being (un)equipped
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
-	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
-		remove_from_mob(C)
-		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
-	else
+	C.equipping = TRUE
+	if(!do_after(usr, C.equip_time, target = C))
+		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-	C.equipping = 0
+		return FALSE
+	C.equipping = FALSE
+	remove_from_mob(C)
+	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	return TRUE
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C))

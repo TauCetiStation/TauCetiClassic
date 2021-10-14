@@ -141,7 +141,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	// Activates the uplink if it's active
 	if(src.hidden_uplink)
 		if(src.hidden_uplink.active)
-			src.hidden_uplink.trigger(user)
+			hidden_uplink.trigger(user)
 			return 1
 	return 0
 
@@ -165,10 +165,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // Includes normal radio uplink, multitool uplink,
 // implant uplink (not the implant tool) and a preset headset uplink.
 
+/obj/item/device/radio/uplink
+	icon_state = "radio"
+
 /obj/item/device/radio/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)
-	icon_state = "radio"
 	hidden_uplink.uplink_type = "nuclear"
 
 /obj/item/device/radio/uplink/attack_self(mob/user)

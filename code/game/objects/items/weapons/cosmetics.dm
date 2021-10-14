@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/colour = "red"
 	var/open = 0
 
@@ -97,7 +97,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = O_MOUTH, mob/living/carbon/human/AH = null)
@@ -180,7 +180,7 @@
 /obj/item/weapon/haircomb //sparklysheep's comb
 	name = "black comb"
 	desc = "A pristine black comb made from flexible plastic."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blackcomb"
 	item_state = "purplecomb"
@@ -201,7 +201,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("cut", "stabbed", "chipped")
@@ -328,7 +328,7 @@
 	var/pos = 0
 	for(var/D in cardinal)
 		pos++
-		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		var/atom/movable/screen/O = LAZYACCESS(char_render_holders, "[D]")
 		if(!O)
 			O = new
 			LAZYSET(char_render_holders, "[D]", O)
@@ -340,7 +340,7 @@
 /obj/item/weapon/scissors/proc/clear_character_previews()
 	barber << browse(null, "window=barber_window")
 	for(var/index in char_render_holders)
-		var/obj/screen/S = char_render_holders[index]
+		var/atom/movable/screen/S = char_render_holders[index]
 		if(barber && barber.client)
 			barber.client.screen -= S
 		qdel(S)
@@ -387,7 +387,7 @@
 
 	if(!barber || !barbertarget || !selectedhairstyle)
 		return
-	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
+	if(!barbertarget.Adjacent(barber) || barber.get_active_hand() != src)
 		return
 
 	if(isfacehair)

@@ -303,7 +303,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(src.photo ? "Снимок прикреплен" : "Нет снимка")]<BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(4)
-				dat+="История успешно опубликованна в [src.channel_name].<BR><BR>"
+				dat+="История успешно опубликована в [src.channel_name].<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(5)
 				dat+="Канал \"[src.channel_name]\" успешно создан.<BR><BR>"
@@ -313,7 +313,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.channel_name=="")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя Канала.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимый текст.</FONT><BR>"
 
@@ -340,7 +340,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(check)
 					dat+="<FONT COLOR='maroon'>Имя Канала уже используется.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Вернуться</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
@@ -459,7 +459,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.channel_name=="" || src.channel_name == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя разыскиваемого.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
@@ -467,9 +467,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Розыск успешно удален.</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(18)
-				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликованно: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
+				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликовано: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat+="<B>Имя</B>: [news_network.wanted_issue.author]<BR>"
-				dat+="<B>Описани</B>: [news_network.wanted_issue.body]<BR>"
+				dat+="<B>Описание</B>: [news_network.wanted_issue.body]<BR>"
 				dat+="<B>Снимок</B>: "
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
@@ -491,7 +491,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.comment_msg == "" || src.comment_msg == null)
 					dat+="<FONT COLOR='maroon'>Недопустимая длина комментария.</FONT><BR>"
 				if(src.scanned_user == "Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Вернуться</A><BR>"
 			if(23)
 				var/datum/feed_message/MESSAGE = src.viewing_message
@@ -937,7 +937,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		"Моисей — это мопс. Рассказываем, что нужно знать",
 		"В Фрелпасу начали сбор подписей на памятник эчпочмаку",
 		"Лепрастейнские гей-парады оказались неуязвимыми",
-		"Только на майские праздники в Плаериэле построят мемориал жертвам космческих наркотиков",
+		"Только на майские праздники в Плаериэле построят мемориал жертвам космических наркотиков",
 		"Геофизики предрекли слияние борща и баклажанов",
 		"Хескостен, город в Северном Ваезе, напомнил журналистам о своем гомосексуализме",
 		"Баррингтон попросит вернуть у Кемалова три тысячи детей",
@@ -967,7 +967,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	w_class = ITEM_SIZE_SMALL	//Let's make it fit in trashbags!
+	w_class = SIZE_TINY	//Let's make it fit in trashbags!
 	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0
@@ -1063,33 +1063,34 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
-		U.set_machine(src)
-		if(href_list["next_page"])
-			if(curr_page==src.pages+1)
-				return //Don't need that at all, but anyway.
-			if(src.curr_page == src.pages) //We're at the middle, get to the end
-				src.screen = 2
-			else
-				if(curr_page == 0) //We're at the start, get to the middle
-					src.screen=1
-			src.curr_page++
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+	if(!Adjacent(U))
+		return
+	U.set_machine(src)
+	if(href_list["next_page"])
+		if(curr_page==src.pages+1)
+			return //Don't need that at all, but anyway.
+		if(src.curr_page == src.pages) //We're at the middle, get to the end
+			src.screen = 2
+		else
+			if(curr_page == 0) //We're at the start, get to the middle
+				src.screen=1
+		src.curr_page++
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		else if(href_list["prev_page"])
-			if(curr_page == 0)
-				return
-			if(curr_page == 1)
-				src.screen = 0
+	else if(href_list["prev_page"])
+		if(curr_page == 0)
+			return
+		if(curr_page == 1)
+			src.screen = 0
 
-			else
-				if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
-					src.screen = 1
-			src.curr_page--
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+		else
+			if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
+				src.screen = 1
+		src.curr_page--
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		if (istype(src.loc, /mob))
-			attack_self(src.loc)
+	if(istype(src.loc, /mob))
+		attack_self(src.loc)
 
 
 /obj/item/weapon/newspaper/attackby(obj/item/I, mob/user, params)
@@ -1100,7 +1101,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
 			if (!s)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!user.Adjacent(src))
 				return
 			src.scribble_page = src.curr_page
 			src.scribble = s

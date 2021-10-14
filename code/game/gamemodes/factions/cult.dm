@@ -29,7 +29,7 @@
 		return /datum/role/cultist/leader
 	return ..()
 
-/datum/faction/cult/HandleRecruitedMind(datum/mind/M, override)
+/datum/faction/cult/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
 	if(.)
 		M.current.Paralyse(5)
@@ -88,7 +88,7 @@
 
 	text += "<br><b>Аспекты([religion.aspects.len]):</b>"
 	if(!religion.aspects.len)
-		text += "<br>Ниодного аспекта не было выбрано"
+		text += "<br>Ни одного аспекта не было выбрано"
 	else
 		for(var/name in religion.aspects)
 			var/datum/aspect/A = religion.aspects[name]
@@ -96,7 +96,7 @@
 
 	text += "<br><br><b>Ритуалы:</b>"
 	if(!religion.ritename_by_count.len)
-		text += "<br>Ниодного ритуала не было выбрано"
+		text += "<br>Ни одного ритуала не было выбрано"
 	else
 		for(var/name in religion.ritename_by_count)
 			var/count = religion.ritename_by_count[name]
@@ -127,18 +127,6 @@
 			active_leads++
 	return active_leads
 
-/datum/faction/cult/proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))
-		return FALSE
-	if(ishuman(mind.current))
-		if((mind.assigned_role in list("Captain", "Chaplain")))
-			return FALSE
-		if(mind.current.get_species() == GOLEM)
-			return FALSE
-	if(ismindshielded(mind.current))
-		return FALSE
-	return TRUE
-
 /datum/faction/cult/proc/get_cultists_out()
 	var/acolytes_out = 0
 	for(var/datum/role/R in members)
@@ -152,7 +140,7 @@
 /datum/faction/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!religion?.can_convert(player))
+		if(!religion?.can_convert(player) && !religion?.is_member(player))
 			ucs += player.mind
 	return ucs
 

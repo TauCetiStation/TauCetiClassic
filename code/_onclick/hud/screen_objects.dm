@@ -6,12 +6,12 @@
 	They are used with the client/screen list and the screen_loc var.
 	For more information, see the byond documentation on the screen_loc and screen vars.
 */
-/obj/screen
+/atom/movable/screen
 	name = ""
 	icon = 'icons/mob/screen1.dmi'
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
-	unacidable = 1
+	flags = ABSTRACT
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
@@ -19,11 +19,11 @@
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
-/obj/screen/Destroy()
+/atom/movable/screen/Destroy()
 	master = null
 	return ..()
 
-/obj/screen/text
+/atom/movable/screen/text
 	icon = null
 	icon_state = null
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -32,14 +32,14 @@
 	maptext_width = 480
 
 
-/obj/screen/inventory
+/atom/movable/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
 
-/obj/screen/close
+/atom/movable/screen/close
 	name = "close"
 
-/obj/screen/close/Click()
+/atom/movable/screen/close/Click()
 	if(master)
 		if(istype(master, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = master
@@ -47,31 +47,31 @@
 	return 1
 
 
-/obj/screen/grab
+/atom/movable/screen/grab
 	name = "grab"
 
-/obj/screen/grab/Click()
+/atom/movable/screen/grab/Click()
 	if(master)
 		var/obj/item/weapon/grab/G = master
 		G.s_click(src)
 	return 1
 
-/obj/screen/grab/attack_hand()
+/atom/movable/screen/grab/attack_hand()
 	return
 
-/obj/screen/grab/attackby()
+/atom/movable/screen/grab/attackby()
 	return
 
 
-/obj/screen/storage
+/atom/movable/screen/storage
 	name = "storage"
 	var/obj/item/last_outlined // for removing outline from item
 
-/obj/screen/storage/Destroy()
+/atom/movable/screen/storage/Destroy()
 	last_outlined = null
 	return ..()
 
-/obj/screen/storage/Click(location, control, params)
+/atom/movable/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.incapacitated())
@@ -102,7 +102,7 @@
 					return 1
 	return 1
 
-/obj/screen/storage/MouseEntered(location, control, params)
+/atom/movable/screen/storage/MouseEntered(location, control, params)
 	. = ..()
 	if(!master)
 		return
@@ -127,43 +127,43 @@
 					I.apply_outline()
 				return
 
-/obj/screen/storage/MouseExited()
+/atom/movable/screen/storage/MouseExited()
 	. = ..()
 	last_outlined?.remove_outline()
 	last_outlined = null
 
-/obj/screen/storage/MouseDrop()
+/atom/movable/screen/storage/MouseDrop()
 	. = ..()
 	last_outlined?.remove_outline()
 	last_outlined = null
 
-/obj/screen/gun
+/atom/movable/screen/gun
 	name = "gun"
 	icon = 'icons/mob/screen1.dmi'
 	master = null
 
-/obj/screen/gun/move
+/atom/movable/screen/gun/move
 	name = "Allow Walking"
 	icon_state = "no_walk0"
 	screen_loc = ui_gun2
 
-/obj/screen/gun/run
+/atom/movable/screen/gun/run
 	name = "Allow Running"
 	icon_state = "no_run0"
 	screen_loc = ui_gun3
 
-/obj/screen/gun/item
+/atom/movable/screen/gun/item
 	name = "Allow Item Use"
 	icon_state = "no_item0"
 	screen_loc = ui_gun1
 
-/obj/screen/gun/mode
+/atom/movable/screen/gun/mode
 	name = "Toggle Gun Mode"
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
 	//dir = 1
 
-/obj/screen/zone_sel
+/atom/movable/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
@@ -171,7 +171,7 @@
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
 
-/obj/screen/zone_sel/Click(location, control,params)
+/atom/movable/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL[ICON_X])
 	var/icon_y = text2num(PL[ICON_Y])
@@ -181,10 +181,10 @@
 
 	return set_selected_zone(choice, usr)
 
-/obj/screen/zone_sel/MouseEntered(location, control, params)
+/atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
 
-/obj/screen/zone_sel/MouseMove(location, control, params)
+/atom/movable/screen/zone_sel/MouseMove(location, control, params)
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL[ICON_X])
 	var/icon_y = text2num(PL[ICON_Y])
@@ -210,12 +210,12 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
-/obj/screen/zone_sel/MouseExited(location, control, params)
+/atom/movable/screen/zone_sel/MouseExited(location, control, params)
 	if(!isobserver(usr) && hovering)
 		vis_contents -= hover_overlays_cache[hovering]
 		hovering = null
 
-/obj/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
+/atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
 		if(1 to 3) //Feet
 			switch(icon_x)
@@ -259,7 +259,7 @@
 							return O_EYES
 				return BP_HEAD
 
-/obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
 	if(choice != selecting)
 		selecting = choice
 		var/mob/living/L = usr
@@ -268,27 +268,30 @@
 		update_icon()
 	return 1
 
-/obj/screen/zone_sel/update_icon()
+/atom/movable/screen/zone_sel/update_icon()
 	cut_overlays()
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
-/obj/screen/pull
+/atom/movable/screen/pull
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "pull1"
 
-/obj/screen/pull/Click()
+/atom/movable/screen/pull/Click()
 	usr.stop_pulling()
 
-/obj/screen/pull/update_icon(mob/mymob)
+/atom/movable/screen/pull/update_icon(mob/mymob)
 	if(!mymob) return
 	if(mymob.pulling)
 		icon_state = "pull1"
 	else
 		icon_state = "pull0"
 
-/obj/screen/Click(location, control, params)
-	if(!usr)	return 1
+/atom/movable/screen/Click(location, control, params)
+	if(!usr)
+		return 1
+
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	switch(name)
 		if("toggle")
@@ -341,7 +344,7 @@
 							var/mob/living/carbon/human/H = C
 							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 								internalsound = 'sound/misc/riginternaloff.ogg'
-						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
@@ -422,7 +425,7 @@
 										var/mob/living/carbon/human/H = C
 										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 											internalsound = 'sound/misc/riginternalon.ogg'
-									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 								if(C.internal)
 									if(C.internals)
@@ -695,7 +698,7 @@
 			return 0
 	return 1
 
-/obj/screen/inventory/Click()
+/atom/movable/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -726,17 +729,17 @@
 				usr.next_move = world.time+6
 	return 1
 
-/obj/screen/inventory/MouseEntered()
+/atom/movable/screen/inventory/MouseEntered()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	add_stored_outline()
 
-/obj/screen/inventory/MouseExited()
+/atom/movable/screen/inventory/MouseExited()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	remove_stored_outline()
 
-/obj/screen/inventory/proc/add_stored_outline()
+/atom/movable/screen/inventory/proc/add_stored_outline()
 	if(!slot_id || !usr.client.prefs.outline_enabled)
 		return
 	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
@@ -747,7 +750,7 @@
 	else
 		inv_item.apply_outline()
 
-/obj/screen/inventory/proc/remove_stored_outline()
+/atom/movable/screen/inventory/proc/remove_stored_outline()
 	if(!slot_id)
 		return
 	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
@@ -755,34 +758,34 @@
 		return
 	inv_item.remove_outline()
 
-/obj/screen/inventory/craft
+/atom/movable/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/inventory/craft/Click()
+/atom/movable/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
 
-/obj/screen/temp
+/atom/movable/screen/temp
 	var/mob/user
 	var/delay = 0
 
-/obj/screen/temp/atom_init(mapload, mob/M)
+/atom/movable/screen/temp/atom_init(mapload, mob/M)
 	. = ..()
 	user = M
 	if(user.client)
 		user.client.screen += src
 	QDEL_IN(src, delay)
 
-/obj/screen/temp/Destroy()
+/atom/movable/screen/temp/Destroy()
 	if(user.client)
 		user.client.screen -= src
 	user = null
 	return ..()
 
-/obj/screen/temp/cult_teleportation
+/atom/movable/screen/temp/cult_teleportation
 	name = "crafting menu"
 	icon = 'icons/effects/bloodTP.dmi'
 	icon_state = "cult_tp"
@@ -792,7 +795,7 @@
 
 	delay = 8.5
 
-/obj/screen/cooldown_overlay
+/atom/movable/screen/cooldown_overlay
 	name = ""
 	icon_state = "cooldown"
 	pixel_y = 4
@@ -800,20 +803,20 @@
 	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
 	vis_flags = VIS_INHERIT_ID
 	var/cooldown_time = 0
-	var/obj/screen/parent_button
+	var/atom/movable/screen/parent_button
 	var/datum/callback/callback
 	var/timer
 
-/obj/screen/cooldown_overlay/atom_init(mapload, button)
+/atom/movable/screen/cooldown_overlay/atom_init(mapload, button)
 	. = ..()
 	parent_button = button
 
-/obj/screen/cooldown_overlay/Destroy()
+/atom/movable/screen/cooldown_overlay/Destroy()
 	stop_cooldown()
 	deltimer(timer)
 	return ..()
 
-/obj/screen/cooldown_overlay/proc/start_cooldown(delay)
+/atom/movable/screen/cooldown_overlay/proc/start_cooldown(delay)
 	parent_button.color = "#8000007c"
 	parent_button.vis_contents += src
 	if(delay)
@@ -821,7 +824,7 @@
 	set_maptext(cooldown_time)
 	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
-/obj/screen/cooldown_overlay/proc/tick()
+/atom/movable/screen/cooldown_overlay/proc/tick()
 	if(cooldown_time == 0)
 		stop_cooldown()
 		return
@@ -829,19 +832,24 @@
 	set_maptext(cooldown_time)
 	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
-/obj/screen/cooldown_overlay/proc/stop_cooldown()
+/atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
 	cooldown_time = 0
 	parent_button.color = "#ffffffff"
 	parent_button.vis_contents -= src
 	if(callback)
 		callback.Invoke()
 
-/obj/screen/cooldown_overlay/proc/set_maptext(time)
+/atom/movable/screen/cooldown_overlay/proc/set_maptext(time)
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
 
-/proc/start_cooldown(obj/screen/button, time, datum/callback/callback)
-	var/obj/screen/cooldown_overlay/cooldown = new(button, button)
+/proc/start_cooldown(atom/movable/screen/button, time, datum/callback/callback)
+	var/atom/movable/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback
 	cooldown.start_cooldown(time)
 	return cooldown
+
+/atom/movable/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood

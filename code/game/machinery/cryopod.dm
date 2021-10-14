@@ -165,16 +165,16 @@ var/global/list/frozen_items = list()
 		icon_state = "cryosleeper_left"
 	. = ..()
 
-/obj/machinery/cryopod/proc/delete_objective(datum/objective/O)
+/obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
 	if(!O)
 		return
 
 	//We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
-	if(!istype(O, /datum/objective/rp_rev))
+	if(!istype(O, /datum/objective/target/rp_rev))
 		O.find_target()
 
 	if(!O.target)
-		all_objectives -= O
+		target_objectives -= O
 		var/datum/faction/F = O.faction
 		if(F)
 			F.handleRemovedObjective(O)
@@ -188,7 +188,7 @@ var/global/list/frozen_items = list()
 
 		qdel(O)
 
-/obj/machinery/cryopod/proc/remove_objective(datum/objective/O)
+/obj/machinery/cryopod/proc/remove_objective(datum/objective/target/O)
 	if(O.target != occupant.mind)
 		return
 
@@ -215,7 +215,7 @@ var/global/list/frozen_items = list()
 				preserve_item(W)
 
 			//Update any existing objectives involving this mob.
-			for(var/datum/objective/O in all_objectives)
+			for(var/datum/objective/target/O in target_objectives)
 				remove_objective(O)
 
 			//Handle job slot/tater cleanup.
@@ -262,12 +262,15 @@ var/global/list/frozen_items = list()
 
 	if(istype(G, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/grab = G
+		if(!user.IsAdvancedToolUser())
+			to_chat(user, "<span class='notice'>You have no idea how to do that.</span>")
+			return
 
 		if(occupant)
 			to_chat(user, "<span class='notice'>The cryo pod is in use.</span>")
 			return
 
-		if(!ismob(grab.affecting))
+		if(!ishuman(grab.affecting))
 			return
 
 		var/willing = null //We don't want to allow people to be forced into despawning.
@@ -354,7 +357,11 @@ var/global/list/frozen_items = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.incapacitated() || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !(ishuman(usr)))
+		return
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='notice'>You have no idea how to do that.</span>")
 		return
 
 	if(occupant)

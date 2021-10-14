@@ -20,8 +20,8 @@
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -68,7 +68,7 @@
 
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
 	..()
-	M.eye_blurry = max(M.eye_blurry - 1, 0)
+	M.adjustBlurriness(-1)
 	M.eye_blind = max(M.eye_blind - 1, 0)
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -321,7 +321,7 @@
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
 	..()
 	M.make_jittery(20)
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 	M.dizziness += 5
 	M.drowsyness = 0
 
@@ -509,13 +509,11 @@
 
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
-	if(!M.stuttering)
-		M.stuttering = 1
-	M.stuttering += 3
+	M.AdjustStuttering(4)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -542,13 +540,11 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
+		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
-		M.druggy = max(M.druggy, 55)
+		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
@@ -569,13 +565,11 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		if (!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
+		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
 		M.confused = max(M.confused + 3,0)
 	else if(data["ticks"] >=55)
-		M.druggy = max(M.druggy, 55)
+		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
@@ -591,39 +585,35 @@
 
 /datum/reagent/consumable/hippies_delight/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(10)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(20)
 			M.make_dizzy(20)
-			M.druggy = max(M.druggy, 45)
+			M.adjustDrugginess(4)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to 200)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(40)
 			M.make_dizzy(40)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(60)
 			M.make_dizzy(60)
-			M.druggy = max(M.druggy, 75)
+			M.adjustDrugginess(7)
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
@@ -695,7 +685,7 @@
 			M.confused = 1
 		M.confused = max(M.confused + confused_adj, 0)
 	if(d >= blur_start)
-		M.eye_blurry = max(M.eye_blurry, 10)
+		M.blurEyes(10)
 		M.drowsyness = max(M.drowsyness, 0)
 	if(d >= pass_out)
 		M.paralysis = max(M.paralysis, 20)
@@ -828,7 +818,7 @@
 
 /datum/reagent/consumable/ethanol/threemileisland/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -941,45 +931,41 @@
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	M.adjustDrugginess(5)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 25)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(1)
 			M.hallucination = max(M.hallucination, 3)
 			if(prob(1))
 				M.emote(pick("twitch","giggle"))
 		if(25 to 75)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 10)
 			M.make_jittery(2)
 			M.make_dizzy(2)
-			M.druggy = max(M.druggy, 45)
+			M.adjustDrugginess(4)
 			if(prob(5))
 				M.emote(pick("twitch","giggle"))
 		if(75 to 150)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
 				M.adjustToxLoss(2)
 		if(150 to 300)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.hallucination = max(M.hallucination, 60)
 			M.make_jittery(4)
 			M.make_dizzy(4)
-			M.druggy = max(M.druggy, 60)
+			M.adjustDrugginess(6)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
@@ -1235,7 +1221,7 @@
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
@@ -1515,9 +1501,7 @@
 	data["ticks"]++
 	M.dizziness += 10
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 10
+		M.AdjustStuttering(11)
 	else if(data["ticks"] >= 115 && prob(33))
 		M.confused = max(M.confused + 15, 15)
 

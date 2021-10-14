@@ -27,9 +27,6 @@
 #define PARALLAX_LOW     2
 #define PARALLAX_DISABLE 3 //this option must be the highest number
 
-#define PARALLAX_THEME_CLASSIC "classic"
-#define PARALLAX_THEME_TG      "tgstation"
-
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
 #define PARALLAX_DELAY_LOW     2
@@ -51,3 +48,6 @@
 #define JP_LEVELS list(JP_HIGH, JP_MEDIUM, JP_LOW)
 
 #define TOOLTIP_NORTH "TOP+0.1, CENTER-3"
+
+//recommened client FPS
+#define RECOMMENDED_FPS 40

@@ -55,6 +55,4 @@
 	return canmove
 
 /mob/living/carbon/brain/update_hud()
-	if(client)
-		if(hud_used)
-			hud_used.reload_fullscreen()
+	reload_fullscreen()

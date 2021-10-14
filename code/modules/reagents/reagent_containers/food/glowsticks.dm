@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
@@ -156,9 +156,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()
 	if(prob(95))
-		src.reagents.add_reagent("luminophore", rand(18,36))
+		reagents.add_reagent("luminophore", rand(18,36))
 	else
-		src.reagents.add_reagent("luminophore", rand(1,2))
+		reagents.add_reagent("luminophore", rand(1,2))
 	var/datum/reagents/R = reagents
 	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
 		if(luminophore)

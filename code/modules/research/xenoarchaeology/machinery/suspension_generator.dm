@@ -162,7 +162,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/is_operational_topic()
+/obj/machinery/suspension_gen/is_operational()
 	return TRUE
 
 /obj/machinery/suspension_gen/Topic(href, href_list)

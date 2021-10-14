@@ -194,6 +194,7 @@
 
 
 // "Tanks".
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank."
@@ -203,8 +204,6 @@
 /obj/structure/reagent_dispensers/watertank/atom_init()
 	. = ..()
 	reagents.add_reagent("water", 1000)
-
-	watertank_list += src
 
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
@@ -216,6 +215,7 @@
 	reagents.add_reagent("aqueous_foam", 1000)
 
 
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank."
@@ -225,8 +225,6 @@
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
 	reagents.add_reagent("fuel",300)
-
-	fueltank_list += src
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"

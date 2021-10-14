@@ -36,11 +36,11 @@
 	var/traitorcount = 0
 
 	for(var/mob/living/player in living_list)
-		if (player.client && player.mind && player.stat != DEAD)
+		if (player.client && player.mind && player.stat != DEAD && (is_station_level(player.z) || is_mining_level(player.z)))
 			playercount++
 			if(isanyantag(player))
 				traitorcount++
-			else if((player.client && (required_pref in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, required_pref) && !role_available_in_minutes(player, required_pref) && !isloyal(player))
+			else if((player.client && (required_pref in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, required_pref) && !role_available_in_minutes(player, required_pref) && !player.ismindprotect())
 				if(!possible_autotraitor.len || !possible_autotraitor.Find(player))
 					possible_autotraitor += player
 

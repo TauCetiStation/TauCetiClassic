@@ -25,16 +25,20 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/ismindshielded(mob/A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield || istype(L, /obj/item/weapon/implant/mindshield/loyalty))
-			continue
+/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
 
-/proc/isloyal(mob/A)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+/mob/proc/isloyal()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ismindprotect()
+	for(var/obj/item/weapon/implant/mind_protect/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
@@ -300,14 +304,46 @@
 
 	return jointext(message_list, " ")
 
+#define TILES_PER_SECOND 0.7
+///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || !strength) return
-	spawn()
-		strength *= 32
-		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
-			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 2)
+	if(!M || !M.client || duration < 1)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
+
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 
 /proc/findname(msg)

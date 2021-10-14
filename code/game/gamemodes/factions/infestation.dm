@@ -58,7 +58,7 @@
 /datum/faction/infestation/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/infestation/reproduct)
+	AppendObjective(/datum/objective/reproduct)
 	return TRUE
 
 /datum/faction/infestation/proc/count_hive_power(in_detail = FALSE)
@@ -70,7 +70,7 @@
 	"[ALIEN_HUNTER]_live" = 0, "[ALIEN_HUNTER]_dead" = 0, "[ALIEN_HUNTER]_key" = "",
 	"[ALIEN_LARVA]_live" = 0, "[ALIEN_LARVA]_dead" = 0, "[ALIEN_LARVA]_key" = "")
 	for(var/list_key in alien_list)
-		if(list_key == ALIEN_FACEHAGGER)
+		if(list_key == ALIEN_FACEHUGGER)
 			continue
 		for(var/mob/living/carbon/xenomorph/A in alien_list[list_key])
 			var/turf/xeno_loc = get_turf(A)

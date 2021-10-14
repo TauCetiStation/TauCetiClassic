@@ -5,16 +5,16 @@
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
-they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
+they are simply references used as part of a "has materials?" type proc.
 The currently supporting non-reagent materials:
-- $metal (/obj/item/stack/metal).
-- $glass (/obj/item/stack/glass).
-- $phoron (/obj/item/stack/phoron).
-- $silver (/obj/item/stack/silver).
-- $gold (/obj/item/stack/gold).
-- $uranium (/obj/item/stack/uranium).
-- $diamond (/obj/item/stack/diamond).
-- $Bananium (/obj/item/stack/Bananium).
+- metal (/obj/item/stack/metal).
+- glass (/obj/item/stack/glass).
+- phoron (/obj/item/stack/phoron).
+- silver (/obj/item/stack/silver).
+- gold (/obj/item/stack/gold).
+- uranium (/obj/item/stack/uranium).
+- diamond (/obj/item/stack/diamond).
+- Bananium (/obj/item/stack/Bananium).
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
@@ -2196,7 +2196,7 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/design/blueprint

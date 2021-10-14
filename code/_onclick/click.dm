@@ -35,8 +35,9 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(src)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -121,7 +122,7 @@
 		throw_item(A)
 		return
 
-	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /atom/movable/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
@@ -138,7 +139,7 @@
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
 
 		// No adjacency needed
 		if(W)
@@ -415,18 +416,18 @@
 	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
-/obj/screen/click_catcher
+/atom/movable/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/atom_init()
+/atom/movable/screen/click_catcher/atom_init()
 	. = ..()
 	transform = matrix(200, 0, 0, 0, 200, 0)
 
-/obj/screen/click_catcher/Click(location, control, params)
+/atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr

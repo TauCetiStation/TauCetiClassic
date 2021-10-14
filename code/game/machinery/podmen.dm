@@ -41,7 +41,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if(B)
 			source = B.data["donor"]
 			to_chat(user, "The strange, sluglike seeds quiver gently and swell with blood.")
-			if(!source.client && source.mind)
+			if(source && !source.client && source.mind)
 				for(var/mob/dead/observer/O in player_list)
 					if(O.mind == source.mind && config.revival_pod_plants)
 						to_chat(O, "<font color='#330033'><font size = 3><b>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font></font>")

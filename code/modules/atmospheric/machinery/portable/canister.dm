@@ -330,7 +330,7 @@ update_flag
 
 	stat |= BROKEN
 	density = FALSE
-	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
+	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
 	update_icon()
 	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
@@ -366,7 +366,7 @@ update_flag
 		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
 	return data
 
-/obj/machinery/portable_atmospherics/canister/is_operational_topic()
+/obj/machinery/portable_atmospherics/canister/is_operational()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/tgui_state(mob/user)

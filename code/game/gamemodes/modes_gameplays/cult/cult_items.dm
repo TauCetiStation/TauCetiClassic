@@ -3,7 +3,7 @@
 	desc = "An arcane weapon wielded by the followers of Nar-Sie."
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 30
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -104,7 +104,7 @@
 	icon_state = "cult_armour"
 	item_state = "cult_armour"
 	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -138,7 +138,7 @@
 	desc = "The stone is made of a complex material, if you look closely, the surface structure is fractal."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "cultstone"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/toggle = FALSE
 	var/mode = HEAVEN
 	var/mob/living/carbon/human/current_user
@@ -172,7 +172,7 @@
 
 /obj/item/device/cult_camera/proc/off()
 	if(toggle)
-		UnregisterSignal(camera, list(COMSIG_PARENT_QDELETED))
+		UnregisterSignal(camera, list(COMSIG_PARENT_QDELETING))
 		current_user.reset_view()
 		current_user.force_remote_viewing = FALSE
 		camera.icon_state = initial(camera.icon_state)
@@ -209,7 +209,7 @@
 	current_user.reset_view(camera)
 	toggle = !toggle
 
-	RegisterSignal(camera, list(COMSIG_PARENT_QDELETED), .proc/feel_pain)
+	RegisterSignal(camera, list(COMSIG_PARENT_QDELETING), .proc/feel_pain)
 
 /obj/item/device/cult_camera/dropped(mob/living/carbon/human/user)
 	. = ..()

@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -167,9 +167,6 @@
 	scan(target, user)
 
 /obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
-	if(!dropping.Adjacent(user))
-		return
-
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return

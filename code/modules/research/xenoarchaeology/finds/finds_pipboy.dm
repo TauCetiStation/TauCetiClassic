@@ -235,7 +235,7 @@
 	if (!t)
 		return
 
-	if (!in_range(src, U))
+	if (!Adjacent(U))
 		return
 
 	if (!(on))

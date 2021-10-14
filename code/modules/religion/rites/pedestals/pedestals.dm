@@ -18,7 +18,7 @@
 
 	var/need_members = 4
 
-/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -32,6 +32,16 @@
 			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
 
+	var/cultists_around = 0
+	for(var/mob/M in AOG.mobs_around)
+		if(religion.is_member(M))
+			cultists_around++
+
+	if(cultists_around < need_members)
+		if(user)
+			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
+		return FALSE
+
 	if(SSticker.nar_sie_has_risen)
 		if(user)
 			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
@@ -39,11 +49,11 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 
-	new /obj/singularity/narsie/large(get_turf(AOG))
+	new /obj/singularity/narsie(get_turf(AOG), religion)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/cult_portal
@@ -67,7 +77,7 @@
 		ASPECT_DEATH = 1
 	)
 
-/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -76,19 +86,16 @@
 			return TRUE
 
 	if(user)
-		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
+		to_chat(user, "<span class='warning'>Сначала разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
-	var/spawned = FALSE
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
 			new /obj/effect/anomaly/bluespace/cult_portal(R.loc, TRUE)
 			qdel(R)
-			spawned = TRUE
-	if(spawned)
-		return TRUE
+			return TRUE
 	return FALSE
 
 /datum/religion_rites/pedestals/cult/make_skeleton
@@ -110,7 +117,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -119,9 +126,15 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
+		if(user)
+			to_chat(user, "<span class='warning'>Неподходящее существо.</span>")
+		return FALSE
+
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
@@ -137,11 +150,12 @@
 	S.color = "#db0101"
 	S.start()
 
+	religion.add_member(H, CULT_ROLE_HIGHPRIEST)
+
 	H.set_species(SKELETON)
 	H.revive()
 	H.visible_message("<span class='warning'>После того, как дым развеялся, на алтаре виден скелет человека.</span>",
 					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")
-	religion.add_member(H, CULT_ROLE_HIGHPRIEST)
 	H.regenerate_icons()
 
 	return TRUE

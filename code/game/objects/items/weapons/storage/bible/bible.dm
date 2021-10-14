@@ -4,11 +4,10 @@
 	icon_state = "bible"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
-	var/mob/affecting = null
-	var/deity_name = "Christ"
-	var/god_lore = ""
+	w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
+
+	var/deity_name = "Christ"
 
 	var/datum/religion/religion
 	var/religify_next = list()
@@ -43,7 +42,7 @@
 		return FALSE
 	if(!target.reagents)
 		return FALSE
-	if(!in_range(user, target))
+	if(!user.Adjacent(target))
 		return FALSE
 	return TRUE
 
@@ -76,7 +75,7 @@
 
 /obj/item/weapon/storage/bible/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)

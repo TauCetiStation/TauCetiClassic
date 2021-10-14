@@ -49,7 +49,7 @@
 		user.say(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
 	else
 		user.whisper(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
-	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слишите тихое шипение.</span>")
+	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слышите тихое шипение.</span>")
 
 /datum/rune/cult
 
@@ -67,7 +67,7 @@
 	user.eject_from_wall(TRUE, companions = companions)
 	for(var/mob/M in companions + user)
 		if(M.client)
-			new /obj/screen/temp/cult_teleportation(M, M)
+			new /atom/movable/screen/temp/cult_teleportation(M, M)
 
 	after_tp(get_turf(user), user, companions)
 
@@ -217,14 +217,29 @@
 
 	var/datum/religion/cult/R = global.cult_religion
 	R.capturing_area = TRUE
-	var/datum/announcement/station/cult/capture_area/announce = new
+
+	var/list/blacklisted_announcements = list(
+		/datum/announcement/centcomm/anomaly,
+		/datum/announcement/centcomm/anomaly/frost,
+		/datum/announcement/centcomm/anomaly/massive_portals,
+		/datum/announcement/centcomm/anomaly/bluespace_trigger,
+		/datum/announcement/centcomm/anomaly/radstorm,
+		/datum/announcement/centcomm/anomaly/radstorm_passed
+	)
+	var/announcement_type = pick(typesof(/datum/announcement/centcomm/anomaly) - blacklisted_announcements)
+	var/datum/announcement/announce = new announcement_type
 	announce.play(area)
-	statue = new(get_turf(holder), holder)
+	var/turf/rune_turf = get_turf(holder)
+	message_admins("Cult has started capture: [area] in [COORD(rune_turf)] - [ADMIN_JMP(rune_turf)]")
+
+	statue = new(rune_turf, holder)
 	R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
 	R.capturing_area = FALSE
+	message_admins("Capture of [get_area(holder)] successful.")
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
+		message_admins("Capture of [get_area(holder)] failed.")
 		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)

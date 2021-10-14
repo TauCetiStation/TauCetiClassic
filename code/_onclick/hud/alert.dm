@@ -34,7 +34,7 @@
 			return
 		var/client/client = user
 		user = client.mob
-			
+
 	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
 	alert.tgui_interact(user)
 
@@ -167,7 +167,7 @@
 	if(!category || QDELETED(src))
 		return
 
-	var/obj/screen/alert/thealert
+	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
@@ -218,13 +218,13 @@
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
 
-/mob/proc/alert_timeout(obj/screen/alert/alert, category)
+/mob/proc/alert_timeout(atom/movable/screen/alert/alert, category)
 	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
 		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category, clear_override = FALSE)
-	var/obj/screen/alert/alert = alerts[category]
+	var/atom/movable/screen/alert/alert = alerts[category]
 	if(!alert)
 		return 0
 	if(alert.override_alerts && !clear_override)
@@ -236,7 +236,7 @@
 		client.screen -= alert
 	qdel(alert)
 
-/obj/screen/alert
+/atom/movable/screen/alert
 	icon = 'icons/mob/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
@@ -249,28 +249,28 @@
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/mob_viewer //the mob viewing this alert
 
-/obj/screen/alert/Destroy()
+/atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
 	mob_viewer = null
 	screen_loc = ""
 
 
-/obj/screen/alert/MouseEntered(location, control, params)
+/atom/movable/screen/alert/MouseEntered(location, control, params)
 	if(!QDELETED(src))
 		openToolTip(usr, src, params, title = name, content = desc, theme = alerttooltipstyle)
 
-/obj/screen/alert/MouseExited()
+/atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
 
 //Gas alerts
-/obj/screen/alert/oxy
+/atom/movable/screen/alert/oxy
 	name = "Choking"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
 			The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "oxy"
 
-/obj/screen/alert/tox_in_air
+/atom/movable/screen/alert/tox_in_air
 	name = "Toxic Gas"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
 			The box in your backpack has an oxygen tank and gas mask in it."
@@ -278,49 +278,49 @@
 //End gas alerts
 
 
-/obj/screen/alert/hot
+/atom/movable/screen/alert/hot
 	name = "Too Hot"
 	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
 	icon_state = "hot"
 
-/obj/screen/alert/cold
+/atom/movable/screen/alert/cold
 	name = "Too Cold"
 	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
 	icon_state = "cold"
 
-/obj/screen/alert/lowpressure
+/atom/movable/screen/alert/lowpressure
 	name = "Low Pressure"
 	desc = "The air around you is hazardously thin. A space suit would protect you."
 	icon_state = "lowpressure"
 
-/obj/screen/alert/highpressure
+/atom/movable/screen/alert/highpressure
 	name = "High Pressure"
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 	icon_state = "highpressure"
 
-/obj/screen/alert/blind
+/atom/movable/screen/alert/blind
 	name = "Blind"
 	desc = "For whatever reason, you can't see. This may be caused by a genetic defect, eye trauma, being unconscious, \
 			or something covering your eyes."
 	icon_state = "blind"
 
-/obj/screen/alert/high
+/atom/movable/screen/alert/high
 	name = "High"
 	desc = "Woah man, you're tripping balls! Careful you don't get addicted to this... if you aren't already."
 	icon_state = "high"
 
-/obj/screen/alert/drunk //Not implemented
+/atom/movable/screen/alert/drunk //Not implemented
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
 
-/obj/screen/alert/embeddedobject
+/atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
 			If you're feeling frisky, click yourself in help intent to pull the object out."
 	icon_state = "embeddedobject"
 
-/obj/screen/alert/weightless
+/atom/movable/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
 			wall or lattice strucure, to push yourself off of if you want to move. A jetpack would enable free range of motion. A pair of \
@@ -330,89 +330,89 @@
 
 //ALIENS
 
-/obj/screen/alert/alien_tox
+/atom/movable/screen/alert/alien_tox
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
 	icon_state = "alien_tox"
 	alerttooltipstyle = "alien"
 
-/obj/screen/alert/alien_fire
+/atom/movable/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 	icon_state = "alien_fire"
 	alerttooltipstyle = "alien"
 
-/obj/screen/alert/alien_embryo
+/atom/movable/screen/alert/alien_embryo
 	name = "Медленное развитие эмбриона"
 	desc = "Носитель не находится в гнезде. Ваша скорость развития снижена."
 	icon_state = "alien_embryo"
 	alerttooltipstyle = "alien"
 
-/obj/screen/alert/alien_queen
+/atom/movable/screen/alert/alien_queen
 	name = "Низкая скорость роста"
 	desc = "Королева вне зоны видимости. Ваша скорость роста снижена."
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
 //changeling
-/obj/screen/alert/regen_stasis
+/atom/movable/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
-	desc = "You has entered in statis. Just wait a little bit."
+	desc = "You has entered in stasis. Just wait a little bit."
 	icon_state = "regen_stasis"
 
 //IANS
-/obj/screen/alert/ian_oxy
+/atom/movable/screen/alert/ian_oxy
 	name = "Choking"
 	desc = "You're not getting enough oxygen."
 	icon_state = "ian_oxy"
 
-/obj/screen/alert/ian_tox
+/atom/movable/screen/alert/ian_tox
 	name = "Gas"
 	desc = "There's gas in the air and you're breathing it in."
 	icon_state = "ian_tox"
 
-/obj/screen/alert/ian_hot
+/atom/movable/screen/alert/ian_hot
 	name = "Too Hot"
 	desc = "You're flaming hot!"
 	icon_state = "ian_hot"
 
-/obj/screen/alert/ian_cold
+/atom/movable/screen/alert/ian_cold
 	name = "Too Cold"
 	desc = "You're freezing cold!"
 	icon_state = "ian_cold"
 
 //SILICONS
 
-/obj/screen/alert/nocell
+/atom/movable/screen/alert/nocell
 	name = "Missing Power Cell"
 	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
 	icon_state = "nocell"
 
-/obj/screen/alert/emptycell
+/atom/movable/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
 			Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
 	icon_state = "emptycell"
 
-/obj/screen/alert/lowcell
+/atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
 	icon_state = "lowcell"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
-/obj/screen/alert/hacked
+/atom/movable/screen/alert/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
 
-/obj/screen/alert/locked
+/atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \
 			office by your AI master or any qualified human may resolve this matter. Robotics my provide further assistance if necessary."
 	icon_state = "locked"
 
-/obj/screen/alert/newlaw
+/atom/movable/screen/alert/newlaw
 	name = "Law Update"
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
 			so as to remain in compliance with the most up-to-date laws."
@@ -421,17 +421,17 @@
 
 //OBJECT-BASED
 
-/obj/screen/alert/buckled
+/atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = "buckled"
 
-/obj/screen/alert/brake
+/atom/movable/screen/alert/brake
 	name = "Brake is on"
 	desc = "Wheelchair's brake is on right now, so you can't move."
 	icon_state = "brake"
 
-/obj/screen/alert/handcuffed // Not used right now.
+/atom/movable/screen/alert/handcuffed // Not used right now.
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
@@ -445,7 +445,7 @@
 			mymob.client.screen -= alerts[alerts[i]]
 		return 1
 	for(var/i = 1, i <= alerts.len, i++)
-		var/obj/screen/alert/alert = alerts[alerts[i]]
+		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style
 		switch(i)
@@ -466,9 +466,9 @@
 	return 1
 
 /mob
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
 
-/obj/screen/alert/Click(location, control, params)
+/atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
 		return
 	var/paramslist = params2list(params)

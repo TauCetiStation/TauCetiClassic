@@ -4,8 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_MINUSCULE
+	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 
@@ -60,6 +60,9 @@
 
 	if(!can_heal(L, user))
 		return
+
+	if(L == user)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
 	if(delay)
@@ -328,8 +331,8 @@
 	item_state = "splint"
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_SMALL
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
+	full_w_class = SIZE_TINY
 
 	self_delay = 50
 	other_delay = 25

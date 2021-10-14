@@ -20,14 +20,14 @@
 
 //Hud stuff
 
-	var/obj/screen/inv1 = null
-	var/obj/screen/inv2 = null
-	var/obj/screen/inv3 = null
+	var/atom/movable/screen/inv1 = null
+	var/atom/movable/screen/inv2 = null
+	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/shown_robot_pda = 0
 	var/shown_robot_foto = 0
-	var/obj/screen/robot_modules_background
+	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -73,6 +73,7 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -250,18 +251,22 @@
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			module.channels = list("Security" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Security")
-			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
-			module_sprites["Black Knight"] = "securityrobot"
-			module_sprites["Bloodhound"] = "bloodhound"
-			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-			module_sprites["Drone"] = "drone-sec"
-			module_sprites["Acheron"] = "mechoid-Security"
-			module_sprites["Kodiak"] = "kodiak-sec"
+			if(can_be_security)
+				module = new /obj/item/weapon/robot_module/security(src)
+				module.channels = list("Security" = 1)
+				if(camera && ("Robots" in camera.network))
+					camera.add_network("Security")
+				module_sprites["Basic"] = "secborg"
+				module_sprites["Red Knight"] = "Security"
+				module_sprites["Black Knight"] = "securityrobot"
+				module_sprites["Bloodhound"] = "bloodhound"
+				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+				module_sprites["Drone"] = "drone-sec"
+				module_sprites["Acheron"] = "mechoid-Security"
+				module_sprites["Kodiak"] = "kodiak-sec"
+			else
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
+				return
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -328,7 +333,7 @@
 	if(custom_name)
 		changed_name = custom_name
 		if(client)
-			for(var/obj/screen/screen in client.screen)
+			for(var/atom/movable/screen/screen in client.screen)
 				if(screen.name == "Namepick")
 					client.screen -= screen
 					qdel(screen)
@@ -440,12 +445,12 @@
 	..()
 	if(ismalf(connected_ai))
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
-		if(malf.apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+		if(SSticker.hacked_apcs >= 3)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
 	else
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
-			stat(null, "Time left: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -736,7 +741,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked", /obj/screen/alert/hacked)
+				throw_alert("hacked", /atom/movable/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				set_ai_link(null)
@@ -772,7 +777,7 @@
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 						qdel(D)
 					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					src.module.rebuild()
+					module.rebuild()
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -1067,7 +1072,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.clear_all_networks()
+		camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
 	update_manifest()
 
@@ -1121,3 +1126,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

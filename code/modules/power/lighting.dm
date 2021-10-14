@@ -8,12 +8,8 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
-#ifdef NEWYEARCONTENT
-    #define LAMP_BRIGHTNESS 1.5
-#else
-    #define LAMP_BRIGHTNESS 2
-#endif
-
+#define LAMP_BRIGHTNESS 2
+#define LAMP_BRIGHTNESS_HOLIDAY 1.5
 
 
 /obj/item/light_fixture_frame
@@ -227,6 +223,11 @@
 	var/nightshift_light_color = "#ffdbb5"
 
 // the smaller bulb light fixture
+
+/obj/machinery/light/atom_init()
+	. = ..()
+	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
+		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
 
 /obj/machinery/light/small
 	icon_state = "bulb1"
@@ -695,7 +696,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -716,7 +717,7 @@
 	brightness_power = 3
 
 /obj/item/weapon/light/tube/large
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4

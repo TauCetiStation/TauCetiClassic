@@ -121,8 +121,7 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/obj/machinery/requests_console{
-	department = "EVA";
+/obj/machinery/requests_console/eva{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -3726,9 +3725,7 @@
 /area/station/maintenance/dormitory)
 "ahO" = (
 /obj/structure/rack,
-/obj/machinery/requests_console{
-	department = "Private Office";
-	name = "Private Office RC";
+/obj/machinery/requests_console/private_office{
 	pixel_x = -30
 	},
 /obj/item/weapon/storage/briefcase/centcomm{
@@ -5812,11 +5809,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Research Director's Desk";
-	departmentType = 5;
-	name = "Research Director RC";
+/obj/machinery/requests_console/rd{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -7785,9 +7778,7 @@
 	},
 /area/station/aisat)
 "bvD" = (
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
+/obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -7854,7 +7845,7 @@
 "bxd" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/robodropper,
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bxf" = (
@@ -8253,6 +8244,9 @@
 /area/station/maintenance/eva)
 "bDP" = (
 /obj/random/vending/cola,
+/obj/structure/noticeboard/bar{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8464,10 +8458,10 @@
 /area/station/maintenance/bridge)
 "bHn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -10773,11 +10767,7 @@
 	},
 /area/station/security/warden)
 "csf" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge RC";
+/obj/machinery/requests_console/bridge{
 	pixel_x = 30
 	},
 /turf/simulated/floor{
@@ -11995,9 +11985,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
+/obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
 /obj/item/device/destTagger,
@@ -12626,9 +12614,7 @@
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
+/obj/machinery/requests_console/security{
 	pixel_x = -30
 	},
 /obj/structure/reagent_dispensers/peppertank{
@@ -14035,10 +14021,7 @@
 	},
 /area/station/medical/surgery)
 "drd" = (
-/obj/machinery/requests_console{
-	department = "Bar";
-	departmentType = 2;
-	name = "Bar RC";
+/obj/machinery/requests_console/bar{
 	pixel_y = 30
 	},
 /obj/machinery/light/small{
@@ -18035,10 +18018,17 @@
 	id = "Armoury0";
 	name = "Emergency Access";
 	pixel_x = 28;
-	pixel_y = 28;
+	pixel_y = 26;
 	req_access = list(2)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door_control{
+	id = "ArmorDoors";
+	name = "Open Armor";
+	pixel_x = 39;
+	pixel_y = 26;
+	req_access = list(3)
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -21633,12 +21623,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "fLy" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/noticeboard/chaplain{
+	pixel_x = 32
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
@@ -22167,9 +22156,7 @@
 /area/station/rnd/hallway)
 "fTt" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -22375,9 +22362,7 @@
 	pixel_y = 3
 	},
 /obj/item/device/flashlight/pen,
-/obj/machinery/requests_console{
-	department = "Genetics";
-	name = "Genetics Requests Console";
+/obj/machinery/requests_console/genetics{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -22455,8 +22440,7 @@
 /turf/simulated/floor/plating,
 /area/station/gateway)
 "fYR" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "Prison Wing APC";
 	pixel_y = 25
@@ -22636,10 +22620,7 @@
 /obj/structure/dispenser{
 	pixel_x = -1
 	},
-/obj/machinery/requests_console{
-	department = "Atmospherics";
-	departmentType = 4;
-	name = "Atmos RC";
+/obj/machinery/requests_console/atmos{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -25313,8 +25294,7 @@
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 1;
 	name = "Cargo Bay APC";
 	pixel_x = 1;
@@ -28846,11 +28826,7 @@
 	},
 /area/station/maintenance/eva)
 "icH" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
-	departmentType = 5;
-	name = "Head of Personnel RC";
+/obj/machinery/requests_console/hop{
 	pixel_x = 30
 	},
 /obj/structure/disposalpipe/segment,
@@ -29295,10 +29271,7 @@
 /obj/machinery/computer/rdconsole/core{
 	dir = 4
 	},
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_x = -30
 	},
 /obj/structure/disposalpipe/segment{
@@ -30860,9 +30833,7 @@
 /area/station/rnd/misc_lab)
 "iKu" = (
 /obj/structure/table,
-/obj/machinery/requests_console{
-	department = "Kitchen";
-	departmentType = 2;
+/obj/machinery/requests_console/kitchen{
 	pixel_x = 30
 	},
 /obj/machinery/juicer,
@@ -32272,10 +32243,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/requests_console{
-	department = "Engineering";
-	departmentType = 4;
-	name = "Engineering RC";
+/obj/machinery/requests_console/engineering{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -32599,9 +32567,7 @@
 	pixel_x = 13;
 	pixel_y = 5
 	},
-/obj/machinery/requests_console{
-	department = "Hydroponics";
-	departmentType = 2;
+/obj/machinery/requests_console/hydroponics{
 	pixel_x = -30
 	},
 /obj/structure/table/glass,
@@ -33554,6 +33520,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -33700,10 +33667,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jGI" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -33940,18 +33904,19 @@
 /area/station/rnd/sppodconstr)
 "jJi" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "warning"
 	},
 /area/station/rnd/mixing)
 "jJo" = (
@@ -34505,6 +34470,7 @@
 /obj/item/weapon/shield/riot,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -35876,9 +35842,7 @@
 	},
 /area/station/maintenance/cargo)
 "koC" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -35990,10 +35954,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "krj" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -36299,8 +36260,7 @@
 /area/station/maintenance/medbay)
 "kvS" = (
 /obj/structure/closet/secure_closet/recycler,
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "Recycler office APC";
 	pixel_x = -27
@@ -40290,11 +40250,7 @@
 /area/station/rnd/sppodconstr)
 "lIf" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	departmentType = 5;
-	name = "Head of Security RC";
+/obj/machinery/requests_console/hos{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -40391,8 +40347,7 @@
 	},
 /area/station/rnd/mixing)
 "lIM" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "MiniSat Antechamber Power APC";
 	pixel_x = -25
@@ -41186,9 +41141,7 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
+/obj/machinery/requests_console/cargo_bay{
 	pixel_x = 30
 	},
 /turf/simulated/floor{
@@ -43456,10 +43409,7 @@
 /area/station/maintenance/brig)
 "mEB" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/machinery/requests_console{
-	department = "Detective's Desk";
-	departmentType = 5;
-	name = "Detective RC";
+/obj/machinery/requests_console/detective{
 	pixel_x = 31
 	},
 /obj/structure/disposalpipe/segment{
@@ -44575,6 +44525,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -44915,8 +44866,7 @@
 /area/station/maintenance/bridge)
 "nbb" = (
 /obj/structure/table,
-/obj/machinery/requests_console{
-	department = "Tool Storage";
+/obj/machinery/requests_console/tool_storage{
 	pixel_x = 30
 	},
 /obj/item/weapon/stock_parts/cell/high,
@@ -45420,9 +45370,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/machinery/requests_console{
-	department = "Medbay";
-	name = "Medbay Requests Console";
+/obj/machinery/requests_console/medbay{
 	pixel_y = 30
 	},
 /obj/machinery/light_switch{
@@ -45912,11 +45860,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "nsl" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge RC";
+/obj/machinery/requests_console/bridge{
 	pixel_x = 30
 	},
 /turf/simulated/floor/wood,
@@ -45976,10 +45920,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
-/obj/machinery/requests_console{
-	department = "Engineering";
-	departmentType = 4;
-	name = "Engineering RC";
+/obj/machinery/requests_console/engineering{
 	pixel_y = 32
 	},
 /obj/item/stack/sheet/rglass{
@@ -46378,7 +46319,7 @@
 /obj/item/weapon/storage/briefcase/centcomm{
 	pixel_x = 3
 	},
-/obj/machinery/requests_console{
+/obj/machinery/requests_console/internal_affairs{
 	pixel_x = 30
 	},
 /turf/simulated/floor{
@@ -47894,9 +47835,7 @@
 	},
 /area/station/hallway/primary/central)
 "nXu" = (
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
+/obj/machinery/requests_console/security{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -47979,8 +47918,7 @@
 	name = "Aisat Turret Control";
 	pixel_x = 30
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "MiniSat External Power APC";
 	pixel_y = 25
@@ -56370,8 +56308,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 20000;
+/obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 25
@@ -57156,8 +57093,7 @@
 /area/station/hallway/primary/central)
 "qVF" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Cargo Office APC";
 	pixel_x = -25
@@ -59811,11 +59747,7 @@
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/central)
 "rRh" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Chief Engineer's Desk";
-	departmentType = 3;
-	name = "Chief Engineer RC";
+/obj/machinery/requests_console/ce{
 	pixel_x = -32
 	},
 /obj/structure/closet/secure_closet/engineering_chief,
@@ -60421,10 +60353,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "sck" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -60974,10 +60903,7 @@
 	},
 /area/station/civilian/hydroponics)
 "ski" = (
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	name = "AI Requests Console";
+/obj/machinery/requests_console/ai{
 	pixel_y = 32
 	},
 /turf/simulated/floor/whitegreed,
@@ -61185,8 +61111,7 @@
 	c_tag = "Dormitories West"
 	},
 /obj/machinery/cryopod/right,
-/obj/machinery/requests_console{
-	department = "Crew Quarters";
+/obj/machinery/requests_console/crew_quarters{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -61298,7 +61223,7 @@
 	req_access = list(57)
 	},
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -61376,8 +61301,7 @@
 	},
 /area/station/medical/cryo)
 "spu" = (
-/obj/machinery/power/apc{
-	cell_type = 2000;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "Forensic APC";
 	pixel_x = -26
@@ -61955,8 +61879,7 @@
 /obj/item/weapon/reagent_containers/dropper{
 	pixel_y = -4
 	},
-/obj/machinery/requests_console{
-	department = "Chemistry Storage";
+/obj/machinery/requests_console/chem_storage{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -61976,7 +61899,7 @@
 /area/station/security/brig)
 "sxQ" = (
 /obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "sxS" = (
@@ -61994,7 +61917,7 @@
 /area/station/medical/cmo)
 "syc" = (
 /obj/structure/noticeboard{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /obj/machinery/light{
 	dir = 1
@@ -62242,11 +62165,7 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Chief Medical Officer's Desk";
-	departmentType = 5;
-	name = "Chief Medical Officer RC";
+/obj/machinery/requests_console/cmo{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -64918,8 +64837,7 @@
 	},
 /area/station/medical/virology)
 "twb" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 4;
 	name = "Central Hall APC";
 	pixel_x = 24
@@ -65193,11 +65111,7 @@
 /area/station/civilian/hydroponics)
 "tAt" = (
 /obj/structure/table/woodentable,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Captain's Desk";
-	departmentType = 5;
-	name = "Captain RC";
+/obj/machinery/requests_console/captain{
 	pixel_x = 30
 	},
 /obj/machinery/light{
@@ -66093,9 +66007,7 @@
 /area/station/civilian/locker)
 "tOD" = (
 /obj/structure/closet/jcloset,
-/obj/machinery/requests_console{
-	department = "Janitorial";
-	departmentType = 1;
+/obj/machinery/requests_console/janitorial{
 	pixel_y = 29
 	},
 /turf/simulated/floor,
@@ -66614,8 +66526,7 @@
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
-/obj/machinery/requests_console{
-	department = "Tech storage";
+/obj/machinery/requests_console/tech_storage{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
@@ -67351,6 +67262,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -68530,6 +68442,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -69785,6 +69698,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
+	id = "ArmorDoors";
 	name = "Weapons locker";
 	req_access = list(3)
 	},
@@ -71410,8 +71324,7 @@
 	},
 /area/station/medical/surgery2)
 "vyk" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 4;
 	name = "Bridge APC";
 	pixel_x = 24
@@ -71488,12 +71401,6 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "vyZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -71919,8 +71826,7 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "MiniSat Internal Power APC";
 	pixel_y = 25
@@ -72944,13 +72850,15 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "vRj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 1;
 	icon_state = "warning"
 	},
 /area/station/rnd/mixing)
@@ -75646,8 +75554,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 4;
 	name = "Execution Chamber APC";
 	pixel_x = 24;
@@ -79696,9 +79603,7 @@
 	},
 /area/station/cargo/office)
 "yfN" = (
-/obj/machinery/requests_console{
-	department = "Chapel";
-	departmentType = 2;
+/obj/machinery/requests_console/chapel{
 	pixel_y = 30
 	},
 /obj/structure/closet/wardrobe/chaplain_black,
@@ -79708,7 +79613,7 @@
 	},
 /area/station/civilian/chapel/office)
 "yfW" = (
-/mob/living/simple_animal/cat/Runtime,
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -128788,9 +128693,9 @@ xtd
 uFD
 uFD
 uFD
-jJi
+lLH
 bHn
-gjh
+vRj
 sVE
 wNV
 vqj
@@ -129047,7 +128952,7 @@ tGM
 kZV
 vyZ
 vJp
-vRj
+jJi
 lPN
 ucd
 ucd

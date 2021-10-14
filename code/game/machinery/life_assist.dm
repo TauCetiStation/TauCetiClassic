@@ -55,7 +55,7 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if(!in_range(src, usr) || !in_range(over_object, src))
+	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
 	if(attached)

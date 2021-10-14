@@ -1,6 +1,7 @@
 /datum/game_mode/mix/changabduct
 	name = "Research Mission"
 	config_name = "changabduct"
+	probability = 80
 	factions_allowed = list(
 		/datum/faction/changeling,
 		/datum/faction/abductors,

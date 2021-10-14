@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(overlays)
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !length(overlays))
-			remove_overlays = overlays
+			remove_overlays = overlays.Copy()
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE

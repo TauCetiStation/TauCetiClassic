@@ -3,8 +3,8 @@
 	var/name = null
 	var/id = null
 	var/result = null
-	var/list/required_reagents = new/list()
-	var/list/required_catalysts = new/list()
+	var/list/required_reagents = list()
+	var/list/required_catalysts = list()
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	var/atom/required_container = null // the container required for the reaction to happen
@@ -294,12 +294,14 @@
 	required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanobots" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
 	result_amount = 5
 
+/*
 /datum/chemical_reaction/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
 	result = "hyperzine"
 	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
 	result_amount = 3
+*/
 
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
@@ -459,7 +461,7 @@
 	var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
 	S.attach(location)
 	S.set_up(10, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 		sleep(10)
@@ -486,7 +488,7 @@
 	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 	S.attach(location)
 	S.set_up(holder, created_volume, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 	holder.clear_reagents()
@@ -963,7 +965,7 @@
 	required_other = 4
 
 /datum/chemical_reaction/slimebork/on_reaction(datum/reagents/holder, created_volume)
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
 	// BORK BORK BORK
 
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
@@ -1482,7 +1484,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimepaint/on_reaction(datum/reagents/holder)
-	var/list/paints = typesof(/obj/item/weapon/reagent_containers/glass/paint) - /obj/item/weapon/reagent_containers/glass/paint
+	var/list/paints = subtypesof(/obj/item/weapon/reagent_containers/glass/paint)
 	var/chosen = pick(paints)
 	var/obj/B = new chosen
 	if(B)

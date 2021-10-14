@@ -19,10 +19,9 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return
-
-	..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
@@ -119,7 +118,7 @@
 	belt = image(belt_icon, belt_icon_state, layer = FLY_LAYER)
 
 /obj/machinery/optable/torture_table/Destroy()
-	religion.torture_tables -= src
+	religion?.torture_tables -= src
 	return ..()
 
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
@@ -130,7 +129,7 @@
 			C.torture_tables += src
 			religion = C
 			name = "charged [initial(name)]"
-			filters += filter(type = "outline", size = 1, color = "#990066")
+			add_filter("torture_outline", 2, outline_filter(1, "#990066"))
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return
@@ -145,7 +144,7 @@
 	return ..()
 
 /obj/machinery/optable/torture_table/MouseDrop_T(atom/A, mob/user)
-	if(A in loc)
+	if(A.loc == loc)
 		if(can_buckle && !buckled_mob)
 			user_buckle_mob(A, user)
 	else
@@ -211,7 +210,8 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/turf/target = findEventArea()
+	var/area/area = findEventArea()
+	var/turf/target = get_turf(pick(get_area_turfs(area.type, FALSE)))
 	if(ismob(A))
 		var/mob/user = A
 		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
@@ -224,7 +224,7 @@
 		user.eject_from_wall(TRUE, companions = companions)
 		for(var/mob/M in companions + user)
 			if(M.client)
-				new /obj/screen/temp/cult_teleportation(M, M)
+				new /atom/movable/screen/temp/cult_teleportation(M, M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = user
 				H.Paralyse(5)

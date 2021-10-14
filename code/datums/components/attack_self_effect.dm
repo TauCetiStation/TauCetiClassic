@@ -17,28 +17,28 @@
 	var/recharge_time_after_del
 	// Time to del effect
 	var/time_to_del
+	//current outline color
+	var/outline_color
 	// Can user do smth
 	var/datum/callback/can_callback
 
-	var/outline
 	var/atom/movable/effect
 	var/have_outline = FALSE
 	var/can_spawn_effect = TRUE
 	var/can_spawn_effect_timer
 
-/datum/component/self_effect/Initialize(_effect_type, outline_color, datum/callback/_can_callback, _recharge_time = 0, _recharge_time_after_del = 0, _time_to_del)
+/datum/component/self_effect/Initialize(_effect_type, _outline_color, datum/callback/_can_callback, _recharge_time = 0, _recharge_time_after_del = 0, _time_to_del)
 	effect_type = _effect_type
 	recharge_time = _recharge_time
 	recharge_time_after_del = _recharge_time_after_del
 	time_to_del = _time_to_del
 	can_callback = _can_callback
-	if(outline_color)
-		outline = filter(type = "outline", size = 1, color = outline_color)
+	outline_color = _outline_color
 
 	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/do_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/equipped_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped_effect)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/del_effect)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/del_effect)
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
@@ -96,16 +96,16 @@
 	can_spawn_effect_timer = addtimer(CALLBACK(src, .proc/ready_create_effect), recharge_time_after_del, TIMER_STOPPABLE)
 
 /datum/component/self_effect/proc/remove_outline()
-	if(outline)
+	if(outline_color)
 		var/obj/item/I = parent
 		have_outline = FALSE
-		I.filters -= outline
+		I.remove_filter("self_effect_outline")
 
 /datum/component/self_effect/proc/create_outline()
-	if(outline)
+	if(outline_color)
 		var/obj/item/I = parent
 		have_outline = TRUE
-		I.filters += outline
+		I.add_filter("self_effect_outline", 2, outline_filter(1, outline_color))
 
 /datum/component/self_effect/proc/ready_create_effect()
 	can_spawn_effect = TRUE

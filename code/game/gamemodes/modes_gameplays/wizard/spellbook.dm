@@ -44,7 +44,7 @@
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
 	if(!istype(get_area(user), /area/custom/wizard_station))
-		to_chat(user, "<span clas=='warning'>Вернуть очки можно только в убежище.</span>")
+		to_chat(user, "<span class='warning'>Вернуть очки можно только в убежище.</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -153,7 +153,7 @@
 
 /datum/spellbook_entry/jaunt
 	name = "Выход из тела"
-	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
+	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	log_name = "EJ"
 	category = "Мобильность"
 
@@ -209,7 +209,7 @@
 
 /datum/spellbook_entry/charge
 	name = "Заряд"
-	spell_type = /obj/effect/proc_holder/spell/targeted/charge
+	spell_type = /obj/effect/proc_holder/spell/no_target/charge
 	log_name = "CH"
 	category = "Помощь"
 	cost = 1
@@ -273,7 +273,7 @@
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Посох создания дверей"
-	desc = "Специфичный посох, который может превращать твердые стены в двери. Плоезно с заклинаниями телепорта. Не работает со стеклом."
+	desc = "Специфичный посох, который может превращать твердые стены в двери. Полезно с заклинаниями телепорта. Не работает со стеклом."
 	item_path = /obj/item/weapon/gun/magic/doorcreation
 	log_name = "SD"
 	category = "Мобильность"
@@ -289,7 +289,7 @@
 
 /datum/spellbook_entry/item/soulstones
 	name = "Шесть осколков камня душ и заклинание ремесленника"
-	desc = "Осколки камня душ это древний инструмент, способный захватить и содержать в себе душу. Заклинание ремесленника позволяет создать тело для захваченой души."
+	desc = "Осколки камня душ это древний инструмент, способный захватить и содержать в себе душу. Заклинание ремесленника позволяет создать тело для захваченной души."
 	item_path = /obj/item/weapon/storage/belt/soulstone/full
 	log_name = "SS"
 	category = "Помощь"
@@ -389,7 +389,7 @@
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	var/uses = 10
@@ -535,7 +535,7 @@
 		return
 
 	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && isturf(loc)))
+	if(loc == H || (Adjacent(H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]

@@ -105,7 +105,7 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -133,6 +133,35 @@
 	icon_state = "waterbottle"
 	list_reagents = list("water" = 30)
 
+///chem list, minus foods/drinks/base chems/paint and special chems, only for waterbottle/relic
+#define RELIC_WATER_CHEM_LIST list(\
+	"stoxin2", "inaprovaline", "ryetalyn", "paracetamol", "tramadol", "oxycodone", "sterilizine", "leporazine",\
+	"kelotane", "dermaline", "dexalin", "dextromethorphan", "dexalinp", "tricordrazine", "anti_toxin", "thermopsis",\
+	"synaptizine", "hyronalin", "arithrazine", "alkysine", "imidazoline", "aurisine", "peridaxon", "kyphotorin",\
+	"bicaridine", "hyperzine", "cryoxadone", "clonexadone", "rezadone", "spaceacillin", "ethylredoxrazine",\
+	"vitamin", "lipozine", "stimulants", "nanocalcium", "toxin", "amatoxin", "mutagen", "phoron", "lexorin",\
+	"slimejelly", "cyanide", "minttoxin", "carpotoxin", "zombiepowder", "mindbreaker", "plantbgone", "stoxin",\
+	"chloralhydrate", "potassium_chloride", "potassium_chlorophoride", "beer2", "mutetoxin", "sacid", "pacid",\
+	"alphaamanitin", "aflatoxin", "chefspecial", "dioxin", "mulligan", "mutationtoxin", "amutationtoxin", "space_drugs",\
+	"serotrotium", "cryptobiolin", "impedrezene", "ectoplasm", "methylphenidate", "methylphenidate", "citalopram",\
+	"citalopram", "paroxetine", "paroxetine", "lube", "plasticide", "glycerol", "nitroglycerin",\
+	"thermite", "virusfood", "fuel", "cleaner", "xenomicrobes", "fluorosurfactant", "foaming_agent", "nicotine",\
+	"ammonia", "glue", "diethylamine", "luminophore","nanites", "nanites2", "nanobots", "mednanobots", "ectoplasm")
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic
+	desc = "A bottle of water filled with unknown liquids. It seems to be radiating some kind of energy."
+	list_reagents = list()
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic/atom_init()
+	var/reagents = volume
+	while(reagents)
+		var/newreagent = rand(1, min(reagents, 30))
+		list_reagents += list(pick(RELIC_WATER_CHEM_LIST) = newreagent)
+		reagents -= newreagent
+	. = ..()
+
+#undef RELIC_WATER_CHEM_LIST
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
@@ -155,7 +184,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	list_reagents = list("sodawater" = 15, "orangejuice" = 15)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up
 	name = "Space-Up"

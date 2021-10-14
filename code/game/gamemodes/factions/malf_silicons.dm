@@ -1,5 +1,3 @@
-#define INTERCEPT_APCS intercept_hacked * APC_BONUS_WITH_INTERCEPT
-
 /datum/faction/malf_silicons
 	name = MALF
 	ID = MALF
@@ -15,9 +13,8 @@
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
 	var/to_nuke_or_not_to_nuke = 0
-	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
-	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
+	var/intercept_apcs = 4 //Bonus for the interception upgrade
 
 /datum/faction/malf_silicons/can_join_faction(mob/P)
 	if (!..())
@@ -34,7 +31,7 @@
 
 /datum/faction/malf_silicons/OnPostSetup()
 	if(SSshuttle)
-		SSshuttle.always_fake_recall = TRUE
+		SSshuttle.fake_recall = TRUE
 	return ..()
 
 /datum/faction/malf_silicons/proc/takeover()
@@ -50,31 +47,10 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 /datum/faction/malf_silicons/process()
-	if(apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
-
-	if(malf_mode_declared)
-		return
-
-	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
-		AI_malf_revealed = 1
-		var/datum/announcement/centcomm/malf/first/announce_first = new
-		announce_first.play()
-	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
-		AI_malf_revealed = 2
-		var/datum/announcement/centcomm/malf/second/announce_second = new
-		announce_second.play()
-	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
-		AI_malf_revealed = 3
-		var/datum/announcement/centcomm/malf/third/announce_third = new
-		announce_third.play()
-	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
-		AI_malf_revealed = 4
-		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-		announce_forth.play()
-		takeover()
 
 /datum/faction/malf_silicons/proc/capture_the_station()
 	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")
@@ -99,7 +75,7 @@
 	if (is_malf_ai_dead())
 		if(config.continous_rounds)
 			if(SSshuttle)
-				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = FALSE
 			malf_mode_declared = FALSE
 		else
 			return TRUE
@@ -133,7 +109,7 @@
 			malf_turf = get_turf(cur_AI)
 	SSticker.explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
@@ -217,5 +193,3 @@
 			dat += "hardware destroyed"
 		dat += ")"
 	return dat
-
-#undef INTERCEPT_APCS

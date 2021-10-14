@@ -75,8 +75,6 @@
 	if(current)					//remove ourself from our old body's mind variable
 		SStgui.on_transfer(current, new_character)
 		current.mind = null
-		if(current.my_religion)
-			current.my_religion.add_member(new_character, holy_role)
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
@@ -91,7 +89,7 @@
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 
-	if(old_character.my_religion)
+	if(old_character?.my_religion)
 		old_character.my_religion.add_member(current, holy_role)
 
 	for(var/role in antag_roles)
@@ -144,12 +142,12 @@
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
 		if(ishuman(current))
-			if(ismindshielded(H, TRUE))
+			if(H.ismindshielded())
 				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(isloyal(H))
+			if(H.isloyal())
 				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
@@ -316,7 +314,17 @@
 		else
 			new_objective = new obj_type()
 
-		if (tgui_alert(usr, "Add the objective to a fraction?", "Faction" ,list("Yes", "No")) == "Yes")
+		var/setup = TRUE
+		if (istype(new_objective, /datum/objective/target) || istype(new_objective, /datum/objective/steal))
+			var/datum/objective/target/new_O = new_objective // the /datum/objective/steal has same proc names
+			if (tgui_alert(usr, "Do you want to specify a target?", "New Objective", list("Yes", "No")) == "Yes")
+				setup = new_O.select_target()
+
+		if(!setup)
+			tgui_alert(usr, "Couldn't set-up a proper target.", "New Objective")
+			return
+
+		if (tgui_alert(usr, "Add the objective to a faction?", "Faction", list("Yes", "No")) == "Yes")
 			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as anything in SSticker.mode.factions
 			fac.handleNewObjective(new_objective)
 			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
@@ -413,22 +421,22 @@
 			href_list["implant"] = copytext(href_list["implant"], 3)
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
-				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			else
-				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
-			var/obj/item/weapon/implant/mindshield/L
+			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
 				L = new(H)
 				L.inject(H)
 			else
-				L = new /obj/item/weapon/implant/mindshield/loyalty(H)
+				L = new /obj/item/weapon/implant/mind_protect/loyalty(H)
 				L.inject(H)
 
 			H.sec_hud_set_implants()

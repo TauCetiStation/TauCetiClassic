@@ -101,7 +101,8 @@
 		src.blinded = 1
 		src.stat = DEAD
 
-	if (src.stuttering) src.stuttering--
+	if (src.stuttering > 0)
+		AdjustStuttering(-1)
 
 	if (src.eye_blind)
 		src.eye_blind--
@@ -120,8 +121,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
+		adjustBlurriness(-1)
 
 	if (src.druggy > 0)
 		src.druggy--
@@ -156,34 +156,33 @@
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
+	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
 		set_EyesVision()
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		sight |= SEE_OBJS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	else if (sight_mode & BORGMESON)
 		set_EyesVision("meson")
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGNIGHT)
+		sight |= SEE_TURFS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	else if (sight_mode & BORGNIGHT)
 		set_EyesVision("nvg")
-		src.see_in_dark = 8
-	else if (src.sight_mode & BORGTHERM)
+		see_in_dark = 8
+	else if (sight_mode & BORGTHERM)
 		set_EyesVision("thermal")
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != DEAD)
+		sight |= SEE_MOBS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	else if (stat != DEAD)
 		set_EyesVision()
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
+		sight &= ~SEE_MOBS
+		sight &= ~SEE_TURFS
+		sight &= ~SEE_OBJS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	regular_hud_updates()
 
 	if (src.healths)
@@ -229,15 +228,15 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge", /obj/screen/alert/lowcell, 60)
+				throw_alert("charge", /atom/movable/screen/alert/lowcell, 60)
 			if(0.25 to 0.5)
-				throw_alert("charge", /obj/screen/alert/lowcell, 40)
+				throw_alert("charge", /atom/movable/screen/alert/lowcell, 40)
 			if(0.01 to 0.25)
-				throw_alert("charge", /obj/screen/alert/lowcell, 20)
+				throw_alert("charge", /atom/movable/screen/alert/lowcell, 20)
 			else
-				throw_alert("charge", /obj/screen/alert/emptycell)
+				throw_alert("charge", /atom/movable/screen/alert/emptycell)
 	else
-		throw_alert("charge", /obj/screen/alert/nocell)
+		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
 	if(pullin)
 		if(pulling)

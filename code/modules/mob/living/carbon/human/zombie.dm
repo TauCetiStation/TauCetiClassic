@@ -8,7 +8,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	force = 16
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
@@ -53,7 +53,7 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 70, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -70,7 +70,7 @@
 								 "<span class='warning'>You hear metal strain.</span>")
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
-				if(A && A.density && in_range(A, user))
+				if(A && A.density && user.Adjacent(A))
 					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
@@ -93,7 +93,7 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 200, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
 									 "<span class='warning'>You break the emergency shutter.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -131,7 +131,7 @@
 	if(brain)
 		brain.damage = 0
 	H.setBrainLoss(0)
-	H.eye_blurry = 0
+	H.setBlurriness(0)
 	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))

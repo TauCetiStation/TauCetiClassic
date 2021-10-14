@@ -3,6 +3,7 @@
 #define POSE_REST 4
 #define POSE_STAT 8
 
+ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian
 	name = "Ian"
 	real_name = "Ian"
@@ -29,10 +30,14 @@
 	var/wander = TRUE
 	var/obj/movement_target
 
+	attack_push_vis_effect = ATTACK_EFFECT_BITE
+	attack_disarm_vis_effect = ATTACK_EFFECT_BITE
+
 	universal_speak = FALSE
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)
 
+	w_class = SIZE_BIG
 	var/obj/item/weapon/card/id/wear_id = null
 
 	var/dodged = FALSE
@@ -61,7 +66,6 @@
 	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
-	chief_animal_list += src
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()

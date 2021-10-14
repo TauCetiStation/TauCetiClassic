@@ -7,12 +7,12 @@ on:
     branches:
       - master
 env:
-  BYOND_MAJOR: 513
-  BYOND_MINOR: 1533
-  SPACEMAN_DMM_VERSION: suite-1.6
+  BYOND_MAJOR: 514
+  BYOND_MINOR: 1565
+  SPACEMAN_DMM_VERSION: suite-1.7
 jobs:
   DreamChecker:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Setup Cache
@@ -23,10 +23,15 @@ jobs:
       - name: Install Dreamchecker
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
-        run: ~/dreamchecker
+        run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Annotate Lints
+        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3
+        if: always()
+        with:
+          outputFile: output-annotations.txt
   Code:
     name: Code and Map Linting
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Setup Cache
@@ -39,12 +44,11 @@ jobs:
           TEST: LINTING
           NODE_VERSION: 12
         run: |
-          chmod +x test/run-test.sh
           bash test/run-test.sh
           bash scripts/build_tgui.sh
   unit_tests:
     name: Unit Tests
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         include:
@@ -67,12 +71,10 @@ jobs:
         run: |
           bash scripts/install-byond.sh
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
-          chmod +x -R scripts/
-          chmod +x test/run-test.sh
           bash test/run-test.sh
   compile_everything:
     name: Compile Everything
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Setup Cache
@@ -86,6 +88,4 @@ jobs:
         run: |
           bash scripts/install-byond.sh
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
-          chmod +x -R scripts/
-          chmod +x test/run-test.sh
           bash test/run-test.sh

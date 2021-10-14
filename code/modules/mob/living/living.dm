@@ -7,11 +7,17 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
+
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -374,6 +380,44 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== BLUR ==========
+
+/**
+ * Make the mobs vision blurry
+ */
+/mob/proc/blurEyes(amount)
+	if(amount > 0)
+		eye_blurry = max(amount, eye_blurry)
+	update_eye_blur()
+
+/**
+ * Adjust the current blurriness of the mobs vision by amount
+ */
+/mob/proc/adjustBlurriness(amount)
+	eye_blurry = max(eye_blurry + amount, 0)
+	update_eye_blur()
+
+/**
+ * Set the mobs blurriness of vision to an amount
+ */
+/mob/proc/setBlurriness(amount)
+	eye_blurry = max(amount, 0)
+	update_eye_blur()
+
+/**
+ * Apply the blurry overlays to a mobs clients screen
+ */
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -496,6 +540,8 @@
 	if(reagents)
 		reagents.clear_reagents()
 
+	beauty.AddModifier("stat", additive=beauty_living)
+
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -505,6 +551,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -524,7 +571,7 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	setBlurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
@@ -688,7 +735,7 @@
 		if(moving_diagonally)
 			return .
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
@@ -710,14 +757,12 @@
 
 /mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(..())
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-		if(blood_volume > 0)
-			vessel.remove_reagent("blood", 1)
+		blood_remove(1)
 
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
 		return
-		
+
 	var/trail_type = getTrail()
 	if(!trail_type)
 		return
@@ -735,7 +780,7 @@
 			newdir = EAST
 	if((newdir in global.cardinal) && (prob(50)))
 		newdir = turn(newdir, 180)
-	
+
 	var/datum/dirt_cover/new_cover
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -772,7 +817,7 @@
 	return "trails_1"
 
 /mob/living/carbon/human/getTrail()
-	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+	if(blood_amount() > 0)
 		return ..()
 
 /mob/living/verb/resist()
@@ -986,7 +1031,7 @@
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
@@ -1007,7 +1052,7 @@
 	return initial(pixel_y)
 
 //Attack animation port below
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
@@ -1040,10 +1085,15 @@
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = default_pixel_y
-	..(A, final_pixel_y)
+/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	end_pixel_y = default_pixel_y
+	..()
 
+	if(has_effect)
+		do_item_attack_animation(A, visual_effect_icon, visual_effect_color)
+
+
+/mob/living/proc/do_item_attack_animation(atom/A, visual_effect_icon, visual_effect_color)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
@@ -1051,16 +1101,14 @@
 
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
-	if(hand)
-		if(l_hand)
-			if(l_hand.alternate_appearances)
-				viewing = alternate_attack_animation(l_hand, A, viewing)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			if(r_hand.alternate_appearances)
-				viewing = alternate_attack_animation(r_hand, A, viewing)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	var/obj/item/used_item = get_active_hand()
+	if(used_item)
+		if(used_item.alternate_appearances)
+			viewing = alternate_attack_animation(used_item, A, viewing)
+		I = image(used_item.icon, A, used_item.icon_state, A.layer + 1)
+	else if(visual_effect_icon)
+		I = image('icons/effects/attack_overlays.dmi', A, visual_effect_icon, A.layer + 0.1)
+		I.color = visual_effect_color
 
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -1134,16 +1182,17 @@
 			harvest(user)
 		return TRUE
 
-/mob/living/proc/harvest(mob/user)
+/mob/living/proc/harvest(mob/user, turf/newloc = loc)
 	if(QDELETED(src))
 		return
 	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
-				new path(src.loc)
+				new path(newloc)
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		if(user)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1215,7 +1264,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1223,7 +1271,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	blurEyes(5)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
@@ -1262,6 +1310,7 @@
 
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 
@@ -1304,3 +1353,17 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return
+
+/mob/living/death(gibbed)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())
