@@ -12,7 +12,12 @@
 	return
 
 /datum/objective_ruleset/proc/get_all_objectives()
-	return get_all_values_from_assoc_list(master_pool.main_objectives_pool)
+	var/list/all_objectives = list()
+	for(var/type in master_pool.main_objectives_pool)
+		var/list/sets = master_pool.main_objectives_pool[type]
+		for(var/datum/objectives_set/o_set as anything in sets)
+			all_objectives += o_set.my_objectives
+	return all_objectives
 
 /datum/objective_ruleset/proc/get_objectives()
 	return

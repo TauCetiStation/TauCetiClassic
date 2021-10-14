@@ -279,7 +279,7 @@
 	SSticker.start_state = new /datum/station_state()
 	SSticker.start_state.count(TRUE)
 
-	give_objectives_by_ruleset()
+	create_objectives_by_ruleset()
 	for(var/datum/faction/F in factions)
 		for(var/datum/role/R in F.members)
 			R.Greet()

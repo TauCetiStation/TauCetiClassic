@@ -755,14 +755,6 @@
 			.[i] = key
 			.[key] = value
 
-/proc/get_all_values_from_assoc_list(list/L)
-	. = list()
-	for(var/value in L)
-		if(islist(L[value]) && is_associative_list(L))
-			. += get_all_values_from_assoc_list(L[value])
-		else
-			. += value
-
 /proc/get_types_of_objects_list(list/L)
 	. = list()
 	for(var/datum/D in L)
