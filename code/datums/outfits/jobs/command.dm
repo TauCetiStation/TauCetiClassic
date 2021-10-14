@@ -8,10 +8,10 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 
 	l_ear = /obj/item/device/radio/headset/heads/captain
-	belt = /obj/item/device/pda/captain
+	belt = /obj/item/weapon/melee/chainofcommand
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
-	l_pocket = /obj/item/weapon/melee/chainofcommand
+	l_pocket = /obj/item/device/pda/captain
 	back_style = BACKPACK_STYLE_CAPTAIN
 
 	implants = list(
