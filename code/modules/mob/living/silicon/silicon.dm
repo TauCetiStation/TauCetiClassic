@@ -89,7 +89,7 @@
 		if(IRRADIATE)
 			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
 		if(STUTTER)
-			stuttering = max(stuttering,(effect/(blocked+1)))
+			Stuttering(effect/(blocked+1))
 		if(EYE_BLUR)
 			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
 		if(DROWSY)

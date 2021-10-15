@@ -101,7 +101,8 @@
 		src.blinded = 1
 		src.stat = DEAD
 
-	if (src.stuttering) src.stuttering--
+	if (src.stuttering > 0)
+		AdjustStuttering(-1)
 
 	if (src.eye_blind)
 		src.eye_blind--
@@ -120,8 +121,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
+		adjustBlurriness(-1)
 
 	if (src.druggy > 0)
 		src.druggy--
