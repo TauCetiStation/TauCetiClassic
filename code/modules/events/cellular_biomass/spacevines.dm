@@ -22,11 +22,15 @@
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
+		if(/obj/item/weapon/shovel) qdel(src)
+		if(/obj/item/weapon/shovel/spade) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
+		if(/obj/item/weapon/twohanded/dualsaber) qdel(src)
+		if(/obj/item/weapon/twohanded/sledgehammer) qdel(src)
+		if(/obj/item/weapon/melee/arm_blade) qdel(src)
+		if(/obj/item/weapon/melee/cultblade) qdel(src)
+		if(/obj/item/weapon/katana) qdel(src)
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
@@ -35,6 +39,9 @@
 			if(prob(25)) qdel(src)
 
 		else //weapons with subtypes
+			if(istype(W, /obj/item/weapon/kitchenknife)) qdel(src)
+			if(istype(W, /obj/item/weapon/pen/edagger)) qdel(src)
+			if(istype(W, /obj/item/weapon/hatchet)) qdel(src)
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
