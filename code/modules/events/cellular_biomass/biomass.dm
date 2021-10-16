@@ -29,7 +29,7 @@
 		if(/obj/item/weapon/melee/arm_blade) qdel(src)
 		if(/obj/item/weapon/melee/cultblade) qdel(src)
 		if(/obj/item/weapon/katana) qdel(src)
-		if(/obj/item/weapon/dualsaber) qdel(src)
+		if(/obj/item/weapon/dualsaber)
 			var/obj/item/weapon/dualsaber/DS = W
 			if(DS.wielded == TRUE) qdel(src)
 
