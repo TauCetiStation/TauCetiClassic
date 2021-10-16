@@ -1729,18 +1729,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if( \
-			istype(W, /obj/item/weapon/kitchenknife) || \
-			istype(W, /obj/item/weapon/scalpel) \
-		)
-	else if( \
-			istype(W, /obj/item/weapon/circular_saw) || \
-			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
-			istype(W, /obj/item/weapon/melee/energy/blade) || \
-			istype(W, /obj/item/weapon/shovel) || \
-			istype(W, /obj/item/weapon/hatchet) || \
-			istype(W, /obj/item/weapon/shard) \
-		)
+	if(W.sharp == 1)
 		inaccurate = 1
 	else
 		return FALSE
