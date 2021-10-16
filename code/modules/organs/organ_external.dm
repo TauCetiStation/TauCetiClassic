@@ -329,7 +329,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
 			var/obj/bodypart = src // Dropped limb object
-			add_blood(owner)
 			bodypart.forceMove(owner.loc)
 
 			if(bodypart)
@@ -344,14 +343,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 						qdel(spark_system)
 
 				var/matrix/M = matrix()
-				M.Turn(rand(180))
+				M.Turn(pick(0, 90, 180, 270))
 				bodypart.transform = M
 
 				if(!clean)
 					// Throw limb around.
 					if(isturf(bodypart.loc))
 						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					set_dir(2)
+						bodypart.set_dir(2)
+
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
@@ -376,37 +376,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 			should_delete = TRUE
 	switch(body_zone)
 		if(BP_HEAD)
-			if(disintegrate == DROPLIMB_EDGE)
-				owner.remove_from_mob(owner.head)
-				owner.remove_from_mob(owner.glasses)
-				owner.remove_from_mob(owner.l_ear)
-				owner.remove_from_mob(owner.r_ear)
-				owner.remove_from_mob(owner.wear_mask)
-			else
-				qdel(owner.head)
-				qdel(owner.glasses)
-				qdel(owner.l_ear)
-				qdel(owner.r_ear)
-				qdel(owner.wear_mask)
+			owner.remove_from_mob(owner.head)
+			owner.remove_from_mob(owner.glasses)
+			owner.remove_from_mob(owner.l_ear)
+			owner.remove_from_mob(owner.r_ear)
+			owner.remove_from_mob(owner.wear_mask)
 		if(BP_R_ARM)
-			if(disintegrate == DROPLIMB_EDGE)
-				owner.remove_from_mob(owner.gloves)
-				owner.remove_from_mob(owner.r_hand)
-			else
-				qdel(owner.gloves)
-				qdel(owner.r_hand)
+			owner.remove_from_mob(owner.gloves)
+			owner.remove_from_mob(owner.r_hand)
 		if(BP_L_ARM)
-			if(disintegrate == DROPLIMB_EDGE)
-				owner.remove_from_mob(owner.gloves)
-				owner.remove_from_mob(owner.l_hand)
-			else
-				qdel(owner.gloves)
-				qdel(owner.l_hand)
+			owner.remove_from_mob(owner.gloves)
+			owner.remove_from_mob(owner.l_hand)
 		if(BP_R_LEG , BP_L_LEG)
-			if(disintegrate == DROPLIMB_EDGE)
-				owner.remove_from_mob(owner.shoes)
-			else
-				qdel(owner.shoes)
+			owner.remove_from_mob(owner.shoes)
 
 	owner.update_body()
 	if(body_zone == BP_HEAD)
