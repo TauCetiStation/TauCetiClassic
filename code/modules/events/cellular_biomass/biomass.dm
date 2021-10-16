@@ -25,11 +25,13 @@
 		if(/obj/item/weapon/shovel/spade) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/fireaxe) qdel(src)
-		if(/obj/item/weapon/dualsaber) qdel(src)
 		if(/obj/item/weapon/sledgehammer) qdel(src)
 		if(/obj/item/weapon/melee/arm_blade) qdel(src)
 		if(/obj/item/weapon/melee/cultblade) qdel(src)
 		if(/obj/item/weapon/katana) qdel(src)
+		if(/obj/item/weapon/dualsaber) qdel(src)
+			var/obj/item/weapon/dualsaber/DS = W
+			if(DS.wielded == TRUE) qdel(src)
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
@@ -39,9 +41,13 @@
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/kitchenknife)) qdel(src)
-			if(istype(W, /obj/item/weapon/pen/edagger)) qdel(src)
 			if(istype(W, /obj/item/weapon/hatchet)) qdel(src)
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
+			if(istype(W, /obj/item/weapon/pen/edagger))
+				var/obj/item/weapon/pen/edagger/ED = W
+				if(ED.on == 1) qdel(src)
+			if(istype(W, /obj/item/weapon/melee/energy))
+				var/obj/item/weapon/melee/energy/E = W
+				if(E.active == 1) qdel(src)
 			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0, user)) qdel(src)
