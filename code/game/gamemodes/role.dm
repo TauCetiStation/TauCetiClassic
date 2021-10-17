@@ -178,7 +178,7 @@
 /datum/role/proc/GiveObjectives()
 	if(config.objectives_disabled)
 		return
-	SSticker.mode.give_objectives()
+	SSticker.mode.give_objectives(src)
 	forgeObjectives()
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)

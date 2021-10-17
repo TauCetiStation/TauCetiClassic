@@ -44,9 +44,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
 
-	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-	if(!N)
-		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")

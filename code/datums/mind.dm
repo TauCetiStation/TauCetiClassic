@@ -252,10 +252,10 @@
 				var/datum/faction/joined = all_factions[joined_faction]
 				joined.HandleRecruitedRole(newRole)
 			else //we got an inexisting faction, gotta create it first!
-				var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[joined_faction], null, 1)
-				if (joined)
-					joined.HandleRecruitedRole(newRole)
+				var/datum/faction/joined = create_faction(all_factions[joined_faction])
+				joined.HandleRecruitedRole(newRole)
 
+		SSticker.mode.generate_objectives(newRole)
 		newRole.OnPostSetup()
 		if ((chosen_greeting && chosen_greeting != "custom") || (chosen_greeting == "custom" && custom_greeting))
 			newRole.Greet(chosen_greeting, custom_greeting)
@@ -284,9 +284,8 @@
 				var/datum/faction/joined = all_factions[join_faction]
 				joined.HandleRecruitedRole(R)
 			else //we got an inexisting faction, gotta create it first!
-				var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[join_faction], null, 1)
-				if(joined)
-					joined.HandleRecruitedRole(R)
+				var/datum/faction/faction = create_faction(all_factions[join_faction])
+				faction.HandleRecruitedRole(R)
 
 	else if (href_list["memory_edit"])
 		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
@@ -537,7 +536,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
-		var/datum/faction/FF = get_uniq_faction(fac_type, FALSE, TRUE)
+		var/datum/faction/FF = create_uniq_faction(fac_type, FALSE, TRUE)
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
@@ -649,7 +648,7 @@
 	mind.assigned_role = "Alien"
 
 	if(!isalien(src))
-		var/datum/faction/infestation/I = get_uniq_faction(/datum/faction/infestation, FALSE, TRUE)
+		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation, FALSE, TRUE)
 		add_faction_member(I, src, TRUE)
 
 	//XENO HUMANOID

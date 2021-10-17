@@ -68,7 +68,7 @@
 /datum/faction/proc/GiveObjectives()
 	if(config.objectives_disabled)
 		return
-	SSticker.mode.give_objectives()
+	SSticker.mode.give_objectives(src)
 	forgeObjectives()
 	for(var/datum/role/R in members)
 		R.GiveObjectives()

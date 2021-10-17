@@ -22,7 +22,7 @@
 
 	var/completition_text = ""
 
-	var/datum/objectives_pool/objectives_pool
+	var/datum/objectives_pool/objectives_pool = new
 
 	var/list/factions = list()
 	var/list/orphaned_roles = list()
@@ -254,8 +254,7 @@
 		var/datum/faction/F = pick(possible_factions)
 		add_faction_member(F, mob, TRUE)
 
-/datum/game_mode/proc/create_objectives_by_ruleset()
-	objectives_pool = new
+/datum/game_mode/proc/generate_rounstart_objectives()
 	var/list/datums_to_process = list()
 	datums_to_process += factions
 	datums_to_process += orphaned_roles
@@ -265,8 +264,11 @@
 
 	objectives_pool.generate_objectives_pool(datums_to_process)
 
+/datum/game_mode/proc/generate_objectives(datum/faction_or_role)
+	objectives_pool.generate_objectives_for(faction_or_role)
+
 /datum/game_mode/proc/give_objectives(datum/faction_or_role)
-	objectives_pool.give_objectives_to(faction_or_role)
+	objectives_pool.give_objectives_for(faction_or_role)
 
 /datum/game_mode/proc/PostSetup()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
@@ -279,7 +281,7 @@
 	SSticker.start_state = new /datum/station_state()
 	SSticker.start_state.count(TRUE)
 
-	create_objectives_by_ruleset()
+	generate_rounstart_objectives()
 	for(var/datum/faction/F in factions)
 		for(var/datum/role/R in F.members)
 			R.Greet()

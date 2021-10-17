@@ -53,6 +53,7 @@
 /proc/setup_role(datum/role/R, mob/P, post_setup)
 	R.Greet()
 	R.add_antag_hud()
+	SSticker.mode.generate_objectives(R)
 	R.GiveObjectives()
 	R.AnnounceObjectives()
 	if(post_setup)
@@ -75,15 +76,16 @@
 		setup_role(., M, post_setup)
 
 /proc/create_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
-	var/datum/faction/F = SSticker.mode.CreateFaction(faction_type, num_players())
+	var/datum/faction/F = SSticker.mode.CreateFaction(faction_type, num_players(), TRUE)
 	if(post_setup)
 		F.OnPostSetup()
 	if(give_objectives)
+		SSticker.mode.generate_objectives(F)
 		F.GiveObjectives()
 		F.AnnounceObjectives()
 	return F
 
-/proc/get_uniq_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
+/proc/create_uniq_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
 	. = find_faction_by_type(faction_type)
 	if(!.)
 		. = create_faction(faction_type, post_setup, give_objectives)

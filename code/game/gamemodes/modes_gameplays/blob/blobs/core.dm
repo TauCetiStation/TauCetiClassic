@@ -109,7 +109,7 @@ var/global/list/blob_nodes = list()
 			add_faction_member(conglomerate, B, !ded)
 
 	else //No faction? Make one and you're the overmind.
-		conglomerate = get_uniq_faction(/datum/faction/blob_conglomerate)
+		conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
 		add_faction_member(conglomerate, B, FALSE)
 
 	conglomerate.declared = TRUE

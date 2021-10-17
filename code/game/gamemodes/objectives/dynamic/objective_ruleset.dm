@@ -71,9 +71,17 @@
 		var/obj_type = pickweight(main_objectives)
 		var/datum/objective/new_obj = new obj_type
 
-		// really random target is not provided here, because ruleset is optional setting
+		var/target_selected
 		if(prob(pseudorandom_chance))
-			new_obj.auto_target = !new_obj.find_pseudorandom_target(all_objectives)
+			target_selected = new_obj.find_pseudorandom_target(all_objectives)
+		else
+			target_selected = new_obj.find_target()
+
+		if(!target_selected)
+			qdel(new_obj)
+			continue
+
+		new_obj.auto_target = !target_selected
 
 		new_objectives += new_obj
 
@@ -82,7 +90,7 @@
 /datum/objective_ruleset/standart/get_objectives()
 	var/objective_type = pickweight(survive_objectives)
 	var/datum/objective/survive_objective = new objective_type
-	return list(get_pseudorandom_objectives() + survive_objective)
+	return get_pseudorandom_objectives() + survive_objective
 
 /datum/objective_ruleset/standart/one
 	objectives_amount = 1
@@ -118,4 +126,4 @@
 
 /datum/objective_ruleset/families/get_objectives()
 	var/datum/objective/points = new /datum/objective/gang/points
-	return list(get_pseudorandom_objectives() + points)
+	return get_pseudorandom_objectives() + points

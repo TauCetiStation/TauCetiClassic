@@ -49,7 +49,7 @@ var/global/list/target_objectives = list()
 /datum/objective/target/find_pseudorandom_target(list/all_objectives)
 	var/list/conflicting_objectives = list()
 	for(var/datum/objective/target/O in all_objectives)
-		if(O.type in conflicting_types)
+		if(O.type in conflicting_types && O.target)
 			conflicting_objectives += O
 
 	if(!conflicting_objectives.len)

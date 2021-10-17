@@ -1,5 +1,5 @@
 /datum/objectives_set
-	var/list/my_objectives = list()
+	var/list/my_objectives
 	var/used = FALSE
 
 /datum/objectives_set/New(list/_my_objectives)
@@ -14,16 +14,23 @@
 
 /datum/objectives_pool/proc/generate_objectives_pool(list/datums_to_process)
 	for(var/some_datum in datums_to_process)
-		// /datum/faction and /datum/role have same syntax
-		var/datum/faction/faction_or_role = some_datum
-		if(!faction_or_role.objectives_ruleset_type)
-			continue
-		var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src, faction_or_role)
-		var/datum/objectives_set/o_set = new(OR.get_objectives())
-		main_objectives_pool[faction_or_role.type] += o_set
-		qdel(OR)
+		generate_objectives_for(some_datum)
 
-/datum/objectives_pool/proc/give_objectives_to(datum/faction_or_role)
+/datum/objectives_pool/proc/generate_objectives_for(datum/some_datum)
+	// /datum/faction and /datum/role have same syntax
+	var/datum/faction/faction_or_role = some_datum
+	if(!faction_or_role.objectives_ruleset_type)
+		return
+	var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src, faction_or_role)
+	var/datum/objectives_set/o_set = new(OR.get_objectives())
+	qdel(OR)
+
+	if(!main_objectives_pool[faction_or_role.type])
+		main_objectives_pool[faction_or_role.type] = list()
+
+	main_objectives_pool[faction_or_role.type] += o_set
+
+/datum/objectives_pool/proc/give_objectives_for(datum/faction_or_role)
 	if(!main_objectives_pool[faction_or_role.type])
 		return
 

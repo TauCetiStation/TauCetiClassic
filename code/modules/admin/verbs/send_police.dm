@@ -61,9 +61,7 @@
 	cop.key = C.key
 
 	//Give antag datum
-	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-	if(!faction)
-		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
+	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
 	if(faction)
 		faction.roletype = cops_to_send
 		add_faction_member(faction, cop, TRUE, TRUE)

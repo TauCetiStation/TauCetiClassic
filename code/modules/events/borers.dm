@@ -25,8 +25,7 @@
 
 	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_GHOSTLY, IGNORE_BORER)
 
-	if(!find_faction_by_type(/datum/faction/borers))
-		SSticker.mode.CreateFaction(/datum/faction/borers)
+	create_uniq_faction(/datum/faction/borers)
 
 	for(var/mob/M in candidates)
 		if(spawncount <= 0 || !vents.len)

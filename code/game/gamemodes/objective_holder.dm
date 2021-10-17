@@ -5,16 +5,13 @@
 
 /datum/objective_holder/proc/AddObjective(datum/objective/O, datum/mind/M, datum/faction/F)
 	ASSERT(!objectives.Find(O))
-	objectives.Add(O)
 	if(M)
 		O.owner = M
 	if(F)
 		O.faction = F
 	if(O.PostAppend())
+		objectives += O
 		return TRUE
-
-	objectives.Remove(O)
-	qdel(O)
 	return FALSE
 
 /datum/objective_holder/proc/GetObjectives()
