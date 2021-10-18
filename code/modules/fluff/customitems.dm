@@ -1,4 +1,4 @@
-#define FLUFF_FILE_PATH "data/customItemsCache.sav"
+#define FLUFF_FILE_PATH "data/customItemsCache_hallowen.sav"
 
 /obj/item/customitem
 	name = "Custom item"
@@ -65,6 +65,8 @@
 		slots = list()
 
 	var/amount = 0
+
+	amount += 3 // halloween
 
 	//all your donator checks go here
 	if(supporter)

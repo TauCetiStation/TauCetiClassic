@@ -46,7 +46,7 @@
 
 	customItemsCache["premoderation"] << moderation_items
 
-	custom_item_changestatus(player_ckey, itemname, "accepted")
+	custom_item_changestatus(player_ckey, itemname, "accepted")//
 
 /proc/custom_item_premoderation_reject(player_ckey, itemname, reason)
 	itemname = ckey(itemname)

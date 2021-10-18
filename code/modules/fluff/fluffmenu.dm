@@ -261,6 +261,10 @@ var/list/editing_item_oldname_list = list()
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "") //remove old one from premoderation
 			user.client.edit_custom_item(editing_item, editing_item_oldname)
 			custom_item_premoderation_add(user.client.ckey, editing_item.name)
+
+			if(user.client.player_ingame_age && user.client.player_ingame_age >= 8000)
+				custom_item_changestatus(user.client.ckey, editing_item.name, "accepted")
+
 			qdel(editing_item)
 			user << browse(null, "window=edit_custom_item")
 		else //adding new
@@ -275,6 +279,10 @@ var/list/editing_item_oldname_list = list()
 			editing_item.status = "submitted"
 			user.client.add_custom_item(editing_item)
 			custom_item_premoderation_add(user.client.ckey, editing_item.name)
+			
+			if(user.client.player_ingame_age && user.client.player_ingame_age >= 8000)
+				custom_item_changestatus(user.client.ckey, editing_item.name, "accepted")
+
 			qdel(editing_item)
 			user << browse(null, "window=edit_custom_item")
 
