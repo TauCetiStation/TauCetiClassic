@@ -1,4 +1,4 @@
-#define FLUFF_FILE_PATH "data/customItemsCache_hallowen.sav"
+#define FLUFF_FILE_PATH "data/customItemsCache_halloween.sav"
 
 /obj/item/customitem
 	name = "Custom item"
