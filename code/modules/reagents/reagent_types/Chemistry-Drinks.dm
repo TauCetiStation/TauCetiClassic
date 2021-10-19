@@ -68,7 +68,7 @@
 
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
 	..()
-	M.adjust_blurriness(-1)
+	M.adjustBlurriness(-1)
 	M.eye_blind = max(M.eye_blind - 1, 0)
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -685,7 +685,7 @@
 			M.confused = 1
 		M.confused = max(M.confused + confused_adj, 0)
 	if(d >= blur_start)
-		M.set_blurriness(max(M.eye_blurry, 10))
+		M.blurEyes(10)
 		M.drowsyness = max(M.drowsyness, 0)
 	if(d >= pass_out)
 		M.paralysis = max(M.paralysis, 20)
