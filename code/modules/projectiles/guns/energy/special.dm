@@ -152,7 +152,7 @@
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_FLAGS_BACK
-	fire_delay = 35
+	fire_delay = 20
 	w_class = SIZE_NORMAL
 	var/zoom = 0
 
