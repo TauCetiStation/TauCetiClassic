@@ -259,7 +259,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		to_chat(src, "До следующего превращения: [round((next_transform - world.time) / 10)] секунд.")
 		return
 	if(!A.has_valid_appearance())
-		to_chat(src, "Почему я пытаюсь абузить, больше так не буду делать? \[Ваша попытка была переотправлена администрации\]")
+		to_chat(src, "Почему я пытаюсь абузить? Больше так не буду делать. \[Ваша попытка была переотправлена администрации\]")
 		return
 	if(is_type_in_list(A, black_types))
 		to_chat(src, "Вы не можете превратиться в [A.name].")
