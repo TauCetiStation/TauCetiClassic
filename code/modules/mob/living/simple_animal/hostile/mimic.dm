@@ -253,6 +253,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	icon_state = A.icon_state
 	icon_living = icon_state
 	appearance = A.appearance
+	density = A.density
 
 /mob/living/simple_animal/hostile/mimic/prophunt/proc/mimic_attack(atom/A)
 	var/list/black_types = list(/turf, /mob/living/carbon/human, /obj/structure/table, /obj/structure/cable,)
