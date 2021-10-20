@@ -206,3 +206,65 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	response_help = "pets the"
 	attacktext = "hugs"
 	a_intent = INTENT_HELP
+
+/mob/living/simple_animal/hostile/mimic/prophunt
+	maxHealth = 100
+	health = 100
+	harm_intent_damage = 5
+	melee_damage = 5
+
+	var/next_transform = 0
+	var/transform_cd = 30 SECONDS
+
+	var/atom/my_prototype
+
+/mob/living/simple_animal/hostile/mimic/prophunt/MouseEntered()
+	. = ..()
+	if(istype(my_prototype, /obj/item))
+		apply_outline()
+
+/mob/living/simple_animal/hostile/mimic/prophunt/MouseExited()
+	. = ..()
+	if(istype(my_prototype, /obj/item))
+		remove_outline()
+
+/mob/living/simple_animal/hostile/mimic/prophunt/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	if(src != over && istype(my_prototype, /obj/item))
+		remove_outline()
+
+/mob/living/simple_animal/hostile/mimic/prophunt/RangedAttack(atom/A, params)
+	mimic_attack(A)
+
+/mob/living/simple_animal/hostile/mimic/prophunt/UnarmedAttack(atom/A)
+	mimic_attack(A)
+
+/mob/living/simple_animal/hostile/mimic/prophunt/examine(mob/user)
+	if(!my_prototype)
+		return ..()
+	return my_prototype.examine(user)
+
+/mob/living/simple_animal/hostile/mimic/prophunt/proc/CopyObject(atom/A)
+	my_prototype = A
+
+	name = A.name
+	desc = A.desc
+	icon = A.icon
+	icon_state = A.icon_state
+	icon_living = icon_state
+	appearance = A.appearance
+
+/mob/living/simple_animal/hostile/mimic/prophunt/proc/mimic_attack(atom/A)
+	var/list/black_types = list(/turf, /mob/living/carbon/human, /obj/structure/table, /obj/structure/cable,)
+	if(next_transform > world.time)
+		to_chat(src, "До следующего превращения: [round((next_transform - world.time) / 10)] секунд.")
+		return
+	if(!A.has_valid_appearance())
+		to_chat(src, "Почему я пытаюсь абузить, больше так не буду делать? \[Ваша попытка была переотправлена администрации\]")
+		return
+	if(is_type_in_list(A, black_types))
+		to_chat(src, "Вы не можете превратиться в [A.name].")
+		return
+
+	CopyObject(A)
+	next_transform = world.time + transform_cd
