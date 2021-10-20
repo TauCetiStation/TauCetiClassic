@@ -210,8 +210,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/prophunt
 	maxHealth = 100
 	health = 100
-	harm_intent_damage = 5
-	melee_damage = 5
 
 	var/next_transform = 0
 	var/transform_cd = 30 SECONDS
