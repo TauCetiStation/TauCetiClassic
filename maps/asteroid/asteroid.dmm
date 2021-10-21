@@ -1769,6 +1769,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -2560,6 +2564,7 @@
 /area/asteroid/research_outpost/harvesting)
 "fj" = (
 /obj/item/device/radio/intercom{
+	name = "Asteroid intercom";
 	pixel_y = 25
 	},
 /obj/machinery/computer/reconstitutor/animal,
@@ -9642,6 +9647,10 @@
 "uY" = (
 /obj/structure/table,
 /obj/item/device/guitar,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -9714,6 +9723,10 @@
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
 /obj/item/weapon/stock_parts/cell,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = 27
+	},
 /turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "asteroidwarning"
@@ -9915,6 +9928,10 @@
 /area/asteroid/mine/living_quarters)
 "vB" = (
 /obj/structure/closet/secure_closet/miner,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -10358,6 +10375,10 @@
 /obj/item/clothing/glasses/hud/mining,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -11685,6 +11706,10 @@
 /area/asteroid/research_outpost/maintstore1)
 "An" = (
 /obj/structure/closet/emcloset,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -11843,6 +11868,10 @@
 	stamp_message = "Research Outpost"
 	},
 /obj/item/weapon/pen,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = -29
+	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "AP" = (
@@ -12049,6 +12078,20 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
+"Bw" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/globose/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/asteroid/research_outpost/gearstore)
 "Bx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12673,6 +12716,13 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/longtermstorage)
+"Kj" = (
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "Kr" = (
 /obj/machinery/light_construct/small{
 	dir = 8
@@ -13205,6 +13255,17 @@
 	oxygen = 0.01
 	},
 /area/asteroid/mine/production)
+"Tj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
 "Ub" = (
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor{
@@ -13372,6 +13433,24 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"Wr" = (
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = 27
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/asteroid/research_outpost/hallway)
+"Ws" = (
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = -29
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -13423,6 +13502,26 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"Xn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/asteroid/research_outpost/hallway)
 "XO" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -47888,7 +47987,7 @@ qG
 vx
 wy
 vN
-Pc
+Ws
 uo
 zs
 Ag
@@ -48151,7 +48250,7 @@ zs
 wM
 zY
 uo
-lA
+Kj
 lA
 rH
 lA
@@ -51369,7 +51468,7 @@ Bb
 aW
 kf
 hp
-mc
+Bw
 mq
 nP
 nK
@@ -56373,7 +56472,7 @@ Xc
 zd
 Qd
 De
-zd
+Tj
 zd
 Re
 uO
@@ -57779,7 +57878,7 @@ aS
 bz
 cb
 cj
-cH
+Wr
 cH
 dy
 dW
@@ -59075,7 +59174,7 @@ fP
 gO
 aP
 eF
-eT
+Xn
 kC
 lj
 lj
