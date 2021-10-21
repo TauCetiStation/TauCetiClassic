@@ -895,7 +895,7 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
-				H.eye_blurry += 10
+				H.adjustBlurriness(10)
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
@@ -906,7 +906,7 @@
 	else
 		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(force * 0.5, force)
+	M.adjustBlurriness(rand(force * 0.5, force))
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`

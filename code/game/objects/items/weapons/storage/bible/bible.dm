@@ -5,10 +5,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	var/mob/affecting = null
-	var/deity_name = "Christ"
-	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
+
+	var/deity_name = "Christ"
 
 	var/datum/religion/religion
 	var/religify_next = list()
