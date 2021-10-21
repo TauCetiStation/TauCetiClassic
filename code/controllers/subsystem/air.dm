@@ -85,20 +85,20 @@ SUBSYSTEM_DEF(air)
 	..()
 
 /datum/controller/subsystem/air/fire(resumed = 0)
-	var/timer = world.tick_usage
+	var/timer = TICK_USAGE_REAL
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -111,18 +111,18 @@ SUBSYSTEM_DEF(air)
 	// This ensures that doorways don't form their own single-turf zones, since doorways are self-zone-blocked and
 	// can merge with an adjacent zone, whereas zones that are formed on adjacent turfs cannot merge with the doorway.
 	if (currentpart == SSAIR_TILES_CUR)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_current(resumed)
-		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
 	if (currentpart == SSAIR_TILES_DEF)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_deferred(resumed)
-		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -130,9 +130,9 @@ SUBSYSTEM_DEF(air)
 
 	// Where gas exchange happens.
 	if (currentpart == SSAIR_EDGES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_edges(resumed)
-		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -140,9 +140,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process fire zones.
 	if (currentpart == SSAIR_FIRE_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_fire_zones(resumed)
-		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -150,9 +150,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process hotspots.
 	if (currentpart == SSAIR_HOTSPOTS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_hotspots(resumed)
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -160,9 +160,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process zones.
 	if (currentpart == SSAIR_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_zones(resumed)
-		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
