@@ -592,6 +592,7 @@
 #include "code\game\gamemodes\objectives\hijack.dm"
 #include "code\game\gamemodes\objectives\nuclear.dm"
 #include "code\game\gamemodes\objectives\objectives.dm"
+#include "code\game\gamemodes\objectives\prop_points.dm"
 #include "code\game\gamemodes\objectives\reproduct.dm"
 #include "code\game\gamemodes\objectives\silence.dm"
 #include "code\game\gamemodes\objectives\steal.dm"
