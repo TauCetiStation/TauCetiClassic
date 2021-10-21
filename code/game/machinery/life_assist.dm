@@ -86,12 +86,12 @@
 	icon_state = "av_idle"
 	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
 
-	var/obj/item/weapon/tank/holding
-
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
 
 	my_trait = TRAIT_AV
+
+	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/tank) && istype(W, /obj/item/weapon/tank/jetpack) && (stat & BROKEN))
