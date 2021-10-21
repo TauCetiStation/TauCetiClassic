@@ -209,6 +209,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	a_intent = INTENT_HELP
 
 /mob/living/simple_animal/hostile/mimic/prophunt
+	name = "mimic"
+	real_name = "mimic"
+	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
@@ -217,6 +220,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	maxHealth = 100
 	health = 100
 	speed = 2
+	harm_intent_damage = 5
+	melee_damage = 5
 
 	universal_understand = TRUE
 	universal_speak = TRUE
@@ -255,8 +260,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/prophunt/UnarmedAttack(atom/A)
 	if(a_intent == INTENT_HELP)
 		mimic_attack(A)
-	else
-		A.attack_animal(src)
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/examine(mob/user)
 	if(!my_prototype)
@@ -267,6 +272,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	my_prototype = A
 
 	name = A.name
+	real_name = A.name
 	desc = A.desc
 	icon = A.icon
 	icon_state = A.icon_state
@@ -289,12 +295,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	CopyObject(A)
 	next_transform = world.time + transform_cd
 
-/mob/living/simple_animal/hostile/mimic/prophunt/prepare_huds()
-	return
-
 /mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_health()
 	return
 
 /mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_status()
 	return
-
