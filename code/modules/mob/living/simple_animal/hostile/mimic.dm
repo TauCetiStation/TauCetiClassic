@@ -42,11 +42,6 @@
 	if(.)
 		emote("growls at [.]")
 
-/mob/living/simple_animal/hostile/mimic/death()
-	..()
-	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
-	qdel(src)
-
 
 
 //
@@ -114,6 +109,9 @@
 	// Put loot in crate
 	for(var/obj/O in src)
 		O.loc = C
+
+	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
+	qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
@@ -146,6 +144,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 	for(var/atom/movable/M in src)
 		M.loc = get_turf(src)
+
+	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
+	qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
@@ -208,13 +209,30 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	a_intent = INTENT_HELP
 
 /mob/living/simple_animal/hostile/mimic/prophunt
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "headcrab"
+	icon_living = "headcrab"
+	icon_dead = "headcrab_dead"
+
 	maxHealth = 100
 	health = 100
+	speed = 2
+
+	universal_understand = TRUE
+	universal_speak = TRUE
 
 	var/next_transform = 0
 	var/transform_cd = 30 SECONDS
 
 	var/atom/my_prototype
+
+/mob/living/simple_animal/hostile/mimic/prophunt/Destroy()
+	my_prototype = null
+	return ..()
+
+/mob/living/simple_animal/hostile/mimic/prophunt/death()
+	icon = initial(icon)
+	..()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseEntered()
 	. = ..()
@@ -235,7 +253,10 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	mimic_attack(A)
 
 /mob/living/simple_animal/hostile/mimic/prophunt/UnarmedAttack(atom/A)
-	mimic_attack(A)
+	if(a_intent == INTENT_HELP)
+		mimic_attack(A)
+	else
+		A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/mimic/prophunt/examine(mob/user)
 	if(!my_prototype)
@@ -251,19 +272,29 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	icon_state = A.icon_state
 	icon_living = icon_state
 	appearance = A.appearance
+	set_dir(A.dir)
+	layer = initial(A.layer)
+	plane = initial(A.plane)
 	density = A.density
 
 /mob/living/simple_animal/hostile/mimic/prophunt/proc/mimic_attack(atom/A)
-	var/list/black_types = list(/turf, /mob/living/carbon/human, /obj/structure/table, /obj/structure/cable,)
+	var/list/black_types = list(/turf, /mob/living/carbon/human, /obj/structure/table, /obj/structure/cable, /obj/structure/disposalpipe, /obj/machinery/atmospherics/pipe)
 	if(next_transform > world.time)
 		to_chat(src, "До следующего превращения: [round((next_transform - world.time) / 10)] секунд.")
 		return
-	if(!A.has_valid_appearance())
-		to_chat(src, "Почему я пытаюсь абузить? Больше так не буду делать. \[Ваша попытка была переотправлена администрации\]")
-		return
-	if(is_type_in_list(A, black_types))
+	if(is_type_in_list(A, black_types) || !A.has_valid_appearance())
 		to_chat(src, "Вы не можете превратиться в [A.name].")
 		return
 
 	CopyObject(A)
 	next_transform = world.time + transform_cd
+
+/mob/living/simple_animal/hostile/mimic/prophunt/prepare_huds()
+	return
+
+/mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_health()
+	return
+
+/mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_status()
+	return
+
