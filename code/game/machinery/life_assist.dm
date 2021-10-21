@@ -66,7 +66,7 @@
 			if(HAS_TRAIT(H, TRAIT_AV))
 				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
 				return
-			attach(over_object)
+			attach(H)
 
 /obj/machinery/life_assist/proc/resolve_stranded(datum/component/bounded/bounds)
 	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
