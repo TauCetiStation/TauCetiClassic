@@ -220,17 +220,17 @@
 	plant.ChangeOpacity(hologram_opacity)
 	add_overlay(plant)
 
-/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_plant(var/state)
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_plant(state)
 	plant = prepare_icon(state)
 
-/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/prepare_icon(var/state)
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/prepare_icon(state)
 	if(!state)
 		state = pick(possible_plants)
 
 	var/plant_icon = icon(icon, state)
 	return getHologramIcon(plant_icon, 0, hologram_opacity)
 
-/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_color(var/color)
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_color(color)
 	if (!plant)
 		return
 
