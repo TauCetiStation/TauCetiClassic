@@ -182,6 +182,74 @@
 	desc = "This is a decorative shrub. It's been trimmed into the shape of an apple."
 	icon_state = "applebush"
 
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant
+	name = "cyberplant"
+	desc = "cyberplant"
+	icon = 'icons/obj/flora/cyberplants.dmi'
+	icon_state = "holopot"
+	var/brightness_on = 4
+	var/emagged = FALSE
+	var/icon/plant = null
+	var/plant_color
+	var/glow_color
+	var/hologram_opacity = 0.85
+	var/list/possible_colors = list(
+		COLOR_RED_LIGHT,
+		COLOR_CIVIE_GREEN,
+		COLOR_LIGHT_CYAN,
+		COLOR_SUN,
+		COLOR_LIGHT_PINK,
+		COLOR_VIOLET,
+		COLOR_YELLOW,
+	)
+	var/list/possible_plants = null
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/atom_init()
+	. = ..()
+	possible_plants = icon_states(src.icon) - "holopot"
+	change_plant(plant)
+	change_color(plant_color)
+	update_icon()
+	set_light(brightness_on, brightness_on/2)
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/update_icon()
+	..()
+	cut_overlays()
+	if (!plant)
+		return
+	plant.ChangeOpacity(hologram_opacity)
+	add_overlay(plant)
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_plant(var/state)
+	plant = prepare_icon(state)
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/prepare_icon(var/state)
+	if(!state)
+		state = pick(possible_plants)
+
+	var/plant_icon = icon(icon, state)
+	return getHologramIcon(plant_icon, 0, hologram_opacity)
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/proc/change_color(var/color)
+	if (!plant)
+		return
+
+	if(!color)
+		color = pick(possible_colors)
+
+	glow_color = color
+	plant_color = color
+	plant.ColorTone(color)
+	set_light(l_color=color)
+
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/weapon/card/id))
+		change_plant()
+		change_color()
+		update_icon()
+	return
+
 /obj/item/weapon/twohanded/flora/monkey
 	name = "monkeyplant"
 	desc = "This is a monkey plant. Made by one mad scientist."

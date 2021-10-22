@@ -12451,12 +12451,10 @@
 	},
 /area/station/maintenance/dormitory)
 "ava" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
-	icon_state = "plant-21"
-	},
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor/wood,
 /area/station/civilian/garden)
 "avb" = (
@@ -12856,10 +12854,10 @@
 	},
 /area/station/rnd/xenobiology)
 "avM" = (
-/obj/item/weapon/twohanded/flora/floorleaf,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "avN" = (
@@ -14646,10 +14644,10 @@
 /area/station/civilian/dormitories/female)
 "azr" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/orange,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -15192,7 +15190,6 @@
 /area/station/civilian/dormitories/female)
 "aAr" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -22
@@ -15200,6 +15197,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/red,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -15961,13 +15959,13 @@
 /area/station/civilian/dormitories/male)
 "aBH" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor/exodus{
 	icon_state = "bar_floor"
 	},
@@ -16416,10 +16414,10 @@
 /area/station/civilian/dormitories/male)
 "aCt" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/cyan,
 /turf/simulated/floor/exodus{
 	icon_state = "bar_floor"
 	},
@@ -27480,10 +27478,10 @@
 	},
 /area/station/cargo/office)
 "aWy" = (
-/obj/structure/table/reinforced,
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/bar)
 "aWz" = (
@@ -28973,7 +28971,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -106148,7 +106146,7 @@ dyy
 awS
 awS
 pwX
-aWy
+avN
 bmx
 avN
 avN
@@ -107438,7 +107436,7 @@ brz
 aDx
 dWf
 bzi
-dWf
+aWy
 avN
 bEU
 aGn
