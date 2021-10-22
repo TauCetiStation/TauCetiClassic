@@ -269,6 +269,13 @@
 	item_color = "blackskirt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/under/blackskirt
+	name = "black skirt"
+	desc = "A black skirt, very fancy!"
+	icon_state = "blackskirt"
+	item_color = "blackskirt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
@@ -298,6 +305,13 @@
 	icon_state = "soviet"
 	item_state = "soviet"
 	item_color = "soviet"
+
+/obj/item/clothing/under/freddy
+	name = "Freddy's outfit"
+	desc = "One, two, Freddy's coming for you..."
+	icon_state = "freddy"
+	item_state = "freddy"
+	item_color = "freddy"
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -636,6 +650,45 @@
 	icon_state = "flapper"
 	item_state = "flapper"
 	item_color = "flapper"
+
+//Star trek
+/obj/item/clothing/under/startrek/yellow
+	name = "Starfleet yellow uniform"
+	desc = "To boldly go where no one has gone before! With our special uniform in yellow colors for command and navigation staff."
+	icon_state = "startrek_yellow"
+	item_state = "startrek_yellow"
+	item_color = "startrek_yellow"
+
+/obj/item/clothing/under/startrek/yellow/female
+	icon_state = "startrek_yellow_f"
+	item_state = "startrek_yellow_f"
+	item_color = "startrek_yellow_f"
+
+/obj/item/clothing/under/startrek/red
+	name = "Starfleet red uniform"
+	desc = "Red uniforms for real redshirts, engineering and security staff. It smells of Scotch whiskey, singing and imminent death."
+	icon_state = "startrek_red"
+	item_state = "startrek_red"
+	item_color = "startrek_red"
+
+/obj/item/clothing/under/startrek/red/female
+	icon_state = "startrek_red_f"
+	item_state = "startrek_red_f"
+	item_color = "startrek_red_f"
+
+/obj/item/clothing/under/startrek/blue
+	name = "Starfleet blue uniform"
+	desc = "Uniforms for medical and scientific staff. With a touch of logic and \"he's dead, Jim.\""
+	icon_state = "startrek_blue"
+	item_state = "startrek_blue"
+	item_color = "startrek_blue"
+
+/obj/item/clothing/under/startrek/blue/female
+	icon_state = "startrek_blue_f"
+	item_state = "startrek_blue_f"
+	item_color = "startrek_blue_f"
+
+
 
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
