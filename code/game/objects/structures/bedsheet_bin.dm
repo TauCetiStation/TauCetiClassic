@@ -42,35 +42,77 @@ LINEN BINS
 		return
 	return ..()
 
-/obj/item/weapon/bedsheet/blue
-	icon_state = "sheetblue"
+/obj/item/weapon/bedsheet/grey
+	icon_state = "sheetgrey"
+	item_color = "grey"
+
+/obj/item/weapon/bedsheet/black
+	icon_state = "sheetblack"
 	item_color = "blue"
 
-/obj/item/weapon/bedsheet/green
-	icon_state = "sheetgreen"
-	item_color = "green"
+/obj/item/weapon/bedsheet/brown
+	icon_state = "sheetbrown"
+	item_color = "brown"
 
-/obj/item/weapon/bedsheet/orange
-	icon_state = "sheetorange"
-	item_color = "orange"
-
-/obj/item/weapon/bedsheet/purple
-	icon_state = "sheetpurple"
-	item_color = "purple"
-
-/obj/item/weapon/bedsheet/rainbow
-	name = "rainbow bedsheet"
-	desc = "A multicolored blanket.  It's actually several different sheets cut up and sewn together."
-	icon_state = "sheetrainbow"
-	item_color = "rainbow"
+/obj/item/weapon/bedsheet/darkred
+	icon_state = "sheetdarkred"
+	item_color = "darkred"
 
 /obj/item/weapon/bedsheet/red
 	icon_state = "sheetred"
 	item_color = "red"
 
+/obj/item/weapon/bedsheet/orange
+	icon_state = "sheetorange"
+	item_color = "orange"
+
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
 	item_color = "yellow"
+
+/obj/item/weapon/bedsheet/pink
+	icon_state = "sheetpink"
+	item_color = "pink"
+
+/obj/item/weapon/bedsheet/purple
+	icon_state = "sheetpurple"
+	item_color = "purple"
+
+/obj/item/weapon/bedsheet/darkblue
+	icon_state = "sheetdarkblue"
+	item_color = "darkblue"
+
+/obj/item/weapon/bedsheet/blue
+	icon_state = "sheetblue"
+	item_color = "blue"
+
+/obj/item/weapon/bedsheet/lightblue
+	icon_state = "sheetlightblue"
+	item_color = "lightblue"
+
+/obj/item/weapon/bedsheet/cyan
+	icon_state = "sheetcyan"
+	item_color = "cyan"
+
+/obj/item/weapon/bedsheet/green
+	icon_state = "sheetgreen"
+	item_color = "green"
+
+/obj/item/weapon/bedsheet/darkgreen
+	icon_state = "sheetdarkgreen"
+	item_color = "darkgreen"
+
+/obj/item/weapon/bedsheet/rainbow
+	name = "rainbow bedsheet"
+	desc = "A multicolored blanket. It's actually several different sheets cut up and sewn together."
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
+
+/obj/item/weapon/bedsheet/clown
+	name = "clown's blanket"
+	desc = "A rainbow blanket with a clown mask woven in. It smells faintly of bananas."
+	icon_state = "sheetclown"
+	item_color = "clown"
 
 /obj/item/weapon/bedsheet/mime
 	name = "mime's blanket"
@@ -78,11 +120,41 @@ LINEN BINS
 	icon_state = "sheetmime"
 	item_color = "mime"
 
-/obj/item/weapon/bedsheet/clown
-	name = "clown's blanket"
-	desc = "A rainbow blanket with a clown mask woven in.  It smells faintly of bananas."
-	icon_state = "sheetclown"
-	item_color = "clown"
+/obj/item/weapon/bedsheet/medical
+	name = "medical blanket"
+	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
+	icon_state = "sheetmedical"
+	item_color = "medical"
+
+/obj/item/weapon/bedsheet/heart
+	name = "lovely blanket"
+	desc = "A very lovely blanket for your lovemaking."
+	icon_state = "sheetheart"
+	item_color = "heart"
+
+/obj/item/weapon/bedsheet/gryffindor
+	name = "Gryffindor blanket"
+	desc = "A bright and large blanket for the bravest and most honest."
+	icon_state = "sheetgryffindor"
+	item_color = "gryffindor"
+
+/obj/item/weapon/bedsheet/hufflepuff
+	name = "Hufflepuff blanket"
+	desc = "A warm and soft blanket for the most dedicated and hardworking."
+	icon_state = "sheethufflepuff"
+	item_color = "hufflepuff"
+
+/obj/item/weapon/bedsheet/ravenclaw
+	name = "Ravenclaw blanket"
+	desc = "An elegant and slightly prickly blanket for the smartest and most enthusiastic ."
+	icon_state = "sheetravenclaw"
+	item_color = "ravenclaw"
+
+/obj/item/weapon/bedsheet/slytherin
+	name = "Slytherin blanket"
+	desc = "An ornate blanket for the most cunning and ambitious."
+	icon_state = "sheetslytherin"
+	item_color = "slytherin"
 
 /obj/item/weapon/bedsheet/captain
 	name = "captain's bedsheet"
@@ -90,46 +162,44 @@ LINEN BINS
 	icon_state = "sheetcaptain"
 	item_color = "captain"
 
+/obj/item/weapon/bedsheet/hop
+	name = "head of personnel's bedsheet"
+	desc = "It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
+	icon_state = "sheethop"
+	item_color = "hop"
+
+/obj/item/weapon/bedsheet/ce
+	name = "chief engineer's bedsheet"
+	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
+	icon_state = "sheetce"
+	item_color = "chief"
+
+/obj/item/weapon/bedsheet/hos
+	name = "head of security's bedsheet"
+	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
+	icon_state = "sheethos"
+	item_color = "hosred"
+
+/obj/item/weapon/bedsheet/cmo
+	name = "chief medical officer's bedsheet"
+	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
+	icon_state = "sheetcmo"
+	item_color = "cmo"
+
 /obj/item/weapon/bedsheet/rd
 	name = "research director's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_color = "director"
 
-/obj/item/weapon/bedsheet/medical
-	name = "medical blanket"
-	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
-	icon_state = "sheetmedical"
-	item_color = "medical"
-
-/obj/item/weapon/bedsheet/hos
-	name = "head of security's bedsheet"
-	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
-	icon_state = "sheethos"
-	item_color = "hosred"
-
-/obj/item/weapon/bedsheet/hop
-	name = "head of personnel's bedsheet"
-	desc = "It is decorated with a key emblem.  For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
-	icon_state = "sheethop"
-	item_color = "hop"
-
-/obj/item/weapon/bedsheet/ce
-	name = "chief engineer's bedsheet"
-	desc = "It is decorated with a wrench emblem.  It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
-	icon_state = "sheetce"
-	item_color = "chief"
-
-/obj/item/weapon/bedsheet/brown
-	icon_state = "sheetbrown"
-	item_color = "brown"
-
-/obj/item/weapon/bedsheet/psych
-	icon_state = "sheetpsych"
-	item_color = "brown"
+/obj/item/weapon/bedsheet/qm
+	name = "quartermaster's bedsheet"
+	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
+	icon_state = "sheetqm"
+	item_color = "qm"
 
 /obj/item/weapon/bedsheet/centcom
-	name = "Centcom bedsheet"
+	name = "\improper CentCom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_color = "centcom"
@@ -142,23 +212,19 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
-	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
+	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_color = "cult"
 
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
-	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
+	desc = "A special fabric enchanted with magic so you can have an enchanted night. It even glows!"
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
-/obj/item/weapon/bedsheet/gar
-	name = "gar bedsheet"
-	desc = "A surprisingly soft gar bedsheet."
-	icon_state = "sheetgurren"
-	item_state = "bedsheet"
-	item_color = "gurren"
-
+/obj/item/weapon/bedsheet/psych
+	icon_state = "sheetpsych"
+	item_color = "brown"
 
 /obj/structure/bedsheetbin
 	name = "linen bin"

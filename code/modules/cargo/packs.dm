@@ -1831,7 +1831,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Pizza crate"
 	group = "Hospitality"
 
-/datum/supply_pack/randomised/costume
+/datum/supply_pack/randomised/bedsheets
 	num_contained = 2
 	contains = list(/obj/item/clothing/suit/pirate,
 					/obj/item/clothing/suit/judgerobe,
@@ -1860,7 +1860,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/chef,
 					/obj/item/clothing/suit/apron/overalls,
 					/obj/item/clothing/under/redcoat,
-					/obj/item/clothing/under/kilt)
+					/obj/item/clothing/under/kilt,
+					/obj/item/clothing/under/freddy)
 	name = "Costumes crate"
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
@@ -1868,3 +1869,37 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_theatre
 	group = "Miscellaneous"
 
+/datum/supply_pack/randomised/bedsheets
+	num_contained = 10
+	contains = list(/obj/item/weapon/bedsheet,
+					/obj/item/weapon/bedsheet/grey,
+					/obj/item/weapon/bedsheet/black,
+					/obj/item/weapon/bedsheet/brown,
+					/obj/item/weapon/bedsheet/darkred,
+					/obj/item/weapon/bedsheet/red,
+					/obj/item/weapon/bedsheet/orange,
+					/obj/item/weapon/bedsheet/yellow,
+					/obj/item/weapon/bedsheet/pink,
+					/obj/item/weapon/bedsheet/purple,
+					/obj/item/weapon/bedsheet/darkblue,
+					/obj/item/weapon/bedsheet/blue,
+					/obj/item/weapon/bedsheet/lightblue,
+					/obj/item/weapon/bedsheet/cyan,
+					/obj/item/weapon/bedsheet/green,
+					/obj/item/weapon/bedsheet/darkgreen,
+					/obj/item/weapon/bedsheet/rainbow,
+					/obj/item/weapon/bedsheet/clown,
+					/obj/item/weapon/bedsheet/mime,
+					/obj/item/weapon/bedsheet/medical,
+					/obj/item/weapon/bedsheet/heart,
+					/obj/item/weapon/bedsheet/captain,
+					/obj/item/weapon/bedsheet/hop,
+					/obj/item/weapon/bedsheet/ce,
+					/obj/item/weapon/bedsheet/hos,
+					/obj/item/weapon/bedsheet/cmo,
+					/obj/item/weapon/bedsheet/rd,
+					/obj/item/weapon/bedsheet/qm)
+	name = "Bedsheets crate"
+	cost = 1000
+	crate_name = "Bedsheets crate"
+	group = "Miscellaneous"

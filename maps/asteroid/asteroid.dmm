@@ -367,10 +367,10 @@
 /area/asteroid/research_outpost/maintstore1)
 "bc" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/brown,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/purple,
 /turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bd" = (
@@ -436,10 +436,10 @@
 /area/asteroid/research_outpost/hallway)
 "bk" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/brown,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/weapon/bedsheet/pink,
 /turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bl" = (
@@ -4723,6 +4723,11 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/tempstorage)
+"jB" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/yellow,
+/turf/simulated/floor/carpet,
+/area/asteroid/mine/living_quarters)
 "jD" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/engine,
@@ -13144,6 +13149,11 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
+"RA" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/turf/simulated/floor/carpet,
+/area/asteroid/mine/living_quarters)
 "Sb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -47205,10 +47215,10 @@ ac
 ac
 ac
 uo
-us
+jB
 pw
 uo
-us
+RA
 pw
 uo
 us

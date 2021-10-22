@@ -600,17 +600,20 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "abs" = (
+/obj/item/weapon/caution,
 /turf/unsimulated/floor{
-	icon_state = "asteroid10";
-	name = "plating"
+	icon_state = "freezerfloor"
 	},
 /area/custom/wizard_station)
 "abt" = (
 /obj/machinery/light,
-/mob/living/simple_animal/hostile/creature{
-	name = "Experiment 35b"
+/mob/living/simple_animal/hostile/tribesman{
+	name = "Experiment 69T"
 	},
-/turf/unsimulated/floor/cult/lava,
+/turf/unsimulated/floor{
+	icon_state = "asteroid2";
+	name = "plating"
+	},
 /area/custom/wizard_station)
 "abu" = (
 /obj/effect/landmark/blockway,
@@ -2176,8 +2179,6 @@
 	},
 /area/custom/arena)
 "afP" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
 /obj/effect/landmark/start{
 	name = "wizard"
 	},
@@ -2195,35 +2196,30 @@
 	},
 /area/centcom/evac)
 "afR" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/structure/kitchenspike,
+/obj/structure/table/reinforced,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "chapel"
 	},
 /area/custom/wizard_station)
 "afS" = (
-/obj/structure/stool/bed/chair/wood/wings{
-	dir = 8
+/obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	on = 0;
+	pixel_x = -3;
+	pixel_y = 8
 	},
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "wooden"
 	},
 /area/custom/wizard_station)
 "afT" = (
-/obj/structure/stool/bed/chair/wood/wings{
-	dir = 4
-	},
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/structure/table/woodentable,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	dir = 1;
+	icon_state = "carpetside"
 	},
 /area/custom/wizard_station)
 "afU" = (
@@ -2675,12 +2671,8 @@
 /area/custom/syndicate_mothership)
 "ahM" = (
 /obj/machinery/light,
-/mob/living/simple_animal/hostile/tribesman{
-	name = "Experiment 69T"
-	},
 /turf/unsimulated/floor{
-	icon_state = "asteroid2";
-	name = "plating"
+	icon_state = "freezerfloor"
 	},
 /area/custom/wizard_station)
 "ahN" = (
@@ -7010,11 +7002,16 @@
 	},
 /area/velocity)
 "avG" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/soup/milosoup,
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed"
+	},
+/obj/item/clothing/suit/wizrobe/magusred,
+/obj/item/clothing/head/wizard/magus,
+/obj/item/weapon/staff,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "grimy"
 	},
 /area/custom/wizard_station)
 "avI" = (
@@ -15922,26 +15919,25 @@
 /turf/unsimulated/wall,
 /area/custom/wizard_station)
 "bas" = (
-/obj/structure/sink,
-/turf/unsimulated/wall,
+/obj/item/target,
+/turf/unsimulated/floor/cult,
 /area/custom/wizard_station)
 "bat" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/structure/table/woodentable,
+/obj/item/clothing/glasses/monocle,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "wooden"
 	},
 /area/custom/wizard_station)
 "bau" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/ravenclaw,
+/obj/structure/curtain/open/bed{
+	alpha = 200;
+	color = "#334e7c"
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "wooden"
 	},
 /area/custom/wizard_station)
 "bav" = (
@@ -15951,214 +15947,22 @@
 	},
 /area/custom/wizard_station)
 "baw" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/structure/table/woodentable,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/slytherin,
+/obj/structure/curtain/open/bed{
+	alpha = 200;
+	color = "#2a593b"
+	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "wooden"
 	},
 /area/custom/wizard_station)
 "bax" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "wooden"
 	},
 /area/custom/wizard_station)
 "bay" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/nuclear,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"baz" = (
-/obj/structure/table/woodentable,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baA" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/paper{
-	info = "<p><b>LIST OF SPELLS AVAILABLE</b></p><p>Magic Missile:<br>This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage.</p><p>Fireball:<br>This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you.</p><p>Disintegrate:</br>This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown.</p><p>Disable Technology:<br>This spell disables all weapons, cameras and most other technology in range.</p><p>Smoke:<br>This spell spawns a cloud of choking smoke at your location and does not require wizard garb.</p><p>Blind:<br>This spell temporarly blinds a single person and does not require wizard garb.<p>Forcewall:<br>This spell creates an unbreakable wall that lasts for 30 seconds and does not require wizard garb.</p><p>Blink:<br>This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience.</p><p>Teleport:<br>This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable.</p><p>Mutate:<br>This spell causes you to turn into a hulk, and gain telekinesis for a short while.</p><p>Ethereal Jaunt:<br>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</p><p>Knock:<br>This spell opens nearby doors and does not require wizard garb.</p>";
-	name = "List of Available Spells (READ)"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baB" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baC" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baD" = (
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baE" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baF" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"baH" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baI" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
-/turf/unsimulated/floor{
-	icon_state = "carpetsymbol"
-	},
-/area/custom/wizard_station)
-"baJ" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baK" = (
-/obj/structure/mineral_door/metal,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baL" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baM" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baN" = (
-/obj/structure/bookcase{
-	name = "bookcase (Tactics)"
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"baO" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = 32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/structure/closet/coffin,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"baP" = (
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baQ" = (
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baR" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = 32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
-	},
-/area/custom/wizard_station)
-"baS" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/bag/cash,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"baT" = (
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"baU" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/wizard_station)
-"baV" = (
 /obj/structure/closet{
 	icon_closed = "cabinet_closed";
 	icon_opened = "cabinet_open";
@@ -16172,21 +15976,7 @@
 	icon_state = "grimy"
 	},
 /area/custom/wizard_station)
-"baW" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
-	},
-/obj/item/clothing/suit/wizrobe/marisa,
-/obj/item/clothing/shoes/sandal/marisa,
-/obj/item/clothing/head/wizard/marisa,
-/obj/item/weapon/staff/broom,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"baX" = (
+"baz" = (
 /obj/structure/closet{
 	icon_closed = "cabinet_closed";
 	icon_opened = "cabinet_open";
@@ -16199,107 +15989,7 @@
 	icon_state = "grimy"
 	},
 /area/custom/wizard_station)
-"baY" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"baZ" = (
-/obj/structure/bookcase,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"bba" = (
-/obj/machinery/vending/magivend,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"bbb" = (
-/obj/structure/table,
-/obj/item/weapon/folder,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/custom/syndicate_mothership)
-"bbc" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = 32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"bbd" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"bbe" = (
-/obj/structure/table/woodentable,
-/obj/machinery/chem_dispenser/soda,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"bbf" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/backpack/cultpack,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"bbg" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/glasses/monocle,
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"bbh" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/backpack,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"bbi" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
-	},
-/obj/item/clothing/under/psysuit,
-/obj/item/clothing/suit/wizrobe/psypurple,
-/obj/item/clothing/head/wizard/amp,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/wizard_station)
-"bbj" = (
+"baA" = (
 /obj/structure/closet{
 	icon_closed = "cabinet_closed";
 	icon_opened = "cabinet_open";
@@ -16317,17 +16007,241 @@
 	icon_state = "grimy"
 	},
 /area/custom/wizard_station)
-"bbk" = (
+"baB" = (
 /obj/structure/closet{
 	icon_closed = "cabinet_closed";
 	icon_opened = "cabinet_open";
 	icon_state = "cabinet_closed"
 	},
-/obj/item/clothing/suit/wizrobe/magusred,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/shoes/sandal/marisa,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/weapon/staff/broom,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"baC" = (
+/obj/item/target,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/cult,
+/area/custom/wizard_station)
+"baE" = (
+/obj/item/target/alien,
+/turf/unsimulated/floor/cult,
+/area/custom/wizard_station)
+"baF" = (
+/obj/item/weapon/twohanded/flora/pottedplant/mysterious,
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baH" = (
+/obj/structure/mineral_door/wood,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"baI" = (
+/obj/item/weapon/twohanded/flora/pottedplant/sticky,
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baJ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/hufflepuff,
+/obj/structure/curtain/open/bed{
+	alpha = 200;
+	color = "#8c721f"
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baK" = (
+/obj/structure/table/woodentable,
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/backpack/cultpack,
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baM" = (
+/turf/unsimulated/floor/cult,
+/area/custom/wizard_station)
+"baN" = (
+/obj/structure/dresser,
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baO" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/gryffindor,
+/obj/structure/curtain/open/bed{
+	alpha = 200;
+	color = "#66232b"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"baP" = (
+/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"baQ" = (
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed"
+	},
+/obj/item/weapon/bedsheet/wiz,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"baR" = (
+/obj/structure/rack,
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/custom/wizard_station)
+"baS" = (
+/obj/structure/kitchenspike,
+/obj/structure/table/reinforced,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/custom/wizard_station)
+"baT" = (
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"baU" = (
+/obj/item/target/syndicate,
+/turf/unsimulated/floor/cult,
+/area/custom/wizard_station)
+"baX" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/custom/wizard_station)
+"baY" = (
+/obj/structure/sign/double/barsign{
+	icon_state = "thecavern"
+	},
+/turf/unsimulated/wall,
+/area/custom/wizard_station)
+"baZ" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/backpack,
+/turf/unsimulated/floor{
+	icon_state = "wooden"
+	},
+/area/custom/wizard_station)
+"bba" = (
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed"
+	},
+/obj/item/clothing/under/psysuit,
+/obj/item/clothing/suit/wizrobe/psypurple,
+/obj/item/clothing/head/wizard/amp,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"bbb" = (
+/obj/structure/table,
+/obj/item/weapon/folder,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
+"bbc" = (
+/obj/structure/rack,
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor{
+	icon_state = "chapel"
+	},
+/area/custom/wizard_station)
+"bbd" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "carpetside"
+	},
+/area/custom/wizard_station)
+"bbe" = (
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/wizard_station)
+"bbf" = (
+/obj/structure/curtain/black,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"bbg" = (
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/wizard_station)
+"bbh" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/wizard_station)
+"bbi" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/wizard_station)
+"bbj" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/dice/d20,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"bbk" = (
+/obj/structure/table/woodentable,
+/obj/item/device/megaphone,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbl" = (
@@ -16352,70 +16266,53 @@
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
-"bbo" = (
-/obj/structure/stool/bed/chair/wood/wings{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
 "bbp" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/dice/d20,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "engine"
 	},
 /area/custom/wizard_station)
 "bbq" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups,
+/obj/structure/mineral_door/metal,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	icon_state = "engine"
 	},
 /area/custom/wizard_station)
 "bbr" = (
-/obj/structure/stool/bed/chair/wood/wings{
-	dir = 8
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/bag/cash,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"bby" = (
+/obj/structure/stool/bed/chair/wood/wings,
+/obj/effect/landmark/start{
+	name = "wizard"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
-"bbx" = (
-/obj/structure/rack,
-/obj/item/weapon/kitchenknife/ritual,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/custom/wizard_station)
-"bby" = (
-/obj/structure/kitchenspike,
-/obj/structure/table/reinforced,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/custom/wizard_station)
 "bbz" = (
-/obj/structure/kitchenspike,
-/obj/structure/table/reinforced,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/book/manual/nuclear{
+	pixel_x = 5
+	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "chapel"
+	dir = 9;
+	icon_state = "carpetside"
 	},
 /area/custom/wizard_station)
 "bbA" = (
-/obj/structure/rack,
-/obj/item/weapon/kitchenknife/ritual,
+/obj/structure/closet/coffin,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "chapel"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbD" = (
@@ -16425,22 +16322,26 @@
 	},
 /area/custom/arena)
 "bbG" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/dice,
+/obj/machinery/vending/magivend,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbJ" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/twohanded/flora/pottedplant/small,
 /turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "chapel"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbK" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/soup/milosoup,
 /turf/unsimulated/floor{
-	icon_state = "chapel"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbL" = (
@@ -16475,16 +16376,18 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "bbX" = (
-/obj/structure/table/woodentable,
-/obj/item/device/megaphone,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	dir = 5;
+	icon_state = "carpetside"
 	},
 /area/custom/wizard_station)
 "bbY" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/storage/backpack/satchel/withwallet,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -16553,16 +16456,14 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bco" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
+	dir = 4;
+	icon_state = "carpetside"
 	},
 /area/custom/wizard_station)
 "bcp" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/spacecash/c1,
+/obj/item/weapon/storage/box/cups,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -16685,25 +16586,6 @@
 	name = "grass"
 	},
 /area/custom/wizard_station)
-"bdu" = (
-/obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
-"bdv" = (
-/mob/living/carbon/monkey{
-	name = "Murphey"
-	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
-"bdw" = (
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
 "bdx" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien6"
@@ -16754,22 +16636,18 @@
 	},
 /area/custom/wizard_station)
 "bdP" = (
-/obj/item/weapon/caution,
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "bdQ" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/mob/living/simple_animal/hostile/creature{
+	name = "Experiment 35b"
 	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "bdR" = (
-/obj/item/weapon/kitchenknife/ritual,
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
+/obj/effect/decal/remains/human,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "bdS" = (
 /turf/unsimulated/wall/abductor,
@@ -17830,6 +17708,13 @@
 	icon_state = "vault"
 	},
 /area/velocity)
+"cmQ" = (
+/obj/item/weapon/twohanded/flora/pottedplant/subterranean,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "cnb" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -20775,6 +20660,12 @@
 	},
 /turf/space,
 /area/centcom/evac)
+"huS" = (
+/turf/unsimulated/floor{
+	icon_state = "asteroid10";
+	name = "plating"
+	},
+/area/custom/wizard_station)
 "hvb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -23540,6 +23431,18 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nFh" = (
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/custom/wizard_station)
+"nFV" = (
+/turf/unsimulated/floor{
+	icon_state = "asteroid5";
+	name = "plating"
+	},
+/area/custom/wizard_station)
 "nGb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -23549,133 +23452,143 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nHb" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nIb" = (
-/obj/structure/dresser,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 4;
+	icon_state = "chapel"
 	},
 /area/custom/wizard_station)
 "nJb" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/table/woodentable,
+/obj/item/weapon/dice,
+/obj/item/weapon/spacecash/c1,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nKb" = (
-/obj/item/target,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "carpetsymbol"
 	},
 /area/custom/wizard_station)
 "nLb" = (
-/obj/item/target/syndicate,
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nMb" = (
-/obj/item/target/alien,
-/turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
-	},
-/area/custom/wizard_station)
-"nNb" = (
-/obj/item/target,
-/turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
-	},
-/area/custom/wizard_station)
-"nOb" = (
-/turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
-	},
-/area/custom/wizard_station)
-"nPb" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
-	},
-/area/custom/wizard_station)
-"nQb" = (
-/obj/machinery/light{
+/obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	dir = 10;
+	icon_state = "carpetside"
+	},
+/area/custom/wizard_station)
+"nNb" = (
+/obj/structure/stool/bed/chair/wood/wings,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"nOb" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
+/obj/item/robot_parts/head,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"nPb" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"nQb" = (
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/soda{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nRb" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/guide_to_robotics,
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 1
+	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nSb" = (
-/obj/structure/table/reinforced,
-/obj/item/robot_parts/head,
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper{
+	info = "<p><b>LIST OF SPELLS AVAILABLE</b></p><p>Magic Missile:<br>This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage.</p><p>Fireball:<br>This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you.</p><p>Disintegrate:</br>This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown.</p><p>Disable Technology:<br>This spell disables all weapons, cameras and most other technology in range.</p><p>Smoke:<br>This spell spawns a cloud of choking smoke at your location and does not require wizard garb.</p><p>Blind:<br>This spell temporarly blinds a single person and does not require wizard garb.<p>Forcewall:<br>This spell creates an unbreakable wall that lasts for 30 seconds and does not require wizard garb.</p><p>Blink:<br>This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience.</p><p>Teleport:<br>This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable.</p><p>Mutate:<br>This spell causes you to turn into a hulk, and gain telekinesis for a short while.</p><p>Ethereal Jaunt:<br>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</p><p>Knock:<br>This spell opens nearby doors and does not require wizard garb.</p>";
+	name = "List of Available Spells (READ)"
+	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "carpetside"
 	},
 /area/custom/wizard_station)
 "nTb" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = 32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
+/obj/item/weapon/twohanded/flora/pottedplant/minitree,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "nUb" = (
-/obj/effect/decal/remains/human,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/wizard_station)
-"nVb" = (
-/turf/unsimulated/floor/cult/lava,
-/area/custom/wizard_station)
-"nWb" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid8";
 	name = "plating"
 	},
 /area/custom/wizard_station)
-"nXb" = (
+"nVb" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid7";
 	name = "plating"
 	},
 /area/custom/wizard_station)
+"nWb" = (
+/obj/effect/decal/cleanable/blood,
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/custom/wizard_station)
+"nXb" = (
+/mob/living/carbon/monkey{
+	name = "Murphey"
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/custom/wizard_station)
 "nYb" = (
 /turf/unsimulated/floor{
-	icon_state = "asteroid5";
-	name = "plating"
+	icon_state = "freezerfloor"
 	},
 /area/custom/wizard_station)
 "nZb" = (
@@ -24743,6 +24656,15 @@
 	icon_state = "barber"
 	},
 /area/velocity)
+"xHA" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "carpetside"
+	},
+/area/custom/wizard_station)
 "xLi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -24754,6 +24676,14 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity)
+"xVs" = (
+/obj/structure/mirror/magic{
+	pixel_x = -28
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
 "xYF" = (
 /obj/structure/cult/statue/camera,
 /turf/unsimulated/floor/cult/lava,
@@ -29638,18 +29568,18 @@ bar
 bat
 baF
 baN
-baF
+baI
 baZ
+bar
+bbe
+bbi
+bar
+bbz
 bbd
-bav
-bav
-bav
-bav
-bbd
-bav
+nMb
 aaY
 nUb
-nVb
+huS
 bar
 aaM
 aaM
@@ -29893,17 +29823,17 @@ aaM
 aaM
 bar
 bau
-bav
-baN
-bav
-baZ
-bav
-bav
-bbo
-bbo
+bax
+bax
+bax
+baJ
+bar
+bbg
+bbp
+bar
 afT
-bbo
-bav
+nKb
+nSb
 aaY
 nVb
 abt
@@ -30149,21 +30079,21 @@ aaM
 aaM
 aaM
 bar
-bav
-bav
-bav
-bav
-bav
-bav
-bav
+afS
+bax
+bax
+bax
+baK
+bar
+bbh
 bbp
-avG
+bar
 bbX
 bco
-bav
+xHA
 aaY
+nFV
 nVb
-nUb
 bar
 aaM
 aaM
@@ -30407,17 +30337,17 @@ aaM
 aaM
 bar
 baw
-bav
-bav
-bav
-bav
-bav
-bav
+bax
+bax
+bax
+baO
+bar
+bar
 bbq
-bbG
+bar
 bbY
-bcp
 bav
+cmQ
 aaY
 aaY
 aaY
@@ -30663,17 +30593,17 @@ aaM
 aaM
 aaM
 bar
-bax
+bar
+bar
+baH
+bar
+bar
+bar
 bav
 bav
 bav
 bav
 bav
-bav
-afS
-bbr
-bbr
-bbr
 bav
 aaY
 nWb
@@ -30921,12 +30851,12 @@ aaM
 aaM
 bar
 bay
-bav
-baO
-baS
+xVs
+baT
+xVs
 bba
-bbe
-baO
+bar
+bav
 bav
 bav
 bav
@@ -31177,21 +31107,21 @@ aaM
 aaM
 aaM
 bar
-bar
-nHb
-bar
-bar
-bar
-bar
-bar
-nKb
+avG
+baT
+baT
+baT
+baT
+aaY
+bav
+bav
 nOb
-nOb
-nOb
-nOb
+bbG
+bav
+bav
 aaY
 nYb
-nXb
+nFh
 bar
 aaM
 aaM
@@ -31435,17 +31365,17 @@ aaM
 aaM
 bar
 baz
-baH
-baP
+baT
+baT
 baT
 baT
 bbf
-bar
-nLb
-nOb
-nOb
-nOb
-nOb
+bav
+bav
+bav
+bav
+bav
+bav
 aaY
 aaY
 aaY
@@ -31692,17 +31622,17 @@ aaM
 aaM
 bar
 baA
-baI
-baQ
 baT
 baT
-bbg
-bar
-nMb
-nOb
-nOb
-nOb
-nOb
+baT
+baP
+aaY
+bav
+bav
+bav
+bav
+bav
+bav
 aaY
 bds
 bdN
@@ -31949,17 +31879,17 @@ aaM
 aaM
 bar
 baB
-baJ
-baR
-afP
 baT
-bbh
+baT
+afP
+baQ
 bar
+bav
 nNb
-nOb
-nOb
-nOb
-nOb
+bbj
+bcp
+nRb
+bav
 aaY
 bds
 bdO
@@ -32206,17 +32136,17 @@ aaM
 aaM
 bar
 bar
-baK
-bar
-bar
-nJb
-bar
-bar
 aaY
+baT
 aaY
+bar
+baY
+bav
+nNb
+bbk
 nPb
-nOb
-nOb
+nLb
+bav
 aaY
 bdt
 bds
@@ -32463,17 +32393,17 @@ aaM
 aaM
 bar
 baC
-baL
+baM
+baM
+baX
+baR
 bar
-baV
-baT
-bbi
-bar
-bbx
+bav
+nNb
 bbJ
-nOb
-nOb
-nOb
+nHb
+nRb
+bav
 aaY
 aaY
 aaY
@@ -32718,21 +32648,21 @@ aaM
 aaM
 aaM
 aaM
-bas
+bar
 baU
-baD
-bar
-baW
+baM
+baM
+nIb
 afR
-bbj
 bar
+bav
 bby
 bbK
-nOb
+nJb
 nRb
-nOb
+bav
 aaY
-bdu
+bdR
 bdP
 bar
 aaM
@@ -32978,18 +32908,18 @@ aaM
 bar
 baE
 baM
-bar
+baM
 baX
-baT
-bbk
+baS
 bar
-bbz
-bbJ
-nOb
-nSb
-nOb
+bav
+bav
+bav
+bav
+bav
+bav
 aaY
-bdv
+bdP
 bdQ
 bar
 aaM
@@ -33233,20 +33163,20 @@ aaM
 aaM
 aaM
 bar
-bar
-bar
-bar
+bas
+baM
+baM
 nIb
 bbc
-baY
 bar
 bbA
-bbK
+bbA
+bbr
 nQb
 nTb
-nOb
+bav
 aaY
-bdw
+bdP
 bdR
 bar
 aaM
