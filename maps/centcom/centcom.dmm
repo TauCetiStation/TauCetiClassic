@@ -16066,7 +16066,6 @@
 /area/custom/wizard_station)
 "baK" = (
 /obj/structure/table/woodentable,
-/obj/structure/table/woodentable,
 /obj/item/weapon/storage/backpack/cultpack,
 /turf/unsimulated/floor{
 	icon_state = "wooden"
