@@ -15985,6 +15985,9 @@
 /obj/item/clothing/suit/wizrobe/magusblue,
 /obj/item/clothing/head/wizard/magus,
 /obj/item/weapon/staff,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -16022,9 +16025,8 @@
 	},
 /area/custom/wizard_station)
 "baC" = (
-/obj/item/target,
 /obj/machinery/light{
-	dir = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/cult,
 /area/custom/wizard_station)
@@ -16076,6 +16078,9 @@
 /area/custom/wizard_station)
 "baN" = (
 /obj/structure/dresser,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "wooden"
 	},
@@ -16104,6 +16109,9 @@
 	icon_state = "cabinet_closed"
 	},
 /obj/item/weapon/bedsheet/wiz,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -16161,6 +16169,9 @@
 /obj/item/clothing/under/psysuit,
 /obj/item/clothing/suit/wizrobe/psypurple,
 /obj/item/clothing/head/wizard/amp,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -16387,6 +16398,9 @@
 "bbY" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -19337,6 +19351,16 @@
 	icon_state = "loadingarea"
 	},
 /area/velocity)
+"ffu" = (
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "fgb" = (
 /obj/machinery/light{
 	dir = 8
@@ -22587,6 +22611,14 @@
 	icon_state = "warnwhite"
 	},
 /area/centcom/control)
+"lPN" = (
+/obj/machinery/light/small{
+	brightness_color = "#008000"
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/wizard_station)
 "lQb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -23527,6 +23559,9 @@
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -24603,6 +24638,15 @@
 "wfy" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"wjM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "wtx" = (
 /turf/simulated/wall/cult/runed/anim,
 /area/custom/cult)
@@ -29828,7 +29872,7 @@ bax
 baJ
 bar
 bbg
-bbp
+lPN
 bar
 afT
 nKb
@@ -31374,7 +31418,7 @@ bav
 bav
 bav
 bav
-bav
+ffu
 aaY
 aaY
 aaY
@@ -31883,7 +31927,7 @@ baT
 afP
 baQ
 bar
-bav
+wjM
 nNb
 bbj
 bcp
@@ -32391,7 +32435,7 @@ aaM
 aaM
 aaM
 bar
-baC
+bas
 baM
 baM
 baX
@@ -33164,7 +33208,7 @@ aaM
 bar
 bas
 baM
-baM
+baC
 nIb
 bbc
 bar
