@@ -18,7 +18,6 @@ LINEN BINS
 	w_class = SIZE_TINY
 	item_color = "white"
 
-
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
