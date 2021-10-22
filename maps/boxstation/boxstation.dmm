@@ -27353,7 +27353,7 @@
 	},
 /area/station/civilian/chapel/office)
 "aWo" = (
-/obj/item/weapon/twohanded/flora/pottedplant/minitree,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -27480,8 +27480,8 @@
 "aWy" = (
 /obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/civilian/bar)
 "aWz" = (
@@ -28971,7 +28971,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -80440,7 +80440,7 @@
 /area/station/medical/virology)
 "stq" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/twohanded/flora/pottedplant/cyberplant,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -106146,7 +106146,7 @@ dyy
 awS
 awS
 pwX
-avN
+aWy
 bmx
 avN
 avN
@@ -107436,8 +107436,8 @@ brz
 aDx
 dWf
 bzi
+dWf
 aWy
-avN
 bEU
 aGn
 bIp
