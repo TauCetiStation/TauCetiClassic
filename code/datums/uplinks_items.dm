@@ -468,7 +468,7 @@
 /datum/uplink_item/ammo/grenade_launcher
 	name = "Ammo-40x46mm (explosive)"
 	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
-	item = /obj/item/projectile/bullet/grenade/explosive
+	item = /obj/item/ammo_casing/r4046/explosive
 	cost = 2
 	uplink_types = list("nuclear")
 
