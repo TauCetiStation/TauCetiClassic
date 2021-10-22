@@ -702,11 +702,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += back
 
+		var/appendix = null
 		var/image/standing = null
-		if (istype(back, /obj/item/weapon/bedsheet) && src.gender == FEMALE)
-			standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER, icon_state_appendix = "_f")
-		else
-			standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER)
+		appendix = istype(back, /obj/item/weapon/bedsheet) && src.gender == FEMALE ? "_f" : ""
+		standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER, icon_state_appendix = appendix)
+		// if (istype(back, /obj/item/weapon/bedsheet) && src.gender == FEMALE)
+		// 	standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER, icon_state_appendix = "_f")
+		// else
+		// 	standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER)
 		overlays_standing[BACK_LAYER] = standing
 	apply_overlay(BACK_LAYER)
 

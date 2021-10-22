@@ -1831,7 +1831,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Pizza crate"
 	group = "Hospitality"
 
-/datum/supply_pack/randomised/bedsheets
+/datum/supply_pack/randomised/costumes
 	num_contained = 2
 	contains = list(/obj/item/clothing/suit/pirate,
 					/obj/item/clothing/suit/judgerobe,
