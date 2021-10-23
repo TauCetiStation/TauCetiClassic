@@ -6,7 +6,6 @@ SUBSYSTEM_DEF(overlays)
 	priority = SS_PRIORITY_OVERLAYS
 
 	flags = SS_TICKER
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	var/list/queue = list()
 	var/list/stats = list()
