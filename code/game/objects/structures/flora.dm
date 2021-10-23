@@ -188,10 +188,8 @@
 	icon = 'icons/obj/flora/cyberplants.dmi'
 	icon_state = "holopot"
 	var/brightness_on = 4
-	var/emagged = FALSE
 	var/icon/plant = null
 	var/plant_color
-	var/glow_color
 	var/hologram_opacity = 0.85
 	var/list/possible_colors = list(
 		COLOR_RED_LIGHT,
@@ -206,11 +204,11 @@
 
 /obj/item/weapon/twohanded/flora/pottedplant/cyberplant/atom_init()
 	. = ..()
-	possible_plants = icon_states(src.icon) - "holopot"
+	possible_plants = icon_states(icon) - "holopot"
 	change_plant(plant)
 	change_color(plant_color)
 	update_icon()
-	set_light(brightness_on, brightness_on/2)
+	set_light(brightness_on, brightness_on / 2)
 
 /obj/item/weapon/twohanded/flora/pottedplant/cyberplant/update_icon()
 	..()
@@ -248,7 +246,6 @@
 		change_plant()
 		change_color()
 		update_icon()
-	return
 
 /obj/item/weapon/twohanded/flora/monkey
 	name = "monkeyplant"
