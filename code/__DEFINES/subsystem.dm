@@ -45,6 +45,7 @@
 
 
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.
+#define SS_PRIORITY_TIMER        700
 #define SS_PRIORITY_OVERLAYS     500
 #define SS_PRIORITY_CHAT         400
 #define SS_PRIORITY_TICKER       200

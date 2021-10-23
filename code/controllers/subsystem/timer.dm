@@ -4,6 +4,7 @@
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 
+	priority      = SS_PRIORITY_TIMER
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
 	display_order = SS_DISPLAY_TIMER
 
