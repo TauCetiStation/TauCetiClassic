@@ -1519,7 +1519,7 @@ var/list/WALLITEMS = typecacheof(list(
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 //returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
 		return 1
 	if (!initial_delay)
