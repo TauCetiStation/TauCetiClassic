@@ -20,13 +20,14 @@
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	var/Temperature = W.get_current_temperature()
+	var/temperature = W.get_current_temperature()
 	if(W.sharp)
 		qdel(src)
-	else if(Temperature > 3000)
+	else if(temperature > 3000)
 		qdel(src)
+	else
+		return ..()
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	return ..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)

@@ -19,12 +19,13 @@
 
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	var/Temperature = W.get_current_temperature()
+	var/temperature = W.get_current_temperature()
 	if(W.sharp)
 		qdel(src)
-	else if(Temperature > 3000)
+	else if(temperature > 3000)
 		qdel(src)
-	return ..()
+	else
+		return ..()
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
