@@ -120,7 +120,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname)
 			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
-	else if(adminview)
+	if(editing_item.icon && editing_item.icon_state)
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
