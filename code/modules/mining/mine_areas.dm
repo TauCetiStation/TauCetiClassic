@@ -69,6 +69,10 @@
 	)
 
 /area/asteroid/mine/unexplored/proc/Spawn(turf/T)
+	if(istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		var/turf/simulated/floor/plating/airless/asteroid/AT = T
+		AT.gets_dug()
+
 	var/to_spawn = pickweight(mob_spawn_list)
 	var/atom/A = new to_spawn(T)
 	if(A)
@@ -83,6 +87,8 @@
 
 /area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
 	if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		return FALSE
+	if(T.icon_state == "asteroid_dug")
 		return FALSE
 	return T.is_mob_placeable(null)
 
