@@ -20,7 +20,7 @@
 
 var/list/editing_item_list = list() // stores the item that is currently being edited for each player
 var/list/editing_item_oldname_list = list()
-/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE, adminview = FALSE)
+/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
