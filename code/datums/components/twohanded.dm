@@ -63,7 +63,7 @@
 	if(icon_wielded)
 		src.icon_wielded = icon_wielded
 
-// register signals withthe parent item
+// Register signals with the parent item
 /datum/component/two_handed/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
@@ -141,20 +141,24 @@
 		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 
-	// // wield update status
+	// Wield update status
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
-		return // blocked wield from item
+		return // Blocked wield from item
 	wielded = TRUE
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 
-	// update item stats and name
+	// Update item stats and name
 	var/obj/item/parent_item = parent
 	if(force_multiplier)
 		parent_item.force *= force_multiplier
 	else if(force_wielded)
 		parent_item.force = force_wielded
 	parent_item.name = "[parent_item.name] (Wielded)"
-	parent_item.update_icon()
+
+	if(icon_wielded)
+		parent_item.icon_state = icon_wielded
+	else
+		parent_item.update_icon()
 
 	if(isrobot(user))
 		to_chat(user, "<span class='notice'>You dedicate your module to [parent].</span>")
@@ -185,12 +189,12 @@
 	if(!wielded)
 		return
 
-	// wield update status
+	// Wield update status
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 
-	// update item stats
+	// Update item stats
 	var/obj/item/parent_item = parent
 	if(force_multiplier)
 		parent_item.force /= force_multiplier
@@ -205,16 +209,19 @@
 		parent_item.name = "[initial(parent_item.name)]"
 
 	// Update icons
-	parent_item.update_icon()
+	if(icon_wielded)
+		parent_item.icon_state = initial(parent_item.icon_state)
+	else
+		parent_item.update_icon()
 
-	if(istype(user)) // tk showed that we might not have a mob here
+	if(istype(user))
 		if(user.get_item_by_slot(SLOT_BACK) == parent)
 			user.update_inv_back()
 		else
 			user.update_inv_l_hand()
 			user.update_inv_r_hand()
 
-		// if the item requires two handed drop the item on unwield
+		// If the item requires two handed drop the item on unwield
 		if(require_twohands && can_drop)
 			user.drop_from_inventory(parent)
 

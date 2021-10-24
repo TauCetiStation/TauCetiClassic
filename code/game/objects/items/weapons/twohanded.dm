@@ -25,7 +25,7 @@
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_spin)
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 40, 10, FALSE)
+	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 40, 10, "fireaxe1")
 	AddComponent(/datum/component/swiping, SCB)
 
 	hitsound = SOUNDIN_DESCERATION
@@ -45,9 +45,6 @@
 
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
 	return wielded
-
-/obj/item/weapon/fireaxe/update_icon()
-	icon_state = "fireaxe[wielded]"
 
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0

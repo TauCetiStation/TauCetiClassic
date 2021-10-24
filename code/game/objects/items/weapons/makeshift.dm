@@ -25,7 +25,7 @@
 
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 18, 10, FALSE)
+	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 18, 10, "spearglass1")
 	AddComponent(/datum/component/swiping, SCB)
 
 /// triggered on wield of two handed item
@@ -44,8 +44,6 @@
 /obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
 	return wielded
 
-/obj/item/weapon/spear/update_icon()
-	icon_state = "spearglass[wielded]"
 
 /obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))

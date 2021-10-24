@@ -238,20 +238,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/sledgehammer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, FALSE)
-
-/// triggered on wield of two handed item
-/obj/item/weapon/sledgehammer/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/weapon/sledgehammer/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
-
-/obj/item/weapon/sledgehammer/update_icon()
-	icon_state = "sledgehammer[wielded]"
+	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
 
 /obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
