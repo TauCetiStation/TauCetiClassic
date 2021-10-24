@@ -384,7 +384,7 @@
 
 	if (drowsyness)
 		drowsyness--
-		set_blurriness(max(2, eye_blurry))
+		blurEyes(2)
 		if (prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
@@ -566,7 +566,7 @@
 			eye_blind = max(eye_blind - 1,0)
 			blinded = TRUE
 		else if(eye_blurry)			//blurry eyes heal slowly
-			adjust_blurriness(-1)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
