@@ -55,6 +55,10 @@
 
 /area/asteroid/mine/unexplored/atom_init()
 	. = ..()
+	InitSpawnArea()
+
+// Creates the spawn area component for this area.
+/area/asteroid/mine/unexplored/proc/InitSpawnArea()
 	// 8 is 1 more than client's view. So mobs spawn right after the view's border
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
 	AddComponent(/datum/component/spawn_area,
@@ -91,6 +95,13 @@
 	if(T.icon_state == "asteroid_dug")
 		return FALSE
 	return T.is_mob_placeable(null)
+
+// Because people didn't want for mobs to spawn on one part of the asteroid I guess
+/area/asteroid/mine/unexplored/safe
+	icon_state = "unexplored_safe"
+
+/area/asteroid/mine/unexplored/safe/InitSpawnArea()
+	return
 
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
