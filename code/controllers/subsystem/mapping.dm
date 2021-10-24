@@ -1,11 +1,10 @@
-var/datum/subsystem/mapping/SSmapping
-
 // How many structures will be spawned
-#define SPACE_STRUCTURES_AMMOUNT 7
+#define SPACE_STRUCTURES_AMOUNT 7
+#define MAX_MINING_SECRET_ROOM 5
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
-/datum/subsystem/mapping
+SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
@@ -13,7 +12,6 @@ var/datum/subsystem/mapping/SSmapping
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
-	var/const/max_secret_rooms = 3
 	var/list/spawned_structures = list()
 	var/list/reserved_space = list()
 
@@ -24,18 +22,17 @@ var/datum/subsystem/mapping/SSmapping
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
 
-/datum/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
-
-/datum/subsystem/mapping/proc/LoadMapConfig()
+/datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
 		config = load_map_config(error_if_missing = FALSE)
 
-/datum/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/Initialize(timeofday)
 	LoadMapConfig()
 	station_image = config.station_image
 	station_name = config.station_name
+	station_name_ru = config.station_name_ru
 	system_name = config.system_name
+	system_name = config.system_name_ru
 
 	loadWorld()
 	renameAreas()
@@ -52,11 +49,11 @@ var/datum/subsystem/mapping/SSmapping
 	spawn_space_structures()
 	..()
 
-/datum/subsystem/mapping/proc/make_mining_asteroid_secrets()
-	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+/datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
+	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
+		make_mining_asteroid_secret(3)
 
-/datum/subsystem/mapping/proc/populate_distribution_map()
+/datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
 		var/datum/ore_distribution/distro = new
 		distro.populate_distribution_map(z)
@@ -68,7 +65,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/x2 // right-top
 	var/y2
 
-/datum/subsystem/mapping/proc/spawn_space_structures()
+/datum/controller/subsystem/mapping/proc/spawn_space_structures()
 	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
 
@@ -78,7 +75,7 @@ var/datum/subsystem/mapping/SSmapping
 		possible += structure_id
 
 	var/list/picked_structures = list()
-	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMMOUNT)
+	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMOUNT)
 		var/structure_id = pick(possible)
 		possible -= structure_id
 		picked_structures += structure_id
@@ -106,11 +103,11 @@ var/datum/subsystem/mapping/SSmapping
 
 			structure.load(T, centered = TRUE, initBounds = FALSE)
 #ifdef SPACE_STRUCTURES_DEBUG
-			info("[structure_id] was created in [T.x],[T.y],[T.z]")
-			message_admins("[structure_id] was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
+			info("[structure_id] was created in [COORD(T)]")
+			message_admins("[structure_id] was created in [COORD(T)] [ADMIN_JMP(T)]")
 #endif
 
-/datum/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
+/datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
@@ -143,16 +140,14 @@ var/datum/subsystem/mapping/SSmapping
 #endif
 	return null
 
-/datum/subsystem/mapping/Recover()
+/datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
-#undef SPACE_STRUCTURES_AMMOUNT
-
 #define INIT_ANNOUNCE(X) info(X)
-/datum/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
@@ -199,7 +194,7 @@ var/datum/subsystem/mapping/SSmapping
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps
 
-/datum/subsystem/mapping/proc/loadWorld()
+/datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
@@ -211,7 +206,7 @@ var/datum/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
-
+	change_lobbyscreen()
 	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
@@ -229,7 +224,7 @@ var/datum/subsystem/mapping/SSmapping
 	if(config.load_junkyard)
 		LoadGroup(FailedZs, "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
 
-	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
+	if(length(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
 		if(FailedZs.len > 1)
 			for(var/I in 2 to FailedZs.len)
@@ -240,7 +235,7 @@ var/datum/subsystem/mapping/SSmapping
 #undef INIT_ANNOUNCE
 
 // Some areas use station name so we rename them here
-/datum/subsystem/mapping/proc/renameAreas()
+/datum/controller/subsystem/mapping/proc/renameAreas()
 	if(!config)
 		return
 
@@ -253,7 +248,7 @@ var/datum/subsystem/mapping/SSmapping
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
-/datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
@@ -261,3 +256,6 @@ var/datum/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
+
+#undef SPACE_STRUCTURES_AMOUNT
+#undef MAX_MINING_SECRET_ROOM

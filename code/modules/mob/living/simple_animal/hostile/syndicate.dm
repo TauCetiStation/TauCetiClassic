@@ -11,17 +11,16 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	attacktext = "punches"
-	a_intent = "harm"
+	melee_damage = 10
+	attacktext = "punch"
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
+	var/gibs = /obj/effect/gibspawner/human
 	min_oxy = 5
 	max_oxy = 0
 	min_tox = 0
@@ -36,30 +35,36 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
-	if(weapon2)
-		new weapon2 (src.loc)
+	if(gibs)
+		new gibs (src.loc)
+		visible_message("<span class='warning'><b>[src]</b> is blown apart along with their equipment by their self-destruct mechanism!</span>")
+	else
+		if(corpse)
+			new corpse (src.loc)
+		if(weapon1)
+			new weapon1 (src.loc)
+		if(weapon2)
+			new weapon2 (src.loc)
 	qdel(src)
 	return
 
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage = 23
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
-	attacktext = "slashes"
+	attacktext = "slash"
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(obj/item/O, mob/user)
@@ -79,13 +84,11 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)	return
 	if(prob(65))
-		src.health -= Proj.damage
+		return ..()
 	else
 		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
-	return 0
-
+		return PROJECTILE_ABSORBED
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	min_oxy = 0
@@ -107,8 +110,8 @@
 	return
 
 /mob/living/simple_animal/hostile/syndicate/ranged
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
@@ -166,11 +169,11 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
+	w_class= SIZE_TINY
 	health = 15
 	maxHealth = 15
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "cuts"
+	melee_damage = 15
+	attacktext = "slic"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	faction = "syndicate"
 	min_oxy = 0

@@ -17,6 +17,7 @@
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src) // Perhaps this may encourage actually buying pistols.
 	new /obj/item/weapon/storage/pouch/ammo(src)
 

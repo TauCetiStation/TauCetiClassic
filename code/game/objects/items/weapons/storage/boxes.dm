@@ -62,13 +62,15 @@
 //Latex gloves
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
-	desc = "Contains white gloves. Must-have of a doctor."
+	desc = "Contains latex and nitrile gloves. Must-have of a doctor."
 	icon_state = "latex_box"
 
 /obj/item/weapon/storage/box/gloves/atom_init()
 	. = ..()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 5)
 		new /obj/item/clothing/gloves/latex(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/gloves/latex/nitrile(src)
 
 //Masks
 /obj/item/weapon/storage/box/masks
@@ -159,16 +161,43 @@
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/smokebomb(src)
 
-//Rubber 40x46mm
 /obj/item/weapon/storage/box/r4046
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
-	icon_state = "4046_box"
+	icon_state = "4046_box(r)"
 
-/obj/item/weapon/storage/box/r4046/atom_init()
+//Rubber 40x46mm
+/obj/item/weapon/storage/box/r4046/rubber
+	name = "box of 40x46mm rubber grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
+	icon_state = "4046_box(r)"
+
+/obj/item/weapon/storage/box/r4046/rubber/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046(src)
+
+//Teargas 40x46mm
+/obj/item/weapon/storage/box/r4046/teargas
+	name = "box of 40x46mm teargas grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
+	icon_state = "4046_box(gas)"
+
+/obj/item/weapon/storage/box/r4046/teargas/atom_init()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/r4046/chem/teargas(src)
+
+//EMP 40x46mm
+/obj/item/weapon/storage/box/r4046/EMP
+	name = "box of 40x46mm EMP grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
+	icon_state = "4046_box(emp)"
+
+/obj/item/weapon/storage/box/r4046/EMP/atom_init()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/r4046/chem/EMP(src)
 
 //EMPs
 /obj/item/weapon/storage/box/emps
@@ -417,7 +446,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
 	can_hold = list(/obj/item/weapon/match)
 
@@ -426,18 +455,30 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
-	if(istype(W) && !W.lit && !W.burnt)
-		if (prob (20))
+/obj/item/weapon/storage/box/matches/atom_init()
+	. = ..()
+	for(var/i in 1 to storage_slots)
+		new /obj/item/weapon/match(src)
+
+/obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
+		if(M.lit || M.burnt)
+			return
+
+		if(prob(20))
 			playsound(src, 'sound/items/matchstick_hit.ogg', VOL_EFFECTS_MASTER, 20)
 			return
+
 		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
-		W.lit = 1
-		W.damtype = "burn"
-		W.icon_state = "match_lit"
-		START_PROCESSING(SSobj, W)
-	W.update_icon()
-	return
+		M.lit = TRUE
+		M.damtype = "burn"
+		M.icon_state = "match_lit"
+		START_PROCESSING(SSobj, M)
+		M.update_icon()
+
+	else
+		return ..()
 
 //Autoinjectors
 /obj/item/weapon/storage/box/autoinjectors
@@ -652,6 +693,29 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/toy/plushie/girly_corgi(src)
+
+/obj/item/weapon/storage/box/mines
+	name = "box of mines"
+	desc = "Full of military-grade mines, just add a foot."
+	icon_state = "mine_box"
+
+/obj/item/weapon/storage/box/mines/explosive
+	name = "box of HE mines"
+
+/obj/item/weapon/storage/box/mines/explosive/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/mines/shock
+	name = "box of shock mines"
+
+/obj/item/weapon/storage/box/mines/shock/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine/shock(src)
+	make_exact_fit()
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

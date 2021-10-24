@@ -3,7 +3,7 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	icon_state = "torch"
 	item_state = "torch"
 	light_color = LIGHT_COLOR_FIRE
@@ -11,10 +11,10 @@
 	slot_flags = null
 	action_button_name = null
 
-/obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
-	..()
+/obj/item/device/flashlight/flare/torch/attackby(obj/item/I, mob/user, params) // ravioli ravioli here comes stupid copypastoli
+	. = ..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(W.get_current_temperature())
+	if(I.get_current_temperature())
 		light(user)
 
 /obj/item/device/flashlight/flare/torch/get_current_temperature()
@@ -40,21 +40,19 @@
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
-	if(user.hand && loc == user)
-		user.update_inv_r_hand()
-	else
-		user.update_inv_l_hand()
+	if(loc == user)
+		user.update_inv_item(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return
 
-/obj/item/stack/sheet/wood/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
-		use(1)
+/obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
 		new /obj/item/device/flashlight/flare/torch(get_turf(user))
-		qdel(W)
-	..()
+		qdel(I)
+		return
+	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
 	name = "rags"
@@ -121,19 +119,21 @@
 			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
+		return
 	if(W.get_current_temperature())
 		StartBurning()
+		return
 /*	if(grill)
-		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))
+		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)
 				//Center the icon where the user clicked.
-				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else */
 	return ..()
 
@@ -309,5 +309,5 @@
 	..()
 	if (get_dist(src, user) <= 2)
 		to_chat(user, "<span class='notice'>There [logs == 1 ? "is" : "are"] [logs] log[logs == 1 ? "" : "s"] in [src]</span>")
-		
+
 #undef ONE_LOG_BURN_TIME

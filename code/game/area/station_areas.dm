@@ -56,7 +56,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/maintenance/escape
 	name = "Escape Shuttle Maintenance"
-	icon_state = "fmaint"	
+	icon_state = "fmaint"
 
 /area/station/maintenance/dormitory
 	name = "Dormitory Maintenance"
@@ -177,9 +177,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
 
-/area/station/hallway/secondary/entry
+/area/station/hallway/secondary/arrival
 	name = "Arrival Shuttle Hallway"
+	icon_state = "arrival"
+
+/area/station/hallway/secondary/entry
+	name = "Entry Shuttles Hallway"
 	icon_state = "entry"
+
+/area/station/hallway/secondary/mine_sci_shuttle
+	name = "Asteroid Shuttle Hallway"
+	icon_state = "mine_sci_shuttle"
 
 /area/station/hallway/secondary/Podbay
 	name = "Pod bay"
@@ -301,6 +309,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/chapel/altar
 	name = "Altar"
 	icon_state = "altar"
+
+/area/station/civilian/chapel/crematorium
+	name = "Crematorium"
+	icon_state = "crematorium"
+
+/area/station/civilian/chapel/mass_driver
+	name = "Chapel Mass Driver"
+	icon_state = "massdriver"
 
 /area/station/civilian/garden
 	name = "Garden"

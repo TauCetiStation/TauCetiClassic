@@ -31,17 +31,14 @@
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
-/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
-
-	//Let people pick the little buggers up.
-	if(M.a_intent == "grab")
-		if(M.species && M.species.name == DIONA)
-			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
-			if(M.is_busy() || !do_after(M, 40, target = src))
-				return
-			merging(M)
-			return
-	..()
+/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	if(attacker.get_species() == DIONA)
+		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
+			return TRUE
+		merging(attacker)
+		return TRUE
+	return ..()
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
@@ -89,7 +86,7 @@
 		if(C.get_species() == DIONA)
 			choices += C
 	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-	if(!M || !src || !(src.Adjacent(M)))
+	if(!M || !src || !(Adjacent(M)))
 		return
 	if(is_busy() || !do_after(src, 40, target = M))
 		return
@@ -132,7 +129,11 @@
 		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
 		return
 
-	var/langdiff = languages - gestalt.languages
+	var/list/langdiff = languages - gestalt.languages
+	if(langdiff.len == 0)
+		to_chat(src, "<span class='notice'>It would appear, that [gestalt] already knows all you could give.</span>")
+		return
+
 	var/datum/language/L = pick(langdiff)
 	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
 	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")
@@ -165,7 +166,7 @@
 		return
 
 	if(injecting)
-		switch(alert("Would you like to stop injecting, or change chemical?","Choose.","Stop injecting","Change chemical"))
+		switch(tgui_alert(usr, "Would you like to stop injecting, or change chemical?","Choose.", list("Stop injecting","Change chemical")))
 			if("Stop injecting")
 				injecting = null
 				return
@@ -193,7 +194,7 @@
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
-	src.visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
+	visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
 
 /mob/living/carbon/monkey/diona/verb/eat_weeds()
 
@@ -210,9 +211,9 @@
 
 	if(!src || !target || target.weedlevel == 0) return //Sanity check.
 
-	src.reagents.add_reagent("nutriment", target.weedlevel)
+	reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0
-	src.visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
+	visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
 
 /mob/living/carbon/monkey/diona/verb/evolve()
 
@@ -221,7 +222,7 @@
 	set desc = "Grow to a more complex form."
 
 	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
-		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
+		to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play as a full diona."))
 		return 0
 
 	if(gestalt)
@@ -236,8 +237,8 @@
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
-	src.split()
-	src.visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
+	split()
+	visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species(DIONA)
@@ -256,7 +257,7 @@
 	adult.ckey = src.ckey
 
 	for (var/obj/item/W in src.contents)
-		src.drop_from_inventory(W)
+		drop_from_inventory(W)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
@@ -280,7 +281,7 @@
 		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
-	src.visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
+	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
 		languages |= L
@@ -310,7 +311,7 @@
 			return 1
 	return ..()
 
-/mob/living/carbon/monkey/diona/say(var/message)
+/mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
 
@@ -319,7 +320,7 @@
 			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 
-	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = copytext_char(trim(message), 1, MAX_MESSAGE_LEN)
 
 	if(stat == DEAD)
 		return say_dead(message)
@@ -327,7 +328,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext_char(message,2+length_char(speaking.key)))
 
 	if(!message || stat)
 		return

@@ -1,4 +1,3 @@
-
 /obj/machinery/artifact_analyser
 	name = "Anomaly Analyser"
 	desc = "Studies the emissions of anomalous materials to discover their uses."
@@ -29,7 +28,7 @@
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
 /obj/machinery/artifact_analyser/ui_interact(mob/user)
-	if(stat & (NOPOWER|BROKEN) || !in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if(stat & (NOPOWER|BROKEN) || !Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
 
@@ -42,16 +41,15 @@
 		dat += "<b><font color=red>Unable to locate analysis pad.</font></b><br>"
 	else if(scan_in_progress)
 		dat += "Please wait. Analysis in progress.<br>"
-		dat += "<a href='?src=\ref[src];halt_scan=1'>Halt scanning.</a><br>"
+		dat += "<a href='?src=\ref[src];halt_scan=1'>Halt scanning</a><br>"
 	else
 		dat += "Scanner is ready.<br>"
-		dat += "<a href='?src=\ref[src];begin_scan=1'>Begin scanning.</a><br>"
+		dat += "<a href='?src=\ref[src];begin_scan=1'>Begin scanning</a><br>"
 
 	dat += "<br>"
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500)
+	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500, nref = src)
 	popup.set_content(dat)
 	popup.open()
 
@@ -80,8 +78,8 @@
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
-		src.visible_message("<b>[name]</b> states, \"Scanning complete.\"")
-		var/obj/item/weapon/paper/P = new(src.loc)
+		visible_message("<b>[name]</b> states, \"Scanning complete.\"")
+		var/obj/item/weapon/paper/artifact_info/P = new(src.loc)
 		P.name = "[src] report #[++report_num]"
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<br>"
@@ -94,19 +92,21 @@
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
+			P.artifact_type = A.name
+			if(A.first_effect)
+				P.artifact_first_effect = A.first_effect.log_name
+			if(A.secondary_effect)
+				P.artifact_second_effect = A.secondary_effect.log_name
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
-	if(href_list["close"])
-		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
-		usr.unset_machine(src)
-		usr << browse(null, "window=artanalyser")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
-
+	if(href_list["close"])
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
+		usr.unset_machine(src)
+		return FALSE
 	if(href_list["begin_scan"])
 		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		if(!owned_scanner)
@@ -126,23 +126,23 @@
 						A.being_used = 1
 
 				if(artifact_in_use)
-					src.visible_message("<b>[name]</b> states, \"Cannot scan. Too much interference.\"")
+					visible_message("<b>[name]</b> states, \"Cannot scan. Too much interference.\"")
 					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 				else
 					scanned_object = O
 					scan_in_progress = 1
 					scan_completion_time = world.time + scan_duration
-					src.visible_message("<b>[name]</b> states, \"Scanning begun.\"")
+					visible_message("<b>[name]</b> states, \"Scanning begun.\"")
 					owned_scanner.icon_state = "xenoarch_scanner_scanning"
 					flick("xenoarch_console_working", src)
 				break
 			if(!scanned_object)
-				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
+				visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
 		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
-		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
+		visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
 	updateDialog()
 
@@ -182,11 +182,11 @@
 			var/obj/machinery/artifact/A = scanned_obj
 			var/out = "Anomalous alien device - composed of an unknown alloy.<br><br>"
 
-			if(A.my_effect)
-				out += A.my_effect.getDescription()
+			if(A.first_effect)
+				out += A.first_effect.getDescription()
 
-			if(A.secondary_effect && A.secondary_effect.activated)
-				out += "<br><br>Internal scans indicate ongoing secondary activity operating independently from primary systems.<br><br>"
+			if(A.secondary_effect)
+				out += "<br><br>Internal scans indicate ongoing secondary activity<br><br>"
 				out += A.secondary_effect.getDescription()
 
 			return out

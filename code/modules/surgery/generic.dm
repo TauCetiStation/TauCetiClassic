@@ -51,7 +51,7 @@
 	//Could be cleaner ...
 	BP.open = 1
 	BP.take_damage(1, 1, DAM_SHARP|DAM_EDGE, tool)
-	BP.clamp()
+	BP.strap()
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -87,7 +87,7 @@
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
-	BP.clamp()
+	BP.strap()
 	BP.open = 2
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -160,7 +160,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] clamps bleeders in [target]'s [BP.name] with \the [tool].</span>",	\
 	"<span class='notice'>You clamp bleeders in [target]'s [BP.name] with \the [tool].</span>")
-	BP.clamp()
+	BP.strap()
 
 /datum/surgery_step/generic/clamp_bleeders/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -225,9 +225,10 @@
 
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
+	/obj/item/stack/medical/suture = 100,
+	/obj/item/weapon/cautery = 100,
+	/obj/item/clothing/mask/cigarette = 75,
+	/obj/item/weapon/lighter = 50,
 	/obj/item/weapon/weldingtool = 50
 	)
 

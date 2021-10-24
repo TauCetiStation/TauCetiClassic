@@ -36,7 +36,7 @@
 /obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
-	dat += "<B>Holodeck Control System</B><BR>"
+	dat += ""
 	dat += "<HR>Current Loaded Programs:<BR>"
 	for(var/prog in supported_programs)
 		if(prog == "Empty")
@@ -53,30 +53,31 @@
 		dat += "<BR>"
 		if(safety_disabled)
 			if (emagged)
-				dat += "<font color=red><b>ERROR</b>: Cannot re-enable Safety Protocols.</font><BR>"
+				dat += "<span class='red'><b>ERROR</b>: Cannot re-enable Safety Protocols.</span><BR>"
 			else
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
+				dat += "<A class='green' href='?src=\ref[src];AIoverride=1'>Re-Enable Safety Protocols</A><BR>"
 		else
-			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
+			dat += "<A class='red' href='?src=\ref[src];AIoverride=1'>Override Safety Protocols</A><BR>"
 
 	dat += "<BR>"
 
 	if(safety_disabled)
 		for(var/prog in restricted_programs)
-			dat += "<A href='?src=\ref[src];program=[restricted_programs[prog]]'>(<font color=red>Begin [prog]</font>)</A><BR>"
+			dat += "<A class='red' href='?src=\ref[src];program=[restricted_programs[prog]]'>Begin [prog]</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
-		dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
+		dat += "Safety Protocols are <span class='red'> DISABLED </span><BR>"
 	else
-		dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
+		dat += "Safety Protocols are <span class='green'> ENABLED </span><BR>"
 
 	if(linkedholodeck.has_gravity)
-		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=green>(ON)</font></A><BR>"
+		dat += "Gravity is <A class='green' href='?src=\ref[src];gravity=1'>ON</A><BR>"
 	else
-		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
+		dat += "Gravity is <A class='blue' href='?src=\ref[src];gravity=1'>OFF</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "Holodeck Control System", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
@@ -108,7 +109,7 @@
 	else if(href_list["gravity"])
 		toggleGravity(linkedholodeck)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/HolodeckControl/emag_act(mob/user)
 	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
@@ -120,7 +121,7 @@
 		to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
 		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
@@ -149,11 +150,6 @@
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	return ..()
-
-/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
-	emergencyShutdown()
-	..()
-
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
@@ -275,6 +271,7 @@
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
 		holo_obj.flags_2 |= HOLOGRAM_2
+		holo_obj.price = 0
 
 	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 
@@ -311,9 +308,9 @@
 	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
-		A.gravitychange(0,A)
+		A.gravitychange(FALSE)
 	else
-		A.gravitychange(1,A)
+		A.gravitychange(TRUE)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
 	//Get rid of any items
@@ -326,7 +323,7 @@
 	loadIdProgram()
 
 	if(!linkedholodeck.has_gravity)
-		linkedholodeck.gravitychange(1,linkedholodeck)
+		linkedholodeck.gravitychange(TRUE)
 
 	active = 0
 	set_power_use(IDLE_POWER_USE)

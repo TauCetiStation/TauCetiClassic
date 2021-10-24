@@ -5,8 +5,6 @@
 #define MAIN_SCREEN 0
 #define ERROR_SCREEN 1
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and
@@ -21,8 +19,8 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(access_brig)
-	anchored = 1.0    		// can't pick it up
-	density = 0       		// can walk through it.
+	anchored = TRUE    		// can't pick it up
+	density = FALSE       		// can walk through it.
 	var/screen = MAIN_SCREEN
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
@@ -36,7 +34,7 @@
 	var/prisoner_crimes = ""
 	var/prisoner_details = ""
 	var/obj/item/device/radio/intercom/radio // for /s announce
-
+	var/datum/data/record/security_data = null
 
 	maptext_height = 26
 	maptext_width = 32
@@ -83,15 +81,21 @@
 		if(world.timeofday > (src.releasetime - 300)) //30 sec notification before release
 			if (!flag30sec)
 				flag30sec = 1
-				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
+				broadcast_security_hud_message("<b>[src.name]</b> Срок приговора заключенного истекает через 30 секунд.", src)
 
 		if(world.timeofday > src.releasetime)
-			broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
-			src.timer_end() // open doors, reset timer, clear status screen
+			broadcast_security_hud_message("<b>[src.name]</b> Заключенный [prisoner_name] отбыл вынесенный приговор. <b>[timer_activator]</b> запрашивается для процедуры освобождения.", src)
+			if(security_data)
+				add_record(null, security_data, "Отбыл наказание за преступления по статьям: [prisoner_crimes]. Уголовный статус статус был изменен на <b>Released</b>", id)
+				security_data.fields["criminal"] = "Released"
+				for(var/mob/living/carbon/human/H in global.human_list)
+					if(H.real_name == prisoner_name)
+						H.sec_hud_set_security_status()
+			timer_end() // open doors, reset timer, clear status screen
 			cell_open()
 
-		src.updateUsrDialog()
-		src.update_icon()
+		updateUsrDialog()
+		update_icon()
 
 	return
 
@@ -148,6 +152,7 @@
 	prisoner_crimes = ""
 	prisoner_details = ""
 	timer_activator = ""
+	security_data = null
 
 	return
 
@@ -196,35 +201,35 @@
 	var/setminute = round(((timetoset / 10) - setsecond) / 60)
 
 	// dat
-	var/dat = "<HTML><BODY><TT>"
+	var/dat = "<TT>"
 
 	switch(screen)
 		if(MAIN_SCREEN)
-			dat += "<HR>Timer System:</hr>"
-			dat += " <b>Door [id] controls</b><br/>"
+			dat += "<HR>Таймер камеры:</hr>"
+			dat += " <b>Контролирует двери камеры [id]</b><br/>"
 			dat +={"
-				<HR><B>All lines must be filled in correctly</B>
-				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [prisoner_name]
-				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [prisoner_crimes]
-				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [prisoner_details]<BR>
-				<br/><B>Authorized by:</B> <FONT COLOR='green'>[timer_activator]</FONT><HR></hr>
+				<HR><B>Все поля должны быть заполнены правильно.</B>
+				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Имя</A>:</B> [prisoner_name] <B><A href='?src=\ref[src];set_manually_name=TRUE'>Ввести вручную</A></B>
+				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Статьи</A>:</B> [prisoner_crimes]
+				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Подробности</A>:</B> [prisoner_details]<BR>
+				<br/><B>Уполномоченный:</B> <FONT COLOR='green'>[timer_activator]</FONT><HR></hr>
 			"}
 
 			// Start/Stop timer
 			if (src.timing)
-				dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
+				dat += "<a href='?src=\ref[src];timing=0'>Остановить таймер и открыть двери</a><br/>"
 			else
-				dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
+				dat += "<a href='?src=\ref[src];timing=1'>Запустить таймер и закрыть двери</a><br/>"
 
 			// Time Left display (uses releasetime)
-			dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
+			dat += "Осталось времени: [(minute ? text("[minute]:") : null)][second] <br/>"
 			dat += "<br/>"
 
 			// Set Timer display (uses timetoset)
 			if(src.timing)
-				dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='?src=\ref[src];change=1'>Set</a><br/>"
+				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='?src=\ref[src];change=1'>Установить</a><br/>"
 			else
-				dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
+				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
 
 			// Controls
 			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
@@ -232,25 +237,25 @@
 			// Mounted flash controls
 			for(var/obj/machinery/flasher/F in targets)
 				if(F.last_flash && (F.last_flash + 150) > world.time)
-					dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
+					dat += "<br/><A href='?src=\ref[src];fc=1'>Вспышка Перезаряжается</A>"
 				else
-					dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
+					dat += "<br/><A href='?src=\ref[src];fc=1'>Ослепить</A>"
 
-			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
-			dat += "</TT></BODY></HTML>"
+			dat += "</TT>"
 
 		if(ERROR_SCREEN)
-			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
+			dat+="<B><FONT COLOR='red'>ОШИБКА: Неверные данные заключенного</B></FONT><HR><BR>"
 			if(prisoner_name == "")
-				dat+="<FONT COLOR='maroon'>•Invalid prisoner name.</FONT><BR>"
+				dat+="<FONT COLOR='red'>•Не указано имя заключенного.</FONT><BR>"
 			if(prisoner_crimes == "")
-				dat+="<FONT COLOR='maroon'>•Invalid crimes number.</FONT><BR>"
+				dat+="<FONT COLOR='red'>•Не указаны статьи.</FONT><BR>"
 			if(prisoner_details == "")
-				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
+				dat+="<FONT COLOR='red'>•Не указаны подробности нарушения.</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Назад</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 //Function for using door_timer dialog input, checks if user has permission
 // href_list to
@@ -265,15 +270,36 @@
 		return
 
 	if(href_list["set_prisoner_name"])
-		prisoner_name = sanitize_safe(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
+		var/list/available_targets = list()
+		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, src, "view"))
+			if(H)
+				var/target_name = H.get_visible_name(TRUE)
+				if(target_name == usr.real_name)
+					continue
+				available_targets += target_name
+		if(available_targets.len == 0)
+			tgui_alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
+			return
+		prisoner_name = sanitize(input(usr, "Выберите имя заключенного.", "Таймер камеры", "") in available_targets)
+		var/record_id = find_record_by_name(usr, prisoner_name)
+		security_data = find_security_record("id", record_id)
+		if(!security_data)
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных. Введите имя вручную.")
+
+	if(href_list["set_manually_name"])
+		prisoner_name = sanitize(input(usr, "Введите имя", "Таймер камеры", input_default(prisoner_name)), MAX_LNAME_LEN)
+		var/record_id = find_record_by_name(usr, prisoner_name)
+		security_data = find_security_record("id", record_id)
+		if(!security_data)
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных.")
 
 	if(href_list["set_prisoner_crimes"])
-		prisoner_crimes = sanitize_safe(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
+		prisoner_crimes = sanitize(input(usr, "Введите статьи", "Таймер камеры", input_default(prisoner_crimes)), MAX_LNAME_LEN)
 
 	if(href_list["set_prisoner_details"])
-		prisoner_details = sanitize_safe(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
+		prisoner_details = sanitize(input(usr, "Введите подробности", "Таймер камеры", input_default(prisoner_details)), MAX_LNAME_LEN)
 
-	if(!src.allowed(usr))
+	if(!allowed(usr))
 		return
 
 	if(href_list["timing"])
@@ -283,12 +309,28 @@
 			src.timing = text2num(href_list["timing"])
 
 			if(src.timing)
-				src.timer_start(usr.name)
+				timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
-				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Prison term: [prison_minute] min.", "Prison Timer", freq = radiochannels["Security"])
+				var/data = ""
+				if(security_data)
+					add_record(usr, security_data, "Уголовный статус статус был изменен на <b>Incarcerated</b>.<br><b>Статья:</b> [prisoner_crimes].<br><b>Подробности:</b> [prisoner_details].<br><b>Время наказания:</b> [prison_minute] min.")
+					security_data.fields["criminal"] = "Incarcerated"
+					for(var/mob/living/carbon/human/H in global.human_list)
+						if(H.real_name == prisoner_name)
+							H.sec_hud_set_security_status()
+					data = "База данных обновлена."
+				else
+					data = "База данных не обновлена."
+				radio.autosay("[timer_activator] посадил [prisoner_name] в камеру [id]. Статья: [prisoner_crimes]. Подробности: [prisoner_details]. Время наказания: [prison_minute] min. [data]", "Prison Timer", freq = radiochannels["Security"])
 				cell_close()
 			else
-				src.timer_end()
+				if(security_data)
+					add_record(usr, security_data, "Освобожден досрочно из камеры [id]. Уголовный статус статус был изменен на <b>Paroled</b>")
+					security_data.fields["criminal"] = "Paroled"
+					for(var/mob/living/carbon/human/H in global.human_list)
+						if(H.real_name == prisoner_name)
+							H.sec_hud_set_security_status()
+				timer_end()
 				cell_open()
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
@@ -304,21 +346,14 @@
 				F.flash()
 
 		if(href_list["change"])
-			src.timer_start(usr.name)
+			timer_start(usr.name)
 			cell_close()
 
 	if(href_list["setScreen"])
 		src.screen = text2num(href_list["setScreen"])
 
-	src.updateUsrDialog()
-	src.update_icon()
-
-	/* if(src.timing)
-		src.timer_start()
-
-	else
-		src.timer_end() */
-
+	updateUsrDialog()
+	update_icon()
 
 //icon update function
 // if NOPOWER, display blank
@@ -357,22 +392,6 @@
 	if(maptext != new_text)
 		maptext = new_text
 
-
-//Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
-//Stolen from status_display
-/obj/machinery/door_timer/proc/texticon(tn, px = 0, py = 0)
-	var/image/I = image('icons/obj/status_display.dmi', "blank")
-	var/len = lentext(tn)
-
-	for(var/d = 1 to len)
-		var/char = copytext(tn, len-d+1, len-d+2)
-		if(char == " ")
-			continue
-		var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
-		ID.pixel_x = -(d-1)*5 + px
-		ID.pixel_y = py
-		I.add_overlay(ID)
-	return I
 
 /obj/machinery/door_timer/cell_1
 	name = "Cell 1"

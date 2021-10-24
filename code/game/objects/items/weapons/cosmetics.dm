@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/colour = "red"
 	var/open = 0
 
@@ -97,7 +97,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = O_MOUTH, mob/living/carbon/human/AH = null)
@@ -106,8 +106,7 @@
 	else
 		H.h_style = "Skinhead"
 	if(AH)
-		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
-		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
+		H.log_combat(AH, "shaved with [name]")
 	H.update_hair()
 	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
@@ -179,11 +178,11 @@
 		..()
 
 /obj/item/weapon/haircomb //sparklysheep's comb
-	name = "purple comb"
-	desc = "A pristine purple comb made from flexible plastic."
-	w_class = ITEM_SIZE_TINY
+	name = "black comb"
+	desc = "A pristine black comb made from flexible plastic."
+	w_class = SIZE_MINUSCULE
 	icon = 'icons/obj/items.dmi'
-	icon_state = "purplecomb"
+	icon_state = "blackcomb"
 	item_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
@@ -202,7 +201,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("cut", "stabbed", "chipped")
@@ -235,7 +234,10 @@
 	return hash
 
 /obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
-	var/mob/living/carbon/human/dummy/mannequin = new(null, H.species.name)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_BARBER, H.species.name)
+
+	mannequin.set_species(H.species.name)
+
 	mannequin.gender = H.gender
 	mannequin.age = H.age
 	mannequin.b_type = H.b_type
@@ -248,10 +250,16 @@
 		mannequin.r_hair = H.r_hair
 		mannequin.g_hair = H.g_hair
 		mannequin.b_hair = H.b_hair
+		mannequin.r_grad = H.r_grad
+		mannequin.g_grad = H.g_grad
+		mannequin.b_grad = H.b_grad
 	else
 		mannequin.r_hair = H.dyed_r_hair
 		mannequin.g_hair = H.dyed_g_hair
 		mannequin.b_hair = H.dyed_b_hair
+		mannequin.r_grad = H.dyed_r_hair
+		mannequin.g_grad = H.dyed_g_hair
+		mannequin.b_grad = H.dyed_b_hair
 
 	if(!H.facial_painted)
 		mannequin.r_facial = H.r_facial
@@ -272,6 +280,8 @@
 		mannequin.h_style = selectedhairstyle
 	else
 		mannequin.h_style = H.h_style
+
+	mannequin.grad_style = H.grad_style
 
 	if(isfacehair && selectedhairstyle)
 		mannequin.f_style = selectedhairstyle
@@ -312,25 +322,25 @@
 	if(!MA)
 		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 		MA = new /mutable_appearance(mannequin)
-		qdel(mannequin)
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_BARBER)
 		LAZYSET(scissors_icon_cache, hash, MA)
 
 	var/pos = 0
 	for(var/D in cardinal)
 		pos++
-		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		var/atom/movable/screen/O = LAZYACCESS(char_render_holders, "[D]")
 		if(!O)
 			O = new
 			LAZYSET(char_render_holders, "[D]", O)
 			barber.client.screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.screen_loc = "barber_preview_map:[pos],0"
 
 /obj/item/weapon/scissors/proc/clear_character_previews()
 	barber << browse(null, "window=barber_window")
 	for(var/index in char_render_holders)
-		var/obj/screen/S = char_render_holders[index]
+		var/atom/movable/screen/S = char_render_holders[index]
 		if(barber && barber.client)
 			barber.client.screen -= S
 		qdel(S)
@@ -344,31 +354,30 @@
 
 	create_character_previews()
 
-	var/list/selected_styles_list = hair_styles_list
+	var/list/selected_styles_list = hairs_cache["[barbertarget.get_species()][PLURAL]"]
 	if(isfacehair)
-		selected_styles_list = facial_hair_styles_list
+		selected_styles_list = facial_hairs_cache["[barbertarget.get_species()][PLURAL]"]
 
 	var/haircutlist = "<table style='width:100%'><tr>"
 	var/tablei = 0
 	for(var/i in selected_styles_list)
-		var/datum/sprite_accessory/hair/tmp_hair = selected_styles_list[i]
-		if(barbertarget.species.name in tmp_hair.species_allowed)
-			var/styles = ""
-			if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
-				styles = "color: rgb(255,0,0)"
-			haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
-			if(++tablei >= 5)
-				tablei = 0
-				haircutlist+="</tr><tr>"
+		var/styles = ""
+		if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
+			styles = "color: rgb(255,0,0)"
+		haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
+		if(++tablei >= 5)
+			tablei = 0
+			haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
 	winshow(barber, "barber_window", TRUE)
-	barber << browse("<html><head><title>Grooming</title></head>" \
-		+ "<body style='margin:0;text-align:center'>" \
-		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
-		+ haircutlist \
-		+ "</body></html>", "window=barber_window")
-	onclose(barber, "barber_window", src)
+	var/dat = ""
+	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
+	dat += haircutlist
+
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/item/weapon/scissors/proc/dohaircut()
@@ -378,7 +387,7 @@
 
 	if(!barber || !barbertarget || !selectedhairstyle)
 		return
-	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
+	if(!barbertarget.Adjacent(barber) || barber.get_active_hand() != src)
 		return
 
 	if(isfacehair)
@@ -400,7 +409,7 @@
 
 
 /obj/item/weapon/scissors/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 

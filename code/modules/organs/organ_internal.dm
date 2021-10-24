@@ -129,9 +129,49 @@
 	name = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
+	var/heart_status = HEART_NORMAL
+	var/fibrillation_timer_id = null
+
+/obj/item/organ/internal/heart/proc/heart_stop()
+	heart_status = HEART_FAILURE
+
+/obj/item/organ/internal/heart/proc/heart_fibrillate()
+	var/failing_interval = 1 MINUTE
+	heart_status = HEART_FIBR
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		failing_interval = 30 SECONDS
+	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/organ/internal/heart/proc/heart_normalize()
+	heart_status = HEART_NORMAL
+	deltimer(fibrillation_timer_id)
+	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
-	name = "servomotor"
+	name = "cooling pump"
+
+	var/pumping_rate = 5
+	var/bruised_loss = 3
+
+/obj/item/organ/internal/heart/ipc/process()
+	if(owner.nutrition < 1)
+		return
+	if(is_broken())
+		return
+
+	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
+	if(!istype(lungs))
+		return
+
+	var/pumping_volume = pumping_rate
+	if(is_bruised())
+		pumping_volume -= bruised_loss
+
+	if(pumping_volume > 0)
+		lungs.add_refrigerant(pumping_volume)
+
+/obj/item/organ/internal/heart/vox
+	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
@@ -139,6 +179,10 @@
 	parent_bodypart = BP_CHEST
 
 	var/has_gills = FALSE
+
+/obj/item/organ/internal/lungs/vox
+	name = "air capillary sack"
+	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
@@ -150,6 +194,11 @@
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+
+	var/refrigerant_max = 50
+	var/refrigerant = 50
+	var/refrigerant_rate = 5
+	var/bruised_loss = 3
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -163,7 +212,7 @@
 		if(prob(2))
 			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
-		if(prob(4))
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
 			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 
@@ -195,6 +244,38 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
+/obj/item/organ/internal/lungs/ipc/process()
+	if(owner.nutrition < 1)
+		return
+	var/temp_gain = owner.species.synth_temp_gain
+
+	if(refrigerant > 0 && !is_broken())
+		var/refrigerant_spent = refrigerant_rate
+		refrigerant -= refrigerant_rate
+		if(refrigerant < 0)
+			refrigerant_spent += refrigerant
+			refrigerant = 0
+
+		if(is_bruised())
+			refrigerant_spent -= bruised_loss
+
+		if(refrigerant_spent > 0)
+			temp_gain -= refrigerant_spent
+
+	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
+		owner.bodytemperature -= 50
+
+	if(temp_gain > 0)
+		owner.bodytemperature += temp_gain
+		if(owner.bodytemperature > owner.species.synth_temp_max)
+			owner.bodytemperature = owner.species.synth_temp_max
+
+/obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
+	if(refrigerant < refrigerant_max)
+		refrigerant += volume
+		if(refrigerant > refrigerant_max)
+			refrigerant = refrigerant_max
+
 /obj/item/organ/internal/liver
 	name = "liver"
 	organ_tag = O_LIVER
@@ -204,12 +285,17 @@
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
 
+/obj/item/organ/internal/liver/vox
+	name = "waste tract"
+
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/atom_init()
-	. = ..()
-	new/obj/item/weapon/stock_parts/cell/crap/(src)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+	..()
+	new/obj/item/weapon/stock_parts/cell/crap(src)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -251,21 +337,40 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	if(damage && C)
+
+	if(!C)
+		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
+		owner.SetParalysis(2)
+		owner.blurEyes(2)
+		owner.silent = 2
+		return
+	if(damage)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
-	else if(!C)
-		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
-			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-		owner.SetParalysis(5)
-		owner.eye_blurry = 5
-		owner.silent = 5
+	if(owner.nutrition < 1)
+		owner.SetParalysis(2)
+		if(accumulator_warning < world.time)
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+			accumulator_warning = world.time + 15 SECONDS
+
+/obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
+	var/obj/item/weapon/stock_parts/cell/C = locate() in src
+	if(!C)
+		return
+	var/turf/T = get_turf(owner.loc)
+	if(owner.nutrition > (C.maxcharge * 1.2))
+		explosion(T, 1, 0, 1, 1)
+		C.ex_act(1.0)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/kidneys/vox
+	name = "filtration bladder"
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
@@ -285,6 +390,8 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(next_warning > world.time)
 		return
 	next_warning = world.time + 10 SECONDS
@@ -297,7 +404,7 @@
 			if(!first)
 				damage_report += "\n"
 			first = FALSE
-			damage_report += "<span class='warning'><b>%[uppertext_(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext_(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+			damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
 
 	if(damage_report != "")
 		to_chat(owner, damage_report)
@@ -327,6 +434,6 @@
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
 	if(is_bruised())
-		owner.eye_blurry = 20
+		owner.blurEyes(20)
 	if(is_broken())
 		owner.eye_blind = 20

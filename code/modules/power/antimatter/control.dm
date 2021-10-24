@@ -3,8 +3,8 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000
@@ -44,7 +44,7 @@
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
 		explosion(get_turf(src),8,12,18,12)
-		if(src) del(src)
+		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
@@ -153,14 +153,14 @@
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"You secure the anchor bolts to the floor.", \
 				"You hear a ratchet")
-			src.anchored = 1
+			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"You remove the anchor bolts.", \
 				"You hear a ratchet")
-			src.anchored = 0
+			src.anchored = FALSE
 			disconnect_from_network()
 		else
 			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
@@ -263,9 +263,7 @@
 			user << browse(null, "window=AMcontrol")
 			return
 
-	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	var/dat
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
 	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
@@ -288,17 +286,12 @@
 		dat += "- Injecting: [fuel_injection] units<BR>"
 		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-
-	user << browse(entity_ja(dat), "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
+	var/datum/browser/popup = new(user, "AMcontrol", "AntiMatter Control Panel", 420, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=AMcontrol")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

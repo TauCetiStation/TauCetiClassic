@@ -6,7 +6,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 	layer = BELOW_CONTAINERS_LAYER
 	speed_process = TRUE
@@ -20,8 +20,11 @@
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
 
-// Auto conveyour is always on unless unpowered
+/obj/machinery/conveyor/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
 
+// Auto conveyour is always on unless unpowered
 /obj/machinery/conveyor/auto/atom_init(mapload, newdir)
 	. = ..(mapload, newdir)
 	operating = 1
@@ -44,7 +47,7 @@
 /obj/machinery/conveyor/atom_init(mapload, newdir)
 	. = ..()
 	if(newdir)
-		dir = newdir
+		set_dir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -130,18 +133,12 @@
 	if(iswrench(I))
 		if(!(stat & BROKEN))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			dir = turn(dir,-45)
+			set_dir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
-	if(!user.drop_item())
-		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>")
-		return
-	if(I && I.loc)
-		I.loc = src.loc
-	return
+
+	return ..()
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
@@ -184,7 +181,7 @@
 /*
 /obj/machinery/conveyor/verb/destroy()
 	set src in view()
-	src.broken()
+	broken()
 */
 
 /obj/machinery/conveyor/power_change()
@@ -308,15 +305,17 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/id = "" //inherited by the belt
 
-/obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/conveyor_switch_construct))
 		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
+
+	else
+		return ..()
 
 /obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
@@ -335,7 +334,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/atom_init()

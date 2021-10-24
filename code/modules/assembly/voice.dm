@@ -13,7 +13,7 @@
 
 /obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)
 
-	msg = lowertext_(sanitize(msg))
+	msg = lowertext(msg)
 
 	if(listening)
 		recorded = msg
@@ -23,9 +23,9 @@
 		if(findtext(msg, recorded))
 			var/time = time2text(world.realtime,"hh:mm:ss")
 			var/turf/T = get_turf(src)
-			lastsignalers.Add("[time] <B>:</B> [M.ckey] activated [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\"")
-			message_admins("[src] activated by [key_name_admin(M)], location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\" [ADMIN_JMP(usr)]")
-			log_game("[src] activated by [key_name(M)], location ([T.x],[T.y],[T.z]), code: \"[recorded]\"")
+			lastsignalers.Add("[time] <B>:</B> [M.ckey] activated [src] @ location [COORD(T)] <B>:</B> \"[recorded]\"")
+			message_admins("[src] activated by [key_name_admin(M)], location [COORD(T)] <B>:</B> \"[recorded]\" [ADMIN_JMP(usr)]")
+			log_game("[src] activated by [key_name(M)], location [COORD(T)], code: \"[recorded]\"")
 			audible_message("Beeeep", hearing_distance = 1)
 			spawn(10)
 				pulse(0)

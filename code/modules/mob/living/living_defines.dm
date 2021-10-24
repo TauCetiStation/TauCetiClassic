@@ -4,7 +4,6 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 
-	var/hud_updateflag = 0
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0.0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -51,5 +50,24 @@
 
 	var/list/roundstart_quirks = list()
 	var/list/status_effects // a list of all status effects the mob has
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD, HOLY_HUD)
 
 	var/force_remote_viewing = FALSE
+
+	// These should be changed whenever the mob somehow permanently affects their image.
+	// By default these are filled in in atom_init().
+	var/matrix/default_transform = matrix()
+	var/default_pixel_x = 0
+	var/default_pixel_y = 0
+	var/default_layer = 0
+
+	// Moveset type that this mob is spawned with(What the mob should know "by nature")
+	var/moveset_type = /datum/combat_moveset/living
+
+	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
+	var/logs_combat = TRUE
+
+	var/datum/modval/beauty
+
+	var/beauty_living = 0.0
+	var/beauty_dead = -100.0

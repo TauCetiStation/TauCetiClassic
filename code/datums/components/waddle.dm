@@ -1,17 +1,23 @@
+#define WADDLE_ANIM_DELAY 2
+
+/atom/movable/var/next_waddle = 0
+
 /atom/movable/proc/waddle(waddle_angle, waddle_height)
+	next_waddle = world.time + WADDLE_ANIM_DELAY
+
 	var/matrix/old_transform = transform
 	var/old_pixel_z = pixel_z
 	animate(src, pixel_z = pixel_z + waddle_height, time = 0)
-	animate(pixel_z = old_pixel_z, transform = turn(transform, waddle_angle), time=2)
+	animate(pixel_z = old_pixel_z, transform = turn(transform, waddle_angle), time=WADDLE_ANIM_DELAY)
 	animate(transform = old_transform, time = 0)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_WADDLE, waddle_angle, waddle_height)
 
 /atom/movable/proc/can_waddle()
-	return !anchored
+	return !anchored && next_waddle <= world.time
 
 /mob/can_waddle()
-	return !notransform && !anchored && !incapacitated()
+	return ..() && !notransform && !incapacitated()
 
 
 /*
@@ -32,8 +38,10 @@
 
 	RegisterSignal(parent, waddle_on, .proc/try_waddle)
 
-/datum/component/waddle/proc/try_waddle(atom/movable/AM, dir)
+/datum/component/waddle/proc/try_waddle()
 	var/atom/movable/waddler = parent
 	if(waddler.can_waddle())
 		var/waddle_angle = pick(waddle_angles)
 		waddler.waddle(waddle_angle, waddle_height)
+
+#undef WADDLE_ANIM_DELAY

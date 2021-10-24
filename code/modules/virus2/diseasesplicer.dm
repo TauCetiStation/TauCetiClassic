@@ -12,26 +12,29 @@
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(isscrewdriver(I))
-		return ..(I,user)
+		return ..()
 
-	if(istype(I,/obj/item/weapon/virusdish))
+	else if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		dish = I
-		c.drop_item()
-		I.loc = src
+		c.drop_from_inventory(I, src)
+		updateUsrDialog()
+		return
 
-	if(istype(I,/obj/item/weapon/diseasedisk))
+	else if(istype(I,/obj/item/weapon/diseasedisk))
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
 		qdel(I)
+		updateUsrDialog()
+		return
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
@@ -134,6 +137,7 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
+		updateUsrDialog()
 		return TRUE
 
 	if (href_list["affected_species"])
@@ -143,12 +147,14 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
+		updateUsrDialog()
 		return TRUE
 
 	if (href_list["eject"])
 		if (dish)
 			dish.loc = src.loc
 			dish = null
+		updateUsrDialog()
 		return TRUE
 
 	if (href_list["splice"])
@@ -167,10 +173,12 @@
 
 			splicing = 10
 			dish.virus2.uniqueID = rand(0,10000)
+		updateUsrDialog()
 		return TRUE
 
 	if (href_list["disk"])
 		burning = 10
+		updateUsrDialog()
 		return TRUE
 
 	return FALSE

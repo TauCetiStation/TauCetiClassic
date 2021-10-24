@@ -185,7 +185,10 @@ var/savefile/Banlist
 
 	dat += "</table>"
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
-	usr << browse(entity_ja(dat), "window=unbanp;size=875x400")
+
+	var/datum/browser/popup = new(usr, "window=unbanp", "Banpanel", 875, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 //////////////////////////////////// DEBUG ////////////////////////////////////
 

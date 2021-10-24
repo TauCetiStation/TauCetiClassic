@@ -5,7 +5,6 @@
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
 	icon_gib = "lizard_gib"
-	small = TRUE
 	speak = list("hiss", "hiss", "hiss", "hiss", "hiss?", "hiss...")
 	speak_emote = list("hisses")
 	emote_hear = list("hisses")
@@ -16,15 +15,17 @@
 	density = FALSE
 	layer = MOB_LAYER
 	pass_flags = PASSTABLE
-	attacktext = "bites"
-	attacktext = "bites"
-	melee_damage_lower = 1
-	melee_damage_upper = 2
+	attacktext = "gnaw"
+	melee_damage = 2
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
+	w_class = SIZE_MINUSCULE
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()
@@ -42,7 +43,7 @@
 	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else

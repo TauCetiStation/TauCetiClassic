@@ -4,7 +4,7 @@
 	icon_state = "flash"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
 	flags = CONDUCT
@@ -44,9 +44,7 @@
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])", user)
+	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
 	if(broken)
@@ -76,26 +74,8 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.confused = max(rand(6, 10), M.confused)
 			M.flash_eyes()
-
-			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
-
-				if(user.mind && (user.mind in ticker.mode.head_revolutionaries) && ticker.mode.name == "revolution")
-					if(M.client)
-						if(M.stat == CONSCIOUS)
-							M.mind_initialize()		//give them a mind datum if they don't have one.
-							var/resisted
-							if(!ismindshielded(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
-								if(user.mind in ticker.mode.head_revolutionaries)
-									M.mind.has_been_rev = 1
-									if(!ticker.mode.add_revolutionary(M.mind))
-										resisted = 1
-							else
-								resisted = 1
-
-							if(resisted)
-								to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 		else
 			flashfail = 1
 
@@ -177,10 +157,7 @@
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
-				var/power = rand(3,5)
 				M.flash_eyes()
-				if (M.confused < power)
-					M.confused += power
 
 	return
 

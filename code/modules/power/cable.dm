@@ -103,6 +103,23 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attack_tk(mob/user)
 	return
 
+/obj/structure/cable/proc/remove_cable(turf/T, mob/user)
+	// 0-X cables are 1 unit, X-X cables are 2 units long
+	var/atom/newcable = new /obj/item/stack/cable_coil(T, (d1 ? 2 : 1), color)
+
+	if(user)
+		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
+
+	qdel(src)
+
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return "<span class='alert'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
+
+	return "<span class='warning'>The cable is not powered.</span>"
+
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
 //   - Cable coil : merge cables
@@ -119,17 +136,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
-		var/atom/newcable
-		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			newcable = new /obj/item/stack/cable_coil(T, 2, color)
-		else
-			newcable = new /obj/item/stack/cable_coil(T, 1, color)
-		newcable.fingerprintslast = user.key
-		user.SetNextMove(CLICK_CD_RAPID)
-
-		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
-
-		qdel(src)
+		remove_cable(T, user)
 
 		return	// not needed, but for clarity
 
@@ -139,20 +146,14 @@ By design, d1 is the smallest direction and d2 is the highest
 		coil.cable_join(src, user)
 
 	else if(ismultitool(W))
-
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
-
-		else
-			to_chat(user, "<span class='warning'>The cable is not powered.</span>")
-
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	else
 		if (W.flags & CONDUCT)
 			shock(user, 50, 0.7)
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
@@ -187,25 +188,48 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
+// All power generation handled in add_avail()
+// Machines (in proc/process()) should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
+		return TRUE
+
+	return FALSE
 
 /obj/structure/cable/proc/add_load(amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
-	else
-		return 0
+		return powernet.avail - powernet.load
+
+	return 0
 
 /obj/structure/cable/proc/avail()
 	if(powernet)
 		return powernet.avail
-	else
-		return 0
+
+	return 0
+
+/obj/structure/cable/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/structure/cable/proc/delayed_surplus()
+	if(powernet)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+
+	return 0
+
+/obj/structure/cable/proc/newavail()
+	if(powernet)
+		return powernet.newavail
+
+	return 0
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -245,7 +269,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+			if(C.d1 == 0 && d1 == 0) //only connected if they are both "nodes"
 				if(C.powernet == powernet)
 					continue
 				if(C.powernet)
@@ -389,7 +413,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = COLOR_WHITE
 	desc = "A coil of power cable."
 	throwforce = 10
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 50
@@ -400,7 +424,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
-	full_w_class = ITEM_SIZE_SMALL
+	full_w_class = SIZE_TINY
 	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
@@ -431,7 +455,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/mob/living/carbon/human/H = M
 
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		if(!BP.is_robotic() || user.a_intent != "help")
+		if(!BP.is_robotic() || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

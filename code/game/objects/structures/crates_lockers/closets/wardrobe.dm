@@ -15,7 +15,11 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/cadet(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/shoes/jackboots(src)
+		new /obj/item/clothing/under/rank/security/skirt(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/cadet/skirt(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/boots(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
 	for (var/i in 1 to 2)
@@ -24,12 +28,11 @@
 		new /obj/item/clothing/head/beret/sec(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/sec_peakedcap(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 3)
-		new /obj/item/clothing/head/santa(src)
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 3)
+			new /obj/item/clothing/head/santa(src)
+			new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+			new /obj/item/clothing/shoes/winterboots(src)
 
 
 /obj/structure/closet/wardrobe/pink
@@ -56,12 +59,12 @@
 		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 3)
+			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
+
 
 
 /obj/structure/closet/wardrobe/chaplain_black
@@ -72,17 +75,16 @@
 
 /obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
 	new /obj/item/clothing/under/rank/chaplain(src)
+	new /obj/item/clothing/under/rank/chaplain/light(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/suit/nun(src)
-	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/chaplain_hoodie(src)
-	new /obj/item/clothing/head/chaplain_hood(src)
+	new /obj/item/clothing/suit/hooded/skhima(src)
+	new /obj/item/clothing/suit/hooded/nun(src)
 	new /obj/item/clothing/shoes/jolly_gravedigger(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
-	new /obj/item/clothing/under/wedding/bride_white(src)
-	new /obj/item/weapon/storage/backpack/cultpack (src)
+	new /obj/item/weapon/storage/backpack/chaplain(src)
 	new /obj/item/weapon/game_kit/chaplain(src)
 	new /obj/item/weapon/reagent_containers/spray/thurible(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/chaplain(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/fancy/candle_box(src)
 
@@ -152,11 +154,10 @@
 		new /obj/item/clothing/head/hardhat/red(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/eng(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 3)
+			new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
+			new /obj/item/clothing/shoes/winterboots(src)
 
 
 
@@ -169,7 +170,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/engineer(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/shoes/workboots(src)
+		new /obj/item/clothing/shoes/boots/work(src)
 	for(var/i = 1 to 3)
 		if(prob(75))
 			new /obj/item/clothing/head/hardhat/yellow(src)
@@ -177,11 +178,10 @@
 			new /obj/item/clothing/head/hardhat/yellow/visor(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/eng(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 3)
+			new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
+			new /obj/item/clothing/shoes/winterboots(src)
 
 
 /obj/structure/closet/wardrobe/white
@@ -241,12 +241,12 @@
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/gloves/black(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 2)
+			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
+
 
 
 /obj/structure/closet/wardrobe/chemistry_white
@@ -279,12 +279,11 @@
 		new /obj/item/clothing/shoes/white(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 2)
+			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
 
 
 /obj/structure/closet/wardrobe/virology_white
@@ -303,12 +302,10 @@
 		new /obj/item/clothing/suit/storage/labcoat/virologist(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
-
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/wardrobe/medic_white
 	name = "medical wardrobe"
@@ -316,6 +313,10 @@
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/medic_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/soft/paramed(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/beret/paramed(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/medical(src)
 	for (var/i in 1 to 2)
@@ -329,12 +330,11 @@
 		new /obj/item/clothing/suit/storage/labcoat(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 2)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
+			new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 
 
 /obj/structure/closet/wardrobe/grey
@@ -349,13 +349,11 @@
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/grey(src)
-	#ifdef NEWYEARCONTENT
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-	#endif
-
+	if(SSholiday.holidays[NEW_YEAR])
+		for (var/i in 1 to 2)
+			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/wardrobe/mixed
 	name = "mixed wardrobe"
@@ -396,26 +394,25 @@
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/wardrobe/tactical
 	name = "tactical equipment"
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/wardrobe/tactical/PopulateContents()
 	new /obj/item/device/radio/headset/headset_sec/marinad(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/marinad(src)
 	new /obj/item/clothing/gloves/security/marinad(src)
 	new /obj/item/clothing/head/helmet/tactical/marinad(src)
-	new /obj/item/clothing/suit/storage/flak/marinad(src)
+	new /obj/item/clothing/suit/marinad(src)
 	new /obj/item/clothing/under/tactical/marinad(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
-	new /obj/item/clothing/shoes/workboots(src)
+	new /obj/item/weapon/kitchenknife/combat(src)
+	new /obj/item/clothing/shoes/boots/work(src)

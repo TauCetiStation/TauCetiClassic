@@ -5,12 +5,12 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
 	var/maxwater = 100               //The maximum amount of water in the tray
-	var/nutrilevel = 10              //The amount of nutrient in the tray (max 10)
+	var/nutrilevel = 3              //The amount of nutrient in the tray (max 10)
 	var/maxnutri = 10                //The maximum nutrient of water in the tray
 	var/pestlevel = 0                //The amount of pests in the tray (max 10)
 	var/weedlevel = 0                //The amount of weeds in the tray (max 10)
@@ -52,8 +52,6 @@
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5  // Up to 30
-	waterlevel = maxwater
-	nutrilevel = 3
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -391,10 +389,10 @@
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
 		user.remove_from_mob(O)
-		nutrilevel = 10
+		nutrilevel = min(nutrilevel + 10, maxnutri)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
-		to_chat(user, "You replace the nutrient solution in [src].")
+		to_chat(user, "You adding the nutrient solution in [src].")
 		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
 		qdel(O)
 		update_icon()
@@ -430,7 +428,7 @@
 					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
-				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
@@ -670,7 +668,7 @@
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 
@@ -690,11 +688,11 @@
 
 		if(!anchored && !isinspace())
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "You wrench [src] in place.")
 		else if(anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "You unwrench [src].")
 
 		wrenched_change()
@@ -704,12 +702,12 @@
 		if(anchored)
 			if(anchored == 2)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 1
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
 			else if(anchored == 1)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 2
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
 			wrenched_change()
@@ -721,7 +719,7 @@
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 		qdel(O)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))
@@ -755,7 +753,7 @@
 	if(issilicon(user))//AI doesn't know what is planted
 		return TRUE
 	if(harvest)
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return TRUE
 		myseed.harvest()
 	else if(dead)
@@ -786,18 +784,17 @@
 	return (yield * parent.yieldmod)
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
-	var/produce = text2path(productname)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-	if(ispath(produce, /obj/item/weapon/reagent_containers/food/snacks/grown))
+	if(ispath(product_type, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		while(t_amount < getYield())
-			var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product_type(output_loc, potency)
 			result.Add(t_prod) // User gets a consumable
 			if(!t_prod)
 				return
-			t_prod.seed = mypath
+			t_prod.seed_type = type
 			t_prod.species = species
 			t_prod.lifespan = lifespan
 			t_prod.endurance = endurance
@@ -807,10 +804,10 @@
 			t_prod.potency = potency
 			t_prod.plant_type = plant_type
 			t_amount++
-	else if (ispath(produce, /obj/item/weapon/grown))
+	else if (ispath(product_type, /obj/item/weapon/grown))
 		while ( t_amount < getYield())
-			var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
-			t_prod.seed = mypath
+			var/obj/item/weapon/grown/t_prod = new product_type(user.loc, potency)
+			t_prod.seed_type = type
 			t_prod.species = species
 			t_prod.lifespan = lifespan
 			t_prod.endurance = endurance
@@ -822,7 +819,7 @@
 			t_amount++
 	else // Messa's Tear and S'rendarr's Hand leaf are not grown consumables and dont have reqired variables
 		while(t_amount < getYield())
-			var/t_prod = new produce(output_loc)
+			var/t_prod = new product_type(output_loc)
 			result.Add(t_prod) // User gets a consumable
 			if(!t_prod)
 				return
@@ -844,12 +841,11 @@
 	parent.update_tray()
 
 /obj/item/seeds/eggyseed/harvest(mob/user = usr)
-	var/produce = text2path(productname)
 	var/obj/machinery/hydroponics/parent = loc
 	var/t_amount = 0
 
 	while (t_amount < (yield * parent.yieldmod))
-		new produce(user.loc)
+		new product_type(user.loc)
 		t_amount++
 
 	parent.update_tray()

@@ -26,6 +26,11 @@ var/lastMove = 0
 	radio = new (src)
 	. = ..()
 
+/obj/machinery/computer/arrival_shuttle/process()
+	if(..())
+		if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
+
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
 		return
@@ -120,7 +125,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
 	SSshuttle.undock_act(/area/velocity, "velocity_1")
-	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
@@ -130,7 +135,7 @@ var/lastMove = 0
 			SSshuttle.dock_act(A)
 
 		if(2) //Station
-			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 			SSshuttle.dock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/play_flying_sound(area/A)
@@ -140,8 +145,11 @@ var/lastMove = 0
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x130")
+	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -165,8 +173,10 @@ var/lastMove = 0
 	icon_state = "wagon"
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
-	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x130")
+	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 200, 130)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()

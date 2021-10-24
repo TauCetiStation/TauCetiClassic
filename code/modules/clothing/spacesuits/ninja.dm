@@ -8,6 +8,8 @@
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
 	blockTracking = 1
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"

@@ -6,7 +6,7 @@
 	frequency = 1449
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	g_amt = 2500
 	m_amt = 10000
 	var/code = 2
@@ -17,33 +17,33 @@
 		return
 	..()
 
-/obj/item/device/radio/electropack/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/clothing/head/helmet))
+/obj/item/device/radio/electropack/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/head/helmet))
 		if(!b_stat)
 			to_chat(user, "<span class='notice'>[src] is not ready to be attached!</span>")
 			return
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.drop_from_inventory(W)
-		W.loc = A
-		W.master = A
-		A.part1 = W
+		user.drop_from_inventory(I, A)
+		I.master = A
+		A.part1 = I
 
-		user.drop_from_inventory(src)
-		loc = A
+		user.drop_from_inventory(src, A)
 		master = A
 		A.part2 = src
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
 
+	else
+		return ..()
+
 /obj/item/device/radio/electropack/Topic(href, href_list)
 	//..()
 	if(usr.incapacitated())
 		return
-	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
+	if((ishuman(usr) && Adjacent(usr)))
 		usr.set_machine(src)
 		if(href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -122,6 +122,8 @@ Code:
 <A href='byond://?src=\ref[src];code=1'>+</A>
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 </TT>"}
-	user << browse(entity_ja(dat), "window=radio")
-	onclose(user, "radio")
+
+	var/datum/browser/popup = new(user, "radio")
+	popup.set_content(dat)
+	popup.open()
 	return

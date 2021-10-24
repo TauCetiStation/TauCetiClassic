@@ -5,7 +5,7 @@
 	flags = CONDUCT
 	force = 0
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/cmineral = null
 	var/reagent = null
 	var/string_attached
@@ -80,9 +80,9 @@
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
-	if(iscoil(W) )
-		var/obj/item/stack/cable_coil/CC = W
+/obj/item/weapon/coin/attackby(obj/item/I, mob/user, params)
+	if(iscoil(I))
+		var/obj/item/stack/cable_coil/CC = I
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
@@ -97,17 +97,17 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(iswirecutter(W) )
+	else if(iswirecutter(I))
 		if(!string_attached)
-			..()
-			return
+			return ..()
 
 		new /obj/item/stack/cable_coil/red(user.loc, 1)
 		cut_overlays()
 		string_attached = null
 		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
+
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time)

@@ -1,6 +1,6 @@
 {{if data.focus}}
 	<div class="notice" style="height: 22px">
-		{{:helper.link('Show List', 'cancel', { 'clear' : 1})}}   Sensor selected: {{:data.focus.name}} 
+		{{:helper.link('Show List', 'cancel', { 'clear' : 1})}}   Sensor selected: {{:data.focus.name}}
 	</div>
 	{{if data.focus.error}}
 		{{:data.focus.error}}
@@ -90,4 +90,4 @@
 		<b>WARN: No Sensors Detected!</b>
 	{{/for}}
 	</table>
-{{/if}} 
+{{/if}}

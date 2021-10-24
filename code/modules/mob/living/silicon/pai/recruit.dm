@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 // Recruiting observers to play as pAIs
 
 var/datum/paiController/paiController			// Global handler for pAI candidates
@@ -14,9 +12,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 /datum/paiController
 	var/list/pai_candidates = list()
-	var/list/asked = list()
-
-	var/askDelay = 10 * 60 * 1	// One minute [ms * sec * min]
 
 /datum/paiController/Topic(href, href_list[])
 	if(href_list["download"])
@@ -36,8 +31,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			card.setPersonality(pai)
 			card.looking_for_personality = 0
 
-			ticker.mode.update_all_cult_icons()
-			ticker.mode.update_all_rev_icons()
 
 			pai_candidates -= candidate
 			usr << browse(null, "window=findPai")
@@ -215,10 +208,13 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	<body>
 	"}
 
-	M << browse(entity_ja(dat), "window=paiRecruit;size=580x580;")
+	M << browse(dat, "window=paiRecruit;size=580x580;")
 
 /datum/paiController/proc/findPAI(obj/item/device/paicard/p, mob/user)
-	requestRecruits()
+	if(!p.searching)
+		p.searching = TRUE
+		addtimer(CALLBACK(p, /obj/item/device/paicard.proc/reset_searching), 3 MINUTES)
+		requestRecruits()
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in paiController.pai_candidates)
 		if(c.ready)
@@ -231,9 +227,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	var/dat = ""
 
 	dat += {"
-		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<!DOCTYPE html>
 		<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 					body {
 						margin-top:5px;
@@ -331,41 +328,9 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		</html>
 	"}
 
-	user << browse(entity_ja(dat), "window=findPai")
+	user << browse(dat, "window=findPai")
 
 /datum/paiController/proc/requestRecruits()
-	for(var/mob/dead/observer/O in player_list)
-		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			continue
-		if(jobban_isbanned(O, ROLE_PAI))
-			continue
-		if(role_available_in_minutes(O, ROLE_PAI))
-			continue
-		if(asked.Find(O.key))
-			if(world.time < asked[O.key] + askDelay)
-				continue
-			else
-				asked.Remove(O.key)
-		if(O.client)
-			var/hasSubmitted = 0
-			for(var/datum/paiCandidate/c in paiController.pai_candidates)
-				if(c.key == O.key)
-					hasSubmitted = 1
-			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_role))
-				question(O.client)
-
-/datum/paiController/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		asked.Add(C.key)
-		asked[C.key] = world.time
-		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "No", "Yes", "Never for this round")
-		if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
-		if(response == "Yes")
-			recruitWindow(C.mob)
-		else if (response == "Never for this round")
-			var/warning = alert(C, "Are you sure? This action will be undoable and you will need to wait until next round.", "You sure?", "Yes", "No")
-			if(warning == "Yes")
-				asked[C.key] = INFINITY
-			else
-				question(C)
+	var/list/candidates = pollGhostCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_GHOSTLY, IGNORE_PAI, 100, TRUE)
+	for(var/mob/M in candidates)
+		recruitWindow(M)

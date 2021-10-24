@@ -5,11 +5,10 @@
 	name = "pack of telriis seeds"
 	desc = "These seeds grow into telriis grass. Not recommended for consumption by sentient species."
 	icon_state = "seed-alien1"
-	mypath = "/obj/item/seeds/telriis"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "telriis"
 	plantname = "Telriis grass"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump
 	lifespan = 50    //number of ticks
 	endurance = 50
 	maturation = 5   //ticks to full growth stage
@@ -36,11 +35,10 @@
 	name = "pack of thaa'dra seeds"
 	desc = "These seeds grow into Thaa'dra lichen. Likes the cold."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/thaadra"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "thaadra"
 	plantname = "Thaa'dra lichen"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/thaadra"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom
 	lifespan = 20
 	endurance = 10
 	maturation = 5
@@ -67,11 +65,10 @@
 	name = "pack of jurl'mah seeds"
 	desc = "These seeds grow into jurl'mah reeds, which produce large syrupy pods."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/jurlmah"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "jurlmah"
 	plantname = "jurl'mah reeds"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah
 	lifespan = 20
 	endurance = 12
 	maturation = 8
@@ -97,11 +94,10 @@
 	name = "pack of amauri seeds"
 	desc = "Grows into a straight, dark plant with small round fruit."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/amauri"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "amauri"
 	plantname = "amauri plant"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/amauri"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/amauri
 	lifespan = 30
 	endurance = 10
 	maturation = 8
@@ -128,11 +124,10 @@
 	name = "pack of gelthi seeds"
 	desc = "Grows into a bright, wavy plant with many small fruits."
 	icon_state = "seed-alien2"
-	mypath = "/obj/item/seeds/gelthi"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "gelthi"
 	plantname = "gelthi plant"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/gelthi"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gelthi
 	lifespan = 20
 	endurance = 15
 	maturation = 6
@@ -160,11 +155,10 @@
 	name = "pack of vale seeds"
 	desc = "The vale bush is often depicted in ancient heiroglyphs and is similar to cherry blossoms."
 	icon_state = "seed-alien2"
-	mypath = "/obj/item/seeds/vale"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "vale"
 	plantname = "vale bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/vale"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/vale
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -191,11 +185,10 @@
 	name = "pack of surik seeds"
 	desc = "A spiky blue vine with large fruit resembling pig ears."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/surik"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "surik"
 	plantname = "surik vine"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/surik"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/surik
 	lifespan = 30
 	endurance = 18
 	maturation = 7
@@ -221,11 +214,10 @@
 	name = "pack of black berry seeds"
 	desc = "Strange black spherical organic formations, glowing in the dark"
 	icon_state = "seed-alien5"
-	mypath = "/obj/item/seeds/blackberry"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "blackberry"
 	plantname = "black berry nest"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry
 	lifespan = 20
 	endurance = 18
 	maturation = 7
@@ -251,9 +243,9 @@
 	var/obj/effect/decal/cleanable/new_smudge
 	new_smudge = new /obj/effect/decal/cleanable/egg_smudge(loc)
 	new_smudge.icon_state = "smashed_blackberry"
-	reagents.reaction(hit_atom, TOUCH)
+	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
-	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	new /obj/effect/spider/spiderling(src.loc)
 	qdel(src)
 

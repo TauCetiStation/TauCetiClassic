@@ -14,21 +14,22 @@
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "drains the life from"
+	melee_damage = 10
+	attacktext = "drain"
 	minbodytemp = 0
 	maxbodytemp = 4000
 	min_oxy = 0
 	max_co2 = 0
 	max_tox = 0
 	speed = -1
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/shade/Life()
 	..()
@@ -42,7 +43,8 @@
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))
-		O.transfer_soul("SHADE", src, user)
+		var/obj/item/device/soulstone/S = O
+		S.transfer_soul(SOULSTONE_SHADE, src, user)
 	else
 		if(O.force)
 			var/damage = O.force
@@ -64,12 +66,13 @@
 	stat = CONSCIOUS
 	maxHealth = 5000
 	health = 5000
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage = 0
 	faction = "Station"
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	invisibility = INVISIBILITY_OBSERVER
 	universal_understand = TRUE
+	universal_speak = FALSE
 	density = FALSE
 
 	min_oxy = 0
@@ -77,16 +80,15 @@
 	max_co2 = 0
 	unsuitable_atoms_damage = 0
 
-	var/islam = FALSE
-	var/obj/item/weapon/nullrod/staff/container
+	typing_indicator_type = null
 
-	var/datum/religion/my_religion
+	var/obj/item/weapon/nullrod/staff/container
 
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
-		if(global.chaplain_religion)
-			stat(null, "Favor: [round(global.chaplain_religion.favor)]/[global.chaplain_religion.max_favor]")
+		if(my_religion)
+			stat(null, "Favor: [round(my_religion.favor)]/[my_religion.max_favor]")
 
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use verbs and stuff like that.
@@ -108,24 +110,22 @@
 
 	return ..()
 
-/mob/living/simple_animal/shade/god/Login()
-	..()
-	stat = CONSCIOUS
-	blinded = FALSE
-
 /mob/living/simple_animal/shade/god/Life()
 	..()
-	if(global.chaplain_religion)
-		global.chaplain_religion.favor += 0.2
+	if(my_religion)
+		my_religion.adjust_favor(0.2)
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))
 		var/mob/M = A
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
 		if(S && S.brainmob == src)
-			// Pull them in closer...
-			step_towards(A, src)
-			SetNextMove(CLICK_CD_RAPID)
+			if(a_intent != INTENT_HARM)
+				// Pull them in closer...
+				step_towards(A, src)
+				SetNextMove(CLICK_CD_RAPID)
+			else
+				M.drop_item()
 	else if(istype(A, /obj/item/weapon/nullrod/staff))
 		var/obj/item/weapon/nullrod/staff/S = A
 		if(S.brainmob == src)
@@ -149,7 +149,7 @@
 
 	var/oldLoc = loc
 
-	dir = direct
+	set_dir(direct)
 	if(NewLoc)
 		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return
@@ -184,8 +184,44 @@
 	set name = "View Crew Manifest"
 	set category = "Deity"
 
-	var/dat
-	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest()
+	var/dat = data_core.html_manifest()
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
+
+/mob/living/simple_animal/shade/god/verb/check_area()
+	set name = "Check influence in this area"
+	set category = "Deity"
+
+	var/area/A = get_area(usr)
+	if(A.religion == usr.my_religion)
+		to_chat(usr, "Эта зона под вашим контролем.")
+	else if(isnull(A.religion))
+		to_chat(usr, "Нейтральная зона.")
+	else if(A.religion != usr.my_religion)
+		to_chat(usr, "Зона захвачена кем-то другим.")
+
+/mob/living/simple_animal/shade/god/resist()
+	. = ..()
+	if(. && container)
+		if(ismob(container.loc))
+			var/mob/M = container.loc
+			M.drop_from_inventory(container)
+			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
+			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
+		else if(istype(container.loc, /obj/item) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
+			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+			container.forceMove(get_turf(container.loc))
+		else if(istype(container.loc, /obj/structure/closet))
+			var/obj/structure/closet/C = container.loc
+			if(!C.opened)
+				to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+				container.forceMove(get_turf(container.loc))
+
+/mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
+	if(paralysis || stunned || weakened || buckled || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
+	return canmove

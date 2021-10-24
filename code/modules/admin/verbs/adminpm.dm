@@ -33,7 +33,7 @@
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom, reply_type)
-	if(prefs.muted & (MUTE_ADMINHELP|MUTE_MENTORHELP))
+	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
@@ -64,13 +64,14 @@
 //Fetching a message if needed. src is the sender and C is the target client
 
 /client/proc/cmd_admin_pm(whom, msg)
-	if(prefs.muted & (MUTE_ADMINHELP|MUTE_MENTORHELP))
+	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
 	if(!holder && !current_ticket)	//no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
 		to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
-		to_chat(src, "<font color='blue'>Message: [msg]</font>")
+		if(msg)
+			to_chat(src, "<font color='blue'>Message: [msg]</font>")
 		return
 
 	var/client/recipient
@@ -93,7 +94,7 @@
 		if(!msg)
 			return
 
-		if(prefs.muted & (MUTE_ADMINHELP|MUTE_MENTORHELP)) // maybe client were muted while typing input.
+		if(prefs.muted & MUTE_ADMINHELP) // maybe client were muted while typing input.
 			to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 			return
 
@@ -105,7 +106,7 @@
 				current_ticket.MessageNoRecipient(msg)
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	if(recipient.holder)
@@ -131,7 +132,7 @@
 				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
-		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		recipient.mob.playsound_local(null, recipient.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -140,10 +141,7 @@
 
 			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></font>")
-			if(config.rus_language)
-				to_chat(recipient, "<font color='red'><i>[CYRILLIC_AHELPCLICKNAME]</i></font>")
-			else
-				to_chat(recipient, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+			to_chat(recipient, "<font color='red'><i>Нажмите на имя администратора для ответа.</i></font>")
 			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")
@@ -166,30 +164,4 @@
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in global.admins)
 		if(X.key != key && X.key != recipient.key) //check client/X is an admin and isn't the sender or recipient
-			to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>" )
-
-
-/client/proc/cmd_admin_irc_pm()
-	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
-		return
-
-	var/msg = sanitize(input(src,"Message:", "Private message to admins on IRC / 400 character limit") as text|null)
-
-	if(!msg)
-		return
-
-	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		to_chat(src, "<span class='warning'>Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting</span>")
-		to_chat(src, "<span class='notice'>[msg]</span>")
-		return
-
-	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
-
-	log_admin("PM: [key_name(src)]->IRC: [msg]")
-	for(var/client/X in admins)
-		if(X == src)
-			continue
-		if(X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> <span class='notice'>[msg]</span></font>")
-
+			to_chat(X, "<font color='blue'><B>PM: [key_name(src, 1, 0)]-&gt;[key_name(recipient, 1, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>" )

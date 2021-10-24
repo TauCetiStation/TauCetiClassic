@@ -28,7 +28,7 @@
 	icon_state = "abed"
 
 /obj/structure/stool/bed/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -59,14 +59,14 @@
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	anchored = 0
+	anchored = FALSE
 	var/type_roller = /obj/item/roller
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(buckled_mob)
-			user_unbuckle_mob()
+			user_unbuckle_mob(user)
 		else
 			visible_message("[user] collapses \the [src.name].")
 			new type_roller(get_turf(src))
@@ -81,6 +81,10 @@
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 
@@ -89,7 +93,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = ITEM_SIZE_LARGE // Can't be put in backpacks. Oh well.
+	w_class = SIZE_NORMAL // Can't be put in backpacks. Oh well.
 	var/type_bed = /obj/structure/stool/bed/roller
 	var/type_holder = /obj/item/roller_holder
 
@@ -98,15 +102,15 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/roller/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/roller_holder))
-		var/obj/item/roller_holder/RH = W
+/obj/item/roller/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/roller_holder))
+		var/obj/item/roller_holder/RH = I
 		if(!RH.held)
 			to_chat(user, "<span class='notice'>You collect the roller bed.</span>")
-			src.loc = RH
+			forceMove(RH)
 			RH.held = src
 			return
-	..()
+	return ..()
 
 /obj/item/roller_holder
 	name = "roller bed rack"
@@ -138,16 +142,16 @@
 			M.pass_flags &= ~PASSCRAWL
 			M.crawling = FALSE
 			M.layer = 4.0
-		density = 1
+		density = TRUE
 		icon_state = "up"
 	else
-		density = 0
+		density = FALSE
 		icon_state = "down"
 	return ..()
 
 /obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
 			return
 		if(buckled_mob)

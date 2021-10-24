@@ -2,9 +2,9 @@
 	name = "window"
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
-	density = 1
+	density = TRUE
 	layer = 3.2//Just above doors
-	anchored = 1.0
+	anchored = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
@@ -99,21 +99,18 @@
 			qdel(src)
 			return
 		if(2.0)
-			shatter(0)
+			take_damage(rand(30, 50))
 			return
 		if(3.0)
-			if(prob(50))
-				shatter(0)
-				return
+			take_damage(rand(5, 15))
+			return
 
+/obj/structure/window/airlock_crush_act()
+	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	..()
 
 /obj/structure/window/blob_act()
-	shatter()
-
-
-/obj/structure/window/meteorhit()
-	shatter()
-
+	take_damage(rand(30, 50))
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -153,7 +150,7 @@
 	if(reinf)
 		tforce *= 0.25
 	if(health - tforce <= 7 && !reinf)
-		anchored = 0
+		anchored = FALSE
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
@@ -171,7 +168,7 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (user.a_intent == "hurt")
+	else if (user.a_intent == INTENT_HARM)
 		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
@@ -205,14 +202,11 @@
 		return
 	attack_generic(user, 15)
 
-/obj/structure/window/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
+/obj/structure/window/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(attacker, attacker.melee_damage)
 
 
 /obj/structure/window/attack_slime(mob/user)
@@ -268,27 +262,22 @@
 				if(1)
 					M.apply_damage(7)
 					take_damage(7)
-					visible_message("<span class='danger'>[user] slams [M] against \the [src]!</span>")
-					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed by [A.name] against \the [src]([A.ckey])</font>"
-					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] slams [key_name(M)] into \the [src]", A)
+					visible_message("<span class='danger'>[A] slams [M] against \the [src]!</span>")
+
+					M.log_combat(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
-					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Bashed by [A.name] against \the [src]([A.ckey])</font>"
-					A.attack_log += "\[[time_stamp()]\] <font color='red'>Bashes [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] bushes [key_name(M)] against \the [src]", A)
+					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
+					M.log_combat(user, "bashed against [name]")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12)
-					visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
-					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Crushed by [A.name] against \the [src]([A.ckey])</font>"
-					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]", A)
+					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
+					M.log_combat(user, "crushed against [name]")
 
 	else if(istype(W,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
@@ -297,17 +286,17 @@
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				fastened_change()
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
+		return ..()
 
 /obj/structure/window/proc/fastened_change()
 	return
@@ -326,7 +315,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
+	if(!Adjacent(usr) || !W.use(1))
 		return
 	else
 		color = new_color
@@ -344,7 +333,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -364,7 +353,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 270)
+	set_dir(turn(dir, 270))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -401,7 +390,7 @@
 
 
 /obj/structure/window/Destroy()
-	density = 0
+	density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	update_nearby_tiles()
 	update_nearby_icons()
@@ -411,7 +400,11 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
-	dir = ini_dir
+
+	if(moving_diagonally)
+		return .
+
+	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 
 //checks if this window is full-tile one
@@ -590,4 +583,4 @@
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
-	. = ..()
+	return ..()

@@ -14,23 +14,41 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
-	return 0
+	return null
+
+/proc/get_area_by_type(type) //get area by its type
+	return locate(type) in all_areas
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
 
 	return 0 //not in range and not telekinetic
+
+/**
+ * Get a bounding box of a list of atoms.
+ *
+ * Arguments:
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
+/proc/get_bbox_of_atoms(list/atoms)
+	var/list/list_x = list()
+	var/list/list_y = list()
+	for(var/_a in atoms)
+		var/atom/a = _a
+		list_x += a.x
+		list_y += a.y
+	return list(
+		min(list_x),
+		min(list_y),
+		max(list_x),
+		max(list_y))
 
 // Like view but bypasses luminosity check
 
@@ -47,7 +65,7 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/T in range(radius, centerturf))
@@ -62,7 +80,7 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/A in view(radius, centerturf))
@@ -85,7 +103,7 @@
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
@@ -98,7 +116,7 @@
 /proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in view(radius, centerturf))
@@ -131,7 +149,7 @@
 			if(sight_check && !isInSight(A, O))
 				continue
 			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - [COORD(M)]"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && !isInSight(A, O))
@@ -161,7 +179,7 @@
 			var/mob/M = A
 			if(M.client)
 				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			//world.log << "Start = [M] - [get_turf(M)] - [COORD(M)]"
 		else if(istype(A, /obj/item/device/radio))
 			hear += A
 
@@ -325,35 +343,16 @@
 			return M
 	return null
 
-/proc/get_larva_candidates()
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/afk_time = 0
-	var/afk_threesold = 3000
-	while(!candidates.len && afk_time <= afk_threesold)
-		for(var/mob/dead/observer/G in player_list)
-			if(!G.client)
-				continue
-			if((ROLE_ALIEN in G.client.prefs.be_role) && !jobban_isbanned(G, ROLE_ALIEN))
-				if(!G.client.is_afk(afk_time)) // the most active players are more likely to become an alien
-					candidates += G.key
-		afk_time += 600
-	return candidates
-
-/proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
-	if(!be_role_type)
-		return
-	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	while(!candidates.len && afk_bracket < 6000)
-		for(var/mob/dead/observer/G in player_list)
-			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role)) // TODO: Replace it with something else. Causes runtimes if there are no ghosts(not observers!)
-					candidates += G.client
-		afk_bracket += 600 // Add a minute to the bracket, for every attempt
-	return candidates
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
+	if(M?.current)
+		if(enforce_human)
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current)
+		if(isliving(M.current))
+			return M.current.stat != DEAD
+	return FALSE
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))	O = new /obj/screen/text()
+	if(!isobj(O))	O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -380,8 +379,8 @@
 	var/dest_x
 	var/dest_y
 
-/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
-							 var/power_x, var/power_y, var/dest_x, var/dest_y)
+/datum/projectile_data/New(src_x, src_y, time, distance, \
+							 power_x, power_y, dest_x, dest_y)
 	src.src_x = src_x
 	src.src_y = src_y
 	src.time = time
@@ -507,8 +506,8 @@
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
-	var/list/processed_list = new/list()
-	var/found_atoms = new/list()
+	var/list/processed_list = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -529,16 +528,24 @@
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
-		return new/list()
+		return list()
 
 //============TG PORTS============
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
+
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/mob/M in viewers(target))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
 
 //============Bay12 atmos=============
 /proc/convert_k2c(temp)
@@ -548,7 +555,7 @@
 	return ((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
-	var/list/temps = new/list(4)
+	var/list/temps[4]
 	for(var/dir in cardinal)
 		var/direction
 		switch(dir)
@@ -561,7 +568,7 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		var/list/rstats = new /list(stats.len)
+		var/list/rstats[stats.len]
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			for(var/i in 1 to stats.len)
@@ -581,3 +588,113 @@
 					rstats[i] = environment.vars[stats[i]]
 		temps[direction] = rstats
 	return temps
+
+
+// Procs for grabbing players.
+
+// grab random ghost from candidates after poll_time
+/proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
+	var/list/mob/dead/observer/candidates = list()
+
+	for(var/mob/dead/observer/O in observer_list)
+		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			continue
+		candidates += O
+
+	candidates = pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
+
+	return candidates
+
+/proc/pollCandidates(Question = "Would you like to be a special role?", be_special_type, Ignore_Role, poll_time = 300, list/group = null)
+	var/list/mob/candidates = list()
+	var/time_passed = world.time
+
+	if(!Ignore_Role)
+		Ignore_Role = be_special_type
+
+	for(var/mob/M in group)
+		if(!M.client)
+			continue
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
+			continue
+		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
+			continue
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/requestCandidate, M, time_passed, candidates, Question, Ignore_Role, poll_time)
+	sleep(poll_time)
+
+	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	for(var/mob/M in candidates)
+		if(!M.client)
+			candidates -= M
+
+	listclearnulls(candidates)
+
+	return candidates
+
+/proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
+	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
+	window_flash(M.client)
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"))
+	switch(ans)
+		if("Yes")
+			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
+				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+				return
+			candidates += M
+		if("No")
+			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			return
+		if("Not This Round")
+			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
+			M.client.prefs.ignore_question |= Ignore_Role
+			return
+
+// first answer "Yes" > transfer
+/mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
+	if(key || mind || stat != CONSCIOUS || !M.client)
+		return
+
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+		return
+
+	if(isobserver(M))
+		var/mob/dead/observer/O = M
+		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			if(show_warnings)
+				to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
+			return
+
+	if(jobban_isbanned(M, "Syndicate"))
+		if(show_warnings)
+			to_chat(M, "<span class='warning'>You are banned from antagonists!</span>")
+		return
+
+	if(jobban_isbanned(M, be_special_type) || role_available_in_minutes(M, be_special_type))
+		if(show_warnings)
+			to_chat(M, "<span class='warning'>You are banned from [be_special_type]!</span>")
+		return
+
+	INVOKE_ASYNC(src, .proc/request_n_transfer, M, Question, be_special_type, Ignore_Role, show_warnings)
+
+/mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
+	var/ans
+	if(Ignore_Role)
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("Yes", "No", "Not This Round"))
+	else
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("Yes", "No"))
+	if(ans == "No")
+		return
+	if(ans == "Not This Round")
+		M.client.prefs.ignore_question |= IGNORE_BORER
+		return
+
+	if(key || mind || stat != CONSCIOUS)
+		return
+
+	transfer_personality(M.client)
+
+/mob/proc/transfer_personality(client/C)
+	return

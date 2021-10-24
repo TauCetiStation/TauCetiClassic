@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
 	item_state = "m79"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"
@@ -23,20 +23,19 @@
 /obj/item/weapon/gun/projectile/m79/process_chamber()
 	return ..(0, 0)
 
-/obj/item/weapon/gun/projectile/m79/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/m79/attackby(obj/item/I, mob/user, params)
 	if(!open)
 		return
 	if(chambered)
 		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
 		return
-	var/num_loaded = magazine.attackby(A, user, 1)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		playsound(src, 'sound/weapons/guns/reload_m79.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
 		update_icon()	//I.E. fix the desc
-		A.update_icon()
+		I.update_icon()
 
 /obj/item/weapon/gun/projectile/m79/attack_self(mob/user)
 	open = !open

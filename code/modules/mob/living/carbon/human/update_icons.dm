@@ -265,7 +265,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)) || (w_uniform && (w_uniform.flags & BLOCKHAIR)))
 		return
 
 	//base icons
@@ -280,26 +280,31 @@ Please contact me on #coderbus IRC. ~Carn x
 					facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
 				else
 					facial_s.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
+					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
+					head.recolor()
 			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
-			var/mutable_appearance/hair_s = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -HAIR_LAYER)
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
+				grad_s.Blend(hair_s, ICON_AND)
 				if(!hair_painted)
-					hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
+					grad_s.Blend(rgb(r_grad, g_grad, b_grad), ICON_AND)
 				else
-					hair_s.color = RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair)
-			standing += hair_s
+					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
+					head.recolor()
+				hair_s.Blend(grad_s, ICON_OVERLAY)
+
+			standing += mutable_appearance(hair_s, "[hair_style.icon_state]_s", -HAIR_LAYER)
 
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
-
-	if(istype(wear_suit, /obj/item/clothing/suit/wintercoat))
-		var/obj/item/clothing/suit/wintercoat/W = wear_suit
-		if(W.hooded) // used for coat hood due to hair layer viewed over the suit
-			overlays_standing[HAIR_LAYER]   = null
 
 	apply_overlay(HAIR_LAYER)
 
@@ -487,11 +492,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
 
-	hud_updateflag |= 1 << ID_HUD
-	hud_updateflag |= 1 << WANTED_HUD
-
 	apply_overlay(ID_LAYER)
-
 
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
@@ -658,12 +659,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
-
-		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
-			var/obj/item/clothing/suit/wintercoat/W = wear_suit
-			if(W.hooded) //used for coat hood due to hair layer viewed over the suit
-				overlays_standing[HAIR_LAYER] = null
-				overlays_standing[HEAD_LAYER] = null
 		update_inv_shoes()
 
 	update_inv_w_uniform()
@@ -717,7 +712,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		client.screen |= contents
 		if(hud_used)
 			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-			hud_used.reload_fullscreen()
+			reload_fullscreen()
 
 
 /mob/living/carbon/human/update_inv_handcuffed()
@@ -735,10 +730,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
-		if(src.m_intent != "walk")
-			src.m_intent = "walk"
-			if(src.hud_used && src.hud_used.move_intent)
-				src.hud_used.move_intent.icon_state = "walking"
+		set_m_intent(MOVE_INTENT_WALK)
 
 		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 
@@ -789,12 +781,13 @@ Please contact me on #coderbus IRC. ~Carn x
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 
-			if(BP.status & ORGAN_DEAD)
-				tail_s.color = NECROSIS_COLOR_MOD
-			else if(HULK in mutations)
-				tail_s.color = HULK_SKIN_COLOR
-			else
-				tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+			if(species.flags[HAS_SKIN_COLOR])
+				if(BP.status & ORGAN_DEAD)
+					tail_s.color = NECROSIS_COLOR_MOD
+				else if(HULK in mutations)
+					tail_s.color = HULK_SKIN_COLOR
+				else
+					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 
 			overlays_standing[TAIL_LAYER] = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 

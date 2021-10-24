@@ -13,20 +13,8 @@
 	salary = 40
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480
+	outfit = /datum/outfit/job/chaplain
 
-/datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return FALSE
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	if(H.mind)
-		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
-
-	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
-	return TRUE
+/datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly && H.mind)
+		INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)

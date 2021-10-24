@@ -3,7 +3,7 @@
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
 
-	anchored = 1
+	anchored = TRUE
 	var/state = 0
 
 	var/id_tag
@@ -85,12 +85,13 @@
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
-	user << browse(entity_ja(return_text()),"window=computer")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "window=computer", src.name)
+	popup.set_content(return_text())
+	popup.open()
 
 /obj/machinery/computer/general_air_control/process()
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/Destroy()
 	radio_controller.remove_object(src, frequency)

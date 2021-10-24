@@ -1,8 +1,7 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
-var/datum/subsystem/timer/SStimer
 
-/datum/subsystem/timer
+SUBSYSTEM_DEF(timer)
 	name = "Timer"
 
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
@@ -25,19 +24,18 @@ var/datum/subsystem/timer/SStimer
 	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
 
 
-/datum/subsystem/timer/New()
+/datum/controller/subsystem/timer/PreInit()
 	processing        = list()
 	hashes            = list()
 	bucket_list       = list()
 	timer_id_dict     = list()
 	clienttime_timers = list()
-	NEW_SS_GLOBAL(SStimer)
 
 
-/datum/subsystem/timer/stat_entry(msg)
+/datum/controller/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
-/datum/subsystem/timer/fire(resumed = FALSE)
+/datum/controller/subsystem/timer/fire(resumed = FALSE)
 	if (length(clienttime_timers))
 		for (var/thing in clienttime_timers)
 			var/datum/timedevent/ctime_timer = thing
@@ -106,7 +104,7 @@ var/datum/subsystem/timer/SStimer
 	spent.len = 0
 
 
-/datum/subsystem/timer/proc/shift_buckets()
+/datum/controller/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
 	var/list/alltimers = list()
 	//collect the timers currently in the bucket
@@ -172,13 +170,12 @@ var/datum/subsystem/timer/SStimer
 	processing = (alltimers - timers_to_remove)
 
 
-/datum/subsystem/timer/Recover()
+/datum/controller/subsystem/timer/Recover()
 	processing |= SStimer.processing
 	hashes |= SStimer.hashes
 	timer_id_dict |= SStimer.timer_id_dict
 	bucket_list |= SStimer.bucket_list
 
-/datum/var/list/active_timers
 /datum/timedevent
 	var/id
 	var/datum/callback/callBack
@@ -342,6 +339,22 @@ var/datum/subsystem/timer/SStimer
 		return TRUE
 	return FALSE
 
+/**
+ * Get the remaining deciseconds on a timer
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ */
+/proc/timeleft(id, datum/controller/subsystem/timer/timer_subsystem)
+	if (!id)
+		return null
+	if (istype(id, /datum/timedevent))
+		var/datum/timedevent/timer = id
+		return timer.timeToRun - world.time
+	timer_subsystem = timer_subsystem || SStimer
+	//id is string
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict["timerid[id]"]
+	return (timer && !timer.spent) ? timer.timeToRun - world.time : null
 
 #undef BUCKET_LEN
 #undef BUCKET_POS

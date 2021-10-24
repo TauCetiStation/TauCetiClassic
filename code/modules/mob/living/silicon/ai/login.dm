@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Login()	//ThisIsDumb(TM) TODO: tidy this up ¬_¬ ~Carn
+/mob/living/silicon/ai/Login()	//ThisIsDumb(TM) TODO: tidy this up Â¬_Â¬ ~Carn
 	..()
 	if(wipe_timer_id)
 		deltimer(wipe_timer_id)
@@ -12,4 +12,4 @@
 		for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 			O.mode = 1
 			O.emotion = "Neutral"
-	src.view_core()
+	view_core()

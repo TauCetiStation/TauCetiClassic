@@ -53,7 +53,7 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/ripley(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	const_holder.cut_overlays()
 	spawn()
 		qdel(src)
@@ -61,7 +61,7 @@
 
 
 /datum/construction/reversible/mecha/ripley
-	result = "/obj/mecha/working/ripley"
+	result_type = /obj/mecha/working/ripley
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -252,14 +252,14 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/gygax(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "gygax0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 
 /datum/construction/reversible/mecha/gygax
-	result = "/obj/mecha/combat/gygax"
+	result_type = /obj/mecha/combat/gygax
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -522,14 +522,14 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/firefighter(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "fireripley0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 
 /datum/construction/reversible/mecha/firefighter
-	result = "/obj/mecha/working/ripley/firefighter"
+	result_type = /obj/mecha/working/ripley/firefighter
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -732,14 +732,14 @@
 /datum/construction/mecha/honker_chassis/spawn_result()
 	var/obj/item/mecha_parts/chassis/const_holder = holder
 	const_holder.construct = new /datum/construction/mecha/honker(const_holder)
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 
 /datum/construction/mecha/honker
-	result = "/obj/mecha/combat/honker"
+	result_type = /obj/mecha/combat/honker
 	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
 					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
 					 list("key"=/obj/item/weapon/bikehorn),//3
@@ -803,13 +803,13 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/durand(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "durand0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 /datum/construction/reversible/mecha/durand
-	result = "/obj/mecha/combat/durand"
+	result_type = /obj/mecha/combat/durand
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1060,7 +1060,7 @@
 
 
 /datum/construction/mecha/phazon_chassis
-	result = "/obj/mecha/combat/phazon"
+	result_type = /obj/mecha/combat/phazon
 	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
 					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
 					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
@@ -1086,14 +1086,14 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/odysseus(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "odysseus0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 
 /datum/construction/reversible/mecha/odysseus
-	result = "/obj/mecha/medical/odysseus"
+	result_type = /obj/mecha/medical/odysseus
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1284,13 +1284,13 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/vindicator(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "vindicator0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 /datum/construction/reversible/mecha/vindicator
-	result = "/obj/mecha/combat/durand/vindicator"
+	result_type = /obj/mecha/combat/durand/vindicator
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1553,14 +1553,14 @@
 	const_holder.construct = new /datum/construction/reversible/mecha/ultra(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ultra0"
-	const_holder.density = 1
+	const_holder.density = TRUE
 	spawn()
 		qdel(src)
 	return
 
 
 /datum/construction/reversible/mecha/ultra
-	result = "/obj/mecha/combat/gygax/ultra"
+	result_type = /obj/mecha/combat/gygax/ultra
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,

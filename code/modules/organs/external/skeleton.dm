@@ -10,18 +10,20 @@
 
 // Bones just fly away if damage is too high. They also don't care about lasers
 /datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	if(!BP.owner)
+		return
 	brute = round(brute * BP.owner.species.brute_mod, 0.1)
 
 	if(brute <= 0)
 		return 0
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 
 	var/lose_bone_chance = 100
-	if(brute < BP.min_broken_damage * 2)
-		lose_bone_chance = 20
-	else if(brute < BP.min_broken_damage)
+	if(brute < BP.min_broken_damage)
 		lose_bone_chance = 5
+	else if(brute < BP.min_broken_damage * 2)
+		lose_bone_chance = 20
 
 	if(prob(lose_bone_chance))
 		if(!BP.cannot_amputate)
@@ -86,11 +88,8 @@
 	H.UpdateDamageIcon(BP)
 
 	if(istype(BP, /obj/item/organ/external/head))
-		var/obj/item/organ/external/head/B = BP
-		if (B.brainmob && B.brainmob.mind)
-			B.brainmob.mind.transfer_to(H)
-			H.dna = B.brainmob.dna
-			QDEL_NULL(B.brainmob)
+		H.force_remote_viewing = FALSE
+		H.reset_view()
 
 	H.visible_message("<span class='notice'>[usr] attached [BP.name] to [M]</span>")
 
@@ -119,6 +118,10 @@
 /obj/item/organ/external/head/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
+
+/obj/item/organ/external/head/skeleton/transfer_identity()
+	owner.force_remote_viewing = TRUE
+	owner.reset_view(src)
 
 /obj/item/organ/external/groin/skeleton
 	name = "skeleton groin"

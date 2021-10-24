@@ -21,19 +21,18 @@
 /obj/item/device/radio/beacon/send_hear()
 	return null
 
-
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
 	set name = "Alter Beacon's Signal"
 	set category = "Object"
 	set src in usr
 
-	if ((usr.canmove && !( usr.restrained() )))
-		src.code = t
-	if (!( src.code ))
-		src.code = "beacon"
-	src.add_fingerprint(usr)
-	return
+	if(usr.incapacitated())
+		return
 
+	code = t
+	if(!code)
+		code = "beacon"
+	add_fingerprint(usr)
 
 /obj/item/device/radio/beacon/bacon/proc/digest_delay() //Probably a better way of doing this, I'm lazy.
 	spawn(600)
@@ -76,7 +75,7 @@
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
 	desc = "A device used for teleporting injured(critical) or dead people."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
@@ -116,7 +115,7 @@
 
 	user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of device on [target.name]!</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, H))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = H
 		loc = null
@@ -141,13 +140,21 @@
 			s2.set_up(3, 1, beacon)
 			s.start()
 			s2.start()
-			H.loc = get_turf(beacon)
+			H.forceMove(get_turf(beacon))
 		if (src)
 			qdel(src)
 		H.cut_overlay(I)
 		qdel(I)
 
+/obj/item/device/radio/beacon/syndicate_chemicals
+	name = "suspicious beacon"
+	desc = "A label on it reads: <i>Warning: Activating this device will send a container with hazardous chemicals to your location.</i>."
+	origin_tech = "bluespace=1;syndicate=4"
 
-
-
-
+/obj/item/device/radio/beacon/syndicate_chemicals/attack_self(mob/user)
+	if(user)
+		to_chat(user, "<span class='notice'>Locked In</span>")
+		new /obj/structure/reagent_dispensers/hazard( user.loc )
+		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
+		qdel(src)
+	return

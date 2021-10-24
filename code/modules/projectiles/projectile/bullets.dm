@@ -48,6 +48,10 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
+/obj/item/projectile/bullet/weakbullet/rubber45 //to manage .45 pain damage
+	name = "rubber bullet"
+	agony = 55
+
 /obj/item/projectile/bullet/smg //.45 ACP
 	name = "submachinegun bullet"
 	damage = 20
@@ -94,6 +98,7 @@
 	hitscan = 1
 
 /obj/item/projectile/bullet/grenade/r4046
+	name = "rubber grenade"
 	damage = 10
 	stun = 10
 	weaken = 10
@@ -194,13 +199,15 @@
 /obj/item/projectile/bullet/stunslug
 	name = "stunslug"
 	icon_state = "spark"
+	flag = "energy"
 	damage = 5
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 60
+	agony = 40
 	embed = 0
 	sharp = 0
+	dispersion = 1.8
 
 /obj/item/projectile/bullet/stunslug/atom_init()
 	. = ..()

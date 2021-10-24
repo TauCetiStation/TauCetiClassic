@@ -4,7 +4,7 @@
 /datum/construction
 	var/list/steps
 	var/atom/holder
-	var/result
+	var/result_type
 	var/list/steps_desc
 
 /datum/construction/New(atom)
@@ -56,8 +56,8 @@
 	return 0
 
 /datum/construction/proc/spawn_result()
-	if(result)
-		new result(get_turf(holder))
+	if(result_type)
+		new result_type(get_turf(holder))
 		qdel(holder)
 	return
 
@@ -75,7 +75,6 @@
 			return 0
 	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 	holder.add_overlay(used_atom.icon_state+"+o")
-	user.drop_item()
 	qdel(used_atom)
 	return 1
 

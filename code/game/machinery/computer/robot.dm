@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -73,31 +70,28 @@
 					dat += " Independent from AI |"
 				if (istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
-						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
+						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
+				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
+				dat += "<A class='red' href='?src=\ref[src];killbot=\ref[R]'><i>Destroy</i></A>"
 				dat += "<BR>"
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+			dat += "<A href='?src=\ref[src];screen=0'>Main Menu</A><BR>"
 		if(screen == 2)
 			if(!src.status)
 				dat += {"<BR><B>Emergency Robot Self-Destruct</B><HR>\nStatus: Off<BR>
 				\n<BR>
-				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>\[Reset\]</A><BR>
+				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>Reset</A><BR>
 				\n<BR>
-				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>"}
 			else
 				dat = {"<B>Emergency Robot Self-Destruct</B><HR>\nStatus: Activated<BR>
 				\n<BR>
 				\nCountdown: [src.timeleft]/60 \[Reset\]<BR>
-				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>"}
+			dat += "<A href='?src=\ref[src];screen=0'>Main Menu</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	. = ..()
@@ -106,7 +100,7 @@
 
 	if (href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
-		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
+		<BR><B><A href='?src=\ref[src];eject2=1'>Swipe ID to initiate destruction sequence</A></B><BR>
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 	else if (href_list["eject2"])
@@ -115,7 +109,7 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
 				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
-				src.start_sequence()
+				start_sequence()
 				src.temp = null
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
@@ -145,7 +139,7 @@
 			if("2")
 				screen = 2
 	else if (href_list["killbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
@@ -163,7 +157,7 @@
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(R && istype(R)) // Extra sancheck because of input var references
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
@@ -177,18 +171,18 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
-							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						else
-							R.throw_alert("locked", /obj/screen/alert/locked)
+							R.throw_alert("locked", /atom/movable/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
@@ -202,7 +196,7 @@
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/robotics/proc/start_sequence()
 

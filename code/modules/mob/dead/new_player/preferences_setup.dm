@@ -6,19 +6,19 @@
 		else
 			gender = FEMALE
 	s_tone = random_skin_tone()
-	if(species == IPC)
-		h_style = random_ipc_monitor(ipc_head)
-	else
-		h_style = random_hair_style(gender, species)
+	h_style = random_hair_style(gender, species, ipc_head)
+	grad_style = random_gradient_style()
 	f_style = random_facial_hair_style(gender, species)
 	randomize_hair_color("hair")
 	randomize_hair_color("facial")
+	randomize_hair_color("gradient")
 	randomize_eyes_color()
 	randomize_skin_color()
 	underwear = rand(1,underwear_m.len)
 	undershirt = rand(1,undershirt_t.len)
 	socks = rand(1,socks_t.len)
 	backbag = 2
+	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]
 	age = rand(S.min_age, S.max_age)
 	if(H)
@@ -84,6 +84,10 @@
 			r_facial = red
 			g_facial = green
 			b_facial = blue
+		if("gradient")
+			r_grad = red
+			g_grad = green
+			b_grad = blue
 
 /datum/preferences/proc/randomize_eyes_color()
 	var/red
@@ -183,49 +187,40 @@
 
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
-	// Silicons only need a very basic preview since there is no customization for them.
-	if(job_engsec_high)
-		switch(job_engsec_high)
-			if(AI)
-				parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
-				return
-			if(CYBORG)
-				parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
-				return
-
-	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = new(null, species)
-	copy_to(mannequin)
-
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
-	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
 
-	if(job_civilian_low & ASSISTANT)
+	if(job_preferences["Test Subject"] == JP_LOW)
 		previewJob = SSjob.GetJob("Test Subject")
-	else if(highRankFlag)
-		var/highDeptFlag
-		if(job_civilian_high)
-			highDeptFlag = CIVILIAN
-		else if(job_medsci_high)
-			highDeptFlag = MEDSCI
-		else if(job_engsec_high)
-			highDeptFlag = ENGSEC
 
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.flag == highRankFlag && job.department_flag == highDeptFlag)
-				previewJob = job
-				break
+	if(!previewJob)
+		var/highest_pref = 0
+		for(var/job in job_preferences)
+			if(job_preferences[job] > highest_pref)
+				previewJob = SSjob.GetJob(job)
+				highest_pref = job_preferences[job]
+
+	if(previewJob)
+		if(istype(previewJob, /datum/job/ai))
+			parent.show_character_previews(image('icons/mob/AI.dmi', "ai", dir = SOUTH))
+			return
+		if(istype(previewJob, /datum/job/cyborg))
+			parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
+			return
+
+	// Set up the dummy for its photoshoot
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES, species)
+	copy_to(mannequin)
 
 	var/datum/species/S = all_species[species]
 	if(S)
 		S.before_job_equip(mannequin, previewJob, TRUE)
 	if(previewJob)
 		mannequin.job = previewJob.title
-		previewJob.equip(mannequin, TRUE)
+		previewJob.equip(mannequin, TRUE, GetPlayerAltTitle(previewJob))
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
-	qdel(mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

@@ -15,8 +15,8 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/mode = 5	// 0 = Blank
@@ -93,7 +93,7 @@
 					line1 = "-ETD-"
 				else
 					line1 = "-ETA-"
-				if(length(line2) > CHARS_PER_LINE)
+				if(length_char(line2) > CHARS_PER_LINE)
 					line2 = "Error!"
 				update_display(line1, line2)
 			else
@@ -105,7 +105,7 @@
 			if(!index1)
 				line1 = message1
 			else
-				line1 = copytext(message1+"|"+message1, index1, index1+CHARS_PER_LINE)
+				line1 = copytext_char(message1+"|"+message1, index1, index1+CHARS_PER_LINE)
 				var/message1_len = length(message1)
 				index1 += SCROLL_SPEED
 				if(index1 > message1_len)
@@ -114,8 +114,8 @@
 			if(!index2)
 				line2 = message2
 			else
-				line2 = copytext(message2+"|"+message2, index2, index2+CHARS_PER_LINE)
-				var/message2_len = length(message2)
+				line2 = copytext_char(message2+"|"+message2, index2, index2+CHARS_PER_LINE)
+				var/message2_len = length_char(message2)
 				index2 += SCROLL_SPEED
 				if(index2 > message2_len)
 					index2 -= message2_len
@@ -125,7 +125,7 @@
 			var/line2
 			if(SSshuttle.moving)
 				line2 = get_SSshuttle_timer()
-				if(lentext(line2) > CHARS_PER_LINE)
+				if(length_char(line2) > CHARS_PER_LINE)
 					line2 = "Error"
 			else
 				if(SSshuttle.at_station)
@@ -145,14 +145,14 @@
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
-		index1 = (length(m1) > CHARS_PER_LINE)
+		index1 = (length_char(m1) > CHARS_PER_LINE)
 		message1 = m1
 	else
 		message1 = ""
 		index1 = 0
 
 	if(m2)
-		index2 = (length(m2) > CHARS_PER_LINE)
+		index2 = (length_char(m2) > CHARS_PER_LINE)
 		message2 = m2
 	else
 		message2 = ""
@@ -176,7 +176,7 @@
 
 /obj/machinery/status_display/proc/get_SSshuttle_timer()
 	if(SSshuttle.moving)
-		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10,1)
+		var/timeleft = round((SSshuttle.eta_timeofday - REALTIMEOFDAY) / 10,1)
 		if(timeleft < 0)
 			return "Late"
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
@@ -221,8 +221,8 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "AI display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon
@@ -288,8 +288,20 @@
 				set_picture("ai_facepalm")
 			if("Friend Computer")
 				set_picture("ai_friend")
+			if("Beer mug")
+				set_picture("ai_beer")
+			if("Dwarf")
+				set_picture("ai_dwarf")
+			if("Fishtank")
+				set_picture("ai_fishtank")
+			if("Plump Helmet")
+				set_picture("ai_plump")
 			if("HAL")
 				set_picture("ai_hal")
+			if("Tribunal")
+				set_picture("ai_tribunal")
+			if("Tribunal Malfunctioning")
+				set_picture("ai_tribunal_malf")
 
 		return
 

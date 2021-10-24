@@ -10,7 +10,7 @@ Variables:
 - design_by_id contains all existing /datum/design.
 - known_designs contains all researched /datum/design.
 - experiments contains data related to earning research points, more info in experiment.dm
-- research_points is an ammount of points that can be spend on researching technologies
+- research_points is an amount of points that can be spend on researching technologies
 - design_categories_protolathe stores all unlocked categories for protolathe designs
 - design_categories_imprinter stores all unlocked categories for circuit imprinter designs
 
@@ -28,8 +28,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 - Name:		Pretty obvious. This is often viewable to the players.
 - Desc:		Pretty obvious. Also player viewable.
 - ID:		This is the unique ID of the tech that is used by the various procs to find and/or maniuplate it.
-- Level:	This is the current level of the tech. Based on the ammount of researched technologies
-- MaxLevel: Maxium level possible for this tech. Based on the ammount of technologies of that tech
+- Level:	This is the current level of the tech. Based on the amount of researched technologies
+- MaxLevel: Maxium level possible for this tech. Based on the amount of technologies of that tech
 
 */
 /***************************************************************
@@ -59,10 +59,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 		var/datum/design/d = new D(src)
 		design_by_id[d.id] = d
 		if(d.starts_unlocked)
-			design_reliabilities[d.id] = 100
+			design_reliabilities[d.id] = 120
+			design_created_prototypes[d.id] = 15
 		else
 			design_reliabilities[d.id] = 10
-		design_created_prototypes[d.id] = 0
+			design_created_prototypes[d.id] = 0
 
 	for(var/T in subtypesof(/datum/tech))
 		var/datum/tech/Tech_Tree = new T
@@ -184,8 +185,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
-	design_reliabilities = O.design_reliabilities
-	design_created_prototypes = O.design_created_prototypes
 
 	for(var/tech_tree_id in O.tech_trees)
 		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
@@ -197,6 +196,12 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/tech_id in O.researched_tech)
 		var/datum/technology/T = O.researched_tech[tech_id]
 		UnlockTechology(T, force = TRUE)
+
+		for(var/D in T.unlocks_designs)
+			if(O.design_reliabilities[D] > design_reliabilities[D]) //check, is the reliability better in the downloadable
+				design_reliabilities[D] = O.design_reliabilities[D]
+				design_created_prototypes[D] = O.design_created_prototypes[D]
+
 	experiments.merge_with(O.experiments)
 
 /datum/research/proc/forget_techology(datum/technology/T)
@@ -279,7 +284,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored
@@ -296,7 +301,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/id = "id"              //An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1              //A simple number scale of the research level. Level 0 = Secret tech.
 	var/rare = 1               //How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
-	var/maxlevel               //Calculated based on the ammount of technologies
+	var/maxlevel               //Calculated based on the amount of technologies
 	var/shown = TRUE           //Used to hide tech that is not supposed to be shown from the start
 	var/item_tech_req          //Deconstructing items with this tech will unlock this tech tree
 
@@ -343,9 +348,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	shortname = "Blue-space"
-	desc = "Research into the sub-reality known as 'blue-space'."
+	name = "'Bluespace' Research"
+	shortname = "Bluespace"
+	desc = "Research into the sub-reality known as 'bluespace'."
 	id = RESEARCH_BLUESPACE
 	rare = 2
 
@@ -512,7 +517,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv")
+	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv", "meson_geo_glasses")
 
 /datum/technology/basic_handheld
 	name = "Basic Handheld"
@@ -980,7 +985,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 3000
 
-	unlocks_designs = list("temp_gun")
+	unlocks_designs = list("temp_gun", "emp_mine")
 
 /datum/technology/adv_exotic_weaponry
 	name = "Advanced Exotic Weaponry"
@@ -1028,7 +1033,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 5000
 
-	unlocks_designs = list("nuclear_gun", "plasma_10_gun", "plasma_104_gun", "plasma_mag", "lasercannon")
+	unlocks_designs = list("nuclear_gun", "plasma_10_gun", "plasma_104_gun", "plasma_mag", "lasercannon", "laserrifle")
 
 // Powerstorage
 
@@ -1179,8 +1184,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 // Bluespace
 
 /datum/technology/basic_bluespace
-	name = "Basic 'Blue-space'"
-	desc = "Basic 'Blue-space'"
+	name = "Basic 'Bluespace'"
+	desc = "Basic 'Bluespace'"
 	id = "basic_bluespace"
 	tech_type = RESEARCH_BLUESPACE
 
@@ -1386,7 +1391,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "borg_upgrade_security")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"
@@ -1566,7 +1571,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 /datum/technology/advanced_hardsuit_modules
 	name = "Advanced Hardsuit Modules"
-	desc = "Basic Hardsuit Modules"
+	desc = "Advanced Hardsuit Modules"
 	id = "advanced_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 

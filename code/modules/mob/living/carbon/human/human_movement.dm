@@ -1,11 +1,13 @@
 /mob/living/carbon/human/movement_delay()
 	if(iszombie(src))
-		return src.zombie_movement_delay()
-	if(mind && mind.changeling && mind.changeling.strained_muscles)
-		if(!has_gravity(src))
-			return -3   // speed boost in space.
-		else
-			return -2.5 // changeling ability also nulify any speed modifications and gives boost.
+		return zombie_movement_delay()
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.strained_muscles)
+			if(!has_gravity(src))
+				return -3   // speed boost in space.
+			else
+				return -2.5 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything
@@ -35,8 +37,8 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
+	var/hungry = (500 - get_nutrition()) / 5
+	if(hungry >= 70) // Slow down if nutrition <= 150
 		tally += hungry / 50
 
 	if(buckled) // so, if we buckled we have large debuff
@@ -68,13 +70,16 @@
 	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
 		tally += back.slowdown
 
-	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-		tally += shoes.slowdown
+	if (shoes)
+		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+			tally += shoes.slowdown
+	else
+		tally += species.speed_mod_no_shoes
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= ITEM_SIZE_NORMAL)
+			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
 				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 	if(shock_stage >= 10)
@@ -97,6 +102,8 @@
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
+
+	tally += mood_additive_speed_modifier
 
 	return (tally + config.human_delay)
 

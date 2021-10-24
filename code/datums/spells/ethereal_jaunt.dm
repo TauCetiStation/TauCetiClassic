@@ -1,28 +1,30 @@
 #define FLICK_OVERLAY_JAUNT_DURATION 12
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
-	name = "Ethereal Jaunt"
-	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = 1
+	name = "Выход из Тела"
+	desc = "Делает вас прозрачным и невидимым, позволяя летать и проходить сквозь стены."
+	charge_max = 30 SECONDS
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	centcomm_cancast = 0 //Prevent people from getting to centcomm
-
 	action_icon_state = "jaunt"
-
-	var/phaseshift = 0
-	var/jaunt_duration = 62 //in deciseconds
+	var/icon/dissapear_animation //what animation is gonna get played on spell cast
+	var/icon/appear_animation //what animation is gonna get played on spell end
+	var/movement_cooldown = 2 //movement speed, less is faster
+	var/ignore_NOJAUNT = FALSE //ignores NOJAUNT turf flag
+	var/jaunt_duration = 6 SECONDS //how long jaunt will last
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	set waitfor = FALSE
+
 	for(var/mob/living/target in targets)
+		if(!target.canmove)
+			continue
+
 		var/turf/mobloc = get_turf(target.loc)
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
+		holder.modifier_delay = movement_cooldown
 		target.ExtinguishMob()			//This spell can extinguish mob
 		target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
 		holder.master = target
@@ -32,80 +34,110 @@
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
-		var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
+		var/image/I = image('icons/mob/blob.dmi', holder, "marker", layer = HUD_LAYER)
+		holder.indicator = I
 		if(target.client)
 			target.client.images += I
 			target.forceMove(holder)
 			target.client.eye = holder
-
-		if(phaseshift)
-			holder.dir = target.dir
-			flick("phase_shift", holder)
-
+		holder.set_dir(target.dir)
+		holder.canmove = TRUE
+		if(dissapear_animation)
+			holder.canmove = FALSE
+			flick(dissapear_animation, holder)
 			sleep(FLICK_OVERLAY_JAUNT_DURATION)
 			holder.canmove = TRUE
-			sleep(jaunt_duration)
-
-			mobloc = get_turf(target.loc)
+		sleep(jaunt_duration)
+		if(appear_animation)
 			holder.canmove = FALSE
-			flick("phase_shift2", holder)
-		else
-			flick("liquify", holder)
-			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-			steam.set_up(10, 0, mobloc)
-			steam.start()
-
+			flick(appear_animation, holder)
 			sleep(FLICK_OVERLAY_JAUNT_DURATION)
 			holder.canmove = TRUE
-			sleep(jaunt_duration)
-
-			mobloc = get_turf(target.loc)
-			steam.location = mobloc
-			steam.start()
-			holder.canmove = FALSE
-			flick("reappear", holder)
-
-		sleep(FLICK_OVERLAY_JAUNT_DURATION)
+		mobloc = get_turf(target.loc)
 		if(target.client)
 			target.client.images -= I
 			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
 		mobloc = get_turf(target.loc)
-		var/can_move_in = 1
-		if(!mobloc.is_mob_placeable(target))
-			can_move_in = 0
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
-		if(!can_move_in)
-			do_teleport(target, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
+		target.eject_from_wall(gib = TRUE, companions = companions)
 		qdel(holder)
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift
+	charge_max = 40 SECONDS
+	clothes_req = 0
+	jaunt_duration = 4 SECONDS
+	action_icon_state = "phaseshift"
+	action_background_icon_state = "bg_cult"
+	dissapear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "phase_shift")
+	appear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "phase_shift2")
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk
+	name = "Shadow Walk"
+	desc = "Phases you into the space between worlds for a short time, allowing movement through walls and invisbility."
+	panel = "Shadowling Abilities"
+	charge_max = 60 SECONDS
+	clothes_req = 0
+	action_icon_state = "jaunt"
+	jaunt_duration = 6 SECONDS
+	movement_cooldown = -1
+	ignore_NOJAUNT = TRUE
+	action_icon_state = "spell_default"
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/cast(list/targets)
+	..()
+	usr.visible_message("<span class='warning'>[usr] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
+	sleep(jaunt_duration)
+	usr.visible_message("<span class='warning'>[usr] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
+	school = "transmutation"
+	centcomm_cancast = 0 //Prevent people from getting to centcomm
+	dissapear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "liquify")
+	appear_animation = icon(icon = 'icons/mob/mob.dmi', icon_state = "reappear")
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard/cast(list/targets)
+	..()
+	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+	steam.set_up(10, 0, get_turf(usr.loc))
+	steam.start()
+	sleep(jaunt_duration + FLICK_OVERLAY_JAUNT_DURATION)
+	steam.location = get_turf(usr.loc)
+	steam.start()
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"
 	last_move = 0
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 5
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"
 	var/mob/master
 	var/canmove = FALSE
-
+	var/image/indicator
+	var/modifier_delay = 2
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
-	if(!canmove || last_move + 2 > world.time)
+	if(last_move + modifier_delay > world.time)
 		return
 	if(user != master)
 		return
 	var/turf/newLoc = get_step(src,direction)
-	if(!(newLoc.flags & NOJAUNT))
-		loc = newLoc
-	else
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
+	for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/J in master.spell_list)
+		if(!(newLoc.flags & NOJAUNT) || J.ignore_NOJAUNT)
+			if(canmove)
+				loc = newLoc
+		else
+			to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	dir = direction
 	last_move = world.time
+	if(indicator)
+		var/turf/T = get_turf(loc)
+		indicator.icon_state = "marker[T.is_mob_placeable() ? "" : "_danger"]"
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
@@ -117,6 +149,39 @@
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	master = null
+	QDEL_NULL(indicator)
 	return ..()
 
 #undef FLICK_OVERLAY_JAUNT_DURATION
+
+/mob/proc/eject_from_wall(gib = FALSE, prioritize_ground = TRUE, list/companions = null)
+	var/turf/mobloc = get_turf(loc)
+	if(mobloc.is_mob_placeable(src))
+		return
+	var/found_ground = !prioritize_ground // this is to give priority to non-space tiles
+	var/to_gib = gib // this is a small feature i considered funny.
+	                  // chances of this occuring are very small
+	                  // as it requires 9x9 grid of impassable tiles ~getup1
+	for(var/turf/newloc in orange(1, mobloc))
+		if(newloc.is_mob_placeable(src) && !istype(newloc, /turf/space))
+			found_ground = TRUE
+			to_gib = FALSE
+			forceMove(newloc)
+			if(companions)
+				for(var/mob/M in companions)
+					M.forceMove(newloc)
+			return
+	if(!found_ground)
+		for(var/turf/newloc in orange(1, mobloc))
+			if(newloc.is_mob_placeable(src))
+				to_gib = FALSE
+				forceMove(newloc)
+				if(companions)
+					for(var/mob/M in companions)
+						M.forceMove(newloc)
+				return
+	if(to_gib)
+		gib()
+		if(companions)
+			for(var/mob/M in companions)
+				M.gib()

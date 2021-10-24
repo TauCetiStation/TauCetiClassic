@@ -11,8 +11,9 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
-	small = TRUE
+	w_class = SIZE_MINUSCULE
 	speak_chance = 1
+	melee_damage = 0
 	turns_per_move = 8
 	see_in_dark = 6
 	maxHealth = 15
@@ -21,6 +22,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
+	attacktext = "gnaw"
 	density = FALSE
 	var/body_color //brown, gray and white, leave blank for random
 	layer = MOB_LAYER
@@ -30,6 +32,11 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	faction = "untouchable"
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/mouse/Life()
 	..()
@@ -40,14 +47,14 @@
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
 		icon_state = "mouse_[body_color]_sleep"
-		wander = 0
+		wander = FALSE
 		speak_chance = 0
 		//snuffles
 	else if(stat == UNCONSCIOUS)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
 			icon_state = "mouse_[body_color]"
-			wander = 1
+			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
 
@@ -88,7 +95,7 @@
 	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else
@@ -183,6 +190,7 @@
 	holder_type = /obj/item/weapon/holder/mouse/brown
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."

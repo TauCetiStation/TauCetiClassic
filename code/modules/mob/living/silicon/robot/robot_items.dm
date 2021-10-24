@@ -1,90 +1,6 @@
-// A special tray for the service droid. Allow droid to pick up and drop items as if they were using the tray normally
-// Click on table to unload, click on item to load. Otherwise works identically to a tray.
-// Unlike the base item "tray", robotrays ONLY pick up food, drinks and condiments.
-
-/obj/item/weapon/tray/robotray
+/obj/item/weapon/storage/visuals/tray/robotray
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
-
-/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
-	if ( !target )
-		return
-	// pick up items, mostly copied from base tray pickup proc
-	// see code\game\objects\items\weapons\kitchen.dm line 241
-	if ( istype(target,/obj/item))
-		if ( !isturf(target.loc) ) // Don't load up stuff if it's inside a container or mob!
-			return
-		var/turf/pickup = target.loc
-
-		var/addedSomething = 0
-
-		for(var/obj/item/weapon/reagent_containers/food/I in pickup)
-
-
-			if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-				var/add = 0
-				if(I.w_class == 1.0)
-					add = 1
-				else if(I.w_class == 2.0)
-					add = 3
-				else
-					add = 5
-				if(calc_carry() + add >= max_carry)
-					break
-
-				I.loc = src
-				carrying.Add(I)
-				add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-				addedSomething = 1
-		if ( addedSomething )
-			user.visible_message("<span class='notice'>[user] load some items onto their service tray.</span>")
-
-		return
-
-	// Unloads the tray, copied from base item's proc dropped() and altered
-	// see code\game\objects\items\weapons\kitchen.dm line 263
-
-	if ( isturf(target) || istype(target,/obj/structure/table) )
-		var/foundtable = istype(target,/obj/structure/table)
-		if ( !foundtable ) //it must be a turf!
-			for(var/obj/structure/table/T in target)
-				foundtable = 1
-				break
-
-		var/turf/dropspot
-		if ( !foundtable ) // don't unload things onto walls or other silly places.
-			dropspot = user.loc
-		else if ( isturf(target) ) // they clicked on a turf with a table in it
-			dropspot = target
-		else					// they clicked on a table
-			dropspot = target.loc
-
-
-		cut_overlays()
-
-		var/droppedSomething = 0
-
-		for(var/obj/item/I in carrying)
-			I.loc = dropspot
-			carrying.Remove(I)
-			droppedSomething = 1
-			if(!foundtable && isturf(dropspot))
-				// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-				spawn()
-					for(var/i = 1, i <= rand(1,2), i++)
-						if(I)
-							step(I, pick(NORTH,SOUTH,EAST,WEST))
-							sleep(rand(2,4))
-		if ( droppedSomething )
-			if ( foundtable )
-				user.visible_message("<span class='notice'>[user] unloads their service tray.</span>")
-			else
-				user.visible_message("<span class='notice'>[user] drops all the items on their tray.</span>")
-
-	return ..()
-
-
-
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.
@@ -210,9 +126,44 @@
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
-	var/ampr = copytext(reject_bad_text(input(user,"Excavation depth?","Set excavation depth","")),1,MAX_NAME_LEN)
-	excavation_amount = 0 + text2num(ampr)/2
+	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num
+	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."
+
+/obj/item/weapon/twohanded/shockpaddles/robot
+	name = "defibrillator paddles"
+	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
+	charge_cost = 50
+	combat = TRUE
+	cooldown_time = 3 SECONDS
+
+/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.charge >= charge_amt)
+
+/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.use(charge_amt))
+
+/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
+	return //No, this can't be wielded
+
+/obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		if(IO.damage < 50)
+			if(do_mob(user, H, 2 SECONDS))
+				visible_message("<span class='danger'>[user] performs a heart massage on [H]!</span>")
+				if(H.health > config.health_threshold_dead)
+					IO.heart_fibrillate()
+					to_chat(user, "<span class='notice'>You detect an irregular heartbeat coming form [H]'s body. It is in need of defibrillation you assume!</span>")
+				else
+					to_chat(user, "<span class='warning'>[H]'s body seems to be too weak, you do not feel a heart beat.</span>")
+		else
+			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
+	..()

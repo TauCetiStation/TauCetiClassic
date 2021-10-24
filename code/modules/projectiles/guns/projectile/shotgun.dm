@@ -3,7 +3,7 @@
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -14,12 +14,12 @@
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	can_be_holstered = FALSE
 
-/obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-		A.update_icon()
+		I.update_icon()
 		update_icon()
 
 /obj/item/weapon/gun/projectile/shotgun/process_chamber()
@@ -66,7 +66,7 @@
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
@@ -76,7 +76,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -93,17 +93,10 @@
 	else
 		icon_state = "dshotgun[open ? "-o" : ""]"
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user)
-	..()
-	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
-		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
-		else
-			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
-		if(short) return
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
+		if(short)
+			return
 		if(get_ammo())
 			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
 			if(chambered.BB)
@@ -116,17 +109,28 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
+		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
-			w_class = ITEM_SIZE_NORMAL
+			w_class = SIZE_SMALL
 			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
-			short = 1
+			short = TRUE
 			can_be_holstered = TRUE
+		return
+
+	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
+		if(open)
+			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
+			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
+			chamber_round()
+		else
+			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
+
+	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
@@ -178,7 +182,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -190,7 +194,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_repeater.wav', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(M, 'sound/weapons/guns/reload_repeater.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
 	if(chambered)
 		chambered.loc = get_turf(src)
@@ -208,7 +212,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
@@ -228,21 +232,24 @@
 		update_icon()	//I.E. fix the desc
 		return 1
 
-/obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+/obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
+		if(!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
-			magazine.loc = src
+			magazine.forceMove(src)
 			to_chat(user, "<span class='notice'>You load a new clip into \the [src].</span>")
 			chamber_round()
-			A.update_icon()
+			I.update_icon()
 			update_icon()
-			return 1
+			return TRUE
+
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a clip in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dungeon

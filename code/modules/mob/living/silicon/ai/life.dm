@@ -7,10 +7,10 @@
 
 		if (src.stat!=0)
 			src.cameraFollow = null
-			src.reset_view(null)
-			src.unset_machine()
+			reset_view(null)
+			unset_machine()
 
-		src.updatehealth()
+		updatehealth()
 		update_gravity(mob_has_gravity())
 		update_action_buttons()
 
@@ -26,8 +26,8 @@
 			return
 
 		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
+			if (!( machine.check_eye(src) ))
+				reset_view(null)
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)
@@ -99,8 +99,8 @@
 					to_chat(src, "You've lost power!")
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 					if (!is_special_character(src))
-						src.set_zeroth_law("")
-					//src.clear_supplied_laws() // Don't reset our laws.
+						set_zeroth_law("")
+					//clear_supplied_laws() // Don't reset our laws.
 					//var/time = time2text(world.realtime,"hh:mm:ss")
 					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 					spawn(20)
@@ -167,17 +167,12 @@
 									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									to_chat(src, "Here are your current laws:")
-									src.show_laws()
+									show_laws()
 							sleep(50)
 							theAPC = null
 
 	add_ingame_age()
 	regular_hud_updates()
-	switch(src.sensor_mode)
-		if (SEC_HUD)
-			process_sec_hud(src,0,src.eyeobj)
-		if (MED_HUD)
-			process_med_hud(src,0,src.eyeobj)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -188,6 +183,8 @@
 			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
 		else
 			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+	diag_hud_set_health()
+	diag_hud_set_status()
 
 /mob/living/silicon/ai/rejuvenate()
 	..()

@@ -14,7 +14,7 @@ AI MODULES
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = CONDUCT
 	force = 5.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
@@ -35,16 +35,12 @@ AI MODULES
 			to_chat(usr, "You haven't selected an AI to transmit laws to!")
 			return
 
-		if(ticker && ticker.mode && ticker.mode.name == "blob")
-			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
-			return
-
 		if (comp.current.stat == DEAD || comp.current.control_disabled == 1)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
 		else if (comp.current.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
-			src.transmitInstructions(comp.current, usr)
+			transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "These are your laws now:")
 			comp.current.show_laws()
 			for(var/mob/living/silicon/robot/R in silicon_list)
@@ -71,7 +67,7 @@ AI MODULES
 		else if (comp.current.connected_ai)
 			to_chat(usr, "Upload failed. The robot is slaved to an AI.")
 		else
-			src.transmitInstructions(comp.current, usr)
+			transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "These are your laws now:")
 			comp.current.show_laws()
 			to_chat(usr, "Upload complete. The robot's laws have been modified.")
@@ -85,8 +81,8 @@ AI MODULES
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) used [src] on [target]([target.key])")
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
-	log_game("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z])")
+	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at [COORD(T)] [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to the laws [src] at [COORD(T)]")
 
 /******************** Modules ********************/
 
@@ -289,7 +285,6 @@ AI MODULES
 	..()
 	target.clear_inherent_laws()
 	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	target.add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
 	target.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
@@ -379,8 +374,8 @@ AI MODULES
 	..()
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name_admin(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
-	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z])")
+	message_admins("[key_name_admin(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at [COORD(T)] [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at [COORD(T)]")
 
 	add_freeform_law(target)
 

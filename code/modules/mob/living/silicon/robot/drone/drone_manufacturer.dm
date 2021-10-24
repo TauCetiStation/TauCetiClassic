@@ -2,8 +2,8 @@
 	name = "drone fabricator"
 	desc = "A large automated factory for producing maintenance drones."
 
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -25,7 +25,7 @@
 
 /obj/machinery/drone_fabricator/process()
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		return
 
 	if(stat & NOPOWER || !produce_drones)
@@ -82,7 +82,7 @@
 	set name = "Join As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		to_chat(src, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 
@@ -127,7 +127,7 @@
 		to_chat(usr, "You must wait 10 minutes to respawn as a drone!")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+	var/response = tgui_alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
 	if(response != "Beep!")
 		return  //Hit the wrong key...again.
 

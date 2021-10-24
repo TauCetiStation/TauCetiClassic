@@ -62,7 +62,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	set name = "Become space bum"
 	set category = "Ghost"
 	var/mob/dead/observer/M = usr
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		to_chat(src, "<span class='warning'> The game hasn't started yet!</span>")
 		return
 	if(!SSjunkyard.junkyard_initialised)
@@ -78,7 +78,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 		to_chat(src, "<span class='warning'>You may only spawn as space bum once per 7 minutes. [(3600 - world.time + client.time_joined_as_spacebum) / 10] seconds to respawn.</span>")
 		return
 	client.time_joined_as_spacebum = world.time
-	var/response = alert(src, "Are you -sure- you want to become a space bum?","Are you sure you want to hobo?","Yeah!","Nope!")
+	var/response = tgui_alert(src, "Are you -sure- you want to become a space bum?","Are you sure you want to hobo?", list("Yeah!","Nope!"))
 	if(response != "Yeah!")
 		return  //Hit the wrong key...again.
 

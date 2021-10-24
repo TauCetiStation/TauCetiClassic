@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/spacetime_dist
-	name = "Spacetime Distortion"
-	desc = "Entangle the strings of spacetime to deny easy movement around you. The strings vibrate..."
+	name = "Искажение Пространства-Времени"
+	desc = "Искажает струны пространства-времени и делает перемещение в зоне действия более проблематичным. Струны вибрируют..."
 	charge_max = 700
 	var/duration = 150
 	range = 7
@@ -52,7 +52,7 @@
 	name = "cross me"
 	desc = "for crossing"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"

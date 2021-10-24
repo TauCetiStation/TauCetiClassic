@@ -5,8 +5,8 @@
 	icon_state = "darts-5"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	var/darts = 5
 
@@ -65,9 +65,8 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name]</span>")
 
-/obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/dart_cartridge))
-
 		var/obj/item/weapon/dart_cartridge/D = I
 
 		if(!D.darts)
@@ -76,17 +75,17 @@
 
 		if(cartridge)
 			if(cartridge.darts <= 0)
-				src.remove_cartridge()
+				remove_cartridge()
 			else
 				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
 				return 0
 
-		user.drop_item()
+		user.drop_from_inventory(D, src)
 		cartridge = D
-		D.loc = src
 		to_chat(user, "<span class='notice'>You slot [D] into [src].</span>")
 		update_icon()
 		return
+
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!istype(I, container_type))
 			to_chat(user, "<span class='notice'>[I] doesn't seem to fit into [src].</span>")
@@ -95,11 +94,13 @@
 			to_chat(user, "<span class='notice'>[src] already has [max_beakers] beakers in it - another one isn't going to fit!</span>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		beakers += B
 		to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
+		return
+
+	return ..()
 
 /obj/item/weapon/gun/dartgun/can_fire()
 	if(!cartridge)
@@ -117,7 +118,7 @@
 		C.loc = get_turf(src)
 		C.update_icon()
 		cartridge = null
-		src.update_icon()
+		update_icon()
 
 /obj/item/weapon/gun/dartgun/proc/get_mixed_syringe()
 	if (!cartridge)
@@ -154,7 +155,7 @@
 			to_chat(user, "<span class='warning'>There are no reagents available!</span>")
 			return
 		cartridge.darts--
-		src.update_icon()
+		update_icon()
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		qdel(S)
 		D.icon_state = "syringeproj"
@@ -178,9 +179,7 @@
 							R += A.id + " ("
 							R += num2text(A.volume) + "),"
 					if (istype(M, /mob))
-						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
-						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
-						msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a dartgun ([R])", user)
+						M.log_combat(user, "shot with a dartgun")
 
 					else
 						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
@@ -223,12 +222,12 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					dat += "<br>    [R.volume] units of [R.name], "
 				if (check_beaker_mixing(B))
-					dat += text("<A href='?src=\ref[src];stop_mix=[i]'><font color='green'>Mixing</font></A> ")
+					dat += text("<A class='green' href='?src=\ref[src];stop_mix=[i]'>Mixing</A> ")
 				else
-					dat += text("<A href='?src=\ref[src];mix=[i]'><font color='red'>Not mixing</font></A> ")
+					dat += text("<A class='red' href='?src=\ref[src];mix=[i]'>Not mixing</A> ")
 			else
 				dat += "nothing."
-			dat += " \[<A href='?src=\ref[src];eject=[i]'>Eject</A>\]<br>"
+			dat += " <A href='?src=\ref[src];eject=[i]'>Eject</A><br>"
 			i++
 	else
 		dat += "There are no beakers inserted!<br><br>"
@@ -237,11 +236,13 @@
 		if(cartridge.darts)
 			dat += "The dart cartridge has [cartridge.darts] shots remaining."
 		else
-			dat += "<font color='red'>The dart cartridge is empty!</font>"
-		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]"
+			dat += "<span class='red'>The dart cartridge is empty!</span>"
+		dat += " <A href='?src=\ref[src];eject_cart=1'>Eject</A>"
 
-	user << browse(entity_ja(dat), "window=dartgun")
-	onclose(user, "dartgun", src)
+	var/datum/browser/popup = new(user, "dartgun", nref = src)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(obj/item/B)
 	if(!mixing || !beakers)
@@ -252,7 +253,7 @@
 	return 0
 
 /obj/item/weapon/gun/dartgun/Topic(href, href_list)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["stop_mix"])
 		var/index = text2num(href_list["stop_mix"])
 		if(index <= beakers.len)
@@ -275,7 +276,7 @@
 				B.loc = get_turf(src)
 	else if (href_list["eject_cart"])
 		remove_cartridge()
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/item/weapon/gun/dartgun/Fire(atom/target, mob/living/user, params, reflex = 0)

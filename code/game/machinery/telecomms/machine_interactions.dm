@@ -1,14 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-
 /*
 
 	All telecommunications interactions:
 
 */
-
-#define STATION_Z 1
-#define TELECOMM_Z 3
 
 /obj/machinery/telecomms
 	var/temp = "" // output message
@@ -34,7 +28,7 @@
 	var/obj/item/device/multitool/P = get_multitool(user)
 
 	var/dat
-	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
+	dat = "<font face = \"Courier\">"
 	dat += "<br>[temp]<br>"
 	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[src.toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
@@ -84,28 +78,11 @@
 
 	dat += "</font>"
 	temp = ""
-	user << browse(entity_ja(dat), "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "tcommachine")
 
+	var/datum/browser/popup = new(user, "tcommachine", "[src.name] Access", 520, 500)
+	popup.set_content(dat)
+	popup.open()
 
-// Off-Site Relays
-//
-// You are able to send/receive signals from the station's z level (changeable in the STATION_Z #define) if
-// the relay is on the telecomm satellite (changable in the TELECOMM_Z #define)
-
-
-/obj/machinery/telecomms/relay/proc/toggle_level()
-
-	var/turf/position = get_turf(src)
-
-	// Toggle on/off getting signals from the station or the current Z level
-	if(src.listening_level == STATION_Z) // equals the station
-		src.listening_level = position.z
-		return 1
-	else if(position.z == TELECOMM_Z)
-		src.listening_level = STATION_Z
-		return 1
-	return 0
 
 // Returns a multitool from a user depending on their mobtype.
 
@@ -118,7 +95,7 @@
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(isrobot(user) && in_range(user, src))
+	else if(isrobot(user) && Adjacent(user))
 		if(ismultitool(user.get_active_hand()))
 			P = user.get_active_hand()
 	else if(isobserver(user))
@@ -156,12 +133,8 @@
 // RELAY
 
 /obj/machinery/telecomms/relay/Options_Menu()
-	var/dat = ""
-	if(src.z == TELECOMM_Z)
-		dat += "<br>Signal Locked to Station: <A href='?src=\ref[src];change_listening=1'>[listening_level == STATION_Z ? "TRUE" : "FALSE"]</a>"
-	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
-	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
-	return dat
+	return "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>" + \
+		 "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
 
 /obj/machinery/telecomms/relay/Options_Topic(href, href_list)
 
@@ -171,14 +144,6 @@
 	if(href_list["broadcast"])
 		broadcasting = !broadcasting
 		temp = "<font color='#666633'>-% Broadcasting mode changed. %-</font>"
-	if(href_list["change_listening"])
-		//Lock to the station OR lock to the current position!
-		//You need at least two receivers and two broadcasters for this to work, this includes the machine.
-		var/result = toggle_level()
-		if(result)
-			temp = "<font color='#666633'>-% [src]'s signal has been successfully changed.</font>"
-		else
-			temp = "<font color='#666633'>-% [src] could not lock it's signal onto the station. Two broadcasters or receivers required.</font>"
 
 // BUS
 
@@ -288,7 +253,7 @@
 					P.buffer.links.Add(src)
 
 				if(!(P.buffer in src.links))
-					src.links.Add(P.buffer)
+					links.Add(P.buffer)
 
 				temp = "<font color='#666633'>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font>"
 
@@ -306,16 +271,13 @@
 		temp = "<font color='#666633'>-% Buffer successfully flushed. %-</font>"
 		P.buffer = null
 
-	src.Options_Topic(href, href_list)
+	Options_Topic(href, href_list)
 
 	usr.set_machine(src)
 
 	updateUsrDialog()
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || isobserver(user) || in_range(user, src))
-		return 1
-	return 0
-
-#undef TELECOMM_Z
-#undef STATION_Z
+	if(issilicon(user) || isobserver(user) || Adjacent(user))
+		return TRUE
+	return FALSE

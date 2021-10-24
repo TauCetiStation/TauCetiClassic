@@ -397,9 +397,7 @@
 	if(borer)
 		borer.detatch()
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	target.chest_brain_op_stage = 2.0
 	target.death()
@@ -468,9 +466,7 @@
 	user.visible_message("<span class='notice'>[user] pries out [target]'s posi-brain from \his hatch with \the [tool].</span>",
 	"<span class='notice'>You pry out [target]'s posi-brain from hatch with \the [tool].</span>")
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)
@@ -508,8 +504,9 @@
 	if(PB.brainmob && PB.brainmob.mind)
 		PB.brainmob.mind.transfer_to(target)
 		target.dna = PB.brainmob.dna
-
 	qdel(tool)
+	target.stat = CONSCIOUS
+
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -691,6 +688,7 @@
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in accum
 	C.forceMove(get_turf(target))
+	target.nutrition = 0
 	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
@@ -727,11 +725,10 @@
 	user.visible_message("<span class='notice'>[user] has put in \the [tool] into [target]'s accumulator slot.</span>",
 	"<span class='notice'>You have put in \the [tool] into [target]'s accumulator slot.</span>")
 
-	user.drop_item()
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
-	tool.forceMove(accum)
+	user.drop_from_inventory(tool, accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
 
-	if (target.nutrition > C.maxcharge)
-		target.nutrition = C.maxcharge
+	target.nutrition = C.charge
+

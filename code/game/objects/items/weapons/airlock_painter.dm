@@ -4,7 +4,7 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
@@ -68,17 +68,18 @@
 		ink_level = "dangerously high"
 	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
-/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/toner))
+/obj/item/weapon/airlock_painter/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/toner))
 		if(ink)
 			to_chat(user, "<span class='notice'>\the [name] already contains \a [ink].</span>")
 			return
-		user.drop_item()
-		W.loc = src
-		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
-		ink = W
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>You install \the [I] into \the [name].</span>")
+		ink = I
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+
+	else
+		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
@@ -95,7 +96,7 @@
 	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
 		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
 		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, target))
+		!user.Adjacent(target))
 	{
 		return
 	}

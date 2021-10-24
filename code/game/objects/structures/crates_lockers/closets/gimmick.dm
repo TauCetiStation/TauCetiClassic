@@ -21,16 +21,16 @@
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"
 	desc = "It's a storage unit for things that have no right being here."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/gimmick/russian
 	name = "russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/gimmick/russian/PopulateContents()
 	for (var/i in 1 to 5)
@@ -40,9 +40,9 @@
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
 	desc = "It's a storage unit for Tacticool gear."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/gimmick/tacticool/PopulateContents()
 	..()
@@ -52,7 +52,7 @@
 		new /obj/item/clothing/gloves/swat(src)
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/clothing/mask/gas/coloured(src)
-		new /obj/item/clothing/shoes/swat(src)
+		new /obj/item/clothing/shoes/boots/swat(src)
 		new /obj/item/clothing/suit/armor/swat(src)
 		new /obj/item/clothing/under/syndicate/tacticool(src)
 
@@ -78,9 +78,9 @@
 
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicatealt"
+	icon_closed = "syndicatealt"
+	icon_opened = "syndicatealtopen"
 
 /obj/structure/closet/thunderdome/tdgreen/PopulateContents()
 	for (var/i in 1 to 3)

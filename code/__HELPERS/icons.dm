@@ -107,7 +107,7 @@ AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60� produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
@@ -665,12 +665,22 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 	if(!exact && (!A.dir || A.dir == SOUTH))
 		curdir = defdir
 	else if(exact)
 		curdir = SOUTH
 	else
 		curdir = A.dir
+
+	//Try to remove/optimize this section ASAP, CPU hog.
+	//Determines if there's directionals.
+	if(!noIcon && curdir != SOUTH)
+		if(!length(icon_states(icon(curicon, curstate, curdir))))
+			base_icon_dir = SOUTH
+
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -683,7 +693,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -861,13 +871,15 @@ The _flatIcons list is a cache for generated icon files.
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, showDirs = cardinal)
+/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, dummy_key, showDirs = cardinal)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new(null, prefs.species)
+		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
+		var/datum/species/S
 		if(prefs)
 			prefs.copy_to(body)
-		var/datum/species/S = all_species[prefs.species]
+			S = all_species[prefs.species]
+
 		if(S)
 			S.before_job_equip(body, J, TRUE)
 		if(J)
@@ -883,9 +895,8 @@ var/global/list/humanoid_icon_cache = list()
 			var/icon/partial = getFlatIcon(body)
 			out_icon.Insert(partial,dir=D)
 
-		qdel(body)
-
 		humanoid_icon_cache[icon_id] = out_icon
+		dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
 		return out_icon
 	else
 		return humanoid_icon_cache[icon_id]

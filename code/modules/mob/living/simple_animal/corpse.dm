@@ -37,29 +37,29 @@
 	M.real_name = src.name
 	M.stat = DEAD //Kills the new mob
 	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), SLOT_W_UNIFORM)
+		M.equip_to_slot_or_del(new corpseuniform(M), SLOT_W_UNIFORM)
 	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), SLOT_WEAR_SUIT)
+		M.equip_to_slot_or_del(new corpsesuit(M), SLOT_WEAR_SUIT)
 	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), SLOT_SHOES)
+		M.equip_to_slot_or_del(new corpseshoes(M), SLOT_SHOES)
 	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), SLOT_GLOVES)
+		M.equip_to_slot_or_del(new corpsegloves(M), SLOT_GLOVES)
 	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), SLOT_L_EAR)
+		M.equip_to_slot_or_del(new corpseradio(M), SLOT_L_EAR)
 	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), SLOT_GLASSES)
+		M.equip_to_slot_or_del(new corpseglasses(M), SLOT_GLASSES)
 	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), SLOT_WEAR_MASK)
+		M.equip_to_slot_or_del(new corpsemask(M), SLOT_WEAR_MASK)
 	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), SLOT_HEAD)
+		M.equip_to_slot_or_del(new corpsehelmet(M), SLOT_HEAD)
 	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), SLOT_BELT)
+		M.equip_to_slot_or_del(new corpsebelt(M), SLOT_BELT)
 	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), SLOT_R_STORE)
+		M.equip_to_slot_or_del(new corpsepocket1(M), SLOT_R_STORE)
 	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), SLOT_L_STORE)
+		M.equip_to_slot_or_del(new corpsepocket2(M), SLOT_L_STORE)
 	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), SLOT_BACK)
+		M.equip_to_slot_or_del(new corpseback(M), SLOT_BACK)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
 		W.name = "[M.real_name]'s ID Card"
@@ -89,7 +89,7 @@
 	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas
@@ -105,7 +105,7 @@
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
@@ -135,7 +135,7 @@
 /obj/effect/landmark/mobcorpse/pirate
 	name = "Pirate"
 	corpseuniform = /obj/item/clothing/under/pirate
-	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpseshoes = /obj/item/clothing/shoes/boots
 	corpseglasses = /obj/item/clothing/glasses/eyepatch
 	corpsehelmet = /obj/item/clothing/head/bandana
 
@@ -151,8 +151,8 @@
 /obj/effect/landmark/mobcorpse/russian
 	name = "Russian"
 	corpseuniform = /obj/item/clothing/under/soviet
-	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpseshoes = /obj/item/clothing/shoes/boots
 	corpsehelmet = /obj/item/clothing/head/bearpelt
 
 /obj/effect/landmark/mobcorpse/russian/ranged
-	corpsehelmet = /obj/item/clothing/head/ushanka
+	corpsehelmet = /obj/item/clothing/head/ushanka/black

@@ -29,15 +29,15 @@ var/cmp_field = "name"
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
 
-/proc/cmp_subsystem_init(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return b.init_order - a.init_order
 
-/proc/cmp_subsystem_display(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	if(a.display_order == b.display_order)
 		return sorttext(b.name, a.name)
 	return a.display_order - b.display_order
 
-/proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
@@ -70,3 +70,20 @@ var/cmp_field = "name"
 		return a_sign - b_sign
 	else
 		return sorttext(b_name, a_name)
+
+/proc/cmp_abs_mood_asc(datum/mood_event/A, datum/mood_event/B)
+	var/abs_a = abs(A.mood_change)
+	var/abs_b = abs(B.mood_change)
+
+	return abs_a - abs_b
+
+/proc/cmp_abs_mood_dsc(datum/mood_event/A, datum/mood_event/B)
+	var/abs_a = abs(A.mood_change)
+	var/abs_b = abs(B.mood_change)
+
+	return abs_b - abs_a
+/proc/cmp_bridge_commands(a,b)
+	return bridge_commands[a].position - bridge_commands[b].position
+
+/proc/cmp_filter_data_priority(list/A, list/B)
+	return A["priority"] - B["priority"]

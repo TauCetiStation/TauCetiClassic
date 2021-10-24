@@ -6,31 +6,32 @@ RSF
 /obj/item/weapon/rsf
 	name = "Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	var/matter = 0
 	var/mode = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/rsf/atom_init()
 	. = ..()
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 
-/obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (istype(W, /obj/item/weapon/rcd_ammo))
-		if ((matter + 10) > 30)
+/obj/item/weapon/rsf/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/rcd_ammo))
+		if(matter + 10 > 30)
 			to_chat(user, "The RSF cant hold any more matter.")
 			return
-		qdel(W)
+		qdel(I)
 		matter += 10
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
-		return
+
+	else
+		return ..()
 
 /obj/item/weapon/rsf/attack_self(mob/user)
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -72,7 +73,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( target.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high amount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
@@ -86,7 +87,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( target )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high amount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")

@@ -2,7 +2,7 @@
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_state = "teleport"
-	circuit = "/obj/item/weapon/circuitboard/teleporter"
+	circuit = /obj/item/weapon/circuitboard/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -51,11 +51,11 @@
 /obj/machinery/computer/teleporter/ui_interact(mob/user)
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
-		data += "<div class='statusDisplay'>No power station linked.</div>"
+		data += "<div class='Section'>No power station linked.</div>"
 	else if(!power_station.teleporter_hub)
-		data += "<div class='statusDisplay'>No hub linked.</div>"
+		data += "<div class='Section'>No hub linked.</div>"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
+		data += "<div class='Section'>Current regime: [regime_set]<BR>"
 		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
@@ -71,8 +71,8 @@
 			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
 			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
-			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
-			data += "<span class='linkOff'>Eject GPS device</span><BR>"
+			data += "<BR><span class='disabled'>Get target from memory</span><BR>"
+			data += "<span class='disabled'>Eject GPS device</span><BR>"
 		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
@@ -226,8 +226,8 @@
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -448,7 +448,7 @@
 		visible_message("<span class='alert'>No target detected.</span>")
 		src.engaged = 0
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/teleport/station/power_change()

@@ -1,14 +1,22 @@
 /datum/event/apc_damage
-	var/apcSelectionRange	= 25
+	var/apcSelectionRange = 25
 
 /datum/event/apc_damage/start()
 	var/obj/machinery/power/apc/A = acquire_random_apc()
 
-	var/severity_range = rand(0,15)
+	var/severity_range = 0
+	switch(severity)
+		if(EVENT_LEVEL_MUNDANE)
+			severity_range = rand(0,7)
+		if(EVENT_LEVEL_MODERATE)
+			severity_range = rand(7,15)
+		if(EVENT_LEVEL_MAJOR)
+			severity_range = rand(15,23)
 
 	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
 		if(is_valid_apc(apc))
 			apc.emagged = 1
+			apc.locked = FALSE
 			apc.update_icon()
 
 /datum/event/apc_damage/proc/acquire_random_apc()

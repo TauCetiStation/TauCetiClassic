@@ -5,14 +5,14 @@
 	icon_state = "samak"
 	icon_living = "samak"
 	icon_dead = "samak_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 2
 	maxHealth = 125
 	health = 125
 	speed = 2
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "mauls"
+	w_class = SIZE_HUMAN
+	melee_damage = 10
+	attacktext = "maul"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Hruuugh!","Hrunnph")
@@ -26,14 +26,14 @@
 	icon_state = "diyaab"
 	icon_living = "diyaab"
 	icon_dead = "diyaab_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 25
 	health = 25
 	speed = 1
-	melee_damage_lower = 1
-	melee_damage_upper = 8
-	attacktext = "gouges"
+	w_class = SIZE_BIG
+	melee_damage = 5
+	attacktext = "goug"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Awrr?","Aowrl!","Worrl")
@@ -47,14 +47,14 @@
 	icon_state = "shantak"
 	icon_living = "shantak"
 	icon_dead = "shantak_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 75
 	health = 75
 	speed = 1
-	melee_damage_lower = 3
-	melee_damage_upper = 12
-	attacktext = "gouges"
+	w_class = SIZE_HUMAN
+	melee_damage = 8
+	attacktext = "goug"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Shuhn","Shrunnph?","Shunpf")
@@ -66,7 +66,8 @@
 	icon_state = "yithian"
 	icon_living = "yithian"
 	icon_dead = "yithian_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	w_class = SIZE_TINY
+	icon = 'icons/misc/jungle.dmi'
 
 /mob/living/simple_animal/tindalos
 	name = "tindalos"
@@ -74,4 +75,5 @@
 	icon_state = "tindalos"
 	icon_living = "tindalos"
 	icon_dead = "tindalos_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	w_class = SIZE_TINY
+	icon = 'icons/misc/jungle.dmi'

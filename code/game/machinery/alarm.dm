@@ -37,7 +37,6 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -96,7 +95,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.dir = dir
+			set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -494,7 +493,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/alarm/proc/populate_status(var/data)
+/obj/machinery/alarm/proc/populate_status(data)
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.total_moles
@@ -515,7 +514,7 @@
 	data["target_temperature"] = "[target_temperature - T0C]C"
 	data["thermoregulation"] = allow_regulate
 
-/obj/machinery/alarm/proc/populate_controls(var/list/data)
+/obj/machinery/alarm/proc/populate_controls(list/data)
 	switch(screen)
 		if(AALARM_SCREEN_MAIN)
 			data["mode"] = mode
@@ -883,7 +882,7 @@ Just a object used in constructing air alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 
@@ -900,13 +899,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+/obj/item/alarm_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -936,7 +935,7 @@ Code shamelessly copied from apc_frame
 FIRE ALARM
 */
 /obj/machinery/firealarm
-	name = "fire alarm"
+	name = "Fire Alarm"
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
@@ -945,7 +944,7 @@ FIRE ALARM
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -1096,9 +1095,12 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", src.name)
+		popup.set_content(dat)
+		popup.open()
+
 	else
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
@@ -1110,9 +1112,11 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", stars(src.name))
+		popup.set_content(dat)
+		popup.open()
 
 /obj/machinery/firealarm/Topic(href, href_list)
 	. = ..()
@@ -1179,7 +1183,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.dir = dir
+		set_dir(dir)
 
 	if(building)
 		buildstage = 0
@@ -1208,7 +1212,7 @@ Just a object used in constructing fire alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 
@@ -1225,13 +1229,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = CONDUCT
 
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+/obj/item/firealarm_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr) > 1)

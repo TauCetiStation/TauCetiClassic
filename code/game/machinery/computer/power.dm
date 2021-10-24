@@ -6,8 +6,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	light_color = "#ffcc33"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80
@@ -44,10 +44,9 @@
 			return
 
 
-	var/t = "<TT><B>Power Monitoring</B><HR>"
+	var/t = "<TT>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
 		t += "<span class='warning'>No connection</span>"
@@ -59,38 +58,40 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
+		t += "<PRE>Total power: [DisplayPower(powernet.viewavail)]<BR>Total load:  [DisplayPower(powernet.viewload)]<BR></PRE>"
 
-		t += "<FONT SIZE=-1>"
+		t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
 
 		if(L.len > 0)
+			t += "<tr> <th>Area</th> <th>Eqp.</th> <th>Lgt.</th> <th>Env.</th>"
+			t += "<th style='text-align: center'>Load</th> <th style='text-align: right'>Cell </th> <th> - </th> </tr>"
 
-			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
-
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
+			var/list/S = list("Off", "A-Off", "On", "A-On")
+			var/list/chg = list("<span style='color: red'>N</span>", "<span style='color: orange'>C</span>", "<span style='color: green'>F</span>")
 
 			for(var/obj/machinery/power/apc/A in L)
+				t += "<tr> <td>"
+				t += copytext("\The [A.area]", 1, 30)
+				t += "</td> <td>[S[A.equipment + 1]]</td> <td>[S[A.lighting + 1]]</td> <td>[S[A.environ + 1]]</td>"
+				t += "<td style='text-align: right'>[round(A.lastused_total)]</td> <td style='text-align: right'>"
 
-				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+				if(A.cell)
+					t += "[round(A.cell.percent())]%</td> <td> [chg[A.charging + 1]] </td> </tr>"
+				else
+					t += "N/C</td> <td>   </td> </tr>"
 
-		t += "</FONT></PRE></TT>"
+		t += "</TABLE></FONT></TT>"
 
-	user << browse(entity_ja(t), "window=powcomp;size=450x900")
-	onclose(user, "powcomp")
+	var/datum/browser/popup = new(user, "powcomp", "Power Monitoring", 470, 900)
+	popup.set_content(t)
+	popup.open()
 
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=powcomp")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
 
 	if( href_list["update"] )
-		src.updateDialog()
+		updateDialog()
 		return

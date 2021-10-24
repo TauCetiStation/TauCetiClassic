@@ -4,7 +4,7 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/trash.dmi'
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	desc = "This is rubbish."
 
 /obj/item/trash/raisins
@@ -97,15 +97,23 @@
 	icon_state = "fries"
 
 
-/obj/item/trash/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(user.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
-		if(istype(W, /obj/item/weapon/nullrod))
+/obj/item/trash/candle/ghost/attackby(obj/item/I, mob/user, params)
+	var/chaplain_check = FALSE
+
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.getBrainLoss() >= 60 || L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")
+			chaplain_check = TRUE
+
+	if(chaplain_check)
+		if(istype(I, /obj/item/weapon/nullrod))
 			var/obj/item/trash/candle/C = new /obj/item/trash/candle(loc)
 			if(istype(loc, /mob))
 				user.put_in_hands(C)
 				dropped()
 			qdel(src)
+	else
+		return ..()
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

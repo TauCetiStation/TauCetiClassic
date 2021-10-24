@@ -43,7 +43,7 @@
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
@@ -54,7 +54,7 @@
 			icon_state = "cutlass0"
 		else
 			icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
@@ -79,7 +79,19 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
-/obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
+	sweep_step = 2
+
+/obj/item/weapon/melee/classic_baton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
@@ -90,11 +102,11 @@
 			user.take_bodypart_damage(2 * force)
 		return
 
-	if (user.a_intent == "hurt")
+	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-			M.stuttering = 8
+		if (!(HULK in M.mutations))
+			M.Stuttering(8)
 		M.Stun(8)
 		M.Weaken(8)
 		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
@@ -102,12 +114,10 @@
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		M.Stun(5)
 		M.Weaken(5)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attacked [key_name(user)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 		user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
+	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -117,9 +127,41 @@
 	icon_state = "telebaton_0"
 	item_state = null
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 3
 	var/on = 0
+
+	sweep_step = 5
+
+/obj/item/weapon/melee/telebaton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.can_pull = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull)
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_spin()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_push()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_pull()
+	return on
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
@@ -129,7 +171,7 @@
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton"
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
@@ -138,7 +180,7 @@
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = null
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
@@ -173,7 +215,7 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
-		if(user.a_intent == I_HELP && ishuman(target))
+		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
@@ -189,10 +231,8 @@
 			else
 				H.adjustHalLoss(35)
 
-			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
-			user.attack_log += "\[[time_stamp()]\]<font color='red'>harmless hit [H.name] ([H.ckey]) with [src.name].</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'>harmless hited [user.name] ([user.ckey]) with [src.name].</font>"
-			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].", user)
+			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
+			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
@@ -251,13 +291,14 @@
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = ITEM_SIZE_HUGE
+		src.w_class = SIZE_BIG
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = ITEM_SIZE_HUGE
-	src.add_fingerprint(user)
+		src.w_class = SIZE_BIG
+	add_fingerprint(user)
+
 	return
 
 
@@ -286,7 +327,7 @@
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
@@ -294,7 +335,7 @@
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	if(user)

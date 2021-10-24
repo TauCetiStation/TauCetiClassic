@@ -68,10 +68,12 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	log_game("[key_name(src)] accessed file: [path]")
-	
-	switch(alert("View (in game), Open (in your system's text editor), or Download?", path, "View", "Open", "Download", "Cancel"))
+
+	switch(tgui_alert(usr, "View (in game), Open (in your system's text editor), or Download?", path, list("View", "Open", "Download", "Cancel")))
 		if ("View")
-			src << browse("<pre style='word-wrap: break-word;'>[entity_ja(html_encode(file2text(file(path))))]</pre>", list2params(list("window" = "viewfile.[path]")))
+			var/datum/browser/popup = new(src, "window=viewfile.[path]", "[path]", ntheme = CSS_THEME_LIGHT)
+			popup.set_content("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>")
+			popup.open()
 		if ("Open")
 			src << run(file(path))
 		if ("Download")
@@ -83,7 +85,7 @@
 
 /client/proc/browseserverlogs_id(subpath = "")
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_round"))
 		to_chat(usr, "<span class='alert'>Database connection required</span>")
 		return
 
@@ -103,3 +105,48 @@
 			return
 
 		browseserverlogs("data/logs/[round_date]/round-[id]/[subpath]")
+
+/client/proc/cmd_display_del_log()
+	set category = "Logs"
+	set name = "View del() Log"
+	set desc = "Display del's log of everything that's passed through it."
+
+	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
+	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in SSgarbage.items)
+		var/datum/qdel_item/I = SSgarbage.items[path]
+		dellog += "<li><u>[path]</u><ul>"
+		if (I.failures)
+			dellog += "<li>Failures: [I.failures]</li>"
+		dellog += "<li>qdel() Count: [I.qdels]</li>"
+		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
+		if (I.hard_deletes)
+			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
+			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+		if (I.slept_destroy)
+			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
+		if (I.no_respect_force)
+			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
+		if (I.no_hint)
+			dellog += "<li>No hint: [I.no_hint]</li>"
+		dellog += "</ul></li>"
+
+	dellog += "</ol>"
+
+	var/datum/browser/popup = new(usr, "dellog")
+	popup.set_content(dellog.Join())
+	popup.open()
+
+/client/proc/cmd_display_init_log()
+	set category = "Logs"
+	set name = "View Initialize() Log"
+	set desc = "Displays a list of things that didn't handle Initialize() properly"
+
+	if(!length(SSatoms.BadInitializeCalls))
+		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
+	else
+		var/dat = replacetext(SSatoms.InitLog(), "\n", "<br>")
+
+		var/datum/browser/popup = new(usr, "initlog")
+		popup.set_content(dat)
+		popup.open()

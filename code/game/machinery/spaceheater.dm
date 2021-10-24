@@ -4,8 +4,8 @@
 
 
 /obj/machinery/space_heater
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
@@ -80,14 +80,14 @@
 
 	var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 	var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-	targetTemperature = dd_range(minTemp, maxTemp, targetTemperature)
+	targetTemperature = clamp(targetTemperature, minTemp, maxTemp)
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
 	if(cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user)
@@ -101,9 +101,8 @@
 				// insert cell
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					user.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		else
@@ -161,7 +160,7 @@
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
 
-/obj/machinery/space_heater/is_operational_topic()
+/obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/Topic(href, href_list)
@@ -190,7 +189,7 @@
 
 		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
 
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)
@@ -207,10 +206,9 @@
 		if(!cell)
 			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 			if(istype(C))
-				if(!usr.drop_item())
+				if(!usr.drop_from_inventory(C, src))
 					return
 				cell = C
-				C.loc = src
 				C.add_fingerprint(usr)
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")

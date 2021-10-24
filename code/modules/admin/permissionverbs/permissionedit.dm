@@ -13,6 +13,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Permissions Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -53,7 +54,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=editrights;size=600x500")
+	usr << browse(output,"window=editrights;size=600x500")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -81,12 +82,16 @@
 		to_chat(usr, "<span class='alert'>Error: Topic 'editrights': No valid ckey</span>")
 		return
 	var/datum/admins/D = admin_datums[adm_ckey]
-	if(alert("Are you sure you want to remove [adm_ckey] from admins?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [adm_ckey] from admins?","Message", list("Yes","Cancel")) == "Yes")
 		if(!D)
 			return
+
+		change_permissions(adm_ckey, 0)
+		db_admin_rank_modification(adm_ckey, ADMIN_RANK_REMOVED)
+
 		admin_datums -= adm_ckey
 		D.disassociate()
-		db_admin_rank_modification(adm_ckey, "Removed")
+		
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 
@@ -112,7 +117,7 @@
 			return
 		if("*New Rank*")
 			new_rank = sanitize(input("Please input a new rank", "New custom rank", null, null) as null|text)
-			if(!new_rank)
+			if(!new_rank || (new_rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX, ADMIN_RANK_REMOVED)))
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return
 	if(D)
@@ -139,6 +144,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Permissions modification panel</title>
 <script>
 function send_rights() {
@@ -167,7 +173,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(entity_ja(output),"window=change_permissions;size=250x380;")
+	usr << browse(output,"window=change_permissions;size=250x380;")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)
@@ -202,8 +208,7 @@ var elements = document.getElementsByName('rights');
 		message_admins("[key_name_admin(usr)] removed[removed_rights] permissions of [adm_ckey]")
 		log_admin("[key_name(usr)] removed[removed_rights] permission of [adm_ckey]")
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_admin", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	adm_ckey = ckey(adm_ckey)
@@ -214,16 +219,16 @@ var elements = document.getElementsByName('rights');
 	var/admin_id
 	while(select_query.NextRow())
 		admin_id = text2num(select_query.item[1])
-	if(!admin_id)
+	if(!admin_id) // also prevents changes to sandbox and round admins
 		return
 	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [new_rights] WHERE id = [admin_id]")
 	insert_query.Execute()
 	if(removed_rights)
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log`) VALUES (NULL, NOW( ), [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed permission[removed_rights] to admin [adm_ckey]');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log`) VALUES (NULL, NOW( ), [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed permission[sanitize_sql(removed_rights)] to admin [adm_ckey]');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Permissions removed.</span>")
 	if(added_rights)
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log` ) VALUES (NULL, NOW( ), [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added permission[added_rights] to admin [adm_ckey]')")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log` ) VALUES (NULL, NOW( ), [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added permission[sanitize_sql(added_rights)] to admin [adm_ckey]')")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Permissions added.</span>")
 
@@ -242,18 +247,18 @@ var elements = document.getElementsByName('rights');
 	if(ment_ckey in admin_datums)
 		remove_admin(ment_ckey)
 	mentor_ckeys += ment_ckey
-	mentors += directory[ment_ckey]
+	if(directory[ment_ckey])
+		mentors += directory[ment_ckey]
 	message_admins("[key_name_admin(usr)] added [ment_ckey] to the mentors list")
 	log_admin("[key_name(usr)] added [ment_ckey] to the mentors list")
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_mentor", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	ment_ckey = ckey(ment_ckey)
 	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_mentor` (`id`, `ckey`) VALUES (null, '[ment_ckey]');")
 	insert_query.Execute()
-	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` , `round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new mentor [ment_ckey].');")
+	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` , `round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new mentor [ment_ckey].');")
 	log_query.Execute()
 	to_chat(usr, "<span class='notice'>New mentor added.</span>")
 
@@ -266,20 +271,19 @@ var elements = document.getElementsByName('rights');
 	if(!ment_ckey)
 		to_chat(usr, "<span class='alert'>Error: Topic 'editmentorlist': [ment_ckey] is not a valid mentor.</span>")
 		return
-	if(alert("Are you sure you want to remove [ment_ckey] from mentors?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [ment_ckey] from mentors?","Message", list("Yes","Cancel")) == "Yes")
 		mentor_ckeys -= ment_ckey
 		mentors -= directory[ment_ckey]
 		message_admins("[key_name_admin(usr)] removed [ment_ckey] from the mentors list")
 		log_admin("[key_name(usr)] removed [ment_ckey] from the mentors list")
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_mentor", "erro_admin_log"))
 			to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 			return
 		ment_ckey = ckey(ment_ckey)
 		var/DBQuery/remove_query = dbcon.NewQuery("DELETE FROM `erro_mentor` WHERE `ckey` = '[ment_ckey]';")
 		remove_query.Execute()
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed mentor [ment_ckey].');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed mentor [ment_ckey].');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Mentor removed.</span>")
 
@@ -292,8 +296,7 @@ var elements = document.getElementsByName('rights');
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 		to_chat(usr, "<span class='alert'>You do not have permission to do this!</span>")
 		return
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_admin", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	if(!adm_ckey || !new_rank)
@@ -303,6 +306,12 @@ var elements = document.getElementsByName('rights');
 		return
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
+
+	var/datum/admins/D = admin_datums[adm_ckey]
+	if(D.rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX))
+		to_chat(usr, "<span class='alert'>You can not edit special rank [D.rank]!</span>")
+		return
+
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM erro_admin WHERE ckey = '[adm_ckey]'")
 	select_query.Execute()
 	var/new_admin = 1
@@ -311,15 +320,54 @@ var elements = document.getElementsByName('rights');
 		new_admin = 0
 		admin_id = text2num(select_query.item[1])
 	if(new_admin)
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_admin` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_admin` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[sanitize_sql(new_rank)]', -1, 0)")
 		insert_query.Execute()
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new admin [adm_ckey] to rank [new_rank]');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new admin [adm_ckey] to rank [sanitize_sql(new_rank)]');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
-			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET rank = '[new_rank]' WHERE id = [admin_id]")
+			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET rank = '[sanitize_sql(new_rank)]' WHERE id = [admin_id]")
 			insert_query.Execute()
-			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Edited the rank of [adm_ckey] to [new_rank]');")
+			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Edited the rank of [adm_ckey] to [sanitize_sql(new_rank)]');")
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")
+
+/client/proc/add_round_admin()
+	set category = "Admin"
+	set name = "Round Admin"
+	set desc = "Add or remove temporary admin"
+
+	if(!check_rights(R_PERMISSIONS))
+		return
+
+	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
+
+	if(!target)
+		return
+
+	if(!target.holder)
+		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+		if (confirm != "Yes")
+			return
+
+		new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
+		target.holder = admin_datums[target.ckey]
+		target.holder.associate(target)
+
+		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
+		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+
+	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
+		var/confirm = tgui_alert(usr, "You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+		if (confirm != "Yes")
+			return
+
+		var/datum/admins/D = target.holder
+		admin_datums -= target.ckey
+		D.disassociate()
+
+		message_admins("[key_name_admin(usr)] removed [ADMIN_RANK_ROUND] [key_name_admin(target)] from the admins list")
+		log_admin("[key_name(usr)] removed [ADMIN_RANK_ROUND] [key_name(target)] from the admins list")
+	else
+		to_chat(usr, "<span class='alert'>Wrong client!</span>")

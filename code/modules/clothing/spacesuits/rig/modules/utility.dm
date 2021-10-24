@@ -75,7 +75,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/weapon/rcd/mounted/attackby()
+/obj/item/weapon/rcd/mounted/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/rig_module/device/rcd
@@ -95,7 +95,7 @@
 	if(device_type)
 		device = new device_type(src)
 		device.canremove = FALSE // so we can't place mounted devices on tables/racks
-		device.w_class = ITEM_SIZE_NO_CONTAINER // so we can't put mounted devices into backpacks
+		device.flags |= ABSTRACT // so we can't put mounted devices into backpacks
 		device.origin_tech = null // so we can't put them into destructive analyzer
 		device.m_amt = 0 // so we can't put them into autolathe
 		device.g_amt = 0
@@ -290,7 +290,6 @@
 	charges["dermaline"]     = new /datum/rig_charge("dermaline",     "dermaline",     0)
 	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    0)
 	charges["oxycodone"]     = new /datum/rig_charge("oxycodone",     "oxycodone",     0)
-	charges["hyperzine"]     = new /datum/rig_charge("hyperzine",     "hyperzine",     0)
 
 /obj/item/rig_module/chem_dispenser/medical/ert // variant for the medical ert rigs
 	name = "hardsuit mounted chemical injector"
@@ -556,9 +555,9 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_ammount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
 
-/obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
+/obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
 		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		charges["aqueous_foam"].charges = ext.reagents.total_volume
@@ -576,7 +575,7 @@
 	selectable = TRUE
 	toggleable = FALSE
 	var/per_use = 5
-	var/spray_ammount = 0 // 0 does 1x1 tile
+	var/spray_amount = 0 // 0 does 1x1 tile
 	var/max_volume = 100
 
 /obj/item/rig_module/metalfoam_spray/init_charges()
@@ -606,7 +605,7 @@
 		return FALSE
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
-	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	INVOKE_ASYNC(src, .proc/spray_at, T)
 
 	return TRUE
@@ -618,7 +617,7 @@
 	step_towards(D, T)
 	sleep(5)
 	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(spray_ammount, D.loc, metalfoam = 1)
+	s.set_up(spray_amount, D.loc, metalfoam = 1)
 	s.start()
 	qdel(D)
 
@@ -680,5 +679,45 @@
 
 	holder.canremove = TRUE
 	holder.wearer.alpha = 255
+
+	return TRUE
+
+/obj/item/rig_module/syndiemmessage
+	name = "Syndicate emergency message"
+	desc = "Special syndicate system emergency message."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "syndie_headset"
+	activate_string = "Send syndicate emergency message"
+	deactivate_string = "Transmitting... Don't turn off this"
+	permanent = TRUE
+	show_toggle_button = TRUE
+	usable = TRUE
+	use_power_cost = 10
+	module_cooldown = 50 SECONDS
+	var/transmitting = FALSE
+
+/obj/item/rig_module/syndiemmessage/activate(forced = FALSE)
+	if(!..())
+		return FALSE
+
+	transmitting = TRUE
+	var/mob/living/carbon/human/H = holder.wearer
+	var/input = sanitize(input(H, "Enter a short and important message that will be useful to command to assess the situation and provide further guidance for your work", "To abort, send an empty message.", ""))
+	if(!input)
+		return FALSE
+	Syndicate_announce(input, H)
+	to_chat(H, "<span class='notice'>Message transmitted.</span>")
+	log_say("[key_name(H)] has made a Syndicate announcement: [H]")
+	transmitting = FALSE
+	deactivate()
+
+/obj/item/rig_module/syndiemmessage/deactivate()
+	if(transmitting)
+		var/mob/living/carbon/human/H = holder.wearer
+		to_chat(H, "<span class='warning'>Syndicate message module transmiting your important message. It turns off on its own how you do it</span>")
+		return FALSE
+
+	if(!..())
+		return FALSE
 
 	return TRUE

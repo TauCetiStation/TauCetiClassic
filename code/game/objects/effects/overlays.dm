@@ -6,6 +6,12 @@
 /obj/effect/overlay/attackby()
 	return
 
+/obj/effect/overlay/singularity_act()
+	return
+
+/obj/effect/overlay/singularity_pull()
+	return
+
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'
@@ -20,28 +26,35 @@
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
-	density = 1
+	density = TRUE
 	layer = 5
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/palmtree_l
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
-	density = 1
+	density = TRUE
 	layer = 5
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/coconut
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
 
-/obj/effect/overlay/singularity_act()
-	return
+/obj/effect/overlay/wall_rot
+	name = "Wallrot"
+	desc = "Ick..."
+	icon = 'icons/effects/wallrot.dmi'
+	anchored = TRUE
+	density = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/effect/overlay/singularity_pull()
-	return
+/obj/effect/overlay/wall_rot/atom_init()
+	. = ..()
+	pixel_x += rand(-10, 10)
+	pixel_y += rand(-10, 10)
 
 /obj/effect/overlay/slice
 	name = "Slice"
@@ -49,12 +62,12 @@
 	icon_state = "Slice"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/droppod_open
 	layer = 4
 	plane = 4
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"
 
@@ -63,3 +76,14 @@
 	if(icon_modifier)
 		icon_state += icon_modifier
 	QDEL_IN(src, 27)
+
+/obj/effect/overlay/typing_indicator
+	icon = 'icons/mob/talk.dmi'
+	icon_state = "default0"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	layer = MOB_LAYER + 1
+
+/obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)
+	. = ..()
+	icon_state = indi_icon

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
@@ -13,9 +13,7 @@
 	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
 		return ..()
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])", user)
+	M.log_combat(user, "carded via [name]")
 
 	transfer_ai("AICORE", "AICARD", M, user)
 	return
@@ -28,10 +26,10 @@
 		to_chat(user, "<b>ERROR ERROR ERROR</b>")
 
 /obj/item/device/aicard/attack_self(mob/user)
-	if (!in_range(src, user))
+	if (!Adjacent(user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Intelicard</B><BR>"
+	var/dat = "<TT>"
 	var/laws
 	for(var/mob/living/silicon/ai/A in src)
 		dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
@@ -73,15 +71,15 @@
 			dat += "Subspace Transceiver is: [A.aiRadio.disabledAi ? "Disabled" : "Enabled"]"
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
-			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-	user << browse(entity_ja(dat), "window=aicard")
-	onclose(user, "aicard")
+
+	var/datum/browser/popup = new(user, "aicard", "Intelicard")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/item/device/aicard/Topic(href, href_list)
 	var/mob/U = usr
-	if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
+	if (!Adjacent(U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 		U << browse(null, "window=aicard")
 		U.unset_machine()
 		return
@@ -90,11 +88,6 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
-			U << browse(null, "window=aicard")
-			U.unset_machine()
-			return
-
 		if ("Radio")
 			for(var/mob/living/silicon/ai/A in src)
 				A.aiRadio.disabledAi = !A.aiRadio.disabledAi
@@ -102,9 +95,9 @@
 				to_chat(U, "You [A.aiRadio.disabledAi ? "Disable" : "Enable"] the AI's Subspace Transceiver")
 
 		if ("Wipe")
-			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
+			var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", list("Yes", "No"))
 			if(confirm == "Yes")
-				if(isnull(src)||!in_range(src, U)||U.machine!=src)
+				if(isnull(src)||!Adjacent(U)||U.machine!=src)
 					U << browse(null, "window=aicard")
 					U.unset_machine()
 					return

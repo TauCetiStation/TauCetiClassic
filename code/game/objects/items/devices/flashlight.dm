@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
@@ -67,10 +67,6 @@
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
-		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
-			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
-			return
-
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
 		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
@@ -118,7 +114,7 @@
 	flags = CONDUCT
 	button_sound = 'sound/items/penlight.ogg'
 	brightness_on = 2
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -127,7 +123,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 // the desk lamps are a bit special
@@ -138,7 +134,7 @@
 	item_state = "lamp"
 	button_sound = 'sound/items/buttonclick.ogg'
 	brightness_on = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
@@ -170,7 +166,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
@@ -211,8 +207,9 @@
 		update_brightness(null)
 
 	if(!fuel)
-		icon_state = "[initial(icon_state)]-empty"
-		item_state = icon_state
+		icon_state = "[initial(icon_state)]-burned"
+		item_state = "[initial(item_state)]-burned"
+		update_inv_mob()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
@@ -233,10 +230,7 @@
 		src.force = on_damage
 		src.damtype = "fire"
 		item_state = icon_state
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		update_inv_mob()
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
@@ -246,7 +240,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
@@ -298,16 +292,14 @@
 	if(emp_cur_charges)
 		emp_cur_charges--
 
-		if(ismob(target))
-			var/mob/M = target
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light", user)
-			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+		if(isliving(target))
+			var/mob/living/M = target
+			M.log_combat(user, "EMP-lighted with [name]")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [target]</span>")
 		else
 			target.visible_message("<span class='danger'>[user] blinks \the [src] at \the [target].</span>")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		target.emp_act(1)
+		target.emplode(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

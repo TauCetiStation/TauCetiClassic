@@ -17,7 +17,7 @@
 	icon_state = "morgue1"
 	dir = EAST
 	density = TRUE
-	anchored = 1.0
+	anchored = TRUE
 
 	var/obj/structure/m_tray/connected = null
 	var/check_delay = 0
@@ -33,7 +33,10 @@
 
 /obj/structure/morgue/AltClick(mob/user)
 	..()
-	if(!CanUseTopic(user) || !user.IsAdvancedToolUser())
+	if(!CanUseTopic(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
@@ -119,7 +122,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		connected = new /obj/structure/m_tray( loc )
-		step(connected, dir)
+		connected.Move(get_step(src, dir))
 		connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
@@ -131,7 +134,7 @@
 					var/mob/M = A
 					M.instant_vision_update(0)
 			connected.icon_state = "morguet"
-			connected.dir = dir
+			connected.set_dir(dir)
 		else
 			qdel(connected)
 			connected = null
@@ -155,7 +158,7 @@
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && loc != user))
+		if (!Adjacent(user))
 			return
 		add_fingerprint(user)
 
@@ -193,10 +196,10 @@
 	desc = "Apply corpse before closing."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morguet"
-	density = 1
+	density = TRUE
 	layer = 2.0
 	var/obj/structure/morgue/connected = null
-	anchored = 1
+	anchored = TRUE
 	throwpass = 1
 
 /obj/structure/m_tray/Destroy()
@@ -206,7 +209,7 @@
 	return ..()
 
 /obj/structure/m_tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/m_tray/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -214,7 +217,7 @@
 	add_fingerprint(user)
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
@@ -237,9 +240,9 @@
 	desc = "A human incinerator. Works well on barbeque nights."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "crema1"
-	density = 1
+	density = TRUE
 	var/obj/structure/c_tray/connected = null
-	anchored = 1.0
+	anchored = TRUE
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
@@ -293,7 +296,7 @@
 	return src.loc
 
 /obj/structure/crematorium/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
@@ -328,7 +331,7 @@
 		else
 			qdel(src.connected)
 			src.connected = null
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	update()
 
 /obj/structure/crematorium/attackby(P, mob/user)
@@ -336,7 +339,7 @@
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if (!Adjacent(usr))
 			return
 		add_fingerprint(user)
 		if (t)
@@ -376,7 +379,7 @@
 		return
 
 	else
-		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
@@ -388,9 +391,7 @@
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
 				M.emote("scream")
-			M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[key_name(user)]</b>" //No point in this when the mob's about to be deleted
-			user.attack_log +="\[[time_stamp()]\] Cremated <b>[key_name(M)]</b>"
-			log_attack("[key_name(user)] cremated by [key_name(M)]")
+			M.log_combat(user, "cremated")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
@@ -414,14 +415,14 @@
 	desc = "Apply body before burning."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "cremat"
-	density = 1
+	density = TRUE
 	layer = 2.0
 	var/obj/structure/crematorium/connected = null
-	anchored = 1
+	anchored = TRUE
 	throwpass = 1
 
 /obj/structure/c_tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/c_tray/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_RAPID)
@@ -430,12 +431,12 @@
 			if (!A.anchored)
 				A.loc = src.connected
 		src.connected.connected = null
-		src.connected.update()
+		connected.update()
 		add_fingerprint(user)
 		qdel(src)
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return

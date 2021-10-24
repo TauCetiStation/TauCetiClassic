@@ -43,6 +43,7 @@
 			W.plane = initial(W.plane)
 			W.loc = M.loc
 			W.dropped(M)
+	M.sec_hud_set_implants()
 
 	var/mob/living/new_mob
 
@@ -111,12 +112,12 @@
 		return
 
 	for (var/obj/effect/proc_holder/spell/S in M.spell_list)
-		new_mob.spell_list += new S.type
+		new_mob.AddSpell(new S.type)
 
 	new_mob.attack_log = M.attack_log
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = "hurt"
+	new_mob.a_intent = INTENT_HARM
 	if(M.mind)
 		M.mind.transfer_to(new_mob)
 	else

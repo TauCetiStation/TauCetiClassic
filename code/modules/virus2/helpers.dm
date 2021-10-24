@@ -105,7 +105,7 @@
 		var/datum/disease2/disease/D = disease.getcopy()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
-		M.hud_updateflag |= 1 << STATUS_HUD
+		M.med_hud_set_status()
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)
@@ -113,14 +113,14 @@
 	D.makerandom()
 	D.infectionchance = 1
 	infect_virus2(M,D,1)
-	M.hud_updateflag |= 1 << STATUS_HUD
+	M.med_hud_set_status()
 
 //Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1)
 	infect_virus2(M,D,1)
-	M.hud_updateflag |= 1 << STATUS_HUD
+	M.med_hud_set_status()
 
 //Fancy prob() function.
 /proc/dprob(p)
@@ -145,7 +145,7 @@
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
-				if (in_range(src, victim))
+				if (Adjacent(victim))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 
@@ -156,7 +156,7 @@
 
 		if (ishuman(victim) && zone_sel)
 			var/mob/living/carbon/human/H = victim
-			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(get_targetzone())
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
 			for(var/obj/item/clothing/C in clothes)
 				if(C && istype(C))

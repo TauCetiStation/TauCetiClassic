@@ -13,17 +13,15 @@
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
-	//	var/value = null
 
 		if (pos)
             // No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
-		//	value = copytext(t, pos + 1)
 		else
             // No, don't do lowertext here, that breaks paths on linux
 			name = t

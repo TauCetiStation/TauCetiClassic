@@ -1,3 +1,7 @@
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 10)
+#define PUMP_MIN_PRESSURE 0
+#define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
+
 /obj/machinery/portable_atmospherics/powered/pump
 	name = "Portable Air Pump"
 
@@ -13,10 +17,7 @@
 
 	var/on = FALSE
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
-	var/target_pressure = ONE_ATMOSPHERE
-
-	var/pressuremin = 0
-	var/pressuremax = 10 * ONE_ATMOSPHERE
+	var/target_pressure = PUMP_DEFAULT_PRESSURE
 
 /obj/machinery/portable_atmospherics/powered/pump/filled
 	start_pressure = 90 * ONE_ATMOSPHERE
@@ -107,50 +108,85 @@
 
 	updateDialog()
 
-/obj/machinery/portable_atmospherics/powered/pump/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui)
-	var/list/data[0]
-	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
-	data["targetpressure"] = round(target_pressure)
-	data["pump_dir"] = direction_out
-	data["minpressure"] = round(pressuremin)
-	data["maxpressure"] = round(pressuremax)
-	data["powerDraw"] = round(last_power_draw)
-	data["cellCharge"] = cell ? cell.charge : 0
-	data["cellMaxCharge"] = cell ? cell.maxcharge : 1
-	data["on"] = on ? 1 : 0
+/obj/machinery/portable_atmospherics/powered/pump/ui_interact(mob/user)
+	tgui_interact(user)
 
-	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "portpump.tmpl", "Portable Pump", 480, 410)
-		ui.set_initial_data(data)
+/obj/machinery/portable_atmospherics/powered/pump/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PortablePump", name)
 		ui.open()
-		ui.set_auto_update(1)
 
-/obj/machinery/portable_atmospherics/powered/pump/Topic(href, href_list)
+/obj/machinery/portable_atmospherics/powered/pump/tgui_data()
+	var/data = list()
+	data["on"] = on
+	data["direction"] = direction_out ? 0 : 1
+	data["connected"] = connected_port ? 1 : 0
+	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
+	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
+	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
+	data["power_draw"] = round(last_power_draw)
+	data["cell_charge"] = cell ? cell.charge : 0
+	data["cell_maxcharge"] = cell ? cell.maxcharge : 1
+
+	if(holding)
+		data["holding"] = list()
+		data["holding"]["name"] = holding.name
+		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	else
+		data["holding"] = null
+	return data
+
+/obj/machinery/portable_atmospherics/powered/pump/tgui_state(mob/user)
+	return global.physical_state
+
+/obj/machinery/portable_atmospherics/powered/pump/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
-
-	if(href_list["power"])
-		on = !on
-		update_icon() // temp vars ~_~
-
-	if(href_list["direction"])
-		direction_out = !direction_out
-		update_icon()
-
-	if (href_list["remove_tank"])
-		if(holding)
-			holding.forceMove(loc)
-			holding = null
-		update_icon()
-
-	if (href_list["pressure_adj"])
-		var/diff = text2num(href_list["pressure_adj"])
-		target_pressure = min(10 * ONE_ATMOSPHERE, max(0, target_pressure+diff))
-		update_icon()
+	switch(action)
+		if("power")
+			on = !on
+			if(on && !holding)
+				var/plasma = air_contents.gas["phoron"]
+				var/n2o = air_contents.gas["sleeping_agent"]
+				if(n2o || plasma)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_JMP(src)]")
+					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [COORD(src)]]")
+			else if(on && direction_out)
+				log_investigate("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+			. = TRUE
+		if("direction")
+			direction_out = !direction_out
+			if(direction_out)
+				if(on && holding)
+					log_investigate("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+			. = TRUE
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = PUMP_DEFAULT_PRESSURE
+				. = TRUE
+			else if(pressure == "min")
+				pressure = PUMP_MIN_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = PUMP_MAX_PRESSURE
+				. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				log_investigate("was set to [target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
+		if("eject")
+			if(holding)
+				holding.forceMove(loc)
+				holding = null
+				. = TRUE
+	update_icon()
+#undef PUMP_MAX_PRESSURE
+#undef PUMP_MIN_PRESSURE
+#undef PUMP_DEFAULT_PRESSURE

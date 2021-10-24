@@ -6,12 +6,10 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_state = ""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!in_range(target, user))
-		return
 
 	if(!istype(target, /obj/item))
 		return ..()
@@ -19,6 +17,9 @@
 	var/obj/item/I = target
 	if(I.anchored)
 		return ..()
+
+	if((I.flags & (ABSTRACT|DROPDEL)) || !I.canremove)
+		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
@@ -30,7 +31,7 @@
 	if(istype(I, /obj/item/device/core_sampler)) //core sampler interacts with evidence bags in another way
 		return
 
-	if(I.w_class > ITEM_SIZE_NORMAL)
+	if(I.w_class > SIZE_SMALL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
@@ -105,7 +106,7 @@
 	var/amount = 10.0
 	item_state = "paper"
 	throwforce = 1
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 3
 	throw_range = 5
 

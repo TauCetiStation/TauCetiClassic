@@ -2,8 +2,8 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
-	anchored = 1
-	w_class = ITEM_SIZE_LARGE
+	anchored = TRUE
+	w_class = SIZE_NORMAL
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
 	var/number = 0
@@ -11,7 +11,7 @@
 	var/mob/living/silicon/ai/ai = list()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
@@ -20,7 +20,7 @@
 
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
@@ -34,7 +34,7 @@
 			return -1
 	if (!src.listening)
 		return -1
-	if(freq == SYND_FREQ)
+	if(freq == SYND_FREQ || freq == HEIST_FREQ)
 		if(!(src.syndie))
 			return -1//Prevents broadcast of messages over devices lacking the encryption
 

@@ -1,8 +1,6 @@
 var/global/list/baked_smooth_icons = list()
 
-var/datum/subsystem/icon_smooth/SSicon_smooth
-
-/datum/subsystem/icon_smooth
+SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = SS_INIT_ICON_SMOOTH
 	wait = SS_WAIT_ICON_SMOOTH
@@ -12,10 +10,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 
-/datum/subsystem/icon_smooth/New()
-	NEW_SS_GLOBAL(SSicon_smooth)
-
-/datum/subsystem/icon_smooth/fire()
+/datum/controller/subsystem/icon_smooth/fire()
 	var/list/cached = smooth_queue
 	while(cached.len)
 		var/atom/A = cached[cached.len]
@@ -34,7 +29,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 		else
 			can_fire = FALSE
 
-/datum/subsystem/icon_smooth/Initialize()
+/datum/controller/subsystem/icon_smooth/Initialize()
 	for(var/zlevel in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_CENTCOM, ZTRAIT_MINING, ZTRAIT_SPACE_RUINS)))
 		smooth_zlevel(zlevel, TRUE)
 	var/queue = smooth_queue
@@ -59,7 +54,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 /atom/proc/SliceNDice(dmifile as file)
 	var/font_size = 32
 #else
-/atom/proc/SliceNDice(dmifile)
+/atom/proc/SliceNDice(dmifile, overlay)
 #endif
 
 	var/STATE_COUNT_NORMAL = 4
@@ -80,7 +75,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 		STATE_COUNT_DIAGONAL = 8
 
 #ifdef MANUAL_ICON_SMOOTH
-	var/create_false_wall_animations = alert(usr, "Generate false wall animation states?", "Confirmation", "Yes", "No") == "Yes" ? TRUE : FALSE
+	var/create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 #else
 	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
 #endif
@@ -459,6 +454,8 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 		I.DrawBox(null, 1, 1, sourceIconWidth, sourceIconHeight)
 		for(var/i in parts)
 			I.Blend(icon(outputIcon, i), ICON_OVERLAY)
+		if (overlay)
+			I.Blend(overlay, ICON_OVERLAY)
 		master.Insert(I, "[dir_bits]")
 		CHECK_TICK
 

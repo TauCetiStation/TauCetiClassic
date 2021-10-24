@@ -3,10 +3,10 @@
 	Uses the same visual objects for all players.
 */
 
-/datum/hud/var/obj/screen/grab_intent
-/datum/hud/var/obj/screen/hurt_intent
-/datum/hud/var/obj/screen/disarm_intent
-/datum/hud/var/obj/screen/help_intent
+/datum/hud/var/atom/movable/screen/grab_intent
+/datum/hud/var/atom/movable/screen/harm_intent
+/datum/hud/var/atom/movable/screen/push_intent
+/datum/hud/var/atom/movable/screen/help_intent
 
 /*
 	The hud datum
@@ -34,23 +34,26 @@ var/global/list/available_ui_styles = list(
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/obj/screen/lingchemdisplay
-	var/obj/screen/lingstingdisplay
-	var/obj/screen/blobpwrdisplay
-	var/obj/screen/blobhealthdisplay
-	var/obj/screen/r_hand_hud_object
-	var/obj/screen/l_hand_hud_object
-	var/obj/screen/action_intent
-	var/obj/screen/move_intent
-	var/obj/screen/staminadisplay
+	var/atom/movable/screen/lingchemdisplay
+	var/atom/movable/screen/lingstingdisplay
+	var/atom/movable/screen/blobpwrdisplay
+	var/atom/movable/screen/blobhealthdisplay
+	var/atom/movable/screen/r_hand_hud_object
+	var/atom/movable/screen/l_hand_hud_object
+	var/atom/movable/screen/action_intent
+	var/atom/movable/screen/move_intent
+	var/atom/movable/screen/staminadisplay
+	var/atom/movable/screen/wanted/wanted_lvl
 
 	var/list/adding
 	var/list/other
-	var/list/obj/screen/hotkeybuttons
+	var/list/atom/movable/screen/hotkeybuttons
 
-	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
+	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
-	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
+	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -62,19 +65,24 @@ var/global/list/available_ui_styles = list(
 		// will fall back to the default if any of these are null
 		ui_style = ui_style2icon(mymob.client && mymob.client.prefs && mymob.client.prefs.UI_style)
 
-	for(var/mytype in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/plane_master/instance = new mytype()
+	for(var/mytype in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
+
+	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
+		var/atom/movable/plane_master_controller/controller_instance = new mytype(null, src)
+		plane_master_controllers[controller_instance.name] = controller_instance
 
 	instantiate()
 
 /datum/hud/Destroy()
 	grab_intent = null
-	hurt_intent = null
-	disarm_intent = null
+	harm_intent = null
+	push_intent = null
 	help_intent = null
 	lingchemdisplay = null
+	wanted_lvl = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
 	r_hand_hud_object = null
@@ -86,10 +94,8 @@ var/global/list/available_ui_styles = list(
 	hotkeybuttons = null
 	hide_actions_toggle = null
 	mymob = null
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			qdel(plane_masters[thing])
-		plane_masters.Cut()
+	QDEL_LIST_ASSOC_VAL(plane_masters)
+	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
@@ -172,11 +178,13 @@ var/global/list/available_ui_styles = list(
 	else if(isrobot(mymob))
 		robot_hud()
 	else if(isobserver(mymob))
-		ghost_hud()
+		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
 		blob_hud()
 	else if(isessence(mymob))
 		changeling_essence_hud()
+	else if(isliving(mymob))
+		default_hud(ui_color, ui_alpha)
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
@@ -277,17 +285,17 @@ var/global/list/available_ui_styles = list(
 /datum/hud/proc/plane_masters_update()
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)
-		var/obj/screen/plane_master/PM = plane_masters[thing]
+		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
 		PM.backdrop(mymob)
 		mymob.client.screen += PM
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12(var/full = 0 as null)
+/mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src))
+		if(ishuman(src) || isobserver(src))
 			hud_used.show_hud() //Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else

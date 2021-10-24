@@ -103,9 +103,7 @@
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/brain/B
 	B = new(target.loc)
@@ -149,7 +147,7 @@
 	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
 
 	if(!istype(tool, /obj/item/brain))
-		return 
+		return
 
 	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 	if(target.key)//Revised. /N
@@ -161,7 +159,8 @@
 		else
 			target.key = B.brainmob.key
 		target.dna = B.brainmob.dna
-	new /obj/item/organ/internal/brain(null, target)
+	var/obj/item/organ/internal/brain/brain = new(null)
+	brain.insert_organ(target)
 	qdel(tool)
 
 /datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

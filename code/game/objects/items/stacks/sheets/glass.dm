@@ -30,22 +30,20 @@
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
-	if(iscoil(W))
-
+/obj/item/stack/sheet/glass/attackby(obj/item/I, mob/user, params)
+	if(iscoil(I))
 		var/list/resources_to_use = list()
-		resources_to_use[W] = 5
+		resources_to_use[I] = 5
 		resources_to_use[src] = 1
 		if(!use_multi(user, resources_to_use))
 			return
 
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		new /obj/item/stack/light_w(user.loc)
-	else if(istype(W, /obj/item/stack/rods))
 
+	else if(istype(I, /obj/item/stack/rods))
 		var/list/resources_to_use = list()
-		resources_to_use[W] = 1
+		resources_to_use[I] = 1
 		resources_to_use[src] = 1
 		if(!use_multi(user, resources_to_use))
 			return
@@ -59,6 +57,27 @@
 				continue
 			G.attackby(RG, user)
 			to_chat(usr, "You add the reinforced glass to the stack. It now contains [RG.get_amount()] sheets.")
+
+	else
+		return ..()
+
+/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/rods))
+		var/list/resources_to_use = list()
+		resources_to_use[I] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/stack/sheet/glass/phoronrglass/FG = new (user.loc)
+		FG.add_fingerprint(user)
+		for(var/obj/item/stack/sheet/glass/phoronrglass/G in user.loc)
+			if(G == FG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(FG, user)
+
 	else
 		return ..()
 
@@ -79,7 +98,7 @@
 			if(src.loc != user)
 				return 1
 
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for(var/obj/structure/window/win in user.loc)
 				i++
@@ -102,15 +121,15 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
 				return 1
@@ -122,22 +141,22 @@
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(step)
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -195,7 +214,7 @@
 				return 1
 			if(src.loc != user)
 				return 1
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
@@ -218,16 +237,16 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Full Window")
 			if(QDELETED(src))
@@ -239,16 +258,16 @@
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
 			W.state = 0
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
 			W.state = 0
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
@@ -262,26 +281,26 @@
 				to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
 				return 1
 
-			if(!src.use(5))
+			if(!use(5))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchored = FALSE
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.set_dir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.set_dir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.set_dir(WEST)
 					WD.ini_dir = WEST
 				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.set_dir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1
@@ -314,10 +333,9 @@
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
@@ -327,13 +345,13 @@
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
-			//SN src = null
 			qdel(src)
-			return
-	return ..()
+
+	else
+		return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
@@ -343,7 +361,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
 			if(H.species.flags[NO_MINORCUTS])

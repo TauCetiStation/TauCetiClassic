@@ -108,7 +108,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aw" = (
-/obj/structure/flora/pottedplant/unusual,
+/obj/item/weapon/twohanded/flora/pottedplant/unusual,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ax" = (
@@ -398,7 +398,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bC" = (
-/obj/structure/flora/pottedplant/crystal,
+/obj/item/weapon/twohanded/flora/pottedplant/crystal,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bD" = (
@@ -531,7 +531,7 @@
 /area/space_structures/robostatoin)
 "cb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -592,11 +592,6 @@
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
-	},
-/area/space_structures/robostatoin)
-"cm" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
 	},
 /area/space_structures/robostatoin)
 "cn" = (
@@ -885,7 +880,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/turf/space,
 /area/space_structures/robostatoin)
 "dm" = (
 /turf/simulated/floor/plating,
@@ -2041,10 +2035,10 @@ aa
 aa
 at
 cC
-cm
+dk
 au
-cm
-cm
+dk
+dk
 ci
 aa
 aa
@@ -2353,10 +2347,10 @@ aa
 aa
 bf
 cf
-cm
+dk
 au
 dk
-cm
+dk
 cs
 aa
 aa

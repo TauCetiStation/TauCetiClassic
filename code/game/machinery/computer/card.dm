@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -12,7 +10,7 @@
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
 	var/mode = 0.0
 	var/printing = null
-	var/datum/money_account/datum_account = null
+	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
@@ -34,7 +32,10 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(in_range(user, src))
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(Adjacent(user))
 		eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()
@@ -67,12 +68,10 @@
 		return ..()
 
 	if(!scan && (access_change_ids in id_card.access))
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		modify = id_card
 		if(id_card.associated_account_number)
 			datum_account = get_account(id_card.associated_account_number)
@@ -89,7 +88,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["manifest"] = data_core ? data_core.get_manifest(0) : null
+	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
 	data["target_rank"] = get_target_rank()
@@ -163,8 +162,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					modify = I
 					var/obj/item/weapon/card/id/id_card = I
 					if(id_card.associated_account_number)
@@ -172,6 +170,9 @@
 					else
 						datum_account = null	//delete information if there is something in the variable
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 		if ("scan")
 			if (scan)
@@ -187,10 +188,12 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 		if("access")
 			if(href_list["allowed"])
@@ -206,6 +209,7 @@
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
 				var/new_salary = 0
+				var/datum/job/jobdatum
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
@@ -216,9 +220,7 @@
 					if(is_centcom())
 						access = get_centcom_access(t1)
 					else
-						var/datum/job/jobdatum
-						for(var/jobtype in typesof(/datum/job))
-							var/datum/job/J = new jobtype
+						for(var/datum/job/J in SSjob.occupations)
 							if(ckey(J.title) == ckey(t1))
 								jobdatum = J
 								break
@@ -234,27 +236,21 @@
 					modify.rank = t1
 
 					if(datum_account)
-						datum_account.owner_salary = new_salary //set the new salary equal to job
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.reassign_employee(modify)
+						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
 		if ("reg")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/temp_name = sanitize_name(href_list["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
-						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 			nanomanager.update_uis(src)
 
 		if ("account")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/datum/money_account/account = get_account(text2num(href_list["account"]))
 					if(account)
 						modify.associated_account_number = account.account_number
@@ -277,13 +273,13 @@
 						P.name = text("crew manifest ([])", worldtime2text())
 						P.info = {"<h4>Crew Manifest</h4>
 							<br>
-							[data_core ? data_core.get_manifest(0) : ""]
+							[data_core ? data_core.html_manifest(monochrome=0) : ""]
 						"}
 						P.update_icon()
 					else if (modify)
 						P.name = "access report"
 						P.info = {"<h4>Access Report</h4>
-							<u>Prepared By:</u> [scan.registered_name ? scan.registered_name : "Unknown"]<br>
+							<u>Prepared By:</u> [scan?.registered_name ? scan.registered_name : "Unknown"]<br>
 							<u>For:</u> [modify.registered_name ? modify.registered_name : "Unregistered"]<br>
 							<hr>
 							<u>Assignment:</u> [modify.assignment]<br>
@@ -300,10 +296,8 @@
 			if (is_authenticated())
 				modify.assignment = "Terminated"
 				modify.access = list()
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.terminate_employee(modify)
+				if(datum_account)
+					datum_account.set_salary(0)		//no salary
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

@@ -322,22 +322,9 @@
 	icon_state = "warning"
 	},
 /area/centcom)
-"aS" = (
-/turf/unsimulated/wall/splashscreen,
-/area/start)
 "aT" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
-	},
-/area/centcom)
-"aU" = (
-/turf/unsimulated/wall{
-	icon_state = "iron8"
-	},
-/area/centcom)
-"aV" = (
-/turf/unsimulated/wall{
-	icon_state = "iron4"
 	},
 /area/centcom)
 "aW" = (
@@ -363,7 +350,7 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"aZ" = (
+"bf" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -371,12 +358,22 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"ba" = (
+"bg" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
+	},
+/area/centcom)
+"bl" = (
+/turf/unsimulated/wall{
+	icon_state = "iron8"
+	},
+/area/centcom)
+"bn" = (
+/turf/unsimulated/wall{
+	icon_state = "iron4"
 	},
 /area/centcom)
 
@@ -442,7 +439,7 @@ ae
 ae
 ae
 ae
-aS
+ae
 aa
 aa
 aa
@@ -4848,10 +4845,10 @@ ay
 ay
 ay
 aR
-aZ
+bf
 ay
 aT
-aU
+bl
 aa
 aa
 aa
@@ -5456,10 +5453,10 @@ ay
 ay
 ay
 aR
-ba
+bg
 ay
 aT
-aV
+bn
 aa
 aa
 aa

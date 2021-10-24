@@ -1,18 +1,17 @@
-
-
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
 	volume = 25
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
-	if(reagents && reagents.total_volume)
-		src.reagents.reaction(loc, TOUCH)
+	reagents.standard_splash(loc)
 	qdel(src)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
 		icon_state = "glass_brown"
@@ -70,7 +69,7 @@
 				desc = "Vitamins! Yay!"
 			if("tomatojuice")
 				icon_state = "glass_red"
-				name = "Glass of Tomato juf"
+				name = "Glass of Tomato juice"
 				desc = "Are you sure this is tomato juice?"
 			if("blood")
 				icon_state = "glass_red"
@@ -307,7 +306,7 @@
 			if("singulo")
 				icon_state = "singulo"
 				name = "Singulo"
-				desc = "A blue-space beverage."
+				desc = "A bluespace beverage."
 			if("alliescocktail")
 				icon_state = "alliescocktail"
 				name = "Allies cocktail"
@@ -527,47 +526,21 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
-	gulp_size = volume
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
-			var/mob/living/M = target
-			var/list/injected = list()
-			for(var/datum/reagent/R in src.reagents.reagent_list)
-				injected += R.name
-			var/contained = english_list(injected)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[key_name(user)] splashed [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
-
+			reagents.standard_splash(target, user=user)
 			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
-			src.reagents.reaction(target, TOUCH)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 			return
-	else
-		if(user.a_intent == "help")
-			gulp_size = volume/10
-			..()
-			return
-	if(reagents.total_volume)
-		if(!CanEat(user, target, src, "drink"))
-			return
-		..()
-		target.visible_message("[target] gulped down the whole [src]. Wow!")
-		return
-	..()
+
+	return ..()
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda/atom_init()
-	. = ..()
-	reagents.add_reagent("sodawater", volume)
-	on_reagent_change()
+	list_reagents = list("sodawater" = 25)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
+	list_reagents = list("cola" = 25)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola/atom_init()
-	. = ..()
-	reagents.add_reagent("cola", volume)
-	on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
+	list_reagents = list("blood" = 25)

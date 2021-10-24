@@ -4,8 +4,8 @@
 	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
 
@@ -20,37 +20,51 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
-	var/dat
+/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
+	add_fingerprint(user)
+	tgui_interact(user)
 
-	dat += text("<table>")
+/obj/machinery/mineral/stacking_unit_console/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MiningStackingConsole", name)
+		ui.open()
 
+/obj/machinery/mineral/stacking_unit_console/tgui_data(mob/user)
+	var/list/data = ..()
+	var/list/stacktypes = list()
 	for(var/stacktype in machine.stack_storage)
 		if(machine.stack_storage[stacktype] > 0)
-			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td><td width = 30>[machine.stack_storage[stacktype]]</td><td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
-	dat += "</table><hr>"
-	dat += text("<br>Stacking: [machine.stack_amt] <A href='?src=\ref[src];change_stack=1'>\[change\]</a><br><br>")
+			stacktypes.Add(list(list(
 
-	var/datum/browser/popup = new(user, "window=processor_console", "Stacking Unit Console", 400, 400)
-	popup.set_content(dat)
-	popup.open()
+				"type" = stacktype,
+				"amt" = machine.stack_storage[stacktype],
+			)))
+	data["stacktypes"] = stacktypes
+	data["stackingAmt"] = machine.stack_amt
+	return data
 
-/obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-	if(href_list["change_stack"])
-		var/choice = input("What would you like to set the stack amount to?") as null|anything in list(1,5,10,20,50)
-		if(!choice)
-			return FALSE
-		machine.stack_amt = choice
-	if(href_list["release_stack"])
-		if(machine.stack_storage[href_list["release_stack"]] > 0)
-			var/stacktype = machine.stack_paths[href_list["release_stack"]]
-			new stacktype (get_turf(machine.output), machine.stack_storage[href_list["release_stack"]])
-			machine.stack_storage[href_list["release_stack"]] = 0
 
-	src.updateUsrDialog()
+/obj/machinery/mineral/stacking_unit_console/tgui_act(action, list/params)
+	if(..())
+		return TRUE
+
+	switch(action)
+		if("change_stack")
+			machine.stack_amt = clamp(text2num(params["amt"]), 1, 50)
+			. = TRUE
+
+		if("release_stack")
+			var/stack = params["stack"]
+			if(machine.stack_storage[stack] > 0)
+				var/stacktype = machine.stack_paths[stack]
+				var/obj/item/stack/sheet/S = new stacktype(get_turf(machine.output))
+				S.amount = machine.stack_storage[stack]
+				machine.stack_storage[stack] = 0
+			. = TRUE
+
+	add_fingerprint(usr)
+
 
 
 /**********************Mineral stacking unit**************************/
@@ -58,8 +72,8 @@
 	name = "stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/stacking_unit_console/console
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
@@ -80,6 +94,8 @@
 	stack_paths["metal"] = /obj/item/stack/sheet/metal
 	stack_storage["plasteel"] = 0
 	stack_paths["plasteel"] = /obj/item/stack/sheet/plasteel
+	stack_storage["phoron glass"] = 0
+	stack_paths["phoron glass"] = /obj/item/stack/sheet/glass/phoronglass
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/stacking_machine/atom_init_late()

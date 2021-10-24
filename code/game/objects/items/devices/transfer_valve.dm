@@ -16,47 +16,47 @@
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
 
-/obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
-	if(istype(item, /obj/item/weapon/tank))
+/obj/item/device/transfer_valve/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first.</span>")
 			return
 
 		if(!tank_one)
-			tank_one = item
-			user.drop_item()
-			item.loc = src
+			tank_one = I
+			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 		else if(!tank_two)
-			tank_two = item
-			user.drop_item()
-			item.loc = src
+			tank_two = I
+			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
 		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
+
 //TODO: Have this take an assemblyholder
-	else if(isassembly(item))
-		var/obj/item/device/assembly/A = item
+	else if(isassembly(I))
+		var/obj/item/device/assembly/A = I
 		if(A.secured)
 			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
 		if(attached_device)
 			to_chat(user, "<span class='warning'>There is already an device attached to the valve, remove it first.</span>")
 			return
-		user.remove_from_mob(item)
+		user.drop_from_inventory(A, src)
 		attached_device = A
-		A.loc = src
-		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
+		to_chat(user, "<span class='notice'>You attach the [A] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
-		bombers += "[key_name(user)] attached a [item] to a transfer valve."
-		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] attached a [item] to a transfer valve.")
+		bombers += "[key_name(user)] attached a [A] to a transfer valve."
+		message_admins("[key_name_admin(user)] attached a [A] to a transfer valve. [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] attached a [A] to a transfer valve.")
 		attacher = user
 		nanomanager.update_uis(src) // update all UIs attached to src
-	return
+
+	else
+		return ..()
 
 
 /obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
@@ -122,7 +122,7 @@
 			update_icon()
 		if(href_list["device"])
 			attached_device.attack_self(usr)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return 1 // Returning 1 sends an update to attached UIs
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
@@ -200,14 +200,14 @@
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
-				src.update_icon()
+				update_icon()
 				sleep(10)
-			src.update_icon()
+			update_icon()
 
 	else if(valve_open==1 && (tank_one && tank_two))
 		split_gases()
 		valve_open = 0
-		src.update_icon()
+		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs

@@ -6,8 +6,8 @@ var/list/alldepartments = list("Central Command")
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "fax"
 	req_one_access = list(access_lawyer, access_heads)
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
@@ -84,7 +84,7 @@ var/list/alldepartments = list("Central Command")
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/faxmachine/is_operational_topic()
+/obj/machinery/faxmachine/is_operational()
 	return TRUE
 
 /obj/machinery/faxmachine/Topic(href, href_list)
@@ -132,9 +132,11 @@ var/list/alldepartments = list("Central Command")
 		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_from_inventory(I, src)
 				scan = I
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.sec_hud_set_ID()
 		authenticated = 0
 
 	if(href_list["dept"])
@@ -156,9 +158,8 @@ var/list/alldepartments = list("Central Command")
 
 	if(istype(O, /obj/item/weapon/paper))
 		if(!tofax)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			tofax = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("faxsend", src)
 			updateUsrDialog()
@@ -169,9 +170,12 @@ var/list/alldepartments = list("Central Command")
 
 		var/obj/item/weapon/card/id/idcard = O
 		if(!scan)
-			usr.drop_item()
+			usr.drop_from_inventory(idcard, src)
 			idcard.loc = src
 			scan = idcard
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 	else if(iswrench(O))
 		default_unfasten_wrench(user, O)
@@ -195,16 +199,17 @@ var/list/alldepartments = list("Central Command")
 	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
-		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
 		attachment_msg = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n")),
+		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 
-/proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
+/proc/send_fax(sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
 			F.print_fax(P.create_self_copy())

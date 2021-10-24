@@ -53,23 +53,23 @@
 /obj/item/rig_module/simple_ai/atom_init()
 	. = ..()
 	health_warnings = list(
-		new /datum/rig_warning(90,  "Vital signs are dropping",                                          'sound/rig/shortbeep.wav'), // health, message, sound
-		new /datum/rig_warning(40,  "Vital signs are dropping. Evacuate area",                           'sound/rig/shortbeep.wav'),
-		new /datum/rig_warning(0,   "Warning: Vital signs critical. Seek medical attention",             'sound/rig/beep.wav'),
-		new /datum/rig_warning(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'sound/rig/longbeep.wav'),
-		new /datum/rig_warning(-50, "Emergency. User death imminent",                                    'sound/rig/longbeep.wav'),
+		new /datum/rig_warning(90,  "Vital signs are dropping",                                          'sound/rig/shortbeep.ogg'), // health, message, sound
+		new /datum/rig_warning(40,  "Vital signs are dropping. Evacuate area",                           'sound/rig/shortbeep.ogg'),
+		new /datum/rig_warning(0,   "Warning: Vital signs critical. Seek medical attention",             'sound/rig/beep.ogg'),
+		new /datum/rig_warning(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'sound/rig/longbeep.ogg'),
+		new /datum/rig_warning(-50, "Emergency. User death imminent",                                    'sound/rig/longbeep.ogg'),
 		)
 
 	breach_warnings = list(
-		new /datum/rig_warning(3, "Minor breaches detected",                                                     'sound/rig/shortbeep.wav'),
-		new /datum/rig_warning(6, "Severe breaches detected. Evacuate low preasure area",                        'sound/rig/beep.wav'),
-		new /datum/rig_warning(8, "Warning: Critical breaches detected. Evacuate low preasure area immediately", 'sound/rig/longbeep.wav'),
+		new /datum/rig_warning(3, "Minor breaches detected",                                                     'sound/rig/shortbeep.ogg'),
+		new /datum/rig_warning(6, "Severe breaches detected. Evacuate low preasure area",                        'sound/rig/beep.ogg'),
+		new /datum/rig_warning(8, "Warning: Critical breaches detected. Evacuate low preasure area immediately", 'sound/rig/longbeep.ogg'),
 		)
 
 	energy_warnings = list(
-		new /datum/rig_warning(0.5, "Warning: hardsuit power level below 50%",         'sound/rig/shortbeep.wav'),
-		new /datum/rig_warning(0.3, "Warning: hardsuit power level below 30%",         'sound/rig/beep.wav'),
-		new /datum/rig_warning(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'),
+		new /datum/rig_warning(0.5, "Warning: hardsuit power level below 50%",         'sound/rig/shortbeep.ogg'),
+		new /datum/rig_warning(0.3, "Warning: hardsuit power level below 30%",         'sound/rig/beep.ogg'),
+		new /datum/rig_warning(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.ogg'),
 		)
 
 /obj/item/rig_module/simple_ai/activate(forced = FALSE)
@@ -97,7 +97,7 @@
 	var/power_waste = 0
 
 	if(H.stat == DEAD && saved_stat != DEAD)
-		playsound(H, 'sound/rig/dead.wav', VOL_EFFECTS_MASTER)
+		playsound(H, 'sound/rig/dead.ogg', VOL_EFFECTS_MASTER)
 	saved_stat = H.stat
 
 	process_warnings(H)
@@ -197,17 +197,17 @@
 	if(dam_module == src) // ai module is damaged, we need to forget about old messages and show to the user that we broke
 		message_queue.Cut() // clearing the message queue
 		if(dam_module.damage >= MODULE_DESTROYED)
-			rig_message(destroyed_message, message_class = "danger", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.wav')
+			rig_message(destroyed_message, message_class = "danger", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.ogg')
 		else
-			rig_message(damage_message, message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.wav')
+			rig_message(damage_message, message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.ogg')
 			restart_cooldown = 10
 		rig_messages_process(holder.wearer)
 		return
 
 	if(dam_module.damage >= MODULE_DESTROYED)
-		rig_message("The [source] has disabled your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.wav')
+		rig_message("The [source] has disabled your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.ogg')
 	else
-		rig_message("The [source] has damaged your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.wav')
+		rig_message("The [source] has damaged your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.ogg')
 
 /datum/rig_aivoice
 	var/name = "ADS"
@@ -335,7 +335,7 @@
 /obj/item/rig_module/simple_ai/advanced/on_rigdamage(mob/living/carbon/human/H, rig_damage)
 	if(rig_damage < 7)
 		return
-	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair/)
+	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair)
 	if(repair_module && !repair_module.active)
 		repair_module.activate(forced = TRUE)
 
@@ -343,7 +343,7 @@
 	if(H.stat == DEAD)
 		return
 
-	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser/)
+	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser)
 	if(!chem_disp)
 		return
 

@@ -28,6 +28,11 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security officer's jumpskirt"
+	icon_state = "skirt_security"
+	item_color = "secskirtred"
+
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
 	desc = "A dress shirt and khakis with a security patch sewn on."
@@ -160,3 +165,20 @@
 	flags_inv = 0
 	siemens_coefficient = 0.6
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/*
+ * Space Police
+ */
+/obj/item/clothing/under/rank/security/beatcop
+	name = "NanoTrasen uniform"
+	desc = "A NanoTrasen uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	item_color = "spacepolice_families"
+
+/obj/item/clothing/under/rank/clownpolice
+	name = "police uniform"
+	desc = "A police uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	item_color = "spacepolice_families"

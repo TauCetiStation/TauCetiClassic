@@ -5,7 +5,7 @@
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
 	light_color = "#e6ffff"
-	circuit = "/obj/item/weapon/circuitboard/area_atmos"
+	circuit = /obj/item/weapon/circuitboard/area_atmos
 
 	var/list/connectedscrubbers = new()
 	var/status = ""
@@ -23,46 +23,35 @@
 	scanscrubbers()
 
 /obj/machinery/computer/area_atmos/ui_interact(mob/user)
+	var/area_atmos_css = {"
+	<style>
+	a.green:link{
+		color:#00CC00;
+		}
+	a.green:visited{
+		color:#00CC00;
+		}
+	a.green:hover{
+		color:#00CC00;
+		}
+	a.green:active{
+		color:#00CC00;
+		}
+	a.red:link{
+		color:#FF0000;
+		}
+	a.red:visited{
+		color:#FF0000;
+		}
+	a.red:hover{
+		color:#FF0000;
+		}
+	a.red:active{
+		color:#FF0000;
+		}
+	</style>"}
 	var/dat = {"
-	<html>
-		<head>
-			<style type="text/css">
-				a.green:link
-				{
-					color:#00CC00;
-				}
-				a.green:visited
-				{
-					color:#00CC00;
-				}
-				a.green:hover
-				{
-					color:#00CC00;
-				}
-				a.green:active
-				{
-					color:#00CC00;
-				}
-				a.red:link
-				{
-					color:#FF0000;
-				}
-				a.red:visited
-				{
-					color:#FF0000;
-				}
-				a.red:hover
-				{
-					color:#FF0000;
-				}
-				a.red:active
-				{
-					color:#FF0000;
-				}
-			</style>
-		</head>
-		<body>
-			<center><h1>Area Air Control</h1></center>
+			<center><h1></h1></center>
 			<font color="red">[status]</font><br>
 			<a href="?src=\ref[src];scan=1">Scan</a>
 			<table border="1" width="90%">"}
@@ -76,9 +65,13 @@
 	dat += {"
 			</table><br>
 			<i>[zone]</i>
-		</body>
-	</html>"}
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=400x400")
+			"}
+
+	var/datum/browser/popup = new(user, "miningshuttle", "Area Air Control", ntheme = CSS_THEME_LIGHT)
+	popup.add_head_content(area_atmos_css)
+	popup.set_content(dat)
+	popup.open()
+
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)
@@ -95,13 +88,13 @@
 			spawn(20)
 				status = "ERROR: Couldn't connect to scrubber! (timeout)"
 				connectedscrubbers -= scrubber
-				src.updateUsrDialog()
+				updateUsrDialog()
 			return
 
 		scrubber.on = text2num(href_list["toggle"])
 		scrubber.update_icon()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/area_atmos/proc/validscrubber(obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber)
 	if(!isobj(scrubber) || get_dist(scrubber.loc, src.loc) > src.range || scrubber.loc.z != src.loc.z)
@@ -121,7 +114,7 @@
 	if(!found)
 		status = "ERROR: No scrubber found!"
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/area_atmos/area
@@ -153,7 +146,7 @@
 		if(A2 && A2 == A)
 			connectedscrubbers += scrubber
 
-	if(!LAZYLEN(connectedscrubbers))
+	if(!length(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
-	src.updateUsrDialog()
+	updateUsrDialog()

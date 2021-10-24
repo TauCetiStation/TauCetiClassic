@@ -13,6 +13,7 @@
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
+	w_class = SIZE_MINUSCULE
 	var/obj/machinery/hydroponics/my_hydrotray
 
 /mob/living/simple_animal/bee/atom_init(mapload, obj/machinery/apiary/new_parent)
@@ -75,11 +76,11 @@
 				B.icon_state = "bees[B.strength]"
 				if(src.parent)
 					B.parent = src.parent
-					src.parent.owned_bee_swarms.Add(B)
+					parent.owned_bee_swarms.Add(B)
 
 		//make some noise
 		if(prob(0.5))
-			src.visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
+			visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
 
 		//smoke, water and steam calms us down
 		var/calming = 0
@@ -98,11 +99,11 @@
 
 		if(calming)
 			if(feral > 0)
-				src.visible_message("<span class='notice'>The bees calm down!</span>")
+				visible_message("<span class='notice'>The bees calm down!</span>")
 			feral = -10
 			target_mob = null
 			target_turf = null
-			wander = 1
+			wander = TRUE
 
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
@@ -127,16 +128,16 @@
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
-					density = 1
+					density = TRUE
 					if(T.Enter(src, get_turf(src)))
 						src.loc = T
-					density = 0
+					density = FALSE
 				break
 
 		if(target_mob)
 			if(target_mob in view(src,7))
 				target_turf = get_turf(target_mob)
-				wander = 0
+				wander = FALSE
 
 			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
 				for(var/mob/living/carbon/G in view(src,7))
@@ -147,10 +148,10 @@
 			if(AStar(src, target_turf, /turf/proc/Distance, 1))
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
-					src.visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
+					visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
-				wander = 1
+				wander = TRUE
 		else
 			//find some flowers, harvest
 			//angry bee swarms don't hang around

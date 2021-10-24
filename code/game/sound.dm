@@ -13,7 +13,10 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 =======================================================================================================================================*/
 
-/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/turf
+	var/sound_coefficient = 1.0
+
+/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
 
@@ -22,7 +25,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		return
 
 	var/max_distance = (world.view + extrarange) * 3
-	var/frequency = get_rand_frequency() // Same frequency for everybody
 
 	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -38,7 +40,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
 
 //todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
-/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
 
@@ -53,12 +55,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
-
-	if (vary)
-		if(frequency)
-			S.frequency = frequency
-		else
-			S.frequency = get_rand_frequency()
+	S.frequency = 1
+	
+	if(frequency)
+		S.frequency = frequency
+	if(playsound_frequency_admin)
+		S.frequency *= playsound_frequency_admin
+	if(vary)
+		S.frequency *= rand(8, 12) * 0.1
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
@@ -87,6 +91,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
 
 		S.volume *= pressure_factor
+		S.volume *= turf_source.sound_coefficient
+		S.volume *= max(T.sound_coefficient, 0.0)
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
@@ -105,41 +111,48 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			S.environment = 10
 	src << S
 
-/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!host || host.ear_deaf > 0)
 		return
 	return ..()
 
 /mob/proc/playsound_lobbymusic()
-	if(!ticker || !ticker.login_music || !client)
+	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(ticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
-	if(!isfile(soundin))
-		CRASH("wrong type in \"soundin\" argument [soundin]")
-
 	if(!client || !client.prefs_ready)
 		return
 
-	/*
-	This will stop stealth sending of music to the client,
-	but will kill the feature with the ability to resume music on the fly mid position, especially the ones that started by an admin.
-
 	var/vol = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel)
-	if(!vol)
-		return
+
+	/*
+	This will stop stealth sending of ambient music to the client,
+	but still keep ability to resume admin music on the fly mid position
 	*/
 
-	var/sound/S = new
+	if(!vol && volume_channel != VOL_ADMIN) 
+		return
 
-	S.file = soundin
+	var/sound/S
+
+	if(istext(soundin))
+		S = new(soundin) // for S.file byond expects 'files', dinamic path works only in new/sound
+		if(!S)
+			CRASH("wrong path in \"soundin\" argument [soundin]")
+	else if(isfile(soundin))
+		S = new
+		S.file = soundin
+	else
+		CRASH("wrong type in \"soundin\" argument [soundin]")
+
 	S.repeat = repeat
 	S.wait = wait
 	S.channel = channel
 	S.priority = priority
 	S.status = status
-	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // S.volume = vol <- replace line with this while uncommenting block of code from above.
+	S.volume = vol
 	S.environment = 2
 	src << S
 
@@ -187,7 +200,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		. = max(0.002, VOL_LINEAR_TO_NON(.)) // max(master slider won't kill sub slider's volume if both are less than max value).
 
 /client/proc/set_sound_volume(volume_channel, vol)
-	vol = CLAMP(vol, 0, 100)
+	vol = clamp(vol, 0, 100)
 
 	switch(volume_channel)
 		if(VOL_MUSIC)
@@ -238,7 +251,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				to_chat(src, "Preferences saving failed due to unknown reason.")
 			return
 		if("testVolume")
-			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), channel = CHANNEL_VOLUMETEST)
+			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
 			return
 		else
 			return
@@ -247,119 +260,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		return
 
 	set_sound_volume(slider, vol_raw)
-
-/proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
-
-/proc/get_announce_sound(soundin)
-	if(istext(soundin))
-		switch(soundin)
-			if("delta")
-				. = 'sound/AI/delta.ogg'
-			if("downtogreen")
-				. = 'sound/AI/downtogreen.ogg'
-			if("blue")
-				. = 'sound/AI/blue.ogg'
-			if("downtoblue")
-				. = 'sound/AI/downtoblue.ogg'
-			if("red")
-				. = 'sound/AI/red.ogg'
-			if("downtored")
-				. = 'sound/AI/downtored.ogg'
-			if("radpassed")
-				. = 'sound/AI/radpassed.ogg'
-			if("radiation")
-				. = pick('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg')
-			if("noert")
-				. = 'sound/AI/noert.ogg'
-			if("yesert")
-				. = 'sound/AI/yesert.ogg'
-			if("meteors")
-				. = pick('sound/AI/meteors1.ogg', 'sound/AI/meteors2.ogg')
-			if("meteorcleared")
-				. = 'sound/AI/meteorcleared.ogg'
-			if("gravanom")
-				. = 'sound/AI/gravanomalies.ogg'
-			if("fluxanom")
-				. = 'sound/AI/flux.ogg'
-			if("vortexanom")
-				. = 'sound/AI/vortex.ogg'
-			if("bluspaceanom")
-				. = 'sound/AI/blusp_anomalies.ogg'
-			if("bluspacetrans")
-				. = 'sound/AI/mas-blu-spa_anomalies.ogg'
-			if("pyroanom")
-				. = 'sound/AI/pyr_anomalies.ogg'
-			if("wormholes")
-				. = 'sound/AI/wormholes.ogg'
-			if("outbreak7")
-				. = 'sound/AI/outbreak7.ogg'
-			if("outbreak5")
-				. = pick('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg')
-			if("lifesigns")
-				. = pick('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg')
-			if("greytide")
-				. = 'sound/AI/greytide.ogg'
-			if("rampbrand")
-				. = 'sound/AI/rampant_brand_int.ogg'
-			if("carps")
-				. = 'sound/AI/carps.ogg'
-			if("estorm")
-				. = 'sound/AI/e-storm.ogg'
-			if("istorm")
-				. = 'sound/AI/i-storm.ogg'
-			if("poweroff")
-				. = pick('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg')
-			if("poweron")
-				. = 'sound/AI/poweron.ogg'
-			if("gravoff")
-				. = 'sound/AI/gravityoff.ogg'
-			if("gravon")
-				. = 'sound/AI/gravityon.ogg'
-			if("artillery")
-				. = 'sound/AI/artillery.ogg'
-			if("icaruslost")
-				. = 'sound/AI/icarus.ogg'
-			if("fungi")
-				. = 'sound/AI/fungi.ogg'
-			if("emer_shut_called")
-				. = 'sound/AI/emergency_s_called.ogg'
-			if("emer_shut_recalled")
-				. = 'sound/AI/emergency_s_recalled.ogg'
-			if("emer_shut_docked")
-				. = 'sound/AI/emergency_s_docked.ogg'
-			if("emer_shut_left")
-				. = 'sound/AI/emergency_s_left.ogg'
-			if("crew_shut_called")
-				. = 'sound/AI/crew_s_called.ogg'
-			if("crew_shut_recalled")
-				. = 'sound/AI/crew_s_recalled.ogg'
-			if("crew_shut_docked")
-				. = 'sound/AI/crew_s_docked.ogg'
-			if("crew_shut_left")
-				. = 'sound/AI/crew_s_left.ogg'
-			if("malf")
-				. = 'sound/AI/aimalf.ogg'
-			if("malf1")
-				. = 'sound/AI/ai_malf_1.ogg'
-			if("malf2")
-				. = 'sound/AI/ai_malf_2.ogg'
-			if("malf3")
-				. = 'sound/AI/ai_malf_3.ogg'
-			if("malf4")
-				. = 'sound/AI/ai_malf_4.ogg'
-			if("aiannounce")
-				. = 'sound/AI/aiannounce.ogg'
-			if("nuke")
-				. = 'sound/AI/nuke.ogg'
-			if("animes")
-				. = 'sound/AI/animes.ogg'
-			if("announce")
-				. = 'sound/AI/announce.ogg'
-			if("commandreport")
-				. = 'sound/AI/commandreport.ogg'
-	if(!.)
-		WARNING("No sound file for [soundin]")
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"
@@ -516,7 +416,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		</script>
 		"}
 
-//	src << browse(dat, "window=volcontrols")
 	var/datum/browser/popup = new(usr, "volcontrols", "Audio Settings:", 620, 500, null, CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()

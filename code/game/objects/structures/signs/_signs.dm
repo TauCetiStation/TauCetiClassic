@@ -99,7 +99,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	item_state = "sheet-metal"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity, params)
@@ -113,13 +113,14 @@
 	else
 		return ..()
 
-/obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
-	if (iswelder(W))
-		if(W.use(0, user))
-			if(W.use_tool(src, user, 20, volume = 50))
+/obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		if(I.use(0, user))
+			if(I.use_tool(src, user, 20, volume = 50))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
 				qdel(src)
-
+				return
+	return ..()
 /obj/structure/sign/nanotrasen
 	name = "Nanotrasen Logo"
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
@@ -153,3 +154,18 @@
 	name = "Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"
+
+/obj/structure/sign/shuttle_medbay
+	name = "medbay sign"
+	desc = "High-tech screen, showing you where shuttle medbay is."
+	icon_state = "shuttlemed"
+
+/obj/structure/sign/shuttle_brig
+	name = "brig sign"
+	desc = "High-tech screen, showing you where shuttle brig is."
+	icon_state = "shuttlebrig"
+
+/obj/structure/sign/shuttle_eng
+	name = "engineering sign"
+	desc = "High-tech screen, showing you where shuttle engineering is."
+	icon_state = "shuttleng"

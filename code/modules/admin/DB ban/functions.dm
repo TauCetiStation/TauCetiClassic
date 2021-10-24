@@ -1,15 +1,14 @@
 
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
-/datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
+/datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 
 	if(!check_rights(R_BAN))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_ban", "erro_player"))
 		return
 
-	var/serverip = "[world.internet_address]:[world.port]"
+	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 	var/bantype_pass = 0
 	var/bantype_str
 	switch(bantype)
@@ -79,6 +78,7 @@
 			adminwho += ", [ckey(C)]"
 
 	reason = sanitize_sql(reason)
+	job = sanitize_sql(job)
 
 	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database."
 
@@ -86,7 +86,7 @@
 	if((bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP) && AH) // not sure if only for perma.
 		AH.Resolve()
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	to_chat(usr, "<span class='notice'>Ban saved to database.</span>")
@@ -104,7 +104,8 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))	return
+	if(!check_rights(R_BAN))
+		return
 
 	var/bantype_str
 	if(bantype)
@@ -138,12 +139,11 @@
 	else
 		bantype_sql = "bantype = '[bantype_str]'"
 
-	var/sql = "SELECT id FROM erro_ban WHERE ckey = '[ckey]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
+	var/sql = "SELECT id FROM erro_ban WHERE ckey = '[ckey(ckey)]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
 	if(job)
-		sql += " AND job = '[job]'"
+		sql += " AND job = '[sanitize_sql(job)]'"
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_ban"))
 		return
 
 	var/ban_id
@@ -182,7 +182,7 @@
 	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, duration, reason FROM erro_ban WHERE id = [banid]")
 	query.Execute()
 
-	var/eckey = usr.ckey	//Editing admin ckey
+	var/eckey = ckey(usr.ckey)	//Editing admin ckey
 	var/pckey				//(banned) Player ckey
 	var/duration			//Old duration
 	var/reason				//Old reason
@@ -236,7 +236,7 @@
 
 			update_query.Execute()
 		if("unban")
-			if(alert("Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Unban [pckey]?", "Unban?", list("Yes", "No")) == "Yes")
 				DB_ban_unban_by_id(banid)
 				return
 			else
@@ -250,42 +250,42 @@
 
 	if(!check_rights(R_BAN))	return
 
-	var/sql = "SELECT ckey FROM erro_ban WHERE id = [id]"
-
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!isnum(id))
 		return
 
-	var/ban_number = 0 //failsafe
+	if(!establish_db_connection("erro_ban"))
+		return
 
-	var/pckey
-	var/DBQuery/query = dbcon.NewQuery(sql)
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, bantype, a_ckey, job, reason FROM erro_ban WHERE id = [id]")
 	query.Execute()
-	while(query.NextRow())
-		pckey = query.item[1]
-		ban_number++;
 
-	if(ban_number == 0)
+	if(!query.NextRow())
 		to_chat(usr, "<span class='warning'>Database update failed due to a ban id not being present in the database.</span>")
 		return
 
-	if(ban_number > 1)
-		to_chat(usr, "<span class='warning'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
-		return
+	var/pckey = query.item[1]
+	var/pbantype  = query.item[2]
+	var/padmin = query.item[3]
+	var/pjob = query.item[4]
+	var/preason = query.item[5]
 
 	if(!src.owner || !istype(src.owner, /client))
 		return
 
-	var/unban_ckey = src.owner:ckey
-	var/unban_computerid = src.owner:computer_id
-	var/unban_ip = src.owner:address
+	var/unban_ckey = ckey(src.owner.ckey)
+	var/unban_computerid = sanitize_sql(src.owner.computer_id)
+	var/unban_ip = sanitize_sql(src.owner.address)
 
 	var/sql_update = "UPDATE erro_ban SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = '[unban_ip]' WHERE id = [id]"
+
+	ban_unban_log_save("[key_name(usr)] has lifted [pckey] ban.")
+	log_admin("[key_name(usr)] has lifted [pckey] ban.")
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.")
+
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
 		attachment_title = "UNBAN",
-		attachment_msg = "**[key_name(usr)]** has lifted **[pckey]**'s ban",
+		attachment_msg = "**[key_name(usr)]** has lifted **[pckey]**'s ban:\n[pbantype][pjob ? "([pjob])" : ""] by [padmin] with reason:\n*[preason]*",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
 
@@ -309,17 +309,16 @@
 	if(!usr.client)
 		return
 
-	if(!check_rights(R_BAN))	return
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_ban"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"
 
 	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
 	output += "</td>"
 
 	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
@@ -344,7 +343,7 @@
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_RAIDER, ROLE_CULTIST, ROLE_WIZARD, ROLE_ERT, ROLE_MEME, ROLE_MUTINEER, ROLE_SHADOWLING, ROLE_ABDUCTOR, ROLE_NINJA, ROLE_BLOB, ROLE_MALF))
+	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_RAIDER, ROLE_CULTIST, ROLE_WIZARD, ROLE_ERT, ROLE_SHADOWLING, ROLE_ABDUCTOR, ROLE_FAMILIES, ROLE_NINJA, ROLE_BLOB, ROLE_MALF))
 		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
@@ -413,13 +412,13 @@
 				if(playercid)
 					cidsearch  = "AND computerid = '[playercid]' "
 			else
-				if(adminckey && lentext(adminckey) > 3)
+				if(adminckey && length(adminckey) > 3)
 					adminsearch = "AND a_ckey LIKE '[adminckey]%' "
-				if(playerckey && lentext(playerckey) > 3)
+				if(playerckey && length(playerckey) > 3)
 					playersearch = "AND ckey LIKE '[playerckey]%' "
-				if(playerip && lentext(playerip) > 3)
+				if(playerip && length(playerip) > 3)
 					ipsearch  = "AND ip LIKE '[playerip]%' "
-				if(playercid && lentext(playercid) > 7)
+				if(playercid && length(playercid) > 7)
 					cidsearch  = "AND computerid LIKE '[playercid]%' "
 
 			if(dbbantype)
@@ -435,7 +434,7 @@
 					else
 						bantypesearch += "'PERMABAN' "
 
-			var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, ip, computerid FROM erro_ban WHERE 1 [playersearch] [adminsearch] [ipsearch] [cidsearch] [bantypesearch] ORDER BY bantime DESC LIMIT 100")
+			var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, ip, computerid, round_id FROM erro_ban WHERE 1 [playersearch] [adminsearch] [ipsearch] [cidsearch] [bantypesearch] ORDER BY bantime DESC LIMIT 100")
 			select_query.Execute()
 
 			while(select_query.NextRow())
@@ -454,6 +453,7 @@
 				var/edits = select_query.item[13]
 				var/ip = select_query.item[14]
 				var/cid = select_query.item[15]
+				var/rid = select_query.item[16]
 
 				var/lcolor = blcolor
 				var/dcolor = bdcolor
@@ -475,7 +475,7 @@
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center'>[typedesc]</td>"
 				output += "<td align='center'><b>[ckey]</b></td>"
-				output += "<td align='center'>[bantime]</td>"
+				output += "<td align='center'>#[rid], [bantime]</td>"
 				output += "<td align='center'><b>[ackey]</b></td>"
 				output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
 				output += "</tr>"
@@ -503,15 +503,16 @@
 
 			output += "</table></div>"
 
-	usr << browse(entity_ja(output),"window=lookupbans;size=900x700")
+	var/datum/browser/popup = new(usr, "window=lookupbans", "Banning panel", 900, 700, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
 //Version of DB_ban_record that can be used without holder.
-/proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		return
+/proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
+	if(!establish_db_connection("erro_player"))
+		return 0
 
-	var/serverip = "[world.internet_address]:[world.port]"
+	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 	var/bantype_pass = 0
 	var/bantype_str
 	switch(bantype)
@@ -529,9 +530,9 @@
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
 			bantype_pass = 1
-	if( !bantype_pass ) return
-	if( !istext(reason) ) return
-	if( !isnum(duration) ) return
+	if( !bantype_pass ) return 0
+	if( !istext(reason) ) return 0
+	if( !isnum(duration) ) return 0
 
 	var/ckey
 	var/computerid
@@ -555,7 +556,7 @@
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
 			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>")
-			return
+			return 0
 
 	var/a_ckey = "taukitty"
 	var/a_computerid = "0000000000"
@@ -576,8 +577,9 @@
 			adminwho += ", [ckey(C)]"
 
 	reason = sanitize_sql(reason)
+	job = sanitize_sql(job)
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
@@ -590,3 +592,5 @@
 	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
 		// servers use data from DB
 		world.send_ban_announce(ckey, ip, computerid)
+
+	return 1

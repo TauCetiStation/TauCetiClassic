@@ -22,7 +22,7 @@
 
 /datum/comment_pages
 	var/list/datum/message_comment/comments = list() //stores COMMENTS_ON_PAGE comments
-  
+
 /datum/message_comment
 	var/author = ""
 	var/backup_author = ""
@@ -109,7 +109,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster
-	name = "newscaster"
+	name = "Newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
@@ -165,7 +165,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
-	anchored = 1
+	anchored = TRUE
 	var/comment_msg = "" //stores a comment that has not yet been posted
 	var/datum/comment_pages/current_page = null
 	var/datum/feed_message/viewing_message = null
@@ -190,21 +190,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			src.cut_overlays()
-			src.add_overlay(image(src.icon, "crack3"))
+			cut_overlays()
+			add_overlay(image(src.icon, "crack3"))
 		return
 
-	src.cut_overlays() //reset overlays
+	cut_overlays() //reset overlays
 
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"
 		return
 
 	if(alert) //new message alert overlay
-		src.add_overlay("newscaster_alert")
+		add_overlay("newscaster_alert")
 
 	if(hitstaken > 0) //Cosmetic damage overlay
-		src.add_overlay(image(src.icon, "crack[hitstaken]"))
+		add_overlay(image(src.icon, "crack[hitstaken]"))
 
 	icon_state = "newscaster_normal"
 	return
@@ -212,15 +212,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/power_change()
 	if(isbroken) //Broken shit can't be powered.
 		return
-	if( src.powered() )
+	if( powered() )
 		src.ispowered = 1
 		stat &= ~NOPOWER
-		src.update_icon()
+		update_icon()
 	else
 		spawn(rand(0, 15))
 			src.ispowered = 0
 			stat |= NOPOWER
-			src.update_icon()
+			update_icon()
 	update_power_use()
 
 /obj/machinery/newscaster/ex_act(severity)
@@ -233,12 +233,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(prob(50))
 				qdel(src)
 			else
-				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
+				update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
 			return
 		else
 			if(prob(50))
 				src.isbroken=1
-			src.update_icon()
+			update_icon()
 			return
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
@@ -252,105 +252,96 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3><style>img {border-style:none;}</style></style>")
+		dat = ""
 
-		src.scan_user(human_or_robot_user) //Newscaster scans you
+		scan_user(human_or_robot_user) //Newscaster scans you
 
 		switch(screen)
 			if(0)
-				dat += "Welcome to Newscasting Unit #[src.unit_no].<BR> Interface & News networks Operational."
-				dat += "<BR><FONT SIZE=1>Property of Nanotransen Inc</FONT>"
+				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR><FONT SIZE=1> Все системы новостной сети функционируют.</FONT>"
+				dat += "<BR><FONT SIZE=1>Собственность Nanotrasen Corp.</FONT>"
 				if(news_network.wanted_issue)
-					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
-				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
-				dat+= "<BR><A href='?src=\ref[src];view=1'>View Feed Channels</A>"
-				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>"
-				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>"
-				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
+					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Раздел \"Розыск\"</A>"
+				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Создать Новостной Канал</A>"
+				dat+= "<BR><A href='?src=\ref[src];view=1'>Новостные Каналы</A>"
+				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Создать Историю</A>"
+				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Распечатать газету</A>"
 				if(src.securityCaster)
 					var/wanted_already = 0
 					if(news_network.wanted_issue)
 						wanted_already = 1
 
-					dat+="<HR><B>Feed Security functions:</B><BR>"
-					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Censor Feed Stories</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice</A>"
-				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[src.scanned_user]</FONT>"
+					dat+="<HR><B>Настройки безопасности:</B><BR>"
+					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Объявить в")] розыск</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Цензурировать Истории</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой НаноТрейзен</A>"
+				dat+="<BR><HR>Новостной модуль распознает вас, как: <FONT COLOR='green'>[src.scanned_user]</FONT>"
+				dat+="<BR><A href='?src=\ref[src];refresh=1'>Сканировать пользователя</A>"
 			if(1)
-				dat+= "Station Feed Channels<HR>"
+				dat+= "Новостные Каналы станции<HR>"
 				if( isemptylist(news_network.network_channels) )
-					dat+="<I>No active channels found...</I>"
+					dat+="<I>Активных Каналов не найдено...</I>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
-							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
+							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></B><BR>"
 						else
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR></B>"
-					/*for(var/datum/feed_channel/CHANNEL in src.channel_list)
-						dat+="<B>[CHANNEL.channel_name]: </B> <BR><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[CHANNEL.author]</FONT>\]</FONT><BR><BR>"
-						if( isemptylist(CHANNEL.messages) )
-							dat+="<I>No feed messages found in channel...</I><BR><BR>"
-						else
-							for(var/datum/feed_message/MESSAGE in CHANNEL.messages)
-								dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"*/
-
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
+							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<span class='red'>***</span>") : null]<BR></B>"
+				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Обновить</A>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(2)
-				dat+="Creating new Feed Channel..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Channel Name</A>:</B> [src.channel_name]<BR>"
-				dat+="<B>Channel Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.c_locked) ? ("NO") : ("YES")]<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
+				dat+="Создание Новостного Канала..."
+				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [src.channel_name]<BR>"
+				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
+				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(src.c_locked) ? ("НЕТ") : ("ДА")]<BR><HR>"
+				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
-				dat+="Creating new Feed Message..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MARK
-				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
-				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
+				dat+="Создание Истории..."
+				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Канал</A>:</B> [src.channel_name]<BR>" //MARK
+				dat+="<B>Автор Истории:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
+				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Текст Истории</A>:</B> [src.msg] <BR>"
+				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(src.photo ? "Снимок прикреплен" : "Нет снимка")]<BR><HR>"
+				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(4)
-				dat+="Feed story successfully submitted to [src.channel_name].<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="История успешно опубликована в [src.channel_name].<BR><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(5)
-				dat+="Feed Channel [src.channel_name] created successfully.<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="Канал \"[src.channel_name]\" успешно создан.<BR><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(6)
-				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось опубликовать Историю.</B></FONT><HR><BR>"
 				if(src.channel_name=="")
-					dat+="<FONT COLOR='maroon'>Invalid receiving channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Недопустимое имя Канала.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
-				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
+				if(src.msg == "" || src.msg == "\[██████\]")
+					dat+="<FONT COLOR='maroon'>Недопустимый текст.</FONT><BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Return</A><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Вернуться</A><BR>"
 			if(7)
-				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать Новостной Канал.</B></FONT><HR><BR>"
 				//var/list/existing_channels = list()            //Let's get dem existing channels - OBSOLETE
 				var/list/existing_authors = list()
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					//existing_channels += FC.channel_name       //OBSOLETE
-					if(FC.author == "\[REDACTED\]")
+					if(FC.author == "\[██████\]")
 						existing_authors += FC.backup_author
 					else
 						existing_authors += FC.author
 				if(src.scanned_user in existing_authors)
-					dat+="<FONT COLOR='maroon'>There already exists a Feed channel under your name.</FONT><BR>"
-				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Вы уже являетесь автором Новостного Канала.</FONT><BR>"
+				if(src.channel_name=="" || src.channel_name == "\[██████\]")
+					dat+="<FONT COLOR='maroon'>Недопустимое имя Канала.</FONT><BR>"
 				var/check = 0
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == src.channel_name)
 						check = 1
 						break
 				if(check)
-					dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Имя Канала уже используется.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Вернуться</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
 				var/active_num=total_num
@@ -360,18 +351,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						message_num += length(FC.messages)    //Dont forget, datum/feed_channel's var messages is a list of datum/feed_message
 					else
 						active_num--
-				dat+="Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories." //TODO: CONTINUE
-				dat+="<BR><BR><B>Liquid Paper remaining:</B> [(src.paper_remaining) *100 ] cm^3"
-				dat+="<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Print Paper</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+				dat+="В настоящий момент существует [total_num] Новостных Каналов, [active_num] из которых активны. Всего было создано [message_num] Историй."
+				dat+="<BR><BR><B>Количество жидкой бумаги:</B> [(src.paper_remaining) *100 ] см^3"
+				dat+="<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Распечатать газету</A>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(9)
-				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
+				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
-					dat+="No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
+					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.<BR><BR>"
 				else
 					if( isemptylist(src.viewing_channel.messages) )
-						dat+="<I>No feed messages found in channel...</I><BR>"
+						dat+="<I>В этом Канале Истории не обнаружены...</I><BR>"
 					else
 						var/i = 0
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -380,68 +371,66 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
 							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
 											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
-							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - ([MESSAGE.count_comments])<HR>"
+							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
 
-				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
+				dat+="<A href='?src=\ref[src];refresh=1'>Обновить</A>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Назад</A>"
 			if(10)
-				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
-				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
-				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
-				dat+="<HR>Select Feed channel to get Stories from:<BR>"
+				dat+="<B>Инструмент цензурирования НаноТрейзен</B><BR>"
+				dat+="<FONT SIZE=1>ПРИМЕЧАНИЕ: Из-за строения Новостных сетей полное удаление Историй невозможно.<BR>"
+				dat+="Учитывайте, что пользователи которые пытаются посмотреть отредактированный канал, вместо текста увидят: \"\[██████\]\".</FONT>"
+				dat+="<HR>Выбрать Канал:<BR>"
 				if(isemptylist(news_network.network_channels))
-					dat+="<I>No feed channels found active...</I><BR>"
+					dat+="<I>Активных Каналов не найдено...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(11)
-				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
-				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
-				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
-				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
+				dat+="<B>Обработчик ❌-метки НаноТрейзен</B><HR>"
+				dat+="<FONT SIZE=1>❌-меткой должен быть отмечен канал, который служба безопасности сочтет Канал опасным для морального духа и дисциплины персонала станции."
+				dat+="❌-метка не позволяет кому-либо обновлять, изменять или добавлять Истории в Канал, но при этом сохраняет всю информацию."
+				dat+="Вы можете наложить или убрать ❌-метку в любое время, если у вас есть необходимый доступ.</FONT><HR>"
 				if(isemptylist(news_network.network_channels))
-					dat+="<I>No feed channels found active...</I><BR>"
+					dat+="<I>Активных Каналов не найдено...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
+				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(12)
-				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><BR>"
-
+				dat+="<B>[src.viewing_channel.channel_name]: </B>"
+				dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT></A><BR>"
 
 				if( isemptylist(src.viewing_channel.messages) )
-					dat+="<I>No feed messages found in channel...</I><BR>"
+					dat+="<I>В этом Канале Истории не обнаружены...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -\
-						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'> [(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
-						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Unlock") : ("Lock")]</A></B></FONT><BR><HR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
+						dat+="-<A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[MESSAGE.body] </A><BR>"
+						dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT></A><BR>"
+						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Открыть") : ("Закрыть")]</A></B></FONT><BR><HR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Назад</A>"
 			if(13)
-				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];toggle_d_notice=\ref[src.viewing_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
+				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
+				dat+="Если вы считаете содержание опасным для станции, вы можете <A href='?src=\ref[src];toggle_d_notice=\ref[src.viewing_channel]'>Наложить ❌-метку на Канал</A>.<HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
-					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
+					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.</FONT><BR><BR>"
 				else
 					if( isemptylist(src.viewing_channel.messages) )
-						dat+="<I>No feed messages found in channel...</I><BR>"
+						dat+="<I>В этом Канале Истории не обнаружены...</I><BR>"
 					else
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
-							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[создано <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[11]'>Back</A>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[11]'>Назад</A>"
 			if(14)
-				dat+="<B>Wanted Issue Handler:</B>"
+				dat+="<B>Обработчик Розыска:</B>"
 				var/wanted_already = 0
 				var/end_param = 1
 				if(news_network.wanted_issue)
@@ -449,114 +438,112 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					end_param = 2
 
 				if(wanted_already)
-					dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
+					dat+="<FONT SIZE=2><BR><I>Запрос розыска уже существует. Вы можете отредактировать его ниже.</FONT></I>"
 				dat+="<HR>"
-				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Criminal Name</A>: [src.channel_name] <BR>"
-				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [src.msg] <BR>"
-				dat+="<A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>: [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
+				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Имя</A>: [src.channel_name] <BR>"
+				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Описание</A>: [src.msg] <BR>"
+				dat+="<A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>: [(src.photo ? "Снимок прикреплен" : "Нет снимка")]</BR>"
 				if(wanted_already)
-					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
+					dat+="<B>Розыск создан:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
-					dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [src.scanned_user]</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
+					dat+="<B>Розыск будет создан:</B><FONT COLOR='green'> [src.scanned_user]</FONT><BR>"
+				dat+="<HR><BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Редактировать") : ("Опубликовать")]</A>"
 				if(wanted_already)
-					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Take down Issue</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Удалить розыск</A>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A>"
 			if(15)
-				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] is now in Network Circulation.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<FONT COLOR='green'>[src.channel_name] был объявлен в розыск.</FONT><BR><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(16)
-				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
-				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>Invalid name for person wanted.</FONT><BR>"
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать розыск.</B></FONT><HR><BR>"
+				if(src.channel_name=="" || src.channel_name == "\[██████\]")
+					dat+="<FONT COLOR='maroon'>Недопустимое имя разыскиваемого.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Issue author unverified.</FONT><BR>"
-				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
+				if(src.msg == "" || src.msg == "\[██████\]")
+					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(17)
-				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<B>Розыск успешно удален.</B><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(18)
-				dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
-				dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
-				dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
-				dat+="<B>Photo:</B>: "
+				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликовано: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
+				dat+="<B>Имя</B>: [news_network.wanted_issue.author]<BR>"
+				dat+="<B>Описание</B>: [news_network.wanted_issue.body]<BR>"
+				dat+="<B>Снимок</B>: "
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
 					dat+="<BR><img src='tmp_photow.png' width = '180'>"
 				else
-					dat+="None"
-				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
+					dat+="Отсутствует"
+				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A><BR>"
 			if(19)
-				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<FONT COLOR='green'>Розыск в [src.channel_name] успешно изменен.</FONT><BR><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(20)
-				dat+="<FONT COLOR='green'>Printing successful. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+				dat+="<FONT COLOR='green'>Печать завершена. Пожалуйста, заберите вашу газету из нижней части Новостного Модуля</FONT><BR><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[0]'>Вернуться</A>"
 			if(21)
-				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+				dat+="<FONT COLOR='maroon'>Ошибка печати. Недостаточно бумаги. Пожалуйста, уведомите обслуживающий персонал пополнить отсек для бумаги.</FONT><BR><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[0]'>Вернуться</A>"
 			if(22)
-				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit comment to Network.</B></FONT><HR><BR>"
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось опубликовать комментарий.</B></FONT><HR><BR>"
 				if(src.comment_msg == "" || src.comment_msg == null)
-					dat+="<FONT COLOR='maroon'>Invalid lenght of comment.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Недопустимая длина комментария.</FONT><BR>"
 				if(src.scanned_user == "Unknown")
-					dat+="<FONT COLOR='maroon'>Invalid name.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Return</A><BR>"
-			if(23) 
-				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Вернуться</A><BR>"
+			if(23)
 				var/datum/feed_message/MESSAGE = src.viewing_message
-				dat+="Number of Comments - [MESSAGE.count_comments]<BR>"
+				dat+="Количество комментариев - [MESSAGE.count_comments]<BR>"
 				if(!src.viewing_channel.lock_comments)
-					dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment</A></B>"
+					dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Оставить комментарий</A></B>"
 				else
-					dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B>"
+					dat+="<B><FONT SIZE=3>Комментарии закрыты!</FONT></B>"
 				var/datum/comment_pages/PAGE = src.current_page
 				if(PAGE.comments.len != 0) //perfecto
 					dat+="<HR>"
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="<FONT COLOR='ORANGE'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
 				var/i = 0
 				dat+="<HR>"
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
-					i++ 
+					i++
 					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
-				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[9]'>Return</A>"
-			if(24) 
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[9]'>Вернуться</A>"
+			if(24)
 				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
 				var/datum/feed_message/MESSAGE = src.viewing_message
-				dat+="Number of Comments - [MESSAGE.count_comments]<HR>"
+				dat+="Количество комментариев - [MESSAGE.count_comments]<HR>"
 				var/datum/comment_pages/PAGE = src.current_page
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
-					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
+					dat+="<A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='ORANGE'>[COMMENT.author]</FONT></A>"
+					dat+=" <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="-<A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'><FONT SIZE=3>[COMMENT.body]</FONT></A><BR>"
 				var/i = 0
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
-					i++ 
+					i++
 					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
-				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[10]'>Вернуться</A>"
 			else
-				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
-		
+				dat+="Ошибка 404.<BR>[return_funny_title()]."
+
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
-		assets.register()
 		assets.send(human_or_robot_user)
 
-		human_or_robot_user << browse(entity_ja(dat), "window=newscaster_main;size=400x600")
-		onclose(human_or_robot_user, "newscaster_main")
+		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600)
+		popup.set_content(dat)
+		popup.open()
 
 	/*if(src.isbroken) //debugging shit
 		return
 	src.hitstaken++
 	if(src.hitstaken==3)
 		src.isbroken = 1
-	src.update_icon()*/
+	update_icon()*/
 
 
 /obj/machinery/newscaster/Topic(href, href_list)
@@ -565,19 +552,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitize_safe(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(channel_name)), MAX_LNAME_LEN)
-		//src.update_icon()
+		src.channel_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", input_default(channel_name)), MAX_LNAME_LEN)
+		//update_icon()
 
 	else if(href_list["set_channel_lock"])
 		src.c_locked = !src.c_locked
-		//src.update_icon()
+		//update_icon()
 
 	else if(href_list["submit_new_channel"])
 		//var/list/existing_channels = list() //OBSOLETE
 		var/list/existing_authors = list()
 		for(var/datum/feed_channel/FC in news_network.network_channels)
 			//existing_channels += FC.channel_name
-			if(FC.author == "\[REDACTED\]")
+			if(FC.author == "\[██████\]")
 				existing_authors += FC.backup_author
 			else
 				existing_authors  +=FC.author
@@ -586,11 +573,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(FC.channel_name == src.channel_name)
 				check = 1
 				break
-		if(src.channel_name == "" || src.channel_name == "\[REDACTED\]" || src.scanned_user == "Unknown" || check || (src.scanned_user in existing_authors) )
+		if(src.channel_name == "" || src.channel_name == "\[██████\]" || src.scanned_user == "Unknown" || check || (src.scanned_user in existing_authors) )
 			src.screen = 7
 		else
-			var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
-			if(choice=="Confirm")
+			var/choice = tgui_alert(usr,"Подтвердите создание Новостного Канала","Обработчик Сети Новостей", list("Подтвердить","Отменить"))
+			if(choice=="Подтвердить")
 				var/datum/feed_channel/newChannel = new /datum/feed_channel
 				newChannel.channel_name = src.channel_name
 				newChannel.author = src.scanned_user
@@ -600,7 +587,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					NEWSCASTER.channel_list += newChannel*/                     //Now that it is sane, get it into the list. -OBSOLETE
 				news_network.network_channels += newChannel                        //Adding channel to the global network
 				src.screen = 5
-		//src.update_icon()
+		//update_icon()
 
 	else if(href_list["set_channel_receiving"])
 		//var/list/datum/feed_channel/available_channels = list()
@@ -608,16 +595,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			if( (!F.locked || F.author == scanned_user) && !F.censored)
 				available_channels += F.channel_name
-		src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
+		src.channel_name = input(usr, "Выберите Канал", "Обработчик Сети Новостей") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(src.msg)), extra = FALSE)
+		src.msg = sanitize(input(usr, "Напишите вашу Историю", "Обработчик Сети Новостей", input_default(src.msg)), extra = FALSE)
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
 
 	else if(href_list["submit_new_message"])
-		if(src.msg == "" || src.msg == "\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
+		if(src.msg == "" || src.msg == "\[██████\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 			src.screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
@@ -648,7 +635,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(!src.paper_remaining)
 			src.screen = 21
 		else
-			src.print_paper()
+			print_paper()
 			src.screen = 20
 
 	else if(href_list["menu_censor_story"])
@@ -668,18 +655,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(channel_name)), MAX_LNAME_LEN)
+		src.channel_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", input_default(msg)), extra = FALSE)
+		src.msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", input_default(msg)), extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
 		if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 			src.screen = 16
 		else
-			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
-			if(choice == "Confirm")
+			var/choice = tgui_alert(usr,"Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
+			if(choice == "Подтвердить")
 				if(input_param == 1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
 					WANTED.author = src.channel_name
@@ -707,8 +694,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(news_network.wanted_issue.is_admin_message)
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
-		var/choice = alert("Please confirm Wanted Issue removal","Network Security Handler","Confirm","Cancel")
-		if(choice=="Confirm")
+		var/choice = tgui_alert(usr, "Подтвердите удаление розыска.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
+		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 				NEWSCASTER.update_icon()
@@ -721,9 +708,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(FC.is_admin_channel)
 			to_chat(usr, "This channel was created by a Nanotrasen Officer. You cannot censor it.")
 			return FALSE
-		if(FC.author != "<B>\[REDACTED\]</B>")
+		if(FC.author != "<B>\[██████\]</B>")
 			FC.backup_author = FC.author
-			FC.author = "<B>\[REDACTED\]</B>"
+			FC.author = "<B>\[██████\]</B>"
 		else
 			FC.author = FC.backup_author
 
@@ -732,9 +719,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(MSG.is_admin_message)
 			to_chat(usr, "This message was created by a Nanotrasen Officer. You cannot censor its author.")
 			return FALSE
-		if(MSG.author != "<B>\[REDACTED\]</B>")
+		if(MSG.author != "<B>\[██████\]</B>")
 			MSG.backup_author = MSG.author
-			MSG.author = "<B>\[REDACTED\]</B>"
+			MSG.author = "<B>\[██████\]</B>"
 		else
 			MSG.author = MSG.backup_author
 
@@ -748,25 +735,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			MSG.img = null
 		else
 			MSG.img = MSG.backup_img
-		if(MSG.body != "<B>\[REDACTED\]</B>")
+		if(MSG.body != "<B>\[██████\]</B>")
 			MSG.backup_body = MSG.body
-			MSG.body = "<B>\[REDACTED\]</B>"
+			MSG.body = "<B>\[██████\]</B>"
 		else
 			MSG.body = MSG.backup_body
 
 	else if(href_list["censor_author_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_author_comment"])
-		if(COMMENT.author != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
+		if(COMMENT.author != "<FONT SIZE=2><B>\[██████\]</B></FONT>")
 			COMMENT.backup_author = COMMENT.author
-			COMMENT.author = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
+			COMMENT.author = "<FONT SIZE=2><B>\[██████\]</B></FONT>"
 		else
 			COMMENT.author = COMMENT.backup_author
 
 	else if(href_list["censor_body_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_body_comment"])
-		if(COMMENT.body != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
+		if(COMMENT.body != "<FONT SIZE=2><B>\[██████\]</B></FONT>")
 			COMMENT.backup_body = COMMENT.body
-			COMMENT.body = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
+			COMMENT.body = "<FONT SIZE=2><B>\[██████\]</B></FONT>"
 		else
 			COMMENT.body = COMMENT.backup_body
 
@@ -807,7 +794,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["setLike"])
 		var/datum/feed_message/FM = locate(href_list["setLike"])
 		FM.voters += src.scanned_user
-		FM.likes += 1 
+		FM.likes += 1
 
 	else if(href_list["setDislike"])
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
@@ -838,7 +825,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
+		src.comment_msg = sanitize(input(usr, "Напишите комментарий", "Обработчик Сети Новостей", input_default(src.comment_msg)), extra = FALSE)
 		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
 			src.screen = 22
 		else
@@ -847,11 +834,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			COMMENT.body = src.comment_msg
 			COMMENT.time = worldtime2text()
 
-			var/lenght = FM.pages.len //find the last page
-			var/size = FM.pages[lenght].comments.len
+			var/length = FM.pages.len //find the last page
+			var/size = FM.pages[length].comments.len
 
-			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal 
-				FM.pages[lenght].comments += COMMENT
+			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal
+				FM.pages[length].comments += COMMENT
 			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
 				FM.pages += CP
@@ -867,22 +854,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			src.viewing_channel.lock_comments = TRUE
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
-
-/*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
-		if(src.screen == 4 || src.screen == 5)
-			if( istype(I, /obj/item/device/pda) )
-				var/obj/item/device/pda/P = I
-				if(P.id)
-					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
-					src.screen=2
-			else
-				var/obj/item/weapon/card/id/T = I
-				src.scanned_user = text("[T.registered_name] ([T.assignment])")
-				src.screen=2*/  //Obsolete after autorecognition
-
 	if(iswrench(I))
 		if(user.is_busy())
 			return
@@ -915,7 +889,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='info'>This does nothing.</span>")
-	src.update_icon()
+	update_icon()
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
@@ -929,8 +903,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item()
-		photo.loc = src
+		user.drop_from_inventory(photo, src)
 	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
@@ -945,7 +918,44 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		P.construct(selection)
 		photo = P
 
+/proc/return_funny_title()
+	// Some copied from @neural_meduza with nanotrasen adaptation
+	var/list/random_imortant_message = list(
+		"В Еуране заблокировали социальные сети из-за твита Президента о гомосексуальных грузовиках",
+		"В Слеирстине предложили наказывать за повышение зарплаты",
+		"Закончились таинственные грибы у прокурора NanoTrasen в Крокандо",
+		"Штальский снова позвонил в космос и изменил вообще всё. На карточках",
+		"Патриарх Досифей назвал главной проблемой эволюцию",
+		"Доказано отсутствие солдат синдиката на Юпитере",
+		"Треть работников NanoTrasen высказалась против кибер-огурцов",
+		"Таяране начали откладывать яйца",
+		"В Ксокслэнсе из-за землетрясения на 10 дней приостановлены изнасилования",
+		"Зрэимцам разрешили переезжать в NanotrasenHub",
+		"Транспортная инспекция полетного движения предложила ввести штраф за покупку не летающих автомобилей",
+		"В Свеузе будут штрафовать за отказ от наркотиков",
+		"Николай II выйдет на работу в 2225 году",
+		"Моисей — это мопс. Рассказываем, что нужно знать",
+		"В Фрелпасу начали сбор подписей на памятник эчпочмаку",
+		"Лепрастейнские гей-парады оказались неуязвимыми",
+		"Только на майские праздники в Плаериэле построят мемориал жертвам космических наркотиков",
+		"Геофизики предрекли слияние борща и баклажанов",
+		"Хескостен, город в Северном Ваезе, напомнил журналистам о своем гомосексуализме",
+		"Баррингтон попросит вернуть у Кемалова три тысячи детей",
+		"В Еспале из-за угрозы взрыва взорвали более 200 человек",
+		"На Плутоне отказались от празднования Дня NanoTrasen",
+		"Половина страпонианцев считает унатхов суперкомпьютерами",
+		"Физики-исламисты стали плохо пить и задушили дождь",
+		"Националисты пожаловались на нехватку сожженных детей в Уфрасе",
+		"В Спауде снова зафиксированы бессмысленные жители",
+		"Человек-слизень помог Буцулони стать унатхом",
+		"Ученыe системы Тау Кита определили, что люди без мозгов живут дольше киборгов",
+		"Университет высоких технологий имени Хутыйна выяснил опытным путем, что слепые люди реже голосуют, чем слабоумные и глухие",
+		"Внимание! Доказано, что финансовые пирамиды платят больше, чем букмекеры",
+		"Срочно! В Низком Кудмисте умер народный порноактер",
+		"Во всем Дапако запретили заниматься сексом под Космо-Рок-Н-Ролл",
+		)
 
+	return pick(random_imortant_message)
 
 
 //########################################################################################################################
@@ -953,18 +963,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 //########################################################################################################################
 
 /obj/item/weapon/newspaper
-	name = "newspaper"
+	name = "Newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	w_class = ITEM_SIZE_SMALL	//Let's make it fit in trashbags!
+	w_class = SIZE_TINY	//Let's make it fit in trashbags!
 	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
 	var/list/datum/feed_channel/news_content = list()
 	var/datum/feed_message/important_message = null
-	var/scribble=""
+	var/scribble = ""
 	var/scribble_page = null
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
@@ -974,37 +984,37 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.pages = 0
 		switch(screen)
 			if(0) //Cover
-				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>Грифон</FONT></B></div>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Стандартная газета НаноТрейзен, предназначенная для использования на Космических Объектах НаноТрейзен©</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
-						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
+						dat+="Содержание:<BR><ul><B><FONT COLOR='red'>**</FONT>Важные объявление службы безопасности<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[стр. [src.pages+2]\]</FONT><BR></ul>"
 					else
-						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
+						dat+="<I>[return_funny_title()]</I>"
 				else
-					dat+="Contents:<BR><ul>"
+					dat+="Содержание:<BR><ul>"
 					for(var/datum/feed_channel/NP in src.news_content)
 						src.pages++
 					if(src.important_message)
-						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR>"
+						dat+="<B><FONT COLOR='red'>**</FONT>Важные объявление службы безопасности<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[стр. [src.pages+2]\]</FONT><BR>"
 					var/temp_page=0
 					for(var/datum/feed_channel/NP in src.news_content)
 						temp_page++
-						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
+						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[стр. [temp_page+1]\]</FONT><BR>"
 					dat+="</ul>"
 				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
+					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[src.scribble]\"</I>"
+				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>След. Страница</A></DIV> <div style='float:left;'></DIV>"
 			if(1) // X channel pages inbetween.
 				for(var/datum/feed_channel/NP in src.news_content)
 					src.pages++ //Let's get it right again.
 				var/datum/feed_channel/C = src.news_content[src.curr_page]
-				dat+="<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.author]</FONT>\]</FONT><BR><BR>"
+				dat+="<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[создано: <FONT COLOR='maroon'>[C.author]</FONT>\]</FONT><BR><BR>"
 				if(C.censored)
-					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
+					dat+="Содержание данного Новостного Канала было отмечено как угроза благополучию станции и помечено <B><FONT COLOR='red'>❌-меткой</B></FONT>. Эта статья не была напечатана в газете."
 				else
 					if(isemptylist(C.messages))
-						dat+="No Feed stories stem from this channel..."
+						dat+="В этом Канале Истории не обнаружены..."
 					else
 						dat+="<ul>"
 						var/i = 0
@@ -1014,36 +1024,38 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-							dat+="<FONT SIZE=1>Likes: [MESSAGE.likes] Dislikes: [MESSAGE.dislikes]</FONT><BR><BR>"
+							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>Лайки: [MESSAGE.likes] Дизлайки: [MESSAGE.dislikes]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
-				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV>"
+					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[src.scribble]\"</I>"
+				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>След. Страница</A></DIV>"
 			if(2) //Last page
 				for(var/datum/feed_channel/NP in src.news_content)
 					src.pages++
-				if(src.important_message!=null)
-					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
-					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
-					dat+="<B>Description</B>: [important_message.body]<BR>"
-					dat+="<B>Photo:</B>: "
+				if(src.important_message != null)
+					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Розыск:</B></FONT SIZE></DIV><BR><BR>"
+					dat+="<B>Имя</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
+					dat+="<B>Описание</B>: [important_message.body]<BR>"
+					dat+="<B>Снимок:</B>: "
 					if(important_message.img)
 						user << browse_rsc(important_message.img, "tmp_photow.png")
 						dat+="<BR><img src='tmp_photow.png' width = '180'>"
 					else
-						dat+="None"
+						dat+="Отсутствует"
 				else
-					dat+="<I>Apart from some uninteresting Classified ads, there's nothing on this page...</I>"
+					dat+="<I>[return_funny_title()]</I>"
 				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
+					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[src.scribble]\"</I>"
+				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV>"
 			else
-				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
+				dat+="[return_funny_title()]"
 
 		dat+="<BR><HR><div align='center'>[src.curr_page+1]</div>"
-		human_user << browse(entity_ja(dat), "window=newspaper_main;size=300x400")
-		onclose(human_user, "newspaper_main")
+
+		var/datum/browser/popup = new(human_user, "window=newspaper_main", src.name, 300, 400, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()
 	else
 		to_chat(user, "The paper is full of intelligible symbols!")
 
@@ -1051,50 +1063,51 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
-		U.set_machine(src)
-		if(href_list["next_page"])
-			if(curr_page==src.pages+1)
-				return //Don't need that at all, but anyway.
-			if(src.curr_page == src.pages) //We're at the middle, get to the end
-				src.screen = 2
-			else
-				if(curr_page == 0) //We're at the start, get to the middle
-					src.screen=1
-			src.curr_page++
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+	if(!Adjacent(U))
+		return
+	U.set_machine(src)
+	if(href_list["next_page"])
+		if(curr_page==src.pages+1)
+			return //Don't need that at all, but anyway.
+		if(src.curr_page == src.pages) //We're at the middle, get to the end
+			src.screen = 2
+		else
+			if(curr_page == 0) //We're at the start, get to the middle
+				src.screen=1
+		src.curr_page++
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		else if(href_list["prev_page"])
-			if(curr_page == 0)
-				return
-			if(curr_page == 1)
-				src.screen = 0
+	else if(href_list["prev_page"])
+		if(curr_page == 0)
+			return
+		if(curr_page == 1)
+			src.screen = 0
 
-			else
-				if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
-					src.screen = 1
-			src.curr_page--
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+		else
+			if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
+				src.screen = 1
+		src.curr_page--
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		if (istype(src.loc, /mob))
-			src.attack_self(src.loc)
+	if(istype(src.loc, /mob))
+		attack_self(src.loc)
 
 
-/obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pen))
+/obj/item/weapon/newspaper/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
 			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
-//			s = copytext(sanitize_u(s), 1, MAX_MESSAGE_LEN)
 			if (!s)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!user.Adjacent(src))
 				return
 			src.scribble_page = src.curr_page
 			src.scribble = s
-			src.attack_self(user)
+			attack_self(user)
 		return
+	return ..()
 
 
 ////////////////////////////////////helper procs

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/prisoner
 	name = "Implant Management"
 	icon = 'icons/obj/computer.dmi'
@@ -17,8 +15,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
-	var/dat
-	dat += "<B>Prisoner Implant Manager System</B><BR>"
+	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 	else if(screen == 1)
@@ -29,9 +26,9 @@
 			if((Tr) && (Tr.z != src.z))	continue//Out of range
 			if(!C.implanted) continue
 			dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
-			dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>"
-			dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>"
-			dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>"
+			dat += "<A class='red' href='?src=\ref[src];inject1=\ref[C]'>1</A>"
+			dat += "<A class='red' href='?src=\ref[src];inject5=\ref[C]'>5</A>"
+			dat += "<A class='red' href='?src=\ref[src];inject10=\ref[C]'>10</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in implant_list)
@@ -46,17 +43,18 @@
 			if(T.malfunction)
 				loc_display = pick(teleportlocs)
 			dat += "ID: [T.id] | Location: [loc_display]<BR>"
-			dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+			dat += "<A class='red' href='?src=\ref[src];warn=\ref[T]'><i>Message Holder</i></A> |<BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "Prisoner Implant Manager System", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
-		src.updateDialog()
+		updateDialog()
 	return
 
 
@@ -78,7 +76,7 @@
 		if(I)	I.activate(10)
 
 	else if(href_list["lock"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			screen = !screen
 		else
 			to_chat(usr, "Unauthorized Access.")
@@ -91,4 +89,4 @@
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()

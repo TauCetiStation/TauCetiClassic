@@ -1,49 +1,42 @@
-/var/global/sent_aliens_to_station = 0
-
 /datum/event/alien_infestation
 	announceWhen	= 400
-	oneShot			= 1
 
 	var/spawncount = 1
-	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
+
+	announcement = new /datum/announcement/centcomm/aliens
 
 
 /datum/event/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(1, 2)
-	sent_aliens_to_station = 1
+	spawncount = rand(3, 4)
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
-
+		announcement.play()
 
 /datum/event/alien_infestation/start()
-	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
-		if(QDELETED(temp_vent))
-			continue
-		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
-			//Stops Aliens getting stuck in small networks.
-			//See: Security, Virology
-			if(temp_vent_parent.other_atmosmch.len > 50)
-				vents += temp_vent
+	if(!aliens_allowed)
+		message_admins("An event attempted to spawn an alien but aliens are locked down. Shutting down.")
+		kill()
+		return
+	var/list/vents = get_vents()
 
 	if(!vents.len)
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_larva_candidates()
+	var/list/candidates = pollGhostCandidates("Would you like to be \a facehugger?", ROLE_ALIEN, IGNORE_FACEHUGGER)
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)
-		var/candidate = pick(candidates)
+		var/mob/candidate = pick(candidates)
 
-		var/mob/living/carbon/xenomorph/larva/new_xeno = new(vent.loc)
-		new_xeno.key = candidate
+		var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
+		new_xeno.key = candidate.key
+		message_admins("[new_xeno] has spawned at [COORD(new_xeno)] [ADMIN_JMP(new_xeno)] [ADMIN_FLW(new_xeno)].")
 
 		candidates -= candidate
 		vents -= vent
 		spawncount--
-		successSpawn = 1
+		successSpawn = TRUE

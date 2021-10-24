@@ -6,7 +6,7 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	sharp = 1
 	edge = 0
 
@@ -41,11 +41,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	var/tension = 0                       // Current draw on the bow.
 	var/max_tension = 3                   // Highest possible tension.
@@ -58,22 +58,22 @@
 	. = ..()
 	desc = "A [gamestory_start_year+2]AD twist on an old classic. Pick up that can."
 
-/obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
+/obj/item/weapon/crossbow/attackby(obj/item/I, mob/user, params)
 	if(!arrow)
-		if (istype(W,/obj/item/weapon/arrow))
-			user.drop_item()
-			arrow = W
-			arrow.loc = src
+		if(istype(I, /obj/item/weapon/arrow))
+			user.drop_from_inventory(I, src)
+			arrow = I
 			user.visible_message("[user] slides [arrow] into [src].","You slide [arrow] into [src].")
 			icon_state = "crossbow-nocked"
 			return
-		else if(istype(W,/obj/item/stack/rods))
-			var/obj/item/stack/rods/R = W
+
+		else if(istype(I, /obj/item/stack/rods))
+			var/obj/item/stack/rods/R = I
 			if(!R.use(1))
 				return
 			arrow = new /obj/item/weapon/arrow/rod(src)
 			arrow.fingerprintslast = src.fingerprintslast
-			arrow.loc = src
+			arrow.forceMove(src)
 			icon_state = "crossbow-nocked"
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
 			if(cell)
@@ -84,11 +84,10 @@
 					cell.use(500)
 			return
 
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(!cell)
-			user.drop_item()
-			W.loc = src
-			cell = W
+			user.drop_from_inventory(I, src)
+			cell = I
 			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
@@ -99,17 +98,17 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(isscrewdriver(W))
+	else if(isscrewdriver(I))
 		if(cell)
 			var/obj/item/C = cell
-			C.loc = get_turf(user)
+			C.forceMove(get_turf(user))
 			cell = null
-			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>")
+			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [I].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
 
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
@@ -200,6 +199,7 @@
 	icon_state = "crossbow"
 
 /obj/item/weapon/crossbow/dropped(mob/user)
+	..()
 	if(arrow)
 		var/obj/item/weapon/arrow/A = arrow
 		A.loc = get_turf(src)

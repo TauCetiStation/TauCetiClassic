@@ -37,14 +37,57 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
 
-//Chaplain
-/obj/item/clothing/suit/nun
+/obj/item/clothing/suit/hooded/skhima
+	name = "Skhima Suit"
+	desc = "That's an ancient religion robe Skhima, decorated with white runes and symbols. Commonly weared by monks."
+	icon_state = "skhima"
+	item_state = "skhima"
+	icon_suit_up = "skhima_up"
+	hoodtype = /obj/item/clothing/head/skhima_hood
+	flags_inv = HIDEJUMPSUIT
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+	allowed = list (/obj/item/weapon/storage/bible,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/device/pda,
+					/obj/item/weapon/lighter,
+					/obj/item/weapon/storage/fancy/crayons,
+					/obj/item/weapon/paper)
+
+/obj/item/clothing/suit/hooded/nun
 	name = "nun robe"
-	desc = "Maximum piety in this star system."
+	desc = "A religion female suit commonly weared by monastery sisters."
 	icon_state = "nun"
 	item_state = "nun"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	var/sleeves = TRUE
+	hoodtype = /obj/item/clothing/head/nun_hood
+	flags_inv = HIDEJUMPSUIT
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+	allowed = list (/obj/item/weapon/storage/bible,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/device/pda,
+					/obj/item/weapon/lighter,
+					/obj/item/weapon/storage/fancy/crayons,
+					/obj/item/weapon/paper)
+
+/obj/item/clothing/suit/hooded/nun/verb/adjust_sleeves()
+	set name = "Toggle Sleeves"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(sleeves)
+		icon_state = "nun_rolled"
+		to_chat(usr, "You roll up your sleeves.")
+		sleeves = FALSE
+	else
+		icon_state = "nun"
+		to_chat(usr, "You let off your sleeves.")
+		sleeves = TRUE
+	usr.update_inv_wear_suit()
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -55,7 +98,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list (/obj/item/weapon/kitchenknife)
 
 //Chef
 /obj/item/clothing/suit/chef/classic
@@ -249,4 +292,4 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/scalpel,/obj/item/weapon/retractor,/obj/item/weapon/hemostat,
-	/obj/item/weapon/cautery,/obj/item/weapon/bonegel,/obj/item/weapon/FixOVein)
+	/obj/item/weapon/cautery, /obj/item/weapon/bonegel,/obj/item/weapon/FixOVein, /obj/item/clothing/gloves/latex)

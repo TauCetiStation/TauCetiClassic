@@ -2,6 +2,7 @@
 	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
+	item_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
@@ -15,11 +16,11 @@
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
-/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/I, mob/user, params)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
-		A.update_icon()
+		I.update_icon()
 		update_icon()
 		chamber_round()
 
@@ -56,19 +57,19 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = "revolver"
+	name = "S&W Model 10"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-
+	w_class = SIZE_TINY
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
 		return ..()
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+		explosion(M.loc, 0, 0, 1, 1)
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
-		M.drop_item()
 		qdel(src)
 		return 0
 	return ..()
@@ -81,21 +82,20 @@
 	var/mob/M = usr
 	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(input && !M.stat && Adjacent(M))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
 
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
-	..()
-	if(isscrewdriver(A))
+/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -108,7 +108,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -116,10 +116,14 @@
 				desc = initial(desc)
 				to_chat(user, "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>")
 
+	else
+		return ..()
+
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -144,7 +148,7 @@
 		chamber_round()
 	spun = 1
 
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = ..()
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(num_loaded)
@@ -154,8 +158,7 @@
 	if(get_ammo() > 0)
 		Spin()
 	update_icon()
-	A.update_icon()
-	return
+	I.update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
 	if(!spun && get_ammo(0,0))
@@ -234,8 +237,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
 /obj/item/weapon/gun/projectile/revolver/detective/dungeon
-	desc = "A a six-shot double-action revolver."
-	name = "Smith & Wesson Model 10"
+	desc = "A six-shot double-action revolver."
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
@@ -243,7 +245,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"

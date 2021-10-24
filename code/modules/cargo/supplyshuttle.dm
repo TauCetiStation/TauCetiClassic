@@ -20,8 +20,8 @@ var/list/mechtoys = list(
 	desc = "Completely impassable - or are they?"
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 4
 	explosion_resistance = 5
 
@@ -37,11 +37,15 @@ var/list/mechtoys = list(
 	return TRUE
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(!istype(A))
+		return
+	if(A.checkpass(PASSGLASS)) // for laser projectile
 		return prob(60)
+	if(A.checkpass(PASSTABLE))
+		return TRUE
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
 		return FALSE
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
@@ -50,7 +54,7 @@ var/list/mechtoys = list(
 			return TRUE
 		if(istype(M, /mob/living/simple_animal/hostile))
 			return FALSE
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  //If your not laying down, or a small creature, no pass.
+		if(!M.lying) //If your not laying down, or a small creature, no pass.
 			return FALSE
 	return ..()
 

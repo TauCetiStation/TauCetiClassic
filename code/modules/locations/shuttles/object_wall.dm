@@ -1,11 +1,12 @@
-//костыль, в будущем что-то сделать с этим
+//РєРѕСЃС‚С‹Р»СЊ, РІ Р±СѓРґСѓС‰РµРј С‡С‚Рѕ-С‚Рѕ СЃРґРµР»Р°С‚СЊ СЃ СЌС‚РёРј
 /obj/structure/object_wall
+	layer = 2
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	opacity = 1
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/locations/shuttles/shuttle.dmi'
 
 /obj/structure/object_wall/atom_init()
 	. = ..()
@@ -23,22 +24,27 @@
 	return ..()
 
 /obj/structure/object_wall/mining
-	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
+	icon = 'icons/locations/shuttles/shuttle_mining.dmi'
 
 /obj/structure/object_wall/standart
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall1"
 
 /obj/structure/object_wall/pod
-	icon = 'code/modules/locations/shuttles/pod.dmi'
+	icon = 'icons/locations/shuttles/pod.dmi'
 
 /obj/structure/object_wall/wagon
-	icon = 'code/modules/locations/shuttles/wagon.dmi'
+	icon = 'icons/locations/shuttles/wagon.dmi'
 	icon_state = "3,1"
 
 /obj/structure/object_wall/erokez
-	icon = 'code/modules/locations/shuttles/erokez.dmi'
+	icon = 'icons/locations/shuttles/erokez.dmi'
 	icon_state = "18,2"
 
 /obj/structure/object_wall/cargo
-	icon = 'code/modules/locations/shuttles/cargo.dmi'
+	icon = 'icons/locations/shuttles/cargo.dmi'
 	icon_state = "0,5"
+
+/obj/structure/object_wall/evac
+	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "9,1"

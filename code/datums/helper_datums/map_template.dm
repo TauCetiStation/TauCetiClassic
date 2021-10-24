@@ -53,7 +53,7 @@
 				continue
 
 	SSatoms.InitializeAtoms(atoms)
-	SSmachine.setup_template_powernets(cables)
+	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load(turf/T, centered = FALSE, initBounds = TRUE)
@@ -80,7 +80,7 @@
 	if(initBounds)
 		initTemplateBounds(bounds)
 
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [COORD(T)]")
 	loaded_stuff.Cut()
 
 /datum/map_template/proc/loadMap(z)

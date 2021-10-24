@@ -8,14 +8,13 @@
 		return
 
 	if(stat != DEAD)
-		handle_actions()
 		add_ingame_age()
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0
 	update_gravity(mob_has_gravity())
 
-	handle_actions()
+	handle_combat()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -39,12 +38,19 @@
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	handle_vision()
+	handle_actions()
 	update_action_buttons()
 
-	return 1
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull1"
+		else
+			pullin.icon_state = "pull0"
+
+	return TRUE
 
 /mob/living/proc/is_vision_obstructed()
 	if(istype(loc, /obj/item/weapon/holder))
@@ -64,38 +70,28 @@
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			throw_alert("blind", /atom/movable/screen/alert/blind)
+			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else if(is_vision_obstructed() && !(XRAY in mutations))
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
 			if(!ishuman(src))
 				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+					overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, 1)
 				else
 					clear_fullscreen("impaired")
 
-				if(eye_blurry)
-					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-				else
-					clear_fullscreen("blurry")
-
-				if(druggy)
-					overlay_fullscreen("high", /obj/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
+					update_eye_blur()
 
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
-/mob/living/proc/update_sight()
-	return
 
 /mob/living/update_action_buttons()
 	if(!hud_used) return
@@ -128,11 +124,11 @@
 	for(var/datum/action/A in actions)
 		button_number++
 		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
+			var/atom/movable/screen/movable/action_button/N = new(hud_used)
 			N.owner = A
 			A.button = N
 
-		var/obj/screen/movable/action_button/B = A.button
+		var/atom/movable/screen/movable/action_button/B = A.button
 
 		B.UpdateIcon()
 

@@ -3,7 +3,7 @@
 	name = "large parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	var/sortTag = ""
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -71,28 +71,31 @@
 	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
-/obj/item/smallDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = W
+/obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/destTagger))
+		var/obj/item/device/destTagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
-			src.sortTag = O.currTag
+			sortTag = O.currTag
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
-		src.name = "[src.name] ([str])"
+		name = "[name] ([str])"
+
+	else
+		return ..()
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/amount = 25.0
 
 
@@ -124,11 +127,11 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= ITEM_SIZE_TINY)
+			if(P.w_class <= SIZE_MINUSCULE)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= ITEM_SIZE_SMALL)
+			else if (P.w_class <= SIZE_TINY)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= ITEM_SIZE_NORMAL)
+			else if (P.w_class <= SIZE_SMALL)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
@@ -138,7 +141,7 @@
 				P.icon_state = "deliverycrate[i]"
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 			src.amount -= 1
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
@@ -182,7 +185,7 @@
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -191,7 +194,7 @@
 	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
+	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 	for(var/i = 1, i <= tagger_locations.len, i++)
@@ -202,15 +205,17 @@
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
 
-	user << browse(entity_ja(dat), "window=destTagScreen;size=450x350")
-	onclose(user, "destTagScreen")
+	var/datum/browser/popup = new(user, "destTagScreen", "TagMaster 2.3", 450, 350)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/item/device/destTagger/attack_self(mob/user)
 	openwindow(user)
 	return
 
 /obj/item/device/destTagger/Topic(href, href_list)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
 	openwindow(usr)
@@ -218,7 +223,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 1
+	density = TRUE
 	icon_state = "intake"
 
 	var/c_mode = 0
@@ -261,7 +266,7 @@
 	else if(istype(AM, /mob))
 		var/mob/M = AM
 		M.loc = src
-	src.flush()
+	flush()
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
@@ -309,8 +314,8 @@
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
-				C.anchored = 1
-				C.density = 1
+				C.anchored = TRUE
+				C.density = TRUE
 				qdel(src)
 			return
 		else

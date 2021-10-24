@@ -14,7 +14,11 @@
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
 	reliability = 1000
+	var/selectable = TRUE// Set to FALSE for passive equipment such as mining scanner or armor plates
 	var/salvageable = 1
+	var/sound_detonation = 'sound/mecha/critdestr.ogg'
+	var/sound_attach_equip = 'sound/mecha/mecha_attack_equip.ogg'
+	var/sound_detach_equip = 'sound/mecha/mech_detach_equip.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
@@ -45,13 +49,11 @@
 		listclearnulls(chassis.equipment)
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
+		update_chassis_page()
 		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
-		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
-			chassis.occupant.playsound_local(null, 'sound/mecha/weapdestr.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else
-			chassis.occupant.playsound_local(null, 'sound/mecha/critdestr.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		if(chassis.occupant)
+			chassis.occupant.playsound_local(null, sound_detonation, VOL_EFFECTS_MASTER, null, FALSE)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
@@ -96,20 +98,22 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
+	playsound(src, sound_attach_equip, VOL_EFFECTS_MASTER, 100, FALSE, null, -3)
 	chassis = M
 	src.loc = M
 	M.log_message("[src] initialized.")
 	if(!M.selected)
 		M.selected = src
-	src.update_chassis_page()
+	update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
 	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
+	if(Move(moveto))
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
+		playsound(src, sound_detach_equip, VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
 		update_chassis_page()
 		chassis.log_message("[src] removed from equipment.")
 		chassis = null
@@ -119,14 +123,14 @@
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
 	if(href_list["detach"])
-		src.detach()
+		detach()
 	return
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)

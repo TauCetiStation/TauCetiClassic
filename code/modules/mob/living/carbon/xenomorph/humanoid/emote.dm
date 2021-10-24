@@ -7,8 +7,12 @@
 		return
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
 		if(act != "hiss")
-			act = copytext(act, 1, length(act))
+			act = copytext(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+
+	// These scare the enemies out, causing them to lose 10 combo points.
+	if(act == "scream")
+		act = pick("roar", "growl", "hiss")
 
 	switch(act)
 
@@ -26,21 +30,29 @@
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, 'sound/voice/xenomorph/whimper.ogg', VOL_EFFECTS_MASTER, 25)
+
+			add_combo_value_all(10)
 		if("roar")
 			message = "<B>The [src.name]</B>[pick(" triumphantly", " menacingly", "")] roars."
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 		if("hiss")
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_HISS), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 		if("growl")
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 
 //  ========== BASIC ==========
 
@@ -80,11 +92,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> [pick("deftly", "quickly", "erotically", "joyfully")] moves its body."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> falls on its back and[pick("", " cheerfully", " awkwardly")] rolls on the floor kinda like a kitten. [pick("Really cute.", "Very cute.", "So cute!")]"
 				m_type = SHOWMSG_VISUAL
 				if(prob(50)) // xenomorphs are not kittens!
@@ -113,7 +125,7 @@
 					return
 				m_type = SHOWMSG_AUDIO
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
 		if ("me")
@@ -121,7 +133,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='danger'>You cannot send IC messages(muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -151,7 +163,7 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
-				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))

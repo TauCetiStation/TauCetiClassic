@@ -17,73 +17,29 @@
 	set hidden = TRUE
 	link_with_alert(src, config.server_rules_url)
 
-/client/verb/hotkeys_help()
-	set name = "hotkeys-help"
-	set category = "OOC"
+/client/verb/reportissue()
+	set name = "report-issue"
+	set desc = "Report an issue"
+	set hidden = 1
 
-	var/hotkey_mode = {"<font color='purple'>
-Hotkey-Mode: (hotkey-mode must be on)
-\t TAB = toggle hotkey-mode
-\t a = left
-\t s = down
-\t d = right
-\t w = up
-\t q = drop
-\t e = equip
-\t r = throw
-\t t = say
-\t h = holder/unholder
-\t x = swap-hand
-\t z = click on held object (or y)
-\t b = click on self
-\t f = cycle-intents-left
-\t g = cycle-intents-right
-\t 1 = help-intent
-\t 2 = disarm-intent
-\t 3 = grab-intent
-\t 4 = harm-intent
-</font>"}
+	var/githuburl = config.repository_link
+	if(!githuburl)
+		to_chat(src, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
+		return
 
-	var/other = {"<font color='purple'>
-Any-Mode: (hotkey doesn't need to be on)
-\t Ctrl+a = left
-\t Ctrl+s = down
-\t Ctrl+d = right
-\t Ctrl+w = up
-\t Ctrl+q = drop
-\t Ctrl+e = equip
-\t Ctrl+r = throw
-\t Ctrl+h = holder/unholder
-\t Ctrl+x = swap-hand
-\t Ctrl+z = click on held object (or Ctrl+y)
-\t Ctrl+b = click on self
-\t Ctrl+f = cycle-intents-left
-\t Ctrl+g = cycle-intents-right
-\t Ctrl+1 = help-intent
-\t Ctrl+2 = disarm-intent
-\t Ctrl+3 = grab-intent
-\t Ctrl+4 = harm-intent
-\t DEL = pull
-\t INS = cycle-intents-right
-\t HOME = drop
-\t PGUP = swap-hand
-\t PGDN = click on held object
-\t END = throw
-</font>"}
+	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	if(tgui_alert(usr, message, "Report Issue", list("Yes", "No")) != "Yes")
+		return
+	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
+	var/servername = config.server_name
+	var/url_params = "[issue_template]"
+	if(global.round_id || config.server_name)
+		url_params += "Issue reported from [global.round_id ? " Round ID: [global.round_id][servername ? " ([servername])" : ""]" : servername]\n"
+	url_params += "Testmerges: ```[test_merges ? test_merges : "No test merges"]```\n"
+	url_params += "Reporting client version: [byond_version].[byond_build]\n"
+	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
 
-	var/admin = {"<font color='purple'>
-Admin:
-\t F5 = Asay
-\t F6 = player-panel-new
-\t F7 = admin-pm
-\t F8 = Invisimin
-\t F9 = Mentorhelp
-</font>"}
-
-	to_chat(src, hotkey_mode)
-	to_chat(src, other)
-	if(holder)
-		to_chat(src, admin)
+	return
 
 /client/verb/changes()
 	set name = "Changelog"
@@ -105,7 +61,7 @@ Admin:
 
 /proc/link_with_alert(client/user, link_url)
 	if(link_url)
-		if(alert("This will open your browser. Are you sure?",, "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "This will open your browser. Are you sure?",, list("Yes", "No")) == "Yes")
 			user << link(link_url)
 	else
 		to_chat(user, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")

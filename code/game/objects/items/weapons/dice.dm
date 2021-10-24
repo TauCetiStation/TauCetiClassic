@@ -6,7 +6,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/sides = 6
 	var/result
 	var/accursed_type = /obj/item/weapon/dice/ghost
@@ -22,15 +22,19 @@
 	icon_state = "gd6"
 	attack_verb = list("diced", "accursed")
 
-/obj/item/weapon/dice/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+/obj/item/weapon/dice/ghost/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-	if(istype(W, /obj/item/weapon/nullrod))
-		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
+
+	else if(istype(I, /obj/item/weapon/nullrod) && isliving(user))
+		var/mob/living/L = user
+		if(L.getBrainLoss() >= 60 || (L.mind && (L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
+
+	else
+		return ..()
 
 /obj/item/weapon/dice/ghost/proc/poof()
 	loc.visible_message("<span class='warning'>[src] trembles in a scary manner.</span>")
@@ -45,7 +49,7 @@
 		set_light(light_range, 1, "#a2fad1")
 		time--
 		sleep(1)
-	for(var/mob/living/A in viewers(3, loc))
+	for(var/mob/living/A in viewers(3,   loc))
 		A.confused += SLIGHTLY_CONFUSED
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
 	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
@@ -169,7 +173,7 @@
 /obj/item/weapon/dice/ghost/d20/attack_self(mob/living/user)
 	diceroll(user)
 	if(result == 20)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			to_chat(user, "<span class='notice'>You suddenly feel sligly better because of your own luck.</span>")
 			user.adjustBruteLoss(-1)
 			user.adjustFireLoss(-1)
@@ -183,7 +187,7 @@
 	diceroll()
 	..()
 	if(result == 20 && istype(target) && istype(thrower))
-		if(thrower.a_intent == "help")
+		if(thrower.a_intent == INTENT_HELP)
 			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [thrower]'s luck.</span>")
 			target.adjustBruteLoss(-1)
 			target.adjustFireLoss(-1)
@@ -232,7 +236,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled  && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
@@ -241,7 +245,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
@@ -282,12 +286,14 @@
 	new /obj/item/weapon/dice/ghost/d12(src)
 	new /obj/item/weapon/dice/ghost/d20(src)
 
-/obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+
+	else
+		return ..()
 
 #undef AMPLITUDE
 #undef SLIGHTLY_CONFUSED

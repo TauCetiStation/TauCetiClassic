@@ -5,7 +5,7 @@
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/list/list_reagents = null
@@ -36,16 +36,9 @@
 	return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == I_HURT) // Since we usually splash mobs or whatever, now we will also hit them.
+	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
 
-// this prevented pills, food, and other things from being picked up by bags.
-// possibly intentional, but removing it allows us to not duplicate functionality.
-// -Sayu (storage conslidation)
-/*
-/obj/item/weapon/reagent_containers/attackby(obj/item/I, mob/user)
-	return
-*/
 /obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
 	return
 

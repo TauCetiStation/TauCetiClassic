@@ -3,21 +3,21 @@
 		desc = "An energy shield used to contain hull breaches."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
-		density = 1
+		density = TRUE
 		opacity = 0
-		anchored = 1
+		anchored = TRUE
 		unacidable = 1
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/atom_init()
-	dir = pick(1,2,3,4)
+	set_dir(pick(1,2,3,4))
 	. = ..()
 	update_nearby_tiles(need_rebuild = 1)
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	return ..()
 
@@ -46,18 +46,6 @@
 	spawn(20) if(src) opacity = 0
 
 	..()
-
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
-	if(src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissipates!</span>")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -185,26 +173,19 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/meteorhit(obj/O)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
-	return
-
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			src.health -= 75
-			src.checkhp()
+			checkhp()
 		if(2.0)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
-			src.checkhp()
+			checkhp()
 		if(3.0)
 			src.health -= 10
-			src.checkhp()
+			checkhp()
 	return
 
 /obj/machinery/shieldgen/emp_act(severity)
@@ -234,13 +215,13 @@
 		user.visible_message("<span class='notice'>[bicon(src)] [user] deactivated the shield generator.</span>", \
 			"<span class='notice'>[bicon(src)] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
-		src.shields_down()
+		shields_down()
 	else
 		if(anchored)
 			user.visible_message("<span class='notice'>[bicon(src)] [user] activated the shield generator.</span>", \
 				"<span class='notice'>[bicon(src)] You activate the shield generator.</span>", \
 				"You hear heavy droning.")
-			src.shields_up()
+			shields_up()
 		else
 			to_chat(user, "The device must first be secured to the floor.")
 
@@ -273,16 +254,16 @@
 			to_chat(user, "<span class='notice'>You unsecure the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
-				src.shields_down()
-			anchored = 0
+				shields_down()
+			anchored = FALSE
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
 			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
-			anchored = 1
+			anchored = TRUE
 
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
-		if(src.allowed(user))
+		if(allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
@@ -344,16 +325,16 @@
 		power = 0
 		return 0
 
-	var/surplus = max(PN.avail-PN.load, 0)
+	var/surplus = max(PN.avail - PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		power = 0
 		return 0
 	else
 		power = 1	// IVE GOT THE POWER!
-		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
+		if(PN) //runtime errors fixer. They were caused by PN.load trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.load += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 
@@ -379,7 +360,7 @@
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \
 			"You hear heavy droning fade out.")
-		for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+		for(var/dir in list(1,2,4,8)) cleanup(dir)
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
@@ -414,11 +395,11 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
+			visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
-			for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+			for(var/dir in list(1,2,4,8)) cleanup(dir)
 
 /obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
 	var/turf/T = src.loc
@@ -460,9 +441,9 @@
 		var/field_dir = get_dir(T2,get_step(T2, NSEW))
 		T = get_step(T2, NSEW)
 		T2 = T
-		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
+		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall(src, G) //(ref to this gen, ref to connected gen)
 		CF.loc = T
-		CF.dir = field_dir
+		CF.set_dir(field_dir)
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
@@ -474,25 +455,25 @@
 			state = 1
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
-			src.anchored = 1
+			src.anchored = TRUE
 			return
 
 		else if(state == 1)
 			state = 0
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You undo the external reinforcing bolts.")
-			src.anchored = 0
+			src.anchored = FALSE
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 		user.SetNextMove(CLICK_CD_MELEE)
 
@@ -515,10 +496,10 @@
 				break
 
 /obj/machinery/shieldwallgen/Destroy()
-	src.cleanup(1)
-	src.cleanup(2)
-	src.cleanup(4)
-	src.cleanup(8)
+	cleanup(1)
+	cleanup(2)
+	cleanup(4)
+	cleanup(8)
 	attached = null
 	return ..()
 
@@ -534,8 +515,8 @@
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "energyshield"
-		anchored = 1
-		density = 1
+		anchored = TRUE
+		density = TRUE
 		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3

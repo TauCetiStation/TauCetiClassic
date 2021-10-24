@@ -7,7 +7,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = TRUE
 	var/toggled = FALSE
@@ -46,9 +46,11 @@
 	qdel(O)
 
 /obj/item/device/chameleon/dropped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/equipped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/attack_self(mob/living/user)
@@ -64,22 +66,34 @@
 /obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
+	if(!check_sprite(target))
+		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
+		return
 	if(!active_dummy)
 		active_dummy = new
-	if(active_dummy.current_type != target.type)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, null, -6)
-			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
-			copy_item(target)
+	if(active_dummy.current_type == target.type)
+		return
+	if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
+		playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
+		to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
+		copy_item(target)
 	else
 		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
+
+/obj/item/device/chameleon/proc/check_sprite(atom/target)
+	if(target.icon_state in icon_states(target.icon))
+		return TRUE
+	return FALSE
 
 /obj/item/device/chameleon/proc/copy_item(obj/O)
 	var/obj/effect/dummy/chameleon/C = active_dummy
 	C.name = O.name
 	C.desc = O.desc
 	C.appearance = O.appearance
-	C.dir = O.dir
+	C.set_dir(O.dir)
 	C.current_type = O.type
 	C.layer = initial(O.layer) // scanning things in your inventory
 	C.plane = initial(O.plane)
@@ -97,7 +111,7 @@
 	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
 
 /obj/item/device/chameleon/proc/play_transform_effect()
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
 	flick("emppulse",T)

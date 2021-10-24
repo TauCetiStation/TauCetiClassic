@@ -71,9 +71,9 @@
 	if(src in view(1, user))
 		to_chat(user, "It has [uses] lights remaining.")
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
+/obj/item/device/lightreplacer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.get_amount() - decrement, 0)
 			if(!remaining && !(G.get_amount() - decrement) == 0)
@@ -84,26 +84,27 @@
 			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
 
-	if(istype(W, /obj/item/weapon/light))
-		var/obj/item/weapon/light/L = W
+	else if(istype(I, /obj/item/weapon/light))
+		var/obj/item/weapon/light/L = I
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
 				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
-				user.drop_item()
 				qdel(L)
 				return
 		else
 			to_chat(user, "You need a working light.")
 			return
 
+	else
+		return ..()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
-			src.Emag()
+			Emag()
 			to_chat(usr, "You shortcircuit the [src].")
 			return
 	*/
@@ -187,7 +188,7 @@
 //Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1

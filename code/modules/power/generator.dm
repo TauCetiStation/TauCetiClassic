@@ -3,8 +3,8 @@
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
@@ -162,21 +162,17 @@
 
 	t += "<BR>"
 	t += "<HR>"
-	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
+	t += "<A href='?src=\ref[src]'>Refresh</A>"
 
-	user << browse(entity_ja(t), "window=teg;size=460x300")
-	onclose(user, "teg")
+	var/datum/browser/popup = new(user, teg, null, 460, 300)
+	popup.set_content(t)
+	popup.open()
 
 
 /obj/machinery/power/generator/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
-
-	if( href_list["close"] )
-		usr << browse(null, "window=teg")
-		usr.unset_machine()
-		return FALSE
 
 	updateDialog()
 
@@ -194,7 +190,7 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.dir = turn(src.dir, 90)
+	set_dir(turn(src.dir, 90))
 
 /obj/machinery/power/generator/verb/rotate_anticlock()
 	set category = "Object"
@@ -204,4 +200,4 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.dir = turn(src.dir, -90)
+	set_dir(turn(src.dir, -90))

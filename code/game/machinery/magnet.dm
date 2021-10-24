@@ -11,7 +11,7 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = 2.5
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
@@ -189,8 +189,8 @@
 	name = "Magnetic Control Console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	frequency = 1449
@@ -232,7 +232,7 @@
 
 
 /obj/machinery/magnetic_controller/ui_interact(mob/user)
-	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
+	var/dat = ""
 	if(!autolink)
 		dat += {"
 		Frequency: <a href='?src=\ref[src];operation=setfreq'>[frequency]</a><br>
@@ -252,8 +252,9 @@
 	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
 	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
-	user << browse(entity_ja(dat), "window=magnet;size=400x500")
-	onclose(user, "magnet")
+	var/datum/browser/popup = new(user, "window=magnet", src.name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/magnetic_controller/Topic(href, href_list)
 	. = ..()

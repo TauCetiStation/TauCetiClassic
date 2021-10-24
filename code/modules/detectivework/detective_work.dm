@@ -48,7 +48,7 @@
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 	if(!suit_fibers.len) suit_fibers = null
 
-var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(print) proc, and means about 80% of
+var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_ascii(print) proc, and means about 80% of
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
 /obj/machinery/computer/forensic_scanning
@@ -95,29 +95,31 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 		isai = 1
 	if(temp)
 		dat += "<tt>[temp]</tt><br><br>"
-		if(canclear) dat += "<a href='?src=\ref[src];operation=clear'>{Clear Screen}</a>"
+		if(canclear) dat += "<a href='?src=\ref[src];operation=clear'>Clear Screen</a>"
 	else
 		if(!authenticated)
-			dat += "<a href='?src=\ref[src];operation=login'>{Log In}</a>"
+			dat += "<a href='?src=\ref[src];operation=login'>Log In</a>"
 		else
-			dat += "<a href='?src=\ref[src];operation=logout'>{Log Out}</a><br><hr><br>"
+			dat += "<a href='?src=\ref[src];operation=logout'>Log Out</a><br><hr><br>"
 			if(scanning)
 				if(scan_process)
-					dat += {"Scan Object: {[scanning.name]}<br>
-					<a href='?src=\ref[src];operation=cancel'>{Cancel Scan}</a> {Print}<br>"}
+					dat += {"Scan Object: [scanning.name]<br>
+					<a href='?src=\ref[src];operation=cancel'>Cancel Scan</a> {Print}<br>"}
 				else
 					if(isai) dat += "Scan Object: {[scanning.name]}<br>"
-					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>{[scanning.name]}</a><br>"
-					dat += "<a href='?src=\ref[src];operation=scan'>{Scan}</a> <a href='?src=\ref[src];operation=print'>{Print}</a><br>"
+					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>[scanning.name]</a><br>"
+					dat += "<a href='?src=\ref[src];operation=scan'>Scan</a> <a href='?src=\ref[src];operation=print'>Print</a><br>"
 			else
 				if(isai) dat += "{No Object Inserted}<br>"
-				else dat += "<a href='?src=\ref[src];operation=insert'>{No Object Inserted}</a><br>"
-				dat += "{Scan} <a href='?src=\ref[src];operation=print'>{Print}</a><br>"
-			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
+				else dat += "<a href='?src=\ref[src];operation=insert'>No Object Inserted</a><br>"
+				dat += "{Scan} <a href='?src=\ref[src];operation=print'>Print</a><br>"
+			dat += {"<a href='?src=\ref[src];operation=database'>Access Database</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
-				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
-	user << browse(entity_ja(dat),"window=scanner")
-	onclose(user,"scanner")
+				dat += "<br><a href='?src=\ref[src];operation=erase'>Erase Data</a>"
+
+	var/datum/browser/popup = new(user, "scanner")
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/forensic_scanning/Topic(href,href_list)
@@ -151,8 +153,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					I.icon_state = "evidenceobj"
 				else
 					scanning = I
-					M.drop_item()
-					I.loc = src
+					M.drop_from_inventory(I, src)
 			else
 				to_chat(usr, "Invalid Object Rejected.")
 		if("card")  //Processing a fingerprint card.
@@ -170,8 +171,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						card.loc = src.loc
 					card = null
 					return
-				M.drop_item()
-				I.loc = src
+				M.drop_from_inventory(I, src)
 				process_card()
 			else
 				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
@@ -189,8 +189,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "Consolidated data points:<br>"
 					for(var/print in files)
 						var/list/file = files[print]
-						temp += "<a href='?src=\ref[src];operation=record;identifier=[print]'>{[file[2]]}</a><br>"
-					temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card (To complete a Dossier)}</a><br><br><br>"
+						temp += "<a href='?src=\ref[src];operation=record;identifier=[print]'>[file[2]]</a><br>"
+					temp += "<br><a href='?src=\ref[src];operation=card'>Insert Finger Print Card (To complete a Dossier)</a><br><br><br>"
 				else
 					temp = ""
 				if(misc && misc.len)
@@ -198,7 +198,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					This is where anything without fingerprints goes.<br><br>"}
 					for(var/atom in misc)
 						var/list/data_entry = misc[atom]
-						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>{[data_entry[3]]}</a><br>"
+						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>[data_entry[3]]</a><br>"
 		if("record") //Viewing a record from the "files" database.
 			canclear = 0
 			if(files)
@@ -212,7 +212,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				temp = {"<b>Criminal Evidence Database</b><br><br>
 				Consolidated data points: [dossier[2]]<br>"}
 				var/print_string = "Fingerprints: Print not complete!<br>"
-				if(stringpercent(dossier[1]) <= FINGERPRINT_COMPLETE)
+				if(stringpercent_ascii(dossier[1]) <= FINGERPRINT_COMPLETE)
 					print_string = "Fingerprints: (80% or higher completion reached)<br>[dossier[1]]<br>"
 				temp += print_string
 				for(var/object in dossier)
@@ -226,7 +226,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -243,12 +243,12 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						temp += "&nbsp<b>Blood:</b><br>"
 						for(var/named in blood)
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>{Rename this Dossier}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>Rename this Dossier</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>Delete this Dossier</a>"
+				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
 		if("databaseprint") //Printing from the "files" database.
 			if(files)
 				var/obj/item/weapon/paper/P = new(loc)
@@ -257,7 +257,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				P.info = "<b>Criminal Evidence Database</b><br><br>"
 				P.info += "Consolidated data points: [dossier[2]]<br>"
 				var/print_string = "Fingerprints: Print not complete!<br>"
-				if(stringpercent(dossier[1]) <= FINGERPRINT_COMPLETE)
+				if(stringpercent_ascii(dossier[1]) <= FINGERPRINT_COMPLETE)
 					print_string = "Fingerprints: (80% or higher completion reached)<br>[dossier[1]]<br>"
 				P.info += print_string
 				for(var/object in dossier)
@@ -271,7 +271,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -303,7 +303,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -320,11 +320,11 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "&nbsp<b>Blood:</b><br>"
 					for(var/named in blood)
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>Delete This Record</a>"
+				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
 		if("auxiliaryprint") //Printing from the "misc" database.
 			if(misc)
 				var/obj/item/weapon/paper/P = new(loc)
@@ -338,7 +338,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -528,7 +528,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						var/associated_print = internal_prints[print]
 						var/reference_print = atom_fingerprints[print]
 						if(associated_print && associated_print != reference_print) //It does not match
-							internal_prints[print] = stringmerge(associated_print, reference_print)
+							internal_prints[print] = stringmerge_ascii(associated_print, reference_print)
 						else if(!associated_print)
 							internal_prints[print] = reference_print
 						//If the main print was updated, lets update the master as well.
@@ -580,7 +580,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning/proc/update_fingerprints(ref_print, new_print)
 	var/list/master = files[ref_print]
 	if(master)
-		master[1] = stringmerge(master[1],new_print)
+		master[1] = stringmerge_ascii(master[1],new_print)
 	else
 		CRASH("Fucking hell.  Something went wrong, and it tried to update a null print or something.  Tell SkyMarshal (and give him this call stack)")
 	return

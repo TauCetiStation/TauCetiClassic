@@ -5,7 +5,6 @@
 	var/id_tag
 	var/suppres_next_status_send = FALSE
 
-
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
@@ -84,7 +83,7 @@
 	..(AM)
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
-		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+		if(density && radio_connection && mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
@@ -109,12 +108,7 @@
 	. = ..()
 	if(frequency)
 		set_frequency(frequency)
-
 	update_icon()
-
-
-/obj/machinery/door/airlock/atom_init()
-	. = ..()
 
 	if(radio_controller)
 		set_frequency(frequency)
@@ -153,6 +147,7 @@
 		icon_state = "airlock_sensor_off"
 
 /obj/machinery/airlock_sensor/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
@@ -226,6 +221,7 @@
 		icon_state = "access_button_off"
 
 /obj/machinery/access_button/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/access_button/attack_hand(mob/user)

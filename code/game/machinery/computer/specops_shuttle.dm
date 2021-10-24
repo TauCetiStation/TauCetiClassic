@@ -1,7 +1,7 @@
 //Config stuff
 #define SPECOPS_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
-#define SPECOPS_STATION_AREATYPE "/area/shuttle/specops/station" //Type of the spec ops shuttle area for station
-#define SPECOPS_DOCK_AREATYPE "/area/shuttle/specops/centcom"	//Type of the spec ops shuttle area for dock
+#define SPECOPS_STATION_AREATYPE /area/shuttle/specops/station //Type of the spec ops shuttle area for station
+#define SPECOPS_DOCK_AREATYPE /area/shuttle/specops/centcom	//Type of the spec ops shuttle area for dock
 #define SPECOPS_RETURN_DELAY 6000 //Time between the shuttle is capable of moving.
 
 var/specops_shuttle_moving_to_station = 0
@@ -16,7 +16,7 @@ var/specops_shuttle_timeleft = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
-	req_access = list(access_cent_specops)
+	req_access = list(access_captain)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
@@ -206,13 +206,12 @@ var/specops_shuttle_timeleft = 0
 	if (temp)
 		dat = temp
 	else
-		dat += {"<BR><B>Special Operations Shuttle</B><HR>
-			\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
-			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*The Special Ops. shuttle is already leaving.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle standing by...</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
-			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+		dat += {"\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
+			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*The Special Ops. shuttle is already leaving.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle standing by..</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
 	. = ..()

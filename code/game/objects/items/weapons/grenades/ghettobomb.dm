@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/cancasing
 	name = "can explosive"
 	desc = "A weak, improvised incendiary device."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
 	item_state = "flashbang"
@@ -107,29 +107,31 @@
 /obj/item/weapon/grenade/cancasing/rag/attack_self(mob/user)
 	return
 
-/obj/item/weapon/grenade/cancasing/rag/attackby(obj/item/weapon/W, mob/living/user)
-	. = ..()
+/obj/item/weapon/grenade/cancasing/rag/attackby(obj/item/I, mob/user, params)
 	if(active)
 		return
-	var/is_W_lit = FALSE
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
-		if(O.lit)
-			is_W_lit = TRUE
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
-		if(O.lit)
-			is_W_lit = TRUE
-	else if(iswelder(W))
-		var/obj/item/weapon/weldingtool/O = W
-		if(O.welding)
-			is_W_lit = TRUE
-	if(!is_W_lit)
-		return
-	if(!clown_check(user))
-		return
 
-	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+	var/is_W_lit = FALSE
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/O = I
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/O = I
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(iswelder(I))
+		var/obj/item/weapon/weldingtool/O = I
+		if(O.isOn())
+			is_W_lit = TRUE
+
+	if(!is_W_lit)
+		return ..()
+
+	if(!clown_check(user))
+		return ..()
+
+	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [I]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [I]!</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user) && istype(user.get_inactive_hand(), src))

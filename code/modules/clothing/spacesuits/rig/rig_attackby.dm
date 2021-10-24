@@ -1,5 +1,4 @@
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
-
+/obj/item/clothing/suit/space/rig/attackby(obj/item/I, mob/user, params)
 	if(!isliving(user))
 		return
 
@@ -9,7 +8,7 @@
 		if(H.wear_suit == src)
 			is_wearing = TRUE
 
-	if(istype(W,/obj/item/clothing/head/helmet/space))
+	if(istype(I, /obj/item/clothing/head/helmet/space/rig))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
@@ -22,13 +21,14 @@
 		if(helmet)
 			to_chat(user, "\The [src] already has a helmet installed.")
 		else
-			to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
-			user.drop_item()
-			W.forceMove(src)
-			helmet = W
+			to_chat(user, "You attach \the [I] to \the [src]'s helmet mount.")
+			user.drop_from_inventory(I, src)
+			helmet = I
+			var/obj/item/clothing/head/helmet/space/rig/R = I
+			R.rig_connect = src
 		return
 
-	else if(istype(W,/obj/item/clothing/shoes/magboots))
+	else if(istype(I, /obj/item/clothing/shoes/magboots))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
@@ -41,28 +41,27 @@
 		if(boots)
 			to_chat(user, "\The [src] already has magboots installed.")
 		else
-			to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
-			user.drop_item()
-			W.forceMove(src)
-			boots = W
+			to_chat(user, "You attach \the [I] to \the [src]'s boot mounts.")
+			user.drop_from_inventory(I, src)
+			boots = I
 		return
 
 	// Check if this is a hardsuit upgrade or a modification.
-	else if(istype(W,/obj/item/rig_module))
+	else if(istype(I, /obj/item/rig_module))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 		if(user.is_busy())
 			return
 
-		var/obj/item/rig_module/mod = W
+		var/obj/item/rig_module/mod = I
 		if(!can_install(mod))
 			return
 
 		to_chat(user, "You begin installing \the [mod] into \the [src].")
-		if(!W.use_tool(src, user, 40, volume = 50))
+		if(!I.use_tool(src, user, 40, volume = 50))
 			return
-		if(!user || !W)
+		if(!user || !I)
 			return
 		if(!can_install(mod))
 			return
@@ -70,21 +69,21 @@
 			return
 		to_chat(user, "You install \the [mod] into \the [src].")
 		mod.installed(src)
-		return 1
+		return TRUE
 
-	else if(!cell && istype(W,/obj/item/weapon/stock_parts/cell))
+	else if(!cell && istype(I, /obj/item/weapon/stock_parts/cell))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
-		if(!user.unEquip(W))
+		if(!user.unEquip(I))
 			return
-		to_chat(user, "You jack \the [W] into \the [src]'s battery mount.")
-		W.forceMove(src)
-		cell = W
+		to_chat(user, "You jack \the [I] into \the [src]'s battery mount.")
+		I.forceMove(src)
+		cell = I
 		return
 
-	else if(isscrewdriver(W))
+	else if(isscrewdriver(I))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
@@ -143,17 +142,19 @@
 			if("helmet")
 				to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
 				helmet.forceMove(get_turf(src))
+				helmet.rig_connect = null
 				helmet = null
 
 			if("boots")
 				to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
 				boots.forceMove(get_turf(src))
 				boots = null
+		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs
 	// is check if any of the loaded modules want to use the item we've been given.
 	for(var/obj/item/rig_module/module in installed_modules)
-		if(module.accepts_item(W,user)) //Item is handled in this proc
+		if(module.accepts_item(I, user)) //Item is handled in this proc
 			return
 
 	return ..()

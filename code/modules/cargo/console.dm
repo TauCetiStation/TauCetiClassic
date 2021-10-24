@@ -53,13 +53,12 @@
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
 		if(!requestonly)
 			dat += "<A href='?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
-		dat += "<A href='?src=\ref[user];mach_close=computer'>Close</A>"
 
 
-	var/datum/browser/popup = new(user, "computer", name, 575, 450)
+	var/datum/browser/popup = new(user, "computer", name, 500, 600)
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/cargo))
 	popup.set_content(dat)
 	popup.open()
-	onclose(user, "computer")
 
 /obj/machinery/computer/cargo/Topic(href, href_list)
 	. = ..()
@@ -77,7 +76,7 @@
 		else
 			SSshuttle.moving = 1
 			SSshuttle.buy()
-			SSshuttle.eta_timeofday = (world.timeofday + SSshuttle.movetime) % 864000
+			SSshuttle.eta_timeofday = (REALTIMEOFDAY + SSshuttle.movetime) % MIDNIGHT_ROLLOVER
 			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
 
@@ -96,8 +95,9 @@
 		else
 			last_viewed_group = href_list["order"]
 			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
-			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>"
-			temp += "<b>Request from: [last_viewed_group]</b><BR><BR>"
+			temp += "<b>Request from: [last_viewed_group]</b><BR>"
+			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR>"
+			temp += "<div class='blockCargo'>"
 			for(var/supply_name in SSshuttle.supply_packs)
 				var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
 				if(requestonly)
@@ -105,7 +105,37 @@
 						continue	//Have to send the type instead of a reference to
 				else if((N.hidden && !hacked) || (N.contraband && !contraband) || N.group != last_viewed_group)
 					continue
-				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
+				temp += {"<div class="spoiler"><input type="checkbox" id='[supply_name]'>"}
+				temp += {"<table><tr><td><span class="cargo32x32 [replace_characters("[N.crate_type]",  list("[/obj]/" = "", "/" = "-"))]"></span></td>"}
+				temp += {"<td><label for='[supply_name]'><b>[N.name]</b></label></td><td><A href='?src=\ref[src];doorder=[supply_name]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
+				temp += "<div><table>"
+				if(ispath(N.crate_type, /obj/structure/closet/critter))
+					var/obj/structure/closet/critter/C = N.crate_type
+					var/mob/animal = initial(C.content_mob)
+					temp += {"<tr><td><span class="cargo32x32 [replace_characters("[animal]", list("[/mob]/" = "", "/" = "-"))]"></span></td><td>[initial(animal.name)]</td></tr>"}
+				else
+					var/list/check_content = list()
+					for(var/element in N.contains) //let's show what's in the conteiner
+						if(element in check_content)
+							continue
+					//=========count the repetitions=======
+						check_content += element
+						var/amount = 0
+						for(var/check in N.contains)
+							if(element == check)
+								amount += 1
+						var/atom/movable/content = element
+						var/final_name = initial(content.name)
+						if(amount > 1)
+							final_name += " x[amount]"
+					//======================================
+						var/size = "32x32"
+						var/list/sprite_32x48 = list(/obj/machinery/mining/brace, /obj/machinery/mining/drill)
+						if(element in sprite_32x48)
+							size = "32x48"
+						temp += {"<tr><td><span class="cargo[size] [replace_characters("[element]", list("[/obj]/" = "", "/" = "-"))]"></span></td><td>[final_name]</td></tr>"}
+				temp += "</table></div></div>"
+			temp += "</div>"
 
 	if(href_list["doorder"])
 		if(world.time < reqtime)

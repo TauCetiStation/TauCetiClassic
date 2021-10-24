@@ -10,14 +10,13 @@
 	response_disarm = "shoves"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 
 	harm_intent_damage = 5
-	melee_damage_lower = 30
-	melee_damage_upper = 30
-	attacktext = "slashes"
+	melee_damage = 30
+	attacktext = "slash"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 
 	min_oxy = 5
@@ -35,6 +34,9 @@
 	faction = "pirate"
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
@@ -44,8 +46,8 @@
 	icon_living = "pirateranged"
 	icon_dead = "piratemelee_dead"
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam

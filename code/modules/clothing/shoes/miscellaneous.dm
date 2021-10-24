@@ -16,36 +16,6 @@
 	item_color = "mime"
 	clipped_status = CLIPPABLE
 
-/obj/item/clothing/shoes/swat
-	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
-	name = "combat boots"
-	desc = "When you REALLY want to turn up the heat"
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-
-/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
-	name = "mangled combat boots"
-	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
-	icon_state = "swat_cut"
-	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
-
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -66,7 +36,7 @@
 	icon_state = "tourist"
 	permeability_coefficient = 1
 	species_restricted = null
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -93,15 +63,6 @@
 	icon_state = "black"
 	body_parts_covered = LEGS
 
-/obj/item/clothing/shoes/galoshes
-	desc = "Rubber boots."
-	name = "galoshes"
-	icon_state = "galoshes"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
-	species_restricted = null
-
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
 	name = "clown shoes"
@@ -113,18 +74,31 @@
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
-		qdel(loc.GetComponent(/datum/component/waddle))
+		// Since slot_equipped is changed only when item is worn
+		// it's safe to assume loc is a mob.
+		stop_waddling(loc)
 	return ..()
 
+/obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
+	if(CLUMSY in user.mutations)
+		slowdown = SHOES_SLOWDOWN
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
+
+/obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
+	slowdown = SHOES_SLOWDOWN + 1.0
+	qdel(user.GetComponent(/datum/component/waddle))
+
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	..()
 	if(slot == SLOT_SHOES)
-		user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+		start_waddling(user)
 	else if(slot_equipped == SLOT_SHOES)
-		qdel(user.GetComponent(/datum/component/waddle))
+		stop_waddling(user)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	..()
 	if(slot_equipped == SLOT_SHOES)
-		qdel(user.GetComponent(/datum/component/waddle))
+		stop_waddling(user)
 
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
@@ -147,7 +121,7 @@
 	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
 	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
 
-	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 	waddling = TRUE
 
 /obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
@@ -158,12 +132,17 @@
 	waddling = FALSE
 
 /obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
+	..()
 	if(slot == SLOT_SHOES)
-		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+		if(user.pulling)
+			check_coffin(user, user.pulling)
+		else
+			RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
 	else if(waddling)
 		stop_waddling(user)
 
 /obj/item/clothing/shoes/jolly_gravedigger/dropped(mob/user)
+	..()
 	if(waddling)
 		stop_waddling(user)
 
@@ -171,29 +150,6 @@
 	if(!istype(target, /obj/structure/closet/coffin))
 		return
 	start_waddling(source)
-
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "wjboots"
-	item_state = "wjboots"
-	item_color = "hosred"
-	siemens_coefficient = 0.7
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/cult
-	name = "boots"
-	desc = "A pair of boots worn by the followers of Nar-Sie."
-	icon_state = "cult"
-	item_state = "cult"
-	item_color = "cult"
-	siemens_coefficient = 0.7
-
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = null
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
@@ -206,14 +162,14 @@
 	icon_state = "slippers"
 	item_state = "slippers"
 	species_restricted = null
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
 	item_state = "slippers_worn"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
@@ -252,13 +208,6 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	slowdown_off = 1
-
-/obj/item/clothing/shoes/workboots
-	name = "work boots"
-	icon_state = "workboots"
-	item_color = "workboots"
-	item_state = "b_shoes"  // need sprites for this
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
@@ -317,3 +266,11 @@
 	icon_state = "footwraps"
 	item_color = "footwraps"
 	species_restricted = null
+
+/obj/item/clothing/shoes/holoboots
+	name = "jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "wjboots"
+	item_state = "wjboots"
+	item_color = "hosred"
+	clipped_status = CLIPPABLE

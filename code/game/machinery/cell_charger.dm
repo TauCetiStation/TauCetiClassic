@@ -3,7 +3,7 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
@@ -30,9 +30,10 @@
 		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
-	if(charging)
-		to_chat(user, "Current charge: [charging.charge]")
+	if(user.Adjacent(src))
+		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+		if(charging)
+			to_chat(user, "Current charge: [charging.charge]")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -50,8 +51,7 @@
 				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 				return
 
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
@@ -88,7 +88,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(charging)
-		charging.emp_act(severity)
+		charging.emplode(severity)
 	..(severity)
 
 

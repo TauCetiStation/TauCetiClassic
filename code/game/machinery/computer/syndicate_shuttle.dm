@@ -24,6 +24,11 @@
 	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)
 
+/obj/machinery/computer/syndicate_station/process()
+	if(..())
+		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
+
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
@@ -56,11 +61,11 @@
 	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
 	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
-	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
-	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
+	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)

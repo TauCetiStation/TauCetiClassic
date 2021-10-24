@@ -91,7 +91,7 @@
 	var/datum/gas_mixture/air3 = AIR3
 
 	//Figure out the amount of moles to transfer
-	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air1] / air2.volume) * air2.total_moles
+	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air2] / air2.volume) * air2.total_moles
 
 	var/power_draw = -1
 	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
@@ -138,8 +138,10 @@
 				<a href='?src=\ref[src];node2_c=0.1'>+</a>
 				"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=atmo_mixer")
-	onclose(user, "atmo_mixer")
+	var/datum/browser/popup = new(user, "atmo_mixer", "[src.name] control")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)
 	if(!..())

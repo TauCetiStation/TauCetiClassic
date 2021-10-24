@@ -10,6 +10,9 @@
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob)
+		if(user.is_busy())
+			return
+
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
 				buckled_mob.visible_message(\
@@ -28,14 +31,17 @@
 					if(user && buckled_mob && user.buckled == src)
 						buckled_mob.pixel_y = 0
 						unbuckle_mob()
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 	return
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(istype(M,/mob/living/carbon/xenomorph))
+	if(user.is_busy())
+		return
+
+	if(istype(M, /mob/living/carbon/xenomorph))
 		return
 	if(!istype(user,/mob/living/carbon/xenomorph/humanoid))
 		return
@@ -61,6 +67,6 @@
 
 /obj/structure/stool/bed/nest/proc/healthcheck()
 	if(health <=0)
-		density = 0
+		density = FALSE
 		qdel(src)
 	return

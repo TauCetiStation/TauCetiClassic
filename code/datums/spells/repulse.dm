@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse
-	name = "Repulse"
-	desc = "This spell throws everything around the user away."
+	name = "Репульс"
+	desc = "Заклинание отбрасывает все вещи и людей от вас подальше."
 	charge_max = 200
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"
@@ -37,4 +37,4 @@
 				var/mob/living/M = AM
 				M.Weaken(2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1, user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1, user)//So stuff gets tossed around at the same time.

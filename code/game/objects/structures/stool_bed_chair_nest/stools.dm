@@ -3,7 +3,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/structure/stool/bar
 	name = "bar stool"
@@ -24,6 +24,10 @@
 				qdel(src)
 				return
 	return
+
+/obj/structure/stool/airlock_crush_act()
+	if(has_buckled_mobs())
+		unbuckle_mob()
 
 /obj/structure/stool/blob_act()
 	if(prob(75))
@@ -50,12 +54,22 @@
 				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
 			return
-	..()
+
+	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = W
+		if(S.wielded && !(flags & NODECONSTRUCT))
+			new /obj/item/stack/sheet/metal(loc)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			qdel(src)
+			return
+	else
+		..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if(H == usr && !H.restrained() && !H.stat && in_range(src, over_object))
+		if(H == usr && !H.restrained() && !H.stat && Adjacent(over_object))
 			var/obj/item/weapon/stool/S = new
 			S.origin_stool = src
 			src.loc = S
@@ -72,7 +86,7 @@
 	force = 10
 	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	var/obj/structure/stool/origin_stool = null
 
 /obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)

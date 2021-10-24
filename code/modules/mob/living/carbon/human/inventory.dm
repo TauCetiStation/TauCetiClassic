@@ -57,10 +57,15 @@
 	return null
 
 
-/mob/living/carbon/human/proc/has_bodypart(name)
+/mob/living/carbon/human/has_bodypart(name)
 	var/obj/item/organ/external/BP = bodyparts_by_name[name]
 
 	return (BP && !(BP.is_stump) )
+
+/mob/living/carbon/human/has_organ(name)
+	var/obj/item/organ/internal/IO = organs_by_name[name]
+
+	return IO
 
 /mob/living/carbon/human/proc/specie_has_slot(slot)
 	if(species && (slot in species.restricted_inventory_slots))
@@ -143,6 +148,7 @@
 			drop_from_inventory(belt)
 		w_uniform = null
 		update_inv_w_uniform()
+		update_suit_sensors()
 	else if (W == gloves)
 		gloves = null
 		update_inv_gloves()
@@ -186,8 +192,11 @@
 				internals.icon_state = "internal0"
 			internal = null
 		update_inv_wear_mask()
+		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
+		sec_hud_set_ID()
+		sec_hud_set_security_status()
 		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
@@ -220,7 +229,19 @@
 
 	return 1
 
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+	var/datum/outfit/O = null
 
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return 0
+	if(!O)
+		return 0
+
+	return O.equip(src, visualsOnly)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
@@ -248,6 +269,7 @@
 				update_hair()
 			W.equipped(src, slot)
 			update_inv_wear_mask()
+			sec_hud_set_security_status()
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed()
@@ -264,12 +286,15 @@
 			W.equipped(src, slot)
 			update_inv_r_hand()
 		if(SLOT_BELT)
+			playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.belt = W
 			W.equipped(src, slot)
 			update_inv_belt()
 		if(SLOT_WEAR_ID)
 			src.wear_id = W
 			W.equipped(src, slot)
+			sec_hud_set_ID()
+			sec_hud_set_security_status()
 			update_inv_wear_id()
 		if(SLOT_L_EAR)
 			src.l_ear = W
@@ -310,6 +335,7 @@
 			W.equipped(src, slot)
 			update_inv_head()
 		if(SLOT_SHOES)
+			playsound(src, 'sound/effects/equip_shoes.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.shoes = W
 			W.equipped(src, slot)
 			update_inv_shoes()
@@ -320,8 +346,10 @@
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(SLOT_W_UNIFORM)
+			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
+			update_suit_sensors()
 			update_inv_w_uniform()
 		if(SLOT_L_STORE)
 			src.l_store = W
@@ -336,8 +364,8 @@
 			W.equipped(src, slot)
 			update_inv_s_store()
 		if(SLOT_IN_BACKPACK)
-			if(src.get_active_hand() == W)
-				src.remove_from_mob(W)
+			if(get_active_hand() == W)
+				remove_from_mob(W)
 			W.loc = src.back
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
@@ -367,3 +395,39 @@
 	if(!has_bodypart(BP_R_ARM))
 		return FALSE
 	return ..()
+
+//delete all equipment without dropping anything
+/mob/living/carbon/human/proc/delete_equipment()
+	for(var/slot in get_all_slots())//order matters, dependant slots go first
+		qdel(slot)
+
+/mob/living/carbon/human/proc/get_all_slots()
+	. = get_head_slots() | get_body_slots()
+
+/mob/living/carbon/human/proc/get_body_slots()
+	return list(
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
+		belt,
+		wear_id,
+		l_store,
+		r_store,
+		w_uniform,
+		l_hand,
+		r_hand
+		)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+		head,
+		wear_mask,
+		neck,
+		glasses,
+		l_ear,
+		r_ear
+		)

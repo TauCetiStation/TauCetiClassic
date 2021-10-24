@@ -16,7 +16,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /********
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
@@ -50,21 +50,22 @@
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+/obj/item/weapon/photo/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
-	else if(istype(P, /obj/item/device/occult_scanner))
+	else if(istype(I, /obj/item/weapon/lighter))
+		burnpaper(I, user)
+	else if(istype(I, /obj/item/device/occult_scanner))
 		for(var/A in photographed_names)
 			if(photographed_names[A] == /mob/dead/observer)
-				var/obj/item/device/occult_scanner/OS = P
+				var/obj/item/device/occult_scanner/OS = I
 				OS.scanned_type = /mob/dead/observer
 				to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 				break
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
@@ -76,12 +77,11 @@
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
-	user << browse(entity_ja("<html><head><title>[name]</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>"), "window=book;size=192x[scribble ? 400 : 192]")
-	onclose(user, "[name]")
+
+	var/datum/browser/popup = new(user, "window=book [name]", "[sanitize(name)]", 224, (scribble ? 400 : 224), ntheme = CSS_THEME_LIGHT)
+	popup.set_content("<div style='overflow:hidden;text-align:center;'> <img src='tmp_photo.png' width = '192' style='-ms-interpolation-mode:nearest-neighbor'>[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : null]</div>")
+	popup.open()
+
 	return
 
 /obj/item/weapon/photo/verb/rename()
@@ -122,9 +122,9 @@
 
 	if((istype(usr, /mob/living/carbon/human)))
 		var/mob/M = usr
-		if(!( istype(over_object, /obj/screen) ))
+		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
-		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
@@ -137,7 +137,7 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+		if(over_object == usr && usr.Adjacent(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			show_to(usr)
@@ -153,7 +153,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "photocamera"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
@@ -190,42 +190,35 @@
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
+/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/camera_film))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [I] into \the [src].</span>")
-		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	..()
+	return ..()
 
-/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
-		OS.scanned_type = src.type
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+		return
+	return ..()
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility)
-				if(see_ghosts)
-					if(istype(A, /mob/dead/observer))
-						var/mob/dead/observer/O = A
-						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
-							continue
-				else
-					continue
-			atoms.Add(A)
+			if(!A.invisibility || (see_ghosts && isobserver(A)))
+				atoms.Add(A)
 
 	var/list/sorted = list()
 	var/j
@@ -303,7 +296,7 @@
 		return
 	captureimage(target, user, proximity)
 
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	pictures_left--
 	update_desc()
@@ -326,7 +319,7 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye)
 		else
 			seen = hear(world.view, user)
 	else
@@ -401,7 +394,7 @@
 
 	if(usr.incapacitated())
 		return
-	if(usr.get_active_hand() != src)
+	if(usr.get_active_hand() != src && !isAI(usr))
 		to_chat(usr, "You need to hold \the [src] in your active hand.")
 		return
 
@@ -415,7 +408,14 @@
 		photo_size = 1
 		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
 
-/obj/item/device/camera/AltClick()
+/obj/item/device/camera/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	set_zoom()
 
 /obj/item/device/camera/big_photos

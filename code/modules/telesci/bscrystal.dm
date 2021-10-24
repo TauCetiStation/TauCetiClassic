@@ -5,7 +5,7 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "bluespace=4;materials=3"
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 
@@ -16,7 +16,6 @@
 
 /obj/item/bluespace_crystal/attack_self(mob/user)
 	if(blink_mob(user))
-		user.drop_item()
 		user.visible_message("<span class='notice'>[user] crushes the [src]!</span>")
 		qdel(src)
 

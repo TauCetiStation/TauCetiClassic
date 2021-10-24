@@ -313,10 +313,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="command">Command</th></tr>
                     {{for data.cached["heads"]}}
                         {{if value.rank == "Captain"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -325,10 +325,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="sec">Security</th></tr>
                     {{for data.cached["sec"]}}
                         {{if value.rank == "Head of Security"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -337,10 +337,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="eng">Engineering</th></tr>
                     {{for data.cached["eng"]}}
                         {{if value.rank == "Chief Engineer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -349,10 +349,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="med">Medical</th></tr>
                     {{for data.cached["med"]}}
                         {{if value.rank == "Chief Medical Officer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -361,10 +361,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="sci">Science</th></tr>
                     {{for data.cached["sci"]}}
                         {{if value.rank == "Research Director"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -373,10 +373,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="civ">Civilian</th></tr>
                     {{for data.cached["civ"]}}
                         {{if value.rank == "Head of Personnel"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
@@ -384,7 +384,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{if data.cached.misc.length}}
                     <tr><th colspan="4" class="misc">Misc</th></tr>
                     {{for data.cached["misc"]}}
-                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}</td>
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                         <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                     {{/for}}
                 {{/if}}
@@ -648,7 +648,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <span class="good">Home System:  </span> <span class="average">{{:data.records.general.home_system}} </span><br>
                         <span class="good">Citizenship:  </span> <span class="average">{{:data.records.general.citizenship}} </span><br>
                         <span class="good">Faction:  </span> <span class="average">{{:data.records.general.faction}} </span><br>
-                        <span class="good">Religion:  </span> <span class="average">{{:data.records.general.religion}} </span><br>						
+                        <span class="good">Religion:  </span> <span class="average">{{:data.records.general.religion}} </span><br>
                         <span class="good">Rank: </span>  <span class="average">{{:data.records.general.rank}} </span><br>
                         <span class="good">Fingerprint:  </span> <span class="average">{{:data.records.general.fingerprint}} </span><br>
                         <span class="good">Physical Status:  </span> <span class="average">{{:data.records.general.p_stat}} </span><br>
@@ -957,10 +957,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
                     {{/if}}
                 {{/for}}
-                
+
     <!-- {{else data.mode == 6}}
         <H2><span class="white">InstaNews ED 2.0.9</span></H2>
-        
+
         <div class="item">
             <div class="itemLabelNarrow">
                 <b>Functions</b>:
@@ -970,11 +970,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Set news tone', 'comment', {'choice' : "Newstone"}, null, 'fixedLeftWide')}}
             </div>
         </div>
-        
+
 		{{if data.reception != 1}}
 			<span class="bad">No reception with newscaster network.</span>
 		{{/if}}
-		
+
 		<div class="item">
             <div class="itemContent">
                 {{for data.feedChannels}}
@@ -989,14 +989,14 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
 		</div>
 
-    {{else data.mode == 61}}      
+    {{else data.mode == 61}}
         <H2><span class="white">{{:data.feed.channel}}</span></H2>
         <span class="white">Created by: </span><span class="average">{{:data.feed.author}}<br></span>
-		
+
 		{{if data.reception != 1}}
 			<span class="bad">No reception with newscaster network.</span>
 		{{/if}}
-		
+
         <div class="statusDisplay" style="overflow: auto;">
             <div class="item">
                 <div class="itemContent" style="width: 100%;">
@@ -1022,56 +1022,64 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 				</div>
             </div>
         </div> -->
-	
+
     {{else data.mode == 7}} <!-- Finance Management -->
         <div class="item">
             <H2>Finance Management</H2>
-			<table>
-				<tr><th><font color="#e9c183">Money:</font></th><td><span class="good">{{:data.money}}$</span></td>
-				<th><font color="#e9c183">Salary:</font></th><td><span class="good">{{:data.salary}}$</span></td>
-				<th><font color="#e9c183">Next Payment:</font></th><td><span class="average">{{:data.time_to_next_pay}}</span></td></tr>
-			</table>
         </div>
         <div class="item">
-            <div class="itemLabelNarrow">
-                <b>Functions:</b>
+            <div class="itemLabelWide">
+                <b>Money:</b> <span class="good">{{:data.money}}$</span><br>
+                <b>Salary:</b> <span class="good">{{:data.salary}}$</span><br>
+                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span>
             </div>
-            <div class="itemContent">
-                {{:helper.link('Transaction Menu', data.trans_menu == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Menu"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Transaction Log', data.trans_log_spoiler == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Log"}, null, 'null')}}
+            <div class="itemContentSmall">
+                {{:helper.link('Transaction Menu', null, {'choice' : "Transaction Menu"}, null, null)}}
+                {{:helper.link('Transaction Log', null, {'choice' : "Transaction Log"}, null, null)}}
+                {{if data.boss}} {{:helper.link('Staff Salary', null, {'choice' : "Staff Salary"}, null, null)}} {{/if}}
             </div>
         </div>
-        {{if data.trans_menu == 1}} <!-- Show Transaction Menu -->
-            <div class="item"> 
-                <div class="statusDisplayRecords">
-                    <table>
-                        <tr><td><span class="good">Target account number:</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
-                        <td><div class="itemContent">{{:helper.link('Manifest', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
-                        <td><div class="itemContent">{{:helper.link('Click', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
+    {{else data.mode == 71}} <!-- Show Transaction Menu -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <table>
+                    <tr><td><span class="good">Target account number:</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
+                    <td><div class="itemContent">{{:helper.link('Manifest', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
+                    <td><div class="itemContent">{{:helper.link('Click', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Funds to transfer($):</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
+                    <tr><td><span class="good">Funds to transfer($):</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Transaction purpose:</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
-                    </table>
-                    <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, null, null)}}</div>
-                </div>
+                    <tr><td><span class="good">Transaction purpose:</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
+                </table>
+                <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, data.ready_to_send ? null : 'disabled', null)}}</div>
             </div>
-        {{/if}}
-        {{if data.trans_log_spoiler == 1}} <!-- Show Transaction Log -->
-            <div class="item">
-                <div class="statusDisplayRecords">
-                    <center><table class="pmon">
-                        <tr><th>Date</th><th>Time</th><th>Target</th><th>Purpose</th><th>Value</th><th>Source</th></tr>
-                        {{for data.trans_log}}
-                            <tr><td>{{:value.data}}</td><td>{{:value.time}}</td><td>{{:value.name}}</td><td>{{:value.purpose}}</td><td>{{:value.amount}}</td><td>{{:value.source}}</td></tr>
-                        {{/for}}
-                    </table></center>
-                </div>
+        </div>
+    {{else data.mode == 72}} <!-- Show Transaction Log -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <center><table class="pmon">
+                    <tr><th>Date</th><th>Time</th><th>Target</th><th>Purpose</th><th>Value</th><th>Source</th></tr>
+                    {{for data.trans_log}}
+                        <tr><td>{{:value.data}}</td><td>{{:value.time}}</td><td>{{:value.name}}</td><td>{{:value.purpose}}</td><td>{{:value.amount}}</td><td>{{:value.source}}</td></tr>
+                    {{/for}}
+                </table></center>
             </div>
-        {{/if}}
+        </div>
+    {{else data.mode == 73}}   <!-- Change Staff Salary -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <center><table class="pmon">
+                    <tr><th>Name</th><th>Rank</th><th>Salary</th></tr>
+                    {{for data.subordinate_staff}}
+                        <tr><td>{{:value.name}}</td><td>{{:value.rank}}</td><td>{{:value.salary}}</td>
+                        <td>{{:helper.link('Change', null, {'choice' : "Change Salary", 'account' : value.acc_number}, null, null)}}</td></tr>
+                    {{/for}}
+                </table></center>
+            </div>
+        </div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">

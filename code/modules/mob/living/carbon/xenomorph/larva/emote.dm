@@ -1,13 +1,13 @@
 /mob/living/carbon/xenomorph/larva/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(stat == UNCONSCIOUS)
 		return
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
+	if (findtext(act, "-", 1))
+		var/t1 = findtext(act, "-", 1)
 		act = copytext(act, 1, t1)
 
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
 		if(act != "hiss")
-			act = copytext(act, 1, length(act))
+			act = copytext(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)
@@ -57,11 +57,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> dances around [pick("happily", "joyfully")]."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> rolls [pick("like a snake", "on the floor", "around itslef")]."
 				m_type = SHOWMSG_VISUAL
 		if("gnarl")
@@ -69,11 +69,11 @@
 				message = "<B>The [src.name]</B> gnarls and shows its teeth."
 				m_type = SHOWMSG_VISUAL
 		if("jump")
-			if(!src.restrained())
+			if(!restrained())
 				message = "<B>The [src.name]</B> jumps around[pick(" happily", " joyfully", "")]."
 				m_type = SHOWMSG_VISUAL
 		if("scratch")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
 		if ("pray")
@@ -95,7 +95,7 @@
 					return
 				m_type = SHOWMSG_AUDIO
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
 		if ("me")
@@ -103,7 +103,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -131,7 +131,7 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
-				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))

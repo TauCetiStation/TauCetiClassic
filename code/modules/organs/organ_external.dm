@@ -63,17 +63,6 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
-/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
-	. = ..()
-	recolor()
-	controller = new controller_type(src)
-	if(H)
-		species = owner.species
-		b_type = owner.dna.b_type
-	else // Bodypart was spawned outside of the body so we need to update its sprite
-		species = all_species[HUMAN]
-		update_sprite()
-
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
@@ -98,11 +87,24 @@
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	qdel(src)
 
-/obj/item/organ/external/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/butch) || istype(I, /obj/item/weapon/kitchenknife))
+/obj/item/organ/external/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchenknife))
 		harvest(I, user)
 	else
-		..()
+		return ..()
+
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+	..()
+
+	recolor()
+	controller = new controller_type(src)
+
+	if(H)
+		species = owner.species
+		b_type = owner.dna.b_type
+	else // Bodypart was spawned outside of the body so we need to update its sprite
+		species = all_species[HUMAN]
+		update_sprite()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
@@ -333,7 +335,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
 				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
+					explosion(get_turf(owner), 0, 0, 2, 3)
 					var/datum/effect/effect/system/spark_spread/spark_system = new
 					spark_system.set_up(5, 0, owner)
 					spark_system.attach(owner)
@@ -349,11 +351,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 					// Throw limb around.
 					if(isturf(bodypart.loc))
 						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					dir = 2
+					set_dir(2)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
-				if(I.w_class > ITEM_SIZE_SMALL && !istype(I, /obj/item/organ))
+				if(I.w_class > SIZE_TINY && !istype(I, /obj/item/organ))
 					I.loc = get_turf(src)
 			should_delete = TRUE
 		if(DROPLIMB_BLUNT)
@@ -419,7 +421,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
-		new /obj/item/organ/external/stump(null, owner, src)
+		var/obj/item/organ/external/stump/S = new(null)
+		S.insert_organ(owner, null, src)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -491,7 +494,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		W.germ_level = 0
 	return rval
 
-/obj/item/organ/external/proc/clamp()
+/obj/item/organ/external/proc/strap()
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
@@ -630,10 +633,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!supplied_wound || (W in supplied_wound.embedded_objects)) // Just in case.
 		return
 
-	owner.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+	owner.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
 	implants += W
+	owner.sec_hud_set_implants()
 	owner.embedded_flag = 1
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
@@ -662,7 +666,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
+	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
 
 /obj/item/organ/external/groin
@@ -682,12 +686,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 
 /obj/item/organ/external/head
 	name = "head"
 	artery_name = "cartoid artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "head_m"
 
 	temp_coeff = 1.05
 
@@ -700,28 +707,40 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 	var/f_style // So we can put his haircut back when we attach the head
 	var/h_style
+	var/grad_style
 	var/r_facial
 	var/g_facial
 	var/b_facial
+	var/dyed_r_facial
+	var/dyed_g_facial
+	var/dyed_b_facial
+	var/facial_painted
 	var/r_hair
 	var/g_hair
 	var/b_hair
-
-/obj/item/organ/external/head/atom_init()
-	. = ..()
-	organ_head_list += src
+	var/dyed_r_hair
+	var/dyed_g_hair
+	var/dyed_b_hair
+	var/r_grad
+	var/g_grad
+	var/b_grad
+	var/hair_painted
 
 /obj/item/organ/external/head/Destroy()
 	organ_head_list -= src
 	QDEL_NULL(brainmob)
 	return ..()
+
+/obj/item/organ/external/head/set_owner()
+	..()
+	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC || H.species.name == DIONA)
@@ -743,9 +762,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 			r_facial = owner.r_facial
 			g_facial = owner.g_facial
 			b_facial = owner.b_facial
+			dyed_r_facial = owner.dyed_r_facial
+			dyed_g_facial = owner.dyed_g_facial
+			dyed_b_facial = owner.dyed_b_facial
+			facial_painted = owner.facial_painted
 			var/mutable_appearance/facial = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.color = RGB_CONTRAST(owner.r_facial, owner.g_facial, owner.b_facial)
+				if(!facial_painted)
+					facial.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				else
+					facial.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
 
 			add_overlay(facial)
 
@@ -753,57 +779,71 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
 		if(hair_style)
 			h_style = owner.h_style
+			grad_style = owner.grad_style
 			r_hair = owner.r_hair
 			g_hair = owner.g_hair
 			b_hair = owner.b_hair
-			var/mutable_appearance/hair = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s")
+			dyed_r_hair = owner.dyed_r_hair
+			dyed_g_hair = owner.dyed_g_hair
+			dyed_b_hair = owner.dyed_b_hair
+			r_grad = owner.r_grad
+			g_grad = owner.g_grad
+			b_grad = owner.b_grad
+			hair_painted = owner.hair_painted
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
-				hair.color = RGB_CONTRAST(owner.r_hair, owner.g_hair, owner.b_hair)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
+				grad_s.Blend(hair_s, ICON_AND)
+				if(!hair_painted)
+					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
+					grad_s.Blend(rgb(r_grad, g_grad, b_grad), ICON_AND)
+				else
+					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+				hair_s.Blend(grad_s, ICON_OVERLAY)
 
-			add_overlay(hair)
+			add_overlay(mutable_appearance(hair_s, "[hair_style.icon_state]_s"))
 
-/obj/item/organ/external/head/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/scalpel) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/shard))
+/obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
 		switch(brain_op_stage)
 			if(0)
 				//todo: should be replaced with visible_message
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
-				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [I] by [user].</span>", SHOWMSG_VISUAL)
+				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
+				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
 				brain_op_stage = 1
 
 			if(2)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
-					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
+						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [I] by [user].</span>", SHOWMSG_VISUAL)
+					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
+					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
 					brain_op_stage = 3.0
 			else
-				..()
-	else if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/crowbar) || istype(W, /obj/item/weapon/hatchet))
+				return ..()
+
+	else if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
-				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [I] by [user].</span>", SHOWMSG_VISUAL)
+				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [I]!</span>")
+				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [I]!</span>")
 
 				brain_op_stage = 2
 			if(3)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
-					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
+						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [I] by [user].</span>", SHOWMSG_VISUAL)
+					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [I]!</span>")
+					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [I]!</span>")
 
-					user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-					brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-					msg_admin_attack("[user.name] ([user.ckey]) debrained [brainmob.name] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)])", user)
+					brainmob.log_combat(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
 
 					if(istype(src,/obj/item/organ/external/head/robot))
 						var/obj/item/device/mmi/posibrain/B = new(loc)
@@ -814,9 +854,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 					brain_op_stage = 4.0
 			else
-				..()
+				return ..()
 	else
-		..()
+		return ..()
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
@@ -829,6 +869,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_arm"
+
 	artery_name = "basilic vein"
 
 	temp_coeff = 1.0
@@ -842,7 +886,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/l_arm/process()
 	..()
@@ -853,6 +897,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_arm
 	name = "right arm"
 	artery_name = "basilic vein"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_arm"
 
 	temp_coeff = 1.0
 
@@ -865,7 +912,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -875,6 +922,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	artery_name = "femoral artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_leg"
 
 	temp_coeff = 0.75
 
@@ -887,12 +937,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
-
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_leg"
 
 	temp_coeff = 0.75
 
@@ -905,7 +957,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
@@ -949,7 +1001,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(open)
 			descriptors += "an open panel"
 
-		return english_list(descriptors)
+		return get_english_list(descriptors)
 
 	var/list/flavor_text = list()
 	if(is_stump)
@@ -995,7 +1047,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(6 to INFINITY)
 				flavor_text += "a ton of [wound]\s"
 
-	return english_list(flavor_text)
+	return get_english_list(flavor_text)
 
 /mob/living/carbon/human/proc/get_missing_bodyparts()
 	var/list/missing = list()

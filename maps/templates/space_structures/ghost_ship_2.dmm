@@ -234,11 +234,11 @@
 	},
 /area/space_structures/ghostship)
 "aJ" = (
-/obj/structure/flora/pottedplant/tropical_1,
+/obj/item/weapon/twohanded/flora/pottedplant/tropical_1,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aK" = (
-/obj/structure/flora/pottedplant/tropical_2,
+/obj/item/weapon/twohanded/flora/pottedplant/tropical_2,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aL" = (
@@ -321,13 +321,13 @@
 	},
 /area/space_structures/ghostship)
 "aZ" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "ba" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
@@ -368,7 +368,7 @@
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/accessory/holy,
+/obj/item/clothing/accessory/metal_cross,
 /obj/item/clothing/under/det/max_payne,
 /obj/item/weapon/switchblade,
 /turf/simulated/floor/wood,
@@ -467,7 +467,7 @@
 	},
 /area/space_structures/ghostship)
 "bz" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /obj/machinery/light/small{
@@ -884,7 +884,7 @@
 	},
 /area/space_structures/ghostship)
 "cG" = (
-/obj/structure/flora/pottedplant,
+/obj/item/weapon/twohanded/flora/pottedplant,
 /obj/machinery/light/small{
 	dir = 4
 	},

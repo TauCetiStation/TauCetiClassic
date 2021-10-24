@@ -211,22 +211,6 @@ function output(message, flag) {
 	var scrollPos = $('body,html').scrollTop();
 	var compensateScroll = 0;
 
-	//fix cyrillic characters displaying for most non-CP1251 clients (breaks some other things, but for russian server not so important)
-	var message2 = "";
-	for (var i = 0; i < message.length; i++) {
-		var code = message.charCodeAt(i);
-		if( code >= 192 && code <= 255 ) {
-			message2 += String.fromCharCode(code + 848);
-			continue;
-		}
-		message2 += message.charAt(i);
-	}
-
-	message = message2
-
-	//also replace for 0xFF char
-	message = message.replace(/¶/g, "я");
-
 	// Create the element - if combining is off, we use it, and if it's on, we
 	// might discard it bug need to check its text content. Some messages vary
 	// only in HTML markup, have the same text content, and should combine.
@@ -449,7 +433,7 @@ function ehjaxCallback(data) {
 
 function createPopup(contents, width) {
 	opts.popups++;
-	$('body').append('<div class="popup" id="popup'+opts.popups+'" style="width: '+width+'px;">'+contents+' <a href="#" class="close"><i class="icon-remove"></i></a></div>');
+	$('body').append('<div class="popup" id="popup'+opts.popups+'" style="width: '+width+'px;">'+contents+' <a href="#" class="close"><i class="fas fa-times"></i></a></div>');
 
 	//Attach close popup event
 	var $popup = $('#popup'+opts.popups);
@@ -985,14 +969,6 @@ $(function() {
 
 	$('img.icon').error(iconError);
 
-	// Tell BYOND to give us a macro list.
-	// I don't know why but for some retarded reason,
-	// You need to activate hotkeymode before you can winget the macros in it.
-	//todo
-	runByond('byond://winset?id=mainwindow&macro=hotkeymode');
-	runByond('byond://winset?id=mainwindow&macro=macro');
-
-	runByond('byond://winget?callback=wingetMacros&id=hotkeymode.*&property=command');
 
 	/*****************************************
 	*

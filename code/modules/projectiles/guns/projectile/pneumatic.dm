@@ -7,10 +7,10 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	storage_slots = 7
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
@@ -51,17 +51,17 @@
 	else
 		to_chat(usr, "There's no tank in [src].")
 
-/obj/item/weapon/storage/pneumatic/attackby(obj/item/W, mob/user)
-	if(!tank && istype(W,/obj/item/weapon/tank))
-		user.remove_from_mob(W)
-		tank = W
+/obj/item/weapon/storage/pneumatic/attackby(obj/item/I, mob/user, params)
+	if(!tank && istype(I, /obj/item/weapon/tank))
+		user.remove_from_mob(I)
+		tank = I
 		tank.loc = src.tank_container
-		user.visible_message("[user] jams [W] into [src]'s valve and twists it closed.","You jam [W] into [src]'s valve and twist it closed.")
+		user.visible_message("[user] jams [I] into [src]'s valve and twists it closed.","You jam [I] into [src]'s valve and twist it closed.")
 		icon_state = "pneumatic-tank"
 		item_state = "pneumatic-tank"
 		user.update_icons()
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return
@@ -128,10 +128,10 @@
 	var/obj/item/object = contents[1]
 	var/speed = min(PNEUMATIC_SPEED_CAP, ((fire_pressure*tank.volume)/object.w_class)/PNEUMATIC_SPEED_DIVISOR) //projectile speed.
 
-	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
-	src.remove_from_storage(object,user.loc)
+	remove_from_storage(object,user.loc)
 	object.throw_at(target, speed + 1, speed, user)
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)

@@ -30,10 +30,10 @@
 	var/datum/industry/industry = null
 
 /datum/stock/proc/changeOptimism(dn)
-	optimism = CLAMP(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = clamp(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/setOptimism(n)
-	optimism = CLAMP(n, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = clamp(n, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/addEvent(datum/stockEvent/E)
 	events |= E
@@ -67,7 +67,7 @@
 	else if (findtext(name, "Wholesale") || findtext(name, "Stores"))
 		industry = new /datum/industry/consumer
 	else
-		var/ts = typesof(/datum/industry) - /datum/industry
+		var/ts = subtypesof(/datum/industry)
 		var/in_t = pick(ts)
 		industry = new in_t
 	for (var/i = 0, i < rand(2, 5), i++)
@@ -88,7 +88,7 @@
 			changeOptimism(0.01)
 
 	if(performance)
-		performance = CLAMP(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
+		performance = clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
 
 	disp_value_change = (change > 0) ? 1 : ((change < 0) ? -1 : 0)
 	last_value = current_value
@@ -146,7 +146,11 @@
 	return 0
 
 /datum/stock/proc/displayValues(mob/user)
-	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")
+	var/dat = plotBarGraph(values, "[name] share value per share")
+
+	var/datum/browser/popup = new(user, "stock_[name]", null, 450, 450)
+	popup.set_content(dat)
+	popup.open()
 
 #undef OPTIMISM_MAX
 #undef OPTIMISM_MIN

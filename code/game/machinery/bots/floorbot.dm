@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -20,7 +20,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/created_name = "Floorbot"
 
 // Floorbot states
@@ -43,7 +43,6 @@
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
-	layer = 5.0
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -102,8 +101,6 @@
 	var/datum/browser/popup = new(user, "autorepair", "Repairbot v1.0 controls", 300, 400)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "autorepair")
 
 
 /obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
@@ -179,9 +176,7 @@
 
 	var/area/t_area = get_area(t)
 
-	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
-		return FALSE
-	else
+	if(istype(t_area, /area/station))
 		return TRUE
 
 /obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
@@ -442,7 +437,7 @@
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
@@ -468,10 +463,11 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
-		..()
-		return
+/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/stack/tile/plasteel))
+		return ..()
+	var/obj/item/stack/tile/plasteel/T = I
+
 	if(src.contents.len >= 1)
 		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")
 		return
@@ -481,48 +477,50 @@
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
-	user.drop_from_inventory(src)
 	qdel(src)
 
-/obj/item/weapon/toolbox_tiles/attackby(obj/item/W, mob/user)
-	..()
-	if(isprox(W))
-		qdel(W)
+/obj/item/weapon/toolbox_tiles/attackby(obj/item/I, mob/user, params)
+	if(isprox(I))
+		qdel(I)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)),MAX_NAME_LEN)
+	else if (istype(I, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)),MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!user.Adjacent(src))
 			return
 
-		src.created_name = t
+		created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		qdel(W)
+	else
+		return ..()
+
+/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
+		qdel(I)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
-	else if (istype(W, /obj/item/weapon/pen))
+
+	else if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!user.Adjacent(src))
 			return
 
-		src.created_name = t
+		created_name = t
+
+	else
+		return ..()
 
 /obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
 	return 1

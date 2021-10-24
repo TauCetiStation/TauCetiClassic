@@ -9,6 +9,7 @@
 	volume = 30
 	possible_transfer_amounts = null
 	var/mode = 1
+	var/reagent_to_recharge = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
@@ -17,11 +18,8 @@
 	var/list/reagent_ids = list("tricordrazine", "inaprovaline", "spaceacillin")
 	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
 
-/obj/item/weapon/reagent_containers/borghypo/surgeon
-	reagent_ids = list("bicaridine", "inaprovaline", "dexalin")
-
-/obj/item/weapon/reagent_containers/borghypo/crisis
-	reagent_ids = list("tricordrazine", "inaprovaline", "tramadol")
+/obj/item/weapon/reagent_containers/borghypo/medical
+	reagent_ids = list("bicaridine", "kelotane", "inaprovaline", "dexalin", "tramadol", "anti_toxin")
 
 /obj/item/weapon/reagent_containers/borghypo/atom_init()
 	. = ..()
@@ -40,13 +38,22 @@
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
 
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/datum/reagents/RG = reagent_list[mode]
-			if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-				R.cell.use(charge_cost) 					//Take power from borg...
-				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
+	if(!isrobot(loc))
+		return
+
+	var/mob/living/silicon/robot/R = loc
+	if(!(R && R.cell))
+		return
+
+	for(var/datum/reagents/charge_reagent in reagent_list)
+		reagent_to_recharge++
+		if(reagent_to_recharge > reagent_list.len)
+			reagent_to_recharge = 1
+		var/datum/reagents/RG = reagent_list[reagent_to_recharge]
+		if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
+			R.cell.use(charge_cost) 					//Take power from borg...
+			RG.add_reagent(reagent_ids[reagent_to_recharge], 5)		//And fill hypo with reagent.
+			break
 	//update_icon()
 	return 1
 

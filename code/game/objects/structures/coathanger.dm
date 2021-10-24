@@ -22,7 +22,7 @@
 		hat = null
 		update_icon()
 		return
-	
+
 
 /obj/structure/coatrack/attackby(obj/item/weapon/W, mob/user)
 	var/can_hang = 0
@@ -32,15 +32,13 @@
 	if (can_hang && !coat && !istype(W, /obj/item/clothing/head/det_hat))
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 		coat = W
-		user.drop_item(src)
-		coat.loc = src
+		user.drop_from_inventory(coat, src)
 		update_icon()
 	else
 		if (can_hang && !hat && istype(W, /obj/item/clothing/head/det_hat))
 			user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 			hat = W
-			user.drop_item(src)
-			hat.loc = src
+			user.drop_from_inventory(hat, src)
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>You cannot hang [W] on [src]</span>")
@@ -53,14 +51,14 @@
 			can_hang = 1
 
 	if (can_hang && !coat && !istype(mover, /obj/item/clothing/head/det_hat))
-		src.visible_message("[mover] lands on \the [src].")
+		visible_message("[mover] lands on \the [src].")
 		coat = mover
 		coat.loc = src
 		update_icon()
 		return 0
 	else
 		if (can_hang && !hat && istype(mover, /obj/item/clothing/head/det_hat))
-			src.visible_message("[mover] lands on \the [src].")
+			visible_message("[mover] lands on \the [src].")
 			hat = mover
 			hat.loc = src
 			update_icon()
@@ -70,10 +68,10 @@
 
 /obj/structure/coatrack/update_icon()
 	cut_overlays()
-	
+
 	if (hat) icon_state = "coatrack1"
 	else icon_state = "coatrack0"
-	
+
 	if (istype(coat, /obj/item/clothing/suit/storage/labcoat))
 		add_overlay(image(icon, icon_state = "coat_lab"))
 	if (istype(coat, /obj/item/clothing/suit/storage/labcoat/cmo))

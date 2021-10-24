@@ -2,18 +2,18 @@
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	can_be_holstered = TRUE
 
-/obj/item/weapon/gun/projectile/wjpp
-	name = "W&J PP"
-	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
-	icon_state = "9mm_wjpp"
-	item_state = "9mm_wjpp"
+/obj/item/weapon/gun/projectile/glock
+	name = "G17"
+	desc = "Semi-automatic service pistol of 9x19mm cal. Designed for professionals."
+	icon_state = "9mm_glock"
+	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mm_2/rubber
 	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
@@ -21,16 +21,17 @@
 	can_be_holstered = TRUE
 	var/mag = null
 
-/obj/item/weapon/gun/projectile/wjpp/atom_init()
+/obj/item/weapon/gun/projectile/glock/atom_init()
 	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
 	add_overlay(mag)
 
-/obj/item/weapon/gun/projectile/wjpp/spec
-	icon_state = "9mm_wjpp_spec"
-	item_state = "9mm_wjpp_spec"
+/obj/item/weapon/gun/projectile/glock/spec
+	name = "G17 GEN3"
+	icon_state = "9mm_glock_spec"
+	item_state = "9mm_glock_spec"
 
-/obj/item/weapon/gun/projectile/wjpp/update_icon(load = 0)
+/obj/item/weapon/gun/projectile/glock/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -38,16 +39,16 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
+/obj/item/weapon/gun/projectile/glock/attack_self(mob/user)
 	cut_overlay(mag)
 	..()
 
-/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
+/obj/item/weapon/gun/projectile/glock/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
+		if((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			add_overlay(mag)
-			..()
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
 	..()
@@ -82,6 +83,14 @@
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	mag_type = /obj/item/ammo_box/magazine/m50/weakened
+
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	icon_state = "deagleg"
+	item_state = "deagleg"
+
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds."
@@ -106,8 +115,9 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon_state = "pistol"
-	w_class = ITEM_SIZE_SMALL
+	icon_state = "stechkin"
+	item_state = "stechkin"
+	w_class = SIZE_TINY
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	can_be_holstered = TRUE
@@ -116,13 +126,15 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
-			silencer_attack_hand(user)
+			if(silencer_attack_hand(user))
+				return
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
-	..()
+		silencer_attackby(I, user)
+		return
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
@@ -134,7 +146,7 @@
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
 	can_be_holstered = TRUE
@@ -157,7 +169,7 @@
 	name = "pistol"
 	desc = "AT-7 .45 caliber pistol."
 	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_at7.ogg'
 	mag_type = /obj/item/ammo_box/magazine/at7_45
 
 /obj/item/weapon/gun/projectile/sec_pistol/atom_init()

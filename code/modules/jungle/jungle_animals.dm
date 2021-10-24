@@ -9,7 +9,7 @@
 	. = ..()
 
 	if(!spawn_type)
-		var/new_type = pick(typesof(/obj/effect/landmark/animal_spawner) - /obj/effect/landmark/animal_spawner)
+		var/new_type = pick(subtypesof(/obj/effect/landmark/animal_spawner))
 		new new_type(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -51,7 +51,7 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
 	icon_dead = "panther_dead"
@@ -62,14 +62,14 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 50
 	health = 50
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 8
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "slashes"
+	melee_damage = 15
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
@@ -109,7 +109,7 @@
 /mob/living/simple_animal/hostile/snake
 	name = "snake"
 	desc = "A sinuously coiled, venomous looking reptile."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
@@ -120,14 +120,14 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 25
 	health = 25
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 2
-	melee_damage_lower = 3
-	melee_damage_upper = 10
-	attacktext = "bites"
+	melee_damage = 7
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush

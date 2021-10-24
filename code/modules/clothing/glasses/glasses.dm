@@ -2,7 +2,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = ITEM_SIZE_SMALL
+	//w_class = SIZE_TINY
 	//flags = GLASSESCOVERSEYES
 	//slot_flags = SLOT_FLAGS_EYES
 	//var/vision_flags = 0
@@ -13,6 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
+	var/sightglassesmod = null
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 	sprite_sheet_slot = SPRITE_SHEET_EYES
@@ -25,11 +26,13 @@
 				active = 0
 				icon_state = off_state
 				vision_flags = 0
+				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = 1
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
+				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			H.update_inv_glasses()
@@ -43,6 +46,7 @@
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = 1
+	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/meson/prescription
@@ -57,6 +61,7 @@
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	toggleable = 1
+	sightglassesmod = "sci"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -64,10 +69,9 @@
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
-//	darkness_view = 3
-//	vision_flags = SEE_SELF
 	darkness_view = 7
 	toggleable = 1
+	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "night"
@@ -229,17 +233,13 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
-/obj/item/clothing/glasses/sunglasses/sechud
+/obj/item/clothing/glasses/sunglasses/hud/sechud
 	name = "HUDsunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
-	var/obj/item/clothing/glasses/hud/security/hud = null
+	hud_types = list(DATA_HUD_SECURITY)
 
-/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
-	. = ..()
-	hud = new/obj/item/clothing/glasses/hud/security(src)
-
-/obj/item/clothing/glasses/sunglasses/sechud/tactical
+/obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
 	icon_state = "swatgoggles"
@@ -253,7 +253,9 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 	toggleable = 1
+	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
@@ -261,7 +263,7 @@
 		to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 		if(M.glasses == src)
 			M.eye_blind = 3
-			M.eye_blurry = 5
+			M.blurEyes(15)
 			M.disabilities |= NEARSIGHTED
 			spawn(100)
 				M.disabilities &= ~NEARSIGHTED
@@ -315,6 +317,11 @@
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	darkness_view = 7
+	toggleable = TRUE
+	sightglassesmod = "nvg"
+	action_button_name = "Toggle Goggles"
+	active = 1
+	off_state = "healthhudnight"
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
@@ -333,7 +340,7 @@
 	toggleable = 0
 	action_button_name = null
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar
+/obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
 	item_state = "gars"
@@ -343,7 +350,7 @@
 	icon_state = "supergarb"
 	item_state = "supergarb"
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar/super
+/obj/item/clothing/glasses/sunglasses/hud/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
 	item_state = "supergars"
@@ -358,6 +365,8 @@
 	name = "noir sunglasses"
 	desc = "Somehow these seem even more out-of-date than normal sunglasses."
 	action_button_name = "Toggle Noir"
+	sightglassesmod = "greyscale"
+	toggleable = TRUE
 
 /obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
 	toggle_noir()

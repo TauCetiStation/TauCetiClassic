@@ -9,7 +9,13 @@
 	plane = PLANE_SPACE
 //	heat_capacity = 700000 No.
 
+/**
+  * Space Initialize
+  *
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /turf/space/atom_init()
+	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -37,7 +43,7 @@
 		set_light(0)
 
 /turf/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/space/attackby(obj/item/C, mob/user)
 
@@ -88,14 +94,13 @@
 	..()
 	if ((!(A) || src != A.loc))	return
 
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
-		// if(ticker.mode.name == "nuclear emergency")	return
 		if(!SSmapping.has_level(A.z))
 			return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+			if(istype(A, /obj/effect/meteor))
 				qdel(A)
 				return
 
@@ -170,11 +175,11 @@
 	var/list/y_arr
 
 	if(src.x <= 1)
-		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
 
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -199,7 +204,7 @@
 			qdel(A)
 			return
 
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -223,7 +228,7 @@
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -245,10 +250,10 @@
 					A.loc.Entered(A)
 
 	else if (src.y >= world.maxy)
-		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]

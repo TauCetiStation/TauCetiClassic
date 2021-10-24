@@ -244,7 +244,7 @@
 			dat += "<A href='?src=\ref[src];action=toggle_recipes'>[!display_craftable_only ? "Showing All Recipes" : "Showing Craftable Recipes"]</A>"
 		dat += "<A href='?src=\ref[src];action=toggle_compact'>[display_compact ? "Compact" : "Detailed"]</A>"
 		dat += "<BR>"
-		dat += "<div class='statusDisplay'>"
+		dat += "<div class='Section'>"
 
 		var/list/surroundings = get_surroundings(user)
 		var/found_any_recipe = FALSE
@@ -266,7 +266,7 @@
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft"
 				else
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
-					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='linkOff'>Craft"
+					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='disabled'>Craft"
 				dat += "<span class='description'>"
 				dat += "REQUIREMENTS: [recipe_data["req_text"]]"
 				if(recipe_data["catalyst_text"])
@@ -286,7 +286,7 @@
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft</A>"
 				else
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
-					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='linkOff'>Craft</span>"
+					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='disabled'>Craft</span>"
 				dat += "<br>REQUIREMENTS: [recipe_data["req_text"]]"
 				if(recipe_data["catalyst_text"])
 					dat += "<br>CATALYSTS: [recipe_data["catalyst_text"]]"
@@ -367,6 +367,6 @@
 	if(recipe_image_cache[R.result])
 		return recipe_image_cache[R.result]
 	var/obj/stored_result = new R.result
-	recipe_image_cache[R.result] = icon2base64(icon(stored_result.icon, stored_result.icon_state))
+	recipe_image_cache[R.result] = bicon_raw(icon(stored_result.icon, stored_result.icon_state))
 	qdel(stored_result)
 	return recipe_image_cache[R.result]

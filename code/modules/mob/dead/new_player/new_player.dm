@@ -5,11 +5,13 @@
 	stat = DEAD
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
+	hud_possible = list()
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers      = FALSE // Player counts for the Lobby tab
 	var/totalPlayersReady = FALSE
+	var/client/my_client
 
 /mob/dead/new_player/atom_init()
 	if(length(newplayer_start))
@@ -24,101 +26,73 @@
 	new_player_list -= src
 	return ..()
 
-/mob/dead/new_player/verb/new_player_panel()
-	set src = usr
-	new_player_panel_proc()
+/mob/dead/new_player/say(msg)
+	if(client)
+		client.ooc(msg)
 
-/mob/dead/new_player/proc/new_player_panel_proc()
-	var/output = null
-	if(length(src.key) > 15)
-		output += "<div align='center'><B>Welcome,<br></B>"
-		output += "<div align='center'><B>[src.key]!</B>"
-	else
-		output += "<div align='center'><B>Welcome, [src.key]!</B>"
-	output +="<hr>"
-	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+/mob/dead/new_player/proc/show_titlescreen()
+	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
-		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
+	assets.send(src)
 
-	else
-		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
+	client << browse(get_lobby_html(), "window=lobbybrowser")
 
-	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+/mob/dead/new_player/proc/hide_titlescreen()
+	if(my_client.mob) // Check if the client is still connected to something
+		// Hide title screen, allowing player to see the map
+		winset(my_client, "lobbybrowser", "is-disabled=true;is-visible=false")
 
-/*	if(!IsGuestKey(src.key))
-		establish_db_connection()
-
-		if(dbcon.IsConnected())
-			var/isadmin = 0
-			if(src.client && src.client.holder)
-				isadmin = 1
-			var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
-			query.Execute()
-			var/newpoll = 0
-			while(query.NextRow())
-				newpoll = 1
-				break
-
-			if(newpoll)
-				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-			else
-				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-commented cause polls are kinda broken now, needs refactoring */
-
-	output += "</div>"
-	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
+/mob/dead/new_player/prepare_huds()
 	return
 
 /mob/dead/new_player/Stat()
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", SSticker.bundle ? "[SSticker.bundle.name]" : "[master_mode]")
 
 		if(world.is_round_preparing())
-			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
-			stat("Players:", "[ticker.totalPlayers]")
+			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[ticker.totalPlayersReady]")
+				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 /mob/dead/new_player/Topic(href, href_list[])
-	if(src != usr)
-		return 0
+	if(src != usr || !client)
+		return
 
-	if(!client)
-		return 0
+	if(href_list["lobby_changelog"])
+		client.changes()
+		return
 
-	if(href_list["show_preferences"])
+	if(href_list["lobby_setup"])
 		client << browse_rsc('html/prefs/dossier_empty.png')
 		client << browse_rsc('html/prefs/opacity7.png')
 		client.prefs.ShowChoices(src)
-		return 1
+		return
 
-	if(href_list["ready"])
-		if(ready && ticker.timeLeft <= 50)
+	if(href_list["lobby_ready"])
+		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
-			return 0
-		if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
+			return
+		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
+			client << output(null, "lobbybrowser:imgsrc")
 			ready = !ready
+		return
 
-	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") // closes the player setup window
-		new_player_panel_proc()
-
-	if(href_list["observe"])
+	if(href_list["lobby_observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
-			return 0
+			return
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
-			return 0
-		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
+			return
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
-				return 1
+				return
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
@@ -147,32 +121,33 @@ commented cause polls are kinda broken now, needs refactoring */
 			observer.key = key
 			qdel(src)
 
-			return 1
+			return
 
-	if(href_list["late_join"])
-		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(href_list["lobby_join"])
+		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 
 		LateChoices()
+		return
 
-	if(href_list["manifest"])
+	if(href_list["lobby_crew"])
 		ViewManifest()
+		return
 
 	if(href_list["SelectedJob"])
-
 		if(!enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
@@ -180,103 +155,11 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
 		if(client)
 			client.prefs.process_link(src, href_list)
-	else if(!href_list["late_join"])
-		new_player_panel()
-
-/*	if(href_list["privacy_poll"])
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			return
-		var/voted = 0
-
-		// First check if the person has not voted yet.
-		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
-		query.Execute()
-		while(query.NextRow())
-			voted = 1
-			break
-
-		// This is a safety switch, so only valid options pass through
-		var/option = "UNKNOWN"
-		switch(href_list["privacy_poll"])
-			if("signed")
-				option = "SIGNED"
-			if("anonymous")
-				option = "ANONYMOUS"
-			if("nostats")
-				option = "NOSTATS"
-			if("later")
-				usr << browse(null,"window=privacypoll")
-				return
-			if("abstain")
-				option = "ABSTAIN"
-
-		if(option == "UNKNOWN")
-			return
-
-		if(!voted)
-			var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
-			var/DBQuery/query_insert = dbcon.NewQuery(sql)
-			query_insert.Execute()
-			to_chat(usr, "<b>Thank you for your vote!</b>")
-			usr << browse(null,"window=privacypoll")
-
-
-	if(href_list["showpoll"])
-
-		handle_player_polling()
 		return
 
-	if(href_list["pollid"])
-
-		var/pollid = href_list["pollid"]
-		if(istext(pollid))
-			pollid = text2num(pollid)
-		if(isnum(pollid))
-			src.poll_player(pollid)
+	else
+		to_chat(src, "Locked! You are ready.")
 		return
-
-	if(href_list["votepollid"] && href_list["votetype"])
-		var/pollid = text2num(href_list["votepollid"])
-		var/votetype = href_list["votetype"]
-		switch(votetype)
-			if("OPTION")
-				var/optionid = text2num(href_list["voteoptionid"])
-				vote_on_poll(pollid, optionid)
-			if("TEXT")
-				var/replytext = href_list["replytext"]
-				log_text_poll_reply(pollid, replytext)
-			if("NUMVAL")
-				var/id_min = text2num(href_list["minid"])
-				var/id_max = text2num(href_list["maxid"])
-
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
-					return
-
-				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
-						var/rating
-						if(href_list["o[optionid]"] == "abstain")
-							rating = null
-						else
-							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating))
-								return
-
-						vote_on_numval_poll(pollid, optionid, rating)
-			if("MULTICHOICE")
-				var/id_min = text2num(href_list["minoptionid"])
-				var/id_max = text2num(href_list["maxoptionid"])
-
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
-					return
-
-				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
-						vote_on_poll(pollid, optionid, 1)
-*/ // commented cause polls are kinda broken now, needs refactoring
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -288,7 +171,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		return FALSE
 	if(!job.player_old_enough(client))
 		return FALSE
-	if(!job.is_species_permitted(client))
+	if(!job.is_species_permitted(client.prefs.species))
 		return FALSE
 	if(!job.map_check())
 		return FALSE
@@ -298,14 +181,14 @@ commented cause polls are kinda broken now, needs refactoring */
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if (src != usr)
 		return 0
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
 	spawning = 1
@@ -314,12 +197,12 @@ commented cause polls are kinda broken now, needs refactoring */
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+	if(!issilicon(character))
+		SSquirks.AssignQuirks(character, character.client, TRUE)
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
-
-		character = character.AIize(move=0) // AIize the character, but don't move them yet
 
 		// IsJobAvailable for AI checks that there is an empty core available in this list
 		var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
@@ -327,8 +210,11 @@ commented cause polls are kinda broken now, needs refactoring */
 
 		character.loc = C.loc
 
+		character = character.AIize(move=0) // AIize the character, but don't move them yet
+
+		show_location_blurb(character.client)
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
-		ticker.mode.latespawn(character)
+		SSticker.mode.latespawn(character)
 
 		qdel(C)
 		qdel(src)
@@ -336,18 +222,19 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
+	show_location_blurb(character.client)
 	// Moving wheelchair if they have one
 	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
 		character.buckled.loc = character.loc
-		character.buckled.dir = character.dir
+		character.buckled.set_dir(character.dir)
 
-	ticker.mode.latespawn(character)
+	SSticker.mode.latespawn(character)
 
-	//ticker.mode.latespawn(character)
+	//SSticker.mode.latespawn(character)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 	//	AnnounceArrival(character, rank)
 
 	else
@@ -355,16 +242,13 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	joined_player_list += character.ckey
 
-	if(!issilicon(character))
-		SSquirks.AssignQuirks(character, character.client, TRUE)
-
 	if(character.client)
 		character.client.guard.time_velocity_spawn = world.timeofday
 
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
+	if (SSticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
@@ -469,9 +353,6 @@ commented cause polls are kinda broken now, needs refactoring */
 		dat += "</td></tr></table>"
 		dat += "</div></div>"
 
-	// Removing the old window method but leaving it here for reference
-	//src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
-
 	// Added the new browser window method
 	var/accurate_length = 600
 	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
@@ -479,7 +360,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
+	popup.open()
 
 
 /mob/dead/new_player/proc/create_character()
@@ -503,7 +384,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(client.prefs.language)
 		new_character.add_language(client.prefs.language)
 
-	if(ticker.random_players)
+	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)
@@ -531,11 +412,11 @@ commented cause polls are kinda broken now, needs refactoring */
 	return new_character
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
-	dat += "<h4>Show Crew Manifest</h4>"
-	dat += data_core.get_manifest(OOC = 1)
+	var/dat = data_core.html_manifest(OOC = 1)
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	return FALSE
@@ -543,6 +424,9 @@ commented cause polls are kinda broken now, needs refactoring */
 /mob/dead/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
+	src << browse(null, "window=preferences_window")
+	if(client)
+		client.clear_character_previews()
 
 /mob/dead/new_player/proc/has_admin_rights()
 	return (client && client.holder && (client.holder.rights & R_ADMIN))

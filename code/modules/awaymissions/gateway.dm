@@ -106,7 +106,7 @@
 	update_icon()
 
 	set_power_use(ACTIVE_POWER_USE)
-	START_PROCESSING(SSmachine, src)
+	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -117,7 +117,7 @@
 	update_icon()
 
 	set_power_use(IDLE_POWER_USE)
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)
@@ -177,7 +177,7 @@
 				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
 
-	M.dir = SOUTH
+	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
 
@@ -194,7 +194,7 @@
 	if(isliving(entered))
 		var/mob/living/M = entered
 		M.Stun(10, 1, 1, 1)
-		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
+		var/atom/movable/screen/cinematic = new /atom/movable/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
 			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -202,7 +202,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
 
-/obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, obj/screen/cinematic)
+/obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, atom/movable/screen/cinematic)
 	if(isliving(entered))
 		var/mob/living/M = entered
 		if(M.client)

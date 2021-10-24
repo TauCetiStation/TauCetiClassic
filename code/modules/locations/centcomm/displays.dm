@@ -1,12 +1,12 @@
-//TODO: разложить все по полочкам
+//TODO: СЂР°Р·Р»РѕР¶РёС‚СЊ РІСЃРµ РїРѕ РїРѕР»РѕС‡РєР°Рј
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
-	icon = 'code/modules/locations/centcomm/tablo.dmi'
+	icon = 'icons/locations/centcomm/tablo.dmi'
 	icon_state = "tablo01"
 
 /obj/structure/sign/directions/dock_tablo
 	name = "LED Display"
-	icon = 'code/modules/locations/centcomm/tablo.dmi'
+	icon = 'icons/locations/centcomm/tablo.dmi'
 	icon_state = "dock1"
 
 /obj/structure/sign/directions/dock_tablo/tablo2
@@ -27,25 +27,25 @@
 /obj/structure/sign/velocity_tablo
 	name = "Velocity LED Display"
 	desc = "A display, sometimes shows you useful information."
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
+	icon = 'icons/locations/centcomm/monitor_90.dmi'
 
 /*/obj/structure/sign/tablo/display
-	icon = 'code/modules/locations/centcomm/monitor.dmi'
+	icon = 'icons/locations/centcomm/monitor.dmi'
 
 /obj/structure/sign/tablo/display/display_90
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'*/
+	icon = 'icons/locations/centcomm/monitor_90.dmi'*/
 
-//надеюсь в скором времени переписать
+//РЅР°РґРµСЋСЃСЊ РІ СЃРєРѕСЂРѕРј РІСЂРµРјРµРЅРё РїРµСЂРµРїРёСЃР°С‚СЊ
 /obj/machinery/information_display
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	var/mode = 1//1 - on
 				//2 - off
 	name = "Information display"
 
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
+	icon = 'icons/locations/centcomm/monitor_90.dmi'
 	var/icon_state_on
 
 /obj/machinery/information_display/atom_init()

@@ -8,8 +8,9 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	volume = 50
+	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
@@ -17,17 +18,25 @@
 		icon_state = "pill[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
-	return
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+	if(halved)
+		return
+	user.drop_from_inventory(src)
+	var/volume_half = reagents.total_volume / 2
+	for(var/part in list("top", "bottom"))
+		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
+		P.name = "half of [name]"
+		P.icon_state = icon_state
+		P.add_filter("pill_alpha", 3, alpha_mask_filter(icon = icon(icon, "pill_half_[part]")))
+		P.add_overlay(icon(icon, "pill_half_border_[part]"))
+		P.halved = TRUE
+		reagents.trans_to(P.reagents, volume_half)
+		user.put_in_any_hand_if_possible(P)
+	to_chat(user, "<span class='notice'>You split [src] in two halves.</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
-
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		to_chat(M, "<span class='notice'>You swallow [src].</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Swallow [src.name]. Reagents: [reagentlist(src)]</font>")
 		M.drop_from_inventory(src) //icon update
@@ -39,12 +48,6 @@
 		return 1
 
 	else
-		if(istype(M, /mob/living/carbon/human) )
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
 		if(!do_mob(user, M)) return
@@ -52,9 +55,7 @@
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] to [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
+		M.log_combat(user, "fed with [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)

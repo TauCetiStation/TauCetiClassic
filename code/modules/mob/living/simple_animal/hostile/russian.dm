@@ -11,14 +11,12 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "punches"
-	a_intent = "harm"
+	melee_damage = 15
+	attacktext = "punch"
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
 	var/weapon1 = /obj/item/weapon/kitchenknife
 	min_oxy = 5
@@ -34,6 +32,9 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
@@ -42,7 +43,7 @@
 	icon_living = "russianranged"
 	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/revolver/mateba
-	ranged = 1
+	ranged = TRUE
 	projectiletype = /obj/item/projectile/bullet
 	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/a357

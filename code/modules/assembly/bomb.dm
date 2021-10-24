@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT //Copied this from old code, so this may or may not be necessary
@@ -23,36 +23,38 @@
 		add_overlay(bombassembly.overlays)
 		add_overlay("bomb_assembly")
 
-/obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/analyzer))
-		bombtank.attackby(W, user)
-		return
-	if(iswrench(W) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+/obj/item/device/onetankbomb/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/analyzer))
+		return bombtank.attackby(I, user, params)
 
+	if(iswrench(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
-		bombassembly.loc = user.loc
+		bombassembly.forceMove(user.loc)
 		bombassembly.master = null
 		bombassembly = null
 
-		bombtank.loc = user.loc
+		bombtank.forceMove(user.loc)
 		bombtank.master = null
 		bombtank = null
 
 		qdel(src)
 		return
-	if((iswelder(W) && W:welding))
-		if(!status)
-			status = 1
-			bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C] [ADMIN_JMP(user)]")
-			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
-		else
-			status = 0
-			bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
-	add_fingerprint(user)
-	..()
+
+	if((iswelder(I)))
+		var/obj/item/weapon/weldingtool/W = I
+		if(!W.isOn())
+			if(!status)
+				status = 1
+				bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
+				message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C] [ADMIN_JMP(user)]")
+				to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
+			else
+				status = 0
+				bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
+				to_chat(user, "<span class='notice'>The hole has been closed.</span>")
+		return
+	return ..()
 
 /obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, 1)
@@ -89,17 +91,15 @@
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.drop_item()			//Remove the assembly from your hands
-	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
+	M.drop_from_inventory(S, R)			//Remove the assembly from your hands
+	M.drop_from_inventory(src, R)	//Remove the tank from your character,in case you were holding it
 	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner
-	S.loc = R			//Move the assembly out of the fucking way
 
 	R.bombtank = src	//Same for tank
 	master = R
-	loc = R
 	R.update_icon()
 	return
 

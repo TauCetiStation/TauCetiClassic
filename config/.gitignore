@@ -1,5 +1,6 @@
 #ignore everything here, except subdirectories.
 *
 !*/
+!names/*
 /announcer
 !example/**

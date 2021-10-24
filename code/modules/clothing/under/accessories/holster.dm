@@ -9,22 +9,22 @@
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
-		return
+		return FALSE
 
 	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
-		return
+		return FALSE
 
 	if (!I.can_be_holstered)
 		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
-		return
+		return FALSE
 
 	holstered = I
-	user.drop_from_inventory(holstered)
-	holstered.loc = src
+	user.drop_from_inventory(holstered, src)
 	holstered.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
 	update_icon()
+	return TRUE
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user)
 	if(!holstered)
@@ -33,7 +33,7 @@
 	if(istype(user.get_active_hand(), /obj) && istype(user.get_inactive_hand(), /obj))
 		to_chat(user, "<span class='warning'>You need an empty hand to draw the [holstered]!</span>")
 	else
-		if(user.a_intent == I_HURT)
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message(
 				"<span class='warning'>[user] draws the [holstered], ready to shoot!</span>",
 				"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
@@ -55,12 +55,12 @@
 
 	..(user)
 
-/obj/item/clothing/accessory/holster/attackby(obj/item/W, mob/user)
-	holster(W, user)
+/obj/item/clothing/accessory/holster/attack_accessory(obj/item/I, mob/user, params)
+	return holster(I, user)
 
 /obj/item/clothing/accessory/holster/emp_act(severity)
 	if (holstered)
-		holstered.emp_act(severity)
+		holstered.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/holster/examine(mob/user)
@@ -78,36 +78,41 @@
 	has_suit.verbs -= /obj/item/clothing/accessory/holster/verb/holster_verb
 	..()
 
+/mob/living/carbon/human/proc/get_holster()
+	var/obj/item/clothing/accessory/holster/H = locate() in src
+	if(!H && istype(w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/S = w_uniform
+		if(S.accessories.len)
+			H = locate() in S.accessories
+	return H
+
+/mob/living/carbon/human/proc/holster_weapon()
+	var/obj/item/clothing/accessory/holster/my_holster = get_holster()
+	if(!my_holster)
+		return
+
+	if(!my_holster.holstered)
+		var/obj/item/weapon/gun/W = get_active_hand()
+		if(!istype(W, /obj/item/weapon/gun))
+			to_chat(src, "<span class='notice'>You need your gun equiped to holster it.</span>")
+			return
+		my_holster.holster(W, src)
+	else
+		my_holster.unholster(src)
+
 //For the holster hotkey
 /obj/item/clothing/accessory/holster/verb/holster_verb()
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
 
-	if(!istype(usr, /mob/living))
+	if(!ishuman(usr))
 		return
 	if(usr.incapacitated())
 		return
 
-	var/obj/item/clothing/accessory/holster/H = null
-	if (istype(src, /obj/item/clothing/accessory/holster))
-		H = src
-	else if (istype(src, /obj/item/clothing/under))
-		var/obj/item/clothing/under/S = src
-		if (S.accessories.len)
-			H = locate() in S.accessories
-
-	if (!H)
-		to_chat(usr, "<span class='warning'>Something is very wrong.</span>")
-
-	if(!H.holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
-			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		H.holster(W, usr)
-	else
-		H.unholster(usr)
+	var/mob/living/carbon/human/human = usr
+	human.holster_weapon()
 
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"

@@ -6,10 +6,8 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/proc/airflow_stun()
 	if(stat == 2)
 		return FALSE
-
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
 		return FALSE
-
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return FALSE
@@ -127,7 +125,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(airflow_dest == loc)
 		step_away(src, loc)
-	if(!src.AirflowCanMove(n))
+	if(!AirflowCanMove(n))
 		return
 	if(ismob(src))
 		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
@@ -190,7 +188,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(airflow_dest == loc)
 		step_away(src, loc)
-	if(!src.AirflowCanMove(n))
+	if(!AirflowCanMove(n))
 		return
 	if(ismob(src))
 		to_chat(src, "<span clas='danger'>You are pushed away by airflow!</span>")

@@ -6,7 +6,7 @@
 	name = "mecha part"
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	flags = CONDUCT
 	origin_tech = "programming=2;materials=2"
 
@@ -17,10 +17,9 @@
 	var/datum/construction/construct
 	flags = CONDUCT
 
-/obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user)
-	if(!construct || !construct.action(W, user))
-		..()
-	return
+/obj/item/mecha_parts/chassis/attackby(obj/item/I, mob/user, params)
+	if(!construct || !construct.action(I, user))
+		return ..()
 
 /obj/item/mecha_parts/chassis/attack_hand()
 	return
@@ -324,7 +323,7 @@
 	board_type = "other"
 	flags = CONDUCT
 	force = 5.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15

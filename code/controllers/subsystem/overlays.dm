@@ -1,6 +1,4 @@
-var/datum/subsystem/overlays/SSoverlays
-
-/datum/subsystem/overlays
+SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
 	wait = SS_WAIT_OVERLAYS
@@ -12,22 +10,19 @@ var/datum/subsystem/overlays/SSoverlays
 	var/list/overlay_icon_state_caches = list()
 	var/list/overlay_icon_cache = list()
 
-/datum/subsystem/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
-
-/datum/subsystem/overlays/Initialize()
+/datum/controller/subsystem/overlays/Initialize()
 	fire(mc_check = FALSE)
 	return ..()
 
-/datum/subsystem/overlays/stat_entry()
+/datum/controller/subsystem/overlays/stat_entry()
 	..("Ov:[length(queue)]")
 
-/datum/subsystem/overlays/Recover()
+/datum/controller/subsystem/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
-/datum/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
+/datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/queue = src.queue
 	var/static/count = 0
 	if (count)
@@ -40,6 +35,8 @@ var/datum/subsystem/overlays/SSoverlays
 		if(thing)
 			var/atom/A = thing
 			COMPILE_OVERLAYS(A)
+			UNSETEMPTY(A.add_overlays)
+			UNSETEMPTY(A.remove_overlays)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
@@ -104,9 +101,8 @@ var/datum/subsystem/overlays/SSoverlays
 #define QUEUE_FOR_COMPILE flags_2 |= OVERLAY_QUEUED_2; SSoverlays.queue += src;
 /atom/proc/cut_overlays()
 	LAZYINITLIST(remove_overlays)
-	LAZYINITLIST(add_overlays)
 	remove_overlays = overlays.Copy()
-	add_overlays.Cut()
+	add_overlays = null
 
 	//If not already queued for work and there are overlays to remove
 	if(NOT_QUEUED_ALREADY && remove_overlays.len)
@@ -116,7 +112,7 @@ var/datum/subsystem/overlays/SSoverlays
 	if(!overlays)
 		return
 	overlays = build_appearance_list(overlays)
-	LAZYINITLIST(add_overlays) //always initialized after this point
+	LAZYINITLIST(add_overlays)
 	LAZYINITLIST(remove_overlays)
 	var/a_len = add_overlays.len
 	var/r_len = remove_overlays.len
@@ -129,6 +125,7 @@ var/datum/subsystem/overlays/SSoverlays
 	//If not already queued and there is work to be done
 	if(NOT_QUEUED_ALREADY && (fa_len != a_len || fr_len != r_len))
 		QUEUE_FOR_COMPILE
+	UNSETEMPTY(add_overlays)
 
 /atom/proc/add_overlay(list/overlays)
 	if(!overlays)
@@ -152,8 +149,8 @@ var/datum/subsystem/overlays/SSoverlays
 
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
-		if(cut_old || !LAZYLEN(overlays))
-			remove_overlays = overlays
+		if(cut_old || !length(overlays))
+			remove_overlays = overlays.Copy()
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE

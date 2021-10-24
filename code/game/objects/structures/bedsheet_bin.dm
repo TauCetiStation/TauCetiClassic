@@ -15,7 +15,7 @@ LINEN BINS
 	throwforce = 1
 	throw_speed = 1
 	throw_range = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_color = "white"
 
 
@@ -28,8 +28,7 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
-	. = ..()
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && isturf(loc)) // you can cut only bedsheet lying on the floor
 		if(!ishuman(user))
 			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
@@ -41,6 +40,7 @@ LINEN BINS
 			R.amount = 3
 			qdel(src)
 		return
+	return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -165,7 +165,7 @@ LINEN BINS
 	desc = "A linen bin. It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
-	anchored = 1
+	anchored = TRUE
 	var/amount = 20
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -191,14 +191,13 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	else if(amount && !hidden && I.w_class < ITEM_SIZE_LARGE)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_item()
-		I.loc = src
+
+	else if(amount && !hidden && I.w_class < SIZE_NORMAL)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+		user.drop_from_inventory(I, src)
 		hidden = I
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 

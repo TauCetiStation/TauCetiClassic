@@ -5,7 +5,9 @@
 
 /datum/money_account
 	var/owner_name = ""
-	var/owner_salary = 0
+	var/owner_salary = 0	//used for payments
+	var/base_salary = 0		//used to changes owner_salary
+	var/change = "def"		//type of salary change: "perm"-Permanent(only admin can cancel), "temp"-Temporarily or "def"-Default
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
@@ -17,7 +19,55 @@
 							//2 - require card and manual login
 
 /datum/money_account/proc/adjust_money(amount)
-	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
+	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
+
+/datum/money_account/proc/set_salary(amount, ratio = 1)
+	owner_salary = amount * ratio
+	base_salary = amount
+	if(change == "perm")
+		return
+	else
+		change = "def"
+
+/datum/money_account/proc/change_salary(user, user_name, terminal, user_rank, force_rate = null)
+	var/new_salary = 0
+	var/salary_rate = 0
+	var/input_rate = ""
+	var/type_change = "temp"	//permanent or temporary change?
+	if(force_rate == null)
+		if(change == "temp")
+			if(tgui_alert(user, "The salary of [owner_name] has already changed. Are you sure you want to change your salary?", "Confirm", list("Yes", "No")) != "Yes")
+				return
+		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
+		if(user_rank != "Admin")
+			if(change == "perm")
+				tgui_alert(user, "Central Command blocked salary change!")
+				return
+			rate = rate.Copy(2,7)
+		else
+			if(tgui_alert(user, "Permanent - only admin can return the base salary.\
+			Temporarily - any head can return the base salary.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
+				type_change = "perm"
+		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
+		if(!input_rate)
+			return
+		salary_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
+		new_salary = round(base_salary + (base_salary * (salary_rate/100)))
+		if(tgui_alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", list("Yes", "No")) != "Yes")
+			return
+	else
+		new_salary = round(base_salary + (base_salary * (force_rate/100)))
+		type_change = "perm"
+		salary_rate = force_rate
+	if(new_salary == owner_salary)	//there were no changes
+		return
+	owner_salary = new_salary
+	if(new_salary == base_salary)	//return to default
+		type_change = "def"
+	change = type_change
+
+	if(owner_PDA)
+		owner_PDA.transaction_inform(null, user_name, salary_rate, TRUE)
 
 /datum/transaction
 	var/target_name = ""
@@ -28,7 +78,7 @@
 	var/source_terminal = ""
 
 /proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
-	var/datum/money_account/M = create_account(H.real_name, start_money, null)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -41,7 +91,7 @@
 		H.mind.initial_account = M
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
 
 	//create a new account
 	var/datum/money_account/M = new()
@@ -56,7 +106,7 @@
 	T.amount = starting_funds
 	if(!source_db)
 		//set a random date, time and location some time over the past decade
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,10)]"
+		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,age)]"
 		T.time = "[rand(0,23)]:[rand(11,59)]"
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
 
@@ -95,22 +145,23 @@
 	return M
 
 /proc/charge_to_account(attempt_account_number, source_name, purpose, terminal_id, amount)
+	var/money = round(amount, 1)
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number && !D.suspended)
-			D.adjust_money(amount)
+			D.adjust_money(money)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
 			T.target_name = source_name
 			T.purpose = purpose
-			T.amount = "[amount]"
+			T.amount = "[money]"
 			T.date = current_date_string
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
 
 			if(D.owner_PDA)
-				D.owner_PDA.transaction_inform(source_name, terminal_id, amount)
+				D.owner_PDA.transaction_inform(source_name, terminal_id, money)
 
 			return TRUE
 	return FALSE

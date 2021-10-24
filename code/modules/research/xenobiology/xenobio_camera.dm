@@ -113,15 +113,20 @@
 	if(ismultitool(O))
 		var/obj/item/device/multitool/M = O
 		if(M.buffer && istype(M.buffer,/obj/machinery/monkey_recycler))
-			if(connected_recycler == M.buffer)
+			if(!connected_recycler)
+				connected_recycler = M.buffer
+				connected_recycler.connected_consoles += src
+				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
+			else if(connected_recycler == M.buffer)
 				to_chat(user, "<span class='warning'>This machine is already linked to this console</span>")
 				return
-			connected_recycler.connected_consoles -= src
-			connected_recycler = M.buffer
-			connected_recycler.connected_consoles += src
-			to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
+			else
+				connected_recycler.connected_consoles -= src
+				connected_recycler = M.buffer
+				connected_recycler.connected_consoles += src
+				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube) && user.drop_item())
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
 		qdel(O)

@@ -23,6 +23,4 @@
 
 	update_canmove()
 
-	ticker.mode.check_win()
-
 	return ..(gibbed)

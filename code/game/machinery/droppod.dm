@@ -10,8 +10,8 @@
 	desc = "We are coming. Look to the skies for your salvation."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 	bound_height = 64
 	icon = 'icons/obj/structures/droppod.dmi'
@@ -73,11 +73,6 @@
 	return ..()
 
 /obj/structure/droppod/blob_act()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
-/obj/structure/droppod/meteorhit()
 	if(flags & STATE_DROPING)
 		return
 	return ..()
@@ -420,7 +415,7 @@
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
@@ -480,7 +475,7 @@
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
-	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
+	if(do_after(usr, 100, 1, src) && Stored_Nuclear)
 		EjectNuclear()
 
 /obj/structure/droppod/proc/EjectNuclear()
@@ -509,10 +504,10 @@
 		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
 		qdel(src)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
 	..()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 
@@ -523,12 +518,12 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
+	intruder << browse(get_stats_html(), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()
 	var/output = {"<html>
-				<head><title>[name] data</title>
+				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
 				body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 				hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -723,7 +718,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.
@@ -735,8 +730,8 @@
 	desc = "Remains of some unfortunate Pod. Completely unrepairable."
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "crashed_droppod"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
 
 /obj/effect/decal/droppod_wreckage/atom_init(mapload, icon_modifier)
@@ -797,4 +792,4 @@
 	desc = "Simple Aim system, can be installed in poor Drop pods"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY

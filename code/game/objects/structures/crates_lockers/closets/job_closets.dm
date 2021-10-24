@@ -43,7 +43,7 @@
 		new /obj/item/weapon/caution(src)
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/weapon/storage/bag/trash(src)
-	new /obj/item/clothing/shoes/galoshes(src)
+	new /obj/item/clothing/shoes/boots/galoshes(src)
 	new /obj/item/weapon/storage/pouch/small_generic(src) // Because I feel like poor janitor gets it bad.
 
 /*
@@ -89,7 +89,7 @@
 			new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
 			new /obj/item/clothing/head/flatcap(src)
 			new /obj/item/clothing/mask/cigarette/cigar/havana(src)
-			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/clothing/shoes/boots(src)
 		if (5)
 			new /obj/item/clothing/under/schoolgirl(src)
 			new /obj/item/clothing/head/kitty(src)
@@ -159,7 +159,7 @@
 			new /obj/item/clothing/shoes/sandal(src)
 			new /obj/item/clothing/suit/wizrobe/fake(src)
 			new /obj/item/clothing/head/wizard/fake(src)
-			new /obj/item/weapon/staff/(src)
+			new /obj/item/weapon/staff(src)
 		if (21)
 			new /obj/item/clothing/mask/gas/sexyclown(src)
 			new /obj/item/clothing/under/sexyclown(src)

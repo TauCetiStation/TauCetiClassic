@@ -1,0 +1,91 @@
+name: CI Suite
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+env:
+  BYOND_MAJOR: 514
+  BYOND_MINOR: 1565
+  SPACEMAN_DMM_VERSION: suite-1.7
+jobs:
+  DreamChecker:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
+          key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
+      - name: Install Dreamchecker
+        run:  bash scripts/install-spaceman-dmm.sh dreamchecker
+      - name: Run Dreamchecker
+        run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Annotate Lints
+        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3
+        if: always()
+        with:
+          outputFile: output-annotations.txt
+  Code:
+    name: Code and Map Linting
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Code and Map Linting
+        env:
+          TEST: LINTING
+          NODE_VERSION: 12
+        run: |
+          bash test/run-test.sh
+          bash scripts/build_tgui.sh
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - map_meta: boxstation
+            map_name: Box Station
+          - map_meta: gamma
+            map_name: Gamma Station
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Unit Tests
+        env:
+          TEST: UNIT
+          MAP_META: ${{ matrix.map_meta }}
+          MAP_NAME: ${{ matrix.map_name }}
+        run: |
+          bash scripts/install-byond.sh
+          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          bash test/run-test.sh
+  compile_everything:
+    name: Compile Everything
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: "Compile Everything"
+        env:
+          TEST: COMPILE
+        run: |
+          bash scripts/install-byond.sh
+          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          bash test/run-test.sh

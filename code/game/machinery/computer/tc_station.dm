@@ -37,9 +37,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 		if(O.hidden_uplink)
 			var/obj/item/P = user.get_active_hand()
-			user.drop_item()
+			user.drop_from_inventory(P, src)
 			uplinkholder = P
-			P.loc = src
 			P.add_fingerprint(user)
 			update_icon()
 			updateUsrDialog()
@@ -83,7 +82,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(linkedboss)
 		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
 	else
-		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
+		dat += "<div class='NoticeBox'>No linked management consoles detected. Scan for uplink stations using the management console.</div>"
 
 	if(uplinkholder)
 		dat += "[uplinkholder.hidden_uplink.uses] telecrystals remain in this uplink.<BR>"
@@ -91,9 +90,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			dat += "Donate TC: <a href='byond://?src=\ref[src];donate1=1'>1</a> | <a href='byond://?src=\ref[src];donate5=1'>5</a>"
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
-	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
@@ -110,7 +108,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	else if(href_list["eject"])
 		ejectuplink()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /////////////////////////////////////////
@@ -141,7 +139,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	var/danger
 	var/active_players = length(player_list)
-	var/agent_numbers = CLAMP((active_players / 5), 2, 6)
+	var/agent_numbers = clamp((active_players / 5), 2, 6)
 	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
 	danger = active_players
 
@@ -152,7 +150,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /obj/machinery/computer/telecrystals/boss/ui_interact(mob/user)
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
+	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations</a><BR>"
 	dat += "This [src] has [storedcrystals] telecrystals available for distribution. <BR>"
 	dat += "<BR><BR>"
 
@@ -165,14 +163,13 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<BR>"
 
 	if(TCstations.len)
-		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
+		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC</a><BR><BR>"
 
 	for(var/entry in transferlog)
 		dat += "<small>[entry]</small><BR>"
 
-	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)

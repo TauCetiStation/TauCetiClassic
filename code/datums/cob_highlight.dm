@@ -104,7 +104,7 @@
 		holo_build.icon_state = initial(build_this.icon_state)
 		holo_build.alpha = 160
 		holo_build.color = list(-1,0,0,0,-1,0,0,0,-1,1,1,1)
-		holo_build.mouse_opacity = FALSE
+		holo_build.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		to_chat(M, "Building [from_recipe.title] ...")
 		var/failed = FALSE
 		if(!do_after(M, from_recipe.time, target = M))
@@ -124,7 +124,7 @@
 	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
 		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
-		A.dir = build_direction
+		A.set_dir(build_direction)
 		using_this.use(from_recipe.req_amount)
 		A.add_fingerprint(M)
 		b_overlay.maptext = COB_HINT

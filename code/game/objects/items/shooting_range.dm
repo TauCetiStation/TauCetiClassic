@@ -4,7 +4,7 @@
 	desc = "A shooting target."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
-	density = 0
+	density = FALSE
 	var/hp = 1800
 
 /obj/item/target/Destroy()
@@ -12,7 +12,7 @@
 	for(var/obj/structure/target_stake/T in view(3,src))
 		if(T.pinned_target == src)
 			T.pinned_target = null
-			T.density = 1
+			T.density = TRUE
 			break
 	return ..() // delete target
 
@@ -30,13 +30,15 @@
 
 
 
-/obj/item/target/attackby(obj/item/W, mob/user)
-	if (iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/target/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			cut_overlays()
 			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>")
 			return
+	else
+		return ..()
 
 
 /obj/item/target/attack_hand(mob/user)
@@ -49,8 +51,8 @@
 
 	if(stake)
 		if(stake.pinned_target)
-			stake.density = 1
-			density = 0
+			stake.density = TRUE
+			density = FALSE
 			layer = OBJ_LAYER
 
 			loc = user.loc

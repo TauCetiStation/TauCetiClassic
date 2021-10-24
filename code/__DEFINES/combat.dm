@@ -22,6 +22,16 @@
 #define EYE_BLUR  "eye_blur"
 #define DROWSY    "drowsy"
 
+// Attack visual effects
+#define ATTACK_EFFECT_SMASH  "smash"
+#define ATTACK_EFFECT_PUNCH  "punch"
+#define ATTACK_EFFECT_BITE   "bite"
+#define ATTACK_EFFECT_CLAW   "claw"
+#define ATTACK_EFFECT_SLASH  "slash"
+#define ATTACK_EFFECT_KICK   "kick"
+#define ATTACK_EFFECT_DISARM "disarm"
+#define ATTACK_EFFECT_SLIME  "glomp"
+
 // Damage flags
 #define DAM_SHARP 1
 #define DAM_EDGE  2
@@ -66,3 +76,9 @@
 #define HOSTILE_STANCE_ATTACK 	 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 	 5
+
+// Combo system.
+// Sources of movesets.
+#define MOVESET_JOB "moveset_job"
+#define MOVESET_SPECIES "moveset_species"
+#define MOVESET_TYPE "moveset_type"

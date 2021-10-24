@@ -71,6 +71,12 @@
 	result = /obj/item/weapon/handcuffs/cable
 	parts = list(/obj/item/stack/cable_coil = 1)
 
+/datum/crafting_recipe/noose
+	name = "Noose"
+	reqs = list(/obj/item/stack/cable_coil = 25)
+	result = /obj/item/weapon/noose
+	parts = list(/obj/item/stack/cable_coil = 1)
+
 //   SHIELD craft
 
 /datum/crafting_recipe/bucklerframe1

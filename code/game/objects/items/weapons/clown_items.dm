@@ -15,14 +15,14 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 
 /obj/item/weapon/bananapeel/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4)
+	AddComponent(/datum/component/slippery, 2)
 
 /obj/item/weapon/bananapeel/honk
 	name = "Clowny banana peel"
@@ -30,14 +30,14 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana_peel"
 	item_state = "h-banana_peel"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 
 /obj/item/weapon/bananapeel/honk/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 3, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
@@ -48,14 +48,14 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 
 /obj/item/weapon/soap/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4)
+	AddComponent(/datum/component/slippery, 2)
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
@@ -138,7 +138,7 @@
 							H.glasses.clean_blood()
 							H.update_inv_glasses()
 						else
-							H.eye_blurry = max(H.eye_blurry, 5)
+							H.blurEyes(5)
 							H.eye_blind = max(H.eye_blind, 1)
 							to_chat(H, "<span class='warning'>Ouch! That hurts!</span>")
 				if("legs")
@@ -192,7 +192,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	throwforce = 3
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
@@ -200,13 +200,8 @@
 
 /obj/item/weapon/bikehorn/proc/honk(mob/user)
 	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-	if(!user.notransform)
-		return
-
-	animate(user, pixel_z = rand(2, 6), time = 0)
-	var/matrix/old_transform = user.transform
-	animate(pixel_z = 0, transform = turn(old_transform, pick(-8, 0, 8)), time=2)
-	animate(pixel_z = 0, transform = old_transform, time = 0)
+	if(user.can_waddle())
+		user.waddle(pick(-14, 0, 14), 4)
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
@@ -216,7 +211,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		honk(user)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
 	. = ..()
@@ -232,37 +227,169 @@
 	item_state = "dogtoy"
 
 //////////////////////////////////////////////////////
-//			       Fake Laugh Button   			    //
+//					 Sound Button   				//
 //////////////////////////////////////////////////////
 
-/obj/item/toy/laugh_button
-	name = "laugh button"
+/obj/item/toy/sound_button
+	name = "sound button"
 	desc = "It's a perfect adding to the bad joke."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "laugh_button_on"
+	icon_state = "sound_button_on"
 	var/cooldown = FALSE
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
+	var/static/list/actions = list(
+		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
+		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
+		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
+		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
+		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
+		)
+	var/static/list/pos_sounds = list(
+		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
+						'sound/voice/fake_laugh/laugh2.ogg',
+						'sound/voice/fake_laugh/laugh3.ogg'),
 
-/obj/item/toy/laugh_button/attack_self(mob/user)
-	if(!cooldown)
-		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
-		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-		var/laugh = pick(
-			'sound/voice/fake_laugh/laugh1.ogg',
-			'sound/voice/fake_laugh/laugh2.ogg',
-			'sound/voice/fake_laugh/laugh3.ogg',
-			)
-		playsound(src, laugh, VOL_EFFECTS_MISC)
-		flick("laugh_button_down",src)
-		icon_state = "laugh_button_off"
-		cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/release_cooldown), 50)
+		"Weapon shot" = list('sound/weapons/blaster.ogg',
+						'sound/weapons/pyrometr_shot.ogg',
+						'sound/weapons/guns/gunpulse.ogg',
+						'sound/weapons/guns/gunpulse2.ogg',
+						'sound/weapons/guns/gunpulse3.ogg',
+						'sound/weapons/guns/gunpulse_emitter2.ogg',
+						'sound/weapons/guns/gunpulse_laser.ogg',
+						'sound/weapons/guns/gunpulse_laser3.ogg',
+						'sound/weapons/guns/gunpulse_laser4.ogg',
+						'sound/weapons/guns/gunpulse_railgun.ogg',
+						'sound/weapons/guns/gunpulse_stunrevolver.ogg',
+						'sound/weapons/guns/gunpulse_Taser.ogg',
+						'sound/weapons/guns/gunpulse_taser2.ogg',
+						'sound/weapons/guns/gunpulse_wave.ogg',
+						'sound/weapons/guns/Gunshot.ogg',
+						'sound/weapons/guns/Gunshot3.ogg',
+						'sound/weapons/guns/gunshot_acm38.ogg',
+						'sound/weapons/guns/gunshot_ak74.ogg',
+						'sound/weapons/guns/gunshot_cannon.ogg',
+						'sound/weapons/guns/gunshot_colt1911.ogg',
+						'sound/weapons/guns/gunshot_heavy.ogg',
+						'sound/weapons/guns/gunshot_light.ogg',
+						'sound/weapons/guns/gunshot_m79.ogg',
+						'sound/weapons/guns/gunshot_medium.ogg',
+						'sound/weapons/guns/gunshot_pneumaticgun.ogg',
+						'sound/weapons/guns/kenetic_accel.ogg',
+						'sound/weapons/guns/lasercannonfire.ogg',
+						'sound/weapons/guns/lasertag.ogg',
+						'sound/weapons/guns/marauder.ogg',
+						'sound/weapons/guns/plasma10_hit.ogg',
+						'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg',
+						'sound/weapons/guns/resonator_blast.ogg'),
+
+		"Melee weapon" = list('sound/items/drill_hit.ogg',
+						'sound/items/sledgehammer_hit.ogg',
+						'sound/items/trayhit1.ogg',
+						'sound/items/trayhit2.ogg',
+						'sound/items/misc/balloon_big-hit.ogg',
+						'sound/items/misc/balloon_small-hit.ogg',
+						'sound/items/misc/belt-slap.ogg',
+						'sound/items/misc/glove-slap.ogg',
+						'sound/items/tools/cable-slap.ogg',
+						'sound/items/tools/crowbar-hit.ogg',
+						'sound/items/tools/tool-hit.ogg',
+						'sound/items/tools/toolbox-hit.ogg',
+						'sound/items/tools/wirecutters-pinch.ogg',
+						'sound/misc/desceration-01.ogg',
+						'sound/weapons/blade1.ogg',
+						'sound/weapons/bladeslice.ogg',
+						'sound/weapons/captainwhip.ogg',
+						'sound/weapons/circsawhit.ogg',
+						'sound/weapons/Egloves.ogg',
+						'sound/weapons/genhit1.ogg',
+						'sound/weapons/metal_shield_hit.ogg',
+						'sound/weapons/punch1.ogg',
+						'sound/weapons/punch2.ogg',
+						'sound/weapons/smash.ogg',
+						'sound/weapons/slash.ogg'),
+
+		"Effects" = list('sound/effects/air_release.ogg',
+						'sound/effects/ArterialBleed.ogg',
+						'sound/effects/bamf.ogg',
+						'sound/effects/bang.ogg',
+						'sound/effects/blobattack.ogg',
+						'sound/effects/bodyfall1.ogg',
+						'sound/effects/bonebreak1.ogg',
+						'sound/effects/bubble_spawn.ogg',
+						'sound/effects/bubbles.ogg',
+						'sound/effects/can_open2.ogg',
+						'sound/effects/clang.ogg',
+						'sound/effects/clownstep1.ogg',
+						'sound/effects/curtain.ogg',
+						'sound/effects/digging.ogg',
+						'sound/effects/electric_shock.ogg',
+						'sound/effects/EMPulse.ogg',
+						'sound/effects/Explosion1.ogg',
+						'sound/effects/extinguish.ogg',
+						'sound/effects/extinguish_mob.ogg',
+						'sound/effects/forcefield_destroy.ogg',
+						'sound/effects/forcefield_hit2.ogg',
+						'sound/effects/fultext_launch.ogg',
+						'sound/effects/ghost2.ogg',
+						'sound/effects/Glassbr2.ogg',
+						'sound/effects/glasses_on.ogg',
+						'sound/effects/Glasshit.ogg',
+						'sound/effects/grillehit.ogg',
+						'sound/effects/hits_to_w_shield.ogg',
+						'sound/effects/hulk_attack.ogg',
+						'sound/effects/hulk_hit_wall.ogg',
+						'sound/effects/hulk_step.ogg',
+						'sound/effects/inflate.ogg',
+						'sound/effects/light-break.ogg',
+						'sound/effects/magic.ogg',
+						'sound/effects/meteorimpact.ogg',
+						'sound/effects/phasein.ogg',
+						'sound/effects/refill.ogg',
+						'sound/effects/scary_honk.ogg',
+						'sound/effects/shieldbash.ogg',
+						'sound/effects/supermatter.ogg'),
+
+		"Screams of pain" = list('sound/voice/mob/pain/male/heavy_1.ogg',
+						'sound/voice/mob/pain/male/heavy_2.ogg',
+						'sound/voice/mob/pain/male/heavy_3.ogg',
+						'sound/voice/mob/pain/male/heavy_4.ogg',
+						'sound/voice/mob/pain/male/heavy_5.ogg',
+						'sound/voice/mob/pain/male/heavy_6.ogg',
+						'sound/voice/mob/pain/male/heavy_7.ogg',
+						'sound/voice/mob/pain/male/heavy_8.ogg',
+						'sound/voice/mob/pain/male/light_1.ogg',
+						'sound/voice/mob/pain/male/light_2.ogg',
+						'sound/voice/mob/pain/male/light_3.ogg',
+						'sound/voice/mob/pain/male/light_4.ogg',
+						'sound/voice/mob/pain/male/light_5.ogg',
+						'sound/voice/mob/pain/male/light_6.ogg',
+						'sound/voice/mob/pain/male/light_7.ogg',
+						'sound/voice/mob/pain/male/light_8.ogg',
+						'sound/voice/mob/pain/male/passive_whiner_1.ogg',
+						'sound/voice/mob/pain/male/passive_whiner_2.ogg',
+						'sound/voice/mob/pain/male/passive_whiner_3.ogg',
+						'sound/voice/mob/pain/male/passive_whiner_4.ogg')
+						)
+
+
+/obj/item/toy/sound_button/attack_self(mob/user)
+	if(cooldown)
 		return
+
+	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
+	if(!soundtype)
+		return
+
+	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MISC, 85, FALSE)
+	flick("sound_button_down", src)
+	icon_state = "sound_button_off"
+	cooldown = TRUE
+	addtimer(CALLBACK(src, .proc/release_cooldown), 60)
 	..()
 
-/obj/item/toy/laugh_button/proc/release_cooldown()
-	flick("laugh_button_up",src)
-	icon_state = "laugh_button_on"
+/obj/item/toy/sound_button/proc/release_cooldown()
+	flick("sound_button_up",src)
+	icon_state = "sound_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
 	return

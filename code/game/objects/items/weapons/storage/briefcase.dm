@@ -7,8 +7,8 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
@@ -20,10 +20,7 @@
 		user.Paralyse(2)
 		return
 
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
 
 	if (M.stat < 2 && M.health < 50 && prob(90))
 		var/mob/H = M
@@ -41,7 +38,7 @@
 		visible_message("<span class='warning'><B>[M] has been knocked unconscious!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 	else
 		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
-		M.eye_blurry += 3
+		M.blurEyes(3)
 
 	return
 

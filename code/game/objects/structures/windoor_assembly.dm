@@ -14,8 +14,8 @@
 
 	name = "Windoor Assembly"
 	icon_state = "l_windoor_assembly01"
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	dir = NORTH
 
 	var/ini_dir
@@ -33,7 +33,7 @@
 	update_nearby_tiles(need_rebuild = 1)
 
 /obj/structure/windoor_assembly/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	return ..()
 
@@ -84,7 +84,7 @@
 					if(src.anchored)
 						return
 					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
-					src.anchored = 1
+					src.anchored = TRUE
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
 					else
@@ -97,7 +97,7 @@
 					if(!src.anchored)
 						return
 					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
-					src.anchored = 0
+					src.anchored = FALSE
 					if(src.secure)
 						src.name = "Secure Windoor Assembly"
 					else
@@ -159,8 +159,7 @@
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-					user.drop_item()
-					AE.loc = src
+					user.drop_from_inventory(AE, src)
 					if(W.use_tool(src, user, 40, volume = 100))
 						if(src.electronics)
 							AE.loc = src.loc
@@ -189,7 +188,7 @@
 				var/t = sanitize_safe(input(user, "Enter the name for the door.", src.name, input_default(src.created_name)), MAX_LNAME_LEN)
 				if(!t)
 					return
-				if(!in_range(src, usr) && src.loc != usr)
+				if(!Adjacent(usr))
 					return
 				created_name = t
 				return
@@ -206,7 +205,7 @@
 					if(!src.electronics)
 						return
 
-					density = 1 //Shouldn't matter but just incase
+					density = TRUE //Shouldn't matter but just incase
 					to_chat(user, "<span class='notice'>You finish the windoor!</span>")
 
 					if(secure)
@@ -217,8 +216,8 @@
 						else
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
-						windoor.dir = src.dir
-						windoor.density = 0
+						windoor.set_dir(src.dir)
+						windoor.density = FALSE
 
 						if(src.electronics.one_access)
 							windoor.req_access = list()
@@ -239,8 +238,8 @@
 						else
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
-						windoor.dir = src.dir
-						windoor.density = 0
+						windoor.set_dir(src.dir)
+						windoor.density = FALSE
 
 						if(src.electronics.one_access)
 							windoor.req_access = list()
@@ -275,7 +274,7 @@
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1) //Compel updates before
 
-	src.dir = turn(src.dir, 270)
+	set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1)

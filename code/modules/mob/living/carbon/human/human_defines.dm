@@ -10,6 +10,11 @@
 	var/dyed_b_hair = 0
 	var/hair_painted = FALSE
 
+	var/r_grad = 0
+	var/g_grad = 0
+	var/b_grad = 0
+	var/grad_style = "none"
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
@@ -43,7 +48,7 @@
 	var/undershirt = 0	//Which undershirt the player wants.
 	var/socks = 0	//Which socks the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-
+	var/use_skirt = FALSE
 	// General information
 	var/home_system = ""
 	var/citizenship = ""
@@ -89,8 +94,8 @@
 	var/obj/item/organ/external/regenerating_bodypart // A bodypart that is currently regenerating, so we don't have a random one picked each time.
 
 	//Golem stuff
-	var/my_master = 0
-	var/my_golems = list()
+	var/mob/living/carbon/human/my_master = null
+	var/mob/living/carbon/human/my_golem = null
 
 	// Prevent sound emotes spam in some situations
 	var/next_high_priority_sound = 0 // Usually these sounds require high attention, such as the sound of agony. These sounds can only be overlaid by sounds with the same priority.
@@ -110,3 +115,7 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Clothes count. Used in mood.
+	var/wet_clothes = 0
+	var/dirty_clothes = 0

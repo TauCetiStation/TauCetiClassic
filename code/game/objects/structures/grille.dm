@@ -3,8 +3,8 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	flags = CONDUCT
 	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
@@ -20,14 +20,19 @@
 		health = 0
 
 /obj/structure/grille/ex_act(severity)
-	qdel(src)
+	switch(severity)
+		if(1)
+			health -= rand(30, 50)
+		if(2)
+			health -= rand(15, 30)
+		if(3)
+			health -= rand(5, 15)
+	healthcheck()
+	return
 
 /obj/structure/grille/blob_act()
-	qdel(src)
-
-/obj/structure/grille/meteorhit(obj/M)
-	qdel(src)
-
+	health -= rand(initial(health)*0.8, initial(health)*3) //Grille will always be blasted, but chances of leaving things over
+	healthcheck()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -80,15 +85,15 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)
+/obj/structure/grille/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage == 0)
 		return
 	..()
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+	attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-	health -= M.melee_damage_upper
+	health -= attacker.melee_damage
 	healthcheck()
 	return
 
@@ -175,28 +180,30 @@
 				WD = new/obj/structure/window/reinforced(loc) //reinforced window
 			else
 				WD = new/obj/structure/window/basic(loc) //normal window
-			WD.dir = dir_to_set
+			WD.set_dir(dir_to_set)
 			WD.ini_dir = dir_to_set
-			WD.anchored = 0
+			WD.anchored = FALSE
 			WD.state = 0
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
 		return
 //window placing end
 
-	else if(istype(W, /obj/item/weapon/shard))
-		health -= W.force * 0.1
-	else if(!shock(user, 70))
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		switch(W.damtype)
-			if("fire")
-				health -= W.force
-			if("brute")
-				health -= W.force * 0.1
-	healthcheck()
-	..()
-	return
+	. = ..()
+	if(!.)
+		return FALSE
 
+	if((W.flags & CONDUCT) && shock(user, 70))
+		return
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+	switch(W.damtype)
+		if("fire")
+			health -= W.force
+		if("brute")
+			health -= W.force * 0.1
+
+	healthcheck()
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 5)
@@ -206,7 +213,7 @@
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"
-			density = 0
+			density = FALSE
 			destroyed = 1
 			new /obj/item/stack/rods(get_turf(src))
 
@@ -225,7 +232,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	if(!Adjacent(user))//To prevent TK and mech users from getting shocked
 		return 0
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()

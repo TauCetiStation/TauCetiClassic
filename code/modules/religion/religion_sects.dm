@@ -11,8 +11,11 @@
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
 
+	var/add_religion_name = TRUE
+
 /// Activates once selected
 /datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
+	give_binding_rites(L, R)
 	give_aspects(L, R)
 	// I mean, they did choose the sect.
 	on_conversion(L)
@@ -21,10 +24,13 @@
 /datum/religion_sect/proc/give_aspects(mob/living/L, datum/religion/R)
 	return
 
+// This proc is used to give all binding rites once
+/datum/religion_sect/proc/give_binding_rites(mob/living/L, datum/religion/R)
+	R.give_binding_rites()
+
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
 	to_chat(L, "<span class='notice'>[convert_opener]</span>")
-
 
 /datum/religion_sect/preset
 	/// An assoc list of form aspect_type = aspect power
@@ -33,17 +39,32 @@
 /datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
 
-/datum/religion_sect/preset/puritanism
+/********************/
+/*    CHAPLAIN      */
+/********************/
+/datum/religion_sect/preset/chaplain
+
+/datum/religion_sect/preset/chaplain/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
-		/datum/aspect/light = 1,
+		/datum/aspect/lightbending/light = 1,
 		/datum/aspect/mystic = 1,
 	)
 
-/datum/religion_sect/preset/technophile
+/datum/religion_sect/preset/chaplain/bloodgods
+	name = "The Slaves of "
+	desc = "Anything you need, little demon."
+	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	aspect_preset = list(
+		/datum/aspect/death = 1,
+		/datum/aspect/lightbending/darkness = 1,
+		/datum/aspect/chaos = 1,
+	)
+
+/datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte."
@@ -52,6 +73,20 @@
 		/datum/aspect/science = 1,
 		/datum/aspect/resources = 1,
 	)
+
+/datum/religion_sect/preset/chaplain/clown
+	name = "The Jesters of "
+	desc = "Anything a real clown needs!"
+	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"
+	aspect_preset = list(
+		/datum/aspect/wacky = 1,
+		/datum/aspect/chaos = 1,
+		/datum/aspect/resources = 1,
+		/datum/aspect/herd = 1,
+	)
+
+/datum/religion_sect/custom/chaplain
+	aspects_count = 3
 
 // This sect type allows user to select their aspects.
 /datum/religion_sect/custom
@@ -67,6 +102,8 @@
 	. = list()
 	for(var/i in subtypesof(/datum/aspect))
 		var/datum/aspect/asp = i
+		if(!initial(asp.name))
+			continue
 		if(!initial(asp.starter))
 			continue
 		. += list(initial(asp.name) = i)
@@ -96,3 +133,29 @@
 			aspects_to_add[aspect_type] += 1
 
 	R.add_aspects(aspects_to_add)
+
+/********************/
+/*        CULT      */
+/********************/
+/datum/religion_sect/preset/cult
+	add_religion_name = FALSE
+
+/datum/religion_sect/preset/cult/blood
+	name = "The Cult of Blood"
+	desc = "Anything you need, little demon."
+	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	aspect_preset = list(
+		/datum/aspect/death = 1,
+		/datum/aspect/rescue = 1,
+		/datum/aspect/chaos = 1,
+		/datum/aspect/mystic = 1,
+		/datum/aspect/conjure = 2,
+	)
+
+/datum/religion_sect/custom/cult
+	name = "Custom Cult"
+	convert_opener = "Chaos is power."
+
+	aspects_count = 5
+
+	add_religion_name = FALSE

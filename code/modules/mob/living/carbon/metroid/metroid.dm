@@ -17,7 +17,12 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	attack_push_vis_effect = ATTACK_EFFECT_SLIME
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLIME
+
 	ventcrawler = 2
+
+	moveset_type = /datum/combat_moveset/slime
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
@@ -71,6 +76,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
+	w_class = SIZE_HUMAN
 
 
 /mob/living/carbon/slime/atom_init()
@@ -200,9 +206,7 @@
 
 /mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
 	attacked += 10
-	..(Proj)
-	return 0
-
+	return ..()
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -268,276 +272,42 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/slime/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
+/mob/living/carbon/slime/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[colour]
+	. = ..()
 
-		updatehealth()
-	return
+/mob/living/carbon/slime/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
+/mob/living/carbon/slime/adult/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
-/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] has glomped [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-		attacked += 5
-
-		if(istype(src, /mob/living/carbon/slime/adult))
-			damage = rand(1, 6)
-		else
-			damage = rand(1, 3)
-
-		adjustBruteLoss(damage)
-
-
-		updatehealth()
-
-	return
-
-
-/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		return
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
-/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
-
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-	..()
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-				return
-			if (health > 0)
-				attacked += 10
-				visible_message("<span class='warning'><B>[M.name] has attacked [src]!</B></span>")
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
-	return
-
-
-/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	..()
-
+/mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)
-		if(Victim == M)
-			if(prob(60))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-
-			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(90) && !client)
-					Discipline++
-
-				spawn()
-					SStun = 1
-					sleep(rand(45,60))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
-
+		if(Victim == attacker)
+			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
+			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			return FALSE
 		else
-			M.do_attack_animation(src)
 			if(prob(30))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
+				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				return FALSE
 
-			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+			if(prob(90) && !client)
+				Discipline++
 
-				if(prob(80) && !client)
-					Discipline++
+			Victim = null
+			anchored = FALSE
+			step_away(src, attacker)
+			return TRUE
 
-					if(!istype(src, /mob/living/carbon/slime/adult))
-						if(Discipline == 1)
-							attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(55,65))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
-
-
-
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-
-		if ("grab")
-			M.Grab(src)
-
-		else
-
-			var/damage = rand(1, 9)
-
-			attacked += 10
-			if (prob(90))
-				if (HULK in M.mutations)
-					damage += 5
-					if(Victim)
-						Victim = null
-						anchored = 0
-						if(prob(80) && !client)
-							Discipline++
-					spawn(0)
-
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
-
-
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
-
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
-	return
-
-
-
-/mob/living/carbon/slime/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-
-		if ("hurt")
-
-			if ((prob(95) && health > 0))
-				attacked += 10
-				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					visible_message("<span class='warning'><B>[M] has attacked [name]!</B></span>")
-				else
-					visible_message("<span class='warning'><B>[M] has wounded [name]!</B></span>")
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
-
-		if ("grab")
-			M.Grab(src)
-
-		if ("disarm")
-			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-			var/damage = 5
-			attacked += 10
-
-			if(prob(95))
-				visible_message("<span class='warning'><B>[M] has tackled [name]!</B></span>")
-
-				if(Victim)
-					Victim = null
-					anchored = 0
-					if(prob(80) && !client)
-						Discipline++
-						if(!istype(src, /mob/living/carbon/slime))
-							if(Discipline == 1)
-								attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(5,20))
-					SStun = 0
-
-				spawn(0)
-
-					step_away(src,M,15)
-					sleep(3)
-					step_away(src,M,15)
-
-			else
-				drop_item()
-				visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
-			adjustBruteLoss(damage)
-			updatehealth()
-	return
-
+	return ..()
 
 /mob/living/carbon/slime/restrained()
 	return 0
-
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return
@@ -555,7 +325,23 @@
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+	med_hud_set_health()
+	med_hud_set_status()
 
+/mob/living/carbon/slime/getTrail()
+	return null
+
+/mob/living/carbon/slime/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/slime/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/is_usable_leg(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/get_species()
+	return SLIME
 
 /obj/item/slime_extract
 	name = "slime extract"
@@ -563,7 +349,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -571,19 +357,20 @@
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
 
-/obj/item/slime_extract/attackby(obj/item/weapon/O, mob/user)
-	..()
-	if(istype(O, /obj/item/weapon/slimesteroid2))
+/obj/item/slime_extract/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
 			to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
-			return ..()
+			return
 		if(Uses == 0)
 			to_chat(user, "<span class='warning'>You can't enhance a used extract!</span>")
-			return ..()
+			return
 		to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 		Uses = 3
 		enhanced = 1
-		qdel(O)
+		qdel(I)
+		return
+	return ..()
 
 /obj/item/slime_extract/atom_init()
 	. = ..()
@@ -863,7 +650,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 
 /obj/item/clothing/suit/space/golem
@@ -871,7 +658,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -888,10 +675,10 @@
 	siemens_coefficient = 0
 	can_breach = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -928,39 +715,37 @@
 		to_chat(user, "<span class='notice'>You cannot do this so often.</span>")
 		return
 	if(user == spirit)
-		for(var/image/I in user.client.images)
-			if(I.loc == src && I.icon_state == "agolem_master")
-				user.client.images -= I
-				break
 		spirit = null
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
 		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
-		user.client.images += I
 		spirit = user
 		user.golem_rune = src
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
 	check_spirit()
 
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!check_spirit())
-		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
+/obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
+	if(H.my_golem || H.get_species() == GOLEM)
 		return
-	user.SetNextMove(CLICK_CD_INTERACT)
+	if(!check_spirit())
+		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
+		return
+	H.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
-	G.my_master = user
-	G.update_golem_hud_icons()
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.my_golems += G
-		H.update_golem_hud_icons()
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+	G.my_master = H
+	H.my_golem = G
+	// Golem get hud
+	H.set_golem_hud()
+	var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+	golem_hud.add_to_single_hud(G, H)
+
+	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
+	G.mind.memory += "<B>[H]</B> - your master."
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
@@ -983,25 +768,6 @@
 	update_icon()
 	return result
 
-/mob/living/carbon/human/proc/update_golem_hud_icons()
-	if(client)
-		if(dna && (dna.mutantrace == "adamantine"))
-			if(my_master)
-				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
-				client.images += I
-		else
-			if(my_golems)
-				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
-					client.images += I
-
-
-/mob/living/carbon/slime/getTrail()
-	return null
-
-/mob/living/carbon/slime/get_species()
-	return SLIME
-
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
@@ -1012,7 +778,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -1068,9 +834,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
+	visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
@@ -1079,10 +845,10 @@
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
-		src.Hatch()
+		Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W, mob/user)
-	if(istype( W, /obj/item/toy/crayon ))
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
 		return
 	else
-		..()
+		return ..()

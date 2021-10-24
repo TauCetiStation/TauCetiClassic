@@ -16,6 +16,10 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	if(stat >=2)
 		//world << "He's dead jim."
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.species.flags[VIRUS_IMMUNE])
+			return
 	if(istype(virus, /datum/disease/advance))
 		//world << "It's an advance virus."
 		var/datum/disease/advance/A = virus
@@ -26,7 +30,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			return
 
 	else
-		if(src.resistances.Find(virus.type))
+		if(resistances.Find(virus.type))
 			//world << "Normal virus and resisted"
 			return
 
@@ -47,7 +51,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	if(skip_this == 1)
 		//world << "infectin"
 		//if(src.virus)				< -- this used to replace the current disease. Not anymore!
-			//src.virus.cure(0)
+			//virus.cure(0)
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v
 		v.affected_mob = src
@@ -172,6 +176,9 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.med_hud_set_status()
 		if(v.can_carry && prob(5))
 			v.carrier = 1
 		return

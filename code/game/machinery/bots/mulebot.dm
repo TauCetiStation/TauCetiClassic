@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
@@ -12,9 +10,8 @@
 	name = "Mulebot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
-	layer = MOB_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	animate_movement=1
 	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
 	maxhealth = 150
@@ -100,8 +97,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
-		user.drop_item()
-		C.loc = src
+		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
 	else if(isscrewdriver(I))
@@ -111,11 +107,11 @@
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
+			visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
 			icon_state="mulebot-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
+			visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 			icon_state = "mulebot0"
 
 		updateDialog()
@@ -137,8 +133,7 @@
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked
@@ -228,8 +223,9 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
-	onclose(user, "mulebot")
+	var/datum/browser/popup = new(user, "window=mulebot", src.name, 350, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	. = ..()
@@ -238,7 +234,7 @@
 
 	switch(href_list["op"])
 		if("lock", "unlock")
-			if(src.allowed(usr))
+			if(allowed(usr))
 				locked = !locked
 			else
 				to_chat(usr, "<span class='warning'>Access denied.</span>")
@@ -268,9 +264,8 @@
 			if(open && !cell)
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					usr.drop_item()
+					usr.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 
 					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
@@ -347,12 +342,11 @@
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(user) && !isrobot(user))
-		return
-	if(user.stat)
+	if(user.incapacitated() || user.lying)
 		return
 
-	if(user.incapacitated() || user.lying)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(AM))
@@ -363,12 +357,16 @@
 // mousedrop a crate to load the bot
 // can load anything if emagged
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(usr) && !isrobot(usr))
-		return
 	if(user.incapacitated() || user.lying)
 		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if (!istype(AM))
 		return
+
 	load(AM)
 
 // called to load a crate
@@ -414,9 +412,9 @@
 		return 0
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
-		density = 1
+		density = TRUE
 		if(!can_step)
 			return 0
 	return ..()
@@ -521,14 +519,14 @@
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							B.set_dir(newdir)
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							B.set_dir(newdir)
 						bloodiness--
 
 					var/moved = step_towards(src, next)	// attempt to move
@@ -630,7 +628,7 @@
 // called when bot reaches current target
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
-		src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
+		visible_message("[src] makes a chiming sound!", "You hear a chime.")
 		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		reached_target = 1
 
@@ -668,9 +666,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
+				visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
+				visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -684,7 +682,7 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
+	visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/damage = rand(5,15)
@@ -830,14 +828,14 @@
 
 /obj/machinery/bot/mulebot/emp_act(severity)
 	if (cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	if(load)
-		load.emp_act(severity)
+		load.emplode(severity)
 	..()
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>")
+	visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)

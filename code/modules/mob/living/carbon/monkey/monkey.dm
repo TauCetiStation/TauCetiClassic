@@ -22,6 +22,10 @@
 	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
+	pull_size_ratio = 1.5
+	w_class = SIZE_BIG
+
+	moveset_type = /datum/combat_moveset/human
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -144,222 +148,9 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
-/mob/living/carbon/monkey/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		var/shielded = 0
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming" && !( shielded )))
-			adjustFireLoss(40)
-		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	return
-
-//mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
-
-
-/mob/living/carbon/monkey/attack_paw(mob/M)
-	..()
-
-	if (M.a_intent == "help")
-		help_shake_act(M)
-	else
-		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-			M.do_attack_animation(src)
-			if ((prob(75) && health > 0))
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M.name] has bit [name]!</B></span>")
-				var/damage = rand(1, 5)
-				adjustBruteLoss(damage)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						contract_disease(D,1,0)
-			else
-				visible_message("<span class='warning'><B>[M.name] has attempted to bite [name]!</B></span>")
-	return
-
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					apply_effects(0,0,0,0,5,0,0,150)
-
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-					s.set_up(3, 1, src)
-					s.start()
-
-					M.do_attack_animation(src)
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	if (M.a_intent == "help")
-		help_shake_act(M)
-		get_scooped(M)
-	else
-		if (M.a_intent == "hurt")
-			M.do_attack_animation(src)
-			if ((prob(75) && health > 0))
-				visible_message("<span class='warning'><B>[M] has punched [name]!</B></span>")
-
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				var/damage = rand(5, 10)
-				if (prob(40))
-					damage = rand(10, 15)
-					if (paralysis < 5)
-						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='warning'><B>[M] has knocked out [name]!</B></span>")
-							return
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to punch [name]!</B></span>")
-		else
-			if (M.a_intent == "grab")
-				M.Grab(src)
-			else
-				if (!( paralysis ))
-					if (prob(25))
-						Paralyse(2)
-						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has pushed down [name]!</B></span>")
-					else
-						drop_item()
-						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
-	return
-
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-
-		if ("hurt")
-			if ((prob(95) && health > 0))
-				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if (paralysis < 15)
-						Paralyse(rand(10, 15))
-					visible_message("<span class='warning'><B>[M] has wounded [name]!</B></span>")
-				else
-					visible_message("<span class='warning'><B>[M] has slashed [name]!</B></span>")
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
-
-		if ("grab")
-			M.Grab(src)
-
-		if ("disarm")
-			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-			var/damage = 5
-			if(prob(95))
-				Weaken(15)
-				visible_message("<span class='warning'><B>[M] has tackled down [name]!</B></span>")
-			else
-				drop_item()
-				visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
-			adjustBruteLoss(damage)
-			updatehealth()
-	return
-
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		return
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
-
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-
-		if(istype(src, /mob/living/carbon/slime/adult))
-			damage = rand(20, 40)
-		else
-			damage = rand(5, 35)
-
-		adjustBruteLoss(damage)
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
-
-				Weaken(power)
-				if (stuttering < power)
-					stuttering = power
-				Stun(power)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
-
-	return
+/mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
+	help_shake_act(attacker)
+	get_scooped(attacker)
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -368,9 +159,10 @@
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
 			stat(null, "Nutriment: [nutrition]/400")
-		CHANGELING_STATPANEL_STATS(null)
-
-	CHANGELING_STATPANEL_POWERS(null)
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
@@ -379,7 +171,7 @@
 	return
 
 /mob/living/carbon/monkey/emp_act(severity)
-	if(wear_id) wear_id.emp_act(severity)
+	if(wear_id) wear_id.emplode(severity)
 	..()
 
 /mob/living/carbon/monkey/ex_act(severity)
@@ -423,11 +215,14 @@
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	return 0
 
-/mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
+/mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
 	if(stat)
 		return
 
-	if(copytext(message,1,2) == "*")
+	if(!message)
+		return
+
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 
 	if(speak_emote.len)
@@ -436,6 +231,15 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/is_usable_arm(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/is_usable_leg(targetzone = null)
+	return TRUE
 
 /mob/living/carbon/monkey/get_species()
 	return race

@@ -14,14 +14,13 @@
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 		var/mob/living/M = target
-		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [M.real_name] ([M.ckey])</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [M.real_name] ([M.ckey])", user)
+		M.log_combat(user, "planted (attempt) with [name]")
 		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [M.name]!</span>")
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = target) && user.Adjacent(target))
 		user.drop_item()
 		target = target
 		loc = null

@@ -1,3 +1,4 @@
+#define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
 #define TANK_DEFAULT_RELEASE_PRESSURE 24
 
@@ -6,7 +7,7 @@
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	force = 5.0
 	throwforce = 10.0
@@ -73,22 +74,21 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user)
-	..()
-	//var/obj/icon = src
-
-	//if (istype(src.loc, /obj/item/assembly))
-	//	icon = src.loc // wtf is this?
-
-	if (istype(W, /obj/item/device/analyzer))
+/obj/item/weapon/tank/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/analyzer))
 		return
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
+
+	else if (istype(I,/obj/item/latexballon))
+		var/obj/item/latexballon/LB = I
 		LB.blow(src)
 		add_fingerprint(user)
 
-	if(istype(W, /obj/item/device/assembly_holder))
-		bomb_assemble(W,user)
+	else if(istype(I, /obj/item/device/assembly_holder))
+		bomb_assemble(I, user)
+		return
+
+	else
+		return ..()
 
 /obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))
@@ -96,93 +96,94 @@
 
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/item/weapon/tank/ui_interact(mob/user)
+	tgui_interact(user)
 
-	var/using_internal
-	if(istype(loc,/mob/living/carbon))
-		var/mob/living/carbon/location = loc
-		if(location.internal==src)
-			using_internal = 1
+/obj/item/weapon/tank/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Tank", name)
+		ui.open()
 
-	// this is the data which will be sent to the ui
-	var/data[0]
+
+/obj/item/weapon/tank/tgui_data(mob/user)
+	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
 	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
-	data["valveOpen"] = using_internal ? 1 : 0
+	data["connected"] = FALSE
 
-	data["maskConnected"] = 0
-	if(istype(loc,/mob/living/carbon))
-		var/mob/living/carbon/location = loc
-		if(location.internal == src || (location.wear_mask && (location.wear_mask.flags & MASKINTERNALS)))
-			data["maskConnected"] = 1
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "tanks.tmpl", "Tank", 500, 300)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+	var/mob/living/carbon/C = user
+	if(!istype(C))
+		C = loc.loc
+	if(!istype(C))
+		return data
 
-/obj/item/weapon/tank/Topic(href, href_list)
-	..()
-	if (usr.stat|| usr.restrained())
-		return 0
-	if (src.loc != usr)
-		return 0
+	if(C.internal == src)
+		data["connected"] = TRUE
 
-	if (href_list["dist_p"])
-		if (href_list["dist_p"] == "reset")
-			src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "max")
-			src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
-		else
-			var/cp = text2num(href_list["dist_p"])
-			src.distribute_pressure += cp
-		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
-	if (href_list["stat"])
-		if(iscarbon(loc))
-			if(internal_switch > world.time)
-				return
-			var/internalsound
-			var/mob/living/carbon/C = loc
-			if(C.internal == src)
-				C.internal = null
-				C.internals.icon_state = "internal0"
-				to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
-				if (C.internals)
+	return data
+
+/obj/item/weapon/tank/tgui_state(mob/user)
+	return global.physical_state
+
+/obj/item/weapon/tank/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	add_fingerprint(usr)
+	switch(action)
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = initial(distribute_pressure)
+				. = TRUE
+			else if(pressure == "min")
+				pressure = TANK_MIN_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = TANK_MAX_RELEASE_PRESSURE
+				. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+		if("internal")
+			if(iscarbon(loc))
+				if(internal_switch > world.time)
+					return
+				var/internalsound
+				var/mob/living/carbon/C = loc
+				if(C.internal == src)
+					C.internal = null
 					C.internals.icon_state = "internal0"
-				internalsound = 'sound/misc/internaloff.ogg'
-				if(ishuman(C)) // Because only human can wear a spacesuit
-					var/mob/living/carbon/human/H = C
-					if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-						internalsound = 'sound/misc/riginternaloff.ogg'
-				playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
-			else
-				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
-					C.internal = src
-					to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
+					to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
 					if (C.internals)
-						C.internals.icon_state = "internal1"
-					internalsound = 'sound/misc/internalon.ogg'
+						C.internals.icon_state = "internal0"
+					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+							internalsound = 'sound/misc/riginternaloff.ogg'
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 				else
-					to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
-			internal_switch = world.time + 16
-
-	src.add_fingerprint(usr)
-	return 1
-
+					if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+						C.internal = src
+						to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
+						if (C.internals)
+							C.internals.icon_state = "internal1"
+						internalsound = 'sound/misc/internalon.ogg'
+						if(ishuman(C)) // Because only human can wear a spacesuit
+							var/mob/living/carbon/human/H = C
+							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+								internalsound = 'sound/misc/riginternalon.ogg'
+						playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+					else
+						to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
+				internal_switch = world.time + 16
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -235,7 +236,7 @@
 
 		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
 
-		explosion(epicenter, round(CLAMP(range*0.25,effrange*0.25,effrange-2)), round(CLAMP(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
+		explosion(epicenter, round(clamp(range*0.25,effrange*0.25,effrange-2)), round(clamp(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
 		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -245,7 +246,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
+			playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
 			qdel(src)
 		else
 			integrity--
@@ -263,3 +264,7 @@
 
 	else if(integrity < 3)
 		integrity++
+
+#undef TANK_MIN_RELEASE_PRESSURE
+#undef TANK_MAX_RELEASE_PRESSURE
+#undef TANK_DEFAULT_RELEASE_PRESSURE

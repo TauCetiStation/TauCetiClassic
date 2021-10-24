@@ -21,6 +21,7 @@
 	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
@@ -52,6 +53,7 @@
 
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -129,8 +131,18 @@
 
 	var/list/prevent_survival_kit_items = list()
 
+	var/list/replace_outfit = list()
+
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
+
+	var/list/prohibit_roles
+
+	// What movesets do these species grant.
+	var/list/moveset_types
+
+	// Bubble can be changed depending on species
+	var/typing_indicator_type = "default"
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -138,6 +150,11 @@
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
+/datum/species/proc/can_be_role(role)
+	if(!prohibit_roles)
+		return TRUE
+	return !(role in prohibit_roles)
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
@@ -148,24 +165,66 @@
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
-		new path(null, H)
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
-		new path(null, H)
+		var/obj/item/organ/internal/O = new path(null)
+		O.insert_organ(H)
 
 	if(flags[IS_SYNTHETIC])
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+
+/**
+  * Replace human clothes in [outfit] on species clothes
+  *
+  * Called after pre_equip()
+  */
+/datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
+	species_replace_outfit(O, replace_outfit)
+	call_species_equip_proc(H, O)
+	return
+
+// replaces default outfit (human outfit) on outfit from replace_outfit
+/datum/species/proc/species_replace_outfit(datum/outfit/O, list/replace_outfit = null)
+	if(replace_outfit.len)
+		var/list/outfit_types = list(
+			"[SLOT_W_UNIFORM]" = O.uniform,
+			"[SLOT_WEAR_SUIT]" = O.suit,
+			"[SLOT_BACK]" = O.back,
+			"[SLOT_BELT]" = O.belt,
+			"[SLOT_GLOVES]" = O.gloves,
+			"[SLOT_SHOES]" = O.shoes,
+			"[SLOT_HEAD]" = O.head,
+			"[SLOT_WEAR_MASK]" = O.mask,
+			"[SLOT_TIE]" = O.neck,
+			"[SLOT_L_EAR]" = O.l_ear,
+			"[SLOT_R_EAR]" = O.r_ear,
+			"[SLOT_GLASSES]" = O.glasses
+			)
+		for(var/I in outfit_types)
+			if(replace_outfit[outfit_types[I]])
+				O.change_slot_equip(text2num(I), replace_outfit[outfit_types[I]])
+
+/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return
+
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
-	return
+	for(var/moveset in moveset_types)
+		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
-/datum/species/proc/on_loose(mob/living/carbon/human/H)
-	return
+	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	H.remove_moveset_source(MOVESET_SPECIES)
+
+	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -181,38 +240,17 @@
 			//H.is_jittery = 0
 			//H.jitteriness = 0
 			H.update_hair()
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
+	IO.heart_stop()
 	return
 
 /datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
 	return
 
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/storage/box/survival/SK = new(H)
-
-	species_survival_kit_items:
-		for(var/type in survival_kit_items)
-			/*
-			is_type_in_list only work on instantinated objects.
-			*/
-			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
-				if(ispath(type, type_to_check))
-					continue species_survival_kit_items
-			new type(SK)
-
-	job_survival_kit_items:
-		for(var/type in J.survival_kit_items)
-			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
-				if(ispath(type, type_to_check))
-					continue job_survival_kit_items
-			new type(SK)
-
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(SK, SLOT_IN_BACKPACK)
+	return
 
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
@@ -284,6 +322,10 @@
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
 
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
+
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -291,11 +333,16 @@
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.unathi_equip(H)
+
 /datum/species/unathi/on_gain(mob/living/M)
+	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
 /datum/species/unathi/on_loose(mob/living/M)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
+	..()
 
 /datum/species/tajaran
 	name = TAJARAN
@@ -346,12 +393,19 @@
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
 
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			)
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
+
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.tajaran_equip(H)
 
 /datum/species/skrell
 	name = SKRELL
@@ -393,11 +447,17 @@
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.skrell_equip(H)
+
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
+	additional_languages = list("Tradeband")
+	tail = "vox_prim"
+
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
@@ -418,11 +478,19 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
+		,HAS_TAIL = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
-		,HAS_SKIN_COLOR = TRUE
-		,NO_FAT=  TRUE
+		,NO_FAT = TRUE
 	)
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/vox,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
+		O_LIVER   = /obj/item/organ/internal/liver/vox,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
+		)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
@@ -441,14 +509,26 @@
 		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
+							/obj/item/clothing/mask/gas/vox,
+							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
 	                          )
 
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 
-	min_age = 12
-	max_age = 20
+	min_age = 1
+	max_age = 100
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
+			)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -456,16 +536,16 @@
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
 		H.internal = H.r_store
 	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
 		H.internal = H.l_store
 	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
 		H.internal = H.l_hand
 	if(H.shoes)
 		qdel(H.shoes)
@@ -474,9 +554,12 @@
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
 
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.vox_equip(H)
+
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
-		H.leap_icon = new /obj/screen/leap()
+		H.leap_icon = new /atom/movable/screen/leap()
 		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
@@ -487,7 +570,7 @@
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -501,7 +584,7 @@
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -576,6 +659,7 @@
 
 	burn_mod = 1.3
 	speed_mod = 7
+	speed_mod_no_shoes = -2
 
 	// restricted_inventory_slots = list(SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_SHOES) // These are trees. Not people. Deal with the fact that they don't have these. P.S. I may return to this one day ~Luduk.
 
@@ -588,11 +672,13 @@
 	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
 	,NO_SCAN = TRUE
-	,IS_PLANT = TRUE
-	,RAD_ABSORB = TRUE
+	,NO_EMOTION = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
+	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
+	,RAD_ABSORB = TRUE
 	)
 
 	has_bodypart = list(
@@ -627,6 +713,8 @@
 
 	min_age = 1
 	max_age = 1000
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -689,11 +777,14 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	// This should cause IPCs to stabilize at ~52 C in a 20 C environment with fully functional cooling system
+	synth_temp_gain = 10
+	// IPCs heat up until ~306C. No more 2000C IPCs
+	synth_temp_max = 550
 
 	brute_mod = 1.5
 	burn_mod = 1
@@ -710,7 +801,9 @@
 	,NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
+	,NO_EMOTION = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
@@ -719,6 +812,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
@@ -743,8 +837,8 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
-	                          /obj/item/device/robotanalyzer
+	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
+	                          /obj/item/stack/nanopaste
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
@@ -752,9 +846,13 @@
 	min_age = 1
 	max_age = 125
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
+	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
@@ -762,9 +860,11 @@
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
+	..()
 
 /datum/species/machine/handle_death(mob/living/carbon/human/H)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
@@ -825,6 +925,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
@@ -833,6 +934,10 @@
 	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	has_bodypart = list(
@@ -856,6 +961,8 @@
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
+
 	return ..()
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
@@ -866,9 +973,10 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
+	var/damType = BRUTE
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
+	var/sharp = FALSE
+	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
@@ -882,10 +990,12 @@
 
 /datum/unarmed_attack/diona
 	attack_verb = list("lash", "bludgeon")
-	damage = 5
+	damage = 2
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+	damage = 5
+	damType = CLONE
 
 /datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
@@ -893,9 +1003,9 @@
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
+	damage = 2
+	sharp = TRUE
+	edge = TRUE
 
 /datum/unarmed_attack/claws/New()
 	attack_sound = list('sound/weapons/slice.ogg')
@@ -945,6 +1055,8 @@
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -984,6 +1096,7 @@
 
 	flags = list(
 		NO_BLOOD = TRUE,
+		NO_DNA = TRUE,
 		NO_BREATHE = TRUE,
 		NO_SCAN = TRUE,
 		NO_PAIN = TRUE,
@@ -993,7 +1106,10 @@
 		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
-		NO_MINORCUTS = TRUE
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE,
+		NO_MUTATION = TRUE,
+		NO_FAT = TRUE,
 		)
 
 	has_organ = list(
@@ -1006,6 +1122,10 @@
 	max_age = 1000
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
+	..()
+	// Clothing on the Golem is created before the hud_list is generated in the atom
+	H.prepare_huds()
+
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
@@ -1020,8 +1140,6 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
-
-	return ..()
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -1042,7 +1160,7 @@
 			if(is_type_in_list(x, golem_items))
 				qdel(x)
 
-	return ..()
+	..()
 
 /datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_golem_digest(M)
@@ -1064,6 +1182,7 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	brute_mod = 2
@@ -1091,7 +1210,7 @@
 
 	add_zombie(H)
 
-	return ..()
+	..()
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -1104,7 +1223,7 @@
 
 	remove_zombie(H)
 
-	return ..()
+	..()
 
 
 /datum/species/zombie/tajaran
@@ -1130,6 +1249,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25
@@ -1172,6 +1292,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25

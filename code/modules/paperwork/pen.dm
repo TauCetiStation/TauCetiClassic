@@ -17,11 +17,21 @@
 	item_state = "pen"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
+	var/click_cooldown = 0
+
+/obj/item/weapon/pen/proc/get_signature(mob/user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/attack_self(mob/user)
+	if(click_cooldown <= world.time)
+		click_cooldown = world.time + 2
+		to_chat(user, "<span class='notice'>Click.</span>")
+		playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 50)
 
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
@@ -29,6 +39,18 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
+
+/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
+	..()
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(!entity)
+			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
+			var/list/choices = list()
+			for(var/mob/dead/observer/D in observer_list)
+				if(D.started_as_observer)
+					choices += D.name
+			if(choices.len)
+				entity = sanitize(pick(choices))
 
 /obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
 	..()
@@ -40,21 +62,24 @@
 	                        "Sound the alarms, all of them!", "Are you, [user], any better?", "You can always give up.", "Why even?")
 	to_chat(user, "<span class='bold'>[entity]</span> [pick("moans", "laments", "whines", "blubbers")], \"[pick(phrases)]\"")
 
-/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
+		return
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 			if(entity && istype(I, /obj/item/weapon/nullrod))
 				entity = ""
 				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
+				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
 				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
 				entity = B.deity_name
+				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
 				for(var/A in P.photographed_names)
@@ -62,6 +87,11 @@
 						entity = A
 						to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 						break
+				return
+	return ..()
+
+/obj/item/weapon/pen/ghost/get_signature(mob/user)
+	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -114,7 +144,6 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "materials=2;syndicate=5"
 
-
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	..()
 
@@ -123,7 +152,6 @@
 
 	if(reagents.total_volume && M.reagents && M.try_inject(user, TRUE, TRUE, TRUE))
 		reagents.trans_to(M, 50)
-
 
 /obj/item/weapon/pen/paralysis/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
@@ -136,39 +164,114 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	tools = list()
+	flags = NOBLOODY
 	var/on = 0
+	var/hacked = 0
+
+/obj/item/weapon/pen/edagger/atom_init()
+	. = ..()
+	item_color = pick("blue", "red", "green", "purple", "yellow", "pink", "black")
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+	..()
+	toggle(user)
+
+/obj/item/weapon/pen/edagger/proc/toggle(mob/living/user)
 	if(on)
 		on = 0
 		force = initial(force)
 		w_class = initial(w_class)
 		edge = initial(edge)
+		sharp = initial(sharp)
+		can_embed = initial(can_embed)
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+		tools = list()
 	else
 		on = 1
 		force = 18
-		w_class = ITEM_SIZE_NORMAL
-		edge = 1
+		w_class = SIZE_SMALL
+		edge = TRUE
+		sharp = TRUE
+		can_embed = FALSE
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+		tools = list(
+			TOOL_KNIFE = 1
+			)
 	update_icon()
+
+/obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(ismultitool(I))
+		if(!hacked)
+			hacked = TRUE
+			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
+			item_color = "rainbow"
+			if (on)
+				toggle(user)
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+
 
 /obj/item/weapon/pen/edagger/update_icon()
 	if(on)
-		icon_state = "edagger"
-		item_state = "edagger"
+		icon_state = "edagger[item_color]"
+		item_state = "edagger[item_color]"
 	else
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+/*
+ * Colors of edagger
+*/
+
+/obj/item/weapon/pen/edagger/blue/atom_init()
+	. = ..()
+	item_color = "blue"
+
+/obj/item/weapon/pen/edagger/red/atom_init()
+	. = ..()
+	item_color = "red"
+
+/obj/item/weapon/pen/edagger/green/atom_init()
+	. = ..()
+	item_color = "green"
+
+/obj/item/weapon/pen/edagger/purple/atom_init()
+	. = ..()
+	item_color = "purple"
+
+/obj/item/weapon/pen/edagger/yellow/atom_init()
+	. = ..()
+	item_color = "yellow"
+
+/obj/item/weapon/pen/edagger/pink/atom_init()
+	. = ..()
+	item_color = "pink"
+
+/obj/item/weapon/pen/edagger/black/atom_init()
+	. = ..()
+	item_color = "black"
+
+/*
+ * Legit edagger for NT boys
+ */
+
+/obj/item/weapon/pen/edagger/legitimate
+	origin_tech = "combat=3"
+
+/obj/item/weapon/pen/edagger/legitimate/atom_init()
+	. = ..()
+	item_color = "blue"
 
 /*
  * Chameleon pen
@@ -177,27 +280,11 @@
 	var/signature = ""
 
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
+	..()
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
-
-/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
-	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
-		if(!entity)
-			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
-			var/list/choices = list()
-			for(var/mob/dead/observer/D in observer_list)
-				if(D.started_as_observer)
-					choices += D.name
-			if(choices.len)
-				entity = sanitize(pick(choices))
-
-/obj/item/weapon/pen/proc/get_signature(mob/user)
-	return (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/get_signature(mob/user)
 	return signature ? signature : "Anonymous"
-
-/obj/item/weapon/pen/ghost/get_signature(mob/user)
-	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/verb/set_colour()
 	set name = "Change Pen Colour"
@@ -227,4 +314,3 @@
 			else
 				colour = "black"
 		to_chat(usr, "<span class='info'>You select the [lowertext(selected_type)] ink container.</span>")
-

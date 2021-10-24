@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -28,16 +28,15 @@
 	if(!istype(M))
 		return
 	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
-		src.reagents.reaction(M, INGEST)
+		reagents.reaction(M, INGEST)
 		if(M.reagents)
 
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
-			var/contained = english_list(injected)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[key_name(user)] injected [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+			var/contained = get_english_list(injected)
+
+			M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 			playsound(src, 'sound/effects/hypospray.ogg', VOL_EFFECTS_MASTER, 25)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -50,7 +49,7 @@
 
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
-	name = "autoinjector"
+	name = "inaprovaline autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
 	icon_state = "autoinjector"
 	item_state = "autoinjector"
@@ -61,6 +60,7 @@
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
+	item_state = "autoinjector_empty"
 	volume = 20
 	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
 
@@ -73,8 +73,15 @@
 	..()
 	update_icon()
 
+	if(user.hand)
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
 	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "autoinjector_empty"
+		item_state = "autoinjector_empty"

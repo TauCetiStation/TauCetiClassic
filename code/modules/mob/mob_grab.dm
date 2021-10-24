@@ -11,10 +11,10 @@
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL
-	var/obj/screen/grab/hud = null
+	flags = DROPDEL|NOBLUDGEON
+	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
-	var/mob/living/carbon/human/assailant = null
+	var/mob/living/assailant = null
 	var/state = GRAB_NONE
 
 	var/allow_upgrade = 1
@@ -25,54 +25,53 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
-/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+/mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
-		return
-	if(lying || target == src || target.anchored)
-		return
-	if(!isturf(target.loc) || restrained())
-		return
+		return FALSE
+	if(target == src)
+		return FALSE
+	if(!isturf(target.loc))
+		return FALSE
+	if(incapacitated())
+		return FALSE
+	if(target.anchored)
+		return FALSE
+	return TRUE
+
+/mob/proc/tryGrab(atom/movable/target, force_state, show_warnings = TRUE)
+	if(!canGrab(target, show_warnings))
+		return FALSE
+
 	for(var/obj/item/weapon/grab/G in GetGrabs())
 		if(G.affecting == target)
 			if(show_warnings)
 				to_chat(src, "<span class='warning'>You already grabbed [target]</span>")
-			return
+			return FALSE
+
 	if(!target.Adjacent(src))
-		return
+		return FALSE
 	if(get_active_hand() && get_inactive_hand())
 		if(show_warnings)
-			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
-		return
-	if(ismob(target))
-		var/mob/M = target
-		if(!(M.status_flags & CANPUSH))
-			return
-		if(M.buckled)
-			if(show_warnings)
-				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
-			return
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(src)
-			if(H.pull_damage())
-				if(show_warnings)
-					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
-		M.inertia_dir = 0
+			to_chat(src, "<span class='warning'>You are holding too much stuff already.</span>")
+		return FALSE
 
-	new /obj/item/weapon/grab(src, target, force_state)
+	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
+		return FALSE
+
+	Grab(target, force_state, show_warnings)
+	return TRUE
+
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	return
 
 /obj/item/weapon/grab/atom_init(mapload, mob/victim, initial_state = GRAB_PASSIVE)
 	. = ..()
 	assailant = loc
 	affecting = victim
 
-	if(affecting.anchored)
-		return INITIALIZE_HINT_QDEL
-
-	hud = new /obj/screen/grab(src)
+	hud = new /atom/movable/screen/grab(src)
 	hud.master = src
 
 	victim.grabbed_by += src
@@ -92,10 +91,13 @@
 	synch()
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
-	if(state == GRAB_PASSIVE)
-		assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
-	else if(state == GRAB_AGGRESSIVE)
-		visible_message("<span class='warning'><b>\The [assailant]</b> seizes [affecting] aggressively!</span>")
+	switch(state)
+		if(GRAB_PASSIVE)
+			assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
+		if(GRAB_AGGRESSIVE)
+			visible_message("<span class='warning'><b>\The [assailant]</b> seizes [affecting] aggressively!</span>")
+		if(GRAB_NECK)
+			visible_message("<span class='warning'><b>\The [assailant]</b> has grabbed [affecting] by the neck!</span>")
 
 	START_PROCESSING(SSobj, src)
 
@@ -120,8 +122,11 @@
 		else
 			qdel(src)
 
-/obj/item/weapon/grab/proc/set_state(_state)
-	assailant.SetNextMove(CLICK_CD_GRAB)
+/obj/item/weapon/grab/proc/set_state(_state, adjust_time = 5, force_loc = FALSE, force_dir = 0)
+	var/next_move_cd = CLICK_CD_GRAB
+	if(_state == GRAB_PASSIVE)
+		next_move_cd *= 0.5
+	assailant.SetNextMove(next_move_cd)
 
 	if(_state != state)
 		state = _state
@@ -139,7 +144,7 @@
 				icon_state = "grabbed+1"
 			if(GRAB_KILL)
 				hud.icon_state = "kill1"
-		adjust_position()
+		adjust_position(adjust_time, force_loc, force_dir)
 
 /mob/proc/StopGrabs()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
@@ -202,7 +207,7 @@
 		affecting.drop_l_hand()
 		affecting.drop_r_hand()
 
-		var/hit_zone = assailant.zone_sel.selecting
+		var/hit_zone = assailant.get_targetzone()
 		var/announce = 0
 		if(hit_zone != last_hit_zone)
 			announce = 1
@@ -231,10 +236,10 @@
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 			if(!BP || BP.is_stump)
 				qdel(src)
 				return PROCESS_KILL
+			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
@@ -242,7 +247,7 @@
 
 	if(state >= GRAB_KILL)
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
-		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
+		affecting.Stuttering(5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
@@ -255,11 +260,11 @@
 
 //Updating pixelshift, position and direction
 //Gets called on process, when the grab gets upgraded or the assailant moves
-/obj/item/weapon/grab/proc/adjust_position()
+/obj/item/weapon/grab/proc/adjust_position(adjust_time = 5, force_loc = FALSE, force_dir = 0)
 	if(!affecting)
 		return
 	if(affecting.buckled)
-		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
+		animate(affecting, pixel_x = 0, pixel_y = 0, time = adjust_time, 1, LINEAR_EASING)
 		return
 	if(affecting.lying && state != GRAB_KILL)
 //		animate(affecting, pixel_x = 0, pixel_y = 0, 5, 1, LINEAR_EASING)
@@ -279,27 +284,47 @@
 			shift = 12
 		if(GRAB_NECK)
 			shift = -10
-			adir = assailant.dir
+			if(!force_dir)
+				force_dir = assailant.dir
 			affecting.set_dir(assailant.dir)
-			affecting.loc = assailant.loc
+			force_loc = TRUE
 		if(GRAB_KILL)
 			shift = 0
-			adir = 1
+			if(!force_dir)
+				force_dir = NORTH
 			affecting.set_dir(SOUTH) //face up
-			affecting.loc = assailant.loc
+			force_loc = TRUE
+
+	if(force_dir)
+		adir = force_dir
+
+	if(force_loc)
+		affecting.forceMove(assailant.loc)
 
 	switch(adir)
 		if(NORTH)
-			animate(affecting, pixel_x = 0, pixel_y =-shift, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = 0
+				affecting.pixel_y = -shift
+			animate(affecting, pixel_x = 0, pixel_y =-shift, time = adjust_time, TRUE, LINEAR_EASING)
 			affecting.layer = 3.9
 		if(SOUTH)
-			animate(affecting, pixel_x = 0, pixel_y = shift, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = 0
+				affecting.pixel_y = shift
+			animate(affecting, pixel_x = 0, pixel_y = shift, time = adjust_time, TRUE, LINEAR_EASING)
 		if(WEST)
-			animate(affecting, pixel_x = shift, pixel_y = 0, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = shift
+				affecting.pixel_y = 0
+			animate(affecting, pixel_x = shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 		if(EAST)
-			animate(affecting, pixel_x =-shift, pixel_y = 0, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = -shift
+				affecting.pixel_y = 0
+			animate(affecting, pixel_x =-shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 
-/obj/item/weapon/grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!assailant)
@@ -336,9 +361,9 @@
 				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
-		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]", assailant)
+
+		affecting.log_combat(assailant, "neck-grabbed")
+
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
 
@@ -350,9 +375,8 @@
 				return
 
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
-		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]", assailant)
+
+		affecting.log_combat(assailant, "strangled")
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -389,10 +413,10 @@
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/hit_zone = assailant.zone_sel.selecting
+			var/hit_zone = assailant.get_targetzone()
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
-				if("help")
+				if(INTENT_HELP)
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
@@ -416,7 +440,7 @@
 						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-				if("grab")
+				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
@@ -427,9 +451,9 @@
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
-				if("hurt")
+				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -437,14 +461,14 @@
 						if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
 							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
 							return
-						if(!affecting.has_eyes())
+						if(!affecting.has_organ(O_EYES))
 							to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
 							return
 						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
-						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
-						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.", assailant)
+
+						affecting.log_combat(assailant, "finger-pressed into the eyes")
+
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
@@ -477,36 +501,32 @@
 						user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
 						if(prob(chance_to_force_vomit))
 							H.vomit(punched=TRUE)
-//					else if(hit_zone != BP_HEAD)
-//						if(state < GRAB_NECK)
-//							assailant << "<span class='warning'>You require a better grab to do this.</span>"
-//							return
-//						if(affecting:grab_joint(assailant))
-//							playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-//							return
 					else
 						if(affecting.lying)
 							return
 						assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
 						var/damage = 20
-						var/obj/item/clothing/hat = assailant.head
-						if(istype(hat))
-							damage += hat.force * 10
-						var/armor = affecting:run_armor_check(affecting, "melee")
-						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, BP_HEAD, armor)
-						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, assailant:run_armor_check(BP_HEAD, "melee"))
+						if(iscarbon(assailant))
+							var/mob/living/carbon/assailant_C = assailant
+							var/obj/item/clothing/hat = assailant_C.head
+							if(istype(hat))
+								damage += hat.force * 4
+						var/armor = affecting.run_armor_check(BP_HEAD, "melee")
+						var/armor_assailant = assailant.run_armor_check(BP_HEAD, "melee")
+						affecting.apply_damage(damage*rand(60, 82)/100, BRUTE, BP_HEAD, blocked = armor)
+						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [affecting.name] ([affecting.ckey])</font>")
-						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]", assailant)
+
+						affecting.log_combat(assailant, "headbutted")
+
 						assailant.drop_from_inventory(src)
 						src.loc = null
 						qdel(src)
 						return
-				if("disarm")
+				if(INTENT_PUSH)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
@@ -525,35 +545,6 @@
 					else
 						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
 						return
-
-	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isxeno(user) && iscarbon(affecting) ) )
-			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
-			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			if(isxeno(user))
-				if(affecting.stat == DEAD)
-					affecting.gib()
-					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
-						attacker.adjustToxLoss(100)
-						to_chat(attacker, "<span class='notice'>You gain some plasma.</span>")
-					else
-						attacker.adjustBruteLoss(-100)
-						attacker.adjustFireLoss(-100)
-						attacker.adjustOxyLoss(-100)
-						attacker.adjustCloneLoss(-100)
-						to_chat(attacker, "<span class='notice'>You feel better.</span>")
-				else
-					affecting.loc = user
-					attacker.stomach_contents.Add(affecting)
-			else
-				affecting.loc = user
-				attacker.stomach_contents.Add(affecting)
-			qdel(src)
 
 /obj/item/weapon/grab/Destroy()
 	if(affecting)

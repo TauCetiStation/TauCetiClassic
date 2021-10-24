@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 /mob/living/simple_animal/det5
 	name = "DET5"
 	icon_state = "robot_rd"
@@ -78,8 +79,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/det5/attack_hand(mob/living/user)
-	det5controll(user)
+/mob/living/simple_animal/det5/helpReaction(mob/living/carbon/human/attacker)
+	det5controll(attacker)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(searchfortarget == 1)
@@ -138,7 +139,7 @@
 			if(emagged == 1)
 				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 				sleep(500)
-				src.explode()
+				explode()
 				commandtrigger = 0
 		if("Explode (using motion sensor)")
 			if(emagged == 1)

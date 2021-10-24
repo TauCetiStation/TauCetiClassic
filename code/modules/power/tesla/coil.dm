@@ -3,8 +3,8 @@
 	desc = "For the union!"
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "coil"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 
@@ -45,17 +45,17 @@
 	var/power_produced = power / power_loss
 	add_avail(power_produced*input_power_multiplier)
 	flick("coilhit", src)
-	playsound(src, 'sound/magic/LightningShock.ogg', VOL_EFFECTS_MISC, null, null, 5)
+	playsound(src, 'sound/magic/LightningShock.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 5)
 	tesla_zap(src, 5, power_produced)
-	addtimer(VARSET_CALLBACK(src, being_shocked, FALSE), 10)
+	VARSET_IN(src, being_shocked, FALSE, 10)
 
 /obj/machinery/power/grounding_rod
 	name = "Grounding Rod"
 	desc = "Keep an area from being fried from Edison's Bane."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 
 /obj/machinery/power/grounding_rod/atom_init()
 	. = ..()

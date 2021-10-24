@@ -23,11 +23,12 @@
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
 
-/obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if ( iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use(0, user))
 			new /obj/item/stack/sheet/glass/phoronglass(user.loc, , TRUE)
 			qdel(src)
+			return
+	return ..()

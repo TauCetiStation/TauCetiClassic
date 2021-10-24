@@ -5,7 +5,7 @@
 
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "navbeacon0-f"
-	name = "navigation beacon"
+	name = "Navigation Beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = 2.5
@@ -115,7 +115,7 @@
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(open)
-			if (src.allowed(user))
+			if (allowed(user))
 				src.locked = !src.locked
 				to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
@@ -145,8 +145,7 @@
 	var/t
 
 	if(locked && !ai)
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-			<i>(swipe card to unlock controls)</i><BR>
+		t = {"<i>(swipe card to unlock controls)</i><BR>
 			Frequency: [format_frequency(freq)]<BR><HR>
 			Location: [location ? location : "(none)"]</A><BR>
 			Transponder Codes:<UL>"}
@@ -157,8 +156,7 @@
 
 	else
 
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-			<i>(swipe card to lock controls)</i><BR>
+		t = {"<i>(swipe card to lock controls)</i><BR>
 			Frequency:
 			<A href='byond://?src=\ref[src];freq=-10'>-</A>
 			<A href='byond://?src=\ref[src];freq=-2'>-</A>
@@ -171,13 +169,14 @@
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += " <small><A href='byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>"
-			t += " <A href='byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"
-		t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
+			t += " <small><A href='byond://?src=\ref[src];edit=1;code=[key]'>edit</A>"
+			t += " <A href='byond://?src=\ref[src];delete=1;code=[key]'>delete</A></small><BR>"
+		t += "<small><A href='byond://?src=\ref[src];add=1;'>add new</A></small><BR>"
 		t+= "<UL></TT>"
 
-	user << browse(entity_ja(t), "window=navbeacon")
-	onclose(user, "navbeacon")
+	var/datum/browser/popup = new(user, "window=navbeacon", src.name)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/navbeacon/Topic(href, href_list)
 	. = ..()

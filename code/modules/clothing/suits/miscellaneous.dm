@@ -121,7 +121,7 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -180,6 +180,25 @@
 	item_state = "cardborg"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
+	..()
+	if(slot == SLOT_WEAR_SUIT)
+		disguise(user)
+
+/obj/item/clothing/suit/cardborg/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("standard_borg_disguise")
+
+/obj/item/clothing/suit/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/cardborg/borghead)
+	if(istype(H))
+		if(!borghead)
+			borghead = H.head
+		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
+			I.override = 1
+			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "eyes-robot")) //gotta look realistic
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
 
 /obj/item/clothing/suit/byzantine_dress
 	name = "Byzantine dress"
@@ -565,7 +584,6 @@
 	icon_state = "cuirass"
 	item_state = "cuirass"
 	blood_overlay_type = "armor"
-	flags = THICKMATERIAL
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/goodman_jacket
@@ -672,3 +690,23 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
+	icon_state = "letterman"
+
+/obj/item/clothing/suit/jacket/letterman_red
+	name = "red letterman jacket"
+	desc = "A letterman jacket in a sick red color. Radical."
+	icon_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_syndie
+	name = "blood-red letterman jacket"
+	desc = "Oddly, this jacket seems to have a large S on the back..."
+	icon_state = "letterman_s"
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen
+	name = "blue letterman jacket"
+	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
+	icon_state = "letterman_n"

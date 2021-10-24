@@ -1157,7 +1157,7 @@
 	mobname = "Nathaniel Waters";
 	name = "Nathaniel Waters"
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -1268,14 +1268,14 @@
 /obj/structure/closet/crate{
 	name = "Gold Crate"
 	},
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dQ" = (
 /obj/structure/closet/crate{
 	name = "Gold Crate"
 	},
-/obj/item/mecha_parts/mecha_equipment/tool/drill,
+/obj/item/mecha_parts/mecha_equipment/drill,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dR" = (
@@ -1403,7 +1403,7 @@
 /obj/structure/closet/crate{
 	name = "Gold Crate"
 	},
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+/obj/item/mecha_parts/mecha_equipment/syringe_gun,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ej" = (

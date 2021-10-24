@@ -17,8 +17,8 @@
 			size = pick(20, 20, 30)
 			maintype = /obj/random/scrap/dense_even
 
-	var/list/makescrap = new/list()
-	var/list/makesparse = new/list()
+	var/list/makescrap = list()
+	var/list/makesparse = list()
 	makescrap += src.loc
 
 	for(var/i = 0 to size)
@@ -66,6 +66,7 @@
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
 	has_resources = 1
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
 	if(prob(1))

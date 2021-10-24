@@ -20,6 +20,12 @@
 /mob/proc/SetNextMove(num)
 	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
 
+// Delays the mob's next click/action either by num deciseconds, or maximum that was already there.
+/mob/proc/AdjustNextMove(num)
+	var/new_next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	if(new_next_move > next_move)
+		next_move = new_next_move
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -29,8 +35,9 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(src)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -68,22 +75,30 @@
 		cob_click(client, modifiers)
 		return
 
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
+		return
+
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+		MiddleShiftClickOn(A)
+		return
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 	if(HardsuitClickOn(A))
+		return
+	if(RegularClickOn(A))
 		return
 
 	if(stat || paralysis || stunned || weakened)
@@ -107,7 +122,7 @@
 		throw_item(A)
 		return
 
-	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /atom/movable/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
@@ -124,7 +139,7 @@
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
 
 		// No adjacency needed
 		if(W)
@@ -162,6 +177,9 @@
 /mob/proc/DblClickOn(atom/A, params)
 	return
 
+// Click without any modifiers
+/mob/proc/RegularClickOn(atom/A)
+	return FALSE
 
 //	Translates into attack_hand, etc.
 
@@ -180,7 +198,7 @@
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len)
 		return
-	if(a_intent == "hurt" && (LASEREYES in mutations))
+	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)
@@ -202,12 +220,31 @@
 	return
 
 /*
+	Middle Shift click
+	For point to
+*/
+/mob/proc/MiddleShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.MiddleShiftClick(src)
+
+/atom/proc/MiddleShiftClick(mob/user)
+	if(user.client && user.client.eye == user)
+		user.pointed(src)
+
+/*
 	Middle click
 	Only used for swapping hands
 */
 /mob/proc/MiddleClickOn(atom/A)
 	return
+
 /mob/living/carbon/MiddleClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLECLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
 	swap_hand()
 
 // In case of use break glass
@@ -223,10 +260,12 @@
 */
 /mob/proc/ShiftClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_SHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
 		user.examinate(src)
@@ -239,9 +278,13 @@
 
 
 /mob/proc/CtrlClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlClick(src)
 	return
 
@@ -257,8 +300,9 @@
 */
 /mob/proc/AltClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_ALTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.AltClick(src)
 	return
 
@@ -271,6 +315,14 @@
 			user.listed_turf = T
 			user.client.statpanel = T.name
 
+/mob/living/AltClick(mob/living/user)
+	/*
+	Handling combat activation after **item swipes** and changeling stings.
+	*/
+	if(istype(user) && user.Adjacent(src) && user.try_combo(src))
+		return FALSE
+	return ..()
+
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
 
@@ -279,9 +331,13 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL_SHIFT, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLSHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlShiftClick(src)
 	return
 
@@ -319,42 +375,65 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	usr.set_dir(NORTH)
+		else		usr.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	usr.set_dir(EAST)
+		else		usr.set_dir(WEST)
+
+// Simple helper to face what you clicked on, in case it should be needed in more than one place
+// This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
+/mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
+	if( stat || buckled)
+		return
+
+	var/dx = pixel_x_new - pixel_x
+	var/dy = pixel_y_new - pixel_y
+
+	if(dx == 0 && dy == 0)
+		return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)
+			set_dir(NORTH)
+		else
+			set_dir(SOUTH)
+	else
+		if(dx > 0)
+			set_dir(EAST)
+		else
+			set_dir(WEST)
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
 		//do nothing
-	else if(modifiers["left"])
-		if(modifiers["alt"])
+	else if(modifiers[LEFT_CLICK])
+		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else
 			C.cob.try_to_build(src)
-	else if(modifiers["right"])
+	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
-/obj/screen/click_catcher
+/atom/movable/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/atom_init()
+/atom/movable/screen/click_catcher/atom_init()
 	. = ..()
 	transform = matrix(200, 0, 0, 0, 200, 0)
 
-/obj/screen/click_catcher/Click(location, control, params)
+/atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers[SCREEN_LOC], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

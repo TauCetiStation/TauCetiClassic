@@ -4,7 +4,7 @@
 	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 
@@ -53,15 +53,16 @@
 	virus2.makerandom()
 	//growth = 100//rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+/obj/item/weapon/virusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
-	..()
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
-		log_game("Virus dish shattered by [key_name(user)] in ([src.x],[src.y],[src.z])")
+		log_game("Virus dish shattered by [key_name(user)] in [COORD(src)]")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
@@ -81,9 +82,11 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
-		return ..()
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+		return
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")

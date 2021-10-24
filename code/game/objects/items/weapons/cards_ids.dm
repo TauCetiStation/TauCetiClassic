@@ -13,7 +13,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -36,7 +36,7 @@
 		src.name = text("data disk- '[]'", t)
 	else
 		src.name = "data disk"
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return
 
 /obj/item/weapon/card/data/clown
@@ -68,6 +68,10 @@
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
+/obj/item/weapon/card/emag/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return TRUE
+
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -75,7 +79,6 @@
 
 	if(uses < 1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-		user.drop_item()
 		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
 		junk.add_fingerprint(user)
 		qdel(src)
@@ -96,6 +99,7 @@
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
+	var/list/disabilities = list()
 
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
@@ -110,16 +114,21 @@
 		blood_type = H.dna.b_type
 		dna_hash = H.dna.unique_enzymes
 		fingerprint_hash = md5(H.dna.uni_identity)
+		for(var/datum/quirk/Q in H.roundstart_quirks)
+			if(Q.disability)
+				disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption points loaded onto this card.")
+	if(disabilities.len)
+		to_chat(user, GetDisabilities())
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -127,16 +136,25 @@
 /obj/item/weapon/card/id/GetID()
 	return src
 
-/obj/item/weapon/card/id/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W,/obj/item/weapon/id_wallet))
-		to_chat(user, "You slip [src] into [W].")
-		src.name = "[src.registered_name]'s [W.name] ([src.assignment])"
-		src.desc = W.desc
-		src.icon = W.icon
-		src.icon_state = W.icon_state
-		qdel(W)
-		return
+/obj/item/weapon/card/id/proc/GetDisabilities()
+	if(disabilities.len)
+		var/msg = "Has disability indicators on the card: <span class='warning bold'><B>"
+		for(var/I in 1 to disabilities.len - 1)
+			msg += "[disabilities[I]], "
+		msg += "[disabilities[disabilities.len]].</B></span>"
+		return msg
+
+/obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/id_wallet))
+		to_chat(user, "You slip [src] into [I].")
+		src.name = "[src.registered_name]'s [I.name] ([src.assignment])"
+		src.desc = I.desc
+		src.icon = I.icon
+		src.icon_state = I.icon_state
+		qdel(I)
+
+	else
+		return ..()
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
@@ -147,6 +165,8 @@
 	to_chat(usr, "The blood type on the card is [blood_type].")
 	to_chat(usr, "The DNA hash on the card is [dna_hash].")
 	to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
+	if(disabilities.len)
+		to_chat(usr, GetDisabilities())
 	return
 
 
@@ -269,9 +289,9 @@
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
-	var/list/colorlist = list()
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
+	var/list/radial_chooses
 
 
 
@@ -299,13 +319,13 @@
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
-			alert("Invalid name.")
+			tgui_alert(usr, "Invalid name.")
 			return
 		src.registered_name = t
 
 		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
-			alert("Invalid assignment.")
+			tgui_alert(usr, "Invalid assignment.")
 			src.registered_name = ""
 			return
 		src.assignment = u
@@ -316,36 +336,36 @@
 
 		if(!registered_user) registered_user = user  //
 
-		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
+		switch(tgui_alert(usr, "Would you like to display the ID, change its look, or retitle it?","Choose.", list("Rename", "Change look","Show")))
 			if("Rename")
 				var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
-					alert("Invalid name.")
+					tgui_alert(usr, "Invalid name.")
 					return
 				src.registered_name = t
 
 				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
-					alert("Invalid assignment.")
+					tgui_alert(usr, "Invalid assignment.")
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")
-				for(var/P in typesof(/obj/item/weapon/card/id))
-					var/obj/item/weapon/card/id/C = new P
-					if (C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-						C.name = C.icon_state
-						colorlist += C
+				if(!radial_chooses)
+					radial_chooses = list()
+					for(var/P in typesof(/obj/item/weapon/card/id))
+						var/obj/item/weapon/card/id/C = new P
+						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
+							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
-				var/obj/item/weapon/card/id/newc
-				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state
 					src.desc = newc.desc
-				src.update_icon()
+				update_icon()
 				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
 				return
 
@@ -383,9 +403,9 @@
 	assignment = "Captain"
 
 /obj/item/weapon/card/id/captains_spare/atom_init()
-	var/datum/job/captain/J = new/datum/job/captain
-	access = J.get_access()
 	. = ..()
+	var/datum/job/captain/J = SSjob.GetJob("Captain")
+	access = J.get_access()
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom. ID"
@@ -393,11 +413,12 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	rank = "NanoTrasen Representative"
 	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/centcom/atom_init()
-	access = get_all_centcom_access()
 	. = ..()
+	access = get_all_accesses() + get_all_centcom_access()
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
@@ -408,17 +429,20 @@
 	assignment = "General"
 
 /obj/item/weapon/card/id/velocity/atom_init()
+	. = ..()
 	access = get_all_centcom_access()
-	. = ..()
 
-/obj/item/weapon/card/id/ert
-	name = "CentCom. ID"
+/obj/item/weapon/card/id/centcom/ert
 	icon_state = "ert"
-	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
-	customizable_view = TRAITOR_VIEW
+	rank = "Emergency Response Team"
 
-/obj/item/weapon/card/id/ert/atom_init()
-	access = get_all_accesses()
-	access += get_all_centcom_access()
+/obj/item/weapon/card/id/space_police
+	assignment = "Organized Crimes Department"
+	rank = "Organized Crimes Department"
+
+	icon_state = "ert"
+
+/obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()
+	access = get_all_accesses()

@@ -15,14 +15,16 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	response_harm   = "kick"
 	faction = "goat"
 	attacktext = "kicks"
 	health = 40
-	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage = 3
 	var/datum/reagents/udder = null
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
@@ -43,7 +45,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
@@ -64,11 +66,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
+	visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(!stat)
+	if(!stat && !ISDIAGONALDIR(Dir))
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
 			qdel(SV)
@@ -111,8 +113,13 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_MASSIVE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/cow/atom_init()
@@ -143,28 +150,12 @@
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 		else if(prob(15))
-			playsound(src, 'sound/voice/cowmoos.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/voice/cowmoos.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 /mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(. && prob(55))
-		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
-
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
-		Weaken(30)
-		icon_state = icon_dead
-		spawn(rand(20,50))
-			if(!stat && M)
-				icon_state = icon_living
-				var/list/responses = list(	"[src] looks at you imploringly.",
-											"[src] looks at you pleadingly",
-											"[src] looks at you with a resigned expression.",
-											"[src] seems resigned to its fate.")
-				to_chat(M, pick(responses))
-	else
-		..()
+	if(. && prob(55) && !ISDIAGONALDIR(Dir))
+		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 /mob/living/simple_animal/chick
 	name = "chick"
@@ -183,7 +174,10 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	small = 1
+	w_class = SIZE_TINY
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/chick/atom_init()
 	. = ..()
@@ -221,7 +215,10 @@ var/global/chicken_count = 0
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	small = 1
+	w_class = SIZE_MINUSCULE
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/chicken/atom_init()
 	. = ..()
@@ -244,7 +241,6 @@ var/global/chicken_count = 0
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat && eggsleft < 8)
 			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
-			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
@@ -290,8 +286,12 @@ var/global/chicken_count = 0
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
@@ -308,6 +308,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	health = 50
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/goose
 	name = "goose"
 	desc = "A pretty goose. Would make a nice comforter."
@@ -322,6 +325,9 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/seal
 	name = "seal"
@@ -338,6 +344,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
 
+	has_head = TRUE
+	has_arm = TRUE
+
 /mob/living/simple_animal/walrus
 	name = "walrus"
 	desc = "A big brown walrus."
@@ -352,3 +361,6 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+
+	has_head = TRUE
+	has_arm = TRUE

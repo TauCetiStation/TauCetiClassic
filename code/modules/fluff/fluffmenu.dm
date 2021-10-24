@@ -26,7 +26,7 @@ var/list/editing_item_oldname_list = list()
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
 	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
@@ -124,7 +124,7 @@ var/list/editing_item_oldname_list = list()
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -143,7 +143,7 @@ var/list/editing_item_oldname_list = list()
 		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
-			alert(user, "You don't have free custom item slots", "Info", "OK")
+			tgui_alert(user, "You don't have free custom item slots", "Info")
 			return
 
 		editing_item_oldname_list[user.client.ckey] = null
@@ -172,7 +172,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN, ascii_only = TRUE)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
@@ -206,7 +206,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["author_info"])
-		alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info", "OK")
+		tgui_alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info")
 		return
 
 	if(href_list["change_author"])
@@ -225,7 +225,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["ooc_info"])
-		alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info", "OK")
+		tgui_alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info")
 		return
 
 	if(href_list["change_oocinfo"])
@@ -253,7 +253,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname) //editing
 			if(slotCount < itemCount) // can't edit, we have too much custom items
-				alert(user, "You have too much custom items, remove old ones before being able to edit", "Info", "OK")
+				tgui_alert(user, "You have too much custom items, remove old ones before being able to edit", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -266,10 +266,10 @@ var/list/editing_item_oldname_list = list()
 		else //adding new
 			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
 			if(old_item)
-				alert(user, "You already have an item with name [editing_item.name]", "Info", "OK")
+				tgui_alert(user, "You already have an item with name [editing_item.name]", "Info")
 				return
 			if(slotCount <= itemCount) // can't create, we have too much custom items
-				alert(user, "You don't have free custom item slots", "Info", "OK")
+				tgui_alert(user, "You don't have free custom item slots", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -282,7 +282,7 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
 			return
 
-		if(alert(usr, "Are you sure?", "Item deletion confirmation", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Are you sure?", "Item deletion confirmation", list("Yes", "No")) == "Yes")
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "")
 			user.client.remove_custom_item(editing_item_oldname)
 			user << browse(null, "window=edit_custom_item")
@@ -357,6 +357,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -381,7 +382,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems;size=600x500")
+	usr << browse(output,"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
 	if(!check_rights(R_PERMISSIONS))
@@ -392,16 +393,16 @@ var/list/editing_item_oldname_list = list()
 		if(!target_ckey)
 			return
 
-	var/ammount = input(usr,"type in ammount (can be negative):","Ammount", 1) as null|num
-	if(!ammount)
+	var/amount = input(usr,"type in amount (can be negative):","Amount", 1) as null|num
+	if(!amount)
 		return
-	ammount = round(ammount)
+	amount = round(amount)
 
-	var/reason = input(usr, "([target_ckey] [ammount > 0 ? "+" : ""][ammount]) type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [amount > 0 ? "+" : ""][amount]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
-	add_custom_items_history(target_ckey, usr.ckey, reason, ammount)
+	add_custom_items_history(target_ckey, usr.ckey, reason, amount)
 	customitems_panel()
 	customs_items_history(target_ckey)
 
@@ -418,6 +419,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -426,7 +428,7 @@ var/list/editing_item_oldname_list = list()
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
 <th text-align:center;'>[user_ckey] <a class='small' href='?src=\ref[src];custom_items=addckey;ckey=[user_ckey]'>\[+\]</a></th>
-<th text-align:center;'>Ammount</th>
+<th text-align:center;'>Amount</th>
 <th text-align:center;'>Reason</th>
 <th text-align:center;'>Added by</th>
 </tr>
@@ -436,7 +438,7 @@ var/list/editing_item_oldname_list = list()
 	for(var/datum/custom_items_history/entry in history)
 		output += "<tr>"
 		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
-		output += "<td style='text-align:center;'>[entry.ammount]</td>"
+		output += "<td style='text-align:center;'>[entry.amount]</td>"
 		output += "<td style='text-align:center;'>[sanitize(entry.reason)]</td>"
 		output += "<td style='text-align:center;'>[entry.admin_ckey]</td>"
 		output += "</tr>"
@@ -448,7 +450,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
+	usr << browse(output,"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
 	if(!check_rights(R_PERMISSIONS))
@@ -457,7 +459,7 @@ var/list/editing_item_oldname_list = list()
 	if(!target_ckey)
 		return
 
-	if(alert(usr, "Are you sure?", "Confirm deletion", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Are you sure?", "Confirm deletion", list("Yes", "No")) == "Yes")
 		remove_custom_items_history(target_ckey, index)
 		customitems_panel()
 		customs_items_history(target_ckey)

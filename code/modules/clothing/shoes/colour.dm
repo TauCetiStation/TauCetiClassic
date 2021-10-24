@@ -107,8 +107,7 @@
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
 	if (src.chained)
 		return
-	user.drop_item(cuffs)
-	cuffs.loc = src
+	user.drop_from_inventory(cuffs, loc)
 	chained = cuffs
 	slowdown = 15
 	name = "shackles"
@@ -129,10 +128,11 @@
 	..()
 	remove_cuffs()
 
-/obj/item/clothing/shoes/orange/attackby(H, mob/user)
-	..()
-	if (istype(H, /obj/item/weapon/handcuffs))
-		attach_cuffs(H, user)
+/obj/item/clothing/shoes/orange/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/handcuffs))
+		attach_cuffs(I, user)
+		return
+	return ..()
 
 /obj/item/clothing/shoes/orange/attack_hand(mob/user)
 	var/confirmed = 1

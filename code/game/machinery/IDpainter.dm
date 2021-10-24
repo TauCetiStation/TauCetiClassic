@@ -7,7 +7,7 @@
 	anchored = TRUE
 	//ghost_must_be_admin = TRUE
 	var/obj/item/weapon/card/id/storedcard = null
-	var/list/colorlist = list()
+	var/list/radial_chooses
 
 
 
@@ -28,16 +28,6 @@
 
 	return
 
-/obj/machinery/idpainter/atom_init()
-	. = ..()
-
-	for(var/P in typesof(/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = new P
-		if (C.customizable_view == UNIVERSAL_VIEW)
-			C.name = C.icon_state
-			colorlist += C
-
-
 /obj/machinery/idpainter/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/card/id))
 		if(storedcard)
@@ -46,11 +36,13 @@
 		else
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
 			if(istype(C))
-				user.drop_item()
+				user.drop_from_inventory(C, src)
 				storedcard = C
-				C.loc = src
 				C.add_fingerprint(usr)
 				update_icon()
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					H.sec_hud_set_ID()
 	else
 		if(iswrench(O))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -63,8 +55,14 @@
 		return
 
 	if(storedcard)
-		var/obj/item/weapon/card/id/C
-		C = input(user, "Select your type!", "Card Painting") as null|anything in colorlist
+		if(!radial_chooses)
+			radial_chooses = list()
+			for(var/P in typesof(/obj/item/weapon/card/id))
+				var/obj/item/weapon/card/id/C = new P
+				if(C.customizable_view == UNIVERSAL_VIEW)
+					radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+
+		var/obj/item/weapon/card/id/C = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 		if(!C)
 			return
 

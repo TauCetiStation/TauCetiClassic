@@ -37,27 +37,24 @@
 		return
 	switch(href_list["action"])
 		if ("create_area")
-			if (get_area_type()!=AREA_SPACE)
+			if (get_area_by_type()!=AREA_SPACE)
 				interact()
 				return
 			create_area()
 		if ("edit_area")
-			if (get_area_type()!=AREA_STATION)
+			if (get_area_by_type()!=AREA_STATION)
 				interact()
 				return
 			edit_area()
 
 /obj/item/blueprints/interact()
-	var/area/A = get_area()
-	var/text = {"<HTML><head><title>[src]</title></head><BODY>
-<h2>[station_name()] blueprints</h2>
-<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>
-"}
-	switch (get_area_type())
+	var/area/A = get_blueprint_area()
+	var/text = "<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>"
+	switch (get_area_by_type())
 		if (AREA_SPACE)
 			text += {"
 <p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
-<p><a href='?src=\ref[src];action=create_area'>Mark this place as new area.</a></p>
+<p><a href='?src=\ref[src];action=create_area'>Mark this place as new area</a></p>
 "}
 		if (AREA_STATION)
 			text += {"
@@ -71,17 +68,17 @@ move an amendment</a> to the drawing.</p>
 "}
 		else
 			return
-	text += "</BODY></HTML>"
-	usr << browse(entity_ja(text), "window=blueprints")
-	onclose(usr, "blueprints")
 
+	var/datum/browser/popup = new(usr, "blueprints", "[station_name()] blueprints")
+	popup.set_content(text)
+	popup.open()
 
-/obj/item/blueprints/proc/get_area()
+/obj/item/blueprints/proc/get_blueprint_area()
 	var/turf/T = get_turf_loc(usr)
 	var/area/A = T.loc
 	return A
 
-/obj/item/blueprints/proc/get_area_type(area/A = get_area())
+/obj/item/blueprints/proc/get_area_by_type(area/A = get_blueprint_area())
 	if (istype(A, /area/space))
 		return AREA_SPACE
 	if (istype(A, /area/awaymission/junkyard))
@@ -132,6 +129,7 @@ move an amendment</a> to the drawing.</p>
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
 	A.always_unpowered = 0
+	A.update_areasize()
 
 	spawn(5)
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]"
@@ -148,7 +146,7 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/edit_area()
-	var/area/A = get_area()
+	var/area/A = get_blueprint_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = "[A.name]"
 	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", input_default(prevname)), MAX_LNAME_LEN)
@@ -159,6 +157,7 @@ move an amendment</a> to the drawing.</p>
 		return
 	set_area_machinery_title(A,str,prevname)
 	A.name = str
+	A.update_areasize()
 	to_chat(usr, "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>")
 	interact()
 	return
@@ -186,7 +185,7 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE
-	if (get_area_type(T2.loc)!=AREA_SPACE)
+	if (get_area_by_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE

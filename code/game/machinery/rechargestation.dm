@@ -13,7 +13,6 @@
 	var/charging_cap_passive = 2500			// Passive Cap - Recharging internal capacitor when no cyborg is inside
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	var/locked = TRUE
 	var/open = TRUE
 	var/recharge_speed
@@ -105,7 +104,7 @@
 		..(severity)
 		return
 	if(occupant)
-		occupant.emp_act(severity)
+		occupant.emplode(severity)
 	open_machine()
 	..(severity)
 
@@ -144,7 +143,7 @@
 		occupant = null
 		set_power_use(IDLE_POWER_USE)
 	open = 1
-	density = 0
+	density = FALSE
 	build_icon()
 
 /obj/machinery/recharge_station/close_machine()
@@ -159,7 +158,7 @@
 			add_fingerprint(R)
 			break
 		open = 0
-		density = 1
+		density = TRUE
 		build_icon()
 
 /obj/machinery/recharge_station/update_icon()

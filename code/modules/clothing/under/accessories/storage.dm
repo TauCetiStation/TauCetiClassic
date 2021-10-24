@@ -5,7 +5,7 @@
 	item_color = "webbing"
 	slot = "utility"
 	var/slots = 3
-	var/max_w_class = ITEM_SIZE_SMALL //pocket sized
+	var/max_w_class = SIZE_TINY //pocket sized
 	var/obj/item/weapon/storage/internal/hold
 
 /obj/item/clothing/accessory/storage/atom_init()
@@ -28,11 +28,12 @@
 	if (hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/accessory/storage/attackby(obj/item/W, mob/user)
-	return hold.attackby(W, user)
+/obj/item/clothing/accessory/storage/attack_accessory(obj/item/I, mob/user, params)
+	hold.attackby(I, user, params)
+	return TRUE
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
-	hold.emp_act(severity)
+	hold.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)
@@ -80,7 +81,7 @@
 	icon_state = "unathiharness2"
 	item_color = "unathiharness2"
 	slots = 2
-	max_w_class = ITEM_SIZE_NORMAL //for knives
+	max_w_class = SIZE_SMALL //for knives
 
 /obj/item/clothing/accessory/storage/knifeharness/atom_init()
 	. = ..()

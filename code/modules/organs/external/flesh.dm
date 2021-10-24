@@ -9,7 +9,7 @@
 	BP = B
 
 	if(BP.species && BP.species.bodypart_butcher_results)
-		BP.butcher_results = BP.species.bodypart_butcher_results
+		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
 		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
 	else if(bodypart_type == BODYPART_ROBOTIC)
@@ -17,6 +17,7 @@
 
 /datum/bodypart_controller/Destroy()
 	BP = null
+	return ..()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
@@ -55,12 +56,9 @@
 		cur_damage += BP.burn_dam
 
 	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
-		// Damage an internal organ
+	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		IO.take_damage(damage_amt / 2)
-		brute /= 2
-		if(laser)
-			burn /= 2
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
@@ -100,7 +98,7 @@
 	// If there are still hurties to dispense
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
-	if(spillover > 0)
+	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
 		BP.owner.shock_stage += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
 
 	// sync the organ's damage with its wounds
@@ -246,6 +244,7 @@ This function completely restores a damaged organ to perfect condition.
 			BP.implants -= implanted_object
 
 	BP.owner.updatehealth()
+	BP.owner.sec_hud_set_implants()
 
 /datum/bodypart_controller/proc/createwound(type = CUT, damage)
 	if(damage == 0)
@@ -269,7 +268,7 @@ This function completely restores a damaged organ to perfect condition.
 			if(BURN)  fluid_loss_severity = FLUIDLOSS_WIDE_BURN
 			if(LASER) fluid_loss_severity = FLUIDLOSS_CONC_BURN
 		var/fluid_loss = (damage / (BP.owner.maxHealth - config.health_threshold_dead)) * 560/*owner.species.blood_volume*/ * fluid_loss_severity
-		BP.owner.remove_blood(fluid_loss)
+		BP.owner.blood_remove(fluid_loss)
 
 	// first check whether we can widen an existing wound
 	if(BP.wounds.len > 0 && prob(max(50 + (BP.number_wounds - 1) * 10, 90)))
@@ -575,7 +574,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
 		BP.owner.try_mutate_to_hulk()
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
 	BP.broken_description = pick("broken", "fracture", "hairline fracture")
 	BP.perma_injury = BP.brute_dam

@@ -48,7 +48,7 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color="white"
+	item_color = "mime"
 	germ_level = 0
 
 /obj/item/clothing/gloves/latex/nitrile
@@ -56,6 +56,7 @@
 	desc = "Sterile nitrile gloves"
 	icon_state = "nitrile"
 	item_state = "ngloves"
+	item_color = "cyan"
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -91,43 +92,43 @@
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"
 	item_state = "fingerless_red"
-	item_color="red"
+	item_color = "red"
 
 /obj/item/clothing/gloves/fingerless/orange
 	name = "orange fingerless gloves"
 	icon_state = "fingerless_orange"
 	item_state = "fingerless_orange"
-	item_color="orange"
+	item_color = "orange"
 
 /obj/item/clothing/gloves/fingerless/green
 	name = "green fingerless gloves"
 	icon_state = "fingerless_green"
 	item_state = "fingerless_green"
-	item_color="green"
+	item_color = "green"
 
 /obj/item/clothing/gloves/fingerless/blue
 	name = "blue fingerless gloves"
 	icon_state = "fingerless_blue"
 	item_state = "fingerless_blue"
-	item_color="blue"
+	item_color = "blue"
 
 /obj/item/clothing/gloves/fingerless/purple
 	name = "purple fingerless gloves"
 	icon_state = "fingerless_purple"
 	item_state = "fingerless_purple"
-	item_color="purple"
+	item_color = "purple"
 
 /obj/item/clothing/gloves/fingerless/yellow
 	name = "yellow fingerless gloves"
 	icon_state = "fingerless_yellow"
 	item_state = "fingerless_yellow"
-	item_color="yellow"
+	item_color = "yellow"
 
 /obj/item/clothing/gloves/fingerless/rainbow
 	name = "rainbow fingerless gloves"
 	icon_state = "fingerless_rainbow"
 	item_state = "fingerless_rainbow"
-	item_color="rainbow"
+	item_color = "rainbow"
 
 /obj/item/clothing/gloves/security/marinad
 	desc = "These were made to hold a full automatic gun."

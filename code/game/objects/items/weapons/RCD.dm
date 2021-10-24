@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 CONTAINS:
 RCD
@@ -10,14 +8,14 @@ RCD
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -44,19 +42,19 @@ RCD
 	spark_system = null
 	return ..()
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/rcd_ammo))
+/obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/rcd_ammo))
 		if((matter + 10) > 30)
 			to_chat(user, "<span class='notice'>The RCD cant hold any more matter-units.</span>")
 			return
-		user.drop_item()
-		qdel(W)
+		qdel(I)
 		matter += 10
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
 
+	else
+		return ..()
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -212,8 +210,8 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000

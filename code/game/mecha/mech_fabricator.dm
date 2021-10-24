@@ -3,8 +3,8 @@
 	icon_state = "fab-idle"
 	name = "Exosuit Fabricator"
 	desc = "Nothing is being built."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -86,17 +86,6 @@
 	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
-
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user)
 	switch(emagged)
 		if(0)
@@ -137,7 +126,7 @@
 	var/output
 	for(var/c in D.materials)
 		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
+			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [c]"
 			i++
 	return output
 
@@ -145,7 +134,7 @@
 	var/output
 	for(var/resource in resources)
 		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
+		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
 		if(amount>0)
 			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
@@ -340,6 +329,7 @@
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
+			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			  <title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
@@ -368,7 +358,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -460,9 +450,9 @@
 
 		var/removed = remove_material(material,amount)
 		if(removed == -1)
-			temp = "Not enough [material2name(material)] to produce a sheet."
+			temp = "Not enough [material] to produce a sheet."
 		else
-			temp = "Ejected [removed] of [material2name(material)]"
+			temp = "Ejected [removed] of [material]"
 		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
@@ -553,12 +543,12 @@
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
+			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -566,10 +556,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
-
-/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)

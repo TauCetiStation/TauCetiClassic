@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/created_name = "Cleanbot"
 
 
@@ -18,9 +18,8 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = MOB_LAYER
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
@@ -99,8 +98,9 @@
 			text("<A href='?src=\ref[src];operation=screw'>[screwloose ? "Yes" : "No"]</A>"),
 			text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A>"))
 
-	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autocleaner")
-	onclose(user, "autocleaner")
+	var/datum/browser/popup = new(user, "window=autocleaner", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	. = ..()
@@ -293,7 +293,7 @@
 		next_dest = signal.data["next_patrol"]
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+	src.target_types = list()
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
@@ -321,7 +321,7 @@
 		target_types += /obj/effect/decal/cleanable/blood/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
-	anchored = 1
+	anchored = TRUE
 	icon_state = "cleanbot-c"
 	visible_message("<span class='warning'>[src] begins to clean up the [target]</span>")
 	cleaning = 1
@@ -335,7 +335,7 @@
 		cleaning = 0
 		qdel(target)
 		icon_state = "cleanbot[on]"
-		anchored = 0
+		anchored = FALSE
 		target = null
 
 /obj/machinery/bot/cleanbot/explode()
@@ -356,22 +356,22 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		user.drop_item()
-		qdel(W)
+/obj/item/weapon/bucket_sensor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
+		qdel(I)
 		var/turf/T = get_turf(loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if (!user.Adjacent(src))
 			return
 		created_name = t
+
+	else
+		return ..()

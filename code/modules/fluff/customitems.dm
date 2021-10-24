@@ -64,25 +64,25 @@
 	if(!slots)
 		slots = list()
 
-	var/ammount = 0
+	var/amount = 0
 
 	//all your donator checks go here
 	if(supporter)
-		ammount += 1
+		amount += 1
 
 	if(ckey in admin_datums)
-		ammount += 1
+		amount += 1
 
 	if(isnum(player_ingame_age) && player_ingame_age >= config.customitem_slot_by_time)
-		ammount += 1
+		amount += 1
 
 	if(ckey in slots)
-		ammount += slots[ckey]
+		amount += slots[ckey]
 
-	if(ammount < 0)
-		ammount = 0
+	if(amount < 0)
+		amount = 0
 
-	return ammount
+	return amount
 
 /proc/custom_items_fixnames(ckey)
 	var/list/items = get_custom_items(ckey)
@@ -257,7 +257,7 @@
 		item.item_state = custom_item_info.icon_state
 		item.item_color = custom_item_info.icon_state
 		if(custom_item_info.item_type == "small")
-			item.w_class = ITEM_SIZE_SMALL
+			item.w_class = SIZE_TINY
 
 
 		var/atom/placed_in = H.equip_or_collect(item)

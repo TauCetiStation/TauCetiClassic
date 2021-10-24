@@ -28,37 +28,42 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(A.shock(user, 100))
 			return TRUE
 
-/datum/wires/airlock/get_interact_window()
+/datum/wires/airlock/get_status()
 	var/obj/machinery/door/airlock/A = holder
 	. += ..()
-	. += "<br>[A.locked ? "The door bolts have fallen!" : "The door bolts look up."]"
-	. += "<br>[A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"]"
-	. += "<br>[A.hasPower() ? "The test light is on." : "The test light is off!"]"
-	. += "<br>[!A.aiControlDisabled ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."]"
-	. += "<br>[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
-	. += "<br>[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
-	. += "<br>[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
-	. += "<br><fieldset class='block'>"
-	. += "<legend><h3>Remote control</h3></legend>"
-	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of your multitool</a>"
-	. += "</fieldset>"
+	. += "[A.locked ? "The door bolts have fallen!" : "The door bolts look up."]"
+	. += "[A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"]"
+	. += "[A.hasPower() ? "The test light is on." : "The test light is off!"]"
+	. += "[!A.aiControlDisabled ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."]"
+	. += "[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
+	. += "[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
+	. += "[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
+	. += list(list(
+		"label" = "Save to the buffer of your multitool",
+		"act" = "buffer",
+		"act_params" = null
+	))
 
-/datum/wires/airlock/Topic(href, href_list)
-	if(!..())
+/datum/wires/airlock/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
 		return
-	if(href_list["buffer"])
+	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
 		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
-			if(holder in M.airlocks_buffer)
-				to_chat(usr, "<span class='warning'>This airlock is already in the buffer!</span>")
-			else if(M.airlocks_buffer.len >= M.buffer_limit)
+			if(holder in M.doors_buffer)
+				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
+			else if(M.doors_buffer.len >= M.buffer_limit)
 				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
 			else
-				M.airlocks_buffer += holder
+				M.doors_buffer += holder
 				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
+			. = TRUE
 		else
 			to_chat(usr, "<span class='warning'>You need a multitool!</span>")
+	if(.)
+		holder.add_fingerprint(usr)
 
 /datum/wires/airlock/update_cut(index, mended)
 	var/obj/machinery/door/airlock/A = holder
@@ -99,11 +104,12 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 			if(!mended)
 				if(A.secondsElectrified != -1)
 					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
 					A.secondsElectrified = 0
+			A.diag_hud_set_electrified()
 
 		if (AIRLOCK_WIRE_SAFETY)
 			A.safe = mended
@@ -153,10 +159,14 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(A.secondsElectrified == 0)
-				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+				if(ismob(usr)) // EMP can do this
+					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+				else
+					A.shockedby += "\[[time_stamp()]\]EMP or smth else"
 				A.secondsElectrified = 30
-				START_PROCESSING(SSmachine, A)
+				A.diag_hud_set_electrified()
+				START_PROCESSING(SSmachines, A)
 
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			if(!A.requiresID() || A.check_access(null))

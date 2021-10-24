@@ -45,6 +45,11 @@
 	heat_capacity = 325000
 	footstep = FOOTSTEP_PLATING
 
+/turf/simulated/floor/goonplaque
+	name = "Comemmorative Plaque";
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
+	icon_state = "plaque";
+
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrench(C))
 		if(user.is_busy(src))
@@ -66,10 +71,6 @@
 				make_plating() // why there is return for this floor type in that proc?
 		else if(prob(30))
 			ReplaceWithLattice()
-
-/turf/simulated/floor/engine/cult
-	name = "engraved floor"
-	icon_state = "cult"
 
 /turf/simulated/floor/engine/airmix
 	oxygen = MOLES_O2ATMOS
@@ -155,7 +156,7 @@
 	name = "wall"
 	icon_state = "wall1"
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 /turf/simulated/shuttle/floor
@@ -265,7 +266,7 @@
 		adjustFireLoss(rand(10, 20))
 		Weaken(rand(10, 15))
 		eye_blind += rand(20, 25)
-		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)
 		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
 		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
@@ -372,6 +373,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0
@@ -391,6 +393,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
@@ -406,24 +409,16 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-
-//	accepts_lighting=0 			// Don't apply overlays
-
 	intact = 0
-
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
+	make_transparent()
 	update_icon(1)
 	set_light(1.5)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
-	underlays.Cut()
-	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-	I.plane = PLANE_SPACE
-	underlays += I
-
 	var/dirs = 0
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src,direction)
@@ -433,18 +428,6 @@
 			if(propogate)
 				C.update_icon(0)
 	icon_state="catwalk[dirs]"
-
-
-/turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(isscrewdriver(C))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		ReplaceWithLattice()
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		return
-
-	if(iscoil(C))
-		var/obj/item/stack/cable_coil/coil = C
-		coil.turf_place(src, user)
 
 /turf/simulated/floor/plating/airless/catwalk/is_catwalk()
 	return TRUE

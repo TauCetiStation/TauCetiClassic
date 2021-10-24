@@ -47,7 +47,7 @@ var/list/advance_cures = 	list(
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
+/datum/disease/advance/New(process = 1, datum/disease/advance/D)
 
 	// Setup our dictionary if it hasn't already.
 	if(!dictionary_symptoms.len)
@@ -98,7 +98,7 @@ var/list/advance_cures = 	list(
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
+	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -124,7 +124,7 @@ var/list/advance_cures = 	list(
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(new S.type)
@@ -205,9 +205,9 @@ var/list/advance_cures = 	list(
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(CLAMP(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		SetSpread(clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
 		permeability_mod = max(CEIL(0.4 * properties["transmittable"]), 1)
-		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
+		cure_chance = 15 - clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -256,7 +256,7 @@ var/list/advance_cures = 	list(
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(list/properties = list())
 	if(properties && properties.len)
-		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
 		cure_id = advance_cures[res]
 
@@ -361,15 +361,14 @@ var/list/advance_cures = 	list(
 
 /proc/SetViruses(datum/reagent/R, list/data)
 	if(data)
-		var/list/preserve = list()
 		if(istype(data) && data["viruses"])
+			var/list/preserve = list()
 			for(var/datum/disease/A in data["viruses"])
 				preserve += A.Copy()
 			R.data = data.Copy()
+			R.data["viruses"] = preserve
 		else
 			R.data = data
-		if(preserve.len)
-			R.data["viruses"] = preserve
 
 /proc/AdminCreateVirus(mob/user)
 	var/i = 5
@@ -397,7 +396,7 @@ var/list/advance_cures = 	list(
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdiseases.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(human_list))
@@ -410,7 +409,7 @@ var/list/advance_cures = 	list(
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [get_english_list(name_symptoms)]")
 
 /*
 /mob/verb/test()

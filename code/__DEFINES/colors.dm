@@ -1,10 +1,15 @@
 // BYOND lower-cases color values, and thus we do so as well to ensure atom.color == COLOR_X will work correctly
+
+#define COLOR_INPUT_DISABLED   "#f0f0f0"
+#define COLOR_INPUT_ENABLED    "#d3b5b5"
+
 #define COLOR_BLACK            "#000000"
 #define COLOR_NAVY_BLUE        "#000080"
 #define COLOR_GREEN            "#008000"
 #define COLOR_DARK_GRAY        "#404040"
 #define COLOR_MAROON           "#800000"
 #define COLOR_PURPLE           "#800080"
+#define COLOR_DARK_PURPLE      "#6b2b63"
 #define COLOR_VIOLET           "#9933ff"
 #define COLOR_OLIVE            "#808000"
 #define COLOR_BROWN_ORANGE     "#824b28"
@@ -19,6 +24,7 @@
 #define COLOR_TEAL             "#33cccc"
 #define COLOR_RED              "#ff0000"
 #define COLOR_PINK             "#ff00ff"
+#define COLOR_LIGHT_PINK       "#ff87ff"
 #define COLOR_ORANGE           "#ff9900"
 #define COLOR_YELLOW           "#ffff00"
 #define COLOR_GRAY             "#808080"
@@ -59,6 +65,7 @@
 #define COLOR_CIVIE_GREEN      "#b7f27d"
 #define COLOR_TITANIUM         "#d1e6e3"
 #define COLOR_DARK_GUNMETAL    "#4c535b"
+#define COLOR_ADAMANTINE       "#269999"
 
 #define	PIPE_COLOR_GREY		"#ffffff"	// yes white is grey
 #define	PIPE_COLOR_RED		"#ff0000"
@@ -84,3 +91,18 @@
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human
 #define HULK_SKIN_COLOR RGB_CONTRAST(0, 180, 60) // xenos
 #define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
+
+// Slime color matrices. Used for /datum/component/mob_modifier-s.
+#define SLIME_COLOR(r, g, b) list( \
+	0.3, 0.0, 0.0, 0.0, \
+	0.0, 0.3, 0.0, 0.0, \
+	0.0, 0.0, 0.3, 0.0, \
+	0.0, 0.0, 0.0, 0.8, \
+	r, g, b, 0.0, \
+)
+
+#define SLIME_COLOR_RED SLIME_COLOR(0.5, 0.2, 0.3)
+#define SLIME_COLOR_GREEN SLIME_COLOR(0.2, 0.5, 0.2)
+#define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
+#define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
+#define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)

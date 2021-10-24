@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = I_HURT
+		M.a_intent = INTENT_HARM
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -158,6 +158,7 @@ var/global/list/tophats_list = list()
 
 /obj/effect/overlay/tophat_portal/attackby(obj/item/I, mob/user)
 	tp_to_tophat(I)
+	return TRUE
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
 	. = ..()
@@ -184,24 +185,25 @@ var/global/list/tophats_list = list()
 
 	tp_to_tophat(AM)
 
-/obj/effect/overlay/tophat_portal/examine(mob/living/user)
+/obj/effect/overlay/tophat_portal/examine(mob/user)
 	..()
-	if(user.client && global.tophats_list.len && in_range(user, src))
-		user.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
+	if(user.client && global.tophats_list.len && isliving(user) && Adjacent(user))
+		var/mob/living/L = user
+		L.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
 
 		if(TP)
-			user.force_remote_viewing = TRUE
-			user.reset_view(TP)
+			L.force_remote_viewing = TRUE
+			L.reset_view(TP)
 
 			for(var/i in 1 to 30)
-				if(do_after(user, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
-					user.reset_view(TP)
+				if(do_after(L, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
+					L.reset_view(TP)
 				else
 					break
 
-			user.reset_view(null)
-			user.force_remote_viewing = FALSE
+			L.reset_view(null)
+			L.force_remote_viewing = FALSE
 
 /obj/effect/overlay/tophat_portal/get_listeners()
 	. = list()
@@ -289,7 +291,7 @@ var/global/list/tophats_list = list()
 			return TRUE
 	return FALSE
 
-/obj/item/clothing/head/wizard/tophat/pickup()
+/obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
 	..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)
@@ -453,17 +455,17 @@ var/global/list/tophats_list = list()
 			user.drop_from_inventory(AM)
 		drop_into(AM, user)
 
-/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/living/user)
+/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/user, params)
 	if(I.w_class <= w_class)
 		if(!global.tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
 			return
 		drop_into(I, user)
-		return
-	if(user.mind && user.mind.special_role == "Wizard")
+		return TRUE
+	if(iswizard(user))
 		drop_into(I, user)
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/clothing/head/wizard/tophat/attack_hand(mob/living/user)
 	if(user.get_active_hand() == src || user.get_inactive_hand() == src)
@@ -471,7 +473,7 @@ var/global/list/tophats_list = list()
 			to_chat(user, "<span class='notice'>There's nothing in the hat.</span>")
 			return
 		next_trick = world.time + trick_delay
-		if(user.mind && user.mind.special_role == "Wizard")
+		if(iswizard(user))
 			if(try_get_monkey(user))
 				user.visible_message("<span class='notice'>[user] takes something big out of [src]!</span>",
 									 "<span class='notice'>You take something unproportionally big out of [src].</span>")

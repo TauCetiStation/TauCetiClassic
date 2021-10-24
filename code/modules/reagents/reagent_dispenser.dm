@@ -3,18 +3,23 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	flags = OPENCONTAINER
 	var/modded = FALSE
 	var/transfer_from = TRUE
+	var/obj/item/device/assembly_holder/rig
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	return
-
 /obj/structure/reagent_dispensers/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	transfer_from = !transfer_from
 	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 
@@ -33,7 +38,7 @@
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
-		
+
 /obj/structure/reagent_dispensers/proc/try_transfer(atom/t_from, atom/t_to, mob/user)
 	var/transfer_amount = 0
 	if(istype(t_from, /obj/item/weapon/reagent_containers/glass))
@@ -78,90 +83,30 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/proc/leak(amount)
-	if (reagents.total_volume == 0)
+	if(reagents.total_volume == 0)
 		return
-	var/datum/reagents/R = new/datum/reagents(amount)
-	reagents.trans_to(R, amount)
-	R.reaction(loc)
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
+	D.reagents.reaction(get_turf(D))
+	for(var/atom/A in get_turf(D))
+		D.reagents.reaction(A)
+	QDEL_IN(D, 1 SECOND)
 
-// "Tanks".
-/obj/structure/reagent_dispensers/watertank
-	name = "watertank"
-	desc = "A watertank."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "watertank"
-	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/watertank/atom_init()
-	. = ..()
-	reagents.add_reagent("water", 1000)
-
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank
-	name = "AFFF tank"
-	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
-	icon_state = "affftank"
-
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", 1000)
-
-/obj/structure/reagent_dispensers/watertank/examine(mob/user)
-	..()
-	if(src in oview(2, user) && modded)
-		to_chat(user, "<span class='warning'>Faucet is wrenched open, [src] is leaking!</span>")
-
-/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if (iswrench(W))
-		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
-			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		modded = !modded
-		if (modded)
-			START_PROCESSING(SSobj, src)
-			leak(amount_per_transfer_from_this)
-
-	add_fingerprint(usr)
-	return ..()
-
-/obj/structure/reagent_dispensers/watertank/process()
+/obj/structure/reagent_dispensers/process()
 	if(!src) return
 	if(modded)
-		leak(2)
+		leak(amount_per_transfer_from_this * 0.1)
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
-	if (. && modded)
-		leak(1)
-
-/obj/structure/reagent_dispensers/fueltank
-	name = "fueltank"
-	desc = "A fueltank."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "weldtank"
-	amount_per_transfer_from_this = 10
-	var/obj/item/device/assembly_holder/rig = null
-
-/obj/structure/reagent_dispensers/fueltank/atom_init()
-	. = ..()
-	var/datum/reagents/R = new/datum/reagents(300)
-	reagents = R
-	R.my_atom = src
-	if(!possible_transfer_amounts)
-		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-	reagents.add_reagent("fuel",300)
-
-/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+/obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(src in oview(2, user))
 		if (modded)
-			to_chat(user, "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>")
+			to_chat(user, "<span class='red'>Faucet is wrenched open, leaking the contents of [src]!</span>")
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
-/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user)
+/obj/structure/reagent_dispensers/attack_hand(mob/user)
 	if (rig && !user.is_busy())
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
@@ -170,19 +115,22 @@
 			rig = null
 			cut_overlays()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
 		modded = !modded
 		if (modded)
+			START_PROCESSING(SSobj, src)
 			leak(amount_per_transfer_from_this)
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
-	if (istype(W,/obj/item/device/assembly_holder))
+
+		return
+	else if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
-			return ..()
+			return
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(W.use_tool(src, user, 20))
@@ -190,11 +138,11 @@
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
+				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_from_inventory(W, src)
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
@@ -203,8 +151,7 @@
 			add_overlay(test)
 
 	add_fingerprint(usr)
-	return ..()
-
+	return
 
 /obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
@@ -231,8 +178,6 @@
 		return TRUE
 	return FALSE
 
-
-
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
 		explode()
@@ -242,18 +187,52 @@
 	..() //extend the zap
 	explode()
 
-/obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if (. && modded)
+	if (. && modded && !ISDIAGONALDIR(Dir))
 		leak(amount_per_transfer_from_this * 0.1)
+
+
+// "Tanks".
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
+/obj/structure/reagent_dispensers/watertank
+	name = "watertank"
+	desc = "A watertank."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "watertank"
+
+/obj/structure/reagent_dispensers/watertank/atom_init()
+	. = ..()
+	reagents.add_reagent("water", 1000)
+
+/obj/structure/reagent_dispensers/aqueous_foam_tank
+	name = "AFFF tank"
+	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
+	icon_state = "affftank"
+
+/obj/structure/reagent_dispensers/aqueous_foam_tank/atom_init()
+	. = ..()
+	reagents.add_reagent("aqueous_foam", 1000)
+
+
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
+/obj/structure/reagent_dispensers/fueltank
+	name = "fueltank"
+	desc = "A fueltank."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "weldtank"
+
+/obj/structure/reagent_dispensers/fueltank/atom_init()
+	. = ..()
+	reagents.add_reagent("fuel",300)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	amount_per_transfer_from_this = 45
 
 /obj/structure/reagent_dispensers/peppertank/atom_init()
@@ -269,7 +248,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/water_cooler/atom_init()
 	. = ..()
@@ -281,7 +260,6 @@
 	desc = "A beer keg."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
-	amount_per_transfer_from_this = 10
 
 /obj/structure/reagent_dispensers/beerkeg/atom_init()
 	. = ..()
@@ -296,8 +274,7 @@
 	desc = "A dispenser of virus food."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "virusfoodtank"
-	amount_per_transfer_from_this = 10
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
@@ -308,8 +285,7 @@
 	desc = "A dispenser of acid for industrial processes."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "acidtank"
-	amount_per_transfer_from_this = 10
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
@@ -332,10 +308,27 @@
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
-	amount_per_transfer_from_this = 10
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", 1000)
+
+/obj/structure/reagent_dispensers/hazard
+	name = "inconspicuous tank"
+	desc = "An unmarked tank, holding many mysteries."
+	icon_state = "unmarkedtank"
+
+/obj/structure/reagent_dispensers/hazard/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("lexorin", 200)
+	reagents.add_reagent("mindbreaker", 200)
+	reagents.add_reagent("alphaamanitin", 200)
+	reagents.add_reagent("space_drugs", 200)
+	reagents.add_reagent("pacid", 200)
+	reagents.add_reagent("fuel", 200)
+	reagents.add_reagent("condensedcapsaicin", 200)
+	reagents.add_reagent("stoxin", 200)
+

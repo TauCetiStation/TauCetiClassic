@@ -16,20 +16,23 @@
 		balances[whose] += net
 
 /datum/stockMarket/proc/generateDesignation(name)
-	if(length(name) <= 4)
+	if(length_char(name) <= 4)
 		return uppertext(name)
-	var/list/w = splittext(name, " ")
-	if(w.len >= 2)
-		var/d = ""
-		for(var/i in 1 to min(5, w.len))
-			d += uppertext(ascii2text(text2ascii(w[i], 1)))
-		return d
-	else
-		var/d = uppertext(ascii2text(text2ascii(name, 1)))
-		for(var/i in 2 to length(name))
-			if(prob(100 / i))
-				d += uppertext(ascii2text(text2ascii(name, i)))
-		return d
+
+	if(findtext(name, " "))
+		return capitalize_words(name)
+
+	// generate random abbreviation if it's just one long word
+	var/bytes_length = length(name)
+	var/char = ""
+	var/new_name = ""
+	for(var/i = 1, i <= bytes_length, i += length(char))
+		char = name[i]
+
+		if(prob(100 / i))
+			new_name += uppertext(char)
+
+	return new_name
 
 /datum/stockMarket/proc/generateStocks(amt = 15)
 	var/list/fruits = list("Banana", "Mimana", "Watermelon", "Ambrosia", "Pomegranate", "Reishi", "Papaya", "Mango", "Tomato", "Conkerberry", "Wood", "Lychee", "Mandarin", "Harebell", "Pumpkin", "Rhubarb", "Tamarillo", "Yantok", "Ziziphus", "Oranges", "Gatfruit", "Daisy", "Kudzu")

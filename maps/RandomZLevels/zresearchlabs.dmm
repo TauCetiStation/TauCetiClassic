@@ -4052,7 +4052,7 @@
 /area/awaymission/labs/militarydivision)
 "jO" = (
 /obj/structure/table,
-/obj/item/weapon/butch{
+/obj/item/weapon/kitchenknife/butch{
 	pixel_y = 3
 	},
 /obj/item/weapon/kitchenknife{
@@ -6321,7 +6321,7 @@
 /area/awaymission/labs/civilian)
 "oB" = (
 /obj/structure/table,
-/obj/item/weapon/butch{
+/obj/item/weapon/kitchenknife/butch{
 	pixel_y = 3
 	},
 /obj/machinery/light{
@@ -6811,7 +6811,7 @@
 /area/awaymission/labs/civilian)
 "pH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/tray{
+/obj/item/weapon/storage/visuals/tray{
 	pixel_y = 6
 	},
 /obj/structure/cable{

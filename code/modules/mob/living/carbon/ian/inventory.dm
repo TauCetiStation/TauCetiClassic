@@ -11,7 +11,6 @@
 	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
@@ -93,8 +92,8 @@
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.slot_equipped = SLOT_MOUTH
 		W.equipped(src,SLOT_MOUTH)
+		W.slot_equipped = SLOT_MOUTH
 		if(client)
 			client.screen |= W
 		if(pulling == W)
@@ -159,7 +158,7 @@
 			name = "Captain [real_name]"
 			desc = "Probably better than the last captain."
 		if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
-			name = "Runtime"
+			name = "Dusty"
 			emote_see = list("coughs up a furball", "stretches")
 			emote_hear = list("purrs")
 			speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")

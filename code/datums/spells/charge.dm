@@ -1,20 +1,19 @@
-/obj/effect/proc_holder/spell/targeted/charge
-	name = "Charge"
-	desc = "This spell can be used to recharge a variety of things in your hands, \
-	 from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
+/obj/effect/proc_holder/spell/no_target/charge
+	name = "Заряд"
+	desc = "Можно использовать для перезарядки разных вещей в ваших руках. \
+	 		Это могут быть как магические артефакты, так и электронные компоненты. Креативные колдуны могут использовать его для зарядки своих друзей магией."
 	school = "transmutation"
+
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "DIRI CEL"
 	invocation_type = "whisper"
-	range = -1
-	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/charge/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
-	var/bad_charge = (user.a_intent == "hurt")
+	var/bad_charge = (user.a_intent == INTENT_HARM)
 	var/list/hand_items = list(C.get_active_hand(), C.get_inactive_hand())
 	var/charged_item = null
 	if(C.pulling && isliving(C.pulling))
@@ -92,7 +91,7 @@
 		playsound(user, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 		to_chat(C, "<span class='notice'>[charged_item] suddenly feels very [bad_charge ? "cold" : "warm"]!</span>")
 
-/obj/effect/proc_holder/spell/targeted/charge/proc/cell_charge(obj/item/weapon/stock_parts/cell/Cell, bad_charge)
+/obj/effect/proc_holder/spell/no_target/charge/proc/cell_charge(obj/item/weapon/stock_parts/cell/Cell, bad_charge)
 	if(prob(50))
 		Cell.maxcharge = max(0, Cell.maxcharge - 200)
 	Cell.charge = bad_charge ? 0 : Cell.maxcharge

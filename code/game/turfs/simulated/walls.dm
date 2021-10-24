@@ -16,8 +16,10 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
+	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
+
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -126,19 +128,19 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam)
+/turf/simulated/wall/proc/take_damage(dam, devastated)
 	if(dam)
 		damage = max(0, damage + dam)
-		update_damage()
+		update_damage(devastated)
 	return
 
-/turf/simulated/wall/proc/update_damage()
+/turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
 	if(rotting)
 		cap = cap / 10
 
 	if(damage >= cap)
-		dismantle_wall()
+		dismantle_wall(devastated)
 	else
 		update_icon()
 
@@ -159,7 +161,9 @@
 		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O,/obj/effect/decal/cleanable/crayon))
+			qdel(O)
+		else if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
@@ -169,7 +173,7 @@
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
-		return (new /obj/structure/cultgirder(src))
+		return (new /obj/structure/girder/cult(src))
 
 	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
@@ -184,17 +188,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			src.ChangeTurf(basetype)
-			return
-		if(2.0)
+		if(1)
+			ChangeTurf(basetype)
+		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3.0)
-			take_damage(rand(0, 250))
-		else
+		if(3)
+			take_damage(rand(0, 55))
 	return
 
 /turf/simulated/wall/blob_act()
@@ -208,18 +210,9 @@
 
 		var/number_rots = rand(2,3)
 		for(var/i=0, i<number_rots, i++)
-			var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-			O.name = "Wallrot"
-			O.desc = "Ick..."
-			O.icon = 'icons/effects/wallrot.dmi'
-			O.pixel_x += rand(-10, 10)
-			O.pixel_y += rand(-10, 10)
-			O.anchored = 1
-			O.density = 1
-			O.layer = 5
-			O.mouse_opacity = 0
+			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/proc/thermitemelt(mob/user)
+/turf/simulated/wall/proc/thermitemelt(mob/user, seconds_to_melt)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -227,35 +220,27 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
+	O.anchored = TRUE
+	O.density = TRUE
 	O.layer = 5
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
 
-	spawn(100)
+	spawn(seconds_to_melt * 10)
 		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M)
-	if (prob(15) && !rotting)
-		dismantle_wall()
-	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
 
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -281,10 +266,10 @@
 		if(istype(M, /mob/living/simple_animal/hulk))
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4,10)
+			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
-			if(M.environment_smash == 3)
+			if(M.environment_smash >= 3)
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>You smash against the wall.</span>")
 			else
@@ -292,23 +277,20 @@
 		else
 			if (prob(40) || rotting)
 				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
-				dismantle_wall(1)
+				dismantle_wall(TRUE)
 			else
-				take_damage(rand(25, 75))
+				take_damage(rand(25, 75), TRUE)
 				to_chat(M, "<span class='info'>You smash against the wall.</span>")
-				return
-			return
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
-		if(user.a_intent == "hurt")
-			playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
-			take_damage(rand(15, 50))
-			if(prob(25))
-				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			return //##Z2
+	if(HULK in user.mutations && user.a_intent == INTENT_HARM) //#Z2 No more chances, just randomized damage and hurt intent
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+		take_damage(rand(15, 50))
+		if(prob(25))
+			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		return //##Z2
 
 	if(rotting)
 		to_chat(user, "<span class='notice'>The wall crumbles under your touch.</span>")
@@ -317,15 +299,10 @@
 
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user)|| ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -343,19 +320,19 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
-			src.dismantle_wall(1)
+			dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				thermitemelt(user)
+				thermitemelt(user, seconds_to_melt)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -366,41 +343,32 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
 	if(iswelder(W))
-		if(user.is_busy()) return
-
-		var/response = "Dismantle"
-		if(damage)
-			response = alert(user, "Would you like to repair or dismantle [src]?", "[src]", "Repair", "Dismantle")
-
 		var/obj/item/weapon/weldingtool/WT = W
-
-		if(WT.use(0,user))
-			if(response == "Repair")
-				to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
-				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
-					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
-					take_damage(-damage)
-
-			else if(response == "Dismantle")
-				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-				if(WT.use_tool(src, user, 100, volume = 100))
-					if(!istype(src, /turf/simulated/wall) || !T)
-						return
-
-					if(user.loc == T && user.get_active_hand() == WT)
-						to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
-						dismantle_wall()
-			return
-		else
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
+		if(user.a_intent == INTENT_HELP)
+			if(!damage)
+				return
+			to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
+				take_damage(-damage)
+
+		else
+			to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
+			if(WT.use_tool(src, user, 100, 3, 100))
+				if(!istype(src, /turf/simulated/wall))
+					return
+				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
+				dismantle_wall()
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		if(user.is_busy(src))
@@ -497,6 +465,12 @@
 	else if(istype(W,/obj/item/door_control_frame))
 		var/obj/item/door_control_frame/AH = W
 		AH.try_build(src)
+		return
+
+	// why is all of this here help me
+	else if(istype(W, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = W
+		NF.try_build(user, src)
 		return
 
 	//Poster stuff

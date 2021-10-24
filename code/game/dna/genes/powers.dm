@@ -182,30 +182,32 @@
 		return 0
 	return ..(M,flags)
 
-/datum/dna/gene/basic/midget/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/activate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags |= 1
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
+		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
 	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 	Mx.Translate(0,-2)
 	M.transform = Mx
+	M.default_transform = Mx
 
-/datum/dna/gene/basic/midget/deactivate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags &= ~1
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
+		H.update_size_class()
 
 	var/matrix/Mx = matrix()
-	Mx.Scale(1) ////Reset size of our halfling
-	Mx.Translate(0,0)
 	M.transform = Mx
+	M.default_transform = Mx
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
@@ -231,6 +233,8 @@
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
+	if(!mind)
+		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return

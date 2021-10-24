@@ -35,6 +35,7 @@
 		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
 			usr.drop_from_inventory(src)
 
+		visible_message("<span class='warning'>[usr] spins \the [src]!</span>")
 		if(isturf(loc))
 			var/speed = rand(1, 3)
 			var/loops
@@ -74,7 +75,7 @@
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -86,13 +87,11 @@
 	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
+	if(user.a_intent != INTENT_HARM || !is_glass)
+		return ..()
 
 	if(!target)
 		return
-
-	if(user.a_intent != "hurt" || !is_glass)
-		return ..()
-
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -150,20 +149,19 @@
 			user.visible_message("<span class='warning'><B>[target] has attacked himself with a bottle of [src.name]!</B></span>")
 
 	//Attack logs
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
-	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with a bottle. (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "smashed with a [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		src.reagents.reaction(target, TOUCH)
+		reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
-	return
+	// We're smashing the bottle into mob's face. There's no need for an afterattack.
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()
@@ -175,8 +173,7 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
+		reagents.standard_splash(loc)
 		qdel(src)
 
 
@@ -185,7 +182,7 @@
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0
@@ -212,175 +209,117 @@
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gin/atom_init()
-	. = ..()
-	reagents.add_reagent("gin", 100)
+	list_reagents = list("gin" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey/atom_init()
-	. = ..()
-	reagents.add_reagent("whiskey", 100)
+	list_reagents = list("whiskey" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/atom_init()
-	. = ..()
-	reagents.add_reagent("vodka", 100)
+	list_reagents = list("vodka" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla/atom_init()
-	. = ..()
-	reagents.add_reagent("tequilla", 100)
+	list_reagents = list("tequilla" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/atom_init()
-	. = ..()
-	reagents.add_reagent("nothing", 100)
+	list_reagents = list("nothing" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
 	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/patron/atom_init()
-	. = ..()
-	reagents.add_reagent("patron", 100)
+	list_reagents = list("patron" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum/atom_init()
-	. = ..()
-	reagents.add_reagent("rum", 100)
-
+	list_reagents = list("rum" = 100)
 /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne
 	name = "Duc de Paris Brut"
 	desc = "Boisson elegante. Servir froid."
 	icon_state = "chambottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne/atom_init()
-	. = ..()
-	reagents.add_reagent("champagne", 100)
+	list_reagents = list("champagne" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
-	desc = "A flask of the chaplain's holy water."
+	name = "Holy Flask"
+	desc = "A flask of the chaplain's water."
 	icon_state = "holyflask"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/atom_init()
-	. = ..()
-	reagents.add_reagent("holywater", 100)
+	list_reagents = list("water" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth/atom_init()
-	. = ..()
-	reagents.add_reagent("vermouth", 100)
+	list_reagents = list("vermouth" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
+	list_reagents = list("kahlua" = 100)
 	is_transparent = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua/atom_init()
-	. = ..()
-	reagents.add_reagent("kahlua", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl Goldschlager"
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager/atom_init()
-	. = ..()
-	reagents.add_reagent("goldschlager", 100)
+	list_reagents = list("goldschlager" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac/atom_init()
-	. = ..()
-	reagents.add_reagent("cognac", 100)
+	list_reagents = list("cognac" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
+	list_reagents = list("wine" = 100)
 	is_transparent = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine/atom_init()
-	. = ..()
-	reagents.add_reagent("wine", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
 	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/atom_init()
-	. = ..()
-	reagents.add_reagent("absinthe", 100)
+	list_reagents = list("absinthe" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
 	icon_state = "melonliquorbottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor/atom_init()
-	. = ..()
-	reagents.add_reagent("melonliquor", 100)
+	list_reagents = list("melonliquor" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
 	icon_state = "bluecuracaobottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
-	. = ..()
-	reagents.add_reagent("bluecuracao", 100)
+	list_reagents = list("bluecuracao" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
 	desc = "Sweet and tangy, a bar syrup used to add color or flavor to drinks."
 	icon_state = "grenadinebottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine/atom_init()
-	. = ..()
-	reagents.add_reagent("grenadine", 100)
+	list_reagents = list("grenadine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pwine
 	name = "Warlock's Velvet"
 	desc = "What a delightful packaging for a surely high quality wine! The vintage must be amazing!"
 	icon_state = "pwinebottle"
+	list_reagents = list("pwine" = 100)
 	is_transparent = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine/atom_init()
-	. = ..()
-	reagents.add_reagent("pwine", 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -389,65 +328,42 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
+	list_reagents = list("orangejuice" = 100)
 	is_glass = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/atom_init()
-	. = ..()
-	reagents.add_reagent("orangejuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
+	list_reagents = list("cream" = 100)
 	is_glass = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/cream/atom_init()
-	. = ..()
-	reagents.add_reagent("cream", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
+	list_reagents = list("tomatojuice" = 100)
 	is_glass = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/atom_init()
-	. = ..()
-	reagents.add_reagent("tomatojuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
+	list_reagents = list("limejuice" = 100)
 	is_glass = 0
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/atom_init()
-	. = ..()
-	reagents.add_reagent("limejuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale/atom_init()
-	. = ..()
-	reagents.add_reagent("ale", 100)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("ale" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer
 	name = "Space Beer"
 	desc = "Contains only water, malt and hops."
 	icon_state = "beer"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/atom_init()
-	. = ..()
-	reagents.add_reagent("beer", 100)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-
+	list_reagents = list("beer" = 100)
 

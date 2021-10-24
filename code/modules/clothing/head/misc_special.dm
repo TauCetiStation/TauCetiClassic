@@ -25,7 +25,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	action_button_name = "Flip Welding Mask"
 	siemens_coefficient = 0.9
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -66,7 +66,7 @@
 	var/processing = 0 //I dont think this is used anywhere.
 	body_parts_covered = EYES
 
-obj/item/clothing/head/cakehat/get_current_temperature()
+/obj/item/clothing/head/cakehat/get_current_temperature()
 	if(onfire)
 		return 700
 	return 0
@@ -106,46 +106,54 @@ obj/item/clothing/head/cakehat/get_current_temperature()
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
-	icon_state = "ushankadown"
-	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
+	var/ushanka_state = "ushanka_black_brown"
+
+/obj/item/clothing/head/ushanka/atom_init()
+	. = ..()
+	icon_state = "[ushanka_state]-down"
+	item_state = "[ushanka_state]-down"
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
-	if(src.icon_state == "ushankadown")
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
+	if(flags_inv & HIDEEARS)
+		icon_state = "[ushanka_state]-up"
+		item_state = "[ushanka_state]-up"
+		flags_inv &= ~HIDEEARS
 		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
+		icon_state = "[ushanka_state]-down"
+		item_state = "[ushanka_state]-down"
+		flags_inv |= HIDEEARS
 		to_chat(user, "You lower the ear flaps on the ushanka.")
+
+/obj/item/clothing/head/ushanka/black
+	ushanka_state = "ushanka_black"
+
+/obj/item/clothing/head/ushanka/brown
+	ushanka_state = "ushanka_brown_brown"
+
+/obj/item/clothing/head/ushanka/black_white
+	ushanka_state = "ushanka_black_white"
+
+/obj/item/clothing/head/ushanka/brown_white
+	ushanka_state = "ushanka_brown_white"
 
 /*
  * Pumpkin head
  */
-/obj/item/clothing/head/pumpkinhead
+/obj/item/clothing/head/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
-	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
-	item_state = "hardhat0_pumpkin"
+	icon_state = "hardhat_pumpkin"//Could stand to be renamed
+	item_state = "hardhat_pumpkin"
 	item_color = "pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|EYES
-	var/brightness_on = 2 //luminosity when on
-	var/on = 0
-	w_class = ITEM_SIZE_NORMAL
-
-/obj/item/clothing/head/pumpkinhead/attack_self(mob/user)
-	if(!isturf(user.loc))
-		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "hardhat[on]_[item_color]"
-	item_state = "hardhat[on]_[item_color]"
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
+	brightness_on = 2 //luminosity when on
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	w_class = SIZE_SMALL
 
 /*
  * Kitty ears

@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "biotech=3"
 
 	req_access = list(access_robotics)
@@ -17,13 +15,13 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-/obj/item/device/mmi/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		var/obj/item/brain/B = O
+/obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
+		var/obj/item/brain/B = I
 		if(!B.brainmob)
 			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
+		visible_message("<span class='notice'>[user] sticks \a [B] into \the [src].</span>")
 
 		brainmob = B.brainmob
 		B.brainmob = null
@@ -39,13 +37,13 @@
 		locked = TRUE
 
 		feedback_inc("cyborg_mmis_filled", 1)
-		qdel(O)
+		qdel(B)
 		return
 
-	else if(istype(O, /obj/item/weapon/holder/diona) && !brainmob)
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
+	else if(istype(I, /obj/item/weapon/holder/diona) && !brainmob)
+		visible_message("<span class='notice'>[user] sticks \a [I] into \the [src].</span>")
 
-		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in O
+		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in I
 		if(!D)
 			world.log << "This is seriously really wrong, and I would like to keep a message for this case."
 		if(!D.mind || !D.key)
@@ -54,10 +52,10 @@
 		transfer_nymph(D)
 
 		feedback_inc("cyborg_mmis_filled",1)
-		qdel(O)
+		qdel(D)
 		return
 
-	else if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+	else if((istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
@@ -66,10 +64,11 @@
 		return
 
 	else if(brainmob)
-		O.attack(brainmob, user)//Oh noooeeeee
-		return
+		// Oh noooeeeee
+		user.SetNextMove(CLICK_CD_MELEE)
+		return I.attack(brainmob, user)
 
-	..()
+	return ..()
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
@@ -102,7 +101,7 @@
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !in_range(user, src) || !in_range(user, target))
+	if(target.buckled)
 		return
 	if(target == user)
 		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)

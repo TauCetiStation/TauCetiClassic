@@ -11,13 +11,13 @@
 
 /*
 
-IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
+IMPORTANT NOTE: Please delete the diseases by using cure() proc or qdel() instruction.
 Diseases are referenced in a global list, so simply setting mob or obj vars
 to null does not delete the object itself. Thank you.
 
 */
 
-var/list/diseases = typesof(/datum/disease) - /datum/disease
+var/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease
@@ -148,8 +148,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/process()
 	if(!holder)
-		STOP_PROCESSING(SSdisease, src)
+		STOP_PROCESSING(SSdiseases, src)
 		return
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		if(H.species.flags[VIRUS_IMMUNE])
+			STOP_PROCESSING(SSdiseases, src)
+			cure()
+			return
+
 	if(prob(65))
 		spread(holder)
 
@@ -187,10 +194,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return
 
 
-/datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
+/datum/disease/New(process=1, datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)				 // Viruses in list are considered active.
-		START_PROCESSING(SSdisease, src)
+		START_PROCESSING(SSdiseases, src)
 	initial_spread = spread
 
 /datum/disease/proc/IsSame(datum/disease/D)

@@ -4,6 +4,7 @@
 	var/turf/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
+	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -27,7 +28,13 @@
 	var/list/resources
 	var/slowdown = 0
 
+/**
+  * Turf Initialize
+  *
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /turf/atom_init()
+	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -68,7 +75,7 @@
 
 /turf/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		src.ex_act(2)
+		ex_act(2)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()
@@ -104,7 +111,7 @@
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if (!CanPass(mover, src))
 		mover.Bump(src, 1)
 		return 0
 
@@ -119,19 +126,21 @@
 /turf/proc/is_mob_placeable(mob/M)
 	if(density)
 		return FALSE
+	var/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
+								  /obj/structure/table, /obj/structure/grille,
+								  /obj/structure/cult, /obj/structure/mineral_door)
 	for(var/atom/movable/on_turf in contents)
 		if(on_turf == M)
 			continue
 		if(istype(on_turf, /mob) && !on_turf.anchored)
 			continue
 		if(on_turf.density)
-			if(istype(on_turf, /obj/structure/window))
-				continue
-			if(istype(on_turf, /obj/machinery/door))
-				continue
-			if(istype(on_turf, /obj/structure/table))
-				continue
-			if(istype(on_turf, /obj/structure/grille))
+			var/allow = FALSE
+			for(var/type in allowed_types)
+				if(istype(on_turf, type))
+					allow = TRUE
+					break
+			if(allow)
 				continue
 			return FALSE
 	return TRUE
@@ -192,6 +201,13 @@
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
+// Port from /tg/
+// We have no multi-z now, so ported only this proc ~ Pervert
+/turf/proc/make_transparent(turf/base = /turf/space)
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(base.icon), initial(base.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
+	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
+	underlays += underlay_appearance
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
@@ -208,6 +224,18 @@
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L)
 		qdel(L)
+
+/turf/proc/empty(turf_type=/turf/space, baseturf_type, list/ignore_typecache)
+	// Remove all atoms except observers, landmarks, docking ports
+	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark))
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
+	allowed_contents -= src
+	for(var/i in 1 to allowed_contents.len)
+		var/thing = allowed_contents[i]
+		qdel(thing, force=TRUE)
+
+	if(turf_type)
+		ChangeTurf(turf_type, baseturf_type)
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
@@ -394,7 +422,7 @@
 
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(basetype)
+	ChangeTurf(basetype)
 	spawn()
 		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
@@ -419,7 +447,7 @@
 /**
  * Distance associates with all directions movement
  */
-/turf/proc/Distance(var/turf/T)
+/turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
 /**
@@ -448,7 +476,7 @@
 		var/mob/living/L = AM
 		L.turf_collision(src)
 
-/turf/proc/update_icon()
+/turf/update_icon()
 	if(is_flooded(absolute = 1))
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)

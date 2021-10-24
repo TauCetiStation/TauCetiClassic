@@ -8,8 +8,8 @@
 	icon = 'icons/obj/power.dmi'
 	var/icon_state_on = "portgen1"
 	icon_state = "portgen0"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	use_power = NO_POWER_USE
 
 	var/active = 0
@@ -34,7 +34,7 @@
 	if(active && HasFuel() && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
-		src.updateDialog()
+		updateDialog()
 
 	else
 		active = 0
@@ -56,7 +56,7 @@
 	var/max_sheets = 100
 	var/sheet_name = "solid phoron"
 	var/sheet_path = /obj/item/stack/sheet/mineral/phoron
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 40
 	var/heat = 0
@@ -150,7 +150,7 @@
 
 	if (heat > 0)
 		heat = max(heat - 2, 0)
-		src.updateDialog()
+		updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
@@ -177,11 +177,11 @@
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
-				anchored = 1
+				anchored = TRUE
 			else if(anchored)
 				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
-				anchored = 0
+				anchored = FALSE
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
@@ -209,7 +209,7 @@
 		user << browse(null, "window=port_gen")
 		return
 
-	var/dat = text("<b>[name]</b><br>")
+	var/dat = ""
 	if (active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
@@ -220,19 +220,15 @@
 	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += text("Heat: [heat]<br>")
-	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[entity_ja(dat)]", "window=port_gen")
-	onclose(user, "port_gen")
 
-/obj/machinery/power/port_gen/pacman/is_operational_topic()
+	var/datum/browser/popup = new(user, "port_gen", src.name)
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/power/port_gen/pacman/is_operational()
 	return TRUE
 
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
-	if (href_list["action"] == "close")
-		usr << browse(null, "window=port_gen")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -256,7 +252,7 @@
 			if (power_output < 4 || emagged)
 				power_output++
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/power/port_gen/pacman/super
@@ -267,7 +263,7 @@
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 65
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = /obj/item/weapon/circuitboard/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
 	explosion(src.loc, 3, 3, 3, -1)
@@ -280,7 +276,7 @@
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = /obj/item/weapon/circuitboard/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)

@@ -18,9 +18,8 @@
 	health = 40
 
 	harm_intent_damage = 8
-	melee_damage_lower = 10
-	melee_damage_upper = 20
-	attacktext = "bites"
+	melee_damage = 15
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	// Space carp aren't affected by atmos.
@@ -38,6 +37,8 @@
 
 	faction = "carp"
 
+	has_head = TRUE
+
 	var/randomify = TRUE // Are we going to use carp_randomify()
 
 	var/carp_color = "purple" // holder for icon set
@@ -48,8 +49,7 @@
 		carp_randomify()
 
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify()
-	melee_damage_lower = rand(0.8 * initial(melee_damage_lower), initial(melee_damage_lower))
-	melee_damage_upper = rand(initial(melee_damage_upper), (1.2 * initial(melee_damage_upper)))
+	melee_damage = initial(melee_damage) * rand(8, 12) * 0.1
 	maxHealth = rand(initial(maxHealth), (1.5 * initial(maxHealth)))
 	health = maxHealth
 
@@ -96,11 +96,11 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
+	w_class = SIZE_MASSIVE
 
 	randomify = FALSE
 
-	melee_damage_lower = 15
-	melee_damage_upper = 25
+	melee_damage = 20
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
@@ -109,16 +109,15 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
-	a_intent = "harm"
+	w_class = SIZE_HUMAN
 
 	turns_per_move = 5
 	speed = -15
 	move_to_delay = -15
 
-	melee_damage_lower = 400
-	melee_damage_upper = 400
+	melee_damage = 400
 
-	attacktext = "licks"
+	attacktext = "lick"
 
 	var/idle_snd_chance = 5
 
@@ -137,4 +136,4 @@
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
-		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, FALSE, null, -3)

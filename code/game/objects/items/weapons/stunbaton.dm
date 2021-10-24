@@ -6,13 +6,24 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 	throwforce = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
 
+	sweep_step = 2
+
 	origin_tech = "combat=2"
+
+/obj/item/weapon/melee/baton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
@@ -53,13 +64,16 @@
 			update_icon()
 		return
 
-	var/mob/living/carbon/human/H = M
 	if(isrobot(M))
-		..()
-		return
+		return ..()
 
-	if(user.a_intent == "hurt")
-		if(!..()) return
+	var/mob/living/carbon/human/H = M
+
+	if(user.a_intent == INTENT_HARM)
+		. = ..()
+		// A mob can be deleted after the attack, so we gotta be wary of that.
+		if(!. || QDELETED(H))
+			return
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
@@ -84,10 +98,8 @@
 			charges--
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
-		if(!(user.a_intent == "hurt"))
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
+		if(!(user.a_intent == INTENT_HARM))
+			H.log_combat(user, "stunned (attempt) with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)

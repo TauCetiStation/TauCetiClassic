@@ -15,26 +15,26 @@
 		var/mob/living/carbon/C = user
 		if(!container)
 			container = I
-			C.drop_item()
-			I.loc = src
+			C.drop_from_inventory(I, src)
 		return
-	if(istype(I,/obj/item/weapon/virusdish))
+
+	if(istype(I, /obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
-		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=list(),"antibodies"=0)
-		data["virus2"] |= I:virus2
-		product.reagents.add_reagent("blood",30,data)
+		var/obj/item/weapon/virusdish/Vd = I
+		var/list/data = list("virus2" = virus_copylist(Vd.virus2))
+		product.reagents.add_reagent("blood", 30, data)
 
 		virusing = TRUE
-		addtimer(VARSET_CALLBACK(src, virusing, FALSE), 1200)
+		VARSET_IN(src, virusing, FALSE, 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
-	..()
-	return
+
+	return ..()
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
 	var/dat
@@ -60,8 +60,9 @@
 	else
 		dat = "Please insert a container."
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/curer/process()
 	..()
@@ -88,7 +89,7 @@
 		container.loc = src.loc
 		container = null
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/weapon/reagent_containers/container)

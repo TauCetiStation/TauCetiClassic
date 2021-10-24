@@ -136,9 +136,7 @@
 /obj/item/projectile/beam/sniper
 	name = "sniper beam"
 	icon_state = "laser"
-	damage = 60
-	stun = 5
-	weaken = 5
+	damage = 50
 	stutter = 5
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle
@@ -182,3 +180,21 @@
 /obj/item/projectile/beam/stun/atom_init()
 	. = ..()
 	proj_act_sound = null
+
+/obj/item/projectile/beam/cult_laser
+	name = "beam"
+	icon_state = "emitter"
+	damage = 5
+
+	muzzle_type = /obj/effect/projectile/emitter/muzzle/cult
+	tracer_type = /obj/effect/projectile/emitter/tracer/cult
+	impact_type = /obj/effect/projectile/emitter/impact/cult
+
+/obj/item/projectile/beam/cult_laser/atom_init()
+	. = ..()
+	def_zone = ran_zone()
+
+/obj/item/projectile/beam/cult_laser/Bump(atom/A, forced=0)
+	if(istype(A, /mob/living/simple_animal/hostile/pylon) || istype(A, /obj/structure/cult/pylon) || istype(A, /mob/living/simple_animal/construct) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
+		return FALSE
+	return ..()

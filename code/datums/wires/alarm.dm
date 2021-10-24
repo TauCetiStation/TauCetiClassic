@@ -12,12 +12,12 @@ var/const/AALARM_WIRE_AALARM     = 16
 	var/obj/machinery/alarm/A = holder
 	return A.wiresexposed
 
-/datum/wires/alarm/get_interact_window()
+/datum/wires/alarm/get_status()
 	var/obj/machinery/alarm/A = holder
 	. += ..()
-	. += "<br>[A.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked."]"
-	. += "<br>[(A.shorted || (A.stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!"]"
-	. += "<br>[A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on."]"
+	. += "[A.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked."]"
+	. += "[(A.shorted || (A.stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!"]"
+	. += "[A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on."]"
 
 /datum/wires/alarm/update_cut(index, mended)
 	var/obj/machinery/alarm/A = holder

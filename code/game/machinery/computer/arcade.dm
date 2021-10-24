@@ -141,7 +141,7 @@
 	name = (name_action + name_part1 + name_part2)
 
 /obj/machinery/computer/arcade/ui_interact(mob/user)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+	var/dat
 
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -158,8 +158,9 @@
 
 	dat += "</b></center>"
 
-	user << browse(entity_ja(dat), "window=arcade")
-	onclose(user, "arcade")
+	var/datum/browser/popup = new(user, "arcade", "[name]", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
 	. = ..()
@@ -170,48 +171,44 @@
 		if (href_list["attack"])
 			src.blocked = 1
 			var/attackamt = rand(2,6)
-			playsound(src, pick('sound/machines/arcade/attack1.ogg', 'sound/machines/arcade/attack2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+			playsound(src, pick('sound/machines/arcade/attack1.ogg', 'sound/machines/arcade/attack2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 			src.temp = "You attack for [attackamt] damage!"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
 
 			sleep(10)
 			src.enemy_hp -= attackamt
-			src.arcade_action()
+			arcade_action()
 
 		else if (href_list["heal"])
 			src.blocked = 1
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
-			playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80 , null, -6)
+			playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80 , FALSE, null, -6)
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			turtle++
 
 			sleep(10)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
-			src.updateUsrDialog()
-			src.arcade_action()
+			updateUsrDialog()
+			arcade_action()
 
 		else if (href_list["charge"])
 			src.blocked = 1
 			var/chargeamt = rand(4,7)
-			playsound(src, pick('sound/machines/arcade/+mana1.ogg', 'sound/machines/arcade/+mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+			playsound(src, pick('sound/machines/arcade/+mana1.ogg', 'sound/machines/arcade/+mana2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 			src.temp = "You regain [chargeamt] points"
 			src.player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
 
-			src.updateUsrDialog()
+			updateUsrDialog()
 			sleep(10)
-			src.arcade_action()
-
-	if (href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=arcade")
+			arcade_action()
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "New Round"
@@ -223,16 +220,16 @@
 		turtle = 0
 
 		if(emagged)
-			src.New()
+			New()
 			emagged = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/arcade/proc/arcade_action()
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1
-			playsound(src, 'sound/machines/arcade/e_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
+			playsound(src, 'sound/machines/arcade/e_death.ogg', VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 			src.temp = "[src.enemy_name] has fallen! Rejoice!"
 
 			if(emagged)
@@ -241,7 +238,7 @@
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb. [ADMIN_JMP(usr)]")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				src.New()
+				New()
 				emagged = 0
 			else if(!contents.len)
 				feedback_inc("arcade_win_normal")
@@ -261,21 +258,21 @@
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
-		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		src.player_hp -= boomamt
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
-		playsound(src, pick('sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+		playsound(src, pick('sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
 		src.player_mp -= stealamt
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
 			sleep(10)
-			playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
+			playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
 				feedback_inc("arcade_loss_mana_emagged")
@@ -284,20 +281,20 @@
 				feedback_inc("arcade_loss_mana_normal")
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
-		playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+		playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 		src.temp = "[src.enemy_name] heals for 4 health!"
 		src.enemy_hp += 4
 		src.enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
-		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
+		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 		src.temp = "[src.enemy_name] attacks for [attackamt] damage!"
 		src.player_hp -= attackamt
 
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
-		playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
+		playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 		src.temp = "You have been crushed! GAME OVER"
 		if(emagged)
 			feedback_inc("arcade_loss_hp_emagged")
@@ -321,7 +318,7 @@
 	emagged = 1
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))

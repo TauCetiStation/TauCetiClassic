@@ -17,6 +17,11 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	w_class = SIZE_BIG
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/facehugger
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
@@ -38,7 +43,7 @@
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -50,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	w_class = SIZE_SMALL
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
@@ -97,9 +103,10 @@
 			emote("me",1,pick("dances around","chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 /mob/living/simple_animal/corgi/borgi
 	name = "E-N"
 	real_name = "E-N"	//Intended to hold the name without altering it.
@@ -115,7 +122,7 @@
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
-			src.explode()
+			explode()
 		return TRUE
 	return FALSE
 

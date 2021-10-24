@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /**********************************************************************
 						Cyborg Spec Items
 ***********************************************************************/
@@ -9,17 +7,14 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
-/obj/item/borg/stun/attack(mob/M, mob/living/silicon/robot/user)
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+/obj/item/borg/stun/attack(mob/living/M, mob/living/silicon/robot/user)
+	M.log_combat(user, "stunned with [name]")
 	playsound(src, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 
 	user.cell.charge -= 30
 
 	M.Weaken(5)
-	if (M.stuttering < 5)
-		M.stuttering = 5
+	M.Stuttering(5)
 	M.Stun(5)
 
 
@@ -62,35 +57,3 @@
 	sight_mode = BORGNIGHT
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'
-
-/obj/item/borg/sight/hud
-	name = "hud"
-	var/obj/item/clothing/glasses/hud/hud = null
-
-
-/obj/item/borg/sight/hud/med
-	name = "medical hud"
-	icon_state = "healthhud"
-	icon = 'icons/obj/clothing/glasses.dmi'
-
-/obj/item/borg/sight/hud/med/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/health(src)
-
-
-/obj/item/borg/sight/hud/sec
-	name = "security hud"
-	icon_state = "securityhud"
-	icon = 'icons/obj/clothing/glasses.dmi'
-
-/obj/item/borg/sight/hud/sec/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/security(src)
-
-
-/obj/item/borg/sight/hud/miner
-	name = "geological hud"
-
-/obj/item/borg/sight/hud/miner/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/mining(src)

@@ -40,6 +40,8 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
+#define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
+
 #define LEFT  1
 #define RIGHT 2
 
@@ -51,11 +53,15 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
-// intent flags
-#define I_HELP   "help"
-#define I_DISARM "disarm"
-#define I_GRAB   "grab"
-#define I_HURT   "hurt" // or harm? or hurt? or what?
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_PUSH   "push"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -85,6 +91,33 @@
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
+//Threshold levels for beauty for humans
+#define BEAUTY_LEVEL_HORRID -66
+#define BEAUTY_LEVEL_BAD -33
+#define BEAUTY_LEVEL_DECENT 33
+#define BEAUTY_LEVEL_GOOD 66
+#define BEAUTY_LEVEL_GREAT 100
+
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 15
+#define MOOD_LEVEL_HAPPY3 10
+#define MOOD_LEVEL_HAPPY2 6
+#define MOOD_LEVEL_HAPPY1 2
+#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_SAD1 -3
+#define MOOD_LEVEL_SAD2 -7
+#define MOOD_LEVEL_SAD3 -15
+#define MOOD_LEVEL_SAD4 -20
+
+//Spirit levels for humans
+#define SPIRIT_MAXIMUM 150
+#define SPIRIT_HIGH 125
+#define SPIRIT_NEUTRAL 100
+#define SPIRIT_DISTURBED 75
+#define SPIRIT_POOR 50
+#define SPIRIT_LOW 25
+#define SPIRIT_BAD 0
+
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -92,6 +125,9 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+
+#define NUTRITION_PERCENT_MAX 120
+#define NUTRITION_PERCENT_ZERO 0
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -137,3 +173,19 @@
 // Indicators.
 #define IND_STAT          "stat"
 #define IND_STAT_NOCLIENT "stat_noclient"
+
+// Heart status
+#define HEART_NORMAL      "heart_normal"
+#define HEART_FAILURE     "heart_failure"
+#define HEART_FIBR        "heart_fibrillation"
+
+// Defibrillation
+#define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE  80
+
+// Awareness about syndicate, it`s agents and equipment
+#define SYNDICATE_UNAWARE  0
+#define SYNDICATE_PHRASES  1
+#define SYNDICATE_RESPONSE 2
+#define SYNDICATE_AWARE    3

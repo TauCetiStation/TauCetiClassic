@@ -3,6 +3,7 @@
 	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head //so the chaplain hoodie or other hoodies can override this
 	var/hooded = FALSE
+	var/icon_suit_up
 
 /obj/item/clothing/suit/hooded/atom_init()
 	. = ..()
@@ -28,6 +29,10 @@
 		var/mob/living/carbon/H = hood.loc
 		H.unEquip(hood, 1)
 	hood.loc = src
+	hooded = !hooded
+	if(icon_suit_up)
+		icon_state = initial(icon_state)
+		usr.update_inv_wear_suit()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -44,6 +49,9 @@
 				to_chat(H, "<span class='userdanger'>You're already wearing something on your head!</span>")
 				return
 			H.equip_to_slot_if_possible(hood, SLOT_HEAD, 0, 0, 1)
+			if(icon_suit_up)
+				icon_state = icon_suit_up
+				usr.update_inv_wear_suit()
+			hooded = !hooded
 	else
 		RemoveHood()
-	hooded = !hooded

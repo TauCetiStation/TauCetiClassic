@@ -28,3 +28,12 @@
 		)
 	product = /obj/item/stack/sheet/metal
 	points = 5
+
+/datum/alloy/phoron_glass
+	metaltag = "phoron glass"
+	requires = list(
+		"phoron" = 1,
+		"sand" = 1
+		)
+	product = /obj/item/stack/sheet/glass/phoronglass
+	points = 25

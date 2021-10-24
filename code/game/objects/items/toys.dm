@@ -45,32 +45,34 @@
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [target].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-		src.update_icon()
+		update_icon()
 	return
 
-/obj/item/toy/balloon/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		if(O.reagents)
-			if(O.reagents.total_volume < 1)
-				to_chat(user, "The [O] is empty.")
-			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent("pacid", 1))
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(I.reagents)
+			if(I.reagents.total_volume < 1)
+				to_chat(user, "The [I] is empty.")
+			else if(I.reagents.total_volume >= 1)
+				if(I.reagents.has_reagent("pacid", 1))
 					to_chat(user, "The acid chews through the balloon!")
-					O.reagents.reaction(user)
+					I.reagents.reaction(user)
 					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [O].</span>")
-					O.reagents.trans_to(src, 10)
-	src.update_icon()
-	return
+					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
+					I.reagents.trans_to(src, 10)
+				update_icon()
+			return
+
+	return ..()
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
-		src.reagents.reaction(get_turf(hit_atom))
+		visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
+		reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
+			reagents.reaction(A)
 		src.icon_state = "burst"
 		spawn(5)
 			if(src)
@@ -95,7 +97,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 /*
  * Fake telebeacon
@@ -124,15 +126,14 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
-	item_state = "gun"
+	item_state = "revolver"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_NORMAL
-	g_amt = 10
-	m_amt = 10
+	w_class = SIZE_SMALL
+	m_amt = 3250
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -141,34 +142,32 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [bullets] caps\s left.</span>")
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user)
-
-	if (istype(A, /obj/item/toy/ammo/gun))
+/obj/item/toy/gun/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/ammo/gun))
+		var/obj/item/toy/ammo/gun/G = I
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='notice'>It's already fully loaded!</span>")
 			return 1
-		if (A.amount_left <= 0)
+		if (G.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There is no more caps!</span>")
 			return 1
-		if (A.amount_left < (7 - src.bullets))
-			src.bullets += A.amount_left
-			to_chat(user, text("<span class='warning'>You reload [] caps\s!</span>", A.amount_left))
-			A.amount_left = 0
+		if (G.amount_left < (7 - src.bullets))
+			src.bullets += G.amount_left
+			to_chat(user, "<span class='warning'>You reload [G.amount_left] caps\s!</span>")
+			G.amount_left = 0
 		else
-			to_chat(user, text("<span class='warning'>You reload [] caps\s!</span>", 7 - src.bullets))
-			A.amount_left -= 7 - src.bullets
-			src.bullets = 7
-		A.update_icon()
-		return 1
-	return
+			to_chat(user, "<span class='warning'>You reload [7 - bullets] caps\s!</span>")
+			G.amount_left -= 7 - bullets
+			bullets = 7
+		G.update_icon()
+		return TRUE
+
+	return ..()
 
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click* *click*</span>", SHOWMSG_AUDIO)
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
@@ -184,9 +183,8 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_TINY
-	g_amt = 10
-	m_amt = 10
+	w_class = SIZE_MINUSCULE
+	m_amt = 500
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -207,7 +205,7 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
@@ -216,16 +214,16 @@
 	if (bullets && (src in view(2, user)))
 		to_chat(user, "<span class='notice'>It is loaded with [bullets] foam darts!</span>")
 
-/obj/item/toy/crossbow/attackby(obj/item/I, mob/user)
+/obj/item/toy/crossbow/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
-			user.drop_item()
 			qdel(I)
 			bullets++
 			to_chat(user, "<span class='notice'>You load the foam dart into the crossbow.</span>")
 		else
 			to_chat(usr, "<span class='warning'>It's already fully loaded.</span>")
-
+	else
+		return ..()
 
 /obj/item/toy/crossbow/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
@@ -273,7 +271,7 @@
 		visible_message("<span class='warning'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
 /obj/item/toy/crossbow/attack(mob/M, mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 // ******* Check
 
@@ -295,15 +293,15 @@
 	desc = "It's nerf or nothing! Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/effect/foam_dart_dummy
 	name = ""
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "null"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 
 /*
@@ -316,7 +314,7 @@
 	icon_state = "sword0"
 	item_state = "sword0"
 	var/active = 0.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 
@@ -327,20 +325,20 @@
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "swordblue"
 		src.item_state = "swordblue"
-		src.w_class = ITEM_SIZE_LARGE
+		src.w_class = SIZE_NORMAL
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "sword0"
 		src.item_state = "sword0"
-		src.w_class = ITEM_SIZE_SMALL
+		src.w_class = SIZE_TINY
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/toy/katana
@@ -353,7 +351,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
@@ -364,7 +362,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -372,7 +370,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(src.loc)
-	src.visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
+	visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
@@ -387,7 +385,7 @@
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
-			src.visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
+			visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
 			playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 			qdel(src)
 
@@ -416,7 +414,7 @@
 	if(locate(/obj/structure/table, loc))
 		return
 
-	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && proximity)
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
@@ -430,13 +428,13 @@
 		src.empty = 0
 
 
-		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
+		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "water"
 		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"
 		D.create_reagents(5)
-		src.reagents.trans_to(D, 1)
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+		reagents.trans_to(D, 1)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
@@ -474,7 +472,7 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 
 //all credit to skasi for toy mech fun ideas
@@ -558,7 +556,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /* NYET.
@@ -567,7 +565,7 @@
 	name = "toddler"
 	desc = "This baby looks almost real. Wait, did it just burp?"
 	force = 5
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 */
 
@@ -589,7 +587,7 @@
 	desc = null
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 
@@ -791,7 +789,7 @@ Owl & Griffin toys
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 
 /obj/item/toy/owl/attack_self(mob/user)
@@ -799,7 +797,7 @@ Owl & Griffin toys
 		var/message = pick("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 20)
-		src.loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = 1
 		spawn(30) cooldown = 0
 		return
@@ -810,7 +808,7 @@ Owl & Griffin toys
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "griffinprize"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 
 /obj/item/toy/griffin/attack_self(mob/user)
@@ -818,7 +816,7 @@ Owl & Griffin toys
 		var/message = pick("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 20)
-		src.loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = 1
 		spawn(30) cooldown = 0
 		return
@@ -832,7 +830,7 @@ Owl & Griffin toys
 	desc = "A plastic model of a Nuclear Fission Explosive."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -857,7 +855,7 @@ Owl & Griffin toys
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor?"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
@@ -876,7 +874,7 @@ Owl & Griffin toys
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "deck"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/list/cards = list()
 	var/normal_deck_size = 52 // How many cards should be in the full deck.
 	var/list/integrity = list() // Is populated in atom_init(), determines which cards SHOULD be in the full deck.
@@ -942,32 +940,32 @@ Owl & Griffin toys
 	playsound(user, 'sound/items/cardshuffle.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 
-/obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
-	..()
-	if(istype(C))
+/obj/item/toy/cards/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src)
 			src.cards += C.cardname
-			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
 
-
-/obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
-	..()
-	if(istype(C))
+	else if(istype(I, /obj/item/toy/cardhand))
+		var/obj/item/toy/cardhand/C = I
 		if(C.parentdeck == src)
 			src.cards += C.currenthand
-			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
 
+	else
+		return ..()
+
 /obj/item/toy/cards/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
 	if(!ishuman(usr) || usr.incapacitated())
 		return
@@ -976,7 +974,7 @@ Owl & Griffin toys
 			M.put_in_hands(src)
 			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
-		else if(istype(over_object, /obj/screen))
+		else if(istype(over_object, /atom/movable/screen))
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -998,7 +996,7 @@ Owl & Griffin toys
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "hand2"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/list/currenthand = list()
 	var/obj/item/toy/cards/parentdeck = null
 	var/choice = null
@@ -1011,10 +1009,9 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/interact(mob/user)
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
+		dat += "<A href='?src=\ref[src];pick=[t]'>A [t]</a><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
 
@@ -1057,11 +1054,11 @@ Owl & Griffin toys
 				qdel(src)
 		return
 
-/obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
-	if(istype(C))
+/obj/item/toy/cardhand/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
@@ -1073,8 +1070,8 @@ Owl & Griffin toys
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
-
-
+	else
+		return ..()
 
 
 
@@ -1083,7 +1080,7 @@ Owl & Griffin toys
 	desc = "A card."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "singlecard_down"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
@@ -1120,7 +1117,7 @@ Owl & Griffin toys
 		src.name = "card"
 		src.pixel_x = -5
 
-/obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
+/obj/item/toy/singlecard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/singlecard))
 		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
@@ -1137,7 +1134,7 @@ Owl & Griffin toys
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 
-	if(istype(I, /obj/item/toy/cardhand))
+	else if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
@@ -1154,6 +1151,8 @@ Owl & Griffin toys
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 
+	else
+		return ..()
 
 /obj/item/toy/singlecard/attack_self(mob/user)
 	if(!ishuman(usr) || usr.incapacitated())
@@ -1511,7 +1510,7 @@ Owl & Griffin toys
 	desc = "Mystical! Magical! Ages 8+!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eight-ball"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/use_action = "shakes the ball"
 	var/last_time_used = 0
 	var/list/possible_answers = list("Definitely", "All signs point to yes.", "Most likely.", "Yes.", "Ask again later.", "Better not tell you now.", "Future Unclear.", "Maybe.", "Doubtful.", "No.", "Don't count on it.", "Never.")
@@ -1535,7 +1534,7 @@ Owl & Griffin toys
 	name = "Magic Conch Shell"
 	desc = "All hail the Magic Conch!"
 	icon_state = "conch"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	use_action = "pulls the string"
 	possible_answers = list("Yes.", "No.", "Try asking again.", "Nothing.", "I don't think so.", "Neither.", "Maybe someday.")
 	answer_sound = null
@@ -1557,7 +1556,7 @@ Owl & Griffin toys
 	desc = "A toy that makes 'mooo' when used."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "mooo"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = FALSE
 
 /obj/item/toy/moocan/attack_self(mob/user)
@@ -1570,3 +1569,38 @@ Owl & Griffin toys
 		spawn(30) cooldown = FALSE
 		return
 	..()
+
+
+/obj/item/toy/xmas_cracker
+	name = "xmas cracker"
+	icon = 'icons/obj/christmas.dmi'
+	icon_state = "cracker"
+	desc = "Directions for use: Requires two people, one to pull each end."
+	var/cracked = FALSE
+
+/obj/item/toy/xmas_cracker/attack(mob/target, mob/user)
+	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
+		target.visible_message("<span class='notice'>[user] and [target] pop \an [src]! *pop*</span>", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='notice'>You hear a *pop*.</span>")
+		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
+		Joke.name = "[pick("awful","terrible","unfunny")] joke"
+		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
+			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
+			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
+			"What happened to the man who stole advent calanders?\n\n<i>He got 25 days.</i>",
+			"What does Santa get when he gets stuck in a chimney?\n\n<i>Claus-trophobia.</i>",
+			"Where do you find chili beans?\n\n<i>The north pole.</i>",
+			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
+			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
+			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
+			"Why doesn't Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+		new /obj/item/clothing/head/festive(target.loc)
+		user.update_icons()
+		cracked = 1
+		icon_state = "cracker1"
+		var/obj/item/toy/xmas_cracker/other_half = new /obj/item/toy/xmas_cracker(target)
+		other_half.cracked = 1
+		other_half.icon_state = "cracker2"
+		target.put_in_active_hand(other_half)
+		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
+		return 1
+	return ..()

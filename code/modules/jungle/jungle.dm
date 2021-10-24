@@ -16,7 +16,7 @@
 
 /area/awaymission/jungle
 	name = "jungle"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "area"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -75,7 +75,7 @@
 		for(var/obj/effect/landmark/door_spawner/D in T.contents)
 			var/spawn_type
 			if(mineral == "iron")
-				spawn_type = text2path("/obj/machinery/door/airlock/vault")
+				spawn_type = /obj/machinery/door/airlock/vault
 			else
 				spawn_type = text2path("/obj/machinery/door/airlock/[mineral]")
 			new spawn_type(D.loc)

@@ -8,8 +8,12 @@
 	. += 				"<tr><td><a href='?_src_=prefs;preference=UIcolor'><b>Change color</b></a> <table border cellspacing='0' style='display:inline;' bgcolor='[UI_style_color]'><tr><td width='20' height='15'></td></tr></table></td></tr>"
 	. += 				"<tr><td>Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a></td></tr>"
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
-	if(config.allow_Metadata)
-		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
+	. +=				"<tr><td>TGUI Window Mode:</b> <a href='?_src_=prefs;preference=tgui_fancy'><b>[tgui_fancy ? "Fancy (default)" : "Compatible (slower)"]</a></td></tr>"
+	. += 				"<tr><td>TGUI Window Placement:</b> <a href='?_src_=prefs;preference=tgui_lock'><b>[tgui_lock ? "Primary Monitor" : "Free (default)"]</a></td></tr>"
+	. += 				"<tr><td>Outline: <a href='?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
+	. += 				"<tr><td>Outline Color: <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
+	. += 				"<tr><td>FPS: <a href='?_src_=prefs;preference=change_fps'>[clientfps]</a></td></tr>"
+	. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
 	//	if(user.client.holder)
 	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
@@ -69,8 +73,10 @@
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
-	. += 					"<td width='45%'>Parallax theme:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
+	. += 					"<td width='45%'>Fit Viewport:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=auto_fit_viewport'><b>[auto_fit_viewport ? "Auto" : "Manual"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
@@ -79,6 +85,18 @@
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Progress Bar:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_progbar'><b>[(toggles & SHOW_PROGBAR) ? "Yes" : "No"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Name of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Font of Names of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_font_tooltip'><b>Change</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Names Size:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_size_tooltip'><b>[tooltip_size]</b></a></td>"
 	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
@@ -112,13 +130,42 @@
 
 		if("UIalpha")
 			var/UI_style_alpha_new = input(user, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num|null
-			if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
+			if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
 			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
 			if(pickedui)
 				UI_style = pickedui
+
+		if("tgui_fancy")
+			tgui_fancy = !tgui_fancy
+
+		if("tgui_lock")
+			tgui_lock = !tgui_lock
+
+		if("tooltip_show")
+			parent?.toggle_tooltip()
+
+		if("change_size_tooltip")
+			parent?.change_size_tooltip()
+
+		if("change_font_tooltip")
+			parent?.change_font_tooltip()
+
+		if("outline_enabled")
+			outline_enabled = !outline_enabled
+
+		if("outline_color")
+			var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
+			if(pickedOutlineColor)
+				outline_color = pickedOutlineColor
+
+		if("change_fps")
+			var/desiredfps = input(user, "Choose your desired fps.\n-1 means recommended value (currently:[RECOMMENDED_FPS])\n0 means world fps (currently:[world.fps])", "Character Preference", clientfps)  as null|num
+			if (!isnull(desiredfps))
+				clientfps = sanitize_integer(desiredfps, -1, 1000, clientfps)
+				parent.fps = (clientfps < 0) ? RECOMMENDED_FPS : clientfps
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
@@ -133,15 +180,13 @@
 		if("ambientocclusion")
 			ambientocclusion = !ambientocclusion
 			if(parent && parent.screen && parent.screen.len)
-				var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+				var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in parent.screen
 				PM.backdrop(parent.mob)
 
-		if("parallax_theme")
-			switch(parallax_theme)
-				if(PARALLAX_THEME_CLASSIC)
-					parallax_theme = PARALLAX_THEME_TG
-				if(PARALLAX_THEME_TG)
-					parallax_theme = PARALLAX_THEME_CLASSIC
+		if("auto_fit_viewport")
+			auto_fit_viewport = !auto_fit_viewport
+			if(auto_fit_viewport && parent)
+				parent.fit_viewport()
 
 		if("ghost_sight")
 			switch(chat_ghostsight)

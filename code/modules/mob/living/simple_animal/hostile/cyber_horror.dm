@@ -11,9 +11,8 @@
 	see_in_dark = 6
 	maxHealth = 150
 	health = 150
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "flails around and hits"
+	melee_damage = 10
+	attacktext = "flail"
 	move_to_delay = 5
 	attack_sound = list('sound/weapons/bite.ogg')
 
@@ -21,8 +20,11 @@
 	var/nanobot_chance = 40
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
-/mob/living/simple_animal/hostile/cyber_horror/Life(var/mob/living/simple_animal/hostile/cyber_horror/M)
+/mob/living/simple_animal/hostile/cyber_horror/Life(mob/living/simple_animal/hostile/cyber_horror/M)
 	. = ..()
 	if(!.)
 		return 0

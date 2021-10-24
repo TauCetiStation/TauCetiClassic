@@ -17,15 +17,15 @@
 	//Sparks effect - For emag
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	//Messages - Saves me time if I want to change something.
-	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
-	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
-	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
-	var/rebootmsg = "<span class='warning'>%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
+	var/noserver = "<span class='red'>ALERT: No server detected.</span>"
+	var/incorrectkey = "<span class='red'>ALERT: Incorrect decryption key!</span>"
+	var/defaultmsg = "<div class='NoticeBox'>Welcome. Please select an option.</div>"
+	var/rebootmsg = "<span class='red'>%$&(ďż˝: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
 	var/emag = 0		// When it is emagged.
-	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
+	var/message = "<div class='NoticeBox'>System bootup complete. Please select an option.</div>"	// The message that shows on the main menu.
 	var/auth = 0 // Are they authenticated?
 	var/optioncount = 7
 	// Custom Message Properties
@@ -52,16 +52,16 @@
 		emag = 1
 		screen = 2
 		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
+		spark_system.start()
 		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
 		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		MK.info += "<br><br><span class='red'>ďż˝%@%(*$%&(ďż˝&?*(%&ďż˝/{}</span>"
 		MK.update_icon()
 		spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
 		message = rebootmsg
 		return TRUE
 	else
-		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+		to_chat(user, "<div class='NoticeBox'>A no server error appears on the screen.</div>")
 		return FALSE
 
 /obj/machinery/computer/message_monitor/update_icon()
@@ -84,16 +84,14 @@
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
-	var/dat = "<head><title>Message Monitor Console</title></head><body>"
-	dat += "<center><h2>Message Monitor Console</h2></center><hr>"
-	dat += "<center><h4><font color='blue'[message]</h5></center>"
+	var/dat = "<center><h4><span class='blue'>[message]</span></h4></center>"
 
 	if(auth)
-		dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=\ref[src];active=1'>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
+		dat += "<h4><dd><A class='green' href='?src=\ref[src];auth=1'>&#09;Authenticated</a>&#09;/"
+		dat += " Server Power: <A href='?src=\ref[src];active=1'>[src.linkedServer && src.linkedServer.active ? "<span class='green'>On</span>":"<span class='red'>Off</span>"]</a></h4>"
 	else
-		dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
+		dat += "<h4><dd><A class='red' href='?src=\ref[src];auth=1'>&#09;Unauthenticated</a>&#09;/"
+		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<span class='green'>On</span>":"<span class='red'>Off</span>"]</u></h4>"
 
 	if(hacking || emag)
 		screen = 2
@@ -119,16 +117,16 @@
 					dat += "<dd><A href='?src=\ref[src];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"
 			else
 				for(var/n = ++i; n <= optioncount; n++)
-					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
+					dat += "<dd><span class='blue'>&#09;[n]. ---------------</span><br></dd>"
 			if((isAI(user) || isrobot(user)) && (user.mind.special_role && user.mind.original == user))
 				//Malf/Traitor AIs can bruteforce into the system to gain the Key.
-				dat += "<dd><A href='?src=\ref[src];hack=1'><i><font color='Red'>*&@#. Bruteforce Key</font></i></font></a><br></dd>"
+				dat += "<dd><A href='?src=\ref[src];hack=1'><i><span class='Red'>*&@#. Bruteforce Key</span></i></a><br></dd>"
 			else
 				dat += "<br>"
 
 			//Bottom message
 			if(!auth)
-				dat += "<br><hr><dd><span class='notice'>Please authenticate with the server in order to show additional options.</span>"
+				dat += "<br><hr><dd><div class='NoticeBox'>Please authenticate with the server in order to show additional options.</div>"
 			else
 				dat += "<br><hr><dd><span class='warning'>Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering Properties.</span>"
 
@@ -236,10 +234,11 @@
 			dat += "</table>"
 
 
-	dat += "</body>"
 	message = defaultmsg
-	user << browse(entity_ja(dat), "window=message;size=700x700")
-	onclose(user, "message")
+
+	var/datum/browser/popup = new(user, "window=message", src.name, 700, 700)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -286,10 +285,10 @@
 	if (href_list["find"])
 		if(message_servers && message_servers.len > 1)
 			src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in message_servers
-			message = "<span class='alert'>NOTICE: Server selected.</span>"
+			message = "<div class='NoticeBox'>NOTICE: Server selected.</div>"
 		else if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
-			message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
+			message =  "<div class='NoticeBox'>NOTICE: Only Single Server Detected - Server selected.</div>"
 		else
 			message = noserver
 
@@ -308,7 +307,7 @@
 		else
 			if(auth)
 				src.linkedServer.pda_msgs = list()
-				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+				message = "<div class='NoticeBox'>NOTICE: Logs cleared.</div>"
 	//Clears the request console logs - KEY REQUIRED
 	if (href_list["clearr"])
 		if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
@@ -316,7 +315,7 @@
 		else
 			if(auth)
 				src.linkedServer.rc_msgs = list()
-				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+				message = "<div class='NoticeBox'>NOTICE: Logs cleared.</div>"
 	//Change the password - KEY REQUIRED
 	if (href_list["pass"])
 		if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
@@ -328,12 +327,12 @@
 					if(src.linkedServer.decryptkey == dkey)
 						var/newkey = sanitize(input(usr,"Please enter the new key (3 - 16 characters max):"))
 						if(length(newkey) <= 3)
-							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
+							message = "<div class='NoticeBox'>NOTICE: Decryption key too short!</div>"
 						else if(length(newkey) > 16)
-							message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
+							message = "<div class='NoticeBox'>NOTICE: Decryption key too long!</div>"
 						else if(newkey && newkey != "")
 							src.linkedServer.decryptkey = newkey
-						message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+						message = "<div class='NoticeBox'>NOTICE: Decryption key set.</div>"
 					else
 						message = incorrectkey
 
@@ -355,7 +354,7 @@
 				message = noserver
 			else //if(istype(href_list["delete"], /datum/data_pda_msg))
 				src.linkedServer.pda_msgs -= locate(href_list["delete"])
-				message = "<span class='notice'>NOTICE: Log Deleted!</span>"
+				message = "<div class='NoticeBox'>NOTICE: Log Deleted!</div>"
 	//Delete the request console log.
 	if (href_list["deleter"])
 		//Are they on the view logs screen?
@@ -364,7 +363,7 @@
 				message = noserver
 			else //if(istype(href_list["delete"], /datum/data_pda_msg))
 				src.linkedServer.rc_msgs -= locate(href_list["deleter"])
-				message = "<span class='notice'>NOTICE: Log Deleted!</span>"
+				message = "<div class='NoticeBox'>NOTICE: Log Deleted!</div>"
 	//Create a custom message
 	if (href_list["msg"])
 		if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
@@ -415,12 +414,12 @@
 						customsender = "UNKNOWN"
 
 					if(isnull(customrecepient))
-						message = "<span class='notice'>NOTICE: No recepient selected!</span>"
-						return src.attack_hand(usr)
+						message = "<div class='NoticeBox'>NOTICE: No recepient selected!</div>"
+						return attack_hand(usr)
 
 					if(isnull(custommessage) || custommessage == "")
-						message = "<span class='notice'>NOTICE: No message entered!</span>"
-						return src.attack_hand(usr)
+						message = "<div class='NoticeBox'>NOTICE: No message entered!</div>"
+						return attack_hand(usr)
 
 					var/obj/item/device/pda/PDARec = null
 					for (var/obj/item/device/pda/P in PDAs)
@@ -429,7 +428,7 @@
 							PDARec = P
 					//Sender isn't faking as someone who exists
 					if(isnull(PDARec))
-						src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
+						linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 						if (!customrecepient.message_silent)
 							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
@@ -442,7 +441,7 @@
 					//Sender is faking as someone who exists
 					else
 
-						src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
+						linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
 						customrecepient.tnote.Add(list(list("sent" = 0, "owner" = "[PDARec.owner]", "job" = "[customjob]", "message" = "[custommessage]", "target" ="\ref[PDARec]")))
 
 						if(!customrecepient.conversations.Find("\ref[PDARec]"))
@@ -490,7 +489,7 @@
 		for(var/obj/machinery/message_server/server in message_servers)
 			if(!isnull(server))
 				if(!isnull(server.decryptkey))
-					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info = "<center><h2>Пароль от сервера сообщений.</h2></center><br>Ключевое слово для сервера сообщений сегодня - '[server.decryptkey]'.<br>Пожалуйста, никому его не называйте. Особенно клоуну.<br>В случае необходимости его можно изменить."
 					info_links = info
 					icon_state = "paper_words"
 					break

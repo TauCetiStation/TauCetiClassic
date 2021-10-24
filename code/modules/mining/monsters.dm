@@ -17,7 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	w_class = SIZE_HUMAN
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -34,10 +34,10 @@
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
-		P.damage = (P.damage / 3)
+		P.damage /= 3
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
@@ -48,6 +48,8 @@
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
 			return
 	..()
+
+////////////////////////////////////////////////////////////////
 
 
 ////////////////Basilisk////////////////
@@ -64,7 +66,7 @@
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
-	ranged = 1
+	ranged = TRUE
 	ranged_message = "stares"
 	ranged_cooldown_cap = 20
 	throw_message = "does nothing against the hard shell of"
@@ -73,14 +75,13 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
-	attacktext = "bites into"
-	a_intent = "harm"
+	melee_damage = 12
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
+	loot_list = list(/obj/item/weapon/ore/diamond = 5)
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -101,37 +102,25 @@
 			if(L.bodytemperature > 261)
 				L.bodytemperature = 261
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
-			adjustBruteLoss(140)
-		if(3.0)
-			adjustBruteLoss(110)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
-	var/counter
-	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
-	..(gibbed)
-
+		if(2)
+			adjustBruteLoss(maxHealth * 0.8)
+		if(3)
+			adjustBruteLoss(maxHealth * 0.4)
 
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
-	health = 500
-	maxHealth = 500
+	health = 400
+	maxHealth = 400
 	faction = "mining"
-	projectiletype = /obj/item/projectile/beam/drone/mining
+	w_class = SIZE_HUMAN
+	projectiletype = /obj/item/projectile/beam/xray
 
-
-
-/obj/item/projectile/beam/drone/mining
-	damage = 20
 
 ////////////////Goldgrub////////////////
 
@@ -147,25 +136,28 @@
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3
+	loot_list = list(/obj/item/weapon/ore/gold = 4)
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 60
 	health = 60
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "barrels into"
-	a_intent = "help"
+	melee_damage = 0
+	w_class = SIZE_MASSIVE
+	attacktext = "barrell"
+	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/phoron,
-						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 
 	var/list/ore_types_eaten = list()
-	var/alerted = 0
+	var/alerted = FALSE
 	var/ore_eaten = 1
 	var/chase_time = 100
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/atom_init()
+	. = ..()
+	wanted_objects = subtypesof(/obj/item/weapon/ore)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
@@ -174,6 +166,7 @@
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
 			stance = HOSTILE_STANCE_ATTACK
 			return
+
 		if(isliving(target) && !search_objects)
 			Aggro()
 			stance = HOSTILE_STANCE_ATTACK
@@ -181,8 +174,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-			return
-	return
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -202,16 +194,20 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
-		alerted = 1
+		alerted = TRUE
 		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
 		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		var/turftype = get_turf(src)
+		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
+			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+			A.gets_dug()
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	if(!ore_eaten || ore_types_eaten.len == 0)
+	if(!ore_eaten || !ore_types_eaten.len)
 		return
 	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
 	var/counter
@@ -223,10 +219,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
-	alerted = 0
+	alerted = FALSE
 	Reward()
 	..()
 
@@ -242,9 +237,9 @@
 	icon_aggro = "Hivelord_alert"
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
-	ranged = 1
+	ranged = TRUE
 	vision_range = 5
 	aggro_vision_range = 9
 	idle_vision_range = 5
@@ -252,9 +247,8 @@
 	maxHealth = 75
 	health = 75
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "lashes out at"
+	melee_damage = 0
+	attacktext = "lash"
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
@@ -262,54 +256,78 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	w_class = SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
 	A.faction = faction
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/asteroid/hivelord_core(src.loc)
-	mouse_opacity = 1
-	..(gibbed)
+	mouse_opacity = MOUSE_OPACITY_ICON
+	..()
+	var/obj/item/asteroid/hivelord_core/core = new /obj/item/asteroid/hivelord_core(loc)
+	core.corpse = src
+	loc = core  //put dead hivelord in droped core
 
 /obj/item/asteroid/hivelord_core
-	name = "hivelord remains"
+	name = "hivelord core"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/obj/food.dmi'
-	icon_state = "boiledrorocore"
-	var/inert = 0
+	icon = 'icons/mob/monsters.dmi'
+	icon_state = "Hivelod_core"
+	var/inert = FALSE
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
+
+/obj/item/asteroid/hivelord_core/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lazarus_injector))
+		var/obj/item/weapon/lazarus_injector/L = I
+		if(L.loaded)
+			if(!corpse)
+				corpse = new /mob/living/simple_animal/hostile/asteroid/hivelord(src)
+				corpse.death()
+				var/obj/item/asteroid/hivelord_core/C = corpse.loc
+				C.corpse = null
+			corpse.loc = get_turf(loc)
+			L.revive(corpse, user)
+			corpse = null
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/asteroid/hivelord_core/Destroy()
+	QDEL_NULL(corpse)
+	return ..()
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/make_inert), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
-	inert = 1
+	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	icon_state = "Hivelord_dead"
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
+	if(inert)
+		to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
+		return
+
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(inert)
-			to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
+		if(H.stat == DEAD)
+			to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 			return
+		if(H != user)
+			H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 		else
-			if(H.stat == DEAD)
-				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
-				return
-			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
-			else
-				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-			H.revive()
-			qdel(src)
-	..()
+			to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
+		H.revive()
+		qdel(src)
+	return ..()
 
 
 ////////////////Hivelordbrood////////////////
@@ -323,7 +341,7 @@
 	icon_aggro = "Hivelordbrood"
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 0
 	friendly = "buzzes near"
 	vision_range = 10
@@ -331,9 +349,8 @@
 	maxHealth = 1
 	health = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 2
-	melee_damage_upper = 2
-	attacktext = "slashes"
+	melee_damage = 2
+	attacktext = "slash"
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
@@ -348,6 +365,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
+	return
 
 ////////////////Goliath////////////////
 
@@ -361,20 +380,21 @@
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
 	attack_sound = list('sound/weapons/punch4.ogg')
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
-	ranged = 1
+	ranged = TRUE
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 4
+	loot_list = list(/obj/item/asteroid/goliath_hide = 1)
 	speed = 2
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	attacktext = "pulverizes"
+	melee_damage = 25
+	w_class = SIZE_MASSIVE
+	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
@@ -395,11 +415,10 @@
 	var/tturf = get_turf(target)
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		new /obj/effect/goliath_tentacle/original(tturf)
+		new /obj/effect/goliath_tentacle/original(tturf, melee_damage)
 		ranged_cooldown = ranged_cooldown_cap
 		icon_state = icon_aggro
 		pre_attack = 0
-	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
@@ -411,19 +430,23 @@
 	handle_preattack()
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
-	return
 
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
+	var/strength
 
-/obj/effect/goliath_tentacle/atom_init()
+/obj/effect/goliath_tentacle/atom_init(mapload, mob_damage)
 	. = ..()
+	strength = mob_damage
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
+	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
+		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+		A.gets_dug()
 	addtimer(CALLBACK(src, .proc/Trip), 20)
 
 /obj/effect/goliath_tentacle/original
@@ -435,12 +458,14 @@
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src, spawndir)
-		new /obj/effect/goliath_tentacle(T)
+		new /obj/effect/goliath_tentacle(T, strength)
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
-		M.Weaken(3)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		M.Weaken(strength * 0.1)
+		M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
 	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
@@ -449,18 +474,13 @@
 		return
 	. = ..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..(gibbed)
-
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
@@ -496,4 +516,3 @@
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
-				return

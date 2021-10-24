@@ -7,9 +7,14 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
 	flags = OPENCONTAINER
-	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
+	var/gulp_size = 5
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
+
+/obj/item/weapon/reagent_containers/food/drinks/atom_init()
+	. = ..()
+	if(is_open_container())
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5)
@@ -20,26 +25,23 @@
 /obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
-	var/datum/reagents/R = reagents
-	var/fillevel = gulp_size
-
-	if (!src.is_open_container())
+/obj/item/weapon/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
+	if (!is_open_container())
 		return 0
 
-	if(!R.total_volume || !R)
+	if(reagents.total_volume <= 0)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
-	if(!CanEat(user, M, src, "drink")) return
+	if(!CanEat(user, M, src, "drink"))
+		return
+
+	var/fillevel = gulp_size
 
 	if(M == user)
-
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
-				return
+		if(user.a_intent != INTENT_HELP && user.a_intent != INTENT_HARM)
+			gulp_whole()
+			return
 
 		if(isliving(M))
 			var/mob/living/L = M
@@ -53,19 +55,14 @@
 		update_icon()
 		return 1
 	else
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
-				return
+		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
+		if(!do_mob(user, M))
+			return
+		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
-		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
-		if(!do_mob(user, M)) return
-		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
-
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
+		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
@@ -73,16 +70,16 @@
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			var/refill = R.get_master_reagent_id()
-			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
+			var/refill = reagents.get_master_reagent_id()
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		update_icon()
 		return 1
 
-
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if (!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
@@ -121,7 +118,7 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -131,16 +128,10 @@
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 
-	else if((user.a_intent == I_HURT) && reagents.total_volume && istype(target, /turf/simulated))
+	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
-
-		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
-	update_icon()
+		reagents.standard_splash(target, user=user)
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
 	reagents.add_reagent(refill, trans)
@@ -160,6 +151,36 @@
 		else
 			to_chat(user, "<span class='notice'>\The [src] is full!</span>")
 
+/obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole()
+	set category = "Object"
+	set name = "Gulp Down"
+	set src in view(1)
+
+	if(!is_open_container())
+		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
+		return
+
+	usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
+
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
+
+	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
+		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
+		reagents.standard_splash(loc, user=usr)
+		return
+
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
+
+	if(taste && isliving(usr))
+		var/mob/living/L = usr
+		L.taste_reagents(reagents)
+
+	usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
+	reagents.trans_to_ingest(usr, reagents.total_volume)
+	playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +190,7 @@
 	name = "golden cup"
 	icon_state = "golden_cup"
 	item_state = "" //nope :(
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
@@ -191,12 +212,7 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/milk/atom_init()
-	. = ..()
-	reagents.add_reagent("milk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("milk" = 50)
 
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
@@ -218,72 +234,44 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk/atom_init()
-	. = ..()
-	reagents.add_reagent("soymilk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("soymilk" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/coffee/atom_init()
-	. = ..()
-	reagents.add_reagent("coffee", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("coffee" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "teacup"
 	item_state = "coffee"
+	list_reagents = list("tea" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea/atom_init()
 	. = ..()
-	reagents.add_reagent("tea", 30)
-	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/ice/atom_init()
-	. = ..()
-	reagents.add_reagent("ice", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("ice" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "hot_coco"
 	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/atom_init()
-	. = ..()
-	reagents.add_reagent("hot_coco", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("hot_coco" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Dosi Ramen"
 	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
 	icon_state = "ramen"
+	list_reagents = list("dry_ramen" = 30)
 	flags = 0 // Default - closed container
-
-	var/ramen_reagent = "dry_ramen"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
-	. = ..()
-	reagents.add_reagent(ramen_reagent, 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
 	if(!is_open_container())
@@ -296,6 +284,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
 	if (!is_open_container())
 		flags |= OPENCONTAINER
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the [src].</span>")
 		update_icon()
@@ -316,7 +305,7 @@
 	name = "Dosi Ramen (Spicy)"
 	desc = "Just add 10ml water, self heats! Unathi's favorite noodle with spicy flavor. DANGER: VERY SPICY! NOT TAJARAN FRIENDLY!"
 	icon_state = "ramen_spicy"
-	ramen_reagent = "hell_ramen"
+	list_reagents = list("hell_ramen" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
@@ -324,11 +313,6 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = null
 	volume = 10
-
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/atom_init()
-	. = ..()
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)

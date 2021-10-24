@@ -1,3 +1,7 @@
+#define SCRUBBER_MAX_RATE (ONE_ATMOSPHERE * 10)
+#define SCRUBBER_MIN_RATE 0
+#define SCRUBBER_DEFAULT_RATE 800
+
 /obj/machinery/portable_atmospherics/powered/scrubber
 	name = "Portable Air Scrubber"
 
@@ -12,10 +16,7 @@
 	power_losses = 150
 
 	var/on = FALSE
-	var/volume_rate = 800
-
-	var/minrate = 0
-	var/maxrate = 10 * ONE_ATMOSPHERE
+	var/volume_rate = SCRUBBER_DEFAULT_RATE
 
 	var/list/scrubbing_gas
 
@@ -90,54 +91,76 @@
 
 	updateDialog()
 
-/obj/machinery/portable_atmospherics/powered/scrubber/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui = null)
-	var/list/data[0]
-	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
-	data["rate"] = round(volume_rate)
-	data["minrate"] = round(minrate)
-	data["maxrate"] = round(maxrate)
-	data["powerDraw"] = round(last_power_draw)
-	data["cellCharge"] = cell ? cell.charge : 0
-	data["cellMaxCharge"] = cell ? cell.maxcharge : 1
-	data["on"] = on ? 1 : 0
 
-	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
+/obj/machinery/portable_atmospherics/powered/scrubber/ui_interact(mob/user)
+	tgui_interact(user)
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "portscrubber.tmpl", "Portable Scrubber", 480, 400)
-		ui.set_initial_data(data)
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PortableScrubber", name)
 		ui.open()
-		ui.set_auto_update(1)
 
-/obj/machinery/portable_atmospherics/powered/scrubber/Topic(href, href_list)
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_data()
+	var/data = list()
+	data["on"] = on
+	data["connected"] = connected_port ? 1 : 0
+	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["target_rate"] = round(volume_rate ? volume_rate : 0)
+	data["default_rate"] = round(SCRUBBER_DEFAULT_RATE)
+	data["min_rate"] = round(SCRUBBER_MIN_RATE)
+	data["max_rate"] = round(SCRUBBER_MAX_RATE)
+	data["power_draw"] = round(last_power_draw)
+	data["cell_charge"] = cell ? cell.charge : 0
+	data["cell_maxcharge"] = cell ? cell.maxcharge : 1
+
+	if(holding)
+		data["holding"] = list()
+		data["holding"]["name"] = holding.name
+		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	else
+		data["holding"] = null
+	return data
+
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_state(mob/user)
+	return global.physical_state
+
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
-
-	if(href_list["power"])
-		on = !on
-		update_icon()
-
-	if (href_list["remove_tank"])
-		if(holding)
-			holding.forceMove(loc)
-			holding = null
-		update_icon()
-
-	if (href_list["volume_adj"])
-		var/diff = text2num(href_list["volume_adj"])
-		volume_rate = CLAMP(volume_rate+diff, minrate, maxrate)
-		update_icon()
+	switch(action)
+		if("power")
+			on = !on
+			. = TRUE
+		if("rate")
+			var/rate = params["rate"]
+			if(rate == "reset")
+				rate = SCRUBBER_DEFAULT_RATE
+				. = TRUE
+			else if(rate == "min")
+				rate = SCRUBBER_MIN_RATE
+				. = TRUE
+			else if(rate == "max")
+				rate = SCRUBBER_MAX_RATE
+				. = TRUE
+			else if(text2num(rate) != null)
+				rate = text2num(rate)
+				. = TRUE
+			if(.)
+				volume_rate = clamp(round(rate), SCRUBBER_MIN_RATE, SCRUBBER_MAX_RATE)
+		if("eject")
+			if(holding)
+				holding.forceMove(loc)
+				holding = null
+				. = TRUE
+	update_icon()
 
 //Huge scrubber
 /obj/machinery/portable_atmospherics/powered/scrubber/huge
 	name = "Huge Air Scrubber"
 	icon_state = "scrubber:0"
-	anchored = 1
+	anchored = TRUE
 	volume = 50000
 	volume_rate = 5000
 
@@ -243,3 +266,7 @@
 		return
 
 	..()
+
+#undef SCRUBBER_MAX_RATE
+#undef SCRUBBER_MIN_RATE
+#undef SCRUBBER_DEFAULT_RATE

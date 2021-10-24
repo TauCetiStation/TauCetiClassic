@@ -1,10 +1,8 @@
 /datum/event/electrical_storm
+	announcement = new /datum/announcement/centcomm/estorm
+
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25
-
-
-/datum/event/electrical_storm/announce()
-	command_alert("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert", "estorm")
 
 
 /datum/event/electrical_storm/start()

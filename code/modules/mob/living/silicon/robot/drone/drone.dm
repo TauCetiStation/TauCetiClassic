@@ -11,9 +11,12 @@
 	pass_flags = PASSTABLE
 	braintype = "Robot"
 	lawupdate = 0
-	density = 0
+	density = FALSE
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
+	w_class = SIZE_SMALL
+	typing_indicator_type = "machine"
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -35,7 +38,7 @@
 	drone_list += src
 
 	if(camera && ("Robots" in camera.network))
-		camera.add_network("Engineering")
+		camera.add_network("Engineering Robots")
 
 	//They are unable to be upgraded, so let's give them a bit of a better battery.
 	cell.maxcharge = 10000
@@ -64,13 +67,16 @@
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
 
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
 /mob/living/silicon/robot/drone/Destroy()
 	drone_list -= src
 	return ..()
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
-	connected_ai = null
+	set_ai_link(null)
 
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -88,15 +94,29 @@
 	else
 		cut_overlay("eyes")
 
-/mob/living/silicon/robot/drone/choose_icon()
-	return
-
 /mob/living/silicon/robot/drone/pick_module()
 	return
 
+/mob/living/simple_animal/drone/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/drone/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(stat == DEAD)
+		holder.icon_state = "huddead2"
+	else if(incapacitated())
+		holder.icon_state = "hudoffline"
+	else
+		holder.icon_state = "hudstat"
+
 //Drones can only use binary and say emotes. NOTHING else.
 //TBD, fix up boilerplate. ~ Z
-/mob/living/silicon/robot/drone/say(var/message)
+/mob/living/silicon/robot/drone/say(message)
 
 	if (!message)
 		return
@@ -105,15 +125,18 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 	else if(length(message) >= 2)
 
@@ -125,11 +148,11 @@
 
 			for (var/mob/living/S in drone_list)
 				if(S.stat != DEAD)
-					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 			for (var/mob/M in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 		else
 
@@ -211,7 +234,7 @@
 
 	emagged = 1
 	lawupdate = 0
-	connected_ai = null
+	set_ai_link(null)
 	clear_supplied_laws()
 	clear_inherent_laws()
 	laws = new /datum/ai_laws/syndicate_override
@@ -245,14 +268,6 @@
 		return
 	..()
 
-/mob/living/silicon/robot/drone/death(gibbed)
-
-	if(module)
-		var/obj/item/weapon/gripper/G = locate(/obj/item/weapon/gripper) in module
-		if(G) G.drop_item()
-
-	..(gibbed)
-
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
@@ -280,36 +295,19 @@
 //Reboot procs.
 
 /mob/living/silicon/robot/drone/proc/request_player()
-	for(var/mob/dead/observer/O in observer_list)
-		if(jobban_isbanned(O, ROLE_DRONE))
-			continue
-		if(role_available_in_minutes(O, ROLE_DRONE))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("drone") && (ROLE_PAI in C.prefs.be_role))
-				question(C)
+	var/list/candidates = pollGhostCandidates("Someone is attempting to reboot a maintenance drone. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_DRONE, 100, TRUE)
+	for(var/mob/M in candidates) // No random
+		transfer_personality(M.client)
+		break
 
-/mob/living/silicon/robot/drone/proc/question(client/C)
-	spawn(0)
-		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
-			return
-		var/response = alert(C, "Someone is attempting to reboot a maintenance drone. Would you like to play as one?", "Maintenance drone reboot", "No", "Yes", "Never for this round.")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += "drone"
+/mob/living/silicon/robot/drone/transfer_personality(client/candidate)
+	if(!candidate)
+		return
 
-/mob/living/silicon/robot/drone/proc/transfer_personality(client/player)
+	ckey = candidate.ckey
 
-	if(!player) return
-
-	src.ckey = player.ckey
-
-	if(player.mob && player.mob.mind)
-		player.mob.mind.transfer_to(src)
+	if(candidate.mob && candidate.mob.mind)
+		candidate.mob.mind.transfer_to(src)
 
 	lawupdate = 0
 	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
@@ -336,7 +334,7 @@
 		..()
 	else if(istype(AM,/obj/item))
 		var/obj/item/O = AM
-		if(O.w_class > ITEM_SIZE_SMALL)
+		if(O.w_class > SIZE_TINY)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 			return
 		else
@@ -345,8 +343,8 @@
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
 
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return 1
+/mob/living/silicon/robot/drone/mob_negates_gravity()
+	return TRUE
 
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
+/mob/living/silicon/robot/drone/mob_has_gravity()
+	return mob_negates_gravity()

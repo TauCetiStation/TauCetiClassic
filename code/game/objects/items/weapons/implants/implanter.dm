@@ -5,7 +5,7 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
@@ -15,7 +15,7 @@
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
 	if (!iscarbon(M))
 		return
 	if (!user || !imp)
@@ -25,9 +25,7 @@
 
 	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
 		if(src && imp)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+			M.log_combat(user, "implanted with [name]")
 			if(imp.implanted(M))
 				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
 				imp.inject(M, def_zone)
@@ -40,7 +38,7 @@
 	name = "implanter-mind shield"
 
 /obj/item/weapon/implanter/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 	update()
 
@@ -48,7 +46,7 @@
 	name = "implanter-loyalty"
 
 /obj/item/weapon/implanter/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 	update()
 
@@ -105,6 +103,8 @@
 	..()
 
 /obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(istype(target,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)

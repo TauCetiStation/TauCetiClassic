@@ -5,20 +5,17 @@
 	health = 180
 	filling_color = "#ff1c1c"
 	bitesize = 3
+	list_reagents = list("protein" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 3)
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
+/obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		to_chat(user, "You cut the meat in thin strips.")
 		qdel(src)
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 	name = "synthetic meat"
@@ -54,9 +51,4 @@
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("vitamin", 2)
-	reagents.add_reagent("blood", 5)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)

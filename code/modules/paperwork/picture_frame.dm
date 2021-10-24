@@ -7,7 +7,7 @@
 	desc = "The perfect showcase for your favorite memories."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame_item"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/photo/displayed
 	var/frame_type = /obj/structure/picture_frame/wooden
 	var/frame_glass = FALSE
@@ -26,7 +26,7 @@
 	icon_state = "metal_frame_item"
 	frame_type = /obj/structure/picture_frame/metal
 
-/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
+/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
 			var/obj/item/weapon/photo/Photo = I
@@ -68,7 +68,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is no glass to screw out in \the [src].</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
@@ -82,6 +82,7 @@
 	..()
 
 /obj/item/weapon/picture_frame/MouseDrop(obj/over_object)
+	. = ..()
 	if(ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		if(!(src.loc == usr))
@@ -99,7 +100,7 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/item/weapon/picture_frame/attack_self(mob/user)
@@ -119,9 +120,9 @@
 		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
 
 /obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
-	var/turf/T = target
-	if(get_dist(T, user) > 1)
+	if(!proximity)
 		return
+	var/turf/T = target
 	if(!istype(T, /turf/simulated/wall))
 		return
 	var/ndir = get_dir(user, T)
@@ -137,7 +138,7 @@
 		PF.framed = I
 	if(frame_glass)
 		PF.frame_glass = TRUE
-	PF.dir = ndir
+	PF.set_dir(ndir)
 	PF.update_icon()
 	qdel(src)
 	return
@@ -329,7 +330,7 @@
 				else
 					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
 
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/structure/picture_frame/update_icon()

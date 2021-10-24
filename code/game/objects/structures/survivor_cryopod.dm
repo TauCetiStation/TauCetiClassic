@@ -38,35 +38,16 @@
 
 	visible_message("<span class='notice'>Automatic cryosleep interruption process has begun, please stand by...</span>")
 	searching = TRUE
-	sleep(50) // Small delay so things aren't instant
 	request_player()
 	addtimer(CALLBACK(src, .proc/stop_search), 350)
 
 /obj/structure/survivor_cryopod/proc/request_player()
-	for(var/mob/dead/observer/O in observer_list)
-		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
-			continue
-		if(jobban_isbanned(O, ROLE_SURVIVOR))
-			continue
-		if(role_available_in_minutes(O, ROLE_SURVIVOR))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("survivor") && (ROLE_SURVIVOR in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C)
-
-/obj/structure/survivor_cryopod/proc/question(client/C)
-	if(QDELETED(C))
-		return
-	var/response = alert(C, "Survivor role is available. Would you like to play?", "Survivor role request", "No", "Yes", "Never for this round")
-	if(QDELETED(C) || !searching)
-		return
-	if(response == "Yes")
+	var/list/candidates = pollGhostCandidates("Survivor role is available. Would you like to play?", ROLE_GHOSTLY, IGNORE_SURVIVOR, 250, TRUE)
+	for(var/mob/M in candidates) // No random
 		searching = FALSE
 		opened = TRUE
-		spawn_survivor(C.mob)
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += "survivor"
+		spawn_survivor(M)
+		break
 
 /obj/structure/survivor_cryopod/proc/spawn_survivor(mob/M)
 	var/mob/living/carbon/human/H = new(loc, HUMAN)

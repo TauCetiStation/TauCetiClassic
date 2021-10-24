@@ -48,6 +48,9 @@
 		else
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else if(istype(I, /obj/item/weapon/grab))
+		if(user.is_busy())
+			return
+
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living))
 			if(!buckled_mob)
@@ -68,12 +71,12 @@
 						pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)
 					H.buckled = src
-					H.dir = 2
+					H.set_dir(2)
 					buckled_mob = H
 					var/matrix/m = matrix(H.transform)
 					m.Turn(180)
 					animate(H, transform = m, time = 3)
-					H.pixel_y = H.get_standard_pixel_y_offset()
+					H.pixel_y = H.default_pixel_y
 					qdel(G)
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
@@ -85,6 +88,9 @@
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
 	if(buckled_mob)
+		if(user.is_busy())
+			return
+
 		var/mob/living/L = buckled_mob
 		if(L != user)
 			if(user.is_busy()) return
@@ -116,7 +122,7 @@
 		var/matrix/m = matrix(L.transform)
 		m.Turn(180)
 		animate(L, transform = m, time = 3)
-		L.pixel_y = L.get_standard_pixel_y_offset()
+		L.pixel_y = L.default_pixel_y
 		L.adjustBruteLoss(15)
 		visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
 		unbuckle_mob()

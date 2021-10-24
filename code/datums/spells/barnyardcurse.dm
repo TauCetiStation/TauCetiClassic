@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
-	name = "Curse of the Barnyard"
-	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
+	name = "Скотоклятье"
+	desc = "Обрекает жертву носить обезличивающую, неснимаемую маску домашнего животного."
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max = 150

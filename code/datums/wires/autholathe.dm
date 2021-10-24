@@ -6,12 +6,12 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	holder_type = /obj/machinery/autolathe
 	wire_count = 6
 
-/datum/wires/autolathe/get_interact_window()
+/datum/wires/autolathe/get_status()
 	var/obj/machinery/autolathe/A = holder
 	. += ..()
-	. += "<br>The red light is [A.disabled ? "off" : "on"]."
-	. += "<br>The green light is [A.shocked ? "off" : "on"]."
-	. += "<br>The blue light is [A.hacked ? "off" : "on"]."
+	. += "The red light is [A.disabled ? "off" : "on"]."
+	. += "The green light is [A.shocked ? "off" : "on"]."
+	. += "The blue light is [A.hacked ? "off" : "on"]."
 
 /datum/wires/autolathe/can_use()
 	var/obj/machinery/autolathe/A = holder
@@ -23,6 +23,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	switch(index)
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !mended
+			A.update_static_data(usr)
 
 		if(AUTOLATHE_WIRE_SHOCK)
 			A.shocked = !mended
@@ -36,6 +37,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	switch(index)
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !A.hacked
+			A.update_static_data(usr)
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 50)
 
 		if(AUTOLATHE_WIRE_SHOCK)
@@ -53,6 +55,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 		switch(index)
 			if(AUTOLATHE_WIRE_HACK)
 				A.hacked = FALSE
+				A.update_static_data(usr)
 
 			if(AUTOLATHE_WIRE_SHOCK)
 				A.shocked = FALSE

@@ -2,7 +2,7 @@
 	var/datum/computer/file/embedded_program/program
 
 	name = "Embedded Controller"
-	anchored = 1
+	anchored = TRUE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/on = 1
@@ -40,7 +40,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	power_channel = STATIC_ENVIRON
-	density = 0
+	density = FALSE
 
 	// Setup parameters only
 	var/id_tag

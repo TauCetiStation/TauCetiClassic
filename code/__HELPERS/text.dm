@@ -15,60 +15,81 @@
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
 	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
-	return copytext(sqltext, 2, lentext(sqltext))
+	return copytext(sqltext, 2, -1)
 
 /*
  * Text sanitization
  */
 
-//Used for preprocessing entered text
-/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
+// You need this for every user text input()
+/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
 	if(!input)
 		return
 
 	if(max_length)
-		input = copytext(input,1,max_length)
-
-	input = replacetext(input, JA_CHARACTER, JA_PLACEHOLDER)
+		input = copytext_char(input, 1, max_length)
 
 	if(extra)
 		input = replace_characters(input, list("\n"=" ","\t"=" "))
 
+	if(ascii_only)
+		// Some procs work differently depending on unicode/ascii string
+		// You should always consider this with any text processing work
+		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
+		//       http://www.byond.com/forum/post/2520672
+		input = strip_non_ascii(input)
+	else
+		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
+		// codes from https://www.compart.com/en/unicode/category/
+		//            https://en.wikipedia.org/wiki/Whitespace_character#Unicode
+		var/static/regex/unicode_control_chars = regex(@"[\u0001-\u0009\u000B\u000C\u000E-\u001F\u007F\u0080-\u009F\u00A0\u1680\u180E\u2000-\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]", "g")
+		input = unicode_control_chars.Replace(input, "")
+
 	if(encode)
-		//In addition to processing html, html_encode removes byond formatting codes like "\red", "\i" and other.
-		//It is important to avoid double-encode text, it can "break" quotes and some other characters.
-		//Also, keep in mind that escaped characters don't work in the interface (window titles, lower left corner of the main window, etc.)
+		// In addition to processing html, html_encode removes byond formatting codes like "\red", "\i" and other.
+		// It is important to avoid double-encode text, it can "break" quotes and some other characters.
+		// Also, keep in mind that escaped characters don't work in the interface (window titles, lower left corner of the main window, etc.)
 		input = html_encode(input)
 	else
-		//If not need encode text, simply remove < and >
-		//note: we can also remove here byond formatting codes: 0xFF + next byte
+		// If not need encode text, simply remove < and >
+		// note: we can also remove here byond formatting codes: 0xFF + next byte
 		input = replace_characters(input, list("<"=" ", ">"=" "))
 
 	if(trim)
-		//Maybe, we need trim text twice? Here and before copytext?
 		input = trim(input)
 
 	return input
 
-//Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places, after html_encode().
+//Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places after html_encode().
 //Best used for sanitize object names, window titles.
 //If you have a problem with sanitize() in chat, when quotes and >, < are displayed as html entites -
 //this is a problem of double-encode(when & becomes &amp;), use sanitize() with encode=0, but not the sanitize_safe()!
-/proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
-	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra)
+/proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
+	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra, ascii_only)
 
-//Filters out undesirable characters from names
+/proc/paranoid_sanitize(t)
+	var/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
+	return alphanum_only.Replace(t, "#")
+
+//Filters out undesirable characters from character names
+//todo: rewrite this
 /proc/sanitize_name(input, max_length = MAX_NAME_LEN, allow_numbers = 0, force_first_letter_uppercase = TRUE)
-	if(!input || length(input) > max_length)
+	if(!input || length_char(input) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
 	var/number_of_alphanumeric	= 0
 	var/last_char_group			= 0
 	var/output = ""
 
-	for(var/i=1, i<=length(input), i++)
-		var/ascii_char = text2ascii(input,i)
-		switch(ascii_char)
+	var/char = ""
+	var/bytes_length = length(input)
+	var/ascii_char
+	for(var/i = 1, i <= bytes_length, i += length(char))
+		char = input[i]
+
+		ascii_char = text2ascii(char)
+
+		switch(ascii_char) //todo: unicode names?
 			// A  .. Z
 			if(65 to 90)			//Uppercase Letters
 				output += ascii2text(ascii_char)
@@ -116,15 +137,15 @@
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == 1)
-		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
+		output = copytext(output, 1, -1)	//removes the last character (in this case a space)
 
 	if(lowertext(output) in forbidden_names)	//prevents these common metagamey names
-		return	//(not case sensitive)
+		return
 
 	return output
 
 /proc/shelleo_url_scrub(url)
-	var/static/regex/bad_chars_regex = regex("\[^#%&./:=?\\w]*", "g")
+	var/static/regex/bad_chars_regex = regex(@"[^#%&./:=?\w]+", "g")
 	var/scrubbed_url = ""
 	var/bad_match = ""
 	var/last_good = 1
@@ -133,43 +154,15 @@
 		bad_chars = bad_chars_regex.Find(url)
 		scrubbed_url += copytext(url, last_good, bad_chars)
 		if(bad_chars)
-			bad_match = url_encode(bad_chars_regex.match)
-			scrubbed_url += bad_match
+			bad_match = bad_chars_regex.match
+			scrubbed_url += url_encode(bad_match)
 			last_good = bad_chars + length(bad_match)
 	while(bad_chars)
 	. = scrubbed_url
 
-
-//Returns null if there is any bad text in the string
-/proc/reject_bad_text(text, max_length=512)
-	if(length(text) > max_length)	return			//message too long
-	var/non_whitespace = 0
-	for(var/i=1, i<=length(text), i++)
-		switch(text2ascii(text,i))
-			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 181)	return			//rejects weird letters like �
-			if(183 to 191)	return			//rejects weird letters like � // todo: JA_PLACEHOLDER
-			if(0 to 31)		return			//more weird stuff
-			if(32)			continue		//whitespace
-			else			non_whitespace = 1
-	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
-
-
-//reset to placeholder for inputs, logs
-/proc/reset_ja(text)
-	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-
-//replace ja with entity for chat/popup
-/proc/entity_ja(text)
-	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
-
-//Reset ja to cp1251. Only needed for loading screen ban messages.
-/proc/initial_ja(text)
-	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
-
-
 /proc/input_default(text)
-	return html_decode(reset_ja(text))//replace br with \n?
+	return html_decode(text)
+
 /*
  * Text searches
  */
@@ -181,13 +174,6 @@
 	var/end = length(prefix) + 1
 	return findtext(text, prefix, start, end)
 
-//Checks the beginning of a string for a specified sub-string. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hasprefix_case(text, prefix)
-	var/start = 1
-	var/end = length(prefix) + 1
-	return findtextEx(text, prefix, start, end)
-
 //Checks the end of a string for a specified substring.
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hassuffix(text, suffix)
@@ -196,60 +182,55 @@
 		return findtext(text, suffix, start, null)
 	return
 
-//Checks the end of a string for a specified substring. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hassuffix_case(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		return findtextEx(text, suffix, start, null)
-
 /*
  * Text modification
  */
 
-/proc/replace_characters(var/t,var/list/repl_chars)
+/proc/replace_characters(t, list/repl_chars)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t
 
-var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
 /proc/random_string(length, list/characters)
 	. = ""
 	for (var/i in 1 to length)
 		. += pick(characters)
 
-/proc/random_short_color()
-	return "#" + random_string(3, global.hex_characters)
-
-/proc/random_color()
-	return "#" + random_string(6, global.hex_characters)
-
-//Adds 'u' number of zeros ahead of the text 't'
+//Adds zeros ahead of the text 't' until length == u
 /proc/add_zero(t, u)
-	while (length(t) < u)
+	var/needs = u - length_char(t)
+	while (needs-- > 0)
 		t = "0[t]"
 	return t
 
-//Adds 'u' number of spaces ahead of the text 't'
+//Adds spaces ahead of the text 't' until length == u
 /proc/add_lspace(t, u)
-	while(length(t) < u)
+	var/needs = u - length_char(t)
+	while(needs-- > 0)
 		t = " [t]"
 	return t
 
-//Adds 'u' number of spaces behind the text 't'
+//Adds spaces behind the text 't' until length == u
 /proc/add_tspace(t, u)
-	while(length(t) < u)
+	var/needs = u - length_char(t)
+	while(needs-- > 0)
 		t = "[t] "
 	return t
 
-//Returns a string with reserved characters and spaces before the first letter removed
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
+
+// Returns a string with reserved characters and spaces before the first letter removed
+// not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
 			return copytext(text, i)
 	return ""
 
-//Returns a string with reserved characters and spaces after the last letter removed
+// Returns a string with reserved characters and spaces after the last letter removed
+// not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_right(text)
 	for (var/i = length(text), i > 0, i--)
 		if (text2ascii(text, i) > 32)
@@ -257,17 +238,41 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 	return ""
 
-//Returns a string with reserved characters and spaces before the first word and after the last word removed.
+// Returns a string with reserved characters and spaces before the first word and after the last word removed.
+// not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
 //Returns a string with the first element of the string capitalized.
-/proc/capitalize(t)
-	return uppertext_(copytext(t, 1, 2)) + copytext(t, 2)
+/proc/capitalize(text)
+	if(text)
+		text = uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+	return text
 
+//Returns a string with the first element of the every word of the string capitalized.
+/proc/capitalize_words(text)
+	var/list/S = splittext(text, " ")
+	var/list/M = list()
+	for (var/w in S)
+		M += capitalize(w)
+	return jointext(M, " ")
+
+/proc/strip_non_ascii(text)
+	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
+	return non_ascii_regex.Replace(text, "")
+
+/proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
+	var/list/strip_chars = list("<",">")
+	t = copytext(t,1,limit)
+	for(var/char in strip_chars)
+		var/index = findtext(t, char)
+		while(index)
+			t = copytext(t, 1, index) + copytext(t, index+1)
+			index = findtext(t, char)
+	return t
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
-/proc/strip_html_properly(var/input)
+/proc/strip_html_properly(input)
 	if(!input)
 		return
 	var/opentag = 1 //These store the position of < and > respectively.
@@ -290,38 +295,15 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 	return input
 
-//Centers text by adding spaces to either side of the string.
-/proc/dd_centertext(message, length)
-	var/new_message = message
-	var/size = length(message)
-	var/delta = length - size
-	if(size == length)
-		return new_message
-	if(size > length)
-		return copytext(new_message, 1, length + 1)
-	if(delta == 1)
-		return new_message + " "
-	if(delta % 2)
-		new_message = " " + new_message
-		delta--
-	var/spaces = add_lspace("",delta/2-1)
-	return spaces + new_message + spaces
-
-//Limits the length of the text. Note: MAX_MESSAGE_LEN and MAX_NAME_LEN are widely used for this purpose
-/proc/dd_limittext(message, length)
-	var/size = length(message)
-	if(size <= length)
-		return message
-	return copytext(message, 1, length + 1)
-
-/proc/stringmerge(text,compare,replace = "*")
+/proc/stringmerge_ascii(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
 //This is used for fingerprints
+//fingerprints has only ascii chars so this proc does not support unicode strings
 	var/newtext = text
-	if(lentext(text) != lentext(compare))
+	if(length(text) != length(compare))
 		return 0
-	for(var/i = 1, i < lentext(text), i++)
+	for(var/i = 1, i < length(text), i++)
 		var/a = copytext(text,i,i+1)
 		var/b = copytext(compare,i,i+1)
 //if it isn't both the same letter, or if they are both the replacement character
@@ -335,13 +317,14 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 				return 0
 	return newtext
 
-/proc/stringpercent(text,character = "*")
+/proc/stringpercent_ascii(text,character = "*")
 //This proc returns the number of chars of the string that is the character
 //This is used for detective work to determine fingerprint completion.
+//fingerprints has only ascii chars so this proc does not support unicode strings
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= lentext(text), i++)
+	for(var/i = 1, i <= length(text), i++)
 		var/a = copytext(text,i,i+1)
 		if(a == character)
 			count++
@@ -349,8 +332,11 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 /proc/reverse_text(text = "")
 	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
-		new_text += copytext(text, i, i+1)
+	var/bytes_length = length(text)
+	var/letter = ""
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_text = letter + new_text
 	return new_text
 
 /proc/parsebbcode(t, colour = "black")
@@ -406,49 +392,65 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 	return t
 
-/*
- * Byond
- * (remove this when byond lern unicode)
- */
+// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as
+// ISO-8859-5 -> utf-8 instead of Windows-1251 -> utf-8
+// Byond choises first encoding based on server locale, this fix for ru_RU
+// On you locale this fix may not work and you should change or
+// drop this proc completly if you not have any pre-513 cyrillics
+// Does nothing with standart latin
+// ...
+// UPDATE: OK, actually I don't understand how it works and how BYOND chooses encoding to fuck us
+/proc/fix_cyrillic(text)
 
-/proc/lowertext_(var/text)
-	var/lenght = length(text)
-	var/new_text = null
-	var/lcase_letter
-	var/letter_ascii
+	var/char = ""
+	var/new_text = ""
+	var/new_char
+	var/bytes_length = length(text)
+	var/ascii_char
 
-	var/p = 1
-	while(p <= lenght)
-		lcase_letter = copytext(text, p, p + 1)
-		letter_ascii = text2ascii(lcase_letter)
+	for(var/i = 1, i <= bytes_length, i += length(char))
+		char = text[i]
+		new_char = char
+		ascii_char = text2ascii(char)
 
-		if((letter_ascii >= 65 && letter_ascii <= 90) || (letter_ascii >= 192 && letter_ascii < 223))
-			lcase_letter = ascii2text(letter_ascii + 32)
-		else if(letter_ascii == 223)
-			lcase_letter = JA_PLACEHOLDER
+		/*switch(ascii_char)
+			if(167)
+				new_char = "э"
+			if(1032)
+				new_char = "Ё"
+			if(1048)
+				new_char = "ё"
+			if(1046) // ¶ (Ж in ISO)
+				new_char = "я"
+			if(8470)
+				new_char = "р"
+			if(1056 to 1119)
+				new_char = ascii2text(ascii_char - 16)*/
 
-		new_text += lcase_letter
-		p++
+		// win1251 -> unicode
+		if(ascii_char <= 255 && ascii_char >= 192)
+			new_char = ascii2text(ascii_char + 848)
+		if(ascii_char == 182)
+			new_char = "я"
 
-	return new_text
-
-/proc/uppertext_(var/text)
-	var/lenght = length(text)
-	var/new_text = null
-	var/ucase_letter
-	var/letter_ascii
-
-	var/p = 1
-	while(p <= lenght)
-		ucase_letter = copytext(text, p, p + 1)
-		letter_ascii = text2ascii(ucase_letter)
-
-		if((letter_ascii >= 97 && letter_ascii <= 122) || (letter_ascii >= 224 && letter_ascii < 255))
-			ucase_letter = ascii2text(letter_ascii - 32)
-		else if(letter_ascii == JA_PLACEHOLDER_CODE)
-			ucase_letter = JA_UPPERCHARACTER
-
-		new_text += ucase_letter
-		p++
+		new_text += new_char
 
 	return new_text
+
+/proc/pluralize_russian(n, one, two, five)
+	if(!five)
+		five = two
+	n = abs(n) % 100
+	if(5 <= n && n <= 20)
+		return five
+	n %= 10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

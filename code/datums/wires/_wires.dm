@@ -45,6 +45,7 @@
  */
 
 #define MAX_FLAG 65535
+#define SEE_BLIND 1
 
 /proc/is_wire_tool(obj/item/I)
 	if(ismultitool(I))
@@ -55,7 +56,10 @@
 		return TRUE
 	return
 
-var/list/same_wires = list()
+var/global/list/same_wires = list()
+
+// Preset of daltonism with his colors by hex
+var/global/list/wire_daltonism_colors = list()
 
 /datum/wires
 	var/random = FALSE     // Will the wires be different for every single instance.
@@ -68,13 +72,13 @@ var/list/same_wires = list()
 	var/list/signallers
 
 	var/table_options = " align='center'"
-	var/row_options1 = " width='80px'"
+	var/row_options1 = " width='120px'"
 	var/row_options2 = " width='260px'"
 	var/window_x = 370
 	var/window_y = 470
 
 	// All possible wires colors are here.
-	var/static/list/wire_colors = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
+	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
 
 /datum/wires/New(atom/holder)
 	..()
@@ -95,10 +99,9 @@ var/list/same_wires = list()
 		// We don't have any wires to copy yet, generate some and then copy it.
 		if(!same_wires[holder_type])
 			randomize_wires()
-			same_wires[holder_type] = src.wires.Copy()
+			same_wires[holder_type] = wires.Copy()
 		else
-			var/list/exist_wires = same_wires[holder_type]
-			wires = exist_wires // Reference the wires list.
+			wires = same_wires[holder_type] // Reference the wires list.
 
 /datum/wires/Destroy()
 	wires = null
@@ -112,8 +115,8 @@ var/list/same_wires = list()
 	//Generate our indexes
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
 		indexes_to_pick += i
-	colors_to_pick.len = wire_count // Downsize it to our specifications.
 
+	colors_to_pick.len = wire_count // Downsize it to our specifications.
 	while(colors_to_pick.len && indexes_to_pick.len)
 		// Pick and remove a color
 		var/color = pick_n_take(colors_to_pick)
@@ -121,6 +124,9 @@ var/list/same_wires = list()
 		// Pick and remove an index
 		var/index = pick_n_take(indexes_to_pick)
 		wires[color] = index
+
+/datum/wires/proc/get_status()
+	return list()
 
 /**
  * Will return TRUE if wires menu successful opened.
@@ -132,101 +138,159 @@ var/list/same_wires = list()
 	if(additional_checks_and_effects(user))
 		return FALSE
 
-	var/html = get_interact_window()
-
 	user.set_machine(holder)
 
-	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
-	popup.set_content(html)
-	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
-	popup.open()
+	tgui_interact(user, null)
 
 	return TRUE
 
-/**
- * In default variation will display all wires and status of them.
- * So you can override it in next variant to get additional data to display.
- *
- * > /datum/wires/example/get_interact_window()
- * >   var/obj/machinery/example/E = holder
- * >   . += ..()
- * >   . += "<br>Some light is [E.some_status ? "off" : "on"]."
- * >   . += "<br>Another light is [E.another_status ? "off" : "blinking"]."
- */
-/datum/wires/proc/get_interact_window()
-	var/html = "<fieldset class='block'>"
-	html += "<legend><h3>Exposed Wires</h3></legend>"
-	html += "<table[table_options]>"
+/datum/wires/proc/calculate_daltonism_colors(sight_mod)
+	if (!wire_daltonism_colors)
+		wire_daltonism_colors = list()
+	if(sight_mod && !wire_daltonism_colors[sight_mod])
+		// Creates a list of color for people with daltonism and save his
+		wire_daltonism_colors[sight_mod] = list()
+		for(var/i in wire_colors)
+			var/color_hex = color_by_hex[i]
+
+			if(!color_hex)
+				var/color = pick(wire_colors)
+				wire_daltonism_colors[sight_mod][i] = color
+				continue
+
+			var/r = hex2num(copytext(color_hex, 2, 4))
+			var/g = hex2num(copytext(color_hex, 4, 6))
+			var/b = hex2num(copytext(color_hex, 6, 8))
+
+			var/datum/ColorMatrix/CM = new(sight_mod)
+			var/new_r = CM.matrix[1] * r + CM.matrix[4] * g + CM.matrix[7] * b + CM.matrix[10] * 255
+			var/new_g = CM.matrix[2] * r + CM.matrix[5] * g + CM.matrix[8] * b + CM.matrix[11] * 255
+			var/new_b = CM.matrix[3] * r + CM.matrix[6] * g + CM.matrix[9] * b + CM.matrix[12] * 255
+
+			wire_daltonism_colors[sight_mod][i] = rgb(new_r, new_g, new_b)
+
+/datum/wires/tgui_host()
+	return holder
+
+/datum/wires/tgui_status(mob/user)
+	if(can_use(user))
+		return ..()
+	return UI_CLOSE
+
+/datum/wires/tgui_state(mob/user)
+	return global.physical_state
+
+/datum/wires/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Wires", "[holder.name] Wires")
+		ui.open()
+
+/datum/wires/tgui_data(mob/user)
+	var/list/data = list()
+	var/list/payload = list()
+
+	var/see_effect
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_BLIND))
+			see_effect = SEE_BLIND
+
+		else if(H.sightglassesmod)
+			see_effect = H.sightglassesmod
+
+	var/list/colors_by_num
+	if(see_effect != SEE_BLIND && see_effect != null)
+		colors_by_num = list()
+		for(var/color in color_by_hex)
+			var/r = hex2num(copytext(color_by_hex[color], 2, 4))
+			var/g = hex2num(copytext(color_by_hex[color], 4, 6))
+			var/b = hex2num(copytext(color_by_hex[color], 6, 8))
+			colors_by_num[color] = list(r, g, b)
 
 	for(var/color in wires)
-		html += "<tr>"
-		html += "<td[row_options1]><font color='[color]'><b>[capitalize(color)]</b></font></td>"
-		html += "<td[row_options2]>"
-		html += "<a href='?src=\ref[src];action=1;cut=[color]'>[is_color_cut(color) ? "Mend" :  "Cut"]</a>"
-		html += "<a href='?src=\ref[src];action=1;pulse=[color]'>Pulse</a>"
-		html += "<a href='?src=\ref[src];action=1;attach=[color]'>[is_signaler_attached(color) ? "Detach" : "Attach"] Signaller</a>"
-		html += "</td>"
-		html += "</tr>"
-	html += "</table>"
-	html += "</fieldset>"
+		var/shownColor
+		var/shownColorLbl
+		switch(see_effect)
+			if(SEE_BLIND)
+				shownColor = "grey"
+				shownColorLbl = null
+			if(null)
+				shownColor = color
+				shownColorLbl = capitalize(shownColor)
+			else
+				var/mcolor
+				calculate_daltonism_colors(see_effect)
+				if(hex2color(wire_daltonism_colors[see_effect][color])) // Color in color_by_hex list
+					mcolor = hex2color(wire_daltonism_colors[see_effect][color])
+				else // Closest color name from list
+					var/r = hex2num(copytext(wire_daltonism_colors[see_effect][color], 2, 4))
+					var/g = hex2num(copytext(wire_daltonism_colors[see_effect][color], 4, 6))
+					var/b = hex2num(copytext(wire_daltonism_colors[see_effect][color], 6, 8))
+					var/min_dist = 256 // Find min dist
+					for(var/colour in colors_by_num)
+						var/list/palette = colors_by_num[colour]
+						var/d = sqrt((palette[1] - r)**2 + (palette[2] - g)**2 + (palette[3] - b)**2)
+						if(!mcolor || d < min_dist)
+							min_dist = d
+							mcolor = colour
+				shownColor = wire_daltonism_colors[see_effect][color]
+				shownColorLbl = capitalize(replacetext(mcolor, "_", " "))
+		payload.Add(list(list(
+			"color" = shownColor,
+			"label" = shownColorLbl,
+			"wire" = color,
+			"cut" = is_color_cut(color),
+			"attached" = is_signaler_attached(color)
+		)))
+	data["wires"] = payload
+	data["status"] = get_status()
+	//data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
+	return data
 
-	return html
+/datum/wires/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
 
-/datum/wires/Topic(href, href_list)
-	..()
-
-	if(!can_use(usr) || href_list["close"])
-		usr << browse(null, "window=wires")
-		usr.unset_machine(holder)
-		return FALSE
-
-	if(!(in_range(holder, usr) && isliving(usr)))
-		return FALSE
+	if(!(usr.Adjacent(holder) && isliving(usr)))
+		return
 
 	var/mob/living/L = usr
 
-	if(!holder.can_mob_interact(L))
-		return FALSE
-
-	if(href_list["action"])
-		var/obj/item/I = L.get_active_hand()
-		holder.add_hiddenprint(L)
-
-		if(href_list["cut"]) // Toggles the cut/mend status
-			if(iswirecutter(I))
-				var/color = href_list["cut"]
-				cut_wire_color(color)
+	if(!can_use(src) || !holder.can_mob_interact(L))
+		return
+	var/target_wire = params["wire"]
+	var/obj/item/I = L.get_active_hand()
+	switch(action)
+		if("cut")
+			if(I && iswirecutter(I))
+				cut_wire_color(target_wire)
+				I.play_tool_sound(holder, 20)
+				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
-
-		else if(href_list["pulse"])
-			if(ismultitool(I))
-				var/color = href_list["pulse"]
-				pulse_color(color)
+		if("pulse")
+			if(I && ismultitool(I))
+				pulse_color(target_wire)
+				I.play_tool_sound(holder, 20)
+				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")
-
-		else if(href_list["attach"])
-			var/color = href_list["attach"]
-
-			// Detach
-			if(is_signaler_attached(color))
-				var/obj/item/O = detach_signaler(color)
+		if("attach")
+			if(is_signaler_attached(target_wire))
+				var/obj/item/O = detach_signaler(target_wire)
 				if(O)
 					L.put_in_hands(O)
-
-			// Attach
+					. = TRUE
 			else
 				if(issignaler(I))
-					L.drop_item()
-					attach_signaler(color, I)
+					L.drop_from_inventory(I, holder)
+					attach_signaler(target_wire, I)
 				else
 					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")
-
-		// Update Window
-		interact(usr)
-
-	return TRUE
+	if(.)
+		holder.add_fingerprint(usr)
 
 ////////////////////
 // Overridable procs
@@ -357,3 +421,4 @@ var/list/same_wires = list()
 
 
 #undef MAX_FLAG
+#undef SEE_BLIND

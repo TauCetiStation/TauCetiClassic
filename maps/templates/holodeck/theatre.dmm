@@ -39,7 +39,7 @@
 /obj/item/clothing/suit/storage/labcoat/mad,
 /obj/item/clothing/glasses/gglasses,
 /obj/item/clothing/mask/cigarette/cigar/havana,
-/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/holoboots,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},
@@ -202,7 +202,7 @@
 	},
 /area/station/civilian/holodeck/source_theatre)
 "A" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor/holofloor{

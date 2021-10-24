@@ -19,7 +19,7 @@
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, "<span class='warning'>You cannot pray (muted).</span>")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
@@ -50,7 +50,7 @@
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(msg)
 	if(speaking)
-		msg = copytext(msg, 2 + length(speaking.key))
+		msg = copytext_char(msg, 2 + length_char(speaking.key))
 	else if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.species.force_racial_language)
@@ -65,7 +65,7 @@
 	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
-	var/scrambled_msg = get_scrambled_message(speaking, msg)
+	var/scrambled_msg = get_scrambled_message(msg, speaking)
 	var/god_not_understand_msg = ""
 	if(scrambled_msg)
 		god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
@@ -83,8 +83,9 @@
 		if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
-			var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
-			to_chat(M, tracker + ghost_msg)
+
+			var/tracker = FOLLOW_LINK(M, src)
+			to_chat(M, "[tracker] [ghost_msg]")
 			continue
 
 
@@ -148,6 +149,7 @@
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":regional_indicator_c: **[key_name(Sender)]**  has made an ***Centcomm*** announcement",
 		attachment_msg = text,
+		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 	text = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
@@ -159,6 +161,7 @@
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":regional_indicator_s: **[key_name(Sender)]**  has made an ***Syndicate*** announcement",
 		attachment_msg = text,
+		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 	text = "<span class='notice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"

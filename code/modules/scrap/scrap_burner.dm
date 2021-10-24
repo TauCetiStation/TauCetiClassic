@@ -26,7 +26,7 @@
 	sheet_path = /obj/item/stack/sheet/refined_scrap
 	power_gen = 5000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/scrap"
+	board_path = /obj/item/weapon/circuitboard/pacman/scrap
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
 	explosion(src.loc, 1, 5, 2, -1)

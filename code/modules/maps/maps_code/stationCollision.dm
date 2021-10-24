@@ -65,7 +65,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-	projectile_type = "/obj/item/projectile/practice"
+	projectile_type = /obj/item/projectile/practice
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate silenced pistol. This definition is not necessary, it's just habit.
@@ -168,45 +168,3 @@ var/sc_safecode5 = "[rand(0,9)]"
 	new /obj/item/clothing/suit/space/cult(src)
 	//new /obj/item/weapon/teleportation_scroll(src)
 	new /obj/item/weapon/ore/diamond(src)
-
-/*
- * Modified Nar-Sie
-
-/obj/singularity/narsie/sc_Narsie
-	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
-	move_self = 0 //Contianed narsie does not move!
-	grav_pull = 0 //Contained narsie does not pull stuff in!
-
-//Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
-/obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
-	return
-
-/obj/singularity/narsie/sc_Narsie/process()
-	eat()
-	if(prob(25))
-		mezzer()
-
-/obj/singularity/narsie/sc_Narsie/consume(var/atom/A)
-	if(is_type_in_list(A, uneatable))
-		return 0
-	if (istype(A,/mob/living))
-		var/mob/living/L = A
-		L.gib()
-	else if(istype(A,/obj))
-		var/obj/O = A
-		O.ex_act(1.0)
-		if(O) del(O)
-	else if(isturf(A))
-		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		T.ChangeTurf(/turf/space)
-	return
-
-/obj/singularity/narsie/sc_Narsie/ex_act()
-	return
-	*/

@@ -15,11 +15,11 @@
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "box"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = 1
+	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
 	var/parts = /obj/item/weapon/table_parts
@@ -42,6 +42,8 @@
 		update_icon()
 		update_adjacent()
 
+	AddComponent(/datum/component/clickplace)
+
 /obj/structure/table/Destroy()
 	if(flipped)
 		update_adjacent()
@@ -55,12 +57,12 @@
 
 /obj/structure/table/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/rack/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/update_icon()
@@ -108,6 +110,8 @@
 		else
 	return
 
+/obj/structure/table/airlock_crush_act()
+	destroy()
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -115,6 +119,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -140,7 +145,7 @@
 		glasstable.shatter()
 	else
 		new /obj/item/weapon/table_parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
@@ -220,96 +225,53 @@
 			return 1
 	return 1
 
-/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
-	..()
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isessence(usr) || isrobot(usr))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
+/obj/structure/table/proc/laser_cut(obj/item/I, mob/user)
+	user.do_attack_animation(src)
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src.loc)
+	spark_system.start()
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+	destroy()
 
+/obj/structure/table/reinforced/laser_cut(obj/item/I, mob/user)
+	user.do_attack_animation(src)
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src.loc)
+	spark_system.start()
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='notice'>You tried to slice through [src] but [I] is too weak.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+
+// React to tools attacking src.
+/obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
+	if(iswrench(I))
+		if(user.is_busy(src))
+			return FALSE
+		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
+		if(I.use_tool(src, user, 50, volume = 50))
+			destroy()
+		return TRUE
+	return FALSE
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
-		var/obj/item/weapon/grab/G = W
-		if(isliving(G.affecting))
-			var/mob/living/M = G.affecting
-			var/mob/living/A = G.assailant
-			user.SetNextMove(CLICK_CD_MELEE)
-			if (G.state < GRAB_AGGRESSIVE)
-				if(user.a_intent == "hurt")
-					slam(A, M, G)
-				else
-					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
-					return
-			else
-				G.affecting.forceMove(loc)
-				G.affecting.Weaken(5)
-				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-				M.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [src]([A.ckey])</font>"
-				A.attack_log += "\[[time_stamp()]\] <font color='red'>Put [M.name] on \the [src]([M.ckey])</font>"
-			qdel(W)
-			return
 
-	if (iswrench(W))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Now disassembling table</span>")
-		if(W.use_tool(src, user, 50, volume = 50))
-			destroy()
+	if(attack_tools(W, user))
 		return
 
-	if(isrobot(user))
-		return
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
-			if(istype(src, /obj/structure/table/reinforced) && W:active)
-				..()
-				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
-				return FALSE
-			user.do_attack_animation(src)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
-			user.SetNextMove(CLICK_CD_MELEE)
-			destroy()
-			return FALSE
-
-	if(!(W.flags & ABSTRACT))
-		if(user.drop_item())
-			W.Move(loc)
-			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+	if(user.a_intent == INTENT_HARM)
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
+			if(W.force > 3)
+				laser_cut(W, user)
 				return
-			W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-	return
 
-/obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
-	if (prob(15))
-		M.Weaken(5)
-	M.apply_damage(8,def_zone = BP_HEAD)
-	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
-	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
-	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]", A)
+	return ..()
 
-/obj/structure/table/proc/straight_table_check(var/direction)
+/obj/structure/table/proc/straight_table_check(direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))
@@ -388,7 +350,7 @@
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -429,11 +391,15 @@
 	parts = /obj/item/weapon/table_parts/glass
 	health = 10
 
+/obj/structure/table/glass/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace, , CALLBACK(src, .proc/slam))
+
 /obj/structure/table/glass/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -485,22 +451,30 @@
 	else
 		return FALSE
 
-/obj/structure/table/glass/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
-	M.Weaken(5)
-	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src], breaking it!</span>")
+/obj/structure/table/glass/proc/slam(obj/item/weapon/grab/G)
+	var/mob/living/assailant = G.assailant
+	var/mob/living/victim = G.affecting
+
+	victim.Weaken(5)
+	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey]), breaking it</font>"
-	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey]), breaking it</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it", A)
-	if(prob(30) && ishuman(M))
-		var/mob/living/carbon/human/H = M
+
+	victim.log_combat(assailant, "face-slammed against [name]")
+
+	if(prob(30) && ishuman(victim))
+		var/mob/living/carbon/human/H = victim
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		var/obj/item/weapon/shard/S = new
 		BP.embed(S)
 		H.apply_damage(15, def_zone = BP_HEAD, damage_flags = DAM_SHARP|DAM_EDGE, used_weapon = S)
 		H.emote("scream")
 	else
-		M.apply_damage(15, def_zone = BP_HEAD)
+		victim.apply_damage(15, def_zone = BP_HEAD)
+	shatter()
+	qdel(G)
+	return TRUE
+
+/obj/structure/table/glass/airlock_crush_act()
 	shatter()
 
 /*
@@ -566,34 +540,42 @@
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (iswelder(W))
-		if(user.is_busy()) return FALSE
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
+	if(iswelder(I))
+		if(user.is_busy())
+			return FALSE
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
-			if(src.status == 2)
-				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
+			if(status == 2)
+				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>Table weakened</span>")
+					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
 					src.status = 1
 			else
-				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
+				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>Table strengthened</span>")
+					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
 					src.status = 2
+			return TRUE
+		return FALSE
+
+	else if(status != 2 && iswrench(I))
+		if(user.is_busy(src))
 			return FALSE
+		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
+		if(I.use_tool(src, user, 50, volume = 50))
+			destroy()
 		return TRUE
 
-	if (iswrench(W))
-		if(src.status == 2)
-			return TRUE
+	return FALSE
 
-	else if(istype(W, /obj/item/door_control_frame))
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/door_control_frame))
 		var/obj/item/door_control_frame/frame = W
 		frame.try_build(src)
 		return
 
- return ..()
+	return ..()
 
 /*
  * Racks
@@ -603,11 +585,16 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
+
+/obj/structure/rack/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
@@ -621,6 +608,9 @@
 			if(prob(25))
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
+
+/obj/structure/rack/airlock_crush_act()
+	destroy()
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
@@ -640,48 +630,39 @@
 	else
 		return 0
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isrobot(user) || isessence(user))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
-
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
-	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
-			user.do_attack_animation(src)
-			user.SetNextMove(CLICK_CD_MELEE)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
-			destroy()
-			return
-	if(isrobot(user))
-		return
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
-	return
 
-/obj/structure/rack/meteorhit(obj/O)
-	qdel(src)
+	. = ..()
+	if(!.)
+		return FALSE
 
+	var/can_cut = FALSE
+	if(istype(W, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/E = W
+		can_cut = E.active
+	else if(istype(W, /obj/item/weapon/twohanded/dualsaber))
+		var/obj/item/weapon/twohanded/dualsaber/D = W
+		can_cut = D.wielded
+
+	if(!can_cut)
+		return ..()
+
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, loc)
+	spark_system.start()
+
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
+	destroy()
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)

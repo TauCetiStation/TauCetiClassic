@@ -1,3 +1,11 @@
+/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+	if(!logs_combat)
+		return
+	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
+	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
+	if(alert_admins)
+		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
+
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
@@ -18,11 +26,14 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-
 	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
 		if(istype(loc, /turf/simulated))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+
+	if(check_shields(P, P.damage, "the [P.name]", P.dir))
+		P.on_hit(src, def_zone, 100)
+		return PROJECTILE_ABSORBED
 
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
@@ -37,7 +48,7 @@
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
 			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
 			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
-			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
+			visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -53,8 +64,8 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
-		if(LAZYLEN(P.proj_act_sound))
-			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
+		if(length(P.proj_act_sound))
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
 
 	return absorb
@@ -75,7 +86,7 @@
 		var/zone
 		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
 		if(L)
-			zone = check_zone(L.zone_sel.selecting)
+			zone = check_zone(L.get_targetzone())
 		else
 			zone = ran_zone(BP_CHEST, 75) // Hits a random part of the body, geared towards the chest
 
@@ -90,7 +101,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(throwingdatum.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -98,10 +109,7 @@
 		if(L)
 			var/client/assailant = L.client
 			if(assailant)
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
-				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!ismouse(src))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey])", L)
+				log_combat(L, "hit with thrown [O]")
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -197,17 +205,18 @@
 
 // End BS12 momentum-transfer code.
 
-/mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
-	return FALSE
+/mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
-		src.visible_message("<span class='warning'>[src] catches fire!</span>",
+		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -215,12 +224,13 @@
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -277,64 +287,35 @@
 	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
 	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (fire_stacks / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
 
-//Mobs on Fire end
-
-/mob/living/regular_hud_updates()
-	..()
+/mob/living/proc/regular_hud_updates()
 	update_action_buttons()
-
-/mob/living/update_action_buttons()
-	if(!hud_used) return
-	if(!client) return
-
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
-		return
-
-	client.screen -= hud_used.hide_actions_toggle
-	for(var/datum/action/A in actions)
-		if(A.button)
-			client.screen -= A.button
-
-	if(hud_used.action_buttons_hidden)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.UpdateIcon()
-
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
-
-		client.screen += hud_used.hide_actions_toggle
-		return
-
-	var/button_number = 0
-	for(var/datum/action/A in actions)
-		button_number++
-		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
-			N.owner = A
-			A.button = N
-
-		var/obj/screen/movable/action_button/B = A.button
-
-		B.UpdateIcon()
-
-		B.name = A.UpdateName()
-
-		client.screen += B
-
-		if(!B.moved)
-			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
-
-	if(button_number > 0)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.InitialiseIcon(src)
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
-		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated(restrained_type = ARMS)
 	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+
+// These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
+// If targetzone is not specified, returns TRUE if the mob has the bodypart in general.
+/mob/living/proc/is_usable_eyes(targetzone = null)
+	return TRUE
+
+/mob/living/proc/is_usable_head(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_leg(targetzone = null)
+	return FALSE
+
+/mob/living/proc/can_hit_zone(mob/living/attacker, targetzone)
+	switch(targetzone)
+		if(O_EYES)
+			return has_organ(O_EYES) && has_bodypart(BP_HEAD)
+		if(BP_HEAD, O_MOUTH)
+			return has_bodypart(BP_HEAD)
+		if(BP_L_ARM, BP_R_ARM)
+			return has_bodypart(targetzone)
+		if(BP_L_LEG, BP_R_LEG)
+			return has_bodypart(targetzone)
+		else
+			return TRUE

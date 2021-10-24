@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*
 Destructive Analyzer
 
@@ -27,10 +25,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
-
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -75,8 +69,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
 		if(linked_console)

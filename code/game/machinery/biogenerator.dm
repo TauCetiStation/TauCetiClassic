@@ -3,8 +3,8 @@
 	desc = "Splits the vegetation into micro and macro nutriments, synthesizers, fertilizers, fiber, and etc."
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	var/processing = 0
@@ -60,15 +60,13 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
 		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/bag/plants/P = O
-		P.close(user) //Принудительно закрываем окно инвентаря сумки, во избежание бага
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -78,7 +76,7 @@
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				if(i >= max_items)
 					break
-				G.loc = src
+				P.remove_from_storage(G, src)
 				i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
@@ -97,8 +95,7 @@
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 
 	if(!processing)
@@ -119,36 +116,36 @@
 /obj/machinery/biogenerator/ui_interact(mob/user)
 	var/dat
 	if(processing)
-		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
+		dat += "<div class='Section'>Biogenerator is processing! Please wait...</div><BR>"
 	else
 		switch(menustat)
 			if("nopoints")
-				dat += "<div class='statusDisplay'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
+				dat += "<div class='Section'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
 				menustat = "menu"
 			if("complete")
-				dat += "<div class='statusDisplay'>Operation complete.</div>"
+				dat += "<div class='Section'>Operation complete.</div>"
 				menustat = "menu"
 			if("void")
-				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
+				dat += "<div class='Section'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
 				menustat = "menu"
 		if(beaker)
-			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
+			dat += "<div class='Section'>Biomass: [points] units.</div><BR>"
 			dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
 			dat += "<h3>Food:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
 			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=monkey'>Make</A> ([250/efficiency])<BR>"
 			dat += "Meat slice: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([80/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
 			dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
 			dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
 			//dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
@@ -156,13 +153,28 @@
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
 			dat += "Brown shoes: <A href='?src=\ref[src];action=create;item=bshoes'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
+			dat += "Security belt: <A href='?src=\ref[src];action=create;item=sbelt'>Make</A> ([300/efficiency])<BR>"
+			dat += "Medical belt: <A href='?src=\ref[src];action=create;item=mbelt'>Make</A> ([300/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
 			dat += "Cash Bag: <A href='?src=\ref[src];action=create;item=cashbag'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Jacket: <A href='?src=\ref[src];action=create;item=jacket'>Make</A> ([500/efficiency])<BR>"
 			dat += "Leather Overcoat: <A href='?src=\ref[src];action=create;item=overcoat'>Make</A> ([1000/efficiency])<BR>"
 			dat += "</div>"
+			dat += "<h3>Pouches:</h3>"
+			dat += "<div class='Section'>"
+			dat += "Small generic pouch: <A href='?src=\ref[src];action=create;item=spounch'>Make</A> ([200/efficiency])<BR>"
+			dat += "Medical supply pouch: <A href='?src=\ref[src];action=create;item=medpouch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Vial pouch: <A href='?src=\ref[src];action=create;item=vpounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Engineering tools pouch: <A href='?src=\ref[src];action=create;item=etpounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Engineering supply pouch: <A href='?src=\ref[src];action=create;item=espounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Ammo pouch: <A href='?src=\ref[src];action=create;item=apounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Pistol holster: <A href='?src=\ref[src];action=create;item=ppounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Baton sheath: <A href='?src=\ref[src];action=create;item=bpounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Medium generic pouch: <A href='?src=\ref[src];action=create;item=mpounch'>Make</A> ([500/efficiency])<BR>"
+			dat += "Large generic pouch: <A href='?src=\ref[src];action=create;item=lpounch'>Make</A> ([1000/efficiency])<BR>"
+			dat += "</div>"
 		else
-			dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
+			dat += "<div class='Section'>No beaker inside, please insert beaker.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
@@ -281,12 +293,48 @@
 		if("tbelt")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
+		if("sbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/security(src.loc)
+		if("mbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/medical(src.loc)
 		if("satchel")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("cashbag")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/cash(src.loc)
+		if("spounch")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/small_generic(src.loc)
+		if("mpounch")
+			if (check_cost(500/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/medium_generic(src.loc)
+		if("lpounch")
+			if (check_cost(1000/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/large_generic(src.loc)
+		if("medpouch")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/medical_supply(src.loc)
+		if("vpounch")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/flare/vial(src.loc)
+		if("etpounch")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/engineering_tools(src.loc)
+		if("espounch")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/engineering_supply(src.loc)
+		if("apounch")
+			if (check_cost(350/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/ammo(src.loc)
+		if("ppounch")
+			if (check_cost(350/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/pistol_holster(src.loc)
+		if("bpounch")
+			if (check_cost(350/efficiency)) return 0
+			else new/obj/item/weapon/storage/pouch/baton_holster(src.loc)
 		if("jacket")
 			if (check_cost(500/efficiency)) return 0
 			else new/obj/item/clothing/suit/jacket/leather(src.loc)

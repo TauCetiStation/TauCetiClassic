@@ -84,8 +84,8 @@
 		if(MODULE_DESTROYED)
 			to_chat(usr, "It is almost completely destroyed.")
 
-/obj/item/rig_module/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/nanopaste))
+/obj/item/rig_module/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/nanopaste))
 		if(user.is_busy(src))
 			return
 
@@ -95,16 +95,16 @@
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
 
-		if(!W.use_tool(src, user, 30, volume = 50))
+		if(!I.use_tool(src, user, 30, volume = 50))
 			return
 
-		var/obj/item/stack/nanopaste/paste = W
+		var/obj/item/stack/nanopaste/paste = I
 		if(paste.use(1))
 			damage = MODULE_NO_DAMAGE
-			to_chat(user, "You mend the damage to [src] with [W].")
+			to_chat(user, "You mend the damage to [src] with [paste].")
 		return
 
-	else if(iscoil(W))
+	else if(iscoil(I))
 		if(user.is_busy())
 			return
 
@@ -116,7 +116,7 @@
 				to_chat(user, "There is no damage that you are capable of mending with such crude tools.")
 				return
 
-		var/obj/item/stack/cable_coil/cable = W
+		var/obj/item/stack/cable_coil/cable = I
 		if(!cable.amount >= 5)
 			to_chat(user, "You need five units of cable to repair \the [src].")
 			return
@@ -124,9 +124,10 @@
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
 		if(cable.use_tool(src, user, 30, amount = 5, volume = 50))
 			damage = MODULE_NO_DAMAGE
-			to_chat(user, "You mend the damage to [src] with [W].")
+			to_chat(user, "You mend the damage to [src] with [cable].")
 		return
-	..()
+
+	return ..()
 
 // Called when the module is installed into a suit.
 /obj/item/rig_module/proc/installed(obj/item/clothing/head/helmet/space/rig/new_holder)
@@ -214,6 +215,7 @@
 					stat(SRM.module.interface_name,SRM)
 
 /obj/stat_rig_module
+	flags = ABSTRACT
 	var/module_mode = ""
 	var/obj/item/rig_module/module
 

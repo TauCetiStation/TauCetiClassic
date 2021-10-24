@@ -1,6 +1,4 @@
-var/datum/subsystem/demo/SSdemo
-
-/datum/subsystem/demo
+SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	flags = SS_TICKER
 	wait = SS_WAIT_DEMO
@@ -25,10 +23,7 @@ var/datum/subsystem/demo/SSdemo
 	var/last_queued = 0
 	var/last_completed = 0
 
-/datum/subsystem/demo/New()
-	NEW_SS_GLOBAL(SSdemo)
-
-/datum/subsystem/demo/proc/write_time()
+/datum/controller/subsystem/demo/proc/write_time()
 	if(!config.record_replays)
 		return
 	var/new_time = world.time
@@ -39,7 +34,7 @@ var/datum/subsystem/demo/SSdemo
 			pre_init_lines += "time [new_time]"
 	last_written_time = new_time
 
-/datum/subsystem/demo/proc/write_event_line(line)
+/datum/controller/subsystem/demo/proc/write_event_line(line)
 	if(!config.record_replays)
 		return
 	write_time()
@@ -48,7 +43,7 @@ var/datum/subsystem/demo/SSdemo
 	else
 		pre_init_lines += line
 
-/datum/subsystem/demo/proc/write_chat(target, text)
+/datum/controller/subsystem/demo/proc/write_chat(target, text)
 	if(!config.record_replays)
 		return
 	var/target_text = ""
@@ -72,7 +67,7 @@ var/datum/subsystem/demo/SSdemo
 	write_event_line("chat [target_text] [last_chat_message == text ? "=" : json_encode(text)]")
 	last_chat_message = text
 
-/datum/subsystem/demo/Initialize()
+/datum/controller/subsystem/demo/Initialize()
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
@@ -159,7 +154,7 @@ var/datum/subsystem/demo/SSdemo
 
 	return ..()
 
-/datum/subsystem/demo/fire()
+/datum/controller/subsystem/demo/fire()
 	if(!src.marked_new.len && !src.marked_dirty.len && !src.marked_turfs.len && !src.del_list.len)
 		return // nothing to do
 
@@ -189,7 +184,7 @@ var/datum/subsystem/demo/SSdemo
 			loc_string = "null"
 			if(isturf(M.loc))
 				loc_string = "[M.x],[M.y],[M.z]"
-			else if(ismovableatom(M.loc))
+			else if(ismovable(M.loc))
 				loc_string = "\ref[M.loc]"
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
@@ -218,7 +213,7 @@ var/datum/subsystem/demo/SSdemo
 		var/loc_string = "null"
 		if(isturf(M.loc))
 			loc_string = "[M.x],[M.y],[M.z]"
-		else if(ismovableatom(M.loc))
+		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
 		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type)]"
@@ -250,7 +245,7 @@ var/datum/subsystem/demo/SSdemo
 	if(canceled)
 		return;
 
-/datum/subsystem/demo/proc/encode_init_obj(atom/movable/M)
+/datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
 	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
@@ -261,7 +256,7 @@ var/datum/subsystem/demo/SSdemo
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
+/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -406,7 +401,7 @@ var/datum/subsystem/demo/SSdemo
 			return diffed_string
 	return undiffed_string
 
-/datum/subsystem/demo/stat_entry(msg)
+/datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"
 	msg += "Trf:[marked_turfs.len]|"
 	msg += "New:[marked_new.len]|"
@@ -415,12 +410,12 @@ var/datum/subsystem/demo/SSdemo
 	msg += "}"
 	..(msg)
 
-/datum/subsystem/demo/proc/mark_turf(turf/T)
+/datum/controller/subsystem/demo/proc/mark_turf(turf/T)
 	if(!isturf(T))
 		return
 	marked_turfs[T] = TRUE
 
-/datum/subsystem/demo/proc/mark_new(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(QDELETED(M))
@@ -430,7 +425,7 @@ var/datum/subsystem/demo/SSdemo
 		marked_dirty -= M
 
 // I can't wait for when TG ports this and they make this a #define macro.
-/datum/subsystem/demo/proc/mark_dirty(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(QDELETED(M))
@@ -438,7 +433,7 @@ var/datum/subsystem/demo/SSdemo
 	if(!marked_new[M])
 		marked_dirty[M] = TRUE
 
-/datum/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(marked_new[M])

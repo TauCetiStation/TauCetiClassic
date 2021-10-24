@@ -1,5 +1,5 @@
 // Populate the space level list and prepare space transitions
-/datum/subsystem/mapping/proc/InitializeDefaultZLevels()
+/datum/controller/subsystem/mapping/proc/InitializeDefaultZLevels()
 	if (z_list)  // subsystem/Recover or badminnery, no need
 		return
 
@@ -16,7 +16,7 @@
 		var/datum/space_level/S = new(I, features[DL_NAME], features[DL_TRAITS])
 		z_list += S
 
-/datum/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
+/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
 	var/new_z = z_list.len + 1
 	if (world.maxz < new_z)
 		world.incrementMaxZ()
@@ -26,12 +26,12 @@
 	z_list += S
 	return S
 
-/datum/subsystem/mapping/proc/get_level(z)
+/datum/controller/subsystem/mapping/proc/get_level(z)
 	if (z_list && z >= 1 && z <= z_list.len)
 		return z_list[z]
 	CRASH("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list ? z_list.len : "null"]")
 
-/datum/subsystem/mapping/proc/has_level(z)
+/datum/controller/subsystem/mapping/proc/has_level(z)
 	if (z_list && z >= 1 && z <= z_list.len)
 		return !!z_list[z]
 	return FALSE

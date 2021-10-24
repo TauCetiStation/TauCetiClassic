@@ -6,7 +6,7 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
-#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
+#define NOLIMB           -1    // related to "pierce_protection" check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
@@ -23,7 +23,7 @@
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
-#define THICKMATERIAL          (1<<8)   // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
+#define NOPIERCE               (1<<8)
 #define GLASSESCOVERSEYES      (1<<8)
 #define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.
@@ -50,10 +50,16 @@
 
 #define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
+#define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2   (1<<1)
+
+//alternate appearance flags
+#define AA_TARGET_SEE_APPEARANCE (1<<0)
+#define AA_MATCH_TARGET_OVERLAYS (1<<1)
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
@@ -82,6 +88,8 @@
 #define NO_MINORCUTS	   "no_minorcuts"
 #define NO_BLOOD_TRAILS    "no_blood_trails"
 #define FACEHUGGABLE       "facehuggable"
+#define NO_EMOTION         "no_emotion"
+#define NO_DNA             "no_dna"
 #define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
@@ -129,3 +137,7 @@
 #define ESSENCE_POINT 128
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
+
+//dir macros
+///Returns true if the dir is diagonal, false otherwise
+#define ISDIAGONALDIR(d) (d&(d-1))

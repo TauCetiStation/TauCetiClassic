@@ -12,6 +12,7 @@
 	emote_see = list("shakes its head", "shivers", "looks cute")
 	speak_chance = 20
 	turns_per_move = 3
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/shiba = 2)
 	response_help  = "pets the"
 	response_disarm = "bops the"
@@ -20,6 +21,10 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/facehugger
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
@@ -40,7 +45,7 @@
 			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -53,7 +58,7 @@
 			emote(pick("chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
@@ -68,21 +73,21 @@
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 				for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src,3))
 					if(isturf(histoy.loc))
 						movement_target = histoy
 						break
 			if(movement_target)
-				stop_automated_movement = 1
+				stop_automated_movement = TRUE
 				walk_to(src,movement_target,0,3)
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(1,src))
 		if(prob(50))
 			for(var/i in list(1,2,4,8,4,2,1,2))
-				dir = i
+				set_dir(i)
 				sleep(1)
 		if(prob(40))
-			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)

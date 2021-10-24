@@ -47,10 +47,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/r_n_d/circuit_imprinter/meteorhit()
-	qdel(src)
-	return
-
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	if(loaded_materials[M])
 		return (loaded_materials[M].amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
@@ -200,6 +196,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(available_num_sheets > 0)
 			var/S = loaded_materials[sheet_type].sheet_type
 			var/obj/item/stack/sheet/sheet = new S(loc)
-			var/sheet_ammount = min(available_num_sheets, amount)
-			sheet.set_amount(sheet_ammount)
-			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_ammount * loaded_materials[sheet_type].sheet_size)
+			var/sheet_amount = min(available_num_sheets, amount)
+			sheet.set_amount(sheet_amount)
+			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_amount * loaded_materials[sheet_type].sheet_size)

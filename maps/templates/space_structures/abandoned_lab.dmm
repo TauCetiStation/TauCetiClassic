@@ -158,7 +158,7 @@
 	},
 /area/space_structures/derelict_lab)
 "az" = (
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm,
 /obj/item/ammo_casing/c9mm,
@@ -579,13 +579,6 @@
 	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
-"bO" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/taser,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/derelict_lab)
 "bP" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
@@ -602,7 +595,7 @@
 	},
 /area/space_structures/derelict_lab)
 "bR" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -888,7 +881,7 @@
 /turf/space,
 /area/space_structures/derelict_lab)
 "lt" = (
-/obj/structure/flora/plant/floorleaf,
+/obj/item/weapon/twohanded/flora/floorleaf,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1528,7 +1521,7 @@ ae
 ae
 bG
 bL
-bO
+bL
 ar
 aR
 ae

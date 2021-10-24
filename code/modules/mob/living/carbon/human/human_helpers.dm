@@ -1,6 +1,22 @@
 /mob/living/carbon/human/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)
-		if(!HAS_TRAIT(src, TRAIT_MULTITASKING) || (busy_left_hand && busy_right_hand))
+		if(HAS_TRAIT(src, TRAIT_MULTITASKING))
+			if(busy_left_hand && busy_right_hand)
+				if(show_warning)
+					to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+				return TRUE
+
+			if(hand)
+				if(busy_left_hand)
+					if(show_warning)
+						to_chat(src, "<span class='warning'>Your left hand is busy. Please finish or cancel your current action, or try the other hand.</span>")
+					return TRUE
+			else
+				if(busy_right_hand)
+					if(show_warning)
+						to_chat(src, "<span class='warning'>Your right hand is busy. Please finish or cancel your current action, or try the other hand.</span>")
+					return TRUE
+		else
 			if(show_warning)
 				to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
 			return TRUE

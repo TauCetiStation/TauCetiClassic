@@ -36,10 +36,10 @@
 			return 0
 
 		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
-			src.open(user)
+			open(user)
 			return 0
 
-		if (!( istype(over_object, /obj/screen) ))
+		if (!( istype(over_object, /atom/movable/screen) ))
 			return 1
 
 		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
@@ -77,14 +77,14 @@
 			H.r_store = null
 			return 0
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if (master_item.loc == user)
-		src.open(user)
+		open(user)
 		return 0
 
 	for(var/mob/M in range(1, master_item.loc))
 		if (M.s_active == src)
-			src.close(M)
+			close(M)
 	return 1
 
 /obj/item/weapon/storage/internal/Adjacent(atom/neighbor)

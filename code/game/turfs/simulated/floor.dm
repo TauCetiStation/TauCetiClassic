@@ -47,6 +47,9 @@ var/list/wood_icons = list("wood","wood-broken")
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	can_deconstruct = TRUE
+
+	var/datum/holy_turf/holy
 
 /turf/simulated/floor/proc/get_lightfloor_state()
 	return lightfloor_state & LIGHTFLOOR_STATE_BITS
@@ -76,6 +79,7 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/Destroy()
 	if(floor_type)
 		floor_type = null
+	QDEL_NULL(holy)
 	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -88,25 +92,25 @@ var/list/wood_icons = list("wood","wood-broken")
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(basetype)
+			ChangeTurf(basetype)
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
-					src.ReplaceWithLattice()
+					ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(basetype)
+					ChangeTurf(basetype)
 				if(3)
 					if(prob(80))
-						src.break_tile_to_plating()
+						break_tile_to_plating()
 					else
-						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+						break_tile()
+					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
-				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
 	return
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -247,7 +251,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 
 /turf/simulated/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/simulated/floor/attack_hand(mob/user)
 	if (is_light_floor())
@@ -304,8 +308,10 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine))
 		return
+	if(istype(src,/turf/simulated/floor/plating/airless/asteroid))
+		return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
-		src.ChangeTurf(/turf/simulated/floor/plating)
+		ChangeTurf(/turf/simulated/floor/plating)
 	if(broken)
 		return
 	if(is_plasteel_floor())
@@ -496,6 +502,13 @@ var/list/wood_icons = list("wood","wood-broken")
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
 
+	if(istype(C, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = C
+		if(S.wielded)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			break_tile()
+
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())
 			if(get_lightfloor_state())
@@ -618,18 +631,28 @@ var/list/wood_icons = list("wood","wood-broken")
 			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
 	if(iswelder(C))
-		var/obj/item/weapon/weldingtool/welder = C
-		if(welder.isOn() && (is_plating()))
-			if(broken || burnt)
-				if(welder.use(0,user))
-					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
-					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-					icon_state = "plating"
-					burnt = 0
-					broken = 0
-				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-
+		var/obj/item/weapon/weldingtool/W = C
+		if(!is_plating())
+			return
+		if(!can_deconstruct)
+			return
+		if(!W.use(0, user))
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			return
+		if(user.a_intent == INTENT_HELP)
+			if(!broken && !burnt)
+				return
+			to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "plating"
+			burnt = 0
+			broken = 0
+		else
+			to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
+			if(W.use_tool(src, user, 100, 3, 100))
+				to_chat(user, "<span class='notice'>You remove the plating.</span>")
+				new /obj/item/stack/tile/plasteel(src)
+				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK

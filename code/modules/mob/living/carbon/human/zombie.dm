@@ -8,7 +8,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	force = 16
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
@@ -44,7 +44,7 @@
 		if(O.can_buckle && O.buckled_mob)
 			O.user_unbuckle_mob(user)
 
-/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, var/obj/machinery/door/A)
+/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, obj/machinery/door/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -53,13 +53,13 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 70, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.open(1)
 
-/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, var/obj/machinery/door/airlock/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, obj/machinery/door/airlock/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -70,7 +70,7 @@
 								 "<span class='warning'>You hear metal strain.</span>")
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
-				if(A && A.density && in_range(A, user))
+				if(A && A.density && user.Adjacent(A))
 					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
@@ -84,7 +84,7 @@
 			else
 				return
 
-/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, var/obj/machinery/door/firedoor/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, obj/machinery/door/firedoor/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -93,7 +93,7 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 200, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
 									 "<span class='warning'>You break the emergency shutter.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -105,7 +105,7 @@
 	if(. && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!iszombie(H))
-			var/target_zone = user.zone_sel.selecting
+			var/target_zone = user.get_targetzone()
 
 			if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
 				target_zone = pick(BP_L_ARM, BP_R_ARM)
@@ -124,6 +124,15 @@
 		return
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
+	var/obj/item/organ/internal/eyes = H.bodyparts_by_name[O_EYES]
+	var/obj/item/organ/internal/brain = H.bodyparts_by_name[O_BRAIN]
+	if(eyes)
+		eyes.damage = 0
+	if(brain)
+		brain.damage = 0
+	H.setBrainLoss(0)
+	H.setBlurriness(0)
+	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		H.drop_l_hand()
@@ -149,7 +158,7 @@
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
-					var/answer = alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!","Yes","No")
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 
@@ -172,13 +181,6 @@
 	H.nutrition = 400
 	H.SetSleeping(0)
 	H.radiation = 0
-
-	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-	if(istype(IO))
-		IO.damage = 0
-		H.eye_blurry = 0
-		H.eye_blind = 0
-
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
 	H.restore_blood()
 
@@ -191,7 +193,7 @@
 	H.stat = CONSCIOUS
 	H.update_canmove()
 	H.regenerate_icons()
-	H.update_health_hud()
+	H.med_hud_set_health()
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
@@ -248,28 +250,6 @@
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
 
-/proc/zombie_talk(var/message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len)
-		message_list.Insert(insertpos, "[pick("ÃŒ«√»", "ÃÓÁ„Ë", "ÃÓÓÁ„ËËË", "ÃŒŒŒ«√»»»»", "¡ŒÀ‹ÕŒ", "¡ŒÀ‹", "œŒÃŒ√»", "–¿¿¿¿", "¿¿¿¿", "¿––’", "Œ“ –Œ…“≈", "Œ“ –Œ…")]...")
-
-	for(var/i = 1, i <= message_list.len, i++)
-		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
-			message_list[i] = message_list[i] + "..."
-
-		if(prob(60))
-			message_list[i] = stutter(message_list[i])
-
-		message_list[i] = stars(message_list[i], 80)
-
-		if(prob(60))
-			message_list[i] = slur(message_list[i])
-
-	return jointext(message_list, " ")
-
 /mob/living/carbon/human/proc/zombie_movement_delay()
 	if(!has_gravity(src))
 		return -1
@@ -316,29 +296,25 @@ var/list/zombie_list = list()
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
-	update_all_zombie_icons()
+
+	var/datum/faction/zombie/Z = find_faction_by_type(/datum/faction/zombie)
+	if(!Z)
+		Z = SSticker.mode.CreateFaction(/datum/faction/zombie)
+		Z.OnPostSetup()
+		Z.forgeObjectives()
+		Z.AnnounceObjectives()
+
+	add_faction_member(Z, H, FALSE)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
-	H.spell_list -= spell
-	H.mind.spell_list -= spell
+	H.RemoveSpell(spell)
 	qdel(spell)
 	zombie_list -= H
-	update_all_zombie_icons()
 
-/proc/update_all_zombie_icons()
-	spawn(0)
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/image/I in H.client.images)
-					if(I.icon_state == "zombie_hud")
-						qdel(I)
-
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/mob/living/carbon/human/Z in zombie_list)
-					var/I = image('icons/mob/human_races/r_zombie.dmi', loc = Z, icon_state = "zombie_hud")
-					H.client.images += I
+	var/datum/role/R = H.mind.GetRole(ZOMBIE)
+	if(R)
+		R.Drop()
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"

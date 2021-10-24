@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 1
 	throw_range = 15
 	var/state
@@ -43,6 +43,7 @@
 		burst()
 	return
 
-/obj/item/latexballon/attackby(obj/item/W, mob/user)
-	if(W.can_puncture())
+/obj/item/latexballon/attackby(obj/item/I, mob/user, params)
+	..()
+	if(I.can_puncture())
 		burst()

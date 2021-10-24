@@ -75,7 +75,7 @@
 
 /obj/item/device/eftpos/attack_self(mob/user)
 	if(get_dist(src,user) <= 1)
-		var/dat = "<b>[eftpos_name]</b><br>"
+		var/dat = ""
 		dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
 		if(transaction_locked)
 			dat += "<a href='?src=\ref[src];choice=toggle_lock'>Back[transaction_paid ? "" : " (authentication required)"]</a><br><br>"
@@ -97,25 +97,27 @@
 			dat += "<a href='?src=\ref[src];choice=change_code'>Change access code</a><br>"
 			dat += "<a href='?src=\ref[src];choice=change_id'>Change EFTPOS ID</a><br>"
 			dat += "Scan card to reset access code <a href='?src=\ref[src];choice=reset'>\[------\]</a>"
-		user << browse(entity_ja(dat),"window=eftpos")
+		var/datum/browser/popup = new(user, "eftpos", "[eftpos_name]")
+		popup.set_content(dat)
+		popup.open()
 	else
 		user << browse(null,"window=eftpos")
 
-/obj/item/device/eftpos/attackby(O, user)
-	if(istype(O, /obj/item/weapon/card))
+/obj/item/device/eftpos/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card))
 		if(linked_account)
-			var/obj/item/weapon/card/I = O
-			scan_card(I)
+			var/obj/item/weapon/card/C = I
+			scan_card(C)
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to linked account.</span>")
-	else if (istype(O, /obj/item/weapon/spacecash/ewallet))
-		var/obj/item/weapon/spacecash/ewallet/E = O
+	else if(istype(I, /obj/item/weapon/spacecash/ewallet))
+		var/obj/item/weapon/spacecash/ewallet/E = I
 		if (linked_account)
 			if(!linked_account.suspended)
 				if(transaction_locked && !transaction_paid)
 					if(transaction_amount <= E.worth)
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-						src.visible_message("[bicon(src)] The [src] chimes.")
+						visible_message("[bicon(src)] The [src] chimes.")
 						transaction_paid = 1
 
 						//transfer the money
@@ -139,9 +141,9 @@
 			to_chat(usr, "[bicon(src)]<span class='warning'>EFTPOS is not connected to an account.</span>")
 
 	else
-		..()
+		return ..()
 
-/obj/item/device/eftpos/Topic(var/href, var/href_list)
+/obj/item/device/eftpos/Topic(href, href_list)
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("change_code")
@@ -151,7 +153,7 @@
 					if(trycode >= 1000 && trycode <= 999999)
 						access_code = trycode
 					else
-						alert("That is not a valid code!")
+						tgui_alert(usr, "That is not a valid code!")
 					print_reference()
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect code entered.</span>")
@@ -174,7 +176,7 @@
 			if("trans_value")
 				var/try_num = input("Enter amount for EFTPOS transaction", "Transaction amount") as num
 				if(try_num < 0)
-					alert("That is not a valid amount!")
+					tgui_alert(usr, "That is not a valid amount!")
 				else
 					transaction_amount = try_num
 			if("toggle_lock")
@@ -210,7 +212,7 @@
 					access_code = 0
 					to_chat(usr, "[bicon(src)]<span class='info'>Access code reset to 0.</span>")
 
-	src.attack_self(usr)
+	attack_self(usr)
 
 /obj/item/device/eftpos/proc/scan_card(obj/item/weapon/card/I)
 	if (istype(I, /obj/item/weapon/card/id))
@@ -225,7 +227,7 @@
 						if(!D.suspended)
 							if(transaction_amount <= D.money)
 								playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-								src.visible_message("[bicon(src)] The [src] chimes.")
+								visible_message("[bicon(src)] The [src] chimes.")
 								transaction_paid = 1
 
 								//transfer the money
@@ -272,7 +274,7 @@
 			else
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				src.visible_message("[bicon(src)] The [src] chimes.")
+				visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
 
 	//emag?

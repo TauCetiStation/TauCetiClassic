@@ -89,7 +89,7 @@
 
 		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
-			if( WT.welding )
+			if( WT.isOn() )
 				T.ChangeTurf(walltype)
 				if(walltype != /turf/simulated/wall/mineral/phoron)//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)

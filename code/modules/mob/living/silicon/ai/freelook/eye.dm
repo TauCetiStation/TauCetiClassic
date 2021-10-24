@@ -8,6 +8,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "eye"
 	alpha = 127
+	hud_possible = list(ANTAG_HUD, HOLY_HUD)
 	var/list/visibleCameraChunks = list()
 	var/mob/living/master = null
 	invisibility = INVISIBILITY_AI_EYE
@@ -27,17 +28,14 @@
 
 /mob/camera/Eye/atom_init()
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
 	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
 	. = ..()
 
 /mob/camera/Eye/Destroy()
 	if (ghostimage)
-		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
+		QDEL_NULL(ghostimage)
 		updateallghostimages()
 	master = null
 	return ..()
@@ -79,23 +77,15 @@
 		return loc
 
 // AI MOVEMENT
-
-// The AI's "eye". Described on the top of the page.
-
-/mob/living/silicon/ai
-	var/mob/camera/Eye/ai/eyeobj = new()
-	var/sprint = 10
-	var/cooldown = 0
-	var/acceleration = 1
-	var/obj/machinery/hologram/holopad/holo = null
-
 // Intiliaze the eye by assigning it's "ai" variable to us. Then set it's loc to us.
-/mob/living/silicon/ai/atom_init()
-	. = ..()
+/mob/living/silicon/ai/proc/create_eye()
+	if(eyeobj)
+		return
+	eyeobj = new()
 	eyeobj.master = src
 	eyeobj.ai = src
+	eyeobj.setLoc(loc)
 	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
-	eyeobj.loc = loc
 
 /mob/living/silicon/ai/Destroy()
 	if(eyeobj)
@@ -141,11 +131,6 @@
 
 
 // Return to the Core.
-
-/mob/living/silicon/ai/proc/core()
-
-	view_core()
-
 
 /mob/living/silicon/ai/proc/view_core()
 	camera = null

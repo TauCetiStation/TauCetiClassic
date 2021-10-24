@@ -4,6 +4,9 @@
 #define MINUTE *600
 #define MINUTES *600
 
+#define HOUR *36000
+#define HOURS *36000
+
 //Returns the world time in english
 /proc/worldtime2text(time = world.time)
 	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
@@ -18,7 +21,8 @@
 	return "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 /proc/shuttleminutes2text()
-	return "[round(SSshuttle.timeleft()/60)]"
+	var/m = round(SSshuttle.timeleft()/60)
+	return pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
 
 var/next_duration_update = 0
 var/last_round_duration = 0
@@ -67,11 +71,12 @@ var/last_round_duration = 0
 		//else
 			//return 1
 
-/var/midnight_rollovers = 0
-/var/rollovercheck_last_timeofday = 0
+var/global/midnight_rollovers = 0
+var/global/rollovercheck_last_timeofday = 0
 /proc/update_midnight_rollover()
-	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return midnight_rollovers++
+	if (world.timeofday < global.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+		global.midnight_rollovers++
+	global.rollovercheck_last_timeofday = world.timeofday
 	return midnight_rollovers
 
 //Takes a value of time in deciseconds.

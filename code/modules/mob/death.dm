@@ -45,6 +45,8 @@
 	dead_mob_list -= src
 
 /mob/proc/death(gibbed)
+	SEND_SIGNAL(src, COMSIG_MOB_DIED, gibbed)
+
 	//Quick fix for corpses kept propped up in chairs. ~Z
 	drop_r_hand()
 	drop_l_hand()
@@ -55,3 +57,4 @@
 	alive_mob_list -= src
 	dead_mob_list += src
 	clear_fullscreens()
+	setDrugginess(0)

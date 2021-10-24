@@ -2,16 +2,19 @@
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
-	flags = HEADCOVERSEYES | THICKMATERIAL
+	flags = HEADCOVERSEYES
 	item_state = "helmet"
-	armor = list(melee = 50, bullet = 60, laser = 50,energy = 20, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
+	pierce_protection = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	force = 5
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
@@ -23,11 +26,12 @@
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoshat"
 	item_state = "hoshat"
-	flags = HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEEARS
 	body_parts_covered = 0
 	siemens_coefficient = 0.8
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/HoS/dermal
 	name = "dermal armour patch"
@@ -42,7 +46,7 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
-	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
@@ -74,16 +78,16 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
-	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
+	armor = list(melee = 10, bullet = 80, laser = 20,energy = 20, bomb = 35, bio = 0, rad = 0)
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
 	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
 	icon_state = "laserproof"
-	armor = list(melee = 10, bullet = 10, laser = 45,energy = 55, bomb = 0, bio = 0, rad = 0)
-	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
+	armor = list(melee = 10, bullet = 10, laser = 65,energy = 75, bomb = 0, bio = 0, rad = 0)
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 	siemens_coefficient = 0
-
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
@@ -94,7 +98,7 @@
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = HEADCOVERSEYES | THICKMATERIAL
+	flags = HEADCOVERSEYES
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
@@ -155,8 +159,10 @@
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "oldwardenhelm"
+	icon_state = "policehelm"
 	item_state = "helmet"
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -192,3 +198,23 @@
 	icon_state = "SS_Helmet"
 	item_state = "helmet"
 	item_color = "SS_Helmet"
+
+/obj/item/clothing/head/helmet/syndilight
+	name = "light helmet"
+	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
+	icon_state = "lighthelmet"
+	item_state = "lighthelmet"
+	armor = list(melee = 50, bullet = 60, laser = 45,energy = 50, bomb = 35, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault
+	name = "assault helmet"
+	desc = "Stylish black and red helmet with armored protective visor."
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	armor = list(melee = 55, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault/alternate
+	icon_state = "assaulthelmet"
+	item_state = "assaulthelmet"

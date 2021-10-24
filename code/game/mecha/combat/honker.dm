@@ -48,9 +48,9 @@
 						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>AirHONK pressure: </b>[tank_pressure]kPa<br>
-						<b>AirHONK temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
+						<b>AirHONK temperature: </b>[tank_temperature] K|[tank_temperature - T0C]&deg;C<br>
 						<b>HONK pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
-						<b>HONK temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
+						<b>HONK temperature: </b> [return_temperature()] K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
@@ -58,7 +58,7 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
@@ -97,14 +97,14 @@
 						</head>
 						<body>
 						<div id='content'>
-						[src.get_stats_part()]
+						[get_stats_part()]
 						</div>
 						<div id='eq_list'>
-						[src.get_equipment_list()]
+						[get_equipment_list()]
 						</div>
 						<hr>
 						<div id='commands'>
-						[src.get_commands()]
+						[get_commands()]
 						</div>
 						</body>
 						</html>

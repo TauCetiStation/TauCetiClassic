@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "A hand held grenade, with an adjustable timer."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
@@ -54,7 +54,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
-	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
@@ -62,20 +62,19 @@
 	if(T)
 		T.hotspot_expose(700,125)
 
-/obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/weapon/grenade/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		switch(det_time)
 			if(1)
-				det_time = 1 SECOND
-			if(1 SECONDS)
 				det_time = 3 SECONDS
 			if(3 SECONDS)
 				det_time = 5 SECONDS
 			if(5 SECONDS)
 				det_time = 1
-		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time/10] second detonation time"].</span>")
+		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time * 0.1] second detonation time"].</span>")
 		add_fingerprint(user)
-	..()
+		return
+	return ..()
 
 /obj/item/weapon/grenade/syndieminibomb
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."

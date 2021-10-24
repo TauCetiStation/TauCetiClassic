@@ -14,8 +14,8 @@
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "filingcabinet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 
 /obj/structure/filingcabinet/chestdrawer
@@ -39,17 +39,18 @@
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle))
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
-		user.drop_item()
-		P.loc = src
+		user.drop_from_inventory(P, src)
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
+
 	else if(iswrench(P))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+
 	else
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
@@ -66,7 +67,10 @@
 		var/obj/item/P = contents[i]
 		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[entity_ja(dat)]</body></html>", "window=filingcabinet;size=350x300")
+
+	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)
+	popup.set_content(dat)
+	popup.open()
 
 	return
 
@@ -89,11 +93,11 @@
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
-		usr << browse("", "window=filingcabinet") // Close the menu
+		usr << browse(null, "window=filingcabinet") // Close the menu
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
-		if(P && in_range(src, usr))
+		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
+		if(P && Adjacent(usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"

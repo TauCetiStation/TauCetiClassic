@@ -11,21 +11,21 @@
 
 /obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(isscrewdriver(O))
-		return ..(O,user)
+		return ..()
 
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
+	else if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		sample = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
+		return
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/computer/centrifuge/update_icon()
 	..()
@@ -185,7 +185,7 @@
 
 		var/list/virus = B.data["virus2"]
 		P.info += "<u>Pathogens:</u> <br>"
-		if (virus.len > 0)
+		if (virus && virus.len > 0)
 			for (var/ID in virus)
 				var/datum/disease2/disease/V = virus[ID]
 				P.info += "[V.name()]<br>"

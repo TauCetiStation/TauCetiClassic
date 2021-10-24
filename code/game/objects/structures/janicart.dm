@@ -36,6 +36,13 @@
 	QDEL_NULL(myreplacer)
 	return ..()
 
+/obj/structure/stool/bed/chair/janitorialcart/get_climb_time(mob/living/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.shoes, /obj/item/clothing/shoes/boots/galoshes))
+			. *= 0.5
+
 /obj/structure/stool/bed/chair/janitorialcart/on_propelled_bump(atom/A)
 	. = ..()
 	if(prob(30))
@@ -55,28 +62,22 @@
 	else
 		to_chat(user, "There is no bucket mounted on it!")
 
-//Altclick the cart with a mop to stow the mop away
 //Altclick the cart with a reagent container to pour things into the bucket without putting the bottle in trash
 /obj/structure/stool/bed/chair/janitorialcart/AltClick(mob/living/user)
 	if(user.next_move > world.time || user.incapacitated() || !Adjacent(user))
 		return
 
-	var/obj/item/I = user.get_active_hand()
-	if(istype(I, /obj/item/weapon/mop))
-		if(!mymop)
-			user.drop_from_inventory(I, src)
-			mymop = I
-			update_icon()
-			updateUsrDialog()
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-		else
-			to_chat(user, "<span class='notice'>The cart already has a mop attached.</span>")
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 
-	else if(istype(I, /obj/item/weapon/reagent_containers) && mybucket)
+	var/obj/item/I = user.get_active_hand()
+	if(istype(I, /obj/item/weapon/reagent_containers) && mybucket)
 		var/obj/item/weapon/reagent_containers/C = I
 		C.afterattack(mybucket, user, TRUE)
 		update_icon()
 
+// Mousedrop the mop to put it onto janitorialcart.
 /obj/structure/stool/bed/chair/janitorialcart/MouseDrop_T(atom/movable/AM, mob/living/user)
 	if(istype(AM, /obj/structure/mopbucket) && !mybucket)
 		AM.forceMove(src)
@@ -84,6 +85,16 @@
 		to_chat(user, "<span class='notice'>You mount the [AM] on the janicart.</span>")
 		update_icon()
 		return
+	else if(istype(AM, /obj/item/weapon/mop))
+		if(!mymop)
+			// In case it was in hands.
+			user.drop_from_inventory(AM, src)
+			mymop = AM
+			update_icon()
+			updateUsrDialog()
+			to_chat(user, "<span class='notice'>You put [AM] into [src].</span>")
+		else
+			to_chat(user, "<span class='notice'>The cart already has a mop attached.</span>")
 	var/turf/T = get_turf(src)
 	if(T == get_turf(AM))
 		if(isliving(AM))
@@ -102,6 +113,8 @@
 					to_chat(user, "<span class='notice'>[mybucket] is empty.</span>")
 				else
 					mybucket.reagents.trans_to(I, 5)
+					if(mybucket.reagents.total_volume == 0)
+						update_icon()
 					to_chat(user, "<span class='notice'>You wet [I] in [mybucket].</span>")
 					playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 			else
@@ -157,7 +170,7 @@
 	..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attack_hand(mob/user)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 
@@ -181,7 +194,7 @@
 	popup.open()
 
 /obj/structure/stool/bed/chair/janitorialcart/Topic(href, href_list)
-	if(!in_range(src, usr))
+	if(!Adjacent(usr))
 		return
 	if(!isliving(usr))
 		return

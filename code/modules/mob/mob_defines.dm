@@ -1,9 +1,11 @@
 /mob
-	density = 1
+	density = TRUE
 	layer = 4.0
 	animate_movement = 2
+	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -13,19 +15,19 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-	var/obj/screen/hands = null
-	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
-	var/obj/screen/i_select = null
-	var/obj/screen/m_select = null
-	var/obj/screen/healths = null
-	var/obj/screen/throw_icon = null
-	var/obj/screen/pressure = null
-	var/obj/screen/pain = null
-	var/obj/screen/gun/item/item_use_icon = null
-	var/obj/screen/gun/move/gun_move_icon = null
-	var/obj/screen/gun/run/gun_run_icon = null
-	var/obj/screen/gun/mode/gun_setting_icon = null
+	var/atom/movable/screen/hands = null
+	var/atom/movable/screen/pullin = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/i_select = null
+	var/atom/movable/screen/m_select = null
+	var/atom/movable/screen/healths = null
+	var/atom/movable/screen/throw_icon = null
+	var/atom/movable/screen/pressure = null
+	var/atom/movable/screen/pain = null
+	var/atom/movable/screen/gun/item/item_use_icon = null
+	var/atom/movable/screen/gun/move/gun_move_icon = null
+	var/atom/movable/screen/gun/run/gun_run_icon = null
+	var/atom/movable/screen/gun/mode/gun_setting_icon = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -33,14 +35,15 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap/leap_icon = null
-	var/obj/screen/neurotoxin_icon = null
-	var/obj/screen/healthdoll = null
-	var/obj/screen/nutrition_icon = null
+	var/atom/movable/screen/zone_sel/zone_sel = null
+	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/neurotoxin_icon = null
+	var/atom/movable/screen/healthdoll = null
+	var/atom/movable/screen/nutrition_icon = null
+	var/atom/movable/screen/charge_icon = null
 
-	var/obj/screen/xenomorph_plasma_display = null
-	var/obj/screen/nightvisionicon = null
+	var/atom/movable/screen/xenomorph_plasma_display = null
+	var/atom/movable/screen/nightvisionicon = null
 
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
@@ -65,7 +68,7 @@
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
-	var/stuttering = null	//Carbon
+	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
 	var/flavor_text = ""
@@ -73,6 +76,7 @@
 	var/sec_record = ""
 	var/gen_record = ""
 	var/blinded = null
+	var/daltonism = FALSE
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
@@ -85,7 +89,6 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
 	var/list/languages = list()         // For speaking/listening.
@@ -93,11 +96,11 @@
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
 	var/floating = 0
-
+    // What is the maximum size ratio that we can pull. The more it is the stronger the mob.
+	var/pull_size_ratio = 2.0
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
@@ -115,7 +118,7 @@
 	var/weakened = 0.0
 	var/losebreath = 0.0//Carbon
 	var/intent = null//Living
-	var/a_intent = "help"//Living
+	var/a_intent = INTENT_HELP //Living
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
@@ -127,6 +130,7 @@
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
 
+	var/datum/hud/hud_type = /datum/hud
 	var/datum/hud/hud_used = null
 
 	var/list/grabbed_by = list(  )
@@ -138,6 +142,8 @@
 
 	var/coughedtime = null
 
+	var/next_point_to = 0
+
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
@@ -145,7 +151,6 @@
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
-
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
@@ -157,6 +162,18 @@
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
+
+	// Determines how mood affects actionspeed.
+	// If ever used by anything else but mood, please
+	// port /datum/actionspeed_modifier system from /tg.
+	// The value is multiplicative.
+	var/mood_multiplicative_actionspeed_modifier = 0.0
+	// Determines how mood affects movespeed.
+	// used only in humans, because mood only is.
+	// If ever used by anything else but mood, please
+	// port /datum/movespeed_modifier system from /tg.
+	// The value is additive.
+	var/mood_additive_speed_modifier = 0.0
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.
@@ -182,7 +199,7 @@
 
 //List of active diseases
 
-	var/viruses = list() // replaces var/datum/disease/virus
+	var/list/viruses = list() // replaces var/datum/disease/virus
 
 //Monkey/infected mode
 	var/list/resistances = list()
@@ -229,3 +246,16 @@
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
 
 	var/list/weather_immunities = list()
+
+	var/list/progressbars = null //for stacking do_after bars
+
+	// This is a ref to the religion that the mob is involved in.
+	// Mobs without mind can be member of a religion
+	var/datum/religion/my_religion
+
+	// datum/atom_hud
+	hud_possible = list(ANTAG_HUD, HOLY_HUD)
+	// Mob typing indication
+	var/typing = FALSE
+	var/obj/effect/overlay/typing_indicator/typing_indicator
+	var/typing_indicator_type = "default"
