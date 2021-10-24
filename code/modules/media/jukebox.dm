@@ -145,7 +145,6 @@ var/global/loopModeNames=list(
 	popup.set_content(t)
 	popup.open()
 
-
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(iswrench(W))
@@ -194,6 +193,7 @@ var/global/loopModeNames=list(
 		if(!check_reload())
 			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
+		addtimer(CALLBACK(src, .proc/updateUsrDialog), JUKEBOX_RELOAD_COOLDOWN, TIMER_UNIQUE)
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
 		playlist = null
@@ -236,6 +236,7 @@ var/global/loopModeNames=list(
 			if(autoplay)
 				playing=1
 				autoplay=0
+			updateUsrDialog()
 		else
 			//testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN

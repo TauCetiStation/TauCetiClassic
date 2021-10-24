@@ -101,6 +101,7 @@
 	desc = "An electrified, stunning taser slug for shotguns."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunslug
+	pellets = 3
 	m_amt = 2500
 
 /obj/item/ammo_casing/shotgun/incendiary
