@@ -411,6 +411,10 @@
 	var/obj/item/weapon/gun/projectile/underslung/gl
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
 
+/obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
+	. = ..()
+	to_chat(user, "It's [gl.name] is [gl.get_ammo() ? "loaded" : "unloaded"].")
+
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
