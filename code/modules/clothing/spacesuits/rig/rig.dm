@@ -1067,10 +1067,10 @@
 	item_state = "science_hardsuit"
 	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 	unacidable = TRUE
-	max_mounted_devices = 5
+	max_mounted_devices = 6
 	slowdown = 0.5
 	offline_slowdown = 7
-	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer ,/obj/item/rig_module/simple_ai)
+	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
@@ -1086,7 +1086,7 @@
 	name = "advanced science hardsuit"
 	item_state = "rd_hardsuit"
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
-	max_mounted_devices = 7
+	max_mounted_devices = 8
 	slowdown = 0.4
 	offline_slowdown = 8
-	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer)
+	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
