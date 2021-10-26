@@ -368,7 +368,7 @@
 	interface_name = "mounted wormhole stabilizer"
 	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
 	activate_on_start = TRUE
-	active_power_cost = 10
+	active_power_cost = 5
 	
 
 
