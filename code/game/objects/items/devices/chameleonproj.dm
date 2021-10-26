@@ -66,7 +66,7 @@
 /obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(target.has_valid_appearance())
+	if(!target.has_valid_appearance())
 		return
 	if(!active_dummy)
 		active_dummy = new
