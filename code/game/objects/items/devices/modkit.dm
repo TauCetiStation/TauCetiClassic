@@ -276,6 +276,10 @@
 		/obj/item/clothing/head/helmet/space/rig/mining,
 		/obj/item/clothing/suit/space/rig/mining
 		)
+	forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/science/rd,
+		/obj/item/clothing/suit/space/rig/science/rd
+	)
 
 /obj/item/device/modkit/mining/tajaran
 	name = "Tajaran mining hardsuit modification kit"
@@ -293,6 +297,47 @@
 	name = "Vox mining hardsuit modification kit"
 	target_species = VOX
 
+/obj/item/device/modkit/science
+	name = "Science hardsuit modification kit"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/science,
+		/obj/item/clothing/suit/space/rig/science
+		)
+/obj/item/device/modkit/science/tajaran
+	name = "Tajaran science hardsuit modification kit"
+	target_species = TAJARAN
+
+/obj/item/device/modkit/science/unathi
+	name = "Unathi science hardsuit modification kit"
+	target_species = UNATHI
+
+/obj/item/device/modkit/science/skrell
+	name = "Skrellian science hardsuit modification kit"
+	target_species = SKRELL
+
+/obj/item/device/modkit/science/vox
+	name = "Vox science modification kit"
+	target_species = VOX
+
+/obj/item/device/modkit/science/rd
+	name = "RD hardsuit modification kit"
+	forbidden_type = list()
+
+/obj/item/device/modkit/science/rd/skrell
+	name = "Skrellian RD hardsuit modification kit"
+	target_species = SKRELL
+
+/obj/item/device/modkit/science/rd/tajaran
+	name = "Tajaran RD hardsuit modification kit"
+	target_species = TAJARAN
+
+/obj/item/device/modkit/science/rd/unathi
+	name = "Unathi RD hardsuit modification kit"
+	target_species = UNATHI
+
+/obj/item/device/modkit/science/rd/vox
+	name = "Vox RD hardsuit modification kit"
+	target_species = VOX
 
 
 /obj/item/device/modkit/syndie
