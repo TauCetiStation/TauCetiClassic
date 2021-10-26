@@ -1,0 +1,9 @@
+{
+    "map_name": "Ministation",
+    "map_path": "ministation",
+    "map_file": "ministation.dmm",
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0,
+    "load_junkyard": 0,
+    "minetype": null
+}
