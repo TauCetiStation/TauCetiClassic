@@ -1,5 +1,5 @@
-var/list/obj/machinery/faxmachine/allfaxes = list()
-var/list/alldepartments = list("Central Command")
+var/global/list/obj/machinery/faxmachine/allfaxes = list()
+var/global/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"

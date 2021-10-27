@@ -13,7 +13,7 @@
 #define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
 #define AIRLOCK_DENY_LIGHT_COLOR "#c23b23"
 
-var/list/airlock_overlays = list()
+var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"

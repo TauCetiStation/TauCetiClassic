@@ -1,7 +1,7 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/spell
 	name = "Spell"

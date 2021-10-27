@@ -7,7 +7,7 @@
 #define LIGHTFLOOR_STATE_BITS 3
 
 //This is so damaged or burnt tiles or platings don't get remembered as the default tile
-var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
+var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
@@ -20,11 +20,11 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
-var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
+var/global/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
 				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
-var/list/wood_icons = list("wood","wood-broken")
+var/global/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor
 

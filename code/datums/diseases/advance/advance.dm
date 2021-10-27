@@ -9,10 +9,10 @@
 
 #define RANDOM_STARTING_LEVEL 2
 
-var/list/archive_diseases = list()
+var/global/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
-var/list/advance_cures = 	list(
+var/global/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
 									"spaceacillin", "kelotane", "ethanol",
 									"leporazine", "synaptizine", "lipozine",

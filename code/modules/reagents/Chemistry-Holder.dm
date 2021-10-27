@@ -1,5 +1,5 @@
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/global/const/TOUCH = 1
+var/global/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 

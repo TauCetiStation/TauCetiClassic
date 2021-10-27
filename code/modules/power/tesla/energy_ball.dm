@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,

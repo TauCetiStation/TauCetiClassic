@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
 /datum/supply_pack
 	var/name = "Crate"
