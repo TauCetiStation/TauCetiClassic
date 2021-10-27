@@ -7,7 +7,7 @@
 /obj/item/weapon/flora/atom_init()
 	. = ..()
 	AddComponent(/datum/component/tactical, null, FALSE)
-	AddComponent(/datum/component/two_handed, TRUE, FALSE, FALSE, FALSE, 0, 5, 2, FALSE)
+	AddComponent(/datum/component/twohanded, TRUE, FALSE, FALSE, FALSE, 0, 5, 2, FALSE)
 	AddElement(/datum/element/beauty, 300)
 
 /obj/item/weapon/flora/random/atom_init()

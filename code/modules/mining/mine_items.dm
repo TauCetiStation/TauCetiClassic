@@ -238,7 +238,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/sledgehammer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
+	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
 
 /obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()

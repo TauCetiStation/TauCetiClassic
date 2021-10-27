@@ -95,7 +95,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/two_handed)
+	AddComponent(/datum/component/twohanded)
 
 /// triggered on wield of two handed item
 /obj/item/weapon/gun/projectile/automatic/l6_saw/proc/on_wield(obj/item/source, mob/user)

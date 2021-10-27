@@ -205,7 +205,7 @@
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
 
-// /datum/component/two_handed signals
+// /datum/component/twohanded signals
 
 ///from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_WIELD "twohanded_wield"

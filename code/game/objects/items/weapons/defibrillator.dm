@@ -227,7 +227,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/two_handed, FALSE, FALSE, FALSE, FALSE, 0, 2, 2, FALSE)
+	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 2, 2, FALSE)
 
 /// triggered on wield of two handed item
 /obj/item/weapon/shockpaddles/proc/on_wield(obj/item/source, mob/user)
