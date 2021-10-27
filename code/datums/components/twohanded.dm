@@ -42,7 +42,7 @@
 	src.icon_wielded = icon_wielded
 
 // Inherit the new values passed to the component
-/datum/component/twohanded/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
+/datum/component/twohanded/InheritComponent(datum/component/twohanded/new_comp, original, require_twohands, wieldsound, unwieldsound, \
 											force_multiplier, force_wielded, force_unwielded, icon_wielded)
 	if(!original)
 		return
