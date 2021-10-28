@@ -824,7 +824,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 						// Find a new turf to take on the property of
 						var/turf/nextturf = get_step(corner, direction)
-						if(!nextturf || !istype(nextturf, /turf/space))
+						if(!nextturf || !!is_type_in_list(nextturf, list(/turf/space, /turf/unsimulated/floor/snow))
 							nextturf = get_step(corner, turn(direction, 180))
 
 
@@ -946,7 +946,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon1 = T.icon
 
 					if(platingRequired)
-						if(istype(B, /turf/space))
+						if(is_type_in_list(B, list(/turf/space, /turf/unsimulated/floor/snow))
 							continue moving
 
 					var/turf/X = new T.type(B)
