@@ -91,11 +91,11 @@
 	if (queue_node_flags & SS_TICKER)
 		next_fire = world.time + (world.tick_lag * wait)
 	else if (queue_node_flags & SS_POST_FIRE_TIMING)
-		next_fire = world.time + wait + (world.tick_lag * (tick_overrun/100))
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun / 100))
 	else if (queue_node_flags & SS_KEEP_TIMING)
 		next_fire += wait
 	else
-		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun / 100))
 
 
 //Queue it to run.
@@ -113,7 +113,7 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node_flags & SS_TICKER)
-			if (!(SS_flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
+			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
 				continue
 			if (queue_node_priority < SS_priority)
 				break
@@ -196,7 +196,7 @@
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	if(can_fire && !(SS_NO_FIRE in flags))
+	if(can_fire && !(SS_NO_FIRE & flags))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"

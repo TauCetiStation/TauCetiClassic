@@ -9,9 +9,8 @@
 var/datum/controller/master/Master = new()
 
 //THIS IS THE INIT ORDER
-//Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
+//Master -> SSPreInit -> world -> config -> SSInitialize -> SSPostInitialize -> Failsafe
 //GOT IT MEMORIZED?
-//No, we don't have any GLOB
 
 /datum/controller/master
 	name = "Master"
@@ -55,6 +54,12 @@ var/datum/controller/master/Master = new()
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
+/datum/controller/master/proc/InitSS()
+	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
+	sortTim(subsytem_types, /proc/cmp_subsystem_init)
+	for(var/I in subsytem_types)
+		subsystems += new I
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	var/list/_subsystems = list()
@@ -64,10 +69,7 @@ var/datum/controller/master/Master = new()
 			Recover()
 			qdel(Master)
 		else
-			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsytem_types, /proc/cmp_subsystem_init)
-			for(var/I in subsytem_types)
-				_subsystems += new I
+			InitSS()
 		Master = src
 
 /datum/controller/master/Destroy()
@@ -145,10 +147,7 @@ var/datum/controller/master/Master = new()
 		sleep(delay)
 
 	if(init_sss)
-		init_subtypes(/datum/controller/subsystem, subsystems)
-
-	// Sort subsystems by init_order, so they initialize in the correct order.
-	sortTim(subsystems, /proc/cmp_subsystem_init)
+		InitSS()
 
 	world.log << "Initializing subsystems..."
 	log_initialization("Initializing subsystems...")
