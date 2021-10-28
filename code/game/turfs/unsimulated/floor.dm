@@ -27,6 +27,12 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 
+/turf/unsimulated/floor/snow/cold
+	name = "snow"
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow"
+	temperature = TM50C
+
 /turf/unsimulated/floor/fakespace
 	name = "space"
 	icon = 'icons/turf/space.dmi'
