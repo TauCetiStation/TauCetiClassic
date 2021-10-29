@@ -51,6 +51,9 @@
 	if(opacity)
 		has_opaque_atom = TRUE
 
+	if(station_name == "Ministation")
+		basetype = /turf/unsimulated/floor/snow/cold
+	
 	return INITIALIZE_HINT_NORMAL
 
 /turf/Destroy(force)
