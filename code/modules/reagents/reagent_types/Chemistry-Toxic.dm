@@ -330,7 +330,7 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.set_blurriness(max(M.eye_blurry, 10))
+			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
 				M.Weaken(2)

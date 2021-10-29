@@ -225,7 +225,7 @@
 			if(4 to 6)
 				if(getBrainLoss() >= 15 && eye_blurry <= 0)
 					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
-					set_blurriness(max(10, eye_blurry))
+					blurEyes(10)
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
@@ -423,9 +423,9 @@
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if (!contents.Find(internal) && !HAS_TRAIT(src, TRAIT_AV))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+		if (!HAS_TRAIT(src, TRAIT_AV) && (!wear_mask || !(wear_mask.flags & MASKINTERNALS)))
 			internal = null
 		if(internal)
 					//internal breath sounds
@@ -1072,7 +1072,7 @@
 
 	if (drowsyness)
 		drowsyness = max(0, drowsyness - 1)
-		set_blurriness(max(2, eye_blurry))
+		blurEyes(2)
 		if(prob(5))
 			emote("yawn")
 			Sleeping(10 SECONDS)
@@ -1188,10 +1188,10 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
-			adjust_blurriness(-3)
+			adjustBlurriness(-3)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
-			adjust_blurriness(-1)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
@@ -1597,7 +1597,7 @@
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
-		set_blurriness(max(2, eye_blurry))
+		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
