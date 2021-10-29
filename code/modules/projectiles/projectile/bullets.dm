@@ -110,6 +110,17 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
+
+/obj/item/projectile/bullet/grenade/explosive
+	name = "grenade"
+	damage = 10
+	embed = 0
+	sharp = 0
+
+/obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	explosion(target, 1, 1, 2)
+	return 1
+
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
