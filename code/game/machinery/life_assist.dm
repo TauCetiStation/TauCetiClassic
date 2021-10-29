@@ -94,10 +94,9 @@
 	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN))
+	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
 		return
-	if (holding || !user.drop_from_inventory(W, src))
-		return
+
 	if(do_after(user, 10, target = src))
 		holding = W
 		add_overlay(holding.icon_state)
