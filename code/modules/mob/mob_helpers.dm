@@ -43,7 +43,7 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/isimplantedobedience() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+/mob/proc/isimplantedobedience()
 	for(var/obj/item/weapon/implant/obedience/L in src)
 		if(L.implanted)
 			return TRUE
