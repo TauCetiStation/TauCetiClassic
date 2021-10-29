@@ -96,11 +96,11 @@
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
 		return
-
 	if(do_after(user, 10, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
 		holding = W
 		add_overlay(holding.icon_state)
-		user.drop_from_inventory(holding, src)
 		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
 		if(attached)
 			update_internal(attached, TRUE)
