@@ -515,6 +515,10 @@
 				icon_state = "bacardilemonadeglass"
 				name = "Bacardi Lemonade"
 				desc = "Mixture of refreshing lemonade and sweet rum."
+			if("lean")
+				icon_state = "lean"
+				name = "Lean"
+				desc = "This shit'll make you lean alright."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
