@@ -26,7 +26,7 @@
 		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
-	if(!H.ismindshielded())
+	if(!H.isimplantedobedience())
 		return
 	H.apply_effect(5, WEAKEN)
 	H.apply_effect(20, AGONY)

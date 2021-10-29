@@ -43,6 +43,12 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedobedience() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
