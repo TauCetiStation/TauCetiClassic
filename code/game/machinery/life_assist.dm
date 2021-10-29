@@ -94,7 +94,7 @@
 	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/tank) && istype(W, /obj/item/weapon/tank/jetpack) && (stat & BROKEN))
+	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN))
 		return
 	if (holding || !user.drop_from_inventory(W, src))
 		return
@@ -107,6 +107,10 @@
 			update_internal(attached, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(user.is_busy())
 		return
 	if(holding && do_after(user, 20, target = src))
