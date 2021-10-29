@@ -110,7 +110,7 @@
 	if(.)
 		return
 
-	if(user.is_busy())
+	if(user.is_busy() || issilicon(user))
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
