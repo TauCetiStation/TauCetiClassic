@@ -96,7 +96,7 @@ var/list/editing_item_oldname_list = list()
 	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
-	dat += "<td>Hide hair (for mask, hat or uniform)</td>"
+	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
 	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
 	dat += "</tr>"
 	if(!readonly)
