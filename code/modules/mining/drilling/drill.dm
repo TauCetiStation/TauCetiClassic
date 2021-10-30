@@ -9,6 +9,7 @@
 	name = "mining drill head"
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
+	interact_open = TRUE
 
 	var/braces_needed = 2
 	var/list/supports = list()
