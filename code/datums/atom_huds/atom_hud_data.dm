@@ -182,6 +182,12 @@
 		holder.pixel_y = y
 		y += -5
 
+	if(isimplantedobedience())
+		holder = hud_list[IMPOBED_HUD]
+		holder.icon_state = "hud_imp_obedience"
+		holder.pixel_y = y
+		y += -5
+
 	for(var/obj/item/weapon/implant/I in src)
 		if(istype(I, /obj/item/weapon/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
@@ -192,12 +198,6 @@
 		if(istype(I, /obj/item/weapon/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			holder.icon_state = "hud_imp_tracking"
-			holder.pixel_y = y
-			y += -5
-
-		if(isimplantedobedience())
-			holder = hud_list[IMPOBED_HUD]
-			holder.icon_state = "hud_imp_obedience"
 			holder.pixel_y = y
 			y += -5
 
