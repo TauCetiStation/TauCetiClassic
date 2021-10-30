@@ -196,7 +196,7 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !new_hair_flags)
 			return
 
-		switch(editing_item.hair_flags)
+		switch(new_hair_flags)
 			if("Head Hair")
 				editing_item.hair_flags = FLUFF_HAIR_HIDE_HEAD
 			if("Head & Face Hair")
