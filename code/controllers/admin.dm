@@ -47,7 +47,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	if(!SSticker)
 		return
 
-	SSticker.mode.PostSetup()
+	// DEBUGG!!!
+	SSticker.mode.PostSetup() // DEBUGG!!!
+	// DEBUGG!!!
+
 	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
 
 // Debug verbs.

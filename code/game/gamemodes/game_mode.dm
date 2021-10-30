@@ -262,7 +262,8 @@
 		for(var/datum/role/R in F.members)
 			datums_to_process += R
 
-	objectives_pool.generate_objectives_pool(datums_to_process)
+	for(var/some_datum in datums_to_process)
+		objectives_pool.generate_objectives_for(some_datum)
 
 /datum/game_mode/proc/generate_objectives(datum/faction_or_role)
 	objectives_pool.generate_objectives_for(faction_or_role)

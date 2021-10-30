@@ -106,7 +106,7 @@
 	for(var/key in sub)
 		if(!main[key] && sub[key])
 			return FALSE
-		if(!predicate?.Invoke(sub[key], main[key]))
+		if(!predicate.Invoke(sub[key], main[key]))
 			return FALSE
 	return TRUE
 

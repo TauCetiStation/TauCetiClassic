@@ -12,17 +12,13 @@
 	// type = list(instanse of /datum/objectives_set, instanse of /datum/objectives_set)
 	var/list/main_objectives_pool = list()
 
-/datum/objectives_pool/proc/generate_objectives_pool(list/datums_to_process)
-	for(var/some_datum in datums_to_process)
-		generate_objectives_for(some_datum)
-
 /datum/objectives_pool/proc/generate_objectives_for(datum/some_datum)
 	// /datum/faction and /datum/role have same syntax
 	var/datum/faction/faction_or_role = some_datum
 	if(!faction_or_role.objectives_ruleset_type)
 		return
 	var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src, faction_or_role)
-	var/datum/objectives_set/o_set = new(OR.get_objectives())
+	var/datum/objectives_set/o_set = OR.get_objectives_set()
 	qdel(OR)
 
 	if(!main_objectives_pool[faction_or_role.type])
@@ -30,6 +26,7 @@
 
 	main_objectives_pool[faction_or_role.type] += o_set
 
+// TODO: Remove the dependence of the faction/role on their objective_holder
 /datum/objectives_pool/proc/give_objectives_for(datum/faction_or_role)
 	if(!main_objectives_pool[faction_or_role.type])
 		return

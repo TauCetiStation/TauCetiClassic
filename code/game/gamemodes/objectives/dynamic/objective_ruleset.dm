@@ -19,7 +19,7 @@
 			all_objectives += o_set.my_objectives
 	return all_objectives
 
-/datum/objective_ruleset/proc/get_objectives()
+/datum/objective_ruleset/proc/get_objectives_set()
 	return
 
 /*
@@ -87,10 +87,11 @@
 
 	return new_objectives
 
-/datum/objective_ruleset/standart/get_objectives()
+/datum/objective_ruleset/standart/get_objectives_set()
 	var/objective_type = pickweight(survive_objectives)
 	var/datum/objective/survive_objective = new objective_type
-	return get_pseudorandom_objectives() + survive_objective
+	var/datum/objectives_set/OS = new(get_pseudorandom_objectives() + survive_objective)
+	return OS
 
 /datum/objective_ruleset/standart/one
 	objectives_amount = 1
@@ -124,6 +125,7 @@
 	var/picked_type = pick(gang_objectives_types)
 	return list(new picked_type)
 
-/datum/objective_ruleset/families/get_objectives()
+/datum/objective_ruleset/families/get_objectives_set()
 	var/datum/objective/points = new /datum/objective/gang/points
-	return get_pseudorandom_objectives() + points
+	var/datum/objectives_set/OS = new(get_pseudorandom_objectives() + points)
+	return OS
