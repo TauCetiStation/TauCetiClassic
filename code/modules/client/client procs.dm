@@ -295,7 +295,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		add_admin_verbs()
 		admin_memo_show()
-		if(holder.rights & R_PERMISSIONS)
+		if(holder.rights & R_BAN)
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
