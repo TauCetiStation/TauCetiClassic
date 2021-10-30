@@ -1,6 +1,7 @@
 #define FLUFF_FILE_PATH "data/customItemsCache.sav"
 
 // not BLOCKHEADHAIR/BLOCKHAIR for savefile in case someone change them
+// feel free to rename if more flags needed
 #define FLUFF_HAIR_HIDE_NONE 0
 #define FLUFF_HAIR_HIDE_HEAD 1 // BLOCKHEADHAIR
 #define FLUFF_HAIR_HIDE_ALL 2 // BLOCKHAIR
