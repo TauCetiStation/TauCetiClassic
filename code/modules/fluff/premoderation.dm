@@ -76,7 +76,7 @@
 
 /datum/admins/proc/customitemsview_panel(player_ckey = null)
 	src = usr.client.holder
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_BAN))
 		return
 
 	var/output = {"<!DOCTYPE html>
