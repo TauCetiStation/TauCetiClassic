@@ -308,7 +308,7 @@ var/list/editing_item_oldname_list = list()
 			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["download"])
-		if(!editing_item || !editing_item.icon)
+		if(!editing_item || !editing_item.icon || !isicon(editing_item.icon))
 			return
 
 		usr << ftp(editing_item.icon)
