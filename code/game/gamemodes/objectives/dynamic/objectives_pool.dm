@@ -12,6 +12,14 @@
 	// type = list(instanse of /datum/objectives_set, instanse of /datum/objectives_set)
 	var/list/main_objectives_pool = list()
 
+/datum/objectives_pool/proc/get_all_objectives()
+	var/list/all_objectives = list()
+	for(var/type in main_objectives_pool)
+		var/list/sets = main_objectives_pool[type]
+		for(var/datum/objectives_set/o_set as anything in sets)
+			all_objectives += o_set.my_objectives
+	return all_objectives
+
 /datum/objectives_pool/proc/generate_objectives_for(datum/some_datum)
 	// /datum/faction and /datum/role have same syntax
 	var/datum/faction/faction_or_role = some_datum

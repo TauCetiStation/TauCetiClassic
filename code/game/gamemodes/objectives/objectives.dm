@@ -40,7 +40,7 @@
 /datum/objective/proc/find_target()
 	return TRUE
 
-/datum/objective/proc/find_pseudorandom_target(list/all_objectives)
+/datum/objective/proc/find_pseudorandom_target(list/all_objectives, list/new_objectives)
 	return FALSE
 
 /datum/objective/proc/extra_info()

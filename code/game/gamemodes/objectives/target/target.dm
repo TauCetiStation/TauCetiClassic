@@ -46,10 +46,17 @@ var/global/list/target_objectives = list()
 			targets += possible_target
 	return targets
 
-/datum/objective/target/find_pseudorandom_target(list/all_objectives)
+/datum/objective/target/find_pseudorandom_target(list/all_objectives, list/new_objectives)
 	var/list/conflicting_objectives = list()
 	for(var/datum/objective/target/O in all_objectives)
-		if(O.type in conflicting_types && O.target)
+		if(!O.target || !(O.type in conflicting_types))
+			continue
+		var/have_same_target = FALSE
+		for(var/datum/objective/target/new_O in new_objectives)
+			if(new_O.target == O.target)
+				have_same_target = TRUE
+				break
+		if(!have_same_target)
 			conflicting_objectives += O
 
 	if(!conflicting_objectives.len)

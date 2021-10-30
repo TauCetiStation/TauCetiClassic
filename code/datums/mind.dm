@@ -382,6 +382,7 @@
 		if(istype(owner, /datum/role))
 			var/datum/role/R = owner
 			var/list/prev_objectives = R.objectives.objectives.Copy()
+			SSticker.mode.generate_objectives(R)
 			R.GiveObjectives()
 			var/list/unique_objectives_role = find_unique_objectives(R.objectives.objectives, prev_objectives)
 			if (!unique_objectives_role.len)
@@ -393,6 +394,7 @@
 			var/datum/faction/F = owner
 			var/list/faction_objectives = F.GetObjectives()
 			var/list/prev_objectives = faction_objectives.Copy()
+			SSticker.mode.generate_objectives(F)
 			F.GiveObjectives()
 			var/list/unique_objectives_faction = find_unique_objectives(F.GetObjectives(), prev_objectives)
 			if (!unique_objectives_faction.len)

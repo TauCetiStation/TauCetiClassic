@@ -1,6 +1,7 @@
 /datum/objective/target/dehead
 	conflicting_types = list(
-		/datum/objective/target/protect
+		/datum/objective/target/protect,
+		/datum/objective/target/dehead
 	)
 
 /datum/objective/target/dehead/format_explanation()

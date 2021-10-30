@@ -8,16 +8,11 @@
 	master_pool = _master_pool
 	faction_or_role = _faction_or_role
 
-/datum/objective_ruleset/proc/get_pseudorandom_objectives()
+/datum/objective_ruleset/proc/get_objectives()
 	return
 
 /datum/objective_ruleset/proc/get_all_objectives()
-	var/list/all_objectives = list()
-	for(var/type in master_pool.main_objectives_pool)
-		var/list/sets = master_pool.main_objectives_pool[type]
-		for(var/datum/objectives_set/o_set as anything in sets)
-			all_objectives += o_set.my_objectives
-	return all_objectives
+	return master_pool.get_all_objectives()
 
 /datum/objective_ruleset/proc/get_objectives_set()
 	return
@@ -48,6 +43,10 @@
 		/datum/objective/hijack = 1,
 	)
 
+	// If it was not possible to find the target for a pseudorandom objective for the first time,
+	// then such a objective can no longer be pseudorandom
+	var/list/blocked_pseudorandom = list()
+
 /datum/objective_ruleset/standart/New()
 	..()
 	if(!istype(faction_or_role, /datum/role))
@@ -63,34 +62,31 @@
 			/datum/objective/block = 10,
 		)
 
-/datum/objective_ruleset/standart/get_pseudorandom_objectives()
+/datum/objective_ruleset/standart/get_objectives()
 	var/list/all_objectives = get_all_objectives()
 	var/list/new_objectives = list()
 
-	for(var/i = 1 to objectives_amount)
+	var/i = 1
+	while(i != objectives_amount)
 		var/obj_type = pickweight(main_objectives)
 		var/datum/objective/new_obj = new obj_type
 
-		var/target_selected
-		if(prob(pseudorandom_chance))
-			target_selected = new_obj.find_pseudorandom_target(all_objectives)
-		else
-			target_selected = new_obj.find_target()
-
-		if(!target_selected)
-			qdel(new_obj)
-			continue
-
-		new_obj.auto_target = !target_selected
+		if(prob(pseudorandom_chance) && !blocked_pseudorandom[obj_type] && new_obj.conflicting_types.len)
+			new_obj.auto_target = !new_obj.find_pseudorandom_target(all_objectives, new_objectives)
+			if(new_obj.auto_target)
+				blocked_pseudorandom[obj_type] = TRUE
+				qdel(new_obj)
+				continue
 
 		new_objectives += new_obj
+		i++
 
 	return new_objectives
 
 /datum/objective_ruleset/standart/get_objectives_set()
 	var/objective_type = pickweight(survive_objectives)
 	var/datum/objective/survive_objective = new objective_type
-	var/datum/objectives_set/OS = new(get_pseudorandom_objectives() + survive_objective)
+	var/datum/objectives_set/OS = new(get_objectives() + survive_objective)
 	return OS
 
 /datum/objective_ruleset/standart/one
@@ -110,7 +106,7 @@
  */
 /datum/objective_ruleset/families
 
-/datum/objective_ruleset/families/get_pseudorandom_objectives()
+/datum/objective_ruleset/families/get_objectives()
 	var/list/all_objectives = get_all_objectives()
 	var/list/all_objectives_types = make_associative(get_types_of_objects_list(all_objectives))
 
@@ -121,11 +117,11 @@
 			if(!all_objectives_types[type])
 				return list(new type)
 
-	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) - /datum/objective/gang/points
+	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) + /datum/objective/target/assassinate/kill_head - /datum/objective/gang/points
 	var/picked_type = pick(gang_objectives_types)
 	return list(new picked_type)
 
 /datum/objective_ruleset/families/get_objectives_set()
 	var/datum/objective/points = new /datum/objective/gang/points
-	var/datum/objectives_set/OS = new(get_pseudorandom_objectives() + points)
+	var/datum/objectives_set/OS = new(get_objectives() + points)
 	return OS
