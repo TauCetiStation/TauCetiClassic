@@ -54,7 +54,7 @@ var/datum/controller/master/Master = new()
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
-/datum/controller/master/proc/InitSS()
+/datum/controller/master/proc/InitSSS()
 	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
 	sortTim(subsytem_types, /proc/cmp_subsystem_init)
 	for(var/I in subsytem_types)
@@ -62,14 +62,13 @@ var/datum/controller/master/Master = new()
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	var/list/_subsystems = list()
-	subsystems = _subsystems
+	subsystems = list()
 	if (Master != src)
 		if (istype(Master))
 			Recover()
 			qdel(Master)
 		else
-			InitSS()
+			InitSSS()
 		Master = src
 
 /datum/controller/master/Destroy()
@@ -147,7 +146,7 @@ var/datum/controller/master/Master = new()
 		sleep(delay)
 
 	if(init_sss)
-		InitSS()
+		InitSSS()
 
 	world.log << "Initializing subsystems..."
 	log_initialization("Initializing subsystems...")
