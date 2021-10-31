@@ -2239,6 +2239,13 @@
 	required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
 	result_amount = 5
 
+/datum/chemical_reaction/lean
+	name = "Lean"
+	id = "lean"
+	result = "lean"
+	required_reagents = list("dextromethorphan" = 1, "space_up" = 3, "sugar" = 1)
+	result_amount = 5
+
 //////////////////////////////////////////////
 //////////////New poisons/////////////////////
 //////////////////////////////////////////////
