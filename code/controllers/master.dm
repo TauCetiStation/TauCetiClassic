@@ -62,7 +62,7 @@ var/datum/controller/master/Master = new()
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	subsystems = list()
+	subsystems = new
 	if (Master != src)
 		if (istype(Master))
 			Recover()
