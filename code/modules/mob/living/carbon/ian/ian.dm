@@ -452,6 +452,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/throw_mode_off()
 	return
 
+/mob/living/carbon/ian/gib()
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 0 to butcher_results[path])
+				new path(loc)
+	..()
+
 /mob/living/carbon/ian/say(message)
 	if(stat)
 		return
