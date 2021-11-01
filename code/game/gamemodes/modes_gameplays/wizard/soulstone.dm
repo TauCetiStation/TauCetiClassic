@@ -34,7 +34,7 @@
 	if(!istype(H, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 
-	if(H.has_brain_worms()) //Borer stuff - RR
+	if(H.get_brain_worms()) //Borer stuff - RR
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 

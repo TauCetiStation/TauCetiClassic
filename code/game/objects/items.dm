@@ -159,7 +159,7 @@
 			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
-	if(M.has_brain_worms())
+	if(M.get_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
 	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"

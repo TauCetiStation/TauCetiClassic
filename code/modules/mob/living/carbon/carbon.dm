@@ -556,7 +556,7 @@
 		SetSleeping(40 SECONDS) //Short nap
 
 //Check for brain worms in head.
-/mob/proc/has_brain_worms()
+/mob/proc/get_brain_worms()
 	for(var/mob/living/simple_animal/borer/B in contents)
 		return B
 	return null

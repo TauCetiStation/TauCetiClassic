@@ -4,7 +4,7 @@
 var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 
 /mob/living/carbon/infestable()
-	return !(get_species() in borer_banned_species) && !has_brain_worms()
+	return !(get_species() in borer_banned_species) && !get_brain_worms()
 
 /obj/effect/proc_holder/borer/active/hostless/infest
 	name = "Infest"
@@ -56,7 +56,7 @@ var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 
 	if(!target.infestable())
 		return
-	if(target.has_brain_worms())
+	if(target.get_brain_worms())
 		if(show_warnings)
 			to_chat(controller, "You cannot infest someone who is already infested!")
 		return

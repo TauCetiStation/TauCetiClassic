@@ -98,7 +98,7 @@
 	user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
 	"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
 
-	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
+	var/mob/living/simple_animal/borer/borer = target.get_brain_worms()
 
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR

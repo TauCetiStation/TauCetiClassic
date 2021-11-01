@@ -20,7 +20,7 @@
 	if(!target)
 		to_chat(user, "<span class='warning'>You need to grab your target by neck!</span>")
 		return
-	if(target.has_brain_worms())
+	if(target.get_brain_worms())
 		to_chat(user, "You cannot infest someone who is already infested!")
 		return
 	// check if we can infest it. if we can, probably, our children can too

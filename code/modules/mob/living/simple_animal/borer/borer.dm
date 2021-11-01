@@ -121,10 +121,11 @@
 			for(var/mob/dead/observer/O in observer_list)
 				try_request_n_transfer(O, "A mindless Cortical Borer was found. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
 				last_client_poll = world.time
-	if(host.reagents.has_reagent("sugar") && !host.reagents.has_reagent("sucrase") && !docile)
-		docile = TRUE
-		var/mob/msg_to = controlling ? host : src
-		to_chat(msg_to, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
+	if(host.reagents.has_reagent("sugar") && !host.reagents.has_reagent("sucrase"))
+		if(!docile)
+			docile = TRUE
+			var/mob/msg_to = controlling ? host : src
+			to_chat(msg_to, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 	else if(docile)
 		docile = FALSE
 		var/mob/msg_to = controlling ? host : src
@@ -215,7 +216,7 @@
 
 // Borers will not be blind in ventilation
 /mob/living/simple_animal/borer/is_vision_obstructed()
-	if(istype(loc, /obj/machinery/atmospherics/pipe))
+	if(istype(loc, /obj/machinery/atmospherics/pipe) || istype(loc, /mob))
 		return FALSE
 	return ..()
 
@@ -226,7 +227,7 @@
 		sight &= ~(SEE_TURFS | SEE_OBJS | BLIND)
 	..()
 
-/mob/living/simple_animal/borer/has_brain_worms()
+/mob/living/simple_animal/borer/get_brain_worms()
 	return src
 
 /mob/living/simple_animal/borer/verb/hide()

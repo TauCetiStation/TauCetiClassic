@@ -302,7 +302,7 @@
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 
-	if(has_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
+	if(get_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
 		return 1
 
 	//These only pertain to common. Languages are handled by mob/say_understands()

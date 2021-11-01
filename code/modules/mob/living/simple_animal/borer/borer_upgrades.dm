@@ -63,7 +63,7 @@
     return clamp(world.time - last_used, 0, cooldown)
 
 /obj/effect/proc_holder/borer/active/can_activate(mob/user)
-    var/mob/living/simple_animal/borer/B = user.has_brain_worms()
+    var/mob/living/simple_animal/borer/B = user.get_brain_worms()
     if(!B || B != holder)
         return FALSE
     if(check_capability && user.incapacitated())
@@ -93,7 +93,7 @@
     return holder.host && user == holder
 
 /obj/effect/proc_holder/borer/active/control/can_use(mob/user)
-    return holder.controlling && user.has_brain_worms() == holder
+    return holder.controlling && user.get_brain_worms() == holder
 
 /obj/effect/proc_holder/borer/active/hostless/can_use(mob/user)
     return !holder.host && user == holder

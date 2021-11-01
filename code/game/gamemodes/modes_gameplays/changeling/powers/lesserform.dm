@@ -9,7 +9,7 @@
 
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
-	if(user.has_brain_worms())
+	if(user.get_brain_worms())
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
 	if(user.restrained())

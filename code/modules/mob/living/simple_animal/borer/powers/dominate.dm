@@ -18,7 +18,7 @@
 		return FALSE
 	if(!can_activate())
 		return FALSE
-	if(M.has_brain_worms())
+	if(M.get_brain_worms())
 		to_chat(src, "You cannot dominate someone who is already infested!")
 		return FALSE
 
