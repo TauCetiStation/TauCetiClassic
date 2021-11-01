@@ -275,8 +275,7 @@
 /proc/init_named_subtypes(prototype, additional_args)
 	. = list()
 	for(var/path in subtypesof(prototype))
-		var/atom/N = new path(arglist(additional_args))
-		if(!length(N?.name))
-			qdel(N)
+		var/atom/N = path
+		if(!initial(N.name))
 			continue
-		. += N
+		. += new path() 
