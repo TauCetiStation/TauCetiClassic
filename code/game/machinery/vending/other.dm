@@ -172,8 +172,9 @@
 	products = list(
 		/obj/item/weapon/storage/visuals/tray = 8,
 		/obj/item/weapon/kitchen/utensil/fork = 6,
+		/obj/item/weapon/kitchen/utensil/spoon = 6,
 		/obj/item/weapon/kitchenknife = 3,
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 16,
 		/obj/item/clothing/suit/chef/classic = 2,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
@@ -183,11 +184,19 @@
 		/obj/item/weapon/kitchen/mould/cash = 1,
 		/obj/item/weapon/kitchen/mould/coin = 1,
 		/obj/item/weapon/kitchen/mould/loli = 1,
+		/obj/item/weapon/storage/box/foodbox = 8,
+		/obj/item/weapon/storage/box/foodntbox = 6,
+		/obj/item/weapon/storage/box/foodcatbox = 2,
+		/obj/item/weapon/storage/box/foodflowerbox = 2,
+		/obj/item/weapon/storage/box/foodchikenbox = 4,
+		/obj/item/weapon/storage/box/foodlovebox = 2,
+		/obj/item/weapon/storage/box/foodgoldbox = 1,
+		/obj/item/weapon/storage/box/foodminebox = 4,
 	)
 	contraband = list(
-		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
 		/obj/item/weapon/kitchenknife/butch = 2,
+		/obj/item/weapon/storage/box/foodrainbowbox = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 

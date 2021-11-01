@@ -715,6 +715,67 @@
 		new /obj/item/mine/shock(src)
 	make_exact_fit()
 
+//LUNHCBOXES
+/obj/item/weapon/storage/box/foodntbox
+	name = "NT lunchbox"
+	desc = "Stereotype NT lunchbox."
+	icon_state = "NT_lunchbox"
+
+/obj/item/weapon/storage/box/foodbox
+	name = "grey lunchbox"
+	desc = "Stereotype greytide lunchbox."
+	icon_state = "clear_lunchbox"
+
+/obj/item/weapon/storage/box/foodcatbox
+	name = "cat's paw lunchbox"
+	desc = "Purrr."
+	icon_state = "cat_lunchbox"
+
+/obj/item/weapon/storage/box/foodflowerbox
+	name = "flower lunchbox"
+	desc = "Green lunchbox."
+	icon_state = "flower_lunchbox"
+
+/obj/item/weapon/storage/box/foodchikenbox
+	name = "chiken lunchbox"
+	desc = "Ta ta-ta, ta-ta-a..."
+	icon_state = "chiken_lunchbox"
+
+/obj/item/weapon/storage/box/foodlovebox
+	name = "Valentine lunchbox"
+	desc = "Pink heart-covered lunchbox."
+	icon_state = "love_lunchbox"
+
+/obj/item/weapon/storage/box/foodgoldbox
+	name = "gold lunchbox"
+	desc = "deluxe."
+	icon_state = "gold_lunchbox"
+
+/obj/item/weapon/storage/box/foodminebox
+	name = "mine lunchbox"
+	desc = "Stereotype mine lunchbox."
+	icon_state = "mine_lunchbox"
+
+/obj/item/weapon/storage/box/foodrainbowbox
+	name = "rainbow lunchbox"
+	desc = "Wow! Cool rainbow lunchbox!."
+	icon_state = "rainbow_lunchbox"
+
+/obj/item/weapon/storage/box/foodsyndibox
+	name = "strange lunchbox"
+	desc = "Stereotype not syndicate lunchbox."
+	icon_state = "syndi_lunchbox"
+
+/obj/item/weapon/storage/box/foodsyndibox/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/food/snacks/brainburger(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/csandwich(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/waffles(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/popcorn(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka(src)
+
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"

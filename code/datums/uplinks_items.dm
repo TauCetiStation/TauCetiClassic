@@ -940,6 +940,12 @@
 	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
 
+	/datum/uplink_item/badass/syndilunch
+	name = "Syndicate lunhcboxes"
+	desc = "Delicious food for a tired agent. With love, the Waffle Co."
+	item = /obj/item/weapon/storage/box/foodsyndibox
+	cost = 3
+
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
