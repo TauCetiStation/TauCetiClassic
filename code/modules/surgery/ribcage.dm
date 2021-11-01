@@ -742,7 +742,7 @@
 
 /datum/surgery_step/ipc_ribcage/hearing_restoration
 	allowed_tools = list(
-	/obj/item/robot_parts/robot_component/radio = 100,
+		/obj/item/robot_parts/robot_component/radio = 100,
 	)
 	min_duration = 30
 	max_duration = 70
