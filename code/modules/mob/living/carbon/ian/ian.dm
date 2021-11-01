@@ -455,7 +455,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/gib()
 	if(butcher_results)
 		for(var/path in butcher_results)
-			for(var/i = 0 to butcher_results[path])
+			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	..()
 
