@@ -940,7 +940,7 @@
 	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
 
-	/datum/uplink_item/badass/syndilunch
+	/datum/uplink_item/badass/syndilunchbox
 	name = "Syndicate lunhcboxes"
 	desc = "Delicious food for a tired agent. With love, the Waffle Co."
 	item = /obj/item/weapon/storage/box/foodsyndibox
