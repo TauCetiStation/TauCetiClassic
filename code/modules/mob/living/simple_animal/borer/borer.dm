@@ -224,6 +224,7 @@
 		sight |= SEE_TURFS | SEE_OBJS | BLIND
 	else
 		sight &= ~(SEE_TURFS | SEE_OBJS | BLIND)
+	..()
 
 /mob/living/simple_animal/borer/has_brain_worms()
 	return src

@@ -14,6 +14,6 @@
 /datum/objective/borer_reproduce/check_completion()
 	if(owner && owner.current)
 		var/mob/living/simple_animal/borer/B = owner.current
-		if(istype(B) && B.has_reproduced)
+		if(istype(B) && B.reproduced)
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
