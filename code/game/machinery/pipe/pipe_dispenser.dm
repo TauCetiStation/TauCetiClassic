@@ -135,10 +135,10 @@
 
 //Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/MouseDrop_T(atom/movable/target, mob/user)
-	if(usr.incapacitated())
+	if(user.incapacitated())
 		return
 
-	if(!usr.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
