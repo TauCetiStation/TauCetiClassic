@@ -11,9 +11,8 @@
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
 #define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
-#define MASKINTERNALS          (1<<2)   // Mask allows internals.
+#define MASKINTERNALS          (1<<3)   // Mask allows internals.
 
-//#define USEDELAY             (1<<3)   // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD               (1<<4)   // Weapon not affected by shield.
 
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
