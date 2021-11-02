@@ -133,6 +133,23 @@
 	else
 		return ..()
 
+//Allow you to drag-drop disposal pipes into it
+/obj/machinery/pipedispenser/MouseDrop_T(obj/W, mob/usr)
+	if(usr.incapacitated())
+		return
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
+	if(!checkPipeType(W))
+		return
+
+	qdel(W)
+
+/obj/machinery/pipedispenser/proc/checkPipeType(obj/W)
+	return istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter)
+
 /obj/machinery/pipedispenser/disposal
 	name = "Disposal Pipe Dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -150,22 +167,8 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
-	if(usr.incapacitated())
-		return
-
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
-	if (!istype(pipe))
-		return
-
-	if (pipe.anchored)
-		return
-
-	qdel(pipe)
+/obj/machinery/pipedispenser/disposal/checkPipeType(obj/structure/disposalconstruct/pipe as obj)
+	return istype(pipe) && !pipe.anchored
 
 /obj/machinery/pipedispenser/disposal/ui_interact(user)
 	var/dat = {"<b>Disposal Pipes</b><br><br>
