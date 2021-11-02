@@ -56,8 +56,6 @@
 	if(stat & BROKEN || !I || !user || !I.canremove)
 		return
 
-	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
-		return
 	add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(isscrewdriver(I))
@@ -97,10 +95,6 @@
 				to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 				return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		to_chat(user, "<span class='warning'>You can't place that item inside the disposal unit.</span>")
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
 		to_chat(user, "<span class='notice'>You empty the bag.</span>")
@@ -108,6 +102,12 @@
 			T.remove_from_storage(O,src)
 		T.update_icon()
 		update()
+		return
+	else if(isrobot(user))
+		return
+
+	if(istype(I, /obj/item/weapon/melee/energy/blade))
+		to_chat(user, "<span class='warning'>You can't place that item inside the disposal unit.</span>")
 		return
 
 	var/obj/item/weapon/grab/G = I
@@ -319,16 +319,15 @@
 			flush = TRUE
 			update()
 
-		if(!issilicon(usr))
-			if(action == "pump-0")
-				mode = 0
-				update()
-			if(action == "pump-1")
-				mode = 1
-				update()
+		if(action == "pump-0")
+			mode = 0
+			update()
+		if(action == "pump-1")
+			mode = 1
+			update()
 
-			if(action == "eject")
-				eject()
+		if(action == "eject")
+			eject()
 
 	return TRUE
 
