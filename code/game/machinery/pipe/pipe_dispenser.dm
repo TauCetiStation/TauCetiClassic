@@ -139,7 +139,7 @@
 		return
 
 	if(!user.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if(!checkPipeType(target))
