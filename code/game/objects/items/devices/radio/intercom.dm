@@ -18,6 +18,13 @@
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
 
+/obj/item/device/radio/intercom/atom_init()
+	. = ..()
+	intercom_list += src
+
+/obj/item/device/radio/intercom/Destroy()
+	intercom_list -= src
+	return ..()
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	add_fingerprint(user)
