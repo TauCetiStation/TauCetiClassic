@@ -167,7 +167,7 @@
 Nah
 */
 
-/obj/machinery/pipedispenser/disposal/checkPipeType(obj/structure/disposalconstruct/pipe as obj)
+/obj/machinery/pipedispenser/disposal/checkPipeType(obj/structure/disposalconstruct/pipe)
 	return istype(pipe) && !pipe.anchored
 
 /obj/machinery/pipedispenser/disposal/ui_interact(user)
