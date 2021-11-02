@@ -134,7 +134,7 @@
 		return ..()
 
 //Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/MouseDrop_T(obj/W, mob/usr)
+/obj/machinery/pipedispenser/MouseDrop_T(atom/movable/target, mob/user)
 	if(usr.incapacitated())
 		return
 
