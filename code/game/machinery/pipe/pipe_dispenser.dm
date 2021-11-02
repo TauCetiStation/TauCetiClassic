@@ -142,13 +142,13 @@
 		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if(!checkPipeType(W))
+	if(!checkPipeType(target))
 		return
 
-	qdel(W)
+	qdel(target)
 
-/obj/machinery/pipedispenser/proc/checkPipeType(obj/W)
-	return istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter)
+/obj/machinery/pipedispenser/proc/checkPipeType(atom/movable/target)
+	return istype(target, /obj/item/pipe) || istype(target, /obj/item/pipe_meter)
 
 /obj/machinery/pipedispenser/disposal
 	name = "Disposal Pipe Dispenser"
@@ -167,8 +167,8 @@
 Nah
 */
 
-/obj/machinery/pipedispenser/disposal/checkPipeType(obj/structure/disposalconstruct/pipe)
-	return istype(pipe) && !pipe.anchored
+/obj/machinery/pipedispenser/disposal/checkPipeType(atom/movable/target)
+	return istype(target, /obj/structure/disposalconstruct) && !target.anchored
 
 /obj/machinery/pipedispenser/disposal/ui_interact(user)
 	var/dat = {"<b>Disposal Pipes</b><br><br>
