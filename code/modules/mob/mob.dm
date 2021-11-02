@@ -933,7 +933,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 //========== Shock Stage =========
 /mob/proc/AdjustShockStage(amount)
-    return
+	return
 
 /mob/living/carbon/human/AdjustShockStage(amount)
 	var/mob/living/carbon/human/H = src
