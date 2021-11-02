@@ -92,10 +92,10 @@
 		T.uses = uplink_uses
 		target_intercom.hidden_uplink = T
 		target_intercom.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [R.loc.loc.name]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [R.loc.loc.name]).")
-		total_TC += target_intercom.hidden_uplink.uses
+		to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [get_area(R)]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
 		target_intercom.hidden_uplink.uses += 5
+		total_TC += target_intercom.hidden_uplink.uses
 
 	else if (istype(R, /obj/item/device/radio))
 		// generate list of radio freqs
