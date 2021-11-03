@@ -41,3 +41,9 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
 	icon_state = "medgreen"
 	item_color = "medgreen"
+
+/obj/item/clothing/accessory/armband/militia
+	name = "militia armband"
+	desc = "An armband, worn by the station's militia in case of abscense of security officers. White-red colors represent the security role of militia."
+	icon_state = "militia"
+	item_color = "militia"

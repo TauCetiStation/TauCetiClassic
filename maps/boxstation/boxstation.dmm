@@ -43375,6 +43375,13 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/altar)
+"byL" = (
+/obj/structure/closet/wardrobe/militia,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/station/bridge/nuke_storage)
 "byM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -70585,12 +70592,10 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "enb" = (
+/obj/structure/closet/wardrobe/militia,
 /turf/simulated/floor{
-	icon_state = "dark"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warninglinecorners"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/armoury)
 "enu" = (
@@ -112004,8 +112009,8 @@ aao
 abl
 abK
 dFb
+ctH
 enb
-abp
 abl
 adX
 aem
@@ -112262,7 +112267,7 @@ abl
 abR
 dFb
 acW
-ctH
+abp
 abl
 adY
 aer
@@ -112584,7 +112589,7 @@ biQ
 aaa
 blW
 bnT
-bsM
+byL
 brc
 bsM
 blW

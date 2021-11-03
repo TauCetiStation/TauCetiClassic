@@ -43,6 +43,22 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/rank/militia
+	name = "militia uniform"
+	desc = "A dark-gray uniform meant to help identyfing (in)voluntary militia aboard NT stations."
+	icon_state = "militia"
+	item_state = "militia"
+	item_color = "militia"
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/under/rank/militia/atom_init()
+	. = ..()
+	var/obj/item/clothing/accessory/armband/militia/A = new /obj/item/clothing/accessory/armband/militia(src)
+	accessories += A
+	A.on_attached(src, null)
+
 /obj/item/clothing/under/rank/security2
 	name = "security officer's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."

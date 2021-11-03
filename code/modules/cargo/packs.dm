@@ -277,7 +277,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_nonlethal 
+/datum/supply_pack/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
 	contains = list(/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
@@ -425,6 +425,17 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Shock Mines Crate"
 	group = "Security"
+
+/datum/supply_pack/militia
+	name = "Militia Uniform"
+	cost = 1300
+	contains = list(/obj/item/clothing/under/rank/militia, /obj/item/clothing/under/rank/militia, /obj/item/clothing/under/rank/militia, /obj/item/clothing/under/rank/militia, /obj/item/clothing/under/rank/militia,
+					/obj/item/clothing/shoes/boots, /obj/item/clothing/shoes/boots, /obj/item/clothing/shoes/boots, /obj/item/clothing/shoes/boots, /obj/item/clothing/shoes/boots,
+					/obj/item/clothing/gloves/black, /obj/item/clothing/gloves/black, /obj/item/clothing/gloves/black, /obj/item/clothing/gloves/black, /obj/item/clothing/gloves/black)
+	crate_type = /obj/structure/largecrate
+	crate_name = "Militia Uniform crate"
+	group = "Security"
+
 
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
@@ -1228,7 +1239,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
-/datum/supply_pack/artifical_ventilation_machine 
+/datum/supply_pack/artifical_ventilation_machine
 	name = "Artifical Ventilation Machine"
 	cost = 3000
 	contains = list(/obj/machinery/life_assist/artificial_ventilation)
@@ -1656,7 +1667,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Barber supplies"
 	group = "Supply"
 
-/datum/supply_pack/clown 
+/datum/supply_pack/clown
 	name = "Clown supply crate"
 	contains = list(/obj/item/weapon/bikehorn,
 					/obj/item/weapon/bikehorn,

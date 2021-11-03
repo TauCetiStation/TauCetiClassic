@@ -34,6 +34,18 @@
 			new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 
+/obj/structure/closet/wardrobe/militia
+	name = "militia wardrobe"
+	icon_state = "militia"
+	icon_closed = "militia"
+
+/obj/structure/closet/wardrobe/militia/PopulateContents()
+	for (var/i in 1 to 8)
+		new /obj/item/clothing/under/rank/militia(src)
+	for (var/i in 1 to 8)
+		new /obj/item/clothing/shoes/boots(src)
+	for (var/i in 1 to 8)
+		new /obj/item/clothing/gloves/black(src)
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
