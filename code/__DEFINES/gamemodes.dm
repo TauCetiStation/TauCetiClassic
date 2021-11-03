@@ -30,7 +30,7 @@
 #define BLOBCEREBRATE "Blob Cerebrate"
 #define CHANGELING "Changeling"
 #define CULTIST "Cultist"
-#define CULT_LEADER "Cult Leader"
+#define CULT_HARBINGER "Cult Harbinger"
 #define DEATHSQUADIE "Death Commando"
 #define GANGSTER "Gangster"
 #define GANGSTER_LEADER "Gangster Leader"

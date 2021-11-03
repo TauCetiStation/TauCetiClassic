@@ -52,7 +52,7 @@
 	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_tome=1;'>(Give Tome)</a>"
 	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_heaven=1;'>(TP to Heaven)</a>"
 	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_cheating=1;'>(Cheating Religion)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_leader=1;'>(Make Leader)</a>"
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_harbinger=1;'>(Make Harbinger)</a>"
 	return dat
 
 /datum/role/cultist/RoleTopic(href, href_list, datum/mind/M, admin_auth)
@@ -78,15 +78,15 @@
 				L[type] = 1
 			C.religion.add_aspects(L)
 
-		if(href_list["cult_leader"])
+		if(href_list["cult_harbinger"])
 			var/mob/living/carbon/human/H = M.current
 			H.mind.holy_role = CULT_ROLE_MASTER
 			add_antag_hud("hudheadcultist")
 	else
 		to_chat(M.current, "Сначала добавьте культиста во фракцию культа")
 
-/datum/role/cultist/leader
-	name = CULT_LEADER
+/datum/role/cultist/harbinger
+	name = CULT_HARBINGER
 
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudheadcultist"
