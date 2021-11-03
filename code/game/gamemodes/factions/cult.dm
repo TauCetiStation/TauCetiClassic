@@ -26,7 +26,7 @@
 
 /datum/faction/cult/get_initrole_type()
 	if(get_active_leads() == 0)
-		return /datum/role/cultist/harbinger
+		return /datum/role/cultist/leader
 	return ..()
 
 /datum/faction/cult/HandleRecruitedMind(datum/mind/M, laterole)
@@ -121,7 +121,7 @@
 
 /datum/faction/cult/proc/get_active_leads()
 	var/active_leads = 0
-	for(var/datum/role/cultist/harbinger/R in members)
+	for(var/datum/role/cultist/leader/R in members)
 		var/mob/M = R?.antag?.current
 		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 			active_leads++
