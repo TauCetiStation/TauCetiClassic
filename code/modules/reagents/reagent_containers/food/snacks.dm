@@ -1729,7 +1729,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if(W.tools[TOOL_KNIFE])
+	if(W.tools[TOOL_KNIFE] || W.sharp)
 		inaccurate = 1
 	else
 		return FALSE
