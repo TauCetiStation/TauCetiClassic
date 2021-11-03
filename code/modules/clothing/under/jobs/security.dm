@@ -57,7 +57,7 @@
 	. = ..()
 	var/obj/item/clothing/accessory/armband/militia/A = new /obj/item/clothing/accessory/armband/militia(src)
 	accessories += A
-	A.on_attached(src, null)
+	A.on_attached(src, silent = TRUE)
 
 /obj/item/clothing/under/rank/security2
 	name = "security officer's uniform"
