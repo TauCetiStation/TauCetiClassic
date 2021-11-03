@@ -275,7 +275,7 @@
 			cameras += C
 	var/minDist = INFINITY
 	var/minCam = console.active_camera
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C as anything in cameras)
 		var/dist = get_dist(T, C)
 		if(dist < minDist)
 			minCam = C
