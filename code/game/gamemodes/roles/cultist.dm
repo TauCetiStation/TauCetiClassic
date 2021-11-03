@@ -85,7 +85,7 @@
 	else
 		to_chat(M.current, "Сначала добавьте культиста во фракцию культа")
 
-/datum/role/cultist/harbinger
+/datum/role/cultist/leader
 	name = CULT_LEADER
 
 	antag_hud_type = ANTAG_HUD_CULT
