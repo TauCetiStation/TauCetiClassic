@@ -53,7 +53,7 @@
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
-		R = pick(intercom_list)
+		R = pick(station_intercom_list)
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate suitable Intercom, installing into a Radio instead!")
