@@ -1058,6 +1058,7 @@
 	item_state = "sceince_helm"
 	item_color = "science"
 	unacidable = TRUE
+	light_color = "#cb00f3"
 	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/science
@@ -1073,12 +1074,29 @@
 	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
-	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and integrated HUD."
 	name = "advanced science hardsuit helmet"
 	icon_state = "rig0-rd"
 	item_state = "rd_helm"
 	item_color = "rd"
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
+
+/obj/item/clothing/head/helmet/space/rig/science/rd/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot != SLOT_HEAD)
+		return
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/rig/science/rd/dropped(mob/user)
+	. = ..()
+	if(!istype(user))
+		return
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_hud_from(user)
+
+	
+
 
 /obj/item/clothing/suit/space/rig/science/rd
 	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
