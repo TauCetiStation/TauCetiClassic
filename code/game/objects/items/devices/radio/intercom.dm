@@ -13,7 +13,7 @@
 /obj/item/device/radio/intercom/atom_init()
 	. = ..()
 	if(is_station_level(z))
-		src += station_intercom_list
+		station_intercom_list += src
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	add_fingerprint(user)
