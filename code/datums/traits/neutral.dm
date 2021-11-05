@@ -24,7 +24,21 @@
 		NO_PAIN = FALSE,
 	)
 
+/datum/quirk/short_height
+	name = QUIRK_SHORT
+	desc = "You are shorter than most people"
+	value = 0
+	mob_trait = TRAIT_SHORT_HEIGHT
+	gain_text = "<span class='danger'>You are shorter than most people.</span>"
+	lose_text = "<span class='notice'>You are normal height.</span>"
 
+/datum/quirk/long_height
+	name = QUIRK_LONG
+	desc = "You are longer than most people"
+	value = 0
+	mob_trait = TRAIT_LONG_HEIGHT
+	gain_text = "<span class='danger'>You are longer than most people.</span>"
+	lose_text = "<span class='notice'>You are normal height.</span>"
 
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA

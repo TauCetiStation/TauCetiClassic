@@ -193,12 +193,14 @@
 
 	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
-	Mx.Translate(0,-2)
+	Mx.Translate(0,-3)
 	M.transform = Mx
 	M.default_transform = Mx
+	M.appearance_flags |= KEEP_TOGETHER
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
+	M.appearance_flags |= PIXEL_SCALE
 	M.pass_flags &= ~1
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

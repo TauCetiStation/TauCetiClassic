@@ -191,6 +191,26 @@
 		speech_problem_flag = 1
 		if (prob(10))
 			Stuttering(10)
+	if(HAS_TRAIT(src, TRAIT_SHORT_HEIGHT))
+		src.appearance_flags |= KEEP_TOGETHER
+		var/matrix/Mx = matrix()
+		Mx.Scale(0.8)
+		src.transform = Mx
+		Mx.Scale(1.2)
+		Mx.Translate(0,-1)
+		src.transform = Mx
+		src.default_transform = Mx
+	if(HAS_TRAIT(src, TRAIT_LONG_HEIGHT))
+		src.appearance_flags |= KEEP_TOGETHER
+		var/matrix/Mx = matrix()
+		Mx.Scale(1.05)
+		src.transform = Mx
+		Mx.Scale(0.95)
+		src.transform = Mx
+		Mx.Scale(1.05)
+		Mx.Translate(0,1)
+		src.transform = Mx
+		src.default_transform = Mx
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
