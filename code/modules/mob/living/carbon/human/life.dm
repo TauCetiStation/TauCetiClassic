@@ -194,20 +194,14 @@
 	if(HAS_TRAIT(src, TRAIT_SHORT_HEIGHT))
 		appearance_flags |= KEEP_TOGETHER
 		var/matrix/Mx = matrix()
-		Mx.Scale(0.8)
-		transform = Mx
-		Mx.Scale(1.2)
+		Mx.Scale(0.96)
 		Mx.Translate(0,-1)
 		transform = Mx
 		default_transform = Mx
 	if(HAS_TRAIT(src, TRAIT_LONG_HEIGHT))
 		appearance_flags |= KEEP_TOGETHER
 		var/matrix/Mx = matrix()
-		Mx.Scale(1.05)
-		transform = Mx
-		Mx.Scale(0.95)
-		transform = Mx
-		Mx.Scale(1.05)
+		Mx.Scale(1.049)
 		Mx.Translate(0,1)
 		transform = Mx
 		default_transform = Mx
