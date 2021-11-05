@@ -182,6 +182,8 @@ var/global/cat_number = 0
 	attacktext = "slashed"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
+	faction = "untouchable"
+
 	var/const/cat_life_duration = 1 MINUTES
 
 /mob/living/simple_animal/cat/runtime/atom_init(mapload, runtime_line)
