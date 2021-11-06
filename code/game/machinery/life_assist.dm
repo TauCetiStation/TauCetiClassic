@@ -32,15 +32,15 @@
 	update_icon()
 
 /obj/machinery/life_assist/proc/detach(rip = FALSE)
-	if(attached)
-		if(!rip)
-			visible_message("<span class='notice'>[attached] is detached from \the [src]</span>")
-		else
-			visible_message("<span class='warning'>The tubes are ripped out of [attached], doesn't that hurt?</span>")
-			attached.apply_damage(15, BRUTE, BP_CHEST)
-		deassist(attached)
-		attached = null
+	if(!rip)
+		visible_message("<span class='notice'>[attached] is detached from \the [src]</span>")
+	else
+		visible_message("<span class='warning'>The tubes are ripped out of [attached], doesn't that hurt?</span>")
+		attached.apply_damage(15, BRUTE, BP_CHEST)
+
 	qdel(GetComponent(/datum/component/bounded))
+	deassist(attached)
+	attached = null
 	update_icon()
 
 // Add the LIFE_ASSIST trait, etc.
