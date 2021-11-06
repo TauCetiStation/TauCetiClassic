@@ -41,6 +41,7 @@ var/global/list/score=list(
 	"disc"           = 0, // is the disc safe and secure?
 	"nuked"          = 0, // was the station blown into little bits?
 	"destranomaly"   = 0, // anomaly of cult
+	"rec_antags"     = 0, // How many antags did we reconvert
 
 	//crew
 	"crew_escaped"   = 0,      // how many people got out alive?
