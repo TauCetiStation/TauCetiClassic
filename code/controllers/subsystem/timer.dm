@@ -76,16 +76,19 @@ SUBSYSTEM_DEF(timer)
 				continue
 			timer = head
 		do
+			if(timer.spent)
+				timer = timer.next
+				continue
+
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
 				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
-			if (!timer.spent)
-				spent += timer
-				timer.spent = TRUE
-				callBack.InvokeAsync()
+			spent += timer
+			timer.spent = TRUE
+			callBack.InvokeAsync()
 
 			timer = timer.next
 
@@ -251,9 +254,7 @@ SUBSYSTEM_DEF(timer)
 		SStimer.timer_id_dict -= "timerid[id]"
 
 	if (flags & TIMER_CLIENT_TIME)
-		if (!spent)
-			spent = TRUE
-			SStimer.clienttime_timers -= src
+		SStimer.clienttime_timers -= src
 		return QDEL_HINT_IWILLGC
 
 	if (!spent)
