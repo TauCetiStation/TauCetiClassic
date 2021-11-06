@@ -740,3 +740,12 @@
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
+
+/mob/living/simple_animal/hostile/mimic/prophunt/mind_initialize()
+	..()
+
+	var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/props)
+	if(!I)
+		I = SSticker.mode.CreateFaction(/datum/faction/props)
+		I.forgeObjectives()
+	add_faction_member(I, src, TRUE)
