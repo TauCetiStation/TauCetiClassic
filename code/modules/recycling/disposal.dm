@@ -103,7 +103,7 @@
 		T.update_icon()
 		update()
 		return
-	else if(isrobot(user))
+	if(isrobot(user))
 		return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
