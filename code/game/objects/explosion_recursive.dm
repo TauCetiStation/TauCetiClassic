@@ -63,6 +63,9 @@ var/list/explosion_turfs = list()
 /turf/space
 	explosion_resistance = 10
 
+/turf/unsimulated/floor/snow/cold
+	explosion_resistance = 10
+
 /turf/simulated/floor
 	explosion_resistance = 1
 

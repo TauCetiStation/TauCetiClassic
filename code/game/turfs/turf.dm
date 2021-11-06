@@ -51,9 +51,8 @@
 	if(opacity)
 		has_opaque_atom = TRUE
 
-	if(station_name == "Ministation")
-		basetype = /turf/unsimulated/floor/snow/cold
-	
+	basetype = text2path(SSmapping.level_trait(z, ZTRAIT_BASETURF))
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/Destroy(force)
@@ -471,7 +470,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ChangeTurf(basetype)
 	return(2)
 
 /turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
