@@ -1,5 +1,6 @@
 {
     "map_name": "Ministation",
     "map_path": "ministation",
-    "map_file": "ministation.dmm"
+    "map_file": "ministation.dmm",
+	"traits": [{"Linkage": null}]
 }
