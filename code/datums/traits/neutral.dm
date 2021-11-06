@@ -32,6 +32,15 @@
 	gain_text = "<span class='danger'>You are shorter than most people.</span>"
 	lose_text = "<span class='notice'>You are normal height.</span>"
 
+/datum/quirk/short_height/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.appearance_flags |= KEEP_TOGETHER
+	var/matrix/Mx = matrix()
+	Mx.Scale(0.96)
+	Mx.Translate(0,-1)
+	H.transform = Mx
+	H.default_transform = Mx
+
 /datum/quirk/long_height
 	name = QUIRK_LONG
 	desc = "You are longer than most people"
@@ -39,6 +48,15 @@
 	mob_trait = TRAIT_LONG_HEIGHT
 	gain_text = "<span class='danger'>You are longer than most people.</span>"
 	lose_text = "<span class='notice'>You are normal height.</span>"
+
+/datum/quirk/long_height/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.appearance_flags |= KEEP_TOGETHER
+	var/matrix/Mx = matrix()
+	Mx.Scale(1.049)
+	Mx.Translate(0,1)
+	H.transform = Mx
+	H.default_transform = Mx
 
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
