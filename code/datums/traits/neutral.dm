@@ -54,7 +54,7 @@
 	H.appearance_flags |= KEEP_TOGETHER
 	var/matrix/Mx = matrix()
 	Mx.Scale(1.049)
-	Mx.Translate(0,1)
+	Mx.Translate(0, 1)
 	H.transform = Mx
 	H.default_transform = Mx
 
