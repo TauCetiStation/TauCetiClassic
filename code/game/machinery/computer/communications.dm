@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
@@ -37,6 +35,8 @@
 	var/stat_msg1
 	var/stat_msg2
 
+	var/datum/announcement/station/command/announcement = new
+
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
 	communications_list += src
@@ -62,14 +62,14 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	return ..()
 
 /obj/machinery/computer/communications/process()
 	if(..())
 		if(state != STATE_STATUSDISPLAY)
-			src.updateDialog()
+			updateDialog()
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)
@@ -98,7 +98,7 @@
 					var/obj/item/device/pda/pda = I
 					I = pda.id
 				if (I && istype(I))
-					if(src.check_access(I))
+					if(check_access(I))
 						authenticated = 1
 					if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
 						authenticated = 2
@@ -150,7 +150,7 @@
 				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				announcement.play(input) //This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement. [ADMIN_JMP(usr)]")
 
@@ -189,8 +189,8 @@
 				if(src.currmsg)
 					var/title = src.messagetitle[src.currmsg]
 					var/text  = src.messagetext[src.currmsg]
-					src.messagetitle.Remove(title)
-					src.messagetext.Remove(text)
+					messagetitle.Remove(title)
+					messagetext.Remove(text)
 					if(src.currmsg == src.aicurrmsg)
 						src.aicurrmsg = 0
 					src.currmsg = 0
@@ -214,10 +214,10 @@
 
 		if("setmsg1")
 			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
-			src.updateDialog()
+			updateDialog()
 		if("setmsg2")
 			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
-			src.updateDialog()
+			updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
@@ -251,7 +251,7 @@
 		if("RestoreBackup")
 			to_chat(usr, "Backup routing data restored!")
 			src.emagged = 0
-			src.updateDialog()
+			updateDialog()
 
 
 
@@ -280,8 +280,8 @@
 			if(src.aicurrmsg)
 				var/title = src.messagetitle[src.aicurrmsg]
 				var/text  = src.messagetext[src.aicurrmsg]
-				src.messagetitle.Remove(title)
-				src.messagetext.Remove(text)
+				messagetitle.Remove(title)
+				messagetext.Remove(text)
 				if(src.currmsg == src.aicurrmsg)
 					src.currmsg = 0
 				src.aicurrmsg = 0
@@ -296,7 +296,7 @@
 
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(emagged)
@@ -315,7 +315,7 @@
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
-		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
+		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
 			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
@@ -361,14 +361,14 @@
 					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Delete"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
 				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A>"
 			else
 				src.state = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
@@ -420,14 +420,14 @@
 				dat += "<BR><BR><A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
 				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
-				src.attack_hand(user)
+				attack_hand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)
@@ -466,14 +466,10 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(SSticker.mode.name == "blob")
-		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-		return
-
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	make_maint_all_access(FALSE)
 
@@ -505,15 +501,11 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(SSticker.mode.name == "blob" || SSticker.mode.name == "epidemic")
-			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-			return
-
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
+	SSshuttle.announce_crew_called.play()
 
 	return
 
@@ -523,9 +515,6 @@
 		return
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
-		return
-	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
-		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm
@@ -562,3 +551,11 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
+
+
+/obj/machinery/computer/communications/evac
+	name = "Shuttle communications console"
+	desc = "This can be used for various important functions."
+	icon_state = "erokez"
+	state_broken_preset = "erokezb"
+	state_nopower_preset = "erokez0"

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
 	item_state = "m79"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"
@@ -57,3 +57,20 @@
 		to_chat(user, "<span class='warning'>You can't fire [src] while it is open!</span>")
 		return 0
 	return ..()
+
+/obj/item/weapon/gun/projectile/underslung
+	name = "underslung grenade launcher"
+	desc = "It's a little tiny launcher. You shouldn't be seeing this."
+	mag_type = /obj/item/ammo_box/magazine/internal/m79/underslung
+	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
+
+/obj/item/weapon/gun/projectile/underslung/attackby(obj/item/I, mob/user, params)
+	if(chambered)
+		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
+		return
+	var/num_loaded = magazine.attackby(I, user, 1)
+	if(num_loaded)
+		playsound(src, 'sound/weapons/guns/reload_m79.ogg', VOL_EFFECTS_MASTER)
+		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+		chambered = AC
+		I.update_icon()

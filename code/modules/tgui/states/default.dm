@@ -43,11 +43,16 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
-
-	// The AI can interact with anything it can see nearby, or with cameras while wireless control is enabled.
-	if(!control_disabled && can_see(src_object))
-		return UI_INTERACTIVE
-	return UI_CLOSE
+	//hook our scary old nanoui topic check cos it handles all the states appropriately
+	switch(can_use_topic(src_object))
+		if(STATUS_INTERACTIVE)
+			. = UI_INTERACTIVE
+		if(STATUS_UPDATE)
+			. = UI_UPDATE
+		if(STATUS_DISABLED)
+			. = UI_DISABLED
+		if(STATUS_CLOSE)
+			. = UI_CLOSE
 
 /mob/living/simple_animal/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)

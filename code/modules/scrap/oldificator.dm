@@ -1,8 +1,9 @@
-/obj/proc/make_old()
+/obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
-	name = pick("old ", "expired ", "dirty ") + initial(name)
-	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	if(change_looks)
+		name = pick("old ", "expired ", "dirty ") + initial(name)
+		desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
@@ -51,7 +52,7 @@
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0,stored_ammo.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item

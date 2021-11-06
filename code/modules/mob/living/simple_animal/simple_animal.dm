@@ -17,9 +17,9 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 0	// No, just no.
-	var/stop_automated_movement = 0 // Use this to temporarely stop random movement or to if you write special movement code for animals.
-	var/wander = 1 // Does the mob wander around when idle?
-	var/stop_automated_movement_when_pulled = 1 // When set to 1 this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement = FALSE // Use this to temporarely stop random movement or to if you write special movement code for animals.
+	var/wander = TRUE // Does the mob wander around when idle?
+	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
 	var/response_help   = "tries to help"
@@ -79,21 +79,27 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
+/mob/living/simple_animal/Login()
+	..()
+	blinded = FALSE
+	stat = CONSCIOUS
+	update_canmove()
+
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
 /mob/living/simple_animal/helpReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/disarmReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_disarm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/hurtReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
@@ -132,7 +138,7 @@
 	health = min(health, maxHealth)
 
 	if(client)
-		handle_vision()
+		handle_regular_hud_updates()
 
 	if(stunned)
 		AdjustStunned(-1)
@@ -249,14 +255,14 @@
 		flick(icon_gib, src)
 	if(butcher_results)
 		for(var/path in butcher_results)
-			for(var/i = 0 to butcher_results[path])
+			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	..()
 
 /mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, m_type)
+		..(act, m_type, message)
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
@@ -282,7 +288,7 @@
 	icon_state = icon_dead
 	stat = DEAD
 	health = 0
-	density = 0
+	density = FALSE
 	med_hud_set_health()
 	med_hud_set_status()
 	return ..()
@@ -290,17 +296,14 @@
 /mob/living/simple_animal/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
-	switch (severity)
-		if (1.0)
-			adjustBruteLoss(500)
+	switch(severity)
+		if(1)
 			gib()
-			return
 
-		if (2.0)
+		if(2)
 			adjustBruteLoss(60)
 
-
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
@@ -320,24 +323,16 @@
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
 		if(!L.stat && L.health >= 0)
-			return (0)
-	if (istype(target_mob,/obj/mecha))
+			return FALSE
+	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
-		if (M.occupant)
-			return (0)
-	if (istype(target_mob,/obj/machinery/bot))
+		if(M.occupant)
+			return FALSE
+	if (istype(target_mob, /obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
-			return (0)
-	return (1)
-
-// Call when target overlay should be added/removed
-/mob/living/simple_animal/update_targeted()
-	if(!targeted_by && target_locked)
-		qdel(target_locked)
-	cut_overlays()
-	if (targeted_by && target_locked)
-		add_overlay(target_locked)
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/update_fire()
 	return
@@ -364,7 +359,7 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/say(var/message)
+/mob/living/simple_animal/say(message)
 	if(stat)
 		return
 
@@ -391,7 +386,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && !stat)
+	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()
@@ -415,3 +410,13 @@
 
 /mob/living/simple_animal/is_usable_leg(targetzone = null)
 	return has_leg
+
+/mob/living/simple_animal/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	if(has_effect && !visual_effect_icon && melee_damage)
+		if(attack_push_vis_effect && !istype(A, /turf/simulated/wall)) // override the standard visual effect.
+			visual_effect_icon = attack_push_vis_effect
+		else if(melee_damage < 10)
+			visual_effect_icon = ATTACK_EFFECT_PUNCH
+		else
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+	..()

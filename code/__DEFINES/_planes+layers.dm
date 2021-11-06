@@ -60,6 +60,9 @@ What is the naming convention for planes or layers?
 	FLOAT_PLANE = -32767
 */
 
+///Plane master controller keys
+#define PLANE_MASTERS_GAME "plane_masters_game"
+
 #define CLICKCATCHER_PLANE   -99
 
 #define PLANE_SPACE            -95
@@ -71,6 +74,7 @@ What is the naming convention for planes or layers?
 
 #define LIGHTING_PLANE         15
 #define LIGHTING_LAYER         15
+#define ABOVE_LIGHTING_PLANE   16
 #define ABOVE_LIGHTING_LAYER   16
 
 //HUD layer defines
@@ -84,7 +88,8 @@ What is the naming convention for planes or layers?
 #define ABOVE_HUD_PLANE   20
 #define ABOVE_HUD_LAYER   20
 
-//efine TURF_LAYER                      2     // For easy recordkeeping; this is a byond define
+#define BELOW_TURF_LAYER                1.9
+//define TURF_LAYER                     2     // For easy recordkeeping; this is a byond define
 #define ABOVE_NORMAL_TURF_LAYER         2.08  // Currently used only by /obj/structure/fans/tiny
 #define GAS_PIPE_HIDDEN_SUPPLY_LAYER    2.33
 #define GAS_PIPE_HIDDEN_SCRUBBER_LAYER  2.34

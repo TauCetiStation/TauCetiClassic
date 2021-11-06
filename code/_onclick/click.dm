@@ -35,8 +35,9 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(src)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -77,22 +78,27 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+		MiddleShiftClickOn(A)
+		return
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 	if(HardsuitClickOn(A))
+		return
+	if(RegularClickOn(A))
 		return
 
 	if(stat || paralysis || stunned || weakened)
@@ -116,7 +122,7 @@
 		throw_item(A)
 		return
 
-	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /atom/movable/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
@@ -133,7 +139,7 @@
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
 
 		// No adjacency needed
 		if(W)
@@ -171,6 +177,9 @@
 /mob/proc/DblClickOn(atom/A, params)
 	return
 
+// Click without any modifiers
+/mob/proc/RegularClickOn(atom/A)
+	return FALSE
 
 //	Translates into attack_hand, etc.
 
@@ -209,6 +218,21 @@
 */
 /mob/proc/RestrainedClickOn(atom/A) // for now it's overriding only in monkey.
 	return
+
+/*
+	Middle Shift click
+	For point to
+*/
+/mob/proc/MiddleShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.MiddleShiftClick(src)
+
+/atom/proc/MiddleShiftClick(mob/user)
+	if(user.client && user.client.eye == user)
+		user.pointed(src)
 
 /*
 	Middle click
@@ -351,11 +375,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	usr.set_dir(NORTH)
+		else		usr.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	usr.set_dir(EAST)
+		else		usr.set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
@@ -371,45 +395,45 @@
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			set_dir(NORTH)
 		else
-			dir = SOUTH
+			set_dir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			set_dir(EAST)
 		else
-			dir = WEST
+			set_dir(WEST)
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
 		//do nothing
-	else if(modifiers["left"])
-		if(modifiers["alt"])
+	else if(modifiers[LEFT_CLICK])
+		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else
 			C.cob.try_to_build(src)
-	else if(modifiers["right"])
+	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
-/obj/screen/click_catcher
+/atom/movable/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/atom_init()
+/atom/movable/screen/click_catcher/atom_init()
 	. = ..()
 	transform = matrix(200, 0, 0, 0, 200, 0)
 
-/obj/screen/click_catcher/Click(location, control, params)
+/atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers[SCREEN_LOC], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

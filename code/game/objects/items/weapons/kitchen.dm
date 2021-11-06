@@ -18,7 +18,7 @@
  */
 /obj/item/weapon/kitchen/utensil
 	force = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
@@ -37,7 +37,7 @@
 		return ..()
 
 	if(user.a_intent != INTENT_HELP)
-		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
+		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
 			if((CLUMSY in user.mutations) && prob(50))
 				M = user
 			return eyestab(M,user)
@@ -126,7 +126,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
@@ -187,7 +187,7 @@
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	force = 15.0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -210,7 +210,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
@@ -222,7 +222,7 @@
 
 	M.log_combat(user, "attacked with [name]")
 
-	var/t = user.zone_sel.selecting
+	var/t = user.get_targetzone()
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -241,7 +241,7 @@
 				return
 			else
 				H.visible_message("<span class='warning'>[user] tried to knock [H] unconscious!</span>", "<span class='warning'>[user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
+				H.blurEyes(3)
 	return ..()
 
 /obj/item/weapon/storage/visuals/tray
@@ -252,10 +252,10 @@
 	force = 8
 	throwforce = 12.0
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	flags = CONDUCT
 	m_amt = 3000
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	opened = TRUE
 	max_storage_space = 18
 	var/cooldown = 0
@@ -307,7 +307,7 @@
 		dropitems(user = user, target = target, scatter = FALSE)
 	return
 
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, scatter = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
 		remove_from_storage(I, new_location = T)
@@ -331,7 +331,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 
 /obj/item/weapon/kitchen/mould/bear

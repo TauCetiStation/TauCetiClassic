@@ -290,7 +290,7 @@
 			return FALSE
 		if(!isturf(walker.loc))
 			return FALSE
-		if(!in_range(walker, carry_obj))
+		if(!walker.Adjacent(carry_obj))
 			return FALSE
 		if(walker.lying)
 			lying_am++
@@ -436,7 +436,7 @@
 		var/mob/M = carry_obj.buckled_mob
 		if(M && M.can_waddle())
 			M.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
-			M.dir = pick(WEST, EAST)
+			M.set_dir(pick(WEST, EAST))
 
 /datum/component/multi_carry/proc/check_proximity(datum/source)
 	var/mob/carrier = source

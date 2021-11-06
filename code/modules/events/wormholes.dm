@@ -3,6 +3,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 /datum/event/wormholes
 	announceWhen = 10
 	endWhen      = 60
+	announcement = new /datum/announcement/centcomm/wormholes
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
@@ -15,7 +16,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 
 /datum/event/wormholes/announce()
 	if(pick_turfs.len)
-		command_alert("Space-time anomalies detected on the station. It is recommended to avoid suspicious things or phenomena. There is no additional data.", "Anomaly Alert", "wormholes")
+		announcement.play()
 
 /datum/event/wormholes/start()
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
@@ -24,7 +25,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 
 	for(var/i in 1 to number_of_wormholes)
 		var/turf/T = pick(pick_turfs)
-		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
+		wormholes += new /obj/effect/portal/wormhole(T, null, FALSE, null, -1)
 
 /datum/event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)

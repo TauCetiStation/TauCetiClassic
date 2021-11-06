@@ -13,7 +13,7 @@
 	var/active = 0
 	var/field_radius = 3
 	var/list/field
-	density = 1
+	density = TRUE
 	var/locked = 0
 	var/average_field_strength = 0
 	var/strengthen_rate = 0.2
@@ -32,7 +32,7 @@
 	active_power_usage = 100
 
 /obj/machinery/shield_gen/atom_init()
-	field = new/list()
+	field = list()
 	. = ..()
 
 /obj/machinery/shield_gen/atom_init_late()
@@ -59,7 +59,7 @@
 
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()
@@ -91,7 +91,7 @@
 	return TRUE
 
 /obj/machinery/shield_gen/ui_interact(mob/user)
-	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+	if (!Adjacent(user) || stat & (BROKEN|NOPOWER))
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
@@ -215,7 +215,7 @@
 				toggle()
 	update_power_use()
 
-/obj/machinery/shield_gen/ex_act(var/severity)
+/obj/machinery/shield_gen/ex_act(severity)
 
 	if(active)
 		toggle()

@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 #define STATE_DEFAULT 1
 #define STATE_INJECTOR  2
 #define STATE_ENGINE 3
@@ -37,7 +36,7 @@
 	switch(href_list["operation"])
 		// main interface
 		if("activate")
-			src.connected_E.engine_process()
+			connected_E.engine_process()
 		if("engine")
 			src.state = STATE_ENGINE
 		if("injector")
@@ -48,14 +47,14 @@
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if (I && istype(I))
-				if(src.check_access(I))
+				if(check_access(I))
 					authenticated = 1
 		if("deactivate")
 			src.connected_E.stopping = 1
 		if("logout")
 			authenticated = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/am_engine/ui_interact(mob/user)
 	var/dat = ""

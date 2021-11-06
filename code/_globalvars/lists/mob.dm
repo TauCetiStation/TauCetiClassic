@@ -22,8 +22,14 @@ var/global/list/new_player_list = list()
 var/global/list/observer_list = list()
 var/global/list/living_list = list()
 var/global/list/carbon_list = list()
-var/global/list/alien_list = list()
-var/global/list/queen_list = list()
+var/global/list/alien_list = list(
+									ALIEN_QUEEN = list(),
+									ALIEN_DRONE = list(),
+									ALIEN_SENTINEL = list(),
+									ALIEN_HUNTER = list(),
+									ALIEN_LARVA = list(),
+									ALIEN_FACEHUGGER = list()
+								)
 var/global/list/human_list = list()
 var/global/list/monkey_list = list()
 var/global/list/silicon_list = list()

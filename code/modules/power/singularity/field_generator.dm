@@ -85,7 +85,7 @@ field_generator power level display
 	if(.)
 		return
 	if(state == FG_WELDED)
-		if(in_range(src, user) || isobserver(user))//Need to actually touch the thing to turn it on
+		if(Adjacent(user) || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
@@ -291,7 +291,7 @@ field_generator power level display
 			var/obj/machinery/containment_field/CF = new
 			CF.set_master(src, G)
 			CF.loc = T
-			CF.dir = field_dir
+			CF.set_dir(field_dir)
 
 	connected_gens |= G
 	G.connected_gens |= src
@@ -330,7 +330,7 @@ field_generator power level display
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
 				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
-		O.last_warning = world.time
+			O.last_warning = world.time
 
 
 #undef FG_MAX_POWER

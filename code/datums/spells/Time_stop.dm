@@ -1,7 +1,7 @@
 var/timestop_count = 0
 
 /obj/effect/timestop
-	anchored = 1
+	anchored = TRUE
 	name = "chronofield"
 	desc = "ZA WARUDO"
 	icon = 'icons/effects/160x160.dmi'
@@ -9,7 +9,7 @@ var/timestop_count = 0
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	bound_height = 160
 	bound_width = 160
 	bound_x = -64
@@ -71,6 +71,7 @@ var/timestop_count = 0
 				H.LoseTarget()
 
 			M.Stun(10, 1, 1, 1)
+			M.silent += duration
 			M.freeze_movement = TRUE
 			stopped_atoms |= M
 
@@ -99,6 +100,7 @@ var/timestop_count = 0
 
 		if(isliving(AM))
 			var/mob/living/M = AM
+			M.silent = max(M.silent - duration, 0)
 			M.AdjustStunned(-10, 1, 1, 0)
 
 		if(istype(AM, /obj/item/projectile))
@@ -106,8 +108,8 @@ var/timestop_count = 0
 			P.paused = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
-	name = "Stop Time"
-	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
+	name = "Остановка Времени"
+	desc = "Останавливает время для всего, кроме вас и позволяет свободно перемещаться в зоне действия, пока ваши враги застыли на месте."
 	charge_max = 500
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"

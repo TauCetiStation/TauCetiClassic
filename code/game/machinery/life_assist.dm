@@ -55,13 +55,18 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if(!in_range(src, usr) || !in_range(over_object, src))
+	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
-	if(attached)
-		detach()
-	else if(ishuman(over_object))
-		attach(over_object)
+	if(do_after(usr, 20, target = src))
+		if(attached)
+			detach()
+		else if(ishuman(over_object))
+			var/mob/living/carbon/human/H = over_object
+			if(HAS_TRAIT(H, TRAIT_AV))
+				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
+				return
+			attach(H)
 
 /obj/machinery/life_assist/proc/resolve_stranded(datum/component/bounded/bounds)
 	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
@@ -86,7 +91,56 @@
 
 	my_trait = TRAIT_AV
 
+	var/obj/item/weapon/tank/holding
 
+/obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
+	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
+		return
+	if(do_after(user, 10, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
+		holding = W
+		add_overlay(holding.icon_state)
+		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+		if(attached)
+			update_internal(attached, TRUE)
+
+/obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(user.is_busy() || issilicon(user))
+		return
+	if(holding && do_after(user, 20, target = src))
+		user.put_in_hands(holding)
+		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
+		cut_overlay(holding.icon_state)
+		holding = null
+		if(attached)
+			update_internal(attached, FALSE)
+
+/obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
+	..()
+	update_internal(TRUE)
+
+/obj/machinery/life_assist/artificial_ventilation/detach(rip = FALSE)
+	update_internal(FALSE)
+	..()
+
+/obj/machinery/life_assist/artificial_ventilation/proc/update_internal(connect = TRUE)
+	if(!attached)
+		return
+	if(connect && holding)
+		if(attached.internal)
+			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
+			return
+		attached.internal = holding
+		if(attached.internals)
+			attached.internals.icon_state = "internal1"
+	else if(attached.internals)
+		attached.internals.icon_state = "internal0"
+		attached.internal = null
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"

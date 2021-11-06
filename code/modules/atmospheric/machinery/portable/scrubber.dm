@@ -122,6 +122,9 @@
 		data["holding"] = null
 	return data
 
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
 	if(.)
@@ -157,7 +160,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/huge
 	name = "Huge Air Scrubber"
 	icon_state = "scrubber:0"
-	anchored = 1
+	anchored = TRUE
 	volume = 50000
 	volume_rate = 5000
 

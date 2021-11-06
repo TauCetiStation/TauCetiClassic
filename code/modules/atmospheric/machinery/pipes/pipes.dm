@@ -83,7 +83,7 @@
 	parent = P
 
 /*
-/obj/machinery/atmospherics/pipe/add_underlay(var/obj/machinery/atmospherics/node, var/direction)
+/obj/machinery/atmospherics/pipe/add_underlay(obj/machinery/atmospherics/node, direction)
 	if(istype(src, /obj/machinery/atmospherics/components/unary/tank))	//todo: move tanks to unary devices
 		return ..()
 

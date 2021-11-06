@@ -10,12 +10,12 @@
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
-	if(!src.Adjacent(user) || !over.Adjacent(user))
+	if(!Adjacent(user) || !over.Adjacent(user))
 		return FALSE // should stop you from dragging through windows
 	return TRUE
 
 
-/atom/MouseDrop(atom/over)
+/atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
 	var/obj/item/I = usr.get_active_hand()

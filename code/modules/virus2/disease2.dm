@@ -43,7 +43,7 @@
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
-/datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)
+/datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
 		return
 	if(effects.len < max_symptoms)
@@ -114,7 +114,7 @@
 	if(mob.reagents.has_reagent("spaceacillin"))
 		if(!mob.is_infected_with_zombie_virus())
 			if(stage == 1 && prob(20))
-				src.cure(mob)
+				cure(mob)
 			return
 		else
 			if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely

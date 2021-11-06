@@ -23,13 +23,13 @@
 			return 1
 	return ..()
 
-/mob/living/silicon/say(var/message)
+/mob/living/silicon/say(message)
 
 	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
 	message = sanitize(message)

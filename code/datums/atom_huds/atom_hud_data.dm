@@ -1,4 +1,3 @@
-#define HIDDEN_SCANNER 1
 /*
  * Data HUDs have been rewritten in a more generic way.
  * In short, they now use an observer-listener pattern.
@@ -8,12 +7,27 @@
 
 /* DATA HUD DATUMS */
 /atom/proc/add_to_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.remove_from_hud(src)
+
+/proc/get_all_data_huds()
+	RETURN_TYPE(/list)
+	var/static/list/all_data_huds
+
+	if(!all_data_huds)
+		all_data_huds = list()
+		for(var/hud_name in global.huds)
+			if(!istype(global.huds[hud_name], /datum/atom_hud/data))
+				continue
+			all_data_huds += global.huds[hud_name]
+
+	return all_data_huds
 
 /datum/atom_hud/data
 	hud_icons = null
@@ -47,17 +61,25 @@
 	return TRUE
 
 /datum/atom_hud/data/security
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
-/datum/atom_hud/data/mine
+/datum/atom_hud/mine
 	hud_icons = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 
-/datum/atom_hud/broken
+/datum/atom_hud/data/broken
 	hud_icons = list(BROKEN_HUD)
 
+/datum/atom_hud/golem
+	hud_icons = list(GOLEM_MASTER_HUD)
+
+/datum/atom_hud/holy
+	hud_icons = list(HOLY_HUD)
+
+/datum/atom_hud/embryo
+	hud_icons = list(ALIEN_EMBRYO_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -72,13 +94,13 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
-	var/severity
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(!D.hidden[HIDDEN_SCANNER])
-			if(!threat || D.severity > threat) //a buffing virus gets an icon
-				threat = D.severity
-				severity = D.severity
+	var/severity = 0
+	for(var/id in virus2)
+		if(id in virusDB)
+			var/datum/disease2/disease/D = virus2[id]
+			if(!threat || D.stage > threat) //a buffing virus gets an icon
+				threat = D.stage
+				severity += D.stage
 	return severity
 
 //called when a human changes suit sensors
@@ -120,23 +142,10 @@
 		else
 			holder.icon_state = "huddead"
 	else
-		switch(virus_threat)
-			if(7)
-				holder.icon_state = "hudill5"
-			if(6)
-				holder.icon_state = "hudill4"
-			if(5)
-				holder.icon_state = "hudill3"
-			if(4)
-				holder.icon_state = "hudill2"
-			if(3)
-				holder.icon_state = "hudill1"
-			if(2)
-				holder.icon_state = "hudill0"
-			if(1)
-				holder.icon_state = "hudbuff"
-			else
-				holder.icon_state = "hudhealthy"
+		if(virus_threat == 0)
+			holder.icon_state = "hudhealthy"
+		else
+			holder.icon_state = "hudill[min(virus_threat, 7)]"
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
@@ -158,18 +167,24 @@
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
 	var/y = 0
-	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
+	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(isloyal(src))
+	if(isloyal())
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(ismindshielded(src))
+	if(ismindshielded())
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
+		holder.pixel_y = y
+		y += -5
+
+	if(isimplantedobedience())
+		holder = hud_list[IMPOBED_HUD]
+		holder.icon_state = "hud_imp_obedience"
 		holder.pixel_y = y
 		y += -5
 
@@ -188,7 +203,7 @@
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
-	var/perpname = get_face_name(get_id_name(""))
+	var/perpname = get_visible_name(TRUE)
 	if(perpname && global.data_core)
 		var/datum/data/record/R = find_record("name", perpname, global.data_core.security)
 		if(R)
@@ -365,4 +380,16 @@
 		else
 			return "health-100"
 
-#undef HIDDEN_SCANNER
+/*~~~~~~~~~~~~
+  Golem Master
+~~~~~~~~~~~~~*/
+/mob/living/proc/set_golem_hud()
+	var/image/holder = hud_list[GOLEM_MASTER_HUD]
+	holder.icon_state = "agolem_master"
+
+/*~~~~~~~~~~~~
+    ✟HOLY✟
+~~~~~~~~~~~~~*/
+/mob/proc/set_holy_hud()
+	var/image/holder = hud_list[HOLY_HUD]
+	holder.icon_state = my_religion?.symbol_icon_state

@@ -125,7 +125,7 @@
 // Vox space gear (vaccuum suit, low pressure armour)
 // Can't be equipped by any other species due to bone structure and vox cybernetics.
 /obj/item/clothing/suit/space/vox
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 1.5
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -277,7 +277,7 @@
 			return
 		if(wearer)
 			wearer.alpha = 4
-			wearer.mouse_opacity = 0
+			wearer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
 				wearer.playsound_local(null, 'sound/rig/loudbeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
@@ -308,11 +308,11 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/toggle_stealth(deactive = FALSE)
 	if(on)
-		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, null, -4)
+		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 		on = FALSE
 		slowdown = 0.5
 		wearer.alpha = 255
-		wearer.mouse_opacity = 1
+		wearer.mouse_opacity = MOUSE_OPACITY_ICON
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
@@ -322,18 +322,18 @@
 			return
 		last_try = world.time + 4 SECONDS
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, -5)
+		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(do_after(wearer, 20, target = wearer))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return
 			if(is_damaged(TRUE))
 				return
-			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, null, -5)
+			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
 			slowdown = 2
 			wearer.alpha = 4
-			wearer.mouse_opacity = 0
+			wearer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)

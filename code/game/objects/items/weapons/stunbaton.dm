@@ -6,7 +6,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 	throwforce = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
@@ -31,9 +31,9 @@
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
-		icon_state = "stunbaton_active"
+		icon_state = "[initial(icon_state)]_active"
 	else
-		icon_state = "stunbaton"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))

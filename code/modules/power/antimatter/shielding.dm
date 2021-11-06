@@ -13,8 +13,8 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	dir = 1
 	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
@@ -205,13 +205,12 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	m_amt = 100
-	w_amt = 2000
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(ismultitool(I) && istype(loc, /turf))

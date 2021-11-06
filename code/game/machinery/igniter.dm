@@ -54,7 +54,7 @@
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
-	anchored = 1
+	anchored = TRUE
 
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )
@@ -77,7 +77,7 @@
 			icon_state = "[base_state]-d"
 		if (!src.disable)
 			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
-			if(src.powered())
+			if(powered())
 				icon_state = "[base_state]"
 			else
 				icon_state = "[base_state]-p"
@@ -129,8 +129,8 @@
 
 	active = 1
 	icon_state = "launcheract"
-	message_admins("Ignition switch was activated at ([x],[y],[z]) [ADMIN_JMP(src)] Last touched by: [key_name(usr)] [ADMIN_JMP(usr)]")
-	log_game("Ignition switch was activated at ([x],[y],[z]) Last touched by: [key_name(usr)]")
+	message_admins("Ignition switch was activated at [COORD(src)] [ADMIN_JMP(src)] Last touched by: [key_name(usr)] [ADMIN_JMP(usr)]")
+	log_game("Ignition switch was activated at [COORD(src)] Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)
 		if (M.id == id)

@@ -1,5 +1,5 @@
 /mob/living/carbon/xenomorph/facehugger/get_unarmed_attack()
-	var/retDam = 2
+	var/retDam = 1
 	var/retDamType = BRUTE
 	var/retFlags = DAM_SHARP
 	var/retVerb = "gnaw"

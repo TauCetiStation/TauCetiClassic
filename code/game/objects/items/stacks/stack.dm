@@ -18,7 +18,7 @@
 	var/amount = 1
 	var/max_amount = 50                 // also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/merge_type = null               // This path and its children should merge with this stack, defaults to src.type
-	var/full_w_class = ITEM_SIZE_NORMAL // The weight class the stack should have at amount > 2/3rds max_amount
+	var/full_w_class = SIZE_SMALL // The weight class the stack should have at amount > 2/3rds max_amount
 	var/is_fusion_fuel
 
 /obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 2, SIZE_MINUSCULE, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 1, SIZE_MINUSCULE, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -72,126 +72,117 @@
 		return ""
 
 /obj/item/stack/attack_self(mob/user)
-	list_recipes(user)
+	tgui_interact(user)
 
-/obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
-	if (!recipes)
-		return
-	if (!src || amount<=0)
-		user << browse(null, "window=stack")
-	user.set_machine(src) //for correct work of onclose
-	var/list/recipe_list = recipes
-	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
-		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
-		recipe_list = srl.recipes
-	var/t1 = "<TT>Amount Left: [src.amount]<br>"
-	for(var/i=1;i<=recipe_list.len,i++)
-		var/E = recipe_list[i]
-		if (isnull(E))
-			t1 += "<hr>"
-			continue
+/obj/item/stack/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Stack", name)
+		ui.open()
 
-		if (i>1 && !isnull(recipe_list[i-1]))
-			t1+="<br>"
+/obj/item/stack/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
+	var/list/data = list()
 
-		if (istype(E, /datum/stack_recipe_list))
-			var/datum/stack_recipe_list/srl = E
-			if (src.amount >= srl.req_amount)
-				t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title] ([srl.req_amount] [src.singular_name]\s)</a>"
-			else
-				t1 += "[srl.title] ([srl.req_amount] [src.singular_name]\s)<br>"
+	data["amount"] = get_amount()
 
-		if (istype(E, /datum/stack_recipe))
-			var/datum/stack_recipe/R = E
-			var/max_multiplier = round(src.amount / R.req_amount)
-			var/title
-			var/can_build = 1
-			can_build = can_build && (max_multiplier>0)
-			/*
-			if (R.one_per_turf)
-				can_build = can_build && !(locate(R.result_type) in usr.loc)
-			if (R.on_floor)
-				can_build = can_build && istype(usr.loc, /turf/simulated/floor)
-			*/
-			if (R.res_amount>1)
-				title+= "[R.res_amount]x [R.title]\s"
-			else
-				title+= "[R.title]"
-			title+= " ([R.req_amount] [src.singular_name]\s)"
-			if (can_build)
-				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i]'>[title]</A>  ")
-			else
-				t1 += text("[]", title)
-				continue
-			if (R.max_res_amount>1 && max_multiplier>1)
-				max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
-				t1 += " |"
-				var/list/multipliers = list(5,10,25)
-				for (var/n in multipliers)
-					if (max_multiplier>=n)
-						t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-				if (!(max_multiplier in multipliers))
-					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+	return data
 
-	t1 += "</TT>"
+/obj/item/stack/tgui_static_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
+	var/list/data = list()
 
-	var/datum/browser/popup = new(user, "stack", "Constructions from [src]")
-	popup.set_content(t1)
-	popup.open()
-	return
+	data["recipes"] = recursively_build_recipes(recipes)
 
-/obj/item/stack/Topic(href, href_list)
-	..()
-	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	return data
+
+/obj/item/stack/proc/recursively_build_recipes(list/recipe_to_iterate)
+	var/list/L = list()
+	for(var/recipe in recipe_to_iterate)
+		if(istype(recipe, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/R = recipe
+			L["[R.title]"] = recursively_build_recipes(R.recipes)
+		if(istype(recipe, /datum/stack_recipe))
+			var/datum/stack_recipe/R = recipe
+			L["[R.title]"] = build_recipe(R)
+
+	return L
+
+/obj/item/stack/proc/build_recipe(datum/stack_recipe/R)
+	return list(
+		"res_amount" = R.res_amount,
+		"max_res_amount" = R.max_res_amount,
+		"req_amount" = R.req_amount,
+		"ref" = "\ref[R]",
+	)
+
+/obj/item/stack/tgui_state(mob/user)
+	return global.hands_state
+
+/obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
 		return
 
-	if (href_list["sublist"] && !href_list["make"])
-		list_recipes(usr, text2num(href_list["sublist"]))
-
-	if (href_list["make"])
-		var/list/recipes_list = recipes
-		if (href_list["sublist"])
-			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
-			recipes_list = srl.recipes
-		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
-		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier) multiplier = 1
-		if(src.amount < (R.req_amount*multiplier))
-			if (R.req_amount*multiplier>1)
-				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
-			else
-				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
-			return
-		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-			return
-		if (R.on_floor)
-			usr.client.cob.turn_on_build_overlay(usr.client, R, src)
-			usr << browse(null, "window=stack")
-			return
-		if (R.time)
-			if(usr.is_busy())
+	switch(action)
+		if("make")
+			if(get_amount() < 1)
+				qdel(src)
 				return
-			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-			if (!do_after(usr, R.time, target = usr))
+
+			var/datum/stack_recipe/R = locate(params["ref"])
+			if(!is_valid_recipe(R, recipes)) //href exploit protection
+				return FALSE
+			var/multiplier = text2num(params["multiplier"])
+			if(!multiplier || (multiplier <= 0)) //href exploit protection
 				return
-		if(!src.use(R.req_amount*multiplier))
-			return
-		var/atom/O = new R.result_type( usr.loc )
-		O.dir = usr.dir
-		if (R.max_res_amount>1)
-			var/obj/item/stack/new_item = O
-			new_item.amount = R.res_amount*multiplier
-		O.add_fingerprint(usr)
-		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
-			for (var/obj/item/I in O)
-				qdel(I)
-		//BubbleWrap END
-	if (src && usr.machine==src) //do not reopen closed window
-		INVOKE_ASYNC(src, .proc/interact, usr)
+			produce_recipe(R, multiplier, usr)
+			return TRUE
+
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+	var/datum/stack_recipe/R = recipe
+	var/multiplier = quantity
+	if (!multiplier) multiplier = 1
+	if(src.amount < (R.req_amount*multiplier))
+		if (R.req_amount*multiplier>1)
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
+		else
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return
-	return
+	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
+		return
+	if (R.on_floor)
+		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
+		return
+	if (R.time)
+		if(usr.is_busy())
+			return
+		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
+		if (!do_after(usr, R.time, target = usr))
+			return
+	if(!use(R.req_amount*multiplier))
+		return
+	var/atom/O = new R.result_type( usr.loc )
+	O.set_dir(usr.dir)
+	if (R.max_res_amount>1)
+		var/obj/item/stack/new_item = O
+		new_item.amount = R.res_amount*multiplier
+	O.add_fingerprint(usr)
+	//BubbleWrap - so newly formed boxes are empty
+	if ( istype(O, /obj/item/weapon/storage) )
+		for (var/obj/item/I in O)
+			qdel(I)
+	//BubbleWrap END
+
+/obj/item/stack/proc/is_valid_recipe(datum/stack_recipe/R, list/recipe_list)
+	for(var/S in recipe_list)
+		if(S == R)
+			return TRUE
+		if(istype(S, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/L = S
+			if(is_valid_recipe(R, L.recipes))
+				return TRUE
+
+	return FALSE
 
 /obj/item/stack/proc/get_amount()
 	. = (amount)
@@ -292,7 +283,7 @@
 	if(!istype(user) || !CanUseTopic(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(!in_range(src, user))
+	if(!Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")

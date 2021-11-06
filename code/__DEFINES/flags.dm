@@ -6,14 +6,13 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
-#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
+#define NOLIMB           -1    // related to "pierce_protection" check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
 #define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
-#define MASKINTERNALS          (1<<2)   // Mask allows internals.
+#define MASKINTERNALS          (1<<3)   // Mask allows internals.
 
-//#define USEDELAY             (1<<3)   // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD               (1<<4)   // Weapon not affected by shield.
 
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
@@ -23,7 +22,7 @@
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
-#define THICKMATERIAL          (1<<8)   // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
+#define NOPIERCE               (1<<8)
 #define GLASSESCOVERSEYES      (1<<8)
 #define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.
@@ -49,6 +48,8 @@
 #define BLOCKHAIR              (1<<15)  // Clothing. Temporarily removes the user's hair, facial and otherwise.
 
 #define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
+
+#define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
@@ -135,3 +136,7 @@
 #define ESSENCE_POINT 128
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
+
+//dir macros
+///Returns true if the dir is diagonal, false otherwise
+#define ISDIAGONALDIR(d) (d&(d-1))

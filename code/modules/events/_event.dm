@@ -67,6 +67,9 @@
 	var/endedAt			= 0 //When this event ended.
 	var/noAutoEnd       = 0 //Does the event end automatically after endWhen passes?
 
+	var/datum/announcement/announcement
+	var/datum/announcement/announcement_end
+
 /datum/event/nothing
 
 //Called first before processing.
@@ -86,7 +89,8 @@
 //Allows you to announce before starting or vice versa.
 //Only called once.
 /datum/event/proc/announce()
-	return
+	if(announcement)
+		announcement.play()
 
 //Called on or after the tick counter is equal to startWhen.
 //You can include code related to your event or add your own
@@ -102,7 +106,8 @@
 //For example: if(activeFor == myOwnVariable + 30) doStuff()
 //Only called once.
 /datum/event/proc/end()
-	return
+	if(announcement_end)
+		announcement_end.play()
 
 //Returns the latest point of event processing.
 /datum/event/proc/lastProcessAt()
@@ -162,10 +167,7 @@
 
 	event_meta = EM
 	severity = event_meta.severity
-	if(severity < EVENT_LEVEL_MUNDANE)
-		severity = EVENT_LEVEL_MUNDANE
-	if(severity > EVENT_LEVEL_MAJOR)
-		severity = EVENT_LEVEL_MAJOR
+	severity = clamp(severity, EVENT_LEVEL_ROUNDSTART, EVENT_LEVEL_MAJOR)
 
 	startedAt = world.time
 

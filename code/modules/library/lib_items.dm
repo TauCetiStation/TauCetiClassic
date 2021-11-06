@@ -15,8 +15,8 @@
 	name = "bookcase"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "book-0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 
 /obj/structure/bookcase/atom_init()
@@ -28,8 +28,7 @@
 
 /obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
@@ -44,7 +43,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(usr.incapacitated() || !in_range(loc, usr))
+			if(usr.incapacitated() || !Adjacent(usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
@@ -63,7 +62,7 @@
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
 				if (prob(50)) b.loc = (get_turf(src))
-				else del(b)
+				else qdel(b)
 			qdel(src)
 			return
 		if(3.0)
@@ -148,7 +147,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = SIZE_SMALL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	var/dat			 // Actual page content
 	var/due_date = 0 // Game time in 1/10th seconds
@@ -182,7 +181,7 @@
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
 		if(!store)
-			if(I.w_class < ITEM_SIZE_NORMAL)
+			if(I.w_class < SIZE_SMALL)
 				user.drop_from_inventory(I, src)
 				store = I
 				to_chat(user, "<span class='notice'>You put [I] in [title].</span>")
@@ -284,7 +283,7 @@
 	icon_state ="scanner"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer // Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book	 //  Currently scanned book
 	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory

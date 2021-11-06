@@ -7,13 +7,14 @@
 	health = 100
 	maxhealth = 100
 
+	layer = INFRONT_MOB_LAYER
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
 
-	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 	idcheck = 1 //If false, all station IDs are authorized for weapons.
 	check_records = 1 //Does it check security records? Checks arrest status and existence of record
 	var/projectile = null//Holder for projectile type, to avoid so many else if chains
+	var/on_timer_id
 
 	var/lasertag_color = ""
 
@@ -52,12 +53,16 @@
 /obj/machinery/bot/secbot/ed209/update_icon()
 	icon_state = "[lasertag_color]ed209[on]"
 
-/obj/machinery/bot/secbot/ed209/is_operational_topic()
-	if(lasertag_color && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+/obj/machinery/bot/secbot/ed209/can_interact_with(mob/user)
+	if(!..())
+		return FALSE
+
+	if(lasertag_color && ishuman(user))
+		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 		if(istype(L) && L.lasertag_color != lasertag_color)
 			return FALSE
+
 	return TRUE
 
 /obj/machinery/bot/secbot/ed209/ui_interact(mob/user)
@@ -72,7 +77,7 @@
 		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
-		if(!lasercolor)
+		if(!lasertag_color)
 			dat += text({"<BR>
 				Check for Weapon Authorization: []<BR>
 				Check Security Records: []<BR>
@@ -129,7 +134,7 @@
 	if(targets.len)
 		shootAt(pick(targets))
 
-	if((mode == SECBOT_HUNT || mode == SECBOT_PREP_ARREST) && lasercolor) //Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
+	if((mode == SECBOT_HUNT || mode == SECBOT_PREP_ARREST) && lasertag_color) //Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
 		mode = SECBOT_IDLE
 		return
 
@@ -174,13 +179,13 @@
 // look for a criminal in view of the bot
 
 /obj/machinery/bot/secbot/ed209/look_for_perp()
-	if(disabled)
+	if(!on)
 		return
 
-	anchored = 0
+	anchored = FALSE
 	threatlevel = 0
 	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
-		if(L.stat || (lasercolor && L.lying && !L.crawling))
+		if(L.stat || (lasertag_color && L.lying && !L.crawling))
 			continue //Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
 
 		if(iscarbon(L))
@@ -197,7 +202,7 @@
 			target = L
 			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
-			if(!lasercolor)
+			if(!lasertag_color)
 				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
@@ -244,7 +249,7 @@
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if(!lasercolor)
+	if(!lasertag_color)
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
@@ -262,7 +267,7 @@
 		if(prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
-			if(!lasercolor)
+			if(!lasertag_color)
 				new /obj/item/clothing/suit/storage/flak(Tsec)
 			if(lasertag_color == "blue")
 				new /obj/item/clothing/suit/lasertag/bluetag(Tsec)
@@ -290,17 +295,17 @@
 	//	playsound(src, 'ed209_shoot.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!projectile)
-		if(!lasercolor)
+		if(!lasertag_color)
 			if(emagged == 2)
 				projectile = /obj/item/projectile/beam
 			else
 				projectile = /obj/item/projectile/energy/electrode
-		else if(lasercolor == "b")
+		else if(lasertag_color == "blue")
 			if(emagged == 2)
 				projectile = /obj/item/projectile/beam/lasertag/omni
 			else
 				projectile = /obj/item/projectile/beam/lasertag/blue
-		else if(lasercolor == "r")
+		else if(lasertag_color == "red")
 			if(emagged == 2)
 				projectile = /obj/item/projectile/beam/lasertag/omni
 			else
@@ -330,8 +335,8 @@
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
-		pulse2.anchored = 1
-		pulse2.dir = pick(cardinal)
+		pulse2.anchored = TRUE
+		pulse2.set_dir(pick(cardinal))
 		QDEL_IN(pulse2, 10)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12, src))
@@ -363,7 +368,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!user.Adjacent(src))
 			return
 		created_name = t
 		return
@@ -450,7 +455,7 @@
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser))
 						return
 					name = "taser ED-209 assembly"
 				else
@@ -487,22 +492,32 @@
 	if(!did_something)
 		return ..()
 
-/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
-	if(!disabled && istype(Proj, /obj/item/projectile/beam/lasertag))
-		var/obj/item/projectile/beam/lasertag/L = Proj
-		if(L.lasertag_color != lasertag_color)
-			disabled = TRUE
-			qdel(Proj)
-			VARSET_IN(src, disabled, FALSE, 100)
+
+/obj/machinery/bot/secbot/ed209/proc/turn_on_cb()
+	on_timer_id = null
+	turn_on()
+
+/obj/machinery/bot/secbot/ed209/turn_on()
+	if (!isnull(on_timer_id))
 		return
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
-	..()
-	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "blue")
-	return INITIALIZE_HINT_QDEL
+/obj/machinery/bot/secbot/ed209/Destroy()
+	deltimer(on_timer_id)
+	return ..()
 
-/obj/machinery/bot/secbot/ed209/redtag/atom_init()
-	..()
-	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "red")
-	return INITIALIZE_HINT_QDEL
+/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
+	if(on && istype(Proj, /obj/item/projectile/beam/lasertag))
+		var/obj/item/projectile/beam/lasertag/L = Proj
+		if(L.lasertag_color != lasertag_color)
+			turn_off()
+			qdel(Proj)
+			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
+		return
+	return ..()
+
+/obj/machinery/bot/secbot/ed209/bluetag
+	lasertag_color = "blue"
+
+/obj/machinery/bot/secbot/ed209/redtag
+	lasertag_color = "red"

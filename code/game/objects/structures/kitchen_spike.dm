@@ -71,7 +71,7 @@
 						pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)
 					H.buckled = src
-					H.dir = 2
+					H.set_dir(2)
 					buckled_mob = H
 					var/matrix/m = matrix(H.transform)
 					m.Turn(180)

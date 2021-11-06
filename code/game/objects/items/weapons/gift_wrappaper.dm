@@ -18,7 +18,7 @@
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class < ITEM_SIZE_LARGE)
+	if(w_class < SIZE_NORMAL)
 		icon_state = "gift[w_class]"
 	else
 		icon_state = "gift[pick(1, 2, 3)]"
@@ -137,12 +137,12 @@
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/living/user, params)
 	if(!locate(/obj/structure/table, loc))
 		to_chat(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
 
-	if(I.w_class < ITEM_SIZE_LARGE)
+	if(I.w_class < SIZE_NORMAL)
 		if(iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
@@ -153,18 +153,16 @@
 					return
 
 				src.amount -= a_used
-				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
+				user.drop_from_inventory(I, G)
 				G.size = I.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				I.forceMove(G)
 				G.add_fingerprint(user)
 				I.add_fingerprint(user)
-				src.add_fingerprint(user)
-				#ifdef NEWYEARCONTENT
-				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
-				#endif
+				add_fingerprint(user)
+				if(SSholiday.holidays[NEW_YEAR])
+					to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
 			if (src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)

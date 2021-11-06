@@ -27,8 +27,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/endtime					// timeofday that shuttle arrives
 	var/timelimit				//important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
-	var/fake_recall = 0			//Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-	var/always_fake_recall = 0
+	var/time_for_fake_recall = 0 // used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/fake_recall = 0 // flag if we need to make fake recall, gamemode fractions set it. Does nothing for crew transfer vote
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
@@ -54,6 +54,17 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/status_display_last_mode
 
+		//announce stuff
+	var/datum/announcement/station/shuttle/crew_called/announce_crew_called = new
+	var/datum/announcement/station/shuttle/crew_recalled/announce_crew_recalled = new
+	var/datum/announcement/station/shuttle/crew_docked/announce_crew_docked = new
+	var/datum/announcement/station/shuttle/crew_left/announce_crew_left = new
+
+	var/datum/announcement/station/shuttle/emer_called/announce_emer_called = new
+	var/datum/announcement/station/shuttle/emer_recalled/announce_emer_recalled = new
+	var/datum/announcement/station/shuttle/emer_docked/announce_emer_docked = new
+	var/datum/announcement/station/shuttle/emer_left/announce_emer_left = new
+
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -62,13 +73,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
-		supply_packs[P.name] = P
+		supply_packs[ckey(P.name)] = P		//Convert to canonical form to avoid possible problems resulting from punctuation
 
 	..()
 
 /datum/controller/subsystem/shuttle/fire()
 	if(moving == 1)
-		var/ticksleft = (eta_timeofday - world.timeofday)
+		var/ticksleft = (eta_timeofday - REALTIMEOFDAY)
 		if(ticksleft > 0)
 			eta = round(ticksleft/600,1)
 		else
@@ -118,7 +129,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
@@ -171,18 +182,18 @@ SUBSYSTEM_DEF(shuttle)
 				endtime = null
 				return 0
 
-			else if((fake_recall != 0) && (timeleft <= fake_recall))
+			else if((time_for_fake_recall != 0) && (timeleft <= time_for_fake_recall))
 				log_admin("Gamemode fake-recalled the shuttle.")
 				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
-				fake_recall = 0
+				time_for_fake_recall = 0
 				return 0
 
 			else if(timeleft == 22)
 				if(last_es_sound < world.time)
 					var/area/escape_hallway = locate(/area/station/hallway/secondary/exit)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
-						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2, voluminosity = FALSE)
+						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
 				return 0
 
@@ -228,9 +239,9 @@ SUBSYSTEM_DEF(shuttle)
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", sound = "emer_shut_docked")
+					announce_emer_docked.play()
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
+					announce_crew_docked.play()
 
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
@@ -271,7 +282,6 @@ SUBSYSTEM_DEF(shuttle)
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
 				//if(alert == 1)
-				//	captain_announce("Departing...")
 				//	sleep(100)
 				// Turn on the star effects
 
@@ -288,14 +298,14 @@ SUBSYSTEM_DEF(shuttle)
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = WEST
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				shake_mobs_in_area(end_location, EAST)
+				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
@@ -347,9 +357,9 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, EAST)
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
+					announce_emer_left.play()
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "crew_shut_left")
+					announce_crew_left.play()
 
 				return 1
 
@@ -580,15 +590,11 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		settimeleft(get_shuttle_arrive_time()*coeff)
 		online = 1
-		if(always_fake_recall)
-			fake_recall = rand(300,500)		//turning on the red lights in hallways
+		if(fake_recall)
+			time_for_fake_recall = rand(300,500)		//turning on the red lights in hallways
 
 
 /datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()
-	// During mutiny rounds, the shuttle takes twice as long.
-	if(SSticker && istype(SSticker.mode,/datum/game_mode/mutiny))
-		return SHUTTLEARRIVETIME * 2
-
 	return SHUTTLEARRIVETIME
 
 /datum/controller/subsystem/shuttle/proc/shuttlealert(X)
@@ -605,13 +611,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
-			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
+			announce_emer_recalled.play()
 			setdirection(-1)
 			online = 1
 
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
+			announce_crew_recalled.play()
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall
@@ -621,7 +627,7 @@ SUBSYSTEM_DEF(shuttle)
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 /datum/controller/subsystem/shuttle/proc/timeleft()
 	if(online)
-		var/timeleft = round((endtime - world.timeofday)/10 ,1)
+		var/timeleft = round((endtime - REALTIMEOFDAY)/10 ,1)
 		if(direction == 1 || direction == 2)
 			return timeleft
 		else
@@ -631,7 +637,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	// sets the time left to a given delay (in seconds)
 /datum/controller/subsystem/shuttle/proc/settimeleft(delay)
-	endtime = world.timeofday + delay * 10
+	endtime = REALTIMEOFDAY + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
@@ -641,8 +647,8 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	direction = dirn
 	// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
-	var/ticksleft = endtime - world.timeofday
-	endtime = world.timeofday + (get_shuttle_arrive_time()*10 - ticksleft)
+	var/ticksleft = endtime - REALTIMEOFDAY
+	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
 
 /obj/effect/bgstar

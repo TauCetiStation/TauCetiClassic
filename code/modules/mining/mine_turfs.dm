@@ -1,3 +1,8 @@
+#define MIN_TUNNEL_LENGTH 20
+#define MAX_TUNNEL_LENGTH 60
+#define DISTANCE_BEETWEEN_MOSTERS 16
+#define CRATE_DROP_CHANCE 0.5 // 1 in 200
+
 /**********************Mineral deposits**************************/
 /turf/simulated/mineral
 	name = "Rock"
@@ -6,7 +11,7 @@
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
@@ -69,7 +74,7 @@
 	if(hud_list)
 		return
 	prepare_huds()
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	mine.add_to_hud(src)
 	set_mine_hud()
 
@@ -107,7 +112,7 @@
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
@@ -155,10 +160,6 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
-		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -361,7 +362,7 @@
 			M.apply_effect(25, IRRADIATE)
 
 
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
 
@@ -373,7 +374,7 @@
 		F.update_overlays()
 
 
-	if(rand(1,500) == 1)
+	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		new /obj/structure/closet/crate/secure/loot(src)
 
@@ -503,17 +504,16 @@
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goldgrub" = 4, "Goliath" = 10, "Basilisk" = 8, "Hivelord" = 6, "Drone" = 2)
-	var/sanity = 1
+	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
+	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
-
-	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
-		src.length = rand(25, 50)
+		src.length = rand(MIN_TUNNEL_LENGTH, MAX_TUNNEL_LENGTH)
 	else
 		src.length = length
 
@@ -563,7 +563,7 @@
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
-					new src.type(tunnel, rand(10, 15), 0, dir)
+					new type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -576,14 +576,17 @@
 			dir = angle2dir(dir2angle(dir) + next_angle)
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
-	for(var/turf/S in range(2,T))
+	for(var/turf/S in range(2, T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
-			sanity = 0
+			sanity = FALSE
 			break
+
 	if(!sanity)
 		return
 
-	SpawnMonster(T)
+	if(prob(30))
+		SpawnMonster(T)
+
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
@@ -593,32 +596,30 @@
 		t.update_overlays_full()
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
-	if(prob(30))
-		if(istype(loc, /area/asteroid/mine/explored))
-			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
-			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
-				return
-		var/randumb = pickweight(mob_spawn_list)
-		switch(randumb)
-			if("Goliath")
-				new /mob/living/simple_animal/hostile/asteroid/goliath(T)
-			if("Goldgrub")
-				new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
-			if("Basilisk")
-				new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
-			if("Hivelord")
-				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
-			if("Drone")
-				new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
-		if(prob(20))
-		 new /obj/machinery/artifact/bluespace_crystal(T)
-	return
+	if(istype(loc, /area/asteroid/mine/explored))
+		return
+	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
+		return
+	var/randumb = pickweight(mob_spawn_list)
+	switch(randumb)
+		if("Goliath")
+			new /mob/living/simple_animal/hostile/asteroid/goliath(T)
+		if("Goldgrub")
+			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
+		if("Basilisk")
+			new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
+		if("Hivelord")
+			new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
+		if("Drone")
+			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
+	if(prob(20))
+		new /obj/machinery/artifact/bluespace_crystal(T)
 
 /**********************Asteroid**************************/
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
 	name = "Asteroid"
+	var/base_icon = 'icons/turf/asteroid.dmi'
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	oxygen = 0.01
@@ -631,6 +632,8 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_SAND
+	smooth = SMOOTH_TRUE | SMOOTH_MORE
+	canSmoothWith = list(/turf/simulated, /obj/structure/lattice)
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
@@ -640,13 +643,15 @@
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid_stone_[rand(1,10)]"
+		smooth_subtype = "asteroid[rand(1, 10)]"
+		smooth_bake_overlay = icon(base_icon, smooth_subtype)
 
 	//I dont know how, but it gets into hudatoms
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
-
+	
+	make_transparent()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
@@ -666,20 +671,6 @@
 				if(8)
 					overlay_name = "rock_side_4"
 			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
-
-/turf/simulated/floor/plating/airless/asteroid/update_overlays()
-	..()
-	var/turf/T
-	for(var/direction_to_check in cardinal)
-		T = get_step(src, direction_to_check)
-		if(T && istype(T, /turf/space))
-			var/lattice = 0
-			for(var/obj/O in T)
-				if(istype(O, /obj/structure/lattice))
-					lattice = 1
-			if(!lattice)
-				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A
@@ -707,9 +698,9 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if (istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!isturf(T))
 			return
 
 		if (dug)
@@ -746,8 +737,9 @@
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
-	return
+	smooth_subtype = "asteroid_dug"
+	smooth_bake_overlay = icon(base_icon, "asteroid_dug")
+	queue_smooth(src)
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
@@ -762,3 +754,8 @@
 				attackby(R.module_state_3,R)
 			else
 				return
+
+#undef MIN_TUNNEL_LENGTH
+#undef MAX_TUNNEL_LENGTH
+#undef DISTANCE_BEETWEEN_MOSTERS
+#undef CRATE_DROP_CHANCE

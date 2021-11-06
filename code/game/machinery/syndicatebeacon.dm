@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 //  Beacon randomly spawns in space
 //	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
 //	If he accepts there is a random chance he will be accepted, rejected, or rejected and killed
@@ -12,8 +10,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = NO_POWER_USE
 
 	var/temptext = ""
@@ -43,7 +41,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/syndicate_beacon/is_operational_topic()
+/obj/machinery/syndicate_beacon/is_operational()
 	return TRUE
 
 /obj/machinery/syndicate_beacon/Topic(href, href_list)
@@ -53,60 +51,27 @@
 
 	if(href_list["betraitor"])
 		if(charges < 1)
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		var/mob/M = locate(href_list["traitormob"])
 		if(M.mind.special_role)
 			temptext = "<i>We have no need for you at this time. Have a pleasant day.</i><br>"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		charges -= 1
 		switch(rand(1,2))
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				spawn(rand(50,200))
 					selfdestruct()
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			SSticker.mode.equip_traitor(N)
-			SSticker.mode.traitors += N.mind
-			N.mind.special_role = "traitor"
-			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", N)
-			var/objective = "Free Objective"
-			switch(rand(1,100))
-				if(1 to 50)
-					objective = "Steal [pick("a hand teleporter", "the Captain's antique laser gun", "a jetpack", "the Captain's ID", "the Captain's jumpsuit")]."
-				if(51 to 60)
-					objective = "Destroy 70% or more of the station's phoron tanks."
-				if(61 to 70)
-					objective = "Cut power to 80% or more of the station's tiles."
-				if(71 to 80)
-					objective = "Destroy the AI."
-				if(81 to 90)
-					objective = "Kill all monkeys aboard the station."
-				else
-					objective = "Make certain at least 80% of the station evacuates on the shuttle."
-			var/datum/objective/custom_objective = new(objective)
-			custom_objective.owner = N.mind
-			N.mind.objectives += custom_objective
+			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
+			T.Greet(GREET_SYNDBEACON)
 
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = N.mind
-			N.mind.objectives += escape_objective
-
-
-			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
-
-			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. [ADMIN_JMP(N)]")
-
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				to_chat(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-				obj_count++
-
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
@@ -181,7 +146,7 @@
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			attached = null
 			return
@@ -193,7 +158,7 @@
 				to_chat(user, "This device must be placed over an exposed cable.")
 				return
 			stat |= SCREWED
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	..()

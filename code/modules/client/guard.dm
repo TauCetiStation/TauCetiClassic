@@ -52,14 +52,17 @@
 		send2bridge_adminless_only("GUARD: [key_name(holder)]", short_report, type = list(BRIDGE_ADMINIMPORTANT))
 
 /datum/guard/proc/print_report()
-	if(!geoip_processed)
-		load_geoip()
-
-	do_tests()
+	prepare()
 
 	var/datum/browser/popup = new(usr, "guard_report_[holder.ckey]", "Guard report on [holder.key]", 350)
 	popup.set_content(src.report)
 	popup.open()
+
+/datum/guard/proc/prepare()
+	if(!geoip_processed)
+		load_geoip()
+
+	do_tests()
 
 //todo: pending tests
 /datum/guard/proc/do_tests()
@@ -214,7 +217,7 @@
 	short_report = new_short_report
 	tests_processed = TRUE
 
-/datum/guard/proc/load_geoip(var/force_reload = FALSE)
+/datum/guard/proc/load_geoip(force_reload = FALSE)
 	if(!config.guard_enabled || !config.guard_email)
 		return
 
@@ -273,7 +276,7 @@
 
 /datum/guard/proc/process_autoban()
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_ban"))
 		message_admins("GUARD: autoban for [holder.ckey] not processed due to database connection problem.")
 		return
 

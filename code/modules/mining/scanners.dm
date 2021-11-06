@@ -3,7 +3,7 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "geoscanner"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -16,7 +16,7 @@
 /obj/item/device/geoscanner/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target, /turf/simulated/mineral))
 		return
-	if(!in_range(user, target))
+	if(!proximity)
 		return
 	var/turf/simulated/mineral/M = target
 	var/data_message = ""
@@ -47,6 +47,19 @@
 	icon_state = "mininghud"
 	item_state = "mininghud"
 	hud_types = list(DATA_HUD_MINER)
+
+/obj/item/clothing/glasses/hud/mining/meson
+	name = "Geological Meson Optical Scanner"
+	desc = "Used for seeing walls, floors, and stuff through anything."
+	icon = 'icons/obj/clothing/glasses.dmi'
+	item_state = "glasses"
+	icon_state = "mesonmininghud"
+	icon_custom = null
+	action_button_name = "Toggle Goggles"
+	toggleable = TRUE
+	sightglassesmod = "sepia"
+	hud_types = list(DATA_HUD_MINER)
+	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"

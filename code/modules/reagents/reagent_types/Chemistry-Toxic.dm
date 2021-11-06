@@ -158,10 +158,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 		if(6 to INFINITY)
 			M.SetSleeping(20 SECONDS)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	if(data["ticks"] % 3 == 0)
 		M.emote("gasp")
 
@@ -257,20 +257,57 @@
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
 		if(prob(50))
-			del(O) //Kills kudzu too.
+			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
-	src = null
-	if(iscarbon(M))
+	if(!iscarbon(M))
+		return
+
+	if(!ishuman(M))
 		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason ~~(What could possible double it, if the toxpwr = 1 :hmm: :thinking:)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.dna)
-					if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
-						H.adjustToxLoss(50)
+		if((method == INGEST) || C.wear_mask)
+			return
+		C.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/mob/living/carbon/human/H = M
+
+	if(!H.species.flags[IS_PLANT])
+		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+			return
+		H.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/brute = toxpwr * 5 //plantmen take a LOT of damage
+	var/burn = toxpwr * 4
+
+	if(method == INGEST)
+		var/capped = min(volume, 5)
+		H.take_bodypart_damage(brute * capped, burn * capped)
+		return
+
+	var/list/bodyparts = H.get_damageable_bodyparts()
+	if(!bodyparts.len)
+		return
+
+	var/covered = get_human_covering(H)
+	var/list/targets = list()
+
+	for(var/obj/item/organ/external/BP in bodyparts) // get uncovered bodyparts
+		if(covered & BP.body_part)
+			continue
+		targets += BP
+
+	if(!targets.len)
+		return
+	var/coef = min(volume / 3, 5) * 2
+	brute *= coef
+	burn *= coef
+
+	for(var/obj/item/organ/external/BP in targets)
+		BP.take_damage(brute, burn)
+
 
 /datum/reagent/toxin/stoxin
 	name = "Sleep Toxin"
@@ -293,7 +330,7 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
 				M.Weaken(2)
@@ -348,6 +385,9 @@
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
 			M.Weaken(10)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -368,6 +408,8 @@
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
 			H.Weaken(10)
+		if(volume >= overdose)
+			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -600,6 +642,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -727,7 +770,7 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 15)
+	M.adjustDrugginess(2)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))

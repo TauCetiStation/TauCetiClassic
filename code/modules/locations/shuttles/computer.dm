@@ -1,8 +1,8 @@
 /obj/machinery/computer/research_shuttle/new_shuttle_white
-	icon = 'code/modules/locations/shuttles/computer_shuttle_white.dmi'
+	icon = 'icons/locations/shuttles/computer_shuttle_white.dmi'
 
 /obj/machinery/computer/mining_shuttle/new_shuttle_mining
-	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	icon = 'icons/locations/shuttles/computer_shuttle_mining.dmi'
 
 /obj/machinery/computer/security/erokez
 	name = "security camera monitor"

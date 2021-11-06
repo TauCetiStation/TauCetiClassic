@@ -7,6 +7,17 @@
 		"Anomalous means" = 0,
 	)
 
+	var/list/earned_score = list(
+		"Explosion" = 0,
+		"Empulse" = 0,
+		"Anomalous means" = 0,
+	)
+
+
+	//Determines maximum amount of points that can be earned by certain methods. 
+	//Total points that can be earned equal highest score multiplied by this number
+	var/cap_coeff = 2 
+
 	var/list/tech_points = list(
 		"materials" = 200,
 		"engineering" = 250,
@@ -34,25 +45,12 @@
 		"biotech" = 0,
 	)
 
-	// So we don't give points for researching non-artifact item
-	var/list/artifact_types = list(
-		/obj/item/clothing/glasses/hud/mining/ancient,
-		/obj/machinery/auto_cloner,
-		/obj/machinery/power/supermatter,
-		/obj/structure/constructshell,
-		/obj/machinery/giga_drill,
-		/obj/structure/cult/pylon,
-		/obj/mecha/working/hoverpod,
-		/obj/machinery/replicator,
-		/obj/machinery/power/crystal,
-		/obj/machinery/artifact
-	)
-
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
-	var/list/saved_artifacts = list()
 	var/list/saved_symptoms = list()
 	var/list/saved_slimecores = list()
+	//xenoarcheology stuff
+	var/list/saved_artifacts = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -125,19 +123,18 @@
 			else
 				points += rand(5,10) * 200 // 1000-2000 points for random weapon
 
-	for(var/list/artifact in I.scanned_artifacts)
-		if(!(artifact["type"] in artifact_types)) // useless
-			continue
-
+	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				already_scanned = TRUE
 				break
 
 		if(!already_scanned)
-			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
-			saved_artifacts += list(artifact)
+			points += 10000 //10000 points for main effect
+			if(scanning_artifact["second_effect"] != "")
+				points += 5000 //5000 points for secondary effect
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in I.scanned_symptoms)
 		if(saved_symptoms[symptom])
@@ -180,14 +177,14 @@
 	for(var/weapon in O.saved_autopsy_weapons)
 		saved_autopsy_weapons |= weapon
 
-	for(var/list/artifact in O.saved_artifacts)
+	for(var/list/scanning_artifact in O.saved_artifacts)
 		var/has_artifact = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				has_artifact = TRUE
 				break
 		if(!has_artifact)
-			saved_artifacts += list(artifact)
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in O.saved_symptoms)
 		saved_symptoms[symptom] = O.saved_symptoms[symptom]
@@ -205,6 +202,8 @@
 	desc = "Scans the level of kinetic energy from explosions"
 
 	channels = list("Science" = 1)
+
+	var/message_scientists = TRUE
 
 	// This thing should be really hard to destroy by any means.
 	// Some destruction methods(Lord Singuloo) are expected, and not considered anomalous.
@@ -224,6 +223,15 @@
 	. = ..()
 	global.interaction_watcher_list += src
 
+/obj/item/device/radio/beacon/interaction_watcher/attack_self(mob/living/carbon/human/user)
+	message_scientists = !message_scientists
+	to_chat(user, "<span class='notice'>You toggle [src]'s messaging module [message_scientists ? "on" : "off"]</span>")
+
+/obj/item/device/radio/beacon/interaction_watcher/autosay(message, from, channel, freq = 1459)
+	if(!message_scientists)
+		return
+	return ..()
+
 /obj/item/device/radio/beacon/interaction_watcher/Destroy()
 	global.interaction_watcher_list -= src
 
@@ -242,15 +250,20 @@
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == 1)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
+			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
 			var/added_score = max(0, score - saved_interaction_score)
 			var/already_earned_score = min(saved_interaction_score, score)
+			var/repetition_cap = max(score, saved_interaction_score) * RD.files.experiments.cap_coeff * new_score_coeff
 
-			calculated_research_points = added_score * new_score_coeff + already_earned_score * repeat_score_coeff
+			var/softcap_coeff = max(repetition_cap / saved_earned_points - 1, 0)
+
+			calculated_research_points = added_score * new_score_coeff + min(already_earned_score * round(repeat_score_coeff * softcap_coeff), repetition_cap - saved_earned_points)
 
 			if(score > saved_interaction_score)
 				RD.files.experiments.saved_best_score[inter_type] = score
 
+			RD.files.experiments.earned_score[inter_type] += calculated_research_points
 			RD.files.research_points += calculated_research_points
 
 	return calculated_research_points
@@ -261,6 +274,8 @@
 
 	if(calculated_research_points > 0)
 		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+	else if (calculated_research_points == 0)
+		autosay("Detected explosion with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -270,6 +285,8 @@
 
 	if(calculated_research_points > 0)
 		autosay("Detected EMP with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+	else if (calculated_research_points == 0)
+		autosay("Detected EMP with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected EMP with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -282,7 +299,7 @@
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -303,6 +320,8 @@
 	return
 
 /obj/item/device/science_tool/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	var/scanneddata = 0
 
 	if(istype(target, /obj/item/weapon/disk/research_points))
@@ -320,8 +339,8 @@
 	if(istype(target, /obj/item/weapon/paper/artifact_info))
 		var/obj/item/weapon/paper/artifact_info/report = target
 		if(report.artifact_type)
-			for(var/list/artifact in scanned_artifacts)
-				if(artifact["type"] == report.artifact_type && artifact["first_effect"] == report.artifact_first_effect && artifact["second_effect"] == report.artifact_second_effect)
+			for(var/list/scanning_artifact in scanned_artifacts)
+				if(scanning_artifact["type"] == report.artifact_type && scanning_artifact["first_effect"] == report.artifact_first_effect && scanning_artifact["second_effect"] == report.artifact_second_effect)
 					to_chat(user, "<span class='notice'>[src] already has data about this artifact report</span>")
 					return
 
@@ -366,7 +385,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/stored_points

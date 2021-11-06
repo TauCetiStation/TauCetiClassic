@@ -179,14 +179,48 @@
 	empulse(target, 4, 10)
 	return 1
 
+/obj/item/projectile/anti_singulo
+	name = "singularity buster charge"
+	icon_state = "ice_1"
+	light_color = "#00ffff"
+	light_power = 2
+	light_range = 2
+	damage = 60
+	damage_type = BURN
+	sharp = 0
+	edge = 0
+
+/obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(istype(target, /obj/singularity))
+
+		switch(target.type)
+			if(/obj/singularity)
+				var/obj/singularity/S = target
+				empulse(S, 4, 10)
+				for(var/mob/living/carbon/H in viewers(S))
+					H.apply_effect(20, IRRADIATE, 0)
+				S.deduce_energy(600)
+				return
+			if(/obj/singularity/narsie)
+				for(var/mob/M in player_list)
+					if(!isnewplayer(M))
+						to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
+						M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
+						for(M in range(20))
+							M.gib()
+							return
+			else
+				return
+
+	return ..()
 
 /obj/item/projectile/neurotoxin
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	stun = 10
+	weaken = 10
 	damage_type = TOX
-	flag = "bullet"
+	flag = "bio"
 
 /obj/item/projectile/acid_special
 	name = "acid"
@@ -202,7 +236,7 @@
 /obj/item/projectile/acid_special/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_bodypart_damage(damage)//+10=30
+		S.take_bodypart_damage(damage)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -216,7 +250,7 @@
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(75))
+					if(prob(30))
 						C.make_old()
 						if(bp == H.head)
 							H.update_inv_head()
@@ -235,16 +269,7 @@
 			else
 				continue //Does this thing we're shooting even exist?
 
-		var/obj/item/organ/external/organ = H.get_bodypart(check_zone(def_zone))
-		var/armorblock = H.run_armor_check(organ, "bio")
-		H.apply_damage(damage, damage_type, organ, armorblock, null, src)
-		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
-		H.flash_pain()
-		to_chat(H, "<span class='warning'>You feel the acid on your skin!</span>")
-		return
-	..()
-
-/obj/item/projectile/bullet/scrap //
+/obj/item/projectile/bullet/scrap
 	icon_state = "scrap_shot"
 	damage = 35
 	stoping_power = 8
@@ -360,7 +385,7 @@
 		var/mob/living/L = target
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			var/obj/item/organ/external/BP = H.get_bodypart(firer.zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(firer.get_targetzone())
 			if(!BP)
 				return "NONE"
 

@@ -1,17 +1,12 @@
 /mob/living/carbon/xenomorph/facehugger/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)			healths.icon_state = "health6"
-	stat = DEAD
-	icon_state = "facehugger_dead"
-
-	if(!gibbed)
-		update_canmove()
-
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	alive_mob_list -= src
 
-	return ..(gibbed)
+	..(gibbed)
+
+	var/obj/item/clothing/mask/facehugger/F = new /obj/item/clothing/mask/facehugger(loc)
+	F.Die()
+	qdel(src)
 
 /mob/living/carbon/xenomorph/larva/death(gibbed)
 	if(stat == DEAD)	return
@@ -43,10 +38,6 @@
 	if(mind) 	mind.store_memory("Time of death: [tod]", 0)
 
 	return ..(gibbed)
-
-/mob/living/carbon/xenomorph/humanoid/praetorian/death()
-	..()
-	praetorians = (praetorians+1)
 
 /mob/living/carbon/xenomorph/gib()
 	death(1)

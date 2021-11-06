@@ -170,12 +170,19 @@
 	if(pumping_volume > 0)
 		lungs.add_refrigerant(pumping_volume)
 
+/obj/item/organ/internal/heart/vox
+	parent_bodypart = BP_GROIN
+
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
 	var/has_gills = FALSE
+
+/obj/item/organ/internal/lungs/vox
+	name = "air capillary sack"
+	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
@@ -278,13 +285,17 @@
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
 
+/obj/item/organ/internal/liver/vox
+	name = "waste tract"
+
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/atom_init()
-	. = ..()
-	new/obj/item/weapon/stock_parts/cell/crap/(src)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+	..()
+	new/obj/item/weapon/stock_parts/cell/crap(src)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -326,7 +337,15 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	if(damage && C)
+
+	if(!C)
+		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
+		owner.SetParalysis(2)
+		owner.blurEyes(2)
+		owner.silent = 2
+		return
+	if(damage)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
@@ -335,17 +354,23 @@
 		if(accumulator_warning < world.time)
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
 			accumulator_warning = world.time + 15 SECONDS
-	else if(!C)
-		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
-			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-		owner.SetParalysis(2)
-		owner.eye_blurry = 2
-		owner.silent = 2
+
+/obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
+	var/obj/item/weapon/stock_parts/cell/C = locate() in src
+	if(!C)
+		return
+	var/turf/T = get_turf(owner.loc)
+	if(owner.nutrition > (C.maxcharge * 1.2))
+		explosion(T, 1, 0, 1, 1)
+		C.ex_act(1.0)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/kidneys/vox
+	name = "filtration bladder"
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
@@ -409,6 +434,6 @@
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
 	if(is_bruised())
-		owner.eye_blurry = 20
+		owner.blurEyes(20)
 	if(is_broken())
 		owner.eye_blind = 20

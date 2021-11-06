@@ -113,6 +113,8 @@
 					to_chat(user, "<span class='notice'>[mybucket] is empty.</span>")
 				else
 					mybucket.reagents.trans_to(I, 5)
+					if(mybucket.reagents.total_volume == 0)
+						update_icon()
 					to_chat(user, "<span class='notice'>You wet [I] in [mybucket].</span>")
 					playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 			else
@@ -192,7 +194,7 @@
 	popup.open()
 
 /obj/structure/stool/bed/chair/janitorialcart/Topic(href, href_list)
-	if(!in_range(src, usr))
+	if(!Adjacent(usr))
 		return
 	if(!isliving(usr))
 		return

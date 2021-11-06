@@ -10,7 +10,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 
@@ -46,8 +46,8 @@
 	icon_living = "pirateranged"
 	icon_dead = "piratemelee_dead"
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam

@@ -7,16 +7,15 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	density = 1
-	layer = ABOVE_WINDOW_LAYER
+	density = TRUE
+	layer = MOB_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
-	throw_range = 1
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 	var/sterile = 0
 	var/strength = 5
-	var/current_hugger
+	var/current_hugger	//container for playable facehugger
 	var/mob/living/carbon/target = null
 	var/chase_time = 0
 
@@ -39,7 +38,7 @@
 	return ismob(mover) || (stat == DEAD)
 
 /obj/item/clothing/mask/facehugger/process()
-	if(stat)
+	if(stat) //if UNCONSCIOUS or DEAD
 		return
 	if(isturf(loc))
 		if(!target)
@@ -48,7 +47,7 @@
 				V.target = C
 				if(V.check())
 					qdel(V)
-					if(CanHug(C, 0))
+					if(CanHug(C, FALSE))
 						chase_time = 28
 						target = C
 						chase()
@@ -133,9 +132,18 @@
 		if(Attach(user))
 			return
 	else
-		if(stat == DEAD && isxeno(user))
+		if(stat == DEAD && isxenoadult(user))
 			if(do_after(user, 20, target = src))
-				to_chat(user, "You ate a facehugger.")
+				var/mob/living/carbon/xenomorph/humanoid/X = user
+				if(X.health >= X.maxHealth)
+					X.adjustToxLoss(50)
+					to_chat(X, "<span class='notice'>Вы проглотили лицехвата. Это дало вам немного плазмы.</span>")
+				else
+					X.adjustBruteLoss(-50)
+					X.adjustFireLoss(-50)
+					X.adjustOxyLoss(-50)
+					X.adjustCloneLoss(-50)
+					to_chat(X, "<span class='notice'>Вы проглотили лицехвата. Ваше самочувствие улучшилось.</span>")
 				qdel(src)
 			return
 		..()
@@ -163,23 +171,33 @@
 	..()
 	Attach(C)
 
+/obj/item/clothing/mask/facehugger/dropped()
+	..()
+	get_off()
+
+//If the facehugger was removed from the face and the player controls the facehugger
+/obj/item/clothing/mask/facehugger/proc/get_off()
+	if(current_hugger)
+		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+		var/atom/movable/mob_container = FH
+		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
+		current_hugger = null
+		FH.reset_view()
+		qdel(FH.get_active_hand())	//delete a grab
+		qdel(src)
+
 /obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
 	..()
 	return HasProximity(AM)
 
 /obj/item/clothing/mask/facehugger/HasProximity(mob/living/carbon/C)
-	if(!current_hugger)
+	if(!current_hugger && istype(loc, /turf)) //not in hands
 		return Attach(C)
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
 	return FALSE
-/*
-/obj/item/clothing/mask/facehugger/proc/show_messageold(message, m_type)
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		FH.show_message(message,m_type)*/
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback)
 	if(!..())
@@ -199,6 +217,8 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
+	if(!istype(C, /mob/living/carbon)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
+		return FALSE
 	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE
 	if(check)
@@ -207,13 +227,21 @@
 				return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/mouth_is_protected()
-	if(istype(head, /obj/item/clothing/head))
-		if(head.flags & HEADCOVERSMOUTH)
-			return head
-	else if(istype(wear_mask, /obj/item/clothing/mask))
-		if(wear_mask.flags & MASKCOVERSMOUTH)
-			return wear_mask
+/obj/item/clothing/mask/facehugger/proc/mouth_is_protected(obj/item/clothing/I)
+	if(istype(I, /obj/item/clothing/head))
+		if((I.flags & HEADCOVERSMOUTH) || (I.flags_inv & HIDEMASK))
+			return TRUE
+	if(istype(I, /obj/item/clothing/mask))
+		if(I.flags & MASKCOVERSMOUTH)
+			return TRUE
+	return FALSE
+
+/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
+	var/obj/item/clothing/head/helmet/space/rig/R = I
+	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
+		R.canremove = TRUE
+	if(C.unEquip(I))
+		return TRUE
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
@@ -222,55 +250,44 @@
 
 	C.visible_message("<span class='danger'>[src] leaps at [C]'s face!</span>", "<span class='userdanger'>[src] leaps at [C]'s face!</span>")
 
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		var/headgear = H.mouth_is_protected()
-		if(headgear)
-			if(current_hugger) // playable facehugger
-				if(prob(50)) // the playable facehugger successfully rips off the helmet and infects the victim
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
-					H.unEquip(headgear)
-				else // the playable facehugger can't rip the helmet and dies
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-					var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-					to_chat(FH, "<span class='danger'>You died while trying to remove [H]'s [headgear]</span>!")
-					FH.ghostize(can_reenter_corpse = FALSE)
-					Die()
-					qdel(current_hugger)
-					return FALSE
-			else // facehugger with ai
-				if(prob(40))
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
-					H.unEquip(headgear)
-				else
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-				if(prob(33))
-					H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
-					qdel(headgear)
-				if(prob(66))
-					Die()
-				else
-					H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
-					GoIdle()
-				return FALSE
-	else
-		if(C.wear_mask)
-			if(prob(20))
-				return FALSE
-			var/obj/item/clothing/mask/WM = target.wear_mask
-			if(WM.flags & NODROP)
-				return FALSE
-			target.unEquip(WM)
-			target.visible_message("<span class='danger'>[src] tears [WM] off of [C]'s face!</span>", "<span class='userdanger'>[src] tears [WM] off of [C]'s face!</span>")
+	var/target_head = C.head
+	var/target_mask = C.wear_mask
+	var/fail_rip_off = FALSE
+	if(target_head && mouth_is_protected(target_head))
+		if(prob(50) && unequip_head(target_head, C))
+			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
+		else
+			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")
+			fail_rip_off = TRUE
+	if(target_mask && mouth_is_protected(target_mask) && !fail_rip_off)
+		if(prob(50) && C.unEquip(target_mask))
+			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_mask]!</span>", "<span class='userdanger'>[src] rips off your [target_mask]!</span>")
+			target_mask = null
+		else
+			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_mask]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_mask]!</span>")
+			fail_rip_off = TRUE
+	if(fail_rip_off)
+		if(current_hugger) // the playable facehugger can't rip the helmet or mask and dies
+			var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+			to_chat(FH, "<span class='danger'>You died while trying to impregnate [C]</span>!")
+			FH.ghostize(can_reenter_corpse = FALSE)
+			Die()
+			qdel(current_hugger)
+			return FALSE
+		else // facehugger with ai
+			Die()
+			return FALSE
+
 	STOP_PROCESSING(SSobj, src)
-	C.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE)
+	if(target_mask)
+		C.drop_from_inventory(target_mask)
+	if(!C.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE))
+		CRASH("can't equip [src] on [C]. [C]'s have [C.head] in head and [C.wear_mask] in mask")
 
 	if(!sterile)
 		C.Paralyse(MAX_IMPREGNATION_TIME / 8) //something like 30 seconds
 
 	GoIdle() //so it doesn't jump the people that tear it off
-	//if(!sterile)
-	//	src.flags |= NODROP
 	if(!current_hugger)
 		addtimer(CALLBACK(src, .proc/Impregnate, C), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
@@ -287,7 +304,6 @@
 
 	if(!sterile)
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>")
-		target.unEquip(src)
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
@@ -297,7 +313,8 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+			qdel(current_hugger)
+		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()
 
@@ -328,9 +345,27 @@
 	stat = DEAD
 	STOP_PROCESSING(SSobj, src)
 
+	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
 
-	return
+/obj/item/clothing/mask/facehugger/verb/hide_fh()
+	set name = "Спрятать"
+	set src in oview(1)
+	set category = null
+
+	if(usr.stat != CONSCIOUS)
+		return
+
+	if(!isxenoadult(usr))
+		to_chat(usr, "<span class='notice'>[src] не реагирует.</span>")
+		return
+
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
+		visible_message("<span class='danger'>[src] исчезает.</span>")
+	else
+		layer = MOB_LAYER
+		visible_message("<span class='danger'>[src] появляется.</span>")
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

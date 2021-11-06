@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "biotech=3"
 
 	req_access = list(access_robotics)
@@ -103,7 +101,7 @@
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !in_range(user, src) || !in_range(user, target))
+	if(target.buckled)
 		return
 	if(target == user)
 		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)

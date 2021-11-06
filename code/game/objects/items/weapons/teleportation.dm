@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -52,7 +52,7 @@ Frequency:
 	if(!current_location || !SSmapping.has_level(current_location.z) || is_centcom_level(current_location.z) || is_junkyard_level(current_location.z))//If turf was not found or they're on centcom z level.
 		to_chat(usr, "The [src] is malfunctioning.")
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
@@ -101,7 +101,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[COORD(sr)]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
@@ -116,7 +116,7 @@ Frequency:
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					attack_self(M)
 	return
 
 
@@ -125,12 +125,12 @@ Frequency:
  */
 /obj/item/weapon/hand_tele
 	name = "hand tele"
-	desc = "A portable item using blue-space technology."
+	desc = "A portable item using bluespace technology."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -176,7 +176,7 @@ Frequency:
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 

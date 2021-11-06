@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(icon_smooth)
 /atom/proc/SliceNDice(dmifile as file)
 	var/font_size = 32
 #else
-/atom/proc/SliceNDice(dmifile)
+/atom/proc/SliceNDice(dmifile, overlay)
 #endif
 
 	var/STATE_COUNT_NORMAL = 4
@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		STATE_COUNT_DIAGONAL = 8
 
 #ifdef MANUAL_ICON_SMOOTH
-	var/create_false_wall_animations = alert(usr, "Generate false wall animation states?", "Confirmation", "Yes", "No") == "Yes" ? TRUE : FALSE
+	var/create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 #else
 	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
 #endif
@@ -454,6 +454,8 @@ SUBSYSTEM_DEF(icon_smooth)
 		I.DrawBox(null, 1, 1, sourceIconWidth, sourceIconHeight)
 		for(var/i in parts)
 			I.Blend(icon(outputIcon, i), ICON_OVERLAY)
+		if (overlay)
+			I.Blend(overlay, ICON_OVERLAY)
 		master.Insert(I, "[dir_bits]")
 		CHECK_TICK
 

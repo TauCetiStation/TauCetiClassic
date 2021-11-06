@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/power/emitter
 	name = "Emitter"
 	desc = "It is a heavy duty industrial laser."
@@ -61,17 +59,17 @@
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/power/emitter/Destroy()
-	message_admins("Emitter deleted at ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
-	log_game("Emitter deleted at ([x],[y],[z])")
-	log_investigate("<font color='red'>deleted</font> at ([x],[y],[z])",INVESTIGATE_SINGULO)
+	message_admins("Emitter deleted at ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
+	log_game("Emitter deleted at [COORD(src)]")
+	log_investigate("<font color='red'>deleted</font> at [COORD(src)]",INVESTIGATE_SINGULO)
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && avail(active_power_usage))
+	if (active && powered)
 		icon_state = "emitter-active"
 	else if(panel_open)
 		icon_state = "emitter-open"
@@ -94,8 +92,8 @@
 			if(active)
 				active = 0
 				to_chat(user, "You turn off the [src].")
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - src)]",0,1)
-				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
+				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - src)]",0,1)
+				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='red'>off</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			else
 				if(panel_open)
@@ -105,8 +103,8 @@
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
 				fire_delay = maximum_fire_delay
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
-				log_game("Emitter turned on by [key_name(user)] in ([x],[y],[z])")
+				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
+				log_game("Emitter turned on by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='green'>on</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			update_icon()
 		else
@@ -133,15 +131,15 @@
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || active_power_usage <= max(surplus(), 0))
 			add_load(active_power_usage)
 			if(!powered)
-				powered = 1
+				powered = TRUE
 				update_icon()
 				log_investigate("regained power and turned <font color='green'>on</font>",INVESTIGATE_SINGULO)
 		else
 			if(powered)
-				powered = 0
+				powered = FALSE
 				update_icon()
 				log_investigate("lost power and turned <font color='red'>off</font>",INVESTIGATE_SINGULO)
 			return
@@ -159,7 +157,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-		A.dir = src.dir
+		A.set_dir(src.dir)
 		A.starting = get_turf(src)
 		switch(dir)
 			if(NORTH)
@@ -186,14 +184,14 @@
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear a ratchet")
-				src.anchored = 1
+				src.anchored = TRUE
 			if(1)
 				state = 0
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear a ratchet")
-				src.anchored = 0
+				src.anchored = FALSE
 			if(2)
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
@@ -236,7 +234,7 @@
 		if(emagged)
 			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")

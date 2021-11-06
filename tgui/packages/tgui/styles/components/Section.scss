@@ -57,6 +57,10 @@ $color-separator: colors.$primary !default;
   height: 100%;
 }
 
+.Section--scrollable {
+  overflow-y: scroll;
+}
+
 .Section--fill .Section__content {
   flex-grow: 1;
 }

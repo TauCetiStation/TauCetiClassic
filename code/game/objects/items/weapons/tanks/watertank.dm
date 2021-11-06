@@ -7,7 +7,7 @@
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
 	flags = OPENCONTAINER
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	action_button_name = "Toggle Mister"
 
 	var/obj/item/weapon/reagent_containers/spray/mister/noz
@@ -75,6 +75,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return
@@ -104,7 +105,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 0 //we shall not abuse
 	amount_per_transfer_from_this = 25
 	possible_transfer_amounts = list(25,50,100)
@@ -161,3 +162,25 @@
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1
 	spray_sizes = list(1,3)
+
+/obj/item/weapon/reagent_containers/watertank_backpack/syndie
+	name = "chemical tank"
+	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies in fresh chemical burns."
+	icon_state = "waterbackpacknuke"
+	item_state = "waterbackpacknuke"
+	volume = 1600
+	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
+	list_reagents = list("lexorin" = 200, "mindbreaker" = 200, "alphaamanitin" = 200, "space_drugs" = 200, "pacid" = 200, "fuel" = 200, "condensedcapsaicin" = 200, "stoxin" = 200)
+
+/obj/item/weapon/reagent_containers/spray/mister/syndie
+	name = "chemical spray nozzle"
+	desc = "Breath of death."
+	icon_state = "misternuke"
+	item_state = "misternuke"
+	triple_shot = TRUE
+	spray_size = 4
+	spray_sizes = list(2)
+	possible_transfer_amounts = null
+	spray_cloud_move_delay = 2
+	spray_cloud_react_delay = 0
+	volume = 1600

@@ -206,13 +206,13 @@ SUBSYSTEM_DEF(job)
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return 0
 
-	if(SSticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
+	if(istype(SSticker.mode, /datum/game_mode/malfunction) && job.spawn_positions)//no additional AIs with malf
 		job.total_positions = job.spawn_positions
 		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
-			if(SSticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+			if(istype(SSticker.mode, /datum/game_mode/malfunction))//Make sure they want to malf if its malf
 				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(job)
 					ai_selected++
 					break
 		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-		if((SSticker.mode.name == "AI malfunction")&&(!ai_selected))
+		if(istype(SSticker.mode, /datum/game_mode/malfunction) && !ai_selected)
 			unassigned = shuffle(unassigned)
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, AC1 end")
 
 	//Check for an AI
-	if(SSticker.mode.name == "AI malfunction")
+	if(istype(SSticker.mode, /datum/game_mode/malfunction))
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -289,7 +289,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, Head Check end")
 
 	//Check for an AI
-	if(!(SSticker.mode.name == "AI malfunction"))
+	if(!istype(SSticker.mode, /datum/game_mode/malfunction))
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -360,8 +360,8 @@ SUBSYSTEM_DEF(job)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
+			player.client << output(player.ready, "lobbybrowser:imgsrc")
 			unassigned -= player
-			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
 
@@ -456,7 +456,7 @@ SUBSYSTEM_DEF(job)
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
-			H.buckled.dir = H.dir
+			H.buckled.set_dir(H.dir)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
@@ -510,7 +510,7 @@ SUBSYSTEM_DEF(job)
 		H.species.after_job_equip(H, job)
 
 	// Happy Valentines day!
-	if(Holiday == "Valentine's Day")
+	if(SSholiday.holidays[VALENTINES])
 		for(var/obj/item/weapon/storage/backpack/BACKP in H)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
@@ -656,3 +656,71 @@ SUBSYSTEM_DEF(job)
 					never++
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
+
+
+/proc/show_location_blurb(client/C)
+	set waitfor = FALSE
+
+	if(!C)
+		return
+
+	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/obj/effect/overlay/blurb/B = new()
+
+	var/list/style_for_line[4]
+	var/list/lines[4]
+
+	var/age
+	if(ishuman(C.mob))
+		var/mob/living/carbon/human/H = C.mob
+		age += ", [H.age] years old"
+
+	lines[1] = "[C.mob.real_name][age]"
+
+	if(length(C.mob.mind.antag_roles))
+		lines[2] = C.mob.mind.antag_roles[1]
+		style_for_line[2] = "color:red;"
+	else
+		lines[2] = C.mob.mind.role_alt_title
+
+	var/station_name
+	if(is_station_level(C.mob.z))
+		station_name = "[station_name()], "
+
+	var/area/A = get_area(C.mob)
+	lines[3] = "[station_name][A.name]"
+
+	lines[4] = "[current_date_string], [worldtime2text()]"
+
+	C.screen += B
+
+	var/newline_flag = TRUE
+	for(var/j in 1 to lines.len)
+		var/new_line = uppertext(lines[j])
+		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
+		animate(B, alpha = 255, time = 10)
+		newline_flag = !newline_flag
+		for(var/i = 2 to length_char(new_line) + 1)
+			var/cur_line = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
+			if(newline_flag)
+				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
+			else
+				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
+			sleep(1)
+		if(newline_flag || j == lines.len)
+			sleep(15)
+			animate(B, alpha = 0, time = 15)
+			sleep(15)
+
+	if(C)
+		C.screen -= B
+	qdel(B)
+
+/obj/effect/overlay/blurb
+	maptext_height = 64
+	maptext_width = 512
+	layer = FLOAT_LAYER
+	plane = HUD_PLANE
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = "LEFT+1,BOTTOM+2"

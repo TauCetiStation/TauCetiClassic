@@ -67,6 +67,7 @@
 	)
 
 	// USE FILTER AFTER 513
+	/// Already 514
 	// var/ghostly_filter
 	var/saved_color
 
@@ -74,7 +75,7 @@
 	var/mob/living/simple_animal/hostile/H = parent
 
 	qdel(possessed.GetComponent(/datum/component/bounded))
-	UnregisterSignal(possessed, list(COMSIG_PARENT_QDELETED))
+	UnregisterSignal(possessed, list(COMSIG_PARENT_QDELETING))
 
 	if(rejuve_timer)
 		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
@@ -116,7 +117,7 @@
 
 	// ghostly_filter = filter(type="color", color=ghostly_matrix)
 
-	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETED), .proc/on_phylactery_destroyed)
+	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), .proc/on_phylactery_destroyed)
 	possessed.forceMove(H.loc)
 
 	if(QDELING(possessed) || !get_turf(possessed))
@@ -152,10 +153,12 @@
 	H.color = saved_color
 
 	if(!update && rejuve_timer)
-		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
 		deltimer(rejuve_timer)
 		rejuve_timer = null
-		H.forceMove(get_turf(possessed))
+
+		if(possessed)
+			SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
+			H.forceMove(get_turf(possessed))
 
 	return ..()
 
@@ -213,11 +216,6 @@
 	// var/slimy_color_filter
 	var/slimy_outline_filter
 
-/datum/component/mob_modifier/slimy/Destroy()
-	// QDEL_NULL(slimy_color_filter)
-	QDEL_NULL(slimy_outline_filter)
-	return ..()
-
 /datum/component/mob_modifier/slimy/apply(update = FALSE)
 	. = ..()
 	if(!.)
@@ -245,13 +243,8 @@
 	var/my_color = pick(pos_colors)
 	var/my_color_matrix = pos_colors[my_color]
 
-	// USE FILTER AFTER 513
-	// slimy_color_filter = filter(type="color", color=my_color_matrix)
-	H.color = my_color_matrix
-	slimy_outline_filter = filter(type = "outline", size = 1, color = my_color)
-
-	//H.filters += slimy_color_filter
-	H.filters += slimy_outline_filter
+	H.add_filter("slimy_color", 2, color_matrix_filter(1, my_color_matrix))
+	H.add_filter("slimy_outline", 2, outline_filter(1, my_color))
 
 /datum/component/mob_modifier/slimy/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -275,7 +268,7 @@
 	H.color = saved_color
 
 	if(!update)
-		H.filters -= slimy_outline_filter
+		H.remove_filter("slimy_outline")
 
 	return ..()
 

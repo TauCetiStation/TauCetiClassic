@@ -125,3 +125,79 @@
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))
+
+// ROLES / ANTAG
+
+#define isfaction(A) (istype(A, /datum/faction))
+
+#define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
+
+#define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
+
+#define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
+
+#define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
+
+#define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
+
+#define isshadowling(H) isrole(SHADOW, H)
+
+#define isshadowthrall(H) isrole(SHADOW_THRALL, H)
+
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define isvoxraider(H) isrole(VOXRAIDER, H)
+
+#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
+
+#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+
+#define isrev(H) isrole(REV, H)
+
+#define isrevhead(H) isrole(HEADREV, H)
+
+#define istraitor(H) isrole(TRAITOR, H)
+
+#define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
+
+#define ismalf(H) isrole(MALF, H)
+
+#define isnukeop(H) isrole(NUKE_OP, H)
+
+#define iswizard(H) isrole(WIZARD, H)
+
+#define isdeathsquad(H) isrole(DEATHSQUADIE, H)
+
+#define isninja(H) isrole(NINJA, H)
+
+#define isERT(H) isrole(RESPONDER, H)
+
+#define isrolezombie(H) isrole(ZOMBIE, H)
+
+#define isalien(H) isrole(XENOMORPH, H)
+
+#define isgangster(H) isrole(GANGSTER, H)
+
+#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+
+#define isanycop(H) isrolebytype(/datum/role/cop, H)
+
+// BLOB
+
+#define isblob(A) istype(A, /obj/effect/blob)
+
+#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+
+#define isblobcore(A) istype(A, /obj/effect/blob/core)
+
+#define isblobnode(A) istype(A, /obj/effect/blob/node)
+
+#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+
+#define isblobshield(A) istype(A, /obj/effect/blob/shield)
+
+#define isblobresource(A) istype(A, /obj/effect/blob/resource)

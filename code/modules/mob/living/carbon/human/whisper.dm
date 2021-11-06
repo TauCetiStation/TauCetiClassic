@@ -14,7 +14,7 @@
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
 
 	if(!speech_allowed && usr == src)
@@ -24,7 +24,7 @@
 	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return FALSE
-		return src.say_dead(message)
+		return say_dead(message)
 
 	if(src.stat)
 		return FALSE
@@ -48,7 +48,7 @@
 
 //This is used by both the whisper verb and human/say() to handle whispering
 // Returns FALSE if speaking was not succesful.
-/mob/living/carbon/human/proc/whisper_say(var/message, var/datum/language/speaking = null, var/alt_name="", var/verb="whispers")
+/mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
 	if(speaking && (speaking.flags & SIGNLANG))
 		return FALSE
@@ -121,12 +121,10 @@
 	for(var/mob/M in eavesdropping)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/speech_bubble_test = say_test(message)
-	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src)

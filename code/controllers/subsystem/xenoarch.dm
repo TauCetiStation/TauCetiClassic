@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(xenoarch)
 				archeo_turf.add_overlay(archeo_turf.archaeo_overlay)
 
 			archeo_turf.prepare_huds()
-			var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+			var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 			mine.add_to_hud(archeo_turf)
 			archeo_turf.set_mine_hud()
 
@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(xenoarch)
 		artifact_turf.artifact_find = new
 
 		artifact_turf.prepare_huds()
-		var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+		var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 		mine.add_to_hud(artifact_turf)
 		artifact_turf.set_mine_hud()
 

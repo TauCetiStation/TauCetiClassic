@@ -1,6 +1,8 @@
 /datum/event/carp_migration
 	announceWhen	= 50
 	endWhen = 900
+	announcement = new /datum/announcement/centcomm/carp
+	var/datum/announcement/announcement_major = new /datum/announcement/centcomm/carp_major
 	var/list/spawned_carp = list()
 	var/list/spawned_mobs = list(
 		/mob/living/simple_animal/hostile/carp = 95,
@@ -13,9 +15,9 @@
 
 /datum/event/carp_migration/announce()
 	if(severity == EVENT_LEVEL_MAJOR)
-		command_alert("Massive migration of unknown biological entities has been detected near [station_name()], please stand-by.", "Lifesign Alert", "carps")
+		announcement_major.play()
 	else
-		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert", "carps")
+		announcement.play()
 
 /datum/event/carp_migration/start()
 	switch(severity)

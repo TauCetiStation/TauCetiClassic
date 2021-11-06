@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -112,7 +109,7 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
 				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
-				src.start_sequence()
+				start_sequence()
 				src.temp = null
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
@@ -142,7 +139,7 @@
 			if("2")
 				screen = 2
 	else if (href_list["killbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
@@ -160,7 +157,7 @@
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(R && istype(R)) // Extra sancheck because of input var references
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
@@ -174,18 +171,18 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
-							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						else
-							R.throw_alert("locked", /obj/screen/alert/locked)
+							R.throw_alert("locked", /atom/movable/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
@@ -199,7 +196,7 @@
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/robotics/proc/start_sequence()
 

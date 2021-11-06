@@ -284,7 +284,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored
@@ -348,9 +348,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	shortname = "Blue-space"
-	desc = "Research into the sub-reality known as 'blue-space'."
+	name = "'Bluespace' Research"
+	shortname = "Bluespace"
+	desc = "Research into the sub-reality known as 'bluespace'."
 	id = RESEARCH_BLUESPACE
 	rare = 2
 
@@ -517,7 +517,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv")
+	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv", "meson_geo_glasses")
 
 /datum/technology/basic_handheld
 	name = "Basic Handheld"
@@ -985,7 +985,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 3000
 
-	unlocks_designs = list("temp_gun")
+	unlocks_designs = list("temp_gun", "emp_mine")
 
 /datum/technology/adv_exotic_weaponry
 	name = "Advanced Exotic Weaponry"
@@ -1184,8 +1184,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 // Bluespace
 
 /datum/technology/basic_bluespace
-	name = "Basic 'Blue-space'"
-	desc = "Basic 'Blue-space'"
+	name = "Basic 'Bluespace'"
+	desc = "Basic 'Bluespace'"
 	id = "basic_bluespace"
 	tech_type = RESEARCH_BLUESPACE
 
@@ -1391,7 +1391,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "borg_upgrade_security")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"
@@ -1571,7 +1571,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 /datum/technology/advanced_hardsuit_modules
 	name = "Advanced Hardsuit Modules"
-	desc = "Basic Hardsuit Modules"
+	desc = "Advanced Hardsuit Modules"
 	id = "advanced_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 

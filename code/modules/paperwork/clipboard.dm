@@ -5,7 +5,7 @@
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 10
 	var/obj/item/weapon/pen/haspen		//The stored pen.
@@ -19,7 +19,7 @@
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
 	if(ishuman(usr))
 		var/mob/M = usr
-		if(!(istype(over_object, /obj/screen) ))
+		if(!(istype(over_object, /atom/movable/screen) ))
 			return ..()
 
 		if(!M.incapacitated())
@@ -79,7 +79,7 @@
 	for(var/obj/item/weapon/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 
-	var/datum/browser/popup = new(user, "window=clipboard", src,name)
+	var/datum/browser/popup = new(user, "window=clipboard", name)
 	popup.set_content(dat)
 	popup.open()
 
@@ -103,19 +103,18 @@
 			if(!haspen)
 				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = usr.get_active_hand()
-					usr.drop_item()
-					W.loc = src
+					usr.drop_from_inventory(W, src)
 					haspen = W
 					to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 
 		if(href_list["write"])
-			var/obj/item/P = locate(href_list["write"])
+			var/obj/item/P = locate(href_list["write"]) in src
 			if(P)
 				if(usr.get_active_hand())
 					P.attackby(usr.get_active_hand(), usr)
 
 		if(href_list["remove"])
-			var/obj/item/P = locate(href_list["remove"])
+			var/obj/item/P = locate(href_list["remove"]) in src
 			if(P)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
@@ -128,17 +127,17 @@
 						toppaper = null
 
 		if(href_list["read"])
-			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			var/obj/item/weapon/paper/P = locate(href_list["read"]) in src
 			if(P)
 				P.show_content(usr)
 
 		if(href_list["look"])
-			var/obj/item/weapon/photo/P = locate(href_list["look"])
+			var/obj/item/weapon/photo/P = locate(href_list["look"]) in src
 			if(P)
 				P.show(usr)
 
 		if(href_list["top"])
-			var/obj/item/P = locate(href_list["top"])
+			var/obj/item/P = locate(href_list["top"]) in src
 			if(P)
 				toppaper = P
 				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")

@@ -5,6 +5,7 @@
 	icon_state = "spaceworm"
 	icon_living = "spaceworm"
 	icon_dead = "spacewormdead"
+	w_class = SIZE_MASSIVE
 	status_flags = 0
 
 	speak_emote = list("transmits") //not supposed to be used under AI control
@@ -21,7 +22,7 @@
 
 	universal_speak =1
 
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	animate_movement = SYNC_STEPS
 
 	minbodytemp = 0
@@ -74,7 +75,7 @@
 	if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 		icon_state = "spacewormhead[previous?1:0]"
 		if(previous)
-			dir = get_dir(previous,src)
+			set_dir(get_dir(previous,src))
 	else
 		icon_state = "spacewormheaddead"
 
@@ -123,13 +124,13 @@
 
 	return
 
-/mob/living/simple_animal/space_worm/proc/update_icon() //only for the sake of consistency with the other update icon procs
+/mob/living/simple_animal/space_worm/update_icon() //only for the sake of consistency with the other update icon procs
 	if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 		if(previous) //midsection
 			icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below
 		else //tail
 			icon_state = "spacewormtail"
-			dir = get_dir(src,next) //next will always be present since it's not a head and if it's dead, it goes in the other if branch
+			set_dir(get_dir(src,next)) //next will always be present since it's not a head and if it's dead, it goes in the other if branch
 	else
 		icon_state = "spacewormdead"
 

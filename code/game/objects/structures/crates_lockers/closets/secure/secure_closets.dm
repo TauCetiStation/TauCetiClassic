@@ -3,7 +3,7 @@
 	desc = "It's an immobile card-locked storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "secure1"
-	density = 1
+	density = TRUE
 	opened = 0
 	locked = 1
 	var/large = 1
@@ -29,8 +29,8 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
-		src.togglelock(user)
+	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
+		togglelock(user)
 	..()
 
 /obj/structure/closet/secure_closet/emp_act(severity)
@@ -39,7 +39,7 @@
 	if(!broken)
 		if(prob(50/severity))
 			src.locked = !src.locked
-			src.update_icon()
+			update_icon()
 		if(prob(20/severity) && !opened)
 			if(!locked)
 				open()
@@ -58,7 +58,7 @@
 	if(user.loc == src)
 		to_chat(user, "<span class='notice'>You can't reach the lock from inside.</span>")
 		return
-	if(src.allowed(user))
+	if(allowed(user))
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
@@ -102,15 +102,15 @@
 	return TRUE
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	if(src.locked)
-		src.togglelock(user)
+		togglelock(user)
 	else
-		src.toggle(user)
+		toggle(user)
 
 /obj/structure/closet/secure_closet/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/closet/secure_closet/verb/verb_togglelock()
 	set src in oview(1) // One square distance
@@ -121,8 +121,8 @@
 		return
 
 	if(ishuman(usr))
-		src.add_fingerprint(usr)
-		src.togglelock(usr)
+		add_fingerprint(usr)
+		togglelock(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 

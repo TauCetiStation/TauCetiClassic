@@ -1,5 +1,5 @@
 
-/mob/living/carbon/brain/say(var/message)
+/mob/living/carbon/brain/say(message)
 	if (silent)
 		return
 	if(container)

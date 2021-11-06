@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
@@ -51,8 +49,7 @@
 			return
 		if (istype(G, /obj/item/weapon/gun/magic))
 			return
-		user.drop_item()
-		G.loc = src
+		user.drop_from_inventory(G, src)
 		charging = G
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(ACTIVE_POWER_USE)

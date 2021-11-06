@@ -14,8 +14,8 @@ var/const/SAFETY_COOLDOWN = 100
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = MOB_LAYER+1 // Overhead
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/grinding = 0
 	var/icon_name = "grinder-o"
@@ -168,7 +168,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)
-	L.anchored = 1
+	L.anchored = TRUE
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)
 		L.gib()
@@ -177,4 +177,4 @@ var/const/SAFETY_COOLDOWN = 100
 		for(var/i = 1 to 3)
 			sleep(10)
 			L.adjustBruteLoss(80)
-	L.anchored = 0
+	L.anchored = FALSE

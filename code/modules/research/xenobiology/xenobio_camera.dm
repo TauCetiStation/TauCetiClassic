@@ -126,7 +126,7 @@
 				connected_recycler.connected_consoles += src
 				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube) && user.drop_item())
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
 		qdel(O)

@@ -2,9 +2,9 @@
 	name = "window"
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
-	density = 1
+	density = TRUE
 	layer = 3.2//Just above doors
-	anchored = 1.0
+	anchored = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
@@ -105,6 +105,10 @@
 			take_damage(rand(5, 15))
 			return
 
+/obj/structure/window/airlock_crush_act()
+	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	..()
+
 /obj/structure/window/blob_act()
 	take_damage(rand(30, 50))
 
@@ -146,7 +150,7 @@
 	if(reinf)
 		tforce *= 0.25
 	if(health - tforce <= 7 && !reinf)
-		anchored = 0
+		anchored = FALSE
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
@@ -286,7 +290,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				fastened_change()
 				step(src, get_dir(user, src))
@@ -311,7 +315,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
+	if(!Adjacent(usr) || !W.use(1))
 		return
 	else
 		color = new_color
@@ -329,7 +333,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -349,7 +353,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 270)
+	set_dir(turn(dir, 270))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -386,7 +390,7 @@
 
 
 /obj/structure/window/Destroy()
-	density = 0
+	density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	update_nearby_tiles()
 	update_nearby_icons()
@@ -396,7 +400,11 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
-	dir = ini_dir
+
+	if(moving_diagonally)
+		return .
+
+	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 
 //checks if this window is full-tile one

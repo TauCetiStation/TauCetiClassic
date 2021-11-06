@@ -36,17 +36,6 @@
 	flags = ONESIZEFITSALL
 	allowed = list(/obj/item) //for stuffing exta special presents
 
-/obj/item/clothing/head/helmet/syndiassault
-	name = "assault helmet"
-	icon_state = "assaulthelmet_b"
-	item_state = "assaulthelmet_b"
-	armor = list(melee = 50, bullet = 60, laser = 45, energy = 70, bomb = 50, bio = 0, rad = 50)
-	siemens_coefficient = 0.2
-
-/obj/item/clothing/head/helmet/syndiassault/alternate
-	icon_state = "assaulthelmet"
-	item_state = "assaulthelmet"
-
 //Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "pirate hat"
@@ -63,7 +52,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)

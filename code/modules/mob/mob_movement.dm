@@ -37,89 +37,17 @@
 /client/East()
 	..()
 
-/client/Northeast()
-	swap_hand()
-	return
-
-/client/Southeast()
-	attack_self()
-	return
-
-/client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
-	else
-		to_chat(usr, "<span class='warning'>This mob type cannot throw items.</span>")
-	return
-
-/client/Northwest()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		if(!L.get_active_hand() && !L.drop_combo_element())
-			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
-			return
-		drop_item()
-
-//This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
-	set hidden = 1
-
-	if(!usr.pulling)
-		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
-		return
-	usr.stop_pulling()
-
-/client/verb/swap_hand()
-	set hidden = 1
-	if(istype(mob, /mob/living/carbon))
-		mob:swap_hand()
-	if(istype(mob,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = mob
-		R.cycle_modules()
-	return
-
-
-
-/client/verb/attack_self()
-	set hidden = 1
-	if(mob)
-		mob.mode()
-	return
-
-
-/client/verb/toggle_throw_mode()
-	set hidden = 1
-	if(!istype(mob, /mob/living/carbon))
-		return
-	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
-		mob:toggle_throw_mode()
-	else
-		return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
 		return mob.drop_item()
 	return
-
-
-/client/Center()
-	/* No 3D movement in 2D spessman game. dir 16 is Z Up
-	if (isobj(mob.loc))
-		var/obj/O = mob.loc
-		if (mob.canmove)
-			return O.relaymove(mob, 16)
-	*/
-	return
-
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
 			if(!mob.control_object)	return
-			mob.control_object.dir = direct
+			mob.control_object.set_dir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
@@ -128,18 +56,23 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
+	if(!forced)
+		if(moving || mob.throwing)
+			return
+
+		if(world.time < move_delay) //do not move anything ahead of this check please
+			return
+		else
+			next_move_dir_add = 0
+			next_move_dir_sub = 0
+
 	if(mob.control_object)	Move_object(direct)
 
 	if(isobserver(mob) || isovermind(mob))
 		return mob.Move(n,direct)
 
-	if(!forced)
-		if(moving || mob.throwing)
-			return
-
-		if(world.time < move_delay)
-			return
-
+	if(!n || !direct)
+		return
 	if(!forced && mob.stat)
 		return
 
@@ -210,16 +143,19 @@
 			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
 
+		//We are now going to move
+		var/add_delay
 		move_delay = world.time//set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 6
-				move_delay += 1+config.run_speed
+					add_delay += 6
+				add_delay += 1+config.run_speed
 			if("walk")
-				move_delay += 2.5+config.walk_speed
-		move_delay += mob.movement_delay()
+				add_delay += 2.5+config.walk_speed
+		add_delay += mob.movement_delay()
+		move_delay += add_delay
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
 			if(istype(mob.loc, /turf/space))
@@ -293,6 +229,8 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
+		if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+			move_delay += add_delay
 		moving = FALSE
 		if(mob && .)
 			mob.throwing = FALSE
@@ -300,18 +238,52 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
+	if(camera_move(direct))
+		return FALSE
 	return Move(n, direct)
 
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	//Camera control: arrow keys.
-	if (machine && istype(machine, /obj/machinery/computer/security))
-		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
-		for(var/i;i<10;i++)
-			T = get_step(T, Dir)
-		console.jump_on_click(src, T)
+/mob/proc/camera_move(Dir = 0)
+	if(stat || restrained())
 		return FALSE
+	if(!machine || !istype(machine, /obj/machinery/computer/security))
+		return FALSE
+	if(!Adjacent(machine) || !machine.can_interact_with(src))
+		return FALSE
+	var/obj/machinery/computer/security/console = machine
+	var/turf/T = get_turf(console.active_camera)
+	var/list/cameras = list()
+	
+	for(var/cam_tag in console.camera_cache)
+		var/obj/C = console.camera_cache[cam_tag]
+		if(C == console.active_camera)
+			continue
+		if(C.z != T.z)
+			continue
+		var/dx = C.x - T.x
+		var/dy = C.y - T.y
+		var/is_in_bounds = FALSE
+		switch(Dir)
+			if(NORTH)
+				is_in_bounds = dy >= abs(dx)
+			if(SOUTH)
+				is_in_bounds = dy <= -abs(dx)
+			if(EAST)
+				is_in_bounds = dx >= abs(dy)
+			if(WEST)
+				is_in_bounds = dx <= -abs(dy)
+		if(is_in_bounds)
+			cameras += C
+	var/minDist = INFINITY
+	var/minCam = console.active_camera
+	for(var/obj/machinery/camera/C as anything in cameras)
+		var/dist = get_dist(T, C)
+		if(dist < minDist)
+			minCam = C
+			minDist = dist
+	console.jump_on_click(src, minCam)
+	return TRUE
 
+/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)
 		return FALSE
 
@@ -328,7 +300,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -368,7 +340,7 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 	return 1
 
 
@@ -472,3 +444,128 @@
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return
+
+
+//bodypart selection verbs - Cyberboss
+//8: repeated presses toggles through head - eyes - mouth
+//9: eyes 8: head 7: mouth
+//4: r-arm 5: chest 6: l-arm
+//1: r-leg 2: groin 3: l-leg
+
+///Validate the client's mob has a valid zone selected
+/client/proc/check_has_body_select()
+	return mob && mob.zone_sel && istype(mob.zone_sel, /atom/movable/screen/zone_sel)
+
+/**
+ * Hidden verb to set the target zone of a mob to the head
+ *
+ * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ */
+
+///Hidden verb to target the head, bound to 8
+/client/verb/body_toggle_head()
+	set name = "body-toggle-head"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/next_in_line
+	switch(mob.get_targetzone())
+		if(BP_HEAD)
+			next_in_line = O_EYES
+		if(O_EYES)
+			next_in_line = O_MOUTH
+		else
+			next_in_line = BP_HEAD
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the eyes, bound to 7
+/client/verb/body_eyes()
+	set name = "body-eyes"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(O_EYES, mob)
+
+///Hidden verb to target the mouth, bound to 9
+/client/verb/body_mouth()
+	set name = "body-mouth"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(O_MOUTH, mob)
+
+///Hidden verb to target the right arm, bound to 4
+/client/verb/body_r_arm()
+	set name = "body-r-arm"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_R_ARM, mob)
+
+///Hidden verb to target the chest, bound to 5
+/client/verb/body_chest()
+	set name = "body-chest"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_CHEST, mob)
+
+///Hidden verb to target the left arm, bound to 6
+/client/verb/body_l_arm()
+	set name = "body-l-arm"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_L_ARM, mob)
+
+///Hidden verb to target the right leg, bound to 1
+/client/verb/body_r_leg()
+	set name = "body-r-leg"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_R_LEG, mob)
+
+///Hidden verb to target the groin, bound to 2
+/client/verb/body_groin()
+	set name = "body-groin"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_GROIN, mob)
+
+///Hidden verb to target the left leg, bound to 3
+/client/verb/body_l_leg()
+	set name = "body-l-leg"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
+	selector.set_selected_zone(BP_L_LEG, mob)

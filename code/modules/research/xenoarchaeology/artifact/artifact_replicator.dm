@@ -4,7 +4,7 @@
 	desc = "It's some kind of pod with strange wires and gadgets all over it."
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "replicator"
-	density = 1
+	density = TRUE
 
 	idle_power_usage = 100
 	active_power_usage = 1000
@@ -91,7 +91,7 @@
 	if(spawning_types.len && powered())
 		spawn_progress_time += world.time - last_process_time
 		if(spawn_progress_time > max_spawn_time)
-			src.visible_message("<span class='warning'>[bicon(src)] [src] pings!</span>")
+			visible_message("<span class='warning'>[bicon(src)] [src] pings!</span>")
 
 			var/obj/source_material = pop(stored_materials)
 			var/spawn_type = pop(spawning_types)
@@ -114,7 +114,7 @@
 				icon_state = "replicator"
 
 		else if(prob(5))
-			src.visible_message("<span class='warning'>[bicon(src)] [src] [pick("clicks", "whizzes", "whirrs", "whooshes", "clanks", "clongs", "clonks", "bangs")].</span>")
+			visible_message("<span class='warning'>[bicon(src)] [src] [pick("clicks", "whizzes", "whirrs", "whooshes", "clanks", "clongs", "clonks", "bangs")].</span>")
 
 	last_process_time = world.time
 
@@ -129,12 +129,11 @@
 	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
-	user.drop_item()
-	W.loc = src
+	user.drop_from_inventory(W, src)
 	stored_materials.Add(W)
-	src.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+	visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 
-/obj/machinery/replicator/is_operational_topic()
+/obj/machinery/replicator/is_operational()
 	return TRUE
 
 /obj/machinery/replicator/Topic(href, href_list)
@@ -147,15 +146,15 @@
 		if(index > 0 && index <= construction.len)
 			if(stored_materials.len > spawning_types.len)
 				if(spawning_types.len)
-					src.visible_message("<span class='notice'>[bicon(src)] a [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].</span>")
+					visible_message("<span class='notice'>[bicon(src)] a [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].</span>")
 				else
-					src.visible_message("<span class='notice'>[bicon(src)] [src]'s front compartment slides shut.</span>")
+					visible_message("<span class='notice'>[bicon(src)] [src]'s front compartment slides shut.</span>")
 
 				spawning_types.Add(construction[construction[index]])
 				spawn_progress_time = 0
 				set_power_use(ACTIVE_POWER_USE)
 				icon_state = "replicator_active"
 			else
-				src.visible_message(fail_message)
+				visible_message(fail_message)
 
 	updateUsrDialog()

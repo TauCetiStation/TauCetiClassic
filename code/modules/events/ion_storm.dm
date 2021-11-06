@@ -1,5 +1,8 @@
+/var/datum/announcement/centcomm/anomaly/istorm/announcement_ion_storm = new
+
 /datum/event/ionstorm
 	announceWhen = -1 // Never (setup may override)
+	announcement = new /datum/announcement/centcomm/anomaly/istorm
 
 	var/botEmagChance = 10
 
@@ -8,13 +11,10 @@
 	if(prob(50))
 		announceWhen = endWhen + rand(250, 400)
 
-/datum/event/ionstorm/announce()
-	command_alert("It has come to our attention that the station passed through an ion storm. Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
-
 /datum/event/ionstorm/start()
 	// Ion laws.
 	for(var/mob/living/silicon/ai/target in ai_list)
-		if(target.mind.special_role == "traitor")
+		if(istraitor(target))
 			continue
 		target.overload_ai_system()
 

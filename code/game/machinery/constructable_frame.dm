@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/constructable_frame //Made into a seperate type to make future revisions easier.
 	name = "machine frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
@@ -115,12 +113,11 @@
 					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
-					if(!user.drop_item())
+					if(!user.drop_from_inventory(P, src))
 						return
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 					circuit = P
-					P.loc = src
 					icon_state = "box_2"
 					state = 3
 					components = list()
@@ -162,7 +159,7 @@
 						break
 				if(component_check)
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
 					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
@@ -217,9 +214,8 @@
 							else
 								to_chat(user, "<span class='warning'>You need more cable!</span>")
 							return
-						if(!user.drop_item())
+						if(!user.drop_from_inventory(P, src))
 							break
-						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
@@ -270,7 +266,9 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/engivend = "Engi-Vend",
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/blood = "Blood'O'Matic",
-							/obj/machinery/vending/junkfood = "McNuffin's Fast Food")
+							/obj/machinery/vending/junkfood = "McNuffin's Fast Food",
+							/obj/machinery/vending/donut = "Monkin' Donuts",
+			)
 //							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 		build_path = pick(names)

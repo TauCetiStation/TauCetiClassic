@@ -7,6 +7,7 @@
 	var/obj/lair_life_monitor/life_monitor = null
 
 /obj/structure/cellular_biomass/lair/atom_init(mapload, spawned_mob_type)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	spawned_mob = spawned_mob_type
 	spawn_mob()
@@ -35,9 +36,11 @@
 //Mob anal probe
 
 /obj/lair_life_monitor
+	flags = ABSTRACT
 	var/obj/structure/cellular_biomass/lair/lair_to_report
 
 /obj/lair_life_monitor/atom_init(mapload, obj/structure/cellular_biomass/lair/lair , mob/living/my_mob)
+	. = ..()
 	if(!lair || ! my_mob)
 		return INITIALIZE_HINT_QDEL
 	loc = my_mob

@@ -1,19 +1,19 @@
 /datum/storage_ui/default
-	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
+	var/list/is_seeing = list() //List of mobs which are currently seeing the contents of this item's storage
 
-	var/obj/screen/storage/boxes
-	var/obj/screen/storage/storage_start //storage UI
-	var/obj/screen/storage/storage_continue
-	var/obj/screen/storage/storage_end
-	var/obj/screen/stored_start
-	var/obj/screen/stored_continue
-	var/obj/screen/stored_end
-	var/obj/screen/close/closer
+	var/atom/movable/screen/storage/boxes
+	var/atom/movable/screen/storage/storage_start //storage UI
+	var/atom/movable/screen/storage/storage_continue
+	var/atom/movable/screen/storage/storage_end
+	var/atom/movable/screen/stored_start
+	var/atom/movable/screen/stored_continue
+	var/atom/movable/screen/stored_end
+	var/atom/movable/screen/close/closer
 
 
-/datum/storage_ui/default/New(var/storage)
+/datum/storage_ui/default/New(storage)
 	..()
-	boxes = new /obj/screen/storage(  )
+	boxes = new /atom/movable/screen/storage(  )
 	boxes.name = "storage"
 	boxes.master = storage
 	boxes.icon_state = "block"
@@ -21,21 +21,21 @@
 	boxes.layer = HUD_LAYER
 	boxes.plane = HUD_PLANE
 
-	storage_start = new /obj/screen/storage(  )
+	storage_start = new /atom/movable/screen/storage(  )
 	storage_start.name = "storage"
 	storage_start.master = storage
 	storage_start.icon_state = "storage_start"
 	storage_start.screen_loc = "7,7 to 10,8"
 	storage_start.layer = HUD_LAYER
 	storage_start.plane = HUD_PLANE
-	storage_continue = new /obj/screen/storage(  )
+	storage_continue = new /atom/movable/screen/storage(  )
 	storage_continue.name = "storage"
 	storage_continue.master = storage
 	storage_continue.icon_state = "storage_continue"
 	storage_continue.screen_loc = "7,7 to 10,8"
 	storage_continue.layer = HUD_LAYER
 	storage_continue.plane = HUD_PLANE
-	storage_end = new /obj/screen/storage(  )
+	storage_end = new /atom/movable/screen/storage(  )
 	storage_end.name = "storage"
 	storage_end.master = storage
 	storage_end.icon_state = "storage_end"
@@ -56,7 +56,7 @@
 	stored_end.layer = HUD_LAYER
 	stored_end.plane = HUD_PLANE
 
-	closer = new /obj/screen/close(  )
+	closer = new /atom/movable/screen/close(  )
 	closer.master = storage
 	closer.icon_state = "x"
 	closer.layer = HUD_LAYER
@@ -74,34 +74,34 @@
 	QDEL_NULL(closer)
 	. = ..()
 
-/datum/storage_ui/default/on_open(var/mob/user)
+/datum/storage_ui/default/on_open(mob/user)
 	if (user.s_active)
 		user.s_active.close(user)
 
-/datum/storage_ui/default/after_close(var/mob/user)
+/datum/storage_ui/default/after_close(mob/user)
 	user.s_active = null
 
-/datum/storage_ui/default/on_insertion(var/mob/user)
+/datum/storage_ui/default/on_insertion(mob/user)
 	//if(user.s_active)
 	//	user.s_active.show_to(user)
 	for(var/mob/M in can_see_contents())
 		M.s_active.show_to(M)
 
-/datum/storage_ui/default/on_pre_remove(var/mob/user, var/obj/item/W)
+/datum/storage_ui/default/on_pre_remove(mob/user, obj/item/W)
 	for(var/mob/M in can_see_contents())
 		if(M.client)
 			M.client.screen -= W
 
-/datum/storage_ui/default/on_post_remove(var/mob/user)
+/datum/storage_ui/default/on_post_remove(mob/user)
 	if(user.s_active)
 		user.s_active.show_to(user)
 
-/datum/storage_ui/default/on_hand_attack(var/mob/user)
+/datum/storage_ui/default/on_hand_attack(mob/user)
 	for(var/mob/M in range(1))
 		if (M.s_active == storage)
 			storage.close(M)
 
-/datum/storage_ui/default/show_to(var/mob/user)
+/datum/storage_ui/default/show_to(mob/user)
 	if(user.s_active != storage)
 		for(var/obj/item/I in storage)
 			if(I.on_found(user))
@@ -125,7 +125,7 @@
 	is_seeing |= user
 	user.s_active = storage
 
-/datum/storage_ui/default/hide_from(var/mob/user)
+/datum/storage_ui/default/hide_from(mob/user)
 	is_seeing -= user
 	if(!user.client)
 		return
@@ -171,7 +171,6 @@
 		//O.hud_layerise()
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
-		O.set_alt_apperances_layers()
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -210,7 +209,7 @@
 	arrange_item_slots(row_num, col_count, numbered_contents)
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
-/datum/storage_ui/default/proc/arrange_item_slots(var/rows, var/cols, list/obj/item/display_contents)
+/datum/storage_ui/default/proc/arrange_item_slots(rows, cols, list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
 	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
@@ -223,7 +222,6 @@
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
-			ND.sample_object.set_alt_apperances_layers()
 			click_border_start[ND.sample_object_index] = (cx-4)*32
 			click_border_end[ND.sample_object_index] = (cx-4)*32+32
 			cx++
@@ -236,7 +234,6 @@
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
-			O.set_alt_apperances_layers()
 			click_border_start += (cx-4)*32
 			click_border_end += (cx-4)*32+32
 			cx++
@@ -305,6 +302,5 @@
 		O.maptext = ""
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = HUD_PLANE
-		O.set_alt_apperances_layers()
 
 	closer.screen_loc = "4:[storage_width+19],2:16"

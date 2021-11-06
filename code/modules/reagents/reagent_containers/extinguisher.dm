@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extinguisher_list)
 /obj/item/weapon/reagent_containers/spray/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -7,7 +8,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
@@ -41,13 +42,16 @@
 		cut_overlays()
 		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
 		add_overlay(I)
-	icon_state = "[initial(icon_state)][!safety]"
+	if(!safety)
+		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	reagents.add_reagent(reagent_inside, volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -66,7 +70,10 @@
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attack_self(mob/user)
 	safety = !safety
-	icon_state = "[initial(icon_state)][!safety]"
+	if(!safety)
+		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
@@ -76,7 +83,7 @@
 	item_state = "miniFE"
 	hitsound = null // It is much lighter, after all.
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 3.0
 	m_amt = 0
 
@@ -88,7 +95,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/golden
 	name = "golden fire extinguisher"

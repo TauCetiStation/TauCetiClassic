@@ -1,13 +1,15 @@
 /mob/living/pbag
 	name = "punching bag"
 	desc = "It's made by some goons."
+	faction = "untouchable"
 
-	icon = 'code/modules/sports/pbag.dmi'
+	icon = 'icons/obj/sports/pbag.dmi'
 	icon_state = "pbag"
 	logs_combat = FALSE
 
 	can_be_pulled = FALSE
 	density = FALSE
+	w_class = SIZE_HUMAN
 
 	maxHealth = 100
 
@@ -67,7 +69,7 @@
 	return TRUE
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if(ckey && !incapacitated())
+	if(ckey && !incapacitated() && !moving_diagonally)
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 		return
 	return ..()

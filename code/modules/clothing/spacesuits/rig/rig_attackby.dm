@@ -8,7 +8,7 @@
 		if(H.wear_suit == src)
 			is_wearing = TRUE
 
-	if(istype(I, /obj/item/clothing/head/helmet/space))
+	if(istype(I, /obj/item/clothing/head/helmet/space/rig))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
@@ -24,6 +24,8 @@
 			to_chat(user, "You attach \the [I] to \the [src]'s helmet mount.")
 			user.drop_from_inventory(I, src)
 			helmet = I
+			var/obj/item/clothing/head/helmet/space/rig/R = I
+			R.rig_connect = src
 		return
 
 	else if(istype(I, /obj/item/clothing/shoes/magboots))
@@ -140,6 +142,7 @@
 			if("helmet")
 				to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
 				helmet.forceMove(get_turf(src))
+				helmet.rig_connect = null
 				helmet = null
 
 			if("boots")

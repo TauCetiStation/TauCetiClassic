@@ -7,7 +7,7 @@
 	desc = "Goodbye, happy holidays..."
 	icon_state = "tree"
 	brightness_on = 5
-	anchored = 1
+	anchored = TRUE
 	layer = 4.1
 
 /obj/item/device/flashlight/lamp/fir/attackby(obj/item/I, mob/user, params)

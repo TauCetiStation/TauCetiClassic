@@ -1,4 +1,5 @@
 var/list/net_announcer_secret = list()
+var/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -35,32 +36,24 @@ var/list/net_announcer_secret = list()
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-//	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
-	var/objectives_disabled = 0 			//if objectives are disabled or not
+	var/traitor_scaling = 1 			//if amount of traitors scales based on amount of players
+	var/objectives_disabled = 0 		//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/allow_Metadata = 1				// Metadata is supported.
+	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/fps = 20
-	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
 	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
 	var/list/mode_names = list()
-	var/list/modes = list()				// allowed modes
-	var/list/votable_modes = list()		// votable modes
+	var/list/config_name_by_real = list()
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
+	var/allow_random_events = 1			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
-	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/serverwhitelist = 0
-	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/afk_time_bracket = 6000 // 10 minutes
@@ -74,9 +67,13 @@ var/list/net_announcer_secret = list()
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
+	var/client_limit_panic_bunker_mentor_pass_cap = 3
+
+	var/bunker_ban_mode = 0
+	var/bunker_ban_mode_message = "Sorry, you can't play on this server, we do not accept new players."
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
-	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+	var/cult_ghostwriter_req_cultists = 9  //...so long as this many cultists are active.
 
 	var/max_maint_drones = 5				//This many drones can spawn,
 	var/allow_drone_spawn = 1				//assuming the admin allow them to.
@@ -89,12 +86,11 @@ var/list/net_announcer_secret = list()
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
-	var/limitalienplayers = 0
-	var/alien_to_human_ratio = 0.5
 	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
+	var/siteurl
 	var/wikiurl
 	var/forumurl
 	var/media_base_url = "http://example.org"
@@ -108,16 +104,9 @@ var/list/net_announcer_secret = list()
 
 	var/repository_link = ""
 
-	//Alert level description
-	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
-	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
-	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
-
 	var/forbid_singulo_possession = 0
 
+	var/allow_holidays = FALSE
 	//game_options.txt configs
 
 	var/health_threshold_softcrit = 0
@@ -148,15 +137,18 @@ var/list/net_announcer_secret = list()
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
+	var/list/event_first_run = list(EVENT_LEVEL_ROUNDSTART = null,
+									EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
-									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
+	var/list/event_delay_lower = list(EVENT_LEVEL_ROUNDSTART = null,
+									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE  = 15 MINUTES,
+	var/list/event_delay_upper = list(EVENT_LEVEL_ROUNDSTART = null,
+									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
 									  EVENT_LEVEL_MODERATE = 45 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
 
@@ -167,8 +159,8 @@ var/list/net_announcer_secret = list()
 
 	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
 
-	var/byond_version_min = 0
-	var/byond_version_recommend = 0
+	var/byond_version_min = RECOMMENDED_VERSION
+	var/byond_version_recommend = RECOMMENDED_VERSION
 
 	var/simultaneous_pm_warning_timeout = 100
 
@@ -182,7 +174,6 @@ var/list/net_announcer_secret = list()
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
 
 	var/guard_email = null
@@ -216,24 +207,19 @@ var/list/net_announcer_secret = list()
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
-/datum/configuration/New()
-	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
-	for (var/T in L)
-		// I wish I didn't have to instance the game modes in order to look up
-		// their information, but it is the only way (at least that I know of).
-		var/datum/game_mode/M = new T()
+	var/minutetopiclimit = 100
+	var/secondtopiclimit = 10
 
-		if (M.config_tag)
-			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
-				if(M.playable_mode)
-					src.modes += M.config_tag
-					src.mode_names[M.config_tag] = M.name
-					src.probabilities[M.config_tag] = M.probability
-				if (M.votable)
-					src.votable_modes += M.config_tag
-		qdel(M)
-	src.votable_modes += "secret"
+	var/deathmatch_arena = TRUE
+
+/datum/configuration/New()
+	for (var/type in subtypesof(/datum/game_mode))
+		var/datum/game_mode/M = type
+		if(initial(M.name) && !(initial(M.name) in mode_names))
+			log_misc("Adding game mode [initial(M.name)] to configuration.")
+			mode_names += initial(M.name)
+			config_name_by_real[initial(M.config_name)] = initial(M.name)
+			probabilities[initial(M.config_name)] = initial(M.probability)
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -377,10 +363,7 @@ var/list/net_announcer_secret = list()
 					config.ert_admin_call_only = 1
 
 				if ("allow_ai")
-					config.allow_ai = 1
-
-//				if ("authentication")
-//					config.enable_authentication = 1
+					config.allow_ai = text2num(value)
 
 				if ("norespawn")
 					config.respawn = 0
@@ -403,20 +386,17 @@ var/list/net_announcer_secret = list()
 				if ("wikiurl")
 					config.wikiurl = value
 
+				if ("siteurl")
+					config.siteurl = value
+
 				if ("forumurl")
 					config.forumurl = value
-
-				if ("guest_jobban")
-					config.guest_jobban = 1
 
 				if ("guest_ban")
 					guests_allowed = 0
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
-
-				if ("serverwhitelist")
-					config.serverwhitelist = 1
 
 				if("media_base_url")
 					media_base_url = value
@@ -430,17 +410,8 @@ var/list/net_announcer_secret = list()
 				if ("customitems_info_url")
 					customitems_info_url = value
 
-				if("serverwhitelist_message")
-					config.serverwhitelist_message = value
-
-				if ("feature_object_spell_system")
-					config.feature_object_spell_system = 1
-
-				if ("allow_metadata")
-					config.allow_Metadata = 1
-
 				if ("traitor_scaling")
-					config.traitor_scaling = 1
+					config.traitor_scaling = text2num(value)
 
 				if ("objectives_disabled")
 					config.objectives_disabled = 1
@@ -456,7 +427,7 @@ var/list/net_announcer_secret = list()
 					if (prob_pos)
 						prob_name = lowertext(copytext(value, 1, prob_pos))
 						prob_value = copytext(value, prob_pos + 1)
-						if (prob_name in config.modes)
+						if (prob_name in config.config_name_by_real)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
 							log_misc("Unknown game mode probability configuration definition: [prob_name].")
@@ -464,7 +435,7 @@ var/list/net_announcer_secret = list()
 						log_misc("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("allow_random_events")
-					config.allow_random_events = 1
+					config.allow_random_events = text2num(value)
 
 				if("kick_inactive")
 					config.kick_inactive = 1
@@ -475,29 +446,11 @@ var/list/net_announcer_secret = list()
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 
-				if("alert_red_upto")
-					config.alert_desc_red_upto = value
-
-				if("alert_red_downto")
-					config.alert_desc_red_downto = value
-
-				if("alert_blue_downto")
-					config.alert_desc_blue_downto = value
-
-				if("alert_blue_upto")
-					config.alert_desc_blue_upto = value
-
-				if("alert_green")
-					config.alert_desc_green = value
-
-				if("alert_delta")
-					config.alert_desc_delta = value
-
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
 				if("allow_holidays")
-					Holiday = 1
+					allow_holidays = TRUE
 
 				if("ticklag")
 					var/ticklag = text2num(value)
@@ -511,9 +464,6 @@ var/list/net_announcer_secret = list()
 					config.antag_hud_allowed = 1
 				if("antag_hud_restricted")
 					config.antag_hud_restricted = 1
-
-				if("socket_talk")
-					socket_talk = text2num(value)
 
 				if("humans_need_surnames")
 					humans_need_surnames = 1
@@ -541,10 +491,6 @@ var/list/net_announcer_secret = list()
 							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
 					else
 						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
-
-				if("alien_player_ratio")
-					limitalienplayers = 1
-					alien_to_human_ratio = text2num(value)
 
 				if("assistant_maint")
 					config.assistant_maint = 1
@@ -625,9 +571,6 @@ var/list/net_announcer_secret = list()
 				if("chat_bridge")
 					config.chat_bridge = value
 
-				if("antigrief_alarm_level")
-					config.antigrief_alarm_level = value
-
 				if("check_randomizer")
 					config.check_randomizer = value
 
@@ -677,13 +620,22 @@ var/list/net_announcer_secret = list()
 					config.registration_panic_bunker_age = value
 
 				if("allowed_by_bunker_player_age")
-					config.allowed_by_bunker_player_age = value
+					config.allowed_by_bunker_player_age = text2num(value)
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
 
+				if("client_limit_panic_bunker_mentor_pass_cap")
+					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
+
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
+
+				if ("bunker_ban_mode")
+					config.bunker_ban_mode = 1
+
+				if("bunker_ban_mode_message")
+					config.bunker_ban_mode_message = value
 
 				if("summon_testmap")
 					config.load_testmap = TRUE
@@ -696,6 +648,12 @@ var/list/net_announcer_secret = list()
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE
+
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -744,6 +702,8 @@ var/list/net_announcer_secret = list()
 					config.starlight = TRUE
 				if("nightshift")
 					config.nightshift = TRUE
+				if("deathmatch_arena")
+					config.deathmatch_arena = text2num(value)
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -786,78 +746,67 @@ var/list/net_announcer_secret = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
-			if ("feedback_database")
-				sqlfdbkdb = value
-			if ("feedback_login")
-				sqlfdbklogin = value
-			if ("feedback_password")
-				sqlfdbkpass = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/pick_mode(mode_name)
-	// I wish I didn't have to instance the game modes in order to look up
-	// their information, but it is the only way (at least that I know of).
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		if (M.config_tag && M.config_tag == mode_name)
+	for (var/type in subtypesof(/datum/game_mode))
+		var/datum/game_mode/M = new type()
+		if (M.name == mode_name)
 			return M
-		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/is_hidden_gamemode(g_mode)
-	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+/datum/configuration/proc/get_bundle_by_name(name)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(initial(M.name) == name)
+			return new M
+	return null
 
-/datum/configuration/proc/is_modeset(g_mode)
-	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+/datum/configuration/proc/is_bundle_by_name(name)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(initial(M.name) == name)
+			return TRUE
+	return FALSE
 
-/datum/configuration/proc/is_custom_modeset(g_mode)
-	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
-
-// As argument accpet config tag of gamemode, not name
-/datum/configuration/proc/is_mode_allowed(g_mode_tag)
-	return (g_mode_tag && (g_mode_tag in modes))
-
-// check_ready - if true only ready players count
-/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		M.modeset = modeset
-		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
-		if (!is_mode_allowed(M.config_tag))
+/datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
+	var/list/datum/game_mode/runnable_modes = list()
+	var/list/runnable_modes_names = list()
+	for (var/type in bundle.possible_gamemodes)
+		var/datum/game_mode/M = new type()
+		if (!M.name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
-		if (is_custom_modeset(M.config_tag))
+		if (probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if(!modeset || modeset == "random" || modeset == "secret")
-			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
-				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
-					qdel(M)
-					continue
-			if (probabilities[M.config_tag]<=0)
-				qdel(M)
-				continue
-		else if (is_custom_modeset(modeset))
-			switch(modeset)
-				if("bs12")
-					switch(M.config_tag)
-						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-							qdel(M)
-							continue
-				if("tau classic")
-					switch(M.config_tag)
-						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-							qdel(M)
-							continue
-		var/mod_prob = probabilities[M.config_tag]
-		if (is_custom_modeset(modeset))
-			mod_prob = 1
-		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+		if (global.master_last_mode == M.name)
+			qdel(M)
+			continue
+		if (global.modes_failed_start[M.name])
+			qdel(M)
+			continue
+		var/mod_prob = probabilities[M.name]
+		if (M.can_start())
 			runnable_modes[M] = mod_prob
-			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
+			runnable_modes_names += M.name
+	log_mode("Current pool of gamemodes([runnable_modes.len]):")
+	log_mode(get_english_list(runnable_modes_names))
+
 	return runnable_modes
+
+/datum/configuration/proc/get_always_runnable_modes()
+	var/list/exactly_runnable_modes = list()
+	var/list/runnable_modes_names = list()
+	var/datum/modesbundle/run_anyway/bundle = new
+	for(var/type in bundle.possible_gamemodes)
+		var/datum/game_mode/M = new type()
+		exactly_runnable_modes[M] = 1
+		runnable_modes_names += M.name
+	log_mode("Current pool of always runnable gamemodes([exactly_runnable_modes.len]):")
+	log_mode(get_english_list(runnable_modes_names))
+	return exactly_runnable_modes
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)

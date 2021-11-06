@@ -9,8 +9,11 @@
  * Misc
  */
 
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+	return get_english_list(input, nothing_text, and_text, comma_text, final_comma_text)
+
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/get_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -54,12 +57,12 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return 0
+	if(!length(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -133,7 +136,7 @@
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
@@ -599,7 +602,7 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/proc/filter_list(var/list/L, var/type)
+/proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)
 		if(istype(entry, type))
@@ -715,6 +718,23 @@
 					L[T] = TRUE
 		return L
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -760,22 +780,39 @@
 
 	return TRUE
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
 /proc/is_associative_list(list/L)
-    var/index = 0
-    for(var/key in L)
-        index++
+	var/index = 0
+	for(var/key in L)
+		index++
 
-        var/value = null
-        // if key not num we can check L[key] without fear of "out of bound"
-        // else compare to index to prevent runtime error in e.g. list(5, 1)
-        // L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
-        if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
-            value = L[key]
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
 
-        if(!isnull(value))
-            return TRUE
+		if(!isnull(value))
+			return TRUE
 
-    return FALSE
+	return FALSE
+
+/proc/get_list_of_primary_keys(list/L)
+	var/primary_keys = list()
+	for (var/primary_key in L)
+		primary_keys += primary_key
+	return primary_keys
+
+/proc/get_list_of_keys_from_values_as_list_from_associative_list(list/assoc_list)
+	var/sub_keys = list()
+	for (var/primary_key in assoc_list)
+		sub_keys |= assoc_list[primary_key]
+	return sub_keys
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
@@ -787,3 +824,9 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

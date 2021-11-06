@@ -6,7 +6,7 @@
 	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/mecha_control"
+	circuit = /obj/item/weapon/circuitboard/mecha_control
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
@@ -55,7 +55,7 @@
 	else if(href_list["return"])
 		screen = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 
@@ -112,7 +112,7 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()

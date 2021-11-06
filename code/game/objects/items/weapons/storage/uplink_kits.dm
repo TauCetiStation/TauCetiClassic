@@ -255,7 +255,7 @@
 /obj/item/weapon/storage/box/syndie_kit/light_armor/atom_init()
 	. = ..()
 	new /obj/item/clothing/suit/armor/syndilight(src)
-	new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
+	new /obj/item/clothing/head/helmet/syndilight(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/fake
@@ -286,4 +286,18 @@
 	new /obj/item/clothing/head/soft/red(src)
 	new /obj/item/clothing/suit/syndieshirt(src)
 	new /obj/item/toy/syndicateballoon(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "box (CH)"
+	desc = "Box containing Spacegeneva violation."
+	icon_state = "syndie_box"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/suit/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/reagent_containers/watertank_backpack/syndie(src)
+	new /obj/item/weapon/lighter/zippo/fluff/michael_guess_1(src)
 	make_exact_fit()

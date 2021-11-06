@@ -3,16 +3,18 @@
 	set name = "Library: Remove by id"
 	if(!check_rights(R_DEBUG))	return
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
-	var/id = input("Book ID:") as num
+	var/id = input("Book ID:") as num|null
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT author, title FROM library WHERE id='[id]'")
+	if(!id)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT author, title FROM erro_library WHERE id='[id]'")
 	if(!query.Execute())
-		to_chat(usr, query.ErrorMsg())
+		to_chat(usr, "SQL ERROR")
 
 	var/author
 	var/title
@@ -21,27 +23,29 @@
 		title = query.item[2]
 		break
 
-	var/input = alert(src, "You want to remove [title], authored [author]", "Confirm", "Confirm", "Cancel")
+	var/input = tgui_alert(src, "You want to remove [title], authored [author]", "Confirm", list("Confirm", "Cancel"))
 	if(input != "Confirm")
 		return
 
-	query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[id]'")
+	query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[id]'")
 	if(!query.Execute())
-		to_chat(usr, query.ErrorMsg())
+		to_chat(usr, "SQL ERROR")
 
 /client/proc/library_debug_read()
 	set category = "Debug"
 	set name = "Library: Read by id"
 	if(!check_rights(R_DEBUG))	return
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
-	var/id = input("Book ID:") as num
+	var/id = input("Book ID:") as num|null
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[id]'")
+	if(!id)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[id]'")
 	query.Execute()
 
 	var/author
@@ -61,8 +65,7 @@
 	set category = "Admin"
 	set name = "Library: Recycle bin"
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "Database is not connected.")
 		return
 
@@ -72,7 +75,7 @@
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, title, author, ckey, deletereason FROM library WHERE deletereason IS NOT NULL")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, title, author, ckey, deletereason FROM erro_library WHERE deletereason IS NOT NULL")
 	if(!query.Execute())
 		return
 

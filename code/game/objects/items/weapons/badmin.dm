@@ -5,7 +5,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/pedalbag/verb/quick_empty()
@@ -62,8 +62,8 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T)
-		log_admin("Badmin [src] spawned on [T.x]:[T.y]:[T.z]")
-		message_admins("<span class='notice'>Badmin [src] spawned on [T.x]:[T.y]:[T.z] [ADMIN_JMP(T)]</span>")
+		log_admin("Badmin [src] spawned on [COORD(T)]")
+		message_admins("<span class='notice'>Badmin [src] spawned on [COORD(T)] [ADMIN_JMP(T)]</span>")
 	else
 		log_admin("Badmin [src] spawned somewhere")
 		message_admins("<span class='notice'>Badmin [src] spawned somewhere</span>")
@@ -108,7 +108,7 @@
 			continue
 		if(entity.flags & (NODROP | ABSTRACT) || !entity.simulated) // not real things
 			continue
-		if(istype(entity, /obj/effect) || istype(entity, /obj/screen)) // service things (eh)
+		if(istype(entity, /obj/effect) || istype(entity, /atom/movable/screen)) // service things (eh)
 			continue
 		if(istype(entity, /mob/living/carbon/human/dummy)) // also service things
 			continue

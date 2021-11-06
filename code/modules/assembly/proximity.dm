@@ -4,7 +4,6 @@
 	icon_state = "prox"
 	m_amt = 800
 	g_amt = 200
-	w_amt = 50
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE
@@ -58,9 +57,9 @@
 
 //	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
 //	var/turf/T = get_turf(src)
-//	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-//	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z])",0,1)
-//	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
+//	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location [COORD(T)]")
+//	message_admins("[src] activated  @ location [COORD(T)]",0,1)
+//	log_game("[src] activated  @ location [COORD(T)]")
 	return
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -129,7 +128,7 @@
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		usr << browse(null, "window=prox")
 		onclose(usr, "prox")
 		return
@@ -139,13 +138,13 @@
 		var/time_scan = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] used [src] , location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
-			log_game("[key_name(usr)] used [src], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] used [src] , location [COORD(T)] <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
+			log_game("[key_name(usr)] used [src], location [COORD(T)],time set: [time]")
 		else
-			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			log_game("(NO USER FOUND) used [src] , location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) used [src], location [COORD(T)] <B>:</B> time set: [time]")
+			log_game("(NO USER FOUND) used [src] , location [COORD(T)],time set: [time]")
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
@@ -153,13 +152,13 @@
 		var/time_start = time2text(world.realtime,"hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
-			log_game("[key_name(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location [COORD(T)] <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
+			log_game("[key_name(usr)] set [src] [timing?"On":"Off"], location [COORD(T)],time set: [time]")
 		else
-			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location [COORD(T)] <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location [COORD(T)] <B>:</B> time set: [time]")
+			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location [COORD(T)],time set: [time]")
 
 	if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])

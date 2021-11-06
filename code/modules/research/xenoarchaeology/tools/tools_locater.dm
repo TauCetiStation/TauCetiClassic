@@ -59,7 +59,7 @@
 			icon_state = "newpinoff"
 
 /obj/item/device/beacon_locator/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/device/beacon_locator/interact(mob/user)
 	var/dat = ""

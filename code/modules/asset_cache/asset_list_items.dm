@@ -4,7 +4,8 @@
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/goonchat,
-		/datum/asset/simple/fontawesome
+		/datum/asset/simple/fontawesome,
+		/datum/asset/simple/error_handler_js
 	)
 
 /datum/asset/simple/tgui
@@ -23,7 +24,6 @@
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
 		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
 		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
 		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
 	)
@@ -70,6 +70,11 @@
 		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
 	)
 
+/datum/asset/simple/lobby
+	assets = list(
+		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
+	)
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
@@ -89,6 +94,11 @@
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
+/datum/asset/simple/error_handler_js
+	assets = list(
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js'
+	)
+
 /datum/asset/nanoui
 	var/list/common = list()
 
@@ -102,8 +112,8 @@
 		"nano/templates/"
 	)
 
-	var/assets = list(
-		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+	var/children = list(
+		/datum/asset/simple/error_handler_js
 	)
 
 /datum/asset/nanoui/register()
@@ -122,16 +132,22 @@
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
 
-	for(var/asset_name in assets)
-		register_asset(asset_name, assets[asset_name])
-
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
 		uncommon = list(uncommon)
 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
-	send_asset_list(client, assets)
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		A.send(client)
+
+/datum/asset/spritesheet/mafia
+	name = "mafia"
+
+/datum/asset/spritesheet/mafia/register()
+	InsertAll("", 'icons/obj/mafia.dmi')
+	..()
 
 /datum/asset/spritesheet/vending
 	name = "vending"
@@ -143,7 +159,50 @@
 			continue
 		var/obj/product = new item
 		var/icon/I = getFlatIcon(product)
-		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/sheetmaterials
+	name = "sheetmaterials"
+
+/datum/asset/spritesheet/sheetmaterials/register()
+	for (var/type in subtypesof(/obj/item/stack/sheet))
+		var/obj/item = type
+		var/icon/I = icon(initial(item.icon), initial(item.icon_state)) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+/datum/asset/spritesheet/equipment_locker
+	name = "equipment_locker"
+
+/datum/asset/spritesheet/equipment_locker/register()
+	var/list/equipment_locker_products = list(
+			/obj/item/device/gps/mining,
+			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+			/obj/item/weapon/reagent_containers/pill/lipozine,
+			/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,
+			/obj/item/weapon/storage/box/autoinjector/stimpack,
+			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+			/obj/item/weapon/survivalcapsule,
+			/obj/item/weapon/survivalcapsule/improved,
+			/obj/item/weapon/survivalcapsule/elite,
+			/obj/item/kinetic_upgrade/speed,
+			/obj/item/weapon/reagent_containers/food/snacks/hotchili,
+			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+			/obj/item/weapon/soap/nanotrasen,
+			/obj/item/clothing/mask/facehugger_toy,
+			/obj/item/weapon/card/mining_point_card,
+			/obj/item/weapon/spacecash/c1000,
+			/obj/item/weapon/mining_voucher,
+	)
+	for (var/k in equipment_locker_products)
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
 
@@ -151,15 +210,21 @@
 	name = "autolathe"
 
 /datum/asset/spritesheet/autolathe/register()
-	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
-	for (var/obj/item in recipes)
-		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
-		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
+	var/list/recipes = global.autolathe_recipes_all
+	for (var/datum/autolathe_recipe/r in recipes)
+		var/obj/item = r.result_type
+		var/icon/I = icon(initial(item.icon), initial(item.icon_state)) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
 
 /datum/asset/spritesheet/cargo
 	name = "cargo"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)
 
 /datum/asset/spritesheet/cargo/register()
 	var/all_objects = list()
@@ -181,10 +246,10 @@
 		if(ispath(content, /mob))
 			var/mob/M = content
 			sprite = icon(initial(M.icon), initial(M.icon_state))
-			imgid = replacetext(replacetext("[content]", "/mob/", ""), "/", "-")
+			imgid = replacetext(replacetext("[content]", "[/mob]/", ""), "/", "-")
 		else
 			var/obj/supply = new content
 			sprite = getFlatIcon(supply)
-			imgid = replacetext(replacetext("[content]", "/obj/", ""), "/", "-")
+			imgid = replacetext(replacetext("[content]", "[/obj]/", ""), "/", "-")
 		insert_icon_in_list(imgid, sprite)
 	return ..()

@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 2.0
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 /obj/item/weapon/moneybag/attack_hand(user)
 	var/amt_gold = 0
@@ -83,7 +83,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["remove"])
 		var/obj/item/weapon/coin/COIN
 		switch(href_list["remove"])

@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	recalculateChannels()
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)
@@ -50,6 +50,15 @@
 	. = ..()
 	set_frequency(SYND_FREQ)
 
+/obj/item/device/radio/headset/heist
+	syndie = TRUE
+	ks1type = /obj/item/device/encryptionkey/heist
+	grid = TRUE
+
+/obj/item/device/radio/headset/heist/atom_init()
+	. = ..()
+	set_frequency(HEIST_FREQ)
+
 /obj/item/device/radio/headset/ninja
 	grid = TRUE
 
@@ -68,6 +77,10 @@
 	icon_state = "sec_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
+
+/obj/item/device/radio/headset/headset_sec/alt
+	name = "security radio headset"
+	icon_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	name = "NT PMC Radio Headset. Works with default security frequency."

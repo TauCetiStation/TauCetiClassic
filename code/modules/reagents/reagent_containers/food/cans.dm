@@ -7,12 +7,14 @@
 
 	if(!canopened)
 		flags &= ~OPENCONTAINER
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		flags |= OPENCONTAINER
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 		canopened = 1
 	else
 		return
@@ -48,9 +50,11 @@
 		return
 
 	else
-		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 		if(!do_mob(user, M)) return
-		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
@@ -101,7 +105,7 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -113,15 +117,7 @@
 
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
-
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
-
-		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
-	return
-
+		reagents.standard_splash(target, user=user)
 
 //DRINKS
 
@@ -136,6 +132,35 @@
 	desc = "Introduced to the vending machines by Skrellian request, this water comes straight from the Martian poles."
 	icon_state = "waterbottle"
 	list_reagents = list("water" = 30)
+
+///chem list, minus foods/drinks/base chems/paint and special chems, only for waterbottle/relic
+#define RELIC_WATER_CHEM_LIST list(\
+	"stoxin2", "inaprovaline", "ryetalyn", "paracetamol", "tramadol", "oxycodone", "sterilizine", "leporazine",\
+	"kelotane", "dermaline", "dexalin", "dextromethorphan", "dexalinp", "tricordrazine", "anti_toxin", "thermopsis",\
+	"synaptizine", "hyronalin", "arithrazine", "alkysine", "imidazoline", "aurisine", "peridaxon", "kyphotorin",\
+	"bicaridine", "hyperzine", "cryoxadone", "clonexadone", "rezadone", "spaceacillin", "ethylredoxrazine",\
+	"vitamin", "lipozine", "stimulants", "nanocalcium", "toxin", "amatoxin", "mutagen", "phoron", "lexorin",\
+	"slimejelly", "cyanide", "minttoxin", "carpotoxin", "zombiepowder", "mindbreaker", "plantbgone", "stoxin",\
+	"chloralhydrate", "potassium_chloride", "potassium_chlorophoride", "beer2", "mutetoxin", "sacid", "pacid",\
+	"alphaamanitin", "aflatoxin", "chefspecial", "dioxin", "mulligan", "mutationtoxin", "amutationtoxin", "space_drugs",\
+	"serotrotium", "cryptobiolin", "impedrezene", "ectoplasm", "methylphenidate", "methylphenidate", "citalopram",\
+	"citalopram", "paroxetine", "paroxetine", "lube", "plasticide", "glycerol", "nitroglycerin",\
+	"thermite", "virusfood", "fuel", "cleaner", "xenomicrobes", "fluorosurfactant", "foaming_agent", "nicotine",\
+	"ammonia", "glue", "diethylamine", "luminophore","nanites", "nanites2", "nanobots", "mednanobots", "ectoplasm")
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic
+	desc = "A bottle of water filled with unknown liquids. It seems to be radiating some kind of energy."
+	list_reagents = list()
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic/atom_init()
+	var/reagents = volume
+	while(reagents)
+		var/newreagent = rand(1, min(reagents, 30))
+		list_reagents += list(pick(RELIC_WATER_CHEM_LIST) = newreagent)
+		reagents -= newreagent
+	. = ..()
+
+#undef RELIC_WATER_CHEM_LIST
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
 	name = "Space Mountain Wind"
@@ -159,7 +184,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	list_reagents = list("sodawater" = 15, "orangejuice" = 15)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up
 	name = "Space-Up"

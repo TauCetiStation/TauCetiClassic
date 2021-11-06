@@ -4,7 +4,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
@@ -211,9 +211,48 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+/obj/item/weapon/noose
+	name = "noose"
+	desc = "A rolled noose."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "noose_rolled"
+	w_class = SIZE_TINY
+
+/obj/item/weapon/noose/attack_self(mob/user)
+	var/turf/user_turf = get_turf(user)
+	var/obj/structure/stool/bed/chair/noose/N
+	if(user_turf.density)
+		to_chat(user, "<span class='notice'>You can't build a noose over that.</span>")
+		return
+	if(locate(N) in user_turf)
+		to_chat(user, "<span class='notice'>You can't build a noose on a tile that has a noose.</span>")
+		return
+	user.visible_message("<span class='notice'>[user] starts constructing a noose</span>")
+	to_chat(user, "<span class='notice'>You begin to construct a noose...</span>")
+	if(!do_after(user, 5 SECONDS, target = user))
+		return
+	N = new(user_turf)
+	N.layer = FLY_LAYER // because of bed/chair/atom_init
+	N.color = color
+	qdel(src)
+
+/obj/item/weapon/noose/attackby(obj/item/W, mob/user)
+	if(!iswirecutter(W))
+		return ..()
+	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
+	var/obj/item/stack/cable_coil/C = new(get_turf(src))
+	C.color = color
+	C.amount = 25
+	qdel(src)
+
+/obj/item/weapon/noose/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
 
 /obj/item/weapon/transparant
 	icon_custom ='icons/mob/inhands/transparant.dmi'
@@ -226,11 +265,11 @@
 	var/delay_msg = 5 SECONDS
 	var/last_warn_msg = 0
 	force = 8
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 5
 //	flags = NOSHIELD
 		//var/protest_text
- 		//	var/protest_text_lenght = 100
+ 		//	var/protest_text_length = 100
  	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
@@ -256,7 +295,7 @@
 		return
 
 	if(istype(I, /obj/item/toy/crayon))
-		var/paths = typesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant - /obj/item/weapon/transparant/text
+		var/paths = subtypesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant/text
 		var/targName = input(usr, "Choose transparant pattern", "Pattern list") in paths
 		if(!targName)
 			return

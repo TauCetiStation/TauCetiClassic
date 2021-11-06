@@ -322,9 +322,6 @@
 	icon_state = "warning"
 	},
 /area/centcom)
-"aS" = (
-/turf/unsimulated/wall/splashscreen,
-/area/start)
 "aT" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -442,7 +439,7 @@ ae
 ae
 ae
 ae
-aS
+ae
 aa
 aa
 aa

@@ -2,14 +2,26 @@
 	var/area/impact_area    //The area the event will hit
 	var/obj/effect/anomaly/newAnomaly
 	announceWhen = 1
+	var/obj/effect/anomaly/anomaly_type
+
+/datum/event/anomaly/announce()
+	if(announcement)
+		announcement.play(impact_area)
 
 /datum/event/anomaly/setup()
 	impact_area = findEventArea()
 	if(!impact_area)
 		CRASH("No valid areas for anomaly found.")
 	var/list/turf_test = get_area_turfs(impact_area)
-	if(!turf_test.len)
+	if(!turf_test)
 		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
+
+/datum/event/anomaly/start()
+	var/list/turfs = get_area_turfs(impact_area)
+	if(!turfs)
+		return
+	var/turf/T = pick(turfs)
+	newAnomaly = new anomaly_type(T)
 
 /datum/event/anomaly/tick()
 	if(QDELETED(newAnomaly))
@@ -22,29 +34,27 @@
 		qdel(newAnomaly)
 
 
-/datum/event/anomaly/proc/findEventArea()
+/proc/findEventArea()
 	var/static/list/allowed_areas
-	var/static/list/world_areas
 	if(!allowed_areas)
 		//Places that shouldn't explode
-		var/list/safe_areas = list(
+		var/list/safe_areas = typecacheof(list(
 			/area/station/ai_monitored/storage_secure,
 			/area/station/aisat/ai_chamber,
 			/area/station/bridge/ai_upload,
-			) + typesof(/area/station/engineering) + typesof(/area/station/solar) + typesof(/area/station/civilian/holodeck)
+			/area/station/engineering,
+			/area/station/solar,
+			/area/station/civilian/holodeck,
+			))
 
 		//Subtypes from the above that actually should explode.
-		var/list/unsafe_areas = list(
+		var/list/unsafe_areas =  typecacheof(list(
 			/area/station/engineering/break_room,
-			/area/station/engineering/chiefs_office
-			)
+			/area/station/engineering/chiefs_office,
+			))
 
-		allowed_areas = subtypesof(/area/station) - safe_areas + unsafe_areas
+		allowed_areas = make_associative(subtypesof(/area/station)) - safe_areas + unsafe_areas
 
-		world_areas = list()
-		for(var/area/A in world)
-			world_areas.Add(A.type)
-
-		allowed_areas &= world_areas
-
-	return locate(pick(allowed_areas))
+	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas)
+	if(length(possible_areas))
+		return pick(possible_areas)

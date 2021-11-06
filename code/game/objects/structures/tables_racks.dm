@@ -15,11 +15,11 @@
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "box"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = 1
+	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
 	var/parts = /obj/item/weapon/table_parts
@@ -57,12 +57,12 @@
 
 /obj/structure/table/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/rack/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/update_icon()
@@ -110,6 +110,8 @@
 		else
 	return
 
+/obj/structure/table/airlock_crush_act()
+	destroy()
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -117,6 +119,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -142,7 +145,7 @@
 		glasstable.shatter()
 	else
 		new /obj/item/weapon/table_parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
@@ -261,18 +264,14 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
-		if(istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
 
 	return ..()
 
-/obj/structure/table/proc/straight_table_check(var/direction)
+/obj/structure/table/proc/straight_table_check(direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))
@@ -351,7 +350,7 @@
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -400,7 +399,7 @@
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -474,6 +473,9 @@
 	shatter()
 	qdel(G)
 	return TRUE
+
+/obj/structure/table/glass/airlock_crush_act()
+	shatter()
 
 /*
  * Wooden tables
@@ -583,10 +585,11 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/atom_init()
@@ -605,6 +608,9 @@
 			if(prob(25))
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
+
+/obj/structure/rack/airlock_crush_act()
+	destroy()
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
@@ -631,8 +637,9 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return ..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))

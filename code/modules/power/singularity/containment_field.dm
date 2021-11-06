@@ -1,12 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	unacidable = 1
 	use_power = NO_POWER_USE
 	light_range = 4
@@ -30,7 +28,7 @@
 	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
-	if(in_range(src, user) && !isobserver(user))
+	if(Adjacent(user) && !isobserver(user))
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()

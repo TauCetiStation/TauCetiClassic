@@ -184,7 +184,7 @@
 				integrity = max(0, integrity - 1)
 */
 /*
-/obj/machinery/media/transmitter/broadcast/linkWith(var/mob/user, var/obj/O, var/list/context)
+/obj/machinery/media/transmitter/broadcast/linkWith(mob/user, obj/O, list/context)
 	if(istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver)))
 		if(sources.len)
 			unhook_media_sources()
@@ -194,7 +194,7 @@
 		return 1
 	return 0
 
-/obj/machinery/media/transmitter/broadcast/unlinkFrom(var/mob/user, var/obj/O)
+/obj/machinery/media/transmitter/broadcast/unlinkFrom(mob/user, obj/O)
 	if(O in sources)
 		unhook_media_sources()
 		sources.Remove(O)
@@ -203,10 +203,10 @@
 		update_icon()
 	return 0
 
-/obj/machinery/media/transmitter/broadcast/canLink(var/obj/O, var/list/context)
+/obj/machinery/media/transmitter/broadcast/canLink(obj/O, list/context)
 	return istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
 
-/obj/machinery/media/transmitter/broadcast/isLinkedWith(var/obj/O)
+/obj/machinery/media/transmitter/broadcast/isLinkedWith(obj/O)
 	return O in sources
 */
 

@@ -10,11 +10,12 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/weapon/melee/chainofcommand
 	l_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash
 
-	implants = list(/obj/item/weapon/implant/mindshield/loyalty)
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
 
 	back_style = BACKPACK_STYLE_SECURITY
 
@@ -33,8 +34,8 @@
 	l_pocket = /obj/item/device/flash
 	l_hand_back = /obj/item/weapon/handcuffs
 
-	list/backpack_contents = null
-	implants = list(/obj/item/weapon/implant/mindshield)
+	backpack_contents = null
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
 
@@ -68,7 +69,7 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
 
-	implants = list(/obj/item/weapon/implant/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
 
@@ -100,6 +101,6 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	r_hand = /obj/item/weapon/book/manual/wiki/security_space_law
 
-	implants = list(/obj/item/weapon/implant/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY

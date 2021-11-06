@@ -49,7 +49,7 @@ var/list/fuel_injectors = list()
 	if (anchored)
 		to_chat(usr,"<span class='notice'>It is fastened to the floor!</span>")
 		return
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 

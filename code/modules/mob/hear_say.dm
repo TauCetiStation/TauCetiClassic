@@ -2,11 +2,11 @@
 
 /mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	if(!client)
-		return
+		return FALSE
 
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
-		return
+		return FALSE
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
@@ -16,7 +16,7 @@
 	if(!say_understands(speaker,language))
 		var/scrambled_msg = speaker.get_scrambled_message(message, language)
 		if(!scrambled_msg)
-			return
+			return FALSE
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
@@ -45,7 +45,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = FOLLOW_LINK(src, speaker)
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -74,6 +74,7 @@
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+	return TRUE
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
@@ -96,6 +97,8 @@
 	if(!say_understands(speaker,language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
+			if(!S.speak.len)
+				return
 			message = pick(S.speak)
 		else if(isIAN(speaker))
 			var/mob/living/carbon/ian/IAN = speaker
@@ -180,7 +183,14 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
+
+		var/track_button
+		var/turf/T = get_turf(speaker)
+		if(T)
+			track_button = FOLLOW_OR_TURF_LINK(src, speaker, T)
+		else
+			track_button = FOLLOW_LINK(src, speaker)
+		track = "[track_button] [speaker_name]"
 
 	if(isliving(src))
 		message = highlight_traitor_codewords(message, src.mind)

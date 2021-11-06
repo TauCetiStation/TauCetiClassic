@@ -34,6 +34,8 @@
 	// After reaching this cap, the first combo element is deleted, and all others are shifted "left".
 	var/max_combo_elements = 4
 
+	var/animating_combo = FALSE
+
 /datum/combo_handler/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
 	last_hit_registered = world.time + delete_after_no_hits
 
@@ -55,10 +57,13 @@
 	attacker.attack_animation = FALSE
 	attacker.combos_performed -= src
 	victim.combos_saved -= src
-	attacker = null
-	victim = null
+
+	if(!animating_combo)
+		attacker = null
+		victim = null
 	QDEL_NULL(progbar)
 	next_combo = null
+
 	return ..()
 
 /datum/combo_handler/proc/set_combo_icon(image/new_icon)
@@ -187,17 +192,25 @@
 
 // An async wrapper for everything animation-related.
 /datum/combo_handler/proc/do_animation(datum/combat_combo/CC)
+	animating_combo = TRUE
 	if(CC.heavy_animation)
 		CC.before_animation(victim, attacker)
 
 	if(!CC.do_combo(victim, attacker, ANIM_DELAY_WINDUP + ANIM_DELAY_RETURN))
 		if(CC.heavy_animation)
 			CC.after_animation(victim, attacker)
+		animating_combo = FALSE
 		return
 	CC.animate_combo(victim, attacker)
 
 	if(CC.heavy_animation)
 		CC.after_animation(victim, attacker)
+
+	if(QDELING(src))
+		victim = null
+		attacker = null
+
+	animating_combo = FALSE
 
 // Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
 // returns TRUE.

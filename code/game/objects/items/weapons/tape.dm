@@ -3,7 +3,7 @@
 	name = "tape roll"
 	icon = 'icons/obj/tape.dmi'
 	icon_state = "rollstart"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/tape
@@ -12,8 +12,8 @@
 /obj/item/tape
 	name = "tape"
 	icon = 'icons/obj/tape.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/icon_base
 
 /obj/item/taperoll/police
@@ -109,10 +109,9 @@
 		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
 
 /obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
-	if (istype(target, /obj/machinery/door/airlock))
-		if(!user.Adjacent(target))
-			to_chat(user, "<span class='notice'>You're too far away from \the [target]!</span>")
-			return
+	if(!proximity)
+		return
+	if(istype(target, /obj/machinery/door/airlock))
 		var/turf/T = get_turf(target)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
@@ -141,7 +140,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (user.a_intent == INTENT_HELP && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
-		density = 0
+		density = FALSE
 		VARSET_IN(src, density, TRUE, 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/mind_transfer
-	name = "Mind Transfer"
-	desc = "This spell allows the user to switch bodies with a target."
+	name = "Обмен Разумом"
+	desc = "Позволяет поменяться телом с целью."
 
 	school = "transmutation"
 	charge_max = 1800
@@ -10,7 +10,7 @@
 	sound = 'sound/magic/MandSwap.ogg'
 	range = 1
 	action_icon_state = "mindswap"
-	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
+	var/list/protected_roles = list(WIZARD, CHANGELING, CULTIST) //which roles are immune to the spell
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
 	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
 	var/spell_loss_chance_modifier = 7 //amount of probability of losing a spell added per spell (mind_transfer included)
@@ -51,15 +51,16 @@ Also, you never added distance checking after target is selected. I've went ahea
 		to_chat(user, "They appear to be catatonic. Not even magic can affect their vacant mind.")
 		return
 
-	if(target.mind.special_role in protected_roles)
-		to_chat(user, "Their mind is resisting your spell.")
-		return
+	for(var/role in protected_roles)
+		if(isrole(role, target))
+			to_chat(user, "Their mind is resisting your spell.")
+			return
 
 	//If target has mindshield/loyalty implant we break it, adding some brainloss
-	if(ismindshielded(target))
+	if(target.ismindprotect())
 		to_chat(user, "Their mind seems to be protected, so you only manage to break it")
 		to_chat(target, "You feel a flash of pain in your head")
-		for(var/obj/item/weapon/implant/mindshield/L in target)
+		for(var/obj/item/weapon/implant/mind_protect/L in target)
 			if(L.implanted && L.imp_in == target)
 				qdel(L)
 		target.sec_hud_set_implants()

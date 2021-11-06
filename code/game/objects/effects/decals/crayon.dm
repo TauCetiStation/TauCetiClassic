@@ -3,15 +3,21 @@
 	desc = "A rune drawn in crayon."
 	icon = 'icons/obj/rune.dmi'
 	layer = 2.1
-	anchored = 1
+	anchored = TRUE
+	var/default_state = TRUE
+
+	beauty = -25
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
 	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
 	if(istype(loc, /atom/movable))
 		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
-	RegisterSignal(loc, list(COMSIG_PARENT_QDELETED), .proc/destroy_rune)
+	RegisterSignal(loc, list(COMSIG_PARENT_QDELETING), .proc/destroy_rune)
 	update_plane()
+
+	if(!default_state)
+		return
 
 	name = e_name
 	desc = "It's \a [type]. Somebody's being naughty leaving it here."
@@ -40,46 +46,11 @@
 		color = main
 	add_hiddenprint(usr)
 
-/obj/effect/decal/cleanable/crayon/gang
-	layer = 3.6 //Harder to hide
-	var/gang
-
-/obj/effect/decal/cleanable/crayon/gang/atom_init(mapload, type, e_name = "gang tag")
-	var/area/territory = get_area(loc)
-	var/color
-
-	if(type == "A")
-		gang = type
-		color = "#00b7ef"
-		icon_state = gang_name("A")
-		SSticker.mode.A_territory_new |= list(territory.type = territory.name)
-		SSticker.mode.A_territory_lost -= territory.type
-	else if(type == "B")
-		gang = type
-		color = "#da0000"
-		icon_state = gang_name("B")
-		SSticker.mode.B_territory_new |= list(territory.type = territory.name)
-		SSticker.mode.B_territory_lost -= territory.type
-
-	. = ..(mapload, color, color, icon_state, e_name)
-
-/obj/effect/decal/cleanable/crayon/gang/Destroy()
-	var/area/territory = get_area(src)
-
-	if(gang == "A")
-		SSticker.mode.A_territory_new -= territory.type
-		SSticker.mode.A_territory_lost |= list(territory.type = territory.name)
-	if(gang == "B")
-		SSticker.mode.B_territory_new -= territory.type
-		SSticker.mode.B_territory_lost |= list(territory.type = territory.name)
-
-	return ..()
-
 /obj/effect/decal/cleanable/crayon/proc/update_plane()
-  if(istype(loc, /turf/simulated/floor))
-    plane = FLOOR_PLANE
-  else
-    plane = GAME_PLANE
+	if(istype(loc, /turf/simulated/floor))
+		plane = FLOOR_PLANE
+	else
+		plane = GAME_PLANE
 
 /obj/effect/decal/cleanable/crayon/proc/destroy_rune()
-  qdel(src)
+	qdel(src)

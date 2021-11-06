@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/weapon/implantcase
 	name = "Glass Case"
 	desc = "A case containing an implant."
@@ -7,7 +5,7 @@
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implantcase/proc/update()
@@ -22,11 +20,11 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
 
-		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
+		if(user.get_active_hand() != I || !Adjacent(usr))
 			return
 
 		name = "Glass Case"
-		if (t)
+		if(t)
 			name += " - '[t]'"
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -110,7 +108,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/loyalty
@@ -120,7 +118,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/death_alarm

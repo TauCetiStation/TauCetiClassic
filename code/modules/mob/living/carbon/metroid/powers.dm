@@ -46,7 +46,7 @@
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
-	anchored = 1
+	anchored = TRUE
 	var/lastnut = nutrition
 	//if(M.client) M << "<span class='warning'>You legs become paralyzed!</span>"
 	if(istype(src, /mob/living/carbon/slime/adult))
@@ -129,7 +129,7 @@
 			icon_state = "[colour] baby slime"
 
 	canmove = 1
-	anchored = 0
+	anchored = FALSE
 
 	if(M)
 		if(M.health <= -70)

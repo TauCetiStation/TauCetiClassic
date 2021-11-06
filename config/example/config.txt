@@ -1,20 +1,6 @@
 ## Server name: This appears at the top of the screen in-game. In this case it will read "tgstation: station_name" where station_name is the randomly generated name of the station for the round. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
 # SERVERNAME spacestation13
 
-## Whitelist for new players
-#SERVERWHITELIST
-
-## Whitelist for new players, message
-#SERVERWHITELIST_MESSAGE Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server.<br/>For more information visit www.tauceti.ru
-
-## Alert levels
-ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
-ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
-
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
@@ -62,23 +48,18 @@ LOG_TGUI
 ## Minutes until user will be kicked for being AFK
 # AFK_TIME_BRACKET 10
 
-## probablities for game modes chosen in "secret" and "random" modes
+## probablities for game modes chosen in bundles of modes
 ##
-## default probablity is 1, increase to make that mode more likely to be picked
+## default probablity is 100, increase to make that mode more likely to be picked
 ## set to 0 to disable that mode
-PROBABILITY EXTENDED 1
-PROBABILITY MALFUNCTION 1
-PROBABILITY NUCLEAR 1
-PROBABILITY WIZARD 1
-PROBABILITY CHANGELING 1
-PROBABILITY CULT 1
-PROBABILITY EXTEND-A-TRAITORMONGOUS 6
+
+# PROBABILITY EXTENDED 40
 
 ## Hash out to disable random events during the round.
-ALLOW_RANDOM_EVENTS
+ALLOW_RANDOM_EVENTS 1
 
 ## if amount of traitors scales or not
-TRAITOR_SCALING
+TRAITOR_SCALING 1
 
 ## if objectives are disabled
 #OBJECTIVES_DISABLED
@@ -92,9 +73,6 @@ TRAITOR_SCALING
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
-## If metadata is supported
-# ALLOW_METADATA
-
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 1200
 
@@ -105,30 +83,26 @@ ALLOW_ANTAG_HUD
 ANTAG_HUD_RESTRICTED
 
 ## allow AI job
-ALLOW_AI
-
+ALLOW_AI 1
 
 ## disable abandon mob
 # NORESPAWN
 
-## disables calling del(src) on newmobs if they logout before spawnin in
-# DONT_DEL_NEWMOB
-
 ## set a hosted by name for unix platforms
-HOSTEDBY yournamehere
-
-## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
-## Set to 1 to jobban them from those positions, set to 0 to allow them.
-GUEST_JOBBAN
+#HOSTEDBY yournamehere
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
+
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
 # USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 #SERVER server.net:port
+
+## site address
+# SITEURL http://example.com
 
 ## forum address
 # FORUMURL http://example.com
@@ -145,10 +119,6 @@ GUEST_BAN
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://example.com
 
-## In-game features
-## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-# FEATURE_OBJECT_SPELL_SYSTEM
-
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 
@@ -160,9 +130,6 @@ ALLOW_HOLIDAYS
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.4
-
-## Whether the server will talk to other processes through socket_talk
-SOCKET_TALK 0
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
@@ -180,18 +147,22 @@ GATEWAY_DELAY 18000
 ## Uncomment to restrict non-admins from using humanoid alien races
 #USEALIENWHITELIST
 
-## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
-#ALIEN_PLAYER_RATIO 0.2
+## Uncomment this to enable job restrictions for xenos in occupation menu.
+USE_ALIEN_JOB_RESTRICTION
+
+## Access to aliens through played time.
+ALIEN_AVAILABLE_BY_TIME SKRELL 10000
+ALIEN_AVAILABLE_BY_TIME UNATHI 20000
+ALIEN_AVAILABLE_BY_TIME TAJARAN 30000
+ALIEN_AVAILABLE_BY_TIME DIONA 40000
+
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000
 
-## Password used for authorizing ircbot and other external tools.
-#COMMS_PASSWORD
-
-## Path to the python2 executable on the system.  Leave blank for default.
+## Path to the python executable on the system.  Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
 
@@ -210,7 +181,7 @@ EVENT_DELAY_UPPER 15;45;70
 ## Unset setting use the EVENT_DELAY_LOWER and EVENT_DELAY_UPPER values instead.
 #EVENT_CUSTOM_START_MUNDANE 10;15
 #EVENT_CUSTOM_START_MODERATE 30;45
-EVENT_CUSTOM_START_MAJOR 80;100
+EVENT_CUSTOM_START_MAJOR 50;70
 
 ## Uncommen to allow ghosts to write in blood during Cult rounds.
 ALLOW_CULT_GHOSTWRITER
@@ -223,12 +194,6 @@ REQ_CULT_GHOSTWRITER 6
 
 ## Media base URL - determines where to pull the jukebox playlist from.
 # MEDIA_BASE_URL http://game2.tauceti.ru/media
-
-## alarms about noobs too close to risk zones
-## 0 - no alarms
-## 1 - alarms only for first round people
-## 2 - for first day
-ANTIGRIEF_ALARM_LEVEL 1
 
 ## guard (geoip and stuff)
 #GUARD_EMAIL contact@taucetistation.org
@@ -254,13 +219,11 @@ ANTIGRIEF_ALARM_LEVEL 1
 ## Uncomment this to enable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
 # CHECK_RANDOMIZER
 
-## Uncomment this to enable job restrictions for xenos in occupation menu.
-USE_ALIEN_JOB_RESTRICTION
-
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
-BYOND_VERSION_MIN 500
-# BYOND_VERSION_RECOMMEND 512
+##by default will be used build RECOMMENDED_VERSION (latest compatible major version)
+# BYOND_VERSION_MIN 514
+# BYOND_VERSION_RECOMMEND 514
 
 ## Changelog link
 CHANGELOG_LINK https://changelog.taucetistation.org
@@ -283,6 +246,12 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Link used by limit panic bunker to redirect a client
 # CLIENT_LIMIT_PANIC_BUNKER_LINK byond://game.taucetistation.org:2507
 
+## In ban mode bunker will block new users before they can join server (like bans). This will not check user registration date and will use only server player age. Can be used as whitelist for new players.
+#BUNKER_BAN_MODE
+
+## This will be used as ban message in ban mode
+#BUNKER_BAN_MODE_MESSAGE Sorry, you can't play on this server, because we don't accept new players.<br/>Please, visit another our server.<br/>For more information visit taucetistation.org
+
 ## Replaces whatever map json file with maps/testmap.json to load testmap only.
 ## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
 # SUMMON_TESTMAP
@@ -297,3 +266,15 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## This config option disables OOC after round start, and enables it back after round end.
 ## Comment it out to disable such behaviour.
 OOC_ROUND_ONLY
+
+## TOPIC RATE LIMITING
+## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 to disable.
+SECOND_TOPIC_LIMIT 10
+
+MINUTE_TOPIC_LIMIT 100
+
+## This config option enables or disables deathmatch arena after round end.
+DEATHMATCH_ARENA 1

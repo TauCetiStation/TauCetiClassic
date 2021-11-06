@@ -57,9 +57,17 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/warning = FALSE // Warning about the end of the round.
 	var/returning = FALSE
 
+	var/datum/announcement/centcomm/vox/arrival/announce_arrival = new
+	var/datum/announcement/centcomm/vox/returns/announce_returns = new
+
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
 	curr_location = locate(/area/shuttle/vox/arkship)
+
+/obj/machinery/computer/vox_station/process()
+	if(..())
+		if(lastMove + VOX_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)
@@ -75,9 +83,9 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	if(announce_vox_departure)
 		if(curr_location == locate(/area/shuttle/vox/arkship))
-			command_alert("Внимание, [station_name()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
+			announce_arrival.play()
 		else if(returning)
-			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of [system_name()] at a rapid clip.", "NSV Icarus")
+			announce_returns.play()
 
 	moving = TRUE
 	lastMove = world.time
@@ -136,7 +144,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(SSticker && (istype(SSticker.mode,/datum/game_mode/heist)))
+		if(find_faction_by_type(/datum/faction/heist))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = TRUE

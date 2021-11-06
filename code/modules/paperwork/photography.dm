@@ -16,7 +16,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /********
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
@@ -122,9 +122,9 @@
 
 	if((istype(usr, /mob/living/carbon/human)))
 		var/mob/M = usr
-		if(!( istype(over_object, /obj/screen) ))
+		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
-		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
@@ -137,7 +137,7 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+		if(over_object == usr && usr.Adjacent(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			show_to(usr)
@@ -153,7 +153,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "photocamera"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
@@ -296,7 +296,7 @@
 		return
 	captureimage(target, user, proximity)
 
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	pictures_left--
 	update_desc()
@@ -319,7 +319,7 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye)
 		else
 			seen = hear(world.view, user)
 	else
@@ -394,7 +394,7 @@
 
 	if(usr.incapacitated())
 		return
-	if(usr.get_active_hand() != src)
+	if(usr.get_active_hand() != src && !isAI(usr))
 		to_chat(usr, "You need to hold \the [src] in your active hand.")
 		return
 

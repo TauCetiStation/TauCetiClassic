@@ -7,7 +7,7 @@
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 10
 	amount_per_transfer_from_this = 10
@@ -40,7 +40,7 @@
 	if(istype(target, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src,target) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		var/obj/structure/reagent_dispensers/RD = target
 		if(!is_open_container())
 			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
@@ -66,7 +66,7 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, null, volume_modifier)
+	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
@@ -135,8 +135,8 @@
 			step(buckled_to, movementdirection)
 			sleep(3)
 			step(buckled_to, movementdirection)
-	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/tool/extinguisher))
-		var/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/ext = loc
+	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
+		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
 		if (ext.chassis)
 			ext.chassis.newtonian_move(movementdirection)
 	else
@@ -185,7 +185,7 @@
 	set category = "Object"
 	set src in usr
 
-	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
+	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
 		return
 	if(isturf(usr.loc))
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
@@ -198,7 +198,7 @@
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "hairspraywhite"
-	item_state = "hairspray"
+	item_state = "hairspraywhite"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)
 	spray_size = 1
@@ -216,12 +216,17 @@
 
 	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
 	if(colour_spray)
-		name = "[colour_spray] [initial(name)]"
-		icon_state = "[initial(icon_state)][colour_spray]"
+		name = "[colour_spray] hair color spray"
+		icon_state = "hairspray[colour_spray]"
+		item_state = "hairspray[colour_spray]"
 	else
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
+	if(usr.hand)
+		usr.update_inv_l_hand()
+	else
+		usr.update_inv_r_hand()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -302,7 +307,7 @@
 				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 				S.attach(location)
 				S.set_up(evaporate, evaporated_volume, 0, location)
-				playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+				playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 				S.start()
 				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
 		fuel = max(fuel - 1, 0)
@@ -374,6 +379,7 @@
 		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
 
 //space cleaner
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_list)
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
@@ -435,7 +441,7 @@
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 3
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
@@ -456,6 +462,14 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
+
+// Lube Spray
+/obj/item/weapon/reagent_containers/spray/lube
+	volume = 150
+
+/obj/item/weapon/reagent_containers/spray/lube/atom_init()
+	. = ..()
+	reagents.add_reagent("lube", 150)
 
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun

@@ -6,15 +6,17 @@
 	var/Time = 110
 	var/Speed = 1
 
+	var/datum/announcement/centcomm/anomaly/frost/announcement = new
+
 /datum/anomaly_frost/proc/set_params(user)
 	Zlevel = input(user, "Choose Z level to freeze.", "Z level number: ", 1) as num
 	Temperature = input(user, "Choose target temperature in kelvins", "Temp: ", 170) as num
 	Speed = input(user, "Choose freeze speed. 1 - slow, 100 - fast", "Speed: ", 2) as num
 	Time = input(user, "Choose amount of frost ticks 1t = 1s.", "Ticks: ", 100) as num
 
-	switch(alert(user, "Show frost alert to crew?",,"Yes","No"))
+	switch(tgui_alert(user, "Show frost alert to crew?",, list("Yes","No")))
 		if("Yes")
-			command_alert("Atmospheric anomaly detected on long range scanners. Prepare for station temperature drop.", "Anomaly Alert")
+			announcement.play()
 
 	START_PROCESSING(SSobj, src)
 	message_admins("Station freezing started!")

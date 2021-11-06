@@ -1,172 +1,162 @@
-/**********************Mineral processing unit console**************************/
+#define PROCESS_NONE		0
+#define PROCESS_SMELT		1
+#define PROCESS_COMPRESS	2
+#define PROCESS_ALLOY		3
 
+/**********************Mineral processing unit console**************************/
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
-	var/obj/machinery/mineral/processing_unit/machine = null
+	var/obj/item/weapon/card/id/inserted_id	// Inserted ID card, for points
 	var/machinedir = EAST
-	var/show_all_ores = 0
-
+	var/obj/machinery/mineral/processing_unit/machine = null
+	var/show_all_ores = FALSE
+	var/list/ore_data = list()
 	var/points = 0
-	var/obj/item/weapon/card/id/inserted_id
-
-	var/show_value_list = 0
-	var/list/ore_values = list(
-							"glass" 			= 1,
-							"iron" 				= 1,
-							"coal" 				= 1,
-							"steel" 			= 5,
-							"hydrogen"			= 10,
-							"uranium" 			= 20,
-							"phoron" 			= 20,
-							"phoron glass"		= 25,
-							"silver" 			= 25,
-							"gold" 				= 30,
-							"platinum"			= 45,
-							"plasteel"			= 50,
-							"diamond" 			= 70)
+	var/static/list/ore_values = list()
 
 /obj/machinery/mineral/processing_unit_console/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/mineral/processing_unit_console/atom_init_late()
-	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
+	. = ..()
+	machine = locate(/obj/machinery/mineral/processing_unit) in range(5, src)
 	if (machine)
 		machine.console = src
+		if(!ore_values.len)
+			for(var/oretype in subtypesof(/datum/ore))
+				var/datum/ore/O = oretype
+				ore_values[initial(O.oretag)] = initial(O.points)
 	else
+		log_debug("Ore processing machine console at [x], [y], [z] could not find its machine!")
 		qdel(src)
 
-/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
-	var/dat
+/obj/machinery/mineral/processing_unit_console/Destroy()
+	if(inserted_id)
+		inserted_id.forceMove(loc) //Prevents deconstructing from deleting whatever ID was inside it.
+	. = ..()
 
-	dat += "<hr><table>"
+/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
+	if(..())
+		return
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	tgui_interact(user)
 
+/obj/machinery/mineral/processing_unit_console/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/card/id))
+		if(!powered())
+			return
+		if(!inserted_id && user.unEquip(I))
+			I.forceMove(src)
+			inserted_id = I
+			SStgui.update_uis(src)
+		return
+	..()
+
+/obj/machinery/mineral/processing_unit_console/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MiningOreProcessingConsole", name)
+		ui.open()
+
+/obj/machinery/mineral/processing_unit_console/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
+	var/list/data = ..()
+	data["unclaimedPoints"] = points
+
+	if(inserted_id)
+		data["has_id"] = TRUE
+		data["id"] = list(
+			"name" = inserted_id.registered_name,
+			"points" = inserted_id.mining_points,
+		)
+	else
+		data["has_id"] = FALSE
+
+
+	var/list/ores = list()
 	for(var/ore in machine.ores_processing)
-
 		if(!machine.ores_stored[ore] && !show_all_ores)
 			continue
+		ores.Add(list(list(
+			"ore" = ore,
+			"amount" = machine.ores_stored[ore],
+			"processing" = machine.ores_processing[ore] ? machine.ores_processing[ore] : 0,
+		)))
+	data["ores"] = ores
+	data["showAllOres"] = show_all_ores
+	data["power"] = machine.active
+	data["speed"] = machine.speed_process
 
-		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100>"
-		if(machine.ores_processing[ore])
-			switch(machine.ores_processing[ore])
-				if(0)
-					dat += "<span class='red'>not processing</span>"
-				if(1)
-					dat += "<span class='orange'>smelting</span>"
-				if(2)
-					dat += "<span class='yellow'>compressing</span>"
-				if(3)
-					dat += "<span class='gray'>alloying</span>"
-				if(4)
-					dat += "<span class='green'>drop</span>"
-		else
-			dat += "<span class='red'>not processing</span>"
-		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>change</a></td></tr>"
+	return data
 
-	dat += "</table><hr>"
+/obj/machinery/mineral/processing_unit_console/tgui_static_data(mob/user)
+	var/list/static_data = list()
+	static_data["ore_values"] = list()
+	for(var/orename in ore_values)
+		static_data["ore_values"] += list(list("name" = orename, "amount" = ore_values[orename]))
+	return static_data
 
-	dat += "Currently displaying [show_all_ores ? "all ore types" : "only available ore types"] <A href='?src=\ref[src];toggle_ores=1'>[show_all_ores ? "show less" : "show more"]</a><br>"
+/obj/machinery/mineral/processing_unit_console/tgui_act(action, list/params)
+	if(..())
+		return TRUE
 
-	dat += "The ore processor is currently "
-	if(machine.active)
-		dat += "<A class='green' href='?src=\ref[src];toggle_power=1'><b>processing</b></a>"
-	else
-		dat += "<A class='red' href='?src=\ref[src];toggle_power=1'><b>disabled</b></a>"
-
-	dat += "<br><br>"
-	dat += "<hr>"
-
-	dat += "<b>Current unclaimed points:</b> [points]<br>"
-
-	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>"
-		dat += "<A href='?src=\ref[src];claim=1'>Claim points</a><br>"
-	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>"
-
-	dat += "<br>"
-
-	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>[show_value_list ? "close" : "open"]</a><br>"
-	if(show_value_list)
-		dat += "<div class='Section'>[get_ore_values()]</div>"
-
-	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-
-	if(href_list["toggle_smelting"])
-		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Drop","Nothing")
-		if(!choice)
-			return FALSE
-		switch(choice)
-			if("Nothing") choice = 0
-			if("Smelting") choice = 1
-			if("Compressing") choice = 2
-			if("Alloying") choice = 3
-			if("Drop") choice = 4
-		machine.ores_processing[href_list["toggle_smelting"]] = choice
-	if(href_list["toggle_power"])
-		machine.active = !machine.active
-	if(href_list["toggle_ores"])
-		show_all_ores = !show_all_ores
-	if(href_list["eject"])
-		inserted_id.loc = loc
-		inserted_id.verb_pickup()
-		inserted_id = null
-	if(href_list["claim"])
-		inserted_id.mining_points += points
-		points = 0
-	if(href_list["insert"])
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if(istype(I))
-			if(!usr.drop_item())
-				return FALSE
-			I.loc = src
-			inserted_id = I
-		else
-			to_chat(usr, "<span class='warning'>No valid ID.</span>")
-	if(href_list["show_values"])
-		show_value_list = !show_value_list
-
-	src.updateUsrDialog()
-
-/obj/machinery/mineral/processing_unit_console/proc/get_ore_values()
-	var/dat = "<table border='0' width='300'>"
-	for(var/ore in ore_values)
-		var/value = ore_values[ore]
-		dat += "<tr><td>[capitalize(ore)]</td><td>[value]</td></tr>"
-	dat += "</table>"
-	return dat
-
-/obj/machinery/mineral/processing_unit_console/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
+	add_fingerprint(usr)
+	switch(action)
+		if("toggleSmelting")
+			var/ore = params["ore"]
+			var/new_setting = params["set"]
+			if(new_setting == null)
+				new_setting = input("What setting do you wish to use for processing [ore]]?") as null|anything in list("Smelting","Compressing","Alloying","Nothing")
+				if(!new_setting)
+					return
+				switch(new_setting)
+					if("Nothing") new_setting = PROCESS_NONE
+					if("Smelting") new_setting = PROCESS_SMELT
+					if("Compressing") new_setting = PROCESS_COMPRESS
+					if("Alloying") new_setting = PROCESS_ALLOY
+			machine.ores_processing[ore] = new_setting
+			. = TRUE
+		if("power")
+			machine.active = !machine.active
+			. = TRUE
+		if("showAllOres")
+			show_all_ores = !show_all_ores
+			. = TRUE
+		if("logoff")
+			if(!inserted_id)
 				return
-			I.loc = src
-			inserted_id = I
-			updateUsrDialog()
-	else
-		..()
+			usr.put_in_hands(inserted_id)
+			inserted_id = null
+			. = TRUE
+		if("claim")
+			if(istype(inserted_id))
+				if(access_mining_station in inserted_id.access)
+					inserted_id.mining_points += points
+					points = 0
+				else
+					to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			. = TRUE
+		if("insert")
+			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			if(istype(I))
+				usr.drop_from_inventory(I, src)
+				inserted_id = I
+			else
+				to_chat(usr, "<span class='warning'>No valid ID.</span>")
+			. = TRUE
 
 /**********************Mineral processing unit**************************/
+
+
 /obj/machinery/mineral/processing_unit
 	name = "material processor" //This isn't actually a goddamn furnace, we're in space and it's processing platinum and flammable phoron...
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	light_range = 3
 	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
@@ -175,16 +165,16 @@
 	var/sheets_per_tick = 10
 	var/list/ores_processing = list()
 	var/list/ores_stored = list()
+	var/active = FALSE
 	var/list/ore_data = list()
 	var/list/alloy_data = list()
-	var/active = 0
 
 /obj/machinery/mineral/processing_unit/atom_init()
 	..()
 	//TODO: Ore and alloy global storage datum.
-	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
+	for(var/alloytype in subtypesof(/datum/alloy))
 		alloy_data += new alloytype()
-	for(var/oretype in typesof(/datum/ore)-/datum/ore)
+	for(var/oretype in subtypesof(/datum/ore))
 		var/datum/ore/OD = new oretype()
 		ore_data[OD.oretag] = OD
 		ores_processing[OD.oretag] = 0
@@ -202,13 +192,16 @@
 		if(output)
 			break
 
+
+
 /obj/machinery/mineral/processing_unit/process()
 
-	if (!src.output || !src.input) return
+	if (!src.output || !src.input)
+		return
 
 	var/list/tick_alloys = list()
 
-	//Grab some more ore to process next tick.
+	//Grab some more ore to process this tick.
 	for(var/i = 0,i<sheets_per_tick,i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
 		var/obj/item/stack/sheet/M = locate() in input.loc
@@ -244,7 +237,7 @@
 						enough_metal = 1
 						for(var/needs_metal in A.requires)
 							//Check if we're alloying the needed metal and have it stored.
-							if(ores_processing[needs_metal] != 3 || ores_stored[needs_metal] < A.requires[needs_metal])
+							if(ores_processing[needs_metal] != PROCESS_ALLOY || ores_stored[needs_metal] < A.requires[needs_metal])
 								enough_metal = 0
 								break
 					if(!enough_metal)
@@ -259,7 +252,7 @@
 						for(var/i=0,i<total,i++)
 							console.points += A.points
 							new A.product(output.loc)
-			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
+			else if(ores_processing[metal] == PROCESS_COMPRESS && O.compresses_to) //Compressing.
 				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
@@ -269,7 +262,7 @@
 					sheets+=2
 					console.points += O.points
 					new O.compresses_to(output.loc)
-			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
+			else if(ores_processing[metal] == PROCESS_SMELT && O.smelts_to) //Smelting.
 				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
@@ -284,3 +277,8 @@
 				new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
+
+#undef PROCESS_NONE
+#undef PROCESS_SMELT
+#undef PROCESS_COMPRESS
+#undef PROCESS_ALLOY

@@ -139,6 +139,9 @@
 		data["holding"] = null
 	return data
 
+/obj/machinery/portable_atmospherics/powered/pump/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/portable_atmospherics/powered/pump/tgui_act(action, params)
 	. = ..()
 	if(.)

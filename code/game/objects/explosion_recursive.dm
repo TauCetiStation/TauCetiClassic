@@ -2,9 +2,9 @@
 	var/explosion_resistance
 
 var/list/explosion_turfs = list()
-var/explosion_in_progress = 0
 
 /proc/explosion_rec(turf/epicenter, power)
+	var/explosion_in_progress = 0
 	var/loopbreak = 0
 	while(explosion_in_progress)
 		if(loopbreak >= 15) return
@@ -19,11 +19,11 @@ var/explosion_in_progress = 0
 		if(get_dist(W, epicenter) < 10)
 			W.react_explosion(epicenter, power)
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - [ADMIN_JMP(epicenter)])")
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
 	log_game("Explosion with size ([power]) in area [epicenter.loc.name]")
 
-	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, null, round(power*2,1) )
-	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, null, round(power,1) )
+	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, round(power*2,1) )
+	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )
 
 	explosion_in_progress = 1
 	explosion_turfs = list()

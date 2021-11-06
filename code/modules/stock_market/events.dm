@@ -32,7 +32,7 @@
 	var/datum/article/product_article = null
 	var/effect = 0
 
-/datum/stockEvent/product/New(var/datum/stock/S)
+/datum/stockEvent/product/New(datum/stock/S)
 	company = S
 	var/mins = rand(5*TIME_MULTIPLIER,20*TIME_MULTIPLIER)
 	next_phase = mins * (600*TIME_MULTIPLIER) + world.time
@@ -68,7 +68,7 @@
 	var/effect = 0
 	var/bailout_millions = 0
 
-/datum/stockEvent/bankruptcy/New(var/datum/stock/S)
+/datum/stockEvent/bankruptcy/New(datum/stock/S)
 	hidden = 1
 	company = S
 	var/mins = rand(9*TIME_MULTIPLIER,60*TIME_MULTIPLIER)
@@ -146,7 +146,7 @@
 	var/offenses = "murder"
 	var/effect = 0
 
-/datum/stockEvent/arrest/New(var/datum/stock/S)
+/datum/stockEvent/arrest/New(datum/stock/S)
 	hidden = 1
 	company = S
 	var/mins = rand(10*TIME_MULTIPLIER, 35*TIME_MULTIPLIER)

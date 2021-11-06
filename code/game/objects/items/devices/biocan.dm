@@ -4,7 +4,7 @@
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	var/obj/item/organ/external/head/headobj = null
 	var/image/display_headobj = null
@@ -92,7 +92,7 @@
 		return ..()
 
 /obj/item/device/biocan/attack_self(mob/user)
-	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")
+	if(tgui_alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",, list("Cancel","Continue")) != "Continue")
 		return
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	extract_head(brain_destroyed = TRUE)

@@ -133,9 +133,6 @@ var/list/nonhuman_positions = list(
 )
 
 
-/proc/guest_jobbans(job)
-	return job in command_positions
-
 /proc/get_job_datums()
 	var/list/occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
@@ -159,7 +156,7 @@ var/list/nonhuman_positions = list(
 
 /proc/my_subordinate_staff(head_rank)	//the function takes a rank, returns a list of subordinate personnel
 
-	var/all_staff = data_core.get_manifest_json()	//crew manifest
+	var/all_staff = data_core.get_manifest()	//crew manifest
 	var/list/data = list()	//it will be returned
 	var/list/own_department = list()
 	var/list/QM_staff = list("Cargo Technician", "Shaft Miner", "Recycler")	//QM's boys
@@ -198,4 +195,4 @@ var/list/nonhuman_positions = list(
 			var/datum/money_account/account = person["acc_datum"]
 			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
-	return data	// --> list(real_name, assignment, salary, /datum/money_account/, account_number)
+	return data	// --> list(real_name, assignment, salary, /datum/money_account, account_number)

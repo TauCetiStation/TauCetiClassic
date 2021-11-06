@@ -43,7 +43,7 @@
 				if(localopened)
 					localopened = FALSE
 					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-					addtimer(CALLBACK(src, .proc/update_icon), 10)
+					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
 			else
 				user.do_attack_animation(src)
@@ -64,8 +64,7 @@
 			if(FA.wielded)
 				to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
 				return
-			user.drop_item()
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			fireaxe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")
 			update_icon()
@@ -76,10 +75,10 @@
 				localopened = !localopened
 				if(localopened)
 					icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
-					addtimer(CALLBACK(src, .proc/update_icon), 10)
+					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				else
 					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-					addtimer(CALLBACK(src, .proc/update_icon), 10)
+					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 	else
 		if(smashed)
 			return
@@ -87,7 +86,7 @@
 			if(localopened)
 				localopened = FALSE
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-				addtimer(CALLBACK(src, .proc/update_icon), 10)
+				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				if(O.use_tool(src, user, 50, volume = 50))
@@ -98,10 +97,10 @@
 			localopened = !localopened
 			if(localopened)
 				icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
-				addtimer(CALLBACK(src, .proc/update_icon), 10)
+				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 			else
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-				addtimer(CALLBACK(src, .proc/update_icon), 10)
+				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/user)
 	if(user.is_busy(src))
@@ -126,19 +125,19 @@
 				localopened = !localopened
 				if(localopened)
 					icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
-					addtimer(CALLBACK(src, .proc/update_icon), 10)
+					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				else
 					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-					addtimer(CALLBACK(src, .proc/update_icon), 10)
+					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 	else
 		localopened = !localopened //I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
 		if(localopened)
 			icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
-			addtimer(CALLBACK(src, .proc/update_icon), 10)
+			addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 		else
 			src.icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
-			addtimer(CALLBACK(src, .proc/update_icon), 10)
+			addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 /obj/structure/closet/fireaxecabinet/attack_tk(mob/user)
 	if(user.is_busy(src))

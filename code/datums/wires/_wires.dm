@@ -138,41 +138,36 @@ var/global/list/wire_daltonism_colors = list()
 	if(additional_checks_and_effects(user))
 		return FALSE
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.sightglassesmod)
-
-			if(!wire_daltonism_colors)
-				wire_daltonism_colors = list()
-
-			// Creates a list of color for people with daltonism and save his
-			if(!wire_daltonism_colors[H.sightglassesmod])
-				wire_daltonism_colors[H.sightglassesmod] = list()
-				for(var/i in wire_colors)
-					var/color_hex = color_by_hex[i]
-
-					if(!color_hex)
-						var/color = pick(wire_colors)
-						wire_daltonism_colors[H.sightglassesmod][i] = color
-						continue
-
-					var/r = hex2num(copytext(color_hex, 2, 4))
-					var/g = hex2num(copytext(color_hex, 4, 6))
-					var/b = hex2num(copytext(color_hex, 6, 8))
-
-					var/datum/ColorMatrix/CM = new(H.sightglassesmod)
-					var/new_r = CM.matrix[1] * r + CM.matrix[4] * g + CM.matrix[7] * b + CM.matrix[10] * 255
-					var/new_g = CM.matrix[2] * r + CM.matrix[5] * g + CM.matrix[8] * b + CM.matrix[11] * 255
-					var/new_b = CM.matrix[3] * r + CM.matrix[6] * g + CM.matrix[9] * b + CM.matrix[12] * 255
-
-					wire_daltonism_colors[H.sightglassesmod][i] = rgb(new_r, new_g, new_b)
-					qdel(CM)
-
 	user.set_machine(holder)
 
 	tgui_interact(user, null)
 
 	return TRUE
+
+/datum/wires/proc/calculate_daltonism_colors(sight_mod)
+	if (!wire_daltonism_colors)
+		wire_daltonism_colors = list()
+	if(sight_mod && !wire_daltonism_colors[sight_mod])
+		// Creates a list of color for people with daltonism and save his
+		wire_daltonism_colors[sight_mod] = list()
+		for(var/i in wire_colors)
+			var/color_hex = color_by_hex[i]
+
+			if(!color_hex)
+				var/color = pick(wire_colors)
+				wire_daltonism_colors[sight_mod][i] = color
+				continue
+
+			var/r = hex2num(copytext(color_hex, 2, 4))
+			var/g = hex2num(copytext(color_hex, 4, 6))
+			var/b = hex2num(copytext(color_hex, 6, 8))
+
+			var/datum/ColorMatrix/CM = new(sight_mod)
+			var/new_r = CM.matrix[1] * r + CM.matrix[4] * g + CM.matrix[7] * b + CM.matrix[10] * 255
+			var/new_g = CM.matrix[2] * r + CM.matrix[5] * g + CM.matrix[8] * b + CM.matrix[11] * 255
+			var/new_b = CM.matrix[3] * r + CM.matrix[6] * g + CM.matrix[9] * b + CM.matrix[12] * 255
+
+			wire_daltonism_colors[sight_mod][i] = rgb(new_r, new_g, new_b)
 
 /datum/wires/tgui_host()
 	return holder
@@ -203,7 +198,7 @@ var/global/list/wire_daltonism_colors = list()
 
 		else if(H.sightglassesmod)
 			see_effect = H.sightglassesmod
-	
+
 	var/list/colors_by_num
 	if(see_effect != SEE_BLIND && see_effect != null)
 		colors_by_num = list()
@@ -225,6 +220,7 @@ var/global/list/wire_daltonism_colors = list()
 				shownColorLbl = capitalize(shownColor)
 			else
 				var/mcolor
+				calculate_daltonism_colors(see_effect)
 				if(hex2color(wire_daltonism_colors[see_effect][color])) // Color in color_by_hex list
 					mcolor = hex2color(wire_daltonism_colors[see_effect][color])
 				else // Closest color name from list
@@ -257,7 +253,7 @@ var/global/list/wire_daltonism_colors = list()
 	if(.)
 		return
 
-	if(!(in_range(holder, usr) && isliving(usr)))
+	if(!(usr.Adjacent(holder) && isliving(usr)))
 		return
 
 	var/mob/living/L = usr
@@ -289,7 +285,7 @@ var/global/list/wire_daltonism_colors = list()
 					. = TRUE
 			else
 				if(issignaler(I))
-					L.drop_item()
+					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else
 					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")

@@ -11,7 +11,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	item_state = "white_candle"
 
 	var/candle_color
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 	var/wax = 0
 	var/lit = FALSE
@@ -138,13 +138,16 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/ghost/attack_ghost()
 	if(!lit)
-		src.light("<span class='warning'>\The [name] suddenly lights up.</span>")
+		light("<span class='warning'>\The [name] suddenly lights up.</span>")
 		if(prob(10))
 			spook()
 
 /obj/item/candle/ghost/attack_self(mob/user)
 	if(lit)
 		to_chat(user, "<span class='notice'>You can't just extinguish it.</span>")
+
+/obj/item/candle/ghost/proc/remove_spook_effect(mob/living/carbon/M)
+	M.remove_alt_appearance("spookyscary")
 
 /obj/item/candle/ghost/proc/spook()
 	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears.</span>")
@@ -153,6 +156,10 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(!iscultist(M))
 			M.confused += 10
 			M.make_jittery(150)
+			var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
+			I.override = TRUE
+			M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
+			addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 1 SECONDS)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
@@ -166,7 +173,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 		return
 
-	if(istype(I, /obj/item/weapon/book/tome))
+	if(istype(I, /obj/item/weapon/storage/bible/tome))
 		spook()
 		light()
 		return

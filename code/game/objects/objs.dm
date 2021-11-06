@@ -2,7 +2,6 @@
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -68,7 +67,7 @@
 /obj/singularity_pull(S, current_size)
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
-			anchored = 0
+			anchored = FALSE
 			step_towards(src,S)
 	else
 		step_towards(src,S)
@@ -135,13 +134,16 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
-				src.interact(M)
+				interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
 
 		in_use = is_in_use|ai_in_use
 
 /obj/attack_ghost(mob/dead/observer/user)
-	if(user.client.machine_interactive_ghost && ui_interact(user) != -1)
+	if(user.client.machine_interactive_ghost)
+		if(ui_interact(user) != -1)
+			return
+		tgui_interact(user)
 		return
 	..()
 
@@ -152,9 +154,6 @@
 	return
 
 /obj/proc/container_resist()
-	return
-
-/obj/proc/update_icon()
 	return
 
 /mob/proc/unset_machine()
@@ -175,7 +174,7 @@
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
 	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
+		attack_self(M)
 
 
 /obj/proc/alter_health()

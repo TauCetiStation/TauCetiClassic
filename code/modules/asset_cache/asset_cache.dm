@@ -89,7 +89,7 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 		if(OACI.md5 != ACI.md5)
 			stack_trace("ERROR: new asset added to the asset cache with the same name as another asset: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]")
 		else
-			log_asset("WARNING: dupe asset added to the asset cache: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]\n")
+			log_asset("WARNING: dupe asset added to the asset cache: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]")
 	SSassets.cache[asset_name] = ACI
 	return ACI
 

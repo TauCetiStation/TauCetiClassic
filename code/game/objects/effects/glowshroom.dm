@@ -2,9 +2,9 @@
 
 /obj/effect/glowshroom
 	name = "glowshroom"
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
@@ -28,7 +28,7 @@
 
 	. = ..()
 
-	dir = CalcDir()
+	set_dir(CalcDir())
 
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor

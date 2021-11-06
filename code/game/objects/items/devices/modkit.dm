@@ -17,7 +17,7 @@
 	var/list/forbidden_type = list()
 
 /obj/item/device/modkit/afterattack(atom/target, mob/user, proximity, params)
-	if(get_dist(src,target)>1)
+	if(!proximity)
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?

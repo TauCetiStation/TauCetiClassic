@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/prisoner
 	name = "Implant Management"
 	icon = 'icons/obj/computer.dmi'
@@ -56,7 +54,7 @@
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
-		src.updateDialog()
+		updateDialog()
 	return
 
 
@@ -78,7 +76,7 @@
 		if(I)	I.activate(10)
 
 	else if(href_list["lock"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			screen = !screen
 		else
 			to_chat(usr, "Unauthorized Access.")
@@ -91,4 +89,4 @@
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()

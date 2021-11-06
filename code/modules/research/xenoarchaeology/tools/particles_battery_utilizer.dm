@@ -2,7 +2,7 @@
 	name = "Exotic particles power battery"
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "particles_battery0"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/datum/artifact_effect/battery_effect
 	var/capacity = 200
 	var/stored_charge = 0
@@ -21,7 +21,7 @@
 	name = "Exotic particles power utilizer"
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "utilizer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/cooldown = 0
 	var/activated = FALSE
 	var/timing = FALSE
@@ -47,8 +47,8 @@
 		return ..()
 
 /obj/item/weapon/xenoarch_utilizer/attack_self(mob/user)
-	if(in_range(src, user))
-		return src.interact(user)
+	if(Adjacent(user))
+		return interact(user)
 
 /obj/item/weapon/xenoarch_utilizer/interact(mob/user)
 
@@ -99,12 +99,12 @@
 		cooldown -= 1
 		if(cooldown <= 0)
 			cooldown = 0
-			src.visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
+			visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
 	else if(activated)
 		if(inserted_battery && inserted_battery.battery_effect)
 			// make sure the effect is active
 			if(!inserted_battery.battery_effect.activated)
-				inserted_battery.battery_effect.ToggleActivate(1)
+				inserted_battery.battery_effect.ToggleActivate(TRUE)
 
 			// update the effect loc
 			var/turf/T = get_turf(src)
@@ -115,7 +115,7 @@
 			// process the effect
 			inserted_battery.battery_effect.process()
 			// if someone is holding the device, do the effect on them
-			if(inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
+			if(inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
 				inserted_battery.battery_effect.DoEffectTouch(src.loc)
 
 			// handle charge
@@ -135,12 +135,11 @@
 	if(activated)
 		activated = FALSE
 		timing = FALSE
-		src.visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
 
 		cooldown = archived_time / 2
 
-		if(inserted_battery.battery_effect.activated)
-			inserted_battery.battery_effect.ToggleActivate(1)
+	inserted_battery.battery_effect.turn_effect_off()
 	updateDialog()
 
 /obj/item/weapon/xenoarch_utilizer/Topic(href, href_list)
@@ -184,7 +183,7 @@
 		update_icon()
 		if(!inserted_battery.battery_effect.activated)
 			message_admins("anomaly battery [inserted_battery.battery_effect.artifact_id]([inserted_battery.battery_effect]) emission started by [key_name(usr)]")
-			inserted_battery.battery_effect.ToggleActivate(1)
+			inserted_battery.battery_effect.ToggleActivate(TRUE)
 	if(href_list["shutdown"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		activated = FALSE
@@ -200,9 +199,10 @@
 			var/mob/living/carbon/human/H = usr
 			if(!H.get_active_hand())
 				H.put_in_hands(inserted_battery)
+		inserted_battery.battery_effect.turn_effect_off()
 		inserted_battery = null
 		update_icon()
-	src.interact(usr)
+	interact(usr)
 	..()
 	updateDialog()
 	update_icon()
@@ -229,7 +229,7 @@
 	if (!istype(M))
 		return
 
-	if(!isnull(inserted_battery) && activated && inserted_battery.battery_effect && inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH )
+	if(!isnull(inserted_battery) && activated && inserted_battery.battery_effect && inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH )
 		inserted_battery.battery_effect.DoEffectTouch(M)
 		inserted_battery.stored_charge -= min(inserted_battery.stored_charge, 20) // we are spending quite a big amount of energy doing this
 		user.visible_message("<span class='notice'>[user] taps [M] with [src], and it shudders on contact.</span>")
@@ -241,4 +241,4 @@
 	M.lastattacker = user
 
 	if(inserted_battery.battery_effect)
-		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.effect_name]) ")
+		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.log_name]) ")

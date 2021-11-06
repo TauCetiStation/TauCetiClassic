@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /mob/living/carbon/brain
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
@@ -57,6 +55,4 @@
 	return canmove
 
 /mob/living/carbon/brain/update_hud()
-	if(client)
-		if(hud_used)
-			hud_used.reload_fullscreen()
+	reload_fullscreen()

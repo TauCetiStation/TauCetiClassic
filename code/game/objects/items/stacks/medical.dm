@@ -4,8 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_MINUSCULE
+	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 
@@ -61,6 +61,9 @@
 	if(!can_heal(L, user))
 		return
 
+	if(L == user)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
+
 	var/delay = L == user ? self_delay : other_delay
 	if(delay)
 		if(!silent)
@@ -92,6 +95,7 @@
 	singular_name = "gauze length"
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
+	item_state = "brutepack"
 	origin_tech = "biotech=1"
 
 	repeating = TRUE
@@ -155,6 +159,7 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	item_state = "ointment"
 	origin_tech = "biotech=1"
 
 	repeating = TRUE
@@ -216,6 +221,7 @@
 	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "traumakit"
+	item_state = "traumakit"
 	heal_brute = 12
 	amount = 6
 	max_amount = 6
@@ -278,6 +284,7 @@
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burnkit"
+	item_state = "burnkit"
 	amount = 6
 	max_amount = 6
 	heal_burn = 12
@@ -286,6 +293,7 @@
 	other_delay = 10
 
 	repeating = TRUE
+
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
 	icon_state = "[initial(icon_state)][amount]"
@@ -320,10 +328,11 @@
 	name = "medical splints"
 	singular_name = "medical splint"
 	icon_state = "splint"
+	item_state = "splint"
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_SMALL
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
+	full_w_class = SIZE_TINY
 
 	self_delay = 50
 	other_delay = 25

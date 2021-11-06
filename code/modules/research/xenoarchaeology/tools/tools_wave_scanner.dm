@@ -8,7 +8,7 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "anoscanner_borg"
 	item_state = "lampgreen"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
@@ -61,7 +61,7 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	action_button_name = "Toggle Searcher"
 
 	var/obj/item/device/searcher/processor
@@ -123,6 +123,7 @@
 	..()
 
 /obj/item/device/wave_scanner_backpack/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return
@@ -148,7 +149,7 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_searcher"
 	item_state = "wave_searcher"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 0 // we shall not abuse
 	throw_range = 0
 	slot_flags = null

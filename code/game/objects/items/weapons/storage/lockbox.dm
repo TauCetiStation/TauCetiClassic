@@ -1,12 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = 10 //The sum of the w_classes of all the items in this storage item.
 	req_access = list(access_armory)
 	var/locked = TRUE
@@ -99,3 +97,15 @@
 /obj/item/weapon/storage/lockbox/clusterbang/atom_init()
 	. = ..()
 	new /obj/item/weapon/grenade/clusterbuster(src)
+
+/obj/item/weapon/storage/lockbox/anti_singulo
+	name = "singularity buster kit"
+	desc = "Lockbox containing experimental rocket launcher to deal with little problems."
+	req_access = list(access_engine_equip)
+
+/obj/item/weapon/storage/lockbox/anti_singulo/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/ammo_casing/caseless/rocket/anti_singulo(src)
+	new /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo(src)
+	make_exact_fit()

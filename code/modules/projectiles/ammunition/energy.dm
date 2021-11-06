@@ -71,6 +71,7 @@
 
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/item/projectile/energy/electrode
+	e_cost = 200
 	select_name = "stun - electrode"
 	fire_sound = 'sound/weapons/guns/gunpulse_taser.ogg'
 
@@ -142,7 +143,7 @@
 /obj/item/ammo_casing/energy/sniper
 	projectile_type = /obj/item/projectile/beam/sniper
 	select_name = "sniper"
-	e_cost = 250
+	e_cost = 100
 	fire_sound = 'sound/weapons/guns/marauder.ogg'
 
 /obj/item/ammo_casing/energy/rails

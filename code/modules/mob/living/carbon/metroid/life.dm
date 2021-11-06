@@ -4,6 +4,8 @@
 
 	if (notransform)
 		return
+	if(!loc)
+		return
 
 	..()
 
@@ -219,7 +221,7 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-	src.updatehealth()
+	updatehealth()
 
 	return //TODO: DEFERRED
 
@@ -239,7 +241,7 @@
 		// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 		//if(!src.rejuv) src.oxyloss++
-		if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(10)
+		if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(10)
 
 		if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 
@@ -275,7 +277,8 @@
 			src.lying = 0
 			src.stat = CONSCIOUS
 
-	if (src.stuttering) src.stuttering = 0
+	if (src.stuttering > 0)
+		setStuttering(0)
 
 	if (src.eye_blind)
 		src.eye_blind = 0
@@ -293,10 +296,10 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry = 0
+		setBlurriness(0)
 
 	if (src.druggy > 0)
-		src.druggy = 0
+		setDrugginess(0)
 
 	return 1
 
@@ -734,7 +737,7 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
-/mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0

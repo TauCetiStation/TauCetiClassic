@@ -2,6 +2,8 @@
 	Datum based languages. Easily editable and modular.
 */
 
+#define MESSAGE_LIMIT 20
+
 /datum/language
 	var/name = "an unknown language" // Fluff name of language if any.
 	var/desc = "A language."         // Short description for 'Check Languages'.
@@ -10,7 +12,7 @@
 	var/exclaim_verb = "exclaims" // Used when sentence ends in a !
 	var/signlang_verb = list()       // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
 	var/colour = "body"         // CSS style to use for strings in this language.
-	var/list/key = list("x")                    // Character used to speak in language eg. :o for Unathi.
+	var/list/key = list()                    // Character used to speak in language eg. :o for Unathi.
 	var/flags = 0                    // Various language flags.
 	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
@@ -33,6 +35,9 @@
 
 	var/input_size = length_char(input)
 	var/scrambled_text = ""
+
+	if(input_size > MESSAGE_LIMIT)
+		input_size = MESSAGE_LIMIT	//limitation on abracadabra
 
 	for(var/i in 1 to input_size)
 		scrambled_text += pick(syllables)
@@ -207,6 +212,14 @@
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
 
+/datum/language/xenomorph
+	name = "Xenomorph language"
+	desc = "Xenomorph language."
+	speech_verb = "hisses"
+	ask_verb = "hisses"
+	exclaim_verb = "hisses"
+	colour = "alien"
+	syllables = list("сс", "хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
 
 // Language handling.
 /mob/proc/add_language(language)
@@ -249,3 +262,5 @@
 	popup.open()
 
 	return
+
+#undef MESSAGE_LIMIT

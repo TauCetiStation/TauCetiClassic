@@ -1,9 +1,7 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/operating
 	name = "Operating Computer"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	icon_state = "operating"
 	state_broken_preset = "crewb"
 	state_nopower_preset = "crew0"
@@ -28,7 +26,7 @@
 			return
 
 	var/dat = ""
-	if(src.table && (src.table.check_victim()))
+	if(src.table && (table.check_victim()))
 		src.victim = src.table.victim
 		dat += {"
 			<B>Patient Information:</B><BR>
@@ -38,10 +36,10 @@
 			<B>Blood Type:</B> [src.victim.b_type]<BR>
 			<BR>
 			<B>Health:</B> [src.victim.health]<BR>
-			<B>Brute Damage:</B> [src.victim.getBruteLoss()]<BR>
-			<B>Toxins Damage:</B> [src.victim.getToxLoss()]<BR>
-			<B>Fire Damage:</B> [src.victim.getFireLoss()]<BR>
-			<B>Suffocation Damage:</B> [src.victim.getOxyLoss()]<BR>
+			<B>Brute Damage:</B> [victim.getBruteLoss()]<BR>
+			<B>Toxins Damage:</B> [victim.getToxLoss()]<BR>
+			<B>Fire Damage:</B> [victim.getFireLoss()]<BR>
+			<B>Suffocation Damage:</B> [victim.getOxyLoss()]<BR>
 			<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
 			<B>Heartbeat rate:</B> [victim.get_pulse(GETPULSE_TOOL)]<BR>
 			"}
@@ -59,4 +57,4 @@
 
 /obj/machinery/computer/operating/process()
 	if(..())
-		src.updateDialog()
+		updateDialog()

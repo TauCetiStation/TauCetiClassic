@@ -25,11 +25,6 @@
 	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 
-/obj/effect/decal/cleanable/cellular/necro
-	name = "Living mass"
-	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
-
 /obj/structure/cellular_biomass/core/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
@@ -42,6 +37,8 @@
 	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	icon_state = "xeno_1"
 	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
+
+	beauty = -250
 
 /obj/structure/cellular_biomass/wall/necro/atom_init()
 	. = ..()
@@ -56,7 +53,7 @@
 	icon_state = "core"
 
 /obj/structure/cellular_biomass/lair/necro/atom_init()
-	new /mob/living/simple_animal/hostile/cellular/necro/(loc)
+	new /mob/living/simple_animal/hostile/cellular/necro(loc)
 	..()
 	return INITIALIZE_HINT_QDEL //glitches are self-replicating, no need for lair
 
@@ -65,6 +62,7 @@
 	desc = "This thing is fast!"
 	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	faction = "necro"
+	w_class = SIZE_HUMAN
 	health = 60
 	maxHealth = 60
 	melee_damage = 15

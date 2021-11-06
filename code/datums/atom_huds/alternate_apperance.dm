@@ -16,6 +16,10 @@ var/global/list/active_alternate_appearances = list()
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
+/atom/proc/update_all_alt_apperance()
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		AA.update_alt_appearance(src)
+
 /**
   * Allows you to add an alternative sprite to the object in the form "appearance_key" = "image"
   *
@@ -23,7 +27,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 	var/transfer_overlays = FALSE
-	var/static/atom/alternate_obj
+	var/atom/alternate_obj
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
@@ -32,11 +36,14 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	global.active_alternate_appearances -= src
+	QDEL_NULL(alternate_obj)
 	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/update_alt_appearance(mob/M)
 	if(mobShouldSee(M))
 		add_hud_to(M)
+	else
+		remove_hud_from(M)
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
@@ -88,11 +95,11 @@ var/global/list/active_alternate_appearances = list()
 		target = I.loc
 	else
 		target = loc
-		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
-		//This is necessary so that sprites are not layered
-		theImage.override = TRUE
+		update_image()
 
 	theImage.layer = target.layer
+	theImage.plane = target.plane
+	theImage.appearance_flags = target.appearance_flags
 
 	if(transfer_overlays)
 		theImage.copy_overlays(target)
@@ -106,6 +113,11 @@ var/global/list/active_alternate_appearances = list()
 		var/image/ghost_image = image(icon = theImage.icon , icon_state = theImage.icon_state, loc = theImage.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
+		ghost_image.pixel_x = theImage.pixel_x
+		ghost_image.pixel_y = theImage.pixel_y
+		ghost_image.color = theImage.color
+		ghost_image.plane = theImage.plane
+		ghost_image.transform = theImage.transform
 		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
@@ -126,6 +138,17 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
 		theImage.copy_overlays(other, cut_old)
+
+/datum/atom_hud/alternate_appearance/basic/proc/update_image()
+	if(!alternate_obj)
+		return
+
+	qdel(theImage)
+	theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
+	//This is necessary so that sprites are not layered
+	theImage.override = TRUE
+	theImage.pixel_x = alternate_obj.pixel_x
+	theImage.pixel_y = alternate_obj.pixel_y
 
 // Fake-image can see everyone
 /datum/atom_hud/alternate_appearance/basic/everyone
@@ -164,6 +187,13 @@ var/global/list/active_alternate_appearances = list()
 		if(mobShouldSee(mob))
 			add_hud_to(mob)
 
+/datum/atom_hud/alternate_appearance/basic/observers/Destroy()
+	var/datum/atom_hud/alternate_appearance/AA = target.alternate_appearances[appearance_key]
+	if(AA)
+		target.alternate_appearances[appearance_key] = null
+		target.alternate_appearances -= appearance_key
+	return ..()
+
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
 
@@ -172,16 +202,49 @@ var/global/list/active_alternate_appearances = list()
 	var/mob/seer
 	add_ghost_version = TRUE
 
-/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
-	..(key, I, FALSE)
+/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M, alternate_type, loc)
+	..(key, I, alternate_type, loc)
 	seer = M
 	add_hud_to(seer)
 
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
-	if(M == seer || isobserver(M))
+	if(M == seer)
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/group
+	var/list/seers
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/group/New(key, image/I, mob_or_mobs)
+	..(key, I, FALSE)
+	var/list/mobs = islist(mob_or_mobs) ? mob_or_mobs : list(mob_or_mobs)
+	seers = mobs
+	for(var/mob/M in seers)
+		add_hud_to(M)
+
+/datum/atom_hud/alternate_appearance/basic/group/mobShouldSee(mob/M)
+	if(M in seers)
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys
+	// Dictionary of form list(ckey = TRUE) for all who shouldn't see this appearance.
+	var/list/ckeys
+
+	add_ghost_version = FALSE
+
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/New(key, image/I, ckeys)
+	..(key, I, FALSE)
+	src.ckeys = ckeys
+	for(var/mob in global.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/mobShouldSee(mob/M)
+	return !ckeys || !ckeys[M.ckey]
+
+// Fake-image can see only mime
 /datum/atom_hud/alternate_appearance/basic/mime
 
 /datum/atom_hud/alternate_appearance/basic/mime/New()
@@ -195,4 +258,40 @@ var/global/list/active_alternate_appearances = list()
 		var/mob/living/carbon/human/H = M
 		if(H.mind && H.mind.assigned_role == "Mime")
 			return TRUE
+	return FALSE
+
+// Fake-image can see only holy_roled
+/datum/atom_hud/alternate_appearance/basic/holy_role
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/holy_role/New()
+	..()
+	for(var/mob/living/carbon/human/H in global.player_list)
+		if(mobShouldSee(H))
+			add_hud_to(H)
+
+/datum/atom_hud/alternate_appearance/basic/holy_role/mobShouldSee(mob/living/carbon/human/H)
+	if(H.mind && H.mind.holy_role)
+		return TRUE
+	return FALSE
+
+// Fake-image can see members of one religion
+/datum/atom_hud/alternate_appearance/basic/my_religion
+	add_ghost_version = TRUE
+	var/datum/religion/religion
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/New(key, image/I, alternate_type, loc, datum/religion/R)
+	..(key, I, alternate_type, loc)
+	religion = R
+	for(var/mob/living/carbon/human/H in global.player_list)
+		if(mobShouldSee(H))
+			add_hud_to(H)
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/Destroy()
+	religion = null
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/mobShouldSee(mob/living/carbon/human/H)
+	if(religion.is_member(H))
+		return TRUE
 	return FALSE

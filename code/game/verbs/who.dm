@@ -55,6 +55,8 @@
 
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
+			if(C.is_afk())
+				entry += " (AFK - [C.inactivity2text()])"
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
 	else
@@ -71,54 +73,78 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, msg)
 
+#define SW_ADMINS     1
+#define SW_MENTORS    2
+#define SW_XENOVISORS 3
+#define SW_DEVELOPERS 4
+#define SW_ALL_GROUPS 4 //update this, if add more staff groups
+
+#define SW_NAME       1
+#define SW_WHOTEXT    2
+#define SW_COUNT      3
+#define SW_ALL_PARAMS 3 //update this, if add more params
+
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] += SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/list/messages = list("", "")
-	var/list/num_online = list(0, 0)
-	if(holder)
-		for(var/client/C in admins)
-			if(C.ckey in stealth_keys)
-				continue
-			if(C.holder.fakekey && !(R_ADMIN & holder.rights))
-				continue
-			messages[1] += "&emsp;[C] is a [C.holder.rank]"
-			if(C.holder.fakekey)
-				messages[1] += " <i>(as [C.holder.fakekey])</i>"
-			if(isobserver(C.mob))
-				messages[1] += " - Observing"
-			else if(isnewplayer(C.mob))
-				messages[1] += " - Lobby"
-			else
-				messages[1] += " - Playing"
-			if(C.is_afk())
-				messages[1] += " (AFK)"
-			messages[1] += "\n"
-			num_online[1]++
-		for(var/client/C in mentors)
-			messages[2] += "&emsp;[C] is a Mentor"
-			if(isobserver(C.mob))
-				messages[2] += " - Observing"
-			else if(isnewplayer(C.mob))
-				messages[2] += " - Lobby"
-			else
-				messages[2] += " - Playing"
-			if(C.is_afk())
-				messages[2] += " (AFK)"
-			messages[2] += "\n"
-			num_online[2]++
-	else
-		for(var/client/C in admins)
-			if(C.ckey in stealth_keys)
-				continue
-			if(!C.holder.fakekey)
-				messages[1] += "&emsp;[C] is a [C.holder.rank]\n"
-				num_online[1]++
-		for(var/client/C in mentors)
-			messages[2] += "&emsp;[C] is a Mentor\n"
-			num_online[2]++
+	var/list/staffwho[SW_ALL_GROUPS][SW_ALL_PARAMS]
+	staffwho[SW_ADMINS][SW_NAME] = "Admins" // update browserOutput.css, if change this
+	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
+	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
+	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
 
-	messages[1]  = num_online[1] ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
-	messages[1] += num_online[2] ? "\n<b>Current Mentors ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Mentors online</b>\n"
-	to_chat(src, messages[1])
+	for(var/client/C in admins|mentors)
+		if(C.ckey in stealth_keys)
+			continue
+		if(C.holder?.fakekey && (!holder || !(R_ADMIN & holder.rights)))
+			continue
+		var/extra = ""
+		if(holder)
+			if(C.holder?.fakekey)
+				extra += "<i>(as [C.holder.fakekey])</i> "
+			if(isobserver(C.mob))
+				extra += "Observing"
+			else if(isnewplayer(C.mob))
+				extra += "Lobby"
+			else
+				extra += "Playing"
+			if(C.is_afk())
+				extra += " (AFK - [C.inactivity2text()])"
+		if(C.ckey in mentor_ckeys)
+			SW_INCREMENT(SW_MENTORS, C, "Mentor", extra)
+		if(C.holder)
+			if(R_BAN & C.holder.rights)
+				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
+			else if(R_DEBUG & C.holder.rights)
+				SW_INCREMENT(SW_DEVELOPERS, C, C.holder.rank, extra)
+			else if(R_WHITELIST & C.holder.rights)
+				SW_INCREMENT(SW_XENOVISORS, C, C.holder.rank, extra)
+			else
+				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
+
+	var/msg
+	for(var/staff in staffwho)
+		if(!staff[SW_COUNT])
+			continue
+		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
+		msg += "[staff[SW_WHOTEXT]]"
+	if(!msg)
+		msg = "<b>No Staff Online</b>"
+	else
+		msg = "<table class='staffwho'>[msg]</table>"
+	to_chat(src, msg)
+
+#undef SW_ADMINS
+#undef SW_MENTORS
+#undef SW_XENOVISORS
+#undef SW_DEVELOPERS
+#undef SW_NAME
+#undef SW_WHOTEXT
+#undef SW_COUNT
+#undef SW_TR
+#undef SW_INCREMENT
+#undef SW_ALL_GROUPS
+#undef SW_ALL_PARAMS

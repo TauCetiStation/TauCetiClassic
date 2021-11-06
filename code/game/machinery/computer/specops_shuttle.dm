@@ -1,7 +1,7 @@
 //Config stuff
 #define SPECOPS_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
-#define SPECOPS_STATION_AREATYPE "/area/shuttle/specops/station" //Type of the spec ops shuttle area for station
-#define SPECOPS_DOCK_AREATYPE "/area/shuttle/specops/centcom"	//Type of the spec ops shuttle area for dock
+#define SPECOPS_STATION_AREATYPE /area/shuttle/specops/station //Type of the spec ops shuttle area for station
+#define SPECOPS_DOCK_AREATYPE /area/shuttle/specops/centcom	//Type of the spec ops shuttle area for dock
 #define SPECOPS_RETURN_DELAY 6000 //Time between the shuttle is capable of moving.
 
 var/specops_shuttle_moving_to_station = 0
@@ -16,7 +16,7 @@ var/specops_shuttle_timeleft = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
-	req_access = list(access_cent_specops)
+	req_access = list(access_captain)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0

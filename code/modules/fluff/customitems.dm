@@ -1,5 +1,13 @@
 #define FLUFF_FILE_PATH "data/customItemsCache.sav"
 
+// not BLOCKHEADHAIR/BLOCKHAIR for savefile in case someone change them
+// feel free to rename if more flags needed
+#define FLUFF_HAIR_HIDE_NONE 0
+#define FLUFF_HAIR_HIDE_HEAD 1 // BLOCKHEADHAIR
+#define FLUFF_HAIR_HIDE_ALL 2 // BLOCKHAIR
+
+#define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == 1 && "Head Hair" || flag == 2 && "Head & Face Hair" || "None")
+
 /obj/item/customitem
 	name = "Custom item"
 
@@ -49,6 +57,8 @@
 	var/desc
 	var/icon
 	var/icon_state
+
+	var/hair_flags
 
 	var/status // submitted accepted rejected
 	var/moderator_message
@@ -256,8 +266,15 @@
 		item.icon_state = custom_item_info.icon_state
 		item.item_state = custom_item_info.icon_state
 		item.item_color = custom_item_info.icon_state
+
+		switch(custom_item_info.hair_flags)
+			if(FLUFF_HAIR_HIDE_HEAD)
+				item.flags |= BLOCKHEADHAIR
+			if(FLUFF_HAIR_HIDE_ALL)
+				item.flags |= BLOCKHAIR
+
 		if(custom_item_info.item_type == "small")
-			item.w_class = ITEM_SIZE_SMALL
+			item.w_class = SIZE_TINY
 
 
 		var/atom/placed_in = H.equip_or_collect(item)

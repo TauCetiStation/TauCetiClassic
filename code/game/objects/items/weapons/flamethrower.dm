@@ -9,7 +9,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 500
 	origin_tech = "combat=1;phorontech=1"
 	var/status = 0
@@ -61,6 +61,8 @@
 		item_state = "flamethrower_0"
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity, params)
+	if(!can_see(user, target))
+		return
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -201,7 +203,7 @@
 /obj/item/weapon/flamethrower/full/atom_init()
 	. = ..()
 	weldtool = new /obj/item/weapon/weldingtool(src)
-	weldtool.status = 0
+	weldtool.secured = FALSE
 	igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
@@ -218,7 +220,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 500
 	origin_tech = "combat=2;phorontech=1"
 	var/status = 0
@@ -276,6 +278,8 @@
 	return
 
 /obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity, params)
+	if(!can_see(user, target))
+		return
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)

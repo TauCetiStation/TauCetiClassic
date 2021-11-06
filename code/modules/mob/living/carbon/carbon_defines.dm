@@ -1,7 +1,6 @@
 /mob/living/carbon
 	gender = MALE
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD,  BROKEN_HUD)
-	var/list/stomach_contents = list()
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
 	var/chest_brain_op_stage = 0
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0

@@ -1,4 +1,4 @@
-var/list/department_radio_keys = list(
+var/global/list/department_radio_keys = list(
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -15,6 +15,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":d" = "dronechat",	"#d" = "dronechat",		".d" = "dronechat",
+	  ":z" = "mafia",		"#z" = "mafia",			".z" = "mafia",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
@@ -32,6 +33,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":D" = "dronechat",	"#D" = "dronechat",		".D" = "dronechat",
+	  ":Z" = "mafia",		"#Z" = "mafia",			".Z" = "mafia",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -51,6 +53,7 @@ var/list/department_radio_keys = list(
 	  ":г" = "Supply",		"#г" = "Supply",		".г" = "Supply",
 	  ":п" = "changeling",	"#п" = "changeling",	".п" = "changeling",
 	  ":в" = "dronechat",	"#в" = "dronechat",		".в" = "dronechat",
+	  ":я" = "mafia",		"#я" = "mafia",			".я" = "mafia",
 
 	  ":К" = "right ear",	"#К" = "right ear",		".К" = "right ear",
 	  ":Д" = "left ear",	"#Д" = "left ear",		".Д" = "left ear",
@@ -67,7 +70,8 @@ var/list/department_radio_keys = list(
 	  ":Е" = "Syndicate",	"#Е" = "Syndicate",		".Е" = "Syndicate",
 	  ":Г" = "Supply",		"#Г" = "Supply",		".Г" = "Supply",
 	  ":П" = "changeling",	"#П" = "changeling",	".П" = "changeling",
-	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat"
+	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat",
+	  ":Я" = "mafia",		"#Я" = "mafia",			".Я" = "mafia",
 )
 
 /mob/living/proc/binarycheck()
@@ -89,31 +93,13 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/proc/hivecheck()
-	if (isxeno(src))
-		return 1
-	if (!ishuman(src))
-		return
-	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
-		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
-			dongle = H.l_ear
-		else
-			dongle = H.r_ear
-		if(!istype(dongle))
-			return
-		if(dongle.translate_binary)
-			return 1
-
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
-
 	if(sanitize)
 		message = sanitize(message)
 		if(!message)
@@ -129,7 +115,7 @@ var/list/department_radio_keys = list(
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
 			if (prob(30))
-				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
+				custom_emote(1, "[pick(speaking.signlang_verb)].")
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
@@ -159,6 +145,10 @@ var/list/department_radio_keys = list(
 
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+	
+	//make sure we actually can hear there
+	if (T.sound_coefficient < 0.5)
+		message = Gibberish(message, (1.0 - max(0.0, T.sound_coefficient)) * 100 + 20)
 
 	var/list/listening = list()
 	var/list/listening_obj = list()
@@ -184,12 +174,10 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/speech_bubble_test = say_test(message)
-	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
@@ -200,7 +188,7 @@ var/list/department_radio_keys = list(
 
 	return 1
 
-/mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
+/mob/living/proc/say_signlang(message, verb="gestures", datum/language/language)
 	for (var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
 

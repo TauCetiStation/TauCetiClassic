@@ -4,9 +4,8 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	var/icon_state_arrest = "secbot-c"
-	layer = 5.0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 25
 	maxhealth = 25
 	fire_dam_coeff = 0.7
@@ -19,7 +18,6 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/frustration = 0
-	var/lasercolor = "" //Used by ED209
 //	var/emagged = 0 //Emagged Secbots view everyone as a criminal
 	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
@@ -53,7 +51,6 @@
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
 	auto_patrol = 1
-	layer = MOB_LAYER
 
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"
@@ -86,7 +83,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = 0
+	anchored = FALSE
 	mode = SECBOT_IDLE
 	walk_to(src, 0)
 	update_icon()
@@ -187,7 +184,7 @@
 		if(user)
 			oldtarget_name = user.name
 		last_found = world.time
-		anchored = 0
+		anchored = FALSE
 		emagged = 2
 		on = 1
 		update_icon()
@@ -218,8 +215,8 @@
 				if(Adjacent(target) && istype(target.loc, /turf))
 					if(iscarbon(target))
 						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
-						icon_state = "[lasercolor][icon_state_arrest]"
-						addtimer(CALLBACK(src, .proc/update_icon), 2)
+						icon_state = "[icon_state_arrest]"
+						addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 						var/mob/living/carbon/M = target
 						do_attack_animation(M)
 						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
@@ -240,8 +237,8 @@
 							next_harm_time = world.time + 15
 							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
-							icon_state = "[lasercolor][icon_state_arrest]"
-							addtimer(CALLBACK(src, .proc/update_icon), 2)
+							icon_state = "[icon_state_arrest]"
+							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat)
@@ -261,14 +258,14 @@
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 			// see if he got away
 			if(!Adjacent(target) || ((target.loc != target_lastloc) && (target.weakened < 2)))
-				anchored = 0
+				anchored = FALSE
 				mode = SECBOT_HUNT
 				return
 
 			if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !arrest_type)
-					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -2)
+					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -2)
 					mode = SECBOT_ARREST
 					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
@@ -545,7 +542,7 @@
 // look for a criminal in view of the bot
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
-	anchored = 0
+	anchored = FALSE
 	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
 		if(L.stat)
 			continue
@@ -682,7 +679,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!user.Adjacent(src))
 			return
 		created_name = t
 

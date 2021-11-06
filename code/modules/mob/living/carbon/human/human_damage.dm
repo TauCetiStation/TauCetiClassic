@@ -22,11 +22,6 @@
 		ChangeToHusk()
 	return
 
-/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
-	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
-		return FALSE
-	return ..()
-
 // =============================================
 
 /mob/living/carbon/human/getBrainLoss()
@@ -202,6 +197,26 @@
 	else
 		..()
 
+// =============================================
+
+/mob/living/carbon/human/Stuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/AdjustStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/setStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
@@ -248,6 +263,14 @@
 		updatehealth()
 		speech_problem_flag = 1
 
+// Damage certain bodyparts
+/mob/living/carbon/human/proc/take_certain_bodypart_damage(list/parts_name, brute, burn, sharp = 0, edge = 0)
+	for(var/name in parts_name)
+		var/obj/item/organ/external/BP = get_bodypart(name)
+		var/damage_flags = (sharp ? DAM_SHARP : FALSE) | (edge ? DAM_EDGE : FALSE)
+
+		if(BP.take_damage(brute, burn, damage_flags))
+			updatehealth()
 
 //Heal MANY external bodyparts, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
@@ -279,10 +302,13 @@
 	while(parts.len && (brute > 0 || burn > 0) )
 		var/obj/item/organ/external/BP = pick(parts)
 
+		var/brute_per_part = round(brute / parts.len)
+		var/burn_per_part = round(burn / parts.len)
+
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
 
-		BP.take_damage(brute, burn, damage_flags, used_weapon)
+		BP.take_damage(brute_per_part, burn_per_part, damage_flags, used_weapon)
 		brute -= (BP.brute_dam - brute_was)
 		burn -= (BP.burn_dam - burn_was)
 
@@ -298,9 +324,8 @@
 This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
-	if(!species.flags[NO_BLOOD])
-		vessel.add_reagent("blood", 560 - vessel.total_volume)
-		fixblood()
+	blood_add(BLOOD_VOLUME_NORMAL - blood_amount(exact = TRUE))
+	fixblood()
 
 
 /*
@@ -312,7 +337,8 @@ This function restores all bodyparts.
 	for(var/BP_ZONE in species.has_bodypart)
 		if(!bodyparts_by_name[BP_ZONE])
 			var/path = species.has_bodypart[BP_ZONE]
-			new path(null, src)
+			var/obj/item/organ/external/E = new path(null)
+			E.insert_organ(src)
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)

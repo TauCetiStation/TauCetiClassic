@@ -20,7 +20,7 @@
 
 var/list/editing_item_list = list() // stores the item that is currently being edited for each player
 var/list/editing_item_oldname_list = list()
-/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE, adminview = FALSE)
+/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -95,6 +95,10 @@ var/list/editing_item_oldname_list = list()
 	dat += "<td>Description</td>"
 	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
+	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
+	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
@@ -120,7 +124,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname)
 			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
-	else if(adminview)
+	if(editing_item.icon)
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
@@ -143,7 +147,7 @@ var/list/editing_item_oldname_list = list()
 		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
-			alert(user, "You don't have free custom item slots", "Info", "OK")
+			tgui_alert(user, "You don't have free custom item slots", "Info")
 			return
 
 		editing_item_oldname_list[user.client.ckey] = null
@@ -172,7 +176,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN, ascii_only = TRUE)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
@@ -184,6 +188,22 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 500)
 			return
 		editing_item.desc = new_item_desc
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["change_hair_flags"])
+		var/new_hair_flags = input("Select which hair item should hide", "Text") as null|anything in list("None", "Head Hair", "Head & Face Hair")
+		if(!editing_item || !new_hair_flags)
+			return
+
+		switch(new_hair_flags)
+			if("Head Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_HEAD
+			if("Head & Face Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_ALL
+			else
+				editing_item.hair_flags = null
+
 		edit_custom_item_panel(src, user)
 		return
 
@@ -206,7 +226,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["author_info"])
-		alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info", "OK")
+		tgui_alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info")
 		return
 
 	if(href_list["change_author"])
@@ -225,7 +245,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["ooc_info"])
-		alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info", "OK")
+		tgui_alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info")
 		return
 
 	if(href_list["change_oocinfo"])
@@ -253,7 +273,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname) //editing
 			if(slotCount < itemCount) // can't edit, we have too much custom items
-				alert(user, "You have too much custom items, remove old ones before being able to edit", "Info", "OK")
+				tgui_alert(user, "You have too much custom items, remove old ones before being able to edit", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -266,10 +286,10 @@ var/list/editing_item_oldname_list = list()
 		else //adding new
 			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
 			if(old_item)
-				alert(user, "You already have an item with name [editing_item.name]", "Info", "OK")
+				tgui_alert(user, "You already have an item with name [editing_item.name]", "Info")
 				return
 			if(slotCount <= itemCount) // can't create, we have too much custom items
-				alert(user, "You don't have free custom item slots", "Info", "OK")
+				tgui_alert(user, "You don't have free custom item slots", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -282,13 +302,13 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
 			return
 
-		if(alert(usr, "Are you sure?", "Item deletion confirmation", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Are you sure?", "Item deletion confirmation", list("Yes", "No")) == "Yes")
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "")
 			user.client.remove_custom_item(editing_item_oldname)
 			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["download"])
-		if(!editing_item || !editing_item.icon)
+		if(!editing_item || !editing_item.icon || !isicon(editing_item.icon))
 			return
 
 		usr << ftp(editing_item.icon)
@@ -459,7 +479,7 @@ var/list/editing_item_oldname_list = list()
 	if(!target_ckey)
 		return
 
-	if(alert(usr, "Are you sure?", "Confirm deletion", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Are you sure?", "Confirm deletion", list("Yes", "No")) == "Yes")
 		remove_custom_items_history(target_ckey, index)
 		customitems_panel()
 		customs_items_history(target_ckey)

@@ -47,11 +47,6 @@ var/list/ventcrawl_machinery = list(
 	if(is_type_in_list(carried_item, can_enter_vent_with))
 		return TRUE//!get_inventory_slot(carried_item)
 
-/mob/living/carbon/is_allowed_vent_crawl_item(obj/item/carried_item)
-	if(carried_item in stomach_contents)
-		return TRUE
-	return ..()
-
 /mob/living/carbon/human/is_allowed_vent_crawl_item(obj/item/carried_item)
 	if(carried_item in organs)
 		return TRUE
@@ -74,76 +69,64 @@ var/list/ventcrawl_machinery = list(
 	return TRUE
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_list(src, ventcrawl_machinery))
-		L.handle_ventcrawl(src)
+	if(!istype(L))
 		return
-	..()
 
-/mob/living/proc/handle_ventcrawl(atom/clicked_on)
+	if(!L.can_ventcrawl())
+		return
+
+	if(!suitable_for_ventcrawl())
+		to_chat(L, "You can't enter to [src].")
+		return
+
+	if(!L.Adjacent(src))
+		to_chat(L, "You must be standing on or beside an air vent to enter it.")
+		return
+
+	L.handle_ventcrawl(src, returnPipenet())
+
+/mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/vent_found, datum/pipeline/vent_found_parent)
+	if(is_busy())
+		return
+	to_chat(src, "You begin climbing into the ventilation system...")
+	var/time = 40
+	if(w_class)
+		time = w_class^2
+	if(!do_after(src, time, null, vent_found))
+		return
+
 	if(!can_ventcrawl())
 		return
 
-	var/obj/machinery/atmospherics/components/unary/vent_found
-	if(clicked_on && Adjacent(clicked_on))
-		vent_found = clicked_on
-		if(!istype(vent_found) || !vent_found.can_crawl_through())
-			vent_found = null
+	if(vent_found_parent)
+		var/datum/gas_mixture/air_contents = vent_found_parent.air
 
-	if(!vent_found)
-		for(var/obj/machinery/atmospherics/machine in range(1, src))
-			if(is_type_in_list(machine, ventcrawl_machinery))
-				vent_found = machine
+		if(air_contents && !issilicon(src))
 
-			if(!vent_found || !vent_found.can_crawl_through())
-				vent_found = null
+			switch(air_contents.temperature)
+				if(0 to BODYTEMP_COLD_DAMAGE_LIMIT)
+					to_chat(src, "<span class='danger'>You feel a painful freeze coming from the vent!</span>")
+				if(BODYTEMP_COLD_DAMAGE_LIMIT to T0C)
+					to_chat(src, "<span class='warning'>You feel an icy chill coming from the vent.</span>")
+				if(T0C + 40 to BODYTEMP_HEAT_DAMAGE_LIMIT)
+					to_chat(src, "<span class='warning'>You feel a hot wash coming from the vent.</span>")
+				if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
+					to_chat(src, "<span class='danger'>You feel a searing heat coming from the vent!</span>")
 
-			if(vent_found)
-				break
+			switch(air_contents.return_pressure())
+				if(0 to HAZARD_LOW_PRESSURE)
+					to_chat(src, "<span class='danger'>You feel a rushing draw pulling you into the vent!</span>")
+				if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+					to_chat(src, "<span class='warning'>You feel a strong drag pulling you into the vent.</span>")
+				if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+					to_chat(src, "<span class='warning'>You feel a strong current pushing you away from the vent.</span>")
+				if(HAZARD_HIGH_PRESSURE to INFINITY)
+					to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
 
-	if(vent_found)
-		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
-		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
+	visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
-			var/datum/gas_mixture/air_contents = vent_found.AIR1
-
-			to_chat(src, "You begin climbing into the ventilation system...")
-			if(air_contents && !issilicon(src))
-
-				switch(air_contents.temperature)
-					if(0 to BODYTEMP_COLD_DAMAGE_LIMIT)
-						to_chat(src, "<span class='danger'>You feel a painful freeze coming from the vent!</span>")
-					if(BODYTEMP_COLD_DAMAGE_LIMIT to T0C)
-						to_chat(src, "<span class='warning'>You feel an icy chill coming from the vent.</span>")
-					if(T0C + 40 to BODYTEMP_HEAT_DAMAGE_LIMIT)
-						to_chat(src, "<span class='warning'>You feel a hot wash coming from the vent.</span>")
-					if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-						to_chat(src, "<span class='danger'>You feel a searing heat coming from the vent!</span>")
-
-				switch(air_contents.return_pressure())
-					if(0 to HAZARD_LOW_PRESSURE)
-						to_chat(src, "<span class='danger'>You feel a rushing draw pulling you into the vent!</span>")
-					if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-						to_chat(src, "<span class='warning'>You feel a strong drag pulling you into the vent.</span>")
-					if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-						to_chat(src, "<span class='warning'>You feel a strong current pushing you away from the vent.</span>")
-					if(HAZARD_HIGH_PRESSURE to INFINITY)
-						to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
-
-			if(is_busy() || !do_after(src, 45, null, vent_found))
-				return
-
-			if(!can_ventcrawl())
-				return
-
-			visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
-
-			forceMove(vent_found)
-			add_ventcrawl(vent_found)
-
-		else
-			to_chat(src, "This vent is not connected to anything.")
-	else
-		to_chat(src, "You must be standing on or beside an air vent to enter it.")
+	forceMove(vent_found)
+	add_ventcrawl(vent_found)
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
 
@@ -162,11 +145,13 @@ var/list/ventcrawl_machinery = list(
 	//candrop = 0
 
 	for(var/X in totalMembers)
+		if(!X)
+			continue
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)
-		A.pipe_image.layer = ABOVE_LIGHTING_LAYER
-		A.pipe_image.plane = LIGHTING_PLANE
+		A.pipe_image.layer = HUD_LAYER
+		A.pipe_image.plane = HUD_PLANE
 		pipes_shown += A.pipe_image
 		client.images += A.pipe_image
 

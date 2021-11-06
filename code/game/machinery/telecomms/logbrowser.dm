@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 /obj/machinery/computer/telecomms
 
 	light_color = "#50ab00"
@@ -181,7 +180,7 @@
 
 	if(href_list["delete"])
 
-		if(!src.allowed(usr) && !emagged)
+		if(!allowed(usr) && !emagged)
 			to_chat(usr, "<span class='warning'>ACCESS DENIED.</span>")
 			return
 
@@ -217,7 +216,7 @@
 
 /obj/machinery/computer/telecomms/server/attackby(obj/item/weapon/D, mob/user)
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/telecomms/server/emag_act(mob/user)
 	if(emagged)

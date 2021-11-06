@@ -1,17 +1,15 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/machinery/implantchair
 	name = "loyalty implanter"
 	desc = "Used to implant occupants with loyalty implants."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
-	density = 1
+	density = TRUE
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 
 	var/ready = 1
 	var/malfunction = 0
-	var/list/obj/item/weapon/implant/mindshield/implant_list = list()
+	var/list/obj/item/weapon/implant/mind_protect/mindshield/implant_list = list()
 	var/max_implants = 5
 	var/injection_cooldown = 600
 	var/replenish_cooldown = 6000
@@ -62,8 +60,8 @@
 				add_implants()
 				ready = 1
 
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
+		updateUsrDialog()
+		add_fingerprint(usr)
 		return
 
 
@@ -79,7 +77,7 @@
 	var/mob/M = G.affecting
 	if(put_mob(M))
 		qdel(G)
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/implantchair/proc/go_out(mob/M)
@@ -112,7 +110,7 @@
 	M.stop_pulling()
 	M.loc = src
 	src.occupant = M
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	icon_state = "implantchair_on"
 	return 1
 
@@ -120,7 +118,7 @@
 /obj/machinery/implantchair/proc/implant(mob/M)
 	if (!istype(M, /mob/living/carbon))
 		return
-	for(var/obj/item/weapon/implant/mindshield/imp in implant_list)
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/imp in implant_list)
 		visible_message("<span class='userdanger'>[M] has been implanted by the [src.name].</span>")
 		if(imp.implanted(M))
 			imp.inject(M)
@@ -130,7 +128,7 @@
 
 /obj/machinery/implantchair/proc/add_implants()
 	for(var/i=0, i<src.max_implants, i++)
-		var/obj/item/weapon/implant/mindshield/I = new(src)
+		var/obj/item/weapon/implant/mind_protect/mindshield/I = new(src)
 		implant_list += I
 	return
 
@@ -140,7 +138,7 @@
 	set src in oview(1)
 	if(usr.incapacitated())
 		return
-	src.go_out(usr)
+	go_out(usr)
 	add_fingerprint(usr)
 	return
 

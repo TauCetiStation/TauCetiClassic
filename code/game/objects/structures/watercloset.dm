@@ -1,12 +1,13 @@
 //todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
 
+ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/open = 0			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
@@ -82,14 +83,13 @@
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
-		if(I.w_class > ITEM_SIZE_NORMAL)
+		if(I.w_class > SIZE_SMALL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > ITEM_SIZE_HUGE)
+		if(w_items + I.w_class > SIZE_BIG)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		w_items += I.w_class
 		user.SetNextMove(CLICK_CD_INTERACT)
 		add_fingerprint(user)
@@ -103,8 +103,8 @@
 	desc = "The HU-452, an experimental urinal."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
@@ -260,7 +260,7 @@
 		if(user.get_active_hand() != I)
 			return //Person has switched hands or the item in their hands
 
-		O.wet = FALSE
+		O.wet = 0
 		user.visible_message( \
 			"<span class='notice'>[user] drying \a [I] using \the [src].</span>", \
 			"<span class='notice'>You dry \a [I] using \the [src].</span>")
@@ -284,8 +284,8 @@
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	layer = MOB_LAYER + 1.1
 	var/on = 0
@@ -303,8 +303,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = MOB_LAYER + 1
-	anchored = 1
-	mouse_opacity = 0
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/machinery/shower/attack_hand(mob/user)
 	. = ..()
@@ -632,7 +632,7 @@
 		if (B.charges > 0 && B.status == 1)
 			flick("baton_active", src)
 			user.Stun(10)
-			user.stuttering = 10
+			user.setStuttering(10)
 			user.Weaken(10)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user

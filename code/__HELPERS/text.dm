@@ -37,7 +37,7 @@
 		// You should always consider this with any text processing work
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
-		input = stip_non_ascii(input)
+		input = strip_non_ascii(input)
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
@@ -66,6 +66,10 @@
 //this is a problem of double-encode(when & becomes &amp;), use sanitize() with encode=0, but not the sanitize_safe()!
 /proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra, ascii_only)
+
+/proc/paranoid_sanitize(t)
+	var/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
+	return alphanum_only.Replace(t, "#")
 
 //Filters out undesirable characters from character names
 //todo: rewrite this
@@ -182,7 +186,7 @@
  * Text modification
  */
 
-/proc/replace_characters(var/t,var/list/repl_chars)
+/proc/replace_characters(t, list/repl_chars)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t
@@ -212,6 +216,10 @@
 	while(needs-- > 0)
 		t = "[t] "
 	return t
+
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
 
 // Returns a string with reserved characters and spaces before the first letter removed
 // not work for unicode spaces - you should cleanup them first with sanitize()
@@ -249,10 +257,19 @@
 		M += capitalize(w)
 	return jointext(M, " ")
 
-/proc/stip_non_ascii(text)
+/proc/strip_non_ascii(text)
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
+/proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
+	var/list/strip_chars = list("<",">")
+	t = copytext(t,1,limit)
+	for(var/char in strip_chars)
+		var/index = findtext(t, char)
+		while(index)
+			t = copytext(t, 1, index) + copytext(t, index+1)
+			index = findtext(t, char)
+	return t
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
 /proc/strip_html_properly(input)
@@ -419,3 +436,21 @@
 		new_text += new_char
 
 	return new_text
+
+/proc/pluralize_russian(n, one, two, five)
+	if(!five)
+		five = two
+	n = abs(n) % 100
+	if(5 <= n && n <= 20)
+		return five
+	n %= 10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

@@ -7,12 +7,16 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
-	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
+	circuit = /obj/item/weapon/circuitboard/atmoscontrol
 	req_access = list(access_ce)
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
+
+/obj/machinery/computer/atmoscontrol/process()
+	if(..())
+		updateUsrDialog()
 
 /obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
 	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.

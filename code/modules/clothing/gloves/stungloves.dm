@@ -79,10 +79,10 @@
 				if(cell.charge >= 2500)
 					cell.use(2500)
 					update_icon()
-					var/calc_power = 150
+					var/calc_power = 100
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						var/obj/item/organ/external/BP = H.get_bodypart(attacker.zone_sel.selecting)
+						var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
 
 						calc_power *= H.get_siemens_coefficient_organ(BP)
 
@@ -90,10 +90,6 @@
 					L.log_combat(attacker, "stungloved witht [name]")
 
 					L.apply_effects(0,0,0,0,2,0,0,calc_power)
-					L.apply_effect(5, WEAKEN)
-					if(L.stuttering < 5)
-						L.stuttering = 5
-					L.apply_effect(5, STUN)
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, L)
 					s.start()

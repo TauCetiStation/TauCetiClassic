@@ -2,8 +2,8 @@
 	name = "Disease Analyser"
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 	var/scanning = 0
 	var/pause = 0
@@ -57,7 +57,7 @@
 			dish = null
 
 			icon_state = "analyser"
-			src.state("\The [src] prints a sheet of paper.")
+			state("\The [src] prints a sheet of paper.")
 
 	else if(dish && !scanning && !pause)
 		if(dish.virus2)
@@ -69,6 +69,6 @@
 				dish.loc = src.loc
 				dish = null
 
-				src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
+				state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
 				pause = 0
 	return

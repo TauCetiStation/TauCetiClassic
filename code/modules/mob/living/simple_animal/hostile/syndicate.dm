@@ -11,7 +11,7 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -110,8 +110,8 @@
 	return
 
 /mob/living/simple_animal/hostile/syndicate/ranged
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
@@ -169,6 +169,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
+	w_class= SIZE_TINY
 	health = 15
 	maxHealth = 15
 	melee_damage = 15

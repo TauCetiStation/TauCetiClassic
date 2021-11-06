@@ -2,7 +2,7 @@
 //Used to control the lasers
 /obj/machinery/computer/lasercon
 	name = "Laser control computer"
-	var/list/lasers = new/list
+	var/list/lasers = list()
 	icon_state = "atmos"
 	var/id
 	//var/advanced = 0
@@ -67,4 +67,4 @@
 			new_freq = min(new_freq,20000)	//highest possible value
 			laser.frequency = new_freq
 
-	src.updateDialog()
+	updateDialog()

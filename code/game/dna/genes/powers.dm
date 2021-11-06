@@ -188,6 +188,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
+		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
 	var/matrix/Mx = matrix()
@@ -202,6 +203,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
+		H.update_size_class()
 
 	var/matrix/Mx = matrix()
 	M.transform = Mx
@@ -231,6 +233,8 @@
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
+	if(!mind)
+		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return

@@ -2,6 +2,7 @@
 
 /datum/event/borer_infestation
 	announceWhen = 400
+	announcement = new /datum/announcement/centcomm/aliens
 
 	var/spawncount = 1
 	var/successSpawn = FALSE //So we don't make a command report if nothing gets spawned.
@@ -12,7 +13,7 @@
 
 /datum/event/borer_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lfesigns")
+		announcement.play()
 
 /datum/event/borer_infestation/start()
 	var/list/vents = get_vents()
@@ -22,15 +23,18 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_ALIEN, IGNORE_BORER)
+	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_GHOSTLY, IGNORE_BORER)
+
+	if(!find_faction_by_type(/datum/faction/borers))
+		SSticker.mode.CreateFaction(/datum/faction/borers)
 
 	for(var/mob/M in candidates)
 		if(spawncount <= 0 || !vents.len)
 			break
 		var/obj/vent = pick_n_take(vents)
-		var/mob/living/simple_animal/borer/B = new(vent.loc)
+		var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
 		B.transfer_personality(M.client)
-		message_admins("[B] has spawned at [B.x],[B.y],[B.z] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
+		message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
 		successSpawn = TRUE
 		spawncount--
 

@@ -276,8 +276,8 @@ var/list/turret_icons
 				return TRUE
 	return FALSE
 
-/obj/machinery/porta_turret/is_operational_topic()
-	return !((stat & (NOPOWER|BROKEN)) || HasController()) && anchored
+/obj/machinery/porta_turret/is_operational()
+	return !((stat & (NOPOWER | BROKEN)) || HasController()) && anchored
 
 /obj/machinery/porta_turret/Topic(href, href_list)
 	. = ..()
@@ -506,13 +506,16 @@ var/list/turret_icons
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
+	if(L.faction == "untouchable") //check faction that shouldn't be attacked by mobs
+		return TURRET_NOT_TARGET
+
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
-	if(isAI(L) || (lethal && (locate(/mob/living/silicon/ai) in get_turf(L))))		//don't accidentally kill the AI!
+	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
 	if(L.stat)		//if the perp is dead/dying...
@@ -715,7 +718,7 @@ var/list/turret_icons
 	shot_synth = TC.shot_synth
 	ailock = TC.ailock
 
-	src.power_change()
+	power_change()
 
 /*
 		Portable turret constructions
@@ -883,7 +886,7 @@ var/list/turret_icons
 		var/t = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!Adjacent(user))
 			return
 
 		finish_name = t

@@ -6,8 +6,8 @@ var/const/SAFETY_COOLDOWN = 100
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = MOB_LAYER+1 // Overhead
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/grinding = 0
 	var/icon_name = "grinder-o"
@@ -91,7 +91,7 @@ var/const/SAFETY_COOLDOWN = 100
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(var/atom/movable/AM)
+/obj/machinery/recycler/Bump(atom/movable/AM)
 	..()
 	if(AM)
 		Bumped(AM)

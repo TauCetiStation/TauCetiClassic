@@ -1,12 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "particle"//Need a new icon for this
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/movement_range = 10
 	var/energy = 10		//energy in eV
 	var/mega_energy = 0	//energy in MeV
@@ -28,7 +26,7 @@
 
 
 /obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
-	src.dir = dir
+	set_dir(dir)
 	if(movement_range > 20)
 		movement_range = 20
 	INVOKE_ASYNC(src, .proc/move, 1)

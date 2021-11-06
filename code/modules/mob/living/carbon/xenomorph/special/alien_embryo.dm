@@ -2,8 +2,6 @@
 This is emryo growth procs
 ----------------------------------------*/
 
-var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
-
 /obj/item/alien_embryo
 	name = "alien embryo"
 	desc = "All slimy and yuck."
@@ -12,8 +10,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/mob/living/affected_mob
 	var/mob/living/baby
 	var/controlled_by_ai = TRUE
-	var/stage_counter = 0
+	var/growth_counter = 0
 	var/stage = 0
+	var/next_growth_limit = MAX_EMBRYO_GROWTH
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -23,7 +22,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living/carbon))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
-		affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
+		add_infected_hud()
 	else
 		qdel(src)
 
@@ -31,26 +30,20 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		remove_infected_hud()
 		affected_mob.med_hud_set_status()
+	if(baby)
+		baby.clear_alert("alien_embryo")
 	affected_mob = null
 	baby = null
 	return ..()
-
-/obj/item/clothing/mask/facehugger/proc/host_is_dead()
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		var/atom/movable/mob_container
-		mob_container = FH
-		mob_container.forceMove(get_turf(src))
-		FH.reset_view()
-		qdel(src)
 
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 		return FALSE
+
 	if(!controlled_by_ai)
 		if(istype(loc, /turf) || !(contents.len))
 			if(baby)
@@ -60,15 +53,16 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				baby.reset_view()
 			qdel(src)
 			return FALSE
+
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		remove_infected_hud()
 		affected_mob.med_hud_set_status()
 		affected_mob = null
 		return FALSE
 
-	if(stage < 5)
+	if(stage < MAX_EMBRYO_STAGE)
 		if(affected_mob.stat == DEAD)
 			if(stage < 4)
 				if(!controlled_by_ai)
@@ -78,11 +72,26 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 						baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
 				qdel(src)
 				return
-		if(stage_counter > 60)
+		if(growth_counter >= next_growth_limit)
 			stage++
-			stage_counter = 0
-			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
-	stage_counter++
+			next_growth_limit += MAX_EMBRYO_GROWTH
+			add_infected_hud()
+//increase the growth rate if the host is buckled to the alien nest
+	var/growth_rate = 1
+	if(affected_mob.buckled && istype(affected_mob.buckled, /obj/structure/stool/bed/nest))
+		growth_rate = 3
+
+	if(baby && baby.client)
+		if(growth_rate == 1)
+			baby.throw_alert("alien_embryo", /atom/movable/screen/alert/alien_embryo)
+		else
+			baby.clear_alert("alien_embryo")
+
+	var/diff = FULL_EMBRYO_GROWTH - growth_counter
+	if(diff < growth_rate)
+		growth_counter += diff	//so as not to go beyond the growth counter
+	else
+		growth_counter += growth_rate
 
 	switch(stage)
 		if(2)
@@ -123,24 +132,26 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(controlled_by_ai)
 		if(!affected_mob)
 			return
-
+		STOP_PROCESSING(SSobj, src)
 		// To stop clientless larva, we will check that our host has a client
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
 		// to 4, so we don't do a process heavy check everytime.
-		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN, IGNORE_LAVRA)
 
 		var/client/larva_candidate
 		if(candidates.len)
 			var/mob/candidate = pick(candidates)
-			larva_candidate = candidate.client
+			larva_candidate = candidate.key
 		else if(affected_mob.client)
 			if((ROLE_ALIEN in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, ROLE_ALIEN))
 				larva_candidate = affected_mob.key
 
 		if(!larva_candidate)
 			stage = 4 // mission failed we'll get em next time
-			stage_counter = 0
+			growth_counter -= MAX_EMBRYO_GROWTH
+			next_growth_limit -= MAX_EMBRYO_GROWTH
+			START_PROCESSING(SSobj, src)
 			return
 
 		affected_mob.death()
@@ -152,16 +163,15 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
-		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
+		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
-		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	else
 		if(baby)
+			STOP_PROCESSING(SSobj, src)
 			var/atom/movable/mob_container
 			mob_container = baby
 			mob_container.forceMove(affected_mob)
@@ -171,5 +181,17 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			baby.put_in_active_hand(G)
 			G.last_bite = world.time - 20
 			G.synch()
-			STOP_PROCESSING(SSobj, src)
 			qdel(src)
+
+//only aliens will see this HUD
+/obj/item/alien_embryo/proc/add_infected_hud()
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.add_to_hud(affected_mob)
+	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
+	holder.icon_state = "infected[stage]"
+
+/obj/item/alien_embryo/proc/remove_infected_hud()
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(affected_mob)
+	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
+	holder.icon_state = null

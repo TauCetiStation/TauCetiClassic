@@ -98,7 +98,7 @@
 			if(src.loc != user)
 				return 1
 
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for(var/obj/structure/window/win in user.loc)
 				i++
@@ -121,15 +121,15 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
 				return 1
@@ -141,22 +141,22 @@
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(step)
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -214,7 +214,7 @@
 				return 1
 			if(src.loc != user)
 				return 1
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
@@ -237,16 +237,16 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Full Window")
 			if(QDELETED(src))
@@ -258,16 +258,16 @@
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
 			W.state = 0
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
 			W.state = 0
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
@@ -281,26 +281,26 @@
 				to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
 				return 1
 
-			if(!src.use(5))
+			if(!use(5))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchored = FALSE
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.set_dir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.set_dir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.set_dir(WEST)
 					WD.ini_dir = WEST
 				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.set_dir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1
@@ -361,7 +361,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
 			if(H.species.flags[NO_MINORCUTS])

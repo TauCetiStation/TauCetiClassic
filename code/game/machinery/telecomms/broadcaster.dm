@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
 	The broadcaster sends processed messages to all radio devices in the game. They
 	do not have to be headsets; intercoms and station-bounced radios suffice.
@@ -15,14 +13,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	machinetype = 5
 	heatgen = 0
 	delay = 7
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 /obj/machinery/telecomms/broadcaster/atom_init()
 	. = ..()
@@ -127,13 +124,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	machinetype = 6
 	heatgen = 0
-	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	var/intercept = FALSE // if TRUE, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
@@ -157,7 +154,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/datum/radio_frequency/connection = signal.data["connection"]
 
-		if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+		if(connection.frequency == SYND_FREQ || connection.frequency == HEIST_FREQ) // if syndicate broadcast, just
 			Broadcast_Message(signal.data["connection"], signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
@@ -232,10 +229,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
-/proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
-						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
-						var/message, var/name, var/job, var/realname, var/vname,
-						var/data, var/compression, var/list/level, var/freq, var/verbage = "says", var/datum/language/speaking = null)
+/proc/Broadcast_Message(datum/radio_frequency/connection, mob/M,
+						vmask, vmessage, obj/item/device/radio/radio,
+						message, name, job, realname, vname,
+						data, compression, list/level, freq, verbage = "says", datum/language/speaking = null)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -274,6 +271,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
+
+		var/datum/radio_frequency/heistconnection = radio_controller.return_frequency(HEIST_FREQ)
+
+		for (var/obj/item/device/radio/R in heistconnection.devices["[RADIO_CHAT]"])
+
+			if(R.receive_range(HEIST_FREQ, level) > -1)
+				radios += R
+
 
 	// --- Broadcast to ALL radio devices ---
 
@@ -351,6 +356,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(SYND_FREQ)
 				freq_text = "#unkn"
+			if(HEIST_FREQ)
+				freq_text = "Shoal"
 			if(COMM_FREQ)
 				freq_text = "Command"
 			if(SCI_FREQ)
@@ -385,6 +392,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		// syndies!
 		if (display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
+		// heist
+		else if(display_freq == HEIST_FREQ)
+			part_a_span = "voxradio"
 		// centcomm channels (deathsquid and ert)
 		else if (display_freq in CENT_FREQS)
 			part_a_span = "centradio"
@@ -421,7 +431,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		// --- Filter the message; place it in quotes apply a verb ---
@@ -457,6 +467,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
+				if(1206)
+					blackbox.msg_heist += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -546,6 +558,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(position && position.z == level)
 				receive |= R.send_hear(SYND_FREQ)
 
+		var/datum/radio_frequency/heistconnection = radio_controller.return_frequency(HEIST_FREQ)
+		for (var/obj/item/device/radio/R in heistconnection.devices["[RADIO_CHAT]"])
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
+				receive |= R.send_hear(HEIST_FREQ)
 
 	// --- Broadcast to ALL radio devices ---
 
@@ -604,6 +621,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(SYND_FREQ)
 				freq_text = "#unkn"
+			if(HEIST_FREQ)
+				freq_text = "Shoal"
 			if(COMM_FREQ)
 				freq_text = "Command"
 			if(1351)
@@ -624,15 +643,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(!freq_text)
 			freq_text = format_frequency(display_freq)
 
-		// Create a radio headset for the sole purpose of using its icon
-		var/obj/item/device/radio/headset/radio = new
-
 		// --- Some more pre-message formatting ---
 
 		var/part_a_span = "radio"
 
 		if (display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
+		else if(display_freq == HEIST_FREQ)
+			part_a_span = "voxradio"
 		else if (display_freq == COMM_FREQ)
 			part_a_span = "comradio"
 		else if (display_freq in DEPT_FREQS)
@@ -642,7 +660,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
@@ -670,6 +688,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
+				if(1206)
+					blackbox.msg_heist += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -710,7 +730,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 

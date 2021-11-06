@@ -37,13 +37,14 @@
 
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, .proc/perform_av, attacker)
 		return TRUE
-	else if(stat == DEAD && target_zone == BP_CHEST)
+	if(Heart && Heart.parent_bodypart == target_zone && (stat == DEAD || Heart.heart_status == HEART_FIBR))
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 		return TRUE
-	else if(!(attacker == src && apply_pressure(attacker, target_zone)))
+	if(attacker != src || !apply_pressure(attacker, target_zone))
 		if(target_zone == O_MOUTH && attacker == src)
 			attacker.force_vomit(src)
 		else

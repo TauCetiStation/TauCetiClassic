@@ -51,23 +51,25 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
-		if(C == user)								//If you're eating it yourself
-			if (fullness <= 50)
-				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
-			if (fullness > 50 && fullness <= 150)
-				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 350)
-				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 350 && fullness <= 550)
-				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+		if(C == user) // If you're eating it yourself
+			if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
+			else if(fullness > 350)
+				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
+			else if(fullness > 150)
+				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
+			else if(fullness > 50)
+				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
+			else
+				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
+
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
+					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 				else
 					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
 					return
@@ -76,7 +78,8 @@
 
 				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
@@ -301,107 +304,60 @@
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
-	icon_state = "donut1"
+	icon_state = "donut"
 	filling_color = "#d9c386"
-	var/donut_sprite_type = "regular"
+	var/donut_sprite_type = "plain"
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/atom_init()
+	. = ..()
+	icon_state = "[initial(icon_state)]_[donut_sprite_type]"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/normal
-	name = "donut"
-	desc = "Goes great with Robust Coffee."
-	icon_state = "donut1"
-	bitesize = 3
-	list_reagents = list("nutriment" = 3, "sprinkles" = 2)
+	donut_sprite_type = "plain"
+	list_reagents = list("nutriment" = 3, "sugar" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/normal/atom_init()
-	. = ..()
-	if(prob(30))
-		icon_state = "donut2"
-		name = "frosted donut"
-		donut_sprite_type = "frosted"
+/obj/item/weapon/reagent_containers/food/snacks/donut/classic
+	donut_sprite_type = "classic"
+	list_reagents = list("nutriment" = 3, "sprinkles" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
-	name = "Chaos Donut"
-	desc = "Like life, it never quite tastes the same."
-	icon_state = "donut1"
-	filling_color = "#ed11e6"
-	bitesize = 10
-	list_reagents = list("nutriment" = 2, "sprinkles" = 1)
+/obj/item/weapon/reagent_containers/food/snacks/donut/syndie
+	donut_sprite_type = "classic"
+	list_reagents = list("nutriment" = 3, "syndicream" = 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
-	. = ..()
-	var/chaosselect = pick(1,2,3,4,5,6,7,8,9,10)
-	switch(chaosselect)
-		if(1)
-			reagents.add_reagent("nutriment", 3)
-		if(2)
-			reagents.add_reagent("capsaicin", 3)
-		if(3)
-			reagents.add_reagent("frostoil", 3)
-		if(4)
-			reagents.add_reagent("sprinkles", 3)
-		if(5)
-			reagents.add_reagent("phoron", 3)
-		if(6)
-			reagents.add_reagent("coco", 3)
-		if(7)
-			reagents.add_reagent("slimejelly", 3)
-		if(8)
-			reagents.add_reagent("banana", 3)
-		if(9)
-			reagents.add_reagent("berryjuice", 3)
-		if(10)
-			reagents.add_reagent("tricordrazine", 3)
-	if(prob(30))
-		src.icon_state = "donut2"
-		src.name = "Frosted Chaos Donut"
+/obj/item/weapon/reagent_containers/food/snacks/donut/choco
+	desc = "With tasty chocolate icing."
+	donut_sprite_type = "choco"
+	list_reagents = list("nutriment" = 2, "coco" = 2, "sprinkles" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly
-	name = "Jelly Donut"
-	desc = "You jelly?"
-	icon_state = "jdonut1"
-	donut_sprite_type = "jelly"
+/obj/item/weapon/reagent_containers/food/snacks/donut/banana
+	desc = "Clown will love this. HONK!"
+	donut_sprite_type = "banana"
+	list_reagents = list("nutriment" = 2, "banana" = 2, "kelotane" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/berry
+	desc = "I love it berry much!"
+	donut_sprite_type = "berries"
 	filling_color = "#ed1169"
-	bitesize = 5
-	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "berryjuice" = 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/atom_init()
-	. = ..()
-	if(prob(30))
-		src.icon_state = "jdonut2"
-		src.name = "Frosted Jelly Donut"
-		donut_sprite_type = "frostedjelly"
-
-/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
-	name = "Jelly Donut"
-	desc = "You jelly?"
-	icon_state = "jdonut1"
-	donut_sprite_type = "jelly"
-	filling_color = "#ed1169"
-	bitesize = 5
-	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "slimejelly" = 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly/atom_init()
-	. = ..()
-	if(prob(30))
-		src.icon_state = "jdonut2"
-		src.name = "Frosted Jelly Donut"
-		donut_sprite_type = "frostedjelly"
+	list_reagents = list("nutriment" = 2, "berryjuice" = 2, "bicaridine" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
-	name = "Jelly Donut"
 	desc = "You jelly?"
-	icon_state = "jdonut1"
 	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
-	bitesize = 5
-	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "cherryjelly" = 5)
+	list_reagents = list("nutriment" = 2, "sprinkles" = 2, "cherryjelly" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly/atom_init()
-	. = ..()
-	if(prob(30))
-		src.icon_state = "jdonut2"
-		src.name = "Frosted Jelly Donut"
-		donut_sprite_type = "frostedjelly"
+/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
+	desc = "You jelly?"
+	donut_sprite_type = "jelly"
+	filling_color = "#ed1169"
+	list_reagents = list("nutriment" = 2, "sprinkles" = 2, "slimejelly" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia
+	desc = "Smells like grass..."
+	donut_sprite_type = "ambrosia"
+	filling_color = "#ed1169"
+	list_reagents = list("nutriment" = 1, "anti_toxin" = 3, "plantmatter" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -416,7 +372,8 @@
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
 			new /mob/living/simple_animal/chick(loc)
-	reagents.reaction(hit_atom, TOUCH)
+	// Yeah, eggs splash too it turns out.
+	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
 
@@ -611,7 +568,7 @@
 	if (src.warm)
 		spawn( 4200 )
 			src.warm = 0
-			src.reagents.del_reagent("tricordrazine")
+			reagents.del_reagent("tricordrazine")
 			src.name = "donk-pocket"
 	return
 
@@ -717,7 +674,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
@@ -757,7 +714,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
+	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
@@ -1317,8 +1274,7 @@
 	if(!proximity) return
 	if(istype(target,/obj/structure/sink) && !wrapped)
 		to_chat(user, "<span class='notice'>You place \the [name] under a stream of water...</span>")
-		user.drop_item()
-		loc = get_turf(target)
+		user.drop_from_inventory(src, get_turf(target))
 		return Expand()
 	..()
 
@@ -1754,7 +1710,7 @@
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/obj/item/weapon/storage/internal/sliceable/storage
 
 /obj/item/weapon/storage/internal/sliceable
@@ -2104,7 +2060,7 @@
 	filling_color = "#baa14c"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice
 	filling_color = "#baa14c"
 	bitesize = 2
 
@@ -2270,11 +2226,10 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
+				user.drop_from_inventory(box, src)
 
-				box.loc = src
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
-				src.boxes.Add( boxestoadd )
+				boxes.Add( boxestoadd )
 
 				box.update_icon()
 				update_icon()
@@ -2290,8 +2245,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.pizza = I
 
 			update_icon()
@@ -3317,3 +3271,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
 	icon_state = "cheesyfries_cardboard"
 	trash = /obj/item/trash/fries
+
+
+/// candy heart
+/obj/item/weapon/reagent_containers/food/snacks/candyheart
+	name = "candy heart"
+	icon = 'icons/obj/valentines.dmi'
+	icon_state = "candyheart"
+	desc = "A heart-shaped candy filled with love."
+	bitesize = 3
+	trash = /obj/item/weapon/paper/lovenote
+
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 3)
+	icon_state = pick("candyheart_pink", "candyheart_green", "candyheart_blue", "candyheart_yellow")

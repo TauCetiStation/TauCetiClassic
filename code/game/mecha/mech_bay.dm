@@ -12,8 +12,8 @@
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "Charges exosuits. It consumes a lot of energy when working."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	dir = 4
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -87,8 +87,8 @@
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "recharge_comp"
 	state_broken_preset = "techb"
@@ -115,10 +115,13 @@
 			data += "<div class='Section'>No mech detected.</div>"
 		else
 			data += "<div class='Section'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
-				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+			if(!recharge_port.recharging_mech.cell)
+				data += "<span class='bad'>No cell detected in the mech.</span><BR>"
 			else
-				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+				if(recharge_port.recharging_mech.cell.crit_fail)
+					data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+				else
+					data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
 
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)

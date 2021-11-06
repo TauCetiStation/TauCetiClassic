@@ -3,8 +3,8 @@
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
@@ -36,7 +36,7 @@
 				return
 		if(3.0)
 			if (prob(25))
-				src.density = 0
+				src.density = FALSE
 		else
 	return
 
@@ -49,7 +49,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = 0
+		src.density = FALSE
 		qdel(src)
 	return
 
@@ -58,7 +58,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = 0
+		src.density = FALSE
 		qdel(src)
 	else
 		return ..() // for fun, for braindamage and fingerprints.
@@ -73,7 +73,9 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+	if(user.incapacitated())
+		return
+	if (iscarbon(A) && isturf(user.loc) && user.IsAdvancedToolUser())
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
@@ -97,9 +99,9 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
 	if (C == user)
-		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
+		user.visible_message("<span class='rose'>[user] climbs on [src].</span>","<span class='notice'>You climb on [src].</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
+		visible_message("<span class='notice'>[C] has been laid on [src] by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
@@ -107,7 +109,7 @@
 	C.loc = src.loc
 	for(var/obj/O in src)
 		O.loc = src.loc
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H

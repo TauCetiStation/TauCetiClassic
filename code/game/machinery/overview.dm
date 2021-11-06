@@ -9,7 +9,7 @@
 
 	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
-	src.drawmap(usr)
+	drawmap(usr)
 
 /obj/machinery/computer/security/proc/drawmap(mob/user)
 
@@ -49,31 +49,31 @@
 
 			else
 				var/sense = 1
-				switch("[T.type]")
-					if("/turf/space")
+				switch(T.type)
+					if(/turf/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor")
+					if(/turf/simulated/floor)
 						colour = rgb(150,150,150)
 						var/turf/simulated/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
-					if("/turf/simulated/floor/engine")
+					if(/turf/simulated/floor/engine)
 						colour = rgb(128,128,128)
 
-					if("/turf/simulated/wall")
+					if(/turf/simulated/wall)
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if(/turf/simulated/wall/r_wall)
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
+					if(/turf/unsimulated/floor)
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall")
+					if(/turf/unsimulated/wall)
 						colour  = rgb(140,140,140)
 
 					else
@@ -164,7 +164,7 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/atom/movable/screen/H = new /atom/movable/screen()
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
@@ -204,12 +204,12 @@
 
 			else
 				var/sense = 1
-				switch("[T.type]")
-					if("/turf/space")
+				switch(T.type)
+					if(/turf/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
+					if(/turf/simulated/floor, /turf/simulated/floor/engine)
 						var/datum/gas_mixture/environment = T.return_air()
 						var/turf_total = environment.total_moles
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
@@ -220,16 +220,16 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
-					if("/turf/simulated/wall")
+					if(/turf/simulated/wall)
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if(/turf/simulated/wall/r_wall)
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
+					if(/turf/unsimulated/floor)
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall")
+					if(/turf/unsimulated/wall)
 						colour  = rgb(140,140,140)
 
 					else
@@ -296,7 +296,7 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/atom/movable/screen/H = new /atom/movable/screen()
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
@@ -316,7 +316,7 @@
 
 	user.client.screen += user.mapobjs
 
-	src.close(user)
+	close(user)
 
 /*			if(seccomp == src)
 				drawmap(user)
@@ -344,9 +344,9 @@
 
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs
-	for(var/obj/screen/O in mapobjs)
+	for(var/atom/movable/screen/O in mapobjs)
 		qdel(O)
 
 	mapobjs = null
-	src.unset_machine()
+	unset_machine()
 

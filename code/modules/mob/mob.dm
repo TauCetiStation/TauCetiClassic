@@ -1,6 +1,3 @@
-/mob
-	hud_possible = list(ANTAG_HUD)
-
 /**
   * Delete a mob
   *
@@ -11,20 +8,25 @@
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
 	global.alive_mob_list -= src
-	for (var/alert in alerts)
+	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	my_religion?.remove_member(src)
+
+	return ..()
+
+
+/mob/examine(mob/user)
+	. = ..()
+	if(w_class)
+		to_chat(user, "It is a [get_size_flavor()] sized creature.")
 
 /mob/atom_init()
 	spawn()
@@ -37,10 +39,8 @@
 		alive_mob_list += src
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
+	update_all_alt_apperance()
+
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -53,7 +53,7 @@
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	var/t = "<span class='notice'>Coordinates: [COORD(T)]</span>\n"
 	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
 	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
 	for(var/g in env.gas)
@@ -163,7 +163,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -319,7 +323,8 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-
+	if(next_point_to > world.time)
+		return
 	if(!usr || !isturf(usr.loc))
 		return
 	if(usr.incapacitated())
@@ -349,6 +354,8 @@
 			if(usr in S.Friends)
 				S.last_pointed = A
 
+	next_point_to = world.time + 1.5 SECONDS
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -358,9 +365,6 @@
 		return
 	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
-		return
-	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
@@ -430,7 +434,7 @@
 	var/eye_name = null
 
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
 
 	if(!eye_name)
 		return
@@ -469,7 +473,7 @@
 
 /mob/Topic(href, href_list)
 	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
@@ -659,8 +663,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
-		if(round_id)
-			stat(null, "Round ID: #[round_id]")
+		if(global.round_id)
+			stat(null, "Round ID: #[global.round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
@@ -671,10 +675,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = SSticker.mode
-					if(GM.malf_mode_declared)
-						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+				if(GM?.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -685,7 +688,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "([x], [y], [z])")
+					stat("Location:", "[COORD(src)]")
 					stat("Instances:", "[world.contents.len]")
 					config.stat_entry()
 					stat(null)
@@ -775,7 +778,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
-			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+			if(G.state == GRAB_NECK && G.assailant.get_targetzone() == BP_CHEST)
 				lying = FALSE
 				density = TRUE
 			break
@@ -795,9 +798,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1
@@ -928,6 +931,38 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+// ========== DRUGGINESS ==========
+/mob/proc/adjustDrugginess(amount)
+	druggy = max(druggy + amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/setDrugginess(amount)
+	druggy = max(amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/updateDrugginesOverlay()
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
+
+// ========== STUTTERING ==========
+/mob/proc/Stuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering, amount, 0)
+
+/mob/proc/AdjustStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering + amount, 0)
+
+/mob/proc/setStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(amount, 0)
 
 // =============================
 
@@ -1028,7 +1063,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = 0
+			anchored = FALSE
 	return 1
 
 ///Get the ghost of this mob (from the mind)
@@ -1080,14 +1115,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
-	if(ishuman(src) && druggy)
-		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
-		var/multiplied
-		if(preset)
-			var/datum/ColorMatrix/CM = new(preset)
-			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
-		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
-	else if(preset)
+	if(preset)
 		var/datum/ColorMatrix/CM = new(preset)
 		animate(client, color = CM.matrix, time = transition_time)
 	else
@@ -1107,7 +1135,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(XRAY in mutations)
 				return
 			else
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 				if(A)
 					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
@@ -1119,7 +1147,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
@@ -1176,3 +1204,29 @@ note dizziness decrements automatically in the mob's Life() proc.
 				var/image/I = image('icons/mob/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
+
+/mob/keybind_face_direction(direction)
+	facedir(direction)
+
+///Spin this mob around it's central axis
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	if((spintime < 1) || (speed < 1) || !spintime|| !speed)
+		return
+
+	flags |= IS_SPINNING
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		set_dir(D)
+		spintime -= speed
+	flags &= ~IS_SPINNING
