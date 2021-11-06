@@ -329,12 +329,14 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/armor/syndilight
-	name = "assault vest"
-	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness."
+	name = "recon armor"
+	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness. Now in fullbody format!"
 	icon_state = "lightarmor"
 	item_state = "lightarmor"
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/m66_kevlarvest
