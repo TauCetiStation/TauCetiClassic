@@ -43,6 +43,12 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
