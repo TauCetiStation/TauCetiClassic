@@ -107,6 +107,7 @@
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src)
+	newRole.is_roundstart_role = !laterole
 	if(!newRole.AssignToRole(M, laterole = laterole))
 		newRole.Drop()
 		return null

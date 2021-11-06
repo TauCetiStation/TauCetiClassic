@@ -62,13 +62,15 @@
 //Latex gloves
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
-	desc = "Contains white gloves. Must-have of a doctor."
+	desc = "Contains latex and nitrile gloves. Must-have of a doctor."
 	icon_state = "latex_box"
 
 /obj/item/weapon/storage/box/gloves/atom_init()
 	. = ..()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 5)
 		new /obj/item/clothing/gloves/latex(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/gloves/latex/nitrile(src)
 
 //Masks
 /obj/item/weapon/storage/box/masks

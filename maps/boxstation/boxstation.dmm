@@ -4766,7 +4766,7 @@
 /area/station/security/warden)
 "ahX" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/skills,
+/obj/machinery/computer/security/bodycam,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahY" = (
@@ -35251,11 +35251,11 @@
 /area/station/cargo/office)
 "bkA" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/melee/chainofcommand,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/item/weapon/reagent_containers/food/drinks/coffee,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkB" = (

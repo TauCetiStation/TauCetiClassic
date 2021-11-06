@@ -895,7 +895,7 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
-				H.adjust_blurriness(10)
+				H.adjustBlurriness(10)
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
@@ -906,7 +906,7 @@
 	else
 		M.take_bodypart_damage(force)
 
-	M.adjust_blurriness(rand(force * 0.5, force))
+	M.adjustBlurriness(rand(force * 0.5, force))
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`
@@ -1023,29 +1023,3 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
-
-
-/client/var/list/image/outlined_item = list()
-/obj/item/proc/apply_outline(color)
-	if(anchored || !usr.client.prefs.outline_enabled)
-		return
-	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(usr.client.outlined_item[src])
-		return
-
-	if(usr.client.outlined_item.len)
-		remove_outline()
-
-	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
-	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	IMG.vis_contents += src
-
-	IMG.filters += filter(type = "outline", size = 1, color = color)
-	usr.client.images |= IMG
-	usr.client.outlined_item[src] = IMG
-
-
-/obj/item/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item -= src

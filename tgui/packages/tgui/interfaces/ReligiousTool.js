@@ -240,7 +240,7 @@ const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     sects,
-    holds_nullrod,
+    holds_religious_tool,
   } = data;
 
   return (
@@ -278,7 +278,7 @@ const SectSelectTab = (props, context) => {
                 textAlign="center"
                 icon="plus"
                 fluid
-                disabled={!holds_nullrod}
+                disabled={!holds_religious_tool}
                 onClick={() => act('sect_select', {
                   path: sect.path,
                 })}>
@@ -659,7 +659,7 @@ const RiteTab = (props, context) => {
     favor,
     piety,
     can_talismaning,
-    holds_nullrod,
+    holds_religious_tool,
   } = data;
 
   const [
@@ -696,7 +696,7 @@ const RiteTab = (props, context) => {
                 <>
                   <Button
                     fontColor="white"
-                    disabled={!holds_nullrod || favor < rite.favor_cost || piety < rite.piety_cost}
+                    disabled={!holds_religious_tool || favor < rite.favor_cost || piety < rite.piety_cost}
                     icon="arrow-right"
                     onClick={() => act('perform_rite', {
                       rite_name: rite.name,
