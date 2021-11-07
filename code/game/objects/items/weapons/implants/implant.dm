@@ -552,3 +552,20 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/storage/islegal()
 	return 0
+
+/obj/item/weapon/implant/obedience
+	name = "L.E.A.S.H. obedience implant"
+	desc = "Keep your herds obedient."
+
+/obj/item/weapon/implant/obedience/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Obedience Imbuer<BR>
+<b>Life:</b> Activates upon recieveing coded signal.<BR>
+<b>Important Notes:</b> Allows to shock host via special tool.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact signaler that triggers microtaser upon recieveing signal.<BR>
+<b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat

@@ -504,7 +504,6 @@
 		new R.product_path(get_turf(src))
 		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		src.vend_ready = 1
-		return
 
 	updateUsrDialog()
 

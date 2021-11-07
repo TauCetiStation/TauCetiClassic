@@ -506,6 +506,9 @@ var/list/turret_icons
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
+	if(L.faction == "untouchable") //check faction that shouldn't be attacked by mobs
+		return TURRET_NOT_TARGET
+
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
