@@ -14,6 +14,7 @@
 	var/require_twohands = FALSE /// Does it have to be held in both hands
 	var/icon_wielded = FALSE /// The icon that will be used when wielded
 	var/obj/item/weapon/offhand/offhand_item = null /// Reference to the offhand created for the item
+
 /**
  * Two Handed component
  *
