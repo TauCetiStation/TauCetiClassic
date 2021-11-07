@@ -11,6 +11,7 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
 	var/wielded = FALSE
+	var/istwohanded = FALSE
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
@@ -80,14 +81,14 @@
 		return 1
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	if(wielded)
-		return ..()
 	if(has_cover)
 		if(cover_open)
 			cover_open = !cover_open
 			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
 			update_icon()
 			return
+		return ..()
+	if(istwohanded)
 		return ..()
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)

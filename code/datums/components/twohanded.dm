@@ -132,7 +132,7 @@
 			to_chat(user, "<span class='notice'>[parent] is too cumbersome to carry in one hand!</span>")
 			user.drop_from_inventory(parent)
 		else
-			to_chat(user, "<span class='warming'>You need your other hand to be empty!</span>")
+			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	var/mob/living/carbon/human/wielder = user
 	var/obj/item/organ/external/l_hand = wielder.bodyparts_by_name[BP_L_ARM]

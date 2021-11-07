@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	wielded = FALSE
 	can_be_holstered = FALSE
+	istwohanded = TRUE
 	fire_sound = 'sound/effects/bang.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/atom_init()

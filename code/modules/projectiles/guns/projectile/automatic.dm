@@ -90,6 +90,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
+	istwohanded = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
@@ -101,11 +102,13 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	wielded = TRUE
+	update_icon()
 
 /// triggered on unwield of two handed item
 /obj/item/weapon/gun/projectile/automatic/l6_saw/proc/on_unwield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	wielded = FALSE
+	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
