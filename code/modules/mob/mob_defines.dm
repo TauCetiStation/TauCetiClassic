@@ -68,7 +68,7 @@
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
-	var/stuttering = null	//Carbon
+	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
 	var/flavor_text = ""

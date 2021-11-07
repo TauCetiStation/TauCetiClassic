@@ -17,7 +17,6 @@
 	else
 		max_roles = max(1, min(num_players, traitors_possible))
 
-	abandon_allowed = 1
 	return TRUE
 
 /datum/faction/traitor/auto/proc/traitorcheckloop()

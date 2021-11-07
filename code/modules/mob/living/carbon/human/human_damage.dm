@@ -22,11 +22,6 @@
 		ChangeToHusk()
 	return
 
-/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
-	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
-		return FALSE
-	return ..()
-
 // =============================================
 
 /mob/living/carbon/human/getBrainLoss()
@@ -199,6 +194,26 @@
 /mob/living/carbon/human/Paralyse(amount)
 	if(HULK in mutations)
 		paralysis = 0
+	else
+		..()
+
+// =============================================
+
+/mob/living/carbon/human/Stuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/AdjustStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
+	else
+		..()
+
+/mob/living/carbon/human/setStuttering()
+	if(species.flags[NO_PAIN])
+		stuttering = 0
 	else
 		..()
 
