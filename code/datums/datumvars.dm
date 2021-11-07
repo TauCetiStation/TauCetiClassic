@@ -286,6 +286,11 @@
 	if(isobj(D) || ismob(D) || isturf(D))
 		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+	if(istype(D, /datum/reagents))
+		body += "<option value='?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
+		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
+		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
+		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
 
 	body += "</select></form>"
 
@@ -1050,5 +1055,25 @@ body
 			return
 		var/last_search = href_list["filter"] ? href_list["filter"] : ""
 		debug_variables_browse(DAT, usr, last_search)
-
+	else if(href_list["reagents"])
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
+			return
+		var/datum/reagents/R = locate(href_list["reagents"])
+		var/current_ids = list()
+		for(var/datum/reagent/reag in R.reagent_list)
+			current_ids += reag.id
+		switch(href_list["action"])
+			if("addreag")
+				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") in chemical_reagents_list
+				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num
+				R.add_reagent(reagent_id, reagent_amt)
+			if("remreag")
+				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") in current_ids
+				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num
+				R.remove_reagent(reagent_id, reagent_amt)
+			if("isoreag")
+				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") in current_ids
+				R.isolate_reagent(reagent_id)
+			if("clearreags")
+				R.clear_reagents()
 	return
