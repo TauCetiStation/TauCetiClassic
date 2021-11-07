@@ -19,28 +19,11 @@
 
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0, user)) qdel(src)
-			else
-				return
-	return ..()
+	var/temperature = W.get_current_temperature()
+	if(W.sharp || W.tools[TOOL_KNIFE] || temperature > 3000)
+		qdel(src)
+	else
+		return ..()
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()

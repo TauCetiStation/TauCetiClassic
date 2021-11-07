@@ -37,6 +37,10 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
+		tools = list(
+			TOOL_KNIFE = 1
+		)
+		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -48,6 +52,8 @@
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
+		tools = list()
+		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
