@@ -64,7 +64,7 @@
 	interface_name = "Alden-Saraspova counter"
 	interface_desc = "An exotic particle detector commonly used by xenoarchaeologists."
 	engage_string = "Begin Scan"
-	use_power_cost = 200
+	use_power_cost = 50
 	usable = TRUE
 	selectable = FALSE
 	device_type = /obj/item/device/ano_scanner
@@ -368,7 +368,7 @@
 	interface_name = "mounted wormhole stabilizer"
 	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
 	activate_on_start = TRUE
-	active_power_cost = 5
+	active_power_cost = 3
 	
 
 
@@ -576,7 +576,7 @@
 	module_cooldown = 0
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
-	active_power_cost = 250
+	active_power_cost = 200
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	if(relay_type)
