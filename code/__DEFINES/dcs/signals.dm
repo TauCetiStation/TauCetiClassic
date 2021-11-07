@@ -204,6 +204,9 @@
 #define COMSIG_ITEM_MAKE_WET "item_make_wet"
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
+/// from mob/carbon/swap_hand: (mob/user)
+#define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
+#define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -304,3 +307,6 @@
 #define COMSIG_START_SUPPRESSING "start_suppressing"
 // send this signal to stop suppressing in /datum/component/silence: ()
 #define COMSIG_STOP_SUPPRESSING "stop_suppressing"
+
+// send this signal to toggle zoom in /datum/component/zoom: (mob/user)
+#define COMSIG_ZOOM_TOGGLE "zoom_toggle"

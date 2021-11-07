@@ -158,15 +158,11 @@
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
-			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
-			if(s.zoom)
-				s.toggle_zoom()
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
-			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
-			if(C.zoomed)
-				C.toggle_zoom()
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_INACTIVE, src)
 	src.hand = !( src.hand )
+	item_in_hand = get_active_hand()
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
