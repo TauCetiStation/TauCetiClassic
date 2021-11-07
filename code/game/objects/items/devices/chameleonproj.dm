@@ -66,11 +66,7 @@
 /obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(!check_sprite(target))
-		return
-	if(target.alpha != 255)
-		return
-	if(target.invisibility != 0)
+	if(!target.has_valid_appearance())
 		return
 	if(!active_dummy)
 		active_dummy = new
@@ -82,11 +78,6 @@
 		copy_item(target)
 	else
 		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
-
-/obj/item/device/chameleon/proc/check_sprite(atom/target)
-	if(target.icon_state in icon_states(target.icon))
-		return TRUE
-	return FALSE
 
 /obj/item/device/chameleon/proc/copy_item(obj/O)
 	var/obj/effect/dummy/chameleon/C = active_dummy
