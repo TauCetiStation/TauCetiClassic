@@ -10,4 +10,3 @@
 	name = new_name
 	traits = new_traits
 	linkage = new_traits[ZTRAIT_LINKAGE]
-	baseturf = new_traits[ZTRAIT_BASETURF]
