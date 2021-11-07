@@ -142,13 +142,7 @@
 			return
 
 		// if both effects arent active, we cant harvest anything
-		if(current_artifact.first_effect && !current_artifact.first_effect.activated  && current_artifact.secondary_effect && !current_artifact.secondary_effect.activated)
-			visible_message("<b>[name]</b> states, \"Cannot harvest. No energy emitting from source.\"")
-			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
-			return
-			
-		// if the first effect is not active and there is no second effect, we cant harvest anything
-		if(current_artifact.first_effect && !current_artifact.first_effect.activated  && !current_artifact.secondary_effect)
+		if(current_artifact.first_effect && !current_artifact.first_effect.activated  && !current_artifact?.secondary_effect?.activated)
 			visible_message("<b>[name]</b> states, \"Cannot harvest. No energy emitting from source.\"")
 			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 			return
