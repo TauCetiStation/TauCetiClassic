@@ -159,12 +159,10 @@
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
-	AddComponent( /datum/component/zoom
-	            , 12
-				, list() // here we manually send toggle signal cause parent's attack_self is overriden
-				, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
-				)
+	AddComponent(/datum/component/zoom, 12)
 
+/obj/item/weapon/gun/energy/sniperrifle/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_ZOOM_TOGGLE, user)
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
@@ -178,16 +176,6 @@
 				icon_state = "[initial(icon_state)][ratio]"
 				item_state = "[initial(item_state)][ratio]"
 	return
-
-/obj/item/weapon/gun/energy/sniperrifle/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set src in usr
-
-	SEND_SIGNAL(src, COMSIG_ZOOM_TOGGLE, usr)
-
-/obj/item/weapon/gun/energy/sniperrifle/attack_self()
-	toggle_zoom()
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
@@ -435,18 +423,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
-	AddComponent( /datum/component/zoom
-	            , 12
-				, list() // We toggle zoom via verb cause attack_self toggles firing modes
-				, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
-				)
-
-/obj/item/weapon/gun/energy/pyrometer/ce/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set src in usr
-
-	SEND_SIGNAL(src, COMSIG_ZOOM_TOGGLE, usr)
+	AddComponent(/datum/component/zoom, 12, TRUE)
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"

@@ -1,56 +1,82 @@
+/datum/action/zoom
+	name = "Toggle Zoom"
+	action_type = AB_INNATE
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_LYING | AB_CHECK_ALIVE | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
+	button_icon_state = "zoom"
+
+/datum/action/zoom/Activate()
+	SEND_SIGNAL(target, COMSIG_ZOOM_TOGGLE, owner)
+	
 /datum/component/zoom
 	var/zoom_view_range
-	var/verbose
+	var/can_move
 	var/zoomed = FALSE
+	var/mob/zoomer
+	var/datum/action/zoom/button
 
-/datum/component/zoom/Initialize(_zoom_view_range, list/toggle_zoom_on, list/unzoom_on, _verbose = TRUE)
+/datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	
 	zoom_view_range = _zoom_view_range
-	verbose = _verbose
+	can_move = _can_move
+	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING), .proc/on_drop)
+	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_zoom)
+	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE), .proc/reset_zoom)
+	button = new(parent)
 
-	RegisterSignal(parent, toggle_zoom_on, .proc/toggle_signal)
-	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_signal)
-	RegisterSignal(parent, unzoom_on, .proc/unzoom_signal)
+/datum/component/zoom/Destroy()
+	QDEL_NULL(button)
+	return ..()
 
-/datum/component/zoom/proc/toggle_signal(_, mob/user)
+/datum/component/zoom/proc/on_equip(_, mob/living/user)
 	SIGNAL_HANDLER
-	toggle_zoom(user)
+	reset_zoom()
+	button.Grant(user)
 
-/datum/component/zoom/proc/unzoom_signal(_, mob/user)
+/datum/component/zoom/proc/on_drop(_, mob/living/user)
 	SIGNAL_HANDLER
-	disable_zoom(user)
+	reset_zoom()
+	button.Remove(user)
 
 /datum/component/zoom/proc/can_zoom(mob/user)
-	if(user.get_active_hand() != parent)
-		if(verbose)
-			to_chat(user, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
+	if(!zoomed && user.get_active_hand() != parent)
+		to_chat(user, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
 		return FALSE
-	if(!ishuman(user) || user.incapacitated())
-		if(verbose)
-			to_chat(user, "You are unable to focus down the scope of the rifle.")
+	if(!user.IsAdvancedToolUser() || user.incapacitated())
+		to_chat(user, "You are unable to focus down the scope of the rifle.")
 		return FALSE
 	return TRUE
 
-/datum/component/zoom/proc/toggle_zoom(mob/user)
-	if(zoomed)
-		disable_zoom(user)
-	else
-		enable_zoom(user)
-	if(verbose)
-		to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
-	
-/datum/component/zoom/proc/disable_zoom(mob/user)
-	zoomed = FALSE
-	if(usr.hud_used)
-		usr.hud_used.show_hud(HUD_STYLE_STANDARD)
-	usr.client.change_view(world.view)
-
-/datum/component/zoom/proc/enable_zoom(mob/user)
+/datum/component/zoom/proc/toggle_zoom(_, mob/user)
+	SIGNAL_HANDLER
 	if(!can_zoom(user))
 		return
+	if(!zoomed)
+		set_zoom(user)
+	else
+		reset_zoom()
+	to_chat(user, "<font color='[zoomed ? "notice" : "rose"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
+	
+/datum/component/zoom/proc/reset_zoom()
+	SIGNAL_HANDLER
+	if(!zoomer)
+		return
+	UnregisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
+	if(!can_move)
+		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
+	zoomer.client?.change_view(world.view)
+	zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
+	zoomed = FALSE
+	zoomer = null
+
+/datum/component/zoom/proc/set_zoom(mob/user)
+	SIGNAL_HANDLER
 	zoomed = TRUE
-	if(user.hud_used)
-		user.hud_used.show_hud(HUD_STYLE_REDUCED)
-	user.client.change_view(zoom_view_range)
+	zoomer = user
+	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
+	zoomer.client?.change_view(zoom_view_range)
+	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
+	if(!can_move)
+		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), .proc/reset_zoom)
