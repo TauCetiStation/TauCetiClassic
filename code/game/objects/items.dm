@@ -611,6 +611,8 @@
 					return 1
 				return 0
 			if(SLOT_S_STORE)
+				if(slot_flags & SLOT_FLAGS_DENYSTORAGE)
+					return 0
 				if(H.s_store)
 					return 0
 				if(!H.wear_suit)

@@ -26,6 +26,7 @@
 #define SLOT_FLAGS_DENYPOCKET   (1<<12)    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_FLAGS_TWOEARS      (1<<13)
 #define SLOT_FLAGS_TIE          (1<<14)
+#define SLOT_FLAGS_DENYSTORAGE  (1<<15) //32768 // Prevents to put something in suit storage slot (for weapons)
 
 //slots
 #define SLOT_BACK          1
