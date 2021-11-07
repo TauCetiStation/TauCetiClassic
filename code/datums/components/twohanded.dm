@@ -137,7 +137,7 @@
 	var/mob/living/carbon/human/wielder = user
 	var/obj/item/organ/external/l_hand = wielder.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_hand = wielder.bodyparts_by_name[BP_R_ARM]
-	if((!l_hand || (l_hand.is_stump)) || (!r_hand || (r_hand.is_stump)))
+	if((!l_hand || l_hand.is_stump) || (!r_hand || r_hand.is_stump))
 		if(require_twohands)
 			wielder.drop_from_inventory(parent)
 		to_chat(wielder, "<span class='warning'>You don't have enough intact hands.</span>")
