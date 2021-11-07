@@ -75,7 +75,8 @@
 
 // Remove all siginals registered to the parent item
 /datum/component/twohanded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED,
+	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP
+                                COMSIG_ITEM_EQUIPPED,
                                 COMSIG_ITEM_DROPPED,
                                 COMSIG_ITEM_ATTACK_SELF,
                                 COMSIG_ITEM_ATTACK,
