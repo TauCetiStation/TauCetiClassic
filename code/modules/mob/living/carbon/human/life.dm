@@ -191,6 +191,7 @@
 		speech_problem_flag = 1
 		if (prob(10))
 			Stuttering(10)
+
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
 			if(prob(6))
