@@ -1059,7 +1059,7 @@ body
 		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
 			return
 		var/datum/reagents/R = locate(href_list["reagents"])
-		var/current_ids = list()
+		var/list/current_ids = list()
 		for(var/datum/reagent/reag in R.reagent_list)
 			current_ids += reag.id
 		switch(href_list["action"])
