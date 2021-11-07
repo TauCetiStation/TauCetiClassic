@@ -279,6 +279,9 @@
 #define COMSIG_LIVING_LEARN_COMBO "learn_combo"
 // from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
 #define COMSIG_LIVING_FORGET_COMBO "forget_combo"
+///from base of mob/living/carbon/swap_hand(): (obj/item)
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
+	#define COMPONENT_BLOCK_SWAP 1
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -299,10 +302,6 @@
 #define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
 /// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_REMOVE "comsig_mob_mod_remove"
-
-///from base of mob/living/carbon/swap_hand(): (obj/item)
-#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
-	#define COMPONENT_BLOCK_SWAP 1
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
