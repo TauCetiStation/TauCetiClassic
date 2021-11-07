@@ -217,11 +217,7 @@
 		parent_item.update_icon()
 
 	if(istype(user))
-		if(user.get_item_by_slot(SLOT_BACK) == parent)
-			user.update_inv_back()
-		else
-			user.update_inv_l_hand()
-			user.update_inv_r_hand()
+		parent_item.update_inv_mob()
 
 		// If the item requires two handed drop the item on unwield
 		if(require_twohands && can_drop)
