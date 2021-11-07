@@ -1064,16 +1064,27 @@ body
 			current_ids += reag.id
 		switch(href_list["action"])
 			if("addreag")
-				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") in chemical_reagents_list
-				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num
+				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") as null|anything in chemical_reagents_list
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num|null
+				if(!reagent_amt)
+					return
 				R.add_reagent(reagent_id, reagent_amt)
 			if("remreag")
-				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") in current_ids
-				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num
+				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num|null
+				if(!reagent_amt)
+					return
 				R.remove_reagent(reagent_id, reagent_amt)
 			if("isoreag")
-				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") in current_ids
+				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
 				R.isolate_reagent(reagent_id)
 			if("clearreags")
-				R.clear_reagents()
+				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
+					R.clear_reagents()
 	return
