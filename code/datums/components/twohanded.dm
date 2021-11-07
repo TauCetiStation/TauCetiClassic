@@ -66,6 +66,7 @@
 
 // Register signals with the parent item
 /datum/component/twohanded/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
@@ -79,6 +80,21 @@
                                 COMSIG_ITEM_ATTACK_SELF,
                                 COMSIG_ITEM_ATTACK,
                                 COMSIG_MOVABLE_MOVED))
+
+/// Triggered on pickup of the item containing the component
+/datum/component/twohanded/proc/on_pickup(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(!require_twohands)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='notice'>[parent] is too heavy and cumbersome for you to carry!</span>")
+		return COMPONENT_ITEM_NO_PICKUP
+	var/mob/living/carbon/human/wielder = user
+	var/obj/item/organ/external/l_hand = wielder.bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/r_hand = wielder.bodyparts_by_name[BP_R_ARM]
+	if((!l_hand || l_hand.is_stump) || (!r_hand || r_hand.is_stump))
+		to_chat(user, "<span class='notice'>[parent] is too cumbersome to carry in one hand!</span>")
+		return COMPONENT_ITEM_NO_PICKUP
 
 /// Triggered on equip of the item containing the component
 /datum/component/twohanded/proc/on_equip(datum/source, mob/user, slot)

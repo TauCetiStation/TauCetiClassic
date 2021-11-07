@@ -180,6 +180,9 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/pickup(): (/mob/user)
+#define COMSIG_ITEM_PICKUP "item_pickup"
+	#define COMPONENT_ITEM_NO_PICKUP 1
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
