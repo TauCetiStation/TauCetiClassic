@@ -1023,29 +1023,3 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
-
-
-/client/var/list/image/outlined_item = list()
-/obj/item/proc/apply_outline(color)
-	if(anchored || !usr.client.prefs.outline_enabled)
-		return
-	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(usr.client.outlined_item[src])
-		return
-
-	if(usr.client.outlined_item.len)
-		remove_outline()
-
-	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
-	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	IMG.vis_contents += src
-
-	IMG.filters += filter(type = "outline", size = 1, color = color)
-	usr.client.images |= IMG
-	usr.client.outlined_item[src] = IMG
-
-
-/obj/item/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item -= src
