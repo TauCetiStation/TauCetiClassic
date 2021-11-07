@@ -187,7 +187,7 @@
  * * show_message (option) show a message to chat on unwield
  * * can_drop (option) whether 'drop_from_inventory' can be called or not.
  */
-/datum/component/twohanded/proc/unwield(mob/living/carbon/user, show_message=TRUE, can_drop = TRUE)
+/datum/component/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE, can_drop = TRUE)
 	if(!wielded)
 		return
 
