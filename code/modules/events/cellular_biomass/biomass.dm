@@ -20,7 +20,7 @@
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	var/temperature = W.get_current_temperature()
-	if(W.sharp || temperature > 3000)
+	if(W.sharp || W.tools[TOOL_KNIFE] || temperature > 3000)
 		qdel(src)
 	else
 		return ..()
