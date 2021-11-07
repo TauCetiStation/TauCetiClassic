@@ -255,7 +255,7 @@
 		flick(icon_gib, src)
 	if(butcher_results)
 		for(var/path in butcher_results)
-			for(var/i = 0 to butcher_results[path])
+			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	..()
 
