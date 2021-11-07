@@ -936,10 +936,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/living/carbon/human/AdjustShockStage(amount)
-	var/mob/living/carbon/human/H = src
-	if(H.species.flags[NO_PAIN])
+	if(species.flags[NO_PAIN])
 		return
-	H.shock_stage = max(H.shock_stage + amount, 0)
+	shock_stage = max(shock_stage + amount, 0)
 
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
