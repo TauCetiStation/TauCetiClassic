@@ -297,6 +297,7 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
+	. = ..()
 	set_light(0)
 	user.set_light(2,1)
 
