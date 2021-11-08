@@ -22,6 +22,7 @@
 	hide = TRUE
 	toggled = FALSE
 	autolinkers = list("r_relay")
+
 /obj/machinery/telecomms/relay/preset/portable
 	id = "Portable Relay"
 	heatgen = 0

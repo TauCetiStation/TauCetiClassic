@@ -1567,7 +1567,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("rigsimpleai", "rigflash", "righealthscanner", "riganomalyscanner", "rigorescanner", "rigextinguisher", "rigmetalfoamspray", "rigcoolingunit", "riganalyzer", "rigsciencetool", )
+	unlocks_designs = list("rigsimpleai", "rigflash", "righealthscanner", "riganomalyscanner", "rigorescanner", "rigextinguisher", "rigmetalfoamspray", "rigcoolingunit", "riganalyzer", "rigsciencetool")
 
 /datum/technology/advanced_hardsuit_modules
 	name = "Advanced Hardsuit Modules"

@@ -113,7 +113,7 @@
 		for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
 			if (s.active)
 				return
-		
+
 		if(prob(20))
 			bad_effects += 1
 			H.confused += 3

@@ -2749,4 +2749,3 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
 	category = list("Rig Modules")
-
