@@ -369,8 +369,6 @@
 	activate_on_start = TRUE
 	active_power_cost = 3
 	
-
-
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."
