@@ -29,9 +29,9 @@
 	beauty_living = 0
 	beauty_dead = -1500
 
-/mob/living/carbon/human/atom_init(mapload, new_species)
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
-	appearance_flags |= KEEP_TOGETHER
+/mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm

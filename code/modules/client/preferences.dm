@@ -156,10 +156,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
-	var/icon/Cut1 = new('icons/effects/cut.dmi',"Cut1")
-	var/icon/Cut2 = new('icons/effects/cut.dmi',"Cut2")
-	var/icon/Cut3 = new('icons/effects/cut.dmi',"Cut3")
-	var/icon/Cut4 = new('icons/effects/cut.dmi',"Cut4")
+	var/static/icon/Cut1 = icon('icons/effects/cut.dmi',"Cut1")
+	var/static/icon/Cut2 = icon('icons/effects/cut.dmi',"Cut2")
+	var/static/icon/Cut3 = icon('icons/effects/cut.dmi',"Cut3")
+	var/static/icon/Cut4 = icon('icons/effects/cut.dmi',"Cut4")
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -351,18 +351,18 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.height = height
 	character.b_type = b_type
 
-	character.filters = null
+	character.remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso"))
 	switch(height)
 		if(1.6)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut1)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut2)
+			character.add_filter("Cut_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut1))
+			character.add_filter("Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut2))
 		if(1.7)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut2)
+			character.add_filter("Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut2))
 		if(1.9)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut4)
+			character.add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut4))
 		if(2.0)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut3)
-			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut4)
+			character.add_filter("Lenghten_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut3))
+			character.add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut4))
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])

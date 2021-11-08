@@ -268,7 +268,7 @@
 				if("height")
 					var/new_height = input(user, "Choose your character's height:\n([1.6]-[2.0])", "Character Height", height) as num|null
 					if(new_height)
-						height = clamp(round(text2num(new_height)*10)/10, 1.6, 2.0)
+						height = clamp(round(text2num(new_height), 0.1), 1.6, 2.0)
 
 				if("species")
 					var/list/new_species = list(HUMAN)
