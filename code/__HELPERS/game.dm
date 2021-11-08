@@ -698,3 +698,17 @@
 
 /mob/proc/transfer_personality(client/C)
 	return
+
+/atom/proc/has_valid_appearance()
+	if(!check_sprite())
+		return FALSE
+	if(alpha != 255)
+		return FALSE
+	if(invisibility != 0)
+		return FALSE
+	return TRUE
+
+/atom/proc/check_sprite()
+	if(icon_state in icon_states(icon))
+		return TRUE
+	return FALSE

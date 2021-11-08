@@ -46,7 +46,6 @@
 	flags = CONDUCT | NOSHIELD | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-	sharp = 1
 	edge = 1
 
 	sweep_step = 5
@@ -67,7 +66,6 @@
 	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
 	edge = 1
 	var/hacked
 
@@ -119,7 +117,6 @@
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
 	force = 70.0//Normal attacks deal very high damage.
-	sharp = 1
 	edge = 1
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
