@@ -256,7 +256,8 @@
 	// Remove the object in the offhand
 	if(offhand_item)
 		UnregisterSignal(offhand_item, COMSIG_ITEM_DROPPED)
-		QDEL_NULL(offhand_item)
+		qdel(offhand_item)
+	offhand_item = null
 
 /**
  * on_attack triggers on attack with the parent item
@@ -293,13 +294,17 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = SIZE_LARGE
-	flags = NODROP | ABSTRACT | DROPDEL
+	flags = NODROP | ABSTRACT
 	unacidable = TRUE
 	var/wielded = FALSE // Off Hand tracking of wielded status
 
 /obj/item/weapon/offhand/Destroy()
 	wielded = FALSE
 	return ..()
+
+/obj/item/weapon/offhand/dropped(mob/user)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
+	. = ..()
 
 /obj/item/weapon/offhand/equipped(mob/user, slot)
 	. = ..()
