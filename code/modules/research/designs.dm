@@ -2741,7 +2741,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/rig_module/mounted_relay
 	category = list("Rig Modules")
 
-
 /datum/design/rigstabilizer
 	name = "Hardsuit Teleporter stabilizer"
 	desc = "Special device to stabilize bluespace interferences occuring during teleportation."
