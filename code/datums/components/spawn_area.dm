@@ -11,7 +11,7 @@ var/global/list/datum/area_group/observer_groups
 
 /datum/area_group/Destroy()
 	for(var/am in observers)
-		deltimer(observers[am])
+		deltimer(LAZYACCESS(observers, am))
 
 	observers = null
 
@@ -44,7 +44,7 @@ var/global/list/datum/area_group/observer_groups
 	RegisterSignal(L, list(COMSIG_PARENT_QDELETING), .proc/on_observer_qdel)
 
 /datum/area_group/proc/remove_observer(mob/living/L)
-	deltimer(observers[L])
+	deltimer(LAZYACCESS(observers, L))
 	LAZYREMOVE(observers, L)
 	UnregisterSignal(L, list(COMSIG_PARENT_QDELETING))
 
@@ -192,7 +192,7 @@ var/global/list/datum/area_group/observer_groups
 /datum/component/spawn_area/proc/on_instance_qdel(datum/source)
 	SIGNAL_HANDLER
 
-	deltimer(despawn_timers[source])
+	deltimer(LAZYACCESS(despawn_timers, source))
 
 	LAZYREMOVE(despawn_timers, source)
 
@@ -218,8 +218,9 @@ var/global/list/datum/area_group/observer_groups
 	// No need to group areas on different Z-levels, since MultiZ travel is not present. CURRENTLY ~Luduk
 	var/g = "[group]_[L.z]"
 
-	var/datum/area_group/AG = observer_groups[g]
-	AG.remove_observer(L)
+	var/datum/area_group/AG = LAZYACCESS(global.observer_groups, g)
+	if(AG)
+		AG.remove_observer(L)
 
 /datum/component/spawn_area/proc/refresh_instance(atom/movable/instance)
 	var/timer = LAZYACCESS(despawn_timers, instance)
@@ -285,7 +286,7 @@ var/global/list/datum/area_group/observer_groups
 
 	if(despawning)
 		UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
-		deltimer(despawn_timers[instance])
+		deltimer(LAZYACCESS(despawn_timers, instance))
 		LAZYREMOVE(despawn_timers, instance)
 		INVOKE_ASYNC(src, .proc/Despawn, instance)
 		return
@@ -294,7 +295,10 @@ var/global/list/datum/area_group/observer_groups
 
 /datum/component/spawn_area/proc/get_observers(atom/movable/AM)
 	var/g = "[group]_[AM.z]"
-	var/datum/area_group/AG = global.observer_groups[g]
+	var/datum/area_group/AG = LAZYACCESS(global.observer_groups, g)
+	if(!AG)
+		return
+
 	. = list()
 	for(var/mob/obs as anything in AG.observers)
 		if(obs.stat == DEAD)
