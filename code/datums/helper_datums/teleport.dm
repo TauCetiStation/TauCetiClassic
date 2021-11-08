@@ -203,8 +203,7 @@
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
 	var/list/stabilizer = teleatom.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
-	var/obj/item/rig_module/teleporter_stabilizer/s
-	for(s in stabilizer)
+	for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
 		if (s.active)
 			return 1
 	
