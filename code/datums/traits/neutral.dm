@@ -24,6 +24,8 @@
 		NO_PAIN = FALSE,
 	)
 
+
+
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
 	desc = "You can't taste anything! Toxic food will still poison you."
