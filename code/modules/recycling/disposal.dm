@@ -320,7 +320,7 @@
 			update()
 
 		if(isAI(usr))
-			return
+			return TRUE
 
 		if(action == "handle-0")
 			flush = FALSE
