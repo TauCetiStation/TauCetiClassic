@@ -173,6 +173,9 @@
 	mutation=SMALLSIZE
 	activation_prob=50
 
+	var/icon/Cut1 = new('icons/effects/cut.dmi',"Cut1")
+	var/icon/Cut2 = new('icons/effects/cut.dmi',"Cut2")
+
 /datum/dna/gene/basic/midget/New()
 	block=SMALLSIZEBLOCK
 
@@ -190,12 +193,8 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-
-	var/matrix/Mx = matrix()
-	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
-	Mx.Translate(0,-2)
-	M.transform = Mx
-	M.default_transform = Mx
+		H.filters += filter(type="displace",x = 0,y = 0,size = 2,icon = Cut1)
+		H.filters += filter(type="displace",x = 0,y = 0,size = 3,icon = Cut2)
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
@@ -204,6 +203,8 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 		H.update_size_class()
+		H.filters -= filter(type="displace",x = 0,y = 0,size = 2,icon = Cut1)
+		H.filters -= filter(type="displace",x = 0,y = 0,size = 3,icon = Cut2)
 
 	var/matrix/Mx = matrix()
 	M.transform = Mx

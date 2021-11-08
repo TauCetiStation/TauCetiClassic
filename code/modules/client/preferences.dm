@@ -76,6 +76,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/height = 1.8					//height of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
@@ -154,6 +155,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/list/gear = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()
+
+	var/icon/Cut1 = new('icons/effects/cut.dmi',"Cut1")
+	var/icon/Cut2 = new('icons/effects/cut.dmi',"Cut2")
+	var/icon/Cut3 = new('icons/effects/cut.dmi',"Cut3")
+	var/icon/Cut4 = new('icons/effects/cut.dmi',"Cut4")
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -342,7 +348,21 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.gender = gender
 	character.age = age
+	character.height = height
 	character.b_type = b_type
+
+	character.filters = null
+	switch(height)
+		if(1.6)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut1)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut2)
+		if(1.7)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut2)
+		if(1.9)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut4)
+		if(2.0)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut3)
+			character.filters += filter(type="displace",x = 0,y = 0,size = 1,icon = Cut4)
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
