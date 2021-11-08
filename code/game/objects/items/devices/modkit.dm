@@ -276,10 +276,6 @@
 		/obj/item/clothing/head/helmet/space/rig/mining,
 		/obj/item/clothing/suit/space/rig/mining
 		)
-	forbidden_type = list(
-		/obj/item/clothing/head/helmet/space/rig/science/rd,
-		/obj/item/clothing/suit/space/rig/science/rd
-	)
 
 /obj/item/device/modkit/mining/tajaran
 	name = "Tajaran mining hardsuit modification kit"
@@ -303,6 +299,11 @@
 		/obj/item/clothing/head/helmet/space/rig/science,
 		/obj/item/clothing/suit/space/rig/science
 		)
+	forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/science/rd,
+		/obj/item/clothing/suit/space/rig/science/rd
+	)
+
 /obj/item/device/modkit/science/tajaran
 	name = "Tajaran science hardsuit modification kit"
 	target_species = TAJARAN
