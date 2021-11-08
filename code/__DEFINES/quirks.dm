@@ -12,8 +12,6 @@
 #define QUIRK_LOW_PAIN_THRESHOLD "Low pain threshold"
 #define QUIRK_AGEUSIA "Ageusia"
 #define QUIRK_DALTONISM "Daltonism"
-#define QUIRK_SHORT "Short height"
-#define QUIRK_LONG "Long height"
 
 // negative quirks.
 #define QUIRK_BLIND "Blind"

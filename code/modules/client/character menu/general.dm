@@ -14,6 +14,7 @@
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
 	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
 	. += 					"</td>"
@@ -211,6 +212,8 @@
 					real_name = random_name(gender)
 				if("age")
 					age = rand(specie_obj.min_age, specie_obj.max_age)
+				if("height")
+					height = 1.8
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
@@ -261,6 +264,11 @@
 					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Age", age) as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
+
+				if("height")
+					var/new_height = input(user, "Choose your character's height:\n([1.6]-[2.0])", "Character Height", height) as num|null
+					if(new_height)
+						height = clamp(round(text2num(new_height)*10)/10, 1.6, 2.0)
 
 				if("species")
 					var/list/new_species = list(HUMAN)

@@ -42,6 +42,7 @@
 	var/lip_color = "white"
 
 	var/age = 30		//Player's age (pure fluff)
+	var/height = 1.8	//Player's height
 	var/b_type = "A+"	//Player's bloodtype
 
 	var/underwear = 1	//Which underwear the player wants

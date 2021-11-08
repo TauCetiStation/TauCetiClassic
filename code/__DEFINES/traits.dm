@@ -129,8 +129,6 @@
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
 #define TRAIT_LIGHT_DRINKER       "light_drinker"
 #define TRAIT_LOW_PAIN_THRESHOLD  "low_pain_threshold"
-#define TRAIT_SHORT_HEIGHT        "short_height"
-#define TRAIT_LONG_HEIGHT         "long_height"
 #define TRAIT_TOURETTE            "tourette"
 #define TRAIT_NEARSIGHT           "nearsighted"
 #define TRAIT_NERVOUS             "nervous"

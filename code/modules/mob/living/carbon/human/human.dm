@@ -31,6 +31,8 @@
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
+	appearance_flags |= KEEP_TOGETHER
+
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
