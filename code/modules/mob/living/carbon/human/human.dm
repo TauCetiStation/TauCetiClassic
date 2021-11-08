@@ -2293,3 +2293,9 @@
 		if(2.0)
 			add_filter("Lenghten_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = lenghten_torso_mask))
 			add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = lenghten_legs_mask))
+
+	if(SMALLSIZE in mutations)
+		add_filter("Gnome_Cut_Torso", 1, list(type="displace",x = 0,y = 0,size = 2,icon = cut_torso_mask))
+		add_filter("Gnome_Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 3,icon = cut_legs_mask))
+	else
+		remove_filter(list("Gnome_Cut_Torso","Gnome_Cut_Legs"))
