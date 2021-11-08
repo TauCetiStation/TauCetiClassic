@@ -437,6 +437,11 @@
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		helmet.canremove = 0
+		if(helmet.on)
+			helmet.set_light(helmet.brightness_on)
+		else
+			helmet.set_light(0)
+
 		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
 

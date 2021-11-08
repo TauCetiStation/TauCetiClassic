@@ -24,7 +24,7 @@
 /obj/item/rig_module/device/analyzer
 	name = "hardsuit analyzer module"
 	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
-	icon_state = "scanner"
+	icon_state = "analyzer"
 	interface_name = "Analyzer"
 	interface_desc = "Shows an anomalies frequencies and which reports current gas levels when used."
 	use_power_cost = 100
@@ -37,7 +37,7 @@
 /obj/item/rig_module/device/science_tool
 	name = "hardsuit science tool module"
 	desc = "A hardsuit-mounted tool for gathering research points."
-	icon_state = "scanner"
+	icon_state = "scitool"
 	interface_name = "Science tool"
 	interface_desc = "Used to collect research data from different sources."
 	use_power_cost = 100
