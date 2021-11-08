@@ -312,18 +312,21 @@
 		return
 
 	if(isturf(loc))
-		if(action == "handle-0")
-			flush = FALSE
-			update()
-		if(action == "handle-1")
-			flush = TRUE
-			update()
-
 		if(action == "pump-0")
 			mode = 0
 			update()
 		if(action == "pump-1")
 			mode = 1
+			update()
+
+		if(isAI(usr))
+			return
+
+		if(action == "handle-0")
+			flush = FALSE
+			update()
+		if(action == "handle-1")
+			flush = TRUE
 			update()
 
 		if(action == "eject")
