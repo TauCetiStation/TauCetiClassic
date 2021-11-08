@@ -242,8 +242,6 @@
 	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/science))
 		protection += 0.5
 
-
-
 	if(istype(H.head, /obj/item/clothing/head/bio_hood/particle_protection))
 		protection += 0.3
 	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science/rd))
@@ -252,7 +250,6 @@
 		protection += 0.2
 	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science))
 		protection += 0.2
-
 
 	// latex gloves and science goggles also give a bit of bonus protection
 	if(istype(H.gloves,/obj/item/clothing/gloves/latex))

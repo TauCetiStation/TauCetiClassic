@@ -214,7 +214,9 @@
 /obj/machinery/telecomms/proc/checkheat()
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
-	if (!environment) return
+	if (!environment)
+		return
+
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
 			integrity = between(0, integrity, 100)

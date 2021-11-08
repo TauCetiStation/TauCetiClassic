@@ -1054,6 +1054,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+
 //Science rig
 /obj/item/clothing/head/helmet/space/rig/science
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
