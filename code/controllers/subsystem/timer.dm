@@ -251,9 +251,7 @@ SUBSYSTEM_DEF(timer)
 		SStimer.timer_id_dict -= "timerid[id]"
 
 	if (flags & TIMER_CLIENT_TIME)
-		if (!spent)
-			spent = TRUE
-			SStimer.clienttime_timers -= src
+		SStimer.clienttime_timers -= src
 		return QDEL_HINT_IWILLGC
 
 	if (!spent)
