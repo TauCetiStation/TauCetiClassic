@@ -13,3 +13,5 @@ var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black s
 var/global/list/socks_t = list("White normal", "White normal hipster", "White short", "White knee", "White long", "Black normal", "Black short", "Black knee", "Black long", "Tights knee", "Tights long", "Tights full", "Rainbow knee", "Rainbow long", "Stripped knee", "Stripped long", "USA knee", "USA long", "Australia knee", "Australia long", "Present knee", "Present long", "None")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Sporty Backpack", "Satchel", "Satchel Alt")
+	//Heights
+var/global/list/heights_list = list("1.6","1.7","1.8","1.9","2.0")

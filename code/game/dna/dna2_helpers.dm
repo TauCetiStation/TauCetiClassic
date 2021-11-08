@@ -147,8 +147,6 @@
 		H.g_skin   = dna.GetUIValueRange(DNA_UI_SKIN_G,    255)
 		H.b_skin   = dna.GetUIValueRange(DNA_UI_SKIN_B,    255)
 
-		H.height   = dna.GetUIValueRange(DNA_UI_HEIGHT,    2)
-
 		H.r_eyes   = dna.GetUIValueRange(DNA_UI_EYES_R,    255)
 		H.g_eyes   = dna.GetUIValueRange(DNA_UI_EYES_G,    255)
 		H.b_eyes   = dna.GetUIValueRange(DNA_UI_EYES_B,    255)
@@ -170,9 +168,15 @@
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 
+		//Height
+		var/height = dna.GetUIValueRange(DNA_UI_HEIGHT,heights_list.len)
+		if((0 < height) && (height <= heights_list.len))
+			H.height = heights_list[height]
+
 		H.apply_recolor()
 		H.update_body()
 		H.update_hair()
+		H.update_height()
 
 		return 1
 	else
