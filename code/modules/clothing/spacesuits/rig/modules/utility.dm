@@ -32,7 +32,7 @@
 	device_type = /obj/item/device/analyzer/mounted
 
 /obj/item/device/analyzer/mounted
-	advanced_mode = 1
+	advanced_mode = TRUE
 
 /obj/item/rig_module/device/science_tool
 	name = "hardsuit science tool module"
