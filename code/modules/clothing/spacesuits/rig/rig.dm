@@ -79,7 +79,6 @@
 		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
 	var/magpulse = 0
-	
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
