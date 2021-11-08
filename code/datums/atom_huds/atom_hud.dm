@@ -134,7 +134,6 @@ var/global/list/huds = list(
 		return
 	for(var/i in hud_icons)
 		if(A.hud_list[i] && (!hud_exceptions[M] || !(A in hud_exceptions[M])))
-			A.hud_list[i].appearance_flags |= KEEP_APART
 			M.client.images |= A.hud_list[i]
 
 //MOB PROCS

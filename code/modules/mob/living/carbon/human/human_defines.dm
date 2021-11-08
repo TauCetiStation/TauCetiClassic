@@ -120,3 +120,8 @@
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	var/static/icon/Cut1 = icon('icons/effects/cut.dmi',"Cut1")
+	var/static/icon/Cut2 = icon('icons/effects/cut.dmi',"Cut2")
+	var/static/icon/Cut3 = icon('icons/effects/cut.dmi',"Cut3")
+	var/static/icon/Cut4 = icon('icons/effects/cut.dmi',"Cut4")

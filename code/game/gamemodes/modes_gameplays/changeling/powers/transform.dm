@@ -21,6 +21,7 @@
 	user.real_name = chosen_dna.real_name
 	user.flavor_text = ""
 	user.UpdateAppearance()
+	user.update_height()
 	domutcheck(user, null)
 
 	feedback_add_details("changeling_powers","TR")

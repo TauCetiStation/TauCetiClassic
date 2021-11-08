@@ -71,6 +71,8 @@
 	make_blood()
 	regenerate_icons()
 
+	update_height()
+
 /mob/living/carbon/human/Destroy()
 	human_list -= src
 	if(my_master)
@@ -2277,3 +2279,17 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/proc/update_height()
+	remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso"))
+	switch(height)
+		if(1.6)
+			add_filter("Cut_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut1))
+			add_filter("Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut2))
+		if(1.7)
+			add_filter("Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut2))
+		if(1.9)
+			add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut4))
+		if(2.0)
+			add_filter("Lenghten_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut3))
+			add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = Cut4))
