@@ -193,8 +193,8 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-		H.add_filter("Gnome_Cut_Torso", 1, list(type="displace",x = 0,y = 0,size = 2,icon = Cut1))
-		H.add_filter("Gnome_Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 3,icon = Cut2))
+		H.add_filter("Gnome_Cut_Torso", 1, list(type="displace",x = 0,y = 0,size = 2,icon = cut_torso_mask))
+		H.add_filter("Gnome_Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 3,icon = cut_legs_mask))
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
