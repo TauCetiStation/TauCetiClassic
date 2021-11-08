@@ -567,14 +567,15 @@
 	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
 	icon_state = "relay"
 	suit_overlay = "mounted-relay"
-	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
-	var/obj/machinery/telecomms/relay
 	toggleable = TRUE
 	show_toggle_button = TRUE
 	module_cooldown = 0
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
 	active_power_cost = 200
+
+	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
+	var/obj/machinery/telecomms/relay
 
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
