@@ -1099,9 +1099,6 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_hud_from(user)
 
-	
-
-
 /obj/item/clothing/suit/space/rig/science/rd
 	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
 	icon_state = "rig-rd"

@@ -18,8 +18,6 @@
 	use_power_cost = 100
 	origin_tech = "biotech=2;programming=2"
 	device_type = /obj/item/device/healthanalyzer
-	
-
 
 /obj/item/rig_module/device/analyzer
 	name = "hardsuit analyzer module"
@@ -32,8 +30,10 @@
 	engage_string = "Analyze air"
 	origin_tech = "magnets=1;programming=2;engineering=1"
 	device_type = /obj/item/device/analyzer/mounted
+
 /obj/item/device/analyzer/mounted
 	advanced_mode = 1
+
 /obj/item/rig_module/device/science_tool
 	name = "hardsuit science tool module"
 	desc = "A hardsuit-mounted tool for gathering research points."
@@ -44,7 +44,6 @@
 	selectable = TRUE
 	origin_tech = "engineering=1;programming=1;biotech=1"
 	device_type = /obj/item/device/science_tool
-
 
 /obj/item/rig_module/device/drill
 	name = "hardsuit drill mount"
@@ -560,7 +559,6 @@
 			holder.installed_modules -= src
 		qdel(src)
 
-
 /obj/item/rig_module/mounted_relay
 	name = "hardsuit mounted relay module"
 	desc = "Can relay radio signals from other sectors"
@@ -577,11 +575,11 @@
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
 	active_power_cost = 200
+
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	if(relay_type)
 		relay = new relay_type(src)
-		
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)
@@ -593,8 +591,6 @@
 	relay.listening_level = H.z
 
 	return active_power_cost
-
-
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
 	volume = 400
