@@ -2716,7 +2716,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riganalyzer
 	name = "Hardsuit Analyzer Module"
-	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
 	id = "riganalyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
