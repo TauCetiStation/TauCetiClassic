@@ -201,10 +201,6 @@
 		H.update_size_class()
 		H.update_height()
 
-	var/matrix/Mx = matrix()
-	M.transform = Mx
-	M.default_transform = Mx
-
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
 	activation_messages = list("Your muscles hurt and feel strange..")
