@@ -602,6 +602,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
 	name = "Asteroid"
+	var/base_icon = 'icons/turf/asteroid.dmi'
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	oxygen = 0.01
@@ -614,6 +615,8 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_SAND
+	smooth = SMOOTH_TRUE | SMOOTH_MORE
+	canSmoothWith = list(/turf/simulated, /obj/structure/lattice)
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
@@ -623,13 +626,15 @@
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid_stone_[rand(1, 10)]"
+		smooth_subtype = "asteroid[rand(1, 10)]"
+		smooth_bake_overlay = icon(base_icon, smooth_subtype)
 
 	//I dont know how, but it gets into hudatoms
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
-
+	
+	make_transparent()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
@@ -649,20 +654,6 @@
 				if(8)
 					overlay_name = "rock_side_4"
 			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
-
-/turf/simulated/floor/plating/airless/asteroid/update_overlays()
-	..()
-	var/turf/T
-	for(var/direction_to_check in cardinal)
-		T = get_step(src, direction_to_check)
-		if(T && istype(T, /turf/space))
-			var/lattice = 0
-			for(var/obj/O in T)
-				if(istype(O, /obj/structure/lattice))
-					lattice = 1
-			if(!lattice)
-				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A
@@ -729,7 +720,9 @@
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	smooth_subtype = "asteroid_dug"
+	smooth_bake_overlay = icon(base_icon, "asteroid_dug")
+	queue_smooth(src)
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()

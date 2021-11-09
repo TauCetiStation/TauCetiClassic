@@ -60,6 +60,9 @@ What is the naming convention for planes or layers?
 	FLOAT_PLANE = -32767
 */
 
+///Plane master controller keys
+#define PLANE_MASTERS_GAME "plane_masters_game"
+
 #define CLICKCATCHER_PLANE   -99
 
 #define PLANE_SPACE            -95

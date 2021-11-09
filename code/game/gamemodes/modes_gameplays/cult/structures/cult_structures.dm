@@ -129,7 +129,7 @@
 			C.torture_tables += src
 			religion = C
 			name = "charged [initial(name)]"
-			filters += filter(type = "outline", size = 1, color = "#990066")
+			add_filter("torture_outline", 2, outline_filter(1, "#990066"))
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return

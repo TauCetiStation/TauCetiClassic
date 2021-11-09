@@ -31,6 +31,8 @@
 	// Radial menu
 	var/list/bible_skins
 
+	var/religious_tool_type
+
 	/*
 	var/lecturn_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -327,15 +329,9 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, custom_type)
-	var/obj/item/weapon/storage/bible/B
-	if(custom_type)
-		B = new custom_type(location)
-	else
-		B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
-	B.deity_name = pick(deity_names)
-	B.god_lore = lore
 	B.religion = src
 	return B
 

@@ -69,7 +69,7 @@
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
-		M.eye_blurry += force/7
+		M.blurEyes(force/7)
 		if(prob(20))
 			M.Paralyse(force/6)
 			M.Weaken(force/15)
