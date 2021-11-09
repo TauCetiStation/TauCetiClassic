@@ -21,7 +21,7 @@
 
 /obj/item/rig_module/device/analyzer
 	name = "hardsuit analyzer module"
-	desc = "A hardsuit-mounted atmospherics and anomalyies scanner."
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
 	icon_state = "analyzer"
 	interface_name = "Analyzer"
 	interface_desc = "Shows an anomalies frequencies and which reports current gas levels when used."
