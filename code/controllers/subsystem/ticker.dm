@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
+	msg_lobby = "Запускаем атомные сверхточные часы..."
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP

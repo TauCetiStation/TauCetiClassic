@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(air)
 	display_order = SS_DISPLAY_AIR
 
 	flags = SS_BACKGROUND
+	msg_lobby = "Фильтруем кислород..."
 
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 

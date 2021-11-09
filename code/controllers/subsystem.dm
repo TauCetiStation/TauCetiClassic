@@ -31,6 +31,8 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
+	var/msg_lobby = null
+
 //Do not override
 ///datum/controller/subsystem/New()
 
@@ -152,6 +154,9 @@
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
+	world << "[msg_lobby]"
+	if(msg_lobby)
+		to_chat(world, "<b>[msg_lobby]</b>")
 	log_initialization(msg)
 	initialized = TRUE
 	return time

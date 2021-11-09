@@ -140,7 +140,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
 	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
-	to_chat(world, "<span class='success'>Initializations complete!</span>")
+	to_chat(world, "<span class='success'>Инициализация завершена за [time] сек.!</span>")
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
