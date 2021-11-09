@@ -10,7 +10,6 @@
 /datum/component/zoom
 	var/zoom_view_range
 	var/can_move
-	var/zoomed = FALSE
 	var/mob/zoomer
 	var/datum/action/zoom/button
 
@@ -41,7 +40,7 @@
 	button.Remove(user)
 
 /datum/component/zoom/proc/can_zoom(mob/user)
-	if(!zoomed && user.get_active_hand() != parent)
+	if(!zoomer && user.get_active_hand() != parent)
 		to_chat(user, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
 		return FALSE
 	if(!user.IsAdvancedToolUser() || user.incapacitated())
@@ -53,11 +52,11 @@
 	SIGNAL_HANDLER
 	if(!can_zoom(user))
 		return
-	if(!zoomed)
+	if(!zoomer)
 		set_zoom(user)
 	else
 		reset_zoom()
-	to_chat(user, "<font color='[zoomed ? "notice" : "rose"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
+	to_chat(user, "<font color='[zoomer ? "notice" : "rose"]'>Zoom mode [zoomer ? "en" : "dis"]abled.</font>")
 	
 /datum/component/zoom/proc/reset_zoom()
 	SIGNAL_HANDLER
@@ -68,12 +67,10 @@
 		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
 	zoomer.client?.change_view(world.view)
 	zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
-	zoomed = FALSE
 	zoomer = null
 
 /datum/component/zoom/proc/set_zoom(mob/user)
 	SIGNAL_HANDLER
-	zoomed = TRUE
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
