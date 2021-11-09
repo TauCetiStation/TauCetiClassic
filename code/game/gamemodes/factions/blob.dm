@@ -72,6 +72,20 @@
 	start.count()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+
+	// find all unwelded vents on station Z level
+	var/list/found_vents = list()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in machines)
+		if(!V.welded && is_station_level(V.z))
+			found_vents.Add(V)
+	for(var/datum/role/R in members)
+		if(!found_vents.len)
+			CRASH("Blobmouse spawn location not found. We're screwed!")
+		var/V = pick_n_take(found_vents)
+		var/mob/living/simple_animal/mouse/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
+		R.antag.transfer_to(M)
+		QDEL_NULL(R.antag.original)
+		M.add_ventcrawl(V)
 	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
