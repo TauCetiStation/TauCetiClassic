@@ -71,8 +71,6 @@
 	make_blood()
 	regenerate_icons()
 
-	update_height()
-
 /mob/living/carbon/human/Destroy()
 	human_list -= src
 	if(my_master)
@@ -2281,6 +2279,11 @@
 				Heart.heart_fibrillate()
 
 /mob/living/carbon/human/proc/update_height()
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi',"Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi',"Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi',"Cut4")
+
 	remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso"))
 	switch(height)
 		if("1.6")
@@ -2290,7 +2293,7 @@
 			add_filter("Cut_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = cut_legs_mask))
 		if("1.9")
 			add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = lenghten_legs_mask))
-		if("2.0")
+		if("2")
 			add_filter("Lenghten_Torso", 1, list(type="displace",x = 0,y = 0,size = 1,icon = lenghten_torso_mask))
 			add_filter("Lenghten_Legs", 1, list(type="displace",x = 0,y = 0,size = 1,icon = lenghten_legs_mask))
 

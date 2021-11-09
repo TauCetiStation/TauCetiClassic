@@ -156,7 +156,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
-
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]

@@ -432,6 +432,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_transform()
 	//Hud Stuff
 	update_hud()
+	update_height()
 
 
 /* --------------------------------------- */
