@@ -429,8 +429,6 @@ var/datum/controller/master/Master = new()
 			else
 				tick_precentage = tick_remaining
 
-			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
-
 			current_ticklimit = round(TICK_USAGE + tick_precentage)
 
 			ran = TRUE
