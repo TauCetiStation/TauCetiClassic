@@ -66,7 +66,7 @@
 
 // Register signals with the parent item
 /datum/component/twohanded/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
+	RegisterSignal(parent, COMSIG_ITEM_BEFORE_PICKUP, .proc/on_pickup)
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
@@ -75,7 +75,7 @@
 
 // Remove all siginals registered to the parent item
 /datum/component/twohanded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,
+	UnregisterSignal(parent, list(COMSIG_ITEM_BEFORE_PICKUP,
                                 COMSIG_ITEM_EQUIPPED,
                                 COMSIG_ITEM_DROPPED,
                                 COMSIG_ITEM_ATTACK_SELF,
@@ -85,6 +85,7 @@
 /// Triggered on pickup of the item containing the component
 /datum/component/twohanded/proc/on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER
+
 	if(!require_twohands)
 		return
 	if(!user.IsAdvancedToolUser())
