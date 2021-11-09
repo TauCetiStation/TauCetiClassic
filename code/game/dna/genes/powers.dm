@@ -173,9 +173,6 @@
 	mutation=SMALLSIZE
 	activation_prob=50
 
-	var/icon/Cut1 = new('icons/effects/cut.dmi',"Cut1")
-	var/icon/Cut2 = new('icons/effects/cut.dmi',"Cut2")
-
 /datum/dna/gene/basic/midget/New()
 	block=SMALLSIZEBLOCK
 
