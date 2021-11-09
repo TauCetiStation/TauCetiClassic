@@ -47,19 +47,14 @@
 	switch(w_class)
 		if(SIZE_TINY)
 			slot_flags = SLOT_FLAGS_POCKET | SLOT_FLAGS_BELT
-			return
 		if(SIZE_SMALL)
 			slot_flags = SLOT_FLAGS_BELT
-			return
 		if(SIZE_NORMAL)
 			slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
-			return
 		if(SIZE_BIG)
 			slot_flags = SLOT_FLAGS_BACK | SLOT_FLAGS_DENYSTORAGE
-			return
 		else
 			slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK // default
-			return
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
