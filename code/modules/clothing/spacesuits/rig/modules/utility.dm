@@ -24,7 +24,7 @@
 	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
 	icon_state = "analyzer"
 	interface_name = "Analyzer"
-	interface_desc = "Shows an anomalies frequencies and which reports current gas levels when used."
+	interface_desc = "Shows anomalies frequencies and reports current gas levels when used."
 	use_power_cost = 100
 	usable = TRUE
 	engage_string = "Analyze air"
