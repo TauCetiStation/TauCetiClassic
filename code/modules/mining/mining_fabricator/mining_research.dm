@@ -199,7 +199,7 @@
 	id = "space_suit_science_rig"
 	build_type = MINEFAB
 	build_path = /obj/item/clothing/suit/space/rig/science
-	materials = list(MAT_METAL=35000,MAT_GLASS=5000,MAT_PLASTIC=10000,MAT_SILVER=6000,MAT_PHORON=8000, MAT_DIAMOND=2000,MAT_GOLD=3000)
+	materials = list(MAT_METAL=35000, MAT_GLASS=5000, MAT_PLASTIC=10000, MAT_SILVER=6000, MAT_PHORON=8000, MAT_DIAMOND=2000, MAT_GOLD=3000)
 	construction_time = 1750
 	category = list("Spacesuit")
 
@@ -208,7 +208,7 @@
 	id = "space_suit_helmet_science_rig"
 	build_type = MINEFAB
 	build_path = /obj/item/clothing/head/helmet/space/rig/science
-	materials = list(MAT_METAL=8000,MAT_GLASS=4000,MAT_PLASTIC=5000,MAT_SILVER=6000,MAT_PHORON=2000,MAT_DIAMOND=500,MAT_GOLD=1000)
+	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_PLASTIC=5000, MAT_SILVER=6000, MAT_PHORON=2000, MAT_DIAMOND=500, MAT_GOLD=1000)
 	construction_time = 1000
 	category = list("Spacesuit")
 
