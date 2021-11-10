@@ -213,7 +213,7 @@
 				if("age")
 					age = rand(specie_obj.min_age, specie_obj.max_age)
 				if("height")
-					height = "1.8"
+					height = MEDIUM_HEIGHT
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
@@ -266,9 +266,9 @@
 						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
 				if("height")
-					var/new_height = input(user, "Choose your character's height:\n(1.6-2.0)", "Character Height", text2num(height)) as null|anything in heights_list
+					var/new_height = input(user, "Choose your character's height:\n(1.6-2.0 meters)", "Character Height", height) as null|anything in heights_list
 					if(new_height)
-						height = num2text(clamp(round(text2num(new_height), 0.1), 1.6, 2.0))
+						height = new_height
 
 				if("species")
 					var/list/new_species = list(HUMAN)

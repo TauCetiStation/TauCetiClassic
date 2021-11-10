@@ -544,7 +544,7 @@
 						if(var_new < 1.6 || var_new > 2.0)
 							to_chat(usr, "<b>Resize coefficient have to be 1.6-2.0 0</b>")
 							return
-						H.vars[variable] = num2text(round(var_new,0.1))
+						H.vars[variable] = var_new
 						world.log << "### VarEdit by [src]: [H.type] [variable]=[html_encode("[H.height]")]"
 						log_admin("[key_name(src)] modified [original_name]'s [variable] to [H.height]")
 						log_handled = TRUE

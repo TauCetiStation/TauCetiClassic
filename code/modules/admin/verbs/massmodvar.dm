@@ -401,7 +401,7 @@
 								if("height")
 									if(ishuman(M))
 										var/mob/living/carbon/human/H = M
-										H.vars[variable] = num2text(round(new_value,0.1))
+										H.vars[variable] = new_value
 										H.update_height()
 								else
 									M.vars[variable] = O.vars[variable]

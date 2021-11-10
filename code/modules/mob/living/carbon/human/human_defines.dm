@@ -41,13 +41,13 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
-	var/age = 30		//Player's age (pure fluff)
-	var/height = 1.8	//Player's height
-	var/b_type = "A+"	//Player's bloodtype
+	var/age = 30				//Player's age (pure fluff)
+	var/height = MEDIUM_HEIGHT	//Player's height
+	var/b_type = "A+"			//Player's bloodtype
 
 	var/underwear = 1	//Which underwear the player wants
 	var/undershirt = 0	//Which undershirt the player wants.
-	var/socks = 0	//Which socks the player wants.
+	var/socks = 0		//Which socks the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 	var/use_skirt = FALSE
 	// General information
