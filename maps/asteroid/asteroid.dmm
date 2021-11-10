@@ -79,7 +79,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/safe)
 "ao" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
@@ -819,7 +819,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/twohanded/flora/pottedplant,
+/obj/item/weapon/flora/pottedplant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluecorner"
@@ -3533,7 +3533,7 @@
 /turf/simulated/wall,
 /area/asteroid/mine/explored)
 "ht" = (
-/obj/item/weapon/twohanded/flora/floorleaf,
+/obj/item/weapon/flora/floorleaf,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
 "hu" = (
@@ -4235,7 +4235,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor{
@@ -4822,7 +4822,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SW"
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-18"
 	},
 /turf/simulated/floor{
@@ -4966,7 +4966,7 @@
 /area/asteroid/research_outpost/med)
 "kf" = (
 /obj/structure/table,
-/obj/item/weapon/twohanded/flora/deskleaf,
+/obj/item/weapon/flora/deskleaf,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -5172,7 +5172,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-18"
 	},
 /turf/simulated/floor,
@@ -7414,7 +7414,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-20"
 	},
 /turf/simulated/floor{
@@ -7606,7 +7606,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/tempstorage)
 "pM" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor{
@@ -7644,7 +7644,7 @@
 	},
 /area/asteroid/mine/abandoned)
 "pR" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor{
@@ -10145,7 +10145,7 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "wb" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-18"
 	},
 /turf/simulated/floor{
@@ -12899,7 +12899,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "Nc" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor{
@@ -13076,7 +13076,7 @@
 	},
 /area/asteroid/mine/production)
 "Qe" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor{

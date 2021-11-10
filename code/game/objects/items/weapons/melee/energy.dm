@@ -80,7 +80,7 @@
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		var/obj/item/weapon/dualsaber/newSaber = new(user.loc)
 		user.unEquip(I)
 		user.unEquip(src)
 		qdel(I)
