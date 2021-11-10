@@ -7,7 +7,7 @@
 	invisibility = 101 // No one can see us
 
 /mob/autosay/say_quote(text)
-	return "says, \"[message]\""
+	return "says, \"[text]\""
 
 /mob/autosay/atom_init(from)
 	. = ..()
