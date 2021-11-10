@@ -2284,7 +2284,7 @@
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi',"Cut3")
 	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi',"Cut4")
 
-	remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso"))
+	remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso","Gnome_Cut_Torso","Gnome_Cut_Legs"))
 	switch(height)
 		if("1.6")
 			add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
@@ -2300,5 +2300,3 @@
 	if(SMALLSIZE in mutations)
 		add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
-	else
-		remove_filter(list("Gnome_Cut_Torso","Gnome_Cut_Legs"))
