@@ -130,7 +130,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				if (num[1] == "*")
+				if (num[1] == "⁎")
 					to_chat(src, "<span class='warning'>Bzzt... Сбой в подпрограмме...</span>")
 				else
 					say("[num]. [law]")
