@@ -577,8 +577,7 @@
 
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
-	if(relay_type)
-		relay = new relay_type(src)
+	relay = new relay_type(src)
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)
