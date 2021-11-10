@@ -8,7 +8,3 @@
 
 /mob/autosay/say_quote(text)
 	return "says, \"[text]\""
-
-/mob/autosay/atom_init(from)
-	. = ..()
-	real_name = from
