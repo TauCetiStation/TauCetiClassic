@@ -538,7 +538,7 @@
 				if("height")
 					if(ishuman(O))
 						var/mob/living/carbon/human/H = O
-						var/var_new = input("Enter new height: \n(Human will gain this height from 1.6 to 2.0)", "Num", H.vars[variable]) as null|num
+						var/var_new = input("Enter new height: \n(Human will gain this height from 1.6 to 2.0)", "Num", H.vars[variable]) as null|anything in heights_list
 						if(isnull(var_new))
 							return
 						if(var_new < 1.6 || var_new > 2.0)
