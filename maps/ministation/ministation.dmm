@@ -1827,7 +1827,7 @@
 /obj/machinery/door_control{
 	id = "armory";
 	name = "Armory";
-	step_x = -10
+	pixel_x = -10
 	},
 /obj/machinery/door_control{
 	id = "armory";
