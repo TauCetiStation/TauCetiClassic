@@ -22,3 +22,6 @@ endmap
 
 map testmap
 endmap
+
+map ministation
+endmap
