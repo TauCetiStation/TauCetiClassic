@@ -257,6 +257,7 @@
 #include "code\datums\components\clickplace.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"
+#include "code\datums\components\hivechat.dm"
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multi_carry.dm"
