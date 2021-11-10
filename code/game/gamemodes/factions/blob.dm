@@ -72,7 +72,10 @@
 	start.count()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	spawn_as_mouse()
+	return ..()
 
+/datum/faction/blob_conglomerate/proc/spawn_as_mouse()
 	// find all unwelded vents on station Z level
 	var/list/found_vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in machines)
@@ -86,7 +89,6 @@
 		R.antag.transfer_to(M)
 		QDEL_NULL(R.antag.original)
 		M.add_ventcrawl(V)
-	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
 	blobwincount = 500 * max_roles
