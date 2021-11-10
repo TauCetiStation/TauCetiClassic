@@ -51,8 +51,6 @@
 	if(opacity)
 		has_opaque_atom = TRUE
 
-	basetype = text2path(SSmapping.level_trait(z, ZTRAIT_BASETURF))
-
 	return INITIALIZE_HINT_NORMAL
 
 /turf/Destroy(force)
