@@ -27,7 +27,7 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
-	
+
 	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
@@ -51,7 +51,7 @@
 	*/
 	if(!network || network.len < 1)
 		if(loc)
-			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
+			error("[name] in [get_area(src)] [COORD(src)] has errored. [network ? "Empty network list" : "Null network list"]")
 		else
 			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
 		ASSERT(network)
@@ -197,7 +197,7 @@
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
 			P.show_content(O)
-	
+
 		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
 			if(S.active_camera != src)
 				continue
