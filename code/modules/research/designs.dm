@@ -1748,7 +1748,7 @@ other types of metals and chemistry for reagents).
 	id = "defibrillators_standalone"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
-	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
+	build_path = /obj/item/weapon/shockpaddles/standalone
 	category = list("Support")
 
 /datum/design/sensor_device
