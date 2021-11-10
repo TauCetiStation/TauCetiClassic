@@ -569,7 +569,7 @@ var/list/ai_verbs_default = list(
 		var/tz = text2num(href_list["z"])
 		var/turf/target = locate(tx, ty, tz)
 		if(istype(target))
-			eyeobj.setLoc(target)
+			eyeobj.forceMove(target)
 			return
 
 	return
