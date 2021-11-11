@@ -1,5 +1,13 @@
 #define PLAYER_PER_BLOB_CORE 30
 
+// vents in this areas potentially could be blocked by valves or some other machinery
+var/global/list/blob_disallow_areas = list(
+	/area/station/engineering/atmos,
+	/area/station/engineering/engine,
+	/area/station/maintenance,
+	/area/station/rnd/mixing,
+)
+
 /datum/faction/blob_conglomerate
 	name = F_BLOBCONGLOMERATE
 	ID = F_BLOBCONGLOMERATE
@@ -14,6 +22,7 @@
 
 	var/datum/station_state/start
 
+	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
 	var/declared = FALSE
 	var/blobwincount = 0
@@ -23,6 +32,21 @@
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
+
+	// find all unwelded vents on station Z level
+	find_vents:
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in machines)
+			if(V.welded || !is_station_level(V.z))
+				continue
+			var/area/A = get_area(V)
+			for(var/T in blob_disallow_areas)
+				if(istype(A, T))
+					continue find_vents
+			spawn_locs.Add(V)
+
+	if(length(spawn_locs) < max_roles)
+		// we were unable to setup because we didn't have enough spawn locations
+		return FALSE
 	return TRUE
 
 // -- Victory procs --
@@ -76,15 +100,8 @@
 	return ..()
 
 /datum/faction/blob_conglomerate/proc/spawn_as_mouse()
-	// find all unwelded vents on station Z level
-	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in machines)
-		if(!V.welded && is_station_level(V.z))
-			found_vents.Add(V)
 	for(var/datum/role/R in members)
-		if(!found_vents.len)
-			CRASH("Blobmouse spawn location not found. We're screwed!")
-		var/V = pick_n_take(found_vents)
+		var/V = pick_n_take(spawn_locs)
 		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
 		R.antag.transfer_to(M)
 		QDEL_NULL(R.antag.original)
