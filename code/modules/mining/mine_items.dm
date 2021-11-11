@@ -222,7 +222,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
 /*****************************Sledgehammer********************************/
-/obj/item/weapon/twohanded/sledgehammer
+/obj/item/weapon/sledgehammer
 	name = "Sledgehammer"
 	icon_state = "sledgehammer0"
 	force = 15
@@ -231,16 +231,16 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
 	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 15
-	force_wielded = 35
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
+	var/wielded = FALSE // track wielded status on item
 
-/obj/item/weapon/twohanded/sledgehammer/update_icon()
-	icon_state = "sledgehammer[wielded]"
+/obj/item/weapon/sledgehammer/atom_init()
+	. = ..()
+	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
 
-/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
 	if(next_hit < world.time)
 		asshole_counter = 0
@@ -256,15 +256,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
 		asshole_counter = 0
-	if(wielded)
-		INVOKE_ASYNC(src, .proc/spin, user)
+	INVOKE_ASYNC(src, .proc/spin, user)
 
-/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
+/obj/item/weapon/sledgehammer/proc/spin(mob/living/user)
 	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
 		user.set_dir(i)
 		sleep(1)
 
-/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+/obj/item/weapon/sledgehammer/dropped(mob/living/carbon/user)
 	..()
 	asshole_counter = 0
 
