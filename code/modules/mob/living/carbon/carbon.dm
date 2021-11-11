@@ -153,12 +153,13 @@
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
-			if(item_in_hand:wielded)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
+		return
+
+	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_INACTIVE, src)
+
 	src.hand = !( src.hand )
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
@@ -170,6 +171,7 @@
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
