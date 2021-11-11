@@ -542,9 +542,10 @@
 		return FALSE
 
 	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
-		qdel(tome)
 		for(var/i in 1 to divine_power)
-			religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+			var/obj/item/weapon/storage/bible/tome/upgraded/upgr = new(AOG.loc)
+			upgr.religion = tome.religion
+		qdel(tome)
 
 	return TRUE
 

@@ -276,7 +276,7 @@
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 /obj/structure/mineral_door/wood/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/twohanded/fireaxe))
+	if(istype(W, /obj/item/weapon/fireaxe))
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You start cutting the [name] with the axe.</span>")

@@ -67,7 +67,7 @@
 					R = HandleNewMind(H.mind)
 					R.OnPostSetup(TRUE)
 
-					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
+					to_chat(H, "<span class='warning'>Вы теперь новый предвестник культа.</span>")
 					added_lead = TRUE
 					break
 

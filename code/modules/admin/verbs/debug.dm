@@ -597,7 +597,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, SLOT_R_HAND)
 
 		if("masked killer")
@@ -612,7 +612,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), SLOT_L_STORE)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), SLOT_R_STORE)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, SLOT_R_HAND)
 
 			for(var/obj/item/carried_item in M.contents)

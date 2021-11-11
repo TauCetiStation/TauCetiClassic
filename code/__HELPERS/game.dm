@@ -5,6 +5,25 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+//gets an empty square with RADIUS from CENTER
+#define BORDER_TURFS(RADIUS, CENTER) \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z) \
+	) + \
+	block( \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+	) \
+
 /proc/dopage(src,target)
 	var/href_list
 	var/href
@@ -698,3 +717,17 @@
 
 /mob/proc/transfer_personality(client/C)
 	return
+
+/atom/proc/has_valid_appearance()
+	if(!check_sprite())
+		return FALSE
+	if(alpha != 255)
+		return FALSE
+	if(invisibility != 0)
+		return FALSE
+	return TRUE
+
+/atom/proc/check_sprite()
+	if(icon_state in icon_states(icon))
+		return TRUE
+	return FALSE
