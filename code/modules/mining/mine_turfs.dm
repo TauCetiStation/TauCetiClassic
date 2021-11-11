@@ -182,8 +182,8 @@
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = W
+	if (istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
 		if(S.wielded)
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
 			GetDrilled(artifact_fail = 1)
