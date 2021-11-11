@@ -85,7 +85,7 @@
 		if(!found_vents.len)
 			CRASH("Blobmouse spawn location not found. We're screwed!")
 		var/V = pick_n_take(found_vents)
-		var/mob/living/simple_animal/mouse/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
+		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
 		R.antag.transfer_to(M)
 		QDEL_NULL(R.antag.original)
 		M.add_ventcrawl(V)
