@@ -304,6 +304,3 @@
 #define COMSIG_START_SUPPRESSING "start_suppressing"
 // send this signal to stop suppressing in /datum/component/silence: ()
 #define COMSIG_STOP_SUPPRESSING "stop_suppressing"
-
-// send this signal to send messages in /datum/component/hivechat: (chat_id, message)
-#define COMSIG_HIVE_SEND "hive_send"
