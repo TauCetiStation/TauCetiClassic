@@ -28,7 +28,6 @@
 	ghost_sightless_images |= ghostimage //so ghosts can see the blob eye when they disable ghost sight
 	updateallghostimages()
 	. = ..()
-	AddComponent(/datum/component/hivechat/blob)
 
 /mob/camera/blob/Login()
 	..()
@@ -69,7 +68,23 @@
 	if (stat)
 		return
 
-	SEND_SIGNAL(src, COMSIG_HIVE_SEND, HIVE_BLOB, message)
+	blob_talk(message)
+
+/mob/camera/blob/proc/blob_talk(message)
+	message = sanitize(message)
+
+	log_say("[key_name(src)] : [message]")
+
+	if (!message)
+		return
+
+	//var/message_a = say_quote(message)
+	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
+	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
+
+	for (var/mob/M in mob_list)
+		if(isovermind(M) || isobserver(M))
+			to_chat(M, message)
 
 /mob/camera/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	return
