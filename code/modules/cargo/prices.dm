@@ -289,7 +289,7 @@
 /obj/item/weapon/table_parts/price = 95
 /obj/item/weapon/tank/jetpack/price = 15000
 /obj/item/weapon/tank/price = 45
-/obj/item/weapon/twohanded/fireaxe/price = 2500
+/obj/item/weapon/fireaxe/price = 2500
 /obj/item/weapon/weldingtool/price = 120
 /obj/item/weapon/weldpack/price = 180
 

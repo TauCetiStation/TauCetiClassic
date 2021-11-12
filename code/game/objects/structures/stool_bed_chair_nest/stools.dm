@@ -55,8 +55,8 @@
 			qdel(src)
 			return
 
-	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = W
+	else if(istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
 		if(S.wielded && !(flags & NODECONSTRUCT))
 			new /obj/item/stack/sheet/metal(loc)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
