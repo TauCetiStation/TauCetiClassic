@@ -111,13 +111,13 @@
 		return
 	if(degutted)
 		to_chat(user, "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>")
-		return 1
+		return TRUE
 	if(anchored)
 		if(!active)
 			settings(user)
 		else
 			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
-			return 1
+			return TRUE
 	else if(!active)
 		settings(user)
 

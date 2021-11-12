@@ -72,9 +72,9 @@ var/const/HOLOPAD_MODE = 0
 
 /obj/machinery/hologram/holopad/attack_hand(mob/user) //Carn: Hologram requests.
 	if(..())
-		return 1
+		return TRUE
 	if(!ishuman(user) && !IsAdminGhost(user))
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(tgui_alert(user, "Would you like to request an AI's presence?",, list("Yes","No")) == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
@@ -167,30 +167,30 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	set_light(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 	icon_state = "holopad0"
 	use_power = IDLE_POWER_USE//Passive power usage.
-	return 1
+	return TRUE
 
 /obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
 		if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if(!(stat & NOPOWER))//If the  machine has power.
 				if(HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range))
-					return 1
+					return TRUE
 
 				else if (HOLOPAD_MODE == 1)
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
 					if(eye_area == holo_area)
-						return 1
+						return TRUE
 
 		clear_holo()//If not, we want to get rid of the hologram.
-	return 1
+	return TRUE
 
 /obj/machinery/hologram/holopad/proc/move_hologram()
 	if(hologram)
 		step_to(hologram, master.eyeobj) // So it turns.
 		hologram.loc = get_turf(master.eyeobj)
 
-	return 1
+	return TRUE
 
 /*
  * Hologram

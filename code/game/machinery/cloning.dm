@@ -342,13 +342,13 @@
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
-		return 0
+		return FALSE
 	if (!message)
-		return 0
+		return FALSE
 
 	src.connected.temp = message
 	connected.updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/clonepod/verb/eject()
 	set name = "Eject Cloner"

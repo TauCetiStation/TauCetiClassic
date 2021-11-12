@@ -81,7 +81,7 @@
 	else
 		icon_update_tick++
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/recharge_station/allow_drop()

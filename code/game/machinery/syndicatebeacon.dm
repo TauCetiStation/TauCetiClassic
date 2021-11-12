@@ -93,7 +93,7 @@
 	stat = 0
 	use_power = NO_POWER_USE
 
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+	var/active = FALSE //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
 	var/obj/structure/cable/attached = null
 
@@ -102,12 +102,12 @@
 	if(!checkWirePower())
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
-		return 1
+		return TRUE
 	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
-	active = 1
+	active = TRUE
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 
@@ -117,7 +117,7 @@
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
-	active = 0
+	active = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 
@@ -129,13 +129,13 @@
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
 	. = ..()
 	if(.)
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
-		return 1
+		return TRUE
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
@@ -180,13 +180,13 @@
 	*/
 /obj/machinery/singularity_beacon/proc/checkWirePower()
 	if(!attached)
-		return 0
+		return FALSE
 	var/datum/powernet/PN = attached.get_powernet()
 	if(!PN)
-		return 0
+		return FALSE
 	if(PN.avail < 1500)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/singularity_beacon/process()
 	if(!active)

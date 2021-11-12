@@ -32,7 +32,7 @@ robot_fabricator
 
 /datum/AI_Module/proc/AIAltClickHandle(atom/A)
 	if(!is_type_in_list(A, valid_targets))
-		return 1
+		return TRUE
 
 /datum/AI_Module/proc/BuyedNewHandle()
 	return
@@ -250,11 +250,11 @@ robot_fabricator
 
 /datum/AI_Module/small/overload_machine/AIAltClickHandle(obj/machinery/M)
 	if(..())
-		return 1
+		return TRUE
 
 	if(!M.is_operational())
 		to_chat(usr, "<span class='red'>The machine is non-functional</span>")
-		return 1
+		return TRUE
 
 	uses--
 	M.audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
@@ -365,11 +365,11 @@ robot_fabricator
 
 /datum/AI_Module/small/upgrade_camera/AIAltClickHandle(obj/machinery/camera/sel_cam)
 	if(..())
-		return 1
+		return TRUE
 
 	if(sel_cam.isXRay() && sel_cam.isEmpProof())
 		to_chat(owner, "<span class='notice'>This camera is already upgraded</span>")
-		return 1
+		return TRUE
 
 	if(!sel_cam.isXRay())
 		sel_cam.upgradeXRay()

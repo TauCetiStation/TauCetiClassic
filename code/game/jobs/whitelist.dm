@@ -6,12 +6,12 @@ var/list/whitelist = list()
 
 /proc/check_whitelist(mob/M /*, rank*/)
 //	if(!whitelist)
-//		return 0
+//		return FALSE
 //	return ("[M.ckey]" in whitelist)
 	for (var/s in whitelist)
 		if(findtext(s,"[M.ckey]"))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /client/proc/get_whitelist()
 	set category = "Server"

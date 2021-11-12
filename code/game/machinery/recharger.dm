@@ -72,11 +72,11 @@
 /obj/machinery/recharger/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 1
+	return TRUE
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	if(charging)
 		charging.update_icon()

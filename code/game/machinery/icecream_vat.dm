@@ -127,7 +127,7 @@ var/list/ingredients_source = list(
 					else
 						add(MUCK, current_reagent.volume / 5)
 				R.reagents.clear_reagents()
-		return 1
+		return TRUE
 	else
 		..()
 

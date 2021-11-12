@@ -26,4 +26,4 @@
 	user.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 	feedback_add_details("changeling_powers","LFT")
 
-	return 1
+	return TRUE

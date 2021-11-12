@@ -20,7 +20,7 @@
 		turn_on()
 	active = !active
 	feedback_add_details("changeling_powers","CS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/chameleon_skin/process()
 	owner.alpha = max(0, owner.alpha - 25)

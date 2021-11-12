@@ -47,7 +47,7 @@
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	if(storedpda)
 		if(!blocked)

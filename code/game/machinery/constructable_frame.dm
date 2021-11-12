@@ -219,9 +219,9 @@
 						components += P
 						req_components[I]--
 						update_req_desc()
-						return 1
+						return TRUE
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
-				return 0
+				return FALSE
 
 
 //Machine Frame Circuit Boards

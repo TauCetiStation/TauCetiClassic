@@ -91,7 +91,7 @@
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/weapon/arm_blade
 	name = "Arm Blade"

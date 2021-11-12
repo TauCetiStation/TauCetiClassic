@@ -247,17 +247,17 @@
 /obj/machinery/bot/farmbot/proc/use_farmbot_item()
 	if ( !target )
 		mode = 0
-		return 0
+		return FALSE
 
 	if ( emagged && !ismob(target) ) // Humans are plants!
 		mode = 0
 		target = null
-		return 0
+		return FALSE
 
 	if ( !emagged && !istype(target,/obj/machinery/hydroponics) && !istype(target,/obj/structure/sink) ) // Humans are not plants!
 		mode = 0
 		target = null
-		return 0
+		return FALSE
 
 	if ( mode == FARMBOT_MODE_FERTILIZE )
 		//Find which fertilizer to use
@@ -296,21 +296,21 @@
 				options.Add(FARMBOT_MODE_WATER)
 			mode = pick(options)
 			target = human
-			return mode
-		return 0
+			return mode //I think this should be TRUE but idc
+		return FALSE
 	else
 		if ( setting_refill && tank && tank.reagents.total_volume < 100 )
 			for ( var/obj/structure/sink/source in view(7,src) )
 				target = source
 				mode = FARMBOT_MODE_REFILL
-				return 1
+				return TRUE
 		for ( var/obj/machinery/hydroponics/tray in view(7,src) )
 			var/newMode = GetNeededMode(tray)
 			if ( newMode )
 				mode = newMode
 				target = tray
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 
 /obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/hydroponics/tray)
 	if ( !tray.planted || tray.dead )
@@ -377,7 +377,7 @@
 	if ( !fert )
 		target = null
 		mode = 0
-		return 0
+		return FALSE
 
 	if ( emagged ) // Warning, hungry humans detected: throw fertilizer at them
 		spawn(0)
@@ -388,7 +388,7 @@
 		spawn (FARMBOT_EMAG_DELAY)
 			mode = 0
 			target = null
-		return 1
+		return FALSE
 
 	else // feed them plants~
 		var/obj/machinery/hydroponics/tray = target
@@ -405,7 +405,7 @@
 			target = null
 		spawn (FARMBOT_ANIMATION_TIME)
 			icon_state = "farmbot[src.on]"
-		return 1
+		return TRUE
 
 /obj/machinery/bot/farmbot/proc/weed()
 	icon_state = "farmbot_hoe"
@@ -444,7 +444,7 @@
 	if ( !tank || tank.reagents.total_volume < 1 )
 		mode = 0
 		target = null
-		return 0
+		return FALSE
 
 	icon_state = "farmbot_water"
 	spawn(FARMBOT_ANIMATION_TIME)

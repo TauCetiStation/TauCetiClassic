@@ -523,4 +523,4 @@
 		return ..()
 
 /obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE

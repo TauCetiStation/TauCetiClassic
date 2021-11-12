@@ -64,12 +64,12 @@
 		return ..() // for fun, for braindamage and fingerprints.
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
@@ -89,10 +89,10 @@
 		if(M.resting)
 			src.victim = M
 			icon_state = M.pulse ? "table2-active" : "table2-idle"
-			return 1
+			return TRUE
 	src.victim = null
 	icon_state = "table2-idle"
-	return 0
+	return FALSE
 
 /obj/machinery/optable/process()
 	check_victim()

@@ -133,7 +133,7 @@
 
 /obj/machinery/flasher_button/attack_hand(mob/user)
 	if(..() || active)
-		return 1
+		return TRUE
 
 	use_power(5)
 	user.SetNextMove(CLICK_CD_INTERACT)

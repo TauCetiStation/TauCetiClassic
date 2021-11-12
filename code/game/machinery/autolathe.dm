@@ -250,16 +250,16 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if(electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/autolathe/interact(mob/user)
 	if(shocked && !issilicon(user) && !isobserver(user))
@@ -274,7 +274,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return
 	if(busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
-		return 1
+		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
 		updateUsrDialog()
@@ -290,13 +290,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			if(stored_material[MAT_GLASS] >= 3750)
 				new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 			default_deconstruction_crowbar(I)
-			return 1
+			return TRUE
 		else if(is_wire_tool(I))
 			wires.interact(user)
-			return 1
+			return TRUE
 
 	if(stat)
-		return 1
+		return TRUE
 
 	var/amount = 1
 	var/obj/item/stack/stack
@@ -324,10 +324,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	if((stored_material[MAT_METAL] + m_amt > storage_capacity[MAT_METAL]) || (stored_material[MAT_GLASS] + g_amt > storage_capacity[MAT_GLASS]))
 		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
-		return 1
+		return TRUE
 	if(m_amt == 0 && g_amt == 0)
 		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
-		return 1
+		return TRUE
 
 	take_item(I, amount)
 	icon_state = "autolathe"

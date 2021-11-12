@@ -26,4 +26,4 @@
 	user.regenerate_icons()
 
 	feedback_add_details("changeling_powers","TS")
-	return 1
+	return TRUE

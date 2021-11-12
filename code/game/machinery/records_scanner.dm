@@ -45,7 +45,7 @@
 	if(.)
 		return
 	if(!ishuman(user) || lastuser == user.real_name)
-		return 1
+		return TRUE
 	use_power(500)
 	flick("scanner_on",src)
 	lastuser = user.real_name

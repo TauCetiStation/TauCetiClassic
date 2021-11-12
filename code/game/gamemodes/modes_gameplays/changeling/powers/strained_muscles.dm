@@ -31,7 +31,7 @@
 		changeling.strained_muscles = 0
 
 	feedback_add_details("changeling_powers","SANIC")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/strained_muscles/process()
 	if(active)

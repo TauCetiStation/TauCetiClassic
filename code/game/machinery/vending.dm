@@ -229,7 +229,7 @@
 					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
 					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
-			return;
+			return
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
@@ -592,7 +592,7 @@
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for(var/datum/data/vending_product/R in src.product_records)
 		if (R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -605,23 +605,23 @@
 		throw_item = new dump_path(src.loc)
 		break
 	if (!throw_item)
-		return 0
+		return FALSE
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
-	return 1
+	return TRUE
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /*
  * Vending machine types

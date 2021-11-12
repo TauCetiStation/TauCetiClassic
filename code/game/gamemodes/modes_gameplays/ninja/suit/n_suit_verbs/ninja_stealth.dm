@@ -42,8 +42,8 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/space/space_ninja/proc/HideHuds(mob/living/target)
 	var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
@@ -76,5 +76,5 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return 1
-	return 0
+		return TRUE
+	return FALSE

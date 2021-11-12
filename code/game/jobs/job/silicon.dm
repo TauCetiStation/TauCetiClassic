@@ -18,7 +18,7 @@
 	if(visualsOnly)
 		return
 
-	return 1
+	return TRUE
 
 /datum/job/ai/is_position_available()
 	return (empty_playable_ai_cores.len != 0)
@@ -39,9 +39,9 @@
 	give_loadout_items = FALSE
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)	return FALSE
 
 	if(visualsOnly)
 		return
 
-	return 1
+	return TRUE

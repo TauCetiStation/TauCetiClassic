@@ -318,7 +318,7 @@
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_RAPID)
 	switch(state)
 		if(1)

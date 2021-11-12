@@ -898,11 +898,11 @@ var/list/turret_icons
 /obj/machinery/porta_turret_construct/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 0
+	return FALSE
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(build_step)
 		if(4)

@@ -97,11 +97,11 @@
 /datum/job/proc/player_old_enough(client/C)
 	if(config.use_ingame_minutes_restriction_for_jobs)
 		if(available_in_real_minutes(C) == 0)
-			return 1	//Available in 0 minutes = available right now = player is old enough to play.
+			return TRUE	//Available in 0 minutes = available right now = player is old enough to play.
 	else
 		if(available_in_days(C) == 0)
-			return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+			return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	return FALSE
 
 /datum/job/proc/is_species_permitted(species)
 	if(!config.use_alien_job_restriction)

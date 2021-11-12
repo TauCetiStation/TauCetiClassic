@@ -174,7 +174,7 @@ var/bomb_set
 	if (!extended)
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-			return 1
+			return TRUE
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
@@ -228,7 +228,7 @@ var/bomb_set
 		return
 	if (!ishuman(usr))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-		return 1
+		return TRUE
 
 	if (src.deployable)
 		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")

@@ -24,7 +24,7 @@
 	domutcheck(user, null)
 
 	feedback_add_details("changeling_powers","TR")
-	return 1
+	return TRUE
 
 /datum/role/changeling/proc/select_dna(prompt, title)
 	var/list/names = list()

@@ -30,7 +30,7 @@
 		var/turf/location = src.loc
 		if (isturf(location))
 			location.hotspot_expose(1000, 500)
-	return 1
+	return TRUE
 
 /obj/machinery/igniter/atom_init()
 	. = ..()
@@ -105,7 +105,7 @@
 	var/turf/location = loc
 	if (isturf(location))
 		location.hotspot_expose(1000, 500)
-	return 1
+	return TRUE
 
 /obj/machinery/sparker/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -122,7 +122,7 @@
 	if(.)
 		return
 	if(active)
-		return 1
+		return TRUE
 
 	use_power(5)
 	user.SetNextMove(CLICK_CD_INTERACT)

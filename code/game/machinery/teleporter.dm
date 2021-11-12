@@ -136,7 +136,7 @@
 		return
 	if(!power_station.teleporter_hub)
 		return
-	return 1
+	return TRUE
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null

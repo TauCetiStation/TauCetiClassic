@@ -22,7 +22,7 @@
 	//user.status_flags &= ~(FAKEDEATH)
 	//user.update_canmove()
 	feedback_add_details("changeling_powers","CR")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
 	if(NOCLONE in user.mutations)

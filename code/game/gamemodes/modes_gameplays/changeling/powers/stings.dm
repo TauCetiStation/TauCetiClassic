@@ -36,21 +36,21 @@
 
 /obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())
-		return
+		return FALSE
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!C.chosen_sting)
 		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
-		return
+		return FALSE
 	if(!isturf(user.loc))
-		return
+		return FALSE
 	if(!AStar(user, target.loc, /turf/proc/Distance, C.sting_range, simulated_only = FALSE))
-		return //hope this ancient magic still works
+		return FALSE //hope this ancient magic still works
 	if(ischangeling(target))
 		sting_feedback(user,target)
 		take_chemical_cost(C)
-		return
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/living/target)
 	if(!target)
@@ -63,11 +63,11 @@
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	//	add_logs(user, target, "unsuccessfully stung")
 	target.log_combat(user, "stinged with [name]")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)
 	if(!target)
-		return 1
+		return TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit)
@@ -78,7 +78,7 @@
 				var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 				C.chem_charges -= rand(5,10)
 				H.drip(10)
-				return 1
+				return TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
@@ -96,9 +96,8 @@
 			var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 			C.chem_charges -= rand(5,10)
 
-			return 1
-		else
-			return 0
+			return TRUE
+		return FALSE
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -110,12 +109,12 @@
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 		target.reagents.add_reagent("ice", 30)
 	feedback_add_details("changeling_powers","CS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
@@ -127,12 +126,12 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	spawn(rand(300,600))
 		if(target)
 			target.hallucination = max(400, target.hallucination)
 	feedback_add_details("changeling_powers","HS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
@@ -163,12 +162,12 @@
 		return
 	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	target.visible_message("<span class='warning'>[target] transforms!</span>")
@@ -177,7 +176,7 @@
 	domutcheck(target, null)
 	target.UpdateAppearance()
 	feedback_add_details("changeling_powers","TS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -195,7 +194,7 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
 	target.dna.real_name = target.real_name
@@ -210,7 +209,7 @@
 
 	user.changeling_update_languages(changeling.absorbed_languages)
 	feedback_add_details("changeling_powers","ED")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/silence
 	name = "Silence Sting"
@@ -222,13 +221,13 @@
 
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
 	target.sdisabilities |= DEAF
 	spawn(300)	target.sdisabilities &= ~DEAF
 	target.silent += 30
 	feedback_add_details("changeling_powers","MS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
@@ -241,14 +240,14 @@
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.disabilities |= NEARSIGHTED
 	spawn(300)	target.disabilities &= ~NEARSIGHTED
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
@@ -260,7 +259,7 @@
 
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
-		return 0
+		return FALSE
 	if(HAS_TRAIT(target, TRAIT_FAT))
 		target.overeatduration = 0
 		target.nutrition -= 100
@@ -270,4 +269,4 @@
 		target.nutrition += 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel blubbery.</span>")
 	feedback_add_details("changeling_powers","US")
-	return 1
+	return TRUE

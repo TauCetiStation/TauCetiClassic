@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
+	if(!height || air_group) return FALSE
 	else return ..()
 
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
@@ -138,7 +138,7 @@
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active) return 0 //If it's already turned on, how did this get called?
+	if(active) return FALSE //If it's already turned on, how did this get called?
 
 	src.active = 1
 	update_icon()
@@ -149,7 +149,7 @@
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active) return 0 //If it's already off, how did this get called?
+	if(!active) return FALSE //If it's already off, how did this get called?
 
 	src.active = 0
 	update_icon()
@@ -206,10 +206,10 @@
 		return
 	if(locked && !IsAdminGhost(user))
 		to_chat(user, "The machine is locked, you are unable to use it.")
-		return 1
+		return TRUE
 	if(is_open)
 		to_chat(user, "The panel must be closed before operating this machine.")
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.active)
 		user.visible_message("<span class='notice'>[bicon(src)] [user] deactivated the shield generator.</span>", \
@@ -300,7 +300,7 @@
 	flags = CONDUCT
 	use_power = NO_POWER_USE
 	var/active = FALSE
-	var/power = 0
+	var/power = FALSE
 	var/state = 0
 	var/steps = 0
 	var/last_check = 0
@@ -313,8 +313,8 @@
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
-		power = 0
-		return 0
+		power = FALSE
+		return FALSE
 	var/turf/T = src.loc
 
 	var/obj/structure/cable/C = T.get_cable_node()
@@ -322,16 +322,16 @@
 	if(C)	PN = C.powernet		// find the powernet of the connected cable
 
 	if(!PN)
-		power = 0
-		return 0
+		power = FALSE
+		return FALSE
 
 	var/surplus = max(PN.avail - PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
-		power = 0
-		return 0
+		power = FALSE
+		return FALSE
 	else
-		power = 1	// IVE GOT THE POWER!
+		power = TRUE	// IVE GOT THE POWER!
 		if(PN) //runtime errors fixer. They were caused by PN.load trying to access missing network in case of working on stored power.
 			storedpower += shieldload
 			PN.load += shieldload //uses powernet power.
@@ -344,13 +344,13 @@
 		return
 	if(state != 1)
 		to_chat(user, "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>")
-		return 1
+		return TRUE
 	if(src.locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
-		return 1
+		return TRUE
 	if(power != 1)
 		to_chat(user, "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>")
-		return 1
+		return TRUE
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.active >= 1)
@@ -597,7 +597,7 @@
 
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		if(prob(20))

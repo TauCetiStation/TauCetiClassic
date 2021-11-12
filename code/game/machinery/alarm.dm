@@ -258,10 +258,10 @@
 	var/turf/simulated/location = loc
 
 	if(!istype(location))
-		return 0
+		return FALSE
 
 	if(!breach_detection)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -270,9 +270,9 @@
 	if (environment_pressure <= pressure_levels[1])		//low pressures
 		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
 			playsound(src, 'sound/machines/alarm_air.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 /obj/machinery/alarm/proc/master_is_operating()
@@ -285,8 +285,8 @@
 	for (var/obj/machinery/alarm/AA in alarm_area)
 		if (!(AA.stat & (NOPOWER|BROKEN)))
 			alarm_area.master_air_alarm = AA
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/alarm/proc/get_danger_level(current_value, list/danger_levels)
 	if((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
@@ -372,7 +372,7 @@
 
 /obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -385,7 +385,7 @@
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 //			world << text("Signal [] Broadcasted to []", command, target)
 
-	return 1
+	return TRUE
 
 /obj/machinery/alarm/proc/apply_mode()
 	//propagate mode to other air alarms in the area
@@ -451,16 +451,16 @@
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 ///////////////
 //END HACKING//
 ///////////////
