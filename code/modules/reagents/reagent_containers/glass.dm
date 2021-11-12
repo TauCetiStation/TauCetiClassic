@@ -227,6 +227,53 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
 	flags = OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/integrated
+	name = "integrated beaker"
+	desc = "An integrated beaker." //not very creative, right?
+	icon_state = "beakerlarge"
+	volume = 150
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
+	flags = OPENCONTAINER
+	var/atom/integrated_into = null
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/atom_init()
+	. = ..()
+	if(istype(loc, /obj/item/weapon/robot_module))
+		integrated_into = loc.loc
+	else
+		integrated_into = loc
+	if(isrobot(integrated_into))
+		RegisterSignal(src, COMSIG_HAND_DROP_ITEM, .proc/drop_item)
+	else
+		RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/drop_item) //BEWARE: Not sure that this will work with non-robots
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/Destroy()
+	if(isrobot(integrated_into))
+		UnregisterSignal(integrated_into, list(COMSIG_HAND_DROP_ITEM,COMSIG_MOVABLE_MOVED))
+	else
+		UnregisterSignal(integrated_into, list(COMSIG_ITEM_DROPPED,COMSIG_MOVABLE_MOVED)) //BEWARE: Not sure that this will work with non-robots
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/drop_item()
+	RegisterSignal(integrated_into, COMSIG_MOVABLE_MOVED, .proc/move_into_integrated)
+	return TRUE
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/move_into_integrated(atom/movable/I, atom/oldLoc, dir)
+	var/dist = get_dist(integrated_into,get_turf(loc))
+	if(dist < 0 || dist > 1)
+		UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
+		if(istype(loc,/obj/machinery))
+			var/obj/machinery/M = loc
+			M.Eject()
+		src.forceMove(integrated_into)
+		if(ismob(integrated_into))
+			var/mob/M = integrated_into
+			to_chat(M, "<span class='notice'>Your integrated beaker gets pulled back inside.</span>")
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/Moved(atom/OldLoc, Dir)
+	if(OldLoc != integrated_into && loc == integrated_into)
+		UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
+
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions."

@@ -225,8 +225,6 @@
 #define COMSIG_HAND_DROP_ITEM "hand_drop_item"
 /// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
 #define COMSIG_HAND_PUT_IN "hand_put_in"
-/// from mob/living/silicon/robot/get_active_hand(): (mob/user)
-#define COMSIG_HAND_GET_ITEM "hand_get_item"
 
 //Mood (/datum/component/mood) signals
 ///called when you send a mood event from anywhere in the code.

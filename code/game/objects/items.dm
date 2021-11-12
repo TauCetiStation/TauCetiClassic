@@ -1028,3 +1028,6 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/proc/get_alternate_item()
+	return src

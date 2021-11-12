@@ -541,3 +541,6 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
+
+/obj/machinery/proc/Eject()
+	return

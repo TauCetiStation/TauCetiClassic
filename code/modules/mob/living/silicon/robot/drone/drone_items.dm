@@ -25,7 +25,9 @@
 		/obj/item/weapon/tank,
 		/obj/item/weapon/circuitboard,
 		/obj/item/weapon/light/tube,
-		/obj/item/weapon/light/bulb
+		/obj/item/weapon/light/bulb,
+		/obj/item/stack/tile/light,
+		/obj/item/stack/light_w
 		)
 
 	//Item currently being held.
@@ -38,14 +40,18 @@
 	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
 	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
 	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
-	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
 
 /obj/item/weapon/gripper/Destroy()
 	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
-                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
+                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN))
 
 	return ..()
 
+
+/obj/item/weapon/gripper/get_alternate_item()
+	if(wrapped)
+		return wrapped
+	return src
 
 /obj/item/weapon/gripper/proc/is_hand(datum/source, atom/T, mob/user, params)
 	return TRUE
@@ -124,12 +130,6 @@
 
 	to_chat(user, "<span class='warning'>Your gripper cannot hold \the [I].</span>")
 	return FALSE
-
-/obj/item/weapon/gripper/proc/get_item(datum/source, mob/user)
-	if(wrapped)
-		return wrapped
-	return src //return src to signal COMSIG_HAND_ATTACK
-
 
 /obj/item/weapon/gripper/paperwork
 	name = "paperwork gripper"

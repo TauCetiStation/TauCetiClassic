@@ -4,9 +4,11 @@
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
 /mob/living/silicon/robot/get_active_hand()
 	if(module_active)
-		var/obj/item/W = SEND_SIGNAL(module_active, COMSIG_HAND_GET_ITEM)
+		var/obj/item/W = module_active.get_alternate_item()
 		if(W)
-			return W
+			if(W.loc == src)
+				return W
+			return
 	return module_active
 
 // I'd rather do this then have something broken.
@@ -41,13 +43,25 @@
 		return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
 	return FALSE
 
-/mob/living/silicon/robot/remove_from_mob(obj/O, atom/T)
+/mob/living/silicon/robot/remove_from_mob(obj/O, atom/target)
 	if(!O)
 		return FALSE
-	if(!module_active || SEND_SIGNAL(module_active, COMSIG_HAND_GET_ITEM) != O)
+	if(!module_active || module_active.get_alternate_item() != O)
 		return FALSE
 
-	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
+	//Shouldn't break anything..?
+	if(istype(O, /obj/item))
+		if(!target)
+			target = loc
+
+		var/obj/item/I = O
+
+		if(I.loc != target)
+			I.forceMove(target)
+
+		I.dropped(src)
+
+	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, target, src)
 
 /mob/living/silicon/robot/u_equip(obj/W)
 	if(!W || (W != module_active))

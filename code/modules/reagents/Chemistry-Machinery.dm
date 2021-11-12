@@ -148,17 +148,24 @@
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
 		if("eject_beaker")
-			. = TRUE
-			if(!beaker)
-				return
+			return Eject()
 
-			beaker.forceMove(loc)
-			beaker = null
+/obj/machinery/chem_dispenser/Eject()
+	. = TRUE
+	if(!beaker)
+		return
 
-			if(iscarbon(usr))
-				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+		beaker.forceMove(B.integrated_into)
+	else
+		beaker.forceMove(loc)
+	beaker = null
 
-			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+	if(iscarbon(usr))
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
@@ -562,11 +569,7 @@
 			Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
 		else if(href_list["eject"])
-			if(beaker)
-				beaker.loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				icon_state = "mixer0"
+			Eject()
 
 		else if(href_list["createpill"]) //Also used for condiment packs.
 			if(reagents.total_volume == 0)
@@ -596,6 +599,17 @@
 					reagents.trans_to(P,vol_each)
 
 	updateUsrDialog()
+
+/obj/machinery/chem_master/Eject()
+	if(beaker)
+		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+			beaker.forceMove(B.integrated_into)
+		else
+			beaker.forceMove(loc)
+		beaker = null
+		reagents.clear_reagents()
+		icon_state = "mixer0"
 
 /obj/machinery/chem_master/ui_interact(mob/user)
 	if(!(user.client in has_sprites))
@@ -703,45 +717,52 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 
-/obj/machinery/chem_master/constructable/attackby(obj/item/B, mob/user, params)
+/obj/machinery/chem_master/constructable/Eject()
+	if(beaker)
+		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+			beaker.forceMove(B.integrated_into)
+		else
+			beaker.forceMove(loc)
+		beaker = null
+		reagents.clear_reagents()
+	if(loaded_pill_bottle)
+		loaded_pill_bottle.loc = src.loc
+		loaded_pill_bottle = null
 
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
-		if(beaker)
-			beaker.loc = src.loc
-			beaker = null
-			reagents.clear_reagents()
-		if(loaded_pill_bottle)
-			loaded_pill_bottle.loc = src.loc
-			loaded_pill_bottle = null
+/obj/machinery/chem_master/constructable/attackby(obj/item/I, mob/user, params)
+
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", I))
+		Eject()
 		return
 
-	if(exchange_parts(user, B))
+	if(exchange_parts(user, I))
 		return
 
 	if(panel_open)
-		if(iscrowbar(B))
-			default_deconstruction_crowbar(B)
+		if(iscrowbar(I))
+			default_deconstruction_crowbar(I)
 			return 1
 		else
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>")
 			return 1
 
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
-		src.beaker = B
-		user.drop_from_inventory(B, src)
+		src.beaker = I
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
+	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
 		if(src.loaded_pill_bottle)
 			to_chat(user, "<span class='alert'>A pill bottle is already loaded into the machine.</span>")
 			return
-		src.loaded_pill_bottle = B
-		user.drop_from_inventory(B, src)
+		src.loaded_pill_bottle = I
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		updateUsrDialog()
 
@@ -785,6 +806,13 @@
 			update_power_use()
 	update_power_use()
 
+/obj/machinery/computer/pandemic/Eject()
+	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+		beaker.forceMove(B.integrated_into)
+	else
+		beaker.forceMove(loc)
+	beaker = null
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	. = ..()
@@ -853,8 +881,7 @@
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 	else if (href_list["eject"])
-		beaker.loc = src.loc
-		beaker = null
+		Eject()
 		icon_state = "mixer0"
 	else if(href_list["clear"])
 		src.temphtml = ""
@@ -972,19 +999,18 @@
 /obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
-		if(src.beaker)
+		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
 
-		src.beaker =  I
+		beaker =  I
 		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(isscrewdriver(I))
-		if(src.beaker)
-			beaker.loc = get_turf(src)
+		Eject()
 		..()
 		return
 
@@ -1193,7 +1219,11 @@
 		return
 	if (!beaker)
 		return
-	beaker.loc = src.loc
+	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+		beaker.forceMove(B.integrated_into)
+	else
+		beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 

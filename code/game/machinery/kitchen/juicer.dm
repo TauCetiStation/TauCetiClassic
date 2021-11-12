@@ -125,7 +125,11 @@
 	if (!beaker)
 		return
 	src.verbs -= /obj/machinery/juicer/verb/detach
-	beaker.loc = src.loc
+	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+		beaker.forceMove(B.integrated_into)
+	else
+		beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 

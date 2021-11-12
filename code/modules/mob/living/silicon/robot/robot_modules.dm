@@ -126,7 +126,7 @@
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/splint(src, 10)
-	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/integrated(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
@@ -358,7 +358,7 @@
 
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) //To fuck chemistry up
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/integrated(src) //To fuck chemistry up
 
 	modules += new /obj/item/device/depth_scanner(src)
 	modules += new /obj/item/weapon/pickaxe/cyb(src)

@@ -221,7 +221,11 @@
 		return
 	if(beaker)
 		filtering = 0
-		beaker.loc = usr.loc
+		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+			beaker.forceMove(B.integrated_into)
+		else
+			beaker.forceMove(usr.loc)
 		beaker = null
 	add_fingerprint(usr)
 	return
@@ -324,7 +328,11 @@
 	if(!state_open && !panel_open)
 		..()
 		if(beaker)
-			beaker.loc = src
+			if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
+				var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
+				beaker.forceMove(B.integrated_into)
+			else
+				beaker.forceMove(src)
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
