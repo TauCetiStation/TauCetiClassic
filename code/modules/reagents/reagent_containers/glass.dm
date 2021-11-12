@@ -265,7 +265,7 @@
 		if(istype(loc,/obj/machinery))
 			var/obj/machinery/M = loc
 			M.Eject()
-		src.forceMove(integrated_into)
+		forceMove(integrated_into)
 		if(ismob(integrated_into))
 			var/mob/M = integrated_into
 			to_chat(M, "<span class='notice'>Your integrated beaker gets pulled back inside.</span>")
