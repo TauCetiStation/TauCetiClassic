@@ -67,7 +67,7 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted |= specie
 
 	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
+		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
 			species_restricted = null
 		return
 
@@ -104,7 +104,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 			global.icon_state_allowed_cache[cache_key] = TRUE
 
-	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
+	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
 		species_restricted = null
 
 //BS12: Species-restricted clothing check.
@@ -115,17 +115,21 @@ var/global/list/icon_state_allowed_cache = list()
 		return 0
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
+
 		var/wearable = null
-		var/exclusive = ("exclude" in species_restricted)
+		var/exclusive = null
 		var/mob/living/carbon/human/H = M
+
+		if("exclude" in species_restricted)
+			exclusive = 1
 
 		if(H.species)
 			if(exclusive)
 				if(!(H.species.name in species_restricted))
-					wearable = TRUE
+					wearable = 1
 			else
 				if(H.species.name in species_restricted)
-					wearable = TRUE
+					wearable = 1
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
@@ -180,7 +184,6 @@ var/global/list/icon_state_allowed_cache = list()
 
 
 /obj/item/clothing/MouseDrop(obj/over_object)
-	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
@@ -188,36 +191,23 @@ var/global/list/icon_state_allowed_cache = list()
 			return
 		if (!over_object)
 			return
-		if (usr.incapacitated())
-			return
-		add_fingerprint(usr)
-		if(!equip_time)
+
+		if (!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
-					if(M.unEquip(src))
-						M.put_in_r_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
 				if("l_hand")
-					if(M.unEquip(src))
-						M.put_in_l_hand(src)
-		else
-			switch(over_object.name)
-				if("r_hand")
-					if(slot_equipped == SLOT_L_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_r_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
-				if("l_hand")
-					if(slot_equipped == SLOT_R_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_l_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
@@ -261,7 +251,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/ears/offear
 	name = "Other ear"
-	w_class = SIZE_BIG
+	w_class = ITEM_SIZE_HUGE
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
@@ -273,7 +263,7 @@ var/global/list/icon_state_allowed_cache = list()
 	desc = O.desc
 	icon = O.icon
 	icon_state = O.icon_state
-	set_dir(O.dir)
+	dir = O.dir
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -286,7 +276,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_FLAGS_EYES
 	var/vision_flags = 0
@@ -294,16 +284,7 @@ var/global/list/icon_state_allowed_cache = list()
 	var/invisa_view = 0
 	// Standart hud type
 	var/list/hud_types
-	// Default huds for fix
-	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
-	var/lighting_alpha = null
-
-/obj/item/clothing/glasses/atom_init()
-	. = ..()
-	if(hud_types)
-		def_hud_types = hud_types
-
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -320,7 +301,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = FALSE
@@ -352,7 +333,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
-	w_class = SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 	var/blockTracking = 0
 
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
@@ -429,7 +410,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_OCLOTHING
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_NORMAL
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
@@ -443,33 +424,30 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | PHORONGUARD
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
-	pierce_protection = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
-
+	
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = SIZE_NORMAL//bulky item
-	throw_range = 2
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = PHORONGUARD | BLOCKUNIFORM
+	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM
 	flags_pressure = STOPS_PRESSUREDMAGE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 3
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
@@ -518,7 +496,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -531,8 +509,6 @@ BLIND     // can't see anything
 	var/rolled_down = 0
 	var/basecolor
 
-	var/fresh_laundered_until = 0
-
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
 
 /obj/item/clothing/under/emp_act(severity)
@@ -540,12 +516,6 @@ BLIND     // can't see anything
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.emplode(severity)
-
-/obj/item/clothing/under/equipped(mob/user, slot)
-	..()
-	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
-		fresh_laundered_until = world.time
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(istype(A))
@@ -615,7 +585,7 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_from_inventory(A, src)
+			user.drop_item()
 			accessories += A
 			A.on_attached(src, user)
 
@@ -651,9 +621,6 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(fresh_laundered_until > world.time)
-		to_chat(user, "It looks fresh and clean.")
-
 	switch(src.sensor_mode)
 		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")
@@ -739,12 +706,3 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()
-
-
-/obj/item/clothing/head/festive
-	name = "festive paper hat"
-	icon_state = "xmashat"
-	desc = "A crappy paper hat that you are REQUIRED to wear."
-	flags_inv = 0
-	body_parts_covered = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
