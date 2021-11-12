@@ -20,15 +20,15 @@
 
 /obj/effect/blob/factory/run_action()
 	if(spores.len >= max_spores)
-		return 0
+		return FALSE
 	if(spore_delay > world.time)
-		return 0
+		return FALSE
 
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation()
 
 	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
-	return 0
+	return FALSE
 
 
 /mob/living/simple_animal/hostile/blobspore
@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover, /obj/effect/blob))
-		return 1
+		return TRUE
 	return ..()
 
 /mob/living/simple_animal/hostile/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)

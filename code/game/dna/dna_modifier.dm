@@ -106,7 +106,7 @@
 	if(open)
 		if(panel_open)
 			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
-			return 0
+			return FALSE
 		open = 0
 		density = TRUE
 		for(var/mob/living/carbon/C in loc)
@@ -140,7 +140,7 @@
 										ghost.reenter_corpse()
 
 								break
-		return 1
+		return TRUE
 
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
@@ -161,7 +161,7 @@
 					occupant.client.perspective = MOB_PERSPECTIVE
 				occupant = null
 			icon_state = "[initial(icon_state)]_open"
-		return 1
+		return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/user)
 	if(user.incapacitated())
@@ -312,12 +312,12 @@
 
 /obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(obj/item/weapon/dnainjector/I, blk, datum/dna2/record/buffer)
 	var/pos = findtext(blk,":")
-	if(!pos) return 0
+	if(!pos) return FALSE
 	var/id = text2num(copytext(blk,1,pos))
-	if(!id) return 0
+	if(!id) return FALSE
 	I.block = id
 	I.buf = buffer
-	return 1
+	return TRUE
 
  /**
   * The ui_interact proc is used to open and update Nano UIs

@@ -110,7 +110,7 @@
 	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)
 	target.Drain()
-	return 1
+	return TRUE
 
 //Absorbs the target DNA.
 /datum/role/changeling/proc/absorb_dna(mob/living/carbon/T)

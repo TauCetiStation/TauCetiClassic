@@ -130,11 +130,11 @@ var/can_call_ert
 		sleep(600 * 3) // Minute * Number of Minutes
 
 
-/proc/trigger_armed_response_team(force = 0, objective_text)
+/proc/trigger_armed_response_team(force = FALSE, objective_text)
 	if(!can_call_ert && !force)
-		return 0
+		return FALSE
 	if(SSticker.ert_call_in_progress)
-		return 0
+		return FALSE
 
 	if(!objective_text)
 		objective_text = "Help the station crew"
@@ -151,7 +151,7 @@ var/can_call_ert
 		var/datum/announcement/centcomm/noert/announcement = new
 		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
-		return 0
+		return FALSE
 
 	var/datum/announcement/centcomm/yesert/announcement = new
 	announcement.play()
@@ -161,7 +161,7 @@ var/can_call_ert
 	ERT.forgeObjectives(objective_text)
 
 	VARSET_IN(SSticker, ert_call_in_progress, FALSE, 5 MINUTES) // Can no longer join the ERT.
-	return 1
+	return TRUE
 
 /client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
@@ -281,4 +281,4 @@ var/can_call_ert
 
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
-	return 1
+	return TRUE

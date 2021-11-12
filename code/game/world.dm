@@ -451,7 +451,7 @@ var/failed_db_connections = 0
 /proc/setup_database_connection()
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
-		return 0
+		return FALSE
 	if(!dbcon)
 		dbcon = new()
 
@@ -475,18 +475,18 @@ var/failed_db_connections = 0
 //optionally you can pass table names as args to check that they exist
 /proc/establish_db_connection(...)
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
-		return 0
+		return FALSE
 
 	if(!dbcon || !dbcon.IsConnected())
 		if(!setup_database_connection())
-			return 0
+			return FALSE
 
 	if(length(args))
 		for(var/tablename in args)
 			if(!dbcon.TableExists(tablename))
-				return 0
+				return FALSE
 
-	return 1
+	return TRUE
 
 #undef FAILED_DB_CONNECTION_CUTOFF
 

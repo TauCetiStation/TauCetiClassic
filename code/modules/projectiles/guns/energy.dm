@@ -57,7 +57,7 @@
 /obj/item/weapon/gun/energy/can_fire()
 	newshot()
 	if(chambered && chambered.BB)
-		return 1
+		return TRUE
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	if(ammo_type.len <= 1)

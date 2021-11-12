@@ -95,17 +95,17 @@ var/global/list/spawned_surprises = list()
 	turfs = get_area_turfs(/area/asteroid/mine/unexplored)
 
 	if(!turfs.len)
-		return 0
+		return FALSE
 
 	while(!valid)
 		valid = 1
 		sanity++
 		if(sanity > 100)
-			return 0
+			return FALSE
 
 		T=pick(turfs)
 		if(!T)
-			return 0
+			return FALSE
 
 		var/list/surroundings = list()
 
@@ -131,7 +131,7 @@ var/global/list/spawned_surprises = list()
 			continue
 
 	if(!T)
-		return 0
+		return FALSE
 
 	room = spawn_room(T,size,size,,,1)
 
@@ -153,4 +153,4 @@ var/global/list/spawned_surprises = list()
 			spawned_surprises.Add(surprise)
 			new surprise(T)
 
-	return 1
+	return TRUE

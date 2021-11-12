@@ -104,7 +104,7 @@
 
 /obj/item/weapon/gun/dartgun/can_fire()
 	if(!cartridge)
-		return 0
+		return FALSE
 	else
 		return cartridge.darts
 

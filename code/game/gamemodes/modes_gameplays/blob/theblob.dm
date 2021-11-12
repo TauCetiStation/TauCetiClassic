@@ -37,8 +37,8 @@
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0))	return 0
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-	return 0
+	if(istype(mover) && mover.checkpass(PASSBLOB))	return TRUE
+	return FALSE
 
 
 /obj/effect/blob/process()
@@ -62,7 +62,7 @@
 /obj/effect/blob/proc/RegenHealth()
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
-		return 0
+		return FALSE
 	if(health < initial(health))
 		health++
 		update_icon()
@@ -104,7 +104,7 @@
 
 /obj/effect/blob/proc/run_action()
 	PulseAnimation()
-	return 0
+	return FALSE
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
@@ -119,7 +119,7 @@
 			if(!(locate(/obj/effect/blob) in T))	break
 			else	T = null
 
-	if(!T)	return 0
+	if(!T)	return FALSE
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
 	B.density = TRUE
 	if(T.Enter(B,src))//Attempt to move into the tile
@@ -132,7 +132,7 @@
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
-	return 1
+	return TRUE
 
 /obj/effect/blob/ex_act(severity)
 	var/damage = 150
@@ -150,7 +150,7 @@
 		 health -= (Proj.damage/fire_resist)
 
 	update_icon()
-	return 0
+	return FALSE
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()

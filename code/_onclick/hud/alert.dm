@@ -443,7 +443,7 @@
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
 			mymob.client.screen -= alerts[alerts[i]]
-		return 1
+		return TRUE
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
@@ -463,7 +463,7 @@
 				. = ""
 		alert.screen_loc = .
 		mymob.client.screen |= alert
-	return 1
+	return TRUE
 
 /mob
 	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly

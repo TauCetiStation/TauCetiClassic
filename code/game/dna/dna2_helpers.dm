@@ -172,9 +172,9 @@
 		H.update_body()
 		H.update_hair()
 
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)

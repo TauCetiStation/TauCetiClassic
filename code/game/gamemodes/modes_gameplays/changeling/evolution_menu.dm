@@ -364,7 +364,7 @@ var/list/sting_paths
 	for(var/language in languages)
 		if(!(language in C.absorbed_languages))
 			C.absorbed_languages += language
-	return 1
+	return TRUE
 
 //Used to dump the languages from the changeling datum into the actual mob.
 /mob/proc/changeling_update_languages(updated_languages)
@@ -402,5 +402,5 @@ var/list/sting_paths
 /datum/role/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
 		if(power.name == P.name)
-			return 1
-	return 0
+			return TRUE
+	return FALSE

@@ -151,7 +151,7 @@
 
 /atom/proc/check_eye(user)
 	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
-		return 1
+		return TRUE
 	return
 
 /atom/proc/on_reagent_change()
@@ -187,10 +187,10 @@
 	return TRUE
 
 /atom/proc/allow_drop()
-	return 1
+	return TRUE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 /atom/proc/HasProximity(atom/movable/AM)
 	return
@@ -214,9 +214,9 @@
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
 		if(istype(src.loc, container))
-			return 1
+			return TRUE
 	else if(src in container)
-		return 1
+		return TRUE
 	return
 
 /*
@@ -343,17 +343,17 @@
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
-			return 0
+			return FALSE
 		if (H.gloves)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-			return 0
+			return FALSE
 		if (!( src.fingerprints ))
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-			return 1
+			return TRUE
 	else
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
@@ -376,14 +376,14 @@
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
-			return 0		//Now, lets get to the dirty work.
+			return FALSE		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 
 		if(H.species.flags[NO_FINGERPRINT]) // They don't leave readable fingerprints, but admins gotta know.
 			fingerprintshidden += "(Specie has no fingerprints) Real name: [H.real_name], Key: [H.key]"
 			fingerprintslast = H.key
-			return 0
+			return FALSE
 
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
@@ -402,9 +402,9 @@
 		if(!ignoregloves)
 			if(H.gloves != src)
 				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
+					return FALSE
 				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
+					return FALSE
 
 		//More adminstuffz
 		if(fingerprintslast != H.key)
@@ -457,7 +457,7 @@
 			fingerprints[full_print] = stars(full_print, rand(0, 20))	//Initial touch, not leaving much evidence the first time.
 
 
-		return 1
+		return TRUE
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
@@ -490,15 +490,15 @@
 		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
 
 
-//returns 1 if made bloody, returns 0 otherwise
+//returns TRUE if made bloody, returns FALSE otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
+	if(flags & NOBLOODY) return FALSE
 	.=1
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
-		return 0
+		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
@@ -526,15 +526,15 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(uncleanable)
-		return 0
+		return FALSE
 	SEND_SIGNAL(src, COMSIG_ATOM_CLEAN_BLOOD)
 	src.germ_level = 0
 	if(dirt_overlay)
 		dirt_overlay = null
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
@@ -554,9 +554,9 @@
 
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag

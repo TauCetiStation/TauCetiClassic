@@ -2,8 +2,8 @@
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity = TRUE, arespect_entrydir=null, aentrydir=null, checkspace=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/teleport
 	var/atom/movable/teleatom //atom to teleport
@@ -23,16 +23,16 @@
 
 /datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null, aentrydir=null, checkspace=null)
 	if(!initTeleport(arglist(args)))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir,aentrydir,checkspace)
 	if(!setTeleatom(ateleatom))
-		return 0
+		return FALSE
 	if(!setDestination(adestination))
-		return 0
+		return FALSE
 	if(!setPrecision(aprecision))
-		return 0
+		return FALSE
 	if(adest_checkdensity)
 		dest_checkdensity = adest_checkdensity
 	if(checkspace)
@@ -44,53 +44,53 @@
 	setEffects(aeffectin,aeffectout)
 	setForceTeleport(afteleport)
 	setSounds(asoundin,asoundout)
-	return 1
+	return TRUE
 
 //must succeed
 /datum/teleport/proc/setPrecision(aprecision)
 	if(isnum(aprecision))
 		precision = aprecision
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //must succeed
 /datum/teleport/proc/setDestination(atom/adestination)
 	if(istype(adestination))
 		destination = adestination
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //must succeed in most cases
 /datum/teleport/proc/setTeleatom(atom/movable/ateleatom)
 	if(istype(ateleatom, /obj/effect) && !istype(ateleatom, /obj/effect/dummy/chameleon))
 		qdel(ateleatom)
-		return 0
+		return FALSE
 	if(istype(ateleatom))
 		teleatom = ateleatom
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //custom effects must be properly set up first for instant-type teleports
 //optional
 /datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null,datum/effect/effect/system/aeffectout=null)
 	effectin = istype(aeffectin) ? aeffectin : null
 	effectout = istype(aeffectout) ? aeffectout : null
-	return 1
+	return TRUE
 
 //optional
 /datum/teleport/proc/setForceTeleport(afteleport)
 	force_teleport = afteleport
-	return 1
+	return TRUE
 
 //optional
 /datum/teleport/proc/setSounds(asoundin=null,asoundout=null)
 	soundin = isfile(asoundin) ? asoundin : null
 	soundout = isfile(asoundout) ? asoundout : null
-	return 1
+	return TRUE
 
 //placeholder
 /datum/teleport/proc/teleportChecks()
-	return 1
+	return TRUE
 
 /datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
 	if(location)
@@ -113,13 +113,13 @@
 		var/list/posturfs = list()
 		var/turf/center = get_turf(destination)
 		if(!center)
-			return 0
+			return FALSE
 		if(respect_entrydir)
 			var/turf/T = get_step(destination, entrydir)
 			if(!density_checks(T))
-				return 0
+				return FALSE
 			if(dest_checkspace && istype(T, /turf/space))
-				return 0
+				return FALSE
 			posturfs += T
 		else
 			for(var/turf/T in RANGE_TURFS(precision,center))
@@ -132,10 +132,10 @@
 	else
 		destturf = get_turf(destination)
 		if(istype(destturf, /turf/space) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
-			return 0
+			return FALSE
 
 	if(!destturf || !curturf)
-		return 0
+		return FALSE
 
 	playSpecials(curturf,effectin,soundin)
 
@@ -154,12 +154,12 @@
 			L.buckled.unbuckle_mob()
 
 	teleatom.newtonian_move(entrydir)
-	return 1
+	return TRUE
 
 /datum/teleport/proc/teleport()
 	if(teleportChecks())
 		return doTeleport()
-	return 0
+	return FALSE
 
 /datum/teleport/proc/density_checks(turf/T)
 	var/turf/center = get_turf(destination)
@@ -186,8 +186,8 @@
 /datum/teleport/instant/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	if(..())
 		if(teleport())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
@@ -196,7 +196,7 @@
 		aeffect.set_up(5, 1, teleatom)
 		effectin = effectin || aeffect
 		effectout = effectout || aeffect
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -211,4 +211,4 @@
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
-	return 1
+	return TRUE

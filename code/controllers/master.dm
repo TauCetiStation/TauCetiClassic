@@ -269,7 +269,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//debug
 		if (make_runtime)
 			var/datum/controller/subsystem/SS
-			SS.can_fire = 0
+			SS.can_fire = FALSE
 
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick + (Failsafe.processing_interval * 5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
@@ -332,7 +332,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS = thing
 		if (SS.state != SS_IDLE)
 			continue
-		if (SS.can_fire <= 0)
+		if (SS.can_fire <= FALSE)
 			continue
 		if (SS.next_fire > world.time)
 			continue

@@ -17,5 +17,5 @@
 	return
 
 /obj/effect/blob/shield/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-	return 0
+	if(istype(mover) && mover.checkpass(PASSBLOB))	return TRUE
+	return FALSE

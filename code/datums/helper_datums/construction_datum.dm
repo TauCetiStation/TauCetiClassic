@@ -1,4 +1,5 @@
 #define FORWARD -1
+#define NONE 0
 #define BACKWARD 1
 
 /datum/construction
@@ -31,17 +32,17 @@
 	if(valid_step)
 		if(custom_action(valid_step, used_atom, user))
 			next_step()
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/construction/proc/is_right_key(atom/used_atom) // returns current step num if used_atom is of the right type.
 	var/list/L = steps[steps.len]
 	if(istype(used_atom, L["key"]))
 		return steps.len
-	return 0
+	return FALSE
 
 /datum/construction/proc/custom_action(step, used_atom, user)
-	return 1
+	return TRUE
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
@@ -52,8 +53,8 @@
 				listclearnulls(steps);
 				if(!steps.len)
 					spawn_result()
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/construction/proc/spawn_result()
 	if(result_type)
@@ -72,11 +73,11 @@
 		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
-			return 0
+			return FALSE
 	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 
 /datum/construction/mecha/action(atom/used_atom,mob/user)
@@ -106,15 +107,17 @@
 		return FORWARD //to the first step -> forward
 	else if(L["backkey"] && istype(used_atom, L["backkey"]))
 		return BACKWARD //to the last step -> backwards
-	return 0
+	return NONE
 
 /datum/construction/reversible/check_step(atom/used_atom,mob/user)
 	var/diff = is_right_key(used_atom)
 	if(diff)
 		if(custom_action(index, diff, used_atom, user))
 			update_index(diff)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/construction/reversible/custom_action(index, diff, used_atom, user)
-	return 1
+	return TRUE
+
+#undef NONE

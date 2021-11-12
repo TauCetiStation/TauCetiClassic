@@ -78,7 +78,7 @@
 
 /obj/item/weapon/gun/projectile/can_fire()
 	if(chambered && chambered.BB)
-		return 1
+		return TRUE
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	if(has_cover)

@@ -17,9 +17,9 @@
 
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
+	if(A < lower) return FALSE
+	if(A > upper) return FALSE
+	return TRUE
 
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
@@ -614,14 +614,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/steps = 0
 
 	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
+		if(steps > length) return FALSE
+		if(current.opacity) return FALSE
 		for(var/atom/A in current)
-			if(A.opacity) return 0
+			if(A.opacity) return FALSE
 		current = get_step_towards(current, target_turf)
 		steps++
 
-	return 1
+	return TRUE
 
 /proc/is_blocked_turf(turf/T)
 	var/cant_pass = 0
@@ -662,8 +662,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
-	if(A.vars.Find(lowertext(varname))) return 1
-	else return 0
+	if(A.vars.Find(lowertext(varname))) return TRUE
+	else return FALSE
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
@@ -1142,11 +1142,11 @@ var/global/list/common_tools = list(
 
 /proc/istool(O)
 	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp
-// Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
+// Returns TRUE if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
 /obj/item/proc/can_puncture()
 	return sharp
 
@@ -1217,29 +1217,29 @@ var/list/WALLITEMS = typecacheof(list(
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, WALLITEMS))
 			if(O.dir == dir)
-				return 1
+				return TRUE
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			switch(dir)
 				if(SOUTH)
 					if(O.pixel_y > 10)
-						return 1
+						return TRUE
 				if(NORTH)
 					if(O.pixel_y < -10)
-						return 1
+						return TRUE
 				if(WEST)
 					if(O.pixel_x > 10)
-						return 1
+						return TRUE
 				if(EAST)
 					if(O.pixel_x < -10)
-						return 1
+						return TRUE
 
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
 		if(is_type_in_typecache(O, WALLITEMS))
 			if(O.pixel_x == 0 && O.pixel_y == 0)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)
@@ -1552,9 +1552,9 @@ var/list/WALLITEMS = typecacheof(list(
 
 /atom/proc/contains(atom/location)
 	if(!location)
-		return 0
+		return FALSE
 	if(location == src)
-		return 1
+		return TRUE
 
 	return contains(location.loc)
 

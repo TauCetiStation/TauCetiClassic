@@ -170,7 +170,7 @@ var/global/datum/controller/radio/radio_controller
 			qdel(frequency)
 			frequencies -= f_text
 
-	return 1
+	return TRUE
 
 /datum/controller/radio/proc/return_frequency(new_frequency)
 	var/f_text = num2text(new_frequency)
@@ -197,7 +197,7 @@ var/global/datum/controller/radio/radio_controller
 		start_point = get_turf(source)
 		if(!start_point)
 			qdel(signal)
-			return 0
+			return FALSE
 	if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
 		for(var/obj/device in devices[filter])
 			if(device == source)
