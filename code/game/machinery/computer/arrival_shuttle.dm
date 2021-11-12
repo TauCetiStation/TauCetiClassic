@@ -26,11 +26,6 @@ var/lastMove = 0
 	radio = new (src)
 	. = ..()
 
-/obj/machinery/computer/arrival_shuttle/process()
-	if(..())
-		if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN + 20 >= world.time)
-			updateUsrDialog()
-
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
 		return
@@ -146,7 +141,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 350)
 	popup.set_content(dat)
 	popup.open()
 

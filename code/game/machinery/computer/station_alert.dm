@@ -49,7 +49,6 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-				updateDialog()
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
@@ -60,7 +59,6 @@
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	updateDialog()
 	return 1
 
 
@@ -78,7 +76,6 @@
 			if (srcs.len == 0)
 				cleared = 1
 				L -= I
-	updateDialog()
 	return !cleared
 
 

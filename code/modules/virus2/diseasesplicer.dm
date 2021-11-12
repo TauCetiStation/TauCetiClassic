@@ -22,7 +22,6 @@
 
 		dish = I
 		c.drop_from_inventory(I, src)
-		updateUsrDialog()
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
@@ -31,7 +30,6 @@
 		species_buffer = I:species
 		analysed = I:analysed
 		qdel(I)
-		updateUsrDialog()
 		return
 
 	attack_hand(user)
@@ -137,7 +135,6 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		updateUsrDialog()
 		return TRUE
 
 	if (href_list["affected_species"])
@@ -147,14 +144,12 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		updateUsrDialog()
 		return TRUE
 
 	if (href_list["eject"])
 		if (dish)
 			dish.loc = src.loc
 			dish = null
-		updateUsrDialog()
 		return TRUE
 
 	if (href_list["splice"])
@@ -173,12 +168,10 @@
 
 			splicing = 10
 			dish.virus2.uniqueID = rand(0,10000)
-		updateUsrDialog()
 		return TRUE
 
 	if (href_list["disk"])
 		burning = 10
-		updateUsrDialog()
 		return TRUE
 
 	return FALSE

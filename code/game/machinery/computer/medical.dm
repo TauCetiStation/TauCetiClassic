@@ -535,6 +535,7 @@
 				info += "<B>Medical Record Lost!</B><BR>"
 			info += "</TT>"
 			print_document(info, docname)
+			updateUsrDialog()
 			next_print = world.time + 50
 
 		if (href_list["print_photos"])
@@ -553,7 +554,6 @@
 					photo.fields["image"] = active1.fields["photo_s"]
 					print_photo(photo, docname)
 				next_print = world.time + 50
-	updateUsrDialog()
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

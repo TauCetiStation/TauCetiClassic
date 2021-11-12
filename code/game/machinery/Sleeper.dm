@@ -103,7 +103,6 @@
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
 						H.blood_trans_to(beaker, 1)
-		updateUsrDialog()
 	return
 
 /obj/machinery/sleeper/blob_act()

@@ -24,11 +24,6 @@
 	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)
 
-/obj/machinery/computer/syndicate_station/process()
-	if(..())
-		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
-			updateUsrDialog()
-
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
