@@ -133,27 +133,27 @@
 	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."
 
-/obj/item/weapon/twohanded/shockpaddles/robot
+/obj/item/weapon/shockpaddles/robot
 	name = "defibrillator paddles"
 	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
 	charge_cost = 50
 	combat = TRUE
 	cooldown_time = 3 SECONDS
 
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
+/obj/item/weapon/shockpaddles/robot/check_charge(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
+/obj/item/weapon/shockpaddles/robot/checked_use(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.use(charge_amt))
 
-/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
+/obj/item/weapon/shockpaddles/robot/attack_self(mob/user)
 	return //No, this can't be wielded
 
-/obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
+/obj/item/weapon/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if(IO.heart_status == HEART_FAILURE)
 		if(IO.damage < 50)
