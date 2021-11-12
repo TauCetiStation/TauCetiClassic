@@ -53,16 +53,6 @@
 		/datum/game_mode/families,
 	)
 
-/datum/modesbundle/mix
-	name = "Mix"
-	votable = TRUE
-
-/datum/modesbundle/mix/New()
-	for(var/type in subtypesof(/datum/game_mode/mix))
-		var/datum/game_mode/M = type
-		if(initial(M.name))
-			possible_gamemodes += type
-
 /datum/modesbundle/extended
 	name = "Extended"
 	hidden = FALSE
