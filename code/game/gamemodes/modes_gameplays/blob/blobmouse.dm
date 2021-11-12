@@ -28,7 +28,7 @@
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M) || istype(M, /mob/living/simple_animal/mouse/blob))
+		if(isobserver(M) || isanyblob(M))
 			to_chat(M, message)
 
 

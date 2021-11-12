@@ -186,6 +186,8 @@
 
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
 
+#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+
 // BLOB
 
 #define isblob(A) istype(A, /obj/effect/blob)
