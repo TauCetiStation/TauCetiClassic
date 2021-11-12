@@ -140,12 +140,12 @@
 
 /obj/item/weapon/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 	if(!WT.isOn())
-		return 0
+		return FALSE
 	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
 	if(WT.use_tool(src, user, 20, volume = 50))
 		if(!WT.isOn())
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE

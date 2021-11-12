@@ -29,12 +29,12 @@
 /obj/machinery/camera/proc/newTarget(mob/target)
 	if (!target.mouse_opacity || target.alpha < 50)
 		return
-	if (istype(target, /mob/living/silicon/ai)) return 0
+	if (istype(target, /mob/living/silicon/ai)) return FALSE
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	if (!(target in motionTargets))
 		motionTargets += target
-	return 1
+	return TRUE
 
 /obj/machinery/camera/proc/lostTarget(mob/target)
 	if (target in motionTargets)
@@ -47,14 +47,14 @@
 		for (var/mob/living/silicon/aiPlayer in player_list)
 			if (status) aiPlayer.cancelAlarm("Motion", get_area(src), src)
 	detectTime = 0
-	return 1
+	return TRUE
 
 /obj/machinery/camera/proc/triggerAlarm()
-	if (!detectTime) return 0
+	if (!detectTime) return FALSE
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		if (status) aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
-	return 1
+	return TRUE
 
 /obj/machinery/camera/HasProximity(atom/movable/AM)
 	// Motion cameras outside of an "ai monitored" area will use this to detect stuff.

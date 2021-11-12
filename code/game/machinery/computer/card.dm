@@ -302,7 +302,7 @@
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
-	return 1
+	return TRUE
 
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"

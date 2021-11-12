@@ -527,7 +527,7 @@
 			timer_maint_revoke_id = 0
 		timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE) // Want to give them time to get out of maintenance.
 
-		return 1
+		return TRUE
 	return
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)

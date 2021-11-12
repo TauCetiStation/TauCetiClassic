@@ -330,41 +330,41 @@
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == DEAD)
-		return 0 //welp too late for them!
+		return FALSE //welp too late for them!
 
 	if(C.suiciding)
-		return 0 //Kevorkian school of robotic medical assistants.
+		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
-		return 1
+		return TRUE
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getFireLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
 			if(!C.reagents.has_reagent(R.id))
-				return 1
+				return TRUE
 
 	//They're injured enough for it!
 	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
-		return 1 //If they're already medicated don't bother!
+		return TRUE //If they're already medicated don't bother!
 
 	if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
-		return 1
+		return TRUE
 
 	if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
-		return 1
+		return TRUE
 
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
-		return 1
+		return TRUE
 
 
 	for(var/datum/disease/D in C.viruses)
 		if((D.stage > 1) || (D.spread_type == AIRBORNE))
 
 			if(!C.reagents.has_reagent(treatment_virus))
-				return 1 //STOP DISEASE FOREVER
+				return TRUE //STOP DISEASE FOREVER
 
-	return 0
+	return FALSE
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!on)
@@ -531,15 +531,15 @@
 /proc/TurfBlockedNonWindowNonDoor(turf/loc, list/access)
 	for(var/obj/O in loc)
 		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
-			return 1
+			return TRUE
 
 		if(O.density && (istype(O, /obj/machinery/door)) && (access.len))
 			var/obj/machinery/door/D = O
 			for(var/req in D.req_access)
 				if(!(req in access)) //doesn't have this access
-					return 1
+					return TRUE
 
-	return 0
+	return FALSE
 */
 
 /*

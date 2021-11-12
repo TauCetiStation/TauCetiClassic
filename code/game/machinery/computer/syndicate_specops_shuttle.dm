@@ -107,8 +107,8 @@ var/syndicate_elite_shuttle_timeleft = 0
 		to_chat(M, syndicate_elite_shuttle_at_station ? "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>" : "<span class='warning'>You have arrived to home. Great job!</span>")
 
 /proc/syndicate_elite_can_move()
-	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
-	else return 1
+	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return FALSE
+	else return TRUE
 
 /obj/machinery/computer/syndicate_elite_shuttle/attackby(I, user)
 	attack_hand(user)

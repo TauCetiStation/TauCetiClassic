@@ -30,27 +30,27 @@
 	if(!.)
 		return
 
-	var/clean = 0
+	var/clean = FALSE
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
-			clean = 1
+			clean = TRUE
 		if("cycle_int")
-			clean = 1
+			clean = TRUE
 		if("force_ext")
-			clean = 1
+			clean = TRUE
 		if("force_int")
-			clean = 1
+			clean = TRUE
 		if("abort")
-			clean = 1
+			clean = TRUE
 		if("purge")
-			clean = 1
+			clean = TRUE
 		if("secure")
-			clean = 1
+			clean = TRUE
 
 	if(clean)
 		program.receive_user_command(href_list["command"])
 
-	return 1
+	return TRUE
 
 
 //Airlock controller for airlock control - most airlocks on the station use this
@@ -85,23 +85,23 @@
 	if(!.)
 		return
 
-	var/clean = 0
+	var/clean = FALSE
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
-			clean = 1
+			clean = TRUE
 		if("cycle_int")
-			clean = 1
+			clean = TRUE
 		if("force_ext")
-			clean = 1
+			clean = TRUE
 		if("force_int")
-			clean = 1
+			clean = TRUE
 		if("abort")
-			clean = 1
+			clean = TRUE
 
 	if(clean)
 		program.receive_user_command(href_list["command"])
 
-	return 1
+	return TRUE
 
 
 //Access controller for door control - used in virology and the like
@@ -163,4 +163,4 @@
 	if(clean)
 		program.receive_user_command(href_list["command"])
 
-	return 1
+	return TRUE

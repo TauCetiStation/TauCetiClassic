@@ -98,9 +98,9 @@
 
 /obj/machinery/computer/area_atmos/proc/validscrubber(obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber)
 	if(!isobj(scrubber) || get_dist(scrubber.loc, src.loc) > src.range || scrubber.loc.z != src.loc.z)
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/computer/area_atmos/proc/scanscrubbers()
 	connectedscrubbers = new()

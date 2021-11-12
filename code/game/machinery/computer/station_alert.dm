@@ -50,7 +50,7 @@
 			if (!(alarmsource in sources))
 				sources += alarmsource
 				updateDialog()
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if (O && istype(O, /list))
@@ -61,14 +61,14 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	updateDialog()
-	return 1
+	return TRUE
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
-	var/cleared = 0
+	var/cleared = FALSE
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -76,7 +76,7 @@
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleared = TRUE
 				L -= I
 	updateDialog()
 	return !cleared

@@ -42,8 +42,8 @@
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/emp_act(severity)
 	if(prob(20/severity)) set_broken()
@@ -197,14 +197,14 @@
 		var/mob/living/carbon/human/H = user
 		if(HULK in H.mutations)
 			if(stat & (BROKEN))
-				return 1
+				return TRUE
 			if(H.a_intent == INTENT_HARM)
 				H.visible_message("<span class='danger'>[H.name] smashes [src] with \his mighty arms!</span>")
 				set_broken()
-				return 1
+				return TRUE
 			else
 				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
-				return 1
+				return TRUE
 	. = ..()
 
 /obj/machinery/computer/attack_paw(mob/user)

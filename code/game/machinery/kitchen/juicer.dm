@@ -40,7 +40,7 @@
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
-			return 1
+			return TRUE
 		else
 			user.remove_from_mob(O)
 			O.loc = src
@@ -51,16 +51,16 @@
 			return 0
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
-		return 1
+		return TRUE
 	user.remove_from_mob(O)
 	O.loc = src
 	updateUsrDialog()
-	return 0
+	return FALSE
 
 /obj/machinery/juicer/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 0
+	return FALSE
 
 /obj/machinery/juicer/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0

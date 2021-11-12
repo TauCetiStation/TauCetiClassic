@@ -171,7 +171,7 @@
 		if(!open())
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
-		return 1
+		return TRUE
 	if(isrobot(user))
 		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	add_fingerprint(user)
@@ -370,7 +370,7 @@
 
 
 /obj/machinery/door/proc/requiresID()
-	return 1
+	return TRUE
 
 /obj/machinery/door/update_nearby_tiles(need_rebuild)
 	. = ..()

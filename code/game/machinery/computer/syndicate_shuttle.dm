@@ -11,7 +11,7 @@
 	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
-	var/moving = 0
+	var/moving = FALSE
 	var/lastMove = 0
 
 /obj/effect/landmark/syndi_shuttle
@@ -35,7 +35,7 @@
 	var/area/dest_location = locate(destination)
 	if(curr_location == dest_location)	return
 
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
 
 	if(curr_location.z != dest_location.z)
@@ -48,8 +48,8 @@
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	moving = 0
-	return 1
+	moving = FALSE
+	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>

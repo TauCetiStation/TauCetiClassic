@@ -209,7 +209,7 @@
 
 	memory["processing"] = state != target_state
 
-	return 1
+	return TRUE
 
 
 /datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)

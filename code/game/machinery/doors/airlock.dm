@@ -29,8 +29,8 @@ var/list/airlock_overlays = list()
 	var/locked = 0
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
-	var/aiDisabledIdScanner = 0
-	var/aiHacking = 0
+	var/aiDisabledIdScanner = FALSE
+	var/aiHacking = FALSE
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
@@ -41,8 +41,8 @@ var/list/airlock_overlays = list()
 	var/safe = 1
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	var/hasShocked = 0 //Prevents multiple shocks from happening
-	var/pulseProof = 0 //#Z1 AI hacked this door after previous pulse?
+	var/hasShocked = FALSE //Prevents multiple shocks from happening
+	var/pulseProof = FALSE //#Z1 AI hacked this door after previous pulse?
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
@@ -211,21 +211,21 @@ var/list/airlock_overlays = list()
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
-		return 0
+		return FALSE
 	if(hasShocked)
-		return 0	//Already shocked someone recently?
+		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if(electrocute_mob(user, get_area(src), src))
-		hasShocked = 1
+		hasShocked = TRUE
 		sleep(10)
-		hasShocked = 0
-		return 1
+		hasShocked = FALSE
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // So icons update in case of cutting off power via APC
 /obj/machinery/door/airlock/power_change()
@@ -720,7 +720,7 @@ var/list/airlock_overlays = list()
 					else if(aiDisabledIdScanner)
 						to_chat(usr, "You've already disabled the IdScan feature.")
 					else
-						aiDisabledIdScanner = 1
+						aiDisabledIdScanner = TRUE
 
 				if(2)
 					// Disrupt main power
@@ -807,7 +807,7 @@ var/list/airlock_overlays = list()
 					if(isWireCut(AIRLOCK_WIRE_IDSCAN))
 						to_chat(usr, "You can't enable IdScan - The IdScan wire has been cut.")
 					else if(aiDisabledIdScanner)
-						aiDisabledIdScanner = 0
+						aiDisabledIdScanner = FALSE
 					else
 						to_chat(usr, "The IdScan feature is not disabled.")
 

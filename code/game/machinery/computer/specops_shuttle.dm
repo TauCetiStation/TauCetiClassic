@@ -188,11 +188,11 @@ var/specops_shuttle_timeleft = 0
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
-		return 0
+		return FALSE
 	for(var/obj/machinery/computer/specops_shuttle/S in computer_list)
 		if(world.timeofday <= S.specops_shuttle_timereset)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/machinery/computer/specops_shuttle/attackby(I, user)
 	attack_hand(user)

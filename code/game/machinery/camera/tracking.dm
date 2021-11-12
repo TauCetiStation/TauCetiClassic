@@ -3,12 +3,12 @@
 
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
-		return 1
+		return TRUE
 	if(is_centcom_level(T.z))
-		return 1
+		return TRUE
 	if(!SSmapping.has_level(T.z))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/proc/get_camera_list()
 
@@ -40,7 +40,7 @@
 		return
 
 	if (!camera || camera == "Cancel")
-		return 0
+		return FALSE
 
 	var/obj/machinery/camera/C = track.cameras[camera]
 	track = null
@@ -168,7 +168,7 @@
 		to_chat(src, "You can't track with camera because you are dead!")
 		return
 	if(target_name == "Cancel")
-		return 0
+		return FALSE
 	if(!target_name)
 		src.cameraFollow = null
 
@@ -233,14 +233,14 @@
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
-		return 0
+		return FALSE
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(!(R.camera && R.camera.can_use()) && !cameranet.checkCameraVis(M))
-			return 0
+			return FALSE
 	else if(!cameranet.checkCameraVis(M))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))

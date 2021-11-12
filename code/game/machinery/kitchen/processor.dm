@@ -133,7 +133,7 @@
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
-		return 1
+		return TRUE
 	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
 		return
 
@@ -150,7 +150,7 @@
 
 	if(contents.len > 0) //TODO: several items at once? several different items?
 		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
-		return 1
+		return TRUE
 	var/obj/item/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
@@ -159,7 +159,7 @@
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
 		to_chat(user, "<span class='warning'>That probably won't blend.</span>")
-		return 1
+		return TRUE
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
 	user.drop_from_inventory(what, src)
@@ -170,10 +170,10 @@
 		return
 	if(processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
-		return 1
+		return TRUE
 	if(contents.len == 0)
 		to_chat(user, "<span class='warning'>The processor is empty.</span>")
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_INTERACT)
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \

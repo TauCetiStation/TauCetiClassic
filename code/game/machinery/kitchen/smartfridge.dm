@@ -50,8 +50,8 @@
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/seeds))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/seeds
 	name = "MegaSeed Servitor"
@@ -63,8 +63,8 @@
 
 /obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
 	if(istype(O,/obj/item/seeds))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
@@ -90,8 +90,8 @@
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/secure/medbay
 	name = "Refrigerated Medicine Storage"
@@ -102,12 +102,12 @@
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass))
-		return 1
+		return TRUE
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
-		return 1
+		return TRUE
 	if(istype(O,/obj/item/weapon/reagent_containers/pill))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/secure/virology
 	name = "Refrigerated Virus Storage"
@@ -119,10 +119,10 @@
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
-		return 1
+		return TRUE
 	if(istype(O,/obj/item/weapon/virusdish))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/chemistry/virology
 	name = "Smart Virus Storage"
@@ -135,7 +135,8 @@
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
-		return 1
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/process()
 	if(!src.ispowered)
@@ -256,7 +257,7 @@
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 0
+	return FALSE
 
 /obj/machinery/smartfridge/attack_hand(mob/user)
 	if(!issilicon(user) && !isobserver(user) && seconds_electrified)
@@ -332,7 +333,7 @@
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for (var/O in item_quants)
 		if(item_quants[O] <= 0) //Try to use a record that actually has something to dump.
@@ -346,14 +347,14 @@
 				break
 		break
 	if(!throw_item)
-		return 0
+		return FALSE
 	throw_item.throw_at(target,16,3,src)
 	visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
-	return 1
+	return TRUE
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)
-	if(!ispowered) return 0
-	if(!prob(prb)) return 0
+	if(!ispowered) return FALSE
+	if(!prob(prb)) return FALSE
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)

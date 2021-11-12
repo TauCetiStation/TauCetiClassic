@@ -341,14 +341,14 @@
 /obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 
 	if(!WT.isOn())
-		return 0
+		return FALSE
 	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
 	if(WT.use_tool(src, user, 100, volume = 50))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/camera/proc/add_network(network_name)
 	add_networks(list(network_name))

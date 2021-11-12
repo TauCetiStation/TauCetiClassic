@@ -109,7 +109,7 @@
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
-			return 1
+			return TRUE
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
@@ -124,10 +124,10 @@
 			src.icon_state = off_icon
 			src.flags = OPENCONTAINER
 			updateUsrDialog()
-			return 1 // Disables the after-attack so we don't spray the floor/user.
+			return TRUE // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
-			return 1
+			return TRUE
 
 	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
@@ -145,11 +145,11 @@
 			src.flags = OPENCONTAINER
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
-		return 1
+		return TRUE
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
-			return 1
+			return TRUE
 		var/obj/item/stack/S = O
 		if (istype(S) && S.get_amount() > 1)
 			new O.type (src)
@@ -167,25 +167,25 @@
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
 		)
 		if (!O.reagents)
-			return 1
+			return TRUE
 		for (var/datum/reagent/R in O.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
 				to_chat(user, "Your [O] contains components unsuitable for cookery")
-				return 1
+				return TRUE
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
-		return 1
+		return TRUE
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
-		return 1
+		return TRUE
 	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 0
+	return FALSE
 
 /*******************
 *   Kitchen Machine Menu
@@ -322,10 +322,10 @@
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		use_power(500)
 		sleep(10)
-	return 1
+	return TRUE
 
 /obj/machinery/kitchen_machine/proc/has_extra_item()
 	for (var/obj/O in contents)
@@ -333,8 +333,8 @@
 				!istype(O,/obj/item/weapon/reagent_containers/food) && \
 				!istype(O, /obj/item/weapon/grown) \
 			)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/kitchen_machine/proc/start()
 	visible_message("<span class='notice'>[src] turns on.</span>", "<span class='notice'>You hear a [src].</span>")

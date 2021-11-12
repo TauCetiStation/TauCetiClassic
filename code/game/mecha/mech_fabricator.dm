@@ -149,10 +149,10 @@
 	for(var/R in D.materials)
 		if(R in resources)
 			if(resources[R] < get_resource_cost_w_coeff(D, R))
-				return 0
+				return FALSE
 		else
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
 	being_built = D
@@ -183,7 +183,7 @@
 	being_built = null
 
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/update_queue_on_page()
 	send_byjax(usr,"mecha_fabricator.browser","queue",list_queue())
@@ -205,9 +205,9 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !IS_INTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
-		return 0
+		return FALSE
 	queue.Cut(index,++index)
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/datum/design/D = queue[1]
@@ -220,12 +220,12 @@
 	temp = null
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		if(!check_resources(D))
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
-			return 0
+			return FALSE
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
@@ -514,10 +514,10 @@
 			for(var/material in resources)
 				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
-			return 1
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
-			return 1
+			return TRUE
 
 	if(istype(W, /obj/item/stack))
 		var/material
