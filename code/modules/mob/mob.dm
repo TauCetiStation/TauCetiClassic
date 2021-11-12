@@ -965,6 +965,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 	stuttering = max(amount, 0)
 
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
+
 // =============================
 
 /mob/proc/get_species()
