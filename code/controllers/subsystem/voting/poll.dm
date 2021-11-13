@@ -23,6 +23,8 @@
 	var/next_vote = 0 //When will we next be allowed to call it again?
 	//You can set this time to a nonzero value to force a minimum roundtime before the vote can be called
 
+	var/announce_winner = TRUE
+
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
 		choices.Add(new ch)
@@ -116,6 +118,12 @@
 		total += V.total_votes()
 	return total
 
+/datum/poll/proc/win_condition(datum/vote_choice/C, list/choice_votes)
+	var/max_votes = 0
+	for(var/datum/vote_choice/V in choice_votes)
+		max_votes = max(max_votes, choice_votes[V])
+	return choice_votes[C] == max_votes
+
 /datum/poll/proc/check_winners()
 	var/list/choice_votes = list()
 	var/list/all_voters = list()
@@ -148,26 +156,28 @@
 	var/list/winners = list()
 	if(!invalid)
 		for(var/datum/vote_choice/V in choice_votes)
-			if(choice_votes[V] == max_votes)
+			if(win_condition(V, choice_votes))
 				winners.Add(V)
 		if(winners.len)
 			winner = pick(winners)
 
 	var/non_voters = clients.len - all_voters.len
+	if(announce_winner)
+		text += "<b>Голоса:</b><br>"
+		for(var/datum/vote_choice/ch in choice_votes)
+			var/ch_percent = total_votes() ? PERCENT(choice_votes[ch] / total_votes()) : 0
+			if(ch in winners)
+				text += "\t<b>[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]</b><br>"
+			else
+				text += "\t[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]<br>"
 
-	text += "<b>Голоса:</b><br>"
-	for(var/datum/vote_choice/ch in choice_votes)
-		var/ch_percent = total_votes() ? PERCENT(choice_votes[ch] / total_votes()) : 0
-		if(ch in winners)
-			text += "\t<b>[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]</b><br>"
-		else
-			text += "\t[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]<br>"
+		text += "Всего проголосовало - [all_voters.len]<br>"
+		text += "Не проголосовало - [non_voters]<br>"
 
-	text += "Всего проголосовало - [all_voters.len]<br>"
-	text += "Не проголосовало - [non_voters]<br>"
-
-	if(winner)
-		text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
+		if(winner)
+			text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
+	else
+		text += "<b>Голосование завершено.</b>"
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")
