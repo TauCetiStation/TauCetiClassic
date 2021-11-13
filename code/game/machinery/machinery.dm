@@ -542,5 +542,5 @@ Class Procs:
 	else
 		ex_act(1)
 
-/obj/machinery/proc/Eject(var/move = TRUE)
+/obj/machinery/proc/Eject(move = TRUE)
 	return
