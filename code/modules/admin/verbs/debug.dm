@@ -158,13 +158,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has blobized [key_name(M)].")
-		spawn(10)
-			M.Blobize()
-
-	else
-		tgui_alert(usr, "Invalid mob")
+	log_admin("[key_name(src)] has blobized [key_name(M)].")
+	addtimer(CALLBACK(M, /mob/proc/Blobize), 1 SECOND)
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
