@@ -25,7 +25,7 @@
 	if(!faction_or_role.objectives_ruleset_type)
 		return
 
-	var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type(src, faction_or_role)
+	var/datum/objective_ruleset/OR = new faction_or_role.objectives_ruleset_type (src, faction_or_role)
 	var/datum/objectives_set/o_set = OR.get_objectives_set()
 	qdel(OR)
 
