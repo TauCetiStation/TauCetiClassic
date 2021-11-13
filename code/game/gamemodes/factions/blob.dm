@@ -24,24 +24,9 @@
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
-	// vents in this areas potentially could be blocked by valves or some other machinery
-	var/static/list/blob_disallow_areas = list(
-		/area/station/engineering/atmos,
-		/area/station/engineering/engine,
-		/area/station/maintenance,
-		/area/station/rnd/mixing,
-		/area/space,
-	)
 
-	// find all unwelded vents on station Z level
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in machines)
-		if(V.welded || !is_station_level(V.z))
-			continue
-		var/area/A = get_area(V)
-		if(!is_type_in_list(A, blob_disallow_areas))
-			spawn_locs.Add(V)
-
-	if(length(spawn_locs) < max_roles)
+	spawn_locs += get_vents()
+	if(spawn_locs.len < max_roles)
 		// we were unable to setup because we didn't have enough spawn locations
 		return FALSE
 	return TRUE
