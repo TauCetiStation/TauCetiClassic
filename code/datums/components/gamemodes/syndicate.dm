@@ -54,7 +54,7 @@
 
 	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
 		var/list/station_intercom_list = list()
-		for(var/obj/item/device/radio/intercom/I in intercom_list)
+		for(var/obj/item/device/radio/intercom/I as anything in intercom_list)
 			if(is_station_level(I.z))
 				station_intercom_list += I
 
