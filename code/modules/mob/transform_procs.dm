@@ -604,7 +604,7 @@
 	if (notransform)
 		return
 	if(!client)
-		new /obj/effect/blob/core(loc, 200)
+		new /obj/effect/blob/core(loc)
 	else
-		new /obj/effect/blob/core(loc, 200, client)
+		new /obj/effect/blob/core(loc, client)
 	gib()
