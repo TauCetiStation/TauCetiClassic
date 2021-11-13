@@ -112,7 +112,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(href_list["lock"])
 		toggle()
 		usr << browse(null, "window=hidden")
-		return 1
+		return TRUE
 
 // Toggles the uplink on and off. Normally this will bypass the item's normal functions and go to the uplink menu, if activated.
 /obj/item/device/uplink/hidden/proc/toggle()
@@ -130,20 +130,20 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
 	if(value == target)
 		trigger(user)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // I placed this here because of how relevant it is.
 // You place this in your uplinkable item to check if an uplink is active or not.
-// If it is, it will display the uplink menu and return 1, else it'll return false.
+// If it is, it will display the uplink menu and return TRUE, else it'll return FALSE.
 // If it returns true, I recommend closing the item's normal menu with "user << browse(null, "window=name")"
 /obj/item/proc/active_uplink_check(mob/user as mob)
 	// Activates the uplink if it's active
 	if(src.hidden_uplink)
 		if(src.hidden_uplink.active)
 			hidden_uplink.trigger(user)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
 /obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)

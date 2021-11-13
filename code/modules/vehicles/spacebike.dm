@@ -251,8 +251,9 @@
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
 		M.bullet_act(Proj)
-		return
+		return PROJECTILE_ACTED
 	..()
+	return PROJECTILE_ACTED
 
 /obj/vehicle/space/spacebike/update_icon()
 	cut_overlays()

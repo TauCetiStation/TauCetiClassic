@@ -147,10 +147,10 @@
 		var/obj/item/toy/ammo/gun/G = I
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='notice'>It's already fully loaded!</span>")
-			return 1
+			return TRUE
 		if (G.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There is no more caps!</span>")
-			return 1
+			return TRUE
 		if (G.amount_left < (7 - src.bullets))
 			src.bullets += G.amount_left
 			to_chat(user, "<span class='warning'>You reload [G.amount_left] caps\s!</span>")
@@ -1602,5 +1602,5 @@ Owl & Griffin toys
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
 		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
-		return 1
+		return TRUE
 	return ..()

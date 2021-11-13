@@ -161,6 +161,7 @@
 		visible_message("<span class='red'>Something shorts out inside [src]!</span>")
 		wires.random_cut()
 	..()
+	return PROJECTILE_ACTED
 
 /obj/machinery/bot/mulebot/ui_interact(mob/user)
 	var/ai = isAI(user) || isobserver(user)

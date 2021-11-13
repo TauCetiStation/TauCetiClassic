@@ -28,7 +28,7 @@
 	icon_state = "closed"
 	exit_delay = 2
 	enter_delay = 3
-	var/pod_moving = 0
+	var/pod_moving = FALSE
 	var/automatic_launch_time = 100
 
 	var/const/OPEN_DURATION = 6
@@ -44,7 +44,7 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-	var/moving = 0
+	var/moving = FALSE
 	var/datum/gas_mixture/air_contents = new()
 	var/image/occupant
 	var/occupant_angle = 0
@@ -161,7 +161,7 @@
 			return
 
 /obj/structure/transit_tube/station/proc/move_pod(obj/structure/transit_tube_pod/pod)
-	pod_moving = 1
+	pod_moving = TRUE
 	close_animation()
 	sleep(CLOSE_DURATION + 2)
 
@@ -178,16 +178,16 @@
 	if(icon_state == "closed" && pod)
 		pod.follow_tube()
 
-	pod_moving = 0
+	pod_moving = FALSE
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
-	return 0
+	return FALSE
 
 
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
-	return 1
+	return TRUE
 
 
 
@@ -198,13 +198,13 @@
 
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
-	pod_moving = 1
+	pod_moving = TRUE
 	addtimer(CALLBACK(src, .proc/cycle_stopped_pod, pod, from_dir), 5)
 
 /obj/structure/transit_tube/station/proc/cycle_stopped_pod(obj/structure/transit_tube_pod/pod, from_dir)
 	open_animation()
 	sleep(OPEN_DURATION + 2)
-	pod_moving = 0
+	pod_moving = FALSE
 	pod.mix_air()
 
 	if(automatic_launch_time)
@@ -232,18 +232,18 @@
 
 	for(var/direction in directions())
 		if(direction == from_dir)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 
 /obj/structure/transit_tube/proc/has_exit(in_dir)
 	for(var/direction in directions())
 		if(direction == in_dir)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 
@@ -281,7 +281,7 @@
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
-		return 1
+		return TRUE
 	else return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
@@ -290,7 +290,7 @@
 	if(moving)
 		return
 
-	moving = 1
+	moving = TRUE
 
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
@@ -347,7 +347,7 @@
 
 	density = TRUE
 
-	moving = 0
+	moving = FALSE
 
 
 /obj/structure/transit_tube_pod/return_air()

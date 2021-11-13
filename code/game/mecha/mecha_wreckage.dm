@@ -32,7 +32,7 @@
 	return
 
 /obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj)
-	return
+	return PROJECTILE_ACTED
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""

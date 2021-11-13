@@ -217,18 +217,18 @@
 
 /obj/structure/proc/can_touch(mob/user)
 	if(!user)
-		return 0
+		return FALSE
 	if(!Adjacent(user))
-		return 0
+		return FALSE
 	if(user.buckled)
 		to_chat(user, "<span class='notice'>You need your hands and legs free for this.</span>")
-		return 0
+		return FALSE
 	if(user.incapacitated())
-		return 0
+		return FALSE
 	if(issilicon(user))
 		to_chat(user, "<span class='notice'>You need hands for this.</span>")
-		return 0
+		return FALSE
 	for(var/obj/O in src.loc)
 		if((O.density && O.opacity) > 0)
-			return 0
-	return 1
+			return FALSE
+	return TRUE

@@ -170,6 +170,7 @@
 
 /obj/effect/dummy/chameleon/bullet_act()
 	master.disrupt()
+	return PROJECTILE_ACTED
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
 

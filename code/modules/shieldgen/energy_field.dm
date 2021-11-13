@@ -18,6 +18,7 @@
 
 /obj/effect/energy_field/bullet_act(obj/item/projectile/Proj)
 	Stress(Proj.damage / 10)
+	return PROJECTILE_ACTED
 
 /obj/effect/energy_field/proc/Stress(severity)
 	strength -= severity

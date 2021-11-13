@@ -82,7 +82,7 @@
 /obj/machinery/hydroponics/bullet_act(obj/item/projectile/P) //Works with the Somatoray to modify plant variables.
 	if(!planted)
 		..()
-		return
+		return PROJECTILE_ACTED
 	if(istype(P, /obj/item/projectile/energy/floramut))
 		mutate()
 	else if(istype(P, /obj/item/projectile/energy/florayield))
@@ -92,7 +92,7 @@
 			adjustSYield(1 * rating)
 	else
 		..()
-		return
+	return PROJECTILE_ACTED
 
 /obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
 	if(air_group || (height == 0))

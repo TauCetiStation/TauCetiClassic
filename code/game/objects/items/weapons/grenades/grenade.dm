@@ -21,8 +21,8 @@
 		activate(user)
 		add_fingerprint(user)
 		addtimer(CALLBACK(src, .proc/prime), 5)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/grenade/examine(mob/user)
 	..()

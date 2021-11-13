@@ -12,13 +12,13 @@
 
 /obj/decal/boxingrope/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density)
-		return 1
+		return TRUE
 	if(air_group || (height==0))
-		return 1
+		return TRUE
 	if ((mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/decal/boxingropeenter
 	name = "Ring entrance"

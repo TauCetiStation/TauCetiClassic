@@ -428,6 +428,7 @@ var/list/turret_icons
 	..()
 
 	take_damage(damage)
+	return PROJECTILE_ACTED
 
 /obj/machinery/porta_turret/emp_act(severity)
 	if(enabled)

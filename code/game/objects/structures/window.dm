@@ -82,7 +82,7 @@
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return -1
+		return PROJECTILE_FORCE_MISS
 
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
@@ -90,8 +90,7 @@
 
 	..()
 	take_damage(Proj.damage, Proj.damage_type)
-	return
-
+	return PROJECTILE_ACTED
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
@@ -114,13 +113,12 @@
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
-		return 0	//full tile window, you can't move into it!
+		return FALSE	//full tile window, you can't move into it!
 	if(get_dir(loc, target) & dir)
 		return !density
-	else
-		return 1
+	return TRUE
 
 /obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(!density)
@@ -132,10 +130,10 @@
 
 /obj/structure/window/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
@@ -193,7 +191,7 @@
 	else
 		visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
 	user.do_attack_animation(src)
-	return 1
+	return TRUE
 
 
 /obj/structure/window/attack_alien(mob/user)
@@ -350,7 +348,7 @@
 
 	if(anchored)
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
-		return 0
+		return FALSE
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	set_dir(turn(dir, 270))
@@ -410,8 +408,8 @@
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
 	if(dir & (dir - 1))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
@@ -547,7 +545,7 @@
 
 /obj/machinery/windowtint/attack_hand(mob/user as mob)
 	if(..())
-		return 1
+		return TRUE
 
 	toggle_tint()
 

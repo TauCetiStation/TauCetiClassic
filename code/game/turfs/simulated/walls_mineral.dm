@@ -128,6 +128,7 @@
 	else if(istype(Proj,/obj/item/projectile/ion))
 		PhoronBurn(500)
 	..()
+	return PROJECTILE_ACTED
 
 /*
 /turf/simulated/wall/mineral/proc/shock()

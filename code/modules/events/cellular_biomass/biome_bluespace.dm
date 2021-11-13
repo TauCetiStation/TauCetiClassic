@@ -108,7 +108,7 @@
 		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/meelee(src.loc)
 		health = health / 2
 		newglitch.health = health
-	return
+	return PROJECTILE_ACTED
 
 /mob/living/simple_animal/hostile/cellular/bluespace/ranged/attackby(obj/item/weapon/W, mob/user)
 	if(health > 2)

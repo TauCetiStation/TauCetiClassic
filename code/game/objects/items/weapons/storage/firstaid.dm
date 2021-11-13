@@ -143,10 +143,10 @@
 
 /obj/item/weapon/storage/pill_bottle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !istype(target) || target != user)
-		return 1
+		return TRUE
 	if(!contents.len)
 		to_chat(user, "<span class='warning'>It's empty!</span>")
-		return 1
+		return TRUE
 	var/zone = user.get_targetzone()
 	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
@@ -157,7 +157,7 @@
 			remove_from_storage(P)
 			user.SetNextMove(CLICK_CD_MELEE)
 			P.attack(target,user)
-			return 1
+			return TRUE
 
 /obj/item/weapon/storage/pill_bottle/atom_init()
 	. = ..()

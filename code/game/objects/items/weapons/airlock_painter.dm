@@ -31,13 +31,12 @@
 /obj/item/weapon/airlock_painter/use(cost)
 	if(cost < 0)
 		stack_trace("[src.type]/use() called with a negative parameter [cost]")
-		return 0
+		return FALSE
 	if(can_use(usr, cost))
 		ink.charges -= cost
 		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 	//This proc only checks if the painter can be used.
 	//Call this if you don't want the painter to be used right after this check, for example
@@ -45,14 +44,13 @@
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user, cost = 10)
 	if(!ink)
 		to_chat(user, "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>")
-		return 0
+		return FALSE
 	else if(ink.charges < cost)
 		to_chat(user, "<span class='notice'>Not enough ink!</span>")
 		if(ink.charges < 1)
 			to_chat(user, "<span class='notice'>\The [name] is out of ink!</span>")
-		return 0
-	else
-		return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()

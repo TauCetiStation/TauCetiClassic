@@ -195,7 +195,7 @@
 	air_contents.merge(giver)
 
 	check_status()
-	return 1
+	return TRUE
 
 /obj/item/weapon/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
@@ -217,7 +217,7 @@
 	//Handle exploding, leaking, and rupturing of the tank
 
 	if(!air_contents)
-		return 0
+		return FALSE
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)

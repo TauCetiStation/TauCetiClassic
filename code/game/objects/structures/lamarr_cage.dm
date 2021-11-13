@@ -30,7 +30,7 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
-	return
+	return PROJECTILE_ACTED
 
 
 /obj/structure/lamarr/blob_act()

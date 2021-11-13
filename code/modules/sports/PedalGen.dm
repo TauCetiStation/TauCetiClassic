@@ -153,6 +153,7 @@
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
+	return PROJECTILE_ACTED
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)

@@ -47,7 +47,7 @@
 /obj/item/stack/rods/attack_self(mob/user)
 	add_fingerprint(user)
 
-	if(!istype(user.loc,/turf)) return 0
+	if(!istype(user.loc,/turf)) return FALSE
 
 	if (locate(/obj/structure/grille, usr.loc))
 		for(var/obj/structure/grille/G in usr.loc)
@@ -59,7 +59,7 @@
 				G.destroyed = 0
 				G.icon_state = "grille"
 			else
-				return 1
+				return TRUE
 	else
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")

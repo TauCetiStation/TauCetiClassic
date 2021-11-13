@@ -35,10 +35,10 @@
 	return
 
 // What does the implant do upon injection?
-// return 0 if the implant fails (ex. Revhead and loyalty implant.)
-// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
+// return FALSE if the implant fails (ex. Revhead and loyalty implant.)
+// return TRUE if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 /obj/item/weapon/implant/proc/implanted(mob/source)
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/proc/inject(mob/living/carbon/C, def_zone)
 	if(!C)
@@ -62,7 +62,7 @@
 	return
 
 /obj/item/weapon/implant/proc/islegal()
-	return 0
+	return FALSE
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
 	to_chat(imp_in, "<span class='warning'>You feel something melting inside [part ? "your [part.name]" : "you"]!</span>")
@@ -145,7 +145,7 @@ Implant Specifics:<BR>"}
 		imp_in.gib()
 
 /obj/item/weapon/implant/dexplosive/islegal()
-	return 0
+	return FALSE
 
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
@@ -230,7 +230,7 @@ Implant Specifics:<BR>"}
 	phrase = sanitize_safe(replace_characters(input("Choose activation phrase:") as text, replacechars))
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0)
 	to_chat(usr, "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.")
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
 	if (malfunction)
@@ -253,7 +253,7 @@ Implant Specifics:<BR>"}
 		malfunction--
 
 /obj/item/weapon/implant/explosive/islegal()
-	return 0
+	return FALSE
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
@@ -466,7 +466,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
 	START_PROCESSING(SSobj, src)
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
@@ -490,7 +490,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/compressed/trigger(emote, mob/source)
 	if (src.scanned == null)
-		return 0
+		return FALSE
 
 	if (emote == src.activation_emote)
 		to_chat(source, "The air glows as \the [src.scanned.name] uncompresses.")
@@ -509,10 +509,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if (source.mind)
 		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/compressed/islegal()
-	return 0
+	return FALSE
 
 /obj/item/weapon/implant/cortical
 	name = "cortical stack"
@@ -551,7 +551,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	return ..()
 
 /obj/item/weapon/implant/storage/islegal()
-	return 0
+	return FALSE
 
 /obj/item/weapon/implant/obedience
 	name = "L.E.A.S.H. obedience implant"

@@ -42,20 +42,18 @@
 
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		if(air_group) return 0
+		if(air_group) return FALSE
 		return !density
-	else
-		return 1
+	return TRUE
 
 /obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
-	else
-		return 1
+	return TRUE
 
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user)
@@ -270,7 +268,7 @@
 
 	if (src.anchored)
 		to_chat(usr, "It is fastened to the floor; therefore, you can't rotate it!")
-		return 0
+		return FALSE
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1) //Compel updates before
 

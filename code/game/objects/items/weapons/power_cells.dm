@@ -121,7 +121,7 @@
 	rating = 6
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
-	return 1
+	return TRUE
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"

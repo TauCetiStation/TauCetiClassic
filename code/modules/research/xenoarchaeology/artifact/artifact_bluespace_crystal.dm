@@ -62,6 +62,7 @@
 	if(prob(Proj.damage))
 		get_damage(Proj.damage)
 	..()
+	return PROJECTILE_ACTED
 
 /obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

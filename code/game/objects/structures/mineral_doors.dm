@@ -330,6 +330,7 @@
 	health -= Proj.damage
 	..()
 	CheckHealth()
+	return PROJECTILE_ACTED
 
 /obj/structure/mineral_door/resin/attack_hand(mob/user)
 	if(isxenoadult(user) && user.a_intent == INTENT_HARM)

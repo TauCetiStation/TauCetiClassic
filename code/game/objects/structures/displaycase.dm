@@ -32,8 +32,7 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
-	return
-
+	return PROJECTILE_ACTED
 
 /obj/structure/displaycase/blob_act()
 	if (prob(75))

@@ -118,9 +118,9 @@
 			update_icon()
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(bcell.use(chrgdeductamt))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 /obj/item/weapon/melee/cattleprod/update_icon()
 	if(status)

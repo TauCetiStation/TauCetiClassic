@@ -58,6 +58,7 @@
 	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 	if(prob(P.damage))
 		push_over()
+	return PROJECTILE_ACTED
 
 /obj/item/cardboard_cutout/proc/populate_selection()
 	coloring = list(
@@ -147,4 +148,4 @@
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."
 			icon_state = "cutout_ian"
-	return 1
+	return TRUE

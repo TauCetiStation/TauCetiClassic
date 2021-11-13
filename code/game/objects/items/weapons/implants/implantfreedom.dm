@@ -13,7 +13,7 @@
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
-		return 0
+		return FALSE
 	if (emote == activation_emote)
 		uses--
 		to_chat(source, "You feel a faint click.")
@@ -24,7 +24,7 @@
 /obj/item/weapon/implant/freedom/implanted(mob/living/carbon/source)
 	source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/implant/freedom/get_data()

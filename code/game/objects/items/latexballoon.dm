@@ -37,6 +37,7 @@
 
 /obj/item/latexballon/bullet_act()
 	burst()
+	return PROJECTILE_ACTED
 
 /obj/item/latexballon/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+100)

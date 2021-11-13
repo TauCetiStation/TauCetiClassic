@@ -414,7 +414,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		if(prob(15))
 			var/expression = pick("a resentful","a happy","an excited")
 			emote("me",1,"looks with [expression] expression on his face and wants to play more!")
-		return
+		return PROJECTILE_ACTED
 
 	return ..()
 

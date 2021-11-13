@@ -10,8 +10,8 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M)
 	..()
@@ -67,7 +67,7 @@
 				Drop.loc = chassis
 				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
-				return 1
+				return TRUE
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -87,7 +87,7 @@
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
-	return 1
+	return TRUE
 
 
 /********Drill********/
@@ -144,13 +144,13 @@
 
 				log_message("Drilled through [target]")
 				target.ex_act(2)
-	return 1
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /********Diamond drill********/
@@ -206,13 +206,13 @@
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
 				target.ex_act(2)
-	return 1
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /********Extinguisher********/
@@ -249,7 +249,7 @@
 
 	if(do_after_cooldown(target) && chassis.occupant)
 		ext.afterattack(target, chassis.occupant)
-	return 1
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Topic(href, href_list)
 	..()
@@ -267,8 +267,8 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /********RCD********/
@@ -477,7 +477,7 @@
 	else
 		if (world.time % 3)
 			occupant_message("<span class='warning'>[src] is not ready to fire again!</span>")
-		return 0
+		return FALSE
 
 	switch(mode)
 		if(1)
@@ -549,8 +549,8 @@
 	if(..())
 		if(!istype(M, /obj/mecha/combat/honker))
 			if(!M.proc_res["dynattackby"])
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/attach(obj/mecha/M)
 	..()
@@ -601,8 +601,8 @@
 	if(..())
 		if(!istype(M, /obj/mecha/combat/honker))
 			if(!M.proc_res["dynbulletdamage"] && !M.proc_res["dynhitby"])
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/attach(obj/mecha/M)
 	..()
@@ -774,8 +774,8 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/can_attach(obj/mecha/M)
 	if(..())
 		if(!M.proc_res["dyngetcharge"])// && !M.proc_res["dynusepower"])
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/dyngetcharge()
 	if(equip_ready) //disabled
@@ -953,30 +953,30 @@
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		return 0
+		return FALSE
 	if(fuel.amount<=0)
 		STOP_PROCESSING(SSobj, src)
 		log_message("Deactivated - no fuel.")
 		set_ready_state(1)
-		return 0
+		return FALSE
 	if(anyprob(reliability))
 		critfail()
 		STOP_PROCESSING(SSobj, src)
-		return 0
+		return FALSE
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
 		occupant_message("No powercell detected.")
 		log_message("Deactivated.")
 		STOP_PROCESSING(SSobj, src)
-		return 0
+		return FALSE
 	var/use_fuel = fuel_per_cycle_idle
 	if(cur_charge<chassis.cell.maxcharge)
 		use_fuel = fuel_per_cycle_active
 		chassis.give_power(power_per_cycle)
 	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
 	update_equip_info()
-	return 1
+	return TRUE
 
 
 /********ExoNuclear reactor********/
@@ -1007,7 +1007,7 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(chassis))
 			M.apply_effect((rad_per_cycle*3),IRRADIATE,0)
-	return 1
+	return TRUE
 
 
 /********KILL CLAMP********/
@@ -1023,8 +1023,8 @@
 /obj/item/mecha_parts/mecha_equipment/safety_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/safety_clamp/attach(obj/mecha/M)
 	..()
@@ -1075,7 +1075,7 @@
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
-	return 1
+	return TRUE
 
 
 /********Mecha customisation kit********/

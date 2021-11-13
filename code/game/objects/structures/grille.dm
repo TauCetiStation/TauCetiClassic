@@ -99,9 +99,9 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return 1
+		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile))
 			return prob(30)
@@ -118,7 +118,7 @@
 
 	src.health -= Proj.damage*0.2
 	healthcheck()
-	return 0
+	return PROJECTILE_ACTED
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -229,11 +229,11 @@
 
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if(!Adjacent(user))//To prevent TK and mech users from getting shocked
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
@@ -241,10 +241,10 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			return 1
+			return TRUE
 		else
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /obj/structure/grille/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!destroyed)

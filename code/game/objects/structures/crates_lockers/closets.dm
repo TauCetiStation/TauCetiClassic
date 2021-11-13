@@ -168,8 +168,7 @@
 	if(health <= 0)
 		dump_contents()
 		qdel(src)
-
-	return
+	return PROJECTILE_ACTED
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)

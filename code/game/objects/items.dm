@@ -85,9 +85,9 @@
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -469,10 +469,10 @@
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	set_alt_apperances_layers()
 
-//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return TRUE if it can do this and FALSE if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-//Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0)
+//Set disable_warning to TRUE if you wish it to not give you outputs.
+/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = FALSE)
 	if(!slot)
 		return FALSE
 	if(QDELETED(M))
@@ -493,160 +493,160 @@
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You're too fat to wear the [name].</span>")
-					return 0
+					return FALSE
 
 		switch(slot)
 			if(SLOT_L_HAND)
 				if(H.l_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_R_HAND)
 				if(H.r_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_WEAR_MASK)
 				if(H.wear_mask)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_BACK)
 				if(H.back)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_BACK) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_WEAR_SUIT)
 				if(H.wear_suit)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_OCLOTHING) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_GLOVES)
 				if(H.gloves)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_GLOVES) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_SHOES)
 				if(H.shoes)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_FEET) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_BELT)
 				if(H.belt)
-					return 0
+					return FALSE
 				if(!H.w_uniform)
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_BELT) )
 					return
-				return 1
+				return TRUE
 			if(SLOT_GLASSES)
 				if(H.glasses)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_EYES) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_HEAD)
 				if(H.head)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_HEAD) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_L_EAR)
 				if(H.l_ear)
-					return 0
+					return FALSE
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
-					return 0
+					return FALSE
 				if( w_class < SIZE_TINY	)
-					return 1
+					return TRUE
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_R_EAR)
 				if(H.r_ear)
-					return 0
+					return FALSE
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
-					return 0
+					return FALSE
 				if( w_class < SIZE_TINY )
-					return 1
+					return TRUE
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_W_UNIFORM)
 				if(H.w_uniform)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_ICLOTHING) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_WEAR_ID)
 				if(H.wear_id)
-					return 0
+					return FALSE
 				if(!H.w_uniform)
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_ID) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_L_STORE)
 				if(H.l_store)
-					return 0
+					return FALSE
 				if(!H.w_uniform)
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
-					return 0
+					return FALSE
 				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
-					return 1
+					return TRUE
 			if(SLOT_R_STORE)
 				if(H.r_store)
-					return 0
+					return FALSE
 				if(!H.w_uniform)
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
-					return 0
+					return FALSE
 				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
-					return 1
-				return 0
+					return TRUE
+				return FALSE
 			if(SLOT_S_STORE)
 				if(H.s_store)
-					return 0
+					return FALSE
 				if(!H.wear_suit)
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
-					return 0
+					return FALSE
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
 						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
-					return 0
+					return FALSE
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					return 1
-				return 0
+					return TRUE
+				return FALSE
 			if(SLOT_HANDCUFFED)
 				if(H.handcuffed)
-					return 0
+					return FALSE
 				if(!istype(src, /obj/item/weapon/handcuffs))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_LEGCUFFED)
 				if(H.legcuffed)
-					return 0
+					return FALSE
 				if(!istype(src, /obj/item/weapon/legcuffs))
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_IN_BACKPACK)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
 					if(B.can_be_inserted(src, M, 1))
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 			if(SLOT_TIE)
 				if(!H.w_uniform)
 					if(!disable_warning)
@@ -660,7 +660,7 @@
 				if( !(slot_flags & SLOT_FLAGS_TIE) )
 					return FALSE
 				return TRUE
-		return 0 //Unsupported slot
+		return FALSE //Unsupported slot
 		//END HUMAN
 
 	else if(ismonkey(M))
@@ -669,31 +669,31 @@
 		switch(slot)
 			if(SLOT_L_HAND)
 				if(MO.l_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_R_HAND)
 				if(MO.r_hand)
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_WEAR_MASK)
 				if(MO.wear_mask)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_BACK)
 				if(MO.back)
-					return 0
+					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_BACK) )
-					return 0
-				return 1
+					return FALSE
+				return TRUE
 			if(SLOT_HANDCUFFED)
 				if(MO.handcuffed)
-					return 0
+					return FALSE
 				if(!istype(src, /obj/item/weapon/handcuffs))
-					return 0
-				return 1
-		return 0 //Unsupported slot
+					return FALSE
+				return TRUE
+		return FALSE //Unsupported slot
 
 		//END MONKEY
 	else if(isIAN(M))
@@ -938,12 +938,12 @@
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
-		return 0
+		return FALSE
 
 	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
+		return FALSE //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	return 1 //we applied blood to the item
+	return TRUE //we applied blood to the item
 
 /obj/item/proc/generate_blood_overlay()
 	var/static/list/items_blood_overlay_by_type = list()

@@ -118,7 +118,7 @@
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	AddUses(-1)
-	return 1
+	return TRUE
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(amount = 1)
@@ -191,9 +191,9 @@
 	add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 #undef LIGHT_OK
 #undef LIGHT_EMPTY

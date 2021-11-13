@@ -465,6 +465,7 @@
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
 	..()
+	return PROJECTILE_ACTED
 
 /obj/machinery/bot/medbot/explode()
 	on = 0

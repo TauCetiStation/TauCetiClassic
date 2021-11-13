@@ -112,7 +112,7 @@
 	src.occupant = M
 	add_fingerprint(usr)
 	icon_state = "implantchair_on"
-	return 1
+	return TRUE
 
 
 /obj/machinery/implantchair/proc/implant(mob/M)

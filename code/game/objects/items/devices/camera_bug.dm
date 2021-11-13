@@ -57,7 +57,7 @@
 	if (user.incapacitated() || loc != user || user.blinded || !current)
 		user.reset_view(null)
 		user.unset_machine()
-		return 0
+		return FALSE
 
 	if(!current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
@@ -65,9 +65,9 @@
 		user.reset_view(null)
 		user.unset_machine()
 
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/item/device/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))

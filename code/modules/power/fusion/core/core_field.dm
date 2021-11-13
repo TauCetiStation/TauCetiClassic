@@ -496,7 +496,7 @@
 /obj/effect/fusion_em_field/bullet_act(obj/item/projectile/Proj)
 	AddEnergy(Proj.damage)
 	update_icon()
-	return 0
+	return PROJECTILE_ACTED
 
 #undef FUSION_ENERGY_PER_K
 #undef FUSION_INSTABILITY_DIVISOR

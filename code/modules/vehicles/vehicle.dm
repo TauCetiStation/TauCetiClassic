@@ -111,6 +111,7 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
+	return PROJECTILE_ACTED
 
 /obj/vehicle/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff

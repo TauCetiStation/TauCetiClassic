@@ -315,6 +315,7 @@
 		istype(P,/obj/item/projectile/energy))
 		try_toggle_effects(TRIGGER_ENERGY)
 		health -= P.damage
+	return PROJECTILE_ACTED
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)

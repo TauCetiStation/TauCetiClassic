@@ -41,7 +41,7 @@
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
-		return
+	return PROJECTILE_ACTED
 
 /obj/machinery/apiary/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/queen_bee))

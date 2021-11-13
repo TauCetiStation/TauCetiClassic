@@ -86,11 +86,11 @@ RCD
 	if(!proximity)
 		return
 	if(disabled && !isrobot(user))
-		return 0
+		return FALSE
 	if(istype(target, /area/shuttle))
-		return 0
+		return FALSE
 	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock)))
-		return 0
+		return FALSE
 
 	switch(mode)
 		if(1)
@@ -100,8 +100,8 @@ RCD
 					to_chat(user, "Building Floor...")
 					activate()
 					S.ChangeTurf(/turf/simulated/floor/plating/airless)
-					return 1
-				return 0
+					return TRUE
+				return FALSE
 
 			if(istype(target, /turf/simulated/floor) && !user.is_busy())
 				var/turf/simulated/floor/F = target
@@ -110,45 +110,45 @@ RCD
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 20, target = F))
 						if(!useResource(3, user))
-							return 0
+							return FALSE
 						activate()
 						F.ChangeTurf(/turf/simulated/wall)
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 
 		if(2)
 			if(istype(target, /turf/simulated/floor))
 				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return 0
+						return FALSE
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
-							return 0
+							return FALSE
 						activate()
 						new /obj/machinery/door/airlock(target)
-						return 1
-					return 0
-				return 0
+						return TRUE
+					return FALSE
+				return FALSE
 
 		if(3)
 			if(istype(target, /turf/simulated/wall))
 				var/turf/simulated/wall/W = target
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
-					return 0
+					return FALSE
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Wall...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 40, target = W))
 						if(!useResource(5, user))
-							return 0
+							return FALSE
 						activate()
 						W.ChangeTurf(/turf/simulated/floor/plating/airless)
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 
 			if(istype(target, /turf/simulated/floor))
 				var/turf/simulated/floor/F = target
@@ -157,11 +157,11 @@ RCD
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = F))
 						if(!useResource(5, user))
-							return 0
+							return FALSE
 						activate()
 						F.BreakToBase()
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 
 			if(istype(target, /obj/machinery/door/airlock) && !user.is_busy())
 				if(checkResource(10, user))
@@ -169,33 +169,33 @@ RCD
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
-							return 0
+							return FALSE
 						activate()
 						qdel(target)
-						return 1
-				return 0
-			return 0
+						return TRUE
+				return FALSE
+			return FALSE
 		else
 			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
-			return 0
+			return FALSE
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
-		return 0
+		return FALSE
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/30 matter-units."
-	return 1
+	return TRUE
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
-		return 0
+		return FALSE
 	return user:cell:use(amount * 30)
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
-		return 0
+		return FALSE
 	return user:cell:charge >= (amount * 30)
 
 /obj/item/weapon/rcd/borg/atom_init()

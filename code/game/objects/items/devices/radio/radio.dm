@@ -9,20 +9,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
-	var/on = 1 // 0 for off
+	var/on = TRUE // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
 	var/datum/wires/radio/wires = null
-	var/b_stat = 0
-	var/broadcasting = 0
-	var/listening = 1
+	var/b_stat = FALSE
+	var/broadcasting = FALSE
+	var/listening = TRUE
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/subspace_transmission = 0
-	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
+	var/subspace_transmission = FALSE
+	var/syndie = FALSE//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
@@ -692,10 +692,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/emp_act(severity)
 	if(!grid)
-		on = 0
+		on = FALSE
 		..()
-/*	broadcasting = 0
-	listening = 0
+/*	broadcasting = FALSE
+	listening = FALSE
 	for (var/ch_name in channels)
 	channels[ch_name] = 0 */
 
@@ -748,7 +748,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/borg/proc/recalculateChannels()
 	src.channels = list()
-	src.syndie = 0
+	src.syndie = FALSE
 
 	var/mob/living/silicon/robot/D = src.loc
 	if(D.module)
@@ -765,7 +765,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			src.channels[ch_name] += keyslot.channels[ch_name]
 
 		if(keyslot.syndie)
-			src.syndie = 1
+			src.syndie = TRUE
 
 
 	for (var/ch_name in src.channels)
@@ -783,13 +783,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(usr.incapacitated() || !on)
 		return
 	if (href_list["mode"])
-		if(subspace_transmission != 1)
-			subspace_transmission = 1
+		if(!subspace_transmission)
+			subspace_transmission = TRUE
 			to_chat(usr, "Subspace Transmission is disabled")
 		else
-			subspace_transmission = 0
+			subspace_transmission = FALSE
 			to_chat(usr, "Subspace Transmission is enabled")
-		if(subspace_transmission == 1)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
+		if(subspace_transmission)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
 			channels = list()
 		else
 			recalculateChannels()
@@ -833,7 +833,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/off
-	listening = 0
+	listening = FALSE
 
 /obj/item/device/radio_grid
 	name = "Shielded grid"

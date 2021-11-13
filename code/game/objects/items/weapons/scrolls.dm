@@ -32,7 +32,7 @@
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( istype(H, /mob/living/carbon/human)))
-		return 1
+		return TRUE
 	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["spell_teleport"])
@@ -79,7 +79,7 @@
 
 	var/list/tempL = L
 	var/attempt = null
-	var/success = 0
+	var/success = FALSE
 	while(tempL.len)
 		attempt = pick(tempL)
 		success = user.Move(attempt)

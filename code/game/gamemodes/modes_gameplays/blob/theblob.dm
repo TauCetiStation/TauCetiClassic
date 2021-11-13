@@ -150,7 +150,7 @@
 		 health -= (Proj.damage/fire_resist)
 
 	update_icon()
-	return FALSE
+	return PROJECTILE_ACTED
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()

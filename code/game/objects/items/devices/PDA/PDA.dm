@@ -26,10 +26,10 @@
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/fon = 0 //Is the flashlight function on?
+	var/fon = FALSE //Is the flashlight function on?
 	var/f_lum = 2 //Luminosity for the flashlight function
-	var/message_silent = 0 //To beep or not to beep, that is the question
-	var/toff = 0 //If 1, messenger disabled
+	var/message_silent = FALSE //To beep or not to beep, that is the question
+	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote[0]  //Current Texts
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
@@ -41,11 +41,11 @@
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
-	var/detonate = 1 // Can the PDA be blown up?
-	var/hidden = 0 // Is the PDA hidden from the PDA list?
+	var/detonate = TRUE // Can the PDA be blown up?
+	var/hidden = FALSE // Is the PDA hidden from the PDA list?
 	var/active_conversation = null // New variable that allows us to only view a single conversation.
 	var/list/conversations = list()    // For keeping up with who we have PDA messsages from.
-	var/newmessage = 0			//To remove hackish overlay check
+	var/newmessage = FALSE			//To remove hackish overlay check
 
 	var/list/cartmodes = list(40, 42, 43, 433, 44, 441, 45, 451, 46, 48, 47, 49) // If you add more cartridge modes add them to this list as well.
 	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 72, 73)		     // These modes we turn off autoupdate
@@ -64,7 +64,7 @@
 	var/list/trans_log = list()
 	var/list/safe_pages = list(7, 71, 72, 73)
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
-	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
+	var/boss_PDA = FALSE	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
@@ -159,7 +159,7 @@
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
-	message_silent = 1
+	message_silent = TRUE
 	ttone = "silence"
 
 /obj/item/device/pda/velocity
@@ -196,7 +196,7 @@
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
-	detonate = 0
+	detonate = FALSE
 	//toff = 1
 
 /obj/item/device/pda/cargo
@@ -216,7 +216,7 @@
 	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
-	hidden = 1
+	hidden = TRUE
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
@@ -243,7 +243,7 @@
 	icon_state = "pda-libb"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
-	message_silent = 1 //Quiet in the library!
+	message_silent = TRUE //Quiet in the library!
 
 /obj/item/device/pda/reporter
 	icon_state = "pda-libc"
@@ -284,7 +284,7 @@
 /obj/item/device/pda/silicon
 	icon_state = "NONE"
 	ttone = "data"
-	detonate = 0
+	detonate = FALSE
 
 
 /obj/item/device/pda/silicon/proc/set_name_and_job(newname, newjob, newrank)
@@ -302,7 +302,7 @@
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
-	set hidden = 1
+	set hidden = TRUE
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't send PDA messages because you are dead!")
 		return
@@ -341,7 +341,7 @@
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
-	set hidden = 1
+	set hidden = TRUE
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
@@ -359,7 +359,7 @@
 
 
 /obj/item/device/pda/silicon/can_use()
-	return 1
+	return TRUE
 
 
 /obj/item/device/pda/silicon/attack_self(mob/user)
@@ -372,12 +372,12 @@
 
 /obj/item/device/pda/silicon/robot/cmd_toggle_pda_receiver()
 	set category = "Robot Commands"
-	set hidden = 1
+	set hidden = TRUE
 	..()
 
 /obj/item/device/pda/silicon/robot/cmd_toggle_pda_silent()
 	set category = "Robot Commands"
-	set hidden = 1
+	set hidden = TRUE
 	..()
 
 /obj/item/device/pda/silicon/pai
@@ -610,10 +610,10 @@
 /obj/item/device/pda/Topic(href, href_list)
 	if(href_list["cartmenu"] && !isnull(cartridge))
 		cartridge.Topic(href, href_list)
-		return 1
+		return TRUE
 	if(href_list["radiomenu"] && !isnull(cartridge) && !isnull(cartridge.radio))
 		cartridge.radio.Topic(href, href_list)
-		return 1
+		return TRUE
 
 
 	..()
@@ -626,7 +626,7 @@
 		U.unset_machine()
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 
 	add_fingerprint(U)
 	U.set_machine(src)
@@ -643,7 +643,7 @@
 		if("Close")//Self explanatory
 			U.unset_machine()
 			ui.close()
-			return 0
+			return FALSE
 		if("Refresh")//Refresh, goes to the end of the proc.
 		if("Return")//Return
 			if(mode<=9)
@@ -710,10 +710,10 @@
 
 		if("Light")
 			if(fon)
-				fon = 0
+				fon = FALSE
 				set_light(0)
 			else
-				fon = 1
+				fon = TRUE
 				set_light(f_lum)
 		if("Medical Scan")
 			if(scanmode == 1)
@@ -780,7 +780,7 @@
 					ttone = t
 			else
 				ui.close()
-				return 0
+				return FALSE
 		if("Message")
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -812,7 +812,7 @@
 					to_chat(U, "PDA not found.")
 			else
 				ui.close()
-				return 0
+				return FALSE
 		if("Send Silence")//Silent virus
 			if(istype(cartridge, /obj/item/weapon/cartridge/mime))
 				var/obj/item/device/pda/P = locate(href_list["target"])
@@ -820,13 +820,13 @@
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
 						to_chat(U, "<span class='notice'>Virus sent!</span>")
-						P.message_silent = 1
+						P.message_silent = TRUE
 						P.ttone = "silence"
 				else
 					to_chat(U, "PDA not found.")
 			else
 				ui.close()
-				return 0
+				return FALSE
 
 //Finance Management=============================================================
 
@@ -988,7 +988,7 @@
 			else
 				U.unset_machine()
 				ui.close()
-				return 0
+				return FALSE
 
 //pAI FUNCTIONS===================================
 		if("pai")
@@ -1013,14 +1013,14 @@
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		newmessage = 0
+		newmessage = FALSE
 		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 
-	return 1 // return 1 tells it to refresh the UI in NanoUI
+	return TRUE // return TRUE tells it to refresh the UI in NanoUI
 
 /obj/item/device/pda/update_icon()
 	..()
@@ -1261,7 +1261,7 @@
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 		P.cut_overlays()
 		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
-		P.newmessage = 1
+		P.newmessage = TRUE
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
@@ -1571,6 +1571,6 @@
 
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
-		boss_PDA = 1
+		boss_PDA = TRUE
 
 #undef TRANSCATION_COOLDOWN

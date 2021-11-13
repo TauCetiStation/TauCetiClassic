@@ -48,6 +48,7 @@
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
 		var/power = Proj.agony * 5
 		electrocute_act(power)
+	return PROJECTILE_ACTED
 
 /obj/effect/fluid/attack_hand(mob/user)
 	..()

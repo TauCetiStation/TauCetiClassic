@@ -83,20 +83,20 @@
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)
-		return 0
+		return FALSE
 	if(!istype(user.loc,/turf))
-		return 0
+		return FALSE
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
+		return FALSE
 	var/title = "Sheet-Glass"
 	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
-				return 1
+				return TRUE
 			if(src.loc != user)
-				return 1
+				return TRUE
 
 			var/list/directions = global.cardinal.Copy()
 			var/i = 0
@@ -104,11 +104,11 @@
 				i++
 				if(i >= 4)
 					to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
-					return 1
+					return TRUE
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
 					to_chat(user, "<span class='warning'>Can't let you do that.</span>")
-					return 1
+					return TRUE
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
@@ -123,7 +123,7 @@
 
 			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
@@ -132,18 +132,18 @@
 			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
-				return 1
+				return TRUE
 			if(src.loc != user)
-				return 1
+				return TRUE
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
+				return TRUE
 
 			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 
 			var/obj/structure/window/W
 			W = new created_window(step)
@@ -152,16 +152,16 @@
 			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
-				return 1
+				return TRUE
 			if(src.loc != user)
-				return 1
+				return TRUE
 
 			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 
 			new /obj/item/weapon/table_parts/glass(user.loc)
-	return 0
+	return FALSE
 
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
@@ -200,31 +200,31 @@
 
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || QDELETED(src))
-		return 0
+		return FALSE
 	if(!isturf(user.loc))
-		return 0
+		return FALSE
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
+		return FALSE
 	var/title = "Sheet Reinf. Glass"
 	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
-				return 1
+				return TRUE
 			if(src.loc != user)
-				return 1
+				return TRUE
 			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
 					to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
-					return 1
+					return TRUE
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
 					to_chat(user, "<span class='warning'>Can't let you do that.</span>")
-					return 1
+					return TRUE
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
@@ -239,7 +239,7 @@
 
 			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
@@ -250,17 +250,17 @@
 
 		if("Full Window")
 			if(QDELETED(src))
-				return 1
+				return TRUE
 			if(src.loc != user)
-				return 1
+				return TRUE
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
+				return TRUE
 			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
 			W.state = 0
@@ -271,19 +271,19 @@
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
-				return 1
+				return TRUE
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly, user.loc))
 				to_chat(user, "<span class='warning'>There is already a windoor assembly in that location.</span>")
-				return 1
+				return TRUE
 
 			if(isturf(user.loc) && locate(/obj/machinery/door/window, user.loc))
 				to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
-				return 1
+				return TRUE
 
 			if(!use(5))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
+				return TRUE
 
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
@@ -303,10 +303,10 @@
 					WD.set_dir(NORTH)
 					WD.ini_dir = NORTH
 		else
-			return 1
+			return TRUE
 
 
-	return 0
+	return FALSE
 
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons

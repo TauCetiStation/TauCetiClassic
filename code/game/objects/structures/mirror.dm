@@ -42,6 +42,7 @@
 		else
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 	..()
+	return PROJECTILE_ACTED
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)

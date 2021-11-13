@@ -497,6 +497,7 @@
 				intruder.bullet_act(Proj)
 			if(second_intruder && prob(40))
 				second_intruder.bullet_act(Proj)
+	return PROJECTILE_ACTED
 
 /obj/structure/droppod/proc/take_damage(amount)
 	obj_integrity -= amount / 2

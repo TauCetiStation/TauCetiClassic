@@ -199,3 +199,4 @@
 
 /mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")
+	return PROJECTILE_ACTED

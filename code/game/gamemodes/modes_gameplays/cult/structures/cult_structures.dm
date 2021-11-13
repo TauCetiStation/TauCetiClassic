@@ -10,6 +10,7 @@
 	..()
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
+	return PROJECTILE_ACTED
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)

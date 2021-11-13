@@ -15,7 +15,7 @@
 	if(BP.status & ORGAN_DESTROYED)
 		if(!(BP.status & ORGAN_ATTACHABLE))
 			to_chat(user, "<span class='warning'>The wound is not ready for a replacement!</span>")
-			return 0
+			return FALSE
 		if(M != user)
 			M.visible_message( \
 				"<span class='warning'>[user] is beginning to attach \the [src] where [H]'s [BP.name] used to be.</span>", \
@@ -45,5 +45,5 @@
 			M.UpdateDamageIcon(BP)
 			qdel(src)
 
-			return 1
-		return 0
+			return TRUE
+		return FALSE

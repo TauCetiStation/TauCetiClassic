@@ -165,7 +165,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power += Proj.damage
 		update_icon()
-	return FALSE
+	return PROJECTILE_ACTED
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE

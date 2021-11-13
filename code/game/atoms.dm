@@ -209,7 +209,7 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, def_zone, 0)
-	. = 0
+	return PROJECTILE_ACTED
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))

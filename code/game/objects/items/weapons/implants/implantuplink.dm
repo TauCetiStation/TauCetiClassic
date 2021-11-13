@@ -13,7 +13,7 @@
 	activation_emote = input("Choose activation emote:") in list("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
 	source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/implant/uplink/trigger(emote, mob/source)

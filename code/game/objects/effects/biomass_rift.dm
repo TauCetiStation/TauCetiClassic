@@ -118,10 +118,10 @@
 	//set background = 1
 	for(var/obj/effect/biomass/biomass in location)
 		if(biomass != source)
-			return 0
+			return FALSE
 	if(istype(location,/turf/space))
-		return 0
+		return FALSE
 	if(location.density)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 */

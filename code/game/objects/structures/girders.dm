@@ -24,8 +24,7 @@
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
-
-		return
+	return PROJECTILE_ACTED
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	if(user.is_busy()) return

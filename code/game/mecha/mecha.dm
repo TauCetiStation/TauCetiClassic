@@ -170,9 +170,9 @@
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -509,7 +509,7 @@
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	..()
-	return
+	return PROJECTILE_ACTED
 
 /obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))

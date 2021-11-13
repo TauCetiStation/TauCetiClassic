@@ -8,7 +8,7 @@
 /obj/mecha/medical/mechturn(direction)
 	set_dir(direction)
 	playsound(src, 'sound/mecha/mechmove01.ogg', VOL_EFFECTS_MASTER, 40)
-	return 1
+	return TRUE
 
 /obj/mecha/medical/mechstep(direction)
 	var/old_loc = loc

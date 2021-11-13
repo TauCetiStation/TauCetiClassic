@@ -7,19 +7,19 @@
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
-			return 1
+			return TRUE
 		else
 			to_chat(user, ("There's not enough fuel."))
-			return 0
+			return FALSE
 	else if(iswrench(used_atom))
 		playsound(holder, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		return 1
+		return TRUE
 	else if(isscrewdriver(used_atom))
 		playsound(holder, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		return 1
+		return TRUE
 	else if(iswirecutter(used_atom))
 		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-		return 1
+		return TRUE
 	else if(iscoil(used_atom))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(!C.use(4))
@@ -31,13 +31,13 @@
 		var/obj/item/stack/S = used_atom
 		if(!S.use(5))
 			to_chat(user, ("There's not enough material in this stack."))
-			return 0
+			return FALSE
 	if(istype(used_atom, /obj))
 		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /datum/construction/mecha/ripley_chassis
@@ -125,7 +125,7 @@
 
 /datum/construction/reversible/mecha/ripley/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -229,7 +229,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 				holder.icon_state = "ripley12"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/ripley/spawn_result()
 	..()
@@ -347,7 +347,7 @@
 
 /datum/construction/reversible/mecha/gygax/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -500,7 +500,7 @@
 			else
 				user.visible_message("[user] unfastens Gygax Armour Plates.", "You unfasten Gygax Armour Plates.")
 				holder.icon_state = "gygax18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	..()
@@ -598,7 +598,7 @@
 
 /datum/construction/reversible/mecha/firefighter/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -711,7 +711,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 				holder.icon_state = "fireripley13"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/firefighter/spawn_result()
 	..()
@@ -758,7 +758,7 @@
 
 /datum/construction/mecha/honker/custom_action(step, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	if(istype(used_atom, /obj/item/weapon/bikehorn))
 		playsound(holder, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
@@ -781,7 +781,7 @@
 		if(2)
 			user.visible_message("[user] puts clown boots on [holder].", "You put clown boots on [holder].")
 			qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/honker/spawn_result()
 	..()
@@ -898,7 +898,7 @@
 
 /datum/construction/reversible/mecha/durand/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1051,7 +1051,7 @@
 			else
 				user.visible_message("[user] unfastens Durand Armour Plates.", "You unfasten Durand Armour Plates.")
 				holder.icon_state = "durand18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	..()
@@ -1157,7 +1157,7 @@
 
 /datum/construction/reversible/mecha/odysseus/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1263,7 +1263,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 				holder.icon_state = "odysseus12"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/odysseus/spawn_result()
 	..()
@@ -1379,7 +1379,7 @@
 
 /datum/construction/reversible/mecha/vindicator/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1532,7 +1532,7 @@
 			else
 				user.visible_message("[user] unfastens Vindicator Armour Plates.", "You unfasten Vindicator Armour Plates.")
 				holder.icon_state = "vindicator18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/vindicator/spawn_result()
 	..()
@@ -1648,7 +1648,7 @@
 
 /datum/construction/reversible/mecha/ultra/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1801,7 +1801,7 @@
 			else
 				user.visible_message("[user] unfastens Gygax Ultra Armour Plates.", "You unfasten Gygax Ultra Armour Plates.")
 				holder.icon_state = "ultra18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/ultra/spawn_result()
 	..()

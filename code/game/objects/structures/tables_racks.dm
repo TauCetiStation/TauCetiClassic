@@ -168,28 +168,27 @@
 	return
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
+		return TRUE
 	if (flipped)
 		if (get_dir(loc, target) == dir)
 			return !density
-		else
-			return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
 	if (get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
-		return 1
+		return TRUE
 	if (get_turf(P.original) == cover)
 		var/chance = 20
 		if (ismob(P.original))
@@ -200,30 +199,29 @@
 			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
 				chance += 20
 			else
-				return 1					//But only from one side
+				return TRUE					//But only from one side
 		if(prob(chance))
 			health -= P.damage/2
 			if (health > 0)
 				visible_message("<span class='warning'>[P] hits \the [src]!</span>")
-				return 0
-			else
-				visible_message("<span class='warning'>[src] breaks down!</span>")
-				destroy()
-				return 1
-	return 1
+				return FALSE
+			visible_message("<span class='warning'>[src] breaks down!</span>")
+			destroy()
+			return TRUE
+	return TRUE
 
 /obj/structure/table/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	if(istype(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
-		return 1
+		return TRUE
 	if (flipped)
 		if (get_dir(loc, target) == dir)
 			return !density
 		else
-			return 1
-	return 1
+			return TRUE
+	return TRUE
 
 /obj/structure/table/proc/laser_cut(obj/item/I, mob/user)
 	user.do_attack_animation(src)
@@ -276,14 +274,14 @@
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))
 		if(T && !T.flipped)
-			return 0
+			return FALSE
 	T = locate() in get_step(src.loc,direction)
 	if (!T || T.flipped)
-		return 1
+		return TRUE
 	if (istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
 		if (R.status == 2)
-			return 0
+			return FALSE
 	return T.straight_table_check(direction)
 
 /obj/structure/table/proc/do_flip()
@@ -308,7 +306,7 @@
 
 /obj/structure/table/proc/unflipping_check(direction)
 	for(var/mob/M in oview(src,0))
-		return 0
+		return FALSE
 
 	var/list/L = list()
 	if(direction)
@@ -320,8 +318,8 @@
 		var/obj/structure/table/T = locate() in get_step(src.loc,new_dir)
 		if(T)
 			if(T.flipped && T.dir == src.dir && !T.unflipping_check(new_dir))
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /obj/structure/table/proc/do_put()
 	set name = "Put table back"
@@ -340,7 +338,7 @@
 
 /obj/structure/table/proc/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
-		return 0
+		return FALSE
 
 	verbs -=/obj/structure/table/proc/do_flip
 	verbs +=/obj/structure/table/proc/do_put
@@ -362,7 +360,7 @@
 	update_icon()
 	update_adjacent()
 
-	return 1
+	return TRUE
 
 /obj/structure/table/proc/unflip()
 	verbs -=/obj/structure/table/proc/do_put
@@ -379,7 +377,7 @@
 	update_icon()
 	update_adjacent()
 
-	return 1
+	return TRUE
 
 /*
  * Glass tables
@@ -397,7 +395,7 @@
 
 /obj/structure/table/glass/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
-		return 0
+		return FALSE
 
 	set_dir(direction)
 	if(dir != NORTH)
@@ -411,7 +409,7 @@
 
 	shatter()
 
-	return 1
+	return TRUE
 
 /obj/structure/table/glass/proc/shatter()
 	canconnect = FALSE
@@ -520,23 +518,23 @@
 	var/status = 2
 
 /obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
+		return TRUE
 	if (flipped)
 		if (get_dir(loc, target) == dir)
 			return !density
 		else
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/structure/table/reinforced/flip(direction)
 	if (status == 2)
-		return 0
+		return FALSE
 	else
 		return ..()
 
@@ -622,13 +620,13 @@
 		return
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
-		return 1
+		return TRUE
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))

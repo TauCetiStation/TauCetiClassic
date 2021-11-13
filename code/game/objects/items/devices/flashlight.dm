@@ -34,11 +34,11 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
-		return 0
+		return FALSE
 
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
-		return 0
+		return FALSE
 
 	if (button_sound)
 		playsound(user, button_sound, VOL_EFFECTS_MASTER, 20)
@@ -47,7 +47,7 @@
 	last_button_sound = world.time + 3
 	update_brightness(user)
 	action_button_name = null
-	return 1
+	return TRUE
 
 /obj/item/device/flashlight/get_current_temperature()
 	if(on)
@@ -275,10 +275,10 @@
 /obj/item/device/flashlight/emp/process()
 	charge_tick++
 	if(charge_tick < 10)
-		return 0
+		return FALSE
 	charge_tick = 0
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
-	return 1
+	return TRUE
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user, def_zone)
 	if(on && def_zone == O_EYES) // call original attack proc only if aiming at the eyes

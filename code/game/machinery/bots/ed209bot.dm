@@ -513,7 +513,7 @@
 			turn_off()
 			qdel(Proj)
 			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
-		return
+		return PROJECTILE_ACTED
 	return ..()
 
 /obj/machinery/bot/secbot/ed209/bluetag

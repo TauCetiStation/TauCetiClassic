@@ -380,19 +380,19 @@
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(used < 0)
 		stack_trace("[src.type]/use() called with a negative parameter [used]")
-		return 0
+		return FALSE
 	if(!active || !check_fuel())
-		return 0
+		return FALSE
 	if(get_fuel() >= used)
 		reagents.remove_reagent("fuel", used)
 		check_fuel()
 		if(M)
 			eyecheck(M)
-		return 1
+		return TRUE
 	else
 		if(M)
 			to_chat(M, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-		return 0
+		return FALSE
 
 // Is welding tool currently on?
 /obj/item/weapon/weldingtool/proc/isOn()
@@ -408,8 +408,8 @@
 /obj/item/weapon/weldingtool/proc/check_fuel()
 	if((get_fuel() <= 0) && active)
 		toggle(1)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 // Toggles the welder off and on
@@ -450,7 +450,7 @@
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
-	if(!iscarbon(user)) return 1
+	if(!iscarbon(user)) return TRUE
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user

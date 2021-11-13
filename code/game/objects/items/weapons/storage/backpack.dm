@@ -58,7 +58,7 @@
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
-		return 1 //No failure
+		return TRUE //No failure
 	if (prob(src.reliability))
 		to_chat(user, "<span class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
 	else

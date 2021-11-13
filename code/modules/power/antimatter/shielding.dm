@@ -118,7 +118,7 @@
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
-	return 0
+	return PROJECTILE_ACTED
 
 
 /obj/machinery/am_shielding/update_icon()

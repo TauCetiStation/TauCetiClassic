@@ -208,6 +208,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
 	..()
+	return PROJECTILE_ACTED
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)

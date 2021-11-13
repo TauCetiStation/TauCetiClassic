@@ -157,6 +157,7 @@
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()
+	return PROJECTILE_ACTED
 
 /obj/structure/reagent_dispensers/blob_act()
 	explode()

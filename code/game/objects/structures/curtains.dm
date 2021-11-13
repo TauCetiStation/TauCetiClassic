@@ -16,6 +16,7 @@
 		qdel(src)
 	else
 		..(P, def_zone)
+	return PROJECTILE_ACTED
 
 /obj/structure/curtain/attack_hand(mob/user)
 	playsound(src, 'sound/effects/curtain.ogg', VOL_EFFECTS_MASTER, 15, null, FALSE, -5)

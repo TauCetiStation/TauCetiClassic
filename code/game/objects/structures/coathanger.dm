@@ -25,10 +25,10 @@
 
 
 /obj/structure/coatrack/attackby(obj/item/weapon/W, mob/user)
-	var/can_hang = 0
+	var/can_hang = FALSE
 	for (var/T in allowed)
 		if(istype(W,T))
-			can_hang = 1
+			can_hang = TRUE
 	if (can_hang && !coat && !istype(W, /obj/item/clothing/head/det_hat))
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 		coat = W
@@ -45,26 +45,24 @@
 	return ..()
 
 /obj/structure/coatrack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	var/can_hang = 0
+	var/can_hang = FALSE
 	for (var/T in allowed)
 		if(istype(mover,T))
-			can_hang = 1
+			can_hang = TRUE
 
 	if (can_hang && !coat && !istype(mover, /obj/item/clothing/head/det_hat))
 		visible_message("[mover] lands on \the [src].")
 		coat = mover
 		coat.loc = src
 		update_icon()
-		return 0
-	else
-		if (can_hang && !hat && istype(mover, /obj/item/clothing/head/det_hat))
-			visible_message("[mover] lands on \the [src].")
-			hat = mover
-			hat.loc = src
-			update_icon()
-			return 0
-		else
-			return 1
+		return FALSE
+	if (can_hang && !hat && istype(mover, /obj/item/clothing/head/det_hat))
+		visible_message("[mover] lands on \the [src].")
+		hat = mover
+		hat.loc = src
+		update_icon()
+		return FALSE
+	return TRUE
 
 /obj/structure/coatrack/update_icon()
 	cut_overlays()

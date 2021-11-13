@@ -226,10 +226,10 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
 	if (istype(M))
-		return 0
+		return FALSE
 	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /////////////////////////////////////////////
 // Bad smoke
@@ -245,7 +245,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/bad/affect(mob/living/carbon/M)
 	if (!..())
-		return 0
+		return FALSE
 	M.drop_item()
 	M.adjustOxyLoss(1)
 	if (M.coughedtime != 1)
@@ -255,11 +255,11 @@ steam.start() -- spawns the effect
 			M.coughedtime = 0
 
 /obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
-	return 1
+	return TRUE
 /////////////////////////////////////////////
 // Sleep smoke
 /////////////////////////////////////////////
@@ -273,7 +273,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M )
 	if (!..())
-		return 0
+		return FALSE
 
 	M.drop_item()
 	M.Sleeping(1 SECOND)
@@ -298,9 +298,9 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/mustard/affect(mob/living/carbon/human/R)
 	if (!..())
-		return 0
+		return FALSE
 	if (R.wear_suit != null)
-		return 0
+		return FALSE
 
 	R.burn_skin(0.75)
 	if (R.coughedtime != 1)
@@ -641,6 +641,7 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/bullet_act()
 	if(metal == 1 || prob(50))
 		qdel(src)
+	return PROJECTILE_ACTED
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)

@@ -40,4 +40,4 @@
 				T.emplode(2)
 		else if(distance <= light_range)
 			T.emplode(2)
-	return 1
+	return TRUE

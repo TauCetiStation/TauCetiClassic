@@ -8,13 +8,13 @@
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
-	var/toggle = 1
+	var/valve_open = FALSE
+	var/toggle = TRUE
 
 /obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 /obj/item/device/transfer_valve/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank))
@@ -79,7 +79,7 @@
 	data["attachmentOne"] = tank_one ? tank_one.name : null
 	data["attachmentTwo"] = tank_two ? tank_two.name : null
 	data["valveAttachment"] = attached_device ? attached_device.name : null
-	data["valveOpen"] = valve_open ? 1 : 0
+	data["valveOpen"] = valve_open
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
@@ -97,18 +97,18 @@
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
 	if ( usr.incapacitated() )
-		return 0
+		return FALSE
 	if (src.loc != usr)
-		return 0
+		return FALSE
 	if(tank_one && href_list["tankone"])
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		tank_one.loc = get_turf(src)
 		tank_one = null
 		update_icon()
 	else if(tank_two && href_list["tanktwo"])
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		tank_two.loc = get_turf(src)
 		tank_two = null
 		update_icon()
@@ -123,14 +123,14 @@
 		if(href_list["device"])
 			attached_device.attack_self(usr)
 	add_fingerprint(usr)
-	return 1 // Returning 1 sends an update to attached UIs
+	return TRUE // Returning TRUE sends an update to attached UIs
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
 	if(toggle)
-		toggle = 0
+		toggle = FALSE
 		toggle_valve()
 		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
-			toggle = 1
+			toggle = TRUE
 
 /obj/item/device/transfer_valve/update_icon()
 	cut_overlays()
@@ -171,8 +171,8 @@
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
-	if(valve_open==0 && (tank_one && tank_two))
-		valve_open = 1
+	if(!valve_open && (tank_one && tank_two))
+		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -204,9 +204,9 @@
 				sleep(10)
 			update_icon()
 
-	else if(valve_open==1 && (tank_one && tank_two))
+	else if(valve_open && (tank_one && tank_two))
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here

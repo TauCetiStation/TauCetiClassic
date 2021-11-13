@@ -56,6 +56,7 @@
 		return
 	opacity = 1
 	spawn(20) if(src) opacity = 0
+	return PROJECTILE_ACTED
 
 /obj/machinery/shield/ex_act(severity)
 	switch(severity)
@@ -506,7 +507,7 @@
 /obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
 	storedpower -= Proj.damage
 	..()
-	return
+	return PROJECTILE_ACTED
 
 
 //////////////Containment Field START
@@ -566,7 +567,7 @@
 			G = gen_secondary
 		G.storedpower -= Proj.damage
 	..()
-	return
+	return PROJECTILE_ACTED
 
 
 /obj/machinery/shieldwall/ex_act(severity)

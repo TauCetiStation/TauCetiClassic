@@ -37,9 +37,9 @@
 /obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
-		return 1
+		return TRUE
 	if(thrusters_active && movement_dir && use_power(ENERGY_USE_WITH_THRUSTERS))
-		return 1
+		return TRUE
 
 /obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -130,7 +130,7 @@
 		if(world.time - last_message > 20)
 			occupant_message("Unable to move while in zoom mode.")
 			last_message = world.time
-		return 0
+		return FALSE
 	return ..()
 
 /obj/mecha/combat/marauder/proc/toggle_thrusters()

@@ -87,4 +87,5 @@
 			if ((O.client && !( O.blinded )))
 				to_chat(O, "<span class='rose'>[src] breaks into tiny pieces and collapses!</span>")
 		qdel(src)
+	return PROJECTILE_ACTED
 

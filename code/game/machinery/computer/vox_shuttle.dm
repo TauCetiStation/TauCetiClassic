@@ -172,6 +172,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")
+	return PROJECTILE_ACTED
 
 #undef VOX_SHUTTLE_MOVE_TIME
 #undef VOX_SHUTTLE_COOLDOWN

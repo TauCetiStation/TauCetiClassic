@@ -186,7 +186,7 @@
 			is_seeing -= M
 	return cansee*/
 
-//This proc return 1 if the item can be picked up and 0 if it can't.
+//This proc return TRUE if the item can be picked up and FALSE if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(!istype(W) || (W.flags & ABSTRACT) || W.anchored)

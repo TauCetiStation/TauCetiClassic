@@ -46,6 +46,7 @@
 /obj/item/mine/bullet_act(obj/item/projectile/Proj)
 	trigger_act(Proj)
 	qdel(src)
+	return PROJECTILE_ACTED
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
 	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))

@@ -35,7 +35,7 @@
 /obj/effect/fusion_particle_catcher/bullet_act(obj/item/projectile/Proj)
 	parent.AddEnergy(Proj.damage)
 	update_icon()
-	return 0
+	return PROJECTILE_ACTED
 
 /obj/effect/fusion_particle_catcher/Bumped(atom/AM)
 	if(ismob(AM) && density)

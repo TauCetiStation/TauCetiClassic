@@ -53,7 +53,7 @@
 	..()
 	if(health <= 0)
 		deflate(1)
-
+	return PROJECTILE_ACTED
 
 /obj/structure/inflatable/ex_act(severity)
 	switch(severity)

@@ -325,3 +325,4 @@
 
 /obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
 	spill(Proj.damage * 10)
+	return PROJECTILE_ACTED

@@ -219,6 +219,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
+	return PROJECTILE_ACTED
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
 	alerted = FALSE

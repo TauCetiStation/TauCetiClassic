@@ -37,7 +37,7 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
-	return
+	return PROJECTILE_ACTED
 
 /obj/structure/cellular_biomass/ex_act(severity)
 	health -= 100 / severity

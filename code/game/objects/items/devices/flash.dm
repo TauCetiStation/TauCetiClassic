@@ -23,8 +23,8 @@
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>\The [src] slips out of your hand.</span>")
 		user.drop_item()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/flash/proc/flash_recharge()
 	//capacitor recharges over time

@@ -265,12 +265,11 @@ update_flag
 	take_damage(200)
 
 /obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
-	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		return
-
-	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
-	..()
+	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
+		if(Proj.damage)
+			take_damage(round(Proj.damage / 2))
+		..()
+	return PROJECTILE_ACTED
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

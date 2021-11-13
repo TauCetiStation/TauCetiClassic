@@ -602,4 +602,4 @@
 			loc:mode = 433
 			mode = 433
 
-	return 1
+	return TRUE

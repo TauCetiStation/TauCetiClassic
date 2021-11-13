@@ -75,6 +75,7 @@
 	if(prob(Proj.damage))
 		set_broken()
 	..()
+	return PROJECTILE_ACTED
 
 /obj/machinery/computer/update_icon()
 	..()

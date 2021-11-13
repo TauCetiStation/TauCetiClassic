@@ -49,8 +49,8 @@
 /obj/structure/closet/body_bag/close()
 	if(..())
 		density = FALSE
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
@@ -58,8 +58,8 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if((over_object == usr && (Adjacent(usr) || usr.contents.Find(src))))
-		if(opened)	return 0
-		if(contents.len)	return 0
+		if(opened)	return FALSE
+		if(contents.len)	return FALSE
 		visible_message("[usr] folds up the [src.name]")
 		new item_path(get_turf(src))
 		qdel(src)
