@@ -77,6 +77,8 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+#define isautosay(A) (istype(A, /mob/autosay))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
