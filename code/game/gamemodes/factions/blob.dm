@@ -78,10 +78,10 @@
 	start.count()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
-	spawn_as_mouse()
+	spawn_blob_mice()
 	return ..()
 
-/datum/faction/blob_conglomerate/proc/spawn_as_mouse()
+/datum/faction/blob_conglomerate/proc/spawn_blob_mice()
 	for(var/datum/role/R in members)
 		var/V = pick_n_take(spawn_locs)
 		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
