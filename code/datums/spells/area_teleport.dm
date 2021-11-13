@@ -5,7 +5,7 @@
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
+/obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1, mob/user = usr)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
 		revert_cast()
@@ -15,13 +15,13 @@
 	cast(targets,thearea)
 	invocation()
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
 		if(target.incapacitated() || target.lying)
 			return FALSE
 	var/A = null
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything  in teleportlocs
+		A = tgui_input_list(user, "Зона для телепортации", "Телепортация", teleportlocs)
 	else
 		A = pick(teleportlocs)
 
@@ -35,7 +35,7 @@
 	else
 		return FALSE
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets, area/thearea)
+/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets, area/thearea, mob/user = usr)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
