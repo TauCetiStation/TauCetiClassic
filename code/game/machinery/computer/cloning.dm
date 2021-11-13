@@ -382,6 +382,7 @@
 	for(var/V in subject.roundstart_quirks)
 		var/datum/quirk/T = V
 		R.quirks += T.type
+	R.quirks += /datum/quirk/genetic_degradation // clones cannot be cloned
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

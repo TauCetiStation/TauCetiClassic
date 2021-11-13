@@ -507,6 +507,13 @@
 	qdel(tool)
 	target.stat = CONSCIOUS
 
+	var/obj/item/organ/internal/heart/IO = target.organs_by_name[O_HEART]
+	IO.heart_normalize()
+	target.SetStunned(0)
+	target.SetWeakened(0)
+	target.SetParalysis(0)
+
+
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -732,3 +739,26 @@
 
 	target.nutrition = C.charge
 
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration
+	allowed_tools = list(
+		/obj/item/robot_parts/robot_component/radio = 100,
+	)
+	min_duration = 30
+	max_duration = 70
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.ribcage == 2
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts putting in \the [tool] into [target]'s hearing module slot.",
+	"You start putting in \the [tool] into [target]'s hearing module slot.")
+	..()
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] has put in \the [tool] into [target]'s hearing module slot.</span>",
+	"<span class='notice'>You have put in \the [tool] into [target]'s hearing module slot.</span>")
+
+	qdel(tool)
+	target.ear_damage = 0
+	target.ear_deaf = 0
