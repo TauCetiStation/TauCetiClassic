@@ -243,7 +243,7 @@
 	RegisterSignal(src, COMSIG_HAND_DROP_ITEM, .proc/drop_item)
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/Destroy()
-	UnregisterSignal(integrated_into, list(COMSIG_HAND_DROP_ITEM,COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(integrated_into, list(COMSIG_HAND_DROP_ITEM, COMSIG_MOVABLE_MOVED))
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/drop_item()
 	RegisterSignal(integrated_into, COMSIG_MOVABLE_MOVED, .proc/check_dist)
@@ -251,7 +251,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/pull_back()
 	UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
-	if(istype(loc,/obj/machinery))
+	if(istype(loc, /obj/machinery))
 		var/obj/machinery/M = loc
 		M.Eject(move = FALSE)
 	forceMove(integrated_into)
@@ -259,7 +259,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/check_dist(atom/movable/I, atom/oldLoc, dir)
 	var/dist = get_dist(get_turf(integrated_into),get_turf(loc))
-	if(dist < 0 || dist > 1)
+	if(0 > dist || dist > 1)
 		pull_back()
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/Moved(atom/OldLoc, Dir)

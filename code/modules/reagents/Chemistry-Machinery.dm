@@ -718,7 +718,7 @@
 		beaker = null
 		reagents.clear_reagents()
 	if(loaded_pill_bottle)
-		loaded_pill_bottle.loc = src.loc
+		loaded_pill_bottle.forceMove(loc)
 		loaded_pill_bottle = null
 
 /obj/machinery/chem_master/constructable/attackby(obj/item/I, mob/user, params)
