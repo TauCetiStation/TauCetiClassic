@@ -53,6 +53,11 @@
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
+		var/list/station_intercom_list = list()
+		for(var/obj/item/device/radio/intercom/I in intercom_list)
+			if(is_station_level(I.z))
+				station_intercom_list += I
+
 		R = pick(station_intercom_list)
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
@@ -76,28 +81,7 @@
 		if (!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
-
-	if (istype(R, /obj/item/device/radio/intercom))
-		var/obj/item/device/radio/intercom/target_intercom = R
-		var/freq = 1441
-		var/list/freqlist = list()
-		while (freq <= 1489)
-			if (freq < 1451 || freq > 1459)
-				freqlist += freq
-			freq += 2
-			if ((freq % 2) == 0)
-				freq += 1
-		freq = freqlist[rand(1, freqlist.len)]
-		var/obj/item/device/uplink/hidden/T = new(R)
-		T.uses = uplink_uses
-		target_intercom.hidden_uplink = T
-		target_intercom.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [get_area(R)]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
-		target_intercom.hidden_uplink.uses += 5
-		total_TC += target_intercom.hidden_uplink.uses
-
-	else if (istype(R, /obj/item/device/radio))
+	if (istype(R, /obj/item/device/radio))
 		// generate list of radio freqs
 		var/obj/item/device/radio/target_radio = R
 		var/freq = 1441
@@ -113,8 +97,13 @@
 		T.uses = uplink_uses
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		if(istype(target_radio, /obj/item/device/radio/intercom))
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [get_area(R)]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
+			target_radio.hidden_uplink.uses += 5
+		else
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
 
 	else if (istype(R, /obj/item/device/pda))

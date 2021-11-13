@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
+
 /obj/item/device/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
@@ -9,11 +11,6 @@
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
-
-/obj/item/device/radio/intercom/atom_init()
-	. = ..()
-	if(is_station_level(z))
-		station_intercom_list += src
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	add_fingerprint(user)
