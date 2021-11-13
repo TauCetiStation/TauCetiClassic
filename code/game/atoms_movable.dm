@@ -463,5 +463,5 @@
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
-	setLoc(new_loc)
+	loc = new_loc
 	Moved(old_loc)
