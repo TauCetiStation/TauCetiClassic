@@ -32,9 +32,9 @@
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
 	var/obj/item/module_active = null
-	var/module_state_1 = null
-	var/module_state_2 = null
-	var/module_state_3 = null
+	var/atom/movable/module_state_1 = null
+	var/atom/movable/module_state_2 = null
+	var/atom/movable/module_state_3 = null
 
 	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null

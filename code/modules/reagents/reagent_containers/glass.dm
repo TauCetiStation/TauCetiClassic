@@ -241,20 +241,31 @@
 	. = ..()
 	integrated_into = R
 	RegisterSignal(src, COMSIG_HAND_DROP_ITEM, .proc/drop_item)
+	RegisterSignal(integrated_into, COMSIG_MOB_DIED, .proc/on_mob_death)
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/Destroy()
-	UnregisterSignal(integrated_into, list(COMSIG_HAND_DROP_ITEM, COMSIG_MOVABLE_MOVED))
+	if(loc != integrated_into && loc != integrated_into.module)
+		UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(src, COMSIG_HAND_DROP_ITEM)
+	UnregisterSignal(integrated_into, COMSIG_MOB_DIED)
+
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/on_mob_death()
+	if(istype(loc, /obj/machinery))
+		var/obj/machinery/M = loc
+		M.Eject(move = FALSE)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/drop_item()
 	RegisterSignal(integrated_into, COMSIG_MOVABLE_MOVED, .proc/check_dist)
 	return TRUE
 
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/pull_back()
+/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/pull_back(loc = src.loc, move = TRUE)
 	UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
 	if(istype(loc, /obj/machinery))
 		var/obj/machinery/M = loc
 		M.Eject(move = FALSE)
-	forceMove(integrated_into)
+	if(move)
+		forceMove(integrated_into)
 	to_chat(integrated_into, "<span class='notice'>Your integrated beaker gets pulled back inside.</span>")
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/check_dist(atom/movable/I, atom/oldLoc, dir)
@@ -264,9 +275,11 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/integrated/Moved(atom/OldLoc, Dir)
 	if(OldLoc != integrated_into)
-		if(loc == integrated_into)
+		if(loc == integrated_into) // if forceMove in pull_back happened
 			UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
-		else
+		else if(loc == integrated_into.module) // Handle Store button
+			pull_back(loc = OldLoc, move = FALSE)
+		else // everything else
 			pull_back()
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
