@@ -76,7 +76,7 @@
 	if(!target)
 		return FALSE
 	if(!chassis)
-		returnFALSE
+		return FALSE
 	if(!equip_ready)
 		return FALSE
 	if(crit_fail)
