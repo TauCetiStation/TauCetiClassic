@@ -149,11 +149,7 @@
 		return
 
 	if(beaker)
-		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-			beaker.forceMove(B.integrated_into)
-		else
-			beaker.forceMove(get_turf(src))
+		beaker.forceMove(get_turf(src))
 		beaker = null
 		update_icon()
 

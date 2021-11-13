@@ -150,15 +150,12 @@
 		if("eject_beaker")
 			return Eject()
 
-/obj/machinery/chem_dispenser/Eject()
+/obj/machinery/chem_dispenser/Eject(move = TRUE)
 	. = TRUE
 	if(!beaker)
 		return
 
-	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-		beaker.forceMove(B.integrated_into)
-	else
+	if(move)
 		beaker.forceMove(loc)
 	beaker = null
 
@@ -600,12 +597,9 @@
 
 	updateUsrDialog()
 
-/obj/machinery/chem_master/Eject()
+/obj/machinery/chem_master/Eject(move = TRUE)
 	if(beaker)
-		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-			beaker.forceMove(B.integrated_into)
-		else
+		if(move)
 			beaker.forceMove(loc)
 		beaker = null
 		reagents.clear_reagents()
@@ -717,12 +711,9 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 
-/obj/machinery/chem_master/constructable/Eject()
+/obj/machinery/chem_master/constructable/Eject(move = TRUE)
 	if(beaker)
-		if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-			var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-			beaker.forceMove(B.integrated_into)
-		else
+		if(move)
 			beaker.forceMove(loc)
 		beaker = null
 		reagents.clear_reagents()
@@ -806,11 +797,8 @@
 			update_power_use()
 	update_power_use()
 
-/obj/machinery/computer/pandemic/Eject()
-	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-		beaker.forceMove(B.integrated_into)
-	else
+/obj/machinery/computer/pandemic/Eject(move = TRUE)
+	if(move)
 		beaker.forceMove(loc)
 	beaker = null
 
@@ -1219,11 +1207,7 @@
 		return
 	if (!beaker)
 		return
-	if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-		var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-		beaker.forceMove(B.integrated_into)
-	else
-		beaker.forceMove(loc)
+	beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 

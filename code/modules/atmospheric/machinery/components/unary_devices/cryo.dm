@@ -295,11 +295,7 @@
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-				var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-				beaker.forceMove(B.integrated_into)
-			else
-				beaker.forceMove(get_step(loc, SOUTH))
+			beaker.forceMove(get_step(loc, SOUTH))
 			beaker = null
 
 	update_icon()
@@ -339,11 +335,7 @@
 		on = FALSE
 		..()
 		if(beaker)
-			if(istype(beaker,/obj/item/weapon/reagent_containers/glass/beaker/integrated))
-				var/obj/item/weapon/reagent_containers/glass/beaker/integrated/B = beaker
-				beaker.forceMove(B.integrated_into)
-			else
-				beaker.forceMove(src)
+			beaker.forceMove(src)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
