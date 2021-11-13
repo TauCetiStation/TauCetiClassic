@@ -60,8 +60,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
 	var/temp = ""
-	var/canclear = 1
-	var/authenticated = 0
+	var/canclear = TRUE
+	var/authenticated = FALSE
 
 //Here's the structure for files: each entry is a list, and entry one in that list is the string of their
 //full and scrambled fingerprint.  This acts as the method to arrange evidence.  Each subsequent entry is list
@@ -129,9 +129,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 	switch(href_list["operation"])
 		if("login")
 			if(allowed(usr))
-				authenticated = 1
+				authenticated = TRUE
 		if("logout")
-			authenticated = 0
+			authenticated = FALSE
 		if("clear")
 			if(canclear)
 				temp = null
@@ -168,7 +168,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 				if(card.amount > 1 || !card.fingerprints.len)
 					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
-						card.loc = src.loc
+						card.loc = loc
 					card = null
 					return
 				M.drop_from_inventory(I, src)
@@ -176,7 +176,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 			else
 				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
-			canclear = 1
+			canclear = TRUE
 			if(href_list["delete_record"])
 				delete_dossier(href_list["delete_record"])
 			if(href_list["delete_aux"])
@@ -200,7 +200,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 						var/list/data_entry = misc[atom]
 						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>[data_entry[3]]</a><br>"
 		if("record") //Viewing a record from the "files" database.
-			canclear = 0
+			canclear = FALSE
 			if(files)
 				var/list/dossier = files[href_list["identifier"]]
 				if(href_list["ren"])
@@ -292,7 +292,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 			else
 				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("auxiliary") //Viewing a record from the "misc" database.
-			canclear = 0
+			canclear = FALSE
 			if(misc)
 				temp = "<b>Auxiliary Evidence Database</b><br><br>"
 				var/list/outputs = misc[href_list["identifier"]]
@@ -572,7 +572,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 			new_file[2] = "Dossier [files.len + 1]"
 			new_file[atom_reference] = data_point
 			files[main_print] = new_file
-	return 1
+	return TRUE
 /********************************
 ***END DO NOT DIRECTLY CALL ME***
 ********************************/
@@ -602,7 +602,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 	else
 		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
-			card.loc = src.loc
+			card.loc = loc
 		card = null
 		return
 	return

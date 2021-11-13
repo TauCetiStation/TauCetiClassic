@@ -3,7 +3,7 @@ var/global/list/datum/bridge_command/bridge_commands
 /world/proc/send2bridge(msg, list/type = list(BRIDGE_SERVICE), attachment_msg, attachment_title, attachment_color, attachment_footer, mention)
 
 	if(!config.chat_bridge || !islist(type) || !type.len || !(msg || attachment_msg || attachment_title))
-		return 0
+		return FALSE
 
 	var/list/json = list()
 
@@ -43,7 +43,7 @@ var/global/list/datum/bridge_command/bridge_commands
 			else
 				ERROR("Unsuccessful send2bridge, json:\n \t[encoded_json]")
 
-	return 1
+	return TRUE
 
 // Topic format: bridge&bridge_secret=secret&bridge_type=type&bridge_from_user=username&bridge_from_uid=DiscordID&bridge_from_suffix=Discord&bridge_arg_1=...
 /world/proc/bridge2game(list/packet_data)

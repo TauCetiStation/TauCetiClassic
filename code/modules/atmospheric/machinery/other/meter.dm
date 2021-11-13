@@ -16,11 +16,11 @@
 	. = ..()
 	SSair.atmos_machinery += src
 	if (!target)
-		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+		target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
-	src.target = null
+	target = null
 	return ..()
 
 /obj/machinery/meter/singularity_pull(S, current_size)
@@ -33,18 +33,18 @@
 /obj/machinery/meter/process_atmos()
 	if(!target)
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
-		return 0
+		return FALSE
 
 	//use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
@@ -87,7 +87,7 @@
 	else if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "<span class='warning'>The display is off.</span>")
 
-	else if(src.target)
+	else if(target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
 			to_chat(user, "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]K ([round(environment.temperature-T0C,0.01)]&deg;C)")
@@ -102,7 +102,7 @@
 
 	if(isAI(usr)) // ghosts can call ..() for examine
 		usr.examinate(src)
-		return 1
+		return TRUE
 
 	return ..()
 
@@ -117,11 +117,11 @@
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",
 			"You hear ratchet.")
-		new /obj/item/pipe_meter(src.loc)
+		new /obj/item/pipe_meter(loc)
 		qdel(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 
 /obj/machinery/meter/turf/atom_init()
-	src.target = loc
-	. = ..()
+	target = loc
+	return ..()

@@ -34,16 +34,16 @@
 	if (!ishuman(M))
 		to_chat(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
 		flick("forensic0",src)
-		return 0
+		return FALSE
 	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		to_chat(user, "<span class='notice'>No fingerprints found on [M]</span>")
 		flick("forensic0",src)
-		return 0
+		return FALSE
 	else
-		if (src.amount < 1)
+		if (amount < 1)
 			to_chat(user, text("<span class='notice'>Fingerprints scanned on [M]. Need more cards to print.</span>"))
 		else
-			src.amount--
+			amount--
 			var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
 			F.amount = 1
 			F.add_fingerprint(M)
@@ -91,7 +91,7 @@
 		"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target]!</span>",\
 		"You hear a faint hum of electrical equipment.")
 		flick("forensic0",src)
-		return 0
+		return FALSE
 
 	if(add_data(target))
 		to_chat(user, "<span class='notice'>Object already in internal memory. Consolidating data...</span>")
@@ -133,13 +133,13 @@
 		"You finish scanning \the [target].",\
 		"You hear a faint hum of electrical equipment.")
 		flick("forensic2",src)
-		return 0
+		return FALSE
 	else
 		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
 		"The results of the scan pique your interest.",\
 		"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
 		flick("forensic2",src)
-		return 0
+		return FALSE
 
 /obj/item/device/detective_scanner/proc/add_data(atom/A)
 	//I love associative lists.
@@ -169,11 +169,11 @@
 			for(var/main_blood in A.blood_DNA)
 				if(!blood[main_blood])
 					blood[main_blood] = A.blood_DNA[blood]
-		return 1
+		return TRUE
 	var/list/sum_list[4]	//Pack it back up!
 	sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
 	sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
 	sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null
 	sum_list[4] = "\The [A] in \the [get_area(A)]"
 	stored["\ref [A]"] = sum_list
-	return 0
+	return TRUE

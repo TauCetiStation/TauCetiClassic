@@ -219,9 +219,9 @@
 	var/module_mode = ""
 	var/obj/item/rig_module/module
 
-/obj/stat_rig_module/atom_init(mapload, obj/item/rig_module/module)
+/obj/stat_rig_module/atom_init(mapload, obj/item/rig_module/r_module)
 	. = ..()
-	src.module = module
+	module = r_module
 
 /obj/stat_rig_module/proc/AddHref(list/href_list)
 	return
@@ -281,8 +281,8 @@
 /obj/stat_rig_module/select/CanUse()
 	if(module.selectable)
 		name = module.holder.selected_module == module ? "Selected" : "Select"
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/stat_rig_module/charge/atom_init(mapload, obj/item/rig_module/module)
 	. = ..()
@@ -302,5 +302,5 @@
 	if(module.charges && module.charges.len)
 		var/datum/rig_charge/charge = module.charges[module.charge_selected]
 		name = "[charge.display_name] ([charge.charges]C) - Change"
-		return 1
-	return 0
+		return TRUE
+	return FALSE

@@ -151,7 +151,7 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		src.icon_state = text("[]-1", src.canister_color)
+		icon_state = text("[]-1", canister_color)
 		return
 
 	if(icon_state != "[canister_color]")
@@ -294,7 +294,7 @@ update_flag
 				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+		return TRUE
 
 	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("<span class='warning'>[user] hits the [src] with a [W]!</span>")
@@ -390,9 +390,9 @@ update_flag
 				)
 				var/label = input("Choose canister label", "Gas canister") as null|anything in colors
 				if (label)
-					src.canister_color = colors[label]
-					src.icon_state = colors[label]
-					src.name = "Canister: [label]"
+					canister_color = colors[label]
+					icon_state = colors[label]
+					name = "Canister: [label]"
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")

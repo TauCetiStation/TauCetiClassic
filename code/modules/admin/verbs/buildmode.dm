@@ -65,7 +65,7 @@
 			set_dir(NORTHWEST)
 		if(NORTHWEST)
 			set_dir(NORTH)
-	return 1
+	return TRUE
 
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
@@ -104,7 +104,7 @@
 			to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>")
 			to_chat(usr, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>")
 			to_chat(usr, "<span class='notice'>***********************************************************</span>")
-	return 1
+	return TRUE
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
@@ -112,7 +112,7 @@
 
 /obj/effect/bmode/buildquit/Click()
 	togglebuildmode(master.cl.mob)
-	return 1
+	return TRUE
 
 /obj/effect/bmode/buildholder
 	density = FALSE
@@ -138,21 +138,21 @@
 		switch(master.cl.buildmode)
 			if(1)
 				master.cl.buildmode = 2
-				src.icon_state = "buildmode2"
+				icon_state = "buildmode2"
 			if(2)
 				master.cl.buildmode = 3
-				src.icon_state = "buildmode3"
+				icon_state = "buildmode3"
 			if(3)
 				master.cl.buildmode = 4
-				src.icon_state = "buildmode4"
+				icon_state = "buildmode4"
 			if(4)
 				master.cl.buildmode = 1
-				src.icon_state = "buildmode1"
+				icon_state = "buildmode1"
 
 	else if(pa.Find("right"))
 		switch(master.cl.buildmode)
 			if(1)
-				return 1
+				return TRUE
 			if(2)
 				objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","[/obj/structure/closet]"))
 				if(!ispath(objholder))
@@ -171,7 +171,7 @@
 				if((master.buildmode.varholder in VE_MASS_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 					return
 				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-				if(!thetype) return 1
+				if(!thetype) return TRUE
 				switch(thetype)
 					if("text")
 						master.buildmode.valueholder = sanitize(input(usr,"Enter variable value:" ,"Value", "value") as text)
@@ -183,7 +183,7 @@
 						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
 					if("turf-reference")
 						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
-	return 1
+	return TRUE
 
 /proc/build_click(mob/user, buildmode, params, obj/object)
 	var/obj/effect/bmode/buildholder/holder = null

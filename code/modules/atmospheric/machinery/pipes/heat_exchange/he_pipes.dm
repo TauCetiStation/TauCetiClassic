@@ -29,9 +29,10 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/simple/heat_exchanging/target)
 	if(!istype(target))
-		return 0
+		return FALSE
 	if(target.initialize_directions_he & get_dir(target,src))
-		return 1
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/SetInitDirections()
 	initialize_directions_he = initialize_directions

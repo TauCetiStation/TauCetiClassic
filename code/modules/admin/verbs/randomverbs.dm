@@ -313,7 +313,7 @@
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
 		else
 			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
-	if(!istext(ckey))	return 0
+	if(!istext(ckey))	return FALSE
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
@@ -324,28 +324,28 @@
 		if("Sentinel")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(spawn_here)
 		if("Larva")		new_xeno = new /mob/living/carbon/xenomorph/larva(spawn_here)
-		else			return 0
+		else			return FALSE
 
 	new_xeno.ckey = ckey
 	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>")
-	return 1
+	return TRUE
 
 /*
 Allow admins to set players to be able to respawn/bypass 30 min wait, without the admin having to edit variables directly
 Ccomp's first proc.
 */
 
-/client/proc/get_ghosts(notify = 0,what = 2)
+/client/proc/get_ghosts(notify = FALSE,what = 2)
 	// what = 1, return ghosts ass list.
 	// what = 2, return mob list
 
 	var/list/mobs = list()
 	var/list/ghosts = list()
 	var/list/sortmob = sortAtom(observer_list)                           // get the mob list.
-	var/any = 0
+	var/any = FALSE
 	for(var/mob/dead/observer/M in sortmob)
 		mobs.Add(M)                                             //filter it where it's only ghosts
-		any = 1                                                 //if no ghosts show up, any will just be 0
+		any = TRUE                                              //if no ghosts show up, any will just be 0
 	if(!any)
 		if(notify)
 			to_chat(src, "There doesn't appear to be any ghosts for you to select.")

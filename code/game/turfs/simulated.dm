@@ -86,16 +86,16 @@
 
 	..()
 
-//returns 1 if made bloody, returns 0 otherwise
+//returns TRUE if made bloody, returns FALSE otherwise
 /turf/simulated/add_blood(mob/living/carbon/human/M)
 	if (!..())
-		return 0
+		return FALSE
 
 	for(var/obj/effect/decal/cleanable/blood/B in contents)
 		if(!B.blood_DNA[M.dna.unique_enzymes])
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			B.virus2 = virus_copylist(M.virus2)
-		return 1 //we bloodied the floor
+		return TRUE //we bloodied the floor
 
 
 
@@ -112,7 +112,7 @@
 	newblood.virus2 = virus_copylist(M.virus2)
 	newblood.update_icon()
 
-	return 1 //we bloodied the floor
+	return TRUE //we bloodied the floor
 
 
 // Only adds blood on the floor -- Skie

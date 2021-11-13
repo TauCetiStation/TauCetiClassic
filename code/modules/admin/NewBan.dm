@@ -56,7 +56,7 @@ var/savefile/Banlist
 
 /proc/UpdateTime() //No idea why i made this a proc.
 	CMinutes = (world.realtime / 10) / 60
-	return 1
+	return TRUE
 
 /proc/LoadBans()
 
@@ -73,7 +73,7 @@ var/savefile/Banlist
 		Banlist.cd = "/base"
 
 	ClearTempbans()
-	return 1
+	return TRUE
 
 /proc/ClearTempbans()
 	UpdateTime()
@@ -90,7 +90,7 @@ var/savefile/Banlist
 		if (!Banlist["temp"]) continue
 		if (CMinutes >= Banlist["minutes"]) RemoveBan(A)
 
-	return 1
+	return TRUE
 
 
 /proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes, address)
@@ -104,7 +104,7 @@ var/savefile/Banlist
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
 		to_chat(usr, text("<span class='warning'>Ban already exists.</span>"))
-		return 0
+		return FALSE
 	else
 		Banlist.dir.Add("[ckey][computerid]")
 		Banlist.cd = "/base/[ckey][computerid]"
@@ -116,7 +116,7 @@ var/savefile/Banlist
 		Banlist["temp"] << temp
 		if (temp)
 			Banlist["minutes"] << bantimestamp
-	return 1
+	return TRUE
 
 /proc/RemoveBan(foldername)
 	var/key
@@ -127,7 +127,8 @@ var/savefile/Banlist
 	Banlist["id"] >> id
 	Banlist.cd = "/base"
 
-	if (!Banlist.dir.Remove(foldername)) return 0
+	if (!Banlist.dir.Remove(foldername))
+		return FALSE
 
 	if(!usr)
 		log_admin("Ban Expired: [key]")
@@ -145,7 +146,7 @@ var/savefile/Banlist
 			Banlist.dir.Remove(A)
 			continue
 
-	return 1
+	return TRUE
 
 /proc/GetExp(minutes)
 	UpdateTime()

@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 10
 
-	var/secured = 0
+	var/secured = FALSE
 	var/obj/item/device/assembly/a_left = null
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
@@ -28,13 +28,13 @@
 
 
 /obj/item/device/assembly_holder/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly_holder/attach(obj/item/device/D, obj/item/device/D2, mob/user)
-	if((!D)||(!D2))	return 0
-	if((!isassembly(D))||(!isassembly(D2)))	return 0
-	if((D:secured)||(D2:secured))	return 0
+	if((!D)||(!D2))	return FALSE
+	if((!isassembly(D))||(!isassembly(D2)))	return FALSE
+	if((D:secured)||(D2:secured))	return FALSE
 	if(user)
 		user.remove_from_mob(D)
 		user.remove_from_mob(D2)
@@ -48,12 +48,12 @@
 	update_icon()
 	usr.put_in_hands(src)
 
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly_holder/attach_special(obj/O, mob/user)
 	if(!O)	return
-	if(!O.IsSpecialAssembly())	return 0
+	if(!O.IsSpecialAssembly())	return FALSE
 
 	return
 
@@ -74,7 +74,7 @@
 /obj/item/device/assembly_holder/examine(mob/user)
 	..()
 	if (src in view(1, user))
-		if (src.secured)
+		if (secured)
 			to_chat(user, "\The [src] is ready!")
 		else
 			to_chat(user, "\The [src] can be attached!")
@@ -153,7 +153,7 @@
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	add_fingerprint(user)
-	if(src.secured)
+	if(secured)
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
@@ -169,7 +169,7 @@
 				a_right.attack_self(user)
 	else
 		var/turf/T = get_turf(src)
-		if(!T)	return 0
+		if(!T)	return FALSE
 		if(a_left)
 			a_left:holder = null
 			a_left.loc = T
@@ -180,8 +180,8 @@
 	return
 
 
-/obj/item/device/assembly_holder/process_activation(obj/D, normal = 1, special = 1)
-	if(!D)	return 0
+/obj/item/device/assembly_holder/process_activation(obj/D, normal = TRUE, special = TRUE)
+	if(!D)	return FALSE
 	if(!secured)
 		visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 	if((normal) && (a_right) && (a_left))
@@ -191,7 +191,7 @@
 			a_left.pulsed(0)
 	if(master)
 		master.receive_signal()
-	return 1
+	return TRUE
 
 //********-Timer
 /obj/item/device/assembly_holder/timer_igniter
@@ -201,16 +201,16 @@
 	. = ..()
 
 	var/obj/item/device/assembly/igniter/ign = new(src)
-	ign.secured = 1
+	ign.secured = TRUE
 	ign.holder = src
 	var/obj/item/device/assembly/timer/tmr = new(src)
 	tmr.time=5
-	tmr.secured = 1
+	tmr.secured = TRUE
 	tmr.holder = src
 	START_PROCESSING(SSobj, tmr)
 	a_left = tmr
 	a_right = ign
-	secured = 1
+	secured = TRUE
 	update_icon()
 	name = initial(name) + " ([tmr.time] secs)"
 

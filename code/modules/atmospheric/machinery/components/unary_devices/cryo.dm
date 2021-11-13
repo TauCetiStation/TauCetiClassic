@@ -7,9 +7,9 @@
 	light_color = "#ffffff"
 	density = TRUE
 	anchored = TRUE
-	state_open = 0
+	state_open = FALSE
 
-	var/on = 0
+	var/on = FALSE
 	var/current_heat_capacity = 50
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -94,7 +94,7 @@
 				beaker.reagents.reaction(occupant)
 
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	last_power_draw = 0
@@ -133,7 +133,7 @@
 	close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
@@ -279,19 +279,19 @@
 
 	if(href_list["switchOn"])
 		if(!state_open)
-			on = 1
+			on = TRUE
 
 	if(href_list["open"])
-		on = 0
+		on = FALSE
 		open_machine()
 
 	if(href_list["close"])
 		if(close_machine() == usr)
 			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
 			ui.close()
-			on = 1
+			on = TRUE
 	if(href_list["switchOff"])
-		on = 0
+		on = FALSE
 
 	if(href_list["ejectBeaker"])
 		if(beaker)

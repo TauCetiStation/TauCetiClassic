@@ -510,7 +510,7 @@
 //Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 	if(!establish_db_connection("erro_player"))
-		return 0
+		return FALSE
 
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 	var/bantype_pass = 0
@@ -530,9 +530,9 @@
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
 			bantype_pass = 1
-	if( !bantype_pass ) return 0
-	if( !istext(reason) ) return 0
-	if( !isnum(duration) ) return 0
+	if( !bantype_pass ) return FALSE
+	if( !istext(reason) ) return FALSE
+	if( !isnum(duration) ) return FALSE
 
 	var/ckey
 	var/computerid
@@ -556,7 +556,7 @@
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
 			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>")
-			return 0
+			return FALSE
 
 	var/a_ckey = "taukitty"
 	var/a_computerid = "0000000000"
@@ -593,4 +593,4 @@
 		// servers use data from DB
 		world.send_ban_announce(ckey, ip, computerid)
 
-	return 1
+	return TRUE

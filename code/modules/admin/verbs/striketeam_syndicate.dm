@@ -221,4 +221,4 @@ var/global/sent_syndicate_strike_team = FALSE
 
 	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	return 1
+	return TRUE

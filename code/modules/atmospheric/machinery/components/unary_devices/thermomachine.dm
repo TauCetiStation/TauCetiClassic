@@ -136,7 +136,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(!..())
-		return 0
+		return FALSE
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node = NODE1
 	if(node)
@@ -150,7 +150,7 @@
 		node.atmos_init()
 		node.addMember(src)
 	build_network()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..(user)

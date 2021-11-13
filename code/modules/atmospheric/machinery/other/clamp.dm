@@ -44,7 +44,7 @@
 		return
 
 	if(!target || !user)
-		return 1
+		return TRUE
 
 	if(!open)
 		open()

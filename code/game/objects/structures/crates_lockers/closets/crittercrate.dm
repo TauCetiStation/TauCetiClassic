@@ -4,23 +4,21 @@
 	icon_state = "critter"
 	icon_opened = "critteropen"
 	icon_closed = "critter"
-	var/already_opened = 0
+	var/already_opened = FALSE
 	var/content_mob = null
 
 /obj/structure/closet/critter/can_open()
-	if(locked || welded)
-		return 0
-	return 1
+	return !(locked || welded)
 
 /obj/structure/closet/critter/open()
 	if(!can_open())
-		return 0
+		return FALSE
 
 	if(content_mob == null) //making sure we don't spawn anything too eldritch
-		already_opened = 1
+		already_opened = TRUE
 		return ..()
 	var/mob/living/to_die
-	if(content_mob != null && already_opened == 0)
+	if(content_mob != null && !already_opened)
 		if(content_mob == /mob/living/simple_animal/shiba)
 			new/obj/item/weapon/bikehorn/dogtoy(src)
 		if(content_mob == /mob/living/simple_animal/chick)
@@ -37,13 +35,13 @@
 		else
 			to_die = new content_mob(loc)
 			to_die.health = to_die.health * (!crit_fail)
-		already_opened = 1
+		already_opened = TRUE
 	..()
 
 /obj/structure/closet/critter/close()
 	..()
-	locked = 1
-	return 1
+	locked = TRUE
+	return TRUE
 
 /obj/structure/closet/critter/attack_hand(mob/user)
 	add_fingerprint(user)

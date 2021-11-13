@@ -272,17 +272,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
-		return 0
+		return FALSE
 	if(!fexists(path))
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
-		return 0
+		return FALSE
 
 	//Account data
 	S["cid_list"]			>> cid_list
@@ -393,14 +393,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = old_default_slot
 		save_preferences()
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_preferences()
 	if(!path)
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	S["version"] << SAVEFILE_VERSION_MAX
@@ -453,17 +453,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]              << snd_notifications_vol
 	S["snd_admin_vol"]                      << snd_admin_vol
 	S["snd_jukebox_vol"]                    << snd_jukebox_vol
-	return 1
+	return TRUE
 
 /datum/preferences/proc/load_saved_character(dir)
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = dir
 
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
-		return 0
+		return FALSE
 
 	//Character
 	S["OOC_Notes"]             >> metadata
@@ -586,10 +586,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
 	if(!player_alt_titles) player_alt_titles = new()
-	if(!organ_data) src.organ_data = list()
-	if(!ipc_head) src.ipc_head = "Default"
-	if(!be_role) src.be_role = list()
-	if(!ignore_question) src.ignore_question = list()
+	if(!organ_data) organ_data = list()
+	if(!ipc_head) ipc_head = "Default"
+	if(!be_role) be_role = list()
+	if(!ignore_question) ignore_question = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -598,12 +598,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/random_character()
 	if(!path)
-		return 0
+		return FALSE
 	if(!fexists(path))
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	var/list/saves = list()
 	var/name
 	for(var/i = 1 to MAX_SAVE_SLOTS)
@@ -615,19 +615,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!saves.len)
 		load_character()
-		return 0
+		return FALSE
 	S.cd = pick(saves)
 	load_saved_character(S.cd)
-	return 1
+	return TRUE
 
 /datum/preferences/proc/load_character(slot)
 	if(!path)
-		return 0
+		return FALSE
 	if(!fexists(path))
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
@@ -638,14 +638,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[slot]"
 	load_saved_character(S.cd)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_character()
 	if(!path)
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/character[default_slot]"
 
 	S["version"] << SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
@@ -713,7 +713,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["religion"]            << religion
 	S["uplinklocation"]      << uplinklocation
 
-	return 1
+	return TRUE
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())

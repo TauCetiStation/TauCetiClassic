@@ -7,13 +7,13 @@
 	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
-	var/opened = 0
-	var/welded = 0
-	var/locked = 0
-	var/broken = 0
-	var/wall_mounted = 0 //never solid (You can always pass over it)
+	var/opened = FALSE
+	var/welded = FALSE
+	var/locked = FALSE
+	var/broken = FALSE
+	var/wall_mounted = FALSE //never solid (You can always pass over it)
 	var/health = 100
-	var/lastbang
+	var/lastbang = FALSE
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
@@ -21,7 +21,7 @@
 	. = ..()
 	closet_list += src
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		for(var/obj/O in src.loc)
+		for(var/obj/O in loc)
 			if(O.density || O.anchored || O == src)
 				continue
 			O.forceMove(src)
@@ -47,46 +47,44 @@
 	return ..()
 
 /obj/structure/closet/proc/can_open()
-	if(src.welded)
-		return 0
-	return 1
+	return !welded
 
 /obj/structure/closet/proc/can_close()
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet != src)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/closet/proc/dump_contents()
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
-		AD.forceMove(src.loc)
+		AD.forceMove(loc)
 
 	for(var/obj/I in src)
-		I.forceMove(src.loc)
+		I.forceMove(loc)
 
 	for(var/mob/M in src)
-		M.forceMove(src.loc)
+		M.forceMove(loc)
 		M.instant_vision_update(0)
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
 
 	//Cham Projector Exception
-	for(var/obj/effect/dummy/chameleon/AD in src.loc)
+	for(var/obj/effect/dummy/chameleon/AD in loc)
 		if(itemcount >= storage_capacity)
 			break
 		AD.forceMove(src)
 		itemcount++
 
-	for(var/obj/item/I in src.loc)
+	for(var/obj/item/I in loc)
 		if(itemcount >= storage_capacity)
 			break
 		if(!I.anchored)
 			I.forceMove(src)
 			itemcount++
 
-	for(var/mob/M in src.loc)
+	for(var/mob/M in loc)
 		if(itemcount >= storage_capacity)
 			break
 		if(istype (M, /mob/dead/observer))
@@ -99,14 +97,14 @@
 		itemcount++
 
 /obj/structure/closet/proc/open()
-	if(src.opened)
-		return 0
+	if(opened)
+		return FALSE
 
 	if(!can_open())
-		return 0
+		return FALSE
 
-	src.icon_state = src.icon_opened
-	src.opened = 1
+	icon_state = icon_opened
+	opened = TRUE
 
 	dump_contents()
 
@@ -116,28 +114,28 @@
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	density = FALSE
 	SSdemo.mark_dirty(src)
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/close()
-	if(!src.opened)
-		return 0
+	if(!opened)
+		return FALSE
 	if(!can_close())
-		return 0
+		return FALSE
 
 	collect_contents()
 
-	src.icon_state = src.icon_closed
-	src.opened = 0
+	icon_state = icon_closed
+	opened = FALSE
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	else
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	density = TRUE
 	SSdemo.mark_dirty(src)
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/toggle(mob/user)
-	if(!(src.opened ? close() : open()))
+	if(!(opened ? close() : open()))
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
@@ -211,7 +209,7 @@
 				qdel(src)
 				return TRUE
 			else
-				src.welded = !src.welded
+				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded?"welded":"unwelded"] [src]'s shutter with [WT].",
 				                     "<span class='notice'>You [welded?"welded":"remove weld from"] [src]'s shutter with [WT].</span>")
@@ -225,17 +223,17 @@
 		attack_hand(user)
 
 /obj/structure/closet/relaymove(mob/user)
-	if(user.incapacitated() || !isturf(src.loc))
+	if(user.incapacitated() || !isturf(loc))
 		return
 
 	if(!open())
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
-			lastbang = 1
+			lastbang = TRUE
 			for (var/mob/M in hearers(src, null))
 				to_chat(M, text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M))))
 			spawn(30)
-				lastbang = 0
+				lastbang = FALSE
 
 
 /obj/structure/closet/attack_paw(mob/user)
@@ -304,9 +302,9 @@
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
-		welded = 0 //applies to all lockers lockers
-		locked = 0 //applies to critter crates and secure lockers only
-		broken = 1 //applies to secure lockers only
+		welded = FALSE //applies to all lockers lockers
+		locked = FALSE //applies to critter crates and secure lockers only
+		broken = TRUE  //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()

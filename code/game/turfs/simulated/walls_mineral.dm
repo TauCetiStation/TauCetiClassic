@@ -136,9 +136,8 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W, mob/user)
 	if((mineral == "gold") || (mineral == "silver"))

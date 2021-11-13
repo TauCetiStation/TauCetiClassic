@@ -6,7 +6,7 @@
 	g_amt = 50
 	origin_tech = "magnets=1"
 
-	secured = 1
+	secured = TRUE
 	wires = WIRE_RECEIVE
 
 /obj/item/device/assembly/igniter/activate()
@@ -19,9 +19,9 @@
 		var/turf/location = get_turf(loc)
 		if(location)
 			location.hotspot_expose(1000,1000,src)
-		if (istype(src.loc,/obj/item/device/assembly_holder))
-			if (istype(src.loc.loc, /obj/structure/reagent_dispensers/fueltank))
-				var/obj/structure/reagent_dispensers/fueltank/tank = src.loc.loc
+		if (istype(loc,/obj/item/device/assembly_holder))
+			if (istype(loc.loc, /obj/structure/reagent_dispensers/fueltank))
+				var/obj/structure/reagent_dispensers/fueltank/tank = loc.loc
 				if (tank && tank.modded)
 					tank.explode()
 
@@ -29,7 +29,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/igniter/attach_assembly(obj/item/device/assembly/A, mob/user)
 	. = ..()

@@ -83,13 +83,13 @@
 
 				numagents--
 		if(numagents >= 6)
-			return 0
+			return FALSE
 
 		for (var/obj/effect/landmark/L in /area/shuttle/syndicate_elite)
 			if (L.name == "Syndicate-Commando-Bomb")
 				new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 
-	return 1
+	return TRUE
 
 /datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return

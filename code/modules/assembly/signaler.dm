@@ -8,7 +8,7 @@
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
-	secured = 1
+	secured = TRUE
 
 	var/code = 30
 	var/frequency = 1457
@@ -16,7 +16,7 @@
 	var/airlock_wire = null
 	var/datum/wires/connected = null
 	var/datum/radio_frequency/radio_connection
-	var/deadman = 0
+	var/deadman = FALSE
 
 /obj/item/device/assembly/signaler/atom_init()
 	. = ..()
@@ -44,10 +44,10 @@
 
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	var/t1 = "-------"
-//	if ((src.b_stat && !( flag1 )))
-//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
+//	if ((b_stat && !( flag1 )))
+//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
 //	else
-//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+//		t1 = "-------"	Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 	var/dat = {"
 <TT>
 
@@ -56,14 +56,14 @@
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
 <A href='byond://?src=\ref[src];freq=-2'>-</A>
-[format_frequency(src.frequency)]
+[format_frequency(frequency)]
 <A href='byond://?src=\ref[src];freq=2'>+</A>
 <A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 Code:
 <A href='byond://?src=\ref[src];code=-5'>-</A>
 <A href='byond://?src=\ref[src];code=-1'>-</A>
-[src.code]
+[code]
 <A href='byond://?src=\ref[src];code=1'>+</A>
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
@@ -90,10 +90,10 @@ Code:
 		set_frequency(new_frequency)
 
 	if(href_list["code"])
-		src.code += text2num(href_list["code"])
-		src.code = round(src.code)
-		src.code = min(100, src.code)
-		src.code = max(1, src.code)
+		code += text2num(href_list["code"])
+		code = round(code)
+		code = min(100, code)
+		code = max(1, code)
 
 	if(href_list["send"])
 		spawn( 0 )
@@ -131,20 +131,20 @@ Code:
 		for(var/obj/item/device/assembly/signaler/S in not_world)
 			if(!S)	continue
 			if(S == src)	continue
-			if((S.frequency == src.frequency) && (S.code == src.code))
+			if((S.frequency == frequency) && (S.code == code))
 				spawn(0)
 					if(S)	S.pulse(0)
-		return 0*/
+		return FALSE*/
 
 
-/obj/item/device/assembly/signaler/pulse(radio = 0)
+/obj/item/device/assembly/signaler/pulse(radio = FALSE)
 	if(connected && wires)
 		connected.pulse_signaler(src)
 	else if(holder)
 		holder.process_activation(src, 1, 0)
 	else
 		..(radio)
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly/signaler/attach_assembly(obj/item/device/assembly/A, mob/user)
@@ -154,9 +154,9 @@ Code:
 
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
-	if(!signal)	return 0
-	if(signal.encryption != code)	return 0
-	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
+	if(!signal)	return FALSE
+	if(signal.encryption != code)	return FALSE
+	if(!(wires & WIRE_RADIO_RECEIVE))	return FALSE
 	pulse(1)
 
 	if(!holder)
@@ -179,11 +179,11 @@ Code:
 /obj/item/device/assembly/signaler/process()
 	if(!deadman)
 		STOP_PROCESSING(SSobj, src)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(!M || !ismob(M))
 		if(prob(5))
 			signal()
-		deadman = 0
+		deadman = FALSE
 		STOP_PROCESSING(SSobj, src)
 	else if(prob(5))
 		M.visible_message("[M]'s finger twitches a bit over [src]'s signal button!")
@@ -193,7 +193,7 @@ Code:
 	set src in usr
 	set name = "Threaten to push the button!"
 	set desc = "BOOOOM!"
-	deadman = 1
+	deadman = TRUE
 	START_PROCESSING(SSobj, src)
 	usr.visible_message("<span class='warning'>[usr] moves their finger over [src]'s signal button...</span>")
 
@@ -206,9 +206,9 @@ Code:
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.encryption != code)
-		return 0
+		return FALSE
 	for(var/obj/effect/anomaly/A in orange(0, src))
 		A.anomalyNeutralize()
 

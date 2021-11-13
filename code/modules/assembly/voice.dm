@@ -7,7 +7,7 @@
 	m_amt = 500
 	g_amt = 50
 
-	var/listening = 0
+	var/listening = FALSE
 	var/recorded = "" //the activation message
 
 
@@ -17,7 +17,7 @@
 
 	if(listening)
 		recorded = msg
-		listening = 0
+		listening = FALSE
 		audible_message("Activation message is '[recorded]'.", hearing_distance = 1)
 	else
 		if(findtext(msg, recorded))
@@ -28,7 +28,7 @@
 			log_game("[src] activated by [key_name(M)], location [COORD(T)], code: \"[recorded]\"")
 			audible_message("Beeeep", hearing_distance = 1)
 			spawn(10)
-				pulse(0)
+				pulse(FALSE)
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)
@@ -38,13 +38,13 @@
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)
-		return 0
+		return FALSE
 	activate()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/voice/toggle_secure()
 	. = ..()
-	listening = 0
+	listening = FALSE
 
 /obj/item/device/assembly/voice/attach_assembly(obj/item/device/assembly/A, mob/user)
 	. = ..()

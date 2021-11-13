@@ -97,15 +97,15 @@
 
 /obj/effect/biomass/proc/grow()
 	if(!energy)
-		src.icon_state = "stage2"
+		icon_state = "stage2"
 		energy = 1
-		src.opacity = 0
-		src.density = FALSE
+		opacity = 0
+		density = FALSE
 		layer = 5
 	else
-		src.icon_state = "stage3"
-		src.opacity = 0
-		src.density = TRUE
+		icon_state = "stage3"
+		opacity = 0
+		density = TRUE
 		energy = 2
 
 /obj/effect/biomass/proc/spread()
@@ -117,8 +117,8 @@
 			if(F.Enter(src))
 				if(master)
 					master.spawn_biomass_piece( F )
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /obj/effect/biomass/ex_act(severity)
 	switch(severity)

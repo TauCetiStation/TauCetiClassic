@@ -147,9 +147,10 @@
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list(BP_CHEST , BP_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
-		return 0
+		return FALSE
 	if (prob(hit_reflect_chance))
-		return 1
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
@@ -192,7 +193,7 @@
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive teleport armor"
 	desc = "Someone seperated our Research Director from his own head!"
-	var/active = 0.0
+	var/active = FALSE
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -205,22 +206,22 @@
 	return 0
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
+	active = !active
+	if (active)
 		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
-		src.icon_state = "reactive"
-		src.item_state = "reactive"
+		icon_state = "reactive"
+		item_state = "reactive"
 	else
 		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
+		icon_state = "reactiveoff"
+		item_state = "reactiveoff"
 		add_fingerprint(user)
 	return
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
-	active = 0
-	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
+	active = FALSE
+	icon_state = "reactiveoff"
+	item_state = "reactiveoff"
 	..()
 
 

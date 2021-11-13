@@ -1,7 +1,7 @@
 /datum/admins/Topic(href, href_list)
 	..()
 
-	if(usr.client != src.owner || !check_rights(0))
+	if(usr.client != owner || !check_rights(0))
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
@@ -885,7 +885,7 @@
 					to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
 					to_chat(M, "<span class='warning'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
-					return 1
+					return TRUE
 				if("No")
 					if(!check_rights(R_BAN))
 						return
@@ -907,7 +907,7 @@
 						to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
 						to_chat(M, "<span class='warning'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
-						return 1
+						return TRUE
 				if("Cancel")
 					return
 
@@ -936,8 +936,8 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg]</span>")
 				to_chat(M, "<span class='warning'><BIG><B>You have been un-jobbanned by [usr.client.ckey] from [msg].</B></BIG></span>")
 				href_list["jobban2"] = 1 // lets it fall through and refresh
-			return 1
-		return 0 //we didn't do anything!
+			return TRUE
+		return FALSE //we didn't do anything!
 
 	else if(href_list["guard"])
 		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
@@ -1535,12 +1535,12 @@
 			if(MALE,FEMALE)	gender_description = "[M.gender]"
 			else			gender_description = "<span class='red'><b>[M.gender]</b></span>"
 
-		to_chat(src.owner, "<b>Info about [M.name]:</b> ")
-		to_chat(src.owner, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]")
-		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
-		to_chat(src.owner, "Location = [location_description];")
-		to_chat(src.owner, "[special_role_description]")
-		to_chat(src.owner, "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)")
+		to_chat(owner, "<b>Info about [M.name]:</b> ")
+		to_chat(owner, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]")
+		to_chat(owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
+		to_chat(owner, "Location = [location_description];")
+		to_chat(owner, "[special_role_description]")
+		to_chat(owner, "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)")
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN))
@@ -1555,15 +1555,15 @@
 		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), SLOT_R_HAND )
 			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(owner)].")
+				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(owner)].")
 				return
 			else
 				H.update_inv_r_hand()//To ensure the icon appears in the HUD
 		else
 			H.update_inv_l_hand()
-		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
-		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
+		log_admin("[key_name(H)] got their cookie, spawned by [key_name(owner)]")
+		message_admins("[key_name(H)] got their cookie, spawned by [key_name(owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 		H.playsound_local(null, 'sound/effects/pray_chaplain.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
@@ -1577,11 +1577,11 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living")
 			return
 
-		if(tgui_alert(src.owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , list("Yes" , "No")) != "Yes")
+		if(tgui_alert(owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , list("Yes" , "No")) != "Yes")
 			return
 
 		if(BSACooldown)
-			to_chat(src.owner, "Standby!  Reload cycle in progress!  Gunnary crews ready in five seconds!")
+			to_chat(owner, "Standby!  Reload cycle in progress!  Gunnary crews ready in five seconds!")
 			return
 
 		BSACooldown = 1
@@ -1589,8 +1589,8 @@
 			BSACooldown = 0
 
 		to_chat(M, "You've been hit by bluespace artillery!")
-		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
-		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
+		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [owner]")
+		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [owner]")
 
 		var/turf/simulated/floor/T = get_turf(M)
 		if(istype(T))
@@ -1614,15 +1614,15 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
 
-		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
+		var/input = sanitize(input(owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
+		to_chat(owner, "You sent [input] to [H] via a secure channel.")
+		log_admin("[owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
+		message_admins("[owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
-			attachment_title = ":regional_indicator_c: **[key_name(src.owner)]** replied to **[key_name(H)]**'s ***Centcom*** message",
+			attachment_title = ":regional_indicator_c: **[key_name(owner)]** replied to **[key_name(H)]**'s ***Centcom*** message",
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
@@ -1638,15 +1638,15 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
 
-		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
+		var/input = sanitize(input(owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
+		to_chat(owner, "You sent [input] to [H] via a secure channel.")
+		log_admin("[owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
+		message_admins("[owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
-			attachment_title = ":regional_indicator_s: **[key_name(src.owner)]** replied to **[key_name(H)]**'s ***Syndicate*** message",
+			attachment_title = ":regional_indicator_s: **[key_name(owner)]** replied to **[key_name(H)]**'s ***Syndicate*** message",
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
@@ -1664,11 +1664,11 @@
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
-		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+		var/input = sanitize(input(owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
 			return
 
-		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
+		var/customname = sanitize_safe(input(owner, "Pick a title for the report", "Title") as text|null)
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
@@ -1688,12 +1688,12 @@
 
 		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
-		to_chat(src.owner, "Message reply to transmitted successfully.")
-		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
-		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]")
+		to_chat(owner, "Message reply to transmitted successfully.")
+		log_admin("[key_name(owner)] replied to a fax message from [key_name(H)]: [input]")
+		message_admins("[key_name_admin(owner)] replied to a fax message from [key_name_admin(H)]")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
-			attachment_title = ":fax: **[key_name(src.owner)]** replied to a fax message from **[key_name(H)]**",
+			attachment_title = ":fax: **[key_name(owner)]** replied to a fax message from **[key_name(H)]**",
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
@@ -1921,85 +1921,85 @@
 		Secretscoder_topic(href_list["secretscoder"],href_list)
 
 	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
-		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
+		admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
 		access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
-		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
+		admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
 		access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
-		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
+		admincaster_feed_channel.locked = !admincaster_feed_channel.locked
 		access_news_network()
 
 	else if(href_list["ac_submit_new_channel"])
 		var/check = 0
 		for(var/datum/feed_channel/FC in news_network.network_channels)
-			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+			if(FC.channel_name == admincaster_feed_channel.channel_name)
 				check = 1
 				break
-		if(src.admincaster_feed_channel.channel_name == "" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
-			src.admincaster_screen=7
+		if(admincaster_feed_channel.channel_name == "" || admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
+			admincaster_screen=7
 		else
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				var/datum/feed_channel/newChannel = new /datum/feed_channel
-				newChannel.channel_name = src.admincaster_feed_channel.channel_name
-				newChannel.author = src.admincaster_signature
-				newChannel.locked = src.admincaster_feed_channel.locked
+				newChannel.channel_name = admincaster_feed_channel.channel_name
+				newChannel.author = admincaster_signature
+				newChannel.locked = admincaster_feed_channel.locked
 				newChannel.is_admin_channel = 1
 				feedback_inc("newscaster_channels",1)
 				news_network.network_channels += newChannel                        //Adding channel to the global network
-				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
-				src.admincaster_screen=5
+				log_admin("[key_name(usr)] created command feed channel: [admincaster_feed_channel.channel_name]!")
+				admincaster_screen=5
 		access_news_network()
 
 	else if(href_list["ac_set_channel_receiving"])
 		var/list/available_channels = list()
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
+		admincaster_feed_channel.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 		access_news_network()
 
 	else if(href_list["ac_set_new_message"])
-		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
+		admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
 		access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
-		if(src.admincaster_feed_message.body =="" || src.admincaster_feed_message.body =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
-			src.admincaster_screen = 6
+		if(admincaster_feed_message.body =="" || admincaster_feed_message.body =="\[REDACTED\]" || admincaster_feed_channel.channel_name == "" )
+			admincaster_screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
-			newMsg.author = src.admincaster_signature
-			newMsg.body = src.admincaster_feed_message.body
+			newMsg.author = admincaster_signature
+			newMsg.body = admincaster_feed_message.body
 			newMsg.is_admin_message = 1
 			feedback_inc("newscaster_stories",1)
 			for(var/datum/feed_channel/FC in news_network.network_channels)
-				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+				if(FC.channel_name == admincaster_feed_channel.channel_name)
 					FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
 					break
-			src.admincaster_screen=4
+			admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
+			NEWSCASTER.newsAlert(admincaster_feed_channel.channel_name)
 
-		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
+		log_admin("[key_name(usr)] submitted a feed story to channel: [admincaster_feed_channel.channel_name]!")
 		access_news_network()
 
 	else if(href_list["ac_create_channel"])
-		src.admincaster_screen=2
+		admincaster_screen=2
 		access_news_network()
 
 	else if(href_list["ac_create_feed_story"])
-		src.admincaster_screen=3
+		admincaster_screen=3
 		access_news_network()
 
 	else if(href_list["ac_menu_censor_story"])
-		src.admincaster_screen=10
+		admincaster_screen=10
 		access_news_network()
 
 	else if(href_list["ac_menu_censor_channel"])
-		src.admincaster_screen=11
+		admincaster_screen=11
 		access_news_network()
 
 	else if(href_list["ac_menu_wanted"])
@@ -2008,43 +2008,43 @@
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_feed_message.author = news_network.wanted_issue.author
-			src.admincaster_feed_message.body = news_network.wanted_issue.body
-		src.admincaster_screen = 14
+			admincaster_feed_message.author = news_network.wanted_issue.author
+			admincaster_feed_message.body = news_network.wanted_issue.body
+		admincaster_screen = 14
 		access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
-		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
+		admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
 		access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
-		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
+		admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 		access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
 		var/input_param = text2num(href_list["ac_submit_wanted"])
-		if(src.admincaster_feed_message.author == "" || src.admincaster_feed_message.body == "")
-			src.admincaster_screen = 16
+		if(admincaster_feed_message.author == "" || admincaster_feed_message.body == "")
+			admincaster_screen = 16
 		else
 			var/choice = tgui_alert(usr, "Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
-					WANTED.author = src.admincaster_feed_message.author               //Wanted name
-					WANTED.body = src.admincaster_feed_message.body                   //Wanted desc
-					WANTED.backup_author = src.admincaster_signature                  //Submitted by
+					WANTED.author = admincaster_feed_message.author               //Wanted name
+					WANTED.body = admincaster_feed_message.body                   //Wanted desc
+					WANTED.backup_author = admincaster_signature                  //Submitted by
 					WANTED.is_admin_message = 1
 					news_network.wanted_issue = WANTED
 					for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 						NEWSCASTER.newsAlert()
 						NEWSCASTER.update_icon()
-					src.admincaster_screen = 15
+					admincaster_screen = 15
 				else
-					news_network.wanted_issue.author = src.admincaster_feed_message.author
-					news_network.wanted_issue.body = src.admincaster_feed_message.body
-					news_network.wanted_issue.backup_author = src.admincaster_feed_message.backup_author
-					src.admincaster_screen = 19
-				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
+					news_network.wanted_issue.author = admincaster_feed_message.author
+					news_network.wanted_issue.body = admincaster_feed_message.body
+					news_network.wanted_issue.backup_author = admincaster_feed_message.backup_author
+					admincaster_screen = 19
+				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [admincaster_feed_message.author]!")
 		access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
@@ -2053,7 +2053,7 @@
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 				NEWSCASTER.update_icon()
-			src.admincaster_screen=17
+			admincaster_screen=17
 		access_news_network()
 
 	else if(href_list["ac_censor_channel_author"])
@@ -2085,8 +2085,8 @@
 
 	else if(href_list["ac_pick_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen=13
+		admincaster_feed_channel = FC
+		admincaster_screen=13
 		access_news_network()
 
 	else if(href_list["ac_toggle_d_notice"])
@@ -2095,35 +2095,35 @@
 		access_news_network()
 
 	else if(href_list["ac_view"])
-		src.admincaster_screen=1
+		admincaster_screen=1
 		access_news_network()
 
 	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
-		src.admincaster_screen = text2num(href_list["ac_setScreen"])
-		if (src.admincaster_screen == 0)
-			if(src.admincaster_feed_channel)
-				src.admincaster_feed_channel = new /datum/feed_channel
-			if(src.admincaster_feed_message)
-				src.admincaster_feed_message = new /datum/feed_message
+		admincaster_screen = text2num(href_list["ac_setScreen"])
+		if (admincaster_screen == 0)
+			if(admincaster_feed_channel)
+				admincaster_feed_channel = new /datum/feed_channel
+			if(admincaster_feed_message)
+				admincaster_feed_message = new /datum/feed_message
 		access_news_network()
 
 	else if(href_list["ac_show_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen = 9
+		admincaster_feed_channel = FC
+		admincaster_screen = 9
 		access_news_network()
 
 	else if(href_list["ac_pick_censor_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
-		src.admincaster_feed_channel = FC
-		src.admincaster_screen = 12
+		admincaster_feed_channel = FC
+		admincaster_screen = 12
 		access_news_network()
 
 	else if(href_list["ac_refresh"])
 		access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		access_news_network()
 
 	if(href_list["secretsmenu"])
@@ -2131,7 +2131,7 @@
 			if("tab")
 				current_tab = text2num(href_list["tab"])
 				Secrets(usr)
-				return 1
+				return TRUE
 
 	else if(href_list["readbook"])
 		var/bookid = text2num(href_list["readbook"])

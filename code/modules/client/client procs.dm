@@ -165,35 +165,35 @@ var/list/blacklisted_builds = list(
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
-		return 1
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
+		return TRUE
+	if(config.automute_on && !holder && last_message == message)
+		last_message_count++
+		if(last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
-			cmd_admin_mute(src.mob, mute_type, 1)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
+			cmd_admin_mute(mob, mute_type, 1)
+			return TRUE
+		if(last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
+			return FALSE
 	else
 		last_message_time = world.time
 		last_message = message
-		src.last_message_count = 0
-		return 0
+		last_message_count = 0
+		return FALSE
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
-		return 0
+		return FALSE
 /*	//Don't need this at the moment. But it's here if it's needed later.
 	//Helps prevent multiple files being uploaded at once. Or right after eachother.
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 0
+		return FALSE
 	fileaccess_timer = world.time + FTPDELAY	*/
-	return 1
+	return TRUE
 
 
 	///////////
@@ -213,8 +213,9 @@ var/list/blacklisted_builds = list(
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
-		src.preload_rsc = pick(config.resource_urls)
-	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
+		preload_rsc = pick(config.resource_urls)
+	else
+		preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
 	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
@@ -420,13 +421,13 @@ var/list/blacklisted_builds = list(
 
 /client/proc/log_client_to_db(connectiontopic)
 
-	if ( IsGuestKey(src.key) )
+	if ( IsGuestKey(key) )
 		return
 
 	if(!establish_db_connection("erro_player"))
 		return
 
-	var/sql_ckey = ckey(src.ckey)
+	var/sql_ckey = ckey(ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 
@@ -446,7 +447,7 @@ var/list/blacklisted_builds = list(
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
-		if(src.ckey == query_ip.item[1])
+		if(ckey == query_ip.item[1])
 			continue
 		if(length(related_accounts_ip))
 			related_accounts_ip += ", "
@@ -457,7 +458,7 @@ var/list/blacklisted_builds = list(
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
-		if(src.ckey == query_cid.item[1])
+		if(ckey == query_cid.item[1])
 			continue
 		if(length(related_accounts_cid))
 			related_accounts_cid += ", "
@@ -465,8 +466,8 @@ var/list/blacklisted_builds = list(
 		break
 
 	var/admin_rank = "Player"
-	if (src.holder)
-		admin_rank = src.holder.rank
+	if (holder)
+		admin_rank = holder.rank
 	else if (config.check_randomizer && check_randomizer(connectiontopic))
 		return
 
@@ -477,8 +478,8 @@ var/list/blacklisted_builds = list(
 		if(!isnum(sql_id))
 			return
 
-	var/sql_ip = sanitize_sql(src.address)
-	var/sql_computerid = sanitize_sql(src.computer_id)
+	var/sql_ip = sanitize_sql(address)
+	var/sql_computerid = sanitize_sql(computer_id)
 	var/sql_admin_rank = sanitize_sql(admin_rank)
 
 
@@ -588,7 +589,7 @@ var/list/blacklisted_builds = list(
 	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/log_client_ingame_age_to_db()
-	if ( IsGuestKey(src.key) )
+	if ( IsGuestKey(key) )
 		return
 
 	if(!establish_db_connection("erro_player"))
@@ -600,7 +601,7 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = ckey(src.ckey)
+	var/sql_ckey = ckey(ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 

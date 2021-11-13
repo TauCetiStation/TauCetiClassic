@@ -29,11 +29,11 @@
 							continue main_loop
 						else
 							continue
-			return 0
+			return FALSE
 	for(var/A in R.chem_catalysts)
 		if(contents[A] < R.chem_catalysts[A])
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
@@ -67,7 +67,7 @@
 
 /datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
-		return 1
+		return TRUE
 	var/list/possible_tools = list()
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/weapon/storage))
@@ -81,8 +81,8 @@
 			for(var/I in possible_tools)
 				if(ispath(I,A))
 					continue main_loop
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)

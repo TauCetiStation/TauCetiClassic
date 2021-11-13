@@ -159,7 +159,7 @@
 
 	..() // initialize internal pipes
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 	if(level == 1 && !T.is_plating()) hide(1)
 	update_icon()
 
@@ -221,7 +221,7 @@
 
 	..() // initialize internal pipes
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 	if(level == 1 && !T.is_plating())
 		hide(1)
 	update_icon()
@@ -270,7 +270,7 @@
 
 	..() // initialize internal pipes
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 	if(level == 1 && !T.is_plating())
 		hide(1)
 	update_icon()
@@ -331,7 +331,7 @@
 		if(N1 && N2)
 			N1.merge(N2)
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 	if(level == 1 && !T.is_plating())
 		hide(1)
 	update_icon()
@@ -449,7 +449,7 @@
 		if(N1 && N2)
 			N1.merge(N2)
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 	if(level == 1 && !T.is_plating())
 		hide(1)
 	update_icon()
@@ -489,7 +489,7 @@
 
 	..()
 
-	var/turf/T = src.loc	// hide if turf is not intact
+	var/turf/T = loc	// hide if turf is not intact
 	if(level == 1 && !T.is_plating())
 		hide(1)
 	update_icon()
@@ -510,7 +510,7 @@
 	name = "mains shutoff valve"
 	desc = "A mains pipe valve"
 
-	var/open = 1
+	var/open = TRUE
 
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
@@ -531,7 +531,7 @@
 			break
 
 	if(animation)
-		flick("[hide?"h":""]mvalve[src.open][!src.open]",src)
+		flick("[hide?"h":""]mvalve[open][!open]",src)
 	else
 		icon_state = "[hide?"h":""]mvalve[open]"
 
@@ -568,19 +568,19 @@
 		set_dir(4)
 
 /obj/machinery/atmospherics/mains_pipe/valve/proc/open()
-	if(open) return 0
+	if(open) return FALSE
 
-	open = 1
+	open = TRUE
 	update_icon()
 
 	atmos_init()
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/mains_pipe/valve/proc/close()
-	if(!open) return 0
+	if(!open) return FALSE
 
-	open = 0
+	open = FALSE
 	update_icon()
 
 	for(var/obj/machinery/atmospherics/pipe/mains_component/node in src)
@@ -588,7 +588,7 @@
 			o.disconnect(node)
 			o.build_network()
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/mains_pipe/valve/attack_ai(mob/user as mob)
 		return
@@ -646,13 +646,13 @@
 			break
 
 	if(animation)
-		flick("[hide?"h":""]dvalve[src.open][!src.open]",src)
+		flick("[hide?"h":""]dvalve[open][!open]",src)
 	else
 		icon_state = "[hide?"h":""]dvalve[open]"
 
 /obj/machinery/atmospherics/mains_pipe/valve/digital/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id))
-		return 0
+		return FALSE
 
 	switch(signal.data["command"])
 		if("valve_open")

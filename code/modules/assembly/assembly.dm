@@ -27,10 +27,10 @@
 /obj/item/device/assembly/proc/activate()			//What the device does when turned on
 	return
 
-/obj/item/device/assembly/proc/pulsed(radio = 0)	//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
+/obj/item/device/assembly/proc/pulsed(radio = FALSE)	//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 	return
 
-/obj/item/device/assembly/proc/pulse(radio = 0)	//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+/obj/item/device/assembly/proc/pulse(radio = FALSE)	//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 	return
 
 /obj/item/device/assembly/proc/toggle_secure()	//Code that has to happen when the assembly is un\secured goes here
@@ -54,41 +54,41 @@
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
 		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/assembly/process_cooldown()
 	cooldown--
-	if(cooldown <= 0)	return 0
+	if(cooldown <= 0)	return FALSE
 	spawn(10)
 		process_cooldown()
-	return 1
+	return TRUE
 
 
-/obj/item/device/assembly/pulsed(radio = 0)
+/obj/item/device/assembly/pulsed(radio = FALSE)
 	if(holder && (wires & WIRE_RECEIVE))
 		activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
 		activate()
-	return 1
+	return TRUE
 
 
-/obj/item/device/assembly/pulse(radio = 0)
+/obj/item/device/assembly/pulse(radio = FALSE)
 	if(holder && (wires & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
 	if(holder && (wires & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
 //	if(radio && (wires & WIRE_RADIO_PULSE))
 		//Not sure what goes here quite yet send signal?
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly/activate()
-	if(!secured || (cooldown > 0))	return 0
+	if(!secured || (cooldown > 0))	return FALSE
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/toggle_secure()
 	secured = !secured
@@ -100,8 +100,8 @@
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
 		to_chat(user, "<span class='notice'>You attach \the [A] to \the [src]!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/device/assembly/attackby(obj/item/I, mob/user, params)
 	if(isassembly(I))
@@ -133,10 +133,10 @@
 
 
 /obj/item/device/assembly/attack_self(mob/user)
-	if(!user)	return 0
+	if(!user)	return FALSE
 	user.set_machine(src)
 	interact(user)
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly/interact(mob/user)

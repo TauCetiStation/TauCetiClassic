@@ -68,31 +68,33 @@ var/datum/report_topic_handler/report_topic_handler
 
 // check if there are any unhandled reports
 /client/proc/unhandled_reports()
-	if(!src.holder) return 0
+	if(!holder)
+		return FALSE
 	var/list/reports = load_reports()
 
 	for(var/datum/admin_report/N in reports)
 		if(N.done)
 			continue
-		else return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 // checks if the player has an unhandled report against him
 /client/proc/is_reported()
 	var/list/reports = load_reports()
 
 	for(var/datum/admin_report/N in reports) if(!N.done)
-		if(N.offender_key == src.key)
-			return 1
+		if(N.offender_key == key)
+			return TRUE
 
-	return 0
+	return FALSE
 
 // display only the reports that haven't been handled
 /client/proc/display_admin_reports()
 	set category = "Admin"
 	set name = "Display Admin Reports"
-	if(!src.holder) return
+	if(!holder)
+		return
 
 	var/list/reports = load_reports()
 
@@ -107,7 +109,7 @@ var/datum/report_topic_handler/report_topic_handler
 			output += "<small>Occured at [time2text(N.date,"MM/DD hh:mm:ss")]</small><br>"
 			output += "<small>authored by <i>[N.author]</i></small><br>"
 			output += " <a href='?src=\ref[report_topic_handler];client=\ref[src];action=remove;ID=[N.ID]'>Flag as Handled</a>"
-			if(src.key == N.author)
+			if(key == N.author)
 				output += " <a href='?src=\ref[report_topic_handler];client=\ref[src];action=edit;ID=[N.ID]'>Edit</a>"
 			output += "<br>"
 			output += "<br>"
@@ -120,15 +122,16 @@ var/datum/report_topic_handler/report_topic_handler
 
 /client/proc/Report(mob/M as mob in not_world)
 	set category = "Admin"
-	if(!src.holder)
+	if(!holder)
 		return
 
 	var/CID = "Unknown"
 	if(M.client)
 		CID = M.client.computer_id
 
-	var/body = input(src.mob, "Describe in detail what you're reporting [M] for", "Report") as null|text
-	if(!body) return
+	var/body = input(mob, "Describe in detail what you're reporting [M] for", "Report") as null|text
+	if(!body)
+		return
 
 
 	make_report(body, key, M.key, CID)
@@ -137,7 +140,7 @@ var/datum/report_topic_handler/report_topic_handler
 		display_admin_reports()
 
 /client/proc/mark_report_done(ID)
-	if(!src.holder || src.holder.level < 0)
+	if(!holder || holder.level < 0)
 		return
 
 	var/savefile/Reports = new("data/reports.sav")
@@ -158,7 +161,7 @@ var/datum/report_topic_handler/report_topic_handler
 
 
 /client/proc/edit_report(ID as num)
-	if(!src.holder || src.holder.level < 0)
+	if(!holder || holder.level < 0)
 		to_chat(src, "<b>You tried to modify the news, but you're not an admin!</b>")
 		return
 
@@ -174,8 +177,9 @@ var/datum/report_topic_handler/report_topic_handler
 	if(!found)
 		to_chat(src, "<b>* An error occured, sorry.</b>")
 
-	var/body = input(src.mob, "Enter a body for the news", "Body") as null|message
-	if(!body) return
+	var/body = input(mob, "Enter a body for the news", "Body") as null|message
+	if(!body)
+		return
 
 	found.body = body
 

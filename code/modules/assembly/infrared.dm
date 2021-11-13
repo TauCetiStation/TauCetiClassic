@@ -8,10 +8,10 @@
 
 	wires = WIRE_PULSE
 
-	secured = 0
+	secured = FALSE
 
-	var/on = 0
-	var/visible = 0
+	var/on = FALSE
+	var/visible = FALSE
 	var/obj/effect/beam/i_beam/first = null
 	var/obj/effect/beam/i_beam/last = null
 
@@ -23,17 +23,17 @@
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	on = !on
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
 		START_PROCESSING(SSobj, src)
 	else
-		on = 0
+		on = FALSE
 		if(first)
 			qdel(first)
 		STOP_PROCESSING(SSobj, src)
@@ -93,14 +93,14 @@
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)
-		return 0
+		return FALSE
 //	dir = holder.dir
 	qdel(first)
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
 	if((!secured)||(!on)||(cooldown > 0))
-		return 0
+		return FALSE
 	pulse(0)
 	if(!holder)
 		visible_message("[bicon(src)] *beep* *beep*")
@@ -180,7 +180,7 @@
 	var/obj/effect/beam/i_beam/previous = null
 	var/obj/item/device/assembly/infra/master = null
 	var/limit = null
-	var/visible = 0
+	var/visible = FALSE
 	var/left = null
 	anchored = TRUE
 

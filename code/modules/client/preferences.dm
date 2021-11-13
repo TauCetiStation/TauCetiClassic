@@ -307,13 +307,13 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("fluff")
 			process_link_fluff(user, href_list)
-			return 1
+			return TRUE
 
 		if("custom_keybindings")
 			process_link_custom_keybindings(user, href_list)
 
 	ShowChoices(user)
-	return 1
+	return TRUE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)

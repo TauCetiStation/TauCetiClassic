@@ -101,8 +101,7 @@ Pipelines + Other Objects -> Pipe network
 	update_underlays()
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if(target.initialize_directions & get_dir(target,src))
-		return 1
+	return target.initialize_directions & get_dir(target,src)
 
 /obj/machinery/atmospherics/proc/has_free_nodes()
 	var/connections_count = 0
@@ -157,7 +156,7 @@ Pipelines + Other Objects -> Pipe network
 			var/turf/T = get_turf(src)
 			if (level == 1 && isturf(T) && T.intact)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-				return 1
+				return TRUE
 
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()

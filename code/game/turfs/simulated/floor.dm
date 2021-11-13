@@ -38,8 +38,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	var/broken = 0
-	var/burnt = 0
+	var/broken = FALSE
+	var/burnt = FALSE
 	var/mineral = "metal"
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
@@ -83,7 +83,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-//	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
+//	if ((istype(mover, /obj/machinery/vehicle) && !(burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
 //	return ..()
@@ -268,42 +268,25 @@ var/list/wood_icons = list("wood","wood-broken")
 	break_tile()
 
 /turf/simulated/floor/is_plasteel_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/plasteel))
-		return 1
-	else
-		return 0
+	return ispath(floor_type, /obj/item/stack/tile/plasteel)
 
 /turf/simulated/floor/is_light_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/light))
-		return 1
-	else
-		return 0
+	return ispath(floor_type, /obj/item/stack/tile/light)
 
 /turf/simulated/floor/is_grass_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/grass))
-		return 1
-	else
-		return 0
+	return ispath(floor_type, /obj/item/stack/tile/grass)
 
 /turf/simulated/floor/is_wood_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/wood))
-		return 1
-	else
-		return 0
+	return ispath(floor_type, /obj/item/stack/tile/wood)
 
 /turf/simulated/floor/is_carpet_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/carpet))
-		return 1
-	else
-		return 0
+	return ispath(floor_type, /obj/item/stack/tile/carpet)
 
 /turf/simulated/floor/is_catwalk()
-	return 0
+	return FALSE
 
 /turf/simulated/floor/is_plating()
-	if(!floor_type && !is_catwalk())
-		return 1
-	return 0
+	return !floor_type && !is_catwalk()
 
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine))
@@ -315,24 +298,24 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(broken)
 		return
 	if(is_plasteel_floor())
-		src.icon_state = "damaged[pick(1,2,3,4,5)]"
-		broken = 1
+		icon_state = "damaged[pick(1,2,3,4,5)]"
+		broken = TRUE
 	else if(is_light_floor())
-		src.icon_state = "light_broken"
-		broken = 1
+		icon_state = "light_broken"
+		broken = TRUE
 	else if(is_plating())
-		src.icon_state = "platingdmg[pick(1,2,3)]"
-		broken = 1
+		icon_state = "platingdmg[pick(1,2,3)]"
+		broken = TRUE
 	else if(is_wood_floor())
-		src.icon_state = "wood-broken"
-		broken = 1
+		icon_state = "wood-broken"
+		broken = TRUE
 	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		broken = 1
+		broken = TRUE
 	else if(is_grass_floor())
-		src.icon_state = "sand[pick("1","2","3")]"
-		broken = 1
+		icon_state = "sand[pick("1","2","3")]"
+		broken = TRUE
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine))
@@ -342,24 +325,24 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(broken || burnt)
 		return
 	if(is_plasteel_floor())
-		src.icon_state = "damaged[pick(1,2,3,4,5)]"
-		burnt = 1
+		icon_state = "damaged[pick(1,2,3,4,5)]"
+		burnt = TRUE
 	else if(is_plasteel_floor())
-		src.icon_state = "floorscorched[pick(1,2)]"
-		burnt = 1
+		icon_state = "floorscorched[pick(1,2)]"
+		burnt = TRUE
 	else if(is_plating())
-		src.icon_state = "panelscorched"
-		burnt = 1
+		icon_state = "panelscorched"
+		burnt = TRUE
 	else if(is_wood_floor())
-		src.icon_state = "wood-broken"
-		burnt = 1
+		icon_state = "wood-broken"
+		burnt = TRUE
 	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		burnt = 1
+		burnt = TRUE
 	else if(is_grass_floor())
-		src.icon_state = "sand[pick("1","2","3")]"
-		burnt = 1
+		icon_state = "sand[pick("1","2","3")]"
+		burnt = TRUE
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
@@ -389,9 +372,9 @@ var/list/wood_icons = list("wood","wood-broken")
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
-	intact = 0
-	broken = 0
-	burnt = 0
+	intact = FALSE
+	broken = FALSE
+	burnt = FALSE
 
 	update_icon()
 	levelupdate()
@@ -400,9 +383,9 @@ var/list/wood_icons = list("wood","wood-broken")
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_plasteel_floor(obj/item/stack/tile/plasteel/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
+	broken = FALSE
+	burnt = FALSE
+	intact = TRUE
 	set_light(0)
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
@@ -427,9 +410,9 @@ var/list/wood_icons = list("wood","wood-broken")
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_light_floor(obj/item/stack/tile/light/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
+	broken = FALSE
+	burnt = FALSE
+	intact = TRUE
 	if(T)
 		if(istype(T,/obj/item/stack/tile/light))
 			floor_type = T.type
@@ -445,9 +428,9 @@ var/list/wood_icons = list("wood","wood-broken")
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_grass_floor(obj/item/stack/tile/grass/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
+	broken = FALSE
+	burnt = FALSE
+	intact = TRUE
 	if(T)
 		if(istype(T,/obj/item/stack/tile/grass))
 			floor_type = T.type
@@ -463,9 +446,9 @@ var/list/wood_icons = list("wood","wood-broken")
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
+	broken = FALSE
+	burnt = FALSE
+	intact = TRUE
 	if(T)
 		if(istype(T,/obj/item/stack/tile/wood))
 			floor_type = T.type
@@ -481,9 +464,9 @@ var/list/wood_icons = list("wood","wood-broken")
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_carpet_floor(obj/item/stack/tile/carpet/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
+	broken = FALSE
+	burnt = FALSE
+	intact = TRUE
 	if(T)
 		if(istype(T,/obj/item/stack/tile/carpet))
 			floor_type = T.type
@@ -499,7 +482,7 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/attackby(obj/item/C, mob/user)
 
 	if(!C || !user)
-		return 0
+		return FALSE
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(C, /obj/item/weapon/sledgehammer))
@@ -588,7 +571,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
 				name = initial(T.turf_type.name)
-				intact = 1
+				intact = TRUE
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T
 					set_lightfloor_state(L.state)
@@ -645,8 +628,8 @@ var/list/wood_icons = list("wood","wood-broken")
 			to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "plating"
-			burnt = 0
-			broken = 0
+			burnt = FALSE
+			broken = FALSE
 		else
 			to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
 			if(W.use_tool(src, user, 100, 3, 100))

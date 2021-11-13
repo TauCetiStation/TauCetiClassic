@@ -112,7 +112,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
 	if (!..())
-		return 0
+		return FALSE
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
 		var/wearable = null
@@ -129,9 +129,9 @@ var/global/list/icon_state_allowed_cache = list()
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
-				return 0
+				return FALSE
 
-	return 1
+	return TRUE
 
 /obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
@@ -226,7 +226,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
-	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+	if (loc != user || !istype(user,/mob/living/carbon/human))
 		..()
 		return
 
@@ -400,7 +400,7 @@ BLIND     // can't see anything
 					species_restricted -= UNATHI
 					species_restricted -= TAJARAN
 					species_restricted -= VOX
-				src.icon_state += "_cut"
+				icon_state += "_cut"
 				user.update_inv_shoes()
 				clipped_status = CLIPPED
 			if(NO_CLIPPING)
@@ -416,7 +416,7 @@ BLIND     // can't see anything
 		playsound(src, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/proc/negates_gravity()
-	return 0
+	return FALSE
 
 //Suit
 /obj/item/clothing/suit
@@ -499,7 +499,7 @@ BLIND     // can't see anything
 	if(!supporting_limbs || !supporting_limbs.len)
 		return
 
-	var/mob/living/carbon/human/H = src.loc
+	var/mob/living/carbon/human/H = loc
 
 	// If the holder isn't human, or the holder IS and is wearing the suit, it keeps supporting the limbs.
 	if(!istype(H) || H.wear_suit == src)
@@ -654,7 +654,7 @@ BLIND     // can't see anything
 	if(fresh_laundered_until > world.time)
 		to_chat(user, "It looks fresh and clean.")
 
-	switch(src.sensor_mode)
+	switch(sensor_mode)
 		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")
 		if(SUIT_SENSOR_BINARY)
@@ -674,10 +674,10 @@ BLIND     // can't see anything
 		return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(has_sensor <= 0)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return FALSE
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -686,7 +686,7 @@ BLIND     // can't see anything
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == usr)
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
 				to_chat(usr, "You disable your suit's remote sensing equipment.")
@@ -700,18 +700,18 @@ BLIND     // can't see anything
 			var/mob/living/carbon/C = M
 			C.update_suit_sensors()
 
-	else if (istype(src.loc, /mob))
+	else if (istype(loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
+				M.visible_message("<span class='warning'>[usr] disables [loc]'s remote sensing equipment.</span>", viewing_distance = 1)
 			if(SUIT_SENSOR_BINARY)
-				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
+				M.visible_message("[usr] turns [loc]'s remote sensors to binary.", viewing_distance = 1)
 			if(SUIT_SENSOR_VITAL)
-				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
+				M.visible_message("[usr] sets [loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
-				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/C = src.loc
+				M.visible_message("[usr] sets [loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
 			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()

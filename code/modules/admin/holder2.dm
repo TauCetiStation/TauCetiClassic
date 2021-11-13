@@ -50,7 +50,7 @@ var/list/admin_datums = list()
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
 if rights_required == 0, then it simply checks if they are an admin.
-if it doesn't return 1 and show_msg=1 it will prints a message explaining why the check has failed
+if it doesn't return TRUE and show_msg=1 it will prints a message explaining why the check has failed
 generally it would be used like so:
 
 /proc/admin_proc()
@@ -65,29 +65,29 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 		if(rights_required)
 			if(usr.client.holder)
 				if(rights_required & usr.client.holder.rights)
-					return 1
+					return TRUE
 				else
 					if(show_msg)
 						to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
 		else
 			if(usr.client.holder)
-				return 1
+				return TRUE
 			else
 				if(show_msg)
 					to_chat(usr, "<font color='red'>Error: You are not an admin.</font>")
-	return 0
+	return FALSE
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
-				return 1
+				return TRUE
 			if(usr.client.holder.rights != other.holder.rights)
 				if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
-					return 1	//we have all the rights they have and more
+					return TRUE	//we have all the rights they have and more
 		to_chat(usr, "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>")
-	return 0
+	return FALSE
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
@@ -101,4 +101,4 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 	if(holder)
 		holder.disassociate()
 		//qdel(holder)
-	return 1
+	return TRUE

@@ -145,7 +145,7 @@ var/list/gear_datums = list()
 	for(var/loadout_category in loadout_categories)
 		var/datum/loadout_category/LC = loadout_categories[loadout_category]
 		LC.gear = sortAssoc(LC.gear)
-	return 1
+	return TRUE
 
 
 /datum/gear

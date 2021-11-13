@@ -159,9 +159,7 @@
 		layer = OBJ_LAYER
 
 /obj/structure/stool/bed/chair/proc/can_flip(mob/living/carbon/human/user)
-	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != INTENT_HARM|| !can_flipped)
-		return 0
-	return 1
+	return !(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != INTENT_HARM || !can_flipped)
 
 /obj/structure/stool/bed/chair/proc/flip()
 	var/matrix/M = matrix(transform)

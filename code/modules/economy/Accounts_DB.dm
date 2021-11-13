@@ -1,3 +1,7 @@
+#define ACCESS_LEVEL_NONE 0
+#define ACCESS_LEVEL_COMMAND 1
+#define ACCESS_LEVEL_CENTCOMM 2
+
 /obj/machinery/account_database
 	name = "Accounts uplink terminal"
 	desc = "Access transaction logs, account data and all kinds of other financial records."
@@ -15,11 +19,11 @@
 
 /obj/machinery/account_database/proc/get_access_level()
 	if (!held_card)
-		return 0
+		return ACCESS_LEVEL_NONE
 	if(access_cent_captain in held_card.access)
-		return 2
+		return ACCESS_LEVEL_CENTCOMM
 	else if((access_hop in held_card.access) || (access_captain in held_card.access))
-		return 1
+		return ACCESS_LEVEL_COMMAND
 
 /obj/machinery/account_database/proc/create_transation(target, reason, amount)
 	var/datum/transaction/T = new()
@@ -101,7 +105,7 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
-		ui = new(user, src, ui_key, "accounts_terminal.tmpl", src.name, 400, 640)
+		ui = new(user, src, ui_key, "accounts_terminal.tmpl", name, 400, 640)
 		ui.set_initial_data(data)
 		ui.open()
 
@@ -149,7 +153,7 @@
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)
-					held_card.loc = src.loc
+					held_card.loc = loc
 
 					if(ishuman(usr) && !usr.get_active_hand())
 						usr.put_in_hands(held_card)
@@ -259,3 +263,7 @@
 				P.info = text
 				P.update_icon()
 				state("The terminal prints out a report.")
+
+#undef ACCESS_LEVEL_NONE
+#undef ACCESS_LEVEL_COMMAND
+#undef ACCESS_LEVEL_CENTCOMM

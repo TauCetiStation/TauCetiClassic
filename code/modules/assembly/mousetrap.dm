@@ -4,7 +4,7 @@
 	icon_state = "mousetrap"
 	m_amt = 100
 	origin_tech = "combat=1"
-	var/armed = 0
+	var/armed = FALSE
 
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
@@ -43,7 +43,7 @@
 		M.splat()
 	playsound(target, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	layer = MOB_LAYER - 0.2
-	armed = 0
+	armed = FALSE
 	update_icon()
 	pulse(0)
 
@@ -88,8 +88,8 @@
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 		triggered(finder, finder.hand ? BP_L_ARM : BP_R_ARM)
-		return 1	//end the search!
-	return 0
+		return TRUE	//end the search!
+	return FALSE
 
 /obj/item/device/assembly/mousetrap/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(!armed)
@@ -99,7 +99,7 @@
 
 /obj/item/device/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
-	armed = 1
+	armed = TRUE
 
 /obj/item/device/assembly/mousetrap/verb/hide_under()
 	set src in oview(1)

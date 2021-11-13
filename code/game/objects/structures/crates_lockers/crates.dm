@@ -7,19 +7,19 @@
 	icon_closed = "crate"
 	climbable = TRUE
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
-	var/rigged = 0
+	var/rigged = FALSE
 
 /obj/structure/closet/crate/can_open()
-	return 1
+	return TRUE
 
 /obj/structure/closet/crate/can_close()
-	return 1
+	return TRUE
 
 /obj/structure/closet/crate/open()
-	if(src.opened)
-		return 0
+	if(opened)
+		return FALSE
 	if(!can_open())
-		return 0
+		return FALSE
 
 	if(rigged && locate(/obj/item/device/radio/electropack) in src)
 		if(isliving(usr))
@@ -28,24 +28,24 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
-				return 2
+				return TRUE  //was return 2 before (not used anywhere)
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
 	icon_state = icon_opened
-	src.opened = 1
+	opened = TRUE
 
 	if(climbable)
 		structure_shaken()
 
-	return 1
+	return TRUE
 
 /obj/structure/closet/crate/close()
-	if(!src.opened)
-		return 0
+	if(!opened)
+		return FALSE
 	if(!can_close())
-		return 0
+		return FALSE
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	var/itemcount = 0
@@ -62,8 +62,8 @@
 		itemcount++
 
 	icon_state = icon_closed
-	src.opened = 0
-	return 1
+	opened = FALSE
+	return TRUE
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
 	if(opened || istype(W, /obj/item/weapon/grab))
@@ -81,7 +81,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You rig [src].</span>")
-		rigged = 1
+		rigged = TRUE
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
@@ -90,19 +90,19 @@
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-			rigged = 0
+			rigged = FALSE
 	else
 		return attack_hand(user)
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/obj/O in src.contents)
+			for(var/obj/O in contents)
 				qdel(O)
 			qdel(src)
 			return
 		if(2.0)
-			for(var/obj/O in src.contents)
+			for(var/obj/O in contents)
 				if(prob(50))
 					qdel(O)
 			qdel(src)
@@ -124,8 +124,8 @@
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
 	var/emag = "securecrateemag"
-	broken = 0
-	locked = 1
+	broken = FALSE
+	locked = TRUE
 
 /obj/structure/closet/crate/secure/atom_init()
 	. = ..()
@@ -145,14 +145,14 @@
 	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
-	if(src.opened)
+	if(opened)
 		to_chat(user, "<span class='notice'>Close the crate first.</span>")
 		return
-	if(src.broken)
+	if(broken)
 		to_chat(user, "<span class='warning'>The crate appears to be broken.</span>")
 		return
 	if(allowed(user))
-		src.locked = !src.locked
+		locked = !locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>")
@@ -203,8 +203,8 @@
 	add_overlay(sparks)
 	spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	src.locked = 0
-	src.broken = 1
+	locked = FALSE
+	broken = TRUE
 	to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
 	return TRUE
 
@@ -213,7 +213,7 @@
 		O.emplode(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
-			src.locked = 1
+			locked = TRUE
 			cut_overlays()
 			add_overlay(redlight)
 		else
@@ -222,13 +222,13 @@
 			add_overlay(sparks)
 			spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-			src.locked = 0
+			locked = FALSE
 	if(!opened && prob(20/severity))
 		if(!locked)
 			open()
 		else
-			src.req_access = list()
-			src.req_access += pick(get_all_accesses())
+			req_access = list()
+			req_access += pick(get_all_accesses())
 	..()
 
 /obj/structure/closet/crate/plastic
@@ -444,16 +444,16 @@
 /obj/structure/closet/crate/large/close()
 	. = ..()
 	if (.)//we can hold up to one large item
-		var/found = 0
-		for(var/obj/structure/S in src.loc)
+		var/found = FALSE
+		for(var/obj/structure/S in loc)
 			if(S == src)
 				continue
 			if(!S.anchored)
-				found = 1
+				found = TRUE
 				S.forceMove(src)
 				break
 		if(!found)
-			for(var/obj/machinery/M in src.loc)
+			for(var/obj/machinery/M in loc)
 				if(!M.anchored)
 					M.forceMove(src)
 					break
@@ -472,16 +472,16 @@
 /obj/structure/closet/crate/secure/large/close()
 	. = ..()
 	if (.)//we can hold up to one large item
-		var/found = 0
-		for(var/obj/structure/S in src.loc)
+		var/found = FALSE
+		for(var/obj/structure/S in loc)
 			if(S == src)
 				continue
 			if(!S.anchored)
-				found = 1
+				found = TRUE
 				S.forceMove(src)
 				break
 		if(!found)
-			for(var/obj/machinery/M in src.loc)
+			for(var/obj/machinery/M in loc)
 				if(!M.anchored)
 					M.forceMove(src)
 					break
