@@ -1063,7 +1063,6 @@
 	item_state = "sceince_helm"
 	item_color = "science"
 	unacidable = TRUE
-	light_color = "#cb00f3"
 	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/science
