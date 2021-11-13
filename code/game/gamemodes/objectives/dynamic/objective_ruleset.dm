@@ -143,7 +143,3 @@
 
 	var/picked_type = pick(gang_objectives_types)
 	return list(create_objective(picked_type))
-
-/datum/objective_ruleset/families/get_objectives_set()
-	var/datum/objective/points = create_objective(/datum/objective/gang/points)
-	return create_objectives_set(get_objectives() + points)
