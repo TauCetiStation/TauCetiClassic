@@ -127,19 +127,14 @@
 
 /datum/objective_ruleset/families/get_objectives()
 	var/list/all_objectives = get_all_objectives()
-	var/list/all_objectives_types = make_associative(get_types_of_objects_list(all_objectives))
 
 	for(var/datum/objective/gang/objective in all_objectives)
 		if(!objective.conflicting_types.len)
 			continue
-		for(var/type in objective.conflicting_types)
-			if(!all_objectives_types[type])
-				return list(create_objective(type))
+		var/type = pick_n_take(objective.conflicting_types)
+		objective.conflicting_types -= type
+		return list(create_objective(type))
 
 	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) + /datum/objective/target/assassinate/kill_head - /datum/objective/gang/points
-	for(var/type in gang_objectives_types)
-		if(all_objectives_types[type])
-			gang_objectives_types -= type
-
 	var/picked_type = pick(gang_objectives_types)
 	return list(create_objective(picked_type))

@@ -19,7 +19,7 @@
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_LOSS
 
-/datum/objective/target/dehead/equip_tools()
+/datum/objective/target/dehead/give_equipments()
 	if(!owner)
 		return
 	var/mob/living/carbon/human/mob = owner.current

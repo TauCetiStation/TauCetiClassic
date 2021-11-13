@@ -63,10 +63,10 @@
 		. = find_target()
 
 	if(.)
-		equip_tools()
+		give_equipments()
 
 /datum/objective/proc/ShuttleDocked()
 	return
 
-/datum/objective/proc/equip_tools()
+/datum/objective/proc/give_equipments()
 	return
