@@ -1,9 +1,10 @@
 /datum/objectives_set
+	var/datum/faction_or_role // faction or role
 	var/list/my_objectives
-	var/used = FALSE
 
-/datum/objectives_set/New(list/_my_objectives)
+/datum/objectives_set/New(list/_my_objectives, datum/_faction_or_role)
 	my_objectives = _my_objectives
+	faction_or_role = _faction_or_role
 
 /*
  * A system designed to provide pseudo-random objectives so that antagonists go to conflicts with station
@@ -34,6 +35,12 @@
 
 	main_objectives_pool[faction_or_role.type] += o_set
 
+/datum/objectives_pool/proc/find_objectives_set(datum/faction_or_role)
+	for(var/datum/objectives_set/o_set as anything in main_objectives_pool[faction_or_role.type])
+		if(o_set.faction_or_role == faction_or_role)
+			return o_set
+	CRASH("Dynamcally generated objectives not found for [faction_or_role]")
+
 // TODO: Remove the dependence of the faction/role on their objective_holder
 /datum/objectives_pool/proc/give_objectives_for(datum/faction_or_role)
 	if(!main_objectives_pool[faction_or_role.type])
@@ -41,7 +48,6 @@
 
 	// standardized fields
 	var/datum/objective_holder/objective_holder
-	var/mind = null
 
 	if(istype(faction_or_role, /datum/faction))
 		var/datum/faction/F = faction_or_role
@@ -49,14 +55,8 @@
 
 	else if(istype(faction_or_role, /datum/role))
 		var/datum/role/R = faction_or_role
-		objective_holder = R.objectives
-		mind = R.antag
+		objective_holder = R.objectives // rename this to objective_holder
 
-	var/list/datum/objectives_set/available_sets = list()
-	for(var/datum/objectives_set/o_set as anything in main_objectives_pool[faction_or_role.type])
-		if(!o_set.used)
-			available_sets += o_set
-	var/datum/objectives_set/o_set = pick(available_sets)
-	o_set.used = TRUE
+	var/datum/objectives_set/o_set = find_objectives_set(faction_or_role)
 	for(var/datum/objective/objective as anything in o_set.my_objectives)
-		objective_holder.AddObjective(objective, mind, mind ? null : faction_or_role)
+		objective_holder.AddObjective(objective) // owners must setted in objective_ruleset

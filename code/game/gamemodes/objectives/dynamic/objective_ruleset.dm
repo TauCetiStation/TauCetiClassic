@@ -17,6 +17,19 @@
 /datum/objective_ruleset/proc/get_objectives_set()
 	return
 
+/datum/objective_ruleset/proc/create_objective(type)
+	var/datum/objective/O = new type
+	if(istype(faction_or_role, /datum/faction))
+		O.faction = faction_or_role
+	else if(istype(faction_or_role, /datum/role))
+		var/datum/role/R = faction_or_role
+		O.owner = R.antag
+	return O
+
+/datum/objective_ruleset/proc/create_objectives_set(objectives)
+	var/datum/objectives_set/OS = new(objectives, faction_or_role)
+	return OS
+
 /*
  * Standart
  */
@@ -69,7 +82,7 @@
 	var/i = 1
 	while(i != objectives_amount)
 		var/obj_type = pickweight(main_objectives)
-		var/datum/objective/new_obj = new obj_type
+		var/datum/objective/new_obj = create_objective(obj_type)
 
 		if(prob(pseudorandom_chance) && !blocked_pseudorandom[obj_type] && new_obj.conflicting_types.len)
 			new_obj.auto_target = !new_obj.find_pseudorandom_target(all_objectives, new_objectives)
@@ -85,9 +98,8 @@
 
 /datum/objective_ruleset/standart/get_objectives_set()
 	var/objective_type = pickweight(survive_objectives)
-	var/datum/objective/survive_objective = new objective_type
-	var/datum/objectives_set/OS = new(get_objectives() + survive_objective)
-	return OS
+	var/datum/objective/survive_objective = create_objective(objective_type)
+	return create_objectives_set(get_objectives() + survive_objective)
 
 /datum/objective_ruleset/standart/one
 	objectives_amount = 1
@@ -115,13 +127,12 @@
 			continue
 		for(var/type in objective.conflicting_types)
 			if(!all_objectives_types[type])
-				return list(new type)
+				return list(create_objective(type))
 
 	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) + /datum/objective/target/assassinate/kill_head - /datum/objective/gang/points
 	var/picked_type = pick(gang_objectives_types)
-	return list(new picked_type)
+	return list(create_objective(picked_type))
 
 /datum/objective_ruleset/families/get_objectives_set()
-	var/datum/objective/points = new /datum/objective/gang/points
-	var/datum/objectives_set/OS = new(get_objectives() + points)
-	return OS
+	var/datum/objective/points = create_objective(/datum/objective/gang/points)
+	return create_objectives_set(get_objectives() + points)

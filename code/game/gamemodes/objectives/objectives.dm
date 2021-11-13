@@ -14,6 +14,11 @@
 	if(text)
 		explanation_text = text
 
+/datum/objective/Destroy(force, ...)
+	owner = null
+	faction = null
+	return ..()
+
 /datum/objective/proc/calculate_completion()
 	completed = check_completion()
 	return completed
