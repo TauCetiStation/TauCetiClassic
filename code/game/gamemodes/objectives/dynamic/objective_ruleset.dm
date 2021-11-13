@@ -8,6 +8,11 @@
 	master_pool = _master_pool
 	faction_or_role = _faction_or_role
 
+/datum/objective_ruleset/Destroy(force, ...)
+	master_pool = null
+	faction_or_role = null
+	return ..()
+
 /datum/objective_ruleset/proc/get_objectives()
 	return
 
@@ -79,18 +84,24 @@
 	var/list/all_objectives = get_all_objectives()
 	var/list/new_objectives = list()
 
-	var/i = 1
+	var/i = 0
 	while(i != objectives_amount)
 		var/obj_type = pickweight(main_objectives)
 		var/datum/objective/new_obj = create_objective(obj_type)
 
+		var/target_selected = FALSE
 		if(prob(pseudorandom_chance) && !blocked_pseudorandom[obj_type] && new_obj.conflicting_types.len)
-			new_obj.auto_target = !new_obj.find_pseudorandom_target(all_objectives, new_objectives)
-			if(new_obj.auto_target)
+			target_selected = new_obj.find_pseudorandom_target(all_objectives, new_objectives)
+			if(!target_selected)
 				blocked_pseudorandom[obj_type] = TRUE
-				qdel(new_obj)
-				continue
+		else
+			target_selected = new_obj.find_target()
 
+		if(!target_selected)
+			qdel(new_obj)
+			continue
+
+		new_obj.auto_target = FALSE
 		new_objectives += new_obj
 		i++
 

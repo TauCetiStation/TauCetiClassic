@@ -87,7 +87,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	set_target(pick(possible_items))
 	return TRUE
 
-/datum/objective/steal/find_pseudorandom_target(list/all_objectives, list/new_objectives)
+/datum/objective/steal/find_pseudorandom_target(list/all_objectives, list/existing_objectives)
 	var/list/conflicting_objectives = list()
 	for(var/datum/objective/steal/O in all_objectives)
 		if(O.type in conflicting_types)

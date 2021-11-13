@@ -16,7 +16,8 @@
 /datum/objectives_pool/proc/get_all_objectives()
 	var/list/all_objectives = list()
 	for(var/antag in main_objectives_pool)
-		all_objectives += main_objectives_pool[antag]
+		var/datum/objectives_set/o_set = main_objectives_pool[antag]
+		all_objectives += o_set.my_objectives
 	return all_objectives
 
 /datum/objectives_pool/proc/generate_objectives_for(datum/some_datum)
