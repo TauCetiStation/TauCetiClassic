@@ -160,9 +160,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has blobized [key_name(M)].")
-		var/mob/living/carbon/human/H = M
 		spawn(10)
-			H.Blobize()
+			M.Blobize()
 
 	else
 		tgui_alert(usr, "Invalid mob")
