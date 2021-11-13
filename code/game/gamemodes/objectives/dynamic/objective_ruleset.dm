@@ -15,7 +15,7 @@
 	return master_pool.get_all_objectives()
 
 /datum/objective_ruleset/proc/get_objectives_set()
-	return
+	return create_objectives_set(get_objectives())
 
 /datum/objective_ruleset/proc/create_objective(type)
 	var/datum/objective/O = new type
@@ -94,12 +94,8 @@
 		new_objectives += new_obj
 		i++
 
-	return new_objectives
-
-/datum/objective_ruleset/standart/get_objectives_set()
-	var/objective_type = pickweight(survive_objectives)
-	var/datum/objective/survive_objective = create_objective(objective_type)
-	return create_objectives_set(get_objectives() + survive_objective)
+	var/datum/objective/survive_objective = create_objective(pickweight(survive_objectives))
+	return new_objectives + survive_objective
 
 /datum/objective_ruleset/standart/one
 	objectives_amount = 1
