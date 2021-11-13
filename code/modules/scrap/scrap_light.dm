@@ -20,8 +20,7 @@
 /obj/item/device/flashlight/flare/torch/get_current_temperature()
 	if(on)
 		return 1500
-	else
-		return 0
+	return 0
 
 /obj/item/device/flashlight/flare/torch/extinguish()
 	turn_off()
@@ -156,8 +155,8 @@
 /obj/structure/bonfire/proc/CheckOxygen()
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.get_by_flag(XGM_GAS_OXIDIZER) > 1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/structure/bonfire/proc/StartBurning()
 	if(!burning && CheckOxygen())

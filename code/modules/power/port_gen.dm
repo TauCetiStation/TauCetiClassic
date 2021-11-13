@@ -19,7 +19,7 @@
 	var/consumption = 0
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
-	return 1
+	return TRUE
 
 /obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
 	return
@@ -102,8 +102,8 @@
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)

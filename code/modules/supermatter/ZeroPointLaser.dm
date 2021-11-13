@@ -63,10 +63,10 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
-			return 1
+			return TRUE
 	else
 		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
-		return 1
+		return TRUE
 
 
 /obj/machinery/zero_point_emitter/emp_act(severity)//Emitters are hardened but still might have issues
@@ -75,7 +75,7 @@
 		if(src.active)
 			src.active = 0
 			src.use_power = 1	*/
-	return 1
+	return TRUE
 
 /obj/machinery/zero_point_emitter/process()
 	if(stat & (NOPOWER|BROKEN))

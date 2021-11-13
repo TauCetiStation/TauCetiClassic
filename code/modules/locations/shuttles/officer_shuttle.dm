@@ -9,7 +9,7 @@
 	var/department_note = "Velocity transport shuttle departed from station."
 	var/arrival_note = "Velocity Transport Shuttle docked with the station."
 	var/obj/item/device/radio/intercom/radio
-	var/moving = 0
+	var/moving = FALSE
 	var/area/curr_location
 	var/area/from_area
 	var/lastMove = 0
@@ -30,7 +30,7 @@
 	if(curr_location == dest_location)	return
 
 	from_area = curr_location
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
 
 	if(curr_location == locate(/area/shuttle/officer/station))
@@ -79,8 +79,8 @@
 
 	curr_location = dest_location
 
-	moving = 0
-	return 1
+	moving = FALSE
+	return TRUE
 
 /obj/machinery/computer/officer_shuttle/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
@@ -92,7 +92,7 @@
 		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "[name]", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 

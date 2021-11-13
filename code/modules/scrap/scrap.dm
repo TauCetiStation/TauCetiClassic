@@ -194,10 +194,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/structure/scrap/proc/hurt_hand(mob/user)
 	if(prob(50))
 		if(!ishuman(user))
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/victim = user
 		if(victim.species.flags[IS_SYNTHETIC])
-			return 0
+			return FALSE
 		if(victim.gloves)
 			if(istype(victim.gloves, /obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = victim.gloves
@@ -205,18 +205,18 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 					return
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
-			return 0
+			return FALSE
 		if(BP.is_robotic())
-			return 0
+			return FALSE
 		if(victim.species.flags[NO_MINORCUTS])
-			return 0
+			return FALSE
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		if(victim.species.flags[NO_PAIN]) // So we still take damage, but actually dig through.
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/structure/scrap/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -241,10 +241,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 			big_item.forceMove(get_turf(src))
 			big_item = null
 		qdel(src)
-		return 0
-	else
-		new /obj/item/weapon/scrap_lump(newloc)
-		return 1
+		return FALSE
+	new /obj/item/weapon/scrap_lump(newloc)
+	return TRUE
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	var/do_dig = 0

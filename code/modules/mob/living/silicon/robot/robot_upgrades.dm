@@ -37,7 +37,7 @@
 	R.languages = list()
 	R.speech_synthesizer_langs = list()
 
-	return 1
+	return TRUE
 
 
 
@@ -55,7 +55,7 @@
 	if(R.module)
 		R.module += src
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/restart
 	name = "Borg emergancy restart module"
@@ -74,7 +74,7 @@
 		return 0
 
 	R.stat = CONSCIOUS
-	return 1
+	return TRUE
 
 
 /obj/item/borg/upgrade/vtec
@@ -88,7 +88,7 @@
 		return 0
 
 	R.speed--
-	return 1
+	return TRUE
 
 
 /obj/item/borg/upgrade/tasercooler
@@ -121,7 +121,7 @@
 	else
 		T.recharge_time = max(2 , T.recharge_time - 4)
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/jetpack
 	name = "Mining Borg Jetpack"
@@ -133,10 +133,9 @@
 	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(usr, "There's no mounting point for the module!")
-		return 0
-	else
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
-		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
-			R.internals = src
-		R.icon_state="Miner+j"
-		return 1
+		return FALSE
+	R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
+	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
+		R.internals = src
+	R.icon_state="Miner+j"
+	return TRUE

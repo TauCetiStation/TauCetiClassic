@@ -540,7 +540,7 @@
 
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")
-		return 1
+		return TRUE
 
 	// make it burn hands if not wearing fire-insulated gloves
 	if(on)
@@ -561,7 +561,7 @@
 			to_chat(user, "You telekinetically remove the light [fitting].")
 		else
 			to_chat(user, "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand.")
-			return 1			// if burned, don't remove the light
+			return TRUE			// if burned, don't remove the light
 	else
 		to_chat(user, "You remove the light [fitting].")
 

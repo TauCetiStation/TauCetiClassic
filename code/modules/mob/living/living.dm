@@ -82,7 +82,7 @@
 	SpreadFire(M)
 
 	if(now_pushing)
-		return 1
+		return TRUE
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
@@ -97,11 +97,11 @@
 			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
 				if ( !(world.time % 5) )
 					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
-				return 1
+				return TRUE
 			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
 				if ( !(world.time % 5) )
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
-				return 1
+				return TRUE
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
@@ -113,7 +113,7 @@
 				can_switch = FALSE
 				break
 		if(can_switch && get_dist(M, src) <= 1)
-			now_pushing = 1
+			now_pushing = TRUE
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 			var/oldloc = loc
@@ -125,23 +125,23 @@
 				if(slime.Victim == M)
 					slime.UpdateFeed()
 
-			now_pushing = 0
-			return 1
+			now_pushing = FALSE
+			return TRUE
 
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
-		return 1
+		return TRUE
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH) )
-		return 1
+		return TRUE
 	//anti-riot equipment is also anti-push
 	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
-		return 1
+		return TRUE
 	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
-		return 1
+		return TRUE
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
@@ -150,24 +150,24 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
-		return 1
+		return TRUE
 	if(!AM.anchored)
-		now_pushing = 1
+		now_pushing = TRUE
 		var/t = get_dir(src, AM)
 		if(istype(AM, /obj/structure/window))
 			var/obj/structure/window/W = AM
 			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
 				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
+					now_pushing = FALSE
 					return
 //			if(W.fulltile)
 //				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
+//					now_pushing = FALSE
 //					return
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
-		now_pushing = 0
+		now_pushing = FALSE
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -243,25 +243,25 @@
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(NO_SHOCK in src.mutations) //shockproof
-			return 0
+			return FALSE
 		if (COLD_RESISTANCE in src.mutations) //fireproof
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = burn_amount / H.bodyparts.len
 		var/extradam = 0	//added to when organ is at max dam
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
+		return TRUE
+	if(istype(src, /mob/living/carbon/monkey))
 		if (COLD_RESISTANCE in src.mutations) //fireproof
-			return 0
+			return FALSE
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/silicon/ai))
-		return 0
+		return TRUE
+	if(istype(src, /mob/living/silicon/ai))
+		return FALSE
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
 	var/temperature = actual
@@ -425,8 +425,8 @@
 
 	for(var/obj/B in L)
 		if(B.type == A)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)

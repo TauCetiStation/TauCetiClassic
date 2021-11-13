@@ -205,13 +205,13 @@
 	stop_automated_movement = TRUE
 	if(!target || !CanAttack(target))
 		LoseTarget()
-		return 0
+		return FALSE
 	if(!(target in ListTargets()))
 		LostTarget()
-		return 0
+		return FALSE
 	if(isturf(loc) && target.Adjacent(src))
 		AttackingTarget()
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)

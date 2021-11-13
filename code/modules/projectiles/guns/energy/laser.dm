@@ -71,12 +71,12 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4) return FALSE
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply) return FALSE
 	power_supply.give(100 * chargespeed)
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
 	if(isrobot(src.loc))

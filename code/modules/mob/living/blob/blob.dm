@@ -70,7 +70,7 @@
 
 /mob/living/blob/Process_Spacemove()
 	if(locate(/obj/effect/blob) in oview(1,src))
-		return 1
+		return TRUE
 	return (..())
 
 

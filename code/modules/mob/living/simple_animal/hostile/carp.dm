@@ -70,7 +70,7 @@
 		icon_gib = "purple_gib"
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
-	return 1 // No drifting in space for space carp!
+	return TRUE // No drifting in space for space carp!
 
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()

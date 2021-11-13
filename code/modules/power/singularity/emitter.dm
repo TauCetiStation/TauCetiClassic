@@ -60,7 +60,7 @@
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
-	return 1
+	return TRUE
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
@@ -87,7 +87,7 @@
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "The emitter isn't connected to a wire.")
-			return 1
+			return TRUE
 		if(!locked || isobserver(user))
 			if(active)
 				active = 0
@@ -111,7 +111,7 @@
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
 		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
-		return 1
+		return TRUE
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
@@ -120,7 +120,7 @@
 		if(src.active)
 			src.active = 0
 			set_power_use(IDLE_POWER_USE)	*/
-	return 1
+	return TRUE
 
 /obj/machinery/power/emitter/process()
 	if(stat & (BROKEN))

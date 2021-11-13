@@ -32,14 +32,14 @@
 
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, halloss = 0, def_zone = null, blocked = 0)
-	if(blocked >= 100)	return 0
+	if(blocked >= 100)	return FALSE
 	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)		apply_damage(oxy, OXY, def_zone, blocked)
 	if(clone)	apply_damage(clone, CLONE, def_zone, blocked)
 	if(halloss) apply_damage(halloss, HALLOSS, def_zone, blocked)
-	return 1
+	return TRUE
 
 
 
@@ -67,11 +67,11 @@
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 	updatehealth()
-	return 1
+	return TRUE
 
 
 /mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)
-	if(blocked >= 100)	return 0
+	if(blocked >= 100)	return FALSE
 	if(stun)		apply_effect(stun, STUN, blocked)
 	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
 	if(paralyze)	apply_effect(paralyze, PARALYZE, blocked)
@@ -80,4 +80,4 @@
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
 	if(agony)		apply_effect(agony, AGONY, blocked)
-	return 1
+	return TRUE

@@ -342,8 +342,8 @@ var/const/INGEST = 2
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change()
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
@@ -525,8 +525,8 @@ var/const/INGEST = 2
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
+	if(!isnum(amount)) return TRUE
+	if(amount < 0) return FALSE
 	if(amount > 2000) return
 
 	var/has_removed_reagent = 0

@@ -32,7 +32,7 @@
 	if(.)
 		return
 	if(scrap_amount < 1)
-		return 1
+		return TRUE
 	user.SetNextMove(CLICK_CD_INTERACT)
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")
 	new /obj/item/stack/sheet/refined_scrap(loc, scrap_amount)

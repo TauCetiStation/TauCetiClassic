@@ -923,17 +923,17 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
+	return TRUE//Humans can use guns and such
 
 
 /mob/living/carbon/human/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
-		return 1
+		return TRUE
 
 	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /mob/living/carbon/human/proc/check_dna()
@@ -1294,16 +1294,16 @@
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/human/M)
 	if (!..())
-		return 0
+		return FALSE
 	//if this blood isn't already in the list, add it
 	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
+		return FALSE //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_dirt_datum = new(dirt_overlay)
 
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
-	return 1 //we applied blood to the item
+	return TRUE //we applied blood to the item
 
 // returns associative list (implant = bodypart)
 /mob/living/carbon/human/get_visible_implants(class = 0)

@@ -150,7 +150,7 @@
 			*/
 
 ///mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
-//	return 1
+//	return TRUE
 
 /mob/living/simple_animal/mouse/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")

@@ -177,14 +177,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 /obj/structure/particle_accelerator/proc/update_state()
 	if(master)
 		master.update_state()
-		return 0
+		return FALSE
 
 
 /obj/structure/particle_accelerator/proc/report_ready(obj/O)
 	if(O && (O == master))
 		if(construction_state >= 3)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/structure/particle_accelerator/proc/report_master()
@@ -197,15 +197,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	if(O && istype(O,/obj/machinery/particle_accelerator/control_box))
 		if(O.dir == src.dir)
 			master = O
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/structure/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
-		return 0
+		return FALSE
 	if(!ismob(user) || !isobj(O))
-		return 0
+		return FALSE
 	var/temp_state = src.construction_state
 
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
@@ -244,13 +244,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 					"You open the access panel.")
 				temp_state--
 	if(temp_state == src.construction_state)//Nothing changed
-		return 0
-	else
-		src.construction_state = temp_state
-		if(src.construction_state < 3)//Was taken apart, update state
-			update_state()
-		update_icon()
-		return 1
+		return FALSE
+	src.construction_state = temp_state
+	if(src.construction_state < 3)//Was taken apart, update state
+		update_state()
+	update_icon()
+	return TRUE
 
 
 
@@ -348,9 +347,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 /obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
-		return 0
+		return FALSE
 	if(!ismob(user) || !isobj(O))
-		return 0
+		return FALSE
 	var/temp_state = src.construction_state
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
@@ -388,14 +387,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 				temp_state--
 				active = 0
 	if(temp_state == src.construction_state)//Nothing changed
-		return 0
-	else
-		if(src.construction_state < 3)//Was taken apart, update state
-			update_state()
-			if(use_power)
-				set_power_use(NO_POWER_USE)
-		src.construction_state = temp_state
-		if(src.construction_state >= 3)
-			set_power_use(IDLE_POWER_USE)
-		update_icon()
-		return 1
+		return FALSE
+	if(src.construction_state < 3)//Was taken apart, update state
+		update_state()
+		if(use_power)
+			set_power_use(NO_POWER_USE)
+	src.construction_state = temp_state
+	if(src.construction_state >= 3)
+		set_power_use(IDLE_POWER_USE)
+	update_icon()
+	return TRUE

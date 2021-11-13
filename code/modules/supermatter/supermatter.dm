@@ -135,10 +135,10 @@
 	if(!removed || !removed.total_moles)
 		damage += max((power-1600)/10, 0)
 		power = min(power, 1600)
-		return 1
+		return TRUE
 
 	if (!removed)
-		return 1
+		return TRUE
 
 	damage_archived = damage
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
@@ -197,7 +197,7 @@
 
 	power -= (power/500)**3
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj)

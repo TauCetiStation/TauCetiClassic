@@ -90,7 +90,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if (shocked)
 		shock(user,50)
 	if (I.is_open_container())
-		return 1
+		return TRUE
 	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
 		if(linked_console)
 			linked_console.linked_lathe = null
@@ -108,31 +108,30 @@ Note: Must be placed west/left of and R&D console to function.
 					var/obj/item/stack/sheet/G = new sheet_type(loc)
 					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
-			return 1
-		else if (is_wire_tool(I) && wires.interact(user))
-			return 1
-		else
-			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
-			return 1
+			return TRUE
+		if (is_wire_tool(I) && wires.interact(user))
+			return TRUE
+		to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
+		return TRUE
 
 	if (disabled)
 		return
 	if (!linked_console)
 		to_chat(user, "\The protolathe must be linked to an R&D console first!")
-		return 1
+		return TRUE
 	if (busy)
 		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
-		return 1
+		return TRUE
 	if (!istype(I, /obj/item/stack/sheet))
 		to_chat(user, "<span class='warning'>You cannot insert this item into the protolathe!</span>")
-		return 1
+		return TRUE
 	if (stat)
-		return 1
+		return TRUE
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
 		if (TotalMaterials() + S.perunit > max_material_storage)
 			to_chat(user, "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>")
-			return 1
+			return TRUE
 
 	var/obj/item/stack/sheet/stack = I
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals

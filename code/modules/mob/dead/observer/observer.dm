@@ -140,7 +140,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		forceMove(T)
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 1
+	return TRUE
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(key)
@@ -236,7 +236,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	SStgui.on_transfer(src, mind.current)
 	mind.current.key = key
-	return 1
+	return TRUE
 
 /mob/dead/observer/proc/show_data_huds()
 	for(var/hudtype in datahuds)

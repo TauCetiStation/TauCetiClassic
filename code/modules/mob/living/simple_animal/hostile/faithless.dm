@@ -38,7 +38,7 @@
 	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/faithless/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/faithless/FindTarget()
 	. = ..()

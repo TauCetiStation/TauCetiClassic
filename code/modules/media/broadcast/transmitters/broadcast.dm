@@ -9,14 +9,14 @@
 	idle_power_usage = 50
 	active_power_usage = 1000
 
-	var/on=0
-	var/integrity=100
+	var/on = FALSE
+	var/integrity = 100
 	var/list/obj/machinery/media/sources=list()
-	var/heating_power=40000
+	var/heating_power = 40000
 	var/list/autolink = null
 
-	var/const/RADS_PER_TICK=150
-	var/const/MAX_TEMP=70 // Celsius
+	var/const/RADS_PER_TICK = 150
+	var/const/MAX_TEMP = 70 // Celsius
 
 /obj/machinery/media/transmitter/broadcast/atom_init()
 	. = ..()
@@ -52,7 +52,7 @@
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
 	if(ismultitool(W))
 		attack_hand(user)
-		return 1
+		return TRUE
 
 /obj/machinery/media/transmitter/broadcast/ui_interact(mob/user)
 	// You need a multitool to use this, or be silicon
@@ -139,7 +139,7 @@
 		return
 	if(on)
 		if(integrity<=0)
-			on=0
+			on = FALSE
 			update_on()
 
 		// Radiation
@@ -191,8 +191,8 @@
 		sources.Add(O)
 		hook_media_sources()
 		update_icon()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/media/transmitter/broadcast/unlinkFrom(mob/user, obj/O)
 	if(O in sources)
@@ -201,7 +201,7 @@
 		if(sources.len)
 			hook_media_sources()
 		update_icon()
-	return 0
+	return FALSE
 
 /obj/machinery/media/transmitter/broadcast/canLink(obj/O, list/context)
 	return istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
@@ -214,4 +214,4 @@
 	id_tag = "dj"
 	media_frequency=1015
 	autolink = list("DJ Satellite")
-	on=1
+	on = TRUE

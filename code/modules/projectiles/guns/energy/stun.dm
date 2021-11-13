@@ -27,10 +27,10 @@
 
 /obj/item/weapon/gun/energy/taser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
-	if(charge_tick < recharge_time) return 0
+	if(charge_tick < recharge_time) return FALSE
 	charge_tick = 0
 
-	if(!power_supply) return 0 //sanity
+	if(!power_supply) return FALSE //sanity
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
@@ -39,7 +39,7 @@
 				power_supply.give(shot.e_cost)	//... to recharge the shot
 
 	update_icon()
-	return 1
+	return TRUE
 
 
 
@@ -79,11 +79,11 @@
 
 /obj/item/weapon/gun/energy/crossbow/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4) return FALSE
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply) return FALSE
 	power_supply.give(100)
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/gun/energy/crossbow/update_icon()

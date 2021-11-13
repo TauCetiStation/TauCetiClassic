@@ -74,8 +74,8 @@
 
 
 /obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
-	return 0
+	if(air_group || (height==0))	return TRUE
+	return FALSE
 
 
 /obj/machinery/am_shielding/process()
@@ -147,20 +147,20 @@
 
 //Call this to link a detected shilding unit to the controller
 /obj/machinery/am_shielding/proc/link_control(obj/machinery/power/am_control_unit/AMC)
-	if(!istype(AMC))	return 0
-	if(control_unit && control_unit != AMC) return 0//Already have one
+	if(!istype(AMC))	return FALSE
+	if(control_unit && control_unit != AMC) return FALSE//Already have one
 	control_unit = AMC
 	control_unit.add_shielding(src,1)
-	return 1
+	return TRUE
 
 
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
 	for(var/direction in alldirs)
 		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine) return 0//Need all for a core
+		if(!machine) return FALSE//Need all for a core
 		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))	return 0
-	return 1
+	return TRUE
 
 
 /obj/machinery/am_shielding/proc/setup_core()

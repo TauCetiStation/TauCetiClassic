@@ -40,7 +40,7 @@
 
 	if(!held_container)
 		to_chat(user, "<span class='warning'>There is nothing on the [src].</span>")
-		return 1
+		return TRUE
 
 	cut_overlays()
 	to_chat(user, "<span class='notice'>You remove the [held_container] from the [src].</span>")

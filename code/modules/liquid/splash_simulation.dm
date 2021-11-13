@@ -32,7 +32,7 @@ var/list/datum/puddle/puddles = list()
 	var/volume = input("Volume?","Volume?", 0 ) as num
 	if(!isnum(volume)) return
 	if(volume <= LIQUID_TRANSFER_THRESHOLD) return
-	var/turf/T = get_turf(src.mob)
+	var/turf/T = get_turf(mob)
 	if(!isturf(T)) return
 	trigger_splash(T, volume)
 
@@ -93,21 +93,21 @@ var/list/datum/puddle/puddles = list()
 			continue
 		var/obj/effect/liquid/L = locate(/obj/effect/liquid) in T
 		if(L)
-			if(L.volume >= src.volume)
+			if(L.volume >= volume)
 				spread_directions.Remove(direction)
 				continue
 			surrounding_volume += L.volume //If liquid already exists, add it's volume to our sum
 		else
 			var/obj/effect/liquid/NL = new(T) //Otherwise create a new object which we'll spread to.
-			NL.controller = src.controller
+			NL.controller = controller
 			controller.liquid_objects.Add(NL)
 
 	if(!spread_directions.len)
 		//world << "ERROR: No candidate to spread to."
 		return //No suitable candidate to spread to
 
-	var/average_volume = (src.volume + surrounding_volume) / (spread_directions.len + 1) //Average amount of volume on this and the surrounding tiles.
-	var/volume_difference = src.volume - average_volume //How much more/less volume this tile has than the surrounding tiles.
+	var/average_volume = (volume + surrounding_volume) / (spread_directions.len + 1) //Average amount of volume on this and the surrounding tiles.
+	var/volume_difference = volume - average_volume //How much more/less volume this tile has than the surrounding tiles.
 	if(volume_difference <= (spread_directions.len*LIQUID_TRANSFER_THRESHOLD)) //If we have less than the threshold excess liquid - then there is nothing to do as other tiles will be giving us volume.or the liquid is just still.
 		//world << "ERROR: transfer volume lower than THRESHOLD!"
 		return
@@ -121,7 +121,7 @@ var/list/datum/puddle/puddles = list()
 			continue //Map edge
 		var/obj/effect/liquid/L = locate(/obj/effect/liquid) in T
 		if(L)
-			src.volume -= volume_per_tile //Remove the volume from this tile
+			volume -= volume_per_tile //Remove the volume from this tile
 			L.new_volume = L.new_volume + volume_per_tile //Add it to the volume to the other tile
 
 /obj/effect/liquid/proc/apply_calculated_effect()
@@ -161,44 +161,44 @@ var/list/datum/puddle/puddles = list()
 			icon_state = "7"
 
 /turf/proc/can_accept_liquid(from_direction)
-	return 0
+	return FALSE
 /turf/proc/can_leave_liquid(from_direction)
-	return 0
+	return FALSE
 
 /turf/space/can_accept_liquid(from_direction)
-	return 1
+	return TRUE
 /turf/space/can_leave_liquid(from_direction)
-	return 1
+	return TRUE
 
 /turf/simulated/floor/can_accept_liquid(from_direction)
 	for(var/obj/structure/window/W in src)
 		if(W.dir in list(5,6,9,10))
-			return 0
+			return FALSE
 		if(W.dir & from_direction)
-			return 0
+			return FALSE
 	for(var/obj/O in src)
 		if(!O.liquid_pass())
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /turf/simulated/floor/can_leave_liquid(to_direction)
 	for(var/obj/structure/window/W in src)
 		if(W.dir in list(5,6,9,10))
-			return 0
+			return FALSE
 		if(W.dir & to_direction)
-			return 0
+			return FALSE
 	for(var/obj/O in src)
 		if(!O.liquid_pass())
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /turf/simulated/wall/can_accept_liquid(from_direction)
-	return 0
+	return FALSE
 /turf/simulated/wall/can_leave_liquid(from_direction)
-	return 0
+	return FALSE
 
 /obj/proc/liquid_pass()
-	return 1
+	return TRUE
 
 /obj/machinery/door/liquid_pass()
 	return !density

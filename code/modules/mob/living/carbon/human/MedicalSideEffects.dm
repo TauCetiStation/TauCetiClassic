@@ -11,11 +11,11 @@
 /datum/medical_effect/proc/manifest(mob/living/carbon/human/H)
 	for(var/R in cures)
 		if(H.reagents.has_reagent(R))
-			return 0
+			return FALSE
 	for(var/R in triggers)
 		if(H.reagents.get_reagent_amount(R) >= triggers[R])
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/medical_effect/proc/on_life(mob/living/carbon/human/H, strength)
 	return
@@ -25,8 +25,8 @@
 		if(H.reagents.has_reagent(R))
 			if (cure_message)
 				to_chat(H, "<span class='notice'>[cure_message]</span>")
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 // MOB HELPERS
@@ -54,7 +54,7 @@
 /mob/living/carbon/human/proc/handle_medical_side_effects()
 	//Going to handle those things only every few ticks.
 	if(life_tick % 15 != 0)
-		return 0
+		return FALSE
 
 	var/list/L = subtypesof(/datum/medical_effect)
 	for(var/T in L)

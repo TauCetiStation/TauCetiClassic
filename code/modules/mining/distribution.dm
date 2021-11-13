@@ -50,7 +50,8 @@ Deep minerals:
 	var/random_element = 0.5
 
 /datum/ore_distribution/proc/map_is_sane()
-	if(!map) return 0
+	if(!map)
+		return FALSE
 
 	var/rare_count = 0
 	var/surface_count = 0
@@ -67,7 +68,7 @@ Deep minerals:
 	if(surface_count < MIN_SURFACE_COUNT || surface_count > MAX_SURFACE_COUNT) return 0
 	if(rare_count < MIN_RARE_COUNT || rare_count > MAX_RARE_COUNT) return 0
 	if(deep_count < MIN_DEEP_COUNT || deep_count > MAX_DEEP_COUNT) return 0
-	return 1
+	return TRUE
 
 //Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.
 /datum/ore_distribution/proc/populate_distribution_map(z)

@@ -72,13 +72,13 @@
 /obj/item/weapon/gun/energy/floragun/process()
 	charge_tick++
 	if(charge_tick < 4)
-		return 0
+		return FALSE
 	charge_tick = 0
 	if(!power_supply)
-		return 0
+		return FALSE
 	power_supply.give(100)
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
 	..()
@@ -313,8 +313,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	for(var/X in getline(A,B))
 		var/turf/T = X
 		if(T.density)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
 	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)

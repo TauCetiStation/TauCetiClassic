@@ -44,14 +44,14 @@
 				blinded = 1
 				stat = DEAD
 				silent = 0
-				return 1
+				return TRUE
 		else if(isfacehugger(src) || isxenolarva(src))
 			if(health < 0)
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
-				return 1
+				return TRUE
 
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
@@ -107,12 +107,12 @@
 
 		if(confused)
 			confused = 0
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/xenomorph/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	handle_hud_icons()
 
@@ -124,14 +124,14 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons()
 
 	handle_hud_icons_health()
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/xenomorph/handle_vision()
 

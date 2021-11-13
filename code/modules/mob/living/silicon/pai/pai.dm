@@ -107,17 +107,17 @@
 	if (!src.current)
 		return null
 	user.reset_view(src.current)
-	return 1
+	return TRUE
 
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/pai/restrained()
-	return 0
+	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
 	// Silence for 2 minutes
@@ -178,15 +178,15 @@
 		unset_machine()
 		reset_view(null)
 		current = null
-		return 0
-	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
+		return FALSE
+	if (stat == DEAD || !C.status || !(src.network in C.network)) return FALSE
 
 	// ok, we're alive, camera is good and in our network...
 
 	set_machine(src)
 	current = C
 	reset_view(C)
-	return 1
+	return TRUE
 
 
 /mob/living/silicon/pai/cancel_camera()

@@ -100,7 +100,7 @@ var/list/fuel_injectors = list()
 
 	if(injecting)
 		to_chat(user, "<span class='warning'>Shut \the [src] off before playing with the fuel rod!</span>")
-		return 1
+		return TRUE
 	if(cur_assembly)
 		cur_assembly.forceMove(get_turf(src))
 		user.put_in_hands(cur_assembly)

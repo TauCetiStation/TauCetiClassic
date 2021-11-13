@@ -85,7 +85,7 @@
 				pedaled = 0
 			else
 				to_chat(user, "You are too exausted to pedal that thing.")
-		return 1
+		return TRUE
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
 	if(!ishuman(user))

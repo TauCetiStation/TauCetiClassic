@@ -30,7 +30,7 @@
 
 	if(!R.total_volume || !R)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
-		return 0
+		return FALSE
 
 	if(M == user)
 		if(isliving(M))
@@ -44,31 +44,29 @@
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size), 5)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		return 1
-	else if (!canopened)
+		return TRUE
+	if (!canopened)
 		to_chat(user, "<span class='notice'> You need to open the drink!</span>")
 		return
+	M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+					"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
+	if(!do_mob(user, M)) return
+	M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+					"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
-	else
-		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
-						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
-		if(!do_mob(user, M)) return
-		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
-						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
+	M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+	if(reagents.total_volume)
+		reagents.trans_to_ingest(M, gulp_size)
 
-		if(reagents.total_volume)
-			reagents.trans_to_ingest(M, gulp_size)
+	if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		var/mob/living/silicon/robot/bro = user
+		bro.cell.use(30)
+		var/refill = R.get_master_reagent_id()
+		addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
-			bro.cell.use(30)
-			var/refill = R.get_master_reagent_id()
-			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
-
-		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		return 1
+	playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return

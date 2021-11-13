@@ -55,7 +55,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = TRUE	//You can throw objects over this, despite it's density.
 
 /obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
@@ -139,10 +139,10 @@
 
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
 
-	if (src.operating == 1)
+	if (operating == 1)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+	if(density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
@@ -156,18 +156,18 @@
 		user = null
 
 	if (allowed(user))
-		if (src.density)
+		if (density)
 			open()
 		else
 			close()
 
-	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
+	else if (density)
+		flick(text("[]deny", base_state), src)
 
 	return
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
-	src.density = FALSE
+	density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
@@ -259,7 +259,7 @@
 	icon_state = "hoop"
 	anchored = TRUE
 	density = TRUE
-	throwpass = 1
+	throwpass = TRUE
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
@@ -267,14 +267,14 @@
 		if(G.state<2)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
-		G.affecting.loc = src.loc
+		G.affecting.loc = loc
 		G.affecting.Weaken(5)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src.loc)
+		user.drop_item(loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
@@ -284,11 +284,11 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(50))
-			I.loc = src.loc
+			I.loc = loc
 			visible_message("<span class='notice'>Swish! \the [I] lands in \the [src].</span>", 3)
 		else
 			visible_message("<span class='warning'>\The [I] bounces off of \the [src]'s rim!</span>", 3)
-		return 0
+		return FALSE
 	else
 		return ..(mover, target, height, air_group)
 
@@ -303,9 +303,9 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = STATIC_ENVIRON
-	var/ready = 0
+	var/ready = FALSE
 	var/area/currentarea = null
-	var/eventstarted = 0
+	var/eventstarted = FALSE
 
 
 /obj/machinery/readybutton/attack_ai(mob/user)
@@ -322,16 +322,16 @@
 		return
 
 	if(!user.IsAdvancedToolUser())
-		return 1
+		return TRUE
 
 	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
-		return 1
+		return TRUE
 
 	if(eventstarted)
 		to_chat(usr, "The event has already begun!")
-		return 1
+		return TRUE
 
 	ready = !ready
 	user.SetNextMove(CLICK_CD_RAPID)
@@ -355,7 +355,7 @@
 
 /obj/machinery/readybutton/proc/begin_event()
 
-	eventstarted = 1
+	eventstarted = TRUE
 
 	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
 		qdel(W)

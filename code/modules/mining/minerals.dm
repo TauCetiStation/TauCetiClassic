@@ -7,7 +7,7 @@ var/list/name_to_mineral
 		if(!new_mineral.name)
 			continue
 		name_to_mineral[new_mineral.name] = new_mineral
-	return 1
+	return TRUE
 
 /mineral
 

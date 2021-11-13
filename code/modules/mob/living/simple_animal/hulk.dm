@@ -209,7 +209,7 @@
 	to_chat(user, msg)
 
 //mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
-//	return 1 //copypasta from carp code
+//	return TRUE //copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -262,11 +262,10 @@
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
 		playsound(target, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER, 75)
-		return 0
-	else
-		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-		visible_message("<span class='userdanger'>[src] has destroyed some mechanic in the [target]!</span>",\
-		"<span class='userdanger'>You destroy some mechanic in the [target] door, which holds it in place!</span>",\
-		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(target, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-		return 1
+		return FALSE
+	say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+	visible_message("<span class='userdanger'>[src] has destroyed some mechanic in the [target]!</span>",\
+	"<span class='userdanger'>You destroy some mechanic in the [target] door, which holds it in place!</span>",\
+	"<span class='userdanger'>You feel some weird vibration!</span>")
+	playsound(target, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+	return TRUE

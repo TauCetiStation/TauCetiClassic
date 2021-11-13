@@ -218,7 +218,7 @@
 			heal(H, disease, effectiveness)
 
 /datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/proc/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	return TRUE
@@ -235,10 +235,9 @@
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(istype(get_turf(M), /turf/space))
 		return 1
-	else
-		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/space))
-				return 0.5
+	for(var/turf/T in view(M, 2))
+		if(istype(T, /turf/space))
+			return 0.5
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	var/heal_amt = actual_power
@@ -253,7 +252,7 @@
 		return
 
 	M.heal_bodypart_damage(heal_amt, heal_amt)
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/starlight/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
@@ -270,7 +269,7 @@
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/metabolism
 	name = "Metabolic Boost"
@@ -285,7 +284,7 @@
 	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(prob(2))
 		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
@@ -302,8 +301,7 @@
 		light_amount = min(1,T.get_lumcount())
 		if(light_amount < 0.7)
 			return 1
-		else
-			return 0
+		return 0
 	return 0.5  // If they are inside something, let them heal, but more slowly
 
 /datum/disease2/effect/heal/darkness/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -318,7 +316,7 @@
 		to_chat(M, "<span class='notice'>The darkness soothes and mends your wounds.</span>")
 
 	M.heal_bodypart_damage(heal_amt, heal_amt * 0.5) //more effective on brute
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/darkness/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(M.getBruteLoss() || M.getFireLoss())
@@ -367,7 +365,7 @@
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
-	return 1
+	return TRUE
 
 /datum/disease2/effect/heal/coma/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if((M.getBruteLoss() + M.getFireLoss()) > 30)

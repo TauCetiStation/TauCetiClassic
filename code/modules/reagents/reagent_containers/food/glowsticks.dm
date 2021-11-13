@@ -140,9 +140,9 @@
 				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(atom/target, mob/user, proximity, params)
 	return

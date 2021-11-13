@@ -163,9 +163,8 @@
 /obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
 	if (..())
 		loc = null
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/item/ammo_casing/caseless/a75
 	desc = "A .75 bullet casing."

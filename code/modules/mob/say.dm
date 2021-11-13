@@ -78,30 +78,30 @@
 /mob/proc/say_understands(mob/other,datum/language/speaking = null)
 
 	if (src.stat == DEAD)		//Dead
-		return 1
+		return TRUE
 
 	//Universal speak makes everything understandable, for obvious reasons.
-	else if(src.universal_speak || src.universal_understand)
-		return 1
+	if(src.universal_speak || src.universal_understand)
+		return TRUE
 
 	//Languages are handled after.
 	if (!speaking)
 		if(!other)
-			return 1
+			return TRUE
 		if(other.universal_speak)
-			return 1
+			return TRUE
 		if(isAI(src) && ispAI(other))
-			return 1
+			return TRUE
 		if(istype(other, src.type) || istype(src, other.type))
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	//Language check.
 	for(var/datum/language/L in languages)
 		if(speaking.name == L.name)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /*
    ***Deprecated***

@@ -161,22 +161,21 @@
 		tally++
 	if(tally >= 6)
 		assembled = 1
-		return 1
-	else
-		assembled = 0
-		return 0
+		return TRUE
+	assembled = 0
+	return FALSE
 
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
 	if(!(T)||!(type))
-		return 0
+		return FALSE
 	var/obj/structure/particle_accelerator/PA = locate(/obj/structure/particle_accelerator) in T
 	if(istype(PA, type))
 		if(PA.connect_master(src))
 			if(PA.report_ready(src))
 				connected_parts.Add(PA)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
@@ -193,7 +192,7 @@
 			part.strength = null
 			part.powered = 0
 			part.update_icon()
-	return 1
+	return TRUE
 
 
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)

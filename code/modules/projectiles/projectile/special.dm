@@ -81,9 +81,9 @@
 				if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 					shake_camera(M, 3, 1)
 			qdel(src)
-			return 1
+			return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"

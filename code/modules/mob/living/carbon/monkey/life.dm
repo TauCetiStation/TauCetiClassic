@@ -371,7 +371,7 @@
 
 	//Temporary fixes to the alerts.
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -467,7 +467,7 @@
 			blinded = 1
 			stat = DEAD
 			silent = 0
-			return 1
+			return TRUE
 
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
@@ -531,12 +531,12 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	if (stat == DEAD || (XRAY in mutations))
 		sight |= SEE_TURFS
@@ -583,7 +583,7 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/proc/handle_random_events()
 	if (prob(1) && prob(2))

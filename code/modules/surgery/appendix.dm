@@ -10,15 +10,15 @@
 
 /datum/surgery_step/appendectomy/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!ishuman(target))
-		return 0
+		return FALSE
 	if (target_zone != BP_GROIN)
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
 	if (!BP)
-		return 0
+		return FALSE
 	if (BP.open < 2)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/appendectomy/cut_appendix
 	allowed_tools = list(

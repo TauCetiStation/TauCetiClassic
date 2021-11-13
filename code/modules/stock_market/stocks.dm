@@ -120,15 +120,15 @@
 	howmany = round(howmany)
 	var/loss = howmany * current_value
 	if (available_shares < howmany)
-		return 0
+		return FALSE
 	if (modifyAccount(who, -loss))
 		supplyDrop(howmany)
 		if (!(who in shareholders))
 			shareholders[who] = howmany
 		else
 			shareholders[who] += howmany
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/stock/proc/sellShares(whose, howmany)
 	if(howmany <= 0)
@@ -136,14 +136,14 @@
 	howmany = round(howmany)
 	var/gain = howmany * current_value
 	if(shareholders[whose] < howmany)
-		return 0
+		return FALSE
 	if(modifyAccount(whose, gain))
 		supplyGrowth(howmany)
 		shareholders[whose] -= howmany
 		if(shareholders[whose] <= 0)
 			shareholders -= whose
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/stock/proc/displayValues(mob/user)
 	var/dat = plotBarGraph(values, "[name] share value per share")

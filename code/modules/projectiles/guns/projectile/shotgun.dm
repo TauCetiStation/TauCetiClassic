@@ -49,11 +49,11 @@
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())	return FALSE
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 	update_icon()	//I.E. fix the desc
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
@@ -199,11 +199,11 @@
 	if(chambered)
 		chambered.loc = get_turf(src)
 		chambered = null
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())	return FALSE
 	var/obj/item/ammo_casing/AC = magazine.get_round()
 	chambered = AC
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
 	name = "bolt-action rifle"
@@ -225,12 +225,12 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
-		return 0
+		return FALSE
 	if(magazine && magazine.ammo_count())
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
 		update_icon()	//I.E. fix the desc
-		return 1
+		return TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box/magazine))

@@ -24,21 +24,21 @@
 
 	F["version"] << 1
 
-	return 1
+	return TRUE
 
 // loads the savefile corresponding to the mob's ckey
-// if silent=true, report incompatible savefiles
-// returns 1 if loaded (or file was incompatible)
-// returns 0 if savefile did not exist
+// if silent = TRUE, report incompatible savefiles
+// returns TRUE if loaded (or file was incompatible)
+// returns FALSE if savefile did not exist
 
-/datum/paiCandidate/proc/savefile_load(mob/user, silent = 1)
+/datum/paiCandidate/proc/savefile_load(mob/user, silent = TRUE)
 	if (IsGuestKey(user.key))
-		return 0
+		return FALSE
 
 	var/path = savefile_path(user)
 
 	if (!fexists(path))
-		return 0
+		return FALSE
 
 	var/savefile/F = new /savefile(path)
 
@@ -51,10 +51,10 @@
 		fdel(path)
 		if (!silent)
 			tgui_alert(user, "Your savefile was incompatible with this version and was deleted.")
-		return 0
+		return FALSE
 
 	F["name"] >> src.name
 	F["description"] >> src.description
 	F["role"] >> src.role
 	F["comments"] >> src.comments
-	return 1
+	return TRUE

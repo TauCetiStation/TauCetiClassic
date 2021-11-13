@@ -73,7 +73,7 @@
 	return
 
 /mob/living/silicon/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
@@ -95,18 +95,18 @@
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()
-	return 1*/
+	return TRUE*/
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
-		return 0
+		return FALSE
 	if (bot.connected_ai == ai)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
-	return 0
+	return FALSE
 
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()

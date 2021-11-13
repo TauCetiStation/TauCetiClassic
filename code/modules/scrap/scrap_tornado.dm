@@ -45,8 +45,7 @@
 			continue
 		to_chat(M, "<span class='red'>You [pick("look in awe on", "can't withstand")] the [src.name].</span>")
 		M.apply_effect(3, STUN)
-	return 1
-
+	return TRUE
 
 /obj/singularity/scrap_ball/consume(atom/A)
 	if (!loc)

@@ -1,8 +1,8 @@
-//Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
+//Returns TRUE if mob can be infected, FALSE otherwise. Checks his clothing.
 /proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	var/score = 0
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(istype(M, /mob/living/carbon/human))
 
@@ -30,19 +30,19 @@
 //	log_debug("[M]'s resistance to [vector] viruses: [score]")
 
 	if(score >= 30)
-		return 0
-	else if(score == 25 && prob(99))
-		return 0
-	else if(score == 20 && prob(95))
-		return 0
-	else if(score == 15 && prob(75))
-		return 0
-	else if(score == 10 && prob(55))
-		return 0
-	else if(score == 5 && prob(35))
-		return 0
+		return FALSE
+	if(score == 25 && prob(99))
+		return FALSE
+	if(score == 20 && prob(95))
+		return FALSE
+	if(score == 15 && prob(75))
+		return FALSE
+	if(score == 10 && prob(55))
+		return FALSE
+	if(score == 5 && prob(35))
+		return FALSE
 //	log_debug("Infection got through")
-	return 1
+	return TRUE
 
 /proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
 	if (!istype(M) || !target_zone)

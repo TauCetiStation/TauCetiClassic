@@ -175,12 +175,12 @@
 /mob/living/carbon/slime/MobBump(mob/M)
 	if(ishuman(M)) //pushing humans
 		if(isslimeadult(src) && prob(10)) //only if we're adult, and 10% of the time
-			return 0
+			return FALSE
 		else
-			return 1
+			return TRUE
 
 /mob/living/carbon/slime/Process_Spacemove(movement_dir = 0)
-	return 2
+	return TRUE
 
 /mob/living/carbon/slime/Stat()
 	..()

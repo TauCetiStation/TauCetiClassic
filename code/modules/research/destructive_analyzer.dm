@@ -75,7 +75,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(linked_console)
 			nanomanager.update_uis(linked_console)
 		addtimer(CALLBACK(src, .proc/unbusy), 10)
-		return 1
+		return TRUE
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/unbusy()

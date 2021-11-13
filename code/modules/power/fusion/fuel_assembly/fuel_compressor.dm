@@ -21,23 +21,23 @@
 	if(istype(thing) && thing.reagents && thing.reagents.total_volume && thing.is_open_container())
 		if(thing.reagents.reagent_list.len > 1)
 			to_chat(user, "<span class='warning'>The contents of \the [thing] are impure and cannot be used as fuel.</span>")
-			return 1
+			return TRUE
 		if(thing.reagents.total_volume < 50)
 			to_chat(user, "<span class='warning'>You need at least fifty units of material to form a fuel rod.</span>")
-			return 1
+			return TRUE
 		var/datum/reagent/R = thing.reagents.reagent_list[1]
 		visible_message("<span class='notice'>\The [src] compresses the contents of \the [thing] into a new fuel assembly.</span>")
 		var/obj/item/weapon/fuel_assembly/F = new(get_turf(src), R.type, R.color)
 		thing.reagents.remove_reagent(R.type, R.volume)
 		user.put_in_hands(F)
-		return 1
-	else if(istype(thing, /obj/machinery/power/supermatter/shard))
+		return TRUE
+	if(istype(thing, /obj/machinery/power/supermatter/shard))
 		var/obj/item/weapon/fuel_assembly/F = new(get_turf(src), "supermatter")
 		visible_message("<span class='notice'>\The [src] compresses the \[thing] into a new fuel assembly.</span>")
 		qdel(thing)
 		user.put_in_hands(F)
-		return 1
-	else if(istype(thing, /obj/item/stack))
+		return TRUE
+	if(istype(thing, /obj/item/stack))
 		var/obj/item/stack/S = thing
 		if(!S.is_fusion_fuel)
 			to_chat(user, "<span class='warning'>It would be pointless to make a fuel rod out of [S].</span>")
@@ -52,5 +52,5 @@
 		var/obj/item/weapon/fuel_assembly/F = new path(get_turf(src))
 		visible_message("<span class='notice'>\The [src] compresses the [S] into a new fuel assembly.</span>")
 		user.put_in_hands(F)
-		return 1
-	return 0
+		return TRUE
+	return FALSE

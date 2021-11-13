@@ -20,7 +20,7 @@
 	w_class = SIZE_MASSIVE
 
 	var/attack_log = null
-	var/on = 0
+	var/on = FALSE
 	var/open = 0
 	var/health = 0	//do not forget to set health for your vehicle!
 	var/maxhealth = 0
@@ -65,12 +65,12 @@
 
 /obj/vehicle/proc/can_move()
 	if(world.time <= l_move_time + move_delay)
-		return 0
+		return FALSE
 	if(!on)
-		return 0
+		return FALSE
 	if(istype(loc, /turf/space) && !istype(src, /obj/vehicle/space))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/vehicle/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/hand_labeler))
@@ -140,28 +140,22 @@
 	return
 
 /obj/vehicle/Process_Spacemove(direction)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	return 0
+	return has_gravity(src) || pulledby
 
 /obj/vehicle/space/Process_Spacemove(direction)
-	return 1
+	return TRUE
 //-------------------------------------------
 // Vehicle procs
 //-------------------------------------------
 /obj/vehicle/proc/turn_on()
 	if(stat)
-		return 0
-	on = 1
+		return FALSE
+	on = TRUE
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/vehicle/proc/turn_off()
-	on = 0
+	on = FALSE
 	update_icon()
 
 /obj/vehicle/proc/explode()
@@ -229,7 +223,7 @@
 	if(ismob(C))
 		buckle_mob(C)
 
-	return 1
+	return TRUE
 
 
 /obj/vehicle/proc/unload(mob/user, direction)
@@ -272,7 +266,7 @@
 
 	load = null
 
-	return 1
+	return TRUE
 
 /obj/vehicle/proc/check_move_delay()
 	var/health_procent = (health / maxhealth) * 100
@@ -302,4 +296,4 @@
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
-	return 1
+	return TRUE

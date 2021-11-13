@@ -66,7 +66,7 @@
 		if(master.client)
 			master.client.eye = src
 		update_parallax_contents()
-		return 1
+		return TRUE
 
 /mob/camera/Eye/ai/setLoc(T)
 	if(..() && ai && ai.holo && isturf(ai.loc))

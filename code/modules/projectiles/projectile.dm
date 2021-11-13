@@ -155,14 +155,14 @@
 
 /obj/item/projectile/Bump(atom/A, forced=0)
 	if(A == src)
-		return 0 //no
+		return FALSE //no
 
 	if(A == firer)
 		loc = A.loc
-		return 0 //cannot shoot yourself
+		return FALSE //cannot shoot yourself
 
 	if((bumped && !forced) || (A in permutated))
-		return 0
+		return FALSE
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
@@ -171,7 +171,7 @@
 	if(firer && M)
 		if(!istype(A, /mob/living))
 			loc = A.loc
-			return 0// nope.avi
+			return FALSE// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
@@ -235,16 +235,15 @@
 	density = FALSE
 	invisibility = 101
 	qdel(src)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0)) return TRUE
 
 	if(istype(mover, /obj/item/projectile))
 		return prob(95)
-	else
-		return 1
+	return TRUE
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
@@ -397,7 +396,7 @@
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(target)
 	if(!curloc || !targloc)
-		return 0
+		return FALSE
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
 	original = target
@@ -414,13 +413,13 @@
 			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
 		if(x == 1 || x == world.maxx || y == 1 || y == world.maxy || kill_count-- < 1)
 			qdel(src)
-			return 0
+			return FALSE
 
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 		if(!location)
 			qdel(src)
-			return 0
+			return FALSE
 
 		Move(location.return_turf())
 
@@ -434,7 +433,7 @@
 	return
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
-	return 1 //Bullets don't drift in space
+	return TRUE //Bullets don't drift in space
 
 var/static/list/taser_projectiles = list(
 	/obj/item/projectile/beam/stun,

@@ -190,7 +190,7 @@
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return TRUE //copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

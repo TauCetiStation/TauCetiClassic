@@ -174,7 +174,7 @@
 	check_instability()
 	Radiate()
 
-	return 1
+	return TRUE
 
 /obj/effect/fusion_em_field/proc/check_instability()
 	if(tick_instability > 0)

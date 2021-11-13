@@ -3,10 +3,10 @@
 		for(var/obj/item/weapon/tank/jetpack/J in module.modules)
 			if(J && istype(J, /obj/item/weapon/tank/jetpack))
 				if(J.allow_thrust(0.01))
-					return 1
+					return TRUE
 	if(..())
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
  //No longer needed, but I'll leave it here incase we plan to re-use it.
 /mob/living/silicon/robot/movement_delay()

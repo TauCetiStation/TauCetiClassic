@@ -437,8 +437,8 @@
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
@@ -515,7 +515,7 @@
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
-		return 1
+		return TRUE
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
@@ -807,32 +807,32 @@
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
-		return 1
+		return TRUE
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = req_access
 	if(!L.len) //no requirements
-		return 1
+		return TRUE
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(req in I.access) //have one of the required accesses
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/updateicon()
 
@@ -1108,16 +1108,16 @@
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
-		return 0
+		return FALSE
 
 	// Power cell is empty.
 	if(cell.charge == 0)
-		return 0
+		return FALSE
 
 	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/toggle_all_components()
 	for(var/V in components)

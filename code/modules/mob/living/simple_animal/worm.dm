@@ -142,14 +142,14 @@
 			var/turf/simulated/wall/wall = target
 			wall.ChangeTurf(/turf/simulated/floor)
 			new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
-			return 1
+			return TRUE
 	else if(istype(target,/atom/movable))
 		if(istype(target,/mob) || eatingDuration >= 50) //5 ticks to eat stuff like airlocks
 			var/atom/movable/objectOrMob = target
 			contents += objectOrMob
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/space_worm/proc/Attach(mob/living/simple_animal/space_worm/attachement)
 	if(!attachement)

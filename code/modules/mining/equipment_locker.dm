@@ -112,7 +112,7 @@
 		if(iscrowbar(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
-		return 1
+		return TRUE
 	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
@@ -255,8 +255,8 @@
 
 
 /datum/data/mining_equipment/New(name, path, cost)
-	src.equipment_name = name
-	src.equipment_path = path
+	equipment_name = name
+	equipment_path = path
 	src.cost = cost
 
 /obj/machinery/mineral/equipment_vendor/atom_init()
@@ -438,15 +438,15 @@
 		return
 	switch(selection)
 		if("Resonator kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/resonator(loc)
 		if("Kinetic Accelerator")
-			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+			new /obj/item/weapon/gun/energy/kinetic_accelerator(loc)
 		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
+			new /mob/living/simple_animal/hostile/mining_drone(loc)
 		if("Special Mining Rig")
-			new /obj/item/mining_rig_pack(src.loc)
+			new /obj/item/mining_rig_pack(loc)
 		if("Mining Meson HUD")
-			new /obj/item/clothing/glasses/hud/mining/meson(src.loc)
+			new /obj/item/clothing/glasses/hud/mining/meson(loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return
@@ -461,8 +461,8 @@
 
 /obj/item/mining_rig_pack/atom_init()
 	..()
-	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
-	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
+	new /obj/item/clothing/head/helmet/space/rig/mining(loc)
+	new	/obj/item/clothing/suit/space/rig/mining(loc)
 	return INITIALIZE_HINT_QDEL
 
 /**********************Mining Equipment Voucher**********************/
@@ -519,17 +519,17 @@
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [name] to work.</span>")
 		return
 	else
-		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+		user.visible_message("<span class='notice'>[user.name] activates the [name]!</span>")
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
 			if(is_station_level(T.z))
 				L += B
 		if(!L.len)
-			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
+			to_chat(user, "<span class='notice'>The [name] failed to create a wormhole.</span>")
 			return
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
@@ -635,13 +635,13 @@
 		spawn(50)
 			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			if(creator)
-				for(var/mob/living/L in src.loc)
+				for(var/mob/living/L in loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
+					to_chat(L, "<span class='danger'>The [name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			else
-				for(var/mob/living/L in src.loc)
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
+				for(var/mob/living/L in loc)
+					to_chat(L, "<span class='danger'>The [name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 
@@ -737,7 +737,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	new /obj/effect/decal/remains/robot(src.loc)
+	new /obj/effect/decal/remains/robot(loc)
 	DropOre()
 	qdel(src)
 
@@ -783,7 +783,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/weapon/ore/O
-	for(O in src.loc)
+	for(O in loc)
 		O.loc = src
 	for(var/dir in alldirs)
 		var/turf/T = get_step(src,dir)
@@ -796,7 +796,7 @@
 		return
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
-		O.loc = src.loc
+		O.loc = loc
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
@@ -823,10 +823,10 @@
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	..()
 	var/msg = null
-	if (src.health < src.maxHealth)
-		if (src.health >= src.maxHealth * 0.7)
+	if (health < maxHealth)
+		if (health >= maxHealth * 0.7)
 			msg += "<span class='warning'>It looks slightly dented.</span>\n"
-		else if (src.health <= src.maxHealth * 0.3)
+		else if (health <= maxHealth * 0.3)
 			msg += "<span class='warning'><B>IT IS FALLING APART!</B></span>\n"
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"

@@ -104,30 +104,30 @@
 
 /obj/machinery/mining/drill/proc/can_work()
 	if(!active)
-		return 0
+		return FALSE
 	if(need_player_check)
-		return 0
+		return FALSE
 	if(!check_supports())
 		system_error("system configuration error")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/mining/drill/proc/use_cell_power()
 	if(wires_power_disable)
-		return 0
+		return FALSE
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.use(charge_use))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/check_supports()
 	if(!supports || supports.len < braces_needed)
-		return 0
+		return FALSE
 
 	if(supports && supports.len >= braces_needed)
-		return 1
-
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/system_error(error)
 
@@ -354,28 +354,27 @@
 
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
-		return 0
+		return FALSE
 	if(!istype(user, /mob/living/carbon))
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/C = user
 
 	if(!cell.use(cell.maxcharge / 10))
-		return 0
+		return FALSE
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 
 	if(C.electrocute_act(cell.maxcharge / 400))
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/cut_hand(mob/user)
 	if(!ishuman(user)) // no hand no cut
 		to_chat(user, "<span class='danger'>You feel, that [src] want to cut your arm</span>")
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]

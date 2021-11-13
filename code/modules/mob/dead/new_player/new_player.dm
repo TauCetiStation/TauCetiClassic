@@ -433,7 +433,7 @@
 
 /mob/dead/new_player/proc/is_species_whitelisted(datum/species/S)
 	if(!S)
-		return 1
+		return TRUE
 	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/dead/new_player/get_species()

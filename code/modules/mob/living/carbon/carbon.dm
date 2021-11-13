@@ -471,18 +471,19 @@
 
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
-		return 0
+		return FALSE
 	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/restrained()
 	if (handcuffed)
-		return 1
+		return TRUE
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
-	if(!W)	return 0
+	if(!W)
+		return FALSE
 
 	else if (W == handcuffed)
 		handcuffed = null

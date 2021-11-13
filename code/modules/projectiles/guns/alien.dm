@@ -154,7 +154,7 @@
 /*
 /obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.
 	in_chamber = new projectile_type(src)
-	return 1 */
+	return TRUE */
 
 /obj/item/weapon/gun/energy/noisecannon/update_icon()
 	return

@@ -101,8 +101,8 @@
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/ammo_box/proc/make_empty(deleting = TRUE)
 	if(deleting)

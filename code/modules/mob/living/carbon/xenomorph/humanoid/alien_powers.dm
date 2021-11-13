@@ -9,14 +9,15 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that while being incapacitated.</span>")
-		return 0
+		return FALSE
 	else if(X && getPlasma() < X)
 		to_chat(src, "<span class='warning'>Not enough plasma stored.</span>")
-		return 0
+		return FALSE
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
 		to_chat(src, "<span class='warning'>Bad place for a garden!</span>")
-		return 0
-	else	return 1
+		return FALSE
+	else
+		return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/verb/plant()
 	set name = "Plant Weeds (50)"

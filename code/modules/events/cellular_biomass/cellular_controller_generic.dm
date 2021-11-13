@@ -1,14 +1,17 @@
+#define STATE_BIOMASS_DYING 0
+#define STATE_BIOMASS_GROWING 1
+
 /obj/effect/cellular_biomass_controller
 	var/list/biomass = list()
 	var/list/biomass_cores = list()
 	var/list/growth_queue = list()
-	var/state = 1                // 1 = growing 0 = dying
-	var/grip_streingth = 5       // range for turfs to expand in space.
-	var/grow_speed = 5           // lower this value to speed up growth. 1 will process without cooldown.
-	var/core_grow_chance = 5     // chance to spawn light core
-	var/living_grow_chance = 6   // chance to spawn lair or mob
-	var/mark_grow_chance = 25    // chance to spawn decoration
-	var/faction = "generic"      // currentrly unused. Will be used to merge/battle biomes
+	var/state = STATE_BIOMASS_GROWING    // 1 = growing 0 = dying
+	var/grip_streingth = 5               // range for turfs to expand in space.
+	var/grow_speed = 5                   // lower this value to speed up growth. 1 will process without cooldown.
+	var/core_grow_chance = 5             // chance to spawn light core
+	var/living_grow_chance = 6           // chance to spawn lair or mob
+	var/mark_grow_chance = 25            // chance to spawn decoration
+	var/faction = "generic"              // currentrly unused. Will be used to merge/battle biomes
 
 	var/walls_type =     /obj/structure/cellular_biomass/wall
 	var/insides_type =   /obj/structure/cellular_biomass/grass
@@ -43,26 +46,26 @@
 
 /obj/effect/cellular_biomass_controller/proc/alive()
 	if(!growth_queue)
-		return 0
+		return FALSE
 	if(!biomass_cores)
-		return 0
+		return FALSE
 	if(!growth_queue.len)
-		return 0
+		return FALSE
 	if(!biomass_cores.len)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/cellular_biomass_controller/proc/isdying()
 	if(!biomass)
-		return 0
+		return FALSE
 	if(!biomass.len)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/cellular_biomass_controller/proc/death()
 	for(var/obj/structure/cellular_biomass/todie in biomass)
 		todie.color = "gray"
-	state = 0
+	state = STATE_BIOMASS_DYING
 
 /obj/effect/cellular_biomass_controller/process()
 	if(state)
@@ -129,8 +132,8 @@
 	if(calcEnergy(growing.loc) >= 4)
 		grow_wall(growing)
 		qdel(growing)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/cellular_biomass_controller/proc/grow_wall(obj/structure/cellular_biomass/wall/growing)
 	spawn_cellular_biomass_inside(growing.loc)

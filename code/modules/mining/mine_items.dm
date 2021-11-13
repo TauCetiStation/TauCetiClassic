@@ -828,9 +828,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		if(O.flags & NODROP || !O.canremove)
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
@@ -874,7 +874,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(accept_check(O))
 			if(contents.len >= max_n_of_items)
 				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
-				return 1
+				return TRUE
 			else
 				user.remove_from_mob(O)
 				O.loc = src

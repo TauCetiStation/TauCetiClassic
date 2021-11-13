@@ -22,18 +22,17 @@
 
 /obj/machinery/r_n_d/proc/shock(mob/user, prb) // this should be moved into parent from all places where it is.
 	if(!shocked || issilicon(user) || isobserver(user))
-		return 0
+		return FALSE
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/r_n_d/attack_hand(mob/user)
 	if(!shock(user, 50) && !disabled)

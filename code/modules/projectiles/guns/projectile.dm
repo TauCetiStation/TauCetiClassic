@@ -22,9 +22,9 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1, no_casing = 0)
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = TRUE, empty_chamber = TRUE, no_casing = FALSE)
 //	if(chambered)
-//		return 1
+//		return TRUE
 	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
 		last_fired += pick(20,40,60)
 		return

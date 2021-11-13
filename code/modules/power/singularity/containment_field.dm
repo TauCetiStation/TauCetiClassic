@@ -32,19 +32,19 @@
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()
-	return 0
+	return FALSE
 
 /obj/machinery/containment_field/ex_act(severity)
-	return 0
+	return FALSE
 
 /obj/machinery/containment_field/HasProximity(atom/movable/AM)
 	if(issilicon(AM) && prob(40))
 		shock(AM)
-		return 1
+		return TRUE
 	if(iscarbon(AM) && prob(50))
 		shock(AM)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/machinery/containment_field/proc/shock(mob/living/shoked_mob)

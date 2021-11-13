@@ -227,16 +227,16 @@
 	var/datum/language/new_language = all_languages[language]
 
 	if(!istype(new_language) || (new_language in languages))
-		return 0
+		return FALSE
 
 	languages.Add(new_language)
-	return 1
+	return TRUE
 
 /mob/proc/remove_language(rem_language)
 
 	languages.Remove(all_languages[rem_language])
 
-	return 0
+	return FALSE
 
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)

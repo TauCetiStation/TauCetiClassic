@@ -122,9 +122,9 @@
 		if(iscrowbar(I))
 			griefProtection()
 			default_deconstruction_crowbar(I)
-			return 1
+			return TRUE
 		else if (is_wire_tool(I) && wires.interact(user))
-			return 1
+			return TRUE
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Centcom Central R&D Database"

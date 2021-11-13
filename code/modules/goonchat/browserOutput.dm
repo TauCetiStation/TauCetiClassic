@@ -4,7 +4,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /datum/chatOutput
 	var/client/owner = null
-	var/loaded = 0
+	var/loaded = FALSE
 	var/list/messageQueue = list()
 	var/list/connectionHistory = list()
 	var/broken = FALSE
@@ -18,16 +18,16 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /datum/chatOutput/proc/start()
 	if(!owner)
-		return 0
+		return FALSE
 
 	if(!winexists(owner, "browseroutput"))
 		spawn()
 			tgui_alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		broken = TRUE
-		return 0
+		return TRUE
 
 	if(!owner) // In case the client vanishes before winexists returns
-		return 0
+		return FALSE
 
 	if(winget(owner, "browseroutput", "is-visible") == "true") //Already setup
 		doneLoading()
@@ -35,7 +35,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	else
 		load()
 
-	return 1
+	return TRUE
 
 /datum/chatOutput/proc/load()
 	set waitfor = FALSE
@@ -48,7 +48,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
-		return 1
+		return TRUE
 
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()

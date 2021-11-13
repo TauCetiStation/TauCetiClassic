@@ -1249,16 +1249,15 @@
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if(isxeno(user))
-		return 0
+		return FALSE
 	if(electrocute_mob(user, src, src))
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)

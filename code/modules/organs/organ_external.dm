@@ -461,36 +461,36 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_bandaged()
 	for(var/datum/wound/W in wounds)
 		if(!W.bandaged)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 // checks if all wounds on the organ are salved
 /obj/item/organ/external/proc/is_salved()
 	for(var/datum/wound/W in wounds)
 		if(!W.salved)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 // checks if all wounds on the organ are disinfected
 /obj/item/organ/external/proc/is_disinfected()
 	for(var/datum/wound/W in wounds)
 		if(!W.disinfected)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/item/organ/external/proc/bandage()
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
 		rval |= !W.bandaged
-		W.bandaged = 1
+		W.bandaged = TRUE
 	return rval
 
 /obj/item/organ/external/proc/disinfect()
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
 		rval |= !W.disinfected
-		W.disinfected = 1
+		W.disinfected = TRUE
 		W.germ_level = 0
 	return rval
 
@@ -499,14 +499,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
 		rval |= !W.clamped
-		W.clamped = 1
+		W.clamped = TRUE
 	return rval
 
 /obj/item/organ/external/proc/salve()
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
 		rval |= !W.salved
-		W.salved = 1
+		W.salved = TRUE
 	return rval
 
 /obj/item/organ/external/proc/fracture()
@@ -526,8 +526,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/has_infected_wound()
 	for(var/datum/wound/W in wounds)
 		if(W.germ_level > INFECTION_LEVEL_ONE)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/organ/external/get_icon(icon_layer)
 	if (!owner)

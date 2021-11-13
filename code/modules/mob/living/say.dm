@@ -78,7 +78,7 @@ var/global/list/department_radio_keys = list(
 	if (istype(src, /mob/living/silicon/pai))
 		return
 	if (issilicon(src))
-		return 1
+		return TRUE
 	if (!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
@@ -91,7 +91,7 @@ var/global/list/department_radio_keys = list(
 		if(!istype(dongle))
 			return
 		if(dongle.translate_binary)
-			return 1
+			return TRUE
 
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
@@ -119,7 +119,7 @@ var/global/list/department_radio_keys = list(
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
-			return 1
+			return TRUE
 
 	//speaking into radios
 	if(used_radios.len)
@@ -186,7 +186,7 @@ var/global/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	return 1
+	return TRUE
 
 /mob/living/proc/say_signlang(message, verb="gestures", datum/language/language)
 	for (var/mob/O in viewers(src, null))

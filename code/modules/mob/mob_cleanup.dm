@@ -7,8 +7,8 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	for(var/datum/disease/D in viruses)
 		if(D.IsSame(virus))
 			//error("[D.name]/[D.type] is the same as [virus.name]/[virus.type]")
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(datum/disease/virus, skip_this = 0, force_species_check=1, spread_type = -5)
@@ -40,13 +40,14 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 
 	if(force_species_check)
-		var/fail = 1
+		var/fail = TRUE
 		for(var/name in virus.affected_species)
 			var/mob_type = text2path("/mob/living/carbon/[lowertext(name)]")
 			if(mob_type && istype(src, mob_type))
-				fail = 0
+				fail = FALSE
 				break
-		if(fail) return
+		if(fail)
+			return
 
 	if(skip_this == 1)
 		//world << "infectin"

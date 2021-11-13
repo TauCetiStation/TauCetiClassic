@@ -443,17 +443,17 @@ var/list/ai_verbs_default = list(
 	if (!camera)
 		return null
 	user.reset_view(camera)
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/blob_act()
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/restrained()
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))
@@ -588,7 +588,7 @@ var/list/ai_verbs_default = list(
 	src.cameraFollow = null
 
 	if (!C || stat == DEAD) //C.can_use())
-		return 0
+		return FALSE
 
 	if(!src.eyeobj)
 		view_core()
@@ -597,11 +597,11 @@ var/list/ai_verbs_default = list(
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
-		return 1
+		return TRUE
 
 	..()
 
@@ -850,15 +850,15 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)
 		to_chat(usr, "<span class='warning'>You are dead!</span>")
-		return 1
+		return TRUE
 
 	if((flags & AI_CHECK_WIRELESS) && src.control_disabled)
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
-		return 1
+		return TRUE
 	if((flags & AI_CHECK_RADIO) && src.aiRadio.disabledAi)
 		to_chat(src, "<span class='warning'>System Error - Transceiver Disabled!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)

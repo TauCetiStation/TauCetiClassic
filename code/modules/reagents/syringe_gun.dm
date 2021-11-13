@@ -47,7 +47,7 @@
 	return syringes.len
 
 /obj/item/weapon/gun/syringe/can_hit(mob/living/target, mob/living/user)
-	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
+	return TRUE		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)

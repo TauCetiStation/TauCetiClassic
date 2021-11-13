@@ -181,7 +181,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		if(creator)
 			src.creator = creator
 			faction = "\ref[creator]" // very unique
-		return 1
+		return TRUE
 	return
 
 /mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()

@@ -54,7 +54,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
-	var/lightfail = 0
+	var/lightfail = FALSE
 	var/charge_tick = 0
 	modifystate = 0
 	can_be_holstered = FALSE
@@ -71,19 +71,19 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4) return FALSE
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply) return FALSE
 	if((power_supply.charge / power_supply.maxcharge) != 1)
-		if(!failcheck())	return 0
+		if(!failcheck())	return FALSE
 		power_supply.give(100)
 		update_icon()
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
-	lightfail = 0
-	if (prob(src.reliability)) return 1 //No failure
+	lightfail = FALSE
+	if (prob(src.reliability)) return TRUE //No failure
 	if (prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
 			if (loc == M)
@@ -91,7 +91,7 @@
 			else
 				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
 			M.apply_effect(rand(3,120), IRRADIATE)
-		lightfail = 1
+		lightfail = TRUE
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
 			if (loc == M)
@@ -101,7 +101,7 @@
 		crit_fail = 1 //break the gun so it stops recharging
 		STOP_PROCESSING(SSobj, src)
 		update_icon()
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_charge()
 	if (crit_fail)

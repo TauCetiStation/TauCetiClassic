@@ -44,7 +44,7 @@
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
-		return 0
+		return FALSE
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
@@ -54,7 +54,7 @@
 		if(C == user) // If you're eating it yourself
 			if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
-				return 0
+				return FALSE
 			else if(fullness > 350)
 				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
 			else if(fullness > 150)
@@ -101,9 +101,9 @@
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
 				On_Consume(M)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/afterattack(atom/target, mob/user, proximity, params)
 	return

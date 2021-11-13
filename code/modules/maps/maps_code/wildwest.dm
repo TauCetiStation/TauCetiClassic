@@ -27,15 +27,15 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(chargesa <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
-		return 1
+		return TRUE
 
 	else if(!ishuman(user))
 		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
-		return 1
+		return TRUE
 
 	else if(is_special_character(user))
 		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
-		return 1
+		return TRUE
 
 	else if (!insistinga)
 		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
@@ -116,14 +116,14 @@
 	if(triggered) return
 
 	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
-		for(var/mob/O in viewers(world.view, src.loc))
+		for(var/mob/O in viewers(world.view, loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
 		trigger_act()
 
 /obj/effect/meatgrinder/proc/trigger_act(mob)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	for(var/mob/O in viewers(world.view, src.loc))
+	for(var/mob/O in viewers(world.view, loc))
 		s.set_up(3, 1, src)
 		s.start()
 		explosion(mob, 1, 0, 0, 0)
@@ -165,4 +165,4 @@
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 		C.update_canmove()
-	return 1
+	return TRUE

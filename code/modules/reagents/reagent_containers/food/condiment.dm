@@ -51,7 +51,7 @@
 
 	if(!R || !R.total_volume)
 		to_chat(user, "<span class='rose'> None of [src] left, oh no!</span>")
-		return 0
+		return FALSE
 
 	if(isliving(M))
 		var/mob/living/L = M
@@ -63,21 +63,20 @@
 			reagents.trans_to_ingest(M, 10)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		return 1
-	else
-		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
-						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
-		if(!do_mob(user, M)) return
-		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
-						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
+		return TRUE
+	M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+					"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
+	if(!do_mob(user, M)) return
+	M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+					"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
-		M.log_combat(user, "fed with [name] (INTENT: [uppertext(user.a_intent)])")
+	M.log_combat(user, "fed with [name] (INTENT: [uppertext(user.a_intent)])")
 
-		if(reagents.total_volume)
-			reagents.trans_to_ingest(M, 10)
+	if(reagents.total_volume)
+		reagents.trans_to_ingest(M, 10)
 
-		playsound(M,'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		return 1
+	playsound(M,'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)

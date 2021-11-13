@@ -6,19 +6,19 @@
 		return TRUE
 
 	if(air_group || (height==0))
-		return 1
+		return TRUE
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB))
-		return 1
+		return TRUE
 	if(buckled == mover)
-		return 1
+		return TRUE
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
-			return 1
+			return TRUE
 		if (mover == buckled_mob)
-			return 1
+			return TRUE
 	return (!mover.density || !density || lying)
 
 /mob/proc/setMoveCooldown(timeout)
@@ -341,21 +341,17 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.set_dir(direct)
-	return 1
+	return TRUE
 
 
 ///Process_Spacemove
 ///Called by /client/Move()
 ///For moving in space
-///Return 1 for movement 0 for none
-///Process_Spacemove
-///Called by /client/Move()
-///For moving in space
-///Return 1 for movement 0 for none
+///Return TRUE for movement FALSE for none
 /mob/Process_Spacemove(movement_dir = 0)
 
 	if(..())
-		return 1
+		return TRUE
 
 	var/atom/movable/dense_object_backup
 	for(var/atom/A in orange(1, get_turf(src)))
@@ -370,7 +366,7 @@
 			if(!turf.density && !mob_negates_gravity())
 				continue
 
-			return 1
+			return TRUE
 
 		else
 			var/atom/movable/AM = A
@@ -378,7 +374,7 @@
 				continue
 			if(AM.density)
 				if(AM.anchored)
-					return 1
+					return TRUE
 				if(pulling == AM)
 					continue
 				dense_object_backup = AM
@@ -387,14 +383,14 @@
 		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
 			to_chat(src, "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>")
 
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/proc/mob_has_gravity(turf/T)
 	return has_gravity(src, T)
 
 /mob/proc/mob_negates_gravity()
-	return 0
+	return FALSE
 
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)

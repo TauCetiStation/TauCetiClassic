@@ -227,7 +227,7 @@
 	else
 		return 0
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

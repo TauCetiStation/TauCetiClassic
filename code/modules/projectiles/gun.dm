@@ -38,12 +38,11 @@
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gun/proc/process_chamber()
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))

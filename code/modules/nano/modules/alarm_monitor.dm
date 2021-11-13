@@ -53,7 +53,7 @@
 
 /obj/nano_module/alarm_monitor/ai/Topic(ref, href_list)
 	if(..())
-		return 1
+		return TRUE
 	if(href_list["switchTo"])
 		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
 		if(!C)
@@ -61,7 +61,7 @@
 			return
 
 		usr.switch_to_camera(C)
-		return 1
+		return TRUE
 
 /obj/nano_module/alarm_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]

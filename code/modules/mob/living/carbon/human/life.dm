@@ -452,7 +452,7 @@
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
 			throw_alert("oxy", /atom/movable/screen/alert/oxy)
-			return 0
+			return FALSE
 		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_last_breath = 1
@@ -462,7 +462,7 @@
 
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
-		return 0
+		return FALSE
 
 	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	//var/safe_pressure_max = 140 // Maximum safe partial pressure of breathable gas in kPa (Not used for now)
@@ -576,7 +576,7 @@
 	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
 
 		if(status_flags & GODMODE)
-			return 1
+			return TRUE
 
 		switch(breath.temperature)
 			if(-INFINITY to species.cold_level_3)
@@ -609,7 +609,7 @@
 
 	breath.update_values()
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -662,7 +662,7 @@
 			apply_effect(5, IRRADIATE)
 
 	if(status_flags & GODMODE)
-		return 1	//godmode
+		return TRUE	//godmode
 
 	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -1106,7 +1106,7 @@
 			death()
 			blinded = 1
 			silent = 0
-			return 1
+			return TRUE
 
 		// the analgesic effect wears off slowly
 		analgesic = max(0, analgesic - 1)
@@ -1229,11 +1229,11 @@
 		if(gloves && germ_level > gloves.germ_level && prob(10))
 			gloves.germ_level += 1
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	if(stat == UNCONSCIOUS && health <= 0)
 		//Critical damage passage overlay
@@ -1490,7 +1490,7 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/update_sight()
 	if(stat == DEAD)
@@ -1533,7 +1533,8 @@
 			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return FALSE	//godmode
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
@@ -1577,8 +1578,10 @@
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE)	return 0	//godmode
-	if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
+	if(status_flags & GODMODE)
+		return FALSE	//godmode
+	if(analgesic || (species && species.flags[NO_PAIN]))
+		return // analgesic avoids all traumatic shock temporarily
 
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
@@ -1629,7 +1632,8 @@
 
 /mob/living/carbon/human/proc/handle_heart_beat()
 
-	if(pulse == PULSE_NONE) return
+	if(pulse == PULSE_NONE)
+		return
 
 	if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
 

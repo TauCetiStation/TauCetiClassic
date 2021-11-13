@@ -83,7 +83,7 @@
 	if(prob(6))
 		new /obj/random/foods/food_trash(src)
 
-	return 1
+	return TRUE
 
 /turf/simulated/floor/plating/ironsand/update_air_properties()
 	return // Critical fix :joypain:

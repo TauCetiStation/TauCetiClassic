@@ -156,10 +156,10 @@
 			for(var/material in resources)
 				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
-			return 1
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
-			return 1
+			return TRUE
 
 	if(istype(W, /obj/item/stack))
 		var/material

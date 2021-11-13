@@ -75,4 +75,4 @@
 		return 0
 
 	set_dir(turn(src.dir, 90))
-	return 1
+	return TRUE

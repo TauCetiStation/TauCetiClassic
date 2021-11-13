@@ -491,8 +491,8 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
 					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
-						return 1
-		return 0
+						return TRUE
+		return FALSE
 
 /mob/MouseDrop(mob/M as mob)
 	..()
@@ -585,7 +585,7 @@
 
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
-		return 1
+		return TRUE
 	return istype(src, /mob/living/silicon) || get_species() == IPC
 
 /mob/proc/is_ready()
@@ -596,9 +596,9 @@
 
 /mob/proc/see(message)
 	if(!is_active())
-		return 0
+		return FALSE
 	to_chat(src, message)
-	return 1
+	return TRUE
 
 /mob/proc/show_viewers(message)
 	for(var/mob/M in viewers())
@@ -732,14 +732,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)						return 0
-	if(client.moving)					return 0
-	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
-	if(anchored)						return 0
-	if(notransform)						return 0
-	if(restrained())					return 0
-	return 1
+	if(!canmove)						return FALSE
+	if(client.moving)					return FALSE
+	if(world.time < client.move_delay)	return FALSE
+	if(stat==2)							return FALSE
+	if(anchored)						return FALSE
+	if(notransform)						return FALSE
+	if(restrained())					return FALSE
+	return TRUE
 
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
@@ -797,13 +797,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/facedir(ndir)
 	if(!canface())
-		return 0
+		return FALSE
 	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
 		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
-	return 1
+	return TRUE
 
 
 /mob/verb/eastface()
@@ -1072,7 +1072,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			pinned -= O
 		if(!pinned.len)
 			anchored = FALSE
-	return 1
+	return TRUE
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -1151,7 +1151,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -1159,7 +1159,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -1174,7 +1174,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		M.pixel_y = initial(M.pixel_y)
 
 /mob/proc/can_unbuckle(mob/user)
-	return 1
+	return TRUE
 
 /mob/proc/get_targetzone()
 	return null

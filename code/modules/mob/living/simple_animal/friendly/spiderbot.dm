@@ -77,7 +77,7 @@
 		transfer_personality(O)
 
 		update_icon()
-		return 1
+		return TRUE
 
 	if (iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
@@ -97,7 +97,7 @@
 	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
 		if (!mmi)
 			to_chat(user, "<span class='warning'>There's no reason to swipe your ID - the spiderbot has no brain to remove.</span>")
-			return 0
+			return FALSE
 
 		var/obj/item/weapon/card/id/id_card
 
@@ -115,10 +115,9 @@
 				held_item.loc = src.loc
 				held_item = null
 
-			return 1
-		else
-			to_chat(user, "<span class='warning'>You swipe your card, with no effect.</span>")
-			return 0
+			return TRUE
+		to_chat(user, "<span class='warning'>You swipe your card, with no effect.</span>")
+		return FALSE
 
 	else
 		user.SetNextMove(CLICK_CD_MELEE)

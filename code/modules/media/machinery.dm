@@ -1,13 +1,13 @@
 // Machinery serving as a media source.
 /obj/machinery/media
-	var/playing=0
-	var/media_url=""
-	var/media_start_time=0
+	var/playing = FALSE
+	var/media_url = ""
+	var/media_start_time = 0
 
 	var/area/master_area
 
 	var/list/obj/machinery/media/transmitter/hooked = list()
-	var/exclusive_hook=null // Disables output to the room
+	var/exclusive_hook = null // Disables output to the room
 
 	// Media system autolink.
 	var/id_tag = "???"
@@ -16,13 +16,13 @@
 	if(exclusive)
 		exclusive_hook=T
 	hooked.Add(T)
-	return 1
+	return TRUE
 
 /obj/machinery/media/proc/unhookMediaOutput(obj/machinery/media/transmitter/T)
 	if(exclusive_hook==T)
 		exclusive_hook=null
 	hooked.Remove(T)
-	return 1
+	return TRUE
 
 // Notify everyone in the area of new music.
 // YOU MUST SET MEDIA_URL AND MEDIA_START_TIME YOURSELF!

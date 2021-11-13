@@ -8,7 +8,7 @@ var/global/list/empty_playable_ai_cores = list()
 			continue
 		empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(get_turf(S))
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/wipe_core()
 	if(ismalf(src) || istype(loc,/obj/item/device/aicard) || stat)

@@ -13,14 +13,14 @@
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
 		if(!throw_proj(target, targloc, user, params, boolet_number))
-			return 0
+			return FALSE
 		if(i > 1)
 			newshot()
 			BB.pixel_x += rand(-8, 8) // so they will look more spreaded and not all in one (good for shotguns).
 			BB.pixel_y += rand(-8, 8)
 	user.next_move = world.time + 4
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet)
 	if(!BB)
@@ -34,13 +34,13 @@
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, boolet_number)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
-		return 0
+		return FALSE
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)
 		qdel(BB)
 		BB = null
-		return 1
+		return TRUE
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)
 	BB.current = curloc
@@ -63,7 +63,7 @@
 	if(BB)
 		BB.process(boolet_number)
 	BB = null
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)
 	var/dx = abs(target.x - current.x)

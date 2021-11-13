@@ -110,14 +110,14 @@
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
 	if(..())
-		return 1
+		return TRUE
 
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
 		var/obj/item/weapon/tank/jetpack/J = back
 		if((movement_dir || J.stabilization_on) && J.allow_thrust(0.01, src))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/mob_has_gravity()
 	. = ..()

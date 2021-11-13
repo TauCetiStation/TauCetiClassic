@@ -301,7 +301,7 @@
 	if (src.druggy > 0)
 		setDrugginess(0)
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/slime/proc/handle_attack()
 	if(!ATarget)
@@ -738,11 +738,11 @@
 			say (pick(phrases))
 
 /mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
-	//if (docile)	return 0
-	if (hunger == 2 || rabid || attacked) return 1
-	if (Leader) return 0
-	if (holding_still) return 0
-	return 1
+	//if (docile)	return FALSE
+	if (hunger == 2 || rabid || attacked) return TRUE
+	if (Leader) return FALSE
+	if (holding_still) return FALSE
+	return TRUE
 
 /mob/living/carbon/slime/proc/get_max_nutrition() // Can't go above it
 	if (isslimeadult(src)) return 1200

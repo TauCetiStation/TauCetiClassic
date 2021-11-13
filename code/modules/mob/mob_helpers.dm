@@ -355,21 +355,21 @@
 /proc/findname(msg)
 	for(var/mob/M in mob_list)
 		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /mob/proc/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
-		return 1
+		return TRUE
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
-		return 1
+		return TRUE
 
 	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 //converts intent-strings into numbers and back
 var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)

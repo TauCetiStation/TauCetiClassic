@@ -51,9 +51,9 @@
 
 /mob/living/silicon/robot/u_equip(obj/W)
 	if(!W || (W != module_active))
-		return 0
+		return FALSE
 	uneq_active()
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
@@ -125,13 +125,13 @@
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
 	if(module_state_1 == O)
-		return 1
+		return TRUE
 	else if(module_state_2 == O)
-		return 1
+		return TRUE
 	else if(module_state_3 == O)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 //Helper procs for cyborg modules on the UI.
 //These are hackish but they help clean up code elsewhere.
@@ -142,19 +142,19 @@
 
 //module_active(module) - Checks whether there is a module active in the slot specified by "module".
 /mob/living/silicon/robot/proc/module_active(module) //Module is 1-3
-	if(module < 1 || module > 3) return 0
+	if(module < 1 || module > 3) return FALSE
 
 	switch(module)
 		if(1)
 			if(module_state_1)
-				return 1
+				return TRUE
 		if(2)
 			if(module_state_2)
-				return 1
+				return TRUE
 		if(3)
 			if(module_state_3)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 //get_selected_module() - Returns the slot number of the currently selected module.  Returns 0 if no modules are selected.
 /mob/living/silicon/robot/proc/get_selected_module()

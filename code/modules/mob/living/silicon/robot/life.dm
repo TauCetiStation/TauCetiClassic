@@ -150,11 +150,11 @@
 		Paralyse(3)
 
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
 		set_EyesVision()
@@ -246,7 +246,7 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)

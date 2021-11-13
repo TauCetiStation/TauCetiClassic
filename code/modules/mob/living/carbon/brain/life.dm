@@ -130,7 +130,7 @@
 			death()
 			blinded = 1
 			silent = 0
-			return 1
+			return TRUE
 
 		//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
 		if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
@@ -200,11 +200,11 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
-	return 1
+	return TRUE
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	if (stat == DEAD || (XRAY in src.mutations))
 		sight |= SEE_TURFS
@@ -244,7 +244,7 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 
 /*/mob/living/carbon/brain/emp_act(severity)

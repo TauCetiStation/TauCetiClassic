@@ -9,11 +9,11 @@
 
 	var/area/linkedholodeck = null
 	var/area/target = null
-	var/active = 0
+	var/active = FALSE
 	var/list/holographic_objs = list()
 	var/list/holographic_mobs = list()
-	var/damaged = 0
-	var/safety_disabled = 0
+	var/damaged = FALSE
+	var/safety_disabled = FALSE
 	var/mob/last_to_emag = null
 	var/last_change = 0
 	var/last_gravity_change = 0
@@ -188,9 +188,9 @@
 		use_power(item_power_usage * (holographic_objs.len + holographic_mobs.len))
 
 		if(!checkInteg(linkedholodeck))
-			damaged = 1
+			damaged = TRUE
 			loadIdProgram()
-			active = 0
+			active = FALSE
 			set_power_use(IDLE_POWER_USE)
 			visible_message("The holodeck overloads!")
 
@@ -223,9 +223,9 @@
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
 	if(id in restricted_programs && !safety_disabled) return
@@ -239,7 +239,7 @@
 		return
 
 	last_change = world.time
-	active = 1
+	active = TRUE
 	set_power_use(ACTIVE_POWER_USE)
 
 	for(var/item in holographic_objs)
@@ -304,7 +304,7 @@
 		return
 
 	last_gravity_change = world.time
-	active = 1
+	active = TRUE
 	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
@@ -325,6 +325,6 @@
 	if(!linkedholodeck.has_gravity)
 		linkedholodeck.gravitychange(TRUE)
 
-	active = 0
+	active = FALSE
 	set_power_use(IDLE_POWER_USE)
 	current_scene = null

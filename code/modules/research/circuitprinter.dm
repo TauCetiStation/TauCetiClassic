@@ -91,7 +91,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 	if (!linked_console)
 		to_chat(user, "\The [name] must be linked to an R&D console first!")
-		return 1
+		return TRUE
 	if (O.is_open_container())
 		return
 	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))

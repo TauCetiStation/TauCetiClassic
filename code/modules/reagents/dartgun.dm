@@ -17,7 +17,7 @@
 		icon_state = "darts-5"
 	else
 		icon_state = "darts-[darts]"
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/dartgun
 	name = "dart gun"
@@ -36,7 +36,7 @@
 
 	if(!cartridge)
 		icon_state = "dartgun-empty"
-		return 1
+		return TRUE
 
 	if(!cartridge.darts)
 		icon_state = "dartgun-0"
@@ -44,7 +44,7 @@
 		icon_state = "dartgun-5"
 	else
 		icon_state = "dartgun-[cartridge.darts]"
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/dartgun/atom_init()
 	. = ..()
@@ -207,7 +207,7 @@
 	..()
 
 /obj/item/weapon/gun/dartgun/can_hit(mob/living/target, mob/living/user)
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/dartgun/attack_self(mob/user)
 
@@ -246,11 +246,11 @@
 
 /obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(obj/item/B)
 	if(!mixing || !beakers)
-		return 0
+		return FALSE
 	for(var/obj/item/M in mixing)
 		if(M == B)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/weapon/gun/dartgun/Topic(href, href_list)
 	add_fingerprint(usr)

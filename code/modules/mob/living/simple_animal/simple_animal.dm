@@ -129,7 +129,7 @@
 
 	// Health
 	if(stat == DEAD)
-		return 0
+		return FALSE
 
 	else if(health < 1)
 		health = 0
@@ -215,7 +215,7 @@
 
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atoms_damage)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech()
 	if(!speak_chance || !(speak.len || emote_hear.len || emote_see.len))

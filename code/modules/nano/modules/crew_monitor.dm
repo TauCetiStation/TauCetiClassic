@@ -7,16 +7,16 @@
 	var/turf/T = get_turf(src)
 	if (!T || !(T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))))
 		to_chat(usr, "<span class='warning'>Unable to establish a connection</span>: You're too far away from the station!")
-		return 0
+		return FALSE
 	if(href_list["close"] )
 		var/mob/user = usr
 		var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 		usr.unset_machine()
 		ui.close()
-		return 0
+		return FALSE
 	if(href_list["update"])
 		updateDialog()
-		return 1
+		return TRUE
 
 /obj/nano_module/crew_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	user.set_machine(src)
@@ -85,4 +85,4 @@
 			var/obj/item/clothing/under/C = H.w_uniform
 			if (C.has_sensor)
 				tracked |= C
-	return 1
+	return TRUE

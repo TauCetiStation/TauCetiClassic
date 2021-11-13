@@ -27,7 +27,7 @@
 	var/i = findtext(name, " ")
 	return copytext(name, 1, i)
 
-// Return 1 if this holidy should be celebrated today
+// Return TRUE if this holiday should be celebrated today
 /datum/holiday/proc/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(always_celebrate)
 		return TRUE

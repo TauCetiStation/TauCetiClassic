@@ -207,8 +207,8 @@
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & HEAD)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /mob/living/carbon/human/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
 	. = ..()
@@ -219,12 +219,12 @@
 		var/obj/item/weapon/I = l_hand
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [l_hand.name]!</span>")
-			return 1
+			return TRUE
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
-			return 1
+			return TRUE
 	if(wear_suit && istype(wear_suit, /obj/item))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
@@ -240,7 +240,7 @@
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			src.loc = picked
-			return 1
+			return TRUE
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)

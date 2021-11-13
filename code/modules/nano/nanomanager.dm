@@ -173,9 +173,9 @@
 /datum/nanomanager/proc/ui_closed(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0 // wasn't open
+		return FALSE // wasn't open
 	else if (isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
-		return 0 // wasn't open
+		return FALSE // wasn't open
 
 	STOP_PROCESSING(SSnanoui, ui)
 	if(ui.user)	// Sanity check in case a user has been deleted (say a blown up borg watching the alarm interface)
@@ -185,7 +185,7 @@
 
 	//testing("nanomanager/ui_closed mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnanoui.processing.len]")
 
-	return 1
+	return TRUE
 
  /**
   * This is called on user logout
@@ -214,7 +214,7 @@
 	//testing("nanomanager/user_transferred from mob [oldMob.name] to mob [newMob.name]")
 	if (!oldMob || isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
 		//testing("nanomanager/user_transferred mob [oldMob.name] has no open uis")
-		return 0 // has no open uis
+		return FALSE // has no open uis
 
 	if (isnull(newMob.open_uis) || !istype(newMob.open_uis, /list))
 		newMob.open_uis = list()
@@ -225,4 +225,4 @@
 
 	oldMob.open_uis.Cut()
 
-	return 1 // success
+	return TRUE // success

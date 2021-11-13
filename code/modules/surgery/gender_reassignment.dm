@@ -10,15 +10,15 @@
 
 /datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!ishuman(target))
-		return 0
+		return FALSE
 	if (target_zone != BP_GROIN)
-		return 0
+		return FALSE
 	var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
 	if (!groin)
-		return 0
+		return FALSE
 	if (groin.open < 1)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/gender_reassignment/reshape_genitals
 	allowed_tools = list(

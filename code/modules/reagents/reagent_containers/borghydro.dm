@@ -35,7 +35,7 @@
 
 /obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_tick++
-	if(charge_tick < recharge_time) return 0
+	if(charge_tick < recharge_time) return FALSE
 	charge_tick = 0
 
 	if(!isrobot(loc))
@@ -55,7 +55,7 @@
 			RG.add_reagent(reagent_ids[reagent_to_recharge], 5)		//And fill hypo with reagent.
 			break
 	//update_icon()
-	return 1
+	return TRUE
 
 // Purely for testing purposes I swear~
 /*

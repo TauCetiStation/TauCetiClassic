@@ -16,11 +16,11 @@
 	//These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
-			return 1
+			return TRUE
 		if (issilicon(other))
-			return 1
+			return TRUE
 		if (isbrain(other))
-			return 1
+			return TRUE
 	return ..()
 
 /mob/living/silicon/say(message)
@@ -98,7 +98,7 @@
 				if(IS_PAI)
 					log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,message_mode,verb,speaking)
-			return 1
+			return TRUE
 
 		if("binary")
 			switch(bot_type)
@@ -115,7 +115,7 @@
 					return
 
 			robot_talk(message)
-			return 1
+			return TRUE
 		if("general")
 			switch(bot_type)
 				if(IS_AI)
@@ -131,7 +131,7 @@
 				if(IS_PAI)
 					log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,null,verb,speaking)
-			return 1
+			return TRUE
 
 		else
 			if(message_mode && (message_mode in radiochannels))
@@ -149,7 +149,7 @@
 					if(IS_PAI)
 						log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						P.radio.talk_into(src,message,message_mode,verb,speaking)
-				return 1
+				return TRUE
 
 	return ..(html_decode(message),speaking,verb)
 
@@ -191,7 +191,7 @@
 	else
 		to_chat(src, "No holopad connected.")
 		return
-	return 1
+	return TRUE
 
 /mob/living/proc/robot_talk(message)
 

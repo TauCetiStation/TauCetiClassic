@@ -308,7 +308,7 @@
 
 	if (istype(other, /mob/living/carbon/human) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.
-			return 1
+			return TRUE
 	return ..()
 
 /mob/living/carbon/monkey/diona/say(message)

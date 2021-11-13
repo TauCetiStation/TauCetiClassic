@@ -114,8 +114,8 @@
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else
 		to_chat(user, "You have spent device's capabilities.")//To limit number of uses.
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/pickaxe/cyb
 	name = "cyborg pickaxe"

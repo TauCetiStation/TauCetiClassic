@@ -29,10 +29,10 @@
 
 /obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
 	if(!growth_queue)
-		return 0
+		return FALSE
 	if(!growth_queue.len)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/decal/cleanable/cellular/mine
 	name = "gibs"

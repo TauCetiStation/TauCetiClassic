@@ -88,7 +88,7 @@ field_generator power level display
 		if(Adjacent(user) || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
-				return 1
+				return TRUE
 			else
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
@@ -99,7 +99,7 @@ field_generator power level display
 				log_investigate("<font color='green'>activated</font> by [key_name(user)].",INVESTIGATE_SINGULO)
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
-		return 1
+		return TRUE
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)

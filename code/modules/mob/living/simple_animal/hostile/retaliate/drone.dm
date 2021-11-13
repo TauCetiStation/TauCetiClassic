@@ -57,7 +57,7 @@
 	ion.start()
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 //self repair systems have a chance to bring the drone back to life
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Life()
