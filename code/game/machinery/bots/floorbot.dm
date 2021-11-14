@@ -511,7 +511,7 @@
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		qdel(src)
 		return FALSE
-	 if (istype(I, /obj/item/weapon/pen))
+	if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
