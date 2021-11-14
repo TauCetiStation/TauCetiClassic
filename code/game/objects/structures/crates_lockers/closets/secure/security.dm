@@ -202,6 +202,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/gloves/security(src)
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
@@ -217,6 +218,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/kitchenknife/combat(src)
 	if(SSholiday.holidays[NEW_YEAR])
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -381,3 +383,25 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/projectile/glock(src)
+
+/obj/structure/closet/crate/secure/weapon/armory_nonlethal
+	name = "Rubber ammo crate"
+	req_access = list(access_armory)
+	desc = "A secure ammo crate with rubber 9mm magazines and beanbags"
+
+/obj/structure/closet/crate/secure/weapon/armory_lethal
+	name = "Ballistic ammo crate"
+	req_access = list(access_armory)
+	desc = "A secure ammo crate with 9mm magazines and buckshots"
+
+/obj/structure/closet/crate/secure/weapon/armory_nonlethal/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/eight_shells/beanbag(src)
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
+
+/obj/structure/closet/crate/secure/weapon/armory_lethal/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/eight_shells/buckshot(src)
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/magazine/m9mm_2(src)

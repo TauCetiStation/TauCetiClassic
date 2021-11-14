@@ -28,6 +28,7 @@
 	icon_state = "armor_fullbody"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	slowdown = 1
 
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
