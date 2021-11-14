@@ -519,6 +519,34 @@
 				icon_state = "lean"
 				name = "Lean"
 				desc = "This shit'll make you lean alright."
+			if("sangria")
+				icon_state = "sangriaglass"
+				name = "Sangria"
+				desc = "You feel the freshness and tranquility of this berry-wine drink. Drink up!"
+			if("strongmandrink")
+				icon_state = "strongmandrinkglass"
+				name = "Strongman's Drink"
+				desc = "Strength and life in one glass, what more can you want?"
+			if("bluelagoone")
+				icon_state = "bluelagooneglass"
+				name = "The Blue Lagoone"
+				desc = "Sea.. Adrenaline.. How these times are missing."
+			if("bloodykuds")
+				icon_state = "bloodykudsglass"
+				name = "Bloody Kuds"
+				desc = "A madman's drink. Scared?"
+			if("rainbowpunch")
+				icon_state = "rainbowpunchglass"
+				name = "Rainbow Punch"
+				desc = "The rainbow color suggests drugs.. Okay, time for a drink."
+			if("sexbeach")
+				icon_state = "sexbeachglass"
+				name = "Sex On The Beach"
+				desc = "For those who miss beach parties!"
+			if("mojito")
+				icon_state = "mojitoglass"
+				name = "Mojito"
+				desc = "Good old mojito, not an aging classic."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
