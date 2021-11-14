@@ -74,6 +74,34 @@
 			to_chat(usr, "You push the visor up on")
 		usr.update_inv_head()	//so our mob-overlays update
 
+
+/obj/item/clothing/head/helmet/light
+	name = "tactical helmet"
+	desc = "A security helmet with a built-in flashlight. If you really want to free your hands while lurking in maintenance"
+	icon_state = "helmet_light"
+	item_state = "helmet"
+	action_button_name = "Toggle Helmet Light"
+	var/on = 0
+
+/obj/item/clothing/head/helmet/light/attack_self()
+	toggle()
+
+/obj/item/clothing/head/helmet/light/verb/toggle()
+	set category = "Object"
+	set name = "Toggle Helmet Light"
+	set src in usr
+
+	if(!usr.incapacitated())
+		if(src.on)
+			src.on = 0
+			icon_state = initial(icon_state)
+			src.set_light(0)
+		else
+			src.on = 1
+			icon_state = "[initial(icon_state)]_on"
+			src.set_light(4)
+		usr.update_inv_head()
+
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
