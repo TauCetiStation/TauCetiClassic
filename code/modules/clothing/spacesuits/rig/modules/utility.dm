@@ -25,7 +25,7 @@
 	icon_state = "analyzer"
 	interface_name = "Analyzer"
 	interface_desc = "Shows anomalies frequencies and reports current gas levels when used."
-	use_power_cost = 100
+	use_power_cost = 25
 	usable = TRUE
 	engage_string = "Analyze air"
 	origin_tech = "magnets=1;programming=2;engineering=1"
@@ -40,7 +40,7 @@
 	icon_state = "scitool"
 	interface_name = "Science tool"
 	interface_desc = "Used to collect research data from different sources."
-	use_power_cost = 100
+	use_power_cost = 25
 	selectable = TRUE
 	origin_tech = "engineering=1;programming=1;biotech=1"
 	device_type = /obj/item/device/science_tool
@@ -367,7 +367,7 @@
 	interface_name = "mounted wormhole stabilizer"
 	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
 	activate_on_start = TRUE
-	active_power_cost = 3
+	active_power_cost = 10
 	
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
@@ -570,7 +570,7 @@
 	module_cooldown = 0
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
-	active_power_cost = 200
+	active_power_cost = 50
 
 	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
 	var/obj/machinery/telecomms/relay
