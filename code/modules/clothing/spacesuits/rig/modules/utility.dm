@@ -366,9 +366,32 @@
 	origin_tech = "engineering=3;programming=3;bluespace=2;"
 	interface_name = "mounted wormhole stabilizer"
 	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
-	activate_on_start = TRUE
-	active_power_cost = 10
-	
+	passive_power_cost = 3
+	use_power_cost = 1500
+
+/obj/item/rig_module/teleporter_stabilizer/proc/base_check()
+	var/cost = use_power_cost
+	if (damage>=MODULE_DESTROYED) return FALSE
+	if (damage > MODULE_NO_DAMAGE)
+		cost *= 1.25
+	return cost
+
+/obj/item/rig_module/teleporter_stabilizer/proc/stabilize_precision()
+	var/cost = base_check()
+	if (!cost) return FALSE
+	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
+		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Bluespace interference removed. Cell charge used: [cost].</span>")
+		return TRUE
+
+/obj/item/rig_module/teleporter_stabilizer/proc/remove_side_effects(dangerous = FALSE)
+	var/cost = base_check()
+	if (!cost) return FALSE
+	if (dangerous)
+		cost *= 2
+	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
+		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Negative health effects removed. Cell charge used: [cost].</span>")
+		return TRUE
+
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."
