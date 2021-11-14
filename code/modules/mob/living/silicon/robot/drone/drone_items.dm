@@ -51,7 +51,7 @@
 /obj/item/weapon/gripper/get_alternate_item()
 	if(wrapped)
 		return wrapped
-	return src
+	return ..()
 
 /obj/item/weapon/gripper/proc/is_hand(datum/source, atom/T, mob/user, params)
 	return TRUE
