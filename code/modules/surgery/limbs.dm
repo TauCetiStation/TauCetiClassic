@@ -8,12 +8,12 @@
 
 /datum/surgery_step/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP)
-		return 0
+		return FALSE
 	if(target_zone in list(O_EYES , O_MOUTH))
-		return 0
+		return FALSE
 	return target_zone != BP_CHEST
 
 
@@ -220,12 +220,12 @@
 
 /datum/surgery_step/ipc_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP)
-		return 0
+		return FALSE
 	if(target_zone in list(O_EYES , O_MOUTH))
-		return 0
+		return FALSE
 	return target_zone != BP_CHEST
 
 

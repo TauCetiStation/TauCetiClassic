@@ -432,8 +432,8 @@
 			to_chat(user, "<span class='notice'>Вы скормили контракт обратно книге. Очки возвращены.</span>")
 			uses += CONTRACT_PRICE
 			qdel(I)
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""

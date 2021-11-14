@@ -132,7 +132,7 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(allowed(usr) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
@@ -143,8 +143,8 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>This [src] doesn't seem to respect your authority.</span>")
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/bot/cleanbot/emag_act(mob/user)
 	..()
@@ -364,14 +364,13 @@
 		A.name = created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
 		qdel(src)
-
-	else if (istype(I, /obj/item/weapon/pen))
+		return FALSE
+	if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
-			return
+			return FALSE
 		if (!user.Adjacent(src))
-			return
+			return FALSE
 		created_name = t
-
-	else
-		return ..()
+		return FALSE
+	return ..()

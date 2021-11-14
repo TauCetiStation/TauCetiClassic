@@ -185,7 +185,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //This will update a mob's name, real_name, mind.name, data_core records, pda and id
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
+	if(!newname)
+		return FALSE
 	real_name = newname
 	name = newname
 	if(mind)
@@ -222,7 +223,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
-	return 1
+	return TRUE
 
 
 
@@ -747,7 +748,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src) return 0
+	if(!A || !src)
+		return FALSE
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
@@ -868,6 +870,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					refined_src -= T
 					refined_trg -= B
 					continue moving
+	return TRUE
 
 
 /proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)

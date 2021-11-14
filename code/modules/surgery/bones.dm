@@ -15,7 +15,8 @@
 	max_duration = 60
 
 /datum/surgery_step/glue_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
+	if(!ishuman(target))
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return BP && BP.open >= 2 && BP.stage == 0
 
@@ -48,7 +49,8 @@
 	max_duration = 70
 
 /datum/surgery_step/set_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
+	if(!ishuman(target))
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return BP && BP.body_zone != BP_HEAD && BP.open >= 2 && BP.stage == 1
 
@@ -86,7 +88,8 @@
 	max_duration = 70
 
 /datum/surgery_step/mend_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
+	if(!ishuman(target))
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return BP && BP.body_zone == BP_HEAD && BP.open >= 2 && BP.stage == 1
 
@@ -121,7 +124,8 @@
 	max_duration = 60
 
 /datum/surgery_step/finish_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
+	if(!ishuman(target))
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return BP && BP.open >= 2 && BP.stage == 2
 

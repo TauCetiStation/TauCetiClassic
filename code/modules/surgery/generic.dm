@@ -273,12 +273,12 @@
 
 /datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (target_zone == O_EYES) // there are specific steps for eye surgery
-		return 0
+		return FALSE
 	if (!ishuman(target))
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
-		return 0
+		return FALSE
 	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 
 /datum/surgery_step/generic/cut_limb/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

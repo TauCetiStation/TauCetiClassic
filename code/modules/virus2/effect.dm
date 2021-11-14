@@ -218,7 +218,7 @@
 			heal(H, disease, effectiveness)
 
 /datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	return TRUE
+	return HEAL_EFFECTIVENESS_MAX
 
 /datum/disease2/effect/heal/proc/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	return TRUE
@@ -234,10 +234,11 @@
 
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(istype(get_turf(M), /turf/space))
-		return 1
+		return HEAL_EFFECTIVENESS_MAX
 	for(var/turf/T in view(M, 2))
 		if(istype(T, /turf/space))
-			return 0.5
+			return HEAL_EFFECTIVENESS_HALF
+	return HEAL_EFFECTIVENESS_NONE
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	var/heal_amt = actual_power
@@ -295,14 +296,14 @@
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	var/light_amount = 0
 	if(M.loc && istype(M.loc.type, /turf/space))
-		return 0
+		return HEAL_EFFECTIVENESS_NONE
 	if(isturf(M.loc))
 		var/turf/T = M.loc
 		light_amount = min(1,T.get_lumcount())
 		if(light_amount < 0.7)
-			return 1
-		return 0
-	return 0.5  // If they are inside something, let them heal, but more slowly
+			return HEAL_EFFECTIVENESS_MAX
+		return HEAL_EFFECTIVENESS_NONE
+	return HEAL_EFFECTIVENESS_HALF  // If they are inside something, let them heal, but more slowly
 
 /datum/disease2/effect/heal/darkness/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	var/heal_amt = 2 * actual_power
@@ -332,13 +333,14 @@
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(M.status_flags & FAKEDEATH)
-		return 1
-	else if(M.stat == UNCONSCIOUS)
-		return 0.5
-	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
+		return HEAL_EFFECTIVENESS_MAX
+	if(M.stat == UNCONSCIOUS)
+		return HEAL_EFFECTIVENESS_HALF
+	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
+	return HEAL_EFFECTIVENESS_NONE
 
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")

@@ -32,22 +32,22 @@
 	if(istype(O, /obj/item/weapon/card/id))
 		if(storedcard)
 			to_chat(user, "There is already a card inside.")
-			return
-		else
-			var/obj/item/weapon/card/id/C = usr.get_active_hand()
-			if(istype(C))
-				user.drop_from_inventory(C, src)
-				storedcard = C
-				C.add_fingerprint(usr)
-				update_icon()
-				if(ishuman(usr))
-					var/mob/living/carbon/human/H = usr
-					H.sec_hud_set_ID()
+			return FALSE
+		var/obj/item/weapon/card/id/C = usr.get_active_hand()
+		if(istype(C))
+			user.drop_from_inventory(C, src)
+			storedcard = C
+			C.add_fingerprint(usr)
+			update_icon()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 	else
 		if(iswrench(O))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+	return FALSE
 
 
 /obj/machinery/idpainter/attack_hand(mob/user)

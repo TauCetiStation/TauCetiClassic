@@ -367,11 +367,11 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
-			return
+			return FALSE
 		if(!user.Adjacent(src))
-			return
+			return FALSE
 		created_name = t
-		return
+		return FALSE
 
 	var/did_something = FALSE
 
@@ -435,7 +435,7 @@
 		if(6)
 			if(iscoil(I))
 				if(user.is_busy(src))
-					return
+					return FALSE
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(I.use_tool(src, user, 40, amount = 1, volume = 50))
 					if(build_step == 6)
@@ -448,18 +448,18 @@
 			switch(lasertag_color)
 				if("blue")
 					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
-						return
+						return FALSE
 					name = "bluetag ED-209 assembly"
 				if("red")
 					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
-						return
+						return FALSE
 					name = "redtag ED-209 assembly"
 				if("")
 					if(!istype(I, /obj/item/weapon/gun/energy/taser))
-						return
+						return FALSE
 					name = "taser ED-209 assembly"
 				else
-					return
+					return FALSE
 			build_step++
 			to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 			item_state = "[lasertag_color]ed209_taser"
@@ -470,7 +470,7 @@
 		if(8)
 			if(isscrewdriver(I))
 				if(user.is_busy(src))
-					return
+					return FALSE
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
 				if(I.use_tool(src, user, 40, volume = 100))
 					if(build_step == 8)
@@ -491,7 +491,7 @@
 
 	if(!did_something)
 		return ..()
-
+	return FALSE
 
 /obj/machinery/bot/secbot/ed209/proc/turn_on_cb()
 	on_timer_id = null

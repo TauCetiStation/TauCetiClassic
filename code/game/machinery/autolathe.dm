@@ -271,17 +271,17 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pai_cable))
-		return
+		return FALSE
 	if(busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
 		updateUsrDialog()
-		return
+		return FALSE
 
 	if(exchange_parts(user, I))
-		return
+		return FALSE
 
 	if(panel_open)
 		if(iscrowbar(I))
@@ -340,6 +340,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		qdel(I)
 	busy = FALSE
 	updateUsrDialog()
+	return FALSE
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
 	if(istype(I, /obj/item/stack))

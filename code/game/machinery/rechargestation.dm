@@ -85,7 +85,7 @@
 
 
 /obj/machinery/recharge_station/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/recharge_station/examine(mob/user)
 	..()

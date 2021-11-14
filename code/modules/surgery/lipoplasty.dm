@@ -10,7 +10,8 @@
 	blood_level = 1
 
 /datum/surgery_step/lipoplasty/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
+	if(!ishuman(target))
+		return FALSE
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/lipoplasty/cut_fat

@@ -410,14 +410,14 @@
 
 /obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = TRUE
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 

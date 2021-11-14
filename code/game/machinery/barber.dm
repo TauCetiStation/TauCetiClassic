@@ -271,25 +271,24 @@ A proc that does all the animations before mix()-ing.
 			if(prob(10))
 				to_chat(user, "<span class='warning'>You feel determined to harm this machine!</span>")
 			return
+		if(emagged)
+			to_chat(user, "<span class='warning'>You stick your hand into the machine, and...</span>")
+			if(ishuman(user))
+				var/list/turf_base = list()
+				for(var/turf/T in view(src, 2))
+					turf_base += T
+				var/obj/item/I = user.get_active_hand()
+				user.throw_item(pick(turf_base), I)
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+				if(BP)
+					BP.take_damage(50, 0, 0, "blunt hit")
+			else if(isliving(user))
+				var/mob/living/L = user
+				L.adjustBruteLoss(50)
 		else
-			if(emagged)
-				to_chat(user, "<span class='warning'>You stick your hand into the machine, and...</span>")
-				if(ishuman(user))
-					var/list/turf_base = list()
-					for(var/turf/T in view(src, 2))
-						turf_base += T
-					var/obj/item/I = user.get_active_hand()
-					user.throw_item(pick(turf_base), I)
-					var/mob/living/carbon/human/H = user
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-					if(BP)
-						BP.take_damage(50, 0, 0, "blunt hit")
-				else if(isliving(user))
-					var/mob/living/L = user
-					L.adjustBruteLoss(50)
-			else
-				to_chat(user, "<span class='notice'>Machine's drum stops spinning to prevent impact with your hand.</span>")
-			return
+			to_chat(user, "<span class='notice'>Machine's drum stops spinning to prevent impact with your hand.</span>")
+		return
 
 	if(!beakers["output"])
 		if(istype(O, /obj/item/weapon/reagent_containers/glass/beaker) && !filling_tank_id)

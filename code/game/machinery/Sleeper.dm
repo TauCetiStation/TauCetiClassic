@@ -69,7 +69,7 @@
 		available_chems |= possible_chems[i]
 
 /obj/machinery/sleeper/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !iscarbon(target) || target.buckled)
@@ -127,22 +127,22 @@
 			user.drop_from_inventory(I, src)
 			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
 			updateUsrDialog()
-			return
-		else
-			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
-			return
+			return FALSE
+		to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
+		return FALSE
 
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
-			return
+			return FALSE
 	if(default_change_direction_wrench(user, I))
-		return
+		return FALSE
 	if(exchange_parts(user, I))
-		return
+		return FALSE
 	if(default_pry_open(I))
-		return
+		return FALSE
 	if(default_deconstruction_crowbar(I))
-		return
+		return FALSE
+	return FALSE
 
 /obj/machinery/sleeper/ex_act(severity)
 	if(filtering)

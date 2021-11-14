@@ -282,3 +282,8 @@
 // Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+// can_heal proc return values
+#define HEAL_EFFECTIVENESS_NONE 0
+#define HEAL_EFFECTIVENESS_HALF 0.5
+#define HEAL_EFFECTIVENESS_MAX 1

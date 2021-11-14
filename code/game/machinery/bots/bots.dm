@@ -83,7 +83,6 @@
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
 
-
 /obj/machinery/bot/attack_animal(mob/living/simple_animal/attacker)
 	..()
 	if(attacker.melee_damage == 0)
@@ -94,9 +93,6 @@
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
-
-
-
 
 /obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
@@ -126,6 +122,7 @@
 			healthcheck()
 		else
 			..()
+	return FALSE
 
 /obj/machinery/bot/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage

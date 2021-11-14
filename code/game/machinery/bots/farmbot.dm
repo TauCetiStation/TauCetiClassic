@@ -13,11 +13,12 @@
 // By default, it will ignore weeds and mushrooms, but can be set to tend to these types of plants as well.
 
 
-#define FARMBOT_MODE_WATER			1
-#define FARMBOT_MODE_FERTILIZE	 	2
-#define FARMBOT_MODE_WEED			3
-#define FARMBOT_MODE_REFILL			4
-#define FARMBOT_MODE_WAITING		5
+#define FARMBOT_MODE_LOOKING_FOR_JOB	0
+#define FARMBOT_MODE_WATER				1
+#define FARMBOT_MODE_FERTILIZE	 		2
+#define FARMBOT_MODE_WEED				3
+#define FARMBOT_MODE_REFILL				4
+#define FARMBOT_MODE_WAITING			5
 
 #define FARMBOT_ANIMATION_TIME		25 //How long it takes to use one of the action animations
 #define FARMBOT_EMAG_DELAY			60 //How long of a delay after doing one of the emagged attack actions
@@ -184,7 +185,7 @@
 	target = null
 	mode = FARMBOT_MODE_WAITING //Give the emagger a chance to get away! 15 seconds should be good.
 	spawn(150)
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 
 /obj/machinery/bot/farmbot/explode()
 	src.on = 0
@@ -226,13 +227,13 @@
 
 	if ( !mode || !target || !(target in view(7,src)) ) //Don't bother chasing down targets out of view
 
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		target = null
 		if ( !find_target() )
 			// Couldn't find a target, wait a while before trying again.
 			mode = FARMBOT_MODE_WAITING
 			spawn(100)
-				mode = 0
+				mode = FARMBOT_MODE_LOOKING_FOR_JOB
 			return
 
 	if ( mode && target )
@@ -246,16 +247,16 @@
 
 /obj/machinery/bot/farmbot/proc/use_farmbot_item()
 	if ( !target )
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		return FALSE
 
 	if ( emagged && !ismob(target) ) // Humans are plants!
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		target = null
 		return FALSE
 
 	if ( !emagged && !istype(target,/obj/machinery/hydroponics) && !istype(target,/obj/structure/sink) ) // Humans are not plants!
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		target = null
 		return FALSE
 
@@ -267,7 +268,7 @@
 			break
 		if ( !fert )
 			target = null
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 			return
 		fertilize(fert)
 
@@ -314,11 +315,11 @@
 
 /obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/hydroponics/tray)
 	if ( !tray.planted || tray.dead )
-		return 0
+		return FARMBOT_MODE_LOOKING_FOR_JOB
 	if ( tray.myseed.plant_type == 1 && setting_ignoreWeeds )
-		return 0
+		return FARMBOT_MODE_LOOKING_FOR_JOB
 	if ( tray.myseed.plant_type == 2 && setting_ignoreMushrooms )
-		return 0
+		return FARMBOT_MODE_LOOKING_FOR_JOB
 
 	if ( setting_water && tray.waterlevel <= 10 && tank && tank.reagents.total_volume >= 1 )
 		return FARMBOT_MODE_WATER
@@ -329,14 +330,14 @@
 	if ( setting_fertilize && tray.nutrilevel <= 2 && get_total_ferts() )
 		return FARMBOT_MODE_FERTILIZE
 
-	return 0
+	return FARMBOT_MODE_LOOKING_FOR_JOB
 
 /obj/machinery/bot/farmbot/proc/move_to_target()
 	//Mostly copied from medibot code.
 
 	if(src.frustration > 8)
 		target = null
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		frustration = 0
 		src.path = new()
 	if(src.target && (src.path.len) && (get_dist(src.target,src.path[src.path.len]) > 2))
@@ -358,7 +359,7 @@
 
 				if ( src.path.len == 0 )
 					target = null
-					mode = 0
+					mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		return
 
 	if(src.path.len > 0 && src.target)
@@ -376,7 +377,7 @@
 /obj/machinery/bot/farmbot/proc/fertilize(obj/item/nutrient/fert)
 	if ( !fert )
 		target = null
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		return FALSE
 
 	if ( emagged ) // Warning, hungry humans detected: throw fertilizer at them
@@ -386,7 +387,7 @@
 		visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
 		flick("farmbot_broke", src)
 		spawn (FARMBOT_EMAG_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 			target = null
 		return FALSE
 
@@ -401,7 +402,7 @@
 		mode = FARMBOT_MODE_WAITING
 
 		spawn (FARMBOT_ACTION_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 			target = null
 		spawn (FARMBOT_ANIMATION_TIME)
 			icon_state = "farmbot[src.on]"
@@ -415,7 +416,7 @@
 	if ( emagged ) // Warning, humans infested with weeds!
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_EMAG_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 
 		if ( prob(50) ) // better luck next time little guy
 			visible_message("<span class='warning'><b>[src] swings wildly at [target] with a minihoe, missing completely!</b></span>")
@@ -434,7 +435,7 @@
 	else // warning, plants infested with weeds!
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_ACTION_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 
 		var/obj/machinery/hydroponics/tray = target
 		tray.weedlevel = 0
@@ -442,7 +443,7 @@
 
 /obj/machinery/bot/farmbot/proc/water()
 	if ( !tank || tank.reagents.total_volume < 1 )
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		target = null
 		return FALSE
 
@@ -461,7 +462,7 @@
 
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_EMAG_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 	else
 		var/obj/machinery/hydroponics/tray = target
 		var/b_amount = tank.reagents.get_reagent_amount("water")
@@ -480,11 +481,11 @@
 		tray.update_icon()
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_ACTION_DELAY)
-			mode = 0
+			mode = FARMBOT_MODE_LOOKING_FOR_JOB
 
 /obj/machinery/bot/farmbot/proc/refill()
 	if ( !tank || !tank.reagents.total_volume > 600 || !istype(target,/obj/structure/sink) )
-		mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		target = null
 		return
 
@@ -493,7 +494,7 @@
 	visible_message("<span class='notice'>[src] starts filling it's tank from [target].</span>")
 	spawn(300)
 		visible_message("<span class='notice'>[src] finishes filling it's tank.</span>")
-		src.mode = 0
+		mode = FARMBOT_MODE_LOOKING_FOR_JOB
 		tank.reagents.add_reagent("water", tank.reagents.maximum_volume - tank.reagents.total_volume )
 		playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 

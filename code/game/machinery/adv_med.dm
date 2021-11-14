@@ -57,13 +57,14 @@
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
 	if(!istype(G))
-		return
+		return FALSE
 	if(!move_inside_checks(G.affecting, user))
-		return
+		return FALSE
 	add_fingerprint(user)
 	close_machine(G.affecting)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	qdel(G)
+	return FALSE
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"

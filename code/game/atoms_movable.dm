@@ -332,7 +332,7 @@
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)
 		return master.attackby(a, b)
-	return
+	return FALSE
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)

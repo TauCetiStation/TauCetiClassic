@@ -85,8 +85,8 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
+/datum/action/proc/CheckRemoval(mob/living/user) // TRUE if action is no longer valid for this mob and should be removed
+	return FALSE
 
 /datum/action/proc/IsAvailable()
 	return Checks()
@@ -319,7 +319,7 @@
 /datum/action/spell_action/CheckRemoval()
 	if(owner.mind)
 		if(target in owner.mind.spell_list)
-			return 0
+			return FALSE
 	return !(target in owner.spell_list)
 
 #undef AB_WEST_OFFSET

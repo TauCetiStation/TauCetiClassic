@@ -133,7 +133,7 @@
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
-		return
+		return FALSE
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
@@ -141,6 +141,6 @@
 			take_victim(G.affecting, usr)
 			user.SetNextMove(CLICK_CD_MELEE)
 			qdel(G)
-			return
+			return FALSE
 
 	return ..()

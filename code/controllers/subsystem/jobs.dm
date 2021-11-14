@@ -259,7 +259,7 @@ SUBSYSTEM_DEF(job)
 				player.client.prefs.random_character()
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return FALSE
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)

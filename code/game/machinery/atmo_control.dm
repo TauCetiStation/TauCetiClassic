@@ -283,17 +283,17 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 /obj/machinery/computer/general_air_control/fuel_injection/process()
 	if(automation)
 		if(!radio_connection)
-			return 0
+			return FALSE
 
-		var/injecting = 0
+		var/injecting = FALSE
 		for(var/id_tag in sensor_information)
 			var/list/data = sensor_information[id_tag]
 			if(data["temperature"])
 				if(data["temperature"] >= cutoff_temperature)
-					injecting = 0
+					injecting = FALSE
 					break
 				if(data["temperature"] <= on_temperature)
-					injecting = 1
+					injecting = TRUE
 
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal

@@ -106,12 +106,12 @@
 				beaker = null
 
 	if(exchange_parts(user, O))
-		return
+		return FALSE
 
 	default_deconstruction_crowbar(O)
 
 	update_icon()
-	return
+	return FALSE
 
 /obj/machinery/biogenerator/ui_interact(mob/user)
 	var/dat

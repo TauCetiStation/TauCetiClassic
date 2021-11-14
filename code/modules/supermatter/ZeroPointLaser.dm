@@ -33,9 +33,9 @@
 
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
-		return 0
+		return FALSE
 	set_dir(turn(src.dir, 90))
-	return 1
+	return TRUE
 
 /obj/machinery/zero_point_emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))

@@ -8,10 +8,10 @@
 
 /datum/surgery_step/plastic_surgery/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
-		return 0
+		return FALSE
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face

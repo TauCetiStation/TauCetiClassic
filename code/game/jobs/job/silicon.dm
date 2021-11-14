@@ -13,10 +13,11 @@
 	give_loadout_items = FALSE
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return FALSE
 
 	if(visualsOnly)
-		return
+		return FALSE
 
 	return TRUE
 

@@ -128,11 +128,11 @@
 
 /turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
 	if(!W || !user)
-		return 0
+		return FALSE
 	if(istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
 		if(!istype(T, /turf))
-			return 0
+			return FALSE
 		if (!dug)
 			if(!user.is_busy() && W.use_tool(src, user, 60))
 				if(!dug) //someone else digged here

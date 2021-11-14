@@ -67,7 +67,8 @@
 			angry_swarm(user)
 		else
 			to_chat(user, "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>")
-		if(user.is_busy()) return
+		if(user.is_busy())
+			return FALSE
 		if(O.use_tool(src, user, 50, volume = 50))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
@@ -88,7 +89,8 @@
 				to_chat(user, "<span class='warning'>You begin to harvest the honey. The bees don't seem to like it.</span>")
 				angry_swarm(user)
 			else
-				if(user.is_busy()) return
+				if(user.is_busy())
+					return FALSE
 				to_chat(user, "<span class='notice'>You begin to harvest the honey.</span>")
 			if(O.use_tool(src, user, 50, volume = 50))
 				G.reagents.add_reagent("honey",harvestable_honey)
@@ -99,6 +101,7 @@
 	else
 		angry_swarm(user)
 		..()
+	return FALSE
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return TRUE

@@ -170,45 +170,44 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
-
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
-		return
+		return FALSE
 
 	if(exchange_parts(user, I))
-		return
+		return FALSE
 
 	if(iscrowbar(I))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
 				O.loc = loc
 			default_deconstruction_crowbar(I)
-		return
+		return FALSE
 
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		var/obj/item/weapon/reagent_containers/glass/B = I
 		if(beaker)
 			to_chat(user, "<span class='red'>A beaker is already loaded into the machine.</span>")
-			return
+			return FALSE
 
 		beaker = B
 		user.drop_from_inventory(B, src)
 		user.visible_message("[user] adds \a [B] to \the [src]!", "You add \a [B] to \the [src]!")
-		return
+		return FALSE
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!ismob(G.affecting))
-			return
+			return FALSE
 
 		if(!open)
 			to_chat(user, "<span class='notice'>Open the scanner first.</span>")
-			return
+			return FALSE
 
 		var/mob/M = G.affecting
 		M.forceMove(loc)
 		qdel(G)
-		return
+		return FALSE
 
 	return ..()
 
@@ -286,9 +285,8 @@
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src
-			return
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()

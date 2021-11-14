@@ -11,28 +11,30 @@
 
 
 /obj/machinery/computer/shuttle/attackby(obj/item/weapon/card/W, mob/user)
-	if(stat & (BROKEN|NOPOWER))	return
-	if ((!( istype(W, /obj/item/weapon/card) ) || !( SSticker ) || SSshuttle.location != 1 || !( user )))	return
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(stat & (BROKEN|NOPOWER))
+		return FALSE
+	if (!istype(W, /obj/item/weapon/card) || !SSticker || SSshuttle.location != 1 || user)
+		return FALSE
+	if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if (istype(W, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = W
 			W = pda.id
 		if (!W:access) //no access
 			to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
-			return
+			return FALSE
 
 		var/list/cardaccess = W:access
 		if(!istype(cardaccess, /list) || !cardaccess.len) //no access
 			to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
-			return
+			return FALSE
 
 		if(!(access_heads in W:access)) //doesn't have this access
 			to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
-			return 0
+			return FALSE
 
 		var/choice = tgui_alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", list("Authorize", "Repeal", "Abort"))
 		if(SSshuttle.location != 1 && user.get_active_hand() != W)
-			return 0
+			return FALSE
 		switch(choice)
 			if("Authorize")
 				src.authorized -= W:registered_name
@@ -56,7 +58,7 @@
 			if("Abort")
 				visible_message("<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
 				authorized.Cut()
-	return
+	return FALSE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(emagged)

@@ -24,7 +24,7 @@
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/abductor/experiment/open_machine()
 	if(!state_open && !panel_open)

@@ -60,7 +60,7 @@
 	return
 
 /atom/movable/screen/grab/attackby()
-	return
+	return FALSE
 
 
 /atom/movable/screen/storage

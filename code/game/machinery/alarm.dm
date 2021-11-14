@@ -778,7 +778,6 @@
 	return
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
-
 	add_fingerprint(user)
 
 	switch(buildstage)
@@ -787,7 +786,7 @@
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
-				return
+				return FALSE
 
 			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
@@ -795,12 +794,12 @@
 				new /obj/item/stack/cable_coil/random(loc, 5)
 				buildstage = 1
 				update_icon()
-				return
+				return FALSE
 
 			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "It does nothing")
-					return
+					return FALSE
 				else
 					if(allowed(usr) && !wires.is_index_cut(AALARM_WIRE_IDSCAN))
 						locked = !locked
@@ -811,16 +810,15 @@
 
 			if(wiresexposed && is_wire_tool(W))
 				wires.interact(user)
-				return
+				return FALSE
 
-			return
-
+			return FALSE
 		if(1)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(!coil.use(5))
 					to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
-					return
+					return FALSE
 
 				to_chat(user, "You wire \the [src]!")
 
@@ -828,11 +826,10 @@
 				update_icon()
 				first_run()
 				wires.repair()
-				return
-
+				return FALSE
 			else if(iscrowbar(W))
 				if(user.is_busy())
-					return
+					return FALSE
 				to_chat(user, "You start prying out the circuit.")
 				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "You pry out the circuit!")
@@ -840,15 +837,14 @@
 					circuit.loc = user.loc
 					buildstage = 0
 					update_icon()
-				return
+				return FALSE
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
 				to_chat(user, "You insert the circuit!")
 				qdel(W)
 				buildstage = 1
 				update_icon()
-				return
-
+				return FALSE
 			else if(iswrench(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
@@ -904,7 +900,7 @@ Code shamelessly copied from apc_frame
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
-		return
+		return FALSE
 	return ..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
@@ -988,7 +984,7 @@ FIRE ALARM
 	if (isscrewdriver(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
-		return
+		return FALSE
 
 	if(wiresexposed)
 		switch(buildstage)
@@ -1010,7 +1006,7 @@ FIRE ALARM
 					var/obj/item/stack/cable_coil/coil = W
 					if(!coil.use(5))
 						to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
-						return
+						return FALSE
 
 					buildstage = 2
 					to_chat(user, "You wire \the [src]!")
@@ -1034,16 +1030,16 @@ FIRE ALARM
 
 				else if(iswrench(W))
 					if(user.is_busy())
-						return
+						return FALSE
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 					qdel(src)
-		return
+		return FALSE
 
 	alarm()
-	return
+	return FALSE
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
@@ -1234,7 +1230,7 @@ Code shamelessly copied from apc_frame
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
-		return
+		return FALSE
 	return ..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)

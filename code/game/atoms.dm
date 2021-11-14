@@ -550,7 +550,7 @@
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else
-		return 0
+		return null
 
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))

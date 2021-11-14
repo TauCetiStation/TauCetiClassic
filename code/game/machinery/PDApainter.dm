@@ -30,20 +30,19 @@
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
 			to_chat(user, "There is already a PDA inside.")
-			return
-		else
-			var/obj/item/device/pda/P = usr.get_active_hand()
-			if(istype(P))
-				user.drop_from_inventory(P, src)
-				storedpda = P
-				P.add_fingerprint(usr)
-				update_icon()
+			return FALSE
+		var/obj/item/device/pda/P = usr.get_active_hand()
+		if(istype(P))
+			user.drop_from_inventory(P, src)
+			storedpda = P
+			P.add_fingerprint(usr)
+			update_icon()
 	else
 		if(iswrench(O))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-
+	return FALSE
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	if(..())

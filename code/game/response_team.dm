@@ -100,8 +100,9 @@ var/can_call_ert
 			if(H.stat == DEAD) deadcount++
 			total++
 
-	if(total == 0) return 0
-	else return round(100 * deadcount / total)
+	if(total == 0)
+		return 0
+	return round(100 * deadcount / total)
 
 // counts the number of antagonists in %
 /proc/percentage_antagonists()
@@ -112,8 +113,9 @@ var/can_call_ert
 			antagonists++
 		total++
 
-	if(total == 0) return 0
-	else return round(100 * antagonists / total)
+	if(total == 0)
+		return 0
+	return round(100 * antagonists / total)
 
 // Increments the ERT chance automatically, so that the later it is in the round,
 // the more likely an ERT is to be able to be called.

@@ -161,9 +161,9 @@
 /obj/vehicle/space/spacebike/can_move()
 	. = ..()
 	if(kickstand)
-		return 0
+		return FALSE
 	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
-		return 0
+		return FALSE
 
 /obj/vehicle/space/spacebike/turn_on()
 	ion.start()

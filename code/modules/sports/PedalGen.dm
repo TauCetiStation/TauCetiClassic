@@ -57,7 +57,7 @@
 /obj/structure/stool/bed/chair/pedalgen/attack_hand(mob/user)
 	if(buckled_mob)
 		pedal(user)
-	return 0
+	return FALSE
 
 /obj/structure/stool/bed/chair/pedalgen/proc/pedal(mob/user)
 	pedaled = 1

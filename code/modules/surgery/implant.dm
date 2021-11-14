@@ -10,7 +10,7 @@
 
 /datum/surgery_step/cavity/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return BP && BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
 

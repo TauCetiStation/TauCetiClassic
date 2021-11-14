@@ -36,8 +36,10 @@
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 0
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return TRUE
+	if(air_group || (height==0))
+		return FALSE
+	if(istype(mover) && mover.checkpass(PASSBLOB))
+		return TRUE
 	return FALSE
 
 
@@ -176,6 +178,7 @@
 
 	health -= damage
 	update_icon()
+	return .
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
