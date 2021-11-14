@@ -13,7 +13,7 @@
 					total_amount++
 				if(total_amount >= 15)
 					return OBJECTIVE_WIN
-	return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/gang/steal_weapons/variant_two
 	explanation_text = "Предлагаю вам сделку. Вы должны раздобить 15 абсолютно любых пушек, а по прибытии домой мы вам за это заплатим. Хотя это не сделка, у вас нет выбора. Найдите оружие!"
