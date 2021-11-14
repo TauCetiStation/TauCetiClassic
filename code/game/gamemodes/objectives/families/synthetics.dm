@@ -7,7 +7,7 @@
 
 /datum/objective/gang/destroy_synthetics/check_completion()
 	for(var/mob/living/carbon/human/H as anything in global.human_list)
-		if(H.spesies.name == IPC && H.mind && H.state != DEAD)
+		if(H.species.name == IPC && H.mind && H.stat != DEAD)
 			return OBJECTIVE_LOSS
 
 	if(!global.silicon_list.len && !global.ai_list.len)
