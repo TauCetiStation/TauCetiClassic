@@ -1,5 +1,5 @@
 /mob/living/Life()
-	set invisibility = 0
+	set invisibility = INVISIBILITY_NONE
 	set background = BACKGROUND_ENABLED
 
 	if (notransform)

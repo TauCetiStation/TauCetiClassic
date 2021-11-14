@@ -1,5 +1,5 @@
 /mob/living/carbon/xenomorph/Life()
-	set invisibility = 0
+	set invisibility = INVISIBILITY_NONE
 	//set background = 1
 
 	if(notransform)

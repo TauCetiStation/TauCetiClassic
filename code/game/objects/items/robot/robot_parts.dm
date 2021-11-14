@@ -230,7 +230,7 @@
 			user.drop_from_inventory(M)
 
 			O.mmi = M
-			O.invisibility = 0
+			O.invisibility = INVISIBILITY_NONE
 			O.custom_name = created_name
 			O.updatename("Default")
 

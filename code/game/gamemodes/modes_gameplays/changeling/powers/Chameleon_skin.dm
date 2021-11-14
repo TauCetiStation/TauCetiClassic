@@ -27,7 +27,7 @@
 	if(!owner.alpha)
 		owner.invisibility = SEE_INVISIBLE_LIVING + 1 // formal invis to prevent AI TRACKING and alt-clicking, cmon, He merged with surroundings
 	else
-		owner.invisibility = 0
+		owner.invisibility = INVISIBILITY_NONE
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
 		if(!(I.flags & ABSTRACT))
@@ -49,7 +49,7 @@
 	STOP_PROCESSING(SSobj, src)
 	var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 	C.chem_recharge_slowdown -= 0.25
-	owner.invisibility = 0
+	owner.invisibility = INVISIBILITY_NONE
 
 /obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_on()
 	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")

@@ -50,7 +50,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/effect/scrapshot
 	name = "This thins shoots scrap everywhere with a delay"
 	desc = "no data"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
 	density = FALSE
 

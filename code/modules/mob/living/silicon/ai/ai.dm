@@ -251,7 +251,7 @@ var/list/ai_verbs_default = list(
 	active_power_usage=1000
 	use_power = ACTIVE_POWER_USE
 	var/mob/living/silicon/ai/powered_ai = null
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM
 
 /obj/machinery/ai_powersupply/atom_init()
 	..()

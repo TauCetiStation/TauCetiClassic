@@ -173,10 +173,10 @@
 		if(T.density)
 			return FALSE
 		if(dest_checkdensity == TELE_CHECK_ALL)
-			T.Enter(teleatom)                   //We want do normal bumping/checks with teleatom first (maybe we got access to that door or to push the atom on the other side),
-			var/obj/effect/E = new(center)      //then we do the real check (if we can enter from destination turf onto target turf).
-			E.invisibility = 101                //Because, checking this with teleatom - won't give us accurate data, since teleatom is far away at this time.
-			if(!T.Enter(E))                     //That's why we test this with the "fake dummy".
+			T.Enter(teleatom)                      //We want do normal bumping/checks with teleatom first (maybe we got access to that door or to push the atom on the other side),
+			var/obj/effect/E = new(center)         //then we do the real check (if we can enter from destination turf onto target turf).
+			E.invisibility = INVISIBILITY_ABSTRACT //Because, checking this with teleatom - won't give us accurate data, since teleatom is far away at this time.
+			if(!T.Enter(E))                        //That's why we test this with the "fake dummy".
 				qdel(E)
 				return FALSE
 			qdel(E)

@@ -101,7 +101,7 @@
 		sleep(5)
 
 /obj/effect/vision
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/target = null
 
 /obj/effect/vision/proc/check()

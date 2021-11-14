@@ -737,7 +737,7 @@
 		M.canmove = 0
 		M.icon = null
 		M.cut_overlays()
-		M.invisibility = 101
+		M.invisibility = INVISIBILITY_ABSTRACT
 		for(var/obj/item/W in M)
 			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
 				qdel(W)

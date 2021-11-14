@@ -181,7 +181,7 @@
 
 //Allows the mob to grab a stealth icon.
 /mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
-	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to 2.
+	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to INVISIBILITY_LEVEL_TWO.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)
 	var/icon/alpha_mask = getIconMask(src)
 	var/icon/alpha_mask_2 = new('icons/effects/effects.dmi', "at_shield1")
@@ -204,7 +204,7 @@
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
-	invisibility = 0//Set ninja invis to 0.
+	invisibility = INVISIBILITY_NONE//Set ninja invis to INVISIBILITY_NONE.
 	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 

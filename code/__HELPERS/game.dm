@@ -723,7 +723,7 @@
 		return FALSE
 	if(alpha != 255)
 		return FALSE
-	if(invisibility != 0)
+	if(invisibility != INVISIBILITY_NONE)
 		return FALSE
 	return TRUE
 

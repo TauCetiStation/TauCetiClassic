@@ -6,7 +6,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	animation = new(loc)
 	animation.icon_state = "blank"
@@ -34,7 +34,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	QDEL_IN(animation, 20)
 	QDEL_IN(src, 20)

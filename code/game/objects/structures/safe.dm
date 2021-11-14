@@ -224,6 +224,6 @@
 	hide(T.intact)
 
 /obj/structure/safe/floor/hide(intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_ABSTRACT : INVISIBILITY_NONE
 
 #undef SOUND_CHANCE

@@ -4,7 +4,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	if(!species.flags[NO_BLOOD_TRAILS])
 		animation = new(loc)

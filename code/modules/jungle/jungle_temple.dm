@@ -45,7 +45,7 @@
 
 /obj/effect/landmark/glowshroom_spawn
 	icon_state = "x3"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/glowshroom_spawn/atom_init()
 	..()

@@ -285,7 +285,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.virus2 = virus_copylist(source.data["virus2"])
 
 	//B.fluorescent = 0
-	B.invisibility = 0
+	B.invisibility = INVISIBILITY_NONE
 	return B
 
 #define BLOOD_SPRAY_DISTANCE 2

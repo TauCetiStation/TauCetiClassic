@@ -63,7 +63,7 @@
 
 /obj/machinery/atmospherics/mains_pipe/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : INVISIBILITY_NONE
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/proc/burst()

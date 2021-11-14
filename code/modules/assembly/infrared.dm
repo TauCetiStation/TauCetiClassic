@@ -203,11 +203,11 @@
 		left--
 	if(left < 1)
 		if(!(visible))
-			invisibility = 101
+			invisibility = INVISIBILITY_ABSTRACT
 		else
-			invisibility = 0
+			invisibility = INVISIBILITY_NONE
 	else
-		invisibility = 0
+		invisibility = INVISIBILITY_NONE
 
 	if(!next && (limit > 0))
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)

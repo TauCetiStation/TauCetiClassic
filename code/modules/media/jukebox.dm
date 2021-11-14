@@ -350,7 +350,7 @@ var/global/loopModeNames=list(
 	playlists=list(
 		"shuttle"  = "Shuttle Mix"
 	)
-	invisibility=101 // FAK U NO SONG 4 U
+	invisibility = INVISIBILITY_ABSTRACT // FAK U NO SONG 4 U
 
 /obj/machinery/media/jukebox/lobby
 	playlist_id="lobby"
@@ -360,5 +360,5 @@ var/global/loopModeNames=list(
 	)
 	playlist_id = "lobby"
 	use_power = NO_POWER_USE
-	invisibility=101
+	invisibility = INVISIBILITY_ABSTRACT
 	autoplay = 1

@@ -1,5 +1,5 @@
 /mob/living/carbon/xenomorph/facehugger/Life()
-	set invisibility = 0
+	set invisibility = INVISIBILITY_NONE
 
 	if (notransform)
 		return

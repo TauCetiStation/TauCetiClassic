@@ -1,7 +1,7 @@
 /obj/effect/falling_effect
 	name = "you should not see this"
 	desc = "no data"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
 	density = FALSE
 	var/falling_type = /obj/random/scrap/moderate_weighted

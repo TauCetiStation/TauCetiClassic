@@ -11,7 +11,7 @@
 	return
 
 /atom/proc/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
-	if(invisibility > 0)
+	if(invisibility > INVISIBILITY_NONE)
 		return
 	if(is_invis_anim)
 		return
@@ -49,7 +49,7 @@
 
 		intensity *= intensity_dropoff
 
-		invisibility = 101
+		invisibility = INVISIBILITY_ABSTRACT
 		animate(I, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
 		animate(pixel_x = prev_pixel_x, pixel_y = prev_pixel_y, transform = prev_transform, time = 0.5)
 		sleep(1)
@@ -103,7 +103,7 @@
 	transform = default_transform
 
 /mob/living/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
-	if(invisibility > 0)
+	if(invisibility > INVISIBILITY_NONE)
 		return
 	if(notransform)
 		return
@@ -270,7 +270,7 @@
 	is_invis_anim = TRUE
 
 	var/old_invisibility = invisibility // I don't know, it may be used.
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM
 
 	var/old_x = pixel_x
 	var/old_y = pixel_y
@@ -330,7 +330,7 @@
 	is_invis_anim = TRUE
 
 	var/old_invisibility = invisibility // I don't know, it may be used.
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)

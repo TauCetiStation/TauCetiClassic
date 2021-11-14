@@ -302,7 +302,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	return ..()
 
 /mob/proc/AIize(move=1)
@@ -338,7 +338,7 @@
 		for(var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
-	O.invisibility = 0
+	O.invisibility = INVISIBILITY_NONE
 	O.aiRestorePowerRoutine = 0
 
 	if(mind)
@@ -367,7 +367,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -380,7 +380,7 @@
 
 
 	O.gender = gender
-	O.invisibility = 0
+	O.invisibility = INVISIBILITY_NONE
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
@@ -418,7 +418,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -449,7 +449,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -485,7 +485,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	for(var/t in bodyparts)	//this really should not be necessary
 		qdel(t)
 
@@ -516,7 +516,7 @@
 	notransform = TRUE
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	for(var/t in bodyparts)
 		qdel(t)

@@ -20,14 +20,14 @@
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
-	user.hud_used.lingstingdisplay.invisibility = 0
+	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_NONE
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = 101
+	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)

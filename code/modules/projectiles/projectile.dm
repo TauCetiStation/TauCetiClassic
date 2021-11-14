@@ -233,7 +233,7 @@
 	on_impact(A)
 
 	density = FALSE
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	qdel(src)
 	return TRUE
 
@@ -369,7 +369,7 @@
 	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
-	invisibility = 101 //Nope!  Can't see me!
+	invisibility = INVISIBILITY_ABSTRACT //Nope!  Can't see me!
 	yo = null
 	xo = null
 	var/target = null

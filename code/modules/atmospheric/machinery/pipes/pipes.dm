@@ -51,7 +51,7 @@
 
 /obj/machinery/atmospherics/pipe/hide(i)
 	if(level == PIPE_HIDDEN_LEVEL && istype(loc, /turf/simulated))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : INVISIBILITY_NONE
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)

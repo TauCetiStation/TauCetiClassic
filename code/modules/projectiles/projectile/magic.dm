@@ -29,7 +29,7 @@
 	M.canmove = 0
 	M.icon = null
 	M.cut_overlays()
-	M.invisibility = 101
+	M.invisibility = INVISIBILITY_ABSTRACT
 
 	if(istype(M, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/Robot = M
@@ -56,7 +56,7 @@
 		if("robot")
 			new_mob = new /mob/living/silicon/robot(M.loc)
 			new_mob.gender = M.gender
-			new_mob.invisibility = 0
+			new_mob.invisibility = INVISIBILITY_NONE
 			new_mob.job = "Cyborg"
 			var/mob/living/silicon/robot/Robot = new_mob
 			Robot.mmi = new /obj/item/device/mmi(new_mob)

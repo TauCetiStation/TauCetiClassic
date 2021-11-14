@@ -34,7 +34,7 @@
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=FALSE
-		U.invisibility = 0
+		U.invisibility = INVISIBILITY_NONE
 		UnhideHuds(U)
 		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
 		if(U.mind.protector_role)
@@ -68,7 +68,7 @@
 		sparks.start()
 
 		s_active=FALSE
-		U.invisibility = 0
+		U.invisibility = INVISIBILITY_NONE
 		HideHuds(U)
 		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
 		if(U.mind.protector_role)

@@ -433,7 +433,7 @@
 
 	max_strength = 1
 
-	var/saved_invisibility = 0
+	var/saved_invisibility = INVISIBILITY_NONE
 	var/saved_alpha = 0
 
 	var/invisible = FALSE

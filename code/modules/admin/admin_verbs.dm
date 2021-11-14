@@ -512,7 +512,7 @@ var/list/admin_verbs_hideable = list(
 		if(length(new_key) >= 26)
 			new_key = copytext(new_key, 1, 26)
 		holder.fakekey = new_key
-		mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+		mob.invisibility = INVISIBILITY_ABSTRACT //JUST IN CASE
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
@@ -1211,7 +1211,7 @@ var/centcom_barriers_stat = 1
 	name = "Invisible wall"
 	anchored = TRUE
 	density = TRUE
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"
 
