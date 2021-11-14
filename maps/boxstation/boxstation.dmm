@@ -7082,7 +7082,7 @@
 /area/station/hallway/secondary/exit)
 "alx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
@@ -17402,7 +17402,7 @@
 /area/station/ai_monitored/eva)
 "aEF" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/twohanded/flora/deskferntrim{
+/obj/item/weapon/flora/deskferntrim{
 	icon_state = "plant-34-alternative";
 	pixel_x = -8;
 	pixel_y = 10
@@ -23311,7 +23311,7 @@
 	},
 /area/station/civilian/playroom)
 "aPT" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = 28
@@ -24531,13 +24531,10 @@
 	},
 /area/station/medical/morgue)
 "aSl" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
-=======
 /obj/machinery/door/firedoor,
->>>>>>> Stashed changes
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -27521,16 +27518,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/station/rnd/mixing)
-<<<<<<< Updated upstream
-"aXy" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/station/medical/cmo)
-=======
->>>>>>> Stashed changes
 "aXz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -33793,15 +33780,12 @@
 	},
 /area/station/rnd/server)
 "biS" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_y = 25
 	},
-=======
->>>>>>> Stashed changes
 /turf/simulated/floor{
 	icon_state = "whiteredcorner"
 	},
@@ -34568,7 +34552,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bkC" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "whitegreencorner"
@@ -36021,13 +36005,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
-=======
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
->>>>>>> Stashed changes
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -37387,22 +37369,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-<<<<<<< Updated upstream
-"bqb" = (
-/obj/item/weapon/flora/random,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "red"
-	},
-/area/station/medical/reception)
-=======
->>>>>>> Stashed changes
 "bqc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -39679,7 +39645,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "arrival"
@@ -41612,12 +41578,11 @@
 	},
 /area/station/medical/hallway)
 "bxu" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	name = "Treatment Center APC";
 	pixel_y = -25
-=======
+	},
 /obj/structure/stool/bed/roller,
 /obj/structure/reagent_dispensers/cleaner{
 	pixel_y = -28
@@ -41630,7 +41595,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
->>>>>>> Stashed changes
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -42650,7 +42614,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzp" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
@@ -44297,7 +44261,7 @@
 	},
 /area/station/medical/hallway)
 "bCW" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -44689,14 +44653,12 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/janitor)
 "bDN" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/random,
 /obj/machinery/light_switch{
 	pixel_x = 27
-=======
+	},
 /obj/structure/sign/poster/random{
 	pixel_x = 32
->>>>>>> Stashed changes
 	},
 /obj/structure/filingcabinet/medical,
 /turf/simulated/floor{
@@ -44785,29 +44747,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
-"bDV" = (
-<<<<<<< Updated upstream
-/turf/simulated/wall,
-/area/station/medical/patients_rooms)
-"bDW" = (
-/obj/item/weapon/flora/random,
-=======
-/obj/structure/table/glass,
->>>>>>> Stashed changes
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light,
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
-/obj/item/device/sensor_device,
-/obj/item/clothing/glasses/hud/health,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/station/medical/cmo)
 "bDW" = (
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
@@ -45911,7 +45850,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -45936,7 +45875,7 @@
 /area/station/medical/medbreak)
 "bGi" = (
 /obj/machinery/door/firedoor,
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -49116,11 +49055,9 @@
 	},
 /area/station/hallway/primary/aft)
 "bNj" = (
-<<<<<<< Updated upstream
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/weapon/flora/random,
 /obj/structure/disposalpipe/segment,
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -49132,7 +49069,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
->>>>>>> Stashed changes
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -49868,7 +49804,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bPv" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -52965,18 +52901,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
-<<<<<<< Updated upstream
-"bXS" = (
-/obj/item/weapon/flora/random,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_x = 28
-	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
-=======
->>>>>>> Stashed changes
 "bXV" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
@@ -53791,19 +53715,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cao" = (
-<<<<<<< Updated upstream
 /obj/structure/table/woodentable,
 /obj/item/weapon/flora/deskferntrim{
 	icon_state = "plant-34-alternative";
 	pixel_x = -8;
 	pixel_y = 10
-=======
+	},
 /obj/item/weapon/defibrillator/loaded,
 /obj/machinery/recharger/wallcharger{
 	dir = 1;
 	pixel_x = 5;
 	pixel_y = 25
->>>>>>> Stashed changes
 	},
 /obj/structure/table,
 /turf/simulated/floor{
@@ -62158,15 +62080,12 @@
 	},
 /area/station/civilian/garden)
 "cvx" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24
 	},
-=======
 /obj/structure/flora/ausbushes/fullgrass,
->>>>>>> Stashed changes
 /turf/simulated/floor{
 	icon_state = "wood_siding5"
 	},
@@ -62447,7 +62366,7 @@
 	},
 /area/station/engineering/engine)
 "cwO" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -67468,7 +67387,7 @@
 	},
 /area/space)
 "cKT" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -70327,7 +70246,7 @@
 	},
 /area/station/rnd/xenobiology)
 "fMb" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -74461,13 +74380,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lwb" = (
-<<<<<<< Updated upstream
 /obj/item/weapon/flora/random,
-=======
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
->>>>>>> Stashed changes
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -75041,7 +74957,7 @@
 	},
 /area/station/maintenance/engineering)
 "mhG" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -124338,7 +124254,7 @@ bGR
 bIq
 bKa
 bMm
-bDV
+qub
 bJm
 cak
 cak
