@@ -8,6 +8,7 @@
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
+#define AB_CHECK_ACTIVE 32
 
 
 /datum/action
@@ -120,6 +121,9 @@
 			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
+			return FALSE
+	if(check_flags & AB_CHECK_ACTIVE)
+		if(owner.get_active_hand() != target)
 			return FALSE
 	return TRUE
 

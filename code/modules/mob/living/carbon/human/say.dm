@@ -310,6 +310,8 @@
 		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return TRUE
+		if(isautosay(other))
+			return TRUE
 		if(issilicon(other))
 			return TRUE
 		if(isbrain(other))

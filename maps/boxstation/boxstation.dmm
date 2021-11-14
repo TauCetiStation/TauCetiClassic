@@ -37719,6 +37719,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -60850,6 +60851,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpD" = (
@@ -61045,6 +61047,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpR" = (
@@ -61320,7 +61323,6 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cqx" = (
-/obj/machinery/hologram/holopad,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -61685,15 +61687,14 @@
 /area/station/cargo/office)
 "crn" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/antechamber)
+/area/station/tcommsat/chamber)
 "cro" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -62500,6 +62501,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62652,6 +62654,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -66537,7 +66540,6 @@
 /turf/simulated/wall,
 /area/station/security/execution)
 "cDq" = (
-/obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -67678,6 +67680,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -123466,7 +123469,7 @@ cDI
 cFS
 bid
 cqN
-cqN
+crn
 csD
 cIe
 cIe
@@ -126026,7 +126029,7 @@ cFP
 cFP
 cpy
 crN
-crn
+csN
 cti
 oAb
 cEW

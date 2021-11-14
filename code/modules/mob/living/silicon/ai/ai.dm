@@ -563,6 +563,15 @@ var/list/ai_verbs_default = list(
 
 		return
 
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			eyeobj.forceMove(target)
+			return
+
 	return
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)

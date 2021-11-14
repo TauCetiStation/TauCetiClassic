@@ -1288,12 +1288,6 @@
 		see_in_dark = 8
 		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
-		if(client)
-			if(client.view != world.view)
-				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
-					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
-					if(s.zoom)
-						s.toggle_zoom()
 
 	else
 		lighting_alpha = initial(lighting_alpha)

@@ -17,6 +17,8 @@
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
 			return TRUE
+		if (isautosay(other))
+			return TRUE
 		if (issilicon(other))
 			return TRUE
 		if (isbrain(other))
