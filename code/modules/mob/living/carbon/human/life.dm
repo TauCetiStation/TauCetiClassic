@@ -976,7 +976,8 @@
 				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
 		if(!(status_flags & GODMODE)) adjustToxLoss(total_phoronloss)
 
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 
 	if(species.flags[REQUIRE_LIGHT])
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing

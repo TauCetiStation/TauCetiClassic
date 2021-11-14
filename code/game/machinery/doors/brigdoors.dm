@@ -116,7 +116,8 @@
 
 // power check and stop timer
 /obj/machinery/door_timer/proc/timer_start(activator)
-	if(stat & (NOPOWER|BROKEN))	return 0
+	if(stat & (NOPOWER|BROKEN))
+		return
 
 	// Set releasetime
 	releasetime = world.timeofday + timetoset
@@ -142,7 +143,8 @@
 
 //power check, set vars as default
 /obj/machinery/door_timer/proc/timer_end()
-	if(stat & (NOPOWER|BROKEN))	return 0
+	if(stat & (NOPOWER|BROKEN))
+		return
 
 	// Reset releasetime
 	src.timing = 0

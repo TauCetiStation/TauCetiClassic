@@ -108,7 +108,8 @@
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return FALSE	//godmode
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/fluid/F = locate() in T
@@ -119,7 +120,7 @@
 
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
-		return 0
+		return FALSE
 	if(def_zone)
 		apply_damage(shock_damage, BURN, def_zone, used_weapon = "Electrocution")
 	else
@@ -475,23 +476,22 @@
 /mob/living/carbon/restrained()
 	if (handcuffed)
 		return TRUE
-	return
+	return FALSE
 
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)
-		return FALSE
+		return
 
-	else if (W == handcuffed)
+	if (W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
-
 	else if (W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
 	else
-	 ..()
+		..()
 
 	return
 

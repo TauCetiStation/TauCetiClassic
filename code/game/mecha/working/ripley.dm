@@ -107,7 +107,7 @@
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
-		return 0
+		return FALSE
 	return ..()
 
 /obj/mecha/working/ripley/Topic(href, href_list)

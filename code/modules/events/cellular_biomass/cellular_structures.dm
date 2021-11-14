@@ -79,7 +79,7 @@
 	layer = 4
 
 /obj/structure/cellular_biomass/wall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 0
+	return FALSE
 
 /obj/structure/cellular_biomass/grass
 	health = 40

@@ -357,8 +357,6 @@ This function restores all bodyparts.
 	if(istype(BP, /obj/item/organ/external))
 		if(BP.heal_damage(brute, burn))
 			med_hud_set_health()
-	else
-		return 0
 
 /mob/living/carbon/human/proc/get_bodypart(zone)
 	if(!zone)

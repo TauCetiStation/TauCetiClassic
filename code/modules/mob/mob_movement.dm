@@ -119,7 +119,7 @@
 		return O.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
-		return 0
+		return
 
 	if(isturf(mob.loc))
 
@@ -128,13 +128,13 @@
 				if(M.pulling == mob)
 					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
 						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-						return 0
+						return
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
 			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
-			return 0
+			return
 
 		//We are now going to move
 		var/add_delay

@@ -325,8 +325,7 @@
 							/obj/machinery/disposal/deliveryChute,
 							/obj/machinery/teleport/hub,
 							/obj/effect/portal)
-	if(!(O in can_bump))
-		return 0
+	return (O in can_bump)
 
 /mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
 

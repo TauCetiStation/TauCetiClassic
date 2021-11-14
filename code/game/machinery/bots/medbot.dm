@@ -183,25 +183,24 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
-
-	else if(istype(W, /obj/item/weapon/reagent_containers/glass))
+		return FALSE
+	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(locked)
 			to_chat(user, "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>")
-			return
+			return FALSE
 		if(!isnull(reagent_glass))
 			to_chat(user, "<span class='notice'>There is already a beaker loaded.</span>")
-			return
+			return FALSE
 
 		user.drop_from_inventory(W, src)
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		updateUsrDialog()
-		return
-
-	else
-		..()
-		if(health < maxhealth && !isscrewdriver(W) && W.force)
-			step_to(src, (get_step_away(src,user)))
+		return FALSE
+	..()
+	if(health < maxhealth && !isscrewdriver(W) && W.force)
+		step_to(src, (get_step_away(src,user)))
+	return FALSE
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
@@ -554,7 +553,7 @@
 	//Making a medibot!
 	if(contents.len >= 1)
 		to_chat(user, "<span class='notice'>You need to empty [src] out first.</span>")
-		return
+		return FALSE
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
 	if(istype(src,/obj/item/weapon/storage/firstaid/fire))
@@ -574,14 +573,15 @@
 		A.add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[A.skin]"))
 	qdel(I)
 	qdel(src)
+	return FALSE
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
-			return
+			return FALSE
 		if(!user.Adjacent(src))
-			return
+			return FALSE
 		created_name = t
 
 	var/did_something = FALSE
@@ -612,3 +612,4 @@
 
 	if(!did_something)
 		return ..()
+	return FALSE

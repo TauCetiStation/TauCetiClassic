@@ -26,9 +26,7 @@
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
-		return ..()
-	else
-		return 0
+		..()
 
 /obj/machinery/door/poddoor/try_open(mob/living/user, obj/item/tool = null)
 	if(!tool)

@@ -158,19 +158,18 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-
-	else if (istype(W, /obj/item/nutrient))
+		return FALSE
+	if (istype(W, /obj/item/nutrient))
 		if ( get_total_ferts() >= Max_Fertilizers )
 			to_chat(user, "The fertilizer storage is full!")
-			return
+			return FALSE
 		to_chat(user, "<span class='notice'>You insert [W] into [src]</span>.")
 		user.drop_from_inventory(W, src)
 		flick("farmbot_hatch",src)
 		updateUsrDialog()
-		return
-
-	else
-		..()
+		return FALSE
+	..()
+	return FALSE
 
 /obj/machinery/bot/farmbot/emag_act(mob/user)
 	..()
@@ -518,9 +517,7 @@
 	if(!tank)
 		new /obj/structure/reagent_dispensers/watertank(src)
 
-
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/I, mob/user)
-
 	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
 		return ..()
 
@@ -530,6 +527,7 @@
 
 	qdel(I)
 	qdel(src)
+	return FALSE
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/device/plant_analyzer)) && !build_step)
@@ -537,38 +535,37 @@
 		to_chat(user, "You add the plant analyzer to [src]!")
 		name = "farmbot assembly"
 		qdel(I)
-
-	else if(istype(I, /obj/item/weapon/reagent_containers/glass/bucket) && build_step == 1)
+		return FALSE
+	if(istype(I, /obj/item/weapon/reagent_containers/glass/bucket) && build_step == 1)
 		build_step++
 		to_chat(user, "You add a bucket to [src]!")
 		src.name = "farmbot assembly with bucket"
 		qdel(I)
-
-	else if(istype(I, /obj/item/weapon/minihoe) && build_step == 2)
+		return FALSE
+	if(istype(I, /obj/item/weapon/minihoe) && build_step == 2)
 		build_step++
 		to_chat(user, "You add a minihoe to [src]!")
 		src.name = "farmbot assembly with bucket and minihoe"
 		qdel(I)
-
-	else if(isprox(I) && build_step == 3)
+		return FALSE
+	if(isprox(I) && build_step == 3)
 		build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot(get_turf(src))
 		S.name = src.created_name
 		qdel(I)
 		qdel(src)
-
-	else if(istype(I, /obj/item/weapon/pen))
+		return FALSE
+	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)) as text, MAX_NAME_LEN)
 		if (!t)
-			return
+			return FALSE
 		if (!user.Adjacent(src))
-			return
+			return FALSE
 
 		created_name = t
-
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user)
 	return //it's a converted watertank, no you cannot pick it up and put it in your backpack

@@ -84,7 +84,6 @@
 
 /obj/singularity/Bumped(atom/A)
 	consume(A)
-	return
 
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
@@ -243,7 +242,7 @@
 
 /obj/singularity/proc/move(force_move = 0)
 	if(!move_self)
-		return 0
+		return
 
 	var/movement_dir = pick(alldirs - last_failed_movement)
 

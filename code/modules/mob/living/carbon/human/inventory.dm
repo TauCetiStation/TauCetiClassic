@@ -119,7 +119,8 @@
 			return TRUE
 
 /mob/living/carbon/human/u_equip(obj/W)
-	if(!W)	return 0
+	if(!W)
+		return
 
 	if (W == wear_suit)
 		if(s_store)
@@ -224,10 +225,6 @@
 	else if (W == l_hand)
 		l_hand = null
 		update_inv_l_hand()
-	else
-		return 0
-
-	return TRUE
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

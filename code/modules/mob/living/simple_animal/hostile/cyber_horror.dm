@@ -27,7 +27,7 @@
 /mob/living/simple_animal/hostile/cyber_horror/Life(mob/living/simple_animal/hostile/cyber_horror/M)
 	. = ..()
 	if(!.)
-		return 0
+		return FALSE
 	if(prob(90) && ((health + emp_damage) < maxHealth))
 		health += 4                                                                        //Created by misuse of medical nanobots, so it heals
 		if(prob(15))

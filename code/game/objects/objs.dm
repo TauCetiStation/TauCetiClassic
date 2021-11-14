@@ -23,7 +23,7 @@
 
 /obj/process()
 	STOP_PROCESSING(SSobj, src)
-	return 0
+	return FALSE
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))

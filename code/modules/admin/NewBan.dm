@@ -3,10 +3,10 @@ var/savefile/Banlist
 
 
 /proc/CheckBan(ckey, id, address)
-	if(!Banlist)		// if Banlist cannot be located for some reason
-		LoadBans()		// try to load the bans
-		if(!Banlist)	// uh oh, can't find bans!
-			return 0	// ABORT ABORT ABORT
+	if(!Banlist)		    // if Banlist cannot be located for some reason
+		LoadBans()		    // try to load the bans
+		if(!Banlist)	    // uh oh, can't find bans!
+			return FALSE	// ABORT ABORT ABORT
 
 	. = list()
 	var/appeal
@@ -18,41 +18,38 @@ var/savefile/Banlist
 		if (Banlist["temp"])
 			if (!GetExp(Banlist["minutes"]))
 				ClearTempbans()
-				return 0
-			else
-				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+				return FALSE
+			.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
 		else
 			Banlist.cd	= "/base/[ckey][id]"
 			.["desc"]	= "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
 		.["reason"]	= "ckey/id"
 		return .
-	else
-		for (var/A in Banlist.dir)
-			Banlist.cd = "/base/[A]"
-			var/matches
-			if( ckey == Banlist["key"] )
-				matches += "ckey"
-			if( id == Banlist["id"] )
-				if(matches)
-					matches += "/"
-				matches += "id"
-			if( address == Banlist["ip"] )
-				if(matches)
-					matches += "/"
-				matches += "ip"
-
+	for (var/A in Banlist.dir)
+		Banlist.cd = "/base/[A]"
+		var/matches
+		if( ckey == Banlist["key"] )
+			matches += "ckey"
+		if( id == Banlist["id"] )
 			if(matches)
-				if(Banlist["temp"])
-					if (!GetExp(Banlist["minutes"]))
-						ClearTempbans()
-						return 0
-					else
-						.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
-				else
-					.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
-				.["reason"] = matches
-				return .
-	return 0
+				matches += "/"
+			matches += "id"
+		if( address == Banlist["ip"] )
+			if(matches)
+				matches += "/"
+			matches += "ip"
+
+		if(matches)
+			if(Banlist["temp"])
+				if (!GetExp(Banlist["minutes"]))
+					ClearTempbans()
+					return FALSE
+				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+			else
+				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
+			.["reason"] = matches
+			return .
+	return FALSE
 
 /proc/UpdateTime() //No idea why i made this a proc.
 	CMinutes = (world.realtime / 10) / 60

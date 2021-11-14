@@ -14,7 +14,7 @@ var/list/fusion_reactions
 	var/minimum_reaction_temperature = 100
 
 /datum/fusion_reaction/proc/handle_reaction_special(obj/effect/fusion_em_field/holder)
-	return 0
+	return
 
 /proc/get_fusion_reaction(p_react, s_react, m_energy)
 	if(!fusion_reactions)

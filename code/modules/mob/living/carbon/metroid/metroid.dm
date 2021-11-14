@@ -307,7 +307,7 @@
 	return ..()
 
 /mob/living/carbon/slime/restrained()
-	return 0
+	return FALSE
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return

@@ -14,13 +14,14 @@
 	var/time = 10
 
 /obj/item/device/assembly/timer/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return//Cooldown check
 
 	timing = !timing
 
 	update_icon()
 
-	return 0
+	return
 
 
 /obj/item/device/assembly/timer/toggle_secure()
@@ -41,7 +42,8 @@
 
 
 /obj/item/device/assembly/timer/proc/timer_end()
-	if(!secured)	return 0
+	if(!secured)
+		return
 	pulse(0)
 	if(!holder)
 		visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
@@ -84,7 +86,7 @@
 /obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
 	if(!secured)
 		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
-		return 0
+		return
 	var/second = time % 60
 	var/minute = (time - second) / 60
 	var/dat = text("<TT><B>Timing Unit</B>\n[] []:[]\n<A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", (timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

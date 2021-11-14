@@ -108,10 +108,10 @@
 /obj/item/weapon/gun/energy/meteorgun/process()
 	charge_tick++
 	if(charge_tick < recharge_time)
-		return 0
+		return
 	charge_tick = 0
 	if(!power_supply)
-		return 0
+		return
 	power_supply.give(100)
 
 /obj/item/weapon/gun/energy/meteorgun/update_icon()
@@ -261,7 +261,7 @@
 	else
 		user.update_inv_r_hand()*/
 
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
 	for(var/X in getline(A,B))

@@ -69,14 +69,14 @@
 
 /obj/machinery/kitchen_machine/attackby(obj/item/O, mob/user)
 	if(operating)
-		return
+		return FALSE
 	if(!broken && dirty<100)
 		if(default_deconstruction_screwdriver(user, open_icon, off_icon, O))
-			return
+			return FALSE
 		if(default_unfasten_wrench(user, O))
-			return
+			return FALSE
 		if(exchange_parts(user, O))
-			return
+			return FALSE
 
 	default_deconstruction_crowbar(O)
 
@@ -106,7 +106,7 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
-				return 0 //to use some fuel
+				return FALSE //to use some fuel
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return TRUE
@@ -181,6 +181,7 @@
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return TRUE
 	updateUsrDialog()
+	return FALSE
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
 	if(IsAdminGhost(user))

@@ -288,7 +288,7 @@
 				var/mob/living/M = get_carrier(src.loc)
 				if(!M)
 					to_chat(src, "You are not being carried by anyone!")
-					return 0
+					return FALSE
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")

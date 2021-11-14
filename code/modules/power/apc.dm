@@ -742,10 +742,8 @@
 	if(ismalf(malf) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
 			return 2 // 2 = APC hacked by user, and user is in its core.
-		else
-			return 1 // 1 = APC not hacked.
-	else
-		return 0 // 0 = User is not a Malf AI
+		return 1 // 1 = APC not hacked.
+	return 0 // 0 = User is not a Malf AI
 
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
@@ -1006,8 +1004,7 @@
 /obj/machinery/power/apc/surplus()
 	if(terminal)
 		return terminal.surplus()
-	else
-		return 0
+	return 0
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal)
@@ -1016,8 +1013,7 @@
 /obj/machinery/power/apc/avail()
 	if(terminal)
 		return terminal.avail()
-	else
-		return 0
+	return 0
 
 /obj/machinery/power/apc/process()
 	if(stat & (BROKEN | MAINT))

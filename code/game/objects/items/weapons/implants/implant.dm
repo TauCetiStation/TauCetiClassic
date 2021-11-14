@@ -139,7 +139,8 @@ Implant Specifics:<BR>"}
 	return
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return
 	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
 	if(src.imp_in)
 		imp_in.gib()
@@ -366,7 +367,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")

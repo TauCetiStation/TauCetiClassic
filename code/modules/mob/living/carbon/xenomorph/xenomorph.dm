@@ -269,7 +269,7 @@ Hit Procs
 	return
 
 /mob/living/carbon/xenomorph/restrained()
-	return 0
+	return FALSE
 
 /mob/living/carbon/xenomorph/show_inv(mob/user)
 	return

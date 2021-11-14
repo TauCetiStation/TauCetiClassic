@@ -173,7 +173,7 @@
 			if(L.lasertag_color == lasertag_color)
 				return ..()
 		to_chat(M, "<span class='warning'>You need to be wearing your appropriate color laser tag vest!</span>")
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/energy/laser/lasertag/atom_init()
 	. = ..()

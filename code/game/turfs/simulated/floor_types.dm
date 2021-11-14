@@ -376,10 +376,10 @@
 	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
-	return 0
+	return
 
 /turf/simulated/floor/plating/ironsand/burn_tile()
-	return 0
+	return
 
 /turf/simulated/floor/plating/ironsand/atom_init()
 	. = ..()

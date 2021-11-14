@@ -73,7 +73,7 @@
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		qdel(src)
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/detective/verb/rename_gun()

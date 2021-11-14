@@ -14,12 +14,12 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action_checks(atom/target)
 	if(projectiles <= 0)
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target)
@@ -135,16 +135,16 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target)
 	if(!chassis)
-		return 0
+		return FALSE
 	if(energy_drain && chassis.get_charge() < energy_drain)
-		return 0
+		return FALSE
 	if(!equip_ready)
-		return 0
+		return FALSE
 
 	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
@@ -309,7 +309,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar

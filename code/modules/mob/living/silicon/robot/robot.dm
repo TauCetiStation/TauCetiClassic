@@ -477,7 +477,7 @@
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/restrained()
-	return 0
+	return FALSE
 
 /mob/living/silicon/robot/airlock_crush_act()
 	..()

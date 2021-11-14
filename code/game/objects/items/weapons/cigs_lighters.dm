@@ -30,8 +30,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/match/get_current_temperature()
 	if(lit)
 		return 1000
-	else
-		return 0
+	return 0
 
 /obj/item/weapon/match/extinguish()
 	burn_out()
@@ -90,8 +89,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/get_current_temperature()
 	if(lit)
 		return 1000
-	else
-		return 0
+	return 0
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/I, mob/user, params)
 	// FML. this copypasta is everywhere somebody call the fucking police please. ~Luduk
@@ -462,8 +460,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/get_current_temperature()
 	if(lit)
 		return 1500
-	else
-		return 0
+	return 0
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)

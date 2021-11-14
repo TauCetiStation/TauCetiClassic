@@ -98,7 +98,7 @@
 		return
 	if(!luminophore.volume)
 		to_chat(user, "<span class='rose'>None of chemicals left in [src]!</span>")
-		return 0
+		return FALSE
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 

@@ -62,5 +62,5 @@
 /obj/item/weapon/gun/projectile/heavyrifle/special_check(mob/user)
 	if(bolt_open)
 		to_chat(user, "<span class='warning'>You can't fire [src] while the bolt is open!</span>")
-		return 0
+		return FALSE
 	return ..()

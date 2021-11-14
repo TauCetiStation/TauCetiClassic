@@ -190,7 +190,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 /obj/structure/particle_accelerator/proc/report_master()
 	if(master)
 		return master
-	return 0
+	return null
 
 
 /obj/structure/particle_accelerator/proc/connect_master(obj/O)
@@ -342,7 +342,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 
 /obj/machinery/particle_accelerator/proc/update_state()
-	return 0
+	return
 
 
 /obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)

@@ -128,7 +128,7 @@
 		if (!istype(X, P.input))
 			continue
 		return P
-	return 0
+	return null
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(processing)

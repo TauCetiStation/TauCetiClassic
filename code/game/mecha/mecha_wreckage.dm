@@ -71,7 +71,7 @@
 
 		salvage_num--
 		return salvaged
-	return 0
+	return null
 
 /obj/effect/decal/mecha_wreckage/gygax
 	name = "Gygax wreckage"

@@ -16,7 +16,7 @@
 
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
+	return
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
 	if(!signal || signal.encryption) return
@@ -89,9 +89,9 @@
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
 	signal.transmission_method = TRANSMISSION_RADIO
 	if(radio_connection)
-		return radio_connection.post_signal(src, signal)
-	else
-		qdel(signal)
+		radio_connection.post_signal(src, signal)
+		return
+	qdel(signal)
 
 /obj/machinery/embedded_controller/radio/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

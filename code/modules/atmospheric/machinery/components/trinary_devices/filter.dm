@@ -89,7 +89,7 @@
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
 	if(!(NODE1 && NODE2 && NODE3))
-		return 0
+		return
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

@@ -213,7 +213,7 @@
 
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
 	if(stat)

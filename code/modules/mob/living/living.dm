@@ -430,7 +430,7 @@
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	  return 0 //only carbon liveforms have this proc
+	  return FALSE //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
 	var/list/L = get_contents()
@@ -497,7 +497,8 @@
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	updatehealth()
@@ -510,7 +511,8 @@
 
 // damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	updatehealth()

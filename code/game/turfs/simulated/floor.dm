@@ -85,7 +85,7 @@ var/list/wood_icons = list("wood","wood-broken")
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
-//			return 0
+//			return FALSE
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
@@ -246,8 +246,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				dir_sum += direction
 		if(dir_sum)
 			return "wood_siding[dir_sum]"
-		else
-			return 0
+		return 0
 
 
 /turf/simulated/floor/attack_paw(mob/user)

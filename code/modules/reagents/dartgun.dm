@@ -71,14 +71,14 @@
 
 		if(!D.darts)
 			to_chat(user, "<span class='notice'>[D] is empty.</span>")
-			return 0
+			return FALSE
 
 		if(cartridge)
 			if(cartridge.darts <= 0)
 				remove_cartridge()
 			else
 				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
-				return 0
+				return FALSE
 
 		user.drop_from_inventory(D, src)
 		cartridge = D
@@ -108,8 +108,8 @@
 	else
 		return cartridge.darts
 
-/obj/item/weapon/gun/dartgun/proc/has_selected_beaker_reagents()
-	return 0
+/obj/item/weapon/gun/dartgun/proc/has_selected_beaker_reagents() //not used
+	return FALSE
 
 /obj/item/weapon/gun/dartgun/proc/remove_cartridge()
 	if(cartridge)
@@ -122,9 +122,9 @@
 
 /obj/item/weapon/gun/dartgun/proc/get_mixed_syringe()
 	if (!cartridge)
-		return 0
+		return null
 	if(!cartridge.darts)
-		return 0
+		return null
 
 	var/obj/item/weapon/reagent_containers/syringe/dart = new(src)
 

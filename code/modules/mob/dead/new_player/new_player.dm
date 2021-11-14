@@ -180,16 +180,16 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if (src != usr)
-		return 0
+		return
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
-		return 0
+		return
 	if(!enter_allowed)
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
-		return 0
+		return
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
-		return 0
+		return
 
 	spawning = 1
 	close_spawn_windows()

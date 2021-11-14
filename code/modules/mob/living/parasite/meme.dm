@@ -51,11 +51,12 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 // --------------------------------------------
 /mob/living/parasite/check_contents_for(t)
 	if(!host)
-		return 0
+		return FALSE
 
 	return host.check_contents_for(t)
 
 /*mob/living/parasite/check_contents_for_reagent(t)
-	if(!host) return 0
+	if(!host) 
+		return FALSE
 
 	return host.check_contents_for_reagent(t) */

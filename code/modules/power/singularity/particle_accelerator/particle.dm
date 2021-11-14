@@ -58,8 +58,6 @@
 /obj/effect/accelerated_particle/Bumped(atom/A)
 	if(ismob(A))
 		Bump(A)
-	return
-
 
 /obj/effect/accelerated_particle/ex_act(severity)
 	qdel(src)

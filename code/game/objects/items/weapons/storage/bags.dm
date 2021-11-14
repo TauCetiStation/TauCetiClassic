@@ -210,7 +210,8 @@
 // Modified handle_item_insertion.  Would prefer not to, but...
 /obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
-	if(!istype(S)) return 0
+	if(!istype(S))
+		return FALSE
 
 	var/amount
 	var/inserted = 0

@@ -23,10 +23,10 @@
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
-		return FALSE//Cooldown check
+		return//Cooldown check
 	on = !on
 	update_icon()
-	return TRUE
+	return
 
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured

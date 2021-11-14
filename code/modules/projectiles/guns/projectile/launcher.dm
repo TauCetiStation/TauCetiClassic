@@ -55,7 +55,7 @@
 /obj/item/weapon/gun/projectile/m79/special_check(mob/user)
 	if(open)
 		to_chat(user, "<span class='warning'>You can't fire [src] while it is open!</span>")
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/weapon/gun/projectile/underslung

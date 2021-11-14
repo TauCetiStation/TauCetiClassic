@@ -88,7 +88,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		qdel(other)
 
 /obj/effect/immovable_rod/ex_act(severity, target)
-	return 0
+	return
 
 /obj/effect/immovablerod/singularity_act()
 	return

@@ -50,7 +50,7 @@
 /datum/robot_component/proc/heal_damage(brute, electronics)
 	if(installed != 1)
 		// If it's not installed, can't repair it.
-		return 0
+		return
 
 	brute_damage = max(0, brute_damage - brute)
 	electronics_damage = max(0, electronics_damage - electronics)

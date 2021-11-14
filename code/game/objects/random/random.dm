@@ -16,7 +16,7 @@
 
 // this function should return a specific item to spawn
 /obj/random/proc/item_to_spawn()
-	return 0
+	return null
 
 
 // creates the random item

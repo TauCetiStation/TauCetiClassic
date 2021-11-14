@@ -189,7 +189,7 @@
 		var/mob/living/L = M
 		L.Weaken(3)
 		L.take_overall_damage(rand(4,12), 0)
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hulk/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"

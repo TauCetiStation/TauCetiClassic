@@ -110,7 +110,7 @@
 				else if(alternate_option == RETURN_TO_LOBBY)
 					alternate_option = 0
 				else
-					return 0
+					return
 			if ("alt_title")
 				var/datum/job/job = locate(href_list["job"])
 				if (job)

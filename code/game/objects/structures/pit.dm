@@ -230,7 +230,7 @@
 
 
 /obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
-	return 0
+	return
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons
 	projectile_type = /obj/item/projectile/beam/practice/jetsons

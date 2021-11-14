@@ -37,7 +37,8 @@
 		log_misc("a [src] didn't find an input plate.")
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)
-	if(!input_plate) return
+	if(!input_plate)
+		return
 
 	if(ismob(A))
 		var/mob/M = A

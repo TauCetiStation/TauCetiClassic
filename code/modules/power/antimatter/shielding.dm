@@ -86,7 +86,7 @@
 
 
 /obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
-	return 0
+	return FALSE
 
 
 /obj/machinery/am_shielding/blob_act()
@@ -158,8 +158,10 @@
 /obj/machinery/am_shielding/proc/core_check()
 	for(var/direction in alldirs)
 		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine) return FALSE//Need all for a core
-		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))	return 0
+		if(!machine)
+			return FALSE//Need all for a core
+		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))
+			return FALSE
 	return TRUE
 
 

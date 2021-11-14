@@ -12,7 +12,7 @@
 
 /datum/paiCandidate/proc/savefile_save(mob/user)
 	if(IsGuestKey(user.key))
-		return 0
+		return FALSE
 
 	var/savefile/F = new /savefile(savefile_path(user))
 

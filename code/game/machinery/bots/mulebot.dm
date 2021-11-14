@@ -100,10 +100,11 @@
 		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
-	else if(isscrewdriver(I))
+		return FALSE
+	if(isscrewdriver(I))
 		if(locked)
 			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
-			return
+			return FALSE
 
 		open = !open
 		if(open)
@@ -115,9 +116,11 @@
 			icon_state = "mulebot0"
 
 		updateDialog()
-	else if(is_wire_tool(I))
+		return FALSE
+	if(is_wire_tool(I))
 		wires.interact(user)
-	else if (iswrench(I))
+		return FALSE
+	if (iswrench(I))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
@@ -126,14 +129,15 @@
 			)
 		else
 			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
-	else if(load && ismob(load))  // chance to knock off rider
+		return FALSE
+	if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
 			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked

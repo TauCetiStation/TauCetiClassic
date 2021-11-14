@@ -36,7 +36,7 @@
 		parent = owner.bodyparts_by_name[parent_bodypart]
 
 /obj/item/organ/process()
-	return 0
+	return
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0

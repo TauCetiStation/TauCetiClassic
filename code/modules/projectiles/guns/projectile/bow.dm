@@ -159,21 +159,20 @@
 	if (target.loc == user.loc)
 		return
 
-	else if (locate (/obj/structure/table, src.loc))
+	if (locate (/obj/structure/table, src.loc))
 		return
-
-	else if(target == user)
+	if(target == user)
 		return
 
 	if(!tension)
 		to_chat(user, "You haven't drawn back the bolt!")
-		return 0
+		return
 
 	if (!arrow)
 		to_chat(user, "You have no arrow nocked to [src]!")
-		return 0
-	else
-		spawn(0) Fire(target,user,params)
+		return
+	spawn(0)
+		Fire(target,user,params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(ishuman(user))

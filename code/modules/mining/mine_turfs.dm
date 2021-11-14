@@ -686,9 +686,8 @@
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
-
 	if(!W || !user)
-		return 0
+		return FALSE
 
 	if (istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc

@@ -36,19 +36,18 @@
 
 /obj/machinery/juicer/attackby(obj/item/O, mob/user)
 	if(default_unfasten_wrench(user, O))
-		return
+		return FALSE
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
 			return TRUE
-		else
-			user.remove_from_mob(O)
-			O.loc = src
-			beaker = O
-			src.verbs += /obj/machinery/juicer/verb/detach
-			update_icon()
-			updateUsrDialog()
-			return 0
+		user.remove_from_mob(O)
+		O.loc = src
+		beaker = O
+		src.verbs += /obj/machinery/juicer/verb/detach
+		update_icon()
+		updateUsrDialog()
+		return FALSE
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
 		return TRUE

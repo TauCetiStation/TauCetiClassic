@@ -680,8 +680,7 @@
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
 		return clamp(round(num), 0, 200)
-	else
-		return 0
+	return 0
 
 
 /obj/machinery/chem_master/condimaster

@@ -496,9 +496,8 @@
 			visible_message("\the [I] lands in \the [src].")
 		else
 			visible_message("\the [I] bounces off of \the [src]'s rim!")
-		return 0
-	else
-		return ..(mover, target, height, air_group)
+		return FALSE
+	return ..(mover, target, height, air_group)
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -1272,8 +1271,7 @@
 /obj/structure/disposalpipe/trunk/nextdir(fromdir)
 	if(fromdir == DOWN)
 		return dir
-	else
-		return 0
+	return 0
 
 // a broken pipe
 /obj/structure/disposalpipe/broken

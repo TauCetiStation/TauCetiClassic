@@ -381,7 +381,7 @@
 		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/resist()
 	..()
@@ -601,9 +601,9 @@
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
-		return 0	//godmode
+		return FALSE	//godmode
 	if(NO_SHOCK in src.mutations)
-		return 0 //#Z2 no shock with that mutation.
+		return FALSE //#Z2 no shock with that mutation.
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
@@ -632,7 +632,7 @@
 		if(species && species.flags[IS_SYNTHETIC])
 			nutrition += . // Electrocute act returns it's shock_damage value.
 		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
-			. = 0
+			. = FALSE
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)

@@ -45,9 +45,10 @@
 
 /mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 	blocked = (100-blocked)/100
-	if(!effect || (blocked <= 0))	return 0
+	if(!effect || (blocked <= 0))
+		return FALSE
 	switch(effecttype)
 		if(STUN)
 			Stun(effect * blocked)

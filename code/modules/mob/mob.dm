@@ -183,7 +183,7 @@
 	for(var/mob/M in mob_list)
 		if(M.real_name == text("[]", msg))
 			return M
-	return 0
+	return null
 
 /mob/proc/movement_delay()
 	return 0
@@ -827,7 +827,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 // ========== STUN ==========
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)

@@ -105,13 +105,13 @@
 	var/turf/T
 	var/mob/living/M
 	if(X1==X2)
-		if(Y1==Y2) return 0 //Light cannot be blocked on same tile
+		if(Y1==Y2) return null //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(1)
 				T = locate(X1,Y1,Z)
-				if(!T) return 0
+				if(!T) return null
 				M = locate() in T
 				if(M) return M
 				M = locate() in orange(1,T)-exc_obj
@@ -128,12 +128,12 @@
 			if(xvert) Y1+=signY //Line exits tile vertically
 			else X1+=signX //Line exits tile horizontally
 			T = locate(X1,Y1,Z)
-			if(!T) return 0
+			if(!T) return null
 			M = locate() in T
 			if(M) return M
 			M = locate() in orange(1,T)-exc_obj
 			if(M) return M
-	return 0
+	return null
 
 
 //Targeting management procs

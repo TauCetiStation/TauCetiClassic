@@ -132,7 +132,7 @@
 /mob/living/simple_animal/hostile/carp/dog/Life()
 	. = ..()
 	if(!.)
-		return 0
+		return FALSE
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')

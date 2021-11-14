@@ -71,7 +71,8 @@
 /obj/machinery/power/am_control_unit/proc/produce_power()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
-	if(core_power <= 0) return 0//Something is wrong
+	if(core_power <= 0)
+		return//Something is wrong
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
@@ -98,7 +99,7 @@
 			if(active)	toggle_power()
 			stability -= rand(10,20)
 	..()
-	return 0
+	return FALSE
 
 
 /obj/machinery/power/am_control_unit/blob_act()

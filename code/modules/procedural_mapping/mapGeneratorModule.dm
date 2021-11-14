@@ -28,7 +28,7 @@
 //Place a spawnable atom or turf on this turf
 /datum/map_generator_module/proc/place(turf/T)
 	if(!T)
-		return 0
+		return FALSE
 
 	var/clustering = 0
 	var/skipLoopIteration = FALSE
@@ -100,7 +100,7 @@
 			if(prob(spawnableAtoms[atomPath]))
 				new atomPath(T)
 
-	. = 1
+	return TRUE
 
 
 //Checks and Rejects dense turfs

@@ -681,7 +681,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(air_group)
-		return 0
+		return FALSE
 	return !density
 
 /datum/effect/effect/system/reagents_explosion

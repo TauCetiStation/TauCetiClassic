@@ -559,7 +559,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_eat/cast_check()
 	to_chat(usr, "<span class='notice'>Target someone, then alt+click.</span>")
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
 	if(!stat && mind && health > 0 && isliving(A) && A != src && Adjacent(A))

@@ -107,13 +107,14 @@
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(amount >= 50)
-			return
+			return FALSE
 		var/loaded = min(50-amount, T.get_amount())
 		T.use(loaded)
 		amount += loaded
 		to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>")
 		updateicon()
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		return FALSE
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(usr) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
@@ -125,8 +126,9 @@
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 		updateUsrDialog()
-	else
-		..()
+		return FALSE
+	..()
+	return FALSE
 
 /obj/machinery/bot/floorbot/emag_act(mob/user)
 	..()
@@ -470,7 +472,7 @@
 
 	if(src.contents.len >= 1)
 		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")
-		return
+		return FALSE
 	if(user.s_active)
 		user.s_active.close(user)
 	qdel(T)
@@ -478,6 +480,7 @@
 	user.put_in_hands(B)
 	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
 	qdel(src)
+	return FALSE
 
 /obj/item/weapon/toolbox_tiles/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))
@@ -487,18 +490,17 @@
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
 		qdel(src)
-
-	else if (istype(I, /obj/item/weapon/pen))
+		return FALSE
+	if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)),MAX_NAME_LEN)
 		if (!t)
-			return
+			return FALSE
 		if (!user.Adjacent(src))
-			return
+			return FALSE
 
 		created_name = t
-
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
@@ -508,19 +510,18 @@
 		A.name = src.created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		qdel(src)
-
-	else if (istype(I, /obj/item/weapon/pen))
+		return FALSE
+	 if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
-			return
+			return FALSE
 		if (!user.Adjacent(src))
-			return
+			return FALSE
 
 		created_name = t
-
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
 	return TRUE

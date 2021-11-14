@@ -71,7 +71,7 @@
 
 	if(R.health < 0)
 		to_chat(usr, "You have to repair the borg before using this module!")
-		return 0
+		return FALSE
 
 	R.stat = CONSCIOUS
 	return TRUE
@@ -85,7 +85,7 @@
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
 	if(R.speed == -1)
-		return 0
+		return FALSE
 
 	R.speed--
 	return TRUE
@@ -102,7 +102,7 @@
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(usr, "There's no mounting point for the module!")
-		return 0
+		return FALSE
 
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
 	if(!T)
@@ -111,16 +111,14 @@
 		T = locate() in R.module.modules
 	if(!T)
 		to_chat(usr, "This cyborg has had its taser removed!")
-		return 0
+		return FALSE
 
 	if(T.recharge_time <= 2)
 		to_chat(R, "Maximum cooling achieved for this hardpoint!")
 		to_chat(usr, "There's no room for another cooling unit!")
-		return 0
+		return FALSE
 
-	else
-		T.recharge_time = max(2 , T.recharge_time - 4)
-
+	T.recharge_time = max(2 , T.recharge_time - 4)
 	return TRUE
 
 /obj/item/borg/upgrade/jetpack

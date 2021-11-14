@@ -329,9 +329,8 @@
 			cable.amount += to_load
 			CC.use(to_load)
 			return to_load
-		else
-			return 0
-	return
+		return 0
+	return null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/use_cable(amount)
 	if(!cable || cable.amount<1)

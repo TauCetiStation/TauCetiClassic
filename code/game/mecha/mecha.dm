@@ -24,7 +24,7 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 	w_class = SIZE_MASSIVE
 	var/initial_icon = null //Mech type for resetting icon. Only used for reskinning kits (see custom items)
-	var/can_move = 1
+	var/can_move = TRUE
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
@@ -255,15 +255,15 @@
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		to_chat(user, "You climb out from [src]")
-		return 0
+		return FALSE
 	if(connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("Unable to move while connected to the air system port")
 			last_message = world.time
-		return 0
+		return FALSE
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
-		return
+		return FALSE
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
@@ -271,11 +271,11 @@
 
 /obj/mecha/proc/dyndomove(direction)
 	if(!can_move)
-		return 0
+		return FALSE
 	if(!Process_Spacemove(direction))
-		return 0
+		return FALSE
 	if(!has_charge(step_energy_drain))
-		return 0
+		return FALSE
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
@@ -292,10 +292,10 @@
 		move_result = mechturn(direction)
 	prev_move_dir = direction
 	if(move_result)
-		can_move = 0
+		can_move = FALSE
 		VARSET_IN(src, can_move, TRUE, step_in * move_result)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
@@ -808,11 +808,11 @@
 /obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != src.loc)
-		return 0
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
@@ -824,11 +824,11 @@
 		P.other_airs += internal_tank.return_air()
 		P.update = 1
 	log_message("Connected to gas port.")
-	return 1
+	return TRUE
 
 /obj/mecha/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 
 	var/datum/pipeline/P = connected_port.returnPipenet(src)
 	if(P)
@@ -837,7 +837,7 @@
 	connected_port.connected_device = null
 	connected_port = null
 	log_message("Disconnected from gas port.")
-	return 1
+	return TRUE
 
 
 /////////////////////////
@@ -959,23 +959,22 @@
 		GrantActions(H, human_occupant = 1)
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
-		return 0
-	else if(mmi_as_oc.brainmob.stat)
+		return FALSE
+	if(mmi_as_oc.brainmob.stat)
 		to_chat(user, "Beta-rhythm below acceptable level.")
-		return 0
-	else if(occupant)
+		return FALSE
+	if(occupant)
 		to_chat(user, "Occupant detected.")
-		return 0
-	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
+		return FALSE
+	if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		to_chat(user, "Stop it!")
-		return 0
+		return FALSE
 
 	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
 
@@ -986,16 +985,16 @@
 			to_chat(user, "Occupant detected.")
 	else
 		to_chat(user, "You stop inserting the MMI.")
-	return 0
+	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && (user in range(1)))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
-			return 0
-		else if(mmi_as_oc.brainmob.stat)
+			return FALSE
+		if(mmi_as_oc.brainmob.stat)
 			to_chat(user, "Beta-rhythm below acceptable level.")
-			return 0
+			return FALSE
 		user.drop_from_inventory(mmi_as_oc)
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
@@ -1013,9 +1012,8 @@
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return 1
-	else
-		return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
@@ -1075,22 +1073,22 @@
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
 	for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 		if(check_access(ID,src.operation_req_access))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
 	for(var/atom/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 		if(check_access(ID,src.internals_req_access))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/mecha/check_access(obj/item/weapon/card/id/I, list/access_list)
 	if(!istype(access_list))
-		return 1
+		return TRUE
 	if(!access_list.len) //no requirements
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
@@ -1098,16 +1096,16 @@
 		var/obj/item/weapon/storage/wallet/wallet = I
 		I = wallet.GetID()
 	if(!istype(I) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	if(access_list==src.operation_req_access)
 		for(var/req in access_list)
 			if(!(req in I.access)) //doesn't have this access
-				return 0
+				return FALSE
 	else if(access_list==src.internals_req_access)
 		for(var/req in access_list)
 			if(req in I.access)
-				return 1
-	return 1
+				return TRUE
+	return TRUE
 
 
 ////////////////////////////////
@@ -1151,15 +1149,15 @@
 	if(get_charge())
 		cell.use(amount)
 		diag_hud_set_mechcell()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		diag_hud_set_mechcell()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/reset_icon()
 	if (initial_icon)

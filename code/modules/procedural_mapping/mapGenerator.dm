@@ -37,7 +37,7 @@
 //Returns the map
 /datum/map_generator/proc/defineRegion(turf/Start, turf/End, replace = 0)
 	if(!checkRegion(Start, End))
-		return 0
+		return null
 
 	if(replace)
 		undefineRegion()
@@ -49,7 +49,7 @@
 //Returns the map
 /datum/map_generator/proc/defineCircularRegion(turf/Start, turf/End, replace = 0)
 	if(!checkRegion(Start, End))
-		return 0
+		return null
 
 	var/centerX = max(abs((End.x+Start.x)/2),1)
 	var/centerY = max(abs((End.y+Start.y)/2),1)

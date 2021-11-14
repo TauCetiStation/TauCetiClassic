@@ -51,9 +51,9 @@
 
 /mob/living/silicon/robot/u_equip(obj/W)
 	if(!W || (W != module_active))
-		return FALSE
+		return
 	uneq_active()
-	return TRUE
+	return
 
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))

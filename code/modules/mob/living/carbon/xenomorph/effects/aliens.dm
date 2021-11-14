@@ -146,7 +146,8 @@
 	apply_damage(W.force)
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+	if(air_group)
+		return FALSE
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

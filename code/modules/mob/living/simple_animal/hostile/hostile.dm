@@ -51,11 +51,11 @@
 	. = ..()
 	if(!.)
 		walk(src, 0)
-		return 0
+		return FALSE
 	if(client)
 		if(target)
 			LoseTarget()
-		return 0
+		return FALSE
 
 	if(!stat)
 		switch(stance)

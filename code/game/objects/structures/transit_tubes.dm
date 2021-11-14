@@ -108,7 +108,7 @@
 	var/obj/structure/transit_tube/T = locate() in M.loc
 	if(T)
 		to_chat(M, "<span class='warning'>The tube's support pylons block your way.</span>")
-		return ..()
+		..()
 	else
 		M.forceMove(loc)
 		to_chat(M, "<span class='info'>You slip under the tube.</span>")

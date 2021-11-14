@@ -65,9 +65,12 @@ Deep minerals:
 		else
 			surface_count++
 
-	if(surface_count < MIN_SURFACE_COUNT || surface_count > MAX_SURFACE_COUNT) return 0
-	if(rare_count < MIN_RARE_COUNT || rare_count > MAX_RARE_COUNT) return 0
-	if(deep_count < MIN_DEEP_COUNT || deep_count > MAX_DEEP_COUNT) return 0
+	if(surface_count < MIN_SURFACE_COUNT || surface_count > MAX_SURFACE_COUNT)
+		return FALSE
+	if(rare_count < MIN_RARE_COUNT || rare_count > MAX_RARE_COUNT)
+		return FALSE
+	if(deep_count < MIN_DEEP_COUNT || deep_count > MAX_DEEP_COUNT)
+		return FALSE
 	return TRUE
 
 //Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.

@@ -76,7 +76,7 @@
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -155,7 +155,7 @@
 		if(!ishuman(usr))
 			return
 		if(buckled_mob)
-			return 0
+			return
 		visible_message("[usr] collapses \the [src.name].")
 		new type_roller(get_turf(src))
 		qdel(src)

@@ -221,8 +221,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		S.Crossed(src)
 
 
-/mob/dead/observer/can_use_hands()	return 0
-/mob/dead/observer/is_active()		return 0
+/mob/dead/observer/can_use_hands()
+	return FALSE
+
+/mob/dead/observer/is_active()
+	return FALSE
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"

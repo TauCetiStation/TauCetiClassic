@@ -8,23 +8,22 @@
 		if (W.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
-		else
-			to_chat(user, ("There's not enough fuel."))
-			return FALSE
-	else if(iswrench(used_atom))
+		to_chat(user, ("There's not enough fuel."))
+		return FALSE
+	if(iswrench(used_atom))
 		playsound(holder, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return TRUE
-	else if(isscrewdriver(used_atom))
+	if(isscrewdriver(used_atom))
 		playsound(holder, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return TRUE
-	else if(iswirecutter(used_atom))
+	if(iswirecutter(used_atom))
 		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		return TRUE
-	else if(iscoil(used_atom))
+	if(iscoil(used_atom))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(!C.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
-			return 0
+			return FALSE
 		playsound(holder, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(used_atom, /obj/item/stack))

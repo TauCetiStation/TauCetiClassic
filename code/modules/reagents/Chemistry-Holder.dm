@@ -321,7 +321,7 @@ var/const/INGEST = 2
 	update_total()
 	if (proccessing_reaction_count > 0)
 		proccessing_reaction_count -= 1
-	return 0
+	return
 
 /datum/reagents/proc/is_reaction_in_proccessing()
 	if (proccessing_reaction_count > 0)
@@ -352,12 +352,10 @@ var/const/INGEST = 2
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-	return 0
 
 /datum/reagents/proc/clear_reagents()
 	for(var/datum/reagent/R in reagent_list)
 		del_reagent(R.id)
-	return 0
 
 /datum/reagents/proc/reaction(atom/A, method=TOUCH, volume_modifier=0)
 

@@ -189,7 +189,8 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
 /proc/icon2base64(icon/icon, iconKey = "misc")
-	if (!isicon(icon)) return 0
+	if (!isicon(icon))
+		return 0
 
 	iconCache[iconKey] << icon
 	var/iconData = iconCache.ExportText(iconKey)

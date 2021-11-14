@@ -102,7 +102,7 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
 	if(!targetName)
 		to_chat(usr, "No name detected on module, please enter one.")
-		return 0
+		return
 	..()
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -130,7 +130,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
 	if(!targetName)
 		to_chat(usr, "No name detected on module, please enter one.")
-		return 0
+		return
 	..()
 
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)

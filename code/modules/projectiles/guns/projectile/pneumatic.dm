@@ -75,17 +75,16 @@
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
 		return
-	else if (locate (/obj/structure/table, src.loc))
+	if (locate (/obj/structure/table, src.loc))
 		return
-
-	else if(target == user)
+	if(target == user)
 		return
 
 	if (length(contents) == 0)
 		to_chat(user, "There's nothing in [src] to fire!")
-		return 0
-	else
-		spawn(0) Fire(target,user,params)
+		return
+	spawn(0)
+		Fire(target,user,params)
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
@@ -106,11 +105,11 @@
 
 	if (!tank)
 		to_chat(user, "There is no gas tank in [src]!")
-		return 0
+		return
 
 	if (cooldown)
 		to_chat(user, "The chamber hasn't built up enough pressure yet!")
-		return 0
+		return
 
 	add_fingerprint(user)
 
@@ -123,7 +122,7 @@
 
 	if (fire_pressure < minimum_tank_pressure)
 		to_chat(user, "There isn't enough gas in the tank to fire [src].")
-		return 0
+		return
 
 	var/obj/item/object = contents[1]
 	var/speed = min(PNEUMATIC_SPEED_CAP, ((fire_pressure*tank.volume)/object.w_class)/PNEUMATIC_SPEED_DIVISOR) //projectile speed.

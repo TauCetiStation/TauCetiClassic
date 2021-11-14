@@ -17,10 +17,11 @@
 	var/range = 2
 
 /obj/item/device/assembly/prox_sensor/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return//Cooldown check
 	timing = !timing
 	update_icon()
-	return 0
+	return
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
@@ -39,15 +40,17 @@
 	log_game("[key_name(user)] attached \the [A] to \the [src].")
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
-	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
+	if (istype(AM, /obj/effect/beam))
+		return
+	if (AM.move_speed < 12)
+		sense()
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
 	var/turf/mainloc = get_turf(src)
 //	if(scanning && cooldown <= 0)
 //		mainloc.visible_message("[bicon(src)] *boop* *boop*", "*boop* *boop*")
-	if((!holder && !secured)||(!scanning)||(cooldown > 0))	return 0
+	if((!holder && !secured)||(!scanning)||(cooldown > 0))	return
 	pulse(0)
 	if(!holder)
 		mainloc.visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
@@ -85,7 +88,8 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
-	if(!secured)	return 0
+	if(!secured)
+		return
 	scanning = !scanning
 	update_icon()
 	return
@@ -113,7 +117,7 @@
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(!secured)
 		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
-		return 0
+		return
 	var/second = time % 60
 	var/minute = (time - second) / 60
 	var/dat = text("<TT>\n[] []:[]\n<A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", (timing ? text("<A href='?src=\ref[];time=0'>Arming</A>", src) : text("<A href='?src=\ref[];time=1'>Not Arming</A>", src)), minute, second, src, src, src, src)

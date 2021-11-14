@@ -920,7 +920,7 @@
 				return units
 		else
 			return 0
-	return
+	return null
 
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/I, mob/user, params)
 	var/result = load_fuel(I)

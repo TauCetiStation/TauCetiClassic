@@ -172,7 +172,7 @@
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/special_check(mob/user)
 	if(open)
 		to_chat(user, "<span class='warning'>You can't fire [src] while its open!</span>")
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/weapon/gun/projectile/shotgun/repeater

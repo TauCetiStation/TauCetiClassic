@@ -31,11 +31,11 @@
 
 /obj/item/device/assembly/signaler/activate()
 	if(cooldown > 0)
-		return FALSE
+		return
 	cooldown = 2
 	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
 	signal()
-	return TRUE
+	return
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)

@@ -41,7 +41,6 @@
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
 		if(!attack_same && !H.attack_same && H.faction == faction)
 			H.enemies |= enemies
-	return 0
 
 /mob/living/simple_animal/hostile/retaliate/adjustBruteLoss(damage)
 	..(damage)

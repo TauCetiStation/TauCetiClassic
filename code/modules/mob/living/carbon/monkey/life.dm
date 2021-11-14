@@ -149,7 +149,8 @@
 					emote("gasp")
 
 /mob/living/carbon/monkey/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
@@ -284,7 +285,7 @@
 
 		oxygen_alert = max(oxygen_alert, 1)
 
-		return 0
+		return
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
@@ -371,7 +372,7 @@
 
 	//Temporary fixes to the alerts.
 
-	return TRUE
+	return
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
