@@ -235,8 +235,8 @@
 
 	statue = new(rune_turf, holder)
 	var/religify_compelted = R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
-	religion.send_message_to_members("Захват [get_area(holder)] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
-	message_admins("Capture of [get_area(holder)] [religify_compelted ? "successful" : "failed"].")
+	religion.send_message_to_members("Захват [area] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
+	message_admins("Capture of [area] [religify_compelted ? "successful" : "failed"].")
 	R.capturing_area = FALSE
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
