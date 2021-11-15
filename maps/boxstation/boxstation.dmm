@@ -19328,6 +19328,9 @@
 	dir = 4;
 	pixel_x = -25
 	},
+/obj/item/weapon/flora/pottedplant/small{
+	pixel_y = 18
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aIv" = (
@@ -34915,6 +34918,9 @@
 	pixel_y = -26
 	},
 /obj/item/weapon/folder/white,
+/obj/item/weapon/flora/pottedplant/smallcactus{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -35626,6 +35632,10 @@
 	pixel_y = -5;
 	range = 8;
 	req_access = list(5)
+	},
+/obj/item/weapon/flora/pottedplant/shoot{
+	pixel_x = 5;
+	pixel_y = 18
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -45956,7 +45966,7 @@
 /area/station/medical/medbreak)
 "bGi" = (
 /obj/machinery/door/firedoor,
-/obj/item/weapon/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/palm,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -49929,10 +49939,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bPv" = (
-/obj/item/weapon/flora/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/item/weapon/flora/pottedplant/large,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -51299,6 +51309,10 @@
 	pixel_y = -27
 	},
 /obj/item/weapon/folder/white,
+/obj/item/weapon/flora/pottedplant/dead{
+	pixel_x = 12;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -54271,7 +54285,7 @@
 /area/station/maintenance/portsolar)
 "cbx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/weapon/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/tropical_2,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -67672,11 +67686,11 @@
 	},
 /area/station/medical/medbreak)
 "cKT" = (
-/obj/item/weapon/flora/pottedplant/tropicalfern,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/item/weapon/flora/pottedplant/fern,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -74643,6 +74657,13 @@
 /obj/structure/sign/warning/detailed,
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/central)
+"kyE" = (
+/obj/structure/bookcase/manuals/medical,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/medical/patient_d)
 "kyH" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -75472,7 +75493,6 @@
 	dir = 6;
 	network = list("SS13","Medical")
 	},
-/obj/structure/disposaloutlet,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -76242,7 +76262,7 @@
 	},
 /area/station/engineering/atmos)
 "mzh" = (
-/obj/structure/bookcase/manuals/medical,
+/obj/item/weapon/flora/pottedplant,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -76879,10 +76899,10 @@
 /area/station/aisat/ai_chamber)
 "nsb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/item/weapon/flora/pottedplant/ficus,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -83348,7 +83368,7 @@
 	},
 /area/station/civilian/kitchen)
 "wpf" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/flora/pottedplant/flower,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -126960,7 +126980,7 @@ rXd
 rXd
 rXd
 aky
-aky
+kyE
 aky
 bHY
 bHY
