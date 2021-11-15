@@ -1,3 +1,4 @@
+///////////////////////////////////////////////////////////////////////////////////
 /datum/chemical_reaction
 	var/name = null
 	var/id = null
@@ -1988,6 +1989,8 @@
 	required_reagents = list("grapejuice" = 2, "cola" = 1)
 	result_amount = 3
 
+
+
 ////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
 
 /datum/chemical_reaction/sbiten
@@ -2236,7 +2239,14 @@
 	required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
 	result_amount = 5
 
-/datum/chemical_reaction/sangria
+/datum/chemical_reaction/lean
+	name = "Lean"
+	id = "lean"
+	result = "lean"
+	required_reagents = list("dextromethorphan" = 1, "space_up" = 3, "sugar" = 1)
+	result_amount = 5
+
+	/datum/chemical_reaction/sangria
 	name = "Sangria"
 	id = "sangria"
 	result = "sangria"
@@ -2254,7 +2264,7 @@
 	name = "The Blue Lagoone"
 	id = "bluelagoone"
 	result = "bluelagoone"
-	required_reagents = list("vodka" = 2, "limejuice" = 1, "sodawater" = 1, "ice" = 1)
+	required_reagents = list("bluecuracao" = 2, "limejuice" = 1, "sodawater" = 1, "ice" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/bloodykuds
