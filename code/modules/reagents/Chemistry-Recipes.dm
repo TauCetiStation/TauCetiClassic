@@ -2246,7 +2246,7 @@
 	required_reagents = list("dextromethorphan" = 1, "space_up" = 3, "sugar" = 1)
 	result_amount = 5
 
-	/datum/chemical_reaction/sangria
+/datum/chemical_reaction/sangria
 	name = "Sangria"
 	id = "sangria"
 	result = "sangria"
