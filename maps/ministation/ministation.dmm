@@ -367,10 +367,6 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "aX" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Chief Engineer";
-	req_access = list(56)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -379,6 +375,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/airlock/command/glass{
+	name = "Head of Security";
+	req_access = list(58)
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "aY" = (
@@ -3567,12 +3567,15 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/weapon/storage/toolbox,
 /obj/item/device/mmi/posibrain,
 /obj/item/weapon/book/manual/wiki/guide_to_exosuits,
 /obj/item/weapon/book/manual/wiki/guide_to_robotics{
 	pixel_x = 2;
 	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5014,6 +5017,7 @@
 "om" = (
 /obj/structure/table,
 /obj/machinery/power/apc/smallcell{
+	dir = 1;
 	name = "Operating Theatre APC";
 	pixel_y = 24
 	},
@@ -10001,6 +10005,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/embedded_controller/radio/access_controller{
+	id_tag = "xeno_airlock_control";
+	name = "Xenobiology Access Console";
+	pixel_x = -8;
+	pixel_y = -22;
+	tag_exterior_door = "xeno_airlock_exterior";
+	tag_interior_door = "xeno_airlock_interior"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurplecorner"
@@ -11161,6 +11173,7 @@
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
 /obj/machinery/power/apc/smallcell{
+	dir = 4;
 	name = "Medbay Treatment  Centre APC";
 	pixel_x = 24
 	},
@@ -13357,7 +13370,6 @@
 	},
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/item/weapon/storage/toolbox,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/stamp/approve{
 	pixel_x = -3;
@@ -13366,6 +13378,10 @@
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
@@ -14979,15 +14995,12 @@
 	},
 /area/station/hallway/secondary/arrival)
 "PY" = (
-/obj/machinery/camera{
-	c_tag = "Central Hallway North";
-	dir = 4
+/obj/machinery/sparker{
+	id = "Xenobio";
+	pixel_x = -25
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
-	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor/engine,
+/area/station/rnd/misc_lab)
 "PZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -17352,10 +17365,6 @@
 	pixel_x = 6;
 	pixel_y = -32
 	},
-/obj/machinery/camera{
-	c_tag = "Cargo Recieving Dock";
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -17596,10 +17605,6 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "Xa" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Chief Engineer";
-	req_access = list(56)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
@@ -17611,6 +17616,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Research Director";
+	req_access = list(30)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -27781,7 +27790,7 @@ WL
 QL
 yR
 IG
-PY
+OM
 hX
 Dh
 Dh
@@ -29725,7 +29734,7 @@ FF
 wo
 aa
 Pg
-Pg
+PY
 Pg
 Td
 Ok

@@ -130,14 +130,17 @@
 /obj/item/clothing/head/ushanka/black
 	ushanka_state = "ushanka_black"
 
-/obj/item/clothing/head/ushanka/brown
-	ushanka_state = "ushanka_brown_brown"
-
 /obj/item/clothing/head/ushanka/black_white
 	ushanka_state = "ushanka_black_white"
 
+/obj/item/clothing/head/ushanka/black_brown
+	ushanka_state = "ushanka_black_brown"
+
 /obj/item/clothing/head/ushanka/brown_white
 	ushanka_state = "ushanka_brown_white"
+
+/obj/item/clothing/head/ushanka/brown
+	ushanka_state = "ushanka_brown_brown"
 
 /*
  * Pumpkin head
