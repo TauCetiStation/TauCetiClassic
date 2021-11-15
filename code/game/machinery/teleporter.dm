@@ -309,7 +309,7 @@
 					var/mob/living/carbon/human/human = M
 					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
 					for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
-						if (s.remove_side_effects(TRUE))
+						if (s.stabilize_teleportation(2))
 							calibrated = 0
 							return
 					// Effects similar to mutagen.

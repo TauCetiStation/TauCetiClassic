@@ -111,7 +111,7 @@
 
 		var/list/stabilizer = H.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
 		for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
-			if (s.remove_side_effects())
+			if (s.stabilize_teleportation())
 				return
 
 		if(prob(20))

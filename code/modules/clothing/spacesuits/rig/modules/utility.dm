@@ -369,13 +369,11 @@
 	passive_power_cost = 3
 	use_power_cost = 1500
 
-/obj/item/rig_module/teleporter_stabilizer/proc/calculate_cost(dangerous = FALSE)
+/obj/item/rig_module/teleporter_stabilizer/proc/calculate_cost(dangerous_coeff)
 	var/cost = use_power_cost
 	if(damage > MODULE_NO_DAMAGE)
 		cost *= 1.25
-	if(dangerous)
-		cost *= 2
-	return cost
+	return cost * dangerous_coeff
 
 /obj/item/rig_module/teleporter_stabilizer/proc/base_check()
 	var/mob/living/carbon/human/H = holder.wearer
@@ -383,21 +381,12 @@
 		return FALSE
 	return TRUE
 
-/obj/item/rig_module/teleporter_stabilizer/proc/stabilize_precision()
+/obj/item/rig_module/teleporter_stabilizer/proc/stabilize_teleportation(dangerous_coeff = 1)
 	if(!base_check())
 		return FALSE
-	var/cost = calculate_cost()
+	var/cost = calculate_cost(dangerous_coeff)
 	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
-		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Bluespace interference removed. Cell charge used: [cost].</span>")
-		return TRUE
-	return FALSE
-
-/obj/item/rig_module/teleporter_stabilizer/proc/remove_side_effects(dangerous = FALSE)
-	if(!base_check())
-		return FALSE
-	var/cost = calculate_cost(dangerous)
-	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
-		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Negative health effects removed. Cell charge used: [cost].</span>")
+		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Cell charge used: [cost].</span>")
 		return TRUE
 	return FALSE
 
