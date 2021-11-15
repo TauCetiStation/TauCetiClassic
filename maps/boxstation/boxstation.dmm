@@ -18837,7 +18837,7 @@
 	dir = 10;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "aHj" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -18933,7 +18933,7 @@
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "aHv" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
@@ -19198,17 +19198,8 @@
 	},
 /area/station/rnd/storage)
 "aHZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/turf/simulated/wall,
+/area/station/medical/sleeper)
 "aIb" = (
 /obj/structure/table,
 /obj/item/device/radio/intercom{
@@ -31977,7 +31968,7 @@
 	dir = 4;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bfb" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -32021,11 +32012,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -32080,11 +32066,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/sign/departments/security{
 	pixel_y = 32
 	},
@@ -32092,7 +32073,7 @@
 	dir = 9;
 	icon_state = "redfull"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bfl" = (
 /obj/machinery/alarm{
 	pixel_y = 24
@@ -32591,32 +32572,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bgl" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	level = 4;
-	name = "Medbay Security Checkpoint APC";
-	pixel_x = 25
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bgm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -34750,7 +34716,7 @@
 	dir = 5;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bkI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -34772,7 +34738,7 @@
 	dir = 6;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bkJ" = (
 /obj/machinery/light{
 	dir = 8
@@ -41771,10 +41737,6 @@
 	},
 /area/station/medical/hallway)
 "bxu" = (
-/obj/machinery/power/apc{
-	name = "Treatment Center APC";
-	pixel_y = -25
-	},
 /obj/structure/stool/bed/roller,
 /obj/item/weapon/flora/random,
 /obj/structure/reagent_dispensers/cleaner{
@@ -43191,7 +43153,7 @@
 	dir = 5;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bAg" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = -32
@@ -43528,7 +43490,7 @@
 	dir = 4;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bAU" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/hor)
@@ -47041,16 +47003,11 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bHQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -47118,7 +47075,7 @@
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bHY" = (
 /turf/simulated/wall,
 /area/station/medical/medbreak)
@@ -48486,7 +48443,7 @@
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bKN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -48719,7 +48676,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bLC" = (
 /obj/machinery/optable,
 /obj/machinery/firealarm{
@@ -48822,7 +48779,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bLP" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
@@ -51766,7 +51723,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "bTL" = (
 /obj/structure/closet/secure_closet/medical1{
 	name = "Cryogenics APC"
@@ -52207,7 +52164,7 @@
 "bVa" = (
 /obj/structure/sign/warning/nosmoking,
 /turf/simulated/wall,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bVb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -52246,7 +52203,7 @@
 "bVg" = (
 /obj/structure/sign/departments/medbay/lifestar,
 /turf/simulated/wall,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "bVh" = (
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
@@ -54275,7 +54232,7 @@
 "cbb" = (
 /obj/structure/sign/departments/examroom,
 /turf/simulated/wall,
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "cbd" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -61725,17 +61682,10 @@
 	},
 /area/station/security/armoury)
 "ctJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/medical/sleeper)
 "ctK" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -62462,7 +62412,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "cvM" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Port Solar Access";
@@ -62957,13 +62907,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "cxz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -63608,7 +63553,7 @@
 	dir = 1;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "czh" = (
 /obj/machinery/shield_gen,
 /turf/simulated/floor/plating,
@@ -63668,7 +63613,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "czu" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -63712,7 +63657,7 @@
 	dir = 10;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "czB" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -69051,7 +68996,7 @@
 	dir = 1;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "dxv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -69581,7 +69526,7 @@
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "ejR" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -69813,11 +69758,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -70194,11 +70134,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -70957,7 +70892,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "fWG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -71627,7 +71562,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "gMY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -72954,7 +72889,7 @@
 	dir = 8;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "itt" = (
 /obj/item/weapon/table_parts/wood/fancy,
 /obj/effect/decal/cleanable/blood/oil,
@@ -73995,7 +73930,7 @@
 	dir = 9;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "jIb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/red,
@@ -74005,7 +73940,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "jJb" = (
 /obj/structure/table/glass,
 /obj/machinery/power/apc{
@@ -74071,7 +74006,7 @@
 	dir = 9;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "jNL" = (
 /obj/item/seeds/berryseed,
 /obj/machinery/hydroponics/constructable,
@@ -74104,7 +74039,7 @@
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "jQu" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor{
@@ -74254,7 +74189,7 @@
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "kda" = (
 /obj/machinery/door/airlock{
 	name = "Starboard Emergency Storage"
@@ -74398,7 +74333,7 @@
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "knK" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -74511,7 +74446,7 @@
 	dir = 8;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "ktd" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -75471,7 +75406,7 @@
 	dir = 6;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "lFl" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -75801,7 +75736,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "mah" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -75880,7 +75815,7 @@
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/checkpoint)
+/area/station/medical/sleeper)
 "mhb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'VACUUM'";
@@ -76867,7 +76802,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/security/checkpoint)
+/area/station/medical/reception_hall)
 "nAY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78797,19 +78732,6 @@
 	icon_state = "blue"
 	},
 /area/station/bridge/hop_office)
-"pRb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/medical/reception_hall)
 "pRn" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -79113,16 +79035,6 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
-"qlb" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/medical/reception_hall)
 "qll" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -120215,8 +120127,8 @@ bbG
 cpX
 bjk
 cvk
-pRb
-qlb
+bfV
+cvk
 eWb
 qNb
 qNb
@@ -120988,8 +120900,8 @@ bVa
 czt
 bfk
 czt
-cgt
-cgt
+aHZ
+aHZ
 kmb
 bKM
 bTK
@@ -121245,7 +121157,7 @@ bVg
 jHb
 bgk
 czz
-cgt
+aHZ
 jNb
 ktb
 itb
@@ -121498,7 +121410,7 @@ bLL
 aTZ
 bbG
 cpX
-aHZ
+auG
 jIb
 cxy
 jPb
@@ -121761,7 +121673,7 @@ bHP
 ejb
 gMb
 dxb
-csj
+ctJ
 bLO
 bHX
 bkV
@@ -122012,11 +121924,11 @@ bLM
 bNd
 bic
 cpX
-ctJ
+avf
 bkH
 bgl
 bkI
-cgt
+aHZ
 bAf
 bAT
 bfa
@@ -122273,11 +122185,11 @@ qub
 qub
 qub
 qub
-cgt
+aHZ
 cbb
 mgb
 kcb
-cgt
+aHZ
 bkV
 bkV
 aUQ
