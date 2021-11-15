@@ -463,6 +463,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Patient Room Three"
 	icon_state = "patients"
 
+/area/station/medical/patient_d
+	name = "Patient Room Four"
+	icon_state = "patients"
+
 /area/station/medical/cmo
 	name = "Chief Medical Officer's office"
 	icon_state = "CMO"
