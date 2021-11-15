@@ -475,7 +475,7 @@
 		|Byond profile: <a href='[player_byond_profile]'>open</a>
 		|Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"})
 
-		message_admins(adminmsg)
+		message_admins(adminmsg, emphasize = TRUE)
 
 	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
 		var/mentormsg = trim_margin({"
@@ -484,7 +484,7 @@
 		|Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
 		|Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"})
 
-		message_mentors(mentormsg, 1)
+		message_mentors(mentormsg, TRUE, TRUE)
 
 // Better get_dir proc
 /proc/get_general_dir(atom/Loc1, atom/Loc2)
