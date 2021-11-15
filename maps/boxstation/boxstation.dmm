@@ -67588,14 +67588,10 @@
 	},
 /area/station/medical/hallway)
 "cKD" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -67604,6 +67600,10 @@
 	c_tag = "Virology Access";
 	dir = 1;
 	network = list("SS13","Medical")
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 3;
@@ -67722,11 +67722,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 3;
@@ -69960,6 +69961,15 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"eHZ" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/medical/virology)
 "eIB" = (
 /obj/structure/closet/wardrobe/medic_white,
 /obj/item/weapon/cane,
@@ -71824,6 +71834,18 @@
 	},
 /turf/space,
 /area/shuttle/mining/station)
+"gVc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/station/medical/virology)
 "gWb" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
@@ -73798,6 +73820,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitegreen"
@@ -74776,11 +74801,12 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "kCR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/effect/landmark/start{
 	name = "Virologist"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -76559,6 +76585,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
+"mVB" = (
+/obj/machinery/meter{
+	pixel_x = 32;
+	pixel_y = 64
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/station/medical/virology)
 "mWb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -79255,14 +79290,16 @@
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
 "qlb" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitegreen"
+	},
 /area/station/medical/virology)
 "qll" = (
 /obj/item/weapon/storage/fancy/vials,
@@ -80454,6 +80491,10 @@
 	},
 /area/station/medical/chemistry)
 "rFb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -80683,6 +80724,8 @@
 	},
 /area/station/civilian/chapel)
 "rSb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitegreen"
@@ -80692,10 +80735,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/meter{
-	pixel_x = 32;
-	pixel_y = 32
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -80703,10 +80742,15 @@
 /area/station/medical/virology)
 "rUb" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
+	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/virology)
 "rVb" = (
 /obj/structure/table/glass,
@@ -80719,6 +80763,16 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
+/area/station/medical/virology)
+"rVi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/wall/r_wall,
 /area/station/medical/virology)
 "rWb" = (
 /obj/structure/extinguisher_cabinet{
@@ -80894,9 +80948,20 @@
 	},
 /area/station/medical/virology)
 "shb" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/wall/r_wall,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/virology)
 "shv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -80930,13 +80995,13 @@
 /area/station/medical/virology)
 "skb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
-	dir = 1;
+	dir = 8;
 	external_pressure_bound = 140;
 	external_pressure_bound_default = 140;
 	name = "(OUT) Space Large Air Vent"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
+	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/airless,
@@ -81129,8 +81194,8 @@
 	},
 /area/station/medical/virology)
 "stb" = (
-/obj/structure/lattice,
-/turf/space,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
 /area/station/medical/virology)
 "stq" = (
 /obj/structure/window/reinforced,
@@ -81440,13 +81505,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "sMW" = (
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/virology)
 "sNb" = (
 /obj/structure/table/glass,
@@ -81971,6 +82038,17 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/checkpoint)
+"tqn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/virology)
 "txp" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -123653,10 +123731,10 @@ enG
 eoR
 faf
 fvH
-pzg
+qlb
 rFb
 kCR
-rFb
+sMW
 rRb
 ckA
 ckA
@@ -123911,9 +123989,9 @@ ckA
 ckA
 ckA
 jqT
-rFb
-rFb
-rFb
+rUb
+shb
+tqn
 iJQ
 sPb
 wgF
@@ -124170,7 +124248,7 @@ ckA
 afx
 rkb
 rwb
-bLQ
+gVc
 rSb
 sib
 sjb
@@ -125714,8 +125792,8 @@ kzr
 ltO
 ohR
 rTb
-ckA
-ckA
+mVB
+rVi
 goG
 ckA
 goG
@@ -125970,11 +126048,11 @@ ckA
 ckA
 ckA
 ckA
-qlb
-shb
+goG
+ckA
 skb
 stb
-aaa
+eHZ
 aah
 aaa
 aaa
@@ -126229,8 +126307,8 @@ aaa
 aaa
 aaa
 aaa
-rUb
-sMW
+aah
+aaa
 aaa
 aah
 aaa
