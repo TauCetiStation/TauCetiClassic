@@ -596,4 +596,9 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/structure/sign/poster/official/sivtsev
+	name = "Sivtsev's chart"
+	desc = "This is an eye chart that can be used to measure visual acuity.."
+	icon_state = "Sivtsev's chart"
+
 #undef PLACE_SPEED
