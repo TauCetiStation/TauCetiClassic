@@ -23,6 +23,10 @@
 		return
 	if(isanycop(user))
 		to_chat(user, "As a NanoTrasen officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
+		to_chat(user, "Gang objectives:")
+		var/obj_count = 1
+		for(var/datum/objective/O in team_to_use.objective_holder.objectives)
+			text += "<b>Objective #[obj_count++]</b>: [O.explanation_text]<br>"
 		for(var/threads in team_to_use.free_clothes)
 			new threads(get_turf(user))
 		qdel(src)
