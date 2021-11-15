@@ -196,7 +196,6 @@
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/sweep_spin)
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)

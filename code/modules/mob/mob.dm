@@ -931,6 +931,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
@@ -963,6 +964,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
 
 // =============================
 
@@ -1047,7 +1055,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
