@@ -1,5 +1,4 @@
 #define FORWARD -1
-#define NONE 0
 #define BACKWARD 1
 
 /datum/construction
@@ -107,7 +106,7 @@
 		return FORWARD //to the first step -> forward
 	else if(L["backkey"] && istype(used_atom, L["backkey"]))
 		return BACKWARD //to the last step -> backwards
-	return NONE
+	return 0
 
 /datum/construction/reversible/check_step(atom/used_atom,mob/user)
 	var/diff = is_right_key(used_atom)
@@ -119,5 +118,3 @@
 
 /datum/construction/reversible/custom_action(index, diff, used_atom, user)
 	return TRUE
-
-#undef NONE
