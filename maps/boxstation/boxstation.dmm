@@ -73933,8 +73933,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/medical/glass{
-	name = "Patients Room";
-	req_access = list(5)
+	name = "Patients Room"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -77758,8 +77757,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Patient Room 1";
-	req_access = null
+	name = "Patient Room 1"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -79168,8 +79166,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Patient Room 2";
-	req_access = null
+	name = "Patient Room 2"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -83383,8 +83380,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Patient Room 3";
-	req_access = null
+	name = "Patient Room 3"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
