@@ -282,3 +282,6 @@
 // Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+#define X_OFFSET(n, d) (n * (!!(d & EAST) + !!(d & WEST) * -1))
+#define Y_OFFSET(n, d) (n * (!!(d & NORTH) + !!(d & SOUTH) * -1))
