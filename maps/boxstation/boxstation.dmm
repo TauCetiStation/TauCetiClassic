@@ -48661,7 +48661,7 @@
 /area/station/maintenance/atmos)
 "bLA" = (
 /obj/machinery/computer/operating{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
