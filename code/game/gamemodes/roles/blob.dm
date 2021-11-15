@@ -7,6 +7,7 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 	restricted_species_flags = list(IS_SYNTHETIC)
+	disallow_job = TRUE
 
 /datum/role/blob_overmind/cerebrate
 	name = BLOBCEREBRATE
@@ -49,8 +50,8 @@
 	var/client/blob_client = null
 	var/turf/location = null
 
-	if(iscarbon(antag.current))
-		var/mob/living/carbon/C = antag.current
+	if(isliving(antag.current))
+		var/mob/living/C = antag.current
 		if(directory[ckey(antag.key)])
 			blob_client = directory[ckey(antag.key)]
 			location = get_turf(C)
