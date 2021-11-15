@@ -15,5 +15,5 @@
 
 	var/mob/candidate = pick(candidates)
 
-	var/obj/effect/blob/core/B = new /obj/effect/blob/core(T, 120, candidate.client)
+	var/obj/effect/blob/core/B = new /obj/effect/blob/core(T, candidate.client, 120)
 	message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
