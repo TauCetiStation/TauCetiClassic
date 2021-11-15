@@ -5078,7 +5078,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/storage/visuals/surgery,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	level = 4;
 	name = "Operating Theatre One APC";
 	pixel_x = -25
@@ -5691,7 +5691,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer1";
 	name = "Medbay";
-	req_access = list(5)
+	req_one_access = list(1,5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -18222,10 +18222,10 @@
 	},
 /area/station/medical/hallway)
 "aFZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
@@ -26132,10 +26132,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUU" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_one_access = list(12,37)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -26145,6 +26141,17 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
+	req_access = list(5)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
@@ -32594,7 +32601,7 @@
 /area/station/security/checkpoint)
 "bgl" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Medbay Security Checkpoint APC";
 	pixel_x = 25
@@ -33325,14 +33332,13 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bhM" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Supplies";
+	req_access = list(72)
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -33856,6 +33862,7 @@
 /area/station/maintenance/eva)
 "biM" = (
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Genetics Lab APC";
 	pixel_y = 25
@@ -34758,7 +34765,7 @@
 	pixel_y = 4
 	},
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -30
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -35661,12 +35668,12 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "bmh" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
+	name = "Infectious ward";
 	req_access = list(5)
 	},
 /obj/structure/curtain/medical,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -36536,14 +36543,14 @@
 	name = "Medbay Reception";
 	req_access = list(5)
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/machinery/power/apc{
-	dir = 1;
 	level = 4;
 	name = "Medbay Reception APC";
 	pixel_y = -25
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -39640,12 +39647,11 @@
 	name = "Cyborg Station"
 	})
 "btS" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
+	name = "Medical Hall";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -39791,6 +39797,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/storage/visuals/surgery,
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Operating Theatre Two APC";
 	pixel_y = 25
@@ -43164,9 +43171,10 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 1;
 	level = 4;
 	name = "Patient Room One APC";
+	pixel_x = -6;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -44704,10 +44712,10 @@
 	name = "Operating Theatre 2";
 	req_access = list(45)
 	},
+/obj/structure/curtain/medical,
 /obj/machinery/holosign/surgery{
 	id = "op2"
 	},
-/obj/structure/curtain/medical,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -44933,6 +44941,13 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45525,14 +45540,13 @@
 	},
 /area/station/rnd/lab)
 "bFh" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Reception";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -45978,9 +45992,6 @@
 	},
 /area/station/rnd/robotics)
 "bGe" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -45992,6 +46003,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -46026,7 +46040,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "Break Room APC";
 	pixel_x = 28
 	},
@@ -46053,9 +46067,6 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -46066,6 +46077,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -46486,6 +46500,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "bGP" = (
@@ -46617,11 +46638,11 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bHb" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access = list(5,33)
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Supplies";
+	req_access = list(72)
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -46665,11 +46686,6 @@
 	},
 /area/station/aisat/antechamber_interior)
 "bHg" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "Genetics";
-	name = "Cloning Lab";
-	req_access = list(5,9)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -46681,6 +46697,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "Genetics";
+	name = "Cloning Lab";
+	req_one_access = list(5,9)
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -46859,11 +46880,6 @@
 	},
 /area/station/rnd/mixing)
 "bHy" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -46875,6 +46891,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Hall";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -47150,10 +47170,10 @@
 	name = "Operating Theatre 1";
 	req_access = list(45)
 	},
+/obj/structure/curtain/medical,
 /obj/machinery/holosign/surgery{
 	id = "op1"
 	},
-/obj/structure/curtain/medical,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -47447,16 +47467,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bID" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access = list(5,33)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Supplies";
+	req_access = list(72)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -48057,6 +48077,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bJV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -48452,7 +48475,14 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer2";
 	name = "Medbay";
-	req_access = list(5)
+	req_one_access = list(1,5)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -48610,6 +48640,7 @@
 	req_access = list(5)
 	},
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Medbay Paramedic Checkpoint APC";
 	pixel_y = 25
@@ -48618,6 +48649,10 @@
 	c_tag = "Medbay Staff Hall";
 	dir = 6;
 	network = list("SS13","Medical")
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -49575,7 +49610,7 @@
 /area/station/civilian/garden)
 "bNV" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Therapist Cabinet APC";
 	pixel_x = 25
@@ -50372,7 +50407,7 @@
 /area/station/medical/staff_hallway)
 "bQd" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	level = 4;
 	name = "Medbay Staff Hall APC";
 	pixel_x = -25
@@ -51743,9 +51778,9 @@
 	name = "Cryogenics APC"
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 1;
 	level = 4;
-	name = "Patient Room One APC";
+	name = "Cryogenics APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -53155,11 +53190,18 @@
 "bXM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(5,6)
+	req_one_access = list(6,28)
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -54153,10 +54195,6 @@
 /turf/simulated/wall,
 /area/station/medical/psych)
 "caL" = (
-/obj/machinery/door/airlock/medical{
-	name = "Morgue";
-	req_access = list(5,6)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
@@ -54166,6 +54204,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access = list(5,6)
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -61904,6 +61946,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Psychologist Cabinet APC";
 	pixel_y = 25
@@ -64131,8 +64174,15 @@
 /area/station/engineering/engine)
 "cAx" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_one_access = list(12,37)
+	name = "Medbay Maintenance";
+	req_access = list(5)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -66434,6 +66484,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -66448,11 +66503,6 @@
 	},
 /area/station/hallway/primary/aft)
 "cGB" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -66464,6 +66514,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Therapist Cabinet";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -66960,6 +67014,11 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/machinery/door_control{
+	id = "Genetics";
+	name = "Genetics";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -67370,6 +67429,13 @@
 	req_one_access = list(9,12,47)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/hallway/outbranch)
 "cJC" = (
@@ -68433,10 +68499,9 @@
 /area/station/security/hos)
 "cNc" = (
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
+	name = "Infectious ward";
 	req_access = list(5)
 	},
-/obj/structure/curtain/medical,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
@@ -68446,6 +68511,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/structure/curtain/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -70804,7 +70870,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Medbay Reception Hall APC";
 	pixel_x = 25
@@ -71038,11 +71104,11 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ghb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(5,6)
+	req_one_access = list(6,28)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -71191,6 +71257,13 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/hallway/outbranch)
 "gpG" = (
@@ -71850,14 +71923,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "heT" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	req_access = list(5)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -72045,6 +72123,7 @@
 /area/station/civilian/library)
 "hrN" = (
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Infectious disease Hall APC";
 	pixel_y = 25
@@ -72414,6 +72493,17 @@
 	icon_state = "escape"
 	},
 /area/station/hallway/secondary/exit)
+"hQO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/staff_hallway)
 "hRb" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -72693,7 +72783,7 @@
 "igc" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Medbay Storage APC";
 	pixel_x = 25
@@ -73834,11 +73924,6 @@
 	},
 /area/station/hallway/primary/starboard)
 "jCb" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
@@ -73846,6 +73931,10 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Patients Room";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -73905,6 +73994,7 @@
 "jJb" = (
 /obj/structure/table/glass,
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Patients Room APC";
 	pixel_y = 25
@@ -74099,6 +74189,7 @@
 /area/station/maintenance/medbay)
 "kab" = (
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Morgue APC";
 	pixel_y = 25
@@ -74281,7 +74372,14 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer2";
 	name = "Medbay";
-	req_access = list(5)
+	req_one_access = list(1,5)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -74817,12 +74915,17 @@
 /turf/simulated/wall/r_wall,
 /area/station/medical/chemistry)
 "kUb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -74919,8 +75022,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "warningline"
+	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
 "ldb" = (
@@ -75010,13 +75112,12 @@
 	},
 /area/station/civilian/locker)
 "llb" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Hall";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -75073,11 +75174,6 @@
 	},
 /area/station/medical/surgery)
 "lpb" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
@@ -75086,6 +75182,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Hall";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -75574,12 +75674,11 @@
 	},
 /area/station/medical/cmo)
 "lTb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
+	name = "Medical Hall";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -75773,6 +75872,12 @@
 /area/station/maintenance/engineering)
 "mhG" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/door_control{
+	id = "Medical_Quarantine";
+	name = "Quarantine";
+	pixel_x = -5;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -76107,7 +76212,7 @@
 /area/station/maintenance/medbay)
 "mGb" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	level = 4;
 	name = "Hospital APC";
 	pixel_x = -25
@@ -76491,7 +76596,7 @@
 /area/station/maintenance/medbay)
 "nkA" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Chemistry APC";
 	pixel_x = 25
@@ -77047,6 +77152,7 @@
 /area/station/medical/hallway)
 "nUb" = (
 /obj/machinery/power/apc{
+	dir = 1;
 	level = 4;
 	name = "Medbay Main Hall APC";
 	pixel_y = 25
@@ -77652,8 +77758,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access = list(5)
+	name = "Patient Room 1";
+	req_access = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -77792,10 +77898,6 @@
 	},
 /area/station/medical/chemistry)
 "oLv" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access = list(5,33)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
@@ -77803,6 +77905,10 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemistry Lab";
+	req_access = list(5,33)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -77842,12 +77948,19 @@
 	},
 /area/station/civilian/kitchen)
 "oNd" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Surgery Maintenance";
-	req_access = list(45)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
+	req_access = list(72)
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "oPb" = (
@@ -78478,7 +78591,7 @@
 /area/station/maintenance/cargo)
 "pAe" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	level = 4;
 	name = "Chief Medical Officer's APC";
 	pixel_x = 25
@@ -79055,8 +79168,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access = list(5)
+	name = "Patient Room 2";
+	req_access = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -80859,11 +80972,6 @@
 	},
 /area/station/medical/staff_hallway)
 "swb" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer1";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -80875,6 +80983,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Hall";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -81935,8 +82047,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
+	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
 "uab" = (
@@ -82456,6 +82567,13 @@
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -82679,6 +82797,16 @@
 	icon_state = "platingdmg1"
 	},
 /area/station/maintenance/medbay)
+"vzZ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Hall";
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/station/medical/staff_hallway)
 "vBO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -82712,6 +82840,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
+"vMb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/staff_hallway)
 "vMJ" = (
 /turf/simulated/wall,
 /area/station/medical/infectious_disease_ward)
@@ -83238,8 +83383,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access = list(5)
+	name = "Patient Room 3";
+	req_access = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -83248,10 +83393,17 @@
 "wTx" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Surgery Maintenance";
-	req_access = list(45)
+	req_access = list(5,33)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "wYU" = (
@@ -83419,11 +83571,18 @@
 	},
 /area/station/bridge/hop_office)
 "xDr" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
 	req_access = list(5,33)
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Quarantine";
+	name = "Quarantine Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteyellowfull"
@@ -119272,7 +119431,7 @@ bLS
 bLS
 bIU
 mSu
-ooy
+vMb
 bQc
 ooy
 bbE
@@ -119529,7 +119688,7 @@ bul
 bxo
 mfb
 rgU
-szT
+hQO
 aHv
 bSv
 cCV
@@ -121075,7 +121234,7 @@ tLL
 knK
 tLL
 swb
-kUb
+vzZ
 qhb
 qhb
 qhb
