@@ -372,7 +372,7 @@
 /obj/item/rig_module/teleporter_stabilizer/proc/base_check()
 	var/cost = use_power_cost
 	if (damage >= MODULE_DESTROYED)
-		return FALSE
+		return 0
 	if (damage > MODULE_NO_DAMAGE)
 		cost *= 1.25
 	return cost
@@ -384,6 +384,7 @@
 	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
 		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Bluespace interference removed. Cell charge used: [cost].</span>")
 		return TRUE
+	return FALSE
 
 /obj/item/rig_module/teleporter_stabilizer/proc/remove_side_effects(dangerous = FALSE)
 	var/cost = base_check()
@@ -394,6 +395,7 @@
 	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
 		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Negative health effects removed. Cell charge used: [cost].</span>")
 		return TRUE
+	return FALSE
 
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
