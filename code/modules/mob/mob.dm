@@ -333,6 +333,11 @@
 	if (istype(A, /obj/effect/decal/point))
 		return
 
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
+		return
+
 	var/tile = get_turf(A)
 	if (!tile)
 		return
