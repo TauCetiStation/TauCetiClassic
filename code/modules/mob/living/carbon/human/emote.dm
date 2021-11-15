@@ -453,7 +453,7 @@
 				if(!auto)
 					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
 
-	RPS_animation(act)
+	play_rock_paper_scissors_animation(act)
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)

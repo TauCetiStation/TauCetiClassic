@@ -1,4 +1,4 @@
-/atom/movable/proc/RPS_animation(choice)
+/atom/movable/proc/play_rock_paper_scissors_animation(choice)
 	var/choice_icon
 	var/choice_icon_state
 	switch(choice)
