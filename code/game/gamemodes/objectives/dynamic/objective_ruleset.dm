@@ -135,6 +135,6 @@
 		objective.conflicting_types -= type
 		return list(create_objective(type))
 
-	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) + /datum/objective/target/assassinate/kill_head - /datum/objective/gang/points
+	var/list/gang_objectives_types = subtypesof(/datum/objective/gang) - /datum/objective/gang/points
 	var/picked_type = pick(gang_objectives_types)
 	return list(create_objective(picked_type))
