@@ -14,6 +14,7 @@
 
 	var/datum/station_state/start
 
+	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
 	var/declared = FALSE
 	var/blobwincount = 0
@@ -23,6 +24,11 @@
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
+
+	spawn_locs += get_vents()
+	if(spawn_locs.len < max_roles)
+		// we were unable to setup because we didn't have enough spawn locations
+		return FALSE
 	return TRUE
 
 // -- Victory procs --
@@ -72,7 +78,16 @@
 	start.count()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	spawn_blob_mice()
 	return ..()
+
+/datum/faction/blob_conglomerate/proc/spawn_blob_mice()
+	for(var/datum/role/R in members)
+		var/V = pick_n_take(spawn_locs)
+		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
+		R.antag.transfer_to(M)
+		QDEL_NULL(R.antag.original)
+		M.add_ventcrawl(V)
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
 	blobwincount = 500 * max_roles
