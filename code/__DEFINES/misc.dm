@@ -285,6 +285,6 @@
 
 // Calculates the offset n in the dir d.
 // For example, if you pass a non-horizontal dir to X_OFFSET, it will always be 0.
-// If dir is NORTH, then a positive number will be returned, if SOUTH, then a negative one.
+// If dir is EAST, then a positive number will be returned, if WEST, then a negative one.
 #define X_OFFSET(n, d) (n * (!!(d & EAST) + !!(d & WEST) * -1))
 #define Y_OFFSET(n, d) (n * (!!(d & NORTH) + !!(d & SOUTH) * -1))
