@@ -483,6 +483,12 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/GetFactionFromRoleByType(type)
+	var/datum/role/R = GetRoleByType(type)
+	if(R)
+		return R.GetFaction()
+	return FALSE
+
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)

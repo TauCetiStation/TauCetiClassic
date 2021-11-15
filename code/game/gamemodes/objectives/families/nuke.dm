@@ -25,7 +25,6 @@
 		/datum/objective/gang/waste_nuke,
 	)
 
-
 /datum/objective/gang/steal_nuke/check_completion()
 	for (var/obj/machinery/nuclearbomb/NUKE in poi_list)
 		if(is_type_in_list(get_area(NUKE), centcom_shuttle_areas))
