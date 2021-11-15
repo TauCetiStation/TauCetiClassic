@@ -68547,6 +68547,22 @@
 	icon_state = "white"
 	},
 /area/station/security/forensic_office)
+"cXi" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "patients_room"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/patients_rooms)
 "cXq" = (
 /obj/machinery/door/airlock/virology{
 	name = "Patient Room 4"
@@ -69384,6 +69400,22 @@
 	icon_state = "white"
 	},
 /area/station/medical/genetics)
+"dYf" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "patients_room"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/patients_rooms)
 "dZb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
@@ -70680,6 +70712,22 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/security/brig)
+"fGs" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "patients_room"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/patients_rooms)
 "fHb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -74114,6 +74162,11 @@
 /area/station/civilian/kitchen)
 "jRb" = (
 /obj/structure/stool/bed,
+/obj/machinery/windowtint{
+	id = "patients_room";
+	pixel_x = -6;
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -83575,6 +83628,22 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
+"wPd" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "patients_room"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "patients_room"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/patients_rooms)
 "wQY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -122972,7 +123041,7 @@ bjt
 bNe
 bcb
 cpX
-fUb
+fGs
 eGb
 fPb
 eGb
@@ -123229,7 +123298,7 @@ bjt
 bNd
 bcb
 cpX
-gab
+wPd
 cwJ
 fPb
 eGb
@@ -123743,7 +123812,7 @@ bjt
 bNd
 bcb
 cpX
-fUb
+dYf
 bjp
 cwM
 eGb
@@ -124000,7 +124069,7 @@ bjt
 bNd
 bcb
 cpX
-gab
+cXi
 eGb
 cwM
 eGb
