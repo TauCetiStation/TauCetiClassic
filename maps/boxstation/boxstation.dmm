@@ -55009,6 +55009,10 @@
 /obj/machinery/light_switch{
 	pixel_y = -26
 	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner"
+	},
 /turf/simulated/floor{
 	icon_state = "whiteyellow"
 	},
