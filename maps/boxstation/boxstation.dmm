@@ -5085,7 +5085,7 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/space)
 "aiE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -19171,18 +19171,6 @@
 	icon_state = "yellow"
 	},
 /area/station/storage/tools)
-"aId" = (
-/obj/structure/table,
-/obj/item/weapon/circular_saw{
-	pixel_y = 10
-	},
-/obj/item/weapon/scalpel,
-/obj/item/weapon/storage/visuals/surgery,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor{
-	icon_state = "whitehall"
-	},
-/area/station/medical/surgery)
 "aIe" = (
 /obj/structure/sign/warning/biohazard,
 /turf/simulated/wall/r_wall,
@@ -25131,7 +25119,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery)
+/area/space)
 "aTi" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -33641,7 +33629,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery)
+/area/space)
 "biz" = (
 /obj/machinery/computer/station_alert{
 	dir = 4
@@ -36827,7 +36815,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery)
+/area/space)
 "boK" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -43922,10 +43910,6 @@
 /obj/structure/device/piano/royal,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"bCe" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/simulated/wall,
-/area/station/medical/surgery2)
 "bCf" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -43967,7 +43951,7 @@
 	id = "op2"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery2)
+/area/space)
 "bCl" = (
 /obj/structure/window/reinforced/polarized{
 	dir = 4;
@@ -43990,7 +43974,7 @@
 	id = "op2"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery2)
+/area/space)
 "bCm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -45593,7 +45577,7 @@
 	pixel_y = 25
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/space)
 "bFu" = (
 /obj/machinery/light/small,
 /obj/structure/stool/bed/chair/schair/wagon{
@@ -46281,7 +46265,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery)
+/area/space)
 "bGB" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -46452,7 +46436,7 @@
 	id = "op2"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery2)
+/area/space)
 "bGQ" = (
 /obj/machinery/door/airlock{
 	name = "Honk Office";
@@ -46486,7 +46470,7 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/space)
 "bGS" = (
 /obj/structure/table,
 /obj/item/weapon/circular_saw{
@@ -46498,7 +46482,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "bGT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -47095,7 +47079,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery)
+/area/space)
 "bId" = (
 /obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor{
@@ -47228,19 +47212,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"bIq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/medical/surgery2)
 "bIr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
@@ -47265,7 +47236,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "bIs" = (
 /obj/structure/sign/warning/securearea,
 /turf/simulated/wall/r_wall,
@@ -47694,7 +47665,7 @@
 	id = "op2"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery2)
+/area/space)
 "bJn" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -48048,7 +48019,7 @@
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "bKb" = (
 /obj/machinery/light{
 	dir = 1
@@ -48639,7 +48610,7 @@
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/space)
 "bLB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -48660,7 +48631,7 @@
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/space)
 "bLD" = (
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -53498,7 +53469,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery)
+/area/space)
 "bYK" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder,
@@ -68450,8 +68421,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery{
-	})
+/area/space)
 "cNh" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
@@ -69113,7 +69083,7 @@
 "dFq" = (
 /obj/structure/sign/warning/nosmoking/circle,
 /turf/simulated/wall,
-/area/station/medical/surgery)
+/area/space)
 "dGG" = (
 /obj/structure/closet/l3closet/general,
 /obj/item/clothing/mask/gas/coloured,
@@ -71084,7 +71054,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery)
+/area/space)
 "gaQ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -72123,8 +72093,7 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery2{
-	})
+/area/space)
 "hlb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -74892,7 +74861,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "kKb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -75307,7 +75276,7 @@
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/space)
 "lpb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -75841,7 +75810,7 @@
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "lTb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -78762,7 +78731,7 @@
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery2)
+/area/space)
 "pAG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -80759,9 +80728,6 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/break_room)
-"rXd" = (
-/turf/simulated/wall,
-/area/station/medical/surgery2)
 "rXf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -80837,7 +80803,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/surgery)
+/area/space)
 "sdb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -81255,9 +81221,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/staff_hallway)
-"sAb" = (
-/turf/simulated/wall,
-/area/station/medical/surgery)
 "sBb" = (
 /obj/machinery/camera{
 	c_tag = "Medical Break Room";
@@ -81291,16 +81254,11 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/space)
 "sCd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"sDb" = (
-/obj/structure/closet/secure_closet/medical2,
-/obj/item/clothing/under/patient_gown,
-/turf/simulated/floor,
-/area/station/medical/surgery)
 "sEb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -81324,7 +81282,7 @@
 /obj/structure/closet/secure_closet/medical2,
 /obj/item/clothing/under/patient_gown,
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/space)
 "sFj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -82561,7 +82519,7 @@
 	pixel_y = -9
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery)
+/area/space)
 "uqD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -83000,7 +82958,7 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/space)
 "vpB" = (
 /obj/effect/landmark/start{
 	name = "Medical Doctor"
@@ -83014,7 +82972,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/space)
 "vqK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -123367,10 +123325,10 @@ rAb
 rAb
 mYb
 rpb
-sAb
-sAb
-sAb
-sAb
+bkb
+bkb
+bkb
+bkb
 dFq
 pYp
 hPK
@@ -123624,11 +123582,11 @@ bKg
 rAb
 bPx
 rtb
-sAb
+bkb
 bix
 aiD
 boJ
-sAb
+bkb
 hrN
 rqW
 lXb
@@ -123882,10 +123840,10 @@ rAb
 aFY
 bKc
 aTh
-aId
+bGS
 gai
 bLA
-sAb
+bkb
 nIa
 dMb
 oBb
@@ -124142,7 +124100,7 @@ bYG
 sCb
 cNf
 bLC
-sAb
+bkb
 sJb
 lZb
 jqJ
@@ -124396,10 +124354,10 @@ rAb
 bzl
 bKc
 scb
-sDb
+sFb
 loy
 uqr
-sAb
+bkb
 eUb
 llb
 qqk
@@ -124652,11 +124610,11 @@ neb
 neb
 aRW
 iTU
-sAb
+bkb
 bGA
 bIc
-sAb
-sAb
+bkb
+bkb
 fSb
 lZb
 axa
@@ -125680,11 +125638,11 @@ neb
 neb
 nUb
 bFn
-bCe
+bkb
 bGP
 bIr
-rXd
-rXd
+bkb
+bkb
 cXq
 qWX
 aky
@@ -125941,7 +125899,7 @@ bJm
 sFb
 hkj
 vom
-rXd
+bkb
 tfI
 kls
 aky
@@ -126196,9 +126154,9 @@ hKb
 bKc
 bCj
 bGR
-bIq
+cNf
 bKa
-rXd
+bkb
 qAm
 gqu
 aky
@@ -126455,7 +126413,7 @@ bCl
 bGS
 kIr
 lTa
-rXd
+bkb
 pjB
 wEe
 aky
@@ -126708,11 +126666,11 @@ wcE
 vVT
 hKb
 bAx
-rXd
+bkb
 bFt
 pAe
 vqc
-rXd
+bkb
 aky
 aky
 aky
@@ -126965,11 +126923,11 @@ wpf
 bMy
 pzb
 bGf
-rXd
-rXd
-rXd
-rXd
-rXd
+bkb
+bkb
+bkb
+bkb
+bkb
 aky
 kyE
 aky
