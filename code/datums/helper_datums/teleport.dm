@@ -207,6 +207,10 @@
 
 	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
 	if(bagholding.len)
+		var/list/stabilizer = teleatom.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+		for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+			if (s.stabilize_teleportation())
+				return 1
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom

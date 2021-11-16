@@ -5,11 +5,11 @@
 	desc = "How did this get here?"
 	density = FALSE
 	anchored = TRUE
-	var/obj/item/weapon/twohanded/spear/spear = null
+	var/obj/item/weapon/spear/spear = null
 	var/obj/item/organ/external/head/head = null
 	var/image/display_head = null
 
-/obj/structure/headpole/atom_init(mapload, obj/item/organ/external/head/H, obj/item/weapon/twohanded/spear/S)
+/obj/structure/headpole/atom_init(mapload, obj/item/organ/external/head/H, obj/item/weapon/spear/S)
 	. = ..()
 	if(istype(H))
 		head = H
@@ -49,7 +49,7 @@
 			spear.forceMove(get_turf(src))
 			spear = null
 		else
-			new /obj/item/weapon/twohanded/spear(get_turf(src))
+			new /obj/item/weapon/spear(get_turf(src))
 		qdel(src)
 
 /obj/structure/headpole/Destroy()
