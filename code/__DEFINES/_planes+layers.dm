@@ -60,17 +60,22 @@ What is the naming convention for planes or layers?
 	FLOAT_PLANE = -32767
 */
 
-///Plane master controller keys
-#define PLANE_MASTERS_GAME "plane_masters_game"
+//NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
+#define LOWEST_EVER_PLANE -200
 
 #define CLICKCATCHER_PLANE   -99
 
 #define PLANE_SPACE            -95
 #define PLANE_SPACE_PARALLAX   -90
 
+#define GRAVITY_PULSE_PLANE -11
+#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+
 #define FLOOR_PLANE      -2
 #define GAME_PLANE       -1
 #define BLACKNESS_PLANE   0
+
+#define AREA_PLANE 10
 
 #define LIGHTING_PLANE         15
 #define LIGHTING_LAYER         15
@@ -123,3 +128,13 @@ What is the naming convention for planes or layers?
 #define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
 #define PODDOOR_CLOSED_MOD  0.31
 #define FIREDOOR_CLOSED_MOD 0.31
+
+
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 990
+#define RENDER_PLANE_NON_GAME 995
+#define RENDER_PLANE_MASTER 999
+
+
+///Plane master controller keys
+#define PLANE_MASTERS_GAME "plane_masters_game"

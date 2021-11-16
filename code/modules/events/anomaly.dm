@@ -23,11 +23,11 @@
 	var/turf/T = pick(turfs)
 	newAnomaly = new anomaly_type(T)
 
-/datum/event/anomaly/tick()
+/datum/event/anomaly/tick(delta_time)
 	if(QDELETED(newAnomaly))
 		kill()
 		return
-	newAnomaly.anomalyEffect()
+	newAnomaly.anomalyEffect(delta_time)
 
 /datum/event/anomaly/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to blow up.

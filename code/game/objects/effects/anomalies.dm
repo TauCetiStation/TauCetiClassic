@@ -41,17 +41,35 @@
 
 ///////////////////////
 
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/light_352.dmi'
+	icon_state = "light"
+	pixel_x = -176
+	pixel_y = -176
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
 	density = TRUE
 	var/boing = 0
+	///Warp effect holder for displacement filter to "pulse" the anomaly
+	var/atom/movable/warp_effect/warp
 
 /obj/effect/anomaly/grav/atom_init()
 	. = ..()
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
 
-/obj/effect/anomaly/grav/anomalyEffect()
+	warp = new(src)
+	vis_contents += warp
+
+/obj/effect/anomaly/grav/Destroy()
+	vis_contents -= warp
+	warp = null
+	return ..()
+
+/obj/effect/anomaly/grav/anomalyEffect(delta_time)
 	..()
 
 	boing = 1
@@ -60,6 +78,10 @@
 			step_towards(O,src)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
+
+	//anomaly quickly contracts then slowly expands it's ring
+	animate(warp, time = delta_time * 3, transform = matrix().Scale(0.5, 0.5))
+	animate(time = delta_time * 7, transform = matrix())
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)

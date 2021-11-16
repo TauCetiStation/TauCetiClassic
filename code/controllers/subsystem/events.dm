@@ -31,11 +31,11 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/fire()
 	for(var/datum/event/E in active_events)
-		E.process()
+		E.process(wait * 0.1)
 
 	for(var/i in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
-		EC.process()
+		EC.process(wait * 0.1)
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
 	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
