@@ -21906,6 +21906,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -70120,9 +70123,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
-"eQy" = (
-/turf/simulated/floor,
-/area/station/medical/chemistry)
 "eQZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -73189,9 +73189,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
-"ivR" = (
-/turf/simulated/wall,
-/area/station/medical/chemistry)
 "iwb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
@@ -79302,6 +79299,11 @@
 /obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
+"qft" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
+/area/station/medical/chemistry)
 "qgb" = (
 /obj/machinery/door_control{
 	id = "atmos";
@@ -79500,6 +79502,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
+"qni" = (
+/turf/simulated/floor,
+/area/station/medical/chemistry)
 "qob" = (
 /obj/structure/sign/departments/pharmacy,
 /turf/simulated/wall,
@@ -83578,11 +83583,6 @@
 	icon_state = "floorgrime"
 	},
 /area/station/cargo/storage)
-"whI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/station/medical/chemistry)
 "wjJ" = (
 /obj/machinery/door/firedoor,
 /obj/item/device/radio/intercom{
@@ -84267,6 +84267,9 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"xKz" = (
+/turf/simulated/wall,
+/area/station/medical/chemistry)
 "xLc" = (
 /obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
@@ -118290,9 +118293,9 @@ byE
 aPG
 ovb
 aEV
-ivR
-ivR
-ivR
+xKz
+xKz
+xKz
 kTy
 kTy
 kTy
@@ -118805,7 +118808,7 @@ aIR
 ovb
 aRR
 pkO
-eQy
+qni
 sfb
 sMb
 tIL
@@ -119062,7 +119065,7 @@ cro
 bye
 lUb
 qSb
-whI
+qft
 aHk
 sUb
 xDr
@@ -119318,7 +119321,7 @@ tJd
 cxv
 bME
 cMQ
-ivR
+xKz
 mXb
 pjb
 kTy
