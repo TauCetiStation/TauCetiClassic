@@ -71,27 +71,10 @@ What is the naming convention for planes or layers?
 #define GRAVITY_PULSE_PLANE -11
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define FLOOR_PLANE      -2
-#define GAME_PLANE       -1
+#define FLOOR_PLANE -7
+#define GAME_PLANE -4
+
 #define BLACKNESS_PLANE   0
-
-#define AREA_PLANE 10
-
-#define LIGHTING_PLANE         15
-#define LIGHTING_LAYER         15
-#define ABOVE_LIGHTING_PLANE   16
-#define ABOVE_LIGHTING_LAYER   16
-
-//HUD layer defines
-
-#define FULLSCREEN_PLANE 18
-#define FLASH_LAYER      18
-#define FULLSCREEN_LAYER 18.1
-
-#define HUD_PLANE         19
-#define HUD_LAYER         19
-#define ABOVE_HUD_PLANE   20
-#define ABOVE_HUD_LAYER   20
 
 #define BELOW_TURF_LAYER                1.9
 //define TURF_LAYER                     2     // For easy recordkeeping; this is a byond define
@@ -122,19 +105,39 @@ What is the naming convention for planes or layers?
 #define EMOTE_LAYER                     5.02
 #define SINGULARITY_LAYER               6
 #define SINGULARITY_EFFECT_LAYER        6.1
-#define POINT_LAYER                     15
 
-//modifiers for /obj/machinery/door (and subtypes) layers
-#define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
-#define PODDOOR_CLOSED_MOD  0.31
-#define FIREDOOR_CLOSED_MOD 0.31
+#define AREA_PLANE 60
+#define GHOST_PLANE 80
+#define POINT_PLANE 90
 
+//---------- -----LIGHTING -------------
+#define LIGHTING_PLANE 100
+#define LIGHTING_LAYER 1
+#define ABOVE_LIGHTING_PLANE 120
+#define ABOVE_LIGHTING_LAYER 1
+
+///--------------- FULLSCREEN IMAGES ------------
+#define FULLSCREEN_PLANE 500
+#define FLASH_LAYER 1
+#define FULLSCREEN_LAYER 2
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 990
 #define RENDER_PLANE_NON_GAME 995
 #define RENDER_PLANE_MASTER 999
 
+//-------------------- HUD ---------------------
+//HUD layer defines
+#define HUD_PLANE 1000
+#define HUD_LAYER 1
+#define ABOVE_HUD_PLANE 1100
+#define ABOVE_HUD_LAYER 1
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
+
+//--------------------MISC-----------------------
+//modifiers for /obj/machinery/door (and subtypes) layers
+#define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
+#define PODDOOR_CLOSED_MOD  0.31
+#define FIREDOOR_CLOSED_MOD 0.31

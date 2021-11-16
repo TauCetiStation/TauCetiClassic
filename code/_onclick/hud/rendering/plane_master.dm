@@ -42,6 +42,20 @@
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
+/atom/movable/screen/plane_master/ghost
+	name = "ghost plane master"
+	plane = GHOST_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/point
+	name = "point plane master"
+	plane = POINT_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME
+
 /**
  * Plane master handling byond internal blackness
  * vars are set as to replicate behavior when rendering to other planes
@@ -63,6 +77,13 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/above_lighting
+	name = "above lighting plane master"
+	plane = ABOVE_LIGHTING_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
 /atom/movable/screen/plane_master/parallax
