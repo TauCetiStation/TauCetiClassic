@@ -68451,7 +68451,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/surgery{
-	mute = 1
 	})
 "cNh" = (
 /obj/structure/stool/bed/roller,
@@ -72125,7 +72124,6 @@
 	icon_state = "whitehall"
 	},
 /area/station/medical/surgery2{
-	mute = 1
 	})
 "hlb" = (
 /obj/structure/disposalpipe/segment{
