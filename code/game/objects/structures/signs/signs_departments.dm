@@ -15,6 +15,11 @@
 	desc = "A sign labelling an area containing chemical equipment."
 	icon_state = "chemistry1"
 
+/obj/structure/sign/departments/pharmacy
+	name = "PHARMACY"
+	desc = "A sign labelling a pharmacy."
+	icon_state = "pharmacy"
+
 /obj/structure/sign/departments/botany
 	name = "HYDROPONICS"
 	desc = "A sign labelling an area as a place where plants are grown."
