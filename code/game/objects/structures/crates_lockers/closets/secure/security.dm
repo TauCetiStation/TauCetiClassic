@@ -109,6 +109,7 @@
 
 	new /obj/item/clothing/head/helmet/HoS/dermal(src)
 	new /obj/item/clothing/head/hos_peakedcap(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)
@@ -156,6 +157,7 @@
 
 	new /obj/item/clothing/head/helmet/warden(src)
 	new /obj/item/clothing/head/beret/sec/warden(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/clothing/under/rank/warden(src)
 	new /obj/item/clothing/under/rank/warden_fem(src)
 	new /obj/item/clothing/suit/storage/flak(src)
@@ -218,7 +220,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	new /obj/item/weapon/kitchenknife/combat(src)
 	if(SSholiday.holidays[NEW_YEAR])
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
