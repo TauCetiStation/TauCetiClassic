@@ -43922,6 +43922,10 @@
 /obj/structure/device/piano/royal,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"bCe" = (
+/obj/structure/sign/warning/nosmoking/circle,
+/turf/simulated/wall/r_wall,
+/area/station/medical/storage)
 "bCf" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -45901,7 +45905,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/atmos)
 "bGc" = (
 /obj/structure/closet/secure_closet/miner,
@@ -48622,7 +48626,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor,
 /area/station/maintenance/atmos)
 "bLA" = (
 /obj/machinery/optable,
@@ -49497,15 +49502,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/item/weapon/shard,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "Stairs2_wide"
+	},
 /area/station/maintenance/atmos)
 "bNR" = (
 /obj/structure/stool/bed/chair/comfy/black{
@@ -50294,9 +50295,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor/plating,
+/obj/structure/closet/hydrant{
+	pixel_x = -32
+	},
+/turf/simulated/floor,
 /area/station/maintenance/atmos)
 "bQa" = (
 /obj/structure/cable{
@@ -50313,7 +50315,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs_wide"
+	},
 /area/station/maintenance/atmos)
 "bQb" = (
 /obj/machinery/door/window/eastleft{
@@ -51240,7 +51246,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/atmos)
 "bSr" = (
 /obj/structure/cable{
@@ -67401,7 +67407,13 @@
 /area/station/engineering/engine)
 "cJN" = (
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/structure/sign/warning/smoking{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "Stairs_wide"
+	},
 /area/station/maintenance/atmos)
 "cJQ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -67800,10 +67812,9 @@
 	},
 /area/station/engineering/engine)
 "cLj" = (
-/obj/structure/closet/hydrant{
-	pixel_x = 26
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/vending/cigarette,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor,
 /area/station/maintenance/atmos)
 "cLk" = (
 /obj/structure/rack,
@@ -67856,7 +67867,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/space_heater,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "cLn" = (
@@ -70043,6 +70055,21 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/port)
+"eKC" = (
+/obj/item/weapon/cigbutt{
+	pixel_x = 13
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = -12;
+	pixel_y = -11
+	},
+/obj/machinery/disposal,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/maintenance/atmos)
 "eLb" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -70403,6 +70430,24 @@
 /obj/machinery/atmospherics/components/binary/pump/on,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
+"fnz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "fob" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -70539,6 +70584,25 @@
 	icon_state = "dark"
 	},
 /area/station/security/warden)
+"fvj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/atmos)
 "fvH" = (
 /obj/machinery/embedded_controller/radio/access_controller{
 	id_tag = "virology_airlock_control";
@@ -74640,6 +74704,10 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"kul" = (
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "kvU" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -75185,6 +75253,11 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
+"liM" = (
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/atmos)
 "ljb" = (
 /obj/structure/sign/directions/security{
 	buildable_sign = 0;
@@ -76087,8 +76160,13 @@
 	},
 /area/station/civilian/fitness)
 "mlb" = (
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/obj/item/weapon/storage/fancy/cigarettes,
+/turf/simulated/floor{
+	icon_state = "floorscorched1"
+	},
 /area/station/maintenance/atmos)
 "mlr" = (
 /obj/structure/window/reinforced{
@@ -76486,13 +76564,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "mPs" = (
-/obj/structure/grille{
-	destroyed = 1
+/obj/machinery/door/firedoor,
+/obj/structure/sign/warning/smoking{
+	pixel_y = 32
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs2_wide"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "mPD" = (
 /obj/structure/grille,
@@ -79151,6 +79230,33 @@
 "qhb" = (
 /turf/simulated/wall,
 /area/station/medical/storage)
+"qhk" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/cigbutt{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = -5;
+	pixel_y = -11
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = -9;
+	pixel_y = -7
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/atmos)
 "qhT" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -80285,6 +80391,23 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
+"rtn" = (
+/obj/item/weapon/cigbutt{
+	pixel_x = -5;
+	pixel_y = -11
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/atmos)
 "rwb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -82846,6 +82969,10 @@
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"uXa" = (
+/obj/machinery/disposal,
+/turf/simulated/wall/r_wall,
+/area/station/engineering/break_room)
 "uXM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair/metal{
@@ -84149,6 +84276,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ydy" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/atmos)
 
 (1,1,1) = {"
 aaa
@@ -116941,7 +117079,7 @@ cgr
 mLb
 bJe
 bEY
-bSP
+uXa
 bSP
 bSP
 bSP
@@ -118743,7 +118881,7 @@ pib
 oLb
 eAo
 kTy
-bPR
+kul
 bLt
 bSV
 cJQ
@@ -119771,9 +119909,9 @@ wzK
 boa
 rOb
 kTy
-bPR
+liM
 bSq
-bPR
+ydy
 mlb
 bSV
 bSV
@@ -120031,7 +120169,7 @@ kTy
 cLj
 bLw
 bGb
-bGb
+qhk
 bGb
 bPZ
 bSV
@@ -120279,7 +120417,7 @@ bLs
 bQe
 rZb
 cCV
-tWi
+bCe
 tWi
 bNZ
 tWi
@@ -120288,9 +120426,9 @@ qhb
 qhb
 qhb
 qhb
-bPR
-bPR
-bLt
+eKC
+rtn
+fvj
 bSV
 bSb
 bTm
@@ -121061,7 +121199,7 @@ qjo
 urx
 qhb
 bPR
-bLt
+fnz
 cdA
 aah
 aah
@@ -121831,7 +121969,7 @@ puW
 uHw
 qrb
 qhb
-bPR
+kul
 bLt
 cdA
 aah
