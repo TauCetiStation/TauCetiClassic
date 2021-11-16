@@ -4,8 +4,8 @@ var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'ic
 
 var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
-#define MARK_READY     "READY ☑"
-#define MARK_NOT_READY "READY ☒"
+#define MARK_READY     "READY <span style='color:lime'>☑</span>"
+#define MARK_NOT_READY "READY <span style='color:red'>☒</span>"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -104,7 +104,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	<script>
 		var mark = document.getElementById("ready");
 		function setReadyStatus(isReady) {
-			mark.textContent = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
+			mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
 		}
 	</script>
 	"}
