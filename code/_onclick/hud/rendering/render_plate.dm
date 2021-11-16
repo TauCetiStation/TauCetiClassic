@@ -72,7 +72,7 @@
 	relay = new()
 	relay.render_source = render_target
 	relay.plane = relay_plane
-	relay.layer = (plane + abs(LOWEST_EVER_PLANE))*0.5 //layer must be positive but can be a decimal
+	relay.layer = (plane + abs(LOWEST_EVER_PLANE)) * 0.5 //layer must be positive but can be a decimal
 	if(blend_mode_override)
 		relay.blend_mode = blend_mode_override
 	else
