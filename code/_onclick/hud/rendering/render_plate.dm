@@ -81,4 +81,4 @@
 	relay.name = render_target
 	mymob.client.screen += relay
 	if(blend_mode != BLEND_MULTIPLY)
-		blend_mode = BLEND_DEFAULT 
+		blend_mode = BLEND_DEFAULT
