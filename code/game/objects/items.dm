@@ -346,7 +346,8 @@
 		return
 
 	remove_outline()
-	pickup(user)
+	if(!pickup(user))
+		return
 	add_fingerprint(user)
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -388,7 +389,8 @@
 		return
 
 	remove_outline()
-	pickup(user)
+	if(!pickup(user))
+		return
 	user.put_in_active_hand(src)
 	return
 
@@ -439,7 +441,10 @@
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
+		return FALSE
+	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
