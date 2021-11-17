@@ -221,15 +221,7 @@
 		if (ismob(P.original))
 			var/mob/M = P.original
 			if (M.lying) //reinforced table is REINFORCED so it cant be penetrated
-				health -= P.damage/2
-				if (health > 0)
-					visible_message("<span class='warning'>[P] hits \the [src]!</span>")
-					return 0
-				else
-					visible_message("<span class='warning'>[src] breaks down!</span>")
-					destroy()
-					return 1
-				return 0
+				chance = 100 
 		if(prob(chance))
 			health -= P.damage/2
 			if (health > 0)
