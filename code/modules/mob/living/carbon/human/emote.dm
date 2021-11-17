@@ -24,10 +24,6 @@
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
 
-	var/list/exception_words = list("scissors")
-	if(!(act in exception_words) && findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act, 1, -1)
-
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
