@@ -59,6 +59,9 @@
 
 /obj/effect/anomaly/grav/atom_init()
 	. = ..()
+
+	appearance_flags &= ~TILE_BOUND // no tile bound so you can see it around corners and so
+
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
 
 	warp = new(src)
