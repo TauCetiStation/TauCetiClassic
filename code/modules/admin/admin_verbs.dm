@@ -185,6 +185,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_display_init_log,
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
+	/client/proc/event_manager_panel,
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

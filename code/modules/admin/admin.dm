@@ -3,9 +3,12 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN, emphasize = FALSE)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	var/style = "admin"
+	if (emphasize)
+		style += " emphasized"
+	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
 	for(var/client/C in admins)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)

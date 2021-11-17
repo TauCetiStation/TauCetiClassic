@@ -493,6 +493,7 @@
 #include "code\game\gamemodes\modes_gameplays\abduction\machinery\dispenser.dm"
 #include "code\game\gamemodes\modes_gameplays\abduction\machinery\experiment.dm"
 #include "code\game\gamemodes\modes_gameplays\abduction\machinery\pad.dm"
+#include "code\game\gamemodes\modes_gameplays\blob\blobmouse.dm"
 #include "code\game\gamemodes\modes_gameplays\blob\overmind.dm"
 #include "code\game\gamemodes\modes_gameplays\blob\powers.dm"
 #include "code\game\gamemodes\modes_gameplays\blob\theblob.dm"
