@@ -13,7 +13,7 @@
 
 	var/last_check = 0
 
-	var/list/first_help = list("Xeno liquidator" = 3, "Xeno destroer" = 2)
+	var/list/first_help = list("Xeno liquidator" = 3, "Xeno destroyer" = 2)
 	var/list/second_help = list("Xeno arsonist" = 5, "Shotgun shells (incendiary)" = 1)
 	var/first_help_sent = FALSE
 	var/second_help_sent = FALSE
