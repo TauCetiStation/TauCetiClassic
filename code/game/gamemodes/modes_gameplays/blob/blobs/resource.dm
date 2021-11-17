@@ -14,7 +14,9 @@
 	return
 
 /obj/effect/blob/resource/run_action()
-
+	if(QDELETED(overmind))
+		overmind = null
+		return
 	if(resource_delay > world.time)
 		return
 
@@ -23,4 +25,3 @@
 
 	if(overmind)
 		overmind.add_points(1)
-

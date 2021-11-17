@@ -19,6 +19,32 @@
 	origin_tech = "biotech=2;programming=2"
 	device_type = /obj/item/device/healthanalyzer
 
+/obj/item/rig_module/device/analyzer
+	name = "hardsuit analyzer module"
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
+	icon_state = "analyzer"
+	interface_name = "Analyzer"
+	interface_desc = "Shows anomalies frequencies and reports current gas levels when used."
+	use_power_cost = 25
+	usable = TRUE
+	engage_string = "Analyze air"
+	origin_tech = "magnets=1;programming=2;engineering=1"
+	device_type = /obj/item/device/analyzer/mounted
+
+/obj/item/device/analyzer/mounted
+	advanced_mode = TRUE
+
+/obj/item/rig_module/device/science_tool
+	name = "hardsuit science tool module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	icon_state = "scitool"
+	interface_name = "Science tool"
+	interface_desc = "Used to collect research data from different sources."
+	use_power_cost = 25
+	selectable = TRUE
+	origin_tech = "engineering=1;programming=1;biotech=1"
+	device_type = /obj/item/device/science_tool
+
 /obj/item/rig_module/device/drill
 	name = "hardsuit drill mount"
 	desc = "A very heavy diamond-tipped drill."
@@ -37,7 +63,7 @@
 	interface_name = "Alden-Saraspova counter"
 	interface_desc = "An exotic particle detector commonly used by xenoarchaeologists."
 	engage_string = "Begin Scan"
-	use_power_cost = 200
+	use_power_cost = 50
 	usable = TRUE
 	selectable = FALSE
 	device_type = /obj/item/device/ano_scanner
@@ -334,6 +360,36 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/teleporter_stabilizer
+	name = "hardsuit teleporter stabilizer"
+	icon_state = "scanner"
+	origin_tech = "engineering=3;programming=3;bluespace=2;"
+	interface_name = "mounted wormhole stabilizer"
+	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	passive_power_cost = 3
+	use_power_cost = 1500
+
+/obj/item/rig_module/teleporter_stabilizer/proc/calculate_cost(dangerous_coeff)
+	var/cost = use_power_cost
+	if(damage > MODULE_NO_DAMAGE)
+		cost *= 1.25
+	return cost * dangerous_coeff
+
+/obj/item/rig_module/teleporter_stabilizer/proc/base_check()
+	var/mob/living/carbon/human/H = holder.wearer
+	if(!H || damage >= MODULE_DESTROYED)
+		return FALSE
+	return TRUE
+
+/obj/item/rig_module/teleporter_stabilizer/proc/stabilize_teleportation(dangerous_coeff = 1)
+	if(!base_check())
+		return FALSE
+	var/cost = calculate_cost(dangerous_coeff)
+	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
+		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Cell charge used: [cost].</span>")
+		return TRUE
+	return FALSE
+
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."
@@ -521,6 +577,39 @@
 		if(holder)
 			holder.installed_modules -= src
 		qdel(src)
+
+/obj/item/rig_module/mounted_relay
+	name = "hardsuit mounted relay module"
+	desc = "Can relay radio signals from other sectors"
+	origin_tech = "programming=6;engineering=6;bluespace=6"
+	interface_name = "portable radio relay"
+	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
+	icon_state = "relay"
+	suit_overlay = "mounted-relay"
+	toggleable = TRUE
+	show_toggle_button = TRUE
+	module_cooldown = 0
+	activate_string = "Activate radio relay"
+	deactivate_string = "Deactivate radio relay"
+	active_power_cost = 50
+
+	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
+	var/obj/machinery/telecomms/relay
+
+/obj/item/rig_module/mounted_relay/atom_init()
+	. = ..()
+	relay = new relay_type(src)
+
+/obj/item/rig_module/mounted_relay/process_module()
+	if(!active)
+		relay.on = FALSE
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	relay.on = TRUE
+	relay.listening_level = H.z
+
+	return active_power_cost
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
 	volume = 400
