@@ -205,45 +205,6 @@
 		world.save_mode(new_gamemode)
 
 /*********************
-	GameMode Exclusive
-**********************/
-/datum/poll/gamemode/exclusive
-	name = "Исключить режимы игры"
-	description = "Выберите режимы, которые вы не хотите играть."
-	announce_winner = FALSE
-
-/datum/poll/gamemode/exclusive/init_choices()
-	for(var/type in subtypesof(/datum/game_mode))
-		var/datum/game_mode/T = type
-		if(!initial(T.name)) // exclude abstract gamemode types
-			continue
-		var/datum/game_mode/mode = new type()
-		if(!mode.potential_runnable())
-			continue
-		var/datum/vote_choice/gamemode/exclusive/C = new()
-		C.text = mode.name
-		C.new_gamemode = mode.name
-		choices.Add(C)
-		qdel(mode)
-
-/datum/poll/gamemode/exclusive/win_condition(datum/vote_choice/C, list/choice_votes)
-	var/min_votes = INFINITY
-	for(var/datum/vote_choice/V in choice_votes)
-		min_votes = min(min_votes, choice_votes[V])
-	return choice_votes[C] == min_votes
-
-/datum/poll/gamemode/exclusive/on_end()
-	. = ..()
-	for(var/datum/poll/gamemode/P in SSvote.votes)
-		P.next_vote = last_vote + P.cooldown
-
-/datum/vote_choice/gamemode/exclusive/on_win()
-	if(master_mode != "Secret")
-		master_mode = "Secret"
-		world.save_mode("Secret")
-	secret_force_mode = new_gamemode
-
-/*********************
 	Custom
 **********************/
 /datum/poll/custom
