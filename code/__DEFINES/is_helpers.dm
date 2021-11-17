@@ -77,6 +77,8 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+#define isautosay(A) (istype(A, /mob/autosay))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
@@ -185,6 +187,8 @@
 #define isgundealer(H) isrole(GANGSTER_DEALER, H)
 
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
+
+#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
 
 // BLOB
 

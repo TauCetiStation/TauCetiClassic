@@ -73,7 +73,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/shield/riot/roman(H))
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/claymore/light(H))
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/spear(H), SLOT_BACK)
 
 /////////////////////////////////////////////////////////////////////////////
 

@@ -329,14 +329,9 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, custom_type)
-	var/obj/item/weapon/storage/bible/B
-	if(custom_type)
-		B = new custom_type(location)
-	else
-		B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
-	B.deity_name = pick(deity_names)
 	B.religion = src
 	return B
 
@@ -673,10 +668,11 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name) // As a god
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type
