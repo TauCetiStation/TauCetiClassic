@@ -81,7 +81,7 @@
 /datum/poll/process()
 	return
 
-/datum/poll/proc/vote(datum/vote_choice/choice, client/C)
+/datum/poll/proc/vote(datum/vote_choice/choice, value, client/C)
 	var/ckey = C.ckey
 	if(ckey in choice.voters)
 		if(can_revote && can_unvote)
@@ -118,11 +118,14 @@
 		total += V.total_votes()
 	return total
 
-/datum/poll/proc/win_condition(datum/vote_choice/C, list/choice_votes)
+/datum/poll/proc/get_winners(list/choice_votes)
 	var/max_votes = 0
+	. = list()
 	for(var/datum/vote_choice/V in choice_votes)
 		max_votes = max(max_votes, choice_votes[V])
-	return choice_votes[C] == max_votes
+	for(var/datum/vote_choice/V in choice_votes)
+		if(choice_votes[V] == max_votes)
+			. += V
 
 /datum/poll/proc/check_winners()
 	var/list/choice_votes = list()
@@ -155,9 +158,7 @@
 	var/datum/vote_choice/winner = null
 	var/list/winners = list()
 	if(!invalid)
-		for(var/datum/vote_choice/V in choice_votes)
-			if(win_condition(V, choice_votes))
-				winners.Add(V)
+		winners += get_winners(choice_votes)
 		if(winners.len)
 			winner = pick(winners)
 

@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(vote)
 	var/vote_start_time = 0
 
 /datum/controller/subsystem/vote/PreInit()
-	for(var/T in subtypesof(/datum/poll))
+	for(var/T in subtypesof(/datum/poll) - /datum/poll/range)
 		var/datum/poll/P = new T
 		votes[T] = P
 
@@ -110,13 +110,8 @@ SUBSYSTEM_DEF(vote)
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
 			. += "<tr><td>"
-			if(C.ckey in choice.voters)
-				. += "<b><a href='?src=\ref[src];vote=\ref[choice]'>[choice.text]</a></b>"
-				. += " [html_decode("&#10003")]" // Checkmark
-			else
-				. += "<a href='?src=\ref[src];vote=\ref[choice]'>[choice.text]</a>"
+			. += choice.render_html(C)
 			. += "</td><td align = 'center'>[c_votes]</td></tr>"
-
 		. += "</table><hr>"
 		if(active_vote.description)
 			. += "[active_vote.description]<hr>"
@@ -161,8 +156,9 @@ SUBSYSTEM_DEF(vote)
 	if(href_list["vote"])
 		if(active_vote)
 			var/datum/vote_choice/choice = locate(href_list["vote"]) in active_vote.choices
+			var/value = url_decode(href_list["voteval"])
 			if(istype(choice) && usr && usr.client)
-				active_vote.vote(choice, usr.client)
+				active_vote.vote(choice, value, usr.client)
 
 	if(href_list["toggle_admin"])
 		var/datum/poll/poll = locate(href_list["toggle_admin"])

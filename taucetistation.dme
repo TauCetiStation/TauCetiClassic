@@ -218,6 +218,7 @@
 #include "code\controllers\subsystem\processing\processing.dm"
 #include "code\controllers\subsystem\voting\poll.dm"
 #include "code\controllers\subsystem\voting\poll_types.dm"
+#include "code\controllers\subsystem\voting\range_poll.dm"
 #include "code\controllers\subsystem\voting\vote_choice.dm"
 #include "code\datums\admin_arguments_request.dm"
 #include "code\datums\ai_laws.dm"
