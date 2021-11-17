@@ -44,10 +44,10 @@
 /atom/movable/warp_effect
 	plane = GRAVITY_PULSE_PLANE
 	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
-	icon = 'icons/effects/light_352.dmi'
-	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "emfield_s7"
+	pixel_x = -100
+	pixel_y = -100
 
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
