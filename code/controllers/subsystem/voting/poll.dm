@@ -119,7 +119,7 @@
 	return total
 
 /datum/poll/proc/get_winners(list/choice_votes)
-	var/max_votes = 0
+	var/max_votes = -INFINITY
 	. = list()
 	for(var/datum/vote_choice/V in choice_votes)
 		max_votes = max(max_votes, choice_votes[V])
