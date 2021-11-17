@@ -23250,15 +23250,16 @@
 	},
 /area/station/hallway/primary/central)
 "aPH" = (
-/obj/structure/table,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = -28
 	},
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "whiteblue"
+	icon_state = "bot"
 	},
 /area/station/medical/staff_hallway)
 "aPI" = (
@@ -47508,15 +47509,10 @@
 /turf/simulated/wall,
 /area/station/medical/therapist)
 "bIS" = (
-/obj/structure/table,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/phone,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/medical/staff_hallway)
 "bIT" = (
 /obj/machinery/firealarm{
@@ -63418,15 +63414,14 @@
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "cyN" = (
-/obj/machinery/vending/medical,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -25
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
 	},
+/turf/simulated/floor/bluegrid,
 /area/station/medical/staff_hallway)
 "cyO" = (
 /obj/structure/table/woodentable/poker,
@@ -67301,7 +67296,7 @@
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "cJn" = (
-/obj/machinery/vending/blood,
+/obj/machinery/vending/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -67736,7 +67731,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/weapon/flora/pottedplant/fern,
+/obj/machinery/vending/blood,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -76817,6 +76812,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"naD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/weapon/flora/pottedplant/fern,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/medical/staff_hallway)
 "nbb" = (
 /obj/structure/sign/warning/securearea,
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -120616,7 +120628,7 @@ bkV
 bLs
 bQe
 rZb
-cCV
+naD
 uTP
 tWi
 bNZ
