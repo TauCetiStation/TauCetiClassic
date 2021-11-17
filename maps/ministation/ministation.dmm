@@ -7818,8 +7818,10 @@
 	},
 /area/station/security/detectives_office)
 "uk" = (
-/obj/machinery/power/emitter/gyrotron{
-	dir = 1
+/obj/machinery/power/emitter/gyrotron,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "op1"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
