@@ -23677,6 +23677,10 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/science/rd,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science/rd,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -37078,6 +37082,10 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"

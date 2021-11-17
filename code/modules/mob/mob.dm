@@ -323,35 +323,33 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-	if(next_point_to > world.time)
+
+	if (next_point_to > world.time)
 		return
-	if(!usr || !isturf(usr.loc))
+
+	if (incapacitated() || (status_flags & FAKEDEATH))
 		return
-	if(usr.incapacitated())
+
+	if (istype(A, /obj/effect/decal/point))
 		return
-	if(usr.status_flags & FAKEDEATH)
-		return
-	if(!(A in oview(usr.loc)))
-		return
-	if(istype(A, /obj/effect/decal/point))
+
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
 		return
 
 	var/tile = get_turf(A)
-	if(!tile)
+	if (!tile)
 		return
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
-
-	QDEL_IN(P, 20)
+	point_at(A)
 
 	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
 
 	next_point_to = world.time + 1.5 SECONDS
