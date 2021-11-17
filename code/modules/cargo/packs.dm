@@ -1902,7 +1902,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	hidden = TRUE
 
 /datum/supply_pack/xeno_shotgun
-	name = "Xeno destroer"
+	name = "Xeno destroyer"
 	contains = list(/obj/item/clothing/suit/bio_suit/old_hazmat/sec,
 					/obj/item/clothing/head/bio_hood/old_hazmat/sec,
 					/obj/item/weapon/gun/projectile/shotgun,
@@ -1913,7 +1913,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
 	cost = 10000
-	crate_name = "Xeno destroer crate"
+	crate_name = "Xeno destroyer crate"
 	group = "xeno"
 	hidden = TRUE
 

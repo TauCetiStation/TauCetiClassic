@@ -15,8 +15,8 @@
 
 	var/list/first_help = list("Xeno liquidator" = 3, "Xeno destroer" = 2)
 	var/list/second_help = list("Xeno arsonist" = 5, "Shotgun shells (incendiary)" = 1)
-	var/first_help_sended = FALSE
-	var/second_help_sended = FALSE
+	var/first_help_sent = FALSE
+	var/second_help_sent = FALSE
 	var/win_declared = FALSE
 
 /datum/faction/infestation/AdminPanelEntry(datum/admins/A)
@@ -139,18 +139,18 @@
 		return FALSE
 	last_check = world.time + CHECK_PERIOD
 	var/data = count_alien_percent()
-	if(data[ALIEN_PERCENT] == 0 && first_help_sended && !win_declared)
+	if(data[ALIEN_PERCENT] == 0 && first_help_sent && !win_declared)
 		var/datum/announcement/centcomm/xeno/crew_win/announcement = new
 		announcement.play()
 		SSshuttle.fake_recall = FALSE
 		win_declared = TRUE
-	else if(data[ALIEN_PERCENT] >= FIRST_HELP_PERCENT && !first_help_sended)
+	else if(data[ALIEN_PERCENT] >= FIRST_HELP_PERCENT && !first_help_sent)
 		send_help_crew(first_help, /datum/announcement/centcomm/xeno/first_help, /datum/announcement/centcomm/xeno/first_help/fail)
-		first_help_sended = TRUE
+		first_help_sent = TRUE
 		SSshuttle.fake_recall = TRUE //Quarantine
-	else if(data[ALIEN_PERCENT] >= SECOND_HELP_PERCENT && !second_help_sended)
+	else if(data[ALIEN_PERCENT] >= SECOND_HELP_PERCENT && !second_help_sent)
 		send_help_crew(second_help, /datum/announcement/centcomm/xeno/second_help, /datum/announcement/centcomm/xeno/second_help/fail)
-		second_help_sended = TRUE
+		second_help_sent = TRUE
 	else if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
 	return FALSE
@@ -227,38 +227,5 @@
 	dat += "</table>"
 
 	return dat
-
-/datum/faction/infestation/proc/send_help_crew(list/supply_crates, announce, announce_fail)
-	//find supply pack by name and create supply order
-	for(var/crate_name in supply_crates)
-		var/supply_name = ckey(crate_name)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[supply_name]
-		var/datum/supply_order/O = new /datum/supply_order(P, "Cent Comm", "Cent Comm", "", "Xeno threat")
-		//add supply orders to shopping list
-		var/number_supply_orders = supply_crates[crate_name]
-		for(var/i = 1, i <= number_supply_orders, i++)
-			SSshuttle.shoppinglist += O
-
-	if(send_shuttle())
-		var/datum/announcement/centcomm/xeno/announcement = new announce
-		announcement.play()
-	else
-		var/datum/announcement/centcomm/xeno/announcement = new announce_fail
-		announcement.play()
-
-/datum/faction/infestation/proc/send_shuttle()
-	if(!SSshuttle.can_move())
-		return FALSE
-	else if(SSshuttle.at_station)
-		SSshuttle.send()
-		SSshuttle.sell()
-		SSshuttle.buy()
-		SSshuttle.moving = 1
-		SSshuttle.set_eta_timeofday()
-	else
-		SSshuttle.buy()
-		SSshuttle.moving = 1
-		SSshuttle.set_eta_timeofday()
-	return TRUE
 
 #undef CHECK_PERIOD
