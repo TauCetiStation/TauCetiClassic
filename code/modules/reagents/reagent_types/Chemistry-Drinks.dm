@@ -1579,7 +1579,7 @@
 	reagent_state = LIQUID
 	color = "#4272ae" // rgb: 66, 114, 174
 	boozepwr = 5
-	taste_message = "beach alcohol
+	taste_message = "beach alcohol"
 
 /datum/reagent/consumable/ethanol/bloodykuds
 	name = "Bloody Kuds"
@@ -1597,7 +1597,7 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "yeaaaah
+	taste_message = "yeaaaah"
 
 /datum/reagent/consumable/ethanol/sexbeach
 	name = "Sex On The Beach"
@@ -1606,7 +1606,7 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "beach alcohol
+	taste_message = "beach alcohol"
 
 /datum/reagent/consumable/ethanol/mojito
 	name = "Mojito"
@@ -1615,4 +1615,4 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "sweet alcohol
+	taste_message = "sweet alcohol"
