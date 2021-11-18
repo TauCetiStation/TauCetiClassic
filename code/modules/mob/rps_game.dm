@@ -2,13 +2,13 @@
 	var/choice_icon
 	var/choice_icon_state
 	switch(choice)
-		if("камень")
+		if("rock")
 			choice_icon = 'icons/obj/mining.dmi'
 			choice_icon_state = pick("slag", "Coal ore")
-		if("бумага")
+		if("paper")
 			choice_icon = 'icons/obj/bureaucracy.dmi'
 			choice_icon_state = pick("paper", "paper_words", "paper_talisman", "cpaper_words")
-		if("ножницы")
+		if("scissors")
 			choice_icon = 'icons/obj/items.dmi'
 			choice_icon_state = "scissors"
 		else

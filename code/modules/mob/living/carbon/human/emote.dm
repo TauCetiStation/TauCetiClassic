@@ -344,52 +344,22 @@
 			message = "prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
-		if ("камень")
+		if ("rock")
 			message_type = SHOWMSG_VISUAL
-			var/ending = ""
-			switch(gender)
-				if(FEMALE)
-					ending = "а"
-				if(MALE)
-					ending = ""
-				if(PLURAL)
-					ending = "и"
-				if(NEUTER)
-					ending = "о"
-			message = "сыграл[ending] камень."
-			mute_message = message
+			message = "plays rock."
+			mute_message = "plays rock."
 			conditions_for_emote = ONE_HAND_IS_USABLE
 
-		if ("бумага")
+		if ("paper")
 			message_type = SHOWMSG_VISUAL
-			var/ending = ""
-			switch(gender)
-				if(FEMALE)
-					ending = "а"
-				if(MALE)
-					ending = ""
-				if(PLURAL)
-					ending = "и"
-				if(NEUTER)
-					ending = "о"
-			message = "сыграл[ending] бумага."
-			mute_message = message
+			message = "plays paper."
+			mute_message = "plays paper."
 			conditions_for_emote = ONE_HAND_IS_USABLE
 
-		if ("ножницы")
+		if ("scissors")
 			message_type = SHOWMSG_VISUAL
-			var/ending = ""
-			switch(gender)
-				if(FEMALE)
-					ending = "а"
-				if(MALE)
-					ending = ""
-				if(PLURAL)
-					ending = "и"
-				if(NEUTER)
-					ending = "о"
-			message = "сыграл[ending] ножницы."
-			mute_message = message
+			message = "plays scissors."
+			mute_message = "plays scissors."
 			conditions_for_emote = ONE_HAND_IS_USABLE
 
 
@@ -428,7 +398,7 @@
 		if ("help")
 			to_chat(src, "<span class='notice'>Voiced in <B>BOLD</B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
 			                                                          laugh, cry, giggle, clap, blink, drool, eyebrow, twitch, frown, nod, blush, wave, deathgasp, \
-			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute, камень, бумага, ножницы.</span>")
+			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute, rock, paper, scissors.</span>")
 
 		else
 			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
