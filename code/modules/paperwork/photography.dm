@@ -33,19 +33,27 @@
 	var/icon/tiny
 	var/list/photographed_names = list() // For occult purposes.
 
+/obj/item/weapon/photo/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
+
 /obj/item/weapon/photo/Destroy()
 	img = null
 	qdel(tiny)
 	tiny = null
 	return ..()
 
-/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	..()
+/obj/item/weapon/photo/proc/summon_ectoplasm()
+	var/ghost_count = 0
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
-			if(prob(10))
-				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
-			break
+			ghost_count++
+
+	if(!ghost_count)
+		return
+
+	for(var/i in 1 to round(ghost_count / 3))
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc)
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
