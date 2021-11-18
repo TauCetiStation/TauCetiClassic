@@ -773,3 +773,8 @@ var/list/blacklisted_builds = list(
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.tgui_interact(mob)

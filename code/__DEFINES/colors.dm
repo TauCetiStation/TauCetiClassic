@@ -66,6 +66,7 @@
 #define COLOR_TITANIUM         "#d1e6e3"
 #define COLOR_DARK_GUNMETAL    "#4c535b"
 #define COLOR_ADAMANTINE       "#269999"
+#define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
 
 #define	PIPE_COLOR_GREY		"#ffffff"	// yes white is grey
 #define	PIPE_COLOR_RED		"#ff0000"
