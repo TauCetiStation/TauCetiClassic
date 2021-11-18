@@ -131,3 +131,5 @@ MAP_REMOVE_JOB(librarian)
 MAP_REMOVE_JOB(psychiatrist)
 MAP_REMOVE_JOB(forensic)
 MAP_REMOVE_JOB(warden)
+
+#undef JOB_MODIFICATION_MAP_NAME
