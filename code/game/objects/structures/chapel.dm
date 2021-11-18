@@ -201,6 +201,19 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 2 SECONDS, 2)
 
+/obj/effect/effect/bell/proc/announce_global(text, strength)
+	for(var/mob/M in player_list)
+		if(M.z == z)
+			// Why do they call them voice announcements if it's just global announcements?
+			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 75)
+			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[text]\"</span>")
+
+	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
+
+	stun_insides(2)
+
+	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
+
 /obj/effect/effect/bell/proc/ring_global(mob/user, strength)
 	if(!user.mind || !user.mind.holy_role)
 		ring(user, strength)
@@ -229,25 +242,14 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	next_global_ring = world.time + 10 MINUTES
 
 	visible_message("[bicon(src)] <span class='warning'>[src] rings loudly, strucken by [user]!</span>")
-
 	var/shake_duration = adjust_strength(4, strength, 0.25, 16)
 	var/shake_strength = adjust_strength(1, strength, 0.1, 5)
 
 	if(shake_strength > 0)
 		shake_camera(user, shake_duration, shake_strength)
 
-	for(var/mob/M in player_list)
-		if(M.z == z)
-			// Why do they call them voice announcements if it's just global announcements?
-			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 75)
-			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[ring_msg]\"</span>")
-
-	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
-
-	stun_insides(2)
-
-	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
-
+	announce_global(ring_msg, strength)
+	
 /obj/effect/effect/bell/attackby(obj/item/I, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		ring_global(user, I.force)
