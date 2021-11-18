@@ -2274,13 +2274,6 @@
 	required_reagents = list("rum" = 2, "vodka" = 2, "tomatojuice" = 1)
 	result_amount = 5
 
-/datum/chemical_reaction/rainbowpunch
-	name = "Rainbow Punch"
-	id = "rainbowpunch"
-	result = "rainbowpunch"
-	required_reagents = list("kiraspecial" = 2, "tequillasunrise" = 2, "ice" = 1)
-	result_amount = 5
-
 /datum/chemical_reaction/sexbeach
 	name = "Sex On The Beach"
 	id = "sexbeach"

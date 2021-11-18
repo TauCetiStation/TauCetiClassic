@@ -535,10 +535,6 @@
 				icon_state = "bloodykudsglass"
 				name = "Bloody Kuds"
 				desc = "A madman's drink. Scared?"
-			if("rainbowpunch")
-				icon_state = "rainbowpunchglass"
-				name = "Rainbow Punch"
-				desc = "The rainbow color suggests drugs.. Okay, time for a drink."
 			if("sexbeach")
 				icon_state = "sexbeachglass"
 				name = "Sex On The Beach"

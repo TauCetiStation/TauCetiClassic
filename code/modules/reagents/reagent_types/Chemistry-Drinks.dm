@@ -1,4 +1,4 @@
-/datum/reagent/consumable/drink
+езеезе/datum/reagent/consumable/drink
 	name = "Drink"
 	id = "drink"
 	description = "Uh, some kind of drink."
@@ -1589,15 +1589,6 @@
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 5
 	taste_message = "heavy alcohol. How tight!"
-
-/datum/reagent/consumable/ethanol/rainbowpunch
-	name = "Rainbow Punch"
-	id = "rainbowpunch"
-	description = "The rainbow color suggests drugs.. Okay, time for a drink."
-	reagent_state = LIQUID
-	color = "#831d21" // rgb: 131, 29, 33
-	boozepwr = 3
-	taste_message = "yeaaaah"
 
 /datum/reagent/consumable/ethanol/sexbeach
 	name = "Sex On The Beach"
