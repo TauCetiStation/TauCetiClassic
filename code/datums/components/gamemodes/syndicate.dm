@@ -52,6 +52,22 @@
 		if (!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
+	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
+		var/list/station_intercom_list = list()
+		for(var/obj/item/device/radio/intercom/I as anything in intercom_list)
+			if(is_station_level(I.z))
+				station_intercom_list += I
+
+		R = pick(station_intercom_list)
+		if(!R)
+			R = locate(/obj/item/device/radio) in traitor_mob.contents
+			to_chat(traitor_mob, "Could not locate suitable Intercom, installing into a Radio instead!")
+		if (!R)
+			R = locate(/obj/item/device/pda) in traitor_mob.contents
+			to_chat(traitor_mob, "Could not locate a Radio, installing in PDA instead!")
+		if (!R)
+			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
+
 	else if(traitor_mob.client.prefs.uplinklocation == "None")
 		to_chat(traitor_mob, "You have elected to not have an AntagCorp portable teleportation relay installed!")
 		R = null
@@ -81,9 +97,15 @@
 		T.uses = uplink_uses
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		if(istype(target_radio, /obj/item/device/radio/intercom))
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [get_area(R)]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
+			target_radio.hidden_uplink.uses += 5
+		else
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
+
 	else if (istype(R, /obj/item/device/pda))
 		// generate a passcode if the uplink is hidden in a PDA
 		var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
