@@ -226,6 +226,16 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -557,6 +567,16 @@
 /obj/structure/window/basic{
 	dir = 8
 	},
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -3247,6 +3267,10 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas/voice,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/atmos,
+/obj/item/clothing/head/helmet/space/rig/atmos,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "ij" = (
@@ -3257,6 +3281,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4701,6 +4726,17 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
@@ -5664,10 +5700,20 @@
 	},
 /area/station/medical/hallway)
 "ou" = (
-/obj/structure/closet/secure_closet/scientist,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/structure/closet/wardrobe/science_white,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -5793,7 +5839,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "oO" = (
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/engineering{
+	name = "Alert Post";
+	req_access = list(24)
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7764,6 +7813,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/clothing/suit/hooded/wintercoat/captain,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "ty" = (
@@ -9585,6 +9636,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/clothing/suit/hooded/wintercoat/cargo,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "browncorner"
@@ -9702,6 +9755,16 @@
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
@@ -9939,6 +10002,17 @@
 /area/station/security/prison)
 "yR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
@@ -13359,6 +13433,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/flora/pottedplant/subterranean,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplecorner"
@@ -13968,6 +14043,23 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"IO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "IP" = (
 /turf/simulated/wall,
 /area/station/civilian/cold_room)
@@ -14264,6 +14356,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/clothing/suit/hooded/wintercoat/cargo,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "browncorner"
@@ -14907,7 +15001,10 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/detectives_office)
 "Lq" = (
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/medical{
+	name = "Alert Post";
+	req_access = list(70)
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -16911,7 +17008,6 @@
 	},
 /area/station/storage/tech)
 "Qg" = (
-/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "escape"
@@ -16963,7 +17059,6 @@
 	},
 /area/station/engineering/atmos)
 "Qp" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/camera{
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
@@ -17103,11 +17198,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "QI" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/magboots,
+/obj/machinery/computer/atmoscontrol,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "QJ" = (
@@ -18286,7 +18377,6 @@
 	},
 /area/station/medical/reception)
 "Ty" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "Arrival Hallway APC";
@@ -18299,6 +18389,17 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "escape"
@@ -18404,7 +18505,6 @@
 	},
 /area/station/hallway/secondary/arrival)
 "TM" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/alarm{
 	dir = 8;
 	name = "Arrival Shuttle Hallway Air Alarm";
@@ -18421,6 +18521,17 @@
 	dir = 8;
 	pixel_y = -10
 	},
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "escape"
@@ -18533,6 +18644,8 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 1
 	},
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
+/obj/item/clothing/shoes/winterboots,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -19315,11 +19428,21 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "VR" = (
-/obj/item/weapon/flora/pottedplant/subterranean,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/closet{
+	icon_closed = "emergency";
+	icon_opened = "emergencyopen";
+	icon_state = "emergency";
+	name = "Emergency"
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplecorner"
@@ -31570,7 +31693,7 @@ xb
 fF
 QD
 Ku
-Ku
+IO
 Ka
 wz
 qH
