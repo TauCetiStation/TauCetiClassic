@@ -58614,7 +58614,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/sign/warning/smoking{
+/obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -73839,6 +73839,7 @@
 /area/station/hallway/primary/central)
 "jeK" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/departments/morgue,
 /turf/simulated/wall,
 /area/station/medical/morgue)
 "jfb" = (
@@ -74290,6 +74291,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
+/obj/item/toy/cards,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
 "jKb" = (
