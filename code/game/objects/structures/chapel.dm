@@ -61,6 +61,7 @@
 
 
 
+ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 /obj/effect/effect/bell
 	name = "The Lord Voker"
 	desc = "Ring-a-ding, let the station know you've got a nullrod and you ain't afraid to use it!"
