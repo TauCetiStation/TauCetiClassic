@@ -18,6 +18,19 @@
 
 	add_languages(R)
 
+	RegisterSignal(R, COMSIG_MOVABLE_MOVED, .proc/silicon_on_move)
+
+/obj/item/weapon/robot_module/proc/silicon_on_move()
+	SIGNAL_HANDLER
+
+	var/mob/living/silicon/robot/R = loc
+	for(var/obj/item/I in modules)
+		if(I.loc == src || I.loc == R)
+			continue
+		var/dist = get_dist(get_turf(I),get_turf(R))
+		if(0 > dist || dist > 1)
+			R.item_pull_back(I)
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -35,6 +48,7 @@
 	qdel(jetpack)
 	emag = null
 	jetpack = null
+	UnregisterSignal(loc, COMSIG_MOVABLE_MOVED)
 	return ..()
 
 
@@ -126,7 +140,7 @@
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/splint(src, 10)
-	modules += new /obj/item/weapon/reagent_containers/glass/beaker/integrated(src, loc)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
@@ -358,7 +372,7 @@
 
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/reagent_containers/glass/beaker/integrated(src, loc) //To fuck chemistry up
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) //To fuck chemistry up
 
 	modules += new /obj/item/device/depth_scanner(src)
 	modules += new /obj/item/weapon/pickaxe/cyb(src)

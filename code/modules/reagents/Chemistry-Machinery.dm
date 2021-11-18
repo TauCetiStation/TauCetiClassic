@@ -148,21 +148,19 @@
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
 		if("eject_beaker")
-			return Eject()
+			. = TRUE
+			eject_item(beaker, loc)
 
-/obj/machinery/chem_dispenser/Eject(move = TRUE)
-	. = TRUE
-	if(!beaker)
-		return
+/obj/machinery/chem_dispenser/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
+		beaker = null
+		if(iscarbon(usr))
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
-	if(move)
-		beaker.forceMove(loc)
-	beaker = null
-
-	if(iscarbon(usr))
-		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
-
-	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+	return ..()
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
@@ -289,12 +287,16 @@
 
 	if(panel_open)
 		if(iscrowbar(I))
-			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
-				beaker = null
+			eject_item(beaker, loc)
 			default_deconstruction_crowbar(I)
 			return 1
+
+/obj/machinery/chem_dispenser/constructable/eject_item(obj/item/I, atom/target)
+	if(istype(I, /obj/item/weapon/reagent_containers))
+		if(!beaker)
+			return FALSE
+		beaker = null
+	return ..()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -566,7 +568,7 @@
 			Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
 		else if(href_list["eject"])
-			Eject()
+			eject_item(beaker, loc)
 
 		else if(href_list["createpill"]) //Also used for condiment packs.
 			if(reagents.total_volume == 0)
@@ -597,13 +599,14 @@
 
 	updateUsrDialog()
 
-/obj/machinery/chem_master/Eject(move = TRUE)
-	if(beaker)
-		if(move)
-			beaker.forceMove(loc)
+/obj/machinery/chem_master/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
 		beaker = null
 		reagents.clear_reagents()
 		icon_state = "mixer0"
+	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user)
 	if(!(user.client in has_sprites))
@@ -711,20 +714,11 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 
-/obj/machinery/chem_master/constructable/Eject(move = TRUE)
-	if(beaker)
-		if(move)
-			beaker.forceMove(loc)
-		beaker = null
-		reagents.clear_reagents()
-	if(loaded_pill_bottle)
-		loaded_pill_bottle.forceMove(loc)
-		loaded_pill_bottle = null
-
 /obj/machinery/chem_master/constructable/attackby(obj/item/I, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", I))
-		Eject()
+		eject_item(beaker, loc)
+		eject_item(loaded_pill_bottle, loc)
 		return
 
 	if(exchange_parts(user, I))
@@ -758,6 +752,18 @@
 		updateUsrDialog()
 
 	return
+
+/obj/machinery/chem_master/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
+		beaker = null
+		reagents.clear_reagents()
+	else if(I == loaded_pill_bottle)
+		if(!loaded_pill_bottle)
+			return FALSE
+		loaded_pill_bottle = null
+	return ..()
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -796,11 +802,6 @@
 			stat |= NOPOWER
 			update_power_use()
 	update_power_use()
-
-/obj/machinery/computer/pandemic/Eject(move = TRUE)
-	if(move)
-		beaker.forceMove(loc)
-	beaker = null
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	. = ..()
@@ -869,8 +870,7 @@
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 	else if (href_list["eject"])
-		Eject()
-		icon_state = "mixer0"
+		eject_item(beaker, loc)
 	else if(href_list["clear"])
 		src.temphtml = ""
 	else if(href_list["name_disease"])
@@ -895,6 +895,13 @@
 
 	updateUsrDialog()
 
+/obj/machinery/computer/pandemic/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
+		beaker = null
+		icon_state = "mixer0"
+	return ..()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user)
 	var/dat = ""
@@ -998,13 +1005,20 @@
 		icon_state = "mixer1"
 
 	else if(isscrewdriver(I))
-		Eject()
+		eject_item(beaker, loc)
 		..()
 		return
 
 	else
 		..()
 	return
+
+/obj/machinery/computer/pandemic/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
+		beaker = null
+	return ..()
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/reagentgrinder
@@ -1207,9 +1221,15 @@
 		return
 	if (!beaker)
 		return
-	beaker.forceMove(loc)
-	beaker = null
+	eject_item(beaker, loc)
 	update_icon()
+
+/obj/machinery/reagentgrinder/eject_item(obj/item/I, atom/target)
+	if(I == beaker)
+		if(!beaker)
+			return FALSE
+		beaker = null
+	return ..()
 
 /obj/machinery/reagentgrinder/proc/eject()
 

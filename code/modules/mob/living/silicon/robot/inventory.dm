@@ -6,9 +6,9 @@
 	if(module_active)
 		var/obj/item/W = module_active.get_alternate_item()
 		if(W)
-			if(W.loc == src)
+			if(W.loc == src || (module_active != W && (W in module_active.contents)))
 				return W
-			return
+			return null
 	return module_active
 
 // I'd rather do this then have something broken.
@@ -23,7 +23,7 @@
 	if(W.anchored)
 		return FALSE
 	if(module_active)
-		return SEND_SIGNAL(module_active, COMSIG_HAND_PUT_IN, W, src)
+		return SEND_SIGNAL(module_active, COMSIG_ROBOT_HAND_PUT_IN, W, src)
 	return FALSE
 
 /mob/living/silicon/robot/put_in_inactive_hand(obj/item/W)
@@ -40,7 +40,9 @@
 
 /mob/living/silicon/robot/drop_item(atom/T)
 	if(module_active)
-		return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
+		if(silicon_drop_item(module_active, T))
+			module_active.forceMove(T)
+			return TRUE
 	return FALSE
 
 /mob/living/silicon/robot/remove_from_mob(obj/O, atom/target)
@@ -49,19 +51,41 @@
 	if(!module_active || module_active.get_alternate_item() != O)
 		return FALSE
 
-	//Shouldn't break anything..?
-	if(istype(O, /obj/item))
-		if(!target)
-			target = loc
+	if(silicon_drop_item(module_active, target))
+		O.forceMove(target)
+		return TRUE
+	return FALSE
 
-		var/obj/item/I = O
+/mob/living/silicon/robot/proc/item_pull_back(obj/item/I)
+	. = TRUE
+	var/is_active = activated(I)
+	if(istype(I.loc, /obj/machinery))
+		var/obj/machinery/M = I.loc
+		. = M.eject_item(I, is_active ? src : module)
+	else
+		. = is_active ? I.forceMove(src) : I.forceMove(module)
+	if(.)
+		UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+		to_chat(src, "<span class='notice'>Your integrated [I] gets pulled back inside.</span>")
 
-		if(I.loc != target)
-			I.forceMove(target)
+/mob/living/silicon/robot/proc/silicon_drop_item(obj/item/I, atom/T, do_check = TRUE)
+	if(do_check && !locate(I) in module.modules)
+		return FALSE
+	//shouldn't actually be TRUE
+	if(I != src && T == module)
+		item_pull_back(I)
+	if(I.comp_lookup[COMSIG_ROBOT_DROP_ITEM])
+		SEND_SIGNAL(I, COMSIG_ROBOT_DROP_ITEM, T, src)
+		return FALSE
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/on_item_moved)
+	return TRUE
 
-		I.dropped(src)
+/mob/living/silicon/robot/proc/on_item_moved(atom/movable/I, atom/oldLoc, dir)
+	SIGNAL_HANDLER
 
-	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, target, src)
+	if(oldLoc == src || I.loc == src || I.loc == module)
+		return
+	item_pull_back(I)
 
 /mob/living/silicon/robot/u_equip(obj/W)
 	if(!W || (W != module_active))
@@ -72,6 +96,8 @@
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return
+	if(module_active.loc != src && module_active.loc != module && (locate(module_active) in module.modules))
+		item_pull_back(module_active)
 	if(module_state_1 == module_active)
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode &= ~module_state_1:sight_mode

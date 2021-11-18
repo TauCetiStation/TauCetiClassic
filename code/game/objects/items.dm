@@ -1029,5 +1029,8 @@
 	if(src != over)
 		remove_outline()
 
+//Determines if an item is a wrapper, e.g. an item that stores another item
+//Should return self if it's not a wrapper or if it doesn't have any items right now
+//Should return a wrapped item if it exists and set
 /obj/item/proc/get_alternate_item()
 	return src

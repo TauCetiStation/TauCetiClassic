@@ -542,5 +542,11 @@ Class Procs:
 	else
 		ex_act(1)
 
-/obj/machinery/proc/Eject(move = TRUE)
-	return
+//Ejects item from machinery into target atom and deals with setting internal variables
+//TRUE if was ejected, FALSE otherwise
+/obj/machinery/proc/eject_item(obj/item/I, atom/target)
+	if(!I)
+		return FALSE
+	if(!(I in contents))
+		return FALSE
+	return I.forceMove(target)

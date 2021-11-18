@@ -223,11 +223,11 @@
 /// check if item is hand_like: ()
 #define COMSIG_HAND_IS "hand_is"
 /// from mob/living/silicon/robot/ClickOn(): (atom/T, mob/user, params)
-#define COMSIG_HAND_ATTACK "hand_attack"
+#define COMSIG_ROBOT_HAND_ATTACK "robot_hand_attack"
 /// from mob/living/silicon/robot/drop_item(): (atom/T, mob/user)
-#define COMSIG_HAND_DROP_ITEM "hand_drop_item"
+#define COMSIG_ROBOT_DROP_ITEM "robot_drop_item"
 /// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
-#define COMSIG_HAND_PUT_IN "hand_put_in"
+#define COMSIG_ROBOT_HAND_PUT_IN "robot_hand_put_in"
 
 //Mood (/datum/component/mood) signals
 ///called when you send a mood event from anywhere in the code.

@@ -127,12 +127,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		linked_console.screen = "main"
 		nanomanager.update_uis(linked_console)
 
-/obj/machinery/r_n_d/destructive_analyzer/proc/eject_item()
+//not used
+/obj/machinery/r_n_d/destructive_analyzer/eject_item(obj/item/I, atom/target)
 	if(busy)
 		to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
-		return
+		return FALSE
 
-	if(loaded_item)
-		loaded_item.forceMove(loc)
+	if(loaded_item && I == loaded_item)
+		//loaded_item.forceMove(loc)
 		loaded_item = null
 		icon_state = "d_analyzer"
+	return ..()

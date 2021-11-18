@@ -73,7 +73,7 @@
 		return
 
 	if(SEND_SIGNAL(W, COMSIG_HAND_IS))
-		SEND_SIGNAL(W, COMSIG_HAND_ATTACK, A, src, params)
+		SEND_SIGNAL(W, COMSIG_ROBOT_HAND_ATTACK, A, src, params)
 		return
 
 	if(W == A)

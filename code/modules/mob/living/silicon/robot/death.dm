@@ -35,7 +35,7 @@
 
 	if(module)
 		for(var/obj/item/I in module)
-			SEND_SIGNAL(I, COMSIG_HAND_DROP_ITEM, null, src)
+			silicon_drop_item(I, null, FALSE)
 
 	update_canmove()
 	if(camera)

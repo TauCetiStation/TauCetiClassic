@@ -227,61 +227,6 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/integrated
-	name = "integrated beaker"
-	desc = "An integrated beaker." //not very creative, right?
-	icon_state = "beakerlarge"
-	volume = 150
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
-	flags = OPENCONTAINER
-	var/mob/living/silicon/robot/integrated_into = null
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/atom_init(mapload, mob/living/silicon/robot/R)
-	. = ..()
-	integrated_into = R
-	RegisterSignal(src, COMSIG_HAND_DROP_ITEM, .proc/drop_item)
-	RegisterSignal(integrated_into, COMSIG_MOB_DIED, .proc/on_mob_death)
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/Destroy()
-	if(loc != integrated_into && loc != integrated_into.module)
-		UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(src, COMSIG_HAND_DROP_ITEM)
-	UnregisterSignal(integrated_into, COMSIG_MOB_DIED)
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/on_mob_death()
-	if(istype(loc, /obj/machinery))
-		var/obj/machinery/M = loc
-		M.Eject(move = FALSE)
-	qdel(src)
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/drop_item()
-	RegisterSignal(integrated_into, COMSIG_MOVABLE_MOVED, .proc/check_dist)
-	return TRUE
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/pull_back(loc = src.loc, move = TRUE)
-	UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
-	if(istype(loc, /obj/machinery))
-		var/obj/machinery/M = loc
-		M.Eject(move = FALSE)
-	if(move)
-		forceMove(integrated_into)
-	to_chat(integrated_into, "<span class='notice'>Your integrated beaker gets pulled back inside.</span>")
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/proc/check_dist(atom/movable/I, atom/oldLoc, dir)
-	var/dist = get_dist(get_turf(integrated_into),get_turf(loc))
-	if(0 > dist || dist > 1)
-		pull_back()
-
-/obj/item/weapon/reagent_containers/glass/beaker/integrated/Moved(atom/OldLoc, Dir)
-	if(OldLoc != integrated_into)
-		if(loc == integrated_into) // if forceMove in pull_back happened
-			UnregisterSignal(integrated_into, COMSIG_MOVABLE_MOVED)
-		else if(loc == integrated_into.module) // Handle Store button
-			pull_back(loc = OldLoc, move = FALSE)
-		else // everything else
-			pull_back()
-
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions."

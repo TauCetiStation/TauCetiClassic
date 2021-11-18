@@ -37,13 +37,13 @@
 /obj/item/weapon/gripper/atom_init()
 	. = ..()
 	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
-	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
-	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
-	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
+	RegisterSignal(src, list(COMSIG_ROBOT_HAND_ATTACK), .proc/attack_as_hand)
+	RegisterSignal(src, list(COMSIG_ROBOT_DROP_ITEM), .proc/drop_item)
+	RegisterSignal(src, list(COMSIG_ROBOT_HAND_PUT_IN), .proc/put_in)
 
 /obj/item/weapon/gripper/Destroy()
-	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
-                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN))
+	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_ROBOT_HAND_ATTACK,
+                               COMSIG_ROBOT_DROP_ITEM, COMSIG_ROBOT_HAND_PUT_IN))
 
 	return ..()
 
@@ -220,7 +220,7 @@
 	set desc = "Release an item from your magnetic gripper."
 	set category = "Drone"
 
-	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
+	SEND_SIGNAL(src, COMSIG_ROBOT_DROP_ITEM, get_turf(src))
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
