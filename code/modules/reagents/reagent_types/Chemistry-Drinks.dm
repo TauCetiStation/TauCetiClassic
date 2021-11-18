@@ -1560,7 +1560,7 @@
 	reagent_state = LIQUID
 	color = "#9d40c1" // rgb: 157, 64, 93
 	boozepwr = 3
-	taste_message = "sweet berry-wine drink. Tasty."
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/strongmandrink
 	name = "Strongman's Drink"
@@ -1569,7 +1569,7 @@
 	reagent_state = LIQUID
 	color = "#f36bad" // rgb: 243, 107, 173
 	boozepwr = 3
-	taste_message = "health alcohol. You feel like the gods are giving you power. Your wounds are healing."
+	taste_message = "health alcohol"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/ethanol/bluelagoone
@@ -1579,7 +1579,7 @@
 	reagent_state = LIQUID
 	color = "#4272ae" // rgb: 66, 114, 174
 	boozepwr = 5
-	taste_message = "beach alcohol. You want more rest and keep drinking.."
+	taste_message = "beach alcohol
 
 /datum/reagent/consumable/ethanol/bloodykuds
 	name = "Bloody Kuds"
@@ -1597,7 +1597,7 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "limonade with ice. Peace be upon you"
+	taste_message = "yeaaaah
 
 /datum/reagent/consumable/ethanol/sexbeach
 	name = "Sex On The Beach"
@@ -1606,7 +1606,7 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "alcohol and the smell of fresh orange. Tasty.."
+	taste_message = "beach alcohol
 
 /datum/reagent/consumable/ethanol/mojito
 	name = "Mojito"
@@ -1615,4 +1615,4 @@
 	reagent_state = LIQUID
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
-	taste_message = "alcohol and you feel smell lime"
+	taste_message = "sweet alcohol
