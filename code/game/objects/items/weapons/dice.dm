@@ -49,7 +49,7 @@
 		set_light(light_range, 1, "#a2fad1")
 		time--
 		sleep(1)
-	for(var/mob/living/A in viewers(3,   loc))
+	for(var/mob/living/A in viewers(3, loc))
 		if(!iscultist(A))
 			A.confused += SLIGHTLY_CONFUSED
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
