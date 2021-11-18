@@ -53,7 +53,7 @@
 		return
 
 	for(var/i in 1 to round(ghost_count / 3))
-		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
