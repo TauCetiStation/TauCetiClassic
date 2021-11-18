@@ -20,6 +20,11 @@
 	desc = "A sign labelling a pharmacy."
 	icon_state = "pharmacy"
 
+/obj/structure/sign/departments/morgue
+	name = "MORGUE"
+	desc = "A sign labelling a morgue."
+	icon_state = "morgue"
+
 /obj/structure/sign/departments/botany
 	name = "HYDROPONICS"
 	desc = "A sign labelling an area as a place where plants are grown."
