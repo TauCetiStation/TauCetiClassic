@@ -1992,6 +1992,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -7073,6 +7076,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/landmark/start{
+	name = "Station Engineer"
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -16153,6 +16159,9 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "white"
