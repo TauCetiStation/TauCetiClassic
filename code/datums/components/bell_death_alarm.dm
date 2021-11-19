@@ -3,7 +3,7 @@
 	var/force = 1
 
 /datum/component/bell_death_alarm/Initialize(force = src.force)
-	if(!iscarbon(parent))
+	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.force = force
@@ -21,4 +21,4 @@
 		msg = "[M.real_name] has died in [A.name]!"
 	for(var/obj/effect/effect/bell/B as anything in global.bells)
 		B.announce_global(msg, force)
-	
+	qdel(src)

@@ -9,7 +9,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/instant/death_alarm/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/chaplain/death_alarm/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 	if(!AOG.buckled_mob)
@@ -23,7 +23,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/death_alarm/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/chaplain/death_alarm/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	var/mob/living/carbon/H = AOG.buckled_mob
 	H.AddComponent(/datum/component/bell_death_alarm)
