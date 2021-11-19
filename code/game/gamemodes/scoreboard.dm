@@ -138,6 +138,15 @@
 			dat += stat
 			dat += "<hr>"
 
+	if(global.deconverted_roles.len)
+		dat += "<B>Deconverted roles:</B><BR>"
+		dat += "<ul>"
+		for(var/name in global.deconverted_roles)
+			dat += "<li>"
+			dat += "[name]: [get_english_list(global.deconverted_roles[name])]."
+			dat += "</li>"
+		dat += "</ul>"
+
 	var/totalfunds = station_account.money
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
