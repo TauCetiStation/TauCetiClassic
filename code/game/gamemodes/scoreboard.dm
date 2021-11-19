@@ -64,14 +64,10 @@
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
 
-	// How many antags did we reconvert using loyalty implant.
-	for(var/datum/faction/faction in SSticker.mode.factions)
-		for(var/datum/role/reconverted in faction.members)
-			if(!reconverted.antag)
-				score["rec_antags"]++
-	for(var/datum/role/reconverted in SSticker.mode.orphaned_roles)
-		if(!reconverted.antag)
-			score["rec_antags"]++
+	// How many antags did we deconvert
+	for(var/name in global.deconverted_roles)
+		var/list/L = global.deconverted_roles[name]
+		score["rec_antags"] += L.len
 
 	//Research Levels
 	var/research_levels = 0

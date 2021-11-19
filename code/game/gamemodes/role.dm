@@ -71,7 +71,15 @@
 
 	return TRUE
 
-/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
+/datum/role/proc/Deconvert()
+	if(!deconverted_roles[id])
+		deconverted_roles[id] = list()
+
+	deconverted_roles[id] += antag.name
+	Drop()
+
+// if role has been deconverts use Deconvert()
+/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
