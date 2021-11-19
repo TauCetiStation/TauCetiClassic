@@ -1,7 +1,6 @@
-/datum/religion_rites/instant/death_alarm
+/datum/religion_rites/instant/chaplain/death_alarm
 	name = "Ангел-хранитель"
 	desc = "Ангел заточенный в колоколе в церкви хоть и не сможет уберечь вас в трудную минуту, но всегда оповестит экипаж о вашей кончине."
-	religion_type = /datum/religion/chaplain
 	ritual_length = (50 SECONDS)
 	favor_cost = 200
 	invoke_msg = "Oh, holy angel, intercessor before our Lord for my soul, my body and my life. Save him from encroachment!"
