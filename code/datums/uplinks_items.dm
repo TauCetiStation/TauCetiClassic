@@ -324,7 +324,7 @@
 	name = "Armor Set"
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
-	cost = 6
+	cost = 4
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/mine
@@ -724,6 +724,7 @@
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 10
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"

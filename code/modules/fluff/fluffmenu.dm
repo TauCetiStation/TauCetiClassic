@@ -95,6 +95,10 @@ var/global/list/editing_item_oldname_list = list()
 	dat += "<td>Description</td>"
 	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
+	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
+	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
@@ -184,6 +188,22 @@ var/global/list/editing_item_oldname_list = list()
 		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 500)
 			return
 		editing_item.desc = new_item_desc
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["change_hair_flags"])
+		var/new_hair_flags = input("Select which hair item should hide", "Text") as null|anything in list("None", "Head Hair", "Head & Face Hair")
+		if(!editing_item || !new_hair_flags)
+			return
+
+		switch(new_hair_flags)
+			if("Head Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_HEAD
+			if("Head & Face Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_ALL
+			else
+				editing_item.hair_flags = null
+
 		edit_custom_item_panel(src, user)
 		return
 
@@ -288,7 +308,7 @@ var/global/list/editing_item_oldname_list = list()
 			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["download"])
-		if(!editing_item || !editing_item.icon)
+		if(!editing_item || !editing_item.icon || !isicon(editing_item.icon))
 			return
 
 		usr << ftp(editing_item.icon)

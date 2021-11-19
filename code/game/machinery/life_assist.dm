@@ -59,6 +59,8 @@
 		return
 
 	if(do_after(usr, 20, target = src))
+		if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
+			return
 		if(attached)
 			detach()
 		else if(ishuman(over_object))
@@ -94,20 +96,23 @@
 	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/tank) && istype(W, /obj/item/weapon/tank/jetpack) && (stat & BROKEN))
-		return
-	if (holding || !user.drop_from_inventory(W, src))
+	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
 		return
 	if(do_after(user, 10, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
 		holding = W
 		add_overlay(holding.icon_state)
-		user.drop_from_inventory(holding, src)
 		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
 		if(attached)
 			update_internal(attached, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
-	if(user.is_busy())
+	. = ..()
+	if(.)
+		return
+
+	if(user.is_busy() || issilicon(user))
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)

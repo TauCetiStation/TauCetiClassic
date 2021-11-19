@@ -502,8 +502,8 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(istype(C, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = C
+	if(istype(C, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = C
 		if(S.wielded)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)

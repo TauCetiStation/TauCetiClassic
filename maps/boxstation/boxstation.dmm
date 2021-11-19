@@ -3980,7 +3980,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor{
@@ -5740,7 +5740,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "ajE" = (
-/obj/item/weapon/twohanded/flora,
+/obj/item/weapon/flora,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9504,7 +9504,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -10220,7 +10220,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aqL" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -11276,7 +11276,7 @@
 /turf/space,
 /area/shuttle/mining/station)
 "asK" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "floorscorched2"
@@ -11866,7 +11866,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "atQ" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-18"
 	},
 /turf/simulated/floor/wood{
@@ -12329,7 +12329,7 @@
 	},
 /area/station/civilian/kitchen)
 "auO" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -12451,7 +12451,7 @@
 	},
 /area/station/maintenance/dormitory)
 "ava" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /obj/machinery/newscaster{
@@ -12856,7 +12856,7 @@
 	},
 /area/station/rnd/xenobiology)
 "avM" = (
-/obj/item/weapon/twohanded/flora/floorleaf,
+/obj/item/weapon/flora/floorleaf,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -13238,7 +13238,7 @@
 	},
 /area/station/maintenance/eva)
 "awB" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -13500,7 +13500,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "axe" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -17995,7 +17995,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 25
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -18160,7 +18160,7 @@
 /turf/simulated/wall,
 /area/station/storage/primary)
 "aFM" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -19160,7 +19160,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aHH" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -20735,7 +20735,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aKA" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -22429,7 +22429,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
@@ -23654,7 +23654,7 @@
 	},
 /area/station/storage/tools)
 "aPR" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -23963,6 +23963,10 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/science/rd,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science/rd,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -24809,7 +24813,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/twohanded/flora/deskleaf,
+/obj/item/weapon/flora/deskleaf,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -24849,7 +24853,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 30
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aRZ" = (
@@ -24962,7 +24966,7 @@
 	},
 /area/station/medical/hallway)
 "aSl" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor{
@@ -25816,7 +25820,7 @@
 	pixel_x = -32;
 	pixel_y = 32
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
@@ -25896,7 +25900,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "aTQ" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Play Room APC";
@@ -25987,7 +25991,7 @@
 	pixel_x = 27;
 	pixel_y = 2
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/door_control{
 	id = "Gateway_shutters";
 	name = "Gateway Shutters";
@@ -26105,7 +26109,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUk" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitehall"
@@ -27355,7 +27359,7 @@
 	},
 /area/station/civilian/chapel/office)
 "aWo" = (
-/obj/item/weapon/twohanded/flora/pottedplant/minitree,
+/obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -27844,7 +27848,7 @@
 /turf/space,
 /area/space)
 "aXj" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -27963,7 +27967,7 @@
 	},
 /area/station/rnd/hor)
 "aXt" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "RD Office APC";
@@ -28035,7 +28039,7 @@
 /turf/space,
 /area/station/rnd/mixing)
 "aXy" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -28355,7 +28359,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aYf" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /obj/structure/window/reinforced{
@@ -28973,7 +28977,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -29457,7 +29461,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/item/weapon/twohanded/flora/pottedplant/mysterious,
+/obj/item/weapon/flora/pottedplant/mysterious,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -29511,7 +29515,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aZU" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/camera{
 	c_tag = "Xenobiology Module SW";
 	dir = 4;
@@ -30014,7 +30018,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "baR" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor{
@@ -30758,7 +30762,7 @@
 	},
 /area/station/cargo/storage)
 "bcg" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Gateway APC";
@@ -32133,7 +32137,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beE" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -32144,7 +32148,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/flora/monkey,
+/obj/item/weapon/flora/monkey,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -33413,7 +33417,7 @@
 /area/station/hallway/secondary/entry)
 "bgQ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/twohanded/flora/deskferntrim,
+/obj/item/weapon/flora/deskferntrim,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bgR" = (
@@ -34483,7 +34487,7 @@
 	},
 /area/station/rnd/server)
 "biS" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
@@ -35183,7 +35187,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -35251,11 +35255,11 @@
 /area/station/cargo/office)
 "bkA" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/melee/chainofcommand,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/item/weapon/reagent_containers/food/drinks/coffee,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkB" = (
@@ -36207,7 +36211,7 @@
 /area/station/cargo/office)
 "bma" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/twohanded/flora/pottedplant/crystal{
+/obj/item/weapon/flora/pottedplant/crystal{
 	pixel_y = 12
 	},
 /obj/machinery/light/small,
@@ -36834,7 +36838,7 @@
 	name = "Medbay Hallway APC";
 	pixel_x = 24
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /obj/structure/cable{
@@ -37366,7 +37370,7 @@
 	},
 /area/station/cargo/office)
 "bop" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -37719,6 +37723,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -37846,13 +37851,17 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/telesci)
 "bpi" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -38336,7 +38345,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bqb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
 	},
@@ -38666,7 +38675,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/weapon/twohanded/flora/floorleaf,
+/obj/item/weapon/flora/floorleaf,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -39061,7 +39070,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "brm" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "escape"
@@ -39343,7 +39352,7 @@
 /area/station/hallway/secondary/exit)
 "brO" = (
 /obj/structure/cable,
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Escape Hallway APC";
@@ -39513,7 +39522,7 @@
 	},
 /area/station/civilian/chapel)
 "bse" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
@@ -40162,7 +40171,7 @@
 	},
 /area/station/bridge)
 "btm" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
@@ -40971,7 +40980,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/twohanded/flora/pottedplant/orientaltree,
+/obj/item/weapon/flora/pottedplant/orientaltree,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -41630,7 +41639,7 @@
 /area/station/bridge/hop_office)
 "bvT" = (
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/weapon/twohanded/flora/deskleaf{
+/obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
 	},
 /obj/machinery/status_display{
@@ -41800,7 +41809,7 @@
 "bwf" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/weapon/twohanded/flora/pottedplant/shoot{
+/obj/item/weapon/flora/pottedplant/shoot{
 	pixel_x = -8;
 	pixel_y = 16
 	},
@@ -42611,7 +42620,7 @@
 /turf/simulated/wall,
 /area/station/medical/patient_a)
 "bxu" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	name = "Treatment Center APC";
 	pixel_y = -25
@@ -45852,7 +45861,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/janitor)
 "bDN" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
@@ -45933,7 +45942,7 @@
 /turf/simulated/wall,
 /area/station/medical/patients_rooms)
 "bDW" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -47977,7 +47986,7 @@
 	},
 /area/station/civilian/cold_room)
 "bHJ" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bHK" = (
@@ -48589,7 +48598,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -50260,7 +50269,7 @@
 /area/station/hallway/primary/aft)
 "bNj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
@@ -52791,7 +52800,7 @@
 	},
 /area/station/medical/surgery)
 "bTA" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bTD" = (
@@ -53730,7 +53739,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bWf" = (
@@ -54300,7 +54309,7 @@
 	},
 /area/station/hallway/primary/central)
 "bXS" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
@@ -54473,7 +54482,7 @@
 /area/station/hallway/primary/aft)
 "bYr" = (
 /obj/effect/decal/cleanable/cobweb2,
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
@@ -55126,7 +55135,7 @@
 /area/station/maintenance/engineering)
 "cao" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/twohanded/flora/deskferntrim{
+/obj/item/weapon/flora/deskferntrim{
 	icon_state = "plant-34-alternative";
 	pixel_x = -8;
 	pixel_y = 10
@@ -58203,7 +58212,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "cjs" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
@@ -59371,7 +59380,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/twohanded/flora/pottedplant/orientaltree{
+/obj/item/weapon/flora/pottedplant/orientaltree{
 	pixel_y = 12
 	},
 /turf/simulated/floor{
@@ -60629,7 +60638,7 @@
 	},
 /area/station/hallway/primary/starboard)
 "cpj" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medical Checkpoint APC";
@@ -60850,6 +60859,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpD" = (
@@ -61045,6 +61055,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpR" = (
@@ -61320,7 +61331,6 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cqx" = (
-/obj/machinery/hologram/holopad,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -61685,15 +61695,14 @@
 /area/station/cargo/office)
 "crn" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/antechamber)
+/area/station/tcommsat/chamber)
 "cro" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -62500,6 +62509,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62652,6 +62662,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63400,7 +63411,7 @@
 	},
 /area/station/medical/chemistry)
 "cvm" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 0;
 	icon_state = "blue"
@@ -63453,7 +63464,7 @@
 	},
 /area/station/civilian/garden)
 "cvx" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24
@@ -66537,7 +66548,6 @@
 /turf/simulated/wall,
 /area/station/security/execution)
 "cDq" = (
-/obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -66710,7 +66720,7 @@
 	},
 /area/station/aisat)
 "cDG" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
@@ -66832,7 +66842,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/twohanded/flora/pottedplant/aquatic{
+/obj/item/weapon/flora/pottedplant/aquatic{
 	pixel_y = 12
 	},
 /turf/simulated/floor{
@@ -67678,6 +67688,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -71522,7 +71533,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fBm" = (
-/obj/item/weapon/twohanded/flora/pottedplant/aquatic,
+/obj/item/weapon/flora/pottedplant/aquatic,
 /turf/simulated/floor,
 /area/station/security/prison)
 "fCb" = (
@@ -72005,7 +72016,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/twohanded/flora,
+/obj/item/weapon/flora,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -72405,7 +72416,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "gNe" = (
-/obj/item/weapon/twohanded/flora/pottedplant/minitree,
+/obj/item/weapon/flora/pottedplant/minitree,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
@@ -72562,7 +72573,7 @@
 	},
 /area/station/hallway/primary/central)
 "gWz" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
@@ -74192,7 +74203,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "juo" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 27
@@ -75410,7 +75421,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lwb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -76282,7 +76293,7 @@
 	},
 /area/station/hallway/secondary/arrival)
 "mDb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -77308,7 +77319,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
 "ofi" = (
-/obj/item/weapon/twohanded/flora/pottedplant/large,
+/obj/item/weapon/flora/pottedplant/large,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -79059,7 +79070,7 @@
 	name = "Asteroid Shuttle Hallway APC";
 	pixel_x = 24
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "qCH" = (
@@ -80442,7 +80453,7 @@
 /area/station/medical/virology)
 "stq" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -123466,7 +123477,7 @@ cDI
 cFS
 bid
 cqN
-cqN
+crn
 csD
 cIe
 cIe
@@ -126026,7 +126037,7 @@ cFP
 cFP
 cpy
 crN
-crn
+csN
 cti
 oAb
 cEW

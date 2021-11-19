@@ -1209,6 +1209,21 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/box/bodybags)
 	crate_name = "body bags crate"
 	group = "Medical / Science"
+	
+/datum/supply_pack/body_bags
+	name = "Stasis Bags Crate"
+	cost = 10000
+	contains = list(/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag)
+	crate_name = "stasis bags crate"
+	group = "Medical / Science"
 
 /datum/supply_pack/suspension_gen
 	name = "Suspension Field Generetor Crate"

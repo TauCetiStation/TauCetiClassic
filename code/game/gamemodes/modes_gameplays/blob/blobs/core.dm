@@ -16,13 +16,14 @@ var/global/list/blob_nodes = list()
 	var/point_rate = 2
 	var/last_resource_collection
 
-/obj/effect/blob/core/atom_init(mapload, h = 200, client/new_overmind, new_rate = 2)
+/obj/effect/blob/core/atom_init(mapload, client/new_overmind, h = 200, new_rate = 2)
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!overmind)
 		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
+	health = h
 	. = ..()
 
 

@@ -359,8 +359,8 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
-			player.ready = 0
-			player.client << output(player.ready, "lobbybrowser:imgsrc")
+			player.ready = FALSE
+			player.client << output(player.ready, "lobbybrowser:setReadyStatus")
 			unassigned -= player
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
