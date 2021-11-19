@@ -134,7 +134,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 
 	if(loaded_item && I == loaded_item)
-		//loaded_item.forceMove(loc)
 		loaded_item = null
 		icon_state = "d_analyzer"
 	return ..()
