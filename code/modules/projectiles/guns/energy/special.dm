@@ -475,7 +475,7 @@
 	icon_state = "portal"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
-	var/firing_core = null
+	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
 	modifystate = 0
 
 /obj/item/weapon/gun/energy/gun/portal/atom_init()
@@ -489,13 +489,34 @@
 
 /obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
+		if(firing_core)
+			to_chat(user, "<span class='warning'>Wormhole projector already has an anomaly core installed!</span>")
+			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
+			return
 		user.drop_from_inventory(C, src)
-		to_chat(user, "You insert [C] into the wormhole projector and the weapon gently hums to life.")
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
 		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
 		firing_core = C
 		modifystate = 2
 		update_icon()
-		return
+		user.update_inv_r_hand()
+		user.update_inv_l_hand()
+
+	if(isscrewdriver(C))
+		if(!firing_core)
+			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
+			return
+		firing_core.forceMove(get_turf(user))
+		firing_core = null
+		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "portal100"
+		modifystate = 0
+		update_icon()
+		user.update_inv_r_hand()
+		user.update_inv_l_hand()
+
+	return ..()
 
 /obj/item/weapon/gun/energy/gun/portal/proc/on_portal_destroy(obj/effect/portal/P)
 	if(P == p_blue)
