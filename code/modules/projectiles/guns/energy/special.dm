@@ -467,3 +467,71 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
 	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+
+/obj/item/weapon/gun/energy/gun/portal
+	name = "bluespace wormhole projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function. Fits in a bag."
+	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	icon_state = "portal"
+	var/obj/effect/portal/p_blue
+	var/obj/effect/portal/p_orange
+	var/firing_core = null
+	modifystate = 0
+
+/obj/item/weapon/gun/energy/gun/portal/atom_init()
+	. = ..()
+	update_icon()
+
+/obj/item/weapon/gun/energy/gun/portal/special_check(mob/M, atom/target)
+	if(!firing_core)
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
+		user.drop_from_inventory(C, src)
+		to_chat(user, "You insert [C] into the wormhole projector and the weapon gently hums to life.")
+		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
+		firing_core = C
+		modifystate = 2
+		update_icon()
+		return
+
+/obj/item/weapon/gun/energy/gun/portal/proc/on_portal_destroy(obj/effect/portal/P)
+	if(P == p_blue)
+		p_blue = null
+	else if(P == p_orange)
+		p_orange = null
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_blue_portal()
+	if(istype(p_blue) && !QDELETED(p_blue))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_orange_portal()
+	if(istype(p_orange) && !QDELETED(p_orange))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/crosslink()
+	if(!has_blue_portal() && !has_orange_portal())
+		return
+	if(!has_blue_portal() && has_orange_portal())
+		p_orange.target = null
+		return
+	if(!has_orange_portal() && has_blue_portal())
+		p_blue.target = null
+		return
+	p_orange.target = p_blue
+	p_blue.target = p_orange
+
+/obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/orange/W, turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
+	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+		qdel(p_orange)
+		p_orange = P
+		P.icon_state = "portalorange"
+	else
+		qdel(p_blue)
+		p_blue = P
+	crosslink()

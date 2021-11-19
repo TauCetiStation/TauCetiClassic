@@ -532,3 +532,25 @@
 		term_color = COLOR_RED
 
 	return term_color
+
+/obj/item/projectile/beam/wormhole
+	name = "bluespace beam"
+	damage = 0
+
+	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
+	tracer_type = /obj/effect/projectile/laser_blue/tracer
+	impact_type = /obj/effect/projectile/laser_blue/impact
+
+/obj/item/projectile/beam/wormhole/orange
+	name = "orange bluespace beam"
+
+	muzzle_type = /obj/effect/projectile/laser/muzzle
+	tracer_type = /obj/effect/projectile/laser/tracer
+	impact_type = /obj/effect/projectile/laser/impact
+
+/obj/item/projectile/beam/wormhole/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	var/obj/item/weapon/gun/energy/gun/portal/P = shot_from
+	if(!P)
+		qdel(src)
+		return
+	P.create_portal(src, get_turf(src))

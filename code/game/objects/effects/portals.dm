@@ -124,3 +124,6 @@
 			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)
+
+/obj/effect/portal/portalgun
+	failchance = 0
