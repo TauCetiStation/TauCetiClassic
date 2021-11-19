@@ -1,4 +1,4 @@
-datum/reagent/consumable/drink
+/datum/reagent/consumable/drink
 	name = "Drink"
 	id = "drink"
 	description = "Uh, some kind of drink."
