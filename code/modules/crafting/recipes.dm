@@ -39,7 +39,7 @@
 
 /datum/crafting_recipe/spear
 	name = "Spear"
-	result = /obj/item/weapon/twohanded/spear
+	result = /obj/item/weapon/spear
 	reqs = list(/obj/item/weapon/wirerod = 1,
 				/obj/item/weapon/shard = 1)
 	time = 40

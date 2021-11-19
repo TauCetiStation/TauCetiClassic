@@ -287,6 +287,12 @@ a.popt {text-decoration: none;}
 	margin-bottom: 4px;
 }
 
+.emphasized {
+	display: block;
+	border-left: 3px solid #e9e000;
+	background-color: #FAFFAF;
+	padding-left: 8px;
+}
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .adminooc, .adminlooc, .admin, .adminobserverooc, .adminooc, .adminobserver, .adminsay, .wet {font-weight: bold;}
