@@ -57,6 +57,9 @@
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
+
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
