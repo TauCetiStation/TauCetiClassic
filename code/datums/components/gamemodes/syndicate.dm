@@ -17,11 +17,7 @@
 
 /datum/component/gamemode/syndicate/proc/get_current()
 	var/datum/role/role = parent
-	var/datum/mind/M = role.antag
-	if(!M)
-		return
-
-	var/mob/living/carbon/human/traitor_mob = M.current
+	var/mob/living/carbon/human/traitor_mob = role.antag.current
 	if(!traitor_mob)
 		return
 
