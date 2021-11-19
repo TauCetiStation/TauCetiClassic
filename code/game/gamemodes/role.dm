@@ -285,11 +285,6 @@
 	var/win = TRUE
 	var/text = ""
 
-	if(!antag)
-		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-		win = FALSE
-		return text
-
 	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
