@@ -1792,7 +1792,7 @@
 /area/custom/arena)
 "aeQ" = (
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /obj/effect/landmark{
@@ -2167,7 +2167,7 @@
 /area/shuttle/vox/arkship)
 "afO" = (
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /obj/random/melee,
@@ -7286,7 +7286,7 @@
 /obj/item/weapon/circular_saw/alien,
 /obj/item/weapon/paper/abductor,
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /obj/structure/table/abductor{
@@ -8094,7 +8094,7 @@
 /area/shuttle/specops/centcom)
 "azH" = (
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /obj/effect/decal/cleanable/blood/splatter,
@@ -15041,7 +15041,7 @@
 /area/shuttle/vox/arkship)
 "aXI" = (
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor{
@@ -15092,7 +15092,7 @@
 	name = "tdome2"
 	},
 /obj/machinery/light/spot{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible spotlight"
 	},
 /turf/unsimulated/floor{
@@ -15121,7 +15121,7 @@
 	name = "tdome1"
 	},
 /obj/machinery/light/spot{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible spotlight"
 	},
 /turf/unsimulated/floor{
@@ -16509,7 +16509,7 @@
 "bce" = (
 /obj/effect/landmark/abductor/console,
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,
@@ -16541,7 +16541,7 @@
 	team = 2
 	},
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,
@@ -16815,7 +16815,7 @@
 	team = 3
 	},
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,
@@ -16837,7 +16837,7 @@
 	team = 4
 	},
 /obj/machinery/light{
-	invisibility = 101;
+	invisibility = INVISIBILITY_ABSTRACT;
 	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,

@@ -488,7 +488,7 @@
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	var/is_currently_brigged = 0
 
@@ -504,7 +504,7 @@
 
 	if(!is_currently_brigged)
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	if(brigged_since == -1)
 		brigged_since = world.time
