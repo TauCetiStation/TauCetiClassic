@@ -153,21 +153,17 @@
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
-			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
-			if(s.zoom)
-				s.toggle_zoom()
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
-			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
-			if(C.zoomed)
-				C.toggle_zoom()
-
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
 		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 		return
 
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_INACTIVE, src)
+
 	src.hand = !( src.hand )
+	item_in_hand = get_active_hand()
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"

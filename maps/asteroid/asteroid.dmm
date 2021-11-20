@@ -12284,6 +12284,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
+"Dh" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/asteroid/research_outpost/gearstore)
 "DC" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -51999,7 +52009,7 @@ hp
 mc
 mr
 mw
-nK
+Dh
 pc
 hP
 pZ
