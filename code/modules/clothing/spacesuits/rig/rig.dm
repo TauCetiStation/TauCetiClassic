@@ -79,7 +79,6 @@
 		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
 	var/magpulse = 0
-
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -437,6 +436,11 @@
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		helmet.canremove = 0
+		if(helmet.on)
+			helmet.set_light(helmet.brightness_on)
+		else
+			helmet.set_light(0)
+
 		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
 
@@ -1050,3 +1054,58 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+
+//Science rig
+/obj/item/clothing/head/helmet/space/rig/science
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and improved module management system."
+	name = "science hardsuit helmet"
+	icon_state = "rig0-science"
+	item_state = "sceince_helm"
+	item_color = "science"
+	unacidable = TRUE
+	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
+
+/obj/item/clothing/suit/space/rig/science
+	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
+	icon_state = "rig-science"
+	name = "science hardsuit"
+	item_state = "science_hardsuit"
+	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
+	unacidable = TRUE
+	max_mounted_devices = 6
+	slowdown = 0.5
+	offline_slowdown = 7
+	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
+
+/obj/item/clothing/head/helmet/space/rig/science/rd
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and integrated HUD."
+	name = "advanced science hardsuit helmet"
+	icon_state = "rig0-rd"
+	item_state = "rd_helm"
+	item_color = "rd"
+	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
+
+/obj/item/clothing/head/helmet/space/rig/science/rd/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot != SLOT_HEAD)
+		return
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/rig/science/rd/dropped(mob/user)
+	. = ..()
+	if(!istype(user))
+		return
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_hud_from(user)
+
+/obj/item/clothing/suit/space/rig/science/rd
+	desc = "A special suit that protects against hazardous, low pressure environments. Has low weight and improved module management system."
+	icon_state = "rig-rd"
+	name = "advanced science hardsuit"
+	item_state = "rd_hardsuit"
+	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
+	max_mounted_devices = 8
+	slowdown = 0.4
+	offline_slowdown = 8
+	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
