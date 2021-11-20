@@ -203,33 +203,13 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				var/list/dstturfs = list()
-				var/throwy = world.maxy
-
 				for(var/turf/T in end_location)
-					dstturfs += T
-					if(T.y < throwy)
-						throwy = T.y
-					CHECK_TICK
-
-				// hey you, get out of the way!
-				for(var/turf/T in dstturfs)
-					// find the turf to move things to
-					var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
-					for(var/atom/movable/AM as mob|obj in T)
-						AM.Move(D)
-
 					if(istype(T, /turf/simulated) || T.is_catwalk())
 						qdel(T)
 					CHECK_TICK
 
-				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
-					bug.gib()
-					CHECK_TICK
-
-				for(var/mob/living/simple_animal/pest in end_location) // And for the other kind of bug...
-					pest.gib()
+				for(var/mob/mob_to_gib in end_location)
+					mob_to_gib.gib()
 					CHECK_TICK
 
 				start_location.move_contents_to(end_location)
