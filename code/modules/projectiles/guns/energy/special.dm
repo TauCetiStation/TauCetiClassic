@@ -473,10 +473,11 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function. Fits in a bag."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
+	modifystate = 0
+	
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
-	modifystate = 0
 
 /obj/item/weapon/gun/energy/gun/portal/atom_init()
 	. = ..()
