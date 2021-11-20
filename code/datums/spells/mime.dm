@@ -13,8 +13,10 @@
 	for(var/mob/living/carbon/human/target in targets)
 		target.miming = !target.miming
 		if(!target.miming)
+			name = "Start miming"
 			to_chat(target, "<span class='warning'>You break your vow of silence.</span>")
 		else
+			name = "Stop miming"
 			to_chat(target, "<span class='notice'>You make a vow of silence.</span>")
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall
