@@ -500,8 +500,7 @@
 		firing_core = C
 		modifystate = 2
 		update_icon()
-		user.update_inv_r_hand()
-		user.update_inv_l_hand()
+		update_inv_mob()
 
 	if(isscrewdriver(C))
 		if(!firing_core)
