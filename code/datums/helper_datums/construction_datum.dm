@@ -36,9 +36,9 @@
 
 /datum/construction/proc/is_right_key(atom/used_atom) // returns current step num if used_atom is of the right type.
 	var/list/L = steps[steps.len]
-	if(steps.len && istype(used_atom, L["key"]))
-		return TRUE
-	return FALSE
+	if(istype(used_atom, L["key"]))
+		return step.len
+	return 0
 
 /datum/construction/proc/custom_action(step, used_atom, user)
 	return TRUE
