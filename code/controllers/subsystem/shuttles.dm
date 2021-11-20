@@ -363,6 +363,7 @@ SUBSYSTEM_DEF(shuttle)
 					thing.Move(target_turf)
 				else
 					qdel(thing)
+			CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
