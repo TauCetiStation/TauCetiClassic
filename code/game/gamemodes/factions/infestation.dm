@@ -13,8 +13,8 @@
 
 	var/last_check = 0
 
-	var/list/first_help = list("Xeno liquidator" = 3, "Xeno destroyer" = 2)
-	var/list/second_help = list("Xeno arsonist" = 5, "Shotgun shells (incendiary)" = 1)
+	var/list/first_help = list("Xeno liquidator" = 4)
+	var/list/second_help = list("Xeno arsonist" = 4)
 	var/first_help_sent = FALSE
 	var/second_help_sent = FALSE
 	var/win_declared = FALSE
@@ -227,5 +227,42 @@
 	dat += "</table>"
 
 	return dat
+
+//send help to cargo from Cent Comm
+//*list/supply_crates - associative list, string key - name of supply pack, int value - number of crates to send
+//*announce - successful shuttle dispatch announcement
+//*announce_fail - the shuttle was busy, the crates were added to the shopping list. Send the shuttle yourself
+/datum/faction/infestation/proc/send_help_crew(list/supply_crates, announce, announce_fail)
+	//find supply pack by name and create supply order
+	for(var/crate_name in supply_crates)
+		var/supply_name = ckey(crate_name)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[supply_name]
+		var/datum/supply_order/O = new /datum/supply_order(P, "Cent Comm", "Cent Comm", "", "Xeno threat")
+		//add supply orders to shopping list
+		var/number_supply_orders = supply_crates[crate_name]
+		for(var/i = 1, i <= number_supply_orders, i++)
+			SSshuttle.shoppinglist += O
+
+	if(send_shuttle())
+		var/datum/announcement/centcomm/xeno/announcement = new announce
+		announcement.play()
+	else
+		var/datum/announcement/centcomm/xeno/announcement = new announce_fail
+		announcement.play()
+
+/datum/faction/infestation/proc/send_shuttle()
+	if(!SSshuttle.can_move())
+		return FALSE
+	else if(SSshuttle.at_station)
+		SSshuttle.send()
+		SSshuttle.sell()
+		SSshuttle.buy()
+		SSshuttle.moving = 1
+		SSshuttle.set_eta_timeofday()
+	else
+		SSshuttle.buy()
+		SSshuttle.moving = 1
+		SSshuttle.set_eta_timeofday()
+	return TRUE
 
 #undef CHECK_PERIOD
