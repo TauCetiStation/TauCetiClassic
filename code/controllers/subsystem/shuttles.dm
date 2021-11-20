@@ -203,13 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				for(var/turf/simulated/turf_to_qdel in end_location)
-						qdel(turf_to_qdel)
-					CHECK_TICK
-
-				for(var/mob/mob_to_gib in end_location)
-					mob_to_gib.gib()
-					CHECK_TICK
+				clean_arriving_area(end_location)
 
 				start_location.move_contents_to(end_location)
 
@@ -345,6 +339,31 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			return 1
 
+/**
+ * Cleans passed area, gibs any mob inside area, unachored movable gets moved, everything else will be qdeled
+ *
+ * vars:
+ * * arriving_area (required) area that is gonna get used in proc
+ */
+/datum/controller/subsystem/shuttle/proc/clean_arriving_area(area/arriving_area)
+	var/throw_y = world.maxy
+	for(var/turf/turf_to_check in arriving_area)
+		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
+		if(turf_to_check.y < throw_y)
+			throw_y = turf_to_check.y
+		for(var/i in turf_to_check.contents)
+			var/atom/movable/thing = i
+			if(isliving(thing))
+				var/mob/living/mob_to_gib = thing
+				mob_to_gib.gib()
+			else
+				if(istype(thing, /obj/singularity))
+					continue
+				if(!thing.anchored)
+					thing.Move(target_turf)
+				else
+					qdel(thing)
+
 /datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
@@ -427,10 +446,7 @@ SUBSYSTEM_DEF(shuttle)
 			at_station = 1
 	moving = 0
 
-	//Do I really need to explain this loop?
-	for(var/mob/living/unlucky_person in the_shuttles_way)
-		unlucky_person.gib()
-		CHECK_TICK
+	clean_arriving_area(the_shuttles_way)
 
 	from.move_contents_to(dest)
 
