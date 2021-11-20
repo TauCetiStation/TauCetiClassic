@@ -203,9 +203,8 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				for(var/turf/T in end_location)
-					if(istype(T, /turf/simulated) || T.is_catwalk())
-						qdel(T)
+				for(var/turf/simulated/turf_to_qdel in end_location)
+						qdel(turf_to_qdel)
 					CHECK_TICK
 
 				for(var/mob/mob_to_gib in end_location)
