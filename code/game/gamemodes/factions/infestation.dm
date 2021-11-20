@@ -240,7 +240,7 @@
 		var/datum/supply_order/O = new /datum/supply_order(P, "Cent Comm", "Cent Comm", "", "Xeno threat")
 		//add supply orders to shopping list
 		var/number_supply_orders = supply_crates[crate_name]
-		for(var/i = 1, i <= number_supply_orders, i++)
+		for(var/i in 1 to number_supply_orders)
 			SSshuttle.shoppinglist += O
 
 	if(send_shuttle())
@@ -253,7 +253,7 @@
 /datum/faction/infestation/proc/send_shuttle()
 	if(!SSshuttle.can_move())
 		return FALSE
-	else if(SSshuttle.at_station)
+	if(SSshuttle.at_station)
 		SSshuttle.send()
 		SSshuttle.sell()
 		SSshuttle.buy()
