@@ -474,14 +474,10 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
 	modifystate = 0
-	
+
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
-
-/obj/item/weapon/gun/energy/gun/portal/atom_init()
-	. = ..()
-	update_icon()
 
 /obj/item/weapon/gun/energy/gun/portal/special_check(mob/M, atom/target)
 	if(!firing_core)
