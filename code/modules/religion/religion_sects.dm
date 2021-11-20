@@ -157,10 +157,10 @@
 	desc = "Save life of cultists at any cost."
 	convert_opener = "Become immortal!"
 	aspect_preset = list(
-		/datum/aspect/chaos = 1,
-		/datum/aspect/rescue = 1,
-		/datum/aspect/mystic = 1,
 		/datum/aspect/resources = 1,
+		/datum/aspect/rescue = 1,
+		/datum/aspect/chaos = 1,
+		/datum/aspect/mystic = 1,
 		/datum/aspect/lightbending/darkness = 2,
 	)
 
