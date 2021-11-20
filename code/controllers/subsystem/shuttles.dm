@@ -348,9 +348,9 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/clean_arriving_area(area/arriving_area)
 	var/throw_y = world.maxy
 	for(var/turf/turf_to_check in arriving_area)
-		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
 		if(turf_to_check.y < throw_y)
 			throw_y = turf_to_check.y
+		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
 		for(var/i in turf_to_check.contents)
 			var/atom/movable/thing = i
 			if(isliving(thing))
