@@ -41,10 +41,10 @@
 	return
 
 // Arguments: event_type as text, E as /datum/event_mecha
-// Returns: TRUE if event cleared, null on error
+// Returns: TRUE if event cleared, FALSE on error
 /datum/events/proc/clearEvent(event_type, datum/event/E)
 	if(!event_type || !E)
-		return
+		return FALSE
 	var/list/event = listgetindex(events,event_type)
 	event -= E
 	return TRUE
@@ -64,4 +64,4 @@
 	if(listener)
 		call(listener,proc_name)(arglist(args))
 		return TRUE
-	return
+	return FALSE
