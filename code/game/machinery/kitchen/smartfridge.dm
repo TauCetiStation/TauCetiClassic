@@ -369,4 +369,4 @@
 	if(!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
-	. = ..()
+	return ..()
