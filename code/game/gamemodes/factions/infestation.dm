@@ -134,10 +134,7 @@
 		alien_percent = WIN_PERCENT
 	. = list(TOTAL_HUMAN = total_human, TOTAL_ALIEN = total_alien, ALIEN_PERCENT = alien_percent)
 
-/datum/faction/infestation/check_win()
-	if(last_check > world.time)
-		return FALSE
-	last_check = world.time + CHECK_PERIOD
+/datum/faction/infestation/process()
 	var/data = count_alien_percent()
 	if(data[ALIEN_PERCENT] == 0 && first_help_sent && !win_declared)
 		var/datum/announcement/centcomm/xeno/crew_win/announcement = new
@@ -151,7 +148,13 @@
 	else if(data[ALIEN_PERCENT] >= SECOND_HELP_PERCENT && !second_help_sent)
 		send_help_crew(second_help, /datum/announcement/centcomm/xeno/second_help, /datum/announcement/centcomm/xeno/second_help/fail)
 		second_help_sent = TRUE
-	else if(data[ALIEN_PERCENT] >= WIN_PERCENT)
+
+/datum/faction/infestation/check_win()
+	if(last_check > world.time)
+		return FALSE
+	last_check = world.time + CHECK_PERIOD
+	var/data = count_alien_percent()
+	if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
 	return FALSE
 
