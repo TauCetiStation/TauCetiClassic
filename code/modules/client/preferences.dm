@@ -346,7 +346,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.height = height
 	character.b_type = b_type
 
-	character.update_height()
+	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
