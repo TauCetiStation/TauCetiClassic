@@ -5,9 +5,6 @@
 		return
 	if(stat == UNCONSCIOUS)
 		return
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		if(act != "hiss")
-			act = copytext(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	// These scare the enemies out, causing them to lose 10 combo points.
