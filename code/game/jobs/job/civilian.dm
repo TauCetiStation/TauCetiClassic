@@ -258,5 +258,5 @@
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
-		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime_speak)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
 		H.miming = TRUE

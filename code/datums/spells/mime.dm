@@ -1,23 +1,21 @@
-/obj/effect/proc_holder/spell/targeted/mime_speak
+/obj/effect/proc_holder/spell/no_target/mime_speak
 	name = "Miming"
 	desc = "Make or break a vow of silence."
 	panel = "Mime"
 	clothes_req = FALSE
 	charge_max = 5 MINUTES
 	range = -1
-	include_user = TRUE
 	action_icon_state = "mime_speech"
 	action_background_icon_state = "bg_mime"
 
-/obj/effect/proc_holder/spell/targeted/mime_speak/cast(list/targets)
-	for(var/mob/living/carbon/human/target in targets)
-		target.miming = !target.miming
-		if(!target.miming)
-			name = "Start miming"
-			to_chat(target, "<span class='warning'>You break your vow of silence.</span>")
-		else
-			name = "Stop miming"
-			to_chat(target, "<span class='notice'>You make a vow of silence.</span>")
+/obj/effect/proc_holder/spell/no_target/mime_speak/cast(list/targets, mob/living/carbon/human/user)
+	user.miming = !user.miming
+	if(!user.miming)
+		name = "Start miming"
+		to_chat(user, "<span class='warning'>You break your vow of silence.</span>")
+	else
+		name = "Stop miming"
+		to_chat(user, "<span class='notice'>You make a vow of silence.</span>")
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall
 	name = "Invisible wall"
