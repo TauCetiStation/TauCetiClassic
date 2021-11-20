@@ -208,7 +208,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/corpse_to_raise
-	var/list/mob/living/carbon/human/bodys_to_sacrifice = list()
+	var/list/mob/living/carbon/human/targets_on_tables = list()
 
 	var/datum/religion/cult/C = religion
 	if(C.mode.sacrifice_target && C.mode.sacrifice_target == AOG.buckled_mob.mind)
@@ -217,12 +217,16 @@
 	if(AOG.buckled_mob.mind)
 		corpse_to_raise = AOG.buckled_mob
 
+	var/w_class_sum = 0
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
 		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
 			continue
-		bodys_to_sacrifice += table.buckled_mob
+		targets_on_tables += table.buckled_mob
+		w_class_sum += table.buckled_mob.w_class
+		if(w_class_sum >= corpse_to_raise)
+			break
 
-	if(!bodys_to_sacrifice.len)
+	if(!targets_on_tables.len || w_class_sum < corpse_to_raise)
 		to_chat(user, "<span class='[religion.style_text]'>Не хватает тел для жертвы.</span>")
 		return FALSE
 
@@ -232,22 +236,22 @@
 		"<span class='[religion.style_text]'>Жизнь... Я снова живу...</span>", \
 		"<span class='[religion.style_text]'>Вы слышите слабый, но знакомый шепот.</span>")
 	playsound(AOG, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
-
-	var/mob/M = pick(bodys_to_sacrifice)
-
 	user.say(pick("Паснар вал'кериам усинар!", "Саврае инес амутан!", "Йам'тотх ремиум ил'тарат!", "Хаккрутйу гопоенйим!", "Храсаи пивроиашан!", "Фирййи прхив мазенхор!", "Танах ех вакантахе!", "Облияе на ораие!", "Миуф хон внор'с!", "Вакабаи хий фен йусших!"))
-	M.visible_message("<span class='[religion.style_text]'>[M] разрывается на части, чёрный дым стремительно поднимается от останков.</span>", \
-		"<span class='[religion.style_text]'>Вы чувствуете, как ваша кровь кипит, разрывая вас же на части.</span>", \
-		"<span class='[religion.style_text]'>Вы слышите тысячи голосов, все из них кричат от боли.</span>")
 
-	if(M.mind)
-		C.mode.sacrificed += M.mind
 
-	if(C.mode.sacrifice_target && C.mode.sacrifice_target == M.mind)
-		to_chat(user, "<span class='[religion.style_text]'>Я принимаю жертву, ваша цель теперь может считаться выполненной.</span>")
-		C.adjust_favor(300 * divine_power)
+	for(var/mob/M in targets_on_tables)
+		M.visible_message("<span class='[religion.style_text]'>[M] разрывается на части, чёрный дым стремительно поднимается от останков.</span>", \
+			"<span class='[religion.style_text]'>Вы чувствуете, как ваша кровь кипит, разрывая вас же на части.</span>", \
+			"<span class='[religion.style_text]'>Вы слышите тысячи голосов, все из них кричат от боли.</span>")
 
-	M.gib()
+		if(M.mind)
+			C.mode.sacrificed += M.mind
+
+		if(C.mode.sacrifice_target && C.mode.sacrifice_target == M.mind)
+			to_chat(user, "<span class='[religion.style_text]'>Я принимаю жертву, ваша цель теперь может считаться выполненной.</span>")
+			C.adjust_favor(300 * divine_power)
+
+		M.gib()
 
 	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
 	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
