@@ -18,19 +18,6 @@
 
 	add_languages(R)
 
-	RegisterSignal(R, COMSIG_MOVABLE_MOVED, .proc/silicon_on_move)
-
-/obj/item/weapon/robot_module/proc/silicon_on_move()
-	SIGNAL_HANDLER
-
-	var/mob/living/silicon/robot/R = loc
-	for(var/obj/item/I in modules)
-		if(I.loc == src || I.loc == R)
-			continue
-		var/dist = get_dist(get_turf(I),get_turf(R))
-		if(0 > dist || dist > 1)
-			R.item_pull_back(I)
-
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -48,7 +35,6 @@
 	qdel(jetpack)
 	emag = null
 	jetpack = null
-	UnregisterSignal(loc, COMSIG_MOVABLE_MOVED)
 	return ..()
 
 

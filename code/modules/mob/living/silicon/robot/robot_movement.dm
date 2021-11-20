@@ -30,3 +30,14 @@
 	var/datum/robot_component/actuator/A = get_component("actuator")
 	if (cell_use_power(A.active_usage))
 		return ..()
+
+/mob/living/silicon/robot/Moved()
+	. = ..()
+	if(!module)
+		return
+	for(var/obj/item/I in module.modules)
+		if(I.loc == module || I.loc == src)
+			continue
+		var/dist = get_dist(get_turf(I),get_turf(src))
+		if(0 > dist || dist > 1)
+			item_pull_back(I)
