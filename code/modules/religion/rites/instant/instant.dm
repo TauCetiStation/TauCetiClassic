@@ -223,10 +223,10 @@
 			continue
 		targets_on_tables += table.buckled_mob
 		w_class_sum += table.buckled_mob.w_class
-		if(w_class_sum >= corpse_to_raise)
+		if(w_class_sum >= corpse_to_raise.w_class)
 			break
 
-	if(!targets_on_tables.len || w_class_sum < corpse_to_raise)
+	if(!targets_on_tables.len || w_class_sum < corpse_to_raise.w_class)
 		to_chat(user, "<span class='[religion.style_text]'>Не хватает тел для жертвы.</span>")
 		return FALSE
 
