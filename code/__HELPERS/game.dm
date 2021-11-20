@@ -249,7 +249,7 @@
 
 
 	// Try to find all the players who can hear the message
-	for(var/i in 1 to player_list.len)
+	for(var/mob/M as anything in player_list)
 		var/mob/M = player_list[i]
 		if(M)
 			var/turf/ear = get_turf(M)
