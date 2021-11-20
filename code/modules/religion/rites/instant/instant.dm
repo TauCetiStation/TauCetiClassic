@@ -73,7 +73,7 @@
 	desc = "Лучшая промывка мозгов в галактике!"
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Служи ему!!!"
-	favor_cost = 50
+	favor_cost = 100
 	can_talismaned = FALSE
 
 /datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
