@@ -13,7 +13,7 @@
 	initroletype = /datum/role/rev_leader
 	roletype = /datum/role/rev
 
-	min_roles = 2
+	min_roles = 0
 	max_roles = 2
 
 	logo_state = "rev-logo"
