@@ -542,7 +542,7 @@
 	p_orange.target = p_blue
 	p_blue.target = p_orange
 
-/obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/orange/W, turf/target)
+/obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
 	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
