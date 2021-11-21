@@ -49,12 +49,25 @@
 		if(!initial(T.name)) // exclude abstract gamemode types
 			continue
 		var/datum/game_mode/mode = new type()
-		if(!mode.potential_runnable())
-			continue
 		var/datum/vote_choice/range/gamemode/C = new()
 		C.text = mode.name
 		choices.Add(C)
 		qdel(mode)
+
+/datum/poll/range/gamemode/get_winners(list/choice_votes)
+	var/max_votes = -INFINITY
+	. = list()
+	for(var/datum/vote_choice/V in choice_votes)
+		// get most wanted modes from those which are runnable
+		// for example, if 29 player server votes 10 for blob and 9 for traitor, traitor will win
+		// because blob cannot run on 29 people
+		var/datum/game_mode/M = config.pick_mode(V.text)
+		if(!M.potential_runnable())
+			continue
+		max_votes = max(max_votes, choice_votes[V])
+	for(var/datum/vote_choice/V in choice_votes)
+		if(choice_votes[V] == max_votes)
+			. += V
 
 /datum/poll/range/gamemode/on_end()
 	. = ..()
@@ -63,8 +76,8 @@
 		P.next_vote = last_vote + P.cooldown
 
 /datum/vote_choice/range/gamemode
-	options = list("Не хочу" = -1, "Все равно" = 0, "Хочу" = 1)
-	
+	options = list("Не хочу" = -1, "Хочу" = 1)
+
 /datum/vote_choice/range/gamemode/on_win()
 	if(master_mode != "Secret")
 		master_mode = "Secret"

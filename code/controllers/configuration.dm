@@ -754,6 +754,7 @@ var/bridge_secret = null
 		var/datum/game_mode/M = new type()
 		if (M.name == mode_name)
 			return M
+		qdel(M)
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_bundle_by_name(name)
