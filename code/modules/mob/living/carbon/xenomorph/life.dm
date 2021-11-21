@@ -104,6 +104,9 @@
 
 		if(druggy)
 			setDrugginess(0)
+
+		if(confused)
+			confused = 0
 	return 1
 
 

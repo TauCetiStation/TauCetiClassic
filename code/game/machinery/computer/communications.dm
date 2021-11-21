@@ -66,12 +66,6 @@
 
 	return ..()
 
-/obj/machinery/computer/communications/process()
-	if(..())
-		if(state != STATE_STATUSDISPLAY)
-			updateDialog()
-
-
 /obj/machinery/computer/communications/Topic(href, href_list)
 	. = ..()
 	if(!.)

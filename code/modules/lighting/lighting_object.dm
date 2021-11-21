@@ -55,7 +55,7 @@
 		if (loc)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
+			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]][COORD(oldturf)] -> [loc]\[[ loc ? loc.type : "null"]][COORD(newturf)])!")
 
 		qdel(src, TRUE)
 		return

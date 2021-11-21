@@ -1,6 +1,7 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_speed = 10
@@ -55,6 +56,9 @@
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -454,3 +458,13 @@
 /atom/movable/proc/remove_outline()
 	usr.client.images -= usr.client.outlined_item[src]
 	usr.client.outlined_item -= src
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	loc = new_loc
+	Moved(old_loc)
