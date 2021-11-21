@@ -121,7 +121,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		adjust_blurriness(-1)
+		adjustBlurriness(-1)
 
 	if (src.druggy > 0)
 		src.druggy--

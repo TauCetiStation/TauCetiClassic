@@ -83,7 +83,7 @@
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M))
+		if(isobserver(M) || isanyblob(M))
 			to_chat(M, message)
 
 /mob/camera/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)

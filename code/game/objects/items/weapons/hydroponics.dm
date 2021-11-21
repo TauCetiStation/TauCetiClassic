@@ -19,6 +19,7 @@
  * Nettle
  */
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	. = ..()
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		user.take_bodypart_damage(0, force)
@@ -47,6 +48,7 @@
  */
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.gloves)
@@ -69,7 +71,7 @@
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
-		M.adjust_blurriness(force/7)
+		M.blurEyes(force/7)
 		if(prob(20))
 			M.Paralyse(force/6)
 			M.Weaken(force/15)

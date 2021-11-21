@@ -542,9 +542,10 @@
 		return FALSE
 
 	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
-		qdel(tome)
 		for(var/i in 1 to divine_power)
-			religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+			var/obj/item/weapon/storage/bible/tome/upgraded/upgr = new(AOG.loc)
+			upgr.religion = tome.religion
+		qdel(tome)
 
 	return TRUE
 
@@ -578,7 +579,7 @@
 		return FALSE
 	var/blindless_modifier = clamp(90 / length(affected), 5 * divine_power, 30)
 	for(var/mob/living/carbon/C in affected)
-		C.adjust_blurriness(blindless_modifier)
+		C.blurEyes(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
 			C.disabilities |= NEARSIGHTED

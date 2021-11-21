@@ -14,7 +14,7 @@
 		user.visible_message("<span class='warning'>При попытке открыть книгу, сквозь обложку просачивается яркий красный шар света, который через мгновенье рассеивается.</span>",
 		"<span class='warning'>При попытке открыть книгу, сквозь обложку просачивается яркий красный шар света, который невольно обжигает ваши руки и быстро рассеивается.</span>")
 		user.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), 0, 10)
-		user.adjust_blurriness(3)
+		user.blurEyes(15)
 		return
 	return ..()
 
@@ -24,6 +24,6 @@
 		return
 	if(!iscultist(AM))
 		var/mob/living/carbon/human/H = AM
-		H.show_message("<span class='warning'>Наступив на книгу вы чувствуете невыносимо жгучую боль в ступнях.</span>")
+		to_chat(H, "<span class='warning'>Наступив на книгу вы чувствуете невыносимо жгучую боль в ступнях.</span>")
 		H.take_certain_bodypart_damage(list(BP_L_LEG, BP_R_LEG), 0, 10)
 		return

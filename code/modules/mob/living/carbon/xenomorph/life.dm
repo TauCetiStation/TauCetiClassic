@@ -77,7 +77,7 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
-			adjust_blurriness(-1)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//No ear damage for aliums!
@@ -104,6 +104,9 @@
 
 		if(druggy)
 			setDrugginess(0)
+
+		if(confused)
+			confused = 0
 	return 1
 
 

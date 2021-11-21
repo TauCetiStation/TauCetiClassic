@@ -26,7 +26,7 @@
 		qdel(src)
 
 /obj/item/weapon/holder/pickup(mob/living/user)
-	..()
+	. = ..()
 	user.status_flags |= PASSEMOTES
 
 /obj/item/weapon/holder/dropped(mob/living/carbon/user)
