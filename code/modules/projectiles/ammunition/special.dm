@@ -57,6 +57,7 @@
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0
 	select_name = "blue"
+	fire_sound = 'sound/weapons/guns/portalgun.ogg'
 
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
