@@ -558,3 +558,4 @@
 	qdel(p_blue)
 	qdel(p_orange)
 	qdel(firing_core)
+	return ..()
