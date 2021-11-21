@@ -506,7 +506,7 @@
 		firing_core = null
 		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		icon_state = "portal100"
+		icon_state = "portal"
 		modifystate = 0
 		update_icon()
 		update_inv_mob()
@@ -514,6 +514,7 @@
 	return ..()
 
 /obj/item/weapon/gun/energy/gun/portal/proc/on_portal_destroy(obj/effect/portal/P)
+	SIGNAL_HANDLER
 	if(P == p_blue)
 		p_blue = null
 	else if(P == p_orange)
@@ -543,6 +544,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/orange/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -551,3 +553,8 @@
 		qdel(p_blue)
 		p_blue = P
 	crosslink()
+
+/obj/item/weapon/gun/energy/gun/portal/Destroy()
+	qdel(p_blue)
+	qdel(p_orange)
+	qdel(firing_core)
