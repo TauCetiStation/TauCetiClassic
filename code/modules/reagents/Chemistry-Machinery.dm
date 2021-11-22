@@ -725,12 +725,9 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(I))
-			default_deconstruction_crowbar(I)
-			return 1
-		else
+		if(!default_deconstruction_crowbar(I))
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>")
-			return 1
+		return 1
 
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
