@@ -4,7 +4,7 @@
 	value = 0
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
 	gain_text = "<span class='danger'>Вы хотите показать, насколько вы сильны. Вы попытаетесь игнорировать любую боль.</span>"
-	lose_text = "<span class='notice'>Вы устали терпеть боль, теперь она пугает Вас.</span>"
+	lose_text = "<span class='notice'>Вы устали терпеть боль, теперь она пугает вас.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
@@ -28,7 +28,7 @@
 
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
-	desc = "Всё для вас одинаково пресно на вкус! Токсичная еда остаётся отравной для вас."
+	desc = "Всё для вас одинаково пресно на вкус! Токсичная еда остаётся ядовитой для вас."
 	value = 0
 	mob_trait = TRAIT_AGEUSIA
 	gain_text = "<span class='notice'>Вы потеряли вкус!</span>"

@@ -4,17 +4,17 @@
 	value = 2
 	mob_trait = TRAIT_MULTITASKING
 	gain_text = "<span class='notice'>Вы чувствуете уверенность в ловкости своих рук.</span>"
-	lose_text = "<span class='danger'>Вы чувствуете, что растеряли свой талант мультизадачности.</span>"
+	lose_text = "<span class='danger'>Вы чувствуете, что растеряли свой талант многозадачности.</span>"
 
 
 
 /datum/quirk/child_of_nature
 	name = QUIRK_CHILD_OF_NATURE
-	desc = "Вы едины с природой. Животные не атакуют вас, если вы разденетесь догола."
+	desc = "Вы едины с природой. Животные не будут атаковать вас, если вы разденетесь догола."
 	value = 2
 	mob_trait = TRAIT_NATURECHILD
 	gain_text = "<span class='notice'>Вы чуствуете единство с природой.</span>"
-	lose_text = "<span class='danger'>Кажись, ваша связь с природой нарушена.</span>"
+	lose_text = "<span class='danger'>Ваша связь с природой нарушена.</span>"
 
 	req_species_flags = list(
 		IS_PLANT = TRUE,
@@ -30,7 +30,7 @@
 
 /datum/quirk/strong_mind
 	name = QUIRK_STRONG_MIND
-	desc = "Вы можете выбирать между правдой и ложью, не оборачиваясь на мораль и эмоции."
+	desc = "Вы отличаете истину от лжи своего сознания."
 	value = 2
 	mob_trait = TRAIT_STRONGMIND
 	gain_text = "<span class='notice'>Вы чувствуете уверенность в своём разуме.</span>"
@@ -65,7 +65,7 @@
 	desc = "Вы проворны как кошка! Вы залазите на различные объекты быстрее."
 	value = 2
 	mob_trait = TRAIT_FREERUNNING
-	gain_text = "<span class='notice'>Ты ощущаешь гибкость своих ног.</span>"
+	gain_text = "<span class='notice'>Вы ощущаете гибкость своих ног.</span>"
 	lose_text = "<span class='danger'>Вы снова чувствуете себя неуклюжим.</span>"
 
 	// They are slow as all hell.
@@ -75,7 +75,7 @@
 
 /datum/quirk/light_step
 	name = QUIRK_LIGHT_STEP
-	desc = "Вы ходите аккуратно и грациозно, издавая меньше шума и никогда не наступая в лужи крови или грязи."
+	desc = "Вы ходите аккуратно и грациозно, никогда не наступая в лужи крови или грязь."
 	value = 2
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>У вас лёгкая поступь.</span>"

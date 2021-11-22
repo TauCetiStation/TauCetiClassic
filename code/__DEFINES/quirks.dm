@@ -5,12 +5,12 @@
 #define QUIRK_STRONG_MIND "Психологическая Устойчивость"
 #define QUIRK_ALCOHOL_TOLERANCE "Стойкость к Алкоголю"
 #define QUIRK_FREERUNNING "Фриран"
-#define QUIRK_LIGHT_STEP "Грациозность"
+#define QUIRK_LIGHT_STEP "Лёгкий Шаг"
 
 // neutral quirks.
-#define QUIRK_HIGH_PAIN_THRESHOLD "Высокий болевой порог"
-#define QUIRK_LOW_PAIN_THRESHOLD "Низкий болевой порог"
-#define QUIRK_AGEUSIA "Утрата вкуса"
+#define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"
+#define QUIRK_LOW_PAIN_THRESHOLD "Низкий Болевой Порог"
+#define QUIRK_AGEUSIA "Утрата Вкуса"
 #define QUIRK_DALTONISM "Дальтонизм"
 
 // negative quirks.
@@ -19,11 +19,11 @@
 #define QUIRK_DEAF "Глухота"
 #define QUIRK_SEIZURES "Эпилепсия"
 #define QUIRK_FATNESS "Полнота"
-#define QUIRK_TOURETTE "Туретта"
+#define QUIRK_TOURETTE "Синдром Туретта"
 #define QUIRK_NEARSIGHTED "Близорукость"
-#define QUIRK_NERVOUS "Нервность"
-#define QUIRK_STRESS_EATER "Нервный Голод"
+#define QUIRK_NERVOUS "Нервозность"
+#define QUIRK_STRESS_EATER "Голод из-за Стресса"
 #define QUIRK_MUTE "Немота"
-#define QUIRK_LIGHT_DRINKER "Легко Напивающийся"
-#define QUIRK_NYCTOPHOBIA "Боязнь темноты"
+#define QUIRK_LIGHT_DRINKER "Неустойчивость к Алкоголю"
+#define QUIRK_NYCTOPHOBIA "Никтофобия"
 #define QUIRK_GENETIC_DEGRADATION "Генетическая Деградация"

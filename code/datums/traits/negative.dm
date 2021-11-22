@@ -22,7 +22,7 @@
 	desc = "У вас неизлечимый хронический кашель."
 	value = -1
 	mob_trait = TRAIT_COUGH
-	gain_text = "<span class='danger'>Вы не можете прекратить кашлять!</span>"
+	gain_text = "<span class='danger'>Вы не можете перестать кашлять!</span>"
 	lose_text = "<span class='notice'>Вы чувствуете облегчение, кашель больше вас не побеспокоит.</span>"
 
 	req_species_flags = list(
@@ -47,7 +47,7 @@
 	desc = "Вы испытываете припадки."
 	value = -1
 	mob_trait = TRAIT_EPILEPSY
-	gain_text = "<span class='danger'>Вы начинаете испытывать припадки!</span>"
+	gain_text = "<span class='danger'>Вы начинаете испытывать эпилептические припадки!</span>"
 	lose_text = "<span class='notice'>Вы чувствуете облегчение, припадки больше вас не побеспокоят.</span>"
 
 	req_species_flags = list(
@@ -62,7 +62,7 @@
 	value = -1
 	mob_trait = TRAIT_FAT
 	gain_text = "<span class='danger'>Вы чувствуете, что набрали несколько лишних килограмм.</span>"
-	lose_text = "<span class='notice'>Кажись вы снова в форме!</span>"
+	lose_text = "<span class='notice'>Вы снова в форме!</span>"
 
 	req_species_flags = list(
 		NO_FAT = FALSE,
@@ -86,7 +86,7 @@
 	value = -1
 	mob_trait = TRAIT_TOURETTE
 	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
-	lose_text = "<span class='notice'>Вы чувствуете облегчение, тики больше вас не побеспокоят.</span>"
+	lose_text = "<span class='notice'>Вас перестаёт трясти.</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -115,7 +115,7 @@
 	desc = "Вы постоянно на взводе."
 	value = -1
 	mob_trait = TRAIT_NERVOUS
-	gain_text = "<span class='danger'>Вы все на нервах.</span>"
+	gain_text = "<span class='danger'>Вы весь на нервах.</span>"
 	lose_text = "<span class='notice'>Вы чувствуете себя более расслабленно.</span>"
 
 	req_species_flags = list(
@@ -129,7 +129,7 @@
 	desc = "Когда вы испытываете боль, ваш голод усиливается."
 	value = -1
 	mob_trait = TRAIT_STRESS_EATER
-	gain_text = "<span class='danger'>Когда вам больно вы чувствуете неутолимый голод.</span>"
+	gain_text = "<span class='danger'>Когда вам больно, вы чувствуете неутолимый голод.</span>"
 	lose_text = "<span class='notice'>Вы перестали чувствовать голод, испытывая боль.</span>"
 
 	req_species_flags = list(
