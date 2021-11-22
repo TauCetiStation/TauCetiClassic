@@ -102,7 +102,7 @@
 		stat(null, "Total Nodes: [blob_nodes.len]")
 		stat(null, "Total Cores: [blob_cores.len]")
 
-/mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/camera/blob/Move(NewLoc, Dir = 0)
 	. = FALSE
 	var/obj/effect/blob/B = locate() in range(3, NewLoc)
 	if(NewLoc && B)

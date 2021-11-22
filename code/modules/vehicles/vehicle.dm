@@ -10,7 +10,7 @@
 	layer = MOB_LAYER + 0.1 //so it sits above objects including mobs
 	density = TRUE
 	anchored = TRUE
-	animate_movement = 1
+	animate_movement = FORWARD_STEPS
 	light_range = 3
 
 	can_buckle = 1
@@ -39,7 +39,7 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/vehicle/Move(NewLoc, Dir = 0)
 	if(can_move())
 		var/old_loc = get_turf(src)
 

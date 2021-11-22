@@ -150,24 +150,45 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
-		return 1
-	if(!AM.anchored)
-		now_pushing = 1
-		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window))
-			var/obj/structure/window/W = AM
-			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
+		return TRUE
+	if(moving_diagonally)// no pushing during diagonal moves.
+		return TRUE
+	if(AM.anchored)
+		now_pushing = FALSE
+		return
+
+	var/dir_to_target = get_dir(src, AM)
+
+	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
+	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
+	// the window will fail as get_dir will return 0 and the player will be unable to move the window when
+	// it should be pushamachinery/door/windowble.
+	// In this scenario, we will use the facing direction of the /mob/living attempting to push the atom as
+	// a fallback.
+	if(!dir_to_target)
+		dir_to_target = dir
+
+	now_pushing = TRUE
+	if(istype(AM, /obj/structure/window))
+		var/obj/structure/window/W = AM
+		if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
+			for(var/obj/structure/window/win in get_step(AM, dir_to_target))
+				now_pushing = 0
+				return
+
+	var/current_dir
+	if(isliving(AM))
+		current_dir = AM.dir
 //			if(W.fulltile)
 //				for(var/obj/structure/window/win in get_step(W,t))
 //					now_pushing = 0
 //					return
-		if(pulling == AM)
-			stop_pulling()
-		step(AM, t)
-		now_pushing = 0
+	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
+		AM.add_fingerprint(src)
+		Move(get_step(loc, dir_to_target), dir_to_target)
+	if(current_dir)
+		AM.set_dir(current_dir)
+	now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -674,14 +695,18 @@
 
 	return
 
-/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (buckled && buckled.loc != NewLoc)
-		if (!buckled.anchored)
-			return buckled.Move(NewLoc, Dir)
+
+/mob/living/Move(atom/NewLoc, Dir = 0, glide_size_override)
+	if(buckled && buckled.loc != NewLoc)
+		if(!buckled.anchored)
+			return buckled.Move(NewLoc, Dir, glide_size)
 		else
 			return FALSE
 
-	if (restrained())
+	if(pinned.len)
+		return FALSE
+
+	if(restrained())
 		stop_pulling()
 
 	var/old_dir = dir
@@ -732,8 +757,6 @@
 
 	if(!ISDIAGONALDIR(Dir))
 		pull_trail_damage(NewLoc, old_loc, old_dir)
-		if(moving_diagonally)
-			return .
 
 	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)

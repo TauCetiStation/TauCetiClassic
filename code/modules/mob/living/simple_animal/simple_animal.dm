@@ -384,7 +384,7 @@
 
 	..(message, speaking, verb, sanitize = 0)
 
-/mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/simple_animal/Move(NewLoc, Dir = 0)
 	. = ..()
 	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)

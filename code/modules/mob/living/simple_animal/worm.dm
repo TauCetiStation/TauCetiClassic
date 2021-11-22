@@ -103,7 +103,7 @@
 		previous.Detach()
 	return ..()
 
-/mob/living/simple_animal/space_worm/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/simple_animal/space_worm/Move(NewLoc, Dir = 0)
 	var/attachementNextPosition = loc
 	. = ..()
 	if(.)

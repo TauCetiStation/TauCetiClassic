@@ -146,7 +146,7 @@
 	return Move(get_step(src, direction))
 
 
-/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(NewLoc, /turf/space) || pulledby)
 		if(!space_speed)

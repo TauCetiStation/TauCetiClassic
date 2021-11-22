@@ -221,7 +221,7 @@
 		qdel(targeted_by)
 	spawn(1) update_targeted()
 
-/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/Move(NewLoc, Dir = 0, glide_size_override)
 	. = ..()
 
 	if(moving_diagonally)

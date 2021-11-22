@@ -1,11 +1,16 @@
 /mob
 	density = TRUE
 	layer = 4.0
-	animate_movement = 2
+	animate_movement = SLIDE_STEPS
 	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+
+	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	vis_flags = VIS_INHERIT_PLANE
+
+	var/updating_glide_size = TRUE
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -59,7 +64,6 @@
 	var/poll_answer = 0.0
 	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
-	var/atom/movable/pulling = null
 	var/next_move = null
 	var/other = 0.0
 	var/notransform = null	//Carbon

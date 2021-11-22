@@ -21,7 +21,7 @@
 /obj/structure/stool/bed/chair/atom_init_late()
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(moving_diagonally)

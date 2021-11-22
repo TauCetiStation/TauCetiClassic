@@ -331,7 +331,7 @@
 			try_toggle_effects(TRIGGER_HEAT)
 	return
 
-/obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/machinery/artifact/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(ISDIAGONALDIR(Dir))

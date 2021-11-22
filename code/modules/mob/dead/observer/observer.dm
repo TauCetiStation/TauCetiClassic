@@ -198,9 +198,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 
-/mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/dead/observer/Move(NewLoc, Dir = 0, glide_size_override = 32)
 	. = TRUE
 	set_dir(Dir)
+
+	if(orbiting)
+		if(ismovable(orbiting.orbiting))
+			var/atom/movable/orb = orbiting.orbiting
+			glide_size_override = orb.glide_size
+
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
+
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)

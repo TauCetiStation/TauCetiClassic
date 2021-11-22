@@ -82,7 +82,7 @@
 
 	master_area=null
 
-/obj/machinery/media/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/machinery/media/Move(NewLoc, Dir = 0)
 	. = ..()
 	if(anchored)
 		update_music()

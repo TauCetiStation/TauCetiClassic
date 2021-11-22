@@ -367,7 +367,7 @@
 		bound_width  = width * world.icon_size
 		bound_height = world.icon_size
 
-/obj/machinery/door/airlock/multi_tile/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/machinery/door/airlock/multi_tile/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(moving_diagonally)

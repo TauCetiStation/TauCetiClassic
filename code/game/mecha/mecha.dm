@@ -237,7 +237,7 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/mecha/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(moving_diagonally)
@@ -293,6 +293,7 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
+		set_glide_size(DELAY_TO_GLIDE_SIZE(step_in))
 		VARSET_IN(src, can_move, TRUE, step_in * move_result)
 		return 1
 	return 0

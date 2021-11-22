@@ -10,7 +10,7 @@
 
 	layer = TURF_LAYER + 0.9
 
-	animate_movement = FALSE
+	animate_movement = NO_STEPS
 
 	var/disolving = FALSE
 	var/image/fore_image

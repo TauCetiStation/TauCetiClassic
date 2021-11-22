@@ -69,7 +69,7 @@
 	drop_down()
 	return TRUE
 
-/mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/pbag/Move(NewLoc, Dir = 0)
 	if(ckey && !incapacitated() && !moving_diagonally)
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 		return

@@ -50,4 +50,4 @@
 #define TOOLTIP_NORTH "TOP+0.1, CENTER-3"
 
 //recommened client FPS
-#define RECOMMENDED_FPS 40
+#define RECOMMENDED_FPS 100

@@ -132,7 +132,7 @@ var/list/datum/puddle/puddles = list()
 	new_volume = 0
 	update_icon2()
 
-/obj/effect/liquid/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/effect/liquid/Move(NewLoc, Dir = 0)
 	return FALSE
 
 /obj/effect/liquid/Destroy()

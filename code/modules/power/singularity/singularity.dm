@@ -6,7 +6,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = SINGULARITY_LAYER
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	w_class = SIZE_MASSIVE
@@ -52,7 +52,7 @@
 	consume(user)
 	return 1
 
-/obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/singularity/Move(NewLoc, Dir = 0)
 	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()

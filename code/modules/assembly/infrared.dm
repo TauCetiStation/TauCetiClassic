@@ -85,7 +85,7 @@
 	..()
 	return
 
-/obj/item/device/assembly/infra/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/item/device/assembly/infra/Move(NewLoc, Dir = 0)
 	var/t = dir
 	. = ..()
 	set_dir(t)

@@ -79,7 +79,7 @@
 		return 0
 	return ..()
 
-/obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(moving_diagonally)

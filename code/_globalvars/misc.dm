@@ -109,4 +109,6 @@ var/global/list/datum/religion/all_religions = list()
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
 
+var/global/internal_tick_usage = 0.2 * world.tick_lag
+
 var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets panel

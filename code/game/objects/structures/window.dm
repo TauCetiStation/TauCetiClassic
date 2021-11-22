@@ -397,7 +397,7 @@
 	return ..()
 
 
-/obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/window/Move(NewLoc, Dir = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
 

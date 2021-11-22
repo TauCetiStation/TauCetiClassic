@@ -6,7 +6,7 @@
 	fluid_update()
 	return ..()
 
-/obj/structure/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/Move(NewLoc, Dir = 0)
 	. = ..()
 	fluid_update()
 
@@ -14,7 +14,7 @@
 	. = ..()
 	fluid_update()
 
-/obj/effect/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/effect/Move(NewLoc, Dir = 0)
 	. = ..()
 	fluid_update()
 

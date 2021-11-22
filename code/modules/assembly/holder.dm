@@ -110,7 +110,7 @@
 			S.on_found(finder)
 
 
-/obj/item/device/assembly_holder/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/item/device/assembly_holder/Move(NewLoc, Dir = 0)
 	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()

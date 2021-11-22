@@ -1,7 +1,10 @@
 /atom/movable
 	layer = OBJ_LAYER
-	appearance_flags = TILE_BOUND|PIXEL_SCALE
+	glide_size = 8
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 
+	var/atom/movable/pulling
+	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_speed = 10
@@ -66,21 +69,82 @@
 /atom/movable/Crossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
-/atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/atom/movable/proc/set_glide_size(target = 8)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
+	glide_size = target
+
+	buckled_mob?.set_glide_size(target)
+
+////////////////////////////////////////
+// Here's where we rewrite how byond handles movement except slightly different
+// To be removed on step_ conversion
+// All this work to prevent a second bump
+/atom/movable/Move(atom/newloc, direction, glide_size_override = 0)
+	. = FALSE
+	if(!newloc || newloc == loc)
+		return
+
+	if(!direction)
+		direction = get_dir(src, newloc)
+
+	set_dir(direction)
+
+	if(!loc.Exit(src, newloc))
+		return
+
+	if(!newloc.Enter(src, src.loc))
+		return
+
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
+
+	// Past this is the point of no return
+	var/atom/oldloc = loc
+	var/area/oldarea = get_area(oldloc)
+	var/area/newarea = get_area(newloc)
+	loc = newloc
+	. = TRUE
+	oldloc.Exited(src, newloc)
+	if(oldarea != newarea)
+		oldarea.Exited(src, newloc)
+
+	for(var/i in oldloc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Uncrossed(src)
+
+	newloc.Entered(src, oldloc)
+	if(oldarea != newarea)
+		newarea.Entered(src, oldloc)
+
+	for(var/i in loc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Crossed(src)
+
+	Moved(oldloc, direction)
+
+/atom/movable/Move(atom/NewLoc, Dir = 0, glide_size_override = 0)
+	if(!moving_from_pull)
+		check_pulling()
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
 
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-		return
+	var/atom/movable/pullee = pulling
 
-	var/is_diagonal = ISDIAGONALDIR(Dir)
+	//Early override for some cases like diagonal movement
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
+
 	var/atom/oldloc = loc
 	var/old_dir = dir
 
 	if(loc != NewLoc)
-		if (!is_diagonal) //Cardinal move
+		if (!ISDIAGONALDIR(Dir)) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal
+		else //Diagonal move, split it into cardinal moves
 			var/v = Dir & NORTH_SOUTH
 			var/h = Dir & EAST_WEST
 
@@ -97,49 +161,95 @@
 					moving_diagonally = SECOND_DIAG_STEP
 					if(!step(src, v))
 						set_dir(h)
-
-			moving_diagonally = 0
+			if(moving_diagonally == SECOND_DIAG_STEP && !inertia_moving)
+				inertia_next_move = world.time + inertia_move_delay
+				newtonian_move(Dir)
+			moving_diagonally = FALSE
+			return
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
-		return FALSE
+		return
 
-	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
+	if(!ISDIAGONALDIR(Dir) && moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
 
+	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
+		if(pulling.anchored)
+			stop_pulling()
+		else
+			var/pull_dir = get_dir(src, pulling)
+			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir))))
+				pulling.moving_from_pull = src
+				pulling.Move(oldloc, get_dir(pulling, oldloc), glide_size) //the pullee tries to reach our previous position
+				pulling.moving_from_pull = null
+			check_pulling()
+
+	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
+	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
+
 	last_move = Dir
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
-		. = 0
+	set_dir(Dir)
+
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc, Dir, glide_size_override)) //movement failed due to buckled mob
+		return FALSE
 
 	if(dir != old_dir)
 		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
-	if(.)
-		Moved(oldloc, Dir)
+/atom/movable/proc/check_pulling()
+	if(pulling)
+		var/atom/movable/pullee = pulling
+		if(pullee && get_dist(src, pullee) > 1)
+			stop_pulling()
+			return
+		if(!isturf(loc))
+			stop_pulling()
+			return
+		if(pullee && !isturf(pullee.loc) && pullee.loc != loc)
+			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
+			stop_pulling()
+			return
+		if(pulling.anchored)
+			stop_pulling()
+			return
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1) //separated from our puller and not in the middle of a diagonal move.
+		pulledby.stop_pulling()
+
+/atom/movable/proc/stop_pulling()
+	if(pulling)
+		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
+
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	if(!ISDIAGONALDIR(Dir))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	SHOULD_CALL_PARENT(TRUE)
 
-		if(moving_diagonally)
-			return
-
-	for(var/atom/movable/AM in contents)
-		AM.locMoved(OldLoc, Dir)
-
-	if (!inertia_moving)
+	if(!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
 
-	if (orbiters)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
+
+	if(orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
 			O.Check()
-	if (orbiting)
+	if(orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
 	return
@@ -351,14 +461,14 @@
 /atom/movable/proc/handle_rotation()
 	return
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	if(!buckled_mob.Move(newloc, direct))
-		loc = buckled_mob.loc
+/atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
+	if(!buckled_mob.Move(newloc, direct, glide_size_override))
+		Move(buckled_mob.loc, direct)
 		last_move = buckled_mob.last_move
 		inertia_dir = last_move
 		buckled_mob.inertia_dir = last_move
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(buckled_mob == mover)

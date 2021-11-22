@@ -23,6 +23,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	icon_state = "energy_ball"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
+	appearance_flags = LONG_GLIDE
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO

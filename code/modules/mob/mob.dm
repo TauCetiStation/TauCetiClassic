@@ -542,6 +542,7 @@
 				M.LAssailant = null
 			else
 				M.LAssailant = usr
+		count_pull_debuff()
 
 		src.pulling = AM
 		AM.pulledby = src
@@ -551,23 +552,12 @@
 			if(H.pull_damage())
 				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
-		count_pull_debuff()
+		AM.set_dir(get_dir(AM, src))
 
-/mob/verb/stop_pulling()
+/mob/verb/stop_pulling1()
 	set name = "Stop Pulling"
 	set category = "IC"
-
-	if(pulling)
-		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
-		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
-
-		// What if the signals above somehow deleted pulledby?
-		if(pulling)
-			pulling.pulledby = null
-			pulling = null
-		if(pullin)
-			pullin.update_icon(src)
-		count_pull_debuff()
+	stop_pulling()
 
 /mob/proc/count_pull_debuff()
 	return

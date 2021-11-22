@@ -313,7 +313,7 @@ Buildable meters
 	else if (pipe_type in list (PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_FUEL_MANIFOLD4W))
 		set_dir(SOUTH)
 
-/obj/item/pipe/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/item/pipe/Move(NewLoc, Dir = 0)
 	. = ..()
 
 	if(moving_diagonally)

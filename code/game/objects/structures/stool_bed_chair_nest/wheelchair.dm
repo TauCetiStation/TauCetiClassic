@@ -7,7 +7,6 @@
 	flags = NODECONSTRUCT
 
 	var/driving = 0
-	var/mob/living/pulling = null
 	var/bloodiness
 	var/brake = 0
 	var/alert = 0
@@ -46,7 +45,7 @@
 	else
 		to_chat(usr, "<span class='notice'>You turn the brake off.</span>")
 
-/obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction)
+/obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction, move_delay)
 	if(brake)
 		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
 		return
@@ -79,15 +78,19 @@
 	var/turf/T = null
 	//--1---Move occupant---1--//
 	if(buckled_mob)
+		buckled_mob.client?.move_delay += ISDIAGONALDIR(direction) ? move_delay*2 : move_delay
+		buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(move_delay))
 		buckled_mob.buckled = null
 		step(buckled_mob, direction)
 		buckled_mob.buckled = src
 	//--2----Move driver----2--//
 	if(pulling)
+		pulling.set_glide_size(DELAY_TO_GLIDE_SIZE(move_delay))
 		T = pulling.loc
 		if(get_dist(src, pulling) >= 1)
 			step(pulling, get_dir(pulling.loc, src.loc))
 	//--3--Move wheelchair--3--//
+	set_glide_size(DELAY_TO_GLIDE_SIZE(move_delay))
 	if(!buckled_mob)
 		step(src, direction)
 	Move(buckled_mob.loc)
@@ -106,7 +109,7 @@
 		create_track()
 	driving = 0
 
-/obj/structure/stool/bed/chair/wheelchair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/stool/bed/chair/wheelchair/Move(NewLoc, Dir = 0, glide_size_override = 0)
 	if(brake)
 		return FALSE
 	. = ..()
@@ -114,7 +117,7 @@
 		var/mob/living/occupant = buckled_mob
 		if(!driving)
 			occupant.buckled = null
-			occupant.Move(src.loc)
+			occupant.Move(src.loc, null, glide_size_override)
 			occupant.buckled = src
 			if (occupant && (src.loc != occupant.loc))
 				if (propelled)
