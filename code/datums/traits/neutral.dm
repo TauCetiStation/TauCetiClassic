@@ -1,10 +1,10 @@
 /datum/quirk/high_pain_threshold
 	name = QUIRK_HIGH_PAIN_THRESHOLD
-	desc = "You can take pain more easily. This quirk only affects sounds."
+	desc = "Вы легче переносите боль. Эта особенность влияет лишь на звуки, издаваемые вами."
 	value = 0
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>You want to show how strong you are. You will try to ignore any pain.</span>"
-	lose_text = "<span class='notice'>You no longer want to endure pain, it scares you.</span>"
+	gain_text = "<span class='danger'>Вы хотите показать, насколько вы сильны. Вы попытаетесь игнорировать любую боль.</span>"
+	lose_text = "<span class='notice'>Вы устали терпеть боль, теперь она пугает Вас.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
@@ -14,11 +14,11 @@
 
 /datum/quirk/low_pain_threshold
 	name = QUIRK_LOW_PAIN_THRESHOLD
-	desc = "You endure pain more difficult. This quirk only affects sounds"
+	desc = "Боль для вас более мучительна. Эта особенность влияет лишь на звуки, издаваемые вами. "
 	value = 0
 	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>Just the thought of pain makes you tremble in fear.</span>"
-	lose_text = "<span class='notice'>You don't want to show yourself to other people anymore that you're a wimp. Now you're trying to ignore the pain.</span>"
+	gain_text = "<span class='danger'>От одной лишь мысли о боли вас начинает трясти от страха.</span>"
+	lose_text = "<span class='notice'>Вы больше не хотите казаться слизняком в глазах окружающих. Теперь вы будете пытаться игнорировать боль.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
@@ -28,11 +28,11 @@
 
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
-	desc = "You can't taste anything! Toxic food will still poison you."
+	desc = "Всё для вас одинаково пресно на вкус! Токсичная еда остаётся отравной для вас."
 	value = 0
 	mob_trait = TRAIT_AGEUSIA
-	gain_text = "<span class='notice'>You can't taste anything!</span>"
-	lose_text = "<span class='notice'>You can taste again!</span>"
+	gain_text = "<span class='notice'>Вы потеряли вкус!</span>"
+	lose_text = "<span class='notice'>Вы снова ощущаете вкус! </span>"
 
 /datum/quirk/no_taste/get_incompatible_species()
 	. = ..()
@@ -47,11 +47,11 @@
 
 /datum/quirk/daltonism
 	name = QUIRK_DALTONISM
-	desc = "You stop feeling the colors of objects."
+	desc = "Вы не различаете цвета."
 	value = 0
 	mob_trait = TRAIT_DALTONISM
-	gain_text = "<span class='notice'>You don't distinguish colors!</span>"
-	lose_text = "<span class='notice'>You see the colors!</span>"
+	gain_text = "<span class='notice'>Вы перестали различать цвета!</span>"
+	lose_text = "<span class='notice'>Вы снова можете насладиться красками этого мира!</span>"
 
 	var/current_type = "greyscale"
 
@@ -60,18 +60,18 @@
 	H.daltonism = TRUE
 
 	var/list/types = list(
-		"Grey"            = "greyscale",
-		"Red"             = "thermal",
-		"Blue"            = "rbg_d",
-		"Dark Green"      = "nvg_military",
-		"Green"           = "meson",
-		"Orange"          = "sepia",
-		"Yellow-Blue"     = "bgr_d",
-		"Purple-Blue"     = "brg_d",
-		"Green-Blue"      = "gbr_d",
-		"Purple-Red"      = "grb_d",
+		"Серый"            = "greyscale",
+		"Красный"             = "thermal",
+		"Синий"            = "rbg_d",
+		"Тёмно зелёный"      = "nvg_military",
+		"Зелёный"           = "meson",
+		"Оранжевый"          = "sepia",
+		"Жёлтый-синий"     = "bgr_d",
+		"Фиолетовый-жёлтый"     = "brg_d",
+		"Зелёный-синий"      = "gbr_d",
+		"Фиолетовый-красный"      = "grb_d",
 		)
 
-	var/choose = input(H, "Choose the type of color blindness", "Color") in types
+	var/choose = input(H, "Выберите тип дальтонизма", "Цвет") in types
 	current_type = types[choose]
 	H.sightglassesmod = current_type
