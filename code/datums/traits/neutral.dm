@@ -4,7 +4,7 @@
 	value = 0
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
 	gain_text = "<span class='danger'>Вы хотите показать, насколько вы сильны. Вы попытаетесь игнорировать любую боль.</span>"
-	lose_text = "<span class='notice'>Вы устали терпеть боль, теперь она пугает вас.</span>"
+	lose_text = "<span class='notice'>Вы устали превозмогать боль.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
