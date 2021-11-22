@@ -280,7 +280,7 @@
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
 	if(T && is_station_level(T.z))
-		invisibility = 0
+		invisibility = INVISIBILITY_NONE
 	else
 		invisibility = INVISIBILITY_ABSTRACT
 
