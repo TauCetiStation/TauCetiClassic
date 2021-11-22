@@ -4,7 +4,6 @@
 	panel = "Mime"
 	clothes_req = FALSE
 	charge_max = 5 MINUTES
-	range = -1
 	action_icon_state = "mime_speech"
 	action_background_icon_state = "bg_mime"
 
