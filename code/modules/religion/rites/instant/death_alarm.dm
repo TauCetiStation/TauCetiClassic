@@ -15,7 +15,7 @@
 	if(!AOG.buckled_mob)
 		return FALSE
 	if(!iscarbon(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Только живое существо может пройти через ритуал.</span>")
+		to_chat(user, "<span class='warning'>Ангел не будет охранять это существо.</span>")
 		return FALSE
 	var/datum/M = AOG.buckled_mob
 	if(M.GetComponent(/datum/component/bell_death_alarm))
