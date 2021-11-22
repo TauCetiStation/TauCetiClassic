@@ -271,7 +271,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/weapon/gun/energy/sniperrifle,
 					/obj/item/weapon/gun/energy/sniperrifle)
-	cost = 5000
+	cost = 8200
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Energy marksman crate"
 	access = access_armory
@@ -1208,6 +1208,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/bodybags,
 					/obj/item/weapon/storage/box/bodybags)
 	crate_name = "body bags crate"
+	group = "Medical / Science"
+	
+/datum/supply_pack/body_bags
+	name = "Stasis Bags Crate"
+	cost = 10000
+	contains = list(/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag)
+	crate_name = "stasis bags crate"
 	group = "Medical / Science"
 
 /datum/supply_pack/suspension_gen

@@ -542,9 +542,10 @@
 		return FALSE
 
 	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
-		qdel(tome)
 		for(var/i in 1 to divine_power)
-			religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+			var/obj/item/weapon/storage/bible/tome/upgraded/upgr = new(AOG.loc)
+			upgr.religion = tome.religion
+		qdel(tome)
 
 	return TRUE
 
@@ -578,7 +579,7 @@
 		return FALSE
 	var/blindless_modifier = clamp(90 / length(affected), 5 * divine_power, 30)
 	for(var/mob/living/carbon/C in affected)
-		C.eye_blurry += blindless_modifier
+		C.blurEyes(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
 			C.disabilities |= NEARSIGHTED
@@ -655,8 +656,8 @@
 	var/stun_modifier = 12 / length(heretics) * divine_power
 	for(var/mob/living/carbon/C in heretics)
 		C.flash_eyes()
-		if(C.stuttering < 1 && (!(HULK in C.mutations)))
-			C.stuttering = 1
+		if(!(HULK in C.mutations))
+			C.Stuttering(1)
 			C.Weaken(stun_modifier)
 			C.Stun(stun_modifier)
 			C.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
@@ -679,8 +680,10 @@
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
 	if(!input)
 		return FALSE
+
+	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
+	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
 	for(var/mob/M in global.mob_list)
-		var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
 		if(isobserver(M))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
 		if(user.my_religion.is_member(M))

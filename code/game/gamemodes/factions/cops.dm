@@ -27,7 +27,7 @@
 	start_time = world.time
 	end_time = start_time + 80 MINUTES
 
-	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES)) // called here because cops are only faction
+	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES), TIMER_STOPPABLE) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
@@ -36,7 +36,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES)
+	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)
 	var/spawncount = 2
 	while(spawncount > 0 && candidates.len)
 		var/spawnloc = pick(dealerstart)
@@ -146,4 +146,3 @@
 		report = "<span class='green'>НаноТрейзен смогла остановить деятельность банд!</span>"
 
 	return "[report]"
-
