@@ -133,9 +133,7 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 10 MINUTES
 
-	if(last_command_report == 0 && world.time >= 1 MINUTES)
-		//command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff and security, has been halved.")
-		command_report("Мы с сожалением сообщаем что разочарованы качеством вашей работы, и потому мы вынуждены урезать финансирование вашей станции. В связи с этим зарплата всех сотрудников за исключением глав и службы безопасности сокращена вдвое.")
+	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		last_command_report = 1
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
@@ -149,18 +147,14 @@
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
-	else if(last_command_report == 1 && world.time >= 2 MINUTES)
-		command_report("Статистика показывает что качество работы многих станций снижено из-за большого количества свободного времени и развлечений. Командованию станции следует прекратить работу развлекательных отсеков, таких как голодек, бар, театр и прочих и заблокировать доступ в них. Еда будет выдаваться через автоматы и на кухне.")
+	else if(last_command_report == 1 && world.time >= 20 MINUTES)
 		last_command_report = 2
-		NT_announce_time = 1
-		NT_announce_time = 2 + NT_announce_interval MINUTES
 
-	else if(last_command_report > 1 && world.time >= NT_announce_time && Rev_announces.len)
-		//command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
-		//command_report("Сообщается что закрытия развлекательных отсеков оказалось недостаточно. Главам следует убедиться что все сотрудники работают с полной отдачей, не тратя силы и время ни на что другое. Все сотрудники пойманные не за работой без разрешения их руководителя должны быть предупреждены, а при повторном нарушении помещены под стражу до окончания смены и доставки их на объекты где они будут использованы с большей пользой.")
-		last_command_report = 3
+	else if(last_command_report > 1 && world.time >= NT_announce_time MINUTES && Rev_announces.len)
+		last_command_report += 1
 		NT_announce_time += NT_announce_interval
-		var/datum/announcement/centcomm/revolution/random/RA = pick_n_take(Rev_announces)
+		var/R = pick_n_take(Rev_announces)
+		var/datum/announcement/centcomm/revolution/random/RA = new R
 		RA.play()
 		RA.do_event()
 
@@ -249,12 +243,31 @@
 
 	return dat
 
-/datum/announcement/centcomm/revolution
+/datum/announcement/centcomm/revolution/first
+	name = "Revolution: First announce"
+/datum/announcement/centcomm/revolution/first/New()
+	message = "Мы с сожалением сообщаем что разочарованы качеством вашей работы, и потому мы вынуждены урезать финансирование вашей станции. В связи с этим зарплата всех сотрудников за исключением глав и службы безопасности сокращена вдвое."
 
-/datum/announcement/centcomm/revolution/proc/do_event()
+/datum/announcement/centcomm/revolution/first/do_event()
+	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in excluded_rank)
+			continue
+		J.salary_ratio = 0.5	//halve the salary of all professions except leading
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in excluded_rank)
+			continue
+		var/datum/money_account/account = person["acc_datum"]
+		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
+
+/datum/announcement/centcomm/revolution/second
+	name = "Revolution: Second announce"
+/datum/announcement/centcomm/revolution/second/New()
+	message = "Статистика показывает что качество работы многих станций снижено из-за большого количества свободного времени и развлечений. Командованию станции следует прекратить работу развлекательных отсеков, таких как голодек, бар, театр и прочих и заблокировать доступ в них. Еда будет выдаваться через автоматы и на кухне."
 
 /datum/announcement/centcomm/revolution/random/rand_1
-
+	name = "Revolution: zero salary"
 /datum/announcement/centcomm/revolution/random/rand_1/New()
 	message = "К сожалению, нам все еще не удалось компенсировать все убытки, так как качество и скорость работы сотрудников [station_name_ru()] по-прежнему недостаточны. Мы вынуждены вновь сократить финансирование за счет зарплат всего персонала, за исключением глав и сотрудников СБ."
 
@@ -271,3 +284,52 @@
 		var/datum/money_account/account = person["acc_datum"]
 		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -100)	//zero the salary of all staff except heads
 
+/datum/announcement/centcomm/revolution/random/rand_2
+	name = "Revolution: increase heads salary"
+/datum/announcement/centcomm/revolution/random/rand_2/New()
+	message = "Мы рады сообщить что прибыль НТ постепенно растет, и хотя мы все еще несем убытки, у нас появились свободные средства на поощрение наших сотрудников. Благодаря увеличению финансирования [station_name_ru()], зарплаты глав и работников службы безопасности повышены на 50%."
+
+/datum/announcement/centcomm/revolution/random/rand_2/do_event()
+	var/list/included_rank = list("Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in included_rank)
+			J.salary_ratio = 1.5
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in included_rank)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = 50)
+
+/datum/announcement/centcomm/revolution/random/rand_3
+	name = "Revolution: workhard"
+/datum/announcement/centcomm/revolution/random/rand_3/New()
+	message = "Сообщается что закрытия развлекательных отсеков оказалось недостаточно для повышения производительности труда. Главам следует убедиться что все сотрудники работают с полной отдачей, не тратя силы и время ни на что другое. Все сотрудники, пойманные не за работой и не имеющие разрешения их руководителя, должны быть предупреждены, а при повторном нарушении помещены под стражу до окончания смены и доставки их на объекты где они будут использованы с большей пользой."
+
+/datum/announcement/centcomm/revolution/random/rand_4
+	name = "Revolution: beatlazys"
+/datum/announcement/centcomm/revolution/random/rand_4/New()
+	message = "Поскольку корпорация все еще несет убытки, мы вынуждены пойти на жесткие меры для мотивации работников. С этого момента главам рекомендуется применять телесные наказания к подчиненным выполняющим свою работу недостаточно старательно. Сотрудникам СБ следует оказать им полное содействие в качестве исполнителей."
+
+/datum/announcement/centcomm/revolution/random/rand_5
+	name = "Revolution: bumstation"
+/datum/announcement/centcomm/revolution/random/rand_5/New()
+	message = "Для дополнительной экономии средств мы приняли решение сократить затраты на снаряжение. Главы и сотрудники безопасности должны следить чтобы работники [station_name_ru()] не использовали и не имели при себе предметы одежды или инструменты которые не являются строго необходимыми для выполнения их обязанностей."
+
+/datum/announcement/centcomm/revolution/random/rand_6
+	name = "Revolution: steal money"
+/datum/announcement/centcomm/revolution/random/rand_6/New()
+	message = "Ненадлежащее исполнение обязанностей должно строго пресекаться. Руководство НТ намерено показать что не станет мириться с ленью и беспечностью своих сотрудников, которые причиняют корпорации финансовый ущерб. Весь персонал [station_name_ru()] за исключением командования и службы безопасности будет оштрафован на 500 кредитов. С этого момента СБ следует применять финансовые штрафы при малейших нарушениях трудовой дисциплины."
+
+/datum/announcement/centcomm/revolution/random/rand_2/do_event()
+	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in excluded_rank)
+			continue
+		var/datum/money_account/account = person["acc_datum"]
+		charge_to_account(account.account_number, "CentComm", "Штраф", "CentComm", -500)
+
+/datum/announcement/centcomm/revolution/random/rand_7
+	name = "Revolution: no healing"
+/datum/announcement/centcomm/revolution/random/rand_7/New()
+	message = "Продолжая сокращать расходы на функционирование ненужных для работы отсеков и несущественные задачи, руководство НТ приняло решение отменить медицинскую страховку для персонала. С этого момента медработники на борту [station_name_ru()] не имеют права выдавать лекарства или оказывать медицинскую помощь никому кроме глав и сотрудников службы безопасности. Нарушение запрета должно расцениваться как превышение полномочий и разбазаривание имущества НТ с соответствующими последствиями."
