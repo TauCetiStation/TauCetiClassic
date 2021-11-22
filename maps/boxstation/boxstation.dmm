@@ -3531,11 +3531,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -3546,6 +3541,10 @@
 	icon_state = "2-4"
 	},
 /obj/structure/table/reinforced,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "ahb" = (
@@ -7784,6 +7783,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/security/lobby)
 "anV" = (
@@ -7882,10 +7886,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -7894,6 +7894,10 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -8057,6 +8061,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/security/lobby)
 "aot" = (
@@ -8116,9 +8125,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aoB" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -9314,15 +9320,11 @@
 	},
 /area/station/security/lobby)
 "aqI" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Security Lobby APC";
-	pixel_x = -24;
-	pixel_y = -3
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/structure/sign/warning/electricshock{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -9409,8 +9411,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/security/lobby)
@@ -9706,10 +9708,17 @@
 	},
 /area/station/hallway/primary/fore)
 "arE" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = -32
-	},
 /obj/machinery/light,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Security Lobby APC";
+	pixel_x = -24;
+	pixel_y = -3
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -9719,6 +9728,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -69928,31 +69942,13 @@
 	},
 /area/station/medical/reception)
 "ejz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -32
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = -32
+/turf/simulated/floor{
+	icon_state = "redcorner"
 	},
-/turf/simulated/floor/plating,
 /area/station/security/brig)
 "ejR" = (
 /obj/machinery/door/airlock/external{
@@ -71173,6 +71169,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
 "fJb" = (
@@ -76594,6 +76591,9 @@
 "nkP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -112643,7 +112643,7 @@ aeq
 aeq
 kHP
 aka
-akw
+ejz
 adJ
 anZ
 aob
@@ -112901,7 +112901,7 @@ aiQ
 ajy
 gAb
 akB
-ejz
+alr
 pLb
 aoB
 aso
@@ -114186,7 +114186,7 @@ aeq
 oyr
 akc
 akO
-adM
+adJ
 alN
 alW
 fIb
