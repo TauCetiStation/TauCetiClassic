@@ -5,7 +5,7 @@
 
 	factions_allowed = list(/datum/faction/revolution)
 
-	minimum_player_count = 1
+	minimum_player_count = 4
 	minimum_players_bundles = 20
 
 /datum/game_mode/revolution/announce()
