@@ -332,7 +332,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS = thing
 		if (SS.state != SS_IDLE)
 			continue
-		if (SS.can_fire <= FALSE)
+		if (!SS.can_fire)
 			continue
 		if (SS.next_fire > world.time)
 			continue
