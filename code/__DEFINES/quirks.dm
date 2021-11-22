@@ -10,7 +10,7 @@
 // neutral quirks.
 #define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"
 #define QUIRK_LOW_PAIN_THRESHOLD "Низкий Болевой Порог"
-#define QUIRK_AGEUSIA "Утрата Вкуса"
+#define QUIRK_AGEUSIA "Агевзия"
 #define QUIRK_DALTONISM "Дальтонизм"
 
 // negative quirks.
