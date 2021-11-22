@@ -105,3 +105,18 @@
 	display_name = "Bronze cross"
 	path = /obj/item/clothing/accessory/bronze_cross
 	cost = 2
+
+/datum/gear/accessory/pride
+	display_name = "Pride pins selection"
+	path = /obj/item/clothing/accessory/pride
+
+/datum/gear/accessory/pride/New()
+	..()
+	var/pins = list()
+	pins["rainbow"] = /obj/item/clothing/accessory/pride
+	pins["bisexual"] = /obj/item/clothing/accessory/pride/bi
+	pins["transgender"] = /obj/item/clothing/accessory/pride/trans
+	pins["asexual"] = /obj/item/clothing/accessory/pride/ace
+	pins["pansexual"] = /obj/item/clothing/accessory/pride/pan
+	pins["non-binary"] = /obj/item/clothing/accessory/pride/enby
+	gear_tweaks += new/datum/gear_tweak/path(pins)
