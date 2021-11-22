@@ -20,6 +20,10 @@
 
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
+	var/NT_announce_interval = 10
+	var/NT_announce_time = 30
+
+	var/list/Rev_announces = list()
 
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
@@ -31,7 +35,7 @@
 /datum/faction/revolution/OnPostSetup()
 	if(SSshuttle)
 		SSshuttle.fake_recall = TRUE
-
+	Rev_announces = subtypesof(/datum/announcement/centcomm/revolution/random)
 	return ..()
 
 /datum/faction/revolution/forgeObjectives()
@@ -129,7 +133,7 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 10 MINUTES
 
-	if(last_command_report == 0 && world.time >= 10 MINUTES)
+	if(last_command_report == 0 && world.time >= 1 MINUTES)
 		//command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff and security, has been halved.")
 		command_report("Мы с сожалением сообщаем что разочарованы качеством вашей работы, и потому мы вынуждены урезать финансирование вашей станции. В связи с этим зарплата всех сотрудников за исключением глав и службы безопасности сокращена вдвое.")
 		last_command_report = 1
@@ -145,13 +149,21 @@
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
-	else if(last_command_report == 1 && world.time >= 30 MINUTES)
-		command_report("Статистика показывает что качество работы многих станций снижено из-за большого количества свободного времени и развлечений. Вам следует прекратить работу развлекательных отсеков, таких как голодек, бар, театр и прочих. Еда будет выдаваться через автоматы и на кухне.")
+	else if(last_command_report == 1 && world.time >= 2 MINUTES)
+		command_report("Статистика показывает что качество работы многих станций снижено из-за большого количества свободного времени и развлечений. Командованию станции следует прекратить работу развлекательных отсеков, таких как голодек, бар, театр и прочих и заблокировать доступ в них. Еда будет выдаваться через автоматы и на кухне.")
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 60 MINUTES)
+		NT_announce_time = 1
+		NT_announce_time = 2 + NT_announce_interval MINUTES
+
+	else if(last_command_report > 1 && world.time >= NT_announce_time && Rev_announces.len)
 		//command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
-		command_report("Сообщается что закрытия развлекательных отсеков оказалось недостаточно. Главам следует убедиться что все сотрудники работают с полной отдачей, не тратя силы и время ни на что другое. Все сотрудники пойманные не за работой без разрешения их руководителя должны быть предупреждены, а при повторном нарушении помещены под стражу до окончания смены и доставки их на объекты где они будут использованы с большей пользой.")
+		//command_report("Сообщается что закрытия развлекательных отсеков оказалось недостаточно. Главам следует убедиться что все сотрудники работают с полной отдачей, не тратя силы и время ни на что другое. Все сотрудники пойманные не за работой без разрешения их руководителя должны быть предупреждены, а при повторном нарушении помещены под стражу до окончания смены и доставки их на объекты где они будут использованы с большей пользой.")
 		last_command_report = 3
+		NT_announce_time += NT_announce_interval
+		var/datum/announcement/centcomm/revolution/random/RA = pick_n_take(Rev_announces)
+		RA.play()
+		RA.do_event()
+
 
 /datum/faction/revolution/proc/command_report(message)
 	for (var/obj/machinery/computer/communications/comm in communications_list)
@@ -236,3 +248,26 @@
 	<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>"}
 
 	return dat
+
+/datum/announcement/centcomm/revolution
+
+/datum/announcement/centcomm/revolution/proc/do_event()
+
+/datum/announcement/centcomm/revolution/random/rand_1
+
+/datum/announcement/centcomm/revolution/random/rand_1/New()
+	message = "К сожалению, нам все еще не удалось компенсировать все убытки, так как качество и скорость работы сотрудников [station_name_ru()] по-прежнему недостаточны. Мы вынуждены вновь сократить финансирование за счет зарплат всего персонала, за исключением глав и сотрудников СБ."
+
+/datum/announcement/centcomm/revolution/random/rand_1/do_event()
+	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in excluded_rank)
+			continue
+		J.salary_ratio = 0.0	//halve the salary of all professions except leading
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in excluded_rank)
+			continue
+		var/datum/money_account/account = person["acc_datum"]
+		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -100)	//zero the salary of all staff except heads
+

@@ -157,3 +157,55 @@
 /datum/announcement/centcomm/gang/change_wanted_level/play(_message)
 	message = _message
 	..()
+
+/datum/announcement/centcomm/revolution/random/rand_2
+
+/datum/announcement/centcomm/revolution/random/rand_2/New()
+	message = "Мы рады сообщить что прибыль НТ постепенно растет, и хотя мы все еще несем убытки, у нас появились свободные средства на поощрение наших сотрудников. Благодаря увеличению финансирования [station_name_ru()], зарплаты глав и работников службы безопасности повышены на 50%."
+
+/datum/announcement/centcomm/revolution/random/rand_2/do_event()
+	var/list/included_rank = list("Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in included_rank)
+			J.salary_ratio = 1.5
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in included_rank)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = 50)
+
+/datum/announcement/centcomm/revolution/random/rand_3
+
+/datum/announcement/centcomm/revolution/random/rand_3/New()
+	message = "Сообщается что закрытия развлекательных отсеков оказалось недостаточно для повышения производительности труда. Главам следует убедиться что все сотрудники работают с полной отдачей, не тратя силы и время ни на что другое. Все сотрудники, пойманные не за работой и не имеющие разрешения их руководителя, должны быть предупреждены, а при повторном нарушении помещены под стражу до окончания смены и доставки их на объекты где они будут использованы с большей пользой."
+
+/datum/announcement/centcomm/revolution/random/rand_4
+
+/datum/announcement/centcomm/revolution/random/rand_4/New()
+	message = "Поскольку корпорация все еще несет убытки, мы вынуждены пойти на жесткие меры для мотивации работников. С этого момента главам рекомендуется применять телесные наказания к подчиненным выполняющим свою работу недостаточно старательно. Сотрудникам СБ следует оказать им полное содействие в качестве исполнителей."
+
+/datum/announcement/centcomm/revolution/random/rand_5
+
+/datum/announcement/centcomm/revolution/random/rand_5/New()
+	message = "Для дополнительной экономии средств мы приняли решение сократить затраты на снаряжение. Главы и сотрудники безопасности должны следить чтобы работники [station_name_ru()] не использовали и не имели при себе предметы одежды или инструменты которые не являются строго необходимыми для выполнения их обязанностей."
+
+/datum/announcement/centcomm/revolution/random/rand_6
+
+/datum/announcement/centcomm/revolution/random/rand_6/New()
+	message = "Ненадлежащее исполнение обязанностей должно строго пресекаться. Руководство НТ намерено показать что не станет мириться с ленью и беспечностью своих сотрудников, которые причиняют корпорации финансовый ущерб. Весь персонал [station_name_ru()] за исключением командования и службы безопасности будет оштрафован на 500 кредитов. С этого момента СБ следует применять финансовые штрафы при малейших нарушениях трудовой дисциплины."
+
+/datum/announcement/centcomm/revolution/random/rand_2/do_event()
+	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in excluded_rank)
+			continue
+		var/datum/money_account/account = person["acc_datum"]
+		charge_to_account(account.account_number, "CentComm", "Штраф", "CentComm", -500)
+
+/datum/announcement/centcomm/revolution/random/rand_7
+
+/datum/announcement/centcomm/revolution/random/rand_7/New()
+	message = "Продолжая сокращать расходы на функционирование ненужных для работы отсеков и несущественные задачи, руководство НТ приняло решение отменить медицинскую страховку для персонала. С этого момента медработники на борту [station_name_ru()] не имеют права выдавать лекарства или оказывать медицинскую помощь никому кроме глав и сотрудников службы безопасности. Нарушение запрета должно расцениваться как превышение полномочий и разбазаривание имущества НТ с соответствующими последствиями."
+
+
