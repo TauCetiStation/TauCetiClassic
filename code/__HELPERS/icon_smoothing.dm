@@ -373,7 +373,7 @@
 		return
 
 	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
+	SSicon_smooth.can_fire = TRUE
 	A.smooth |= SMOOTH_QUEUED
 
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
