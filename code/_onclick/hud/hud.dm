@@ -190,12 +190,13 @@ var/global/list/available_ui_styles = list(
 		show_hud(HUD_STYLE_REDUCED)
 
 	create_parallax()
-	return TRUE
 
 	// See the comment from "/mob/living/carbon/human/create_mob_hud()"
 	// If comment does not exist, then delete code below and this comment
 	if(!ishuman(mymob))
 		plane_masters_update()
+
+	return TRUE
 
 //Version denotes which style should be displayed. blank or FALSE means "next version"   //khem, what? return is not used anywhere
 /datum/hud/proc/show_hud(version = 0)
