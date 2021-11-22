@@ -754,39 +754,32 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
+	var/list/refined_src = list()
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
-	var/list/refined_src = list()
-	for(var/turf/T in turfs_src)
 		refined_src += T
 		refined_src[T] = new/datum/coords
 		var/datum/coords/C = refined_src[T]
 		C.x_pos = (T.x - src_min_x)
 		C.y_pos = (T.y - src_min_y)
 
+	var/trg_min_x = 0
+	var/trg_min_y = 0
 	var/list/refined_trg = list()
-	for(var/turf/T in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		refined_trg += T
 		refined_trg[T] = new/datum/coords
 		var/datum/coords/C = refined_trg[T]
 		C.x_pos = (T.x - trg_min_x)
 		C.y_pos = (T.y - trg_min_y)
 
-
-	var/list/toupdate = list()
-
 	moving:
-		for (var/turf/T in refined_src)
+		for (var/turf/T as anything in refined_src)
 			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
+			for (var/turf/B as anything in refined_trg)
 				var/datum/coords/C_trg = refined_trg[B]
 				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
 
@@ -844,7 +837,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
-						if(!istype(O,/obj) || !O.simulated)
+						if(istype(O, /obj/effect/portal))
+							qdel(O)
+							continue
+						if(!O.simulated)
 							continue
 						O.loc = X
 						if (length(O.client_mobs_in_contents))
@@ -859,8 +855,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
 //						X.opacity = !X.opacity
 //						X.set_opacity(!X.opacity)
-
-					toupdate += X
 
 //					if(turftoleave)
 //						T.MoveTurf(turftoleave)
