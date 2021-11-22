@@ -22,9 +22,6 @@
 	panel = "Mime"
 	charge_max = 1 MINUTE
 	sound = null
-	clothes_req = FALSE
-	range = -1
-	include_user = TRUE
 	invocation_type = "none"
 	summon_path = /obj/effect/forcefield/magic/mime
 	action_icon_state = "invisible_wall"
