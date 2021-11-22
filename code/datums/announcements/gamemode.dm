@@ -158,4 +158,3 @@
 	message = _message
 	..()
 
-/datum/announcement/centcomm/proc/do_event()
