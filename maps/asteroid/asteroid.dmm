@@ -1903,14 +1903,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "ec" = (
-/obj/machinery/camera{
-	c_tag = "Misc Test Chamber";
-	network = list("Research","SS13")
+/obj/machinery/computer/reconstitutor/animal{
+	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2563,11 +2560,15 @@
 	},
 /area/asteroid/research_outpost/harvesting)
 "fj" = (
+/obj/machinery/clonepod,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/item/device/radio/intercom{
-	name = "Asteroid intercom";
+	frequency = 1489;
+	name = "Asteroid Intercom";
 	pixel_y = 25
 	},
-/obj/machinery/computer/reconstitutor/animal,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fk" = (
@@ -2591,23 +2592,14 @@
 	},
 /area/asteroid/research_outpost/anomaly)
 "fn" = (
-/obj/machinery/alarm{
-	dir = 1;
-	locked = 0;
-	pixel_y = -24
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = -32
 	},
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/wrench,
-/obj/structure/disposalpipe/segment{
-	desc = "Pipe for transfer more fuel.";
-	dir = 4;
-	name = "filling pipe"
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/machinery/light,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2638,20 +2630,22 @@
 	},
 /area/asteroid/research_outpost/anomaly)
 "fq" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	desc = "Pipe for transfer more fuel.";
 	dir = 4;
 	name = "filling pipe"
 	},
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/wrench,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fr" = (
 /obj/structure/lattice,
@@ -2694,10 +2688,9 @@
 /area/space)
 "fw" = (
 /obj/structure/transit_tube{
-	icon_state = "N-SW"
+	icon_state = "D-SE"
 	},
-/obj/structure/lattice,
-/turf/space,
+/turf/simulated/wall/r_wall,
 /area/space)
 "fx" = (
 /obj/structure/grille,
@@ -3431,15 +3424,15 @@
 	},
 /area/asteroid/research_outpost/tempstorage)
 "hf" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hg" = (
 /obj/item/stack/rods,
@@ -3642,9 +3635,6 @@
 /obj/machinery/alarm/isolation{
 	pixel_y = 24
 	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -3838,14 +3828,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "ib" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 6
+/obj/structure/transit_tube{
+	icon_state = "D-NE"
 	},
-/obj/item/device/taperecorder,
-/turf/simulated/floor/engine,
-/area/asteroid/research_outpost/outpost_misc_lab)
+/turf/simulated/wall/r_wall,
+/area/space)
 "ic" = (
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
@@ -4484,10 +4471,15 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "jb" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SE"
+/obj/machinery/shieldwallgen,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/simulated/wall/r_wall,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jc" = (
 /obj/machinery/conveyor{
@@ -4503,14 +4495,9 @@
 /area/asteroid/research_outpost/maint)
 "jd" = (
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4527,16 +4514,18 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/table/reinforced,
+/obj/item/device/taperecorder,
+/obj/item/clothing/glasses/science{
+	pixel_x = 2;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jf" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -4549,18 +4538,13 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jg" = (
-/obj/structure/table/reinforced,
-/obj/machinery/ignition_switch{
-	id = "outpost_misc";
-	pixel_x = -6;
-	pixel_y = 2
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "out_misclab";
-	name = "Test Chamber Blast Doors";
-	pixel_x = 6;
-	pixel_y = -4;
-	req_access = list(47)
+/obj/item/device/radio/intercom{
+	frequency = 1489;
+	name = "Asteroid Intercom";
+	pixel_y = 25
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4687,18 +4671,21 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "jw" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "out_misclab";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/engine,
-/turf/simulated/floor{
+/obj/machinery/door/window/southleft{
 	dir = 8;
-	icon_state = "warningline"
+	name = "Test Chamber";
+	req_access = list(47)
 	},
+/obj/machinery/door/window/southleft{
+	dir = 4;
+	name = "Test Chamber";
+	req_access = list(47)
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/space,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jy" = (
 /obj/machinery/door/firedoor,
@@ -4724,7 +4711,9 @@
 	},
 /area/asteroid/research_outpost/tempstorage)
 "jD" = (
-/obj/machinery/clonepod,
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jE" = (
@@ -4879,20 +4868,20 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jY" = (
-/obj/machinery/door/window/southleft{
-	dir = 8;
-	name = "Test Chamber";
-	req_access = list(47)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/machinery/door/window/southleft{
-	dir = 4;
-	name = "Test Chamber";
-	req_access = list(47)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jZ" = (
 /obj/structure/cable{
@@ -5099,8 +5088,8 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
+/obj/item/weapon/flora/pottedplant{
+	icon_state = "plant-21"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5110,6 +5099,11 @@
 "kr" = (
 /obj/machinery/light_switch{
 	pixel_x = -27
+	},
+/obj/machinery/camera{
+	c_tag = "Misc Test Chamber Entrance";
+	dir = 5;
+	network = list("Research","SS13")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5406,11 +5400,8 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
 "kV" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 1
+/obj/item/weapon/flora/pottedplant{
+	icon_state = "plant-21"
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -5682,18 +5673,15 @@
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "lv" = (
-/obj/machinery/door/window/southleft{
-	dir = 8;
-	name = "Test Chamber";
-	req_access = list(47)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/door/window/southleft{
-	dir = 4;
-	name = "Test Chamber";
-	req_access = list(47)
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "lw" = (
 /obj/structure/rack,
@@ -5860,6 +5848,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -6125,20 +6114,14 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "mA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/asteroid/research_outpost/outpost_misc_lab)
+/turf/simulated/wall/r_wall,
+/area/space)
 "mB" = (
-/obj/machinery/sparker{
-	id = "outpost_misc";
-	pixel_y = -28
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -6906,11 +6889,6 @@
 	},
 /area/asteroid/mine/unexplored/safe)
 "oo" = (
-/obj/machinery/camera{
-	c_tag = "Misc Test";
-	dir = 1;
-	network = list("Research","SS13")
-	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
 	pixel_x = -2;
@@ -7606,9 +7584,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/tempstorage)
 "pM" = (
-/obj/item/weapon/flora/pottedplant{
-	icon_state = "plant-21"
-	},
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -10923,6 +10899,14 @@
 /obj/structure/plasticflaps/mining,
 /turf/simulated/floor,
 /area/asteroid/mine/west_outpost)
+"xU" = (
+/obj/machinery/camera{
+	c_tag = "Misc Test Chamber";
+	dir = 8;
+	network = list("Anomaly Isolation")
+	},
+/turf/simulated/floor/engine,
+/area/asteroid/research_outpost/outpost_misc_lab)
 "xZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -10952,15 +10936,21 @@
 	},
 /area/asteroid/research_outpost/anomaly)
 "yc" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_y = -32
+/obj/structure/table/reinforced,
+/obj/machinery/door_control{
+	id = "out_misclab";
+	name = "Test Chamber Blast Doors";
+	pixel_x = 6;
+	pixel_y = -4;
+	req_access = list(47)
 	},
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
+/obj/machinery/ignition_switch{
+	id = "outpost_misc";
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 5;
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -11800,10 +11790,14 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Az" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "out_misclab";
+	name = "Test Chamber Blast Doors";
+	opacity = 0
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "AB" = (
 /obj/structure/lattice,
@@ -12008,12 +12002,20 @@
 /turf/space,
 /area/shuttle/vox/mining)
 "Bk" = (
+/obj/machinery/shieldwallgen,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/disposalpipe/segment{
 	desc = "Pipe for transfer more fuel.";
 	dir = 4;
 	name = "filling pipe"
 	},
-/turf/simulated/wall/r_wall,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Bm" = (
 /obj/structure/scrap_cube,
@@ -12029,13 +12031,12 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "Bp" = (
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/structure/disposalpipe/segment{
+	desc = "Pipe for transfer more fuel.";
+	dir = 4;
+	name = "filling pipe"
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
+/turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Bs" = (
 /obj/structure/window/reinforced,
@@ -12427,6 +12428,21 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/iso1)
+"FA" = (
+/obj/machinery/door/window/southleft{
+	dir = 8;
+	name = "Test Chamber";
+	req_access = list(47)
+	},
+/obj/machinery/door/window/southleft{
+	dir = 4;
+	name = "Test Chamber";
+	req_access = list(47)
+	},
+/obj/structure/window/reinforced,
+/turf/space,
+/turf/simulated/floor/engine,
+/area/asteroid/research_outpost/outpost_misc_lab)
 "FB" = (
 /turf/space,
 /area/shuttle/mining/transit)
@@ -12881,6 +12897,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"MA" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/asteroid/research_outpost/outpost_misc_lab)
 "Nb" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -12938,6 +12961,13 @@
 /obj/machinery/artifact_scanpad,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"Nr" = (
+/obj/structure/transit_tube{
+	icon_state = "N-SW"
+	},
+/obj/structure/lattice,
+/turf/space,
+/area/space)
 "NR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -13336,6 +13366,14 @@
 	icon_state = "floorgrime"
 	},
 /area/asteroid/mine/eva)
+"UV" = (
+/obj/machinery/sparker{
+	id = "outpost_misc";
+	pixel_y = -28
+	},
+/obj/machinery/light,
+/turf/simulated/floor/engine,
+/area/asteroid/research_outpost/outpost_misc_lab)
 "Vb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -61509,10 +61547,10 @@ aa
 aa
 aa
 aF
-iX
+Ar
 jg
 jX
-kF
+MA
 yc
 Ar
 fB
@@ -61769,7 +61807,7 @@ aF
 iX
 ec
 jd
-mA
+kF
 fn
 Ar
 yU
@@ -62023,7 +62061,7 @@ aa
 aa
 aa
 aF
-Ar
+iX
 hf
 jY
 lv
@@ -62281,9 +62319,9 @@ aa
 aa
 aF
 Ar
-Ar
+jb
 jw
-jw
+FA
 Bk
 Ar
 aF
@@ -62538,9 +62576,9 @@ aa
 aa
 aF
 Ar
-ib
-fC
-fC
+Ar
+Az
+Az
 Bp
 Ar
 aF
@@ -63053,9 +63091,9 @@ aa
 aF
 Ar
 fj
-kV
 fC
 fC
+UV
 Ar
 aF
 aa
@@ -63307,14 +63345,14 @@ aa
 aa
 aa
 aa
-aG
-Az
+aF
 Ar
+kV
+fC
+xU
+fC
 Ar
-Ar
-Ar
-jb
-nB
+aF
 aa
 aa
 aa
@@ -63564,14 +63602,14 @@ aa
 aa
 aa
 aa
-hS
-bn
-by
-by
-by
-by
+aG
+ib
+mA
+mA
+mA
+mA
 fw
-ge
+nB
 aa
 aa
 aa
@@ -63821,14 +63859,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+hS
+bn
+by
+by
+by
+by
+Nr
+ge
 aa
 aa
 aa
