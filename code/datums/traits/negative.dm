@@ -2,7 +2,7 @@
 
 /datum/quirk/blindness
 	name = QUIRK_BLIND
-	desc = "Вы абсолютно слепы."
+	desc = "Вы абсолютно слепы. Ничто не в силах это изменить."
 	value = -4
 	disability = TRUE
 	mob_trait = TRAIT_BLIND
@@ -44,7 +44,7 @@
 
 /datum/quirk/epileptic
 	name = QUIRK_SEIZURES
-	desc = "Вы испытываете припадки."
+	desc = "Вы испытываете эпилептические припадки."
 	value = -1
 	mob_trait = TRAIT_EPILEPSY
 	gain_text = "<span class='danger'>Вы начинаете испытывать эпилептические припадки!</span>"
