@@ -3,8 +3,8 @@
 	desc = "Вы можете действовать обеими руками одновременно!"
 	value = 2
 	mob_trait = TRAIT_MULTITASKING
-	gain_text = "<span class='notice'>Вы чувствуете уверенность в ловкости своих рук.</span>"
-	lose_text = "<span class='danger'>Вы чувствуете, что растеряли свой талант многозадачности.</span>"
+	gain_text = "<span class='notice'>Вы чувствуете уверенность в том, что можете действовать двумя руками одновременно.</span>"
+	lose_text = "<span class='danger'>Вы чувствуете, что растеряли талант многозадачности.</span>"
 
 
 

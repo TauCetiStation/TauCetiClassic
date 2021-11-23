@@ -22,7 +22,7 @@
 #define QUIRK_TOURETTE "Синдром Туретта"
 #define QUIRK_NEARSIGHTED "Близорукость"
 #define QUIRK_NERVOUS "Нервозность"
-#define QUIRK_STRESS_EATER "Голод из-за Стресса"
+#define QUIRK_STRESS_EATER "Компульсивное Переедание"
 #define QUIRK_MUTE "Немота"
 #define QUIRK_LIGHT_DRINKER "Неустойчивость к Алкоголю"
 #define QUIRK_NYCTOPHOBIA "Никтофобия"

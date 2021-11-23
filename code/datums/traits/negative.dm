@@ -130,7 +130,7 @@
 	value = -1
 	mob_trait = TRAIT_STRESS_EATER
 	gain_text = "<span class='danger'>Когда вам больно, вы чувствуете неутолимый голод.</span>"
-	lose_text = "<span class='notice'>Вы перестали чувствовать голод, испытывая боль.</span>"
+	lose_text = "<span class='notice'>Вы перестали заедать боль.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
