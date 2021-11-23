@@ -71,8 +71,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue
-		
-		if(!display_name) 
+
+		if(!display_name)
 			display_name = name
 
 		if(sender)
@@ -110,7 +110,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
-/client/verb/looc(msg as text)
+/client/verb/looc()
+	var/msg = sanitize(input(src, null, "looc \"text\"") as text|null)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"

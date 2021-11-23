@@ -7,7 +7,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	"thunder",
 	"ERT",
 	"NUKE",
-	"AURORA"
+	"AURORA",
+	"SECURITY UNITS"
 	)
 
 // Posters

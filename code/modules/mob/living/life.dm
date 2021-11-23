@@ -83,10 +83,7 @@
 				else
 					clear_fullscreen("impaired")
 
-				if(eye_blurry)
-					overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
-				else
-					clear_fullscreen("blurry")
+					update_eye_blur()
 
 		if(machine)
 			if (!(machine.check_eye(src)))
