@@ -157,4 +157,3 @@
 /datum/announcement/centcomm/gang/change_wanted_level/play(_message)
 	message = _message
 	..()
-
