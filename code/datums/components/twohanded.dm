@@ -1,7 +1,36 @@
 /**
+ * Component Builder
+ * Is used to set all the required params for twohanded component.
+ * Instantinate before adding component, no need to save anywhere.
+ * vars:
+ * * require_twohands (optional) Does the item need both hands to be carried
+ * * wieldsound (optional) The sound to play when wielded
+ * * unwieldsound (optional) The sound to play when unwielded
+ * * attacksound (optional) The sound to play when wielded and attacking
+ * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
+ * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
+ * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
+ * * icon_wielded (optional) The icon to be used when wielded
+ * * on_wield(mob/wielder, obj/item/wieldee): bool (optional) The callback to be called on wield. If returns TRUE, item won't be wielded
+ * * on_unwield(mob/wielder, obj/item/wieldee): bool (optional) The callback to be called on unwield. If returns TRUE, item won't be unwielded
+*/
+/datum/twohanded_component_builder
+	var/require_twohands = FALSE
+	var/wieldsound = null
+	var/unwieldsound = null
+	var/attacksound = null
+	var/force_multiplier = 0
+	var/force_wielded = 0
+	var/force_unwielded = 0
+	var/icon_wielded = null
+	var/datum/callback/on_wield = null
+	var/datum/callback/on_unwield = null
+
+/**
  * Two Handed Component
  * When applied to an item it will make it two handed
  */
+
 /datum/component/twohanded
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an item
 	var/wielded = FALSE /// Are we holding the two handed item properly
@@ -14,55 +43,47 @@
 	var/require_twohands = FALSE /// Does it have to be held in both hands
 	var/icon_wielded = FALSE /// The icon that will be used when wielded
 	var/obj/item/weapon/offhand/offhand_item = null /// Reference to the offhand created for the item
+	var/datum/callback/on_wield = null /// The callback that will be called on wielding
+	var/datum/callback/on_unwield = null /// The callback that will be called on unwielding
 
 /**
  * Two Handed component
- *
- * vars:
- * * require_twohands (optional) Does the item need both hands to be carried
- * * wieldsound (optional) The sound to play when wielded
- * * unwieldsound (optional) The sound to play when unwielded
- * * attacksound (optional) The sound to play when wielded and attacking
- * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
- * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
- * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
- * * icon_wielded (optional) The icon to be used when wielded
  */
-/datum/component/twohanded/Initialize(require_twohands = FALSE, wieldsound = FALSE, unwieldsound = FALSE, attacksound = FALSE, \
-										force_multiplier = 0, force_wielded = 0, force_unwielded = 0, icon_wielded = FALSE)
+/datum/component/twohanded/Initialize(datum/twohanded_component_builder/TCB)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.require_twohands = require_twohands
-	src.wieldsound = wieldsound
-	src.unwieldsound = unwieldsound
-	src.attacksound = attacksound
-	src.force_multiplier = force_multiplier
-	src.force_wielded = force_wielded
-	src.force_unwielded = force_unwielded
-	src.icon_wielded = icon_wielded
+	if(!TCB)
+		TCB = new
+
+	require_twohands = TCB.require_twohands
+	wieldsound = TCB.wieldsound
+	unwieldsound = TCB.unwieldsound
+	attacksound = TCB.attacksound
+	force_multiplier = TCB.force_multiplier
+	force_wielded = TCB.force_wielded
+	force_unwielded = TCB.force_unwielded
+	icon_wielded = TCB.icon_wielded
+	on_wield = TCB.on_wield
+	on_unwield = TCB.on_unwield
 
 // Inherit the new values passed to the component
-/datum/component/twohanded/InheritComponent(datum/component/twohanded/new_comp, original, require_twohands, wieldsound, unwieldsound, \
-											force_multiplier, force_wielded, force_unwielded, icon_wielded)
+/datum/component/twohanded/InheritComponent(datum/component/twohanded/new_comp, original, datum/twohanded_component_builder/TCB)
 	if(!original)
 		return
-	if(require_twohands)
-		src.require_twohands = require_twohands
-	if(wieldsound)
-		src.wieldsound = wieldsound
-	if(unwieldsound)
-		src.unwieldsound = unwieldsound
-	if(attacksound)
-		src.attacksound = attacksound
-	if(force_multiplier)
-		src.force_multiplier = force_multiplier
-	if(force_wielded)
-		src.force_wielded = force_wielded
-	if(force_unwielded)
-		src.force_unwielded = force_unwielded
-	if(icon_wielded)
-		src.icon_wielded = icon_wielded
+	if(!TCB)
+		return
+
+	require_twohands = TCB.require_twohands
+	wieldsound = TCB.wieldsound || wieldsound
+	unwieldsound = TCB.unwieldsound || unwieldsound
+	attacksound = TCB.attacksound || attacksound
+	force_multiplier = TCB.force_multiplier
+	force_wielded = TCB.force_wielded
+	force_unwielded = TCB.force_unwielded
+	icon_wielded = TCB.icon_wielded || icon_wielded
+	on_wield = TCB.on_wield || on_wield
+	on_unwield = TCB.on_unwield || on_unwield
 
 // Register signals with the parent item
 /datum/component/twohanded/RegisterWithParent()
@@ -162,10 +183,11 @@
 		return
 
 	// Wield update status
-	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, wielder) & COMPONENT_TWOHANDED_BLOCK_WIELD)
+	if(on_wield && on_wield.Invoke(wielder, parent))
 		return // Blocked wield from item
 	wielded = TRUE
 	RegisterSignal(wielder, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	ADD_TRAIT(parent, TRAIT_DOUBLE_WIELDED, TWOHANDED_TRAIT)
 
 	// Update item stats and name
 	var/obj/item/parent_item = parent
@@ -209,10 +231,12 @@
 	if(!wielded)
 		return
 
+	if(on_unwield && on_unwield.Invoke(user, parent))
+		return // Blocked wield from item
 	// Wield update status
 	wielded = FALSE
+	REMOVE_TRAIT(parent, TRAIT_DOUBLE_WIELDED, TWOHANDED_TRAIT)
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
-	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 
 	// Update item stats
 	var/obj/item/parent_item = parent
