@@ -7,13 +7,16 @@
 	origin_tech = "biotech=2;programming=2;syndicate=1"
 	active = FALSE
 
-	var/mob/living/silicon/robot/drone/syndi/slave
-	var/mob/living/carbon/human/operator
+	var/mob/living/silicon/robot/drone/syndi/slave = null
+	var/mob/living/carbon/human/operator = null
 
-/obj/item/clothing/glasses/syndidroneRC/atom_init()
+/obj/item/clothing/glasses/syndidroneRC/Destroy()
+	if(slave)
+		if(slave.operator)
+			loose_control()
+		else
+			remote_view_off()
 	. = ..()
-	slave = null
-	operator = null
 
 /obj/item/clothing/glasses/syndidroneRC/attack_self(mob/living/carbon/human/user)
 	if(user.stat != CONSCIOUS)
@@ -21,13 +24,14 @@
 	if(src.slot_equipped != SLOT_GLASSES)
 		to_chat(user, "<span class='warning'>The [src.name] needs to be equipped to work properly!</span>")
 		return
-	if(active)
+
+	if(active) //Normally the player will not be able to click on the glasses while controlling the drone. So he is definitely spectating.
 		remote_view_off()
 		return
+
 	if(slave && !slave.is_dead() && !QDELING(slave))
 		if(!slave.key)
-			slave.control(user)
-			return
+			gain_control(user)
 		else
 			to_chat(user, "<span class='notice'>The [slave.real_name] is already controlled by an AI. Switching to its camera...</span>")
 			remote_view_on(user)
@@ -37,18 +41,31 @@
 /obj/item/clothing/glasses/syndidroneRC/process()
 	if(active && operator)
 		if(loc == operator)
-			if((slot_equipped == SLOT_GLASSES) && (operator.stat == CONSCIOUS))
+			if((slot_equipped == SLOT_GLASSES) && (operator.stat == CONSCIOUS) && slave.key)
 				return
-	remote_view_off()
+	
+	if(slave.operator)
+		loose_control()
+	else
+		remote_view_off()
 
+/obj/item/clothing/glasses/syndidroneRC/proc/gain_control(mob/living/carbon/human/user)
+	operator = user
+	active = TRUE
+	START_PROCESSING(SSobj, src)
+	slave.control(user)
+
+/obj/item/clothing/glasses/syndidroneRC/proc/loose_control()
+	slave.loose_control()
+	STOP_PROCESSING(SSobj, src)
+	active = FALSE
+	operator = null
 
 /obj/item/clothing/glasses/syndidroneRC/proc/remote_view_on(mob/living/carbon/human/user)
-	if(!slave || QDELING(slave))
-		return FALSE
 	user.force_remote_viewing = TRUE
 	user.reset_view(slave)
-	active = TRUE
 	operator = user
+	active = TRUE
 	START_PROCESSING(SSobj, src)
 	return TRUE
 
@@ -57,5 +74,5 @@
 		operator.force_remote_viewing = FALSE
 		operator.reset_view(operator)
 		operator = null
-	active = FALSE
 	STOP_PROCESSING(SSobj, src)
+	active = FALSE
