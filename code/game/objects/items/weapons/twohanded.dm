@@ -11,7 +11,6 @@
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
-	var/wielded = FALSE
 
 /obj/item/weapon/fireaxe/atom_init()
 	. = ..()
@@ -23,28 +22,22 @@
 
 	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_sweep)
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_spin)
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 40, 10, "fireaxe1")
+
 	AddComponent(/datum/component/swiping, SCB)
+
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 40
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "fireaxe1"
+	AddComponent(/datum/component/twohanded, TCB)
 
 	hitsound = SOUNDIN_DESCERATION
 
-/// triggered on wield of two handed item
-/obj/item/weapon/fireaxe/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/weapon/fireaxe/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
-
 /obj/item/weapon/fireaxe/proc/can_sweep(mob/user)
-	return wielded
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
-	return wielded
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0
@@ -59,7 +52,6 @@
 	item_color = "green"
 	var/hacked
 	var/slicing
-	var/wielded = FALSE
 	var/wieldsound = 'sound/weapons/saberon.ogg'
 	var/unwieldsound = 'sound/weapons/saberoff.ogg'
 	var/hitsound_wielded = list('sound/weapons/blade1.ogg')
@@ -102,30 +94,29 @@
 	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
 	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/dualsaber.proc/get_sweep_objs)
-
-
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/twohanded, FALSE, wieldsound, unwieldsound, hitsound_wielded, 0, 45, 3, FALSE)
 	AddComponent(/datum/component/swiping, SCB)
 
-/// triggered on wield of two handed item
-/obj/item/weapon/dualsaber/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.wieldsound = wieldsound
+	TCB.unwieldsound = unwieldsound
+	TCB.attacksound = hitsound_wielded
+	TCB.force_wielded = 45
+	TCB.force_unwielded = 3
+	TCB.on_wield = CALLBACK(src, .proc/on_wield)
+	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
 	w_class = SIZE_BIG
 
-/// triggered on unwield of two handed item
-/obj/item/weapon/dualsaber/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
+/obj/item/weapon/dualsaber/proc/on_unwield()
 	slicing = FALSE
 	set_light(0)
 	w_class = initial(w_class)
 
 /obj/item/weapon/dualsaber/proc/can_swipe(mob/user)
-	return wielded
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	var/list/directions_opposite = list()
@@ -138,32 +129,32 @@
 	return sweep_objects
 
 /obj/item/weapon/dualsaber/update_icon()
-	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		icon_state = "dualsaber[item_color]1"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
 /obj/item/weapon/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) && prob(40))
+	if((CLUMSY in user.mutations) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(40))
 		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_bodypart_damage(20, 25)
 		return
-	if(wielded && prob(50))
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.set_dir(i)
 				sleep(1)
 
 /obj/item/weapon/dualsaber/Get_shield_chance()
-	if(wielded && !slicing)
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
 		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
 	else
 		return 0
 
 /obj/item/weapon/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
-	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
+	return !slicing && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/dualsaber/attackby(obj/item/I, mob/user, params)
 	if(ismultitool(I))
@@ -181,7 +172,7 @@
 /obj/item/weapon/dualsaber/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target,/obj/machinery/door/airlock) || slicing)
 		return
-	if(target.density && wielded && proximity)
+	if(target.density && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && proximity)
 		user.visible_message("<span class='danger'>[user] start slicing the [target] </span>")
 		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
