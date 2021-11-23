@@ -8,7 +8,7 @@
 			return OBJECTIVE_HALFWIN
 
 		//assume that only carbon mobs can become rev heads for now
-		if(target.current:handcuffed || !ishuman(target.current))
+		if(target.current:handcuffed || !ishuman(target.current) || isrev(target.current) || isrevhead(target.current))
 			return OBJECTIVE_WIN
 
 		var/turf/T = get_turf(target.current)

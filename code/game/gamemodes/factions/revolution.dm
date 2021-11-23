@@ -182,7 +182,7 @@
 	for(var/mob/living/carbon/human/player in human_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
+			if(role in command_positions)
 				if (player.stat == DEAD)
 					score["deadcommand"]++
 
