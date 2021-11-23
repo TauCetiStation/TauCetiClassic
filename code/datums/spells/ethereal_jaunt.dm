@@ -42,6 +42,7 @@
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker", layer = HUD_LAYER)
+		I.plane = HUD_PLANE
 		holder.indicator = I
 		if(target.client)
 			target.client.images += I
