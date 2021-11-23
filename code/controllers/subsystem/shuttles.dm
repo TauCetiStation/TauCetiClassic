@@ -66,7 +66,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/datum/announcement/station/shuttle/emer_left/announce_emer_left = new
 
 	//var/datum/round_event/shuttle_loan/shuttle_loan
-	var/list/forbidden_cargo_types = list(/obj/item/weapon/disk/nuclear, /obj/machinery/nuclearbomb, /obj/item/device/radio/beacon, /mob/living, /obj/effect/portal)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
@@ -471,7 +470,13 @@ SUBSYSTEM_DEF(shuttle)
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(is_type_in_list(A, forbidden_cargo_types))
+	if(istype(A,/mob/living))
+		return 1
+	if(istype(A,/obj/item/weapon/disk/nuclear))
+		return 1
+	if(istype(A,/obj/machinery/nuclearbomb))
+		return 1
+	if(istype(A,/obj/item/device/radio/beacon))
 		return 1
 
 	for(var/i=1, i<=A.contents.len, i++)

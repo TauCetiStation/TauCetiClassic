@@ -479,6 +479,16 @@
 	var/obj/effect/portal/p_orange
 	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
 
+
+/obj/item/weapon/gun/energy/gun/portal/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(!prob(reliability))
+		if(firing_core && !is_centcom_level(z))
+			to_chat(user, "<span class='warning'>The wormhole projector malfunctions, teleporting away!</span>")
+			user.drop_from_inventory(src)
+			do_teleport(src, get_turf(src), 7, asoundin = 'sound/effects/phasein.ogg')
+			return
+	..()
+
 /obj/item/weapon/gun/energy/gun/portal/special_check(mob/M, atom/target)
 	if(!firing_core)
 		return FALSE
