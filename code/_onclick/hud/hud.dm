@@ -152,9 +152,9 @@ var/global/list/available_ui_styles = list(
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	if(!mymob.client)
-		return 0
+		return FALSE
 
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
@@ -193,13 +193,14 @@ var/global/list/available_ui_styles = list(
 		for(var/thing in plane_masters)
 			mymob.client.screen += plane_masters[thing]
 	create_parallax()
+	return TRUE
 
-//Version denotes which style should be displayed. blank or 0 means "next version"
+//Version denotes which style should be displayed. blank or FALSE means "next version"   //khem, what? return is not used anywhere
 /datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	if(!mymob.client)
-		return 0
+		return FALSE
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
