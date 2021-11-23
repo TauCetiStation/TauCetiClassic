@@ -2691,7 +2691,7 @@
 	icon_state = "D-SE"
 	},
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/asteroid/research_outpost/outpost_misc_lab)
 "fx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3832,7 +3832,7 @@
 	icon_state = "D-NE"
 	},
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/asteroid/research_outpost/outpost_misc_lab)
 "ic" = (
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
@@ -6113,9 +6113,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
-"mA" = (
-/turf/simulated/wall/r_wall,
-/area/space)
 "mB" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -63604,10 +63601,10 @@ aa
 aa
 aG
 ib
-mA
-mA
-mA
-mA
+Ar
+Ar
+Ar
+Ar
 fw
 nB
 aa
