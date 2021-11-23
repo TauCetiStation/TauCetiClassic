@@ -64,7 +64,11 @@ var/global/list/master_filter_info = list(
 			"color" = "",
 			"transform" = null,
 			"blend_mode" = BLEND_DEFAULT
-		)
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY,
+			"FILTER_UNDERLAY" = FILTER_UNDERLAY
+		),
 	),
 	"motion_blur" = list(
 		"defaults" = list(
