@@ -213,7 +213,7 @@
 		if(!player.mind)
 			continue
 		var/role = player.mind.assigned_role
-		if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
+		if(role in command_positions)
 			if(player.stat != DEAD)
 				comcount++
 		else
