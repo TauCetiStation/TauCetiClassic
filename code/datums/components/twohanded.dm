@@ -1,3 +1,12 @@
+#define TWOHANDED_TIP "Can be double-wielded."
+
+/datum/mechanic_tip/twohanded
+	tip_name = TWOHANDED_TIP
+	description = "You can use this item in your hand to make your character grab it with both hands."
+
+/datum/mechanic_tip/twohanded/required
+	description = "This item requires both of your hands to be free."
+
 /**
  * Component Builder
  * Is used to set all the required params for twohanded component.
@@ -66,6 +75,17 @@
 	icon_wielded = TCB.icon_wielded
 	on_wield = TCB.on_wield
 	on_unwield = TCB.on_unwield
+
+	var/datum/mechanic_tip/twohanded/tip
+	if(require_twohands)
+		tip = new /datum/mechanic_tip/twohanded/required
+	else
+		tip = new /datum/mechanic_tip/twohanded
+	parent.AddComponent(/datum/component/mechanic_desc, list(tip))
+
+/datum/component/twohanded/Destroy(force, silent)
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(TWOHANDED_TIP))
+	. = ..()
 
 // Inherit the new values passed to the component
 /datum/component/twohanded/InheritComponent(datum/component/twohanded/new_comp, original, datum/twohanded_component_builder/TCB)
