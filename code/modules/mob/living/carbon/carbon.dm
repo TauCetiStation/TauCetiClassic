@@ -912,6 +912,8 @@
 	med_hud_set_status()
 
 /mob/living/carbon/update_sight()
+	if(!..())
+		return FALSE
 	if(stat == DEAD)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
