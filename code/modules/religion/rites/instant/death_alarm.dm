@@ -17,7 +17,7 @@
 	if(!iscarbon(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Ангел не будет охранять это существо.</span>")
 		return FALSE
-	var/datum/M = AOG.buckled_mob
+	var/mob/living/carbon/M = AOG.buckled_mob
 	if(M.GetComponent(/datum/component/bell_death_alarm))
 		to_chat(user, "<span class='warning'>Эта цель уже охраняется ангелом.</span>")
 		return FALSE
