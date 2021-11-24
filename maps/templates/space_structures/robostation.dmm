@@ -108,7 +108,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aw" = (
-/obj/item/weapon/twohanded/flora/pottedplant/unusual,
+/obj/item/weapon/flora/pottedplant/unusual,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ax" = (
@@ -281,7 +281,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "be" = (
-/obj/item/weapon/twohanded/fireaxe,
+/obj/item/weapon/fireaxe,
 /obj/item/clothing/head/collectable/petehat,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
@@ -398,7 +398,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bC" = (
-/obj/item/weapon/twohanded/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/crystal,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bD" = (

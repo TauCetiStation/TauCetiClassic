@@ -109,7 +109,7 @@
 #define MOOD_LEVEL_SAD3 -15
 #define MOOD_LEVEL_SAD4 -20
 
-//Sanity levels for humans
+//Spirit levels for humans
 #define SPIRIT_MAXIMUM 150
 #define SPIRIT_HIGH 125
 #define SPIRIT_NEUTRAL 100

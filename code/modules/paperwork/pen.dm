@@ -77,8 +77,8 @@
 				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
-				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
-				entity = B.deity_name
+				entity = pick(B.religion.deity_names)
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [entity] possesess \the [src].</span>")
 				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
@@ -183,6 +183,8 @@
 		force = initial(force)
 		w_class = initial(w_class)
 		edge = initial(edge)
+		sharp = initial(sharp)
+		can_embed = initial(can_embed)
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
@@ -193,7 +195,9 @@
 		on = 1
 		force = 18
 		w_class = SIZE_SMALL
-		edge = 1
+		edge = TRUE
+		sharp = TRUE
+		can_embed = FALSE
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35

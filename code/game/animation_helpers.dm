@@ -1,11 +1,13 @@
 /atom
 	// To prevent the item from being forever invisible, check this flag. If it's TRUE, don't animate.
 	var/is_invis_anim = FALSE
+	//For handling persistent filters
+	var/list/filter_data
 
-/atom/proc/before_shake_animation(intensity, time, intensity_dropoff)
+/atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
-/atom/proc/after_shake_animation(intensity, time, intensity_dropoff)
+/atom/proc/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
 /atom/proc/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
@@ -25,16 +27,11 @@
 	I.loc = src
 	I.appearance_flags |= KEEP_APART
 
-	var/list/viewers = list()
-	for(var/mob/M in viewers(src))
-		if(M.client)
-			viewers += M.client
-
-	before_shake_animation(intensity, time, intensity_dropoff, viewers)
+	before_shake_animation(intensity, time, intensity_dropoff, clients)
 
 	var/prev_invis = invisibility
 
-	flick_overlay(I, viewers, time + 1)
+	flick_overlay(I, clients, time + 1)
 
 	var/stop_shaking = world.time + time
 	while(stop_shaking > world.time)
@@ -56,7 +53,7 @@
 			return
 		invisibility = prev_invis
 
-	after_shake_animation(intensity, time, intensity_dropoff, viewers)
+	after_shake_animation(intensity, time, intensity_dropoff, clients)
 
 	qdel(I)
 	is_invis_anim = FALSE

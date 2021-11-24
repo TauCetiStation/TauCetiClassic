@@ -9,7 +9,7 @@
 	name = "hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEEARS
-	flags = THICKMATERIAL | PHORONGUARD | BLOCKHAIR
+	flags = PHORONGUARD | BLOCKHAIR
 
 
 /obj/item/clothing/suit/bio_suit/new_hazmat/security

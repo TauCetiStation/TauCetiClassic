@@ -506,13 +506,16 @@ var/list/turret_icons
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
+	if(L.faction == "untouchable") //check faction that shouldn't be attacked by mobs
+		return TURRET_NOT_TARGET
+
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
-	if(isAI(L) || (lethal && (locate(/mob/living/silicon/ai) in get_turf(L))))		//don't accidentally kill the AI!
+	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
 	if(L.stat)		//if the perp is dead/dying...

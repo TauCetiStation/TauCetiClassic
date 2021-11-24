@@ -163,7 +163,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -319,35 +323,33 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-	if(next_point_to > world.time)
+
+	if (next_point_to > world.time)
 		return
-	if(!usr || !isturf(usr.loc))
+
+	if (incapacitated() || (status_flags & FAKEDEATH))
 		return
-	if(usr.incapacitated())
+
+	if (istype(A, /obj/effect/decal/point))
 		return
-	if(usr.status_flags & FAKEDEATH)
-		return
-	if(!(A in oview(usr.loc)))
-		return
-	if(istype(A, /obj/effect/decal/point))
+
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
 		return
 
 	var/tile = get_turf(A)
-	if(!tile)
+	if (!tile)
 		return
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
-
-	QDEL_IN(P, 20)
+	point_at(A)
 
 	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
 
 	next_point_to = world.time + 1.5 SECONDS
@@ -673,7 +675,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 				if(GM?.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -927,6 +929,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
@@ -943,6 +946,29 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
+
+// ========== STUTTERING ==========
+/mob/proc/Stuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering, amount, 0)
+
+/mob/proc/AdjustStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering + amount, 0)
+
+/mob/proc/setStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
 
 // =============================
 
@@ -1027,7 +1053,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

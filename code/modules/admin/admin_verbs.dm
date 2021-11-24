@@ -96,7 +96,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
-	/client/proc/stop_server_sound
+	/client/proc/stop_server_sound,
+	/client/proc/play_server_sound
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/change_title_screen,
@@ -184,6 +185,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_display_init_log,
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
+	/client/proc/event_manager_panel,
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

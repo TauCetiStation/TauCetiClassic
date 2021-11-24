@@ -218,24 +218,33 @@
 	var/datum/religion/cult/R = global.cult_religion
 	R.capturing_area = TRUE
 
-	var/datum/announcement/station/cult/capture_area/announce = new
+	var/list/blacklisted_announcements = list(
+		/datum/announcement/centcomm/anomaly,
+		/datum/announcement/centcomm/anomaly/frost,
+		/datum/announcement/centcomm/anomaly/massive_portals,
+		/datum/announcement/centcomm/anomaly/bluespace_trigger,
+		/datum/announcement/centcomm/anomaly/radstorm,
+		/datum/announcement/centcomm/anomaly/radstorm_passed
+	)
+	var/announcement_type = pick(typesof(/datum/announcement/centcomm/anomaly) - blacklisted_announcements)
+	var/datum/announcement/announce = new announcement_type
 	announce.play(area)
+
 	var/turf/rune_turf = get_turf(holder)
 	message_admins("Cult has started capture: [area] in [COORD(rune_turf)] - [ADMIN_JMP(rune_turf)]")
 
 	statue = new(rune_turf, holder)
-	R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
+	var/religify_compelted = R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
+	religion.send_message_to_members("Захват [area] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
+	message_admins("Capture of [area] [religify_compelted ? "successful" : "failed"].")
 	R.capturing_area = FALSE
-	message_admins("Capture of [get_area(holder)] successful.")
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
-		message_admins("Capture of [get_area(holder)] failed.")
 		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)
-		for(var/mob/M in religion.members)
-			to_chat(M, "<span class='[religion.style_text]'>Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%</span>")
+		religion.send_message_to_members("Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
 
 	INVOKE_ASYNC(src, .proc/capture_effect, i, all_items)
 	sleep(per_obj_cd)

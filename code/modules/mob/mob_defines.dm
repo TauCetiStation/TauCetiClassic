@@ -68,7 +68,7 @@
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
-	var/stuttering = null	//Carbon
+	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
 	var/flavor_text = ""
@@ -101,7 +101,6 @@
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon

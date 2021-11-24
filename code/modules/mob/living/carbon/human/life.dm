@@ -64,6 +64,10 @@
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+			if(failed_last_breath)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			else
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -186,7 +190,7 @@
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -221,7 +225,7 @@
 			if(4 to 6)
 				if(getBrainLoss() >= 15 && eye_blurry <= 0)
 					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
-					eye_blurry = 10
+					blurEyes(10)
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
@@ -419,9 +423,9 @@
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if (!contents.Find(internal) && !HAS_TRAIT(src, TRAIT_AV))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+		if (!HAS_TRAIT(src, TRAIT_AV) && (!wear_mask || !(wear_mask.flags & MASKINTERNALS)))
 			internal = null
 		if(internal)
 					//internal breath sounds
@@ -660,8 +664,15 @@
 	if(status_flags & GODMODE)
 		return 1	//godmode
 
+	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > species.heat_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 3)
@@ -677,6 +688,9 @@
 			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
@@ -1058,7 +1072,7 @@
 
 	if (drowsyness)
 		drowsyness = max(0, drowsyness - 1)
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if(prob(5))
 			emote("yawn")
 			Sleeping(10 SECONDS)
@@ -1174,10 +1188,10 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
-			eye_blurry = max(eye_blurry-3, 0)
+			adjustBlurriness(-3)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry-1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
@@ -1200,7 +1214,7 @@
 
 		if(stuttering)
 			speech_problem_flag = 1
-			stuttering = max(stuttering-1, 0)
+			AdjustStuttering(-1)
 		if (slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)
@@ -1274,14 +1288,9 @@
 		see_in_dark = 8
 		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
-		if(client)
-			if(client.view != world.view)
-				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
-					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
-					if(s.zoom)
-						s.toggle_zoom()
 
 	else
+		lighting_alpha = initial(lighting_alpha)
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
@@ -1440,9 +1449,9 @@
 				impaired = max(impaired, 2)
 
 		if(eye_blurry)
-			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
+			update_eye_blur()
 		else
-			clear_fullscreen("blurry")
+			update_eye_blur()
 		if(nearsighted)
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
@@ -1582,7 +1591,7 @@
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
