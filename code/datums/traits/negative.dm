@@ -155,7 +155,7 @@
 	value = -1
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='danger'>От одной лишь мысли об алкоголе у вас кружится голова.</span>"
-	lose_text = "<span class='notice'>Вас больше не коробит от алкоголя.</span>"
+	lose_text = "<span class='notice'>Вы перестали быть слишком чувствительными к алкоголю.</span>"
 
 	// Those are not affected by alcohol at all.
 	incompatible_species = list(SKRELL)
