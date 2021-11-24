@@ -61,6 +61,9 @@
 	if(!can_heal(L, user))
 		return
 
+	if(L == user)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
+
 	var/delay = L == user ? self_delay : other_delay
 	if(delay)
 		if(!silent)
@@ -399,7 +402,7 @@
 		// Suturing yourself brings much more pain.
 		var/pain_factor = H == user ? 40 : 20
 		if(H.stat == CONSCIOUS)
-			H.shock_stage += pain_factor
+			H.AdjustShockStage(pain_factor)
 		BP.status &= ~ORGAN_ARTERY_CUT
 		BP.strap()
 		user.visible_message(

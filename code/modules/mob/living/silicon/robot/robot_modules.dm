@@ -129,7 +129,7 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
+	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -403,6 +403,7 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)

@@ -1,6 +1,7 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_speed = 10
@@ -29,6 +30,9 @@
 	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
+	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
+	var/list/area_sensitive_contents
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc
@@ -52,6 +56,9 @@
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -366,6 +373,32 @@
 /atom/movable/proc/keybind_face_direction(direction)
 	return
 
+/atom/movable/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYREMOVE(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/atom/movable/Entered(atom/movable/AM, atom/oldLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/// See traits.dm. Use this in place of ADD_TRAIT.
+/atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
+	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, src)
+	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
+
+/atom/movable/proc/on_area_sensitive_trait_loss()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
+	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+		LAZYREMOVE(location.area_sensitive_contents, src)
 /* Sizes stuff */
 
 /atom/movable/proc/get_size_flavor()
@@ -400,3 +433,38 @@
 
 /atom/movable/proc/update_size_class()
 	return w_class
+
+/client/var/list/image/outlined_item = list()
+/atom/movable/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/atom/movable/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	loc = new_loc
+	Moved(old_loc)

@@ -38,7 +38,7 @@
 	if(!..())
 		return FALSE
 
-	var/list/possibles_objectives = subtypesof(/datum/objective/cult)
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
 	for(var/i in 1 to rand(2, 3))
 		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
@@ -67,7 +67,7 @@
 					R = HandleNewMind(H.mind)
 					R.OnPostSetup(TRUE)
 
-					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
+					to_chat(H, "<span class='warning'>Вы теперь новый предвестник культа.</span>")
 					added_lead = TRUE
 					break
 

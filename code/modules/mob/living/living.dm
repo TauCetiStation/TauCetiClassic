@@ -14,6 +14,11 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
+
 /mob/living/Destroy()
 	allowed_combos = null
 	known_combos = null
@@ -375,6 +380,44 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== BLUR ==========
+
+/**
+ * Make the mobs vision blurry
+ */
+/mob/proc/blurEyes(amount)
+	if(amount > 0)
+		eye_blurry = max(amount, eye_blurry)
+	update_eye_blur()
+
+/**
+ * Adjust the current blurriness of the mobs vision by amount
+ */
+/mob/proc/adjustBlurriness(amount)
+	eye_blurry = max(eye_blurry + amount, 0)
+	update_eye_blur()
+
+/**
+ * Set the mobs blurriness of vision to an amount
+ */
+/mob/proc/setBlurriness(amount)
+	eye_blurry = max(amount, 0)
+	update_eye_blur()
+
+/**
+ * Apply the blurry overlays to a mobs clients screen
+ */
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -497,6 +540,8 @@
 	if(reagents)
 		reagents.clear_reagents()
 
+	beauty.AddModifier("stat", additive=beauty_living)
+
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -526,7 +571,7 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	setBlurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
@@ -1250,7 +1295,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1258,7 +1302,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	blurEyes(5)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
@@ -1297,6 +1341,7 @@
 
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 
@@ -1342,3 +1387,14 @@
 
 /mob/living/proc/swap_hand()
 	return
+
+/mob/living/death(gibbed)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())

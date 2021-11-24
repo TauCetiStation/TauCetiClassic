@@ -1,3 +1,74 @@
+/mob/living/carbon/human
+	var/list/conversations
+	var/conversation_expiration = 45 SECONDS
+
+/mob/living/carbon/human/proc/handle_conversation(speaker, speak_tags, hear_tags)
+	var/speech_amount = speak_tags + hear_tags
+
+	if(speech_amount < 30)
+		return
+
+	var/speech_imbalance = 1.0
+	if(speak_tags > hear_tags)
+		speech_imbalance = (speak_tags + 1) / (hear_tags + 1)
+	else
+		speech_imbalance = (hear_tags + 1) / (speak_tags + 1)
+
+	if(speech_amount < 150)
+		if(speech_imbalance < 20.0)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
+		return
+
+	if(speech_imbalance < 2.0 && speech_amount > 500)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/deep_conversation, speaker)
+		return
+
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/conversation, speaker)
+
+/mob/living/carbon/human/proc/clear_conversation(speaker)
+	if(!conversations || !conversations[speaker])
+		return
+
+	handle_conversation(speaker, conversations[speaker]["say"], conversations[speaker]["hear"])
+
+	conversations -= speaker
+	if(conversations.len == 0)
+		conversations = null
+
+/mob/living/carbon/human/proc/add_conversation(speaker, tag, message)
+	if(!conversations)
+		conversations = list()
+	// Can't pay attention to all these people around.
+	if(conversations.len > 3)
+		return
+	if(!conversations[speaker])
+		conversations[speaker] = list("say" = 0, "hear" = 0)
+
+	conversations[speaker][tag] += length(message)
+	addtimer(
+		CALLBACK(
+			src, .proc/clear_conversation, speaker
+		),
+		conversation_expiration,
+		TIMER_OVERRIDE|TIMER_UNIQUE
+	)
+
+/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	. = ..()
+	if(!.)
+		return
+
+	if(speaker == src)
+		return
+
+	if(!ishuman(speaker))
+		return
+
+	var/mob/living/carbon/human/H = speaker
+
+	add_conversation(speaker.GetVoice(), "hear", message)
+	H.add_conversation(GetVoice(), "say", message)
+
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -239,6 +310,8 @@
 		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
+		if(isautosay(other))
+			return 1
 		if(issilicon(other))
 			return 1
 		if(isbrain(other))

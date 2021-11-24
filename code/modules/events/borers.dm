@@ -23,7 +23,7 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_ALIEN, IGNORE_BORER)
+	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_GHOSTLY, IGNORE_BORER)
 
 	if(!find_faction_by_type(/datum/faction/borers))
 		SSticker.mode.CreateFaction(/datum/faction/borers)

@@ -19,7 +19,7 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
@@ -30,7 +30,7 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.stuttering = 0
+			M.setStuttering(0)
 			M.confused = 0
 			M.jitteriness = 0
 
@@ -351,7 +351,7 @@
 	M.setBrainLoss(0)
 	M.disabilities = 0
 	M.sdisabilities = 0
-	M.eye_blurry = 0
+	M.setBlurriness(0)
 	M.eye_blind = 0
 	M.SetWeakened(0)
 	M.SetStunned(0)
@@ -359,7 +359,7 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.setStuttering(0)
 	M.confused = 0
 	M.SetSleeping(0)
 	M.jitteriness = 0
@@ -448,7 +448,7 @@
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
 	..()
-	M.eye_blurry = max(M.eye_blurry - 5, 0)
+	M.adjustBlurriness(-5)
 	M.eye_blind = max(M.eye_blind - 5, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -647,7 +647,7 @@
 	..()
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.setStuttering(0)
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 

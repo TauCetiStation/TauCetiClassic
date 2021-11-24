@@ -76,7 +76,7 @@
 
 	var/speech_problem_flag = 0
 
-	var/miming = null //Toggle for the mime's abilities.
+	var/miming = FALSE //Toggle for the mime's abilities.
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
@@ -115,3 +115,7 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Clothes count. Used in mood.
+	var/wet_clothes = 0
+	var/dirty_clothes = 0

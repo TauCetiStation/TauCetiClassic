@@ -7,7 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD, IMPOBED_HUD)
 
 	typing_indicator_type = "robot"
 
@@ -73,6 +73,7 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -250,18 +251,22 @@
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			module.channels = list("Security" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Security")
-			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
-			module_sprites["Black Knight"] = "securityrobot"
-			module_sprites["Bloodhound"] = "bloodhound"
-			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-			module_sprites["Drone"] = "drone-sec"
-			module_sprites["Acheron"] = "mechoid-Security"
-			module_sprites["Kodiak"] = "kodiak-sec"
+			if(can_be_security)
+				module = new /obj/item/weapon/robot_module/security(src)
+				module.channels = list("Security" = 1)
+				if(camera && ("Robots" in camera.network))
+					camera.add_network("Security")
+				module_sprites["Basic"] = "secborg"
+				module_sprites["Red Knight"] = "Security"
+				module_sprites["Black Knight"] = "securityrobot"
+				module_sprites["Bloodhound"] = "bloodhound"
+				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+				module_sprites["Drone"] = "drone-sec"
+				module_sprites["Acheron"] = "mechoid-Security"
+				module_sprites["Kodiak"] = "kodiak-sec"
+			else
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
+				return
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -440,12 +445,12 @@
 	..()
 	if(ismalf(connected_ai))
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
-		if(malf.apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+		if(SSticker.hacked_apcs >= 3)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
 	else
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
-			stat(null, "Time left: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 

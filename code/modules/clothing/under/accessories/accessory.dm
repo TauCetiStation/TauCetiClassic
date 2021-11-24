@@ -82,6 +82,8 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 	layer_priority = 0.1
+	m_amt = 150
+	g_amt = 20
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
@@ -226,15 +228,15 @@
 */
 
 /obj/item/clothing/accessory/holobadge
-
 	name = "holobadge"
-	desc = "This glowing blue badge marks the holder as THE LAW."
+	desc = "This glowing blue badge marks the holder as THE LAW. Also has an in-built camera."
 	icon_state = "holobadge"
 	item_color = "holobadge"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
 
 	var/emagged = FALSE // Emagging removes Sec check.
 	var/stored_name = null
+	var/obj/machinery/camera/camera
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
@@ -265,7 +267,20 @@
 			to_chat(user, "You imprint your ID details onto the badge.")
 			stored_name = id_card.registered_name
 			name = "holobadge ([stored_name])"
-			desc = "This glowing blue badge marks [stored_name] as THE LAW."
+			desc = "This glowing blue badge marks [stored_name] as THE LAW. Also has an in-built camera."
+
+			if(stored_name && !camera)
+				camera = new /obj/machinery/camera(src)
+				camera.name = "bodycam"
+				camera.replace_networks(list("SECURITY UNIT"))
+				cameranet.removeCamera(camera)
+				camera.status = FALSE
+				if(has_suit)
+					camera.status = TRUE
+					to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+			to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
+			if(camera)
+				camera.c_tag = "[stored_name] #[rand(999)]"
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
 		return TRUE
@@ -283,4 +298,22 @@
 		return FALSE
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
+	if(camera)
+		camera.status = FALSE
 	return TRUE
+
+/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
+	..()
+	if(camera && !emagged)
+		camera.status = TRUE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+
+/obj/item/clothing/accessory/holobadge/on_removed(mob/user)
+	..()
+	if(camera && !emagged)
+		camera.status = FALSE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")
+
+/obj/item/clothing/accessory/holobadge/emp_act(severity)
+	if(camera)
+		camera.emp_act(1)
