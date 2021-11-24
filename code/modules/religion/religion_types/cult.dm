@@ -31,6 +31,7 @@
 	)
 
 	bible_type = /obj/item/weapon/storage/bible/tome
+	religious_tool_type = /obj/item/weapon/storage/bible/tome
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
@@ -222,7 +223,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD])
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE

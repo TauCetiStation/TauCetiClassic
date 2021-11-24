@@ -22,6 +22,7 @@
 		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
+	. = ..()
 	if(iscultist(user))
 		var/datum/religion/cult/C = user.my_religion
 		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))

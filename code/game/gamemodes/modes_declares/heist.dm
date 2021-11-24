@@ -2,7 +2,7 @@
 /datum/game_mode/heist
 	name = "Heist"
 	config_name = "heist"
-	probability = 80
+	probability = 0
 
 	factions_allowed = list(/datum/faction/heist)
 
