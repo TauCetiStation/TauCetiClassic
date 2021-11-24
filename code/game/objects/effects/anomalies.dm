@@ -69,7 +69,7 @@
 
 /obj/effect/anomaly/grav/Destroy()
 	vis_contents -= warp
-	warp = null
+	QDEL_NULL(warp)
 	return ..()
 
 /obj/effect/anomaly/grav/anomalyEffect(delta_time)
