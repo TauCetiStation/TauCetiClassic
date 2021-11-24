@@ -31,7 +31,7 @@
 		var/remove_xray = FALSE
 		if(!(XRAY in target.mutations))
 			target.mutations += XRAY
-			target.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+			target.update_sight()
 			remove_xray = TRUE
 
 		holder.master = target
@@ -68,7 +68,7 @@
 		target.status_flags ^= GODMODE	//Turn off this cheat
 		if(remove_xray)
 			target.mutations -= XRAY
-			target.sight &= ~(SEE_MOBS|SEE_OBJS|SEE_TURFS)
+			target.update_sight()
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
