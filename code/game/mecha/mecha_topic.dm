@@ -424,11 +424,10 @@
 		occupant_message("Recalibrating coordination system.")
 		log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/stationary_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/stationary_repair, loc), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
 
 	return
 
-///Repairs internal damage if the mech hasn't moved.
 /obj/mecha/proc/stationary_repair(location)
 	if(location == loc)
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)

@@ -192,10 +192,15 @@
 		return 1
 	if (get_turf(P.original) == cover)
 		var/chance = 20
+		if (!flipable)
+			chance += 20	//reinforced table covers legs so 20 common chance + lying 20 chance
 		if (ismob(P.original))
 			var/mob/M = P.original
 			if (M.lying)
-				chance += 20				//Lying down lets you catch less bullets
+				if(!flipable)
+					chance = 100				//reinforced table is REINFORCED so it cant be penetrated
+				else
+					chance += 20				//Lying down lets you catch less bullets
 		if(flipped)
 			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
 				chance += 20
