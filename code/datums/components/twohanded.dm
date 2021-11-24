@@ -95,15 +95,15 @@
 		return
 
 	require_twohands = TCB.require_twohands
-	wieldsound = TCB.wieldsound || wieldsound
-	unwieldsound = TCB.unwieldsound || unwieldsound
-	attacksound = TCB.attacksound || attacksound
+	wieldsound = TCB.wieldsound
+	unwieldsound = TCB.unwieldsound
+	attacksound = TCB.attacksound
 	force_multiplier = TCB.force_multiplier
 	force_wielded = TCB.force_wielded
 	force_unwielded = TCB.force_unwielded
-	icon_wielded = TCB.icon_wielded || icon_wielded
-	on_wield = TCB.on_wield || on_wield
-	on_unwield = TCB.on_unwield || on_unwield
+	icon_wielded = TCB.icon_wielded
+	on_wield = TCB.on_wield
+	on_unwield = TCB.on_unwield
 
 // Register signals with the parent item
 /datum/component/twohanded/RegisterWithParent()
