@@ -109,11 +109,13 @@
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
 	w_class = SIZE_BIG
+	return FALSE
 
 /obj/item/weapon/dualsaber/proc/on_unwield()
 	slicing = FALSE
 	set_light(0)
 	w_class = initial(w_class)
+	return FALSE
 
 /obj/item/weapon/dualsaber/proc/can_swipe(mob/user)
 	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
