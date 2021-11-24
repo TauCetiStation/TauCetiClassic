@@ -85,7 +85,7 @@
 
 /datum/component/twohanded/Destroy(force, silent)
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(TWOHANDED_TIP))
-	. = ..()
+	return ..()
 
 // Inherit the new values passed to the component
 /datum/component/twohanded/InheritComponent(datum/component/twohanded/new_comp, original, datum/twohanded_component_builder/TCB)
