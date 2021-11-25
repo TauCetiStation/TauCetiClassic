@@ -77,7 +77,7 @@
         if(operator_mind && operator_mind.current && operator_mind.key == key)
             operator_mind.current.key = key
         else
-            src.ghostize(FALSE)
+            ghostize(FALSE)
     key = null
     to_chat(operator, "You've lost control of the [src.name].")
     operator = null

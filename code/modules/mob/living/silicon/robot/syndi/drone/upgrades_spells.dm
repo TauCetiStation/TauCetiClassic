@@ -13,7 +13,7 @@
     var/duration = 50
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost/cast(list/targets, mob/user)
-    if(!istype(user, /mob/living/silicon/robot/drone/))
+    if(!istype(user, /mob/living/silicon/robot/drone))
         return
 
     var/mob/living/silicon/robot/drone/D = user

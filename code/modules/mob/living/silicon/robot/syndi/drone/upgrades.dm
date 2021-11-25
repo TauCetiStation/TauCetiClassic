@@ -63,7 +63,7 @@
     var/single_use = TRUE //whether it's possible to install this multiple times
     var/installed = FALSE
 
-/datum/drone_upgrade/proc/can_install(mob/living/silicon/robot/drone/syndi/D, var/chat_warning = TRUE)
+/datum/drone_upgrade/proc/can_install(mob/living/silicon/robot/drone/syndi/D, chat_warning = TRUE)
     if(D.stat == DEAD)
         if(chat_warning)
             to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
