@@ -28,7 +28,7 @@
 #define SS_NO_INIT 2
 
 //subsystem does not fire.
-//	(like can_fire = 0, but keeps it from getting added to the processing subsystems list)
+//	(like can_fire = FALSE, but keeps it from getting added to the processing subsystems list)
 //	(Requires a MC restart to change)
 #define SS_NO_FIRE 4
 
