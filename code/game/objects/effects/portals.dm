@@ -9,6 +9,9 @@
 	var/obj/item/target = null
 	var/creator = null
 	anchored = TRUE
+	var/portal_density_check = TELE_CHECK_NONE
+	var/portal_respect_dir = FALSE
+	var/portal_use_forceMove = TRUE
 
 /obj/effect/portal/atom_init(mapload, turf/target, creator = null, lifespan = 300)
 	. = ..()
@@ -48,6 +51,9 @@
 	if(!target)
 		qdel(src)
 		return FALSE
+	density_check = portal_density_check
+	respect_entrydir = portal_respect_dir
+	use_forceMove = portal_use_forceMove
 	if(istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
@@ -127,13 +133,6 @@
 
 /obj/effect/portal/portalgun
 	failchance = 0
-
-/obj/effect/portal/portalgun/Bumped(mob/M)
-	set waitfor = 0
-	teleport(M, TELE_CHECK_ALL, TRUE, FALSE)
-
-/obj/effect/portal/portalgun/Crossed(atom/movable/AM)
-	set waitfor = 0
-
-	. = .()
-	teleport(AM, TELE_CHECK_ALL, TRUE, FALSE)
+	portal_density_check = TELE_CHECK_ALL
+	portal_respect_dir = TRUE
+	portal_use_forceMove = FALSE
