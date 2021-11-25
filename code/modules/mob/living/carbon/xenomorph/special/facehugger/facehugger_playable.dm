@@ -25,6 +25,7 @@
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/hide)
 
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null

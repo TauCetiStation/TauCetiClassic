@@ -5,6 +5,12 @@
 	health = 160
 	icon_state = "aliend_s"
 	plasma_rate = 15
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/weeds,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/whisp,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/resin,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen)
+
 
 /mob/living/carbon/xenomorph/humanoid/drone/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)

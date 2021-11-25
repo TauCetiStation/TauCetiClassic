@@ -14,6 +14,8 @@
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/hide,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve)
 
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null

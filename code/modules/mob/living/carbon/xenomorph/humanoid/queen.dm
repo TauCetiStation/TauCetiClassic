@@ -13,6 +13,12 @@
 	neurotoxin_delay = 10
 	ventcrawler = 0
 	w_class = SIZE_GYGANT
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/weeds,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/whisp,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/resin,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/screech)
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()

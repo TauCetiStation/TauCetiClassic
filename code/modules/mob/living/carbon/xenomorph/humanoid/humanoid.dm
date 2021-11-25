@@ -22,7 +22,9 @@
 	var/last_screech = 0
 	var/screech_delay = 900
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
-
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/weeds,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/whisp,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma)
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/xenomorph/humanoid/atom_init()

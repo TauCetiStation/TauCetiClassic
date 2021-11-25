@@ -30,11 +30,15 @@
 	attack_push_vis_effect = ATTACK_EFFECT_CLAW
 	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
+	var/list/alien_spells = list()
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
+	for(var/spell in alien_spells)
+		AddSpell(new spell(src))
 
 /mob/living/carbon/xenomorph/Destroy()
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
