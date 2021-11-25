@@ -83,7 +83,7 @@
 
 
 /datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install)
+    if(!can_install())
         return FALSE
 
     if(!items.len)
@@ -104,18 +104,18 @@
     items = list(
         /obj/item/weapon/gripper,
         /obj/item/weapon/screwdriver,
-	    /obj/item/weapon/wrench,
-	    /obj/item/weapon/weldingtool,
-	    /obj/item/weapon/crowbar/red,
-	    /obj/item/weapon/wirecutters,
-	    /obj/item/device/multitool
+        /obj/item/weapon/wrench,
+        /obj/item/weapon/weldingtool,
+        /obj/item/weapon/crowbar/red,
+        /obj/item/weapon/wirecutters,
+        /obj/item/device/multitool
     )
 
 /datum/drone_upgrade/device_tools/emag
-	name = "Cryptographic Sequencer"
-	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
-	items = list(/obj/item/weapon/card/emag)
-	cost = 8
+    name = "Cryptographic Sequencer"
+    desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
+    items = list(/obj/item/weapon/card/emag)
+    cost = 8
     single_use = FALSE
 
 /datum/drone_upgrade/device_tools/flash
@@ -126,28 +126,28 @@
     single_use = FALSE
 
 /datum/drone_upgrade/device_tools/jetpack
-	name = "Jetpack"
-	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas."
-	items = list(/obj/item/weapon/tank/jetpack/carbondioxide)
-	cost = 7
+    name = "Jetpack"
+    desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas."
+    items = list(/obj/item/weapon/tank/jetpack/carbondioxide)
+    cost = 7
 
 /datum/drone_upgrade/device_tools/hypo //mostly for nukeops to use as in-combat medical support unit
-	name = "Medical hypospray"
-	desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
-	items = list(/obj/item/weapon/reagent_containers/borghypo)
-	cost = 8
+    name = "Medical hypospray"
+    desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
+    items = list(/obj/item/weapon/reagent_containers/borghypo)
+    cost = 8
 
 /datum/drone_upgrade/device_tools/medhypo //the same as above
-	name = "Improved medical hypospray"
-	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
-	items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
-	cost = 12
+    name = "Improved medical hypospray"
+    desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
+    items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
+    cost = 12
 
 /datum/drone_upgrade/device_tools/plasmacutter
-	name = "Plasma cutter"
-	desc = "A rock cutter that uses bursts of hot plasma. Can be used to cut through walls."
-	items = list(/obj/item/weapon/pickaxe/plasmacutter)
-	cost = 7
+    name = "Plasma cutter"
+    desc = "A rock cutter that uses bursts of hot plasma. Can be used to cut through walls."
+    items = list(/obj/item/weapon/pickaxe/plasmacutter)
+    cost = 7
 
 //========SURVEILLANCE AND OPTICS
 /datum/drone_upgrade/optics
@@ -181,7 +181,7 @@
     cost = 2
 
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install)
+    if(!can_install())
         return FALSE
 
     to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
@@ -202,7 +202,7 @@
     cost = 4
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install)
+    if(!can_install())
         return FALSE
 
     D.maxHealth += 20
@@ -216,7 +216,7 @@
     cost = 4
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install)
+    if(!can_install())
         return FALSE
 
     D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/boost())
