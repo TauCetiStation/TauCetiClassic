@@ -26,7 +26,7 @@
         if(upgrade.category != category)
             dat += "<b>[upgrade.category]</b><br>"
             category = upgrade.category
-        if(upgrade.cost <= points)
+        if(upgrade.cost <= points && !(upgrade.single_use && upgrade.installed))
             dat += "<A href='byond://?src=\ref[src];buy_item=[i];'>[upgrade.name]</A> [upgrade.cost] "
         else
             dat += "<span class='disabled'>[upgrade.name] [upgrade.cost]</span>"
@@ -60,6 +60,8 @@
     var/desc = "upgrade description"
     var/list/items = null
     var/cost = 0
+    var/single_use = FALSE //whether it's possible to install this multiple times
+    var/installed = FALSE
 
 /datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
     if(!items.len)
@@ -96,3 +98,22 @@
     else
         to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
         return FALSE
+
+/datum/drone_upgrade/internal/speed_boost
+    name = "Maneuverability booster"
+    desc = "Speeds up your servos to increase your maneuverability for a short time. Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
+    cost = 3
+    single_use = TRUE
+
+/datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
+    if(D.stat == DEAD)
+        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+        return FALSE
+    if(installed)
+        to_chat(D, "<span class='warning'>You can't install this upgrade twice!</span>")
+        return FALSE
+
+    D.AddSpell(new /obj/effect/proc_holder/spell/no_target/drone_boost())
+    installed = TRUE
+    D.uplink.points -= cost
+    return TRUE

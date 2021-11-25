@@ -3,6 +3,7 @@
 	real_name = "drone"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "repairbot"
+	var/eyes_overlay = "eyes-repairbot"
 	maxHealth = 15
 	health = 15
 	universal_speak = 0
@@ -43,7 +44,7 @@
 /mob/living/silicon/robot/drone/updateicon()
 	cut_overlays()
 	if(stat == CONSCIOUS)
-		add_overlay("eyes-[icon_state]")
+		add_overlay(eyes_overlay)
 	else
 		cut_overlay("eyes")
 
