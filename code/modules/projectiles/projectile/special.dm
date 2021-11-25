@@ -553,4 +553,6 @@
 	if(!P)
 		qdel(src)
 		return
+	if(istype(target, /obj/effect/portal/portalgun))
+		return
 	P.create_portal(src, get_turf(src))

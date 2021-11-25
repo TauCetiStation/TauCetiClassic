@@ -127,3 +127,13 @@
 
 /obj/effect/portal/portalgun
 	failchance = 0
+
+/obj/effect/portal/portalgun/Bumped(mob/M)
+	set waitfor = 0
+	teleport(M, TELE_CHECK_ALL, TRUE, FALSE)
+
+/obj/effect/portal/portalgun/Crossed(atom/movable/AM)
+	set waitfor = 0
+
+	. = .()
+	teleport(AM, TELE_CHECK_ALL, TRUE, FALSE)
