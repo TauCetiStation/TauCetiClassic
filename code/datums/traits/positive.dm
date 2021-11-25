@@ -1,20 +1,20 @@
 /datum/quirk/multitasking
 	name = QUIRK_MULTITASKING
-	desc = "You can do stuff with both of your hands simultaneously!"
+	desc = "Вы можете действовать обеими руками одновременно!"
 	value = 2
 	mob_trait = TRAIT_MULTITASKING
-	gain_text = "<span class='notice'>You feel confident in using both of your hands simultaneously.</span>"
-	lose_text = "<span class='danger'>You feel as if you lose the ability to multitask.</span>"
+	gain_text = "<span class='notice'>Вы чувствуете уверенность в том, что можете действовать двумя руками одновременно.</span>"
+	lose_text = "<span class='danger'>Вы чувствуете, что растеряли талант многозадачности.</span>"
 
 
 
 /datum/quirk/child_of_nature
 	name = QUIRK_CHILD_OF_NATURE
-	desc = "You feel as if you're one with nature. If you're nude animals do not attack you."
+	desc = "Вы едины с природой. Животные не будут атаковать вас, если вы разденетесь догола."
 	value = 2
 	mob_trait = TRAIT_NATURECHILD
-	gain_text = "<span class='notice'>You feel like you are one with nature.</span>"
-	lose_text = "<span class='danger'>You no more feel as if you're part of nature's plan.</span>"
+	gain_text = "<span class='notice'>Вы чуствуете единство с природой.</span>"
+	lose_text = "<span class='danger'>Ваша связь с природой нарушена.</span>"
 
 	req_species_flags = list(
 		IS_PLANT = TRUE,
@@ -30,11 +30,11 @@
 
 /datum/quirk/strong_mind
 	name = QUIRK_STRONG_MIND
-	desc = "You can distinguish between lies and truth of your consciousness."
+	desc = "Вы отличаете истину от лжи своего сознания."
 	value = 2
 	mob_trait = TRAIT_STRONGMIND
-	gain_text = "<span class='notice'>You feel confident in your sense.</span>"
-	lose_text = "<span class='danger'>You feel insecure about your consciousness.</span>"
+	gain_text = "<span class='notice'>Вы чувствуете уверенность в своём разуме.</span>"
+	lose_text = "<span class='danger'>Вы чувствуете ненадёжность своего сознания.</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -44,11 +44,11 @@
 
 /datum/quirk/alcohol_tolerance
 	name = QUIRK_ALCOHOL_TOLERANCE
-	desc = "You become drunk more slowly and suffer fewer drawbacks from alcohol."
+	desc = "Вы сложнее напиваетесь и легче переносите похмелье."
 	value = 1
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
-	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
-	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
+	gain_text = "<span class='notice'>Вы чувствуете, что вам и бочка пива будет по силе!</span>"
+	lose_text = "<span class='danger'>Вы больше не чувствуете себя стойким к алкоголю. Какая беда.</span>"
 
 	// Those are not affected by alcohol at all.
 	incompatible_species = list(SKRELL)
@@ -62,11 +62,11 @@
 
 /datum/quirk/freerunning
 	name = QUIRK_FREERUNNING
-	desc = "You're great at quick moves! You can climb objects more quickly."
+	desc = "Вы проворны как кошка! Вы залазите на различные объекты быстрее."
 	value = 2
 	mob_trait = TRAIT_FREERUNNING
-	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
-	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+	gain_text = "<span class='notice'>Вы ощущаете гибкость своих ног.</span>"
+	lose_text = "<span class='danger'>Вы снова чувствуете себя неуклюжим.</span>"
 
 	// They are slow as all hell.
 	incompatible_species = list(DIONA)
@@ -75,8 +75,8 @@
 
 /datum/quirk/light_step
 	name = QUIRK_LIGHT_STEP
-	desc = "You walk with a gentle step, never stepping on sharp objects or blood."
+	desc = "Вы ходите аккуратно и грациозно, никогда не наступая в лужи крови или грязь."
 	value = 2
 	mob_trait = TRAIT_LIGHT_STEP
-	gain_text = "<span class='notice'>You walk with a litheness.</span>"
-	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
+	gain_text = "<span class='notice'>У вас лёгкая поступь.</span>"
+	lose_text = "<span class='danger'>Вы начинаете топотать, как грязный варвар.</span>"

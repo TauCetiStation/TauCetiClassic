@@ -651,6 +651,9 @@ SUBSYSTEM_DEF(shuttle)
 	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
 
+/datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
+	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
+
 /obj/effect/bgstar
 	name = "star"
 	var/speed = 10

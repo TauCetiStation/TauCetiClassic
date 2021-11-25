@@ -159,9 +159,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldown = start_cooldown(action.button, charge_max)
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
+		cooldown.tick()
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)

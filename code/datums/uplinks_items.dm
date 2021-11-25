@@ -915,6 +915,12 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
+	
+/datum/uplink_item/implants/explosive
+	name = "Explosive Implant"
+	desc = "An implant, that explodes with different power when activated by a code word."
+	item = /obj/item/weapon/implanter/explosive
+	cost = 3
 
 // TELECRYSTALS
 
