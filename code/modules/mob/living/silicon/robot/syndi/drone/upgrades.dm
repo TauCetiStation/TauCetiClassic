@@ -119,6 +119,21 @@
         to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
         return FALSE
 
+/datum/drone_upgrade/internal/extra_armor
+    name = "Armor upgrade"
+    desc = "Additional armor plates help the drone to withstand more damage. It will even survive one laser shot!"
+    cost = 4
+    single_use = TRUE
+
+/datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install)
+        return FALSE
+
+    D.maxHealth += 20
+    installed = TRUE
+    D.uplink.points -= cost
+    return TRUE
+
 /datum/drone_upgrade/internal/speed_boost
     name = "Maneuverability booster"
     desc = "Speeds up your servos to increase your maneuverability for a short time. Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
