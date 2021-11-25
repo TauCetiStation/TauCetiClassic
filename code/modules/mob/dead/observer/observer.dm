@@ -559,6 +559,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	H.equipOutfit(/datum/outfit/velocity)
 	H.key = key
 
+#undef MAX_VELOCITY_OFFICERS
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
