@@ -1,15 +1,18 @@
 #define POWER_USAGE_MULTIPLIER 100
 #define BURN_DAMAGE_CAP 5
 
-/obj/effect/proc_holder/spell/no_target/drone_boost
+/obj/effect/proc_holder/spell/no_target/syndi_drone
+    panel = "Drone upgrades"
+    overlay_icon_state = "wiz_tech"
+    clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/no_target/syndi_drone/boost
     name = "Maneuverability boost"
     desc = ""
-    panel = "Drone upgrades"
     charge_max = 600
-    clothes_req = FALSE
     var/duration = 50
 
-/obj/effect/proc_holder/spell/no_target/drone_boost/cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/no_target/syndi_drone/boost/cast(list/targets, mob/user)
     if(!istype(user, /mob/living/silicon/robot/drone/))
         return
 

@@ -129,7 +129,7 @@
     if(!can_install)
         return FALSE
 
-    D.AddSpell(new /obj/effect/proc_holder/spell/no_target/drone_boost())
+    D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/boost())
     installed = TRUE
     D.uplink.points -= cost
     return TRUE
