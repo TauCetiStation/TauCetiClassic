@@ -14,5 +14,5 @@
 	if(is_alien_whitelisted(src, "ian") || (client.supporter && !is_alien_whitelisted_banned(src, "ian")))
 		verbs += /mob/dead/observer/proc/ianize
 
-	if(client in mentors)
+	if(ckey in global.mentor_ckeys)
 		verbs += /mob/dead/observer/proc/become_velocity_officer
