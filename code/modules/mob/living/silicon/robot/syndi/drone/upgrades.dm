@@ -92,6 +92,7 @@
         D.module.modules += new item_type(D.module)
 
     D.uplink.points -= cost
+    installed = TRUE
     return TRUE
 //========DEVICE AND TOOLS========
 /datum/drone_upgrade/device_tools
