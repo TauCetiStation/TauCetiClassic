@@ -154,6 +154,9 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		C.dust()
 	return
 
+/obj/singularity/energy_ball/update_icon(stage)
+	return
+
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
 	if(power < 1000)
