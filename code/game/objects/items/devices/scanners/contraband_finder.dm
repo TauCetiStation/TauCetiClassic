@@ -529,14 +529,14 @@ var/global/list/contraband_listings
 	P.update_icon()
 	P.updateinfolinks()
 
+	last_search_log = null
+
 	if(user.put_in_hands(P))
 		return
 	if(ismob(loc))
 		P.forceMove(loc.loc)
 	else
 		P.forceMove(loc)
-
-	last_search_log = null
 
 /obj/item/device/contraband_finder/proc/check_warrant(obj/item/weapon/paper/P, mob/living/user)
 	if(!dd_hasprefix(P.name, warrant_name))

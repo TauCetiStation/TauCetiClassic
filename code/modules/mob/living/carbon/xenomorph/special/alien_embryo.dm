@@ -137,7 +137,7 @@ This is emryo growth procs
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
 		// to 4, so we don't do a process heavy check everytime.
-		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN, IGNORE_LAVRA)
 
 		var/client/larva_candidate
 		if(candidates.len)

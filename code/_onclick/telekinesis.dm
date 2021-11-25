@@ -188,13 +188,13 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/check_path()
 	var/turf/ref = get_turf(src.loc)
 	var/turf/target = get_turf(focus.loc)
-	if(!ref || !target)	return 0
+	if(!ref || !target)	return FALSE
 	var/distance = get_dist(ref, target)
-	if(distance >= 10)	return 0
+	if(distance >= 10)	return FALSE
 	for(var/i = 1 to distance)
 		ref = get_step_to(ref, target, 0)
-	if(ref != target)	return 0
-	return 1
+	if(ref != target)	return FALSE
+	return TRUE
 */
 
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)

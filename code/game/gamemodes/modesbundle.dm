@@ -55,7 +55,7 @@
 
 /datum/modesbundle/mix
 	name = "Mix"
-	votable = TRUE
+	votable = FALSE
 
 /datum/modesbundle/mix/New()
 	for(var/type in subtypesof(/datum/game_mode/mix))

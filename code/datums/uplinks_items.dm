@@ -175,7 +175,7 @@
 
 /datum/uplink_item/dangerous/tommygun
 	name = "Tommygun"
-	desc = "Based on the classic 'Chicago Typewriter'. Uses 9mm rounds."
+	desc = "Based on the classic 'Chicago Typewriter'. Uses .45 ACP rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/tommygun
 	cost = 10
 	uplink_types = list("dealer")
@@ -212,12 +212,19 @@
 
 /datum/uplink_item/dangerous/a74
 	name = "A74 Assault Rifle"
-	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
+	desc = "An automatic assault rifle. Great for ranged combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
 	uplink_types = list("nuclear", "dealer")
 
 	need_wanted_level = 5
+
+/datum/uplink_item/dangerous/drozd
+	name = "Drozd OTs-114 Assault Carbine"
+	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/drozd
+	cost = 20
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -317,7 +324,7 @@
 	name = "Armor Set"
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
-	cost = 6
+	cost = 4
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/mine
@@ -375,8 +382,8 @@
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/tommygun
-	name = "9mm Tommygun Magazine"
-	desc = "A 50-round 9mm magazine for use in the tommygun."
+	name = ".45 ACP Tommygun Magazine"
+	desc = "A 50-round .45 ACP magazine for use in the tommygun."
 	item = /obj/item/ammo_box/magazine/tommygunm45
 	cost = 4
 	uplink_types = list("dealer")
@@ -449,6 +456,27 @@
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 14
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/drozd
+	name = "Ammo-12.7mm"
+	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
+	item = /obj/item/ammo_box/magazine/drozd127
+	cost = 4
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/grenade_launcher
+	name = "Ammo-40x46mm (explosive)"
+	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
+	item = /obj/item/ammo_casing/r4046/explosive
+	cost = 2
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/grenade_launcher_emp
+	name = "Ammo-40x46mm (EMP)"
+	desc = "A single grenade for use in underslung grenade launcher. This one creates EMP blast."
+	item = /obj/item/ammo_casing/r4046/chem/EMP
+	cost = 3
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/heavyrifle
@@ -696,6 +724,7 @@
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 10
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
@@ -885,6 +914,12 @@
 	name = "EMP Implant"
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
+	
+/datum/uplink_item/implants/explosive
+	name = "Explosive Implant"
+	desc = "An implant, that explodes with different power when activated by a code word."
+	item = /obj/item/weapon/implanter/explosive
 	cost = 3
 
 // TELECRYSTALS

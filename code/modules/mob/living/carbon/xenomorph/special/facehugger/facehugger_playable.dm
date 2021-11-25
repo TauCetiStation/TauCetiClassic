@@ -259,7 +259,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.shock_stage = 20
+			H.SetShockStage(20)
 			H.Weaken(1)
 			H.emote("scream")
 	else if(ismonkey(affecting))
@@ -359,7 +359,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
-	start_cooldown(hud, 3, CALLBACK(src, .proc/reset_cooldown))
+	start_cooldown(hud, 4, CALLBACK(src, .proc/reset_cooldown))
 	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
@@ -458,7 +458,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			start_cooldown(hud, 5, CALLBACK(src, .proc/reset_cooldown))
+			start_cooldown(hud, 6, CALLBACK(src, .proc/reset_cooldown))
 			on_cooldown = TRUE
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"
