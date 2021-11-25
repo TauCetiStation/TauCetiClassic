@@ -60,7 +60,7 @@
     var/desc = "upgrade description"
     var/list/items = null
     var/cost = 0
-    var/single_use = FALSE //whether it's possible to install this multiple times
+    var/single_use = TRUE //whether it's possible to install this multiple times
     var/installed = FALSE
 
 /datum/drone_upgrade/proc/can_install(mob/living/silicon/robot/drone/syndi/D, var/chat_warning = TRUE)
@@ -93,8 +93,85 @@
 
     D.uplink.points -= cost
     return TRUE
+//========DEVICE AND TOOLS========
+/datum/drone_upgrade/device_tools
+    category = "Device and tools"
 
-//==========UPGRADES==========
+/datum/drone_upgrade/device_tools/toolkit
+    name = "Toolkit"
+    desc = "Standard engineering toolkit. Magnetic gripper is included!"
+    cost = 5
+    items = list(
+        /obj/item/weapon/gripper,
+        /obj/item/weapon/screwdriver,
+	    /obj/item/weapon/wrench,
+	    /obj/item/weapon/weldingtool,
+	    /obj/item/weapon/crowbar/red,
+	    /obj/item/weapon/wirecutters,
+	    /obj/item/device/multitool
+    )
+
+/datum/drone_upgrade/device_tools/emag
+	name = "Cryptographic Sequencer"
+	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
+	items = list(/obj/item/weapon/card/emag)
+	cost = 8
+    single_use = FALSE
+
+/datum/drone_upgrade/device_tools/flash
+    name = "Flash"
+    desc = "Self-defence device used for blinding livebeings or stun cyborgs by overloading their optics. Has limited amount of uses."
+    items = list(/obj/item/device/flash)
+    cost = 5
+    single_use = FALSE
+
+/datum/drone_upgrade/device_tools/jetpack
+	name = "Jetpack"
+	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas."
+	items = list(/obj/item/weapon/tank/jetpack/carbondioxide)
+	cost = 7
+
+/datum/drone_upgrade/device_tools/hypo //mostly for nukeops to use as in-combat medical support unit
+	name = "Medical hypospray"
+	desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
+	items = list(/obj/item/weapon/reagent_containers/borghypo)
+	cost = 8
+
+/datum/drone_upgrade/device_tools/medhypo //the same as above
+	name = "Improved medical hypospray"
+	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
+	items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
+	cost = 12
+
+/datum/drone_upgrade/device_tools/plasmacutter
+	name = "Plasma cutter"
+	desc = "A rock cutter that uses bursts of hot plasma. Can be used to cut through walls."
+	items = list(/obj/item/weapon/pickaxe/plasmacutter)
+	cost = 7
+
+//========SURVEILLANCE AND OPTICS
+/datum/drone_upgrade/optics
+    category = "Surveillance and optics"
+
+/datum/drone_upgrade/optics/thermal
+    name = "Thermal scanners"
+    desc = "These scanners allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects."
+    cost = 4
+    items = list(/obj/item/borg/sight/thermal)
+
+/datum/drone_upgrade/optics/meson
+    name = "Optical meson scanners"
+    desc = "Used for seeing walls, floors, and stuff through anything."
+    cost = 2
+    items = list(/obj/item/borg/sight/meson)
+
+/datum/drone_upgrade/optics/night
+    name = "Night vision"
+    desc = "Special optical device for working in poorly lit areas."
+    cost = 2
+    items = list(/obj/item/borg/sight/night)
+
+//==========UPGRADES============
 /datum/drone_upgrade/internal
     category = "Chassis and internal upgrades"
 
@@ -123,7 +200,6 @@
     name = "Armor upgrade"
     desc = "Additional armor plates help the drone to withstand more damage. It will even survive one laser shot!"
     cost = 4
-    single_use = TRUE
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
     if(!can_install)
@@ -138,7 +214,6 @@
     name = "Maneuverability booster"
     desc = "Speeds up your servos to increase your maneuverability for a short time. Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
     cost = 4
-    single_use = TRUE
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
     if(!can_install)
