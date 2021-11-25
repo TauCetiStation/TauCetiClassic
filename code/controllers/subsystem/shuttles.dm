@@ -203,34 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				var/list/dstturfs = list()
-				var/throwy = world.maxy
-
-				for(var/turf/T in end_location)
-					dstturfs += T
-					if(T.y < throwy)
-						throwy = T.y
-					CHECK_TICK
-
-				// hey you, get out of the way!
-				for(var/turf/T in dstturfs)
-					// find the turf to move things to
-					var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
-					for(var/atom/movable/AM as mob|obj in T)
-						AM.Move(D)
-
-					if(istype(T, /turf/simulated) || T.is_catwalk())
-						qdel(T)
-					CHECK_TICK
-
-				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
-					bug.gib()
-					CHECK_TICK
-
-				for(var/mob/living/simple_animal/pest in end_location) // And for the other kind of bug...
-					pest.gib()
-					CHECK_TICK
+				clean_arriving_area(end_location)
 
 				start_location.move_contents_to(end_location)
 
@@ -366,6 +339,32 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			return TRUE
 
+/**
+ * Cleans passed area, gibs any mob inside area, unachored movable gets moved, everything else will be qdeled
+ *
+ * vars:
+ * * arriving_area (required) area that is gonna get used in proc
+ */
+/datum/controller/subsystem/shuttle/proc/clean_arriving_area(area/arriving_area)
+	var/throw_y = world.maxy
+	for(var/turf/turf_to_check in arriving_area)
+		if(turf_to_check.y < throw_y)
+			throw_y = turf_to_check.y
+		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
+		for(var/i in turf_to_check.contents)
+			var/atom/movable/thing = i
+			if(isliving(thing))
+				var/mob/living/mob_to_gib = thing
+				mob_to_gib.gib()
+			else
+				if(istype(thing, /obj/singularity))
+					continue
+				if(!thing.anchored)
+					thing.Move(target_turf)
+				else
+					qdel(thing)
+			CHECK_TICK
+
 /datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
@@ -448,10 +447,7 @@ SUBSYSTEM_DEF(shuttle)
 			at_station = 1
 	moving = 0
 
-	//Do I really need to explain this loop?
-	for(var/mob/living/unlucky_person in the_shuttles_way)
-		unlucky_person.gib()
-		CHECK_TICK
+	clean_arriving_area(the_shuttles_way)
 
 	from.move_contents_to(dest)
 
