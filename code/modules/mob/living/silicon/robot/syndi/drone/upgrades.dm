@@ -83,7 +83,7 @@
 
 
 /datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install())
+    if(!can_install(D))
         return FALSE
 
     if(!items.len)
@@ -181,7 +181,7 @@
     cost = 2
 
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install())
+    if(!can_install(D))
         return FALSE
 
     to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
@@ -202,7 +202,7 @@
     cost = 4
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install())
+    if(!can_install(D))
         return FALSE
 
     D.maxHealth += 20
@@ -216,7 +216,7 @@
     cost = 4
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!can_install())
+    if(!can_install(D))
         return FALSE
 
     D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/boost())
