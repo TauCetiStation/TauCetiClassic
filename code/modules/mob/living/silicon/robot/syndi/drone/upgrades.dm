@@ -26,7 +26,7 @@
         if(upgrade.category != category)
             dat += "<b>[upgrade.category]</b><br>"
             category = upgrade.category
-        if(upgrade.cost <= points && !(upgrade.single_use && upgrade.installed))
+        if(upgrade.can_install(user, FALSE))
             dat += "<A href='byond://?src=\ref[src];buy_item=[i];'>[upgrade.name]</A> [upgrade.cost] "
         else
             dat += "<span class='disabled'>[upgrade.name] [upgrade.cost]</span>"
@@ -63,14 +63,34 @@
     var/single_use = FALSE //whether it's possible to install this multiple times
     var/installed = FALSE
 
-/datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
-    if(!items.len)
-        return FALSE
+/datum/drone_upgrade/proc/can_install(mob/living/silicon/robot/drone/syndi/D, var/chat_warning = TRUE)
     if(D.stat == DEAD)
-        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+        if(chat_warning)
+            to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+        return FALSE
+
+    if(cost > D.uplink.points)
+        if(chat_warning)
+            to_chat(D, "<span class='warning'>You have insufficient TK for upgrade!</span>")
+        return FALSE
+
+    if(single_use && installed)
+        if(chat_warning)
+            to_chat(D, "<span class='warning'>You can't install this upgrade twice!</span>")
+        return FALSE
+
+    return TRUE
+
+
+/datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install)
+        return FALSE
+
+    if(!items.len)
         return FALSE
     for(var/item_type in items)
         D.module.modules += new item_type(D.module)
+
     D.uplink.points -= cost
     return TRUE
 
@@ -84,9 +104,9 @@
     cost = 2
 
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
-    if(D.stat == DEAD)
-        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
+    if(!can_install)
         return FALSE
+
     to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
     var/list/drone_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate drone. Would you like to play as one?", ROLE_OPERATIVE)
     if(drone_candicates.len)
@@ -102,15 +122,11 @@
 /datum/drone_upgrade/internal/speed_boost
     name = "Maneuverability booster"
     desc = "Speeds up your servos to increase your maneuverability for a short time. Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
-    cost = 3
+    cost = 4
     single_use = TRUE
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
-    if(D.stat == DEAD)
-        to_chat(D, "<span class='warning'>You can't be upgraded while you're dead!</span>")
-        return FALSE
-    if(installed)
-        to_chat(D, "<span class='warning'>You can't install this upgrade twice!</span>")
+    if(!can_install)
         return FALSE
 
     D.AddSpell(new /obj/effect/proc_holder/spell/no_target/drone_boost())
