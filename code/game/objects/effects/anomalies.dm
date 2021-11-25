@@ -49,6 +49,19 @@
 	pixel_x = -100
 	pixel_y = -100
 
+/atom/movable/warp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("warp_blure", 1, gauss_blur_filter(4))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/warp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/warp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix())
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
@@ -72,7 +85,7 @@
 	QDEL_NULL(warp)
 	return ..()
 
-/obj/effect/anomaly/grav/anomalyEffect(delta_time)
+/obj/effect/anomaly/grav/anomalyEffect()
 	..()
 
 	boing = 1
@@ -81,10 +94,6 @@
 			step_towards(O,src)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
-
-	//anomaly quickly contracts then slowly expands it's ring
-	animate(warp, time = delta_time * 3, transform = matrix().Scale(0.5, 0.5))
-	animate(time = delta_time * 7, transform = matrix())
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
