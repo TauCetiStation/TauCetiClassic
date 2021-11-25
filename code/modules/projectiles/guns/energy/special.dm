@@ -474,6 +474,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
 	modifystate = 0
+	can_suicide_with = FALSE
 
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
