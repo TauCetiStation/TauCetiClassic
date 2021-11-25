@@ -428,8 +428,6 @@ var/global/list/contraband_listings
 
 	var/list/last_search_log
 
-	var/test
-
 /obj/item/device/contraband_finder/atom_init()
 	. = ..()
 
@@ -449,8 +447,6 @@ var/global/list/contraband_listings
 	vis_contents += screen
 
 	reset_color()
-
-	test = global.contraband_listings[contraband_listing]
 
 /obj/item/device/contraband_finder/Destroy()
 	set_item_image(null)
