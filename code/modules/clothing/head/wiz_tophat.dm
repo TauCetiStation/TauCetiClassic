@@ -292,7 +292,7 @@ var/global/list/tophats_list = list()
 	return FALSE
 
 /obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
-	..()
+	. = ..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)
 

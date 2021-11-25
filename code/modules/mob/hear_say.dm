@@ -117,7 +117,7 @@
 	if(vname)
 		speaker_name = vname
 
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
@@ -137,7 +137,7 @@
 
 	var/changed_voice
 
-	if(istype(src, /mob/living/silicon/ai) && !hard_to_hear)
+	if(isAI(src) && !hard_to_hear)
 		var/jobname // the mob's "job"
 		var/mob/living/carbon/human/impersonating //The crewmember being impersonated, if any.
 
@@ -159,30 +159,37 @@
 
 		else if (iscarbon(speaker)) // Nonhuman carbon mob
 			jobname = "No id"
-		else if (isAI(speaker))
+		else if (isAI(speaker) || isautosay(speaker))
 			jobname = "AI"
 		else if (isrobot(speaker))
 			jobname = "Cyborg"
-		else if (istype(speaker, /mob/living/silicon/pai))
+		else if (ispAI(speaker))
 			jobname = "Personal AI"
 		else
 			jobname = "Unknown"
 
-		if(speaker.mouse_opacity && (speaker.alpha > 50))
-			if(changed_voice)
-				if(impersonating)
-					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+		if(isautosay(speaker))
+			var/turf/T = get_turf(speaker)
+			track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
+		else
+			if(speaker.mouse_opacity && (speaker.alpha > 50))
+				if(changed_voice)
+					if(impersonating)
+						track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+					else
+						track = "[speaker_name] ([jobname])"
 				else
-					track = "[speaker_name] ([jobname])"
-			else
-				track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
+					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
 
-	if(istype(src, /mob/dead/observer))
-		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
-			speaker_name = "[speaker.real_name] ([speaker_name])"
-		if(isAI(speaker))
-			var/mob/living/silicon/ai/S = speaker
-			speaker = S.eyeobj
+	if(isobserver(src))
+		if(isautosay(speaker))
+			speaker_name = speaker.real_name
+		else
+			if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
+				speaker_name = "[speaker.real_name] ([speaker_name])"
+			if(isAI(speaker))
+				var/mob/living/silicon/ai/S = speaker
+				speaker = S.eyeobj
 
 		var/track_button
 		var/turf/T = get_turf(speaker)

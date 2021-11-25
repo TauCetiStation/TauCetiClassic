@@ -1,6 +1,9 @@
 /datum/religion_rites/instant/cult
 	religion_type = /datum/religion/cult
 
+/datum/religion_rites/instant/chaplain
+	religion_type = /datum/religion/chaplain
+
 /datum/religion_rites/instant/cult/sacrifice
 	name = "Жертвоприношение"
 	desc = "Душа для древнего бога."
@@ -542,9 +545,10 @@
 		return FALSE
 
 	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
-		qdel(tome)
 		for(var/i in 1 to divine_power)
-			religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+			var/obj/item/weapon/storage/bible/tome/upgraded/upgr = new(AOG.loc)
+			upgr.religion = tome.religion
+		qdel(tome)
 
 	return TRUE
 

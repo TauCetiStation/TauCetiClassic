@@ -77,8 +77,8 @@
 				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
-				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
-				entity = B.deity_name
+				entity = pick(B.religion.deity_names)
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [entity] possesess \the [src].</span>")
 				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I

@@ -17,6 +17,8 @@
 	power_stored = min(power_stored, 100)
 	icon_state = "particles_battery[round(power_stored, 25)]"
 
+#define COOLDOWN_TIME 5 
+
 /obj/item/weapon/xenoarch_utilizer
 	name = "Exotic particles power utilizer"
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
@@ -54,19 +56,20 @@
 
 	var/dat = "<b>Exotic Particles Energy Utilizer</b><br>"
 	if(inserted_battery)
-		if(cooldown)
-			dat += "Cooldown in progress, please wait.<br>"
-		else if(activated)
+		if(activated)
+			dat += "Device active"
 			if(timing)
-				dat += "Device active.<br>"
+				dat += " in timed mode.<br>"
 			else
-				dat += "Device active in timed mode.<br>"
+				dat += ".<br>"
+		else
+			dat += "Device is inactive.<br>"
 
 		dat += "[inserted_battery] inserted, exotic wave ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
 		dat += "<b>Total Power:</b> [round(inserted_battery.stored_charge, 1)]/[inserted_battery.capacity]<BR><BR>"
 		dat += "<b>Timed activation:</b> <A href='?src=\ref[src];neg_changetime_max=-100'>--</a> <A href='?src=\ref[src];neg_changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime_max=100'>++</a><BR>"
 		if(cooldown)
-			dat += "<font color=red>Cooldown in progress.</font><BR>"
+			dat += "<font color=red>Cooldown in progress, please wait.</font><BR>"
 			dat += "<br>"
 		else if(!activated && world.time >= cooldown_to_start)
 			dat += "<A href='?src=\ref[src];startup=1'>Start</a><BR>"
@@ -100,36 +103,33 @@
 		if(cooldown <= 0)
 			cooldown = 0
 			visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
-	else if(activated)
-		if(inserted_battery && inserted_battery.battery_effect)
-			// make sure the effect is active
-			if(!inserted_battery.battery_effect.activated)
-				inserted_battery.battery_effect.ToggleActivate(TRUE)
+	else if(activated && inserted_battery?.battery_effect)
+		// make sure the effect is active
+		if(!inserted_battery.battery_effect.activated)
+			inserted_battery.battery_effect.ToggleActivate(TRUE)
 
-			// update the effect loc
-			var/turf/T = get_turf(src)
-			if(T != archived_loc)
-				archived_loc = T
-				inserted_battery.battery_effect.UpdateMove()
+		// update the effect loc
+		var/turf/T = get_turf(src)
+		if(T != archived_loc)
+			archived_loc = T
+			inserted_battery.battery_effect.UpdateMove()
 
-			// process the effect
-			inserted_battery.battery_effect.process()
-			// if someone is holding the device, do the effect on them
-			if(inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
-				inserted_battery.battery_effect.DoEffectTouch(src.loc)
+		// process the effect
+		inserted_battery.battery_effect.process()
+		// if someone is holding the device, do the effect on them
+		if(inserted_battery.battery_effect.release_method == ARTIFACT_EFFECT_TOUCH && ismob(src.loc))
+			inserted_battery.battery_effect.DoEffectTouch(src.loc)
 
-			// handle charge
-			inserted_battery.stored_charge -= 1
-			if(inserted_battery.stored_charge <= 0)
+		// handle charge
+		inserted_battery.stored_charge -= 1
+		if(inserted_battery.stored_charge <= 0)
+			shutdown_emission()
+
+		// handle timed mode
+		if(timing)
+			time -= 1
+			if(time <= 0)
 				shutdown_emission()
-
-			// handle timed mode
-			if(timing)
-				time -= 1
-				if(time <= 0)
-					shutdown_emission()
-		else
-			shutdown()
 
 /obj/item/weapon/xenoarch_utilizer/proc/shutdown_emission()
 	if(activated)
@@ -137,7 +137,7 @@
 		timing = FALSE
 		visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
 
-		cooldown = archived_time / 2
+		cooldown = COOLDOWN_TIME
 
 	inserted_battery.battery_effect.turn_effect_off()
 	updateDialog()
@@ -186,7 +186,7 @@
 			inserted_battery.battery_effect.ToggleActivate(TRUE)
 	if(href_list["shutdown"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-		activated = FALSE
+		shutdown_emission()
 	if(href_list["starttimer"])
 		timing = TRUE
 		archived_time = time
@@ -242,3 +242,5 @@
 
 	if(inserted_battery.battery_effect)
 		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.log_name]) ")
+
+#undef COOLDOWN_TIME
