@@ -299,3 +299,11 @@
 
 /obj/effect/landmark/blockway
 	density = TRUE
+
+/obj/effect/landmark/velocity_officer_spawn
+	name = "Velocity Officer"
+
+/obj/effect/landmark/velocity_officer_spawn/atom_init(mapload)
+	..()
+	global.velocityofficerstart += loc
+	return INITIALIZE_HINT_QDEL

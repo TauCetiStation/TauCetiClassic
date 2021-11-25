@@ -350,6 +350,7 @@
 #include "code\datums\outfits\jobs\science.dm"
 #include "code\datums\outfits\jobs\security.dm"
 #include "code\datums\outfits\misc\arena.dm"
+#include "code\datums\outfits\misc\velocity.dm"
 #include "code\datums\spells\area_teleport.dm"
 #include "code\datums\spells\barnyardcurse.dm"
 #include "code\datums\spells\charge.dm"

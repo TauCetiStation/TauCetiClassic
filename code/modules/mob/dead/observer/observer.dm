@@ -1,5 +1,7 @@
 var/global/list/image/ghost_sightless_images = list() //this is a list of images for things ghosts should still be able to see even without ghost sight
 
+var/global/velocity_officers_count = 0
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -522,6 +524,41 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
+#define MAX_VELOCITY_OFFICERS 2
+/mob/dead/observer/proc/become_velocity_officer()
+	set name = "Become Velocity Officer"
+	set category = "Ghost"
+
+	if(!abandon_allowed)
+		to_chat(src, "<span class='notice'>Respawn is disabled.</span>")
+		return
+
+	if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
+		return
+
+	if(!SSticker.mode)
+		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
+		return
+
+	if(global.velocity_officers_count >= MAX_VELOCITY_OFFICERS)
+		to_chat(src, "<span class='notice'>There are already enough Velocity Officers.</span>")
+		return
+
+	var/response = tgui_alert(src, "Wanna teach some newbies?","Do you want to be Velocity Officer?", list("Yes!","Nope!"))
+	if(response != "Yes!")
+		return
+
+	global.velocity_officers_count++
+
+	var/spawnloc = pick(velocityofficerstart)
+
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(spawnloc)
+	var/new_name = sanitize_safe(input(src, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	client.create_human_apperance(H, new_name)
+	H.equipOutfit(/datum/outfit/velocity)
+	H.key = key
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
@@ -617,7 +654,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	update_sight()
-	
+
 
 /mob/dead/observer/update_sight()
 	if (!ghostvision)

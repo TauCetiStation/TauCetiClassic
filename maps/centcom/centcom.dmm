@@ -387,7 +387,6 @@
 	},
 /area/velocity)
 "aaI" = (
-/obj/structure/centcom_barrier,
 /obj/structure/mirror/magic{
 	pixel_x = 30
 	},
@@ -5774,7 +5773,6 @@
 	pixel_x = 32;
 	req_access = list(101)
 	},
-/obj/structure/centcom_barrier,
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills{
 	req_access = list(101);
@@ -6428,6 +6426,9 @@
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
 	},
+/obj/machinery/door/poddoor{
+	id = "velocity_shutters_north"
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6540,7 +6541,6 @@
 	},
 /area/velocity)
 "atU" = (
-/obj/structure/centcom_barrier,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -30
 	},
@@ -6549,17 +6549,23 @@
 	},
 /area/velocity)
 "atV" = (
-/obj/structure/centcom_barrier,
+/obj/effect/landmark/velocity_officer_spawn,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 1;
+	icon_state = "bluefull"
 	},
 /area/velocity)
 "atW" = (
-/obj/structure/centcom_barrier,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/machinery/door_control{
+	id = "velocity_shutters_north";
+	name = "Shutters Control";
+	pixel_y = -32;
+	req_access = list(101)
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7713,6 +7719,9 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
 	},
+/obj/machinery/door/poddoor{
+	id = "velocity_shutters_south"
+	},
 /turf/unsimulated/floor{
 	icon_state = "bot"
 	},
@@ -7723,16 +7732,14 @@
 /area/space)
 "ayv" = (
 /obj/structure/closet/wardrobe/red,
-/obj/structure/centcom_barrier,
+/obj/machinery/door_control{
+	id = "velocity_shutters_south";
+	name = "Shutters Control";
+	pixel_y = 32;
+	req_access = list(101)
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
-	},
-/area/velocity)
-"ayw" = (
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "bluefull"
 	},
 /area/velocity)
 "ayx" = (
@@ -7927,7 +7934,6 @@
 /obj/structure/closet/emcloset{
 	pixel_x = 7
 	},
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8240,12 +8246,14 @@
 	},
 /area/velocity)
 "aAc" = (
-/obj/effect/landmark/start{
-	name = "Velocity Officer"
+/obj/machinery/door_control{
+	id = "velocity_shutters_north";
+	name = "Shutters Control";
+	pixel_y = 32;
+	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "bluefull"
+	icon_state = "floor"
 	},
 /area/velocity)
 "aAd" = (
@@ -18562,26 +18570,30 @@
 /turf/simulated/shuttle/plating,
 /area/space)
 "dxb" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+/obj/machinery/door_control{
+	id = "velocity_shutters_south";
+	name = "Shutters Control";
+	pixel_y = -32;
+	req_access = list(101)
 	},
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warnwhite"
+	icon_state = "floor"
 	},
 /area/velocity)
 "dyb" = (
-/obj/structure/centcom_barrier,
+/obj/effect/landmark/trololo,
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
+/obj/machinery/door/poddoor{
+	id = "velocity_shutters_south"
+	},
 /turf/unsimulated/floor{
-	icon_state = "hydrofloor"
+	icon_state = "floor"
 	},
 /area/velocity)
 "dzb" = (
 /obj/structure/closet/l3closet/security,
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "warnwhite"
@@ -18590,6 +18602,9 @@
 "dAb" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/landmark/trololo,
+/obj/machinery/door/poddoor{
+	id = "velocity_shutters_north"
+	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -19432,7 +19447,6 @@
 	},
 /area/velocity)
 "feb" = (
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brownold"
@@ -72943,7 +72957,7 @@ aoo
 atK
 atU
 aoo
-arZ
+aAc
 arZ
 dLb
 dTb
@@ -73198,7 +73212,7 @@ asE
 asE
 aao
 arZ
-atV
+arZ
 aty
 arZ
 aap
@@ -73216,17 +73230,17 @@ axS
 axY
 aaq
 arZ
-aty
-ayw
+dyb
+ayA
 ayA
 ayA
 ayn
 ayA
 ayA
 ayA
-aAc
-aAc
-aAc
+atV
+atV
+atV
 aao
 eNb
 fPb
@@ -73729,7 +73743,7 @@ arZ
 axS
 aoo
 ayh
-arZ
+dxb
 aoo
 atM
 aaL
@@ -74226,7 +74240,7 @@ cJb
 aoo
 dnb
 dtb
-dxb
+dnb
 aoo
 aut
 dGb
@@ -74483,7 +74497,7 @@ cGb
 aao
 arZ
 arZ
-dyb
+cGb
 dAb
 arZ
 dGb
