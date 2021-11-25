@@ -386,14 +386,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"aaI" = (
-/obj/structure/mirror/magic{
-	pixel_x = 30
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/velocity)
 "aaJ" = (
 /obj/structure/sign/velocity_overlay/reklama/soda_ad{
 	pixel_x = 3;
@@ -16954,6 +16946,7 @@
 	dock_tag = "velocity_officer";
 	name = "Velocity Shuttle"
 	},
+/obj/machinery/door/poddoor,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -73494,7 +73487,7 @@ ayI
 aoo
 azg
 feb
-aaI
+arZ
 aar
 aas
 aar
