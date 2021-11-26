@@ -150,7 +150,7 @@
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = max(1, min(amount, max_amount))
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
@@ -191,7 +191,7 @@
 	return ..()
 
 /obj/item/stack/medical/ointment/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = max(1, min(amount, max_amount))
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
@@ -232,7 +232,8 @@
 	repeating = TRUE
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = max(1, min(amount, max_amount))
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -296,7 +297,8 @@
 
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = max(1, min(amount, max_amount))
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -392,7 +394,8 @@
 	repeating = FALSE
 
 /obj/item/stack/medical/suture/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = max(1, min(amount, max_amount))
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/suture/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))

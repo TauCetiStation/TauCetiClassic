@@ -87,6 +87,9 @@
 			W.afterattack(A, src, 1, params)
 		return
 
+	if(!check_stackable_item(W))
+		return
+
 	if(!isturf(loc))
 		return
 
@@ -95,9 +98,34 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
+				if(istype(W, /obj/item/weapon/card/emag))
+					var/obj/item/weapon/card/emag/E = W
+					if(E.uses < 2)
+						//A bit hacky way to not delete emag on afterattack
+						E.uses += 1
+						W.afterattack(A, src, 1, params)
+
+						//Delete used emag
+						u_equip(E)
+						module.modules -= E
+						E.emag_break(src)
+
+						//Add junk to the borg's module
+						var/obj/item/weapon/card/emag_broken/junk = new(module)
+						module.modules += junk
+						junk.add_fingerprint(src)
+						hud_used.update_robot_modules_display()
+						return
 				W.afterattack(A, src, 1, params)
-		else
-			W.afterattack(A, src, 0, params)
+			return
+		W.afterattack(A, src, 0, params)
+
+/mob/living/silicon/robot/proc/check_stackable_item(obj/item/I)
+	if(istype(I, /obj/item/stack))
+		var/obj/item/stack/S = I
+		if(S.amount < 1)
+			return FALSE
+	return TRUE
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
