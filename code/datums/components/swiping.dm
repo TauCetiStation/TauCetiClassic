@@ -304,7 +304,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -399,7 +399,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))

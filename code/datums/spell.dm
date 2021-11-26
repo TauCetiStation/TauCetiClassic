@@ -59,10 +59,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		if(try_start)
 			to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
-		return 0
+		return FALSE
 
 	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
-		return 0
+		return FALSE
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -70,48 +70,48 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(charge_counter < charge_max)
 					if(try_start)
 						to_chat(user, "[name] is still recharging.")
-					return 0
+					return FALSE
 			if("charges")
 				if(!charge_counter)
 					if(try_start)
 						to_chat(user, "[name] has no charges left.")
-					return 0
+					return FALSE
 
 		if(favor_cost > 0 && user.mind.holy_role)
 			if(user.my_religion.favor < favor_cost)
 				if(try_start)
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
-				return 0
+				return FALSE
 
 	if(user.stat && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
-		return 0
+		return FALSE
 
 	if(ishuman(user) || ismonkey(user))
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			if(try_start)
 				user.say("Mmmf mrrfff!")
-			return 0
+			return FALSE
 
 	if(clothes_req) //clothes check
 		if(!ishuman(user))
 			if(try_start)
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/H = user
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
-			return 0
+			return FALSE
 		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
-			return 0
+			return FALSE
 		if(!is_type_in_typecache(H.head, casting_clothes))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my hat.")
-			return 0
+			return FALSE
 
 	if(try_start && !skipcharge)
 		switch(charge_type)
@@ -125,7 +125,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(favor_cost > 0 && user.mind.holy_role)
 			user.my_religion.adjust_favor(-favor_cost)  //steals favor from spells per favor
 
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
@@ -153,15 +153,17 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldown = start_cooldown(action.button, charge_max)
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
+		cooldown.tick()
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)
