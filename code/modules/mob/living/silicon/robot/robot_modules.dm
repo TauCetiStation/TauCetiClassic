@@ -330,7 +330,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
-	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)

@@ -84,15 +84,8 @@
 	..()
 
 /obj/item/weapon/card/emag/proc/emag_break(mob/user)
-	if(isrobot(user))
-		var/mob/living/silicon/robot/R = user
-		if(loc == R || loc == R.module)
-			R.module.remove_module_item(src)
-			var/obj/item/weapon/card/emag_broken/junk = new(R.module)
-			R.module.add_module_item(junk)
-	else
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
+	var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+	junk.add_fingerprint(user)
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	qdel(src)
 

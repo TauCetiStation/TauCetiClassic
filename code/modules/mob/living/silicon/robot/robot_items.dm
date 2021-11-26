@@ -167,3 +167,17 @@
 		else
 			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
 	..()
+
+/obj/item/weapon/card/emag/borg
+	name = "robotic cryptographic sequencer"
+
+/obj/item/weapon/card/emag/borg/emag_break(mob/user)
+	var/mob/living/silicon/robot/R = user
+	if(loc == R || loc == R.module)
+		R.module.remove_module_item(src)
+		var/obj/item/weapon/card/emag_broken/junk = new(R.module)
+		R.module.add_module_item(junk)
+		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+		qdel(src)
+		return
+	return ..()
