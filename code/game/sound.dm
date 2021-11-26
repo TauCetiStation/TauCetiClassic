@@ -16,7 +16,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /turf
 	var/sound_coefficient = 1.0
 
-/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE, varylow = 0.8, varyhigh = 1.2)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
 
@@ -40,7 +40,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
 
 //todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
-/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE, varylow = 0.8, varyhigh = 1.2)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
 
@@ -56,13 +56,13 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
 	S.frequency = 1
-	
+
 	if(frequency)
 		S.frequency = frequency
 	if(playsound_frequency_admin)
 		S.frequency *= playsound_frequency_admin
 	if(vary)
-		S.frequency *= rand(8, 12) * 0.1
+		S.frequency *= varylow + rand() * (varyhigh - varylow)
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
@@ -132,7 +132,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	but still keep ability to resume admin music on the fly mid position
 	*/
 
-	if(!vol && volume_channel != VOL_ADMIN) 
+	if(!vol && volume_channel != VOL_ADMIN)
 		return
 
 	var/sound/S
