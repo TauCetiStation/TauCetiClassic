@@ -75,6 +75,20 @@
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
+		if(uses < 2 && isrobot(user))
+			var/mob/living/silicon/robot/R = user
+
+			//Delete used emag
+			R.u_equip(E)
+			R.module.modules -= src
+			emag_break(user)
+
+			//Add junk emag to the borg's module
+			var/obj/item/weapon/card/emag_broken/junk = new(R.module)
+			R.module.modules += junk
+			junk.add_fingerprint(user)
+			R.hud_used.update_robot_modules_display()
+			return
 		uses--
 
 	if(uses < 1)
