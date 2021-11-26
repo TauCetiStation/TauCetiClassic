@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	for(var/mob/dead/new_player/player as anything in new_player_list)
-		if(player?.spawning)
+		if(player.spawning)
 			qdel(player)
 
 	current_state = GAME_STATE_PLAYING
