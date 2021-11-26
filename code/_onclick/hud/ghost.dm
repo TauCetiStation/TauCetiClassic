@@ -84,9 +84,9 @@
 
 /datum/hud/ghost/show_hud(version = 0)
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	if(!mymob.client)
-		return 0
+		return FALSE
 
 	if(version)
 		hud_version = version
@@ -100,3 +100,4 @@
 		else
 			hud_shown = FALSE
 			mymob.client.screen -= adding
+	return TRUE
