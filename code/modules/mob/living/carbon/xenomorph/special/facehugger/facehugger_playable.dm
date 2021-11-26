@@ -108,7 +108,6 @@
 
 	put_in_active_hand(G)
 
-	C.grabbed_by += G
 	G.synch()
 	C.LAssailant = src
 
@@ -363,7 +362,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
-	affecting.grabbed_by += src
 	synch()
 	affecting.LAssailant = assailant
 	assailant.update_hud()
