@@ -79,7 +79,7 @@
 			var/mob/living/silicon/robot/R = user
 
 			//Delete used emag
-			R.u_equip(E)
+			R.u_equip(src)
 			R.module.modules -= src
 			emag_break(user)
 
