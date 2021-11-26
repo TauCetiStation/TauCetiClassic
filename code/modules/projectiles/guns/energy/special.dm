@@ -159,7 +159,7 @@
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
-	AddComponent(/datum/component/zoom, 12, TRUE, 8)
+	AddComponent(/datum/component/zoom, 12, FALSE, 8)
 
 /obj/item/weapon/gun/energy/sniperrifle/attack_self(mob/user)
 	SEND_SIGNAL(src, COMSIG_ZOOM_TOGGLE, user)

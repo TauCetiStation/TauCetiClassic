@@ -15,7 +15,7 @@
 
 /obj/item/weapon/gun/projectile/heavyrifle/atom_init()
 	. = ..()
-	AddComponent(/datum/component/zoom, 10, TRUE, 7)
+	AddComponent(/datum/component/zoom, 8, TRUE, 7)
 
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	if(bolt_open)
