@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/in_hand/Click()
 	if(cast_check())
 		cast()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
 	return (!user.lying && ..())
