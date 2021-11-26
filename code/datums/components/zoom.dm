@@ -6,19 +6,21 @@
 
 /datum/action/zoom/Activate()
 	SEND_SIGNAL(target, COMSIG_ZOOM_TOGGLE, owner)
-	
+
 /datum/component/zoom
 	var/zoom_view_range
 	var/can_move
 	var/mob/zoomer
 	var/datum/action/zoom/button
+	var/tileoffset
 
-/datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
+/datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE, _tileoffset = 6)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	zoom_view_range = _zoom_view_range
 	can_move = _can_move
+	tileoffset = _tileoffset
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING), .proc/on_drop)
 	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_zoom)
@@ -57,7 +59,7 @@
 	else
 		reset_zoom()
 	to_chat(user, "<font color='[zoomer ? "notice" : "rose"]'>Zoom mode [zoomer ? "en" : "dis"]abled.</font>")
-	
+
 /datum/component/zoom/proc/reset_zoom()
 	SIGNAL_HANDLER
 	if(!zoomer)
@@ -67,6 +69,9 @@
 		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
 	zoomer.client?.change_view(world.view)
 	zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
+	if(zoomer.client)
+		zoomer.client.pixel_x = 0
+		zoomer.client.pixel_y = 0
 	zoomer = null
 
 /datum/component/zoom/proc/set_zoom(mob/user)
@@ -74,6 +79,22 @@
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
+	var/tilesize = 32
+	var/viewoffset = tilesize * tileoffset
+
+	switch(zoomer.dir)
+		if(NORTH)
+			zoomer.client.pixel_x = 0
+			zoomer.client.pixel_y = viewoffset
+		if(SOUTH)
+			zoomer.client.pixel_x = 0
+			zoomer.client.pixel_y = -viewoffset
+		if(EAST)
+			zoomer.client.pixel_x = viewoffset
+			zoomer.client.pixel_y = 0
+		if(WEST)
+			zoomer.client.pixel_x = -viewoffset
+			zoomer.client.pixel_y = 0
 	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
 	if(!can_move)
 		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), .proc/reset_zoom)

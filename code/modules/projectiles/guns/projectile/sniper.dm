@@ -13,6 +13,10 @@
 	can_be_holstered = FALSE
 	var/bolt_open = 0
 
+/obj/item/weapon/gun/projectile/heavyrifle/atom_init()
+	. = ..()
+	AddComponent(/datum/component/zoom, 10, TRUE, 7)
+
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	if(bolt_open)
 		icon_state = "heavyrifle-open"
