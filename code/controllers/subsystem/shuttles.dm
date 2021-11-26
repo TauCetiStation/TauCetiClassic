@@ -431,24 +431,20 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
 	var/area/dest
-	var/area/the_shuttles_way
 	switch(at_station)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			the_shuttles_way = from
 			undock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			the_shuttles_way = dest
 			dock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 1
 	moving = 0
 
-	clean_arriving_area(the_shuttles_way)
-
+	clean_arriving_area(dest)
 	from.move_contents_to(dest)
 
 //Check whether the shuttle is allowed to move
