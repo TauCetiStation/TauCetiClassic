@@ -174,7 +174,7 @@
 
 /datum/religion_rites/instant/cult/raise_torture
 	name = "Воскрешение"
-	desc = "Взрывает случайное существ на столах пыток, но возрождает человека на алтаре."
+	desc = "Уничтожает существ на столах пыток, но возрождает человека на алтаре."
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
 	favor_cost = 300
