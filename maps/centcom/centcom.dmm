@@ -85,9 +85,6 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/taser,
-/obj/item/weapon/gun/energy/taser,
-/obj/item/weapon/gun/energy/taser,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -142,22 +139,6 @@
 	},
 /area/velocity)
 "aap" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity05";
-	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = -32;
-	req_access = list(101)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity06";
-	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = -32;
-	req_access = list(101)
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier{
 	density = 0;
@@ -177,36 +158,8 @@
 	},
 /area/velocity)
 "aaq" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity03";
-	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = 32;
-	req_access = list(101)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity04";
-	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = 32;
-	req_access = list(101)
-	},
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/device/taperecorder,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -5446,17 +5399,17 @@
 	},
 /area/velocity)
 "aqu" = (
-/obj/structure/table,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/welding,
+/obj/structure/table/reinforced,
 /turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "floor"
 	},
 /area/velocity)
 "aqv" = (
-/obj/structure/stool/bed,
+/obj/structure/table/reinforced,
+/obj/random/tools/toolbox,
 /turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "floor"
 	},
 /area/velocity)
 "aqw" = (
@@ -5467,18 +5420,13 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/velocity)
-"aqx" = (
-/turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "floor"
 	},
 /area/velocity)
 "aqy" = (
-/obj/machinery/gibber,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "floor"
 	},
 /area/velocity)
 "aqC" = (
@@ -5583,19 +5531,12 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"aqW" = (
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/velocity)
 "aqX" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/engine,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/velocity)
 "arb" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -6105,25 +6046,12 @@
 	},
 /area/velocity)
 "asD" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/gun/energy/laser,
+/obj/structure/table/reinforced,
+/obj/random/foods/drink_can,
+/obj/random/foods/drink_can,
+/obj/random/foods/drink_can,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/velocity)
 "asE" = (
@@ -6189,25 +6117,13 @@
 	},
 /area/velocity)
 "asQ" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/gun/energy/laser,
+/obj/structure/table/reinforced,
+/obj/random/foods/food_snack,
+/obj/random/foods/food_snack,
+/obj/random/foods/food_snack,
+/obj/random/foods/food_snack,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/velocity)
 "asR" = (
@@ -6257,29 +6173,6 @@
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "orangefull"
-	},
-/area/velocity)
-"atg" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/gun/energy/laser,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
 	},
 /area/velocity)
 "ath" = (
@@ -7299,19 +7192,13 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"awZ" = (
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/velocity)
 "axa" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Cargo";
 	req_access = list(101)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17802,18 +17689,13 @@
 	},
 /area/velocity)
 "ckb" = (
-/obj/item/weapon/flora/random,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "incerator_velocity"
 	},
-/area/velocity)
-"clb" = (
-/obj/structure/centcom_barrier,
+/obj/machinery/door/poddoor,
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "floor5"
 	},
 /area/velocity)
 "cmb" = (
@@ -17825,7 +17707,6 @@
 	pixel_y = 24;
 	req_access = list(101)
 	},
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -18340,11 +18221,9 @@
 	},
 /area/velocity)
 "deb" = (
-/obj/structure/table/reinforced{
-	icon_state = "table"
-	},
 /obj/item/device/flashlight/lamp,
 /obj/item/device/taperecorder,
+/obj/structure/table/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
@@ -72944,7 +72823,7 @@ cGb
 aoo
 asD
 asQ
-atg
+asE
 aal
 aoo
 atK
@@ -74215,8 +74094,8 @@ aoI
 anp
 anu
 aoo
-ckb
-awZ
+cxb
+awY
 cnb
 csb
 cnb
@@ -74472,7 +74351,7 @@ aoJ
 anr
 anw
 api
-clb
+cnb
 cnb
 cnb
 cnb
@@ -74980,7 +74859,7 @@ aaM
 aaM
 aaM
 aoo
-aov
+aow
 aoD
 aoK
 aoR
@@ -75249,7 +75128,7 @@ apv
 apD
 aoo
 aqu
-aqW
+arZ
 aoo
 cNb
 cGb
@@ -75494,7 +75373,7 @@ aaM
 aaM
 aaM
 aoo
-aow
+ckb
 aoE
 aoo
 ant
@@ -75506,7 +75385,7 @@ apw
 apE
 aoo
 aqv
-aqx
+arZ
 aoo
 cLb
 cGb
@@ -75763,7 +75642,7 @@ crb
 apF
 aoo
 aqw
-aqx
+arZ
 arn
 cLb
 cGb
@@ -76019,8 +75898,8 @@ aoo
 aoo
 aoo
 aoo
-aqx
-aqx
+arZ
+arZ
 aoo
 cLb
 cGb
