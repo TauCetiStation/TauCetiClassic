@@ -119,3 +119,9 @@
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	// Attention drawer verb. Makes the char say "Hey!" and plays voice line
+	var/attention_drawer_max = 2
+	var/attention_drawer_amount = 2
+	var/attention_drawer_restore = (30 SECONDS)
+	var/attention_drawer_text = "Эй!"

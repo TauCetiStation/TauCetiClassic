@@ -2241,3 +2241,27 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/verb/attention_drawer()
+	set name = "Hey!"
+	set category = "IC"
+
+	if(stat != CONSCIOUS)
+		to_chat(src, "<span class='warning'>Not while you're incapacitated.</span>")
+		return
+
+	if(silent || miming || isabductor(src) || HAS_TRAIT(src, TRAIT_MUTE))
+		to_chat(src, "<span class='danger'>You can't speak.</span>")
+		return
+
+	if(!attention_drawer_amount)
+		to_chat(src, "<span class='danger'>You are being rate limited!</span>")
+		return
+
+	say(attention_drawer_text)
+	//attention_drawer_amount--
+	playsound(src, pick(gender == FEMALE ? SOUNDIN_HEY_FEMALE : SOUNDIN_HEY_MALE), VOL_EFFECTS_MASTER, varylow = 7, varyhigh = 10)
+	addtimer(CALLBACK(src, .proc/increment_attention_drawer), attention_drawer_restore)
+
+/mob/living/carbon/human/proc/increment_attention_drawer()
+	attention_drawer_amount = min(attention_drawer_amount + 1, attention_drawer_max)
