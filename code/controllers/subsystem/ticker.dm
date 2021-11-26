@@ -248,6 +248,12 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
+	CHECK_TICK
+
+	for(var/mob/dead/new_player/player as anything in new_player_list)
+		if(player?.spawning)
+			qdel(player)
+
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
@@ -377,7 +383,6 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-				qdel(player)
 		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
