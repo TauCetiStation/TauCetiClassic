@@ -4,7 +4,8 @@
 /obj/item/weapon/stock_parts/cell/atom_init()
 	. = ..()
 	charge = maxcharge
-	addtimer(CALLBACK(src, .proc/updateicon), 5)
+	if(loc && isturf(loc))
+		addtimer(CALLBACK(src, .proc/updateicon), 5)
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()

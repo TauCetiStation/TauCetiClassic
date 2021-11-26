@@ -1262,8 +1262,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
-	P.loc = get_turf_loc(holder.my_atom)
+	var/obj/item/weapon/stock_parts/cell/slime/P = new(get_turf_loc(holder.my_atom))
 
 /datum/chemical_reaction/slimeglow
 	name = "Slime Glow"

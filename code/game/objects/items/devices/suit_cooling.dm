@@ -29,8 +29,7 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	cell = new(src) // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
