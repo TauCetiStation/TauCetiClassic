@@ -544,6 +544,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(global.velocity_officers_count >= MAX_VELOCITY_OFFICERS)
 		to_chat(src, "<span class='notice'>There are already enough Velocity Officers.</span>")
 		return
+	if(!config.velocity_officers_allowed)
+		to_chat(src, "<span class='notice'>Velocity administration has decided not to deploy officers.</span>")
+		return
 
 	var/response = tgui_alert(src, "Wanna teach some newbies?","Do you want to be Velocity Officer?", list("Yes!","Nope!"))
 	if(response != "Yes!")

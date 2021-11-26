@@ -1052,6 +1052,15 @@ var/global/BSACooldown = 0
 	message_admins("[key_name_admin(usr)] toggled Deathmatch Arena [config.deathmatch_arena ? "on" : "off"].")
 	feedback_add_details("admin_verb","TDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggle_velocity_officers()
+	set category = "Server"
+	set desc = "Toggle spawn of velocity officers."
+	set name = "Toggle Velocity Officers"
+	config.velocity_officers_allowed = !config.velocity_officers_allowed
+	log_admin("[key_name(usr)] toggled Velocity Officers spawning to [config.velocity_officers_allowed].")
+	message_admins("[key_name_admin(usr)] toggled velocity_officers [config.velocity_officers_allowed ? "on" : "off"].")
+	feedback_add_details("admin_verb","TVO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"

@@ -212,6 +212,8 @@ var/bridge_secret = null
 
 	var/deathmatch_arena = TRUE
 
+	var/velocity_officers_allowed = TRUE
+
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = type
@@ -703,6 +705,8 @@ var/bridge_secret = null
 				if("nightshift")
 					config.nightshift = TRUE
 				if("deathmatch_arena")
+					config.deathmatch_arena = text2num(value)
+				if("velocity_officers_allowed")
 					config.deathmatch_arena = text2num(value)
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
