@@ -75,31 +75,24 @@
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(uses < 2 && isrobot(user))
-			var/mob/living/silicon/robot/R = user
-
-			//Delete used emag
-			R.u_equip(src)
-			R.module.modules -= src
-			emag_break(user)
-
-			//Add junk emag to the borg's module
-			var/obj/item/weapon/card/emag_broken/junk = new(R.module)
-			R.module.modules += junk
-			junk.add_fingerprint(user)
-			R.hud_used.update_robot_modules_display()
-			return
 		uses--
 
 	if(uses < 1)
 		emag_break(user)
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
 		return
 
 	..()
 
 /obj/item/weapon/card/emag/proc/emag_break(mob/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(loc == R || loc == R.module)
+			R.module.remove_module_item(src)
+			var/obj/item/weapon/card/emag_broken/junk = new(R.module)
+			R.module.add_module_item(junk)
+	else
+		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+		junk.add_fingerprint(user)
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	qdel(src)
 

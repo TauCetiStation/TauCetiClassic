@@ -55,10 +55,11 @@
 	uneq_active()
 	return 1
 
-/mob/living/silicon/robot/proc/uneq_active()
-	if(isnull(module_active))
+/mob/living/silicon/robot/proc/u_equip_any(obj/O)
+	. = FALSE
+	if(!O)
 		return
-	if(module_state_1 == module_active)
+	if(module_state_1 == O)
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode &= ~module_state_1:sight_mode
 		if (client)
@@ -68,7 +69,8 @@
 		module_state_1:loc = module //So it can be used again later
 		module_state_1 = null
 		inv1.icon_state = "inv1"
-	else if(module_state_2 == module_active)
+		. = TRUE
+	else if(module_state_2 == O)
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode &= ~module_state_2:sight_mode
 		if (client)
@@ -78,7 +80,8 @@
 		module_state_2:loc = module
 		module_state_2 = null
 		inv2.icon_state = "inv2"
-	else if(module_state_3 == module_active)
+		. = TRUE
+	else if(module_state_3 == O)
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode &= ~module_state_3:sight_mode
 		if (client)
@@ -88,8 +91,15 @@
 		module_state_3:loc = module
 		module_state_3 = null
 		inv3.icon_state = "inv3"
-	hud_used.update_robot_modules_display()
-	updateicon()
+		. = TRUE
+	if(.)
+		hud_used.update_robot_modules_display()
+		updateicon()
+
+/mob/living/silicon/robot/proc/uneq_active()
+	if(isnull(module_active))
+		return
+	u_equip_any(module_active)
 
 /mob/living/silicon/robot/proc/uneq_all()
 	module_active = null

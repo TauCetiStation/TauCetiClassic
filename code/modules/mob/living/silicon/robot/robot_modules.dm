@@ -74,6 +74,20 @@
 	R.add_language("Trinary", 1)
 	R.add_language("Sol Common", 1)
 
+/obj/item/weapon/robot_module/proc/add_module_item(obj/O)
+	O.forceMove(src)
+	modules += O
+	var/mob/living/silicon/robot/R = loc
+	R.hud_used.update_robot_modules_display()
+
+/obj/item/weapon/robot_module/proc/remove_module_item(obj/O)
+	if(!(locate(O) in modules))
+		return
+	var/mob/living/silicon/robot/R = loc
+	modules -= O
+	R.u_equip_any(O)
+	qdel(O)
+
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
