@@ -139,24 +139,15 @@
 	},
 /area/velocity)
 "aap" = (
-/obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
+/obj/machinery/computer/security,
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/approve,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/device/taperecorder,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 8;
+	icon_state = "wood"
 	},
-/area/velocity)
+/area/space)
 "aaq" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/cleaner,
@@ -188,21 +179,15 @@
 	},
 /area/velocity)
 "aau" = (
-/obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Velocity";
-	dptdest = "Captain's Office";
-	req_access = list(101);
-	req_one_access = list()
-	},
+/obj/machinery/computer/station_alert,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/velocity)
+/area/space)
 "aav" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/stamp/velocity,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -236,24 +221,11 @@
 	},
 /area/velocity)
 "aaz" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-y"
-	},
 /turf/unsimulated/floor{
-	icon_state = "carpet3-0"
+	dir = 8;
+	icon_state = "wood"
 	},
-/area/velocity)
+/area/space)
 "aaA" = (
 /obj/structure/sink{
 	dir = 4;
@@ -339,6 +311,9 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"aaI" = (
+/turf/unsimulated/wall/fakeglass,
+/area/space)
 "aaJ" = (
 /obj/structure/sign/velocity_overlay/reklama/soda_ad{
 	pixel_x = 3;
@@ -2179,6 +2154,42 @@
 /obj/effect/landmark/mafia_game_area,
 /turf/space,
 /area/space)
+"afW" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
+/obj/item/weapon/stamp/velocity,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"afX" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/lighter/zippo/fluff/michael_guess_1,
+/obj/item/clothing/mask/cigarette/cigar,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"afY" = (
+/obj/machinery/door_control{
+	id = "velocity_room02";
+	name = "Blast Door Control";
+	pixel_x = -25;
+	req_access = list(101)
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/velocity)
+"afZ" = (
+/obj/structure/disposalpipe/segment,
+/turf/unsimulated/floor{
+	icon_state = "carpet6-0"
+	},
+/area/velocity)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -2200,12 +2211,91 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"agc" = (
+/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/poddoor,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"agd" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-y"
+	},
+/turf/unsimulated/floor{
+	icon_state = "carpet3-0"
+	},
+/area/velocity)
+"age" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/velocity)
+"agf" = (
+/obj/structure/closet/secure_closet/velocity_security/full,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"agg" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen,
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"agh" = (
+/obj/structure/table/woodentable,
+/obj/machinery/faxmachine{
+	department = "Velocity";
+	dptdest = "Captain's Office";
+	req_access = list(101);
+	req_one_access = list()
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
+"agi" = (
+/obj/structure/disposalpipe/segment,
+/turf/unsimulated/floor{
+	icon_state = "carpet5-0"
+	},
+/area/velocity)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agk" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/velocity)
 "agl" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -5477,10 +5567,12 @@
 	},
 /area/custom/alien)
 "aqL" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/wood,
-/area/velocity)
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/space)
 "aqM" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -6011,12 +6103,9 @@
 	},
 /area/shuttle/supply/velocity)
 "asy" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/simulated/floor/wood,
-/area/velocity)
+/obj/structure/sign/poster/official/random,
+/turf/unsimulated/wall,
+/area/space)
 "asz" = (
 /obj/machinery/color_mixer,
 /turf/unsimulated/floor{
@@ -17842,17 +17931,12 @@
 	},
 /area/velocity)
 "czb" = (
-/obj/machinery/door_control{
-	id = "velocity_room02";
-	name = "Blast Door Control";
-	pixel_x = -25;
-	req_access = list(101)
-	},
-/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/arrival_shuttle,
 /turf/unsimulated/floor{
-	icon_state = "carpet6-0"
+	dir = 8;
+	icon_state = "wood"
 	},
-/area/velocity)
+/area/space)
 "cAb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -18120,16 +18204,8 @@
 	},
 /area/velocity)
 "cWb" = (
-/obj/machinery/door_control{
-	id = "velocity_room02";
-	name = "Blast Door Control";
-	pixel_x = -25;
-	req_access = list(101)
-	},
 /obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	icon_state = "carpet5-0"
-	},
+/turf/simulated/floor/wood,
 /area/velocity)
 "cXb" = (
 /obj/structure/stool/bed/chair/comfy/black{
@@ -68702,14 +68778,14 @@ aoo
 aoo
 aoo
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aaI
+aaI
+aaI
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -68959,14 +69035,14 @@ apG
 apL
 akF
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+czb
+aaz
+aaz
+aaz
+aaz
+aaz
+agf
+aeD
 aaM
 aaM
 aaM
@@ -69216,14 +69292,14 @@ aqg
 aqE
 aqf
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aap
+aqL
+afW
+aaz
+aaz
+aaz
+agg
+aeD
 aaM
 aaM
 aaM
@@ -69473,14 +69549,14 @@ arJ
 arK
 ard
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aau
+aaz
+afX
+aaz
+aaz
+aaz
+agh
+aeD
 aaM
 aaM
 aaM
@@ -69730,15 +69806,15 @@ ash
 asj
 asb
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+asy
+aeD
+aeD
+agc
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -69988,13 +70064,13 @@ atp
 atn
 aoo
 aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
+aqM
+afY
+aqM
+aqM
+age
+afY
+aqM
 aoo
 aaM
 aaM
@@ -70244,15 +70320,15 @@ axt
 axu
 axs
 aoo
-aoo
-aqL
-czb
-cEb
-aaz
-cEb
+aav
 cWb
-asy
-aoo
+afZ
+cEb
+agd
+cEb
+agi
+cWb
+agk
 aoo
 aaM
 aaM
@@ -70504,7 +70580,7 @@ aoo
 att
 aqM
 cAb
-aau
+arx
 arR
 asc
 cXb
@@ -70761,7 +70837,7 @@ aoo
 aql
 aqM
 cAb
-aav
+arx
 arS
 arx
 cXb
@@ -73087,7 +73163,7 @@ arZ
 arZ
 aty
 arZ
-aap
+aaq
 auS
 dTb
 arZ
