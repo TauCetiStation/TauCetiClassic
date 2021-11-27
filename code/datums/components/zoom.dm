@@ -79,8 +79,7 @@
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
-	var/tilesize = 32
-	var/viewoffset = tilesize * tileoffset
+	var/viewoffset = world.icon_size * tileoffset
 
 	switch(zoomer.dir)
 		if(NORTH)
