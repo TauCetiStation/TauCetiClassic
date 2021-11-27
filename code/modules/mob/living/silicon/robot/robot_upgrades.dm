@@ -134,9 +134,9 @@
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(usr, "There's no mounting point for the module!")
 		return 0
-	else
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
-		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
-			R.internals = src
-		R.icon_state="Miner+j"
-		return 1
+	var/obj/item/weapon/tank/jetpack/carbondioxide/J = new(R.module)
+	R.module.add_module_item(J)
+	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
+		R.internals = src
+	R.icon_state="Miner+j"
+	return 1

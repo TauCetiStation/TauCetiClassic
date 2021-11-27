@@ -57,17 +57,10 @@
 		if(!S)
 			src.modules -= null
 			S = new T(src, 1)
-			src.modules += S
+			add_module_item(S)
 
 		if(S.get_amount() < stacktypes[T])
 			S.add(1)
-
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
-	var/list/temp_list = modules
-	modules = list()
-	for(var/obj/O in temp_list)
-		if(O)
-			modules += O
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
 	R.add_language("Tradeband", 1)
@@ -83,8 +76,8 @@
 /obj/item/weapon/robot_module/proc/remove_module_item(obj/O)
 	if(!(locate(O) in modules))
 		return
-	var/mob/living/silicon/robot/R = loc
 	modules -= O
+	var/mob/living/silicon/robot/R = loc
 	R.unequip_module(O)
 	qdel(O)
 
