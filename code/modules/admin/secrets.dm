@@ -401,7 +401,7 @@
 		if("friendai")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FA")
-			for(var/mob/camera/Eye/ai/aE in ai_eyes_list)
+			for(var/mob/camera/Eye/ai/aE as anything in ai_eyes_list)
 				aE.icon_state = "ai_friend"
 			for(var/obj/machinery/ai_status_display/A in ai_status_display_list)
 				A.emotion = "Friend Computer"
