@@ -99,7 +99,7 @@
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return
-	u_equip_any(module_active)
+	unequip_module(module_active)
 
 /mob/living/silicon/robot/proc/uneq_all()
 	module_active = null

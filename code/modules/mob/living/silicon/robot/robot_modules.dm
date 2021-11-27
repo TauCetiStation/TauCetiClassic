@@ -85,7 +85,7 @@
 		return
 	var/mob/living/silicon/robot/R = loc
 	modules -= O
-	R.u_equip_any(O)
+	R.unequip_module(O)
 	qdel(O)
 
 /obj/item/weapon/robot_module/standard
