@@ -40,4 +40,4 @@ Bonus
 		M.adjustFireLoss(-get_damage)
 		M.adjustBruteLoss(-get_damage)
 		M.adjustToxLoss(get_damage)
-		return 1
+		return TRUE
