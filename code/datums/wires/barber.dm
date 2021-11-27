@@ -1,9 +1,9 @@
-var/const/COLOR_MIXER_POWER         = 1
-var/const/COLOR_MIXER_TANK_1        = 2
-var/const/COLOR_MIXER_TANK_2        = 4
-var/const/COLOR_MIXER_TANK_3        = 8
-var/const/COLOR_MIXER_TANK_OUTPUT   = 16
-var/const/COLOR_MIXER_OUTPUT_SAFETY = 32
+var/global/const/COLOR_MIXER_POWER         = 1
+var/global/const/COLOR_MIXER_TANK_1        = 2
+var/global/const/COLOR_MIXER_TANK_2        = 4
+var/global/const/COLOR_MIXER_TANK_3        = 8
+var/global/const/COLOR_MIXER_TANK_OUTPUT   = 16
+var/global/const/COLOR_MIXER_OUTPUT_SAFETY = 32
 
 /datum/wires/color_mixer
 	holder_type = /obj/machinery/color_mixer

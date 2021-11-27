@@ -13,6 +13,7 @@
 
 	simulated = FALSE
 	flags = NOREACT
+	flags_2 = PROHIBIT_FOR_DEMO_2 // can corrupt the demo
 
 	var/needs_update = FALSE
 	var/turf/myturf

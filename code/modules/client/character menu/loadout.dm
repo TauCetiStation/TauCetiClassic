@@ -103,8 +103,8 @@
 	return
 
 
-var/list/loadout_categories = list()
-var/list/gear_datums = list()
+var/global/list/loadout_categories = list()
+var/global/list/gear_datums = list()
 
 /datum/loadout_category
 	var/category = ""
