@@ -78,7 +78,7 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
-	armor = list(melee = 10, bullet = 80, laser = 20,energy = 20, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 60, laser = 20,energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 
 /obj/item/clothing/head/helmet/laserproof
