@@ -356,7 +356,7 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null

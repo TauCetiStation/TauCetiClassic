@@ -301,7 +301,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode && !override)
 		override = mode.name
 	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
-	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+	for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
 		if(isliving(M))
@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(ticker)
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
 
-			for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!
 					var/turf/T = get_turf(M)
 					if(T && is_station_level(T.z))
@@ -342,7 +342,7 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
-	for(var/mob/M in mob_list) //search any goodest
+	for(var/mob/M as anything in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	if(explosion)
 		flick(explosion,cinematic)
@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.client)
 			M.client.screen -= cinematic
 		if(isliving(M))
@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player as anything in mob_list)
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++

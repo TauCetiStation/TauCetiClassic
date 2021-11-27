@@ -176,7 +176,7 @@
 	if(!message)
 		return
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 
