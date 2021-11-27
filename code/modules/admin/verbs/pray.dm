@@ -89,7 +89,7 @@
 			continue
 
 
-	for(var/mob/living/simple_animal/shade/god/G in gods_list)
+	for(var/mob/living/simple_animal/shade/god/G as anything in gods_list)
 		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
 			if(G == src) // Don't hear your own prayer.
 				continue
