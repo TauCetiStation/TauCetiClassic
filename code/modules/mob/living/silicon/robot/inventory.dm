@@ -55,7 +55,7 @@
 	uneq_active()
 	return 1
 
-/mob/living/silicon/robot/proc/u_equip_any(obj/O)
+/mob/living/silicon/robot/proc/unequip_module(obj/O)
 	. = FALSE
 	if(!O)
 		return
