@@ -173,7 +173,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 				display_name = "[holder.fakekey]/([key])"
 			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/track = ""
 			if(isobserver(C.mob))

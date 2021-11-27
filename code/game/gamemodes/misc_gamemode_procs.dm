@@ -192,7 +192,7 @@
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
 						continue //Ghosted while alive
 
-	for(var/client/M in admins)
+	for(var/client/M as anything in admins)
 		if(M.holder)
 			to_chat(M, msg)
 	log_game(strip_html_properly(msg))

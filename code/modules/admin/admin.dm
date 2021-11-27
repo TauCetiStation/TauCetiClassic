@@ -9,7 +9,7 @@ var/global/BSACooldown = 0
 	if (emphasize)
 		style += " emphasized"
 	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
@@ -27,7 +27,7 @@ var/global/BSACooldown = 0
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)

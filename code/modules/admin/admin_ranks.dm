@@ -61,7 +61,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 /proc/load_admins()
 	//clear the datums references
 	admin_datums.Cut()
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		C.remove_admin_verbs()
 		C.holder = null
 	admins.Cut()
