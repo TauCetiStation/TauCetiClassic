@@ -72,6 +72,9 @@
 	if(buckled)
 		return
 
+	if(!check_stackable_item(W))
+		return
+
 	if(SEND_SIGNAL(W, COMSIG_HAND_IS))
 		SEND_SIGNAL(W, COMSIG_HAND_ATTACK, A, src, params)
 		return
@@ -85,9 +88,6 @@
 		var/resolved = A.attackby(W, src, params)
 		if(!resolved && A && W)
 			W.afterattack(A, src, 1, params)
-		return
-
-	if(!check_stackable_item(W))
 		return
 
 	if(!isturf(loc))
