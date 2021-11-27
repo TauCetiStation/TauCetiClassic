@@ -407,7 +407,7 @@ SUBSYSTEM_DEF(ticker)
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
 		ai_completions += "<div class='Section'>"
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)

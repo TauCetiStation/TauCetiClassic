@@ -3,7 +3,7 @@
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
 
 	// Who is alive/dead, who escaped
-	for (var/mob/living/silicon/ai/I in ai_list)
+	for (var/mob/living/silicon/ai/I as anything in ai_list)
 		if (I.stat == DEAD && is_station_level(I.z))
 			score["deadaipenalty"] = 1
 			score["crew_dead"] += 1

@@ -13,7 +13,7 @@
 
 /datum/event/ionstorm/start()
 	// Ion laws.
-	for(var/mob/living/silicon/ai/target in ai_list)
+	for(var/mob/living/silicon/ai/target as anything in ai_list)
 		if(istraitor(target))
 			continue
 		target.overload_ai_system()

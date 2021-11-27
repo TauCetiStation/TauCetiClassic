@@ -192,7 +192,7 @@
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return
 		to_chat(user, "You hold \the [P] up to the camera...")
-		for(var/mob/living/silicon/ai/O in ai_list)
+		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")

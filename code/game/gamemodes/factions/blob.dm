@@ -117,7 +117,7 @@
 				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
@@ -132,7 +132,7 @@
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
@@ -142,7 +142,7 @@
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
 			declared = FALSE
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)

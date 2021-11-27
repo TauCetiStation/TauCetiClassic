@@ -294,7 +294,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //When a borg is activated, it can choose which AI it wants to be slaved to
 /proc/active_ais()
 	. = list()
-	for(var/mob/living/silicon/ai/A in ai_list)
+	for(var/mob/living/silicon/ai/A as anything in ai_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
