@@ -2250,7 +2250,7 @@
 		to_chat(src, "<span class='warning'>Not while you're incapacitated.</span>")
 		return
 
-	if(silent || miming || isabductor(src) || HAS_TRAIT(src, TRAIT_MUTE))
+	if(silent || miming || (get_species() == ABDUCTOR) || HAS_TRAIT(src, TRAIT_MUTE))
 		to_chat(src, "<span class='danger'>You can't speak.</span>")
 		return
 
