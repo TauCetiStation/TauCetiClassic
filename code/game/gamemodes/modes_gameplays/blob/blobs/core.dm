@@ -1,5 +1,5 @@
 //Few global vars to track the blob
-var/blob_tiles_grown_total = 0
+var/global/blob_tiles_grown_total = 0
 var/global/list/blobs = list()
 var/global/list/blob_cores = list()
 var/global/list/blob_nodes = list()

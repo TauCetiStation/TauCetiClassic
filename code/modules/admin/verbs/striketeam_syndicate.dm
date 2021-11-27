@@ -1,6 +1,6 @@
 //SYNDICATE STRIKE TEAMS
 
-var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
+var/global/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_syndicate_strike_team = FALSE
 
 /client/proc/syndicate_strike_team()

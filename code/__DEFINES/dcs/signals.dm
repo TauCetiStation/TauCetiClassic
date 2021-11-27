@@ -211,14 +211,6 @@
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 
-// /datum/component/twohanded signals
-
-///from base of datum/component/twohanded/proc/wield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_WIELD "twohanded_wield"
-	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
-///from base of datum/component/twohanded/proc/unwield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
-
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
 #define COMSIG_HAND_IS "hand_is"

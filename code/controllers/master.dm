@@ -6,14 +6,14 @@
  * Odds are, there is a reason
  *
 **/
-var/datum/controller/master/Master = new()
-var/MC_restart_clear = 0
-var/MC_restart_timeout = 0
-var/MC_restart_count = 0
+var/global/datum/controller/master/Master = new()
+var/global/MC_restart_clear = 0
+var/global/MC_restart_timeout = 0
+var/global/MC_restart_count = 0
 
 //current tick limit, assigned by the queue controller before running a subsystem.
 //used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
-var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+var/global/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master
 	name = "Master"
