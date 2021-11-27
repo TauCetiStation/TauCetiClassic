@@ -114,7 +114,7 @@
 /atom/movable/screen/plane_master/fullscreen
 	name = "fullscreen alert plane"
 	plane = FULLSCREEN_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAM
+	render_relay_plane = RENDER_PLANE_NON_GAME
 
 /atom/movable/screen/plane_master/singularity
 	name = "singularity plane"

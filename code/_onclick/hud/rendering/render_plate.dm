@@ -50,7 +50,6 @@
 	plane = RENDER_PLANE_ABOVE_GAME
 	render_relay_plane = RENDER_PLANE_MASTER
 
-
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
 	name = "non-game rendering plate"
