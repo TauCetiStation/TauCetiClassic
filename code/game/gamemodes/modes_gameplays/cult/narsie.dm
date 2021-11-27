@@ -176,7 +176,7 @@
 			return
 
 	//no living players, follow a clientless instead.
-	for(var/mob/mob in alive_mob_list)
+	for(var/mob/mob as anything in alive_mob_list)
 		if(mob.faction == "cult")
 			continue
 		var/turf/pos = get_turf(mob)

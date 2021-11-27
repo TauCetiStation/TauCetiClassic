@@ -253,7 +253,7 @@
 	var/crewcount = 0
 	var/diskdat = ""
 	var/bombdat = "Unknown"
-	for(var/mob/living/C in alive_mob_list)
+	for(var/mob/living/C as anything in alive_mob_list)
 		if (!C.client || C.stat != DEAD)
 			continue
 		if(!ishuman(C) || !issilicon(C))
