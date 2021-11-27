@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(shuttle)
 					stop_parallax = locate(/area/shuttle/escape_pod4/transit)
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
-					return 0
+					return FALSE
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
 				else
@@ -173,21 +173,21 @@ SUBSYSTEM_DEF(shuttle)
 
 					online = 0
 
-					return 1
+					return TRUE
 
 					/* --- Shuttle has docked centcom after being recalled --- */
 			if(timeleft>timelimit)
 				online = 0
 				direction = 1
 				endtime = null
-				return 0
+				return FALSE
 
 			else if((time_for_fake_recall != 0) && (timeleft <= time_for_fake_recall))
 				log_admin("Gamemode fake-recalled the shuttle.")
 				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
 				time_for_fake_recall = 0
-				return 0
+				return FALSE
 
 			else if(timeleft == 22)
 				if(last_es_sound < world.time)
@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(shuttle)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
 						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
@@ -223,7 +223,7 @@ SUBSYSTEM_DEF(shuttle)
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
-				return 1
+				return TRUE
 
 		if(SHUTTLE_AT_STATION)
 			// Just before it leaves, close the damn doors!
@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(shuttle)
 								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
@@ -334,10 +334,10 @@ SUBSYSTEM_DEF(shuttle)
 				else
 					announce_crew_left.play()
 
-				return 1
+				return TRUE
 
 		else
-			return 1
+			return TRUE
 
 /**
  * Cleans passed area, gibs any mob inside area, unachored movable gets moved, everything else will be qdeled
@@ -449,32 +449,32 @@ SUBSYSTEM_DEF(shuttle)
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
-	if(moving) return 0
-	if(!at_station) return 1
+	if(moving) return FALSE
+	if(!at_station) return TRUE
 
 	var/area/shuttle = locate(/area/shuttle/supply/station)
-	if(!shuttle) return 0
+	if(!shuttle) return FALSE
 
 	if(forbidden_atoms_check(shuttle))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
 	if(istype(A,/mob/living))
-		return 1
+		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
-		return 1
+		return TRUE
 	if(istype(A,/obj/machinery/nuclearbomb))
-		return 1
+		return TRUE
 	if(istype(A,/obj/item/device/radio/beacon))
-		return 1
+		return TRUE
 
 	for(var/i=1, i<=A.contents.len, i++)
 		var/atom/B = A.contents[i]
 		if(.(B))
-			return 1
+			return TRUE
 
 	//Sellin
 /datum/controller/subsystem/shuttle/proc/sell()
@@ -672,10 +672,10 @@ SUBSYSTEM_DEF(shuttle)
 
 
 /obj/effect/starender
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/starspawner
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/spawndir = SOUTH
 	var/spawning = 0
 
