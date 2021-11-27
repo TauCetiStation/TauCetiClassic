@@ -96,11 +96,11 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
 	if(!(istype(D, /datum/disease/advance)))
-		return 0
+		return FALSE
 
 	if(GetDiseaseID() != D.GetDiseaseID())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 // To add special resistances.
 /datum/disease/advance/cure(resistance=1)
@@ -132,8 +132,8 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
 		if(symp.id == S.id)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(type_level_limit = RANDOM_STARTING_LEVEL, amount_get = 0)
