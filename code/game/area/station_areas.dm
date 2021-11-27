@@ -485,10 +485,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Emergency Treatment Centre"
 	icon_state = "exam_room"
 
-/area/station/medical/checkpoint
-	name = "Medical Checkpoint"
-	icon_state = "exam_room"
-
 //Security
 
 /area/station/security/main
@@ -535,6 +531,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Firing Range"
 	icon_state = "firingrange"
 
+/area/station/security/processing
+	name = "Labor Shuttle Dock"
+	icon_state = "sec_processing"
+
 /area/station/security/checkpoint
 	name = "Security Checkpoint"
 	icon_state = "security"
@@ -543,8 +543,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Vacant Office"
 	icon_state = "security"
 
-/area/station/security/lawoffice
+/area/station/security/iaa_office
 	name = "Internal Affairs"
+	icon_state = "law"
+
+/area/station/security/lawyer_office
+	name = "Lawyer Office"
 	icon_state = "law"
 
 //Cargo bay
