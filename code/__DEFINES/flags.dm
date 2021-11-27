@@ -57,6 +57,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2   (1<<1)
+/// atom with this flag will never appear on demo
+#define PROHIBIT_FOR_DEMO_2   (1<<2)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)

@@ -68,7 +68,7 @@
 
 /datum/controller/subsystem/Destroy()
 	dequeue()
-	can_fire = 0
+	can_fire = FALSE
 	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 	return ..()
@@ -202,7 +202,7 @@
 		msg = "OFFLINE\t[msg]"
 
 	var/title = name
-	if (can_fire)
+	if(can_fire)
 		title = "\[[state_letter()]][title]"
 
 	stat(title, statclick.update(msg))

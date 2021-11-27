@@ -328,7 +328,7 @@ SUBSYSTEM_DEF(garbage)
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
-			SSgarbage.can_fire = 1
+			SSgarbage.can_fire = TRUE
 			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
@@ -337,7 +337,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
+	SSgarbage.can_fire = FALSE
 
 	if(usr && usr.client)
 		usr.client.running_find_references = type
@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(garbage)
 	running_find_references = null
 
 	//restart the garbage collector
-	SSgarbage.can_fire = 1
+	SSgarbage.can_fire = TRUE
 	SSgarbage.update_nextfire(reset_time = TRUE)
 
 /client/verb/purge_all_destroyed_objects()

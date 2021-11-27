@@ -221,6 +221,7 @@
 	var/offset_y = 0
 	var/view_sized
 	var/absolute = FALSE
+	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
