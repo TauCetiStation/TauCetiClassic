@@ -121,7 +121,7 @@ var/global/list/sec_closets_list = list()
 		log_game("RoundStart Event: [A] bluescreen in [COORD(A)].")
 
 /datum/event/roundstart/dead_monkeys/start()
-	for(var/mob/M in monkey_list)
+	for(var/mob/M as anything in monkey_list)
 		if(prob(20))
 			message_admins("RoundStart Event: [M] was killed in [COORD(M)]")
 			log_game("RoundStart Event: [M] was killed in [COORD(M)]")
