@@ -537,7 +537,7 @@ SUBSYSTEM_DEF(ticker)
 		M.mind.transfer_to(L)
 		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		L.equipOutfit(/datum/outfit/arena)
-		L.name = "Gladiator ([rand(1, 1000)])"
+		L.name = L.key
 		L.real_name = L.name
 		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
