@@ -271,7 +271,7 @@ SUBSYSTEM_DEF(ticker)
 
 		SSevents.start_roundstart_event()
 
-		for(var/mob/dead/new_player/N in new_player_list)
+		for(var/mob/dead/new_player/N as anything in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff

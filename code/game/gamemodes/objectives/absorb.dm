@@ -7,7 +7,7 @@
 	if (SSticker)
 		var/n_p = 1 //autowin
 		if (SSticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/dead/new_player/P in new_player_list)
+			for(var/mob/dead/new_player/P as anything in new_player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
 		else if (SSticker.current_state == GAME_STATE_PLAYING)

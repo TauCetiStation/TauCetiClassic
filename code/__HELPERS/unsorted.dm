@@ -1579,7 +1579,7 @@ var/list/WALLITEMS = typecacheof(list(
 		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
-	for(var/mob/dead/new_player/N in new_player_list)
+	for(var/mob/dead/new_player/N as anything in new_player_list)
 		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
 
 // Converts browser keycodes to BYOND keycodes.
