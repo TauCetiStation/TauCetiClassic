@@ -1,5 +1,5 @@
 /datum/event/roundstart/headset/start()
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if((H.l_ear || H.r_ear) && prob(10))
 			var/headset_to_del = H.l_ear ? H.l_ear : H.r_ear
 			message_admins("RoundStart Event: [headset_to_del] was removed from [H]")
@@ -8,7 +8,7 @@
 			H.update_inv_ears()
 
 /datum/event/roundstart/survbox/start()
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!prob(10))
 			continue
 		var/list/boxs = H.get_all_contents_type(/obj/item/weapon/storage/box/survival)

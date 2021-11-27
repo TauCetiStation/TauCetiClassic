@@ -207,7 +207,7 @@
 
 /proc/get_nt_opposed()
 	var/list/dudes = list()
-	for(var/mob/living/carbon/human/man in human_list)
+	for(var/mob/living/carbon/human/man as anything in human_list)
 		if(man.client)
 			if(man.client.prefs.nanotrasen_relation == "Opposed")
 				dudes += man

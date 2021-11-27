@@ -1,6 +1,6 @@
 /proc/get_living_heads()
 	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in human_list)
+	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
@@ -23,7 +23,7 @@
 
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in human_list)
+	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
@@ -112,7 +112,7 @@
 		if(active_revs == 0)
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = FALSE
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.stat != DEAD && H.mind && H.client?.inactivity <= 20 MINUTES && isrev(H))
 					var/datum/role/R = H.mind.GetRole(REV)
 					R.Drop(H.mind)
@@ -179,7 +179,7 @@
 				score["opkilled"]++
 	if(foecount == score["arrested"])
 		score["allarrested"] = 1
-	for(var/mob/living/carbon/human/player in human_list)
+	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
 			if(role in global.command_positions)
@@ -209,7 +209,7 @@
 		if (rev.antag?.current?.stat != DEAD)
 			revcount++
 
-	for(var/mob/living/carbon/human/player in human_list)
+	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(!player.mind)
 			continue
 		var/role = player.mind.assigned_role

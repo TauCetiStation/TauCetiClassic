@@ -157,7 +157,7 @@
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in human_list)
+				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)

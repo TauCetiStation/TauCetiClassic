@@ -35,7 +35,7 @@
 
 /mob/living/silicon/ai/proc/generate_ion_law()
 	var/list/players = list()
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!H.mind || !H.client || H.client.inactivity > 10 MINUTES)
 			continue
 		players += H.real_name

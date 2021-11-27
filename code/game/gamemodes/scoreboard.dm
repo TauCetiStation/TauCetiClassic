@@ -8,7 +8,7 @@
 			score["deadaipenalty"] = 1
 			score["crew_dead"] += 1
 
-	for (var/mob/living/carbon/human/I in human_list)
+	for (var/mob/living/carbon/human/I as anything in human_list)
 		if (I.stat == DEAD && is_station_level(I.z))
 			score["crew_dead"] += 1
 		if (I.job == "Clown")
@@ -20,7 +20,7 @@
 
 	var/cashscore = 0
 	var/dmgscore = 0
-	for(var/mob/living/carbon/human/E in human_list)
+	for(var/mob/living/carbon/human/E as anything in human_list)
 		if(E.stat == DEAD)
 			continue
 		cashscore = 0
