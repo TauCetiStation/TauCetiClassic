@@ -501,7 +501,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/security/execution
 	name = "Execution"
-	icon_state = "brig"
+	icon_state = "execution_room"
 
 /area/station/security/prison
 	name = "Prison Wing"
@@ -509,11 +509,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/security/warden
 	name = "Warden"
-	icon_state = "Warden"
+	icon_state = "warden"
 
 /area/station/security/armoury
 	name = "Armory"
-	icon_state = "Warden"
+	icon_state = "armory"
 
 /area/station/security/hos
 	name = "Head of Security's Office"

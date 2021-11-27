@@ -104,11 +104,8 @@
 
 /obj/item/weapon/stamp/law
 	name = "lawyer's rubber stamp"
-	icon_state = "stamp-deny"
 	item_color = "redcoat"
 	stamp_message = "Lawyer"
-	stamp_color = "#a23e3e"
-	stamp_border = "#660000"
 	big_stamp = TRUE	
 
 /obj/item/weapon/stamp/internalaffairs
