@@ -2259,8 +2259,8 @@
 		return
 
 	say(attention_drawer_text)
-	//attention_drawer_amount--
-	playsound(src, pick(gender == FEMALE ? SOUNDIN_HEY_FEMALE : SOUNDIN_HEY_MALE), VOL_EFFECTS_MASTER, varylow = 7, varyhigh = 10)
+	attention_drawer_amount--
+	playsound(src, pick(gender == FEMALE ? SOUNDIN_HEY_FEMALE : SOUNDIN_HEY_MALE), VOL_EFFECTS_MASTER, varylow = 0.7, varyhigh = 1)
 	addtimer(CALLBACK(src, .proc/increment_attention_drawer), attention_drawer_restore)
 
 /mob/living/carbon/human/proc/increment_attention_drawer()
