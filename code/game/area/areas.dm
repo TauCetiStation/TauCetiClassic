@@ -200,7 +200,7 @@ var/list/ghostteleportlocs = list()
 					C.add_network("Power Alarms")
 				else
 					C.remove_network("Power Alarms")
-			for (var/mob/living/silicon/aiPlayer in silicon_list)
+			for (var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
@@ -229,7 +229,7 @@ var/list/ghostteleportlocs = list()
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
 				C.remove_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
@@ -241,7 +241,7 @@ var/list/ghostteleportlocs = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
 				C.add_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
