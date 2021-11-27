@@ -536,7 +536,7 @@
 			var/choice1 = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice1 == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/mob/living/carbon/M in carbon_list)
+				for(var/mob/living/carbon/M as anything in carbon_list)
 					if(M.virus2.len)
 						for(var/ID in M.virus2)
 							var/datum/disease2/disease/V = M.virus2[ID]
