@@ -147,7 +147,7 @@
 //////////////////////////
 /datum/game_mode/proc/display_roundstart_logout_report()
 	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n</span>"
-	for(var/mob/living/L in living_list)
+	for(var/mob/living/L as anything in living_list)
 
 		if(L.ckey)
 			var/found = 0
