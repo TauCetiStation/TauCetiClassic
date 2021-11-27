@@ -25,3 +25,13 @@
 /datum/keybinding/human/holster/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
 	H.holster_weapon()
+
+/datum/keybinding/human/attention_drawer
+	hotkey_keys = list("None")
+	name = "attention_drawer"
+	full_name = "Hey!"
+	description = "Draw attention of nearby people."
+
+/datum/keybinding/human/attention_drawer/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.attention_drawer()
