@@ -91,7 +91,7 @@ var/list/ventcrawl_machinery = list(
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
 	if(w_class)
-		time = w_class^2
+		time = w_class ** 2
 	if(!do_after(src, time, null, vent_found))
 		return
 
