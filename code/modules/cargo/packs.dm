@@ -1883,3 +1883,36 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_theatre
 	group = "Miscellaneous"
 
+//----------------------------------------------
+//-----------------XENO THREAT-------------------
+//----------------------------------------------
+/datum/supply_pack/xeno_laser
+	name = "Xeno liquidator"
+	contains = list(/obj/item/clothing/suit/bio_suit/old_hazmat/firered,
+					/obj/item/clothing/head/bio_hood/old_hazmat/firered,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/shield/buckler,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	cost = 10000
+	crate_name = "Xeno liquidator crate"
+	group = "xeno"	//there is no such category, so these crates will not be visible in the console
+	hidden = TRUE
+
+/datum/supply_pack/xeno_incendiary
+	name = "Xeno arsonist"
+	contains = list(/obj/item/clothing/head/helmet/space/rig/security,
+					/obj/item/clothing/suit/space/rig/security,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/weapon/shield/riot,
+					/obj/item/clothing/ears/earmuffs,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	cost = 10000
+	crate_name = "Xeno arsonist crate"
+	group = "xeno"
+	hidden = TRUE
