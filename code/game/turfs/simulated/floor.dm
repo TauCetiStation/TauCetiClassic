@@ -504,7 +504,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(istype(C, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = C
-		if(S.wielded)
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)
 			break_tile()
