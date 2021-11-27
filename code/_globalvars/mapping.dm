@@ -9,46 +9,46 @@ var/global/list/global_map = null
 	//3 - AI satellite
 	//5 - empty space
 
-var/shuttle_z = 2	//default
-var/airtunnel_start = 68 // default
-var/airtunnel_stop = 68 // default
-var/airtunnel_bottom = 72 // default
-var/list/monkeystart = list()
-var/list/wizardstart = list()
-var/list/newplayer_start = list()
-var/list/latejoin = list()
-var/list/prisonwarp = list()	//prisoners go to these
-var/list/holdingfacility = list()	//captured people go here
-var/list/xeno_spawn = list()//Aliens spawn at these.
-var/list/tdome1 = list()
-var/list/tdome2 = list()
-var/list/tdomeobserve = list()
-var/list/tdomeadmin = list()
-var/list/prisonsecuritywarp = list()	//prison security goes to these
-var/list/prisonwarped = list()	//list of players already warped
-var/list/blobstart = list()
-var/list/ninjastart = list()
-var/list/copsstart = list()
-var/list/dealerstart = list()
-var/list/eorgwarp = list()
-var/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
-var/list/cardinalz = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
-var/list/cornerdirs = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-var/list/cornerdirsz = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, NORTH|UP, EAST|UP, WEST|UP, SOUTH|UP, NORTH|DOWN, EAST|DOWN, WEST|DOWN, SOUTH|DOWN)
-var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-var/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13, 15, 32, 34, 33, 35, 40, 42, 41, 43, 36, 38, 37, 39, 44, 46, 45, 47, 16, 18, 17, 19, 24, 26, 25, 27, 20, 22, 21, 23, 28, 30, 29, 31, 48, 50, 49, 51, 56, 58, 57, 59, 52, 54, 53, 55, 60, 62, 61, 63)
+var/global/shuttle_z = 2	//default
+var/global/airtunnel_start = 68 // default
+var/global/airtunnel_stop = 68 // default
+var/global/airtunnel_bottom = 72 // default
+var/global/list/monkeystart = list()
+var/global/list/wizardstart = list()
+var/global/list/newplayer_start = list()
+var/global/list/latejoin = list()
+var/global/list/prisonwarp = list()	//prisoners go to these
+var/global/list/holdingfacility = list()	//captured people go here
+var/global/list/xeno_spawn = list()//Aliens spawn at these.
+var/global/list/tdome1 = list()
+var/global/list/tdome2 = list()
+var/global/list/tdomeobserve = list()
+var/global/list/tdomeadmin = list()
+var/global/list/prisonsecuritywarp = list()	//prison security goes to these
+var/global/list/prisonwarped = list()	//list of players already warped
+var/global/list/blobstart = list()
+var/global/list/ninjastart = list()
+var/global/list/copsstart = list()
+var/global/list/dealerstart = list()
+var/global/list/eorgwarp = list()
+var/global/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
+var/global/list/cardinalz = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
+var/global/list/cornerdirs = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+var/global/list/cornerdirsz = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, NORTH|UP, EAST|UP, WEST|UP, SOUTH|UP, NORTH|DOWN, EAST|DOWN, WEST|DOWN, SOUTH|DOWN)
+var/global/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+var/global/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13, 15, 32, 34, 33, 35, 40, 42, 41, 43, 36, 38, 37, 39, 44, 46, 45, 47, 16, 18, 17, 19, 24, 26, 25, 27, 20, 22, 21, 23, 28, 30, 29, 31, 48, 50, 49, 51, 56, 58, 57, 59, 52, 54, 53, 55, 60, 62, 61, 63)
 
 	//away missions
-var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
+var/global/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 
 //List of preloaded templates
-var/list/datum/map_template/map_templates = list()
+var/global/list/datum/map_template/map_templates = list()
 
 //var/list/datum/map_template/ruins_templates = list()
 //var/list/datum/map_template/space_ruins_templates = list()
 //var/list/datum/map_template/lava_ruins_templates = list()
 
 //var/list/datum/map_template/shuttle_templates = list()
-var/list/datum/map_template/shelter_templates = list()
-var/list/datum/map_template/holoscene_templates = list()
-var/list/datum/map_template/spacestructures_templates = list()
+var/global/list/datum/map_template/shelter_templates = list()
+var/global/list/datum/map_template/holoscene_templates = list()
+var/global/list/datum/map_template/spacestructures_templates = list()

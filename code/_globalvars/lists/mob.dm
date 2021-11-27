@@ -5,9 +5,9 @@ var/global/list/language_keys[0]					//table of say codes for all languages
 var/global/list/whitelisted_species = list(HUMAN)
 var/global/list/sprite_sheet_restricted = list()
 
-var/list/clients = list()							//list of all clients
-var/list/admins = list()							//list of all clients whom are admins
-var/list/directory = list()							//list of all ckeys with associated client
+var/global/list/clients = list()							//list of all clients
+var/global/list/admins = list()							//list of all clients whom are admins
+var/global/list/directory = list()							//list of all ckeys with associated client
 
 //Since it didn't really belong in any other category, I'm putting this here
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
@@ -40,7 +40,7 @@ var/global/list/drone_list = list()
 var/global/list/gods_list = list()
 
 //feel free to add shit to lists below
-var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
-var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
-var/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
-var/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
+var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
+var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+var/global/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
+var/global/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
