@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(ticker)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
 				spawn(50)
-					for(var/client/C in clients)
+					for(var/client/C as anything in clients)
 						C.log_client_ingame_age_to_db()
 					world.save_last_mode(SSticker.mode.name)
 

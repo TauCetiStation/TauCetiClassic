@@ -155,7 +155,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/n = 0
 		var/admins = 0
 
-		for(var/client/C in clients)
+		for(var/client/C as anything in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
@@ -227,7 +227,7 @@ var/shutdown_processed = FALSE
 /world/Reboot(reason = 0, end_state)
 	PreShutdown(end_state)
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C << link(BYOND_JOIN_LINK)
 
@@ -255,7 +255,7 @@ var/shutdown_processed = FALSE
 	..()
 
 /world/proc/KickInactiveClients()
-	for (var/client/C in clients)
+	for (var/client/C as anything in clients)
 		if (!(C.holder || C.supporter) && C.is_afk())
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
@@ -358,7 +358,7 @@ var/shutdown_processed = FALSE
 				if(l[i]["reward_price"] == "5.00")
 					donators.Add(ckey(l[i]["name"]))
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		C.update_supporter_status()
 
 /client/proc/update_supporter_status()

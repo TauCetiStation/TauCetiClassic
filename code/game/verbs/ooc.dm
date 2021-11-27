@@ -67,7 +67,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else
 		log_ooc("[name]: [msg]")
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue

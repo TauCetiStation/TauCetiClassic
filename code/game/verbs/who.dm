@@ -8,7 +8,7 @@
 	var/list/Lines = list()
 
 	if(holder && (R_ADMIN & holder.rights))
-		for(var/client/C in clients)
+		for(var/client/C as anything in clients)
 			if(C.ckey in stealth_keys) continue
 			var/entry = "&emsp;[C.key]"
 			if(C.holder && C.holder.fakekey)
@@ -60,7 +60,7 @@
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
 	else
-		for(var/client/C in clients)
+		for(var/client/C as anything in clients)
 			if(C.ckey in stealth_keys) continue
 			if(C.holder && C.holder.fakekey)
 				Lines += C.holder.fakekey

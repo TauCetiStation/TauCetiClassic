@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(vote)
 
 	vote_start_time = world.time
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		interface_client(C)
 
 	var/text = "[poll.initiator] начал голосование \"[poll.name]\"."

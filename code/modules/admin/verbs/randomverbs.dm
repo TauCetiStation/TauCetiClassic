@@ -82,7 +82,7 @@
 	var/missing_ages = 0
 	var/msg = ""
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(C.player_age == "Requires database")
 			missing_ages = 1
 			continue
