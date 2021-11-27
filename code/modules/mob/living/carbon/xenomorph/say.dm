@@ -53,7 +53,7 @@
 
 	var/rendered = "<span class='[tag]'>УЛЕЙ: <i>[name] шепчет, \"[message]\"</i></span>"
 	for(var/key in alien_list)
-		for(var/mob/living/carbon/xenomorph/S in alien_list[key])
+		for(var/mob/living/carbon/xenomorph/S as anything in alien_list[key])
 			if(!S.client)
 				continue
 			if(S.stat == CONSCIOUS)

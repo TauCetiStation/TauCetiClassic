@@ -34,7 +34,7 @@
 	if(powerc(500))
 		// Queen check
 		var/no_queen = TRUE
-		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 			if(Q.stat == DEAD || !Q.key)
 				continue
 			no_queen = FALSE

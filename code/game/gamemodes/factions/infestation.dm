@@ -78,7 +78,7 @@
 	for(var/list_key in alien_list)
 		if(list_key == ALIEN_FACEHUGGER)
 			continue
-		for(var/mob/living/carbon/xenomorph/A in alien_list[list_key])
+		for(var/mob/living/carbon/xenomorph/A as anything in alien_list[list_key])
 			var/turf/xeno_loc = get_turf(A)
 			if(!xeno_loc)
 				continue
