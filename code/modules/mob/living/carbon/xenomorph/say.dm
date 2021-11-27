@@ -59,7 +59,7 @@
 			if(S.stat == CONSCIOUS)
 				S.show_message(rendered, SHOWMSG_AUDIO)
 
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
 		var/tracker = FOLLOW_LINK(M, src)

@@ -86,7 +86,7 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		for(var/mob/dead/observer/O in observer_list)
+		for(var/mob/dead/observer/O as anything in observer_list)
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_GHOSTLY, IGNORE_BORER)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)

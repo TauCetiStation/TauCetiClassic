@@ -165,7 +165,7 @@
 						continue
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
-				for(var/mob/M in observer_list)
+				for(var/mob/M as anything in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
@@ -270,7 +270,7 @@
 				for(var/M in C.essences)
 					to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
 
-				for(var/mob/M in observer_list)
+				for(var/mob/M as anything in observer_list)
 					if(!M.client)
 						continue //skip monkeys, leavers and new players
 					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)

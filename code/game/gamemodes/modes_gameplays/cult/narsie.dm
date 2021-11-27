@@ -10,7 +10,7 @@
 	layer = SINGULARITY_LAYER
 
 /atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
 		var/turf/T = get_turf(src)
@@ -190,7 +190,7 @@
 		return
 
 	//no living humans, follow a ghost instead.
-	for(var/mob/dead/observer/ghost in observer_list)
+	for(var/mob/dead/observer/ghost as anything in observer_list)
 		if(!ghost.client)
 			continue
 		var/turf/pos = get_turf(ghost)

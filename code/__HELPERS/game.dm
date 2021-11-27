@@ -616,7 +616,7 @@
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
-	for(var/mob/dead/observer/O in observer_list)
+	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
