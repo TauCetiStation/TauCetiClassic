@@ -10,7 +10,6 @@
 	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	var/wielded = FALSE
 
 /obj/item/weapon/spear/atom_init()
 	. = ..()
@@ -23,27 +22,20 @@
 	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
 	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
 
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 18, 10, "spearglass1")
 	AddComponent(/datum/component/swiping, SCB)
 
-/// triggered on wield of two handed item
-/obj/item/weapon/spear/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 18
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "spearglass1"
 
-/// triggered on unwield of two handed item
-/obj/item/weapon/spear/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
+	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/spear/proc/can_sweep_push(atom/target, mob/user)
-	return wielded
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
-	return wielded
-
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))

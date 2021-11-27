@@ -334,7 +334,7 @@ SUBSYSTEM_DEF(demo)
 		appearance.pixel_y == 0 ? "" : appearance.pixel_y,
 		appearance.blend_mode <= 1 ? "" : appearance.blend_mode,
 		appearance_transform_string != "i" ? appearance_transform_string : "",
-		appearance:invisibility == 0 ? "" : appearance:invisibility, // colon because dreamchecker is dumb
+		appearance:invisibility == INVISIBILITY_NONE ? "" : appearance:invisibility, // colon because dreamchecker is dumb
 		appearance.pixel_w == 0 ? "" : appearance.pixel_w,
 		appearance.pixel_z == 0 ? "" : appearance.pixel_z,
 		appearance.overlays.len ? overlays_string : "",

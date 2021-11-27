@@ -1,8 +1,8 @@
-var/const/SYNDIEBOMB_WIRE_BOOM     = 1    // Explodes if pulsed or cut while active, defuses a bomb that isn't active on cut
-var/const/SYNDIEBOMB_WIRE_UNBOLT   = 2    // Unbolts the bomb if cut, hint on pulsed
-var/const/SYNDIEBOMB_WIRE_DELAY    = 4    // Raises the timer on pulse, does nothing on cut
-var/const/SYNDIEBOMB_WIRE_PROCEED  = 8    // Lowers the timer, explodes if cut while the bomb is active
-var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed, will hint if pulsed while already active, will stop a timer a bomb on cut
+var/global/const/SYNDIEBOMB_WIRE_BOOM     = 1    // Explodes if pulsed or cut while active, defuses a bomb that isn't active on cut
+var/global/const/SYNDIEBOMB_WIRE_UNBOLT   = 2    // Unbolts the bomb if cut, hint on pulsed
+var/global/const/SYNDIEBOMB_WIRE_DELAY    = 4    // Raises the timer on pulse, does nothing on cut
+var/global/const/SYNDIEBOMB_WIRE_PROCEED  = 8    // Lowers the timer, explodes if cut while the bomb is active
+var/global/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed, will hint if pulsed while already active, will stop a timer a bomb on cut
 
 /datum/wires/syndicatebomb
 	random = TRUE
