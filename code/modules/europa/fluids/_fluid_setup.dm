@@ -1,5 +1,5 @@
 // We share overlays for all fluid turfs to sync icon animation.
-var/list/fluid_images = list()
+var/global/list/fluid_images = list()
 /proc/get_fluid_icon(img_state)
 	if(!fluid_images[img_state])
 		fluid_images[img_state] = image('icons/effects/liquids.dmi',img_state)

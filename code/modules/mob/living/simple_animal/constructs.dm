@@ -43,7 +43,7 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 	var/image/glow = image(icon, src, "glow_[icon_state]", LIGHTING_LAYER + 1)
-	glow.plane = LIGHTING_PLANE + 1
+	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
 /mob/living/simple_animal/construct/death()

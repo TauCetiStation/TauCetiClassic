@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/in_hand/Click()
 	if(cast_check())
 		cast()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
 	return (!user.lying && ..())
@@ -262,7 +262,7 @@
 	animation.pixel_y = 32
 	animation.alpha = 0
 	animation.layer = LIGHTING_LAYER + 1
-	animation.plane = LIGHTING_PLANE + 1
+	animation.plane = ABOVE_LIGHTING_PLANE
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)

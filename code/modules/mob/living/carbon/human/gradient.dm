@@ -1,4 +1,4 @@
-var/list/hair_gradients = list(
+var/global/list/hair_gradients = list(
 	"None" = "none",
 	"Fade (Up)" = "fadeup",
 	"Fade (Down)" = "fadedown",
