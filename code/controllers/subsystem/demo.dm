@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(demo)
 					var/atom/movable/as_movable = C
 					if(as_movable.loc != T)
 						continue
-					if(isobj(C) || ismob(C))
+					if((isobj(C) || ismob(C)) && !(as_movable.flags_2 & PROHIBIT_FOR_DEMO_2))
 						turf_list += encode_init_obj(C)
 				if(turf_list.len)
 					if(spacing)
@@ -140,8 +140,9 @@ SUBSYSTEM_DEF(demo)
 	// track objects that exist in nullspace
 	var/nullspace_list = list()
 	for(var/atom/movable/M in world)
-		if(M.loc != null) continue
-		if(!isobj(M) && !ismob(M))
+		if(M.loc != null)
+			continue
+		if((!isobj(M) && !ismob(M)) || !(M.flags_2 & PROHIBIT_FOR_DEMO_2))
 			continue
 		nullspace_list += encode_init_obj(M)
 		CHECK_TICK
@@ -251,8 +252,9 @@ SUBSYSTEM_DEF(demo)
 	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
 	var/list/encoded_contents = list()
 	for(var/C in M.contents)
-		if(isobj(C) || ismob(C))
-			encoded_contents += encode_init_obj(C)
+		var/atom/A = C
+		if((isobj(A) || ismob(A)) && !(A.flags_2 & PROHIBIT_FOR_DEMO_2))
+			encoded_contents += encode_init_obj(A)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
@@ -332,7 +334,7 @@ SUBSYSTEM_DEF(demo)
 		appearance.pixel_y == 0 ? "" : appearance.pixel_y,
 		appearance.blend_mode <= 1 ? "" : appearance.blend_mode,
 		appearance_transform_string != "i" ? appearance_transform_string : "",
-		appearance:invisibility == 0 ? "" : appearance:invisibility, // colon because dreamchecker is dumb
+		appearance:invisibility == INVISIBILITY_NONE ? "" : appearance:invisibility, // colon because dreamchecker is dumb
 		appearance.pixel_w == 0 ? "" : appearance.pixel_w,
 		appearance.pixel_z == 0 ? "" : appearance.pixel_z,
 		appearance.overlays.len ? overlays_string : "",
@@ -411,12 +413,12 @@ SUBSYSTEM_DEF(demo)
 	..(msg)
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/T)
-	if(!isturf(T))
+	if(!isturf(T) || T.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	marked_turfs[T] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return
@@ -426,7 +428,7 @@ SUBSYSTEM_DEF(demo)
 
 // I can't wait for when TG ports this and they make this a #define macro.
 /datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return

@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(ticker)
 			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
-			return 0
+			return FALSE
 
 		// hiding forced gamemode in secret
 		if(istype(bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(ticker)
 		QDEL_NULL(mode)
 		current_state = GAME_STATE_PREGAME
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
 	//Configure mode and assign player to special mode stuff
 	SSjob.DivideOccupations() //Distribute jobs
@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(ticker)
 		world.log << "The gamemode setup for [mode.name] errored out."
 		QDEL_NULL(mode)
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
 	if(!bundle || !bundle.hidden)
 		mode.announce()
@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(ticker)
 		//Print a list of antagonists to the server log
 		antagonist_announce()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/show_blurbs()
 	for(var/datum/mind/M in SSticker.minds)
@@ -525,7 +525,7 @@ SUBSYSTEM_DEF(ticker)
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)
@@ -537,7 +537,7 @@ SUBSYSTEM_DEF(ticker)
 		M.mind.transfer_to(L)
 		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		L.equipOutfit(/datum/outfit/arena)
-		L.name = "Gladiator ([rand(1, 1000)])"
+		L.name = L.key
 		L.real_name = L.name
 		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
