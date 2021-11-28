@@ -38,7 +38,7 @@
 		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
 	)
 	syndie = list(
-		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1;
+		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
 	)
 	prices = list(
 		/obj/item/weapon/storage/fancy/cigarettes = 20,
