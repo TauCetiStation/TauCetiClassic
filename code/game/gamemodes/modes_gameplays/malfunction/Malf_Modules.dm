@@ -128,6 +128,7 @@ robot_fabricator
 	if(SSticker.Malf_announce_stage < 4)
 		if(tgui_alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [SSticker.hacked_apcs] APCs.", "Takeover", list("Yes", "No")) != "Yes")
 			return
+		SSticker.Malf_announce_stage = 4
 		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 		announce_forth.play()
 
