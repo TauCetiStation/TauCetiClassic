@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,
@@ -22,7 +22,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = ABOVE_LIGHTING_PLANE
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO

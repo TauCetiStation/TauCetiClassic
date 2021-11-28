@@ -1,4 +1,4 @@
-var/atom/movable/screen/robot_inventory
+var/global/atom/movable/screen/robot_inventory
 
 
 /datum/hud/proc/robot_hud()

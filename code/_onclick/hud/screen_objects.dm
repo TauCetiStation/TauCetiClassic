@@ -9,13 +9,13 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/mob/screen1.dmi'
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
+	plane = HUD_PLANE
 	flags = ABSTRACT
+	vis_flags = VIS_INHERIT_PLANE
+	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
-	appearance_flags = APPEARANCE_UI
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
@@ -816,21 +816,22 @@
 	deltimer(timer)
 	return ..()
 
-/atom/movable/screen/cooldown_overlay/proc/start_cooldown(delay)
+/atom/movable/screen/cooldown_overlay/proc/start_cooldown(delay, need_timer = TRUE)
 	parent_button.color = "#8000007c"
 	parent_button.vis_contents += src
-	if(delay)
-		cooldown_time = delay
+	cooldown_time = delay
 	set_maptext(cooldown_time)
-	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+	if(need_timer)
+		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/tick()
-	if(cooldown_time == 0)
+	if(cooldown_time == 1)
 		stop_cooldown()
 		return
 	cooldown_time--
 	set_maptext(cooldown_time)
-	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+	if(timer)
+		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
 	cooldown_time = 0
@@ -846,7 +847,9 @@
 	var/atom/movable/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback
-	cooldown.start_cooldown(time)
+		cooldown.start_cooldown(time)
+	else
+		cooldown.start_cooldown(time, FALSE)
 	return cooldown
 
 /atom/movable/screen/mood

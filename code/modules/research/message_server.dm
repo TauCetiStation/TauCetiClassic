@@ -200,7 +200,7 @@
 /datum/feedback_variable/proc/get_parsed()
 	return list(variable,value,details)
 
-var/obj/machinery/blackbox_recorder/blackbox
+var/global/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder
 	icon = 'icons/obj/stationobjs.dmi'

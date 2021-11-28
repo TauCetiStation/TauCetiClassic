@@ -8,6 +8,7 @@
 	icon_state = null
 	layer = GAME_PLANE
 	plane = GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /**
  * A generic background object.
@@ -20,6 +21,7 @@
 	icon_state = "clear"
 	layer = GAME_PLANE
 	plane = GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /**
  * Sets screen_loc of this screen object, in form of point coordinates,
