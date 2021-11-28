@@ -1,4 +1,4 @@
-var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
+var/global/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
                                                 /area/shuttle/escape_pod1/transit,
                                                 /area/shuttle/escape_pod2/transit,
                                                 /area/shuttle/escape_pod3/transit,
@@ -11,7 +11,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 #define ANNOUNCE_ALL (~0)
 
 /* Announcement sounds */
-var/list/announcement_sounds = list(
+var/global/list/announcement_sounds = list(
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
