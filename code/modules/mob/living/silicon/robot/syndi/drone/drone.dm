@@ -23,7 +23,7 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	uplink = new /obj/item/device/drone_uplink()
 
-    flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
+	flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
     loose_control()
