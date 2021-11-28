@@ -1285,7 +1285,7 @@
 
 	update_sight()
 
-	if( stat == DEAD )
+	if(stat == DEAD)
 		if(healths)
 			healths.icon_state = "health7"	//DEAD healthmeter
 	else
