@@ -224,3 +224,15 @@
     installed = TRUE
     D.uplink.points -= cost
     return TRUE
+
+/datum/drone_upgrade/internal/selfdestruct
+    name = "Explosive self-destruct mechanism"
+    desc = "Creates a medium-sized explosion to obliterate any trace of your existence. Needs to be activated manually."
+    items = list(/obj/item/borg/selfdestruct)
+    cost = 18
+
+/datum/drone_upgrade/internal/selfdestruct_emp
+    name = "EMP self-destruct mechanism"
+    desc = "Creates a medium-sized EMP to obliterate any trace of your existence. Needs to be activated manually."
+    items = list(/obj/item/borg/selfdestruct/emp)
+    cost = 15
