@@ -257,8 +257,8 @@ var/datum/controller/master/Master = new()
 		sortTim(I, /proc/cmp_subsystem_priority)
 		I += tickersubsystems
 
-	var/cached_runlevel = current_runlevel
-	var/list/current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
+	var/cached_runlevel = null // force subsystems reschedule
+	var/list/current_runlevel_subsystems = null
 
 	init_timeofday = world.timeofday
 	init_time = world.time
@@ -377,8 +377,6 @@ var/datum/controller/master/Master = new()
 		SS_flags = SS.flags
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
-			continue
-		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
 		if (SS.postponed_fires >= 1)
 			SS.postponed_fires--
