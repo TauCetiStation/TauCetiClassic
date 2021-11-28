@@ -225,6 +225,28 @@
     D.uplink.points -= cost
     return TRUE
 
+/datum/drone_upgrade/internal/smoke
+    name = "Smokescreen charges"
+    desc = "Three smokescreen charges. Activate it to hide yourself and your fellows from the enemy sight."
+    cost = 2
+    single_use = FALSE
+
+/datum/drone_upgrade/internal/smoke/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install(D))
+        return FALSE
+
+    if(installed)
+        for(var/obj/effect/proc_holder/spell/S in D.spell_list)
+            if(istype(S, /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke))
+                S.charge_counter = 3
+                D.uplink.points -= cost
+                return TRUE
+
+    D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke())
+    installed = TRUE
+    D.uplink.points -= cost
+    return TRUE
+
 /datum/drone_upgrade/internal/corporate_disguise
     name = "NanoTrasen disguise"
     desc = "A bunch of hull modifications, that make you look exactly as an NT maintenance drone. Security protocols hack is not included!"

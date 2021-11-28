@@ -3,12 +3,12 @@
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone
     panel = "Drone upgrades"
-    overlay_icon_state = "wiz_tech"
+    desc = ""
+    action_icon_state = "drone"
     clothes_req = FALSE
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost
     name = "Maneuverability boost"
-    desc = ""
     charge_max = 600
     var/duration = 50
 
@@ -37,6 +37,17 @@
     A.active_usage /= POWER_USAGE_MULTIPLIER
     D.speed += 2
     D.lying = FALSE
+
+/obj/effect/proc_holder/spell/no_target/syndi_drone/smoke
+    name = "Deploy smokescreen"
+    charge_type = "charges"
+    charge_max = 3
+
+/obj/effect/proc_holder/spell/no_target/syndi_drone/smoke/cast(list/targets, mob/user)
+    var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+    smoke.set_up(10, 0, get_turf(user))
+    playsound(user, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+    smoke.start()
 
 #undef POWER_USAGE_MULTIPLIER
 #undef BURN_DAMAGE_CAP
