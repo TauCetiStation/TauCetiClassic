@@ -13,7 +13,7 @@
 /datum/events/proc/addEventType(event_type)
 	if(!(event_type in events) || !islist(events[event_type]))
 		events[event_type] = list()
-		return 1
+		return TRUE
 	return
 
 
@@ -41,13 +41,13 @@
 	return
 
 // Arguments: event_type as text, E as /datum/event_mecha
-// Returns: 1 if event cleared, null on error
+// Returns: TRUE if event cleared, FALSE on error
 /datum/events/proc/clearEvent(event_type, datum/event/E)
 	if(!event_type || !E)
-		return
+		return FALSE
 	var/list/event = listgetindex(events,event_type)
 	event -= E
-	return 1
+	return TRUE
 
 
 /datum/event_mecha
@@ -63,5 +63,5 @@
 	//world << "Event fired"
 	if(listener)
 		call(listener,proc_name)(arglist(args))
-		return 1
-	return
+		return TRUE
+	return FALSE

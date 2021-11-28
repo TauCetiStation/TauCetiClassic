@@ -54,7 +54,8 @@
 			if(is_station_level(I.z))
 				station_intercom_list += I
 
-		R = pick(station_intercom_list)
+		if(station_intercom_list.len)
+			R = pick(station_intercom_list)
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate suitable Intercom, installing into a Radio instead!")

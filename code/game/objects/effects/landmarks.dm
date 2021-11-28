@@ -3,6 +3,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = TURF_LAYER
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
