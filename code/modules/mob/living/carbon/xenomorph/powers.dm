@@ -39,7 +39,7 @@
 /obj/effect/proc_holder/spell/targeted/xenomorph/weeds
 	name = "Plant Weeds (50)"
 	desc = "Plants some alien weeds."
-	action_icon_state = "alien_plant"
+	action_icon_state = "plant_weeds"
 	spell_cost = 50
 	sound = 'sound/effects/resin_build.ogg'
 
@@ -67,7 +67,7 @@
 /obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg
 	name = "Lay Egg (75)"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
-	action_icon_state = "alien_plant"
+	action_icon_state = "lay_egg"
 	spell_cost = 75
 	sound = 'sound/effects/resin_build.ogg'
 
@@ -97,6 +97,7 @@
 	desc = "Whisper to someone."
 	spell_cost = 10
 	range = 7
+	action_icon_state = "xeno_whisper"
 	var/msg = ""
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/whisp/before_cast(list/targets, mob/user)
@@ -127,6 +128,7 @@
 	desc = "Transfer Plasma to another alien."
 	range = 1
 	spell_cost = 0	//How much plasma to transfer?
+	action_icon_state = "transfer_plasma"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma/before_cast(list/targets, mob/user)
 	var/mob/living/M = targets[1]
@@ -162,6 +164,7 @@
 	range = 7
 	max_targets = 0	//unlimited
 	spell_cost = 200
+	action_icon_state = "queen_screech"
 	sound = 'sound/voice/xenomorph/queen_roar.ogg'
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/screech/cast(list/targets, mob/user = usr)
@@ -209,6 +212,7 @@
 	desc = "Secrete tough malleable resin."
 	spell_cost = 75
 	var/build_name = null
+	action_icon_state = "secrete_resin"
 	sound = 'sound/effects/resin_build.ogg'
 	var/list/buildings = list("resin door" = /obj/structure/mineral_door/resin,
 							"resin wall" = /obj/structure/alien/resin/wall,
@@ -262,6 +266,7 @@
 /obj/effect/proc_holder/spell/targeted/xenomorph/hide
 	name = "Спрятаться"
 	desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
+	action_icon_state = "xeno_hide"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/hide/cast(list/targets, mob/user = usr)
 	if (user.layer != TURF_LAYER+0.2)
@@ -279,6 +284,7 @@
 	name = "Evolve (500)"
 	desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	spell_cost = 500
+	action_icon_state = "drone_evolve"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(!isturf(user.loc))
@@ -315,6 +321,7 @@
 /obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve
 	name = "Эволюция"
 	desc = "Превратиться во взрослого ксеноморфа."
+	action_icon_state = "alien_evolve_larva"
 	var/list/castes = list("Охотник" = /mob/living/carbon/xenomorph/humanoid/hunter,
 							"Страж" = /mob/living/carbon/xenomorph/humanoid/sentinel,
 							"Трутень" = /mob/living/carbon/xenomorph/humanoid/drone)
