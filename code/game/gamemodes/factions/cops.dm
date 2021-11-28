@@ -44,9 +44,6 @@
 	for(var/i in 1 to spawncount)
 		new /datum/spawner/dealer()
 
-/datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
-
-
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
 	var/list/gangs = find_factions_by_type(/datum/faction/gang)
