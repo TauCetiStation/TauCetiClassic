@@ -39,7 +39,6 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
-	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()

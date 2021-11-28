@@ -301,3 +301,20 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/carbon/xenomorph/proc/toggle_nvg(message = 1)
+	if(stat != CONSCIOUS)
+		return
+
+	src.nightvision = !src.nightvision
+
+	if(!src.nightvision)
+		src.nightvisionicon.icon_state = "nightvision0"
+	else if(src.nightvision == 1)
+		src.nightvisionicon.icon_state = "nightvision1"
+
+	update_sight()
+	if(message)
+		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
+	else
+		return

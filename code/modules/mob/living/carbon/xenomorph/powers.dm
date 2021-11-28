@@ -1,39 +1,7 @@
-/mob/living/carbon/xenomorph/proc/toggle_nvg(message = 1)
-	if(stat != CONSCIOUS)
-		return
-
-	src.nightvision = !src.nightvision
-
-	if(!src.nightvision)
-		src.nightvisionicon.icon_state = "nightvision0"
-	else if(src.nightvision == 1)
-		src.nightvisionicon.icon_state = "nightvision1"
-
-	update_sight()
-	if(message)
-		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
-	else
-		return
-
-/mob/living/carbon/xenomorph/proc/hide()
-	set name = "Спрятаться"
-	set desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
-	set category = "Alien"
-
-	if(incapacitated())
-		return
-
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
-		visible_message("<span class='danger'>[src] исчезает.</span>", "<span class='notice'>Сейчас вы прячетесь.</span>")
-	else
-		layer = MOB_LAYER
-		visible_message("<span class='warning'>[src] появляется.</span>", "<span class='notice'>Вы больше не прячетесь.</span>")
-
 #define ALREADY_STRUCTURE_THERE (locate(/obj/structure/alien/air_plant) in get_turf(src))      || (locate(/obj/structure/alien/egg) in get_turf(src)) \
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
-                             // does anyone have an idea how to make it shorter?
+                            
 #define CHECK_WEEDS (locate(/obj/structure/alien/weeds) in get_turf(src))
 
 /mob/living/carbon/xenomorph/proc/check_enough_plasma(cost)
@@ -64,6 +32,10 @@
 		return FALSE
 	. = ..(skipcharge, user, try_start)
 
+//----------------------------------------------
+//-----------------Plant Weeds------------------
+//----------------------------------------------
+
 /obj/effect/proc_holder/spell/targeted/xenomorph/weeds
 	name = "Plant Weeds (50)"
 	desc = "Plants some alien weeds."
@@ -88,6 +60,10 @@
 	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 	new /obj/structure/alien/weeds/node(user.loc)
 
+//----------------------------------------------
+//-----------------Lay Egg----------------------
+//----------------------------------------------
+
 /obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg
 	name = "Lay Egg (75)"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
@@ -111,6 +87,10 @@
 	alien.adjustToxLoss(-spell_cost)
 	user.visible_message("<span class='notice'><B>[user] has laid an egg!</B></span>")
 	new /obj/structure/alien/egg(user.loc)
+
+//----------------------------------------------
+//-----------------Whisper----------------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/whisp
 	name = "Whisper (10)"
@@ -137,6 +117,10 @@
 	to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head... <I>[msg]</I></span>")
 	to_chat(user, "<span class='noticealien'>You said: \"<I>[msg]</I>\" to [M]</span>")
 	msg = ""
+
+//----------------------------------------------
+//---------------Transfer Plasma----------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma
 	name = "Transfer Plasma"
@@ -165,6 +149,10 @@
 		to_chat(user, "<span class='noticealien'>You have transfered [spell_cost] plasma to [M]</span>")
 	else
 		to_chat(user, "<span class='warning'>You need to be closer.</span>")
+
+//----------------------------------------------
+//-------------------Screech--------------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/screech
 	name = "Screech! (200)"
@@ -211,6 +199,10 @@
 			H.playsound_local(null, 'sound/effects/mob/earring_15s.ogg', VOL_EFFECTS_MASTER)
 			H.Stun(5)
 			H.Paralyse(2)
+
+//----------------------------------------------
+//----------------Secrete Resin-----------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/resin
 	name = "Secrete Resin (75)"
@@ -263,6 +255,10 @@
 	new build(user.loc)
 	build_name = null
 
+//----------------------------------------------
+//---------------------Hide---------------------
+//----------------------------------------------
+
 /obj/effect/proc_holder/spell/targeted/xenomorph/hide
 	name = "Спрятаться"
 	desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
@@ -274,6 +270,10 @@
 	else
 		user.layer = MOB_LAYER
 		user.visible_message("<span class='warning'>[user] появляется.</span>", "<span class='notice'>Вы больше не прячетесь.</span>")
+
+//----------------------------------------------
+//---------------Drone Evolve-------------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen
 	name = "Evolve (500)"
@@ -307,6 +307,10 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(alien)
+
+//----------------------------------------------
+//---------------Larva Evolve-------------------
+//----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve
 	name = "Эволюция"
@@ -374,7 +378,6 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
-
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS

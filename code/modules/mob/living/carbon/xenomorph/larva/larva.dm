@@ -29,7 +29,6 @@
 	name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_LARVA] += src
 	. = ..()
 
