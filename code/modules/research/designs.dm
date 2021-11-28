@@ -772,6 +772,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/science_tool
 	category = list("Misc")
 
+/datum/design/portalgun
+	name = "Portal Gun"
+	desc = "Experimental bluespace projector able to create interconnected wormholes at user's will."
+	id = "portalgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 5000, MAT_SILVER = 5000, MAT_PHORON = 10000, MAT_URANIUM = 5000)
+	build_path = /obj/item/weapon/gun/energy/gun/portal
+	category = list("Misc")
+
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
