@@ -6,7 +6,7 @@
   * Odds are, there is a reason
   *
  **/
-var/datum/controller/master/Master = new()
+var/global/datum/controller/master/Master = new()
 
 //THIS IS THE INIT ORDER
 //Master -> SSPreInit -> world -> config -> SSInitialize -> SSPostInitialize -> Failsafe
