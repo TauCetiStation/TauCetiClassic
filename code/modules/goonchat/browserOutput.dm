@@ -1,6 +1,6 @@
-var/savefile/iconCache = new /savefile("data/iconCache.sav")
-var/chatDebug = file("data/chatDebug.log")
-var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
+var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
+var/global/chatDebug = file("data/chatDebug.log")
+var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
 
 /datum/chatOutput
 	var/client/owner = null

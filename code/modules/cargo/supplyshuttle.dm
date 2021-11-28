@@ -1,5 +1,5 @@
 //Config stuff
-var/list/mechtoys = list(
+var/global/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
 	/obj/item/toy/prize/fireripley,
 	/obj/item/toy/prize/deathripley,

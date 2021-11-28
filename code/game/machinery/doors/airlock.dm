@@ -13,7 +13,7 @@
 #define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
 #define AIRLOCK_DENY_LIGHT_COLOR "#c23b23"
 
-var/list/airlock_overlays = list()
+var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -1000,7 +1000,7 @@ var/list/airlock_overlays = list()
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/fireaxe/F = C
-					if(F.wielded)
+					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	open(1)
 					else
 						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
@@ -1009,7 +1009,7 @@ var/list/airlock_overlays = list()
 			else
 				if(beingcrowbarred == 0)
 					var/obj/item/weapon/fireaxe/F = C
-					if(F.wielded)
+					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	close(1)
 					else
 						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")

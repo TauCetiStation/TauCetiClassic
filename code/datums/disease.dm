@@ -17,7 +17,7 @@ to null does not delete the object itself. Thank you.
 
 */
 
-var/list/diseases = subtypesof(/datum/disease)
+var/global/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease
