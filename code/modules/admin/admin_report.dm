@@ -23,7 +23,7 @@
 	else if(href_list["action"] == "edit")
 		C.edit_report(text2num(href_list["ID"]))
 
-var/datum/report_topic_handler/report_topic_handler
+var/global/datum/report_topic_handler/report_topic_handler
 
 /world/New()
 	..()
