@@ -5056,15 +5056,8 @@
 	icon_state = "vault"
 	},
 /area/station/security/hos)
-"aiA" = (
-/obj/machinery/computer/med_data,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitered"
-	},
-/area/station/security/brig)
 "aiB" = (
-/obj/machinery/iv_drip,
+/obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -5358,6 +5351,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	icon_state = "whiteredcorner"
 	},
@@ -72004,12 +71998,12 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/dormitory)
 "eCb" = (
-/obj/item/weapon/flora/pottedplant/dead,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -79237,8 +79231,8 @@
 	},
 /area/station/security/prison)
 "pcb" = (
-/obj/item/weapon/flora/pottedplant/sticky,
 /obj/machinery/light,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -110568,7 +110562,7 @@ adJ
 ann
 agH
 adJ
-aiA
+aiB
 ajA
 akG
 adJ
