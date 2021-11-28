@@ -49,7 +49,7 @@ export const SpawnersMenu = (props, context) => {
                     </LabeledList.Item>
                   )}
                   {spawner.flavor_text && (
-                    <LabeledList.Item label="Дополнительное описание">
+                    <LabeledList.Item label="Дополнительно">
                       {spawner.flavor_text}
                     </LabeledList.Item>
                   )}
