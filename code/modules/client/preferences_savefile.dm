@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 33
+#define SAVEFILE_VERSION_MAX 34
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,6 +226,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 33)
 		S["parallax_theme"] << null
+
+	if(current_version < 34)
+		var/list/diff = ignore_question - global.full_ignore_question
+		if(diff.len)
+			S["ignore_question"] << ignore_question - diff
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

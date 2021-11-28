@@ -33,7 +33,6 @@
 #define IGNORE_FAMILIAR     "Religion familiar"
 #define IGNORE_NARSIE_SLAVE "Nar-sie slave"
 #define IGNORE_COPS         "Cops"
-#define IGNORE_DEALER       "Smuggler"
 #define IGNORE_SYNDI_BORG   "Syndicate robot"
 #define IGNORE_FACEHUGGER   "Facehugger"
 #define IGNORE_LAVRA        "Lavra"
@@ -53,7 +52,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_RAIDER     = null,
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
-	ROLE_FAMILIES   = list(IGNORE_COPS, IGNORE_DEALER),
+	ROLE_FAMILIES   = list(IGNORE_COPS),
 	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE ,IGNORE_FAMILIAR, IGNORE_BORER),
 )
 

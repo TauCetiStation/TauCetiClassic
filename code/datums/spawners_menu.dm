@@ -28,6 +28,8 @@ var/global/list/datum/spawners = list()
 /datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
 	if(!ghost.client)
 		return FALSE
+	if(!required_pref)
+		return TRUE
 	if(jobban_isbanned(ghost, required_pref) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, required_pref))
 		return FALSE
 	return TRUE
