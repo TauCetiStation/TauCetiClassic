@@ -7,6 +7,7 @@
     faction = "syndicate"
     req_access = list(access_syndicate)
     holder_type = /obj/item/weapon/holder/drone/syndi
+    eyes_overlay = "eyes-syndibot"
 
     var/obj/item/device/drone_uplink/uplink = null
     var/mob/living/carbon/human/operator = null //Mob controlling the drone
@@ -21,6 +22,8 @@
 	module = new /obj/item/weapon/robot_module/syndidrone(src)
 	laws = new /datum/ai_laws/syndicate_override()
 	uplink = new /obj/item/device/drone_uplink()
+
+    flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
     loose_control()
@@ -52,7 +55,7 @@
 /mob/living/silicon/robot/drone/syndi/updatename()
 	var/N = rand(100,999)
 	real_name = "syndicate drone ([N])"
-	name = "maintenance drone ([N])"
+	name = "suspicious drone ([N])"
 
 /mob/living/silicon/robot/drone/syndi/pick_module()
     uplink.interact(src)

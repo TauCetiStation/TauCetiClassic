@@ -225,6 +225,22 @@
     D.uplink.points -= cost
     return TRUE
 
+/datum/drone_upgrade/internal/corporate_disguise
+    name = "NanoTrasen disguise"
+    desc = "A bunch of hull modifications, that make you look exactly as an NT maintenance drone. Security protocols hack is not included!"
+    cost = 6
+
+/datum/drone_upgrade/internal/corporate_disguise/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install(D))
+        return FALSE
+
+    D.eyes_overlay = "eyes-repairbot"
+    D.name = "maintenance drone " + copytext(D.name, -5)
+    D.flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
+    D.uplink.points -= cost
+    installed = TRUE
+    return TRUE
+
 /datum/drone_upgrade/internal/selfdestruct
     name = "Explosive self-destruct mechanism"
     desc = "Creates a medium-sized explosion to obliterate any trace of your existence. Needs to be activated manually."

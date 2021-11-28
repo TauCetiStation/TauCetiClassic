@@ -530,6 +530,10 @@ var/list/turret_icons
 	if(isrobot(L)) //If the target is robot and we want to shoot robots
 		if(lethal && shot_synth)
 			return TURRET_PRIORITY_TARGET
+		var/mob/living/silicon/robot/R = L
+		message_admins("Scrambledcodes is [R.scrambledcodes]")
+		if(lethal && R.scrambledcodes) //If AI failes to determine robot as a fellow
+			return TURRET_PRIORITY_TARGET
 		else
 			return TURRET_NOT_TARGET
 
