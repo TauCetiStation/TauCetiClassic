@@ -1,6 +1,9 @@
 /datum/religion_rites/instant/cult
 	religion_type = /datum/religion/cult
 
+/datum/religion_rites/instant/chaplain
+	religion_type = /datum/religion/chaplain
+
 /datum/religion_rites/instant/cult/sacrifice
 	name = "Жертвоприношение"
 	desc = "Душа для древнего бога."
