@@ -173,7 +173,7 @@
 /obj/structure/morgue/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	playsound(user, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='warning'>You are overloading the body detection mechanism.</span>")
 	if (connected)
 		icon_state = "morgue0"
