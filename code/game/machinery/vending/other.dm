@@ -37,6 +37,9 @@
 	premium = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
 	)
+	syndie = list(
+		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1;
+	)
 	prices = list(
 		/obj/item/weapon/storage/fancy/cigarettes = 20,
 		/obj/item/weapon/storage/fancy/cigarettes/menthol = 30,
@@ -63,6 +66,10 @@
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/device/flashlight/seclite = 4,
+	)
+	syndie = list(
+		/obj/item/ammo_box/a357 = 1,
+		/obj/item/ammo_box/magazine/m9mm = 1,
 	)
 
 /obj/machinery/vending/weirdomat
@@ -188,6 +195,9 @@
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
 		/obj/item/weapon/kitchenknife/butch = 2,
+	)
+	syndie = list(
+		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 

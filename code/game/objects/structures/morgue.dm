@@ -22,6 +22,7 @@
 	var/obj/structure/m_tray/connected = null
 	var/check_delay = 0
 	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
+	var/emagged = 0
 
 /obj/structure/morgue/Destroy()
 	QDEL_NULL(connected)
@@ -46,7 +47,7 @@
 		STOP_PROCESSING(SSobj, src)
 		icon_state = "morgue0"
 	else
-		if (contents.len)
+		if (contents.len && !emagged)
 			START_PROCESSING(SSobj, src)
 			icon_state = "morgue2"
 		else
@@ -96,7 +97,7 @@
 		update()
 		return //nothing inside
 
-	if (has_clonable_bodies())
+	if (has_clonable_bodies() && !emagged)
 		if(beeper)
 			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		icon_state = "morgue3"
@@ -168,6 +169,18 @@
 			src.name = "Morgue"
 	else
 		..()
+
+/obj/structure/morgue/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='warning'>You are overloading the body detection mechanism.</span>")
+	if (connected)
+		icon_state = "morgue0"
+	else
+		icon_state = "morgue1"
+	emagged = 1
+	return TRUE
 
 /obj/structure/morgue/relaymove(mob/user)
 	if (user.incapacitated())
