@@ -22,12 +22,16 @@
 
 	var/datum/announcement/centcomm/gang/announce_gamemode/first_announce = new
 
+/datum/faction/cops/New()
+	. = ..()
+	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), 10, TIMER_STOPPABLE) // called here because cops are only faction
+
 /datum/faction/cops/OnPostSetup()
 	. = ..()
 	start_time = world.time
 	end_time = start_time + 80 MINUTES
 
-	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES), TIMER_STOPPABLE) // called here because cops are only faction
+	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), 10, TIMER_STOPPABLE) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
@@ -36,27 +40,13 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)
+	//var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)
 	var/spawncount = 2
-	while(spawncount > 0 && candidates.len)
-		var/spawnloc = pick(dealerstart)
-		var/mob/candidate = pick(candidates)
-
-		INVOKE_ASYNC(src, .proc/traitor_create_apperance, spawnloc, candidate.client)
-
-		candidates -= candidate
-		spawncount--
-		dealerstart -= spawnloc
+	for(var/i in 1 to spawncount)
+		new /datum/spawner/dealer()
 
 /datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
-	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
-	H.key = C.key
-
-	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()

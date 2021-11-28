@@ -242,6 +242,7 @@
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
 #include "code\datums\space_structures.dm"
+#include "code\datums\spawners_menu.dm"
 #include "code\datums\spell.dm"
 #include "code\datums\uplinks_items.dm"
 #include "code\datums\announcements\centcomm.dm"

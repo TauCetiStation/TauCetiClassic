@@ -30,7 +30,9 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+
 	var/datum/orbit_menu/orbit_menu
+	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -100,6 +102,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
 	QDEL_NULL(adminMulti)
+	QDEL_NULL(spawners_menu)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.
@@ -616,7 +619,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	update_sight()
-	
+
 
 /mob/dead/observer/update_sight()
 	if (!ghostvision)
@@ -659,6 +662,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game()
 	game.tgui_interact(usr)
+
+/mob/dead/observer/verb/open_spawners_menu()
+	set name = "Spawners Menu"
+	set desc = "See all currently available spawners"
+	set category = "Ghost"
+
+	if(!spawners_menu)
+		spawners_menu = new(src)
+
+	spawners_menu.tgui_interact(src)
 
 /mob/dead/observer/Stat()
 	..()

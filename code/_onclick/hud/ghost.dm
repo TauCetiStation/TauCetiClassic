@@ -44,6 +44,14 @@
 	var/mob/dead/observer/G = usr
 	G.mafia_signup()
 
+/atom/movable/screen/ghost/spawners_menu
+	name = "Spawners menu"
+	icon_state = "spawners"
+
+/atom/movable/screen/ghost/spawners_menu/Click()
+	var/mob/dead/observer/observer = usr
+	observer.open_spawners_menu()
+
 /atom/movable/screen/ghost/toggle_darkness
 	name = "Toggle Darkness"
 	icon_state = "toggle_darkness"
@@ -74,6 +82,10 @@
 
 	using = new /atom/movable/screen/ghost/mafia()
 	using.screen_loc = ui_ghost_mafia
+	adding += using
+
+	using = new /atom/movable/screen/ghost/spawners_menu()
+	using.screen_loc = ui_ghost_spawners_menu
 	adding += using
 
 	using = new /atom/movable/screen/ghost/toggle_darkness()
