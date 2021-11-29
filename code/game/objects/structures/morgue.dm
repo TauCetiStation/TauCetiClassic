@@ -22,7 +22,7 @@
 	var/obj/structure/m_tray/connected = null
 	var/check_delay = 0
 	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
-	var/emagged = 0
+	var/emagged = FALSE
 
 /obj/structure/morgue/Destroy()
 	QDEL_NULL(connected)
@@ -43,16 +43,22 @@
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/morgue/proc/update()
-	if (connected)
+	if (connected || emagged)
 		STOP_PROCESSING(SSobj, src)
-		icon_state = "morgue0"
-	else
-		if (contents.len && !emagged)
-			START_PROCESSING(SSobj, src)
-			icon_state = "morgue2"
-		else
-			icon_state = "morgue1"
+	else if (contents.len && !emagged)
+		START_PROCESSING(SSobj, src)
 	return
+
+/obj/structure/morgue/update_icon()
+	if (connected)
+		icon_state = "morgue0"
+	else if (contents.len && !emagged)
+		if (has_clonable_bodies())
+			icon_state = "morgue3"
+		else
+			icon_state = "morgue2"
+	else
+		icon_state = "morgue1"
 
 /obj/structure/morgue/ex_act(severity)
 	var/chance = 0
@@ -97,10 +103,10 @@
 		update()
 		return //nothing inside
 
-	if (has_clonable_bodies() && !emagged)
+	if (has_clonable_bodies())
 		if(beeper)
 			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		icon_state = "morgue3"
+		update_icon()
 	else
 		update()
 
@@ -116,6 +122,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		qdel(connected)
 		connected = null
+		update_icon()
 		update()
 
 /obj/structure/morgue/proc/open()
@@ -128,7 +135,7 @@
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
 			connected.connected = src
-			icon_state = "morgue0"
+			update_icon()
 			for(var/atom/movable/A in src)
 				A.forceMove(connected.loc)
 				if(ismob(A))
@@ -175,11 +182,8 @@
 		return FALSE
 	playsound(user, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='warning'>You are overloading the body detection mechanism.</span>")
-	if (connected)
-		icon_state = "morgue0"
-	else
-		icon_state = "morgue1"
-	emagged = 1
+	emagged = TRUE
+	update_icon()
 	return TRUE
 
 /obj/structure/morgue/relaymove(mob/user)
@@ -191,7 +195,7 @@
 	var/turf/T = get_step(src, dir)
 	if (T.contents.Find(connected))
 		connected.connected = src
-		icon_state = "morgue0"
+		update_icon()
 		for(var/atom/movable/A in src)
 			A.loc = connected.loc
 		connected.icon_state = "morguet"
