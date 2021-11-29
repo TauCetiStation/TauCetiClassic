@@ -179,7 +179,7 @@ This is chestburster mechanic for damaging
 
 /obj/item/weapon/larva_bite
 	name = "larva_bite"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/larva_bite/hud = null
 	var/mob/affecting = null
 	var/mob/chestburster = null
@@ -335,7 +335,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/fh_grab/hud = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
