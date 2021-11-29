@@ -1,5 +1,5 @@
-var/round_start_time = 0
-var/round_start_realtime = 0
+var/global/round_start_time = 0
+var/global/round_start_realtime = 0
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"

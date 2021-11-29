@@ -372,7 +372,7 @@
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)

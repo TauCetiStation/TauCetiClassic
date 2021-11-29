@@ -9,26 +9,13 @@
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
-	wielded = FALSE
 	can_be_holstered = FALSE
 	istwohanded = TRUE
 	fire_sound = 'sound/effects/bang.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/twohanded)
-
-/// triggered on wield of two handed item
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
 	. = ..()
@@ -74,7 +61,7 @@
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	else
