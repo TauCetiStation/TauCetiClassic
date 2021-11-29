@@ -11,7 +11,7 @@
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
 		to_chat(src, "<span class='warning'>Bad place for a garden!</span>")
 		return FALSE
-	else	return TRUE
+	return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (100)"

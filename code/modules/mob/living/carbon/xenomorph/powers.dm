@@ -1,8 +1,8 @@
-#define ALREADY_STRUCTURE_THERE (locate(/obj/structure/alien/air_plant) in get_turf(src))      || (locate(/obj/structure/alien/egg) in get_turf(src)) \
-                             || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
-                             || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
+#define ALREADY_STRUCTURE_THERE(user) (locate(/obj/structure/alien/air_plant) in get_turf(user))      || (locate(/obj/structure/alien/egg) in get_turf(user)) \
+                             || (locate(/obj/structure/mineral_door/resin) in get_turf(user))   || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) \
+                             || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user))
                             
-#define CHECK_WEEDS (locate(/obj/structure/alien/weeds) in get_turf(src))
+#define CHECK_WEEDS(user) (locate(/obj/structure/alien/weeds) in get_turf(user))
 
 /mob/living/carbon/xenomorph/proc/check_enough_plasma(cost)
 	if(getPlasma() < cost)
@@ -22,25 +22,30 @@
 	action_icon_state = "alien_plant"
 	action_background_icon_state = "bg_alien"
 	sound = null
-	var/spell_cost = 0
+	var/plasma_cost = 0
+
+/obj/effect/proc_holder/spell/targeted/xenomorph/atom_init()
+	. = ..()
+	if(plasma_cost)
+		name += " ([plasma_cost])"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	var/mob/living/carbon/xenomorph/alien = user
-	if(!alien.check_enough_plasma(spell_cost))
+	if(!alien.check_enough_plasma(plasma_cost))
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 //----------------------------------------------
 //-----------------Plant Weeds------------------
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/weeds
-	name = "Plant Weeds (50)"
+	name = "Plant Weeds"
 	desc = "Plants some alien weeds."
 	action_icon_state = "plant_weeds"
-	spell_cost = 50
+	plasma_cost = 50
 	sound = 'sound/effects/resin_build.ogg'
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/weeds/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
@@ -48,15 +53,15 @@
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a weed's node.</span>")
 		return FALSE
-	if((!isturf(user.loc) || istype(user.loc, /turf/space)))
+	if(!isturf(user.loc) || istype(user.loc, /turf/space))
 		if(try_start)
 			to_chat(user, "<span class='warning'>Bad place for a garden!</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/weeds/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 	new /obj/structure/alien/weeds/node(user.loc)
 
@@ -65,26 +70,26 @@
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg
-	name = "Lay Egg (75)"
+	name = "Lay Egg"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
 	action_icon_state = "lay_egg"
-	spell_cost = 75
+	plasma_cost = 75
 	sound = 'sound/effects/resin_build.ogg'
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
-	if(ALREADY_STRUCTURE_THERE)
+	if(ALREADY_STRUCTURE_THERE(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
 		return FALSE
-	if(!CHECK_WEEDS)
+	if(!CHECK_WEEDS(user))
 		if(try_start)
 			to_chat (user, "<span class='warning'>You can lay egg on weeds only.</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user] has laid an egg!</B></span>")
 	new /obj/structure/alien/egg(user.loc)
 
@@ -93,9 +98,9 @@
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/whisp
-	name = "Whisper (10)"
+	name = "Whisper"
 	desc = "Whisper to someone."
-	spell_cost = 10
+	plasma_cost = 10
 	range = 7
 	action_icon_state = "xeno_whisper"
 	var/msg = ""
@@ -112,7 +117,7 @@
 	if(!msg)
 		return
 	var/mob/living/carbon/xenomorph/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	var/mob/living/M = targets[1]
 	log_say("AlienWhisper: [key_name(user)]->[key_name(M)] : [msg]")
 	to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head... <I>[msg]</I></span>")
@@ -127,7 +132,7 @@
 	name = "Transfer Plasma"
 	desc = "Transfer Plasma to another alien."
 	range = 1
-	spell_cost = 0	//How much plasma to transfer?
+	plasma_cost = 0	//How much plasma to transfer?
 	action_icon_state = "transfer_plasma"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma/before_cast(list/targets, mob/user)
@@ -137,18 +142,18 @@
 		return
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
 	if(amount)
-		spell_cost = abs(round(amount))
+		plasma_cost = abs(round(amount))
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma/cast(list/targets, mob/user = usr)
-	if(!spell_cost)
+	if(!plasma_cost)
 		return
 	var/mob/living/carbon/xenomorph/M = targets[1]
 	if(get_dist(user, M) <= 1)
 		var/mob/living/carbon/xenomorph/alien = user
-		alien.adjustToxLoss(-spell_cost)
-		M.adjustToxLoss(spell_cost)
-		to_chat(M, "<span class='noticealien'>[user] has transfered [spell_cost] plasma to you.</span>")
-		to_chat(user, "<span class='noticealien'>You have transfered [spell_cost] plasma to [M]</span>")
+		alien.adjustToxLoss(-plasma_cost)
+		M.adjustToxLoss(plasma_cost)
+		to_chat(M, "<span class='noticealien'>[user] has transfered [plasma_cost] plasma to you.</span>")
+		to_chat(user, "<span class='noticealien'>You have transfered [plasma_cost] plasma to [M]</span>")
 	else
 		to_chat(user, "<span class='warning'>You need to be closer.</span>")
 
@@ -157,19 +162,19 @@
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/screech
-	name = "Screech! (200)"
+	name = "Screech!"
 	desc = "Emit a screech that stuns prey."
 	charge_max = 900
 	charge_type = "recharge"
 	range = 7
 	max_targets = 0	//unlimited
-	spell_cost = 200
+	plasma_cost = 200
 	action_icon_state = "queen_screech"
 	sound = 'sound/voice/xenomorph/queen_roar.ogg'
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/screech/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	alien.create_shriekwave()
 	for(var/mob/living/carbon/human/H in targets)
 		if(!ishuman(H))
@@ -208,12 +213,13 @@
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/resin
-	name = "Secrete Resin (75)"
+	name = "Secrete Resin"
 	desc = "Secrete tough malleable resin."
-	spell_cost = 75
+	plasma_cost = 75
 	var/build_name = null
 	action_icon_state = "secrete_resin"
 	sound = 'sound/effects/resin_build.ogg'
+	var/static/list/builds_image
 	var/list/buildings = list("resin door" = /obj/structure/mineral_door/resin,
 							"resin wall" = /obj/structure/alien/resin/wall,
 							"resin membrane" = /obj/structure/alien/resin/membrane,
@@ -221,21 +227,22 @@
 							"air plant" = /obj/structure/alien/air_plant)
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/resin/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
-	if(ALREADY_STRUCTURE_THERE)
+	if(ALREADY_STRUCTURE_THERE(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
 		return FALSE
-	if(!CHECK_WEEDS)
+	if(!CHECK_WEEDS(user))
 		if(try_start)
 			to_chat (user, "<span class='warning'>You can only build on weeds.</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/resin/before_cast(list/targets, mob/user)
-	var/list/builds_image = list()
-	for(var/B in buildings)
-		var/obj/O = buildings[B]
-		builds_image[B] = image(icon = initial(O.icon), icon_state = initial(O.icon_state))
+	if(!builds_image)
+		builds_image = list()
+		for(var/name in buildings)
+			var/obj/type = buildings[name]
+			builds_image[name] = image(icon = initial(type.icon), icon_state = initial(type.icon_state))
 	
 	var/choice = show_radial_menu(user, user, builds_image, tooltips = TRUE)
 	if(!choice)
@@ -253,10 +260,10 @@
 	if(!build_name)
 		return
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> vomits up a thick purple substance and begins to shape it.</span>", "<span class='notice'>You shape a [build_name].</span>")
-	var/obj/build = buildings[build_name]
-	new build(user.loc)
+	var/type = buildings[build_name]
+	new type(user.loc)
 	build_name = null
 
 //----------------------------------------------
@@ -281,9 +288,9 @@
 //----------------------------------------------
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen
-	name = "Evolve (500)"
+	name = "Evolve"
 	desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
-	spell_cost = 500
+	plasma_cost = 500
 	action_icon_state = "drone_evolve"
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
@@ -300,7 +307,7 @@
 		if(try_start)
 			to_chat(user, "<span class='notice'>We already have an alive queen.</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen/cast(list/targets, mob/user = usr)
 	to_chat(user, "<span class='notice'>You begin to evolve!</span>")
@@ -308,7 +315,7 @@
 	if(!do_after(user, 10 SECONDS, target = user))
 		return
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
-	alien.adjustToxLoss(-spell_cost)
+	alien.adjustToxLoss(-plasma_cost)
 	var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
@@ -336,7 +343,7 @@
 		if(try_start)
 			to_chat(user, "<span class='warning'>Вы еще не выросли.</span>")
 		return FALSE
-	. = ..(skipcharge, user, try_start)
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve/cast(list/targets, mob/user = usr)
 	var/queen = FALSE
