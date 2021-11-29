@@ -627,8 +627,7 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "abf" = (
@@ -739,7 +738,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 9;
 	icon_state = "warning"
 	},
 /area/station/security/main)
@@ -2239,9 +2238,6 @@
 	name = "Security Delivery";
 	req_access = list(1)
 	},
-/obj/structure/sign/warning/electricshock{
-	pixel_x = 32
-	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2652,9 +2648,6 @@
 	},
 /area/station/security/warden)
 "aet" = (
-/obj/machinery/keycard_auth{
-	pixel_x = 26
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -3318,7 +3311,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/main)
 "afz" = (
 /obj/structure/table/woodentable,
@@ -3700,7 +3696,7 @@
 	},
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	icon_state = "redcorner"
+	icon_state = "bluecorner"
 	},
 /area/station/security/main)
 "agl" = (
@@ -3900,6 +3896,11 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/seccarts,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4099,7 +4100,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/main)
 "agX" = (
 /obj/structure/stool,
@@ -4126,7 +4130,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/main)
 "aha" = (
 /obj/structure/grille,
@@ -4270,7 +4277,8 @@
 /area/station/security/brig)
 "ahn" = (
 /turf/simulated/floor{
-	icon_state = "redcorner"
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/station/security/main)
 "aho" = (
@@ -4331,6 +4339,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4450,7 +4459,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/main)
 "ahC" = (
 /turf/simulated/wall,
@@ -4471,7 +4483,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "redcorner"
+	dir = 4;
+	icon_state = "blue"
 	},
 /area/station/security/main)
 "ahE" = (
@@ -5278,11 +5291,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aiU" = (
-/obj/item/device/radio/intercom{
-	frequency = 1475;
-	name = "Station Intercom (Security)";
-	pixel_x = 30
-	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
@@ -5377,6 +5385,9 @@
 /area/station/security/brig)
 "ajf" = (
 /obj/structure/filingcabinet,
+/obj/machinery/keycard_auth{
+	pixel_x = 26
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5833,7 +5844,8 @@
 	},
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	icon_state = "red"
+	dir = 8;
+	icon_state = "redcorner"
 	},
 /area/station/security/main)
 "ajT" = (
@@ -5895,7 +5907,6 @@
 	pixel_y = -30
 	},
 /turf/simulated/floor{
-	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/station/security/main)
@@ -5929,6 +5940,9 @@
 /obj/item/weapon/hand_labeler,
 /obj/machinery/light,
 /obj/item/weapon/packageWrap,
+/obj/structure/sign/warning/electricshock{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -8562,13 +8576,18 @@
 	},
 /area/station/security/forensic_office)
 "aoi" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "grimy"
+	dir = 9;
+	icon_state = "red"
 	},
-/area/station/security/detectives_office)
+/area/station/security/main)
 "aoj" = (
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9066,16 +9085,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "apa" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /turf/simulated/floor{
-	icon_state = "grimy"
+	dir = 1;
+	icon_state = "redcorner"
 	},
-/area/station/security/detectives_office)
+/area/station/security/main)
 "apb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9392,7 +9406,7 @@
 /obj/machinery/computer/forensic_scanning{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -9665,9 +9679,6 @@
 /area/station/security/detectives_office)
 "aql" = (
 /obj/item/weapon/flora/random,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -9866,11 +9877,11 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -10481,7 +10492,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -16600,9 +16611,11 @@
 "aDs" = (
 /obj/structure/table,
 /obj/item/clothing/shoes/orange{
+	pixel_x = -14;
 	pixel_y = 4
 	},
 /obj/item/clothing/shoes/orange{
+	pixel_x = -14;
 	pixel_y = -4
 	},
 /obj/item/weapon/razor,
@@ -16996,8 +17009,8 @@
 	},
 /obj/random/vending/snack,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "redcorner"
+	dir = 9;
+	icon_state = "red"
 	},
 /area/station/security/main)
 "aEk" = (
@@ -19812,7 +19825,10 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/main)
 "aJu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -23776,8 +23792,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "warning"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "aQH" = (
@@ -73271,6 +73286,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
+"gpy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/security/main)
 "gqb" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -74967,6 +74991,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
+"iKx" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
 "iMb" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -115701,8 +115731,8 @@ cdJ
 afQ
 afa
 agW
-acl
-cde
+apa
+gpy
 ajT
 aaV
 aka
@@ -115945,7 +115975,7 @@ aat
 aay
 aaN
 abd
-aKL
+aoi
 aQx
 aKL
 abV
@@ -116459,7 +116489,7 @@ aaA
 aaP
 aaV
 aEj
-acl
+apa
 aRf
 abO
 acc
@@ -117254,8 +117284,8 @@ ama
 amo
 anf
 ajo
-aoi
-apa
+ajo
+apb
 aql
 afV
 ark
@@ -117767,7 +117797,7 @@ adJ
 ahC
 anP
 aoG
-any
+iKx
 any
 apd
 ast
