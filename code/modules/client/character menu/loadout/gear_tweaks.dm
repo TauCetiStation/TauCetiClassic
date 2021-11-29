@@ -17,7 +17,7 @@
 * Color adjustment
 */
 
-var/datum/gear_tweak/color/gear_tweak_free_color_choice = new()
+var/global/datum/gear_tweak/color/gear_tweak_free_color_choice = new()
 
 /datum/gear_tweak/color
 	var/list/valid_colors
