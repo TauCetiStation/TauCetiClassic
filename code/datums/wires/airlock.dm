@@ -1,15 +1,15 @@
-var/const/AIRLOCK_WIRE_IDSCAN        = 1
-var/const/AIRLOCK_WIRE_MAIN_POWER1   = 2
-var/const/AIRLOCK_WIRE_MAIN_POWER2   = 4
-var/const/AIRLOCK_WIRE_DOOR_BOLTS    = 8
-var/const/AIRLOCK_WIRE_BACKUP_POWER1 = 16
-var/const/AIRLOCK_WIRE_BACKUP_POWER2 = 32
-var/const/AIRLOCK_WIRE_OPEN_DOOR     = 64
-var/const/AIRLOCK_WIRE_AI_CONTROL    = 128
-var/const/AIRLOCK_WIRE_ELECTRIFY     = 256
-var/const/AIRLOCK_WIRE_SAFETY        = 512
-var/const/AIRLOCK_WIRE_SPEED         = 1024
-var/const/AIRLOCK_WIRE_LIGHT         = 2048
+var/global/const/AIRLOCK_WIRE_IDSCAN        = 1
+var/global/const/AIRLOCK_WIRE_MAIN_POWER1   = 2
+var/global/const/AIRLOCK_WIRE_MAIN_POWER2   = 4
+var/global/const/AIRLOCK_WIRE_DOOR_BOLTS    = 8
+var/global/const/AIRLOCK_WIRE_BACKUP_POWER1 = 16
+var/global/const/AIRLOCK_WIRE_BACKUP_POWER2 = 32
+var/global/const/AIRLOCK_WIRE_OPEN_DOOR     = 64
+var/global/const/AIRLOCK_WIRE_AI_CONTROL    = 128
+var/global/const/AIRLOCK_WIRE_ELECTRIFY     = 256
+var/global/const/AIRLOCK_WIRE_SAFETY        = 512
+var/global/const/AIRLOCK_WIRE_SPEED         = 1024
+var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock

@@ -11,7 +11,7 @@
 	to check that the mob is not inside of something
 */
 /atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
-	return 0
+	return FALSE
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(atom/neighbor)
@@ -28,9 +28,9 @@
 /turf/Adjacent(atom/neighbor, atom/target = null)
 	var/turf/T0 = get_turf(neighbor)
 	if(T0 == src)
-		return 1
+		return TRUE
 	if(get_dist(src,T0) > 1)
-		return 0
+		return FALSE
 
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
@@ -52,8 +52,8 @@
 		if(!ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
 			continue // could not enter src
 
-		return 1 // we don't care about our own density
-	return 0
+		return TRUE // we don't care about our own density
+	return FALSE
 
 /*
 Quick adjacency (to turf):
@@ -63,12 +63,12 @@ Quick adjacency (to turf):
 /turf/proc/AdjacentQuick(atom/neighbor, atom/target = null)
 	var/turf/T0 = get_turf(neighbor)
 	if(T0 == src)
-		return 1
+		return TRUE
 
 	if(get_dist(src,T0) > 1)
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /*
 	Adjacency (to anything else):
@@ -79,20 +79,20 @@ Quick adjacency (to turf):
 	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(atom/neighbor)
-	if(neighbor == loc) return 1
-	if(!isturf(loc)) return 0
+	if(neighbor == loc) return TRUE
+	if(!isturf(loc)) return FALSE
 	for(var/turf/T in locs)
 		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
-	return 0
+		if(T.Adjacent(neighbor,src)) return TRUE
+	return FALSE
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, recurse = 1)
-	if(neighbor == loc) return 1
+	if(neighbor == loc) return TRUE
 	if(isitem(loc) || isliving(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)
-		return 0
+		return FALSE
 	return ..()
 
 
@@ -110,13 +110,13 @@ Quick adjacency (to turf):
 				var/obj/structure/window/W = target_atom
 				if(istype(W))
 					if(!W.is_fulltile())	//exception for breaking full tile windows on top of single pane windows
-						return 0
+						return FALSE
 				else
-					return 0
+					return FALSE
 
 		else if( !border_only ) // dense, not on border, cannot pass over
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 /*
 	Aside: throwpass does not do what I thought it did originally, and is only used for checking whether or not
 	a thrown object should stop after already successfully entering a square.  Currently the throw code involved

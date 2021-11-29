@@ -8,7 +8,9 @@
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
-	layer = 10
+	layer = AREA_LAYER
+	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
+	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/static/global_uid = 0
@@ -88,7 +90,7 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
+var/global/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in all_areas)
@@ -104,7 +106,7 @@ var/list/teleportlocs = list()
 	return 1
 
 
-var/list/ghostteleportlocs = list()
+var/global/list/ghostteleportlocs = list()
 
 /proc/process_ghost_teleport_locs()
 	for(var/area/AR in all_areas)
