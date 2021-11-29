@@ -41,15 +41,49 @@
 
 ///////////////////////
 
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "emfield_s7"
+	pixel_x = -100
+	pixel_y = -100
+
+/atom/movable/warp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("warp_blure", 1, gauss_blur_filter(4))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/warp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/warp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix())
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
 	density = TRUE
 	var/boing = 0
+	///Warp effect holder for displacement filter to "pulse" the anomaly
+	var/atom/movable/warp_effect/warp
 
 /obj/effect/anomaly/grav/atom_init()
 	. = ..()
+
+	appearance_flags &= ~TILE_BOUND // no tile bound so you can see it around corners and so
+
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
+
+	warp = new(src)
+	vis_contents += warp
+
+/obj/effect/anomaly/grav/Destroy()
+	vis_contents -= warp
+	QDEL_NULL(warp)
+	return ..()
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()

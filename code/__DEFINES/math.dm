@@ -147,7 +147,7 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 
-var/normal_next
+var/global/normal_next
 /proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
 	if(normal_next != null)
 		. = mean + normal_next * stddev
