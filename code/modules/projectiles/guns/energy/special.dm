@@ -569,3 +569,6 @@
 		qdel(p_blue)
 		p_blue = P
 	crosslink()
+
+/obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
+	return
