@@ -94,6 +94,34 @@
 	new /obj/structure/alien/egg(user.loc)
 
 //----------------------------------------------
+//-----------Plant Air Generator----------------
+//----------------------------------------------
+
+/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant
+	name = "Plant Air Generator"
+	desc = "Plant an air regenerating plant."
+	action_icon_state = "air_plant"
+	plasma_cost = 200
+	sound = 'sound/effects/resin_build.ogg'
+
+/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(ALREADY_STRUCTURE_THERE(user))
+		if(try_start)
+			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
+		return FALSE
+	if(!CHECK_WEEDS(user))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can only build on weeds.</span>")
+		return FALSE
+	return ..()
+
+/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant/cast(list/targets, mob/user = usr)
+	var/mob/living/carbon/xenomorph/alien = user
+	alien.adjustToxLoss(-plasma_cost)
+	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
+	new /obj/structure/alien/air_plant(user.loc)
+
+//----------------------------------------------
 //-----------------Whisper----------------------
 //----------------------------------------------
 
@@ -223,8 +251,7 @@
 	var/list/buildings = list("resin door" = /obj/structure/mineral_door/resin,
 							"resin wall" = /obj/structure/alien/resin/wall,
 							"resin membrane" = /obj/structure/alien/resin/membrane,
-							"resin nest" = /obj/structure/stool/bed/nest,
-							"air plant" = /obj/structure/alien/air_plant)
+							"resin nest" = /obj/structure/stool/bed/nest)
 
 /obj/effect/proc_holder/spell/targeted/xenomorph/resin/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(ALREADY_STRUCTURE_THERE(user))

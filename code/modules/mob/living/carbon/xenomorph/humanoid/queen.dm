@@ -18,7 +18,8 @@
 						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma,
 						/obj/effect/proc_holder/spell/targeted/xenomorph/resin,
 						/obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/screech)
+						/obj/effect/proc_holder/spell/targeted/xenomorph/screech,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant)
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()

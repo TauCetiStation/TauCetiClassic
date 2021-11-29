@@ -9,6 +9,7 @@
 						/obj/effect/proc_holder/spell/targeted/xenomorph/whisp,
 						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma,
 						/obj/effect/proc_holder/spell/targeted/xenomorph/resin,
+						/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant,
 						/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen)
 
 
