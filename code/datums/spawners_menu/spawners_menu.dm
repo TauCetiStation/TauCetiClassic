@@ -33,6 +33,15 @@
 		this["important_warning"] = spawner.important_info
 		this["amount_left"] = spawners_list.len
 
+		var/min_time = INFINITY
+		for(var/datum/spawner/S as anything in spawners_list)
+			if(!S.timer_to_expiration)
+				continue
+			if(timeleft(S.timer_to_expiration) < min_time)
+				min_time = timeleft(S.timer_to_expiration)
+
+		this["time_left"] = min_time
+
 		data["spawners"] += list(this)
 	return data
 
@@ -61,5 +70,4 @@
 		if("spawn")
 			spawner.do_spawn(owner)
 			to_chat(world, "[action] - [spawner.name] is work")
-			qdel(spawner)
 			return TRUE

@@ -8885,9 +8885,6 @@
 /area/centcom/living)
 "aBO" = (
 /obj/effect/landmark{
-	name = "Response Team"
-	},
-/obj/effect/landmark{
 	name = "Commando"
 	},
 /obj/machinery/light{
@@ -8899,9 +8896,6 @@
 	},
 /area/centcom/specops)
 "aBP" = (
-/obj/effect/landmark{
-	name = "Response Team"
-	},
 /obj/effect/landmark{
 	name = "Commando"
 	},
@@ -22467,6 +22461,27 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/holding)
+"lpG" = (
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "lqb" = (
 /turf/unsimulated/floor{
 	icon_state = "brown"
@@ -55754,7 +55769,7 @@ bib
 bib
 bib
 aBp
-aBP
+lpG
 aCq
 aCN
 aDq

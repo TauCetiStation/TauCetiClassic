@@ -1,6 +1,6 @@
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Flex } from '../components';
+import { Button, LabeledList, Section, Flex, TimeDisplay } from '../components';
 import { Window } from '../layouts';
 
 export const SpawnersMenu = (props, context) => {
@@ -21,6 +21,11 @@ export const SpawnersMenu = (props, context) => {
                 title={toTitleCase(spawner.name)}
                 buttons={
                   <Flex>
+                    {spawner.time_left && (
+                      <Flex.Item fontSize="14px" color="green" bold mt={0.4} mr={1}>
+                        <TimeDisplay auto="down" value={spawner.time_left} />
+                      </Flex.Item>
+                    )}
                     <Flex.Item fontSize="14px" color="green" bold mt={0.4} mr={2}>
                       Мест: {spawner.amount_left}
                     </Flex.Item>
@@ -43,11 +48,9 @@ export const SpawnersMenu = (props, context) => {
                   </Flex>
                 }>
                 <LabeledList>
-                  {spawner.short_desc && (
-                    <LabeledList.Item label="Описание">
-                      {spawner.short_desc}
-                    </LabeledList.Item>
-                  )}
+                  <LabeledList.Item label="Описание">
+                    {spawner.short_desc}
+                  </LabeledList.Item>
                   {spawner.flavor_text && (
                     <LabeledList.Item label="Дополнительно">
                       {spawner.flavor_text}

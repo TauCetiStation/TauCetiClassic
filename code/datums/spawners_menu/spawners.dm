@@ -6,13 +6,17 @@ var/global/list/datum/spawners = list()
 	var/flavor_text
 	var/important_info
 
-	var/required_pref
+	var/list/ranks
+	var/del_after_spawn = TRUE
+	var/timer_to_expiration
 
-	var/datum/callback/spawn_ghost
-
-/datum/spawner/New()
+/datum/spawner/New(time_to_expiration)
 	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	LAZYADD(global.spawners[type], src)
+
+	if(time_to_expiration)
+		timer_to_expiration = QDEL_IN(src, time_to_expiration)
 
 /datum/spawner/Destroy()
 	var/list/spawn_list = global.spawners[type]
@@ -24,15 +28,27 @@ var/global/list/datum/spawners = list()
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
 	if(!can_spawn(ghost))
 		return
+
 	spawn_ghost(ghost)
+
+	if(del_after_spawn)
+		qdel(src)
 
 /datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
 	if(!ghost.client)
 		return FALSE
-	if(!required_pref)
+	if(!ranks)
 		return TRUE
-	if(jobban_isbanned(ghost, required_pref) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, required_pref))
+	if(jobban_isbanned(ghost, "Syndicate"))
+		to_chat(ghost, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
 		return FALSE
+	for(var/rank in ranks)
+		if(jobban_isbanned(ghost, rank))
+			to_chat(ghost, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
+			return FALSE
+		if(role_available_in_minutes(ghost, rank))
+			to_chat(ghost, "<span class='danger'>У Вас не хватает минут, чтобы зайди за роль \"[name]\". Чтобы её разблокировать вам нужно просто играть!</span>")
+			return FALSE
 	return TRUE
 
 /datum/spawner/proc/spawn_ghost(mob/dead/observer/ghost)
@@ -46,7 +62,7 @@ var/global/list/datum/spawners = list()
 	desc = "Вы появляетесь в космосе вблизи со станцией."
 	flavor_text = "https://wiki.taucetistation.org/Families"
 
-	required_pref = ROLE_FAMILIES
+	ranks = list(ROLE_FAMILIES)
 
 /datum/spawner/dealer/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart) // TODO: dealerstart
@@ -72,13 +88,15 @@ var/global/list/datum/spawners = list()
 	desc = "Вы появляетесь на ЦК в полном обмундирование с целью прилететь на станцию и задержать всех бандитов."
 	flavor_text = "https://wiki.taucetistation.org/Families"
 
-	required_pref = ROLE_FAMILIES
+	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
 	copsstart -= spawnloc
+
+	var/client/C = ghost.client
 
 	var/mob/living/carbon/human/cop = new(null)
 
@@ -124,3 +142,47 @@ var/global/list/datum/spawners = list()
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
 	roletype = /datum/role/cop/beatcop/military
+
+/datum/spawner/ert
+	name = "ЕРТ"
+	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
+
+	del_after_spawn = FALSE
+	ranks = list(ROLE_ERT, "Security Officer")
+
+/datum/spawner/ert/jump(mob/dead/observer/ghost)
+	var/list/correct_landmarks = list()
+	for (var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "Commando")
+			correct_landmarks += L
+
+	var/jump_to = pick(correct_landmarks)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
+	var/list/correct_landmarks = list()
+	for (var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "Commando")
+			correct_landmarks += L
+
+	var/spawnloc = pick(correct_landmarks)
+	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
+
+	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
+	var/leader_selected = isemptylist(ERT_team.members)
+
+	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, leader_selected, new_name)
+	new_commando.mind.key = ghost.key
+	new_commando.key = ghost.key
+	create_random_account_and_store_in_mind(new_commando)
+	qdel(spawnloc)
+
+	to_chat(new_commando, "<span class='notice'>You are [!leader_selected ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
+	if(!leader_selected)
+		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
+	else
+		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
+
+	if(ERT_team)
+		add_faction_member(ERT_team, new_commando, FALSE)
