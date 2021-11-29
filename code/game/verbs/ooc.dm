@@ -110,7 +110,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
-/client/verb/looc(msg as text)
+/client/verb/looc()
+	var/msg = sanitize(input(src, null, "looc \"text\"") as text|null)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
