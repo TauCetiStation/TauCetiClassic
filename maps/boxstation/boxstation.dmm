@@ -37355,7 +37355,6 @@
 /turf/space,
 /area/shuttle/escape_pod1/station)
 "bos" = (
-/obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -54350,6 +54349,7 @@
 	dir = 5;
 	network = list("SS13","Engineering")
 	},
+/obj/structure/disposalconstruct,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -54814,9 +54814,6 @@
 	},
 /area/station/construction/assembly_line)
 "bZD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/item/trash/candy,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -76024,9 +76021,7 @@
 	},
 /area/station/engineering/engine)
 "lBK" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/structure/stool,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -82003,6 +81998,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"sGv" = (
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/drone_fabrication)
 "sHb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -83600,13 +83605,11 @@
 	},
 /area/station/civilian/bar)
 "vtj" = (
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -22
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "vvH" = (
@@ -83697,7 +83700,7 @@
 "vNR" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Drone Fabrication";
-	req_access = list(32)
+	req_access = list(10)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -109186,7 +109189,7 @@ bQl
 xHP
 cyw
 cyx
-czd
+lBK
 kiS
 rSY
 czd
@@ -109700,7 +109703,7 @@ bQl
 bcm
 cyw
 cyw
-lBK
+vtj
 czG
 czH
 czd
@@ -109962,7 +109965,7 @@ chG
 czH
 czd
 ckq
-vtj
+sGv
 cyw
 aah
 aah
