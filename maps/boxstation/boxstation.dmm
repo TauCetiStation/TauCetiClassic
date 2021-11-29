@@ -4546,13 +4546,13 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (
@@ -12784,13 +12784,6 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/station/civilian/holodeck/alphadeck)
-"awi" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "awj" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -22366,7 +22359,7 @@
 /area/station/hallway/primary/central)
 "aOb" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp/qm,
 /turf/simulated/floor,
@@ -35839,7 +35832,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/device/eftpos{
 	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
@@ -37185,7 +37178,7 @@
 /area/station/maintenance/engineering)
 "boB" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/packageWrap,
 /obj/machinery/light,
 /obj/structure/cable,
@@ -40769,7 +40762,7 @@
 /area/station/tcommsat/computer)
 "buV" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/stamp{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
@@ -68001,7 +67994,7 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/weapon/folder/yellow{
+/obj/item/weapon/folder/brown{
 	pixel_x = 4
 	},
 /turf/simulated/floor/carpet,
@@ -73398,7 +73391,7 @@
 /area/station/engineering/chiefs_office)
 "gyb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/stamp/ce,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin,
@@ -80534,7 +80527,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rdb" = (
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/structure/table/glass,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -110610,7 +110603,7 @@ agO
 aoA
 agO
 avG
-awi
+alZ
 agO
 awD
 axi
