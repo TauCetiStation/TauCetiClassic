@@ -122,7 +122,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 	if(!mob)	return
 
 	msg = sanitize(msg)
-
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))
