@@ -731,6 +731,9 @@ var/global/list/blacklisted_builds = list(
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
 					communication_hotkeys += key
+				if("LOOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
+					communication_hotkeys += key
 
 	// winget() does not work for F1 and F2
 	for(var/key in communication_hotkeys)
