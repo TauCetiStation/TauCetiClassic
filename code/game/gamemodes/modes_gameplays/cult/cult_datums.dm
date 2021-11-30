@@ -241,14 +241,13 @@
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
-		return FALSE
+		return
 
 	if((100*i)/all_items.len % 25 == 0)
 		religion.send_message_to_members("Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
 
 	INVOKE_ASYNC(src, .proc/capture_effect, i, all_items)
 	sleep(per_obj_cd)
-	return TRUE
 
 /datum/rune/cult/capture_area/proc/capture_effect(i, list/all_items)
 	var/turf = get_turf(all_items[i])
@@ -405,7 +404,7 @@
 		break
 	if(!has_pylon)
 		to_chat(user, "<span class='warning'>Вокруг руны нету пилонов.</span>")
-		return
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/charge_pylons/action(mob/living/carbon/user)

@@ -11,7 +11,6 @@
 	if(C.sacrifice_target)
 		target = C.sacrifice_target
 		explanation_text = format_explanation()
-	return TRUE
 
 /datum/objective/target/sacrifice/select_target()
 	return FALSE

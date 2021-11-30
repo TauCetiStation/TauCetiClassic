@@ -9,4 +9,3 @@
 	..()
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.sting_range = 2
-	return

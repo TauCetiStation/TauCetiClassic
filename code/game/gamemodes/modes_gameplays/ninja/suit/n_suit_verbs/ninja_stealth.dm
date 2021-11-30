@@ -34,7 +34,7 @@
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=FALSE
-		U.invisibility = 0
+		U.invisibility = INVISIBILITY_NONE
 		UnhideHuds(U)
 		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
 		if(U.mind.protector_role)
@@ -42,8 +42,8 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/space/space_ninja/proc/HideHuds(mob/living/target)
 	var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
@@ -68,7 +68,7 @@
 		sparks.start()
 
 		s_active=FALSE
-		U.invisibility = 0
+		U.invisibility = INVISIBILITY_NONE
 		HideHuds(U)
 		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
 		if(U.mind.protector_role)
@@ -76,5 +76,5 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return 1
-	return 0
+		return TRUE
+	return FALSE

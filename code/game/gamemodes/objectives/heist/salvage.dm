@@ -14,7 +14,6 @@
 			target_amount = pick(20, 30, 40, 50)
 
 	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
-	return TRUE
 
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0

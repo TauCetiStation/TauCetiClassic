@@ -28,8 +28,7 @@
 /obj/machinery/abductor/gland_dispenser/interact(mob/user)
 	if(!IsAbductor(user) && !isobserver(user))
 		return
-	else
-		..()
+	..()
 
 /obj/machinery/abductor/gland_dispenser/ui_interact(mob/user)
 	var/dat
@@ -50,7 +49,7 @@
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
-		return
+		return FALSE
 	return ..()
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)

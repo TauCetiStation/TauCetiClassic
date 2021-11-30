@@ -21,7 +21,7 @@
 		user.see_in_dark = 0
 		user.lighting_alpha = initial(user.lighting_alpha)
 		user.see_invisible = SEE_INVISIBLE_LIVING
-	return 1
+	return TRUE
 
 /mob/living
 	var/changeling_aug = 0

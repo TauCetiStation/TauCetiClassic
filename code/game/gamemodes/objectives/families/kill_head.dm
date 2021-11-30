@@ -6,7 +6,7 @@
 	var/list/possible_targets = get_targets()
 	var/list/heads = list()
 	if(!possible_targets.len)
-		return FALSE
+		return
 
 	for(var/datum/mind/M in possible_targets)
 		if(M.assigned_role in command_positions)
@@ -19,5 +19,3 @@
 
 	if(target && target.current)
 		explanation_text = format_explanation()
-
-	return TRUE

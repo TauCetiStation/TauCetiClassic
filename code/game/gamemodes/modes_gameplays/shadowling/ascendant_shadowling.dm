@@ -53,4 +53,4 @@
 
 //mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)//TG
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return TRUE //copypasta from carp code

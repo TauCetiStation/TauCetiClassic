@@ -31,8 +31,6 @@ var/global/list/target_objectives = list()
 		target = pick(possible_targets)
 		if(target && target.current)
 			explanation_text = format_explanation()
-		return TRUE
-	return FALSE
 
 /datum/objective/target/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
 	for(var/datum/mind/possible_target in SSticker.minds)
@@ -40,8 +38,6 @@ var/global/list/target_objectives = list()
 			target = possible_target
 			if(target && target.current)
 				explanation_text = format_explanation()
-			return TRUE
-	return FALSE
 
 /datum/objective/target/proc/get_targets()
 	var/list/targets = list()
