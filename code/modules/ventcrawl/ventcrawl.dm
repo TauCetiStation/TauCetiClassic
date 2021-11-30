@@ -1,4 +1,4 @@
-var/list/ventcrawl_machinery = list(
+var/global/list/ventcrawl_machinery = list(
 	/obj/machinery/atmospherics/components/unary/vent_scrubber,
 	/obj/machinery/atmospherics/components/unary/vent_pump
 	)

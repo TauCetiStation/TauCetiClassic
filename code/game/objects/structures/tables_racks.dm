@@ -652,7 +652,7 @@
 		can_cut = E.active
 	else if(istype(W, /obj/item/weapon/dualsaber))
 		var/obj/item/weapon/dualsaber/D = W
-		can_cut = D.wielded
+		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
 		return ..()
