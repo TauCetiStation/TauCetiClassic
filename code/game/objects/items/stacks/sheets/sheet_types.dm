@@ -199,6 +199,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		new/datum/stack_recipe("red folder", /obj/item/weapon/folder/red), \
 		new/datum/stack_recipe("white folder", /obj/item/weapon/folder/white), \
 		new/datum/stack_recipe("yellow folder", /obj/item/weapon/folder/yellow), \
+		new/datum/stack_recipe("green folder", /obj/item/weapon/folder/green), \
+		new/datum/stack_recipe("brown folder", /obj/item/weapon/folder/brown), \
+		new/datum/stack_recipe("pink folder", /obj/item/weapon/folder/pink), \
+		new/datum/stack_recipe("purple folder", /obj/item/weapon/folder/purple), \
 		)) \
 )
 
