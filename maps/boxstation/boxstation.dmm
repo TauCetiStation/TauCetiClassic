@@ -7867,7 +7867,7 @@
 "amZ" = (
 /obj/machinery/door/airlock/security{
 	name = "Detective";
-	req_access = list(4,68)
+	req_one_access = list(4,68)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -8192,7 +8192,7 @@
 "anz" = (
 /obj/machinery/door/window/westleft{
 	name = "Forensic Office";
-	req_access = list(4,68)
+	req_one_access = list(4,68)
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -8733,7 +8733,7 @@
 "aoz" = (
 /obj/machinery/door/airlock/security{
 	name = "Detective";
-	req_access = list(4,68)
+	req_one_access = list(4,68)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -9174,7 +9174,7 @@
 "apj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Detective Maintenance";
-	req_access = list(4,68)
+	req_one_access = list(4,68)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -49208,7 +49208,8 @@
 /obj/machinery/door_control{
 	id = "Dorm3";
 	name = "Dorm 3";
-	pixel_y = -28
+	pixel_y = -28;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -51755,7 +51756,8 @@
 /obj/machinery/door_control{
 	id = "Dorm2";
 	name = "Dorm 2";
-	pixel_x = 28
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/weapon/bedsheet/red,
@@ -53068,7 +53070,8 @@
 /obj/machinery/door_control{
 	id = "Dorm1";
 	name = "Dorm 1";
-	pixel_x = 28
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -78655,6 +78658,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
+"omV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/vending/wallmed1{
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/security/prison)
 "onb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -79671,6 +79689,9 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"pPF" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/detectives_office)
 "pQb" = (
 /obj/machinery/door_control{
 	id = "HoP_queue";
@@ -80757,6 +80778,9 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
+"rnU" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/main)
 "rob" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -82912,6 +82936,9 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hallway)
+"uUU" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/forensic_office)
 "uYg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -109022,7 +109049,7 @@ cwu
 eCb
 fEb
 gPb
-hhv
+omV
 oje
 qIb
 aAY
@@ -115734,11 +115761,11 @@ amH
 afV
 afV
 afV
-afV
+pPF
 aod
 aoz
 arJ
-afV
+pPF
 arw
 asu
 asr
@@ -115995,7 +116022,7 @@ aoP
 aog
 ajo
 arI
-afV
+pPF
 aeJ
 asw
 aub
@@ -116252,7 +116279,7 @@ anr
 apH
 aqA
 aqk
-afV
+pPF
 arz
 aeJ
 avq
@@ -116509,7 +116536,7 @@ anw
 aof
 apb
 arL
-afV
+pPF
 asZ
 aeJ
 avF
@@ -116766,7 +116793,7 @@ anu
 apG
 aqC
 arK
-afV
+pPF
 aef
 aef
 aef
@@ -117023,7 +117050,7 @@ ajo
 ajo
 apb
 arN
-afV
+pPF
 arj
 arS
 aef
@@ -117280,7 +117307,7 @@ ajo
 ajo
 apb
 aql
-afV
+pPF
 ark
 arT
 aef
@@ -117516,8 +117543,8 @@ abx
 aav
 acM
 ach
-aaV
-aaV
+rnU
+rnU
 agg
 agg
 ahc
@@ -117537,7 +117564,7 @@ anz
 apJ
 aqB
 arM
-ahC
+uUU
 asv
 aug
 ayK
@@ -117787,14 +117814,14 @@ agg
 adJ
 alR
 adJ
-ahC
+uUU
 anP
 aoG
 iKx
 any
 apd
 ast
-ahC
+uUU
 aef
 aef
 aef
@@ -118044,14 +118071,14 @@ agg
 akb
 aBe
 amM
-ahC
+uUU
 amn
 ane
 ant
 cXb
 aph
 aqo
-ahC
+uUU
 atB
 alC
 aeJ
@@ -118301,14 +118328,14 @@ agg
 aeJ
 aBe
 amL
-ahC
+uUU
 anO
 anh
 aoU
 ddb
 apg
 arO
-ahC
+uUU
 cyv
 aef
 aef
@@ -118558,14 +118585,14 @@ agg
 alC
 akp
 aef
-ahC
-ahC
-ahC
+uUU
+uUU
+uUU
 ans
 aoh
 aqH
 aqq
-ahC
+uUU
 atD
 azE
 avE
@@ -118817,12 +118844,12 @@ aue
 aln
 apY
 amq
-ahC
-ahC
-ahC
+uUU
+uUU
+uUU
 apj
-ahC
-ahC
+uUU
+uUU
 atD
 aBe
 aeJ
