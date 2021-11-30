@@ -124,11 +124,11 @@
 	},
 /area/station/security/armoury)
 "aas" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1184,17 +1184,16 @@
 	},
 /area/station/security/armoury)
 "abY" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1345,10 +1344,6 @@
 "acl" = (
 /turf/simulated/floor,
 /area/station/security/main)
-"acm" = (
-/obj/structure/lattice,
-/turf/simulated/wall,
-/area/station/security/brig)
 "acn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1405,16 +1400,16 @@
 "acr" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
-	name = "Security Pods";
-	req_access = list(1)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Security Pods";
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -2575,6 +2570,10 @@
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
 /obj/item/weapon/cartridge/detective,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3800,6 +3799,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "agw" = (
@@ -3808,6 +3812,11 @@
 	on = 0;
 	pixel_x = -7;
 	pixel_y = 16
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -4553,6 +4562,11 @@
 	dir = 9
 	},
 /mob/living/simple_animal/corgi/borgi,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (
@@ -5064,6 +5078,9 @@
 /obj/machinery/requests_console/hos{
 	pixel_y = -32
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -5538,6 +5555,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -6593,10 +6614,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "alb" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Shuttle";
-	req_access = list(2)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -6609,6 +6626,10 @@
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Shuttle";
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -7143,16 +7164,16 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
-	name = "Security Maintenance";
-	req_access = list(1)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Security Maintenance";
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -7993,11 +8014,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /turf/simulated/floor,
 /area/station/security/processing)
 "anj" = (
@@ -8731,10 +8747,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "aoz" = (
-/obj/machinery/door/airlock/security{
-	name = "Detective";
-	req_one_access = list(4,68)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8747,6 +8759,10 @@
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Detective";
+	req_one_access = list(4,68)
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -8904,18 +8920,17 @@
 /area/station/security/prison)
 "aoN" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "OuterrBrig";
-	layer = 2.8;
-	name = "Brig";
-	req_access = list(63)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "OuterrBrig";
+	name = "Brig";
+	req_access = list(63)
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -8924,18 +8939,17 @@
 "aoO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "OuterrBrig";
-	layer = 2.8;
-	name = "Brig";
-	req_access = list(63)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "OuterrBrig";
+	name = "Brig";
+	req_access = list(63)
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -16990,9 +17004,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aEi" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/wall,
-/area/station/security/range)
+/obj/machinery/cryopod/right,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "aEj" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to monitor areas of the Security Division.";
@@ -19638,8 +19654,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aJb" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/range)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/station/security/armoury)
 "aJc" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -70798,6 +70819,11 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/stamp/hos,
 /obj/item/clothing/head/beret/sec/hos,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "cNc" = (
@@ -79410,6 +79436,16 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
+"pmr" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/hos)
 "pob" = (
 /obj/structure/weightlifter,
 /turf/simulated/floor{
@@ -108026,7 +108062,7 @@ oTb
 qFb
 qFb
 oTb
-qFb
+aEi
 amB
 aah
 aah
@@ -110090,7 +110126,7 @@ amB
 abF
 acA
 acN
-acm
+adM
 adM
 adM
 adM
@@ -114714,7 +114750,7 @@ aaH
 abl
 abT
 aas
-ctH
+aJb
 acX
 abl
 aeG
@@ -115480,8 +115516,8 @@ aah
 aaj
 aDL
 aEO
-aEi
-aJb
+aaj
+aaj
 abl
 dpb
 aci
@@ -118318,7 +118354,7 @@ aaV
 adj
 agg
 aem
-agL
+pmr
 agw
 cMW
 ahX
