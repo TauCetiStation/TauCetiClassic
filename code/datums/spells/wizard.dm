@@ -37,7 +37,7 @@
 		qdel(src)
 	else if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Мутация"

@@ -1,4 +1,4 @@
-var/list/sting_paths
+var/global/list/sting_paths
 // totally stolen from the new player panel.  YAYY
 
 /obj/effect/proc_holder/changeling/evolution_menu
