@@ -72,9 +72,6 @@
 	if(buckled)
 		return
 
-	if(!check_stackable_item(W))
-		return
-
 	if(SEND_SIGNAL(W, COMSIG_HAND_IS))
 		SEND_SIGNAL(W, COMSIG_HAND_ATTACK, A, src, params)
 		return
@@ -101,13 +98,6 @@
 				W.afterattack(A, src, 1, params)
 			return
 		W.afterattack(A, src, 0, params)
-
-/mob/living/silicon/robot/proc/check_stackable_item(obj/item/I)
-	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
-		if(S.amount < 1)
-			return FALSE
-	return TRUE
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)

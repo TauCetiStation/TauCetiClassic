@@ -34,6 +34,8 @@
 		"<span class='notice'>You begin applying \the [src] on [to_self ? "yourself" : L].</span>")
 
 /obj/item/stack/medical/proc/can_heal(mob/living/L, mob/user)
+	if(zero_amount())
+		return FALSE
 	if(!istype(L))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
 		return FALSE
@@ -71,9 +73,8 @@
 		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE))
 			return
 
-	if(heal(L, user) && use(1) && repeating && !zero_amount())
+	if(use(1) && heal(L, user) && repeating)
 		try_heal(L, user, TRUE)
-		return
 
 	L.updatehealth()
 
