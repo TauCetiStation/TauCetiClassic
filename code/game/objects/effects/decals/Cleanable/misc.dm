@@ -174,7 +174,7 @@
 
 	beauty = -100
 
-var/list/toilet_overlay_cache = list()
+var/global/list/toilet_overlay_cache = list()
 
 /obj/effect/decal/cleanable/toilet_paint/atom_init(mapload, main = random_color(), shade = random_color())
 	. = ..()

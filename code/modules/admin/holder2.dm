@@ -1,4 +1,4 @@
-var/list/admin_datums = list()
+var/global/list/admin_datums = list()
 
 /datum/admins
 	var/rank			= "Temporary Admin"
