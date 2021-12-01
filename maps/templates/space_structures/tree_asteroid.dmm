@@ -86,12 +86,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
-"W" = (
-/obj/structure/flora/ausbushes/lavendergrass{
-	icon_state = "brflowers_2"
-	},
-/turf/simulated/floor/grass,
-/area/space_structures/tree_asteroid)
 "Z" = (
 /obj/machinery/light{
 	dir = 8
@@ -156,7 +150,7 @@ R
 U
 j
 V
-W
+S
 z
 e
 U
