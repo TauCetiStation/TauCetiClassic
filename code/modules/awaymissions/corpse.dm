@@ -230,17 +230,6 @@
 	corpsemask = /obj/item/clothing/mask/breath
 	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/mining
 
-/obj/effect/landmark/corpse/botanist
-	corpseradio = /obj/item/device/radio/headset/
-	corpseuniform = /obj/item/clothing/under/rank/hydroponics
-	corpsegloves = /obj/item/clothing/gloves/white
-	corpseback = /obj/item/weapon/storage/backpack/
-	corpseshoes = /obj/item/clothing/shoes/black
-	corpseid = 1
-	corpseidjob = "Botanist"
-	corpseidaccess = "Botanist"
-
-
 /////////////////Officers//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
