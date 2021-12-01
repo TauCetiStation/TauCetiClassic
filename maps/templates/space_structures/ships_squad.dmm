@@ -746,7 +746,6 @@
 	pixel_y = 30
 	},
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
 /obj/item/clothing/head/helmet/space/rig/security,
 /turf/simulated/shuttle/floor{
 	dir = 1
