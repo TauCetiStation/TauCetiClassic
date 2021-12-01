@@ -6,7 +6,8 @@ SUBSYSTEM_DEF(ticker)
 
 	priority = SS_PRIORITY_TICKER
 
-	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
@@ -93,11 +94,13 @@ SUBSYSTEM_DEF(ticker)
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				Master.SetRunLevel(RUNLEVEL_SETUP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -105,6 +108,7 @@ SUBSYSTEM_DEF(ticker)
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -244,7 +248,14 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
-	Master.RoundStart()
+	CHECK_TICK
+
+	for(var/mob/dead/new_player/player as anything in new_player_list)
+		if(player.spawning)
+			qdel(player)
+
+	current_state = GAME_STATE_PLAYING
+	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
@@ -372,7 +383,6 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-				qdel(player)
 		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
