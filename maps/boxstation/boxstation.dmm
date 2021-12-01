@@ -48397,7 +48397,9 @@
 	req_access = list(19,23)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/storage/tech)
 "bIz" = (
 /obj/machinery/door/firedoor,
@@ -56288,7 +56290,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "yellowfull"
+	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
 "cfk" = (
@@ -72182,7 +72184,7 @@
 /area/station/medical/reception)
 "gMs" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/glowstick,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -84458,6 +84460,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"wHd" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/station/storage/tech)
 "wHJ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
@@ -113544,7 +113552,7 @@ bLW
 bKl
 bLY
 bNz
-bLZ
+wHd
 bQp
 bRy
 bSI
