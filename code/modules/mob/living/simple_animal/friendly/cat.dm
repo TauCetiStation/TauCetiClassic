@@ -264,3 +264,26 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/MouseDrop(atom/over_object)
 	return
+
+// Fake runtime cat, doesn't disappear
+/mob/living/simple_animal/cat/runtime_lab
+	name = "Runtime"
+	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
+	icon_state = "runtimecat"
+	density = FALSE
+	universal_speak = TRUE
+	can_be_pulled = FALSE
+
+	a_intent = INTENT_HARM
+
+	status_flags = GODMODE // Bluespace cat
+	min_oxy = 0
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+
+	harm_intent_damage = 10
+	melee_damage = 10
+	attacktext = "slashed"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	faction = "untouchable"

@@ -140,3 +140,45 @@
 /area/space_structures/derelict_lab
 	name = "Abandoned Lab"
 	icon_state = "yellow"
+
+/area/space_structures/tree_asteroid
+	name = "Tree Asteroid"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/resource_shuttle
+	name = "Abandoned Cargo Shuttle"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/nt_fighter_blaton
+	name = "NT Fighter \"Blaton\""
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/nt_fighter_skeora
+	name = "NT Fighter \"Skeora\""
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/nt_troopship
+	name = "NT Troopship"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/secrete_lab
+	name = "Secrete Lab"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/space_structures/broken_breacher
+	name = "Broken Breacher"
+	icon_state = "broken_breacher"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
