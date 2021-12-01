@@ -52,6 +52,7 @@
 		/datum/aspect/rescue = 1,
 		/datum/aspect/lightbending/light = 1,
 		/datum/aspect/mystic = 1,
+		/datum/aspect/spawn = 1,
 	)
 
 /datum/religion_sect/preset/chaplain/bloodgods
@@ -62,6 +63,7 @@
 		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
+		/datum/aspect/wacky = 1,
 	)
 
 /datum/religion_sect/preset/chaplain/technophile
@@ -72,6 +74,7 @@
 		/datum/aspect/technology = 1,
 		/datum/aspect/science = 1,
 		/datum/aspect/resources = 1,
+		/datum/aspect/wacky = 1,      
 	)
 
 /datum/religion_sect/preset/chaplain/clown
@@ -86,7 +89,7 @@
 	)
 
 /datum/religion_sect/custom/chaplain
-	aspects_count = 3
+	aspects_count = 4
 
 // This sect type allows user to select their aspects.
 /datum/religion_sect/custom
@@ -95,7 +98,7 @@
 	convert_opener = "I am the first to enter here..."
 
 	// How many aspects can a user select.
-	var/aspects_count = 3
+	var/aspects_count = 4
 
 // What aspects does this sect allow to choose from?
 /datum/religion_sect/custom/proc/get_allowed_aspects()
