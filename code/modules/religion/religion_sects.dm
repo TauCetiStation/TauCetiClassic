@@ -52,7 +52,7 @@
 		/datum/aspect/rescue = 1,
 		/datum/aspect/lightbending/light = 1,
 		/datum/aspect/mystic = 1,
-		/datum/aspect/spawn = 1,
+		/datum/aspect/conjure = 1,
 	)
 
 /datum/religion_sect/preset/chaplain/bloodgods
