@@ -98,6 +98,7 @@ var/global/initial_station_money = 7500
 		weighted_mundaneevent_locations[D] = D.viable_mundane_events.len
 
 	create_station_account()
+	set_news_timers()
 
 	for(var/department in station_departments)
 		create_department_account(department)
