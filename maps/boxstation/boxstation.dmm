@@ -62562,6 +62562,9 @@
 	id_tag = "engineering_aux_pump";
 	name = "Engineering Aux Large Air Vent"
 	},
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -78561,12 +78564,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"owb" = (
-/obj/structure/closet/emergency_wall{
-	pixel_y = 32
-	},
-/turf/simulated/wall/r_wall,
-/area/station/engineering/engine)
 "owJ" = (
 /obj/structure/table,
 /obj/item/clothing/ears/earmuffs{
@@ -119249,7 +119246,7 @@ crH
 cLT
 cLV
 crH
-owb
+crH
 crH
 crH
 aah
