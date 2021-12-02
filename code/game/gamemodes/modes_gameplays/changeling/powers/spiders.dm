@@ -3,7 +3,7 @@
 	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
 	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 4 DNA absorptions."
 	chemical_cost = 30
-	genomecost = 3
+	genomecost = 2
 	req_dna = 4
 
 //Makes some spiderlings. Good for setting traps and causing general trouble.
