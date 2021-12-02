@@ -146,7 +146,7 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
-/obj/machinery/ai_slipper/AICtrlClick()
+/obj/machinery/ai_slipper/AICtrlClick() // turns on/off liquid dispenser
 	Topic("toggleOn=1", list("toggleOn"="1"), 1)
 
 /atom/proc/AIAltClick()
