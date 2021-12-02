@@ -150,6 +150,12 @@
     items = list(/obj/item/weapon/pickaxe/plasmacutter)
     cost = 7
 
+/datum/drone_upgrade/device_tools/decoy
+    name = "Sound decoy"
+    desc = "Can produce various sounds to distract your enemies."
+    items = list(/obj/item/toy/sound_button/syndi)
+    cost = 4
+
 //========SURVEILLANCE AND OPTICS
 /datum/drone_upgrade/optics
     category = "Surveillance and optics"

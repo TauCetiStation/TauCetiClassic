@@ -236,15 +236,25 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
+	var/cooldown_max = 60
 	w_class = SIZE_TINY
-	var/static/list/actions = list(
+	var/actions
+	var/pos_sounds 
+
+/obj/item/toy/sound_button/atom_init()
+	. = ..()
+	init_soundboard()
+
+/obj/item/toy/sound_button/proc/init_soundboard()
+	actions = list(
 		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
 		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
 		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
 		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
 		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
 		)
-	var/static/list/pos_sounds = list(
+
+	pos_sounds = list(
 		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
 						'sound/voice/fake_laugh/laugh2.ogg',
 						'sound/voice/fake_laugh/laugh3.ogg'),
@@ -371,7 +381,6 @@
 						'sound/voice/mob/pain/male/passive_whiner_4.ogg')
 						)
 
-
 /obj/item/toy/sound_button/attack_self(mob/user)
 	if(cooldown)
 		return
@@ -380,11 +389,11 @@
 	if(!soundtype)
 		return
 
-	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MISC, 85, FALSE)
+	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MASTER, 85, FALSE)
 	flick("sound_button_down", src)
 	icon_state = "sound_button_off"
 	cooldown = TRUE
-	addtimer(CALLBACK(src, .proc/release_cooldown), 60)
+	addtimer(CALLBACK(src, .proc/release_cooldown), cooldown_max)
 	..()
 
 /obj/item/toy/sound_button/proc/release_cooldown()
@@ -392,4 +401,67 @@
 	icon_state = "sound_button_on"
 	cooldown = FALSE
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
+	return
+
+//Syndicate version
+
+/obj/item/toy/sound_button/syndi
+	name = "sound decoy"
+	desc = "Can easily lure someone into your trap. Trust me!"
+	cooldown_max = 40
+
+/obj/item/toy/sound_button/syndi/init_soundboard()
+	actions = list(
+		"Battle" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_traitor"),
+		"Mystical shit" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_wizard"),
+		"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
+		"Make'em paranoid!" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling")
+	)
+	pos_sounds = list(
+		"Battle" = list(
+			'sound/hallucinations/fake_battle_1_scaled.ogg',
+			'sound/hallucinations/fake_battle_2_scaled.ogg',
+			'sound/hallucinations/fake_battle_3_scaled.ogg'),
+
+		"Mystical shit" = list(
+			'sound/magic/Knock.ogg',
+			'sound/magic/Fireball.ogg',
+			'sound/magic/Teleport_diss.ogg',
+			'sound/magic/Teleport_app.ogg',
+			'sound/magic/MAGIC_MISSILE.ogg',
+			'sound/magic/Repulse.ogg',
+			'sound/effects/ghost2.ogg'),
+		
+		"Xenomorph" = list(
+			'sound/voice/shriek1.ogg',
+			'sound/voice/xenomorph/talk_1.ogg',
+			'sound/voice/xenomorph/talk_2.ogg',
+			'sound/voice/xenomorph/talk_3.ogg',
+			'sound/voice/xenomorph/talk_4.ogg',
+			'sound/voice/xenomorph/whimper.ogg',
+			'sound/voice/xenomorph/small_roar.ogg',
+			'sound/voice/xenomorph/spitacid_1.ogg',
+			'sound/voice/xenomorph/spitacid_2.ogg',
+			'sound/voice/xenomorph/chestburst_1.ogg',
+			'sound/voice/xenomorph/chestburst_2.ogg'),
+		
+		"Make'em paranoid!" = list(
+			'sound/hallucinations/behind_you1.ogg',
+			'sound/hallucinations/behind_you2.ogg',
+			'sound/hallucinations/far_noise.ogg',
+			'sound/hallucinations/veryfar_noise.ogg',
+			'sound/hallucinations/wail.ogg',
+			'sound/hallucinations/i_see_you_1.ogg',
+			'sound/hallucinations/im_here1.ogg',
+			'sound/hallucinations/im_here2.ogg',
+			'sound/hallucinations/look_up1.ogg',
+			'sound/hallucinations/over_here1.ogg',
+			'sound/hallucinations/turn_around1.ogg')
+	)
+
+/obj/item/toy/sound_button/syndi/release_cooldown()
+	flick("sound_button_up",src)
+	icon_state = "sound_button_on"
+	cooldown = FALSE
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -7)//more stealthy, can only be heard on the same turf
 	return
