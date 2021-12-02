@@ -10,6 +10,7 @@ var/global/list/asset_datums = list()
 
 /datum/asset
 	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
+	var/cached_url_mappings
 
 /datum/asset/New()
 	global.asset_datums[type] = src
@@ -17,6 +18,12 @@ var/global/list/asset_datums = list()
 
 /datum/asset/proc/get_url_mappings()
 	return list()
+
+/datum/asset/proc/get_serialized_url_mappings()
+	if (isnull(cached_url_mappings))
+		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+
+	return cached_url_mappings
 
 /datum/asset/proc/register()
 	return
