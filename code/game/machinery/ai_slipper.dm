@@ -30,6 +30,17 @@
 	src.uses = uses
 	power_change()
 
+/obj/machinery/ai_slipper/proc/setDisable()
+	src.disabled = !src.disabled
+	icon_state = src.disabled? "motion0":"motion3"
+
+/obj/machinery/ai_slipper/proc/activate()
+	new /obj/effect/effect/foam(src.loc)
+	src.uses--
+	cooldown_on = 1
+	cooldown_time = world.timeofday + 100
+	slip_process()
+
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -69,27 +80,22 @@
 	popup.set_content(t)
 	popup.open()
 
-/obj/machinery/ai_slipper/Topic(href, href_list, no_window)
-	. = ..(href, href_list)
+/obj/machinery/ai_slipper/Topic(href, href_list)
+	. = ..()
 	if(!.)
 		return
 	if (locked && !issilicon_allowed(usr) && !isobserver(usr))
 		to_chat(usr, "Control panel is locked!")
 		return FALSE
 	if (href_list["toggleOn"])
-		src.disabled = !src.disabled
-		icon_state = src.disabled? "motion0":"motion3"
+		setDisable()
 	else if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return FALSE
 		else
-			new /obj/effect/effect/foam(src.loc)
-			src.uses--
-			cooldown_on = 1
-			cooldown_time = world.timeofday + 100
-			slip_process()
-	if(!no_window)
-		updateUsrDialog()
+			activate()
+
+	updateUsrDialog()
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)

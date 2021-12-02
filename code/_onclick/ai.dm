@@ -147,7 +147,7 @@
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
 /obj/machinery/ai_slipper/AICtrlClick() // turns on/off liquid dispenser
-	Topic("toggleOn=1", list("toggleOn"="1"), 1)
+	setDisable()
 
 /atom/proc/AIAltClick()
 	return
@@ -163,7 +163,10 @@
 	return
 
 /obj/machinery/ai_slipper/AIAltClick() // Activates liquid dispenser
-	Topic("toggleUse=1", list("toggleUse"="1"), 1)
+	if(cooldown_on || disabled)
+		return FALSE
+	else
+		activate()
 
 //
 // Override AdjacentQuick for AltClicking
