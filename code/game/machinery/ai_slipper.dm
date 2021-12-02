@@ -21,9 +21,15 @@
 		if( powered() )
 			stat &= ~NOPOWER
 		else
-			icon_state = "motion0"
 			stat |= NOPOWER
+			update_icon()
 	update_power_use()
+
+/obj/machinery/ai_slipper/update_icon()
+	if(stat == NOPOWER)
+		icon_state = "motion0"
+	else
+		icon_state = disabled? "motion0":"motion3"
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
@@ -31,14 +37,14 @@
 	power_change()
 
 /obj/machinery/ai_slipper/proc/toggle_on()
-	src.disabled = !src.disabled
-	icon_state = src.disabled? "motion0":"motion3"
+	disabled = !disabled
+	update_icon()
 
 /obj/machinery/ai_slipper/proc/activate()
 	if(cooldown_on || disabled)
 		return
-	new /obj/effect/effect/foam(src.loc)
-	src.uses--
+	new /obj/effect/effect/foam(loc)
+	uses--
 	cooldown_on = 1
 	cooldown_time = world.timeofday + 100
 	slip_process()
