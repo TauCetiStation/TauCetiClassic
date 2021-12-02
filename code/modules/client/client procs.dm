@@ -45,9 +45,6 @@ var/global/list/blacklisted_builds = list(
 		if(!asset_cache_job)
 			return
 
-	if(href_list["_src_"] == "chat")
-		return chatOutput.Topic(href, href_list)
-
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
@@ -94,6 +91,8 @@ var/global/list/blacklisted_builds = list(
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
 
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
@@ -209,8 +208,6 @@ var/global/list/blacklisted_builds = list(
 	if(!guard)
 		guard = new(src)
 
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -221,6 +218,9 @@ var/global/list/blacklisted_builds = list(
 
 	clients += src
 	directory[ckey] = src
+
+	// Instantiate tgui panel
+	tgui_panel = new(src)
 
 	global.ahelp_tickets?.ClientLogin(src)
 
@@ -277,8 +277,8 @@ var/global/list/blacklisted_builds = list(
 	if(SSinput.initialized)
 		set_macros()
 
-	spawn() // Goonchat does some non-instant checks in start()
-		chatOutput.start()
+	spawn() // Initialize tgui panel
+		tgui_panel.initialize()
 
 	connection_time = world.time
 
