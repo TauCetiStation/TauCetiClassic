@@ -8,6 +8,11 @@
 		/datum/asset/simple/error_handler_js
 	)
 
+/datum/asset/simple/tgui_common
+	assets = list(
+		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
+	)
+
 /datum/asset/simple/tgui
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',

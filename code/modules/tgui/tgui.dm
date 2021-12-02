@@ -84,6 +84,7 @@
 	if(!window.is_ready())
 		window.initialize(inline_assets = list(
 			get_asset_datum(/datum/asset/simple/tgui),
+			get_asset_datum(/datum/asset/simple/tgui_common),
 		))
 	else
 		window.send_message("ping")
