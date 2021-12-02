@@ -48,7 +48,7 @@
 
 /datum/news_announcement/changling_meta
 	round_time = 1800
-	author = "Mike Hammers - abobus"
+	author = "Mike Hammers"
 	channel_name = "The Gibson Gazette"
 	message = {"
 <center><b><font size="3">Новая угроза в секторе Тау Кита</font></b></center><br><br>
