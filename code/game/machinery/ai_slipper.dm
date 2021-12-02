@@ -69,8 +69,8 @@
 	popup.set_content(t)
 	popup.open()
 
-/obj/machinery/ai_slipper/Topic(href, href_list)
-	. = ..()
+/obj/machinery/ai_slipper/Topic(href, href_list, no_window)
+	. = ..(href, href_list)
 	if(!.)
 		return
 	if (locked && !issilicon_allowed(usr) && !isobserver(usr))
@@ -88,7 +88,8 @@
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100
 			slip_process()
-	updateUsrDialog()
+	if(!no_window)
+		updateUsrDialog()
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)

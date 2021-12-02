@@ -146,6 +146,8 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
+/obj/machinery/ai_slipper/AICtrlClick()
+	Topic("toggleOn=1", list("toggleOn"="1"), 1)
 
 /atom/proc/AIAltClick()
 	return
@@ -159,6 +161,9 @@
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	diag_hud_set_electrified()
 	return
+
+/obj/machinery/ai_slipper/AIAltClick() // Activates liquid dispenser
+	Topic("toggleUse=1", list("toggleUse"="1"), 1)
 
 //
 // Override AdjacentQuick for AltClicking
