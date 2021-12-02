@@ -163,7 +163,8 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
-		cooldown.tick()
+		if(cooldown)
+			cooldown.tick()
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)
