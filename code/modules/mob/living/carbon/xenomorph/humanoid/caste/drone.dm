@@ -5,12 +5,12 @@
 	health = 160
 	icon_state = "aliend_s"
 	plasma_rate = 15
-	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xenomorph/weeds,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/whisp,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/resin,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant,
-						/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen)
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
+						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
+						/obj/effect/proc_holder/spell/no_target/resin,
+						/obj/effect/proc_holder/spell/no_target/air_plant,
+						/obj/effect/proc_holder/spell/no_target/evolve_to_queen)
 
 
 /mob/living/carbon/xenomorph/humanoid/drone/atom_init()

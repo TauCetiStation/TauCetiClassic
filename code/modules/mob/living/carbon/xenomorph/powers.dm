@@ -9,46 +9,25 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/xenomorph
-	name = "xenomorph"
-	desc = ""
+//----------------------------------------------
+//-----------------Plant Weeds------------------
+//----------------------------------------------
+
+/obj/effect/proc_holder/spell/no_target/weeds
+	name = "Plant Weeds"
+	desc = "Plants some alien weeds."
 	charge_max = 0
 	charge_type = "none"
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = -1 //no_targeted
 	centcomm_cancast = FALSE
-	action_icon_state = "alien_plant"
 	action_background_icon_state = "bg_alien"
-	sound = null
-	var/plasma_cost = 0
-
-/obj/effect/proc_holder/spell/targeted/xenomorph/atom_init()
-	. = ..()
-	if(plasma_cost)
-		name += " ([plasma_cost])"
-
-/obj/effect/proc_holder/spell/targeted/xenomorph/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
-	var/mob/living/carbon/xenomorph/alien = user
-	if(!alien.check_enough_plasma(plasma_cost))
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
-		return FALSE
-	return ..()
-
-//----------------------------------------------
-//-----------------Plant Weeds------------------
-//----------------------------------------------
-
-/obj/effect/proc_holder/spell/targeted/xenomorph/weeds
-	name = "Plant Weeds"
-	desc = "Plants some alien weeds."
 	action_icon_state = "plant_weeds"
 	plasma_cost = 50
 	sound = 'sound/effects/resin_build.ogg'
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/weeds/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/weeds/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a weed's node.</span>")
@@ -59,7 +38,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/weeds/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/weeds/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
@@ -69,14 +48,21 @@
 //-----------------Lay Egg----------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg
+/obj/effect/proc_holder/spell/no_target/lay_egg
 	name = "Lay Egg"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	action_icon_state = "lay_egg"
 	plasma_cost = 75
 	sound = 'sound/effects/resin_build.ogg'
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/lay_egg/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(ALREADY_STRUCTURE_THERE(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
@@ -87,7 +73,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/lay_egg/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/lay_egg/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user] has laid an egg!</B></span>")
@@ -97,14 +83,21 @@
 //-----------Plant Air Generator----------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant
+/obj/effect/proc_holder/spell/no_target/air_plant
 	name = "Plant Air Generator"
 	desc = "Plant an air regenerating plant."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	action_icon_state = "air_plant"
 	plasma_cost = 200
 	sound = 'sound/effects/resin_build.ogg'
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/air_plant/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(ALREADY_STRUCTURE_THERE(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
@@ -115,7 +108,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/air_plant/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/air_plant/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
@@ -125,23 +118,30 @@
 //-----------------Whisper----------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/whisp
+/obj/effect/proc_holder/spell/targeted/xeno_whisp
 	name = "Whisper"
 	desc = "Whisper to someone."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
+	action_icon_state = "xeno_whisper"
 	plasma_cost = 10
 	range = 7
-	action_icon_state = "xeno_whisper"
 	var/msg = ""
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/whisp/before_cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/targeted/xeno_whisp/before_cast(list/targets, mob/user)
 	msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/whisp/invocation(mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/xeno_whisp/invocation(mob/user = usr)
 	if(!msg)
 		return	//do not play sound if there is no message
 	..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/whisp/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/xeno_whisp/cast(list/targets, mob/user = usr)
 	if(!msg)
 		return
 	var/mob/living/carbon/xenomorph/alien = user
@@ -156,14 +156,21 @@
 //---------------Transfer Plasma----------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma
+/obj/effect/proc_holder/spell/targeted/transfer_plasma
 	name = "Transfer Plasma"
 	desc = "Transfer Plasma to another alien."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
+	action_icon_state = "transfer_plasma"
 	range = 1
 	plasma_cost = 0	//How much plasma to transfer?
-	action_icon_state = "transfer_plasma"
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma/before_cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/targeted/transfer_plasma/before_cast(list/targets, mob/user)
 	var/mob/living/M = targets[1]
 	if(!isxeno(M))
 		to_chat(user, "<span class='warning'>You can only transfer plasma to xenomorphs.</span>")
@@ -172,7 +179,7 @@
 	if(amount)
 		plasma_cost = abs(round(amount))
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/transfer_plasma/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/transfer_plasma/cast(list/targets, mob/user = usr)
 	if(!plasma_cost)
 		return
 	var/mob/living/carbon/xenomorph/M = targets[1]
@@ -189,18 +196,23 @@
 //-------------------Screech--------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/screech
+/obj/effect/proc_holder/spell/targeted/screech
 	name = "Screech!"
 	desc = "Emit a screech that stuns prey."
 	charge_max = 900
 	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	range = 7
 	max_targets = 0	//unlimited
 	plasma_cost = 200
 	action_icon_state = "queen_screech"
 	sound = 'sound/voice/xenomorph/queen_roar.ogg'
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/screech/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/screech/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	alien.create_shriekwave()
@@ -240,20 +252,27 @@
 //----------------Secrete Resin-----------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/resin
+/obj/effect/proc_holder/spell/no_target/resin
 	name = "Secrete Resin"
 	desc = "Secrete tough malleable resin."
-	plasma_cost = 75
-	var/build_name = null
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	action_icon_state = "secrete_resin"
 	sound = 'sound/effects/resin_build.ogg'
+	plasma_cost = 75
+	var/build_name = null
 	var/static/list/builds_image
 	var/list/buildings = list("resin door" = /obj/structure/mineral_door/resin,
 							"resin wall" = /obj/structure/alien/resin/wall,
 							"resin membrane" = /obj/structure/alien/resin/membrane,
 							"resin nest" = /obj/structure/stool/bed/nest)
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/resin/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/resin/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(ALREADY_STRUCTURE_THERE(user))
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
@@ -264,7 +283,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/resin/before_cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/no_target/resin/before_cast(list/targets, mob/user)
 	if(!builds_image)
 		builds_image = list()
 		for(var/name in buildings)
@@ -278,12 +297,12 @@
 		return
 	build_name = choice
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/resin/invocation(mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/resin/invocation(mob/user = usr)
 	if(!build_name)
 		return
 	..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/resin/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/resin/cast(list/targets, mob/user = usr)
 	if(!build_name)
 		return
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
@@ -297,12 +316,19 @@
 //---------------------Hide---------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/hide
+/obj/effect/proc_holder/spell/no_target/hide
 	name = "Спрятаться"
 	desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	action_icon_state = "xeno_hide"
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/hide/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/hide/cast(list/targets, mob/user = usr)
 	if (user.layer != TURF_LAYER+0.2)
 		user.layer = TURF_LAYER+0.2
 		user.visible_message("<span class='danger'>[user] исчезает.</span>", "<span class='notice'>Сейчас вы прячетесь.</span>")
@@ -314,13 +340,20 @@
 //---------------Drone Evolve-------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen
+/obj/effect/proc_holder/spell/no_target/evolve_to_queen
 	name = "Evolve"
 	desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	plasma_cost = 500
 	action_icon_state = "drone_evolve"
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/evolve_to_queen/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(!isturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='warning'>You cannot evolve when you are inside something.</span>")
@@ -336,7 +369,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/evolve_to_queen/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/evolve_to_queen/cast(list/targets, mob/user = usr)
 	to_chat(user, "<span class='notice'>You begin to evolve!</span>")
 	user.visible_message("<span class='notice'><B>[user] begins to twist and contort!</B></span>")
 	if(!do_after(user, 10 SECONDS, target = user))
@@ -352,15 +385,22 @@
 //---------------Larva Evolve-------------------
 //----------------------------------------------
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve
+/obj/effect/proc_holder/spell/no_target/larva_evolve
 	name = "Эволюция"
 	desc = "Превратиться во взрослого ксеноморфа."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
 	action_icon_state = "alien_evolve_larva"
 	var/list/castes = list("Охотник" = /mob/living/carbon/xenomorph/humanoid/hunter,
 							"Страж" = /mob/living/carbon/xenomorph/humanoid/sentinel,
 							"Трутень" = /mob/living/carbon/xenomorph/humanoid/drone)
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/larva_evolve/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(!isturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='warning'>Вы не можете эволюционировать, когда находитесь внутри чего-то.</span>")
@@ -372,7 +412,7 @@
 		return FALSE
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/xenomorph/larva_evolve/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/larva_evolve/cast(list/targets, mob/user = usr)
 	var/queen = FALSE
 	var/drone = FALSE
 	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
