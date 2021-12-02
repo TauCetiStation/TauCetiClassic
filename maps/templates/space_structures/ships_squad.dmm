@@ -1,8 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f6"
+/obj/structure/grille,
+/obj/structure/shuttle/window{
+	icon_state = "13"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_fighter_skeora)
 "aA" = (
 /obj/machinery/body_scanconsole,
@@ -26,11 +28,9 @@
 /turf/simulated/shuttle/plating,
 /area/space_structures/nt_troopship)
 "bl" = (
-/obj/structure/grille,
-/obj/structure/shuttle/window{
-	icon_state = "12"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
 	},
-/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_fighter_skeora)
 "by" = (
 /turf/simulated/shuttle/wall{
@@ -45,11 +45,6 @@
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
-"cN" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
-	},
-/area/space_structures/nt_fighter_skeora)
 "fh" = (
 /obj/machinery/door/unpowered/shuttle/officer,
 /turf/unsimulated/floor,
@@ -62,13 +57,15 @@
 /area/space_structures/nt_troopship)
 "fP" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
+	icon_state = "swall_f6"
 	},
 /area/space_structures/nt_fighter_skeora)
 "fS" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swallc1"
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_fighter_skeora)
 "gh" = (
 /obj/structure/grille,
@@ -102,23 +99,22 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "hd" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/machinery/turretid/stun{
+	control_area = "NT Fighter \"Skeora\"";
+	dir = 8;
+	lethal = 1;
+	name = "NT Fighter turret control";
+	pixel_x = 30
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
-"hV" = (
-/obj/machinery/porta_turret/stationary{
-	check_n_synth = 1;
-	shot_synth = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/nt_fighter_skeora)
 "jf" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swallc4"
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
 "jz" = (
@@ -136,7 +132,7 @@
 	})
 "kw" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swallc3"
+	icon_state = "swallc1"
 	},
 /area/space_structures/nt_fighter_skeora)
 "lr" = (
@@ -152,11 +148,27 @@
 	},
 /turf/space,
 /area/space_structures/nt_troopship)
-"lW" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/donkpockets,
+"lM" = (
+/obj/structure/closet/emergency_wall{
+	pixel_x = 30
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
+	},
+/area/space_structures/nt_fighter_skeora)
+"lW" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/nt_fighter_skeora)
+"me" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/decal/mecha_wreckage/durand/vindicator,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "mH" = (
@@ -202,7 +214,7 @@
 "pL" = (
 /obj/structure/grille,
 /obj/structure/shuttle/window{
-	icon_state = "13"
+	icon_state = "9"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/nt_fighter_skeora)
@@ -222,13 +234,6 @@
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
-"rI" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/coin/silver,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/space_structures/nt_fighter_skeora)
 "sJ" = (
 /obj/machinery/computer/pod{
 	id = "ntcruiser1";
@@ -246,13 +251,12 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "ub" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/machinery/light,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -265,17 +269,9 @@
 "uX" = (
 /obj/structure/grille,
 /obj/structure/shuttle/window{
-	icon_state = "9"
+	icon_state = "12"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space_structures/nt_fighter_skeora)
-"vz" = (
-/obj/structure/closet/emergency_wall{
-	pixel_x = 30
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
 /area/space_structures/nt_fighter_skeora)
 "wh" = (
 /obj/item/stack/sheet/metal{
@@ -303,17 +299,10 @@
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
-"ym" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/space_structures/nt_fighter_skeora)
 "yt" = (
-/obj/machinery/door/unpowered/shuttle/officer,
-/turf/unsimulated/floor,
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc4"
+	},
 /area/space_structures/nt_fighter_skeora)
 "zq" = (
 /obj/item/weapon/disk/research_points,
@@ -339,13 +328,8 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ad" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warndark"
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc2"
 	},
 /area/space_structures/nt_fighter_skeora)
 "At" = (
@@ -448,8 +432,11 @@
 	},
 /area/space_structures/nt_troopship)
 "Gh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f9"
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
 "GR" = (
@@ -506,17 +493,21 @@
 /turf/simulated/shuttle/plating,
 /area/space_structures/nt_fighter_blaton)
 "Kn" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
 "KM" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
 	},
-/obj/effect/decal/mecha_wreckage/mauler,
+/obj/machinery/light,
 /turf/simulated/floor{
-	dir = 9;
+	dir = 1;
 	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -566,9 +557,16 @@
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
+"Pd" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/coin/silver,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/nt_fighter_skeora)
 "Pq" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swallc2"
+	icon_state = "swall_f9"
 	},
 /area/space_structures/nt_fighter_skeora)
 "PC" = (
@@ -645,9 +643,8 @@
 /turf/simulated/shuttle/floor,
 /area/space_structures/nt_troopship)
 "Sz" = (
-/obj/structure/closet/emergency_wall{
-	pixel_x = -30
-	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -657,6 +654,18 @@
 	icon_state = "swallc2"
 	},
 /area/space_structures/nt_fighter_blaton)
+"SQ" = (
+/obj/machinery/door/unpowered/shuttle/officer,
+/turf/unsimulated/floor,
+/area/space_structures/nt_fighter_skeora)
+"SX" = (
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/nt_fighter_skeora)
 "SY" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/shuttle/floor{
@@ -664,9 +673,8 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Tg" = (
-/obj/machinery/door/unpowered/shuttle,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc3"
 	},
 /area/space_structures/nt_fighter_skeora)
 "To" = (
@@ -686,16 +694,8 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "UH" = (
-/obj/item/clothing/mask/cigarette/cigar,
-/obj/machinery/turretid/stun{
-	control_area = "NT Fighter \"Skeora\"";
-	dir = 8;
-	lethal = 1;
-	name = "NT Fighter turret control";
-	pixel_x = 30
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
 	},
 /area/space_structures/nt_fighter_skeora)
 "Va" = (
@@ -1277,13 +1277,13 @@ Rh
 Rh
 Rh
 Rh
-Rh
-Rh
-Rh
-Rh
-Rh
-Rh
-Rh
+fS
+fP
+UH
+UH
+SQ
+gO
+lW
 Rh
 Rh
 Rh
@@ -1300,18 +1300,18 @@ Rh
 Rh
 "}
 (20,1,1) = {"
-Rh
-Rh
-Rh
-Rh
-hV
-ac
-Kn
-Kn
-yt
+fP
 gO
-cN
-Rh
+UH
+lW
+Ad
+yt
+Sz
+SX
+ND
+Rf
+kw
+lW
 Rh
 Rh
 Rh
@@ -1328,17 +1328,17 @@ Rh
 "}
 (21,1,1) = {"
 ac
-gO
+yb
 Kn
-cN
-Pq
-jf
-lW
-Sz
+kw
+yt
+Di
+ND
+ND
 ND
 Rf
-fS
-cN
+me
+ac
 Rh
 Rh
 Rh
@@ -1356,14 +1356,14 @@ To
 (22,1,1) = {"
 pL
 yb
-hd
-fS
-jf
-Di
-ND
-ND
-ND
 Rf
+ND
+jf
+ND
+ND
+ND
+ND
+ND
 KM
 pL
 Rh
@@ -1383,14 +1383,14 @@ ZS
 (23,1,1) = {"
 uX
 yb
-Rf
-ND
+hd
+Ad
 Tg
+Gh
 ND
 ND
 ND
-ND
-ND
+Rf
 ub
 uX
 Rh
@@ -1409,17 +1409,17 @@ XQ
 "}
 (24,1,1) = {"
 bl
-yb
+gO
 UH
 Pq
 kw
-ym
-ND
-ND
+Tg
+Pd
+lM
 ND
 Rf
 Ad
-bl
+Pq
 Rh
 Rh
 Rh
@@ -1435,18 +1435,18 @@ ZA
 XQ
 "}
 (25,1,1) = {"
-fP
-gO
-Kn
-Gh
+Rh
+Rh
+Rh
+Rh
 fS
-kw
-rI
-vz
-ND
-Rf
+bl
+UH
+UH
+SQ
+gO
 Pq
-Gh
+Rh
 Rh
 Rh
 Rh
@@ -1466,13 +1466,13 @@ Rh
 Rh
 Rh
 Rh
-hV
-fP
-Kn
-Kn
-yt
-gO
-Gh
+Rh
+Rh
+Rh
+Rh
+Rh
+Rh
+Rh
 Rh
 Rh
 Rh

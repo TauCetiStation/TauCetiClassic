@@ -4,8 +4,8 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet13-5"
 	},
 /area/space_structures/broken_breacher)
 "ap" = (
@@ -19,7 +19,7 @@
 /area/space_structures/broken_breacher)
 "aT" = (
 /obj/item/stack/sheet/metal,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 10;
 	icon_state = "podhatch"
 	},
@@ -36,7 +36,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
@@ -55,7 +55,7 @@
 /obj/item/weapon/shield/riot{
 	pixel_x = -4
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 5;
 	icon_state = "podhatch"
 	},
@@ -66,21 +66,21 @@
 "bp" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "br" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "bA" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 1;
 	icon_state = "podhatch"
 	},
@@ -88,14 +88,6 @@
 "bH" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
-	},
-/area/space_structures/broken_breacher)
-"bT" = (
-/obj/structure/safe,
-/obj/item/weapon/storage/secure/briefcase/syndie,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
 "cp" = (
@@ -116,7 +108,8 @@
 	},
 /area/space_structures/broken_breacher)
 "cR" = (
-/obj/structure/stool/bed,
+/obj/structure/safe,
+/obj/item/weapon/storage/secure/briefcase/syndie,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "dj" = (
@@ -150,9 +143,8 @@
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet10-8"
 	},
 /area/space_structures/broken_breacher)
 "ev" = (
@@ -176,7 +168,7 @@
 "gG" = (
 /obj/effect/landmark/corpse/unathicommander,
 /obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
@@ -208,7 +200,7 @@
 /area/space_structures/broken_breacher)
 "if" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	dir = 5;
 	icon_state = "podhatch"
 	},
@@ -216,8 +208,7 @@
 "iq" = (
 /obj/structure/table/woodentable,
 /obj/item/device/radio/off,
-/turf/unsimulated/floor{
-	dir = 8;
+/turf/simulated/floor/plating/airless{
 	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
@@ -232,7 +223,7 @@
 /obj/structure/closet/gimmick,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
@@ -251,7 +242,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
@@ -261,9 +252,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet14-10"
 	},
 /area/space_structures/broken_breacher)
 "kQ" = (
@@ -271,16 +261,24 @@
 /mob/living/simple_animal/hostile/carp{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet9-4"
+	},
+/area/space_structures/broken_breacher)
+"kW" = (
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "lM" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -27
+	},
+/turf/simulated/floor{
 	dir = 8;
 	icon_state = "podhatch"
 	},
@@ -295,7 +293,7 @@
 	dir = 4
 	},
 /obj/item/weapon/arrow/rod,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 4;
 	icon_state = "podhatch"
 	},
@@ -320,16 +318,15 @@
 /area/space_structures/broken_breacher)
 "mU" = (
 /obj/structure/dresser,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "ng" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet5-1"
 	},
 /area/space_structures/broken_breacher)
 "nh" = (
@@ -354,7 +351,7 @@
 	},
 /area/space_structures/broken_breacher)
 "nS" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 4;
 	icon_state = "podhatch"
 	},
@@ -369,7 +366,7 @@
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
@@ -387,9 +384,14 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 6;
 	icon_state = "podhatch"
+	},
+/area/space_structures/broken_breacher)
+"op" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "or" = (
@@ -409,7 +411,7 @@
 /area/space_structures/broken_breacher)
 "oV" = (
 /obj/item/stack/rods,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
@@ -428,6 +430,12 @@
 "pT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
+	},
+/area/space_structures/broken_breacher)
+"qw" = (
+/turf/simulated/floor/plating/airless{
+	dir = 9;
+	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
 "qR" = (
@@ -460,7 +468,7 @@
 /obj/item/stack/cable_coil/red{
 	amount = 1
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 5;
 	icon_state = "podhatch"
 	},
@@ -469,12 +477,22 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/space,
 /area/space_structures/broken_breacher)
+"rA" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/space_structures/broken_breacher)
 "rB" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
 	shot_synth = 1
 	},
 /turf/simulated/floor/plating/airless,
+/area/space_structures/broken_breacher)
+"rO" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet7-3"
+	},
 /area/space_structures/broken_breacher)
 "sh" = (
 /turf/simulated/shuttle/wall{
@@ -512,7 +530,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
@@ -521,22 +539,21 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "va" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "vd" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/red,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet11-12"
 	},
 /area/space_structures/broken_breacher)
 "vm" = (
@@ -554,17 +571,19 @@
 /area/space_structures/broken_breacher)
 "vA" = (
 /obj/structure/droppod,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	dir = 10;
 	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
 "vH" = (
-/obj/effect/decal/droppod_wreckage,
+/obj/effect/decal/droppod_wreckage{
+	anchored = 1
+	},
 /obj/item/stack/cable_coil/red{
 	amount = 2
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	dir = 6;
 	icon_state = "podhatch"
 	},
@@ -572,20 +591,19 @@
 "vW" = (
 /obj/effect/landmark/corpse/unathisoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "wh" = (
 /obj/structure/filingcabinet,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet6-2"
 	},
 /area/space_structures/broken_breacher)
 "xb" = (
 /mob/living/simple_animal/hostile/carp,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
@@ -601,32 +619,37 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 8;
+/turf/simulated/floor/plating/airless{
 	icon_state = "wood"
+	},
+/area/space_structures/broken_breacher)
+"xk" = (
+/obj/structure/stool/bed,
+/obj/machinery/light,
+/turf/simulated/floor/plating/airless{
+	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "xz" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/green,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "xB" = (
 /obj/machinery/door/airlock/centcom,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "xY" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet6-2"
 	},
 /area/space_structures/broken_breacher)
 "yh" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 8;
 	icon_state = "podhatch"
 	},
@@ -639,42 +662,38 @@
 /area/space_structures/broken_breacher)
 "yw" = (
 /obj/machinery/door/airlock/centcom,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
+/turf/simulated/floor/wood,
 /area/space_structures/broken_breacher)
 "yA" = (
 /obj/structure/stool/bed,
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/green,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "zd" = (
-/turf/unsimulated/floor{
-	dir = 8;
+/turf/simulated/floor/plating/airless{
 	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
 "zs" = (
 /obj/machinery/door/airlock/centcom,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "zX" = (
 /obj/structure/closet/gimmick,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "Bk" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet13-5"
 	},
 /area/space_structures/broken_breacher)
 "BA" = (
@@ -710,7 +729,7 @@
 /area/space_structures/broken_breacher)
 "BT" = (
 /obj/structure/stool/bed,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
@@ -725,16 +744,15 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/green,
 /obj/machinery/light,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "CC" = (
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet7-3"
 	},
 /area/space_structures/broken_breacher)
 "CS" = (
@@ -764,19 +782,19 @@
 	},
 /obj/machinery/door/window/brigdoor,
 /obj/structure/rack,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 9;
 	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
 "Ds" = (
 /obj/item/clothing/accessory/storage/knifeharness,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "DG" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 1;
 	icon_state = "podhatch"
 	},
@@ -812,6 +830,12 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/broken_breacher)
+"Ff" = (
+/obj/machinery/door/airlock/centcom,
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
+	},
+/area/space_structures/broken_breacher)
 "Fx" = (
 /obj/machinery/door/airlock/centcom,
 /turf/simulated/floor{
@@ -833,12 +857,12 @@
 	},
 /area/space_structures/broken_breacher)
 "FI" = (
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet13-5"
 	},
 /area/space_structures/broken_breacher)
 "FS" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
@@ -866,7 +890,7 @@
 "Gj" = (
 /obj/structure/closet/gimmick,
 /obj/item/clothing/glasses/night,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
@@ -876,9 +900,8 @@
 	},
 /area/space_structures/broken_breacher)
 "GB" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet7-3"
 	},
 /area/space_structures/broken_breacher)
 "Hl" = (
@@ -889,14 +912,13 @@
 	},
 /area/space_structures/broken_breacher)
 "HA" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet11-12"
 	},
 /area/space_structures/broken_breacher)
 "HE" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "HP" = (
@@ -916,10 +938,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
+/turf/simulated/floor/wood,
 /area/space_structures/broken_breacher)
 "Ip" = (
 /obj/structure/computerframe,
@@ -934,18 +953,18 @@
 "IQ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
 "IS" = (
 /obj/machinery/door/airlock/centcom,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "JA" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 9;
 	icon_state = "podhatch"
 	},
@@ -967,13 +986,11 @@
 /obj/item/device/flashlight/lamp/green{
 	pixel_x = -6
 	},
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/item/weapon/lighter/zippo/fluff/michael_guess_1{
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/turf/unsimulated/floor{
-	dir = 8;
+/turf/simulated/floor/plating/airless{
 	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
@@ -985,8 +1002,7 @@
 /area/space_structures/broken_breacher)
 "Lf" = (
 /mob/living/simple_animal/hostile/carp,
-/turf/unsimulated/floor{
-	dir = 8;
+/turf/simulated/floor/plating/airless{
 	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
@@ -1006,7 +1022,7 @@
 "LM" = (
 /obj/structure/closet/gimmick,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
@@ -1029,7 +1045,7 @@
 "Ni" = (
 /obj/effect/landmark/corpse/unathisoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 1;
 	icon_state = "podhatch"
 	},
@@ -1052,10 +1068,14 @@
 /area/space_structures/broken_breacher)
 "NI" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
+"NY" = (
+/obj/structure/stool/bed,
+/turf/space,
+/area/space)
 "Oa" = (
 /obj/random/vending/snack,
 /turf/simulated/shuttle/floor{
@@ -1069,26 +1089,24 @@
 	},
 /area/space_structures/broken_breacher)
 "Om" = (
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet10-8"
 	},
 /area/space_structures/broken_breacher)
 "OG" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "OY" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet14-10"
 	},
 /area/space_structures/broken_breacher)
 "Pp" = (
@@ -1106,7 +1124,7 @@
 /turf/space,
 /area/space)
 "PM" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
@@ -1114,9 +1132,8 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet14-10"
 	},
 /area/space_structures/broken_breacher)
 "Qp" = (
@@ -1146,7 +1163,7 @@
 /obj/item/weapon/shard,
 /obj/item/stack/cable_coil/red,
 /obj/item/weapon/airlock_electronics,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	dir = 10;
 	icon_state = "podhatch"
 	},
@@ -1172,10 +1189,18 @@
 	},
 /area/space_structures/broken_breacher)
 "TC" = (
-/obj/effect/decal/droppod_wreckage,
-/turf/unsimulated/floor{
+/obj/effect/decal/droppod_wreckage{
+	anchored = 1
+	},
+/turf/simulated/floor{
 	dir = 6;
 	icon_state = "podhatch"
+	},
+/area/space_structures/broken_breacher)
+"TG" = (
+/obj/structure/closet/gimmick,
+/turf/simulated/floor/plating/airless{
+	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "Ue" = (
@@ -1186,14 +1211,13 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "UQ" = (
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
+/turf/simulated/floor{
+	icon_state = "carpet9-4"
 	},
 /area/space_structures/broken_breacher)
 "UU" = (
@@ -1214,7 +1238,7 @@
 /area/space_structures/broken_breacher)
 "VR" = (
 /obj/effect/landmark/corpse/unathisoldier,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
@@ -1228,8 +1252,18 @@
 /area/space_structures/broken_breacher)
 "Wa" = (
 /obj/item/weapon/arrow/rod,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
+	},
+/area/space_structures/broken_breacher)
+"WG" = (
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -27
+	},
+/obj/structure/table/woodentable,
+/obj/item/clothing/mask/cigarette/cigar,
+/turf/simulated/floor/plating/airless{
+	icon_state = "wood"
 	},
 /area/space_structures/broken_breacher)
 "Xg" = (
@@ -1260,15 +1294,15 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/lasercannon,
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatch"
 	},
 /area/space_structures/broken_breacher)
 "XH" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/flora/deskleaf,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
+/turf/simulated/floor{
+	icon_state = "carpet15-15"
 	},
 /area/space_structures/broken_breacher)
 "Yb" = (
@@ -1284,14 +1318,13 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
+/turf/simulated/floor/plating/airless{
+	icon_state = "carpet5-1"
 	},
 /area/space_structures/broken_breacher)
 "Yt" = (
 /obj/effect/landmark/corpse/unathisoldier,
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
@@ -1310,7 +1343,7 @@
 	},
 /area/space_structures/broken_breacher)
 "Zm" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
@@ -1479,7 +1512,7 @@ PM
 PM
 pT
 FS
-FS
+kW
 zX
 Og
 sO
@@ -1848,7 +1881,7 @@ BO
 BO
 BO
 BO
-BO
+FA
 pT
 bA
 PM
@@ -1923,7 +1956,7 @@ yw
 pT
 pT
 pT
-BO
+VW
 BO
 BO
 BO
@@ -1958,11 +1991,11 @@ pT
 pT
 pT
 pT
-bg
+cR
 Lf
 xh
 zd
-zd
+WG
 Kh
 pT
 pT
@@ -1998,13 +2031,13 @@ sO
 sO
 sO
 sO
-sO
+hh
 Sd
 lV
 bg
 zd
 xY
-GB
+rO
 Yl
 pT
 sr
@@ -2029,7 +2062,7 @@ pT
 Zm
 Zm
 Zm
-Cx
+xk
 aX
 sO
 sO
@@ -2043,7 +2076,7 @@ pT
 pT
 pT
 HT
-bT
+zd
 iq
 dT
 vd
@@ -2113,7 +2146,7 @@ pT
 pT
 pT
 BT
-cR
+bg
 FV
 dj
 ru
@@ -2146,7 +2179,7 @@ sO
 ap
 pT
 pT
-xB
+Ff
 pT
 pT
 pT
@@ -2158,7 +2191,7 @@ sh
 pT
 sO
 sO
-sO
+NY
 sO
 cp
 "}
@@ -2192,7 +2225,7 @@ Ds
 gG
 uV
 pT
-aI
+rA
 gV
 pT
 sO
@@ -2229,13 +2262,13 @@ sO
 SL
 pT
 pT
-PM
-JA
+op
+qw
 vA
 VR
 EI
 bg
-zX
+TG
 pT
 sO
 sO
@@ -2271,7 +2304,7 @@ sO
 hh
 sO
 sh
-PM
+op
 if
 vH
 Wa
@@ -2314,9 +2347,9 @@ sO
 sO
 sO
 sh
-PM
-PM
-PM
+op
+op
+op
 pT
 Vk
 FV
