@@ -40,7 +40,7 @@
  *
  * optional inline_assets list List of assets to inline into the html.
  */
-/datum/tgui_window/proc/initialize(inline_assets = list())
+/datum/tgui_window/proc/initialize(fancy=FALSE, inline_assets = list())
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
@@ -52,7 +52,7 @@
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
 	// Remove titlebar and resize handles for a fancy window
-	if(client.prefs.tgui_fancy)
+	if(fancy)
 		options += "titlebar=0;can_resize=0;"
 	else
 		options += "titlebar=1;can_resize=1;"

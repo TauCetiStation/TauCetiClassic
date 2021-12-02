@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -33,6 +33,8 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/tgui_state/state = null
+	/// Rate limit client refreshes to prevent DoS.
+	COOLDOWN_DECLARE(refresh_cooldown)
 
 /**
  * public
@@ -50,11 +52,11 @@
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
 	log_tgui(user,
-		"new [interface] fancy [user.client.prefs.tgui_fancy]",
+		"new [interface] fancy [user?.client?.prefs.tgui_fancy]",
 		src_object = src_object)
 	src.user = user
 	src.src_object = src_object
-	src.window_key = "\ref[src_object]-main"
+	src.window_key = "[REF(src_object)]-main"
 	src.interface = interface
 	if(title)
 		src.title = title
@@ -63,38 +65,52 @@
 	if(ui_x && ui_y)
 		src.window_size = list(ui_x, ui_y)
 
+/datum/tgui/Destroy()
+	user = null
+	src_object = null
+	return ..()
+
 /**
  * public
  *
  * Open this UI (and initialize it with data).
+ *
+ * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
 /datum/tgui/proc/open()
 	if(!user.client)
-		return null
+		return FALSE
 	if(window)
-		return null
+		return FALSE
 	process_status()
 	if(status < UI_UPDATE)
-		return null
+		return FALSE
 	window = SStgui.request_pooled_window(user)
 	if(!window)
-		return null
+		return FALSE
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(
-			get_asset_datum(/datum/asset/simple/tgui),
-			get_asset_datum(/datum/asset/simple/tgui_common),
-		))
+		window.initialize(
+			fancy = user.client.prefs.tgui_fancy,
+			inline_assets = list(
+				get_asset_datum(/datum/asset/simple/tgui_common),
+				get_asset_datum(/datum/asset/simple/tgui),
+			))
 	else
 		window.send_message("ping")
-	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
+	var/flush_queue = window.send_asset(get_asset_datum(
+		/datum/asset/simple/fontawesome))
 	for(var/datum/asset/asset in src_object.tgui_assets(user))
-		window.send_asset(asset)
+		flush_queue |= window.send_asset(asset)
+	if (flush_queue)
+		user.client.asset_flush()
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
 	SStgui.on_open(src)
+
+	return TRUE
 
 /**
  * public
@@ -146,11 +162,13 @@
  * Makes an asset available to use in tgui.
  *
  * required asset datum/asset
+ *
+ * return bool - true if an asset was actually sent
  */
 /datum/tgui/proc/send_asset(datum/asset/asset)
 	if(!window)
-		CRASH("send_asset() can only be called after open().")
-	window.send_asset(asset)
+		CRASH("send_asset() was called either without calling open() first or when open() did not return TRUE.")
+	return window.send_asset(asset)
 
 /**
  * public
@@ -204,9 +222,13 @@
 			"fancy" = user.client.prefs.tgui_fancy,
 			"locked" = user.client.prefs.tgui_lock,
 		),
+		"client" = list(
+			"ckey" = user.client.ckey,
+			"address" = user.client.address,
+			"computer_id" = user.client.computer_id,
+		),
 		"user" = list(
 			"name" = "[user]",
-			"ckey" = "[user.ckey]",
 			"observer" = isobserver(user),
 		),
 	)
@@ -226,7 +248,7 @@
  * Run an update cycle for this UI. Called internally by SStgui
  * every second or so.
  */
-/datum/tgui/process(force = FALSE)
+/datum/tgui/process(delta_time, force = FALSE)
 	if(closing)
 		return
 	var/datum/host = src_object.tgui_host(user)
@@ -281,6 +303,10 @@
 		return FALSE
 	switch(type)
 		if("ready")
+			// Send a full update when the user manually refreshes the UI
+			if (initialized && COOLDOWN_FINISHED(src, refresh_cooldown))
+				send_full_update()
+				COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 			initialized = TRUE
 		if("pingReply")
 			initialized = TRUE
