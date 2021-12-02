@@ -92,7 +92,7 @@ export const storeWindowGeometry = async () => {
   storage.set(windowKey, geometry);
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
-    storage.get('geometries') || [],
+    await storage.get('geometries') || [],
     windowKey);
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -107,39 +107,33 @@ export const recallWindowGeometry = async (options = {}) => {
     logger.log('recalled geometry:', geometry);
   }
   let pos = geometry?.pos || options.pos;
-  let size = options.size;
-  // Wait until screen offset gets resolved
-  await screenOffsetPromise;
-  const areaAvailable = [
-    window.screen.availWidth,
-    window.screen.availHeight,
-  ];
+  const size = options.size;
   // Set window size
   if (size) {
-    // Constraint size to not exceed available screen area.
-    size = [
-      Math.min(areaAvailable[0], size[0]),
-      Math.min(areaAvailable[1], size[1]),
-    ];
     setWindowSize(size);
   }
+  // Set window position
   if (pos) {
+    await screenOffsetPromise;
     // Constraint window position if monitor lock was set in preferences.
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
     setWindowPosition(pos);
   }
-
   // Set window position at the center of the screen.
   else if (size) {
-    pos = vecAdd(
+    await screenOffsetPromise;
+    const areaAvailable = [
+      window.screen.availWidth - Math.abs(screenOffset[0]),
+      window.screen.availHeight - Math.abs(screenOffset[1]),
+    ];
+    const pos = vecAdd(
       vecScale(areaAvailable, 0.5),
       vecScale(size, -0.5),
       vecScale(screenOffset, -1.0));
     setWindowPosition(pos);
   }
-
 };
 
 export const setupDrag = async () => {
@@ -184,8 +178,6 @@ export const dragStartHandler = event => {
     window.screenLeft - event.screenX,
     window.screenTop - event.screenY,
   ];
-  // Focus click target
-  event.target?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);
   dragMoveHandler(event);
@@ -222,8 +214,6 @@ export const resizeStartHandler = (x, y) => event => {
     window.innerWidth,
     window.innerHeight,
   ];
-  // Focus click target
-  event.target?.focus();
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
   resizeMoveHandler(event);

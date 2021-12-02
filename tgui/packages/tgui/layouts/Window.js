@@ -5,16 +5,17 @@
  */
 
 import { classes } from 'common/react';
+import { useDispatch } from 'common/redux';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { backendSuspendStart, useBackend } from '../backend';
 import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
-import { toggleKitchenSink, useDebug } from '../debug';
+import { useDebug } from '../debug';
+import { toggleKitchenSink } from '../debug/actions';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
-import { useDispatch } from '../store';
-import { Layout, refocusLayout } from './Layout';
+import { Layout } from './Layout';
 
 const logger = createLogger('Window');
 
@@ -22,26 +23,11 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { suspended } = useBackend(this.context);
+    const { config, suspended } = useBackend(this.context);
     if (suspended) {
       return;
     }
     logger.log('mounting');
-    this.updateGeometry();
-  }
-
-  componentDidUpdate(prevProps) {
-    const shouldUpdateGeometry = (
-      this.props.width !== prevProps.width
-      || this.props.height !== prevProps.height
-    );
-    if (shouldUpdateGeometry) {
-      this.updateGeometry();
-    }
-  }
-
-  updateGeometry() {
-    const { config } = useBackend(this.context);
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
@@ -57,6 +43,7 @@ export class Window extends Component {
 
   render() {
     const {
+      resizable,
       theme,
       title,
       children,
@@ -69,9 +56,11 @@ export class Window extends Component {
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
     // Determine when to show dimmer
-    const showDimmer = config.user.observer
-      ? config.status < UI_DISABLED
-      : config.status < UI_INTERACTIVE;
+    const showDimmer = config.user && (
+      config.user.observer
+        ? config.status < UI_DISABLED
+        : config.status < UI_INTERACTIVE
+    );
     return (
       <Layout
         className="Window"
@@ -96,7 +85,7 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && (
+        {fancy && resizable && (
           <Fragment>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
@@ -118,8 +107,6 @@ const WindowContent = props => {
     children,
     ...rest
   } = props;
-  // A bit lazy to actually write styles for it,
-  // so we simply include a Box with margins.
   return (
     <Layout.Content
       className={classes([
@@ -166,10 +153,17 @@ const TitleBar = (props, context) => {
         'TitleBar',
         className,
       ])}>
-      <Icon
-        className="TitleBar__statusIcon"
-        color={statusToColor(status)}
-        name="eye" />
+      {status === undefined && (
+        <Icon
+          className="TitleBar__statusIcon"
+          name="tools"
+          opacity={0.5} />
+      ) || (
+        <Icon
+          className="TitleBar__statusIcon"
+          color={statusToColor(status)}
+          name="eye" />
+      )}
       <div className="TitleBar__title">
         {typeof title === 'string'
           && title === title.toLowerCase()

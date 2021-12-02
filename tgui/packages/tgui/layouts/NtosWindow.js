@@ -7,7 +7,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
-import { refocusLayout } from './Layout';
 import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
@@ -15,6 +14,7 @@ export const NtosWindow = (props, context) => {
     title,
     width = 575,
     height = 700,
+    resizable,
     theme = 'ntos',
     children,
   } = props;
@@ -35,13 +35,10 @@ export const NtosWindow = (props, context) => {
       title={title}
       width={width}
       height={height}
-      theme={theme}>
+      theme={theme}
+      resizable={resizable}>
       <div className="NtosWindow">
-        <div
-          className="NtosWindow__header NtosHeader"
-          onMouseDown={() => {
-            refocusLayout();
-          }}>
+        <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
             <Box inline bold mr={2}>
               {PC_stationtime}

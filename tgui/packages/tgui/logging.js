@@ -36,7 +36,6 @@ const log = (level, ns, ...args) => {
       tgui: 1,
       window_id: window.__windowId__,
       type: 'log',
-      ns,
       message: logEntry,
     });
   }

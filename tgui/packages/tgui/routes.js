@@ -5,14 +5,14 @@
  */
 
 import { selectBackend } from './backend';
-import { selectDebug } from './debug';
+import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces', false, /\.js$/);
 
 const routingError = (type, name) => () => {
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable>
         {type === 'notFound' && (
           <div>Interface <b>{name}</b> was not found.</div>
@@ -27,13 +27,14 @@ const routingError = (type, name) => () => {
 
 const SuspendedWindow = () => {
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable />
     </Window>
   );
 };
 
-export const getRoutedComponent = state => {
+export const getRoutedComponent = store => {
+  const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;
@@ -42,7 +43,7 @@ export const getRoutedComponent = state => {
     const debug = selectDebug(state);
     // Show a kitchen sink
     if (debug.kitchenSink) {
-      return require('./debug/KitchenSink').KitchenSink;
+      return require('./debug').KitchenSink;
     }
   }
   const name = config?.interface;
