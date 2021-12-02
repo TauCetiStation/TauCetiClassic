@@ -30,11 +30,13 @@
 	src.uses = uses
 	power_change()
 
-/obj/machinery/ai_slipper/proc/setDisable()
+/obj/machinery/ai_slipper/proc/toggle_on()
 	src.disabled = !src.disabled
 	icon_state = src.disabled? "motion0":"motion3"
 
 /obj/machinery/ai_slipper/proc/activate()
+	if(cooldown_on || disabled)
+		return
 	new /obj/effect/effect/foam(src.loc)
 	src.uses--
 	cooldown_on = 1
@@ -88,12 +90,9 @@
 		to_chat(usr, "Control panel is locked!")
 		return FALSE
 	if (href_list["toggleOn"])
-		setDisable()
+		toggle_on()
 	else if (href_list["toggleUse"])
-		if(cooldown_on || disabled)
-			return FALSE
-		else
-			activate()
+		activate()
 
 	updateUsrDialog()
 
