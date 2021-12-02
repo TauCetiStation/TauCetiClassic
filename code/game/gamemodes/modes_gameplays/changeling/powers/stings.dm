@@ -123,7 +123,7 @@
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
 	chemical_cost = 15
-	genomecost = 2
+	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -140,7 +140,7 @@
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
-	genomecost = 3
+	genomecost = 2
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -218,7 +218,7 @@
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
-	genomecost = 2
+	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -237,7 +237,7 @@
 	desc = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
-	genomecost = 2
+	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
