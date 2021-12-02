@@ -67756,10 +67756,42 @@
 /area/station/maintenance/engineering)
 "cGO" = (
 /obj/structure/table/woodentable,
-/obj/item/device/taperecorder{
-	pixel_x = -3
-	},
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_y = -5
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_y = 6
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = -10
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = -4
+	},
+/obj/item/weapon/paper/changeling_object{
+	pixel_x = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cGP" = (
@@ -67796,6 +67828,10 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 27
+	},
+/obj/item/device/taperecorder{
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)

@@ -59,7 +59,9 @@
 /datum/asset/simple/paper
 	assets = list(
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
-		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
+		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png',
+		"top_secret.png" = 'icons/paper_icons/top_secret.png',
+		"unclassified.png" = 'icons/paper_icons/unclassified.png'
 	)
 
 /datum/asset/simple/newscaster
