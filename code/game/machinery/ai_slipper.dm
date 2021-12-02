@@ -29,7 +29,7 @@
 	if(stat | NOPOWER)
 		icon_state = "motion0"
 	else
-		icon_state = disabled? "motion0":"motion3"
+		icon_state = disabled ? "motion0" : "motion3"
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
