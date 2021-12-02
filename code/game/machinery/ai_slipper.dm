@@ -26,7 +26,7 @@
 	update_power_use()
 
 /obj/machinery/ai_slipper/update_icon()
-	if(stat == NOPOWER)
+	if(stat | NOPOWER)
 		icon_state = "motion0"
 	else
 		icon_state = disabled? "motion0":"motion3"
