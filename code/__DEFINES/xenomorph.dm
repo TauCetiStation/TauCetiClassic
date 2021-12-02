@@ -2,7 +2,7 @@
 #define TOTAL_HUMAN         1
 #define TOTAL_ALIEN         2
 #define ALIEN_PERCENT       3
-#define FIRST_HELP_PERCENT  25
+#define FIRST_HELP_PERCENT  20
 #define SECOND_HELP_PERCENT 60
 #define WIN_PERCENT         190
 
