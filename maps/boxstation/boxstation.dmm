@@ -349,12 +349,14 @@
 	},
 /area/station/security/range)
 "aaK" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -454,11 +456,12 @@
 /turf/simulated/wall,
 /area/station/security/main)
 "aaW" = (
-/obj/structure/stool,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/window/reinforced/tinted{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -500,9 +503,15 @@
 	},
 /area/station/security/main)
 "abc" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
+/obj/machinery/camera{
+	c_tag = "Prison Solitary Confinement 2";
+	network = list("SS13","Prison")
+	},
+/obj/structure/table,
+/obj/item/weapon/paper,
+/obj/item/weapon/pen,
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -529,6 +538,8 @@
 	dir = 4;
 	network = list("SS13","Security")
 	},
+/obj/item/weapon/storage/box/cups,
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -591,12 +602,8 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/armoury)
 "abm" = (
-/obj/structure/closet/secure_closet/brig{
-	name = "Solitary Confinement Locker"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor/plating,
 /area/station/security/brig)
 "abn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -606,6 +613,9 @@
 /area/station/security/brig)
 "abo" = (
 /obj/effect/decal/cleanable/generic,
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -766,7 +776,7 @@
 /area/station/security/brig)
 "abG" = (
 /obj/structure/lattice,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall,
 /area/station/security/processing)
 "abH" = (
 /obj/machinery/deployable/barrier,
@@ -1148,15 +1158,13 @@
 	},
 /area/station/security/main)
 "aci" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	id = "Armoury0";
-	name = "Emergency Access"
+/obj/structure/closet/secure_closet/brig{
+	name = "Solitary Confinement Locker"
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	icon_state = "dark"
 	},
-/area/station/security/armoury)
+/area/station/security/brig)
 "acj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1447,17 +1455,14 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "acP" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/plating,
-/area/space)
+/area/station/security/brig)
 "acQ" = (
 /obj/structure/firedoor_assembly,
 /turf/simulated/floor/plating{
@@ -1477,7 +1482,10 @@
 	},
 /area/station/security/execution)
 "acS" = (
-/turf/simulated/wall/r_wall,
+/obj/structure/sign/warning/electricshock{
+	pixel_x = 32
+	},
+/turf/space,
 /area/space)
 "acT" = (
 /obj/machinery/flasher/portable,
@@ -1624,8 +1632,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "add" = (
@@ -1749,13 +1756,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ado" = (
+/obj/structure/stool/bed,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1777,25 +1782,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "adr" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Solitary Confinement";
+	req_access = list(2)
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/flasher_button{
-	id = "solitary1";
-	name = "Solitary Confinement flash";
-	pixel_y = -26
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/security/brig)
 "ads" = (
 /obj/structure/closet/secure_closet/security,
@@ -2053,15 +2056,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "adP" = (
-/obj/machinery/camera{
-	c_tag = "Prison Solitary Confinement 2";
-	network = list("SS13","Prison")
-	},
-/obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -2528,6 +2527,24 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "aeB" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig)
+"aeD" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/security/warden)
+"aeE" = (
 /obj/machinery/flasher{
 	id = "solitary1"
 	},
@@ -2541,28 +2558,6 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/station/security/brig)
-"aeC" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = 32
-	},
-/obj/structure/lattice,
-/turf/space,
-/area/space)
-"aeD" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/station/security/warden)
-"aeE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor/plating,
 /area/station/security/brig)
 "aeF" = (
 /obj/machinery/light{
@@ -2655,21 +2650,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aeP" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Solitary Confinement";
-	req_access = list(2)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -2720,6 +2710,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/flasher_button{
+	id = "solitary1";
+	name = "Solitary Confinement flash";
+	pixel_x = -28;
+	pixel_y = -26
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -2976,13 +2972,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "afq" = (
-/obj/structure/stool/bed,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -4729,6 +4719,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -10678,7 +10669,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "asY" = (
-/turf/simulated/wall,
+/turf/simulated/wall/r_wall,
 /area/station/security/lobby)
 "asZ" = (
 /obj/structure/closet,
@@ -14691,13 +14682,6 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Secure Gate";
-	name = "Security Blast Door";
-	opacity = 0
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -23112,6 +23096,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -77749,12 +77734,6 @@
 	icon_state = "wood_stairs2"
 	},
 /area/station/civilian/chapel)
-"plb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
 "plH" = (
 /obj/structure/table/woodentable,
 /obj/machinery/newscaster{
@@ -107030,7 +107009,7 @@ aaa
 aaa
 aah
 aaa
-cVb
+abY
 abY
 abY
 acE
@@ -107544,7 +107523,7 @@ aaa
 aaa
 aah
 aaa
-cVb
+abY
 acv
 acB
 acK
@@ -107801,7 +107780,7 @@ aaa
 aah
 aah
 aaa
-cVb
+abY
 acw
 acC
 akd
@@ -108050,7 +108029,7 @@ aaa
 aaa
 aaa
 aah
-aeC
+aah
 aaa
 aaa
 aaa
@@ -108306,9 +108285,9 @@ aaa
 aaa
 aaa
 acS
-adJ
-adJ
-adJ
+aaa
+aaa
+aaa
 adJ
 adJ
 adJ
@@ -108317,7 +108296,7 @@ adJ
 ahZ
 ajA
 ajd
-adJ
+adM
 cWb
 akz
 adM
@@ -108562,19 +108541,19 @@ aaa
 aaa
 aaa
 aah
-acS
-aaK
-abc
-plb
+adJ
+adJ
+adJ
+adJ
 adJ
 aeT
 afU
 aeT
-adJ
+adM
 ahY
 ajD
 ajc
-adJ
+adM
 alE
 amA
 alp
@@ -108819,7 +108798,7 @@ aaa
 aaa
 aah
 aah
-acP
+adJ
 aaW
 aeB
 afq
@@ -108827,11 +108806,11 @@ adJ
 abn
 ann
 agH
-adJ
+adM
 aiB
 ajD
 akG
-adJ
+adM
 cYb
 alb
 adM
@@ -109076,15 +109055,15 @@ aaa
 aah
 aah
 aaa
-acS
+aaK
 adP
 aeE
 ado
 adJ
 abo
 aey
-aeT
-adJ
+acP
+adM
 abF
 ajD
 aje
@@ -109333,15 +109312,15 @@ aah
 aah
 aaa
 aaa
-acS
 adJ
-adJ
+abc
+abm
 aeP
 adJ
 abr
 abB
 agJ
-adJ
+adM
 aiF
 ajE
 akI
@@ -109358,7 +109337,7 @@ auS
 arg
 asF
 aBZ
-ayr
+ani
 auh
 bLx
 bNr
@@ -109590,11 +109569,11 @@ bEP
 bEP
 bEP
 bEP
-bEP
-bEP
-abm
+adJ
+adJ
+adJ
 adr
-adM
+adJ
 adM
 aex
 adM
@@ -109615,8 +109594,8 @@ arg
 aqs
 ayt
 aCs
-ayr
-ayr
+ani
+ani
 ayr
 ayr
 ayr
@@ -109848,8 +109827,8 @@ aaD
 abL
 abs
 oRb
-bEP
-adh
+aaZ
+aci
 aeS
 adh
 afP
@@ -111918,9 +111897,9 @@ aiE
 ajs
 alI
 fmb
-adM
-adM
-adM
+adJ
+adJ
+adJ
 adJ
 aqI
 arE
@@ -113700,7 +113679,7 @@ aaj
 aaj
 abl
 dpb
-aci
+acz
 acz
 abl
 abl
@@ -113977,12 +113956,12 @@ amH
 afV
 afV
 afV
-pPF
+afV
 aod
 aoz
 arJ
 pPF
-aef
+afl
 aef
 aef
 aef
