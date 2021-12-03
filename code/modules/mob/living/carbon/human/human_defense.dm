@@ -352,7 +352,7 @@
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
 							if(R)
-								R.RemoveFromRole(mind)
+								R.Deconvert()
 
 				if(bloody)//Apply blood
 					if(wear_mask)
