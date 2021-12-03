@@ -172,7 +172,6 @@
 					to_chat(user, "<span class='[religion.style_text]'>Ты чувствуешь прилив сил в [BP].</span>")
 
 	user.heal_overall_damage(1.2 * drain, drain)
-	user.apply_damages(-drain, -drain, -drain, -drain, -drain, -drain)
 	return TRUE
 
 /datum/religion_rites/instant/cult/raise_torture
