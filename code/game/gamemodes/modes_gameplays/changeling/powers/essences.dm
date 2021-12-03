@@ -75,7 +75,6 @@
 	if(!host)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
-		
 	var/message_mode = parse_message_mode(message)
 	if(message_mode == "alientalk")
 		if(!(flags_allowed & ESSENCE_SPEAK_TO_HOST))
