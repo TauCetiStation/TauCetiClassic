@@ -1,4 +1,4 @@
 /**
  * Stub for tg compatibility
 **/
-#define REF(input) \ref[input]
+#define REF(input) "\ref[input]"
