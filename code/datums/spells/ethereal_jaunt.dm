@@ -27,6 +27,13 @@
 		holder.modifier_delay = movement_cooldown
 		target.ExtinguishMob()			//This spell can extinguish mob
 		target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
+
+		var/remove_xray = FALSE
+		if(!(XRAY in target.mutations))
+			target.mutations += XRAY
+			target.update_sight()
+			remove_xray = TRUE
+
 		holder.master = target
 		var/list/companions = handle_teleport_grab(holder, target)
 		if(companions)
@@ -35,6 +42,7 @@
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker", layer = HUD_LAYER)
+		I.plane = HUD_PLANE
 		holder.indicator = I
 		if(target.client)
 			target.client.images += I
@@ -58,7 +66,9 @@
 			target.client.images -= I
 			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
-		mobloc = get_turf(target.loc)
+		if(remove_xray)
+			target.mutations -= XRAY
+			target.update_sight()
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
