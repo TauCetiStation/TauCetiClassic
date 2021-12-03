@@ -1,4 +1,4 @@
-var/list/name_to_mineral
+var/global/list/name_to_mineral
 
 /proc/SetupMinerals()
 	name_to_mineral = list()

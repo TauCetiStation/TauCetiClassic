@@ -45,6 +45,7 @@
 
 
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.
+#define SS_PRIORITY_TIMER        700
 #define SS_PRIORITY_OVERLAYS     500
 #define SS_PRIORITY_CHAT         400
 #define SS_PRIORITY_TICKER       200
@@ -107,3 +108,13 @@
 #define SS_DISPLAY_TIMER    7
 #define SS_DISPLAY_NANOUI   8
 #define SS_DISPLAY_DEFAULT  100
+
+// SS runlevels
+
+#define RUNLEVEL_INIT 0
+#define RUNLEVEL_LOBBY 1
+#define RUNLEVEL_SETUP 2
+#define RUNLEVEL_GAME 4
+#define RUNLEVEL_POSTGAME 8
+
+#define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)

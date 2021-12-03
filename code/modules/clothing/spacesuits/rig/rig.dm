@@ -696,7 +696,7 @@
 		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && on)
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
-			lamp.plane = LIGHTING_PLANE + 1
+			lamp.plane = ABOVE_LIGHTING_PLANE
 			user.add_overlay(lamp)
 			lamp.alpha = 255
 		user.update_inv_head()
