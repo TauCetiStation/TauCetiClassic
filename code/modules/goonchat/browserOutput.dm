@@ -242,7 +242,7 @@ var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiLi
 	return "[bicon_cache[key]]"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
-	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, message, handle_whitespace)
 		return
 	SSchat.queue(target, message, handle_whitespace)
