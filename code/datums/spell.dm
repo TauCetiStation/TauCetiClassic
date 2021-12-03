@@ -1,7 +1,7 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -23,6 +23,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/divine_power = 0 //control of spell power depending on the aspect
 	var/list/needed_aspects
 	/****RELIGIOUS ASPECT****/
+
+	var/plasma_cost = 0 //for xenomorph powers
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -87,6 +89,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
+	
+	if(plasma_cost && isxeno(user))
+		var/mob/living/carbon/xenomorph/alien = user
+		if(!alien.check_enough_plasma(plasma_cost))
+			if(try_start)
+				to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
+			return FALSE
 
 	if(ishuman(user) || ismonkey(user))
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -149,6 +158,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!casting_clothes)
 		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
 		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
+	if(plasma_cost)
+		name += " ([plasma_cost])"
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())

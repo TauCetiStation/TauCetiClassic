@@ -447,7 +447,7 @@
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)
-					R.RemoveFromRole(src)
+					R.Deconvert()
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 

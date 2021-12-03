@@ -20,11 +20,12 @@
 	max_plasma = 50
 
 	density = FALSE
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide)
 
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
@@ -38,7 +39,6 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
-	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
@@ -179,7 +179,7 @@ This is chestburster mechanic for damaging
 
 /obj/item/weapon/larva_bite
 	name = "larva_bite"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/larva_bite/hud = null
 	var/mob/affecting = null
 	var/mob/chestburster = null
@@ -335,7 +335,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/fh_grab/hud = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger

@@ -1281,7 +1281,7 @@ var/global/BSACooldown = 0
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /proc/move_admin_shuttle()
 	var/area/fromArea
@@ -1322,7 +1322,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+var/global/ferry_location = 0 // 0 = centcom , 1 = station
 
 /proc/move_ferry()
 	var/area/fromArea
@@ -1363,7 +1363,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 /**********************Alien ship**************************/
 
-var/alien_ship_location = 1 // 0 = base , 1 = mine
+var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /proc/move_alien_ship()
 	var/area/fromArea

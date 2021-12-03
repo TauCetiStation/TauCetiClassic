@@ -1,4 +1,4 @@
-var/timestop_count = 0
+var/global/timestop_count = 0
 
 /obj/effect/timestop
 	anchored = TRUE

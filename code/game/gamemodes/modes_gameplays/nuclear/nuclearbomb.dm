@@ -1,7 +1,7 @@
 #define TIMER_MIN 600
 #define TIMER_MAX 780
 
-var/bomb_set
+var/global/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "Nuclear Fission Explosive"

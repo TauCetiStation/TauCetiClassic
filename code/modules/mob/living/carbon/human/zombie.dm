@@ -291,7 +291,7 @@
 
 	return (tally + config.human_delay)
 
-var/list/zombie_list = list()
+var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
@@ -314,7 +314,7 @@ var/list/zombie_list = list()
 
 	var/datum/role/R = H.mind.GetRole(ZOMBIE)
 	if(R)
-		R.Drop()
+		R.Deconvert()
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"

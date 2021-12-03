@@ -5,9 +5,9 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -46
 	pixel_y = -43
-	plane = ABOVE_LIGHTING_LAYER
-	density = TRUE
+	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
+	density = TRUE
 
 /atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/M in observer_list)
@@ -24,7 +24,6 @@
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
-	plane = ABOVE_LIGHTING_LAYER
 	light_range = 1
 	light_color = "#3e0000"
 	current_size = 12
@@ -219,3 +218,6 @@
 	sleep(11)
 	move_self = TRUE
 	icon = initial(icon)
+
+/obj/singularity/narsie/update_icon(stage)
+	return
