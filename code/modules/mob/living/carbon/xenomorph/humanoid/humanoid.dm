@@ -4,6 +4,7 @@
 	icon_state = "alien_s"
 
 	pass_flags = PASSTABLE
+	w_class = SIZE_HUMAN
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null

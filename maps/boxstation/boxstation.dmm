@@ -13058,7 +13058,7 @@
 	},
 /area/station/civilian/holodeck/alphadeck)
 "awi" = (
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/structure/table,
 /turf/simulated/floor/carpet/black,
 /area/station/security/lawoffice)
@@ -22670,7 +22670,7 @@
 /area/station/hallway/primary/central)
 "aOb" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp/qm,
 /turf/simulated/floor,
@@ -36200,7 +36200,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/device/eftpos{
 	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
@@ -37505,7 +37505,7 @@
 /area/station/maintenance/engineering)
 "boB" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/packageWrap,
 /obj/machinery/light,
 /obj/structure/cable,
@@ -41091,7 +41091,7 @@
 /area/station/tcommsat/computer)
 "buV" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/stamp{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
@@ -66786,7 +66786,7 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/weapon/folder/yellow{
+/obj/item/weapon/folder/brown{
 	pixel_x = 4
 	},
 /turf/simulated/floor/carpet,
@@ -72180,7 +72180,7 @@
 /area/station/engineering/chiefs_office)
 "gyb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/item/weapon/stamp/ce,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin,
@@ -79431,7 +79431,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rdb" = (
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/brown,
 /obj/structure/table/glass,
 /turf/simulated/floor,
 /area/station/engineering/break_room)

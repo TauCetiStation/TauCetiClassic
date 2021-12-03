@@ -4,10 +4,11 @@
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 
+	priority      = SS_PRIORITY_TIMER
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
 	display_order = SS_DISPLAY_TIMER
 
-	flags = SS_FIRE_IN_LOBBY | SS_TICKER | SS_NO_INIT
+	flags = SS_TICKER | SS_NO_INIT
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
@@ -53,7 +54,6 @@ SUBSYSTEM_DEF(timer)
 
 	var/static/list/spent = list()
 	var/static/datum/timedevent/timer
-	var/static/datum/timedevent/head
 
 	if (practical_offset > BUCKET_LEN || (!resumed  && length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
 		shift_buckets()
@@ -61,37 +61,36 @@ SUBSYSTEM_DEF(timer)
 
 	if (!resumed)
 		timer = null
-		head = null
 
 	var/list/bucket_list = src.bucket_list
 
 	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
-		if (!timer || !head || timer == head)
-			head = bucket_list[practical_offset]
-			if (!head)
+		if (!timer)
+			timer = bucket_list[practical_offset]
+			if (!timer)
 				practical_offset++
 				if (MC_TICK_CHECK)
 					break
 				continue
-			timer = head
 		do
+			timer.spent = TRUE
+			spent += timer
+
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
 				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
-			if (!timer.spent)
-				spent += timer
-				timer.spent = TRUE
-				callBack.InvokeAsync()
+			callBack.InvokeAsync()
 
 			timer = timer.next
 
 			if (MC_TICK_CHECK)
+				bucket_list[practical_offset] = timer
+
 				return
-		while (timer && timer != head)
-		timer = null
+		while (timer)
 		bucket_list[practical_offset++] = null
 		if (MC_TICK_CHECK)
 			return
@@ -115,7 +114,7 @@ SUBSYSTEM_DEF(timer)
 		do
 			alltimers += bucket_node
 			bucket_node = bucket_node.next
-		while(bucket_node && bucket_node != bucket_head)
+		while(bucket_node)
 
 
 	bucket_list.len = 0
@@ -160,12 +159,13 @@ SUBSYSTEM_DEF(timer)
 			timer.prev = null
 			continue
 
-		if (!bucket_head.prev)
-			bucket_head.prev = bucket_head
-		timer.next = bucket_head
-		timer.prev = bucket_head.prev
-		timer.next.prev = timer
-		timer.prev.next = timer
+		if (bucket_head.next)
+			timer.next = bucket_head.next
+			timer.next.prev = timer
+		else
+			timer.next = null
+		timer.prev = bucket_head
+		bucket_head.next = timer
 
 	processing = (alltimers - timers_to_remove)
 
@@ -228,12 +228,11 @@ SUBSYSTEM_DEF(timer)
 			SStimer.practical_offset = bucket_pos
 		return
 	//other wise, lets do a simplified linked list add.
-	if (!bucket_head.prev)
-		bucket_head.prev = bucket_head
-	next = bucket_head
-	prev = bucket_head.prev
-	next.prev = src
-	prev.next = src
+	if (bucket_head.next)
+		next = bucket_head.next
+		next.prev = src
+	prev = bucket_head
+	bucket_head.next = src
 
 /datum/timedevent/Destroy()
 	..()
