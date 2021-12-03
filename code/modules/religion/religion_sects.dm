@@ -155,10 +155,22 @@
 		/datum/aspect/conjure = 2,
 	)
 
+/datum/religion_sect/preset/cult/salvation
+	name = "The Cult of Salvation"
+	desc = "Save life of cultists at any cost."
+	convert_opener = "Become immortal!"
+	aspect_preset = list(
+		/datum/aspect/resources = 1,
+		/datum/aspect/rescue = 1,
+		/datum/aspect/chaos = 1,
+		/datum/aspect/mystic = 1,
+		/datum/aspect/lightbending/darkness = 2,
+	)
+
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
 	convert_opener = "Chaos is power."
 
-	aspects_count = 5
+	aspects_count = 6
 
 	add_religion_name = FALSE
