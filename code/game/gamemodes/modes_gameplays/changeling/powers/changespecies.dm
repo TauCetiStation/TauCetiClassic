@@ -7,6 +7,7 @@
 	req_human = 1
 	genetic_damage = 30
 	max_genetic_damage = 30
+	can_be_used_in_abom_form = FALSE
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/change_species/sting_action(mob/living/carbon/human/user)

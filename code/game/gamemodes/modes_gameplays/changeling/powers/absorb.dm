@@ -155,19 +155,26 @@
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
 	if(changeling.absorbedcount == OVEREATING_AMOUNT/2)
-		to_chat(user, "You feel like you're halfway to losing control over this shell!")
+		to_chat(user, "<span class='warning'>Absorbing that many made us realise that we are halway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
 
 	if(changeling.absorbedcount == OVEREATING_AMOUNT-1)
-		to_chat(user, "You feel like you're near the edge to transforming to something way more brutal and inhuman - and there will be no way back.")
+		to_chat(user, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
 
 	if(changeling.absorbedcount == OVEREATING_AMOUNT)
-		to_chat(user, "MONSTER!!!")
+		to_chat(user, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
 		for(var/obj/item/I in user) //drops all items
 			user.drop_from_inventory(I)
 		user.regenerate_icons()
+		user.Stun(10)
+		sleep(10)
 
 		user.set_species(ABOMINATION)
 		user.name = "[changeling.changelingID]"
 		user.real_name = user.name
+
+		for(var/mob/M in player_list)
+			if(!isnewplayer(M))
+				to_chat(M, "<font size='10' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")
+				M.playsound_local(null, 'sound/antag/abomination_start.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 #undef OVEREATING_AMOUNT

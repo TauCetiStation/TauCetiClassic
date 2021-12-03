@@ -1359,7 +1359,7 @@
 
 	darksight = 8
 
-	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES)
 
 	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
 
@@ -1375,6 +1375,16 @@
 	,NO_MUTATION = TRUE
 	,NO_PAIN = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/abomination
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
 
 	burn_mod = 0.2
 	brute_mod = 0.2

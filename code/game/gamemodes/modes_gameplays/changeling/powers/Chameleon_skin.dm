@@ -9,6 +9,7 @@
 	var/active = 0
 	var/mob/living/carbon/human/owner
 	var/turf/last_loc
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/chameleon_skin/sting_action(mob/living/carbon/user)
 	if(!ishuman(user))
