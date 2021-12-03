@@ -177,6 +177,10 @@
 		return
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
 	if(amount)
+		var/mob/living/carbon/xenomorph/alien = user
+		if(!alien.check_enough_plasma(amount))
+			to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
+			return
 		plasma_cost = abs(round(amount))
 
 /obj/effect/proc_holder/spell/targeted/transfer_plasma/cast(list/targets, mob/user = usr)
@@ -191,6 +195,7 @@
 		to_chat(user, "<span class='noticealien'>You have transfered [plasma_cost] plasma to [M]</span>")
 	else
 		to_chat(user, "<span class='warning'>You need to be closer.</span>")
+	plasma_cost = 0
 
 //----------------------------------------------
 //-------------------Screech--------------------

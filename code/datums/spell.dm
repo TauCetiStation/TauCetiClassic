@@ -90,7 +90,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
 	
-	if(isxeno(user))
+	if(plasma_cost && isxeno(user))
 		var/mob/living/carbon/xenomorph/alien = user
 		if(!alien.check_enough_plasma(plasma_cost))
 			if(try_start)
