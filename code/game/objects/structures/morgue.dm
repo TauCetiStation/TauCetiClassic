@@ -47,7 +47,6 @@
 		STOP_PROCESSING(SSobj, src)
 	else if (contents.len && !emagged)
 		START_PROCESSING(SSobj, src)
-	return
 
 /obj/structure/morgue/update_icon()
 	if (connected)
