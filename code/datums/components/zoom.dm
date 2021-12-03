@@ -67,11 +67,10 @@
 	UnregisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
 	if(!can_move)
 		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
-	zoomer.client?.change_view(world.view)
-	zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
 	if(zoomer.client)
-		zoomer.client.pixel_x = 0
-		zoomer.client.pixel_y = 0
+		zoomer.client?.change_view(world.view)
+		zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
+		animate(zoomer.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoomer = null
 
 /datum/component/zoom/proc/set_zoom(mob/user)
@@ -79,21 +78,9 @@
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
-	var/viewoffset = world.icon_size * tileoffset
+	var/offset = world.icon_size * tileoffset
+	animate(zoomer.client, pixel_x = X_OFFSET(offset, zoomer.dir), pixel_y = Y_OFFSET(offset, zoomer.dir), 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 
-	switch(zoomer.dir)
-		if(NORTH)
-			zoomer.client.pixel_x = 0
-			zoomer.client.pixel_y = viewoffset
-		if(SOUTH)
-			zoomer.client.pixel_x = 0
-			zoomer.client.pixel_y = -viewoffset
-		if(EAST)
-			zoomer.client.pixel_x = viewoffset
-			zoomer.client.pixel_y = 0
-		if(WEST)
-			zoomer.client.pixel_x = -viewoffset
-			zoomer.client.pixel_y = 0
 	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
 	if(!can_move)
 		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), .proc/reset_zoom)
