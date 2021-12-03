@@ -14,7 +14,6 @@ package-lock.json
 
 ## Build artifacts
 /public/.tmp/**/*
-/public/**/*
 !/public/*.html
 
 ## Previously ignored locations that are kept to avoid confusing git
