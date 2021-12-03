@@ -20,6 +20,7 @@
 	var/next_fire = 0       //scheduled world.time for next fire()
 	var/cost = 0            //average time to execute
 	var/tick_usage = 0      //average tick usage
+	var/tick_overrun = 0    //average tick overrun
 	var/state = SS_IDLE     //tracks the current state of the ss, running, paused, etc.
 	var/paused_ticks = 0    //ticks this ss is taking to run right now.
 	var/paused_tick_usage   //total tick_usage of all of our runs while pausing this run
@@ -30,6 +31,11 @@
 	//linked list stuff for the queue
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
+
+	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+	var/postponed_fires = 0 /// How many fires have we been requested to postpone
+
+	var/static/list/failure_strikes //How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
 
 //Do not override
 ///datum/controller/subsystem/New()
@@ -67,6 +73,31 @@
 	Master.subsystems -= src
 	return ..()
 
+
+/** Update next_fire for the next run.
+ *  reset_time (bool) - Ignore things that would normally alter the next fire, like tick_overrun, and last_fire. (also resets postpone)
+ */
+/datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
+	var/queue_node_flags = flags
+
+	if (reset_time)
+		postponed_fires = 0
+		if (queue_node_flags & SS_TICKER)
+			next_fire = world.time + (world.tick_lag * wait)
+		else
+			next_fire = world.time + wait
+		return
+
+	if (queue_node_flags & SS_TICKER)
+		next_fire = world.time + (world.tick_lag * wait)
+	else if (queue_node_flags & SS_POST_FIRE_TIMING)
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun / 100))
+	else if (queue_node_flags & SS_KEEP_TIMING)
+		next_fire += wait
+	else
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun / 100))
+
+
 //Queue it to run.
 //  (we loop thru a linked list until we get to the end or find the right point)
 //  (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
@@ -82,7 +113,7 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node_flags & SS_TICKER)
-			if (!(SS_flags & SS_TICKER))
+			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
 				continue
 			if (queue_node_priority < SS_priority)
 				break
@@ -165,8 +196,8 @@
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	if(can_fire)
-		msg = "[round(cost, 1)]ms|[round(tick_usage, 1)]%|[round(ticks, 0.1)]\t[msg]"
+	if(can_fire && !(SS_NO_FIRE & flags))
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 
@@ -189,11 +220,10 @@
 		if (SS_IDLE)
 			. = "  "
 
-//could be used to postpone a costly subsystem for (default one) var/cycles, cycles
-//for instance, during cpu intensive operations like explosions
+/// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)
-	if(next_fire - world.time < wait)
-		next_fire += (wait*cycles)
+	if (can_fire && cycles >= 1)
+		postponed_fires += cycles
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
@@ -201,8 +231,8 @@
 
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
 /datum/controller/subsystem/on_varedit(edited_var)
-	if(edited_var == "can_fire" && can_fire)
-		next_fire = world.time + wait
+	if (edited_var == "can_fire" && can_fire)
+		update_nextfire(reset_time = TRUE)
 
 /datum/controller/subsystem/StartLoadingMap()
 
