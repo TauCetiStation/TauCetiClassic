@@ -44,6 +44,12 @@
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 
+///everything that should be above game world. (for example, singularity, nar-si)
+/atom/movable/screen/plane_master/rendering_plate/above_game_world
+	name = "above game rendering plate"
+	plane = RENDER_PLANE_ABOVE_GAME
+	render_relay_plane = RENDER_PLANE_MASTER
+
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
 	name = "non-game rendering plate"

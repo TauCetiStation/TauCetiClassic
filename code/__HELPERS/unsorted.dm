@@ -1201,7 +1201,7 @@ var/global/list/common_tools = list(
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
@@ -1513,7 +1513,7 @@ var/list/WALLITEMS = typecacheof(list(
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 //returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
 		return 1
 	if (!initial_delay)
@@ -1524,7 +1524,7 @@ var/list/WALLITEMS = typecacheof(list(
 		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 

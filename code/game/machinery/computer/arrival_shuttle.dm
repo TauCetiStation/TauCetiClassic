@@ -5,10 +5,10 @@
 #define ARRIVAL_SHUTTLE_EXODUS 2
 
 
-var/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
-var/moving = FALSE
-var/area/curr_location
-var/lastMove = 0
+var/global/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/global/moving = FALSE
+var/global/area/curr_location
+var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"

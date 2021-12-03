@@ -27,7 +27,7 @@ Possible to do for anyone motivated enough:
 // HOLOPAD MODE
 // 0 = RANGE BASED
 // 1 = AREA BASED
-var/const/HOLOPAD_MODE = 0
+var/global/const/HOLOPAD_MODE = 0
 
 /obj/machinery/hologram/holopad
 	name = "AI holopad"

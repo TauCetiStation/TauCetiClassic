@@ -214,7 +214,7 @@
 
 /* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
 
-var/datum/blob_colour/B = new()
+var/global/datum/blob_colour/B = new()
 
 /datum/blob_colour/New()
 	..()

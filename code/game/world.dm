@@ -1,5 +1,5 @@
-var/round_id = 0
-var/base_commit_sha = 0
+var/global/round_id = 0
+var/global/base_commit_sha = 0
 
 /world/New()
 #ifdef DEBUG
@@ -112,8 +112,8 @@ var/base_commit_sha = 0
 		info(debug_rev_message)
 		log_runtime(debug_rev_message)
 
-var/world_topic_spam_protect_ip = "0.0.0.0"
-var/world_topic_spam_protect_time = world.timeofday
+var/global/world_topic_spam_protect_ip = "0.0.0.0"
+var/global/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 
@@ -222,7 +222,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-var/shutdown_processed = FALSE
+var/global/shutdown_processed = FALSE
 
 /world/Reboot(reason = 0, end_state)
 	PreShutdown(end_state)
@@ -446,7 +446,7 @@ var/shutdown_processed = FALSE
 			world.log << "New round: #[global.round_id]\n-------------------------"
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
-var/failed_db_connections = 0
+var/global/failed_db_connections = 0
 
 /proc/setup_database_connection()
 

@@ -64,14 +64,10 @@
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
 
-	// How many antags did we reconvert using loyalty implant.
-	for(var/datum/faction/faction in SSticker.mode.factions)
-		for(var/datum/role/reconverted in faction.members)
-			if(!reconverted.antag)
-				score["rec_antags"]++
-	for(var/datum/role/reconverted in SSticker.mode.orphaned_roles)
-		if(!reconverted.antag)
-			score["rec_antags"]++
+	// How many antags did we deconvert
+	for(var/name in global.deconverted_roles)
+		var/list/L = global.deconverted_roles[name]
+		score["rec_antags"] += L.len
 
 	//Research Levels
 	var/research_levels = 0
@@ -141,6 +137,15 @@
 		if(stat)
 			dat += stat
 			dat += "<hr>"
+
+	if(global.deconverted_roles.len)
+		dat += "<B>Deconverted roles:</B><BR>"
+		dat += "<ul>"
+		for(var/name in global.deconverted_roles)
+			dat += "<li>"
+			dat += "[name]: [get_english_list(global.deconverted_roles[name])]."
+			dat += "</li>"
+		dat += "</ul>"
 
 	var/totalfunds = station_account.money
 	dat += {"<B><U>GENERAL STATS</U></B><BR>

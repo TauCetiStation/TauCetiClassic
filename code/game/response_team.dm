@@ -1,10 +1,10 @@
 //STRIKE TEAMS
 //Thanks to Kilakk for the admin-button portion of this code.
 
-var/list/response_team_members = list()
+var/global/list/response_team_members = list()
 
-var/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
-var/can_call_ert
+var/global/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
+var/global/can_call_ert
 
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"

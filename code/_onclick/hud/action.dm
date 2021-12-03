@@ -256,7 +256,10 @@
 
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
+	if(!client)
+		return FALSE
 	sync_lighting_plane_alpha()
+	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()

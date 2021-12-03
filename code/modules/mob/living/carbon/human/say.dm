@@ -251,33 +251,28 @@
 		if("changeling")
 			if(ischangeling(src))
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-				var/n_message = message
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
+				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
 				for(var/mob/Changeling as anything in mob_list)
 					if(ischangeling(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 						var/datum/role/changeling/CC = Changeling.mind.GetRoleByType(/datum/role/changeling)
 						for(var/M in CC.essences)
-							to_chat(M, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+							to_chat(M, n_message)
 
 					else if(isobserver(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 			return
 		if("alientalk")
 			if(ischangeling(src))
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-				var/n_message = message
+				var/n_message = "<span class='shadowling'><b>[C.changelingID]:</b> [message]</span>"
 				for(var/M in C.essences)
-					to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-
-				for(var/mob/M as anything in observer_list)
-					if(!M.client)
-						continue //skip monkeys, leavers and new players
-					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-						to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-
-				to_chat(src, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
+					to_chat(M, n_message)
+				for(var/datum/orbit/O in orbiters)
+					to_chat(O.orbiter, n_message)
+				to_chat(src, n_message)
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
 			return
 		if("mafia")
 			if(global.mafia_game)

@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,
@@ -47,6 +47,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		qdel(EB)
 
 	return ..()
+
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -153,6 +154,15 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
+
+/obj/singularity/energy_ball/update_icon(stage)
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(2)
+		vis_contents += singulo_effect
+
+	singulo_effect.icon = icon
+	singulo_effect.icon_state = icon_state
 
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
