@@ -164,7 +164,6 @@
 		to_chat(user, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
 		for(var/obj/item/I in user) //drops all items
 			user.drop_from_inventory(I)
-		user.regenerate_icons()
 		user.Stun(10)
 		sleep(10)
 
