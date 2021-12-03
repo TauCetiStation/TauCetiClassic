@@ -194,3 +194,6 @@ var/global/static/list/color_by_hex = list(
 	"navy" = "#000080",
 	"gold" = "#ffd700",
 )
+
+// role_id = list(names)
+var/global/list/deconverted_roles = list()

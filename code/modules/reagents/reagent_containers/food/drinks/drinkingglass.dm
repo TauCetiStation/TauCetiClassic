@@ -570,5 +570,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
 	list_reagents = list("cola" = 25)
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass
+	list_reagents = list("kvass" = 25)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
 	list_reagents = list("blood" = 25)
+
+// for emaged /obj/machinery/vending/boozeomat
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash
+	list_reagents = list("beepskysmash" = 25)

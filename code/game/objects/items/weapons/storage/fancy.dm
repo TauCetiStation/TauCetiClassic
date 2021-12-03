@@ -350,7 +350,7 @@
 	item_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "unknown"
+	name = "obscure cigarette packet"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
