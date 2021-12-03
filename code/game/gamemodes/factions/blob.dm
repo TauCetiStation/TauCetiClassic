@@ -38,7 +38,7 @@
 	. = FALSE
 	var/ded = TRUE
 	for (var/datum/role/R in members)
-		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+		if (R.antag.current && !(R.antag.current.is_dead()))
 			ded = FALSE
 
 	if(!ded)

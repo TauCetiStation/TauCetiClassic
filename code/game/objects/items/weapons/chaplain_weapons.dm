@@ -154,7 +154,7 @@
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-			C.RemoveFromRole(M.mind)
+			C.Deconvert()
 			M.Paralyse(5)
 			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 			M.mind.memory = ""

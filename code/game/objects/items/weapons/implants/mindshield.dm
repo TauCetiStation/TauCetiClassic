@@ -13,7 +13,7 @@
 	for(var/role in role_to_deconvert)
 		if(isrole(role, M))
 			var/datum/role/R = H.mind.GetRole(role)
-			R.Drop()
+			R.Deconvert()
 
 	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
@@ -76,7 +76,7 @@
 				var/datum/role/R = M.mind.GetRole(role)
 				if(!R)
 					continue
-				R.RemoveFromRole(M.mind)
+				R.Deconvert()
 				cleared_role = TRUE
 
 			if(cleared_role)
