@@ -49583,10 +49583,7 @@
 	name = "Paramedic equipment";
 	req_access = list(70)
 	},
-/obj/item/weapon/storage/belt/medical{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor{
 	dir = 4;
@@ -51015,10 +51012,7 @@
 	name = "Paramedic equipment";
 	req_access = list(70)
 	},
-/obj/item/weapon/storage/belt/medical{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor{
 	dir = 4;
