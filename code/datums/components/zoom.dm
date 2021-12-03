@@ -68,7 +68,7 @@
 	if(!can_move)
 		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
 	if(zoomer.client)
-		zoomer.client?.change_view(world.view)
+		zoomer.client.change_view(world.view)
 		zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
 		animate(zoomer.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoomer = null
