@@ -1900,7 +1900,6 @@
 #include "code\modules\organs\organ_internal.dm"
 #include "code\modules\organs\pain.dm"
 #include "code\modules\organs\wound.dm"
-#include "code\modules\organs\external\abomination.dm"
 #include "code\modules\organs\external\flesh.dm"
 #include "code\modules\organs\external\ipc.dm"
 #include "code\modules\organs\external\robotic.dm"

@@ -58,7 +58,7 @@
 
 	changeling.absorb_dna(target)
 
-	check_overeating(	user)
+	check_overeating(user)
 	var/nutr = user.get_nutrition()
 	if(nutr < 400)
 		user.nutrition += min(target.nutrition, 400 - nutr)
