@@ -154,10 +154,10 @@
 /obj/effect/proc_holder/changeling/absorbDNA/proc/check_overeating(mob/living/carbon/human/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
-	if(changeling.absorbedcount == OVEREATING_AMOUNT/2)
+	if(changeling.absorbedcount == OVEREATING_AMOUNT / 2)
 		to_chat(user, "<span class='warning'>Absorbing that many made us realise that we are halway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
 
-	if(changeling.absorbedcount == OVEREATING_AMOUNT-1)
+	if(changeling.absorbedcount == OVEREATING_AMOUNT - 1)
 		to_chat(user, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
 
 	if(changeling.absorbedcount == OVEREATING_AMOUNT)
