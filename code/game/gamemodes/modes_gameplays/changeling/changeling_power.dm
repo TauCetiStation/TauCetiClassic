@@ -40,15 +40,17 @@
 	changeling.geneticdamage += genetic_damage
 
 //Fairly important to remember to return 1 on success >.<
-/obj/effect/proc_holder/changeling/proc/can_sting(mob/living/carbon/human/user, mob/target)
+/obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
-	if(!can_be_used_in_abom_form && user.species.name == ABOMINATION)
-		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
-		return 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!can_be_used_in_abom_form && H.species.name == ABOMINATION)
+			to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
+			return 0
 	var/datum/role/changeling/c = user.mind.GetRoleByType(/datum/role/changeling)
 	if(c.chem_charges<chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
