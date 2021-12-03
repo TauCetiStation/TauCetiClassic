@@ -1,5 +1,4 @@
 import { classes } from 'common/react';
-import { Fragment } from 'inferno';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Flex, NoticeBox, Section, TimeDisplay, Tooltip } from '../components';
@@ -226,7 +225,7 @@ export const MafiaPanel = (props, context) => {
                         </Flex.Item>
                         <Flex.Item>
                           {player.votes !== undefined && !!player.alive
-                            && (<Fragment>Голоса : {player.votes} </Fragment>)}
+                            && (<>Голоса : {player.votes} </>)}
                         </Flex.Item>
                         <Flex.Item grow={1} />
                         <Flex.Item>
@@ -257,7 +256,7 @@ export const MafiaPanel = (props, context) => {
                 <Section
                   title="Роли и Заметки"
                   buttons={
-                    <Fragment>
+                    <>
                       <Button
                         color="transparent"
                         icon="address-book"
@@ -274,7 +273,7 @@ export const MafiaPanel = (props, context) => {
                         Нижний раздел - ваши текущие заметки. На некоторых ролях он будет пустой,
                         но на других туда будут записываться ваши действия(детективные расследования)`}
                       />
-                    </Fragment>
+                    </>
                   }>
                   <Flex
                     direction="column">

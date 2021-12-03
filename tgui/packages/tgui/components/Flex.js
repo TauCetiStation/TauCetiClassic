@@ -15,7 +15,6 @@ export const computeFlexProps = props => {
     align,
     justify,
     inline,
-    spacing = 0,
     ...rest
   } = props;
   return {
@@ -27,13 +26,12 @@ export const computeFlexProps = props => {
           : 'Flex--iefix'
       ),
       inline && 'Flex--inline',
-      spacing > 0 && 'Flex--spacing--' + spacing,
       className,
     ]),
     style: {
       ...rest.style,
       'flex-direction': direction,
-      'flex-wrap': wrap,
+      'flex-wrap': wrap === true ? 'wrap' : wrap,
       'align-items': align,
       'justify-content': justify,
     },
@@ -69,8 +67,8 @@ export const computeFlexItemProps = props => {
     ]),
     style: {
       ...style,
-      'flex-grow': grow,
-      'flex-shrink': shrink,
+      'flex-grow': grow !== undefined && Number(grow),
+      'flex-shrink': shrink !== undefined && Number(shrink),
       'flex-basis': unit(basis),
       'order': order,
       'align-self': align,

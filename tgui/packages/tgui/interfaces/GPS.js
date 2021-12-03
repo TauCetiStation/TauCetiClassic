@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, Input, LabeledList, Section,
   Table } from '../components';
@@ -41,12 +40,12 @@ export const GPS = (properties, context) => {
               <TurnedOff emp />
             </Flex.Item>
           ) : (
-            <Fragment>
+            <>
               <Flex.Item>
                 <Settings />
               </Flex.Item>
               {active ? (
-                <Fragment>
+                <>
                   <Flex.Item mt="0.5rem">
                     <Position area={area} position={position} />
                   </Flex.Item>
@@ -58,11 +57,11 @@ export const GPS = (properties, context) => {
                   <Flex.Item mt="0.5rem" grow="1" basis="0">
                     <Signals height="100%" />
                   </Flex.Item>
-                </Fragment>
+                </>
               ) : (
                 <TurnedOff />
               )}
-            </Fragment>
+            </>
           )}
         </Flex>
       </Window.Content>
@@ -153,10 +152,10 @@ const Position = ({ title, area, position }, context) => {
     <Section title={title || "Position"}>
       <Box fontSize="1.5rem">
         {area && (
-          <Fragment>
+          <>
             {area}
             <br />
-          </Fragment>
+          </>
         )}
         {vectorText(position)}
       </Box>

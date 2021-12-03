@@ -255,7 +255,7 @@ a.popt {
 /* ADD HERE FOR ITALIC */
 
 
-.italic, .italics, .emote {
+.italic, .italics {
   font-style: italic;
 }
 
@@ -311,7 +311,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -390,10 +390,6 @@ em {
   color: #d82020;
 }
 
-.emote {
-  font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
@@ -430,6 +426,11 @@ em {
   font-weight: bold;
 }
 
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .greenannounce {
   color: #059223;
   font-weight: bold;
@@ -449,11 +450,21 @@ em {
 
 .tinynotice {
   color: #6685f5;
+  font-size: 85%;
+}
+
+.tinynoticeital {
+  color: #6685f5;
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
+  color: #6685f5;
+  font-size: 90%;
+}
+
+.smallnoticeital {
   color: #6685f5;
   font-style: italic;
   font-size: 90%;
@@ -505,40 +516,40 @@ em {
 }
 
 .cult {
-  color: #aa1c1c;
+  color: #973e3b;
 }
 
 .cultitalic {
-  color: #aa1c1c;
+  color: #973e3b;
   font-style: italic;
 }
 
 .cultbold {
-  color: #aa1c1c;
+  color: #973e3b;
   font-style: italic;
   font-weight: bold;
 }
 
 .cultboldtalic {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .cultlarge {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #aa1c1c;
+  color: #973e3b;
   font-weight: bold;
   font-size: 370%;
 }

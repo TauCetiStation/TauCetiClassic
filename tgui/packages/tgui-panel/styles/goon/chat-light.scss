@@ -273,8 +273,7 @@ a.popt {
 
 /* ADD HERE FOR ITALIC */
 .italic,
-.italics,
-.emote {font-style: italic;}
+.italics {font-style: italic;}
 
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
@@ -291,10 +290,9 @@ em						{font-style: normal;	font-weight: bold;}
 .vote					{color: purple;}
 
 /* Miscellaneous */
-.say					{}
+.say, .emote {}
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
-.emote					{font-style: italic;}
 .selecteddna			{color: #FFFFFF; background-color: #001B1B}
 .artefact				{color: #ffa500;}
 .electronicblue			{color: #00BFFF; background-color: #414141}
@@ -398,10 +396,6 @@ h1.alert, h2.alert		{color: #000000;}
 	background-repeat: no-repeat;
 }
 
-/* HELPER CLASSES */
-.text-normal {font-weight: normal; font-style: normal;}
-.hidden {display: none; visibility: hidden;}
-
 /* Popup windows */
 .embedded_tip{
 	position: relative;
@@ -464,7 +458,24 @@ table.staffwho .Xenovisors{color:#2ECC71;}
 	font-size: 160%;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 	font-weight: bold;
-  }
+}
+
+
+.connectionClosed,
+.fatalError {
+  background: red;
+  color: white;
+  padding: 5px;
+}
+
+.connectionClosed.restored {
+  background: green;
+}
+
+.internal.boldnshit {
+  color: blue;
+  font-weight: bold;
+}
 
 
 
