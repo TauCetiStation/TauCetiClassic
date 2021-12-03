@@ -58,6 +58,7 @@
 
 	changeling.absorb_dna(target)
 
+	check_overeating(	user)
 	var/nutr = user.get_nutrition()
 	if(nutr < 400)
 		user.nutrition += min(target.nutrition, 400 - nutr)
@@ -147,3 +148,26 @@
 							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
 							return FALSE
 	return TRUE
+
+
+#define OVEREATING_AMOUNT 6
+/obj/effect/proc_holder/changeling/absorbDNA/proc/check_overeating(mob/living/carbon/human/user)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
+
+	if(changeling.absorbedcount == OVEREATING_AMOUNT/2)
+		to_chat(user, "You feel like you're halfway to losing control over this shell!")
+
+	if(changeling.absorbedcount == OVEREATING_AMOUNT-1)
+		to_chat(user, "You feel like you're near the edge to transforming to something way more brutal and inhuman - and there will be no way back.")
+
+	if(changeling.absorbedcount == OVEREATING_AMOUNT)
+		to_chat(user, "MONSTER!!!")
+		for(var/obj/item/I in user) //drops all items
+			user.drop_from_inventory(I)
+		user.regenerate_icons()
+
+		user.set_species(ABOMINATION)
+		user.name = "[changeling.changelingID]"
+		user.real_name = user.name
+
+#undef OVEREATING_AMOUNT
