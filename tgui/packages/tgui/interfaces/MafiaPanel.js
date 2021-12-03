@@ -90,7 +90,7 @@ export const MafiaPanel = (props, context) => {
                   <Button
                     color="red"
                     icon="gavel"
-                    tooltipPosition="bottom-left"
+                    tooltipPosition="bottom-start"
                     tooltip={multiline`
                     Привет админ! Если ты ищешь админскую панель управления, пожалуйста,
                     обрати внимание на дополнительный скроллбар, которого нет у
@@ -260,7 +260,7 @@ export const MafiaPanel = (props, context) => {
                       <Button
                         color="transparent"
                         icon="address-book"
-                        tooltipPosition="bottom-left"
+                        tooltipPosition="bottom-start"
                         tooltip={multiline`
                         Верхний раздел - это роли в игре. Вы можете нажать на знак вопроса,
                         чтобы узнать информацию о роли.`}
@@ -268,7 +268,7 @@ export const MafiaPanel = (props, context) => {
                       <Button
                         color="transparent"
                         icon="edit"
-                        tooltipPosition="bottom-left"
+                        tooltipPosition="bottom-start"
                         tooltip={multiline`
                         Нижний раздел - ваши текущие заметки. На некоторых ролях он будет пустой,
                         но на других туда будут записываться ваши действия(детективные расследования)`}
@@ -416,7 +416,7 @@ const LobbyDisplay = (props, context) => {
       [Стадия = {phase} | <TimeDisplay auto="down" value={timeleft} />]{' '}
       <Button
         icon="clipboard-check"
-        tooltipPosition="bottom-left"
+        tooltipPosition="bottom-start"
         tooltip={multiline`
         Регистрация в игру. Если она уже идёт, то
         Вы войдёте в следующую.`}
@@ -424,7 +424,7 @@ const LobbyDisplay = (props, context) => {
         onClick={() => act("mf_signup")} />
       <Button
         icon="eye"
-        tooltipPosition="bottom-left"
+        tooltipPosition="bottom-start"
         tooltip={multiline`
         Вы будете наблюдателем, пока не Выключите это.
         Автоматически включается, когда Вы умираете, чтобы увидеть результат игры.

@@ -76,7 +76,7 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_DEADCHAT,
     name: 'Deadchat',
     description: 'All of deadchat',
-    selector: '.deadsay',
+    selector: '.deadsay, .ghostalert',
   },
   {
     type: MESSAGE_TYPE_OOC,
