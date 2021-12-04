@@ -344,13 +344,13 @@ This function restores the subjects blood to max.
 This function restores all bodyparts.
 */
 /mob/living/carbon/human/restore_all_bodyparts()
-	for(var/obj/item/organ/external/BP in bodyparts)
-		BP.rejuvenate()
 	for(var/BP_ZONE in species.has_bodypart)
 		if(!bodyparts_by_name[BP_ZONE])
 			var/path = species.has_bodypart[BP_ZONE]
 			var/obj/item/organ/external/E = new path(null)
 			E.insert_organ(src)
+	for(var/obj/item/organ/external/BP in bodyparts)
+		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
