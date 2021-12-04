@@ -883,7 +883,7 @@
 	name = "Syndicate drone"
 	desc = "A remote control drone disguised as a NT maintenance drone. Comes with a RC interface."
 	item = /obj/item/weapon/storage/box/syndie_kit/drone
-	cost = 10
+	cost = 14
 	uplink_types = list("nuclear", "traitor")
 
 // IMPLANTS

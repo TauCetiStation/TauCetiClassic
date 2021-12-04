@@ -101,7 +101,7 @@
 /datum/drone_upgrade/device_tools/toolkit
     name = "Toolkit"
     desc = "Standard engineering toolkit. Magnetic gripper is included!"
-    cost = 5
+    cost = 6
     items = list(
         /obj/item/weapon/gripper,
         /obj/item/weapon/screwdriver,
@@ -117,7 +117,7 @@
     desc = "The emag is a small card that unlocks hidden functions in electronic devices, \
         subverts intended functions and characteristically breaks security mechanisms."
     items = list(/obj/item/weapon/card/emag)
-    cost = 8
+    cost = 12
     single_use = FALSE
 
 /datum/drone_upgrade/device_tools/emplight
@@ -138,13 +138,13 @@
     name = "Jetpack"
     desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas."
     items = list(/obj/item/weapon/tank/jetpack/carbondioxide)
-    cost = 7
+    cost = 5
 
 /datum/drone_upgrade/device_tools/decoy
     name = "Sound decoy"
     desc = "Can produce various sounds to distract your enemies."
     items = list(/obj/item/toy/sound_button/syndi)
-    cost = 4
+    cost = 6
 
 //========SURVEILLANCE AND OPTICS========
 /datum/drone_upgrade/optics
@@ -193,19 +193,19 @@
     name = "Medical hypospray"
     desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
     items = list(/obj/item/weapon/reagent_containers/borghypo)
-    cost = 8
+    cost = 10
 
 /datum/drone_upgrade/chems_poisons/medhypo //the same as above
     name = "Improved medical hypospray"
     desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
     items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
-    cost = 12
+    cost = 14
 
 /datum/drone_upgrade/chems_poisons/dropper
     name = "Poison delivery system"
     desc = "Integrated industrial dropper, has 10u volume. Can be filled with various poisons via uplink."
     items = list(/obj/item/weapon/reagent_containers/dropper/robot/drone)
-    cost = 5
+    cost = 7
 
 /datum/drone_upgrade/chems_poisons/dropper_refill
     single_use = FALSE
@@ -239,25 +239,25 @@
 /datum/drone_upgrade/chems_poisons/dropper_refill/chefspecial
     name = "Chef's Special refill"
     desc = "An extremely toxic chemical that will surely end in death."
-    cost = 10
+    cost = 8
     reagent = "chefspecial"
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/alphaamanitin
     name = "Alpha-amanitin refill"
     desc = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
-    cost = 5
+    cost = 4
     reagent = "alphaamanitin"
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/cyanide
     name = "Cyanide refill"
     desc = "A highly toxic chemical. May cause deth by suffocation."
-    cost = 7
+    cost = 6
     reagent = "cyanide"
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/chloralhydrate
     name = "Chloral Hydrate refill"
     desc = "A powerful sedative."
-    cost = 5
+    cost = 4
     reagent = "chloralhydrate"
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/
@@ -289,7 +289,7 @@
 /datum/drone_upgrade/internal/extra_armor
     name = "Armor upgrade"
     desc = "Additional armor plates help the drone to withstand more damage. It will even survive one laser shot!"
-    cost = 4
+    cost = 5
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
     if(!can_install(D))
@@ -318,7 +318,7 @@
 /datum/drone_upgrade/internal/smoke
     name = "Smokescreen charges"
     desc = "Three smokescreen charges. Activate it to hide yourself and your fellows from the enemy sight."
-    cost = 2
+    cost = 3
     single_use = FALSE
 
 /datum/drone_upgrade/internal/smoke/install(mob/living/silicon/robot/drone/syndi/D)
@@ -328,7 +328,7 @@
     if(installed)
         for(var/obj/effect/proc_holder/spell/S in D.spell_list)
             if(istype(S, /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke))
-                S.charge_counter = 3
+                S.charge_counter += 3
                 D.uplink.points -= cost
                 return TRUE
 
@@ -340,7 +340,7 @@
 /datum/drone_upgrade/internal/corporate_disguise
     name = "NanoTrasen disguise"
     desc = "A bunch of hull modifications, that make you look exactly as an NT maintenance drone. Security protocols hack is not included!"
-    cost = 6
+    cost = 5
 
 /datum/drone_upgrade/internal/corporate_disguise/install(mob/living/silicon/robot/drone/syndi/D)
     if(!can_install(D))
