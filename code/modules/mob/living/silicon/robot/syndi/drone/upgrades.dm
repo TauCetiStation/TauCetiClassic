@@ -114,7 +114,8 @@
 
 /datum/drone_upgrade/device_tools/emag
     name = "Cryptographic Sequencer"
-    desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
+    desc = "The emag is a small card that unlocks hidden functions in electronic devices, \
+        subverts intended functions and characteristically breaks security mechanisms."
     items = list(/obj/item/weapon/card/emag)
     cost = 8
     single_use = FALSE
@@ -157,13 +158,14 @@
     items = list(/obj/item/toy/sound_button/syndi)
     cost = 4
 
-//========SURVEILLANCE AND OPTICS
+//========SURVEILLANCE AND OPTICS========
 /datum/drone_upgrade/optics
     category = "Surveillance and optics"
 
 /datum/drone_upgrade/optics/thermal
     name = "Thermal scanners"
-    desc = "These scanners allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects."
+    desc = "These scanners allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
+        emitted as heat and light by objects."
     cost = 4
     items = list(/obj/item/borg/sight/thermal)
 
@@ -220,7 +222,8 @@
 
 /datum/drone_upgrade/internal/speed_boost
     name = "Maneuverability booster"
-    desc = "Speeds up your servos to increase your maneuverability for a short time. Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
+    desc = "Speeds up your servos to increase your maneuverability for a short time. \
+        Due to overheating your optical sensor will turn red and your curcuits will likely melt a little bit. High energy drain."
     cost = 4
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
@@ -265,7 +268,8 @@
 
     D.eyes_overlay = "eyes-repairbot"
     D.name = "maintenance drone " + copytext(D.name, -5)
-    D.flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
+    D.flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: \
+        'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
     D.uplink.points -= cost
     installed = TRUE
     return TRUE
