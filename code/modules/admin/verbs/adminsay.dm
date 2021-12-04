@@ -18,7 +18,7 @@
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
 			to_chat(C, 
-				type = MESSAGE_TYPE_ADMINLOG,
+				type = MESSAGE_TYPE_ADMINCHAT,
 				html = msg,
 				confidential = TRUE)
 
