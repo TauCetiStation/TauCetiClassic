@@ -135,7 +135,7 @@
 					for(var/role in list(CULTIST, REV, HEADREV))
 						var/datum/role/R = M.brainmob.mind.GetRole(role)
 						if(R)
-							R.RemoveFromRole(M.brainmob.mind)
+							R.Deconvert()
 
 				user.drop_from_inventory(M, src)
 				brain = M

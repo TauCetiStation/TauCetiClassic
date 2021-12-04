@@ -73,7 +73,7 @@
 		remove_tip(tip_name)
 
 /datum/component/mechanic_desc/proc/show_tips(datum/source, mob/user)
-	if(!can_show?.Invoke(source, user))
+	if(can_show && !can_show.Invoke(source, user))
 		return
 
 	for(var/tip_name in tips)

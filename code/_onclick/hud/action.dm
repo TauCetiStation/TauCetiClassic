@@ -85,8 +85,8 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
+/datum/action/proc/CheckRemoval(mob/living/user) // TRUE if action is no longer valid for this mob and should be removed
+	return FALSE
 
 /datum/action/proc/IsAvailable()
 	return Checks()
@@ -106,26 +106,26 @@
 
 /datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
-		return 0
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUNNED)
 		if(owner.stunned || owner.weakened)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying && !owner.crawling)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_ACTIVE)
 		if(owner.get_active_hand() != target)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateName()
 	return name
@@ -186,11 +186,11 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[SHIFT_CLICK])
 		moved = 0
-		return 1
+		return TRUE
 	if(usr.next_move >= world.time) // Is this needed ?
 		return
 	owner.Trigger()
-	return 1
+	return TRUE
 
 /atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
@@ -256,7 +256,10 @@
 
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
+	if(!client)
+		return FALSE
 	sync_lighting_plane_alpha()
+	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
@@ -306,7 +309,7 @@
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/spell/spell = target
 
 	if(usr)
@@ -314,12 +317,12 @@
 	else
 		if(owner)
 			return spell.can_cast(owner)
-	return 1
+	return TRUE
 
 /datum/action/spell_action/CheckRemoval()
 	if(owner.mind)
 		if(target in owner.mind.spell_list)
-			return 0
+			return FALSE
 	return !(target in owner.spell_list)
 
 #undef AB_WEST_OFFSET

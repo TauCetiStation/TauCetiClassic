@@ -95,7 +95,7 @@
 	var/dat = ""
 	dat += "<HR>"
 	if(!pod1)
-		pod1 = locate() in orange(1, src)
+		pod1 = locate() in orange(5, src)
 
 	if(!pod1)
 		dat += "<span class='red bold'>Unable to locate cloning pod.</span><br>"
