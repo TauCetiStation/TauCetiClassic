@@ -140,18 +140,6 @@
     items = list(/obj/item/weapon/tank/jetpack/carbondioxide)
     cost = 7
 
-/datum/drone_upgrade/device_tools/hypo //mostly for nukeops to use as in-combat medical support unit
-    name = "Medical hypospray"
-    desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
-    items = list(/obj/item/weapon/reagent_containers/borghypo)
-    cost = 8
-
-/datum/drone_upgrade/device_tools/medhypo //the same as above
-    name = "Improved medical hypospray"
-    desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
-    items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
-    cost = 12
-
 /datum/drone_upgrade/device_tools/decoy
     name = "Sound decoy"
     desc = "Can produce various sounds to distract your enemies."
@@ -181,6 +169,82 @@
     cost = 2
     items = list(/obj/item/borg/sight/night)
 
+//========CHEMICALS========
+/datum/drone_upgrade/chems_poisons
+    category = "Chemical injectors and poisons"
+
+/datum/drone_upgrade/chems_poisons/hypo //mostly for nukeops to use as in-combat medical support unit
+    name = "Medical hypospray"
+    desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
+    items = list(/obj/item/weapon/reagent_containers/borghypo)
+    cost = 8
+
+/datum/drone_upgrade/chems_poisons/medhypo //the same as above
+    name = "Improved medical hypospray"
+    desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
+    items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
+    cost = 12
+
+/datum/drone_upgrade/chems_poisons/dropper
+    name = "Poison delivery system"
+    desc = "Integrated industrial dropper, has 10u volume. Can be filled with various poisons via uplink."
+    items = list(/obj/item/weapon/reagent_containers/dropper/robot/drone)
+    cost = 5
+
+/datum/drone_upgrade/chems_poisons/dropper_refill
+    single_use = FALSE
+    var/reagent
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/can_install(mob/living/silicon/robot/drone/syndi/D, chat_warning)
+    for(var/obj/item/I in D.module.modules)
+        if(istype(I, /obj/item/weapon/reagent_containers/dropper/robot/drone))
+            return ..(D, chat_warning)
+
+    if(chat_warning)
+        to_chat(D, "<span class='warning'>You have no dropper to refill!</span>")
+    return FALSE
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install(D))
+        return FALSE
+
+    for(var/obj/item/I in D.module.modules)
+        if(istype(I, /obj/item/weapon/reagent_containers/dropper/robot/drone))
+            var/obj/item/weapon/reagent_containers/dropper/robot/drone/P = I
+            P.reagents.clear_reagents()
+            P.reagents.add_reagent(reagent, 10)
+            P.filled = 1
+            P.icon_state = "[initial(P.icon_state)][P.filled]"
+            to_chat(D, "<span class='notice'>Your [P.name] was refilled.</span>")
+    
+    D.uplink.points -= cost
+    return TRUE
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/chefspecial
+    name = "Chef's Special refill"
+    desc = "An extremely toxic chemical that will surely end in death."
+    cost = 10
+    reagent = "chefspecial"
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/alphaamanitin
+    name = "Alpha-amanitin refill"
+    desc = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
+    cost = 5
+    reagent = "alphaamanitin"
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/cyanide
+    name = "Cyanide refill"
+    desc = "A highly toxic chemical. May cause deth by suffocation."
+    cost = 7
+    reagent = "cyanide"
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/chloralhydrate
+    name = "Chloral Hydrate refill"
+    desc = "A powerful sedative."
+    cost = 5
+    reagent = "chloralhydrate"
+
+/datum/drone_upgrade/chems_poisons/dropper_refill/
 //==========UPGRADES============
 /datum/drone_upgrade/internal
     category = "Chassis and internal upgrades"
