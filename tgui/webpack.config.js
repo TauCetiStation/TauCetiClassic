@@ -89,7 +89,7 @@ module.exports = (env = {}, argv) => {
             {
               loader: require.resolve('url-loader'),
               options: {
-                esModule: false,
+                esModule: true,
               },
             },
           ],
