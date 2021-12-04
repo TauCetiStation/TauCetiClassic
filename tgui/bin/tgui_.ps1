@@ -67,6 +67,8 @@ function task-clean {
   ## Build artifacts
   Remove-Quiet -Recurse -Force "public\.tmp"
   Remove-Quiet -Force "public\*.map"
+  Remove-Quiet -Force "public\*.chunk.*"
+  Remove-Quiet -Force "public\*.bundle.*"
   Remove-Quiet -Force "public\*.hot-update.*"
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
@@ -78,7 +80,7 @@ function task-clean {
   Remove-Quiet -Force ".pnp.*"
   ## NPM artifacts
   Get-ChildItem -Path "." -Include "node_modules" -Recurse -File:$false | Remove-Item -Recurse -Force
-  Remove-Quiet -Force "package-lock.json"
+  Get-ChildItem -Path "." -Include "package-lock.json" -Recurse | Remove-Item -Force
 }
 
 

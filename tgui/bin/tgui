@@ -105,6 +105,8 @@ task-validate-build() {
   diff="$(git diff public/*.bundle.*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
+    echo "git diff:"
+    echo ${diff}
     echo "Please rebuild tgui."
     exit 1
   fi
