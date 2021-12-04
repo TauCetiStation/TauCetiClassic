@@ -9,13 +9,13 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/mob/screen1.dmi'
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
+	plane = HUD_PLANE
 	flags = ABSTRACT
+	vis_flags = VIS_INHERIT_PLANE
+	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
-	appearance_flags = APPEARANCE_UI
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
@@ -844,6 +844,8 @@
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
 
 /proc/start_cooldown(atom/movable/screen/button, time, datum/callback/callback)
+	if(!time)
+		return
 	var/atom/movable/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback

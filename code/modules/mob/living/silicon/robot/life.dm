@@ -152,38 +152,39 @@
 
 	return 1
 
+/mob/living/silicon/robot/update_sight()
+	if(!..())
+		return FALSE
+
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+	see_in_dark = 8
+
+	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
+		set_EyesVision(transition_time = 0)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		see_invisible = SEE_INVISIBLE_OBSERVER
+	else if (sight_mode & BORGMESON)
+		set_EyesVision("meson")
+		sight |= SEE_TURFS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	else if (sight_mode & BORGNIGHT)
+		set_EyesVision("nvg")
+	else if (sight_mode & BORGTHERM)
+		set_EyesVision("thermal")
+		sight |= SEE_MOBS
+	else
+		set_EyesVision()
+
+	return TRUE
+
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
-		set_EyesVision()
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	else if (sight_mode & BORGMESON)
-		set_EyesVision("meson")
-		sight |= SEE_TURFS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	else if (sight_mode & BORGNIGHT)
-		set_EyesVision("nvg")
-		see_in_dark = 8
-	else if (sight_mode & BORGTHERM)
-		set_EyesVision("thermal")
-		sight |= SEE_MOBS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	else if (stat != DEAD)
-		set_EyesVision()
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	regular_hud_updates()
+	update_sight()
 
 	if (src.healths)
 		if (src.stat != DEAD)

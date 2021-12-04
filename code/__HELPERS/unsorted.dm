@@ -756,39 +756,32 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
+	var/list/refined_src = list()
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
-	var/list/refined_src = list()
-	for(var/turf/T in turfs_src)
 		refined_src += T
 		refined_src[T] = new/datum/coords
 		var/datum/coords/C = refined_src[T]
 		C.x_pos = (T.x - src_min_x)
 		C.y_pos = (T.y - src_min_y)
 
+	var/trg_min_x = 0
+	var/trg_min_y = 0
 	var/list/refined_trg = list()
-	for(var/turf/T in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		refined_trg += T
 		refined_trg[T] = new/datum/coords
 		var/datum/coords/C = refined_trg[T]
 		C.x_pos = (T.x - trg_min_x)
 		C.y_pos = (T.y - trg_min_y)
 
-
-	var/list/toupdate = list()
-
 	moving:
-		for (var/turf/T in refined_src)
+		for (var/turf/T as anything in refined_src)
 			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
+			for (var/turf/B as anything in refined_trg)
 				var/datum/coords/C_trg = refined_trg[B]
 				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
 
@@ -846,7 +839,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
-						if(!istype(O,/obj) || !O.simulated)
+						if(istype(O, /obj/effect/portal))
+							qdel(O)
+							continue
+						if(!O.simulated)
 							continue
 						O.loc = X
 						if (length(O.client_mobs_in_contents))
@@ -861,8 +857,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
 //						X.opacity = !X.opacity
 //						X.set_opacity(!X.opacity)
-
-					toupdate += X
 
 //					if(turftoleave)
 //						T.MoveTurf(turftoleave)
@@ -1207,7 +1201,7 @@ var/global/list/common_tools = list(
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
@@ -1519,7 +1513,7 @@ var/list/WALLITEMS = typecacheof(list(
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 //returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
 		return 1
 	if (!initial_delay)
@@ -1530,7 +1524,7 @@ var/list/WALLITEMS = typecacheof(list(
 		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 

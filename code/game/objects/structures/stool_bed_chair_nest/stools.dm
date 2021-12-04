@@ -57,7 +57,7 @@
 
 	else if(istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
-		if(S.wielded && !(flags & NODECONSTRUCT))
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED) && !(flags & NODECONSTRUCT))
 			new /obj/item/stack/sheet/metal(loc)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)

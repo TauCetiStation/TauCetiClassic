@@ -65,4 +65,4 @@
 	icon_state = "purple"
 
 // CENTCOM AREA LIST
-var/list/centcom_areas_typecache = typecacheof(centcom_shuttle_areas + typesof(/area/centcom))
+var/global/list/centcom_areas_typecache = typecacheof(centcom_shuttle_areas + typesof(/area/centcom))

@@ -180,7 +180,7 @@
 		if(/obj/item/weapon/gun/energy/gun/nuclear)
 			eshot_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
-var/list/turret_icons
+var/global/list/turret_icons
 
 /obj/machinery/porta_turret/update_icon()
 	if(!turret_icons)
