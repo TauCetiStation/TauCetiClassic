@@ -86,6 +86,7 @@ task-clean() {
   rm -f public/*.bundle.*
   rm -f public/*.hot-update.*
   ## Yarn artifacts
+  yarn cache clean --all
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
   rm -rf .yarn/webpack
