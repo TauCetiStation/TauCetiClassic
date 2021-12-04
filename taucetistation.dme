@@ -1783,7 +1783,6 @@
 #include "code\modules\mob\living\carbon\xenomorph\larva\inventory.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\larva.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\life.dm"
-#include "code\modules\mob\living\carbon\xenomorph\larva\powers.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\update_icons.dm"
 #include "code\modules\mob\living\carbon\xenomorph\special\alien_embryo.dm"
 #include "code\modules\mob\living\carbon\xenomorph\special\facehugger\facehugger.dm"

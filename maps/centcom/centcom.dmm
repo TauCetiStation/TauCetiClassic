@@ -24512,7 +24512,6 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "scL" = (
-/obj/item/weapon/storage/box/monkeycubes,
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,

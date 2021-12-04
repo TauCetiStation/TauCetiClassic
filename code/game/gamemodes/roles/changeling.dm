@@ -81,12 +81,10 @@
 	return TRUE
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
-	antag?.current?.hud_used.lingchemdisplay.invisibility = 101
+	antag.current?.hud_used.lingchemdisplay.invisibility = 101
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
-	if(!antag)
-		return
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
@@ -146,5 +144,5 @@
 	if(purchasedpowers.len)
 		for(var/P in purchasedpowers)
 			var/obj/effect/proc_holder/changeling/S = P
-			if(S.chemical_cost >= 0 && S.can_be_used_by(antag?.current))
+			if(S.chemical_cost >= 0 && S.can_be_used_by(antag.current))
 				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S)

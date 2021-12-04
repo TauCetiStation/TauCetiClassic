@@ -30,5 +30,5 @@
 /datum/faction/props/process()
 	. = ..()
 	for(var/datum/role/R in members)
-		if(R.antag?.current)
+		if(R.antag.current)
 			points += 1
