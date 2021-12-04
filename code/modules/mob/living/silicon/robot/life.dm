@@ -188,21 +188,20 @@
 
 	if (src.healths)
 		if (src.stat != DEAD)
-			switch(health)
-				if(maxHealth to INFINITY)
-					src.healths.icon_state = "health0"
-				if(maxHealth * 0.75 to maxHealth)
-					src.healths.icon_state = "health1"
-				if(maxHealth * 0.5 to maxHealth * 0.75)
-					src.healths.icon_state = "health2"
-				if(maxHealth * 0.25 to maxHealth * 0.5)
-					src.healths.icon_state = "health3"
-				if(0 to maxHealth * 0.25)
-					src.healths.icon_state = "health4"
-				if(config.health_threshold_dead to 0)
-					src.healths.icon_state = "health5"
-				else
-					src.healths.icon_state = "health6"
+			if(health >= maxHealth)
+				src.healths.icon_state = "health0"
+			else if(health >= maxHealth * 0.75)
+				src.healths.icon_state = "health1"
+			else if(health >= maxHealth * 0.5)
+				src.healths.icon_state = "health2"
+			else if(health >= maxHealth * 0.25)
+				src.healths.icon_state = "health3"
+			else if(health >= 0)
+				src.healths.icon_state = "health4"
+			else if(health >= config.health_threshold_dead)
+				src.healths.icon_state = "health5"
+			else
+				src.healths.icon_state = "health6"
 		else
 			src.healths.icon_state = "health7"
 
