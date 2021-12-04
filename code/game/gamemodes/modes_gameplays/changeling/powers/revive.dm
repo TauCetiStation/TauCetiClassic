@@ -18,6 +18,10 @@
 	user.timeofdeath = 0
 	user.reagents.clear_reagents()
 	user.rejuvenate()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
+		E.rejuvenate()
 	to_chat(user, "<span class='notice'>We have regenerated.</span>")
 	//user.status_flags &= ~(FAKEDEATH)
 	//user.update_canmove()

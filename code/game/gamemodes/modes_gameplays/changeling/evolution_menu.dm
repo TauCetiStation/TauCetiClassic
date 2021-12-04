@@ -364,6 +364,12 @@ var/global/list/sting_paths
 	for(var/language in languages)
 		if(!(language in C.absorbed_languages))
 			C.absorbed_languages += language
+
+	var/obj/item/organ/internal/brain/B = H.organs_by_name[O_BRAIN]
+	B.parent_bodypart = BP_CHEST
+
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+	BP.vital = FALSE
 	return 1
 
 //Used to dump the languages from the changeling datum into the actual mob.
