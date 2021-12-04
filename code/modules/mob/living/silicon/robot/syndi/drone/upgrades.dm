@@ -169,6 +169,22 @@
     cost = 2
     items = list(/obj/item/borg/sight/night)
 
+/datum/drone_upgrade/optics/med_hud
+    name = "Health scanner HUD"
+    desc = "An integrated scanner that scans creatures in view and provides accurate data about their health status."
+    cost = 2
+
+/datum/drone_upgrade/optics/med_hud/install(mob/living/silicon/robot/drone/syndi/D)
+    if(!can_install(D))
+        return FALSE
+    
+    var/datum/atom_hud/sensor = global.huds[DATA_HUD_MEDICAL]
+    sensor.add_hud_to(D)
+    D.sensor_mode = TRUE
+
+    D.uplink.points -= cost
+    return TRUE
+
 //========CHEMICALS========
 /datum/drone_upgrade/chems_poisons
     category = "Chemical injectors and poisons"
