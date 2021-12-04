@@ -11,3 +11,4 @@ data/
 cfg/
 .vscode
 **/MapFXDrawer/*.png
+config/example/config.txt
