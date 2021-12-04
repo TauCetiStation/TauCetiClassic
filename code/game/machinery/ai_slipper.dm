@@ -31,11 +31,6 @@
 	else
 		icon_state = disabled ? "motion0" : "motion3"
 
-/obj/machinery/ai_slipper/proc/setState(enabled, uses)
-	src.disabled = disabled
-	src.uses = uses
-	power_change()
-
 /obj/machinery/ai_slipper/proc/toggle_on()
 	disabled = !disabled
 	update_icon()
