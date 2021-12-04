@@ -119,6 +119,13 @@
     cost = 8
     single_use = FALSE
 
+/datum/drone_upgrade/device_tools/emplight
+    name = "EMP Flashlight"
+    desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
+        Useful for disrupting headsets, cameras, and borgs during stealth operations."
+    items = list(/obj/item/device/flashlight/emp)
+    cost = 10
+
 /datum/drone_upgrade/device_tools/flash
     name = "Flash"
     desc = "Self-defence device used for blinding livebeings or stun cyborgs by overloading their optics. Has limited amount of uses."
