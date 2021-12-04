@@ -103,7 +103,7 @@ task-clean() {
 task-validate-build() {
   cd "${base_dir}"
   local diff
-  diff="$(git diff --text --stat public/*)"
+  diff="$(git diff --text --word-diff public/*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo ${diff}
