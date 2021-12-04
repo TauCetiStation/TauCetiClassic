@@ -256,7 +256,7 @@
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 			viewing |= M.client
 
-	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = SINGULARITY_LAYER)
+	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = FLY_LAYER)
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
 

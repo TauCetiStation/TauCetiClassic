@@ -72,3 +72,6 @@
 
 /obj/singularity/scrap_ball/Bumped(atom/A)
 	consume(A)
+
+/obj/singularity/scrap_ball/update_icon(stage)
+	return

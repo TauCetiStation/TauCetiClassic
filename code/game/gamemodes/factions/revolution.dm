@@ -106,7 +106,7 @@
 		tried_to_add_revheads = world.time + 5 SECONDS
 		var/active_revs = 0
 		for(var/datum/role/rev_leader/R in members)
-			if(R.antag?.current?.client?.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
+			if(R.antag.current?.client?.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 				active_revs++
 
 		if(active_revs == 0)
@@ -168,7 +168,7 @@
 	var/foecount = 0
 	for(var/datum/role/rev_leader/lead in members)
 		foecount++
-		if (!lead?.antag?.current)
+		if (!lead.antag.current)
 			score["opkilled"]++
 			continue
 		var/turf/T = lead.antag.current.loc
@@ -203,10 +203,10 @@
 	var/loycount = 0
 
 	for(var/datum/role/rev_leader/lead in members)
-		if (lead.antag?.current?.stat != DEAD)
+		if (lead.antag.current?.stat != DEAD)
 			foecount++
 	for(var/datum/role/rev/rev in members)
-		if (rev.antag?.current?.stat != DEAD)
+		if (rev.antag.current?.stat != DEAD)
 			revcount++
 
 	for(var/mob/living/carbon/human/player in human_list)
