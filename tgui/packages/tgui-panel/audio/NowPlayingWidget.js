@@ -38,7 +38,7 @@ export const NowPlayingWidget = (props, context) => {
         </>
       ) || (
         <Flex.Item grow={1} color="label">
-          Nothing to play.
+          &quot;Здесь мог бы быть ваш код.&quot; ©KIBORG04
         </Flex.Item>
       )}
       {audio.playing && (
