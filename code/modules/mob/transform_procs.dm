@@ -272,6 +272,11 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
+			var/obj/item/organ/internal/brain/B = O.organs_by_name[O_BRAIN]
+			B.parent_bodypart = BP_CHEST
+
+			var/obj/item/organ/external/BP = O.bodyparts_by_name[BP_HEAD]
+			BP.vital = FALSE
 
 	transfer_trait_datums(O)
 
