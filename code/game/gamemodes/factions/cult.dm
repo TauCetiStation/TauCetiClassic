@@ -122,7 +122,7 @@
 /datum/faction/cult/proc/get_active_leads()
 	var/active_leads = 0
 	for(var/datum/role/cultist/leader/R in members)
-		var/mob/M = R?.antag?.current
+		var/mob/M = R.antag.current
 		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 			active_leads++
 	return active_leads
@@ -130,7 +130,7 @@
 /datum/faction/cult/proc/get_cultists_out()
 	var/acolytes_out = 0
 	for(var/datum/role/R in members)
-		if(R.antag?.current?.stat != DEAD)
+		if(R.antag.current?.stat != DEAD)
 			var/area/A = get_area(R.antag.current)
 			if(is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_out++

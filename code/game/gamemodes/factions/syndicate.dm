@@ -223,7 +223,7 @@
 	var/nukedpenalty = 1000
 	for(var/datum/role/role in members)
 		foecount++
-		if (!role.antag || !role.antag.current)
+		if (!role.antag.current)
 			score["opkilled"]++
 			continue
 		var/turf/T = role.antag.current.loc

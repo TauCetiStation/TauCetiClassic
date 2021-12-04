@@ -26,25 +26,25 @@
 	addtimer(CALLBACK(src, .proc/stage3), time_to_stage3)
 
 /datum/role/blob_overmind/proc/stage1()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	to_chat(antag.current, "<span class='alert'>You feel tired and bloated.</span>")
 
 /datum/role/blob_overmind/proc/stage2()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	to_chat(antag.current, "<span class='alert'>You feel like you are about to burst.</span>")
 
 /datum/role/blob_overmind/proc/stage3()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	burst()
 
 /datum/role/blob_overmind/proc/burst()
-	if(!antag || isovermind(antag.current))
+	if(isovermind(antag.current))
 		return
 
 	var/client/blob_client = null
@@ -66,7 +66,7 @@
 /datum/role/blob_overmind/Greet(greeting,custom)
 	if(!..())
 		return FALSE
-	if(!antag || isovermind(antag.current))
+	if(isovermind(antag.current))
 		return FALSE
 
 	to_chat(antag.current, "<span class='warning'>Your body is ready to give spawn to a new blob core which will eat this station.</span>")
