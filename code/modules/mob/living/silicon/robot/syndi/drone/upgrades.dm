@@ -151,12 +151,6 @@
     items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
     cost = 12
 
-/datum/drone_upgrade/device_tools/plasmacutter
-    name = "Plasma cutter"
-    desc = "A rock cutter that uses bursts of hot plasma. Can be used to cut through walls."
-    items = list(/obj/item/weapon/pickaxe/plasmacutter)
-    cost = 7
-
 /datum/drone_upgrade/device_tools/decoy
     name = "Sound decoy"
     desc = "Can produce various sounds to distract your enemies."
