@@ -1384,6 +1384,9 @@
 		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
+	has_organ = list(
+		O_BRAIN  = /obj/item/organ/internal/brain/abomination
+		)
 	burn_mod = 0.2
 	brute_mod = 0.2
 	brain_mod = 0
