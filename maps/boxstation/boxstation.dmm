@@ -4210,10 +4210,6 @@
 	},
 /area/station/security/main)
 "ahE" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Head of Security";
-	req_access = list(58)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -4245,6 +4241,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Head of Security";
+	req_access = list(58)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7073,8 +7073,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westright{
-	name = "Brig Desk";
-	req_access = list(1)
+	name = "Brig Desk"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7500,7 +7499,8 @@
 /area/station/security/brig)
 "amV" = (
 /obj/machinery/door/window/brigdoor/northleft{
-	name = "Brig Desk"
+	name = "Brig Desk";
+	req_access = list(63)
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -7549,7 +7549,8 @@
 "amY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/window/brigdoor/northright{
-	name = "Brig Desk"
+	name = "Brig Desk";
+	req_access = list(63)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -8352,6 +8353,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/weapon/paper,
+/obj/item/weapon/pen,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aos" = (
@@ -8559,7 +8564,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aoN" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -9442,8 +9447,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westleft{
-	name = "Brig Desk";
-	req_access = list(1)
+	name = "Brig Desk"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9850,7 +9854,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "arx" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -14420,13 +14424,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aAy" = (
 /obj/structure/drain,
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aAz" = (
 /obj/machinery/door/airlock{
 	name = "Brig Restroom"
@@ -15007,13 +15011,10 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/cigbutt{
-	pixel_x = 13
-	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aBH" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
@@ -15022,7 +15023,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aBI" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -16344,12 +16345,10 @@
 /obj/machinery/alarm{
 	pixel_y = 28
 	},
-/obj/structure/table,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/flash,
-/obj/item/weapon/handcuffs,
+/obj/machinery/computer/station_alert,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -17198,7 +17197,7 @@
 	},
 /area/station/civilian/bar)
 "aFT" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -20168,14 +20167,14 @@
 	},
 /area/station/rnd/mixing)
 "aLq" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/table,
+/obj/item/device/flash,
+/obj/item/weapon/handcuffs,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -26483,12 +26482,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/vending/cigarette,
 /obj/machinery/camera{
 	c_tag = "Security Office East";
 	dir = 8;
 	network = list("SS13","Security")
 	},
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -27718,8 +27717,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/cigbutt{
+	pixel_x = 13
+	},
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "aYQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -70314,6 +70316,12 @@
 	icon_state = "warndark"
 	},
 /area/station/security/armoury)
+"dFe" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/eva)
 "dHv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -71455,6 +71463,14 @@
 	icon_state = "greencorner"
 	},
 /area/station/hallway/primary/port)
+"fEm" = (
+/obj/machinery/camera{
+	c_tag = "Prison Maintenance";
+	dir = 8;
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "fFb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -74930,7 +74946,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/maintenance/eva)
 "lgb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -79392,6 +79408,12 @@
 	icon_state = "whitegreencorner"
 	},
 /area/station/medical/virology)
+"rRu" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "rRE" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/wardrobe/white,
@@ -106548,7 +106570,7 @@ agO
 agO
 agO
 agO
-alZ
+rRu
 alZ
 aqb
 arv
@@ -106806,7 +106828,7 @@ alZ
 alZ
 ceF
 alZ
-alZ
+fEm
 alZ
 alZ
 cfP
@@ -107061,13 +107083,13 @@ alm
 aqd
 awE
 bLk
-ayr
-ayr
-ayr
-ayr
-ayr
-ayr
-ayr
+adW
+adW
+adW
+adW
+adW
+adW
+adW
 asi
 atG
 alZ
@@ -107318,13 +107340,13 @@ alv
 alZ
 atc
 alZ
-ayr
+adW
 aYP
-ani
+agO
 lga
 aAx
 aBG
-ayr
+adW
 alZ
 alZ
 alZ
@@ -107575,13 +107597,13 @@ alm
 afg
 afF
 cfP
-ayr
-aqz
+adW
+dFe
 aoM
 arw
 aAy
 aBH
-ayr
+adW
 aqd
 alZ
 atG
@@ -108348,8 +108370,8 @@ ams
 apP
 arg
 asF
+auS
 arg
-asF
 asF
 aBT
 ayr
@@ -109119,7 +109141,7 @@ amr
 arQ
 aBX
 apQ
-asF
+arg
 asF
 axL
 aBT
@@ -109376,7 +109398,7 @@ anS
 anl
 aBX
 arg
-auS
+asF
 arg
 asF
 aBZ
@@ -109612,7 +109634,7 @@ bEP
 bEP
 bEP
 bEP
-adJ
+bEP
 adJ
 adJ
 adr
@@ -109633,7 +109655,7 @@ ani
 ani
 aCZ
 axL
-arg
+auS
 aqs
 ayt
 aCs
