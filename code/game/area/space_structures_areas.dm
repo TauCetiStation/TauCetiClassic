@@ -157,19 +157,19 @@
 	name = "NT Fighter \"Blaton\""
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
+	requires_power = 1
 
 /area/space_structures/nt_fighter_skeora
 	name = "NT Fighter \"Skeora\""
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
+	requires_power = 1
 
 /area/space_structures/nt_troopship
 	name = "NT Troopship"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
+	requires_power = 1
 
 /area/space_structures/secrete_lab
 	name = "Secrete Lab"

@@ -8,12 +8,14 @@
 /area/space_structures/nt_fighter_skeora)
 "aA" = (
 /obj/machinery/body_scanconsole,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
 "aC" = (
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
@@ -41,13 +43,14 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
 "fh" = (
 /obj/machinery/door/unpowered/shuttle/officer,
-/turf/unsimulated/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_fighter_blaton)
 "fr" = (
 /turf/simulated/shuttle/wall{
@@ -90,7 +93,9 @@
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},
-/turf/simulated/shuttle/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
 /area/space_structures/nt_troopship)
 "gO" = (
 /obj/structure/sign/nanotrasen,
@@ -107,25 +112,46 @@
 	name = "NT Fighter turret control";
 	pixel_x = 30
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
+"hP" = (
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/space_structures/nt_fighter_blaton)
 "jf" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
+"js" = (
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/space_structures/nt_troopship)
 "jz" = (
-/obj/machinery/light,
-/turf/simulated/shuttle/floor{
-	dir = 1
+/obj/machinery/light{
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "jP" = (
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton{
 	requires_power = 0
@@ -152,7 +178,8 @@
 /obj/structure/closet/emergency_wall{
 	pixel_x = 30
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -178,7 +205,10 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -27
 	},
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/space_structures/nt_troopship)
 "nZ" = (
 /turf/simulated/shuttle/wall{
@@ -195,7 +225,10 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/space_structures/nt_troopship)
 "oN" = (
 /obj/structure/grille,
@@ -224,14 +257,23 @@
 	opened = 1
 	},
 /obj/item/weapon/gun/energy/laser/classic,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
 "qy" = (
 /obj/machinery/blackbox_recorder,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
+	},
+/area/space_structures/nt_fighter_blaton)
+"ri" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
 "sJ" = (
@@ -239,15 +281,16 @@
 	id = "ntcruiser1";
 	name = "Hull Door Control"
 	},
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_troopship)
 "sX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "ub" = (
@@ -262,7 +305,8 @@
 /area/space_structures/nt_fighter_skeora)
 "um" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
@@ -281,21 +325,46 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
+"wD" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/space_structures/nt_troopship)
+"wJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/space_structures/nt_troopship)
 "xe" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_y = -30
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "yb" = (
 /obj/structure/computerframe,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -304,13 +373,22 @@
 	icon_state = "swallc4"
 	},
 /area/space_structures/nt_fighter_skeora)
+"yC" = (
+/obj/structure/lattice,
+/obj/effect/meteor/dust,
+/turf/space,
+/area/space_structures/nt_troopship)
 "zq" = (
 /obj/item/weapon/disk/research_points,
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "zP" = (
@@ -343,8 +421,9 @@
 	name = "NT Fighter turret control";
 	pixel_x = 30
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ax" = (
@@ -362,8 +441,9 @@
 	pixel_x = 10;
 	pixel_y = 10
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "CO" = (
@@ -379,16 +459,23 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 37
 	},
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/space_structures/nt_troopship)
 "Di" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -27
 	},
-/turf/simulated/shuttle/floor{
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -401,8 +488,9 @@
 /obj/structure/closet/emergency_wall{
 	pixel_x = -30
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Dv" = (
@@ -423,7 +511,7 @@
 "Ek" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/a74,
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_troopship)
 "FR" = (
 /turf/simulated/shuttle/wall{
@@ -433,9 +521,13 @@
 /area/space_structures/nt_troopship)
 "Gh" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 1;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -444,8 +536,9 @@
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 5
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ha" = (
@@ -461,8 +554,9 @@
 /area/space_structures/nt_fighter_blaton)
 "HH" = (
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "HI" = (
@@ -476,8 +570,8 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Jr" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "swall_floor_f5"
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc1"
 	},
 /area/space_structures/nt_fighter_blaton)
 "JD" = (
@@ -493,10 +587,8 @@
 /turf/simulated/shuttle/plating,
 /area/space_structures/nt_fighter_blaton)
 "Kn" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -512,8 +604,10 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "Lj" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "swall_floor_f9"
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Lp" = (
@@ -540,27 +634,30 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Nx" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor{
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
 "ND" = (
-/turf/simulated/shuttle/floor{
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
 "Pd" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/coin/silver,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -583,15 +680,20 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/space_structures/nt_troopship)
 "Qk" = (
 /obj/item/ammo_casing/a74,
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_troopship)
 "Qn" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_blaton)
@@ -599,7 +701,8 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -623,9 +726,15 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
 	},
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/space_structures/nt_troopship)
 "Sv" = (
 /obj/structure/sign/nanotrasen,
@@ -637,15 +746,16 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
-/turf/simulated/shuttle/floor,
 /area/space_structures/nt_troopship)
 "Sz" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
@@ -662,13 +772,15 @@
 /obj/structure/closet/emergency_wall{
 	pixel_x = -30
 	},
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
 /area/space_structures/nt_fighter_skeora)
 "SY" = (
 /obj/machinery/bodyscanner,
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
@@ -684,13 +796,15 @@
 /area/space_structures/nt_troopship)
 "TI" = (
 /obj/structure/computerframe,
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ud" = (
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "UH" = (
@@ -702,15 +816,19 @@
 /obj/item/weapon/reagent_containers/syringe{
 	pixel_x = -4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/turf/simulated/shuttle/floor{
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
@@ -719,9 +837,6 @@
 /turf/space,
 /area/space_structures/nt_fighter_blaton)
 "Wy" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box{
 	pixel_x = -3;
@@ -731,8 +846,15 @@
 	pixel_x = 6;
 	pixel_y = 11
 	},
-/turf/simulated/shuttle/floor{
-	dir = 1
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Wz" = (
@@ -747,8 +869,9 @@
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/security,
-/turf/simulated/shuttle/floor{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Xm" = (
@@ -767,12 +890,13 @@
 	},
 /area/space_structures/nt_troopship)
 "Zh" = (
-/turf/simulated/shuttle/floor{
+/turf/simulated/floor/plating/airless{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/space_structures/nt_fighter_blaton)
 "ZA" = (
-/turf/simulated/shuttle/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/nt_troopship)
 "ZL" = (
 /turf/simulated/shuttle/wall{
@@ -881,7 +1005,7 @@ by
 Lt
 DP
 GR
-Ud
+hP
 Dn
 zU
 nZ
@@ -932,10 +1056,10 @@ Rh
 Rh
 Rh
 zP
-by
+SG
+DF
+Ud
 Lj
-Ud
-Ud
 Ud
 Sg
 Xp
@@ -959,7 +1083,7 @@ Rh
 by
 ok
 RY
-Lj
+DF
 Ud
 Ud
 Ud
@@ -987,7 +1111,7 @@ gh
 TI
 zq
 Ud
-Ud
+Lj
 jP
 Ud
 xe
@@ -1017,7 +1141,7 @@ Bl
 Ud
 Ud
 Ud
-Ud
+Lj
 Qn
 aC
 wh
@@ -1040,11 +1164,11 @@ Rh
 Hx
 ok
 RY
-Jr
+ZL
 Wy
 sX
 HH
-Ud
+Lj
 JD
 qy
 SG
@@ -1067,7 +1191,7 @@ Rh
 Rh
 Rh
 zP
-Hx
+Jr
 HI
 RY
 Ha
@@ -1098,7 +1222,7 @@ Rh
 JD
 MA
 Zh
-Zh
+ri
 SY
 JD
 Rh
@@ -1278,7 +1402,7 @@ Rh
 Rh
 Rh
 fS
-fP
+Ad
 UH
 UH
 SQ
@@ -1333,9 +1457,9 @@ Kn
 kw
 yt
 Di
+Kn
 ND
-ND
-ND
+Kn
 Rf
 me
 ac
@@ -1362,8 +1486,8 @@ jf
 ND
 ND
 ND
-ND
-ND
+Kn
+Kn
 KM
 pL
 Rh
@@ -1376,7 +1500,7 @@ Ss
 oG
 mH
 oG
-Ss
+oG
 Ax
 ZS
 "}
@@ -1387,9 +1511,9 @@ hd
 Ad
 Tg
 Gh
-ND
-ND
-ND
+Kn
+Kn
+Kn
 Rf
 ub
 uX
@@ -1398,13 +1522,13 @@ Rh
 Rh
 Rh
 gE
+yC
 ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
+js
+js
+wJ
+js
+js
 XQ
 "}
 (24,1,1) = {"
@@ -1427,11 +1551,11 @@ Rh
 aG
 Qk
 Ek
-ZA
-ZA
-ZA
-ZA
-ZA
+js
+js
+js
+js
+js
 XQ
 "}
 (25,1,1) = {"
@@ -1440,7 +1564,7 @@ Rh
 Rh
 Rh
 fS
-bl
+kw
 UH
 UH
 SQ
@@ -1456,8 +1580,8 @@ sJ
 Sw
 PP
 Dg
-PP
 Sw
+wD
 PC
 lD
 "}
