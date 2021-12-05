@@ -106,6 +106,7 @@
 		changeling.geneticpoints += 0.5
 		changeling.chem_charges += 10
 
+	changeling.absorbedamount++
 	changeling.isabsorbing = 0
 	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)

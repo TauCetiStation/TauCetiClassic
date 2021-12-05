@@ -34,6 +34,7 @@
 	var/mob/living/parasite/essence/trusted_entity
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
+	var/absorbedamount = 0 //precise amount of ppl absorbed
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
@@ -154,13 +155,13 @@
 /datum/role/changeling/proc/handle_absorbing()
 	var/mob/living/carbon/human/changeling = antag.current
 
-	if(absorbedcount == round(OVEREATING_AMOUNT / 2))
+	if(absorbedamount == round(OVEREATING_AMOUNT / 2))
 		to_chat(changeling, "<span class='warning'>Absorbing that many made us realise that we are halfway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
 
-	else if(absorbedcount == OVEREATING_AMOUNT - 1)
+	else if(absorbedamount == OVEREATING_AMOUNT - 1)
 		to_chat(changeling, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
 
-	else if(absorbedcount == OVEREATING_AMOUNT)
+	else if(absorbedamount == OVEREATING_AMOUNT)
 		to_chat(changeling, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
 		for(var/obj/item/I in changeling) //drops all items
 			changeling.drop_from_inventory(I)
