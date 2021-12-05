@@ -103,8 +103,10 @@ What is the naming convention for planes or layers?
 //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
 #define INDICATOR_LAYER                 5.01  // Emotes should be above this as they are shown only temporary.
 #define EMOTE_LAYER                     5.02
-#define SINGULARITY_LAYER               6
-#define SINGULARITY_EFFECT_LAYER        6.1
+
+#define SINGULARITY_PLANE 10
+#define SINGULARITY_LAYER 1
+#define ABOVE_SINGULARITY_LAYER 2
 
 #define AREA_PLANE 60
 #define GHOST_PLANE 80
@@ -123,6 +125,7 @@ What is the naming convention for planes or layers?
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 990
+#define RENDER_PLANE_ABOVE_GAME 991
 #define RENDER_PLANE_NON_GAME 995
 #define RENDER_PLANE_MASTER 999
 
