@@ -298,7 +298,7 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	if(species.name == ABOMINATION)
+	else if(species.name == ABOMINATION)
 		speech_sound = sound('sound/voice/abomination.ogg')
 		sound_vol = 50
 
