@@ -421,7 +421,8 @@
 		"Battle" = list(
 			'sound/hallucinations/fake_battle_1_scaled.ogg',
 			'sound/hallucinations/fake_battle_2_scaled.ogg',
-			'sound/hallucinations/fake_battle_3_scaled.ogg'),
+			'sound/hallucinations/fake_battle_3_scaled.ogg'
+			),
 
 		"Mystical shit" = list(
 			'sound/magic/Knock.ogg',

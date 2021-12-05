@@ -94,6 +94,7 @@
     D.uplink.points -= cost
     installed = TRUE
     return TRUE
+
 //========DEVICE AND TOOLS========
 /datum/drone_upgrade/device_tools
     category = "Device and tools"
@@ -260,7 +261,6 @@
     cost = 4
     reagent = "chloralhydrate"
 
-/datum/drone_upgrade/chems_poisons/dropper_refill/
 //==========UPGRADES============
 /datum/drone_upgrade/internal
     category = "Chassis and internal upgrades"

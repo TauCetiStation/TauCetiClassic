@@ -2,7 +2,7 @@
     real_name = "syndicate drone"
     maxHealth = 25
     health = 25
-    scrambledcodes = 1
+    scrambledcodes = TRUE
     modtype = "Syndicate"
     faction = "syndicate"
     req_access = list(access_syndicate)
@@ -27,7 +27,7 @@
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
     loose_control()
-    . = ..()
+    return ..()
 
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -53,7 +53,7 @@
     operator_health_last = operator.health
 
 /mob/living/silicon/robot/drone/syndi/updatename()
-	var/N = rand(100,999)
+	var/N = rand(100, 999)
 	real_name = "syndicate drone ([N])"
 	name = "suspicious drone ([N])"
 
@@ -69,7 +69,7 @@
     cooldown = 5//in seconds
     key = M.key
     M.key = "@[key]"
-    to_chat(src, "You're now controlling the [src.name].")
+    to_chat(src, "You're now controlling the [name].")
 
 /mob/living/silicon/robot/drone/syndi/proc/loose_control()
     if(!operator)
@@ -82,7 +82,7 @@
         else
             ghostize(FALSE)
     key = null
-    to_chat(operator, "You've lost control of the [src.name].")
+    to_chat(operator, "You've lost control of the [name].")
     operator = null
     operator_mind = null
 

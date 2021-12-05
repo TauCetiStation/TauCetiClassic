@@ -16,13 +16,13 @@
 			loose_control()
 		else
 			remote_view_off()
-	. = ..()
+	return ..()
 
 /obj/item/clothing/glasses/syndidroneRC/attack_self(mob/living/carbon/human/user)
 	if(user.stat != CONSCIOUS)
 		return
-	if(src.slot_equipped != SLOT_GLASSES)
-		to_chat(user, "<span class='warning'>The [src.name] needs to be equipped to work properly!</span>")
+	if(slot_equipped != SLOT_GLASSES)
+		to_chat(user, "<span class='warning'>The [name] needs to be equipped to work properly!</span>")
 		return
 
 	if(active) //Normally the player will not be able to click on the glasses while controlling the drone. So he is definitely spectating.
