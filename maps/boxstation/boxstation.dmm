@@ -988,6 +988,11 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/photocopier,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -6994,6 +6999,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "amd" = (
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "Prison Wing APC";
+	pixel_x = -26
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -7777,7 +7791,9 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
-/obj/machinery/door/window/southleft,
+/obj/machinery/door/window/southleft{
+	name = "Brig Desk"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -8445,6 +8461,11 @@
 	dir = 8;
 	network = list("SS13","Security")
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -8620,7 +8641,9 @@
 "aoQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/southright,
+/obj/machinery/door/window/southright{
+	name = "Brig Desk"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -72330,6 +72353,15 @@
 	},
 /turf/space,
 /area/shuttle/mining/station)
+"gVm" = (
+/obj/machinery/requests_console/security{
+	pixel_x = 30
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/security/main)
 "gWb" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
@@ -78537,6 +78569,15 @@
 /obj/structure/table,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"qDo" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning{
+	desc = "There is a washing machine behind this wall. Maybe we should take another path?";
+	name = "WARNING! WASHING MACHINE!";
+	pixel_y = -32
+	},
+/turf/space,
+/area/space)
 "qEb" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
@@ -115042,7 +115083,7 @@ aaa
 aaa
 aaa
 aaa
-aah
+qDo
 aaV
 aaz
 aaO
@@ -116336,7 +116377,7 @@ aFr
 aLq
 aWE
 abU
-adz
+gVm
 adz
 adL
 afX
