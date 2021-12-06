@@ -12,6 +12,7 @@ import { useGame } from './game';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
+import { EmotesPanel, useEmotes } from './emotes';
 
 export const Panel = (props, context) => {
   // IE8-10: Needs special treatment due to missing Flex support
@@ -22,6 +23,7 @@ export const Panel = (props, context) => {
   }
   const audio = useAudio(context);
   const settings = useSettings(context);
+  const emotes = useEmotes(context);
   const game = useGame(context);
   if (process.env.NODE_ENV !== 'production') {
     const { useDebug, KitchenSink } = require('tgui/debug');
@@ -63,6 +65,15 @@ export const Panel = (props, context) => {
                   tooltipPosition="bottom-start"
                   onClick={() => settings.toggle()} />
               </Stack.Item>
+              <Stack.Item>
+                <Button
+                  color="grey"
+                  selected={emotes.visible}
+                  icon="grin"
+                  tooltip="Emotes panel"
+                  tooltipPosition="bottom-start"
+                  onClick={() => emotes.toggle()} />
+              </Stack.Item>
             </Stack>
           </Section>
         </Stack.Item>
@@ -76,6 +87,11 @@ export const Panel = (props, context) => {
         {settings.visible && (
           <Stack.Item>
             <SettingsPanel />
+          </Stack.Item>
+        )}
+        {emotes.visible && (
+          <Stack.Item>
+            <EmotesPanel />
           </Stack.Item>
         )}
         <Stack.Item grow>
