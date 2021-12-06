@@ -1,13 +1,13 @@
 /mob/living/silicon/robot/drone/maintenance
-    req_access = list(access_engine, access_robotics)
+	req_access = list(access_engine, access_robotics)
 
-    // We need to keep track of a few module items so we don't need to do list operations
+	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
-    var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
-    var/obj/item/stack/sheet/wood/cyborg/stack_wood = null
-    var/obj/item/stack/sheet/glass/cyborg/stack_glass = null
-    var/obj/item/stack/sheet/mineral/plastic/cyborg/stack_plastic = null
-    var/obj/item/weapon/matter_decompiler/decompiler = null
+	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
+	var/obj/item/stack/sheet/wood/cyborg/stack_wood = null
+	var/obj/item/stack/sheet/glass/cyborg/stack_glass = null
+	var/obj/item/stack/sheet/mineral/plastic/cyborg/stack_plastic = null
+	var/obj/item/weapon/matter_decompiler/decompiler = null
 
 
 /mob/living/silicon/robot/drone/maintenance/atom_init()
@@ -19,15 +19,15 @@
 
 	module = new /obj/item/weapon/robot_module/drone(src)
 
-    //Grab stacks.
+	//Grab stacks.
 	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
 	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
 	stack_glass = locate(/obj/item/stack/sheet/glass/cyborg) in src.module
 	stack_plastic = locate(/obj/item/stack/sheet/mineral/plastic/cyborg) in src.module
-    //Grab decompiler.
+	//Grab decompiler.
 	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
 
-    //Some tidying-up.
+	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
 
