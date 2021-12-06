@@ -1,84 +1,184 @@
+#define ARTIFACT_SMALL_POWER  1
+#define ARTIFACT_MEDIUM_POWER 2
+#define ARTIFACT_LARGE_POWER  3
 
-//override procs in children as necessary
+#define ARTIFACT_ACTIVATION_MESSAGES list(\
+	"momentarily glows brightly!",\
+	"distorts slightly for a moment!",\
+	"flickers slightly!",\
+	"vibrates!",\
+	"shimmers slightly for a moment!")
+
+#define ARTIFACT_DEACTIVATION_MESSAGES list(\
+	"grows dull!",\
+	"fades in intensity!",\
+	"suddenly becomes very still!",\
+	"suddenly becomes very quiet!")
+
+#define NO_ANOMALY_PROTECTION 1
+#define FULL_ANOMALY_PROTECTION 0
+
 /datum/artifact_effect
-	var/effect_name = "unknown" // purely used for admin checks ingame
-	var/effect = ARTIFACT_EFFECT_TOUCH
-	var/effectrange = 4
+	///what is our energy release method
+	var/release_method = ARTIFACT_EFFECT_TOUCH
+	///our effect range
+	var/range = 4
+	///our trigger to become activated
 	var/trigger = TRIGGER_TOUCH
+	///where are we
 	var/atom/holder
-	var/activated = 0
-	var/chargelevel = 0
-	var/chargelevelmax = 10
+	///is our artifact is processing
+	var/activated = FALSE
+	///current ammount of charges
+	var/current_charge = 0
+	///maximum ammount of charges
+	var/maximum_charges = 10
+	///our recharge speed, process in artifact
+	var/recharge_speed = 1
+	///used in radiocarbon_spectrometer
 	var/artifact_id = ""
-	var/effect_type = ARTIFACT_EFFECT_UNKNOWN
+	///activation cost for touch cast
+	var/activation_touch_cost = 3
+	///activation cost for aura cast
+	var/activation_aura_cost = 0
+	///activation cost for pulse cast
+	var/activation_pulse_cost = 0
+	///used for logs and science tool
+	var/log_name = "unknown"
+	///purely used for getDescription
+	var/type_name = ARTIFACT_EFFECT_UNKNOWN
 
 /datum/artifact_effect/New(atom/location)
 	..()
 	holder = location
-	effect = rand(0,ARTIFACT_MAX_EFFECT)
-	trigger = rand(0,MAX_TRIGGER)
+	release_method = pick(ARTIFACT_ALL_RELEASE_METHODS)
+	trigger = pick(ARTIFACT_POSSIBLE_TRIGGERS)
+	create_artifact_type(50, 70, 30)
+	activation_pulse_cost = maximum_charges
 
-	// this will be replaced by the excavation code later, but it's here just in case
-	artifact_id = "[pick("kappa", "sigma", "antaeres", "beta", "omicron", "iota", "epsilon", "omega", "gamma", "delta", "tau", "alpha")]-[rand(100, 999)]"
+/datum/artifact_effect/Destroy(force, ...)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	// random charge time and distance
-	switch(pick(50;1, 70;2, 30;3))
-		if(1)
-			// short range, short charge time
-			chargelevelmax = rand(3, 20)
-			effectrange = rand(2, 4)
-		if(2)
-			// medium range, medium charge time
-			chargelevelmax = rand(15, 30)
-			effectrange = rand(5, 7)
-		if(3)
-			// large range, long charge time
-			chargelevelmax = rand(20, 50)
-			effectrange = rand(7, 10)
+/**
+ * Picks artifact type
+ */
+/datum/artifact_effect/proc/create_artifact_type(chance_small, chance_medium, chance_large)
+	switch(pick(chance_small;ARTIFACT_SMALL_POWER, chance_medium;ARTIFACT_MEDIUM_POWER, chance_large;ARTIFACT_LARGE_POWER))
+		if(ARTIFACT_SMALL_POWER)
+			maximum_charges = rand(5, 20)
+			range = rand(2, 4)
+		if(ARTIFACT_MEDIUM_POWER)
+			maximum_charges = rand(15, 30)
+			range = rand(5, 7)
+		if(ARTIFACT_LARGE_POWER)
+			maximum_charges = rand(20, 50)
+			range = rand(7, 10)
 
-/datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
-	//so that other stuff happens first
-	spawn(0)
-		if(activated)
-			activated = FALSE
-		else
-			activated = TRUE
-		if(reveal_toggle && holder)
-			if(istype(holder, /obj/machinery/artifact))
-				var/obj/machinery/artifact/A = holder
-				A.update_icon()
-			var/display_msg
-			if(activated)
-				display_msg = pick("momentarily glows brightly!", "distorts slightly for a moment!", "flickers slightly!", "vibrates!", "shimmers slightly for a moment!")
-			else
-				display_msg = pick("grows dull!", "fades in intensity!", "suddenly becomes very still!", "suddenly becomes very quiet!")
-			var/atom/toplevelholder = holder
-			while(!istype(toplevelholder.loc, /turf))
-				toplevelholder = toplevelholder.loc
-			if(ishuman(toplevelholder)) // When utilizer works, the holder is human and we dont display his icon (costs too much)
-				toplevelholder.visible_message("<span class='warning'>[toplevelholder] [display_msg]</span>")
-			else
-				toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
+/**
+ * Invokes async toggle artifact
+ */
+/datum/artifact_effect/proc/ToggleActivate(reveal_toggle = TRUE)
+	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
 
+/**
+ * Stops/starts processing, updates artifact icon, displays visible_message
+ */
+/datum/artifact_effect/proc/toggle_artifact_effect(reveal_toggle)
+	activated = !activated
+	if(activated)
+		START_PROCESSING(SSobj, src)
+	if(!activated)
+		STOP_PROCESSING(SSobj, src)
+	if(istype(holder, /obj/machinery/artifact))
+		var/obj/machinery/artifact/A = holder
+		A.update_icon()
+	if(!reveal_toggle && !holder)
+		return
+	var/display_msg = activated ? pick(ARTIFACT_ACTIVATION_MESSAGES): pick(ARTIFACT_DEACTIVATION_MESSAGES)
+	var/atom/toplevelholder = holder
+	while(!istype(toplevelholder.loc, /turf))
+		toplevelholder = toplevelholder.loc
+	if(ishuman(toplevelholder)) // When utilizer works, the holder is human and we dont display his icon (costs too much)
+		toplevelholder.visible_message("<span class='warning'>[toplevelholder] [display_msg]</span>")
+	else
+		toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
+
+/**
+ * Turns effect off, no icon update, doesnt display message
+ */
+/datum/artifact_effect/proc/turn_effect_off()
+	if(activated)
+		STOP_PROCESSING(SSobj, src)
+		activated = FALSE
+
+/**
+ * Checks for a user, anomaly protection, tries to drain artifact charg
+ * returns true if charge was drained, otherwise returns false
+ */
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
-/datum/artifact_effect/proc/DoEffectAura(atom/holder)
-/datum/artifact_effect/proc/DoEffectPulse(atom/holder)
+	if(!user)
+		return FALSE
+	if(!get_anomaly_protection(user)) //we ignore things with full anomaly protection
+		return FALSE
+	if(try_drain_charge(activation_touch_cost))
+		return TRUE
+	return FALSE
+
+/**
+ * Tries to drain charge
+ * returns true if charge was drained, otherwise returns false
+ */
+/datum/artifact_effect/proc/DoEffectAura()
+	if(try_drain_charge(activation_aura_cost))
+		return TRUE
+	return FALSE
+
+/**
+ * Tries to drain charge
+ * returns true if charge was drained, otherwise returns false
+ */
+/datum/artifact_effect/proc/DoEffectPulse()
+	if(try_drain_charge(activation_pulse_cost))
+		return activation_pulse_cost
+	return FALSE
+
+/**
+ * Only called in artifact_unknown code on qdel
+ */
+/datum/artifact_effect/proc/DoEffectDestroy()
+	return
+
+/**
+ * Updates effect on /move
+ */
 /datum/artifact_effect/proc/UpdateMove()
+	return
+
+/**
+ * Tries to subtract given numbre from current_charge
+ * returns true if the result above zero, returns false otherwise
+ */
+/datum/artifact_effect/proc/try_drain_charge(charges_drained)
+	if((current_charge - charges_drained) < 0)
+		return FALSE
+	current_charge -= charges_drained
+	return TRUE
 
 /datum/artifact_effect/process()
-	if(chargelevel < chargelevelmax)
-		chargelevel++
+	current_charge = min(current_charge + recharge_speed, maximum_charges)
+	if(release_method == ARTIFACT_EFFECT_AURA)
+		DoEffectAura()
+	if(release_method == ARTIFACT_EFFECT_PULSE)
+		DoEffectPulse()
 
-	if(activated)
-		if(effect == ARTIFACT_EFFECT_AURA)
-			DoEffectAura()
-		else if(effect == ARTIFACT_EFFECT_PULSE && chargelevel >= chargelevelmax)
-			chargelevel = 0
-			DoEffectPulse()
-
+/**
+ * Returns type effect
+ * used in artifact analyser
+ */
 /datum/artifact_effect/proc/getDescription()
 	. = "<b>"
-	switch(effect_type)
+	switch(type_name)
 		if(ARTIFACT_EFFECT_ENERGY)
 			. += "Concentrated energy emissions"
 		if(ARTIFACT_EFFECT_PSIONIC)
@@ -98,7 +198,7 @@
 
 	. += "</b> have been detected <b>"
 
-	switch(effect)
+	switch(release_method)
 		if(ARTIFACT_EFFECT_TOUCH)
 			. += "interspersed throughout substructure and shell."
 		if(ARTIFACT_EFFECT_AURA)
@@ -120,29 +220,49 @@
 		else
 			. += " Unable to determine any data about activation trigger."
 
-// returns 0..1, with 1 being no protection and 0 being fully protected
-/proc/GetAnomalySusceptibility(mob/living/carbon/human/H)
-	if(!H || !istype(H))
-		return 1
 
-	var/protected = 0
+/**
+ * Calculates mob effect protection
+ * returns NO_ANOMALY_PROTECTION if not human, returns calculated protection otherwise
+ * higher returning number means less protection
+ */
+/proc/get_anomaly_protection(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return NO_ANOMALY_PROTECTION
+
+	var/protection = 0
 
 	// particle protection suits give best protection, but science space suits are almost as good
 	if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/particle_protection))
-		protected += 0.6
+		protection += 0.6
+	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/science/rd))
+		protection += 0.6
 	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/globose/science))
-		protected += 0.5
+		protection += 0.5
+	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/science))
+		protection += 0.5
 
 	if(istype(H.head, /obj/item/clothing/head/bio_hood/particle_protection))
-		protected += 0.3
+		protection += 0.3
+	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science/rd))
+		protection += 0.3
 	else if(istype(H.head, /obj/item/clothing/head/helmet/space/globose/science))
-		protected += 0.2
+		protection += 0.2
+	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science))
+		protection += 0.2
 
 	// latex gloves and science goggles also give a bit of bonus protection
 	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
-		protected += 0.1
-
+		protection += 0.1
 	if(istype(H.glasses,/obj/item/clothing/glasses/science))
-		protected += 0.1
+		protection += 0.1
 
-	return 1 - protected
+	return clamp(NO_ANOMALY_PROTECTION - protection, FULL_ANOMALY_PROTECTION, NO_ANOMALY_PROTECTION)
+
+#undef ARTIFACT_SMALL_POWER
+#undef ARTIFACT_MEDIUM_POWER
+#undef ARTIFACT_LARGE_POWER
+#undef ARTIFACT_ACTIVATION_MESSAGES
+#undef ARTIFACT_DEACTIVATION_MESSAGES
+#undef NO_ANOMALY_PROTECTION
+#undef FULL_ANOMALY_PROTECTION

@@ -772,6 +772,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/science_tool
 	category = list("Misc")
 
+/datum/design/portalgun
+	name = "Portal Gun"
+	desc = "Experimental bluespace projector able to create interconnected wormholes at user's will."
+	id = "portalgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 5000, MAT_SILVER = 5000, MAT_PHORON = 10000, MAT_URANIUM = 5000)
+	build_path = /obj/item/weapon/gun/energy/gun/portal
+	category = list("Misc")
+
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
@@ -1748,7 +1757,7 @@ other types of metals and chemistry for reagents).
 	id = "defibrillators_standalone"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
-	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
+	build_path = /obj/item/weapon/shockpaddles/standalone
 	category = list("Support")
 
 /datum/design/sensor_device
@@ -2712,4 +2721,40 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
 	build_path = /obj/item/rig_module/metalfoam_spray
+	category = list("Rig Modules")
+
+/datum/design/riganalyzer
+	name = "Hardsuit Analyzer Module"
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
+	id = "riganalyzer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/analyzer
+	category = list("Rig Modules")
+
+/datum/design/rigsciencetool
+	name = "Hardsuit Science Tool Module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	id = "rigsciencetool"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/science_tool
+	category = list("Rig Modules")
+
+/datum/design/rigrelay
+	name = "Hardsuit Mounted Relay Module"
+	desc = "Can relay radio signals from other sectors."
+	id = "rigrelay"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/rig_module/mounted_relay
+	category = list("Rig Modules")
+
+/datum/design/rigstabilizer
+	name = "Hardsuit Teleporter stabilizer"
+	desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	id = "rigstabilizer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
+	build_path = /obj/item/rig_module/teleporter_stabilizer
 	category = list("Rig Modules")

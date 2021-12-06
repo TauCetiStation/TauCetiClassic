@@ -131,7 +131,7 @@
 	if(brain)
 		brain.damage = 0
 	H.setBrainLoss(0)
-	H.eye_blurry = 0
+	H.setBlurriness(0)
 	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -291,7 +291,7 @@
 
 	return (tally + config.human_delay)
 
-var/list/zombie_list = list()
+var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
@@ -314,7 +314,7 @@ var/list/zombie_list = list()
 
 	var/datum/role/R = H.mind.GetRole(ZOMBIE)
 	if(R)
-		R.Drop()
+		R.Deconvert()
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"
@@ -331,7 +331,7 @@ var/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

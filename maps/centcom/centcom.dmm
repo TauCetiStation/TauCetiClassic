@@ -1470,7 +1470,7 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/item/weapon/twohanded/flora/pottedplant/orientaltree,
+/obj/item/weapon/flora/pottedplant/orientaltree,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adX" = (
@@ -6662,7 +6662,7 @@
 	},
 /area/velocity)
 "auu" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8421,7 +8421,7 @@
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/twohanded/shockpaddles/standalone,
+/obj/item/weapon/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/gun/energy/taser/stunrevolver,
@@ -8511,7 +8511,7 @@
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/twohanded/shockpaddles/standalone,
+/obj/item/weapon/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/gun/energy/taser/stunrevolver,
@@ -8543,7 +8543,7 @@
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/twohanded/shockpaddles/standalone,
+/obj/item/weapon/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/gun/energy/taser/stunrevolver,
@@ -17363,7 +17363,7 @@
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
 "bAb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17801,7 +17801,7 @@
 	},
 /area/velocity)
 "ckb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
@@ -17816,7 +17816,7 @@
 	},
 /area/velocity)
 "cmb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
@@ -17941,7 +17941,7 @@
 	},
 /area/velocity)
 "cxb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -18052,7 +18052,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cJb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -18427,7 +18427,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dkb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -24467,7 +24467,7 @@
 /turf/space,
 /area/space)
 "qsd" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -24495,7 +24495,7 @@
 /turf/space,
 /area/custom/syndicate_mothership/armory)
 "rkK" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern{
+/obj/item/weapon/flora/pottedplant/tropicalfern{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -24512,7 +24512,6 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "scL" = (
-/obj/item/weapon/storage/box/monkeycubes,
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
@@ -24666,7 +24665,7 @@
 /area/velocity)
 "voK" = (
 /obj/structure/table/glass,
-/obj/item/weapon/twohanded/flora/deskleaf{
+/obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor{
@@ -24771,7 +24770,7 @@
 /area/custom/cult)
 "ygn" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/twohanded/flora,
+/obj/item/weapon/flora,
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Paper"
 	},

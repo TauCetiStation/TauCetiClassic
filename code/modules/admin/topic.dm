@@ -238,7 +238,7 @@
 				var/itemname = href_list["itemname"]
 				editing_item_list[usr.ckey] = get_custom_item(target_ckey, itemname)
 				if(editing_item_list[usr.ckey])
-					edit_custom_item_panel(null, usr, readonly = TRUE, adminview = TRUE)
+					edit_custom_item_panel(null, usr, readonly = TRUE)
 			if("moderation_accept")
 				var/itemname = href_list["itemname"]
 				custom_item_premoderation_accept(target_ckey, itemname)
@@ -611,13 +611,6 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
 
-		//pAI isn't technically a job, but it goes in here.
-
-		if(jobban_isbanned(M, ROLE_PAI))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_PAI];jobban4=\ref[M]'>[ROLE_PAI]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PAI];jobban4=\ref[M]'>[ROLE_PAI]</a></td>"
-
 		//Observer is no job and probably not at all human still there's no better place.
 
 		if(jobban_isbanned(M, "Observer"))
@@ -761,11 +754,6 @@
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		jobs += "<tr bgcolor='ccccff'><th colspan='3'>Other Races</th></tr><tr align='center'>"
 
-		if(jobban_isbanned(M, ROLE_PLANT))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
-
 		//many roles available to ghost after die
 		if(jobban_isbanned(M, ROLE_GHOSTLY))
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
@@ -853,7 +841,6 @@
 					joblist += temp.title */
 			if("nonhumandept")
 				joblist += ROLE_DRONE
-				joblist += ROLE_PAI
 				for(var/jobPos in nonhuman_positions)
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
@@ -1616,7 +1603,7 @@
 			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
 			M.Stun(20)
 			M.Weaken(20)
-			M.stuttering = 20
+			M.setStuttering(20)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/H = locate(href_list["CentcommReply"])

@@ -72,7 +72,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit)
 			var/obj/item/clothing/I = H.wear_suit
-			if(I.flags & THICKMATERIAL)
+			if(I.pierce_protection & UPPER_TORSO)
 				to_chat(user, "<span class='warning'>We broke our sting about our's armor!</span>")
 				unset_sting(user)
 				var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
@@ -82,7 +82,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.get_targetzone())
+		var/result = H.check_pierce_protection(BP) || H.isSynthetic(user.get_targetzone())
 		if(result)
 			if(result == NOLIMB)
 				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
@@ -246,7 +246,7 @@
 	target.disabilities |= NEARSIGHTED
 	spawn(300)	target.disabilities &= ~NEARSIGHTED
 	target.eye_blind = 20
-	target.eye_blurry = 40
+	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")
 	return 1
 

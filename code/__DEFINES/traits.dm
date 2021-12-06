@@ -153,13 +153,20 @@
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
 
+/*
+ * Used for items that have different behaviour when they are two-hand wielded
+ */
+#define TRAIT_DOUBLE_WIELDED "double_wielded"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
+#define TWOHANDED_TRAIT    "twohanded"
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+#define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"

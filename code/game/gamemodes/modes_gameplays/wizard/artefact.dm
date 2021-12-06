@@ -73,7 +73,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/shield/riot/roman(H))
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/claymore/light(H))
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/spear(H), SLOT_BACK)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -175,7 +175,7 @@
 		if("healing")
 			if(free_school_flags & SCHOOL_HEAL)
 				free_school_flags &= ~SCHOOL_HEAL
-				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/no_target/charge(M))
 				M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch(M))
 				M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/heal(M))
 				to_chat(M, "<span class='notice'>Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge, resurrection and heal.</span>")

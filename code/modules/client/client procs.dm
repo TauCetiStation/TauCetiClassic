@@ -10,7 +10,7 @@
 
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
-var/list/blacklisted_builds = list(
+var/global/list/blacklisted_builds = list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
@@ -270,6 +270,8 @@ var/list/blacklisted_builds = list(
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
+	update_supporter_status()
+
 	. = ..()	//calls mob.Login()
 
 	if(SSinput.initialized)
@@ -279,8 +281,6 @@ var/list/blacklisted_builds = list(
 		chatOutput.start()
 
 	connection_time = world.time
-
-	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
@@ -731,6 +731,9 @@ var/list/blacklisted_builds = list(
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
 					communication_hotkeys += key
+				if("LOOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
+					communication_hotkeys += key
 
 	// winget() does not work for F1 and F2
 	for(var/key in communication_hotkeys)
@@ -773,3 +776,8 @@ var/list/blacklisted_builds = list(
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.tgui_interact(mob)

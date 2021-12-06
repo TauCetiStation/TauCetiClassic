@@ -143,7 +143,7 @@
 
 	return base
 
-var/list/rune_animation = list(
+var/global/list/rune_animation = list(
 		list(0.000, 5),
 		list(0.020, 1),
 		list(0.050, 1),

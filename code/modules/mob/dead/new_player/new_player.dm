@@ -23,6 +23,10 @@
 	new_player_list += src
 
 /mob/dead/new_player/Destroy()
+	if(my_client)
+		hide_titlescreen()
+		my_client = null
+
 	new_player_list -= src
 	return ..()
 
@@ -79,15 +83,8 @@
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
-			client << output(null, "lobbybrowser:set_ready")
 			ready = !ready
-		return
-
-	if(href_list["lobby_be_special"])
-		if(!client.prefs.have_quality)
-			SSqualities.register_client(client)
-		else
-			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
 
 	if(href_list["lobby_observe"])
@@ -206,9 +203,7 @@
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
-	SSqualities.give_quality(character)
-	SSjob.EquipRank(character, rank, 1)
-	SSqualities.give_post_quality(character)
+	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

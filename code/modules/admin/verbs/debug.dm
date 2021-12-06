@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI."
 
 	var/list/available = list()
-	for(var/mob/C in mob_list)
+	for(var/mob/C as anything in mob_list)
 		if(C.key)
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
@@ -158,14 +158,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has blobized [key_name(M)].")
-		var/mob/living/carbon/human/H = M
-		spawn(10)
-			H.Blobize()
-
-	else
-		tgui_alert(usr, "Invalid mob")
+	log_admin("[key_name(src)] has blobized [key_name(M)].")
+	addtimer(CALLBACK(M, /mob/proc/Blobize), 1 SECOND)
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
@@ -597,7 +591,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, SLOT_R_HAND)
 
 		if("masked killer")
@@ -612,7 +606,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), SLOT_L_STORE)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), SLOT_R_STORE)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, SLOT_R_HAND)
 
 			for(var/obj/item/carried_item in M.contents)

@@ -4,17 +4,21 @@ var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'ic
 
 var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
+#define MARK_READY     "READY <span style='color:lime'>☑</span>"
+#define MARK_NOT_READY "READY <span style='color:red'>☒</span>"
+
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
 	<html>
 		<head>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-			<style type='text/css'>
+			<style>
 				@font-face {
 					font-family: "Fixedsys";
 					src: url("FixedsysExcelsior3.01Regular.ttf");
 				}
+
 				body,
 				html {
 					margin: 0;
@@ -25,10 +29,10 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 				}
 
 				img {
-					border-style:none;
+					border-style: none;
 				}
 
-				.fone{
+				.back {
 					position: absolute;
 					width: auto;
 					height: 100vmin;
@@ -49,7 +53,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					padding-top: 60vmin;
 					box-sizing: border-box;
 					top: 50%;
-					left:50%;
+					left: 50%;
 					transform: translate(-50%, -50%);
 					z-index: 1;
 				}
@@ -85,44 +89,28 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1'>[ready ? "READY ☑" : "READY ☒"]</a>
-	"}
+		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1'>[ready ? MARK_READY : MARK_NOT_READY]</a>"}
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>
-	"}
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>
-	"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
 	var/have_q = client.prefs.have_quality
 	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>QUALITY [have_q ? "☑" : "☒"]</a>
 	"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>
-	"}
-	dat += {"<br><br><a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
+	dat += "<br><br>"
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
 	"}
 
 	dat += "</div>"
-	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
+	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
 	dat += {"
-	<script language="JavaScript">
-		var i=0;
-		var ready_mark=document.getElementById("ready");
-		var ready_marks=new Array('READY ☒', 'READY ☑');
-
+	<script>
+		var mark = document.getElementById("ready");
 		var quality_mark=document.getElementById("quality");
-		function set_ready(setReady) {
-			if(setReady) {
-				i = setReady;
-				ready_mark.textContent = ready_marks\[i\];
-			}
-			else {
-				i++;
-				if (i == ready_marks.length)
-					i = 0;
-				ready_mark.textContent = ready_marks\[i\];
-			}
-		}
+		function setReadyStatus(isReady) {
+			mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
 		function set_quality(setQuality) {
 			if(setQuality) {
 				quality_mark.textContent = 'QUALITY ☑';
@@ -135,3 +123,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 	dat += "</body></html>"
 	return dat
+
+#undef MARK_READY
+#undef MARK_NOT_READY

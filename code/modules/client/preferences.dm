@@ -1,6 +1,6 @@
-var/list/preferences_datums = list()
+var/global/list/preferences_datums = list()
 
-var/const/MAX_SAVE_SLOTS = 10
+var/global/const/MAX_SAVE_SLOTS = 10
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -152,7 +152,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
-	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
   //custom loadout
 	var/list/gear = list()

@@ -30,11 +30,15 @@
 	attack_push_vis_effect = ATTACK_EFFECT_CLAW
 	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
+	var/list/alien_spells = list()
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
+	for(var/spell in alien_spells)
+		AddSpell(new spell(src))
 
 /mob/living/carbon/xenomorph/Destroy()
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
@@ -164,7 +168,7 @@
 	if(statpanel("Status"))
 		if(!isxenoqueen(src))
 			var/mob/living/carbon/xenomorph/queen = null
-			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 				if(Q.stat == DEAD || !Q.key)
 					continue
 				queen = Q
@@ -181,7 +185,7 @@
 			var/count = 0
 			if(key == ALIEN_QUEEN)
 				continue
-			for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+			for(var/mob/living/carbon/xenomorph/A as anything in alien_list[key])
 				if(A.stat == DEAD || !A.key)
 					continue
 				count++
@@ -282,11 +286,9 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand,/obj/item/weapon/twohanded))
-			if(item_in_hand:wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
+		return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -299,3 +301,20 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/carbon/xenomorph/proc/toggle_nvg(message = 1)
+	if(stat != CONSCIOUS)
+		return
+
+	src.nightvision = !src.nightvision
+
+	if(!src.nightvision)
+		src.nightvisionicon.icon_state = "nightvision0"
+	else if(src.nightvision == 1)
+		src.nightvisionicon.icon_state = "nightvision1"
+
+	update_sight()
+	if(message)
+		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
+	else
+		return

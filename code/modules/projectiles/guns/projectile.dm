@@ -10,6 +10,9 @@
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
+	var/istwohanded = FALSE
+	var/has_cover = FALSE //does this gun has cover
+	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
 
 /obj/item/weapon/gun/projectile/atom_init()
@@ -77,22 +80,28 @@
 		return 1
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	if (magazine)
+	if(has_cover)
+		if(cover_open)
+			cover_open = !cover_open
+			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
+			update_icon()
+			return
+		return ..()
+	if(istwohanded)
+		return ..()
+	else if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
-		return 1
 	else if(chambered)
 		playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
 		process_chamber()
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
-	return 0
 
 /obj/item/weapon/gun/projectile/Destroy()
 	qdel(magazine)

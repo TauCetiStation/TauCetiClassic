@@ -26,7 +26,7 @@
 		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
 		P.name = "half of [name]"
 		P.icon_state = icon_state
-		P.filters += filter(type = "alpha", icon = icon(icon, "pill_half_[part]"))
+		P.add_filter("pill_alpha", 3, alpha_mask_filter(icon = icon(icon, "pill_half_[part]")))
 		P.add_overlay(icon(icon, "pill_half_border_[part]"))
 		P.halved = TRUE
 		reagents.trans_to(P.reagents, volume_half)

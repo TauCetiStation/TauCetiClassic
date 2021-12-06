@@ -6,6 +6,24 @@ import { Window } from '../layouts';
 
 const ASPECT2COLOR = [];
 
+const GetTab = (tab, sects) => {
+  if (tab === 3) {
+    return <Encyclopedia />;
+  }
+
+  if (sects) {
+    return <SectSelectTab />;
+  }
+
+  if (tab === 1) {
+    return <ReligionTab />;
+  }
+
+  if (tab === 2) {
+    return <RiteTab />;
+  }
+};
+
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 1);
@@ -52,19 +70,7 @@ export const ReligiousTool = (props, context) => {
           </Flex>
         </Tabs>
         <Flex.Item>
-          {tab === 1 && (
-            !!sects && (
-              <SectSelectTab />
-            ) || (
-              <ReligionTab />
-            )
-          )}
-          {tab === 2 && (
-            <RiteTab />
-          )}
-          {tab === 3 && (
-            <Encyclopedia />
-          )}
+          {GetTab(tab, sects)}
         </Flex.Item>
       </Window.Content>
     </Window>
@@ -234,6 +240,7 @@ const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     sects,
+    holds_religious_tool,
   } = data;
 
   return (
@@ -271,6 +278,7 @@ const SectSelectTab = (props, context) => {
                 textAlign="center"
                 icon="plus"
                 fluid
+                disabled={!holds_religious_tool}
                 onClick={() => act('sect_select', {
                   path: sect.path,
                 })}>
@@ -651,6 +659,7 @@ const RiteTab = (props, context) => {
     favor,
     piety,
     can_talismaning,
+    holds_religious_tool,
   } = data;
 
   const [
@@ -687,7 +696,7 @@ const RiteTab = (props, context) => {
                 <>
                   <Button
                     fontColor="white"
-                    disabled={favor < rite.favor_cost || piety < rite.piety_cost}
+                    disabled={!holds_religious_tool || favor < rite.favor_cost || piety < rite.piety_cost}
                     icon="arrow-right"
                     onClick={() => act('perform_rite', {
                       rite_name: rite.name,

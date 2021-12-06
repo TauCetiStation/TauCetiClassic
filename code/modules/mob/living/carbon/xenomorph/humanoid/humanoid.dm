@@ -4,6 +4,7 @@
 	icon_state = "alien_s"
 
 	pass_flags = PASSTABLE
+	w_class = SIZE_HUMAN
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
@@ -22,7 +23,9 @@
 	var/last_screech = 0
 	var/screech_delay = 900
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
-
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
+						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+						/obj/effect/proc_holder/spell/targeted/transfer_plasma)
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/xenomorph/humanoid/atom_init()

@@ -1,5 +1,5 @@
-var/list/net_announcer_secret = list()
-var/bridge_secret = null
+var/global/list/net_announcer_secret = list()
+var/global/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -793,8 +793,7 @@ var/bridge_secret = null
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
 	log_mode(get_english_list(runnable_modes_names))
-	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
-		return get_always_runnable_modes()
+
 	return runnable_modes
 
 /datum/configuration/proc/get_always_runnable_modes()

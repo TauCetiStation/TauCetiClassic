@@ -21,7 +21,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-var/list/bad_messages = list("Never take me off, please!",
+var/global/list/bad_messages = list("Never take me off, please!",
 		"They all want to wear me... But I'm yours!",
 		"They're all want to take me from you! Bastards!",
 		"We are one",
@@ -31,7 +31,8 @@ var/list/bad_messages = list("Never take me off, please!",
 /obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
-		M.say(pick(heard_talk))
+		if(M.stat == CONSCIOUS)
+			M.say(pick(heard_talk))
 	if(istype(src.loc, /mob/living) && prob(2))
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
