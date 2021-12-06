@@ -101,7 +101,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
-	"}
 
 	dat += "</div>"
 	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
@@ -111,6 +110,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		var quality_mark=document.getElementById("quality");
 		function setReadyStatus(isReady) {
 			mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
+		}
 		function set_quality(setQuality) {
 			if(setQuality) {
 				quality_mark.textContent = 'QUALITY ☑';

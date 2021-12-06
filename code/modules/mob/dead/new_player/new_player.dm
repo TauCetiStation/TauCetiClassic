@@ -87,6 +87,14 @@
 			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
 
+	if(href_list["lobby_be_special"])
+		if(!client.prefs.have_quality)
+			if(tgui_alert(src, "Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.", "Особенность", list("ДА!!!", "Нет")) == "ДА!!!")
+				SSqualities.register_client(client)
+		else
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+		return
+
 	if(href_list["lobby_observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")

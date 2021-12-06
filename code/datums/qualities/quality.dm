@@ -207,7 +207,7 @@
 	restriction = "Унатх."
 
 /datum/quality/cultural_heritage/restriction_check(mob/living/carbon/human/H)
-	if((H.species.name == UNATHI))
+	if(H.species.name == UNATHI)
 		return TRUE
 	else
 		return FALSE
