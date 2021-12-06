@@ -65,7 +65,7 @@
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(!R.key)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(ghost.corpse == R && ghost.client)
 				ghost.client.mob = ghost.corpse
 

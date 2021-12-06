@@ -87,7 +87,7 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+	for(var/mob/M as anything in observer_list)	//does this include players who joined as observers as well?
 		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 

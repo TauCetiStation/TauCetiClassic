@@ -364,7 +364,7 @@
 			to_chat(user, "<span class='warning'>You cannot evolve when you are inside something.</span>")
 		return FALSE
 	var/no_queen = TRUE
-	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 		if(Q.stat == DEAD || !Q.key)
 			continue
 		no_queen = FALSE
@@ -420,11 +420,11 @@
 /obj/effect/proc_holder/spell/no_target/larva_evolve/cast(list/targets, mob/user = usr)
 	var/queen = FALSE
 	var/drone = FALSE
-	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 		if(Q.stat == DEAD || !Q.key)
 			continue
 		queen = TRUE
-	for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_DRONE])
+	for(var/mob/living/carbon/xenomorph/A as anything in alien_list[ALIEN_DRONE])
 		if(A.stat == DEAD || !A.key)
 			continue
 		drone = TRUE
