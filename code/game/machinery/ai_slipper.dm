@@ -31,9 +31,15 @@
 	else
 		icon_state = disabled ? "motion0" : "motion3"
 
+/obj/machinery/ai_slipper/AICtrlClick()
+	toggle_on()
+
 /obj/machinery/ai_slipper/proc/toggle_on()
 	disabled = !disabled
 	update_icon()
+
+/obj/machinery/ai_slipper/AIAltClick()
+	activate()
 
 /obj/machinery/ai_slipper/proc/activate()
 	if(cooldown_on || disabled)
