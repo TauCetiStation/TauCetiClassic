@@ -709,6 +709,8 @@
 /area/station/security/main)
 "aby" = (
 /obj/machinery/light/small/emergency,
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2022,7 +2024,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "laborexit";
 	name = "Labor Shuttle";
-	req_access = list(2)
+	req_access = list(1)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -4626,6 +4628,9 @@
 	pixel_x = -24
 	},
 /obj/structure/table,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -5976,13 +5981,22 @@
 	},
 /area/station/medical/virology)
 "akz" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -6307,6 +6321,17 @@
 /area/station/hallway/secondary/entry)
 "alb" = (
 /obj/machinery/door_timer/cell_3,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -6424,17 +6449,6 @@
 	dir = 4;
 	network = list("SS13","Security")
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -6498,17 +6512,6 @@
 	},
 /area/station/rnd/misc_lab)
 "alr" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -6516,6 +6519,17 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -6552,7 +6566,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	name = "Labor Shuttle";
-	req_access = list(63)
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
@@ -6633,17 +6647,6 @@
 	},
 /area/station/security/brig)
 "alE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	dir = 1;
@@ -6731,11 +6734,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -6910,16 +6908,16 @@
 /area/station/maintenance/dormitory)
 "alW" = (
 /obj/machinery/door_timer/cell_4,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -7267,6 +7265,17 @@
 	pixel_y = -30;
 	range = 10;
 	req_access = list(2)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7982,13 +7991,23 @@
 	},
 /area/station/maintenance/science)
 "anM" = (
-/obj/machinery/power/apc{
-	name = "Brig APC";
-	pixel_y = -24
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
@@ -18848,6 +18867,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/item/weapon/paper/firing_range,
+/obj/item/weapon/screwdriver,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -69926,16 +69946,14 @@
 	},
 /area/station/security/forensic_office)
 "cYb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Brig APC";
+	pixel_y = 28
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -108366,7 +108384,7 @@ adJ
 ajA
 ajd
 ahZ
-cWb
+adh
 akz
 anE
 amb
@@ -109138,7 +109156,7 @@ agF
 aje
 adM
 alr
-kKb
+anM
 aHL
 ame
 amr
@@ -112993,7 +113011,7 @@ ajQ
 ajp
 adh
 alK
-anM
+amE
 adM
 ami
 aqE
