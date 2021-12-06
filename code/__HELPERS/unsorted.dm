@@ -294,7 +294,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //When a borg is activated, it can choose which AI it wants to be slaved to
 /proc/active_ais()
 	. = list()
-	for(var/mob/living/silicon/ai/A in ai_list)
+	for(var/mob/living/silicon/ai/A as anything in ai_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -327,7 +327,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/namecounts = list()
 
 	if(with_mobs)
-		for(var/mob/M in mobs)
+		for(var/mob/M as anything in mobs)
 			if(skip_mindless && (!M.mind && !M.ckey))
 				if(!isbot(M) && !istype(M, /mob/camera))
 					continue
@@ -977,7 +977,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
-					for(var/mob/M in mobs)
+					for(var/mob/M as anything in mobs)
 						newmobs += DuplicateObject(M , 1)
 
 					for(var/mob/M in newmobs)
@@ -1579,7 +1579,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
-	for(var/mob/dead/new_player/N in new_player_list)
+	for(var/mob/dead/new_player/N as anything in new_player_list)
 		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
 
 // Converts browser keycodes to BYOND keycodes.

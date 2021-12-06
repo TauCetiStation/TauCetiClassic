@@ -162,7 +162,7 @@ robot_fabricator
 	need_only_once = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
-	for(var/mob/living/silicon/ai/ai in ai_list)
+	for(var/mob/living/silicon/ai/ai as anything in ai_list)
 		if(!ai.client)
 			continue
 		ai.fire_res_on_core = TRUE

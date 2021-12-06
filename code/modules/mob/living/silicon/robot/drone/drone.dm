@@ -93,7 +93,7 @@
 
 			user.visible_message("<span class='warning'>\the [user] swipes \his ID card through \the [src], attempting to reboot it.</span>", "<span class='warning'>You swipe your ID card through \the [src], attempting to reboot it.</span>")
 			var/drones = 0
-			for(var/mob/living/silicon/robot/drone/D in drone_list)
+			for(var/mob/living/silicon/robot/drone/D as anything in drone_list)
 				if(D.key && D.client)
 					drones++
 			if(drones < config.max_maint_drones)

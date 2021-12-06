@@ -285,7 +285,7 @@
 	L.revive()
 
 	if(!L.ckey || !L.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(L.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
