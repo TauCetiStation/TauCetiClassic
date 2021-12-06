@@ -12,7 +12,6 @@
 /datum/quality/proc/add_post_effect(mob/living/carbon/human/H)
 	return
 
-/*
 /datum/quality/cyborg
 	desc = "Все твои конечности и органы были заменены протезами в результате недавнего несчастного случая."
 	restriction = "Нет."
@@ -54,7 +53,7 @@
 	H.add_quirk(QUIRK_MUTE)
 
 /datum/quality/wonder_doctor
-	desc = "В качестве эксперимента, тебе выдали таблетку с экспериментальным препаратом, чем-то напоминающим тот самый Философский Камень."
+	desc = "В качестве эксперимента, тебе выдали таблетку с новейшим препаратом, чем-то напоминающим тот самый Философский Камень."
 	restriction = "Доктор, Парамедик, СМО."
 
 /datum/quality/wonder_doctor/restriction_check(mob/living/carbon/human/H)
@@ -237,7 +236,6 @@
 
 /datum/quality/vaccinated/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_VACCINATED, QUALITY_TRAIT)
-*/
 
 /datum/quality/protector
 	desc = "Помимо основной должности, Нанотрейзен наняли тебя для защиты конкретной персоны на станции. Лучше не подводить работодателя."
