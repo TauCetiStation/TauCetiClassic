@@ -6,7 +6,7 @@
 	if(init_full)
 		charge = maxcharge
 		if(isturf(loc))
-			update_icon()
+			updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()

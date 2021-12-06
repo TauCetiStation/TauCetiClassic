@@ -48,6 +48,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 
 	return ..()
 
+
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
@@ -153,6 +154,15 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
+
+/obj/singularity/energy_ball/update_icon(stage)
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(2)
+		vis_contents += singulo_effect
+
+	singulo_effect.icon = icon
+	singulo_effect.icon_state = icon_state
 
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
