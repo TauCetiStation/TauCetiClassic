@@ -146,11 +146,11 @@
 				to_chat(src, "<span class='warning'>Your radio transmitter isn't functional.</span>")
 				return
 
-			for (var/mob/living/S in drone_list)
+			for (var/mob/living/S as anything in drone_list)
 				if(S.stat != DEAD)
 					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
-			for (var/mob/M in observer_list)
+			for (var/mob/M as anything in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
@@ -163,7 +163,7 @@
 				if(D.client)
 					to_chat(D, "<b>[src]</b> transmits, \"[message]\"")
 
-			for(var/mob/M in observer_list)
+			for(var/mob/M as anything in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
@@ -192,7 +192,7 @@
 
 			user.visible_message("<span class='warning'>\the [user] swipes \his ID card through \the [src], attempting to reboot it.</span>", "<span class='warning'>You swipe your ID card through \the [src], attempting to reboot it.</span>")
 			var/drones = 0
-			for(var/mob/living/silicon/robot/drone/D in drone_list)
+			for(var/mob/living/silicon/robot/drone/D as anything in drone_list)
 				if(D.key && D.client)
 					drones++
 			if(drones < config.max_maint_drones)

@@ -168,7 +168,7 @@
 	if(statpanel("Status"))
 		if(!isxenoqueen(src))
 			var/mob/living/carbon/xenomorph/queen = null
-			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 				if(Q.stat == DEAD || !Q.key)
 					continue
 				queen = Q
@@ -185,7 +185,7 @@
 			var/count = 0
 			if(key == ALIEN_QUEEN)
 				continue
-			for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+			for(var/mob/living/carbon/xenomorph/A as anything in alien_list[key])
 				if(A.stat == DEAD || !A.key)
 					continue
 				count++
