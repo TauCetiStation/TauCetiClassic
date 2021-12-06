@@ -309,7 +309,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/drone/atom_init()
 	. = ..()
-	var/obj/item/weapon/holder/drone/syndi/H = new /obj/item/weapon/holder/drone/syndi(src)
-	var/obj/item/clothing/glasses/syndidroneRC/G = new /obj/item/clothing/glasses/syndidroneRC(src)
-	G.slave = new /mob/living/silicon/robot/drone/syndi(H)
+	var/obj/item/weapon/holder/drone/syndi/drone_holder = new /obj/item/weapon/holder/drone/syndi(src)
+	var/obj/item/clothing/glasses/syndidroneRC/rc_glasses = new /obj/item/clothing/glasses/syndidroneRC(src)
+	rc_glasses.slave = new /mob/living/silicon/robot/drone/syndi(drone_holder)
 	make_exact_fit()

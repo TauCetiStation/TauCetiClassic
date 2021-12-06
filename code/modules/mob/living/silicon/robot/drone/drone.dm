@@ -3,7 +3,6 @@
 	real_name = "drone"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "repairbot"
-	var/eyes_overlay = "eyes-repairbot"
 	maxHealth = 15
 	health = 15
 	universal_speak = 0
@@ -17,11 +16,10 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
 	w_class = SIZE_SMALL
 	typing_indicator_type = "machine"
-
-	//Used for self-mailing.
-	var/mail_destination = ""
-
 	holder_type = /obj/item/weapon/holder/drone
+
+	var/mail_destination = "" //Used for self-mailing.
+	var/eyes_overlay = "eyes-repairbot"
 
 /mob/living/silicon/robot/drone/atom_init()
 	. = ..()

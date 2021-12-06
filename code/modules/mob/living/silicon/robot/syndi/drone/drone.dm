@@ -13,7 +13,7 @@
 	var/mob/living/carbon/human/operator = null //Mob controlling the drone
 	var/datum/mind/operator_mind = null
 	var/operator_health_last = null
-	var/cooldown = 0
+	var/msg_cooldown = 0
 
 /mob/living/silicon/robot/drone/syndi/atom_init()
 	. = ..()
@@ -42,13 +42,13 @@
 		return
 	if(operator.health < operator_health_last)
 		to_chat(src, "<span class='warning'>You're getting damage! Secure yourself as soon as possible!</span>")
-	if(cooldown)
-		cooldown--
+	if(msg_cooldown)
+		msg_cooldown--
 	else
 		for(var/mob/living/M in range(1, operator))
 			if(M != operator)
 				to_chat(src, "<span class='notice'>You feel something moving around you.</span>")
-				cooldown = 3//in seconds
+				msg_cooldown = 3//in 2x of seconds (so 'cooldown 3' is 6 seconds)
 				break
 	operator_health_last = operator.health
 
@@ -66,7 +66,7 @@
 	operator = M
 	operator_mind = M.mind
 	operator_health_last = M.health
-	cooldown = 5//in seconds
+	msg_cooldown = 5//in 2x of seconds (so 'cooldown 5' is 10 seconds)
 	key = M.key
 	M.key = "@[key]"
 	to_chat(src, "You're now controlling the [name].")
@@ -76,10 +76,10 @@
 		return
 	if(operator.key == "@[key]")
 		operator.key = key
-	else
-		if(operator_mind && operator_mind.current && operator_mind.key == key)
+	else //if operator is controlled by another client
+		if(operator_mind && operator_mind.current && operator_mind.key == key) //if client is controlling another mob, not the operator
 			operator_mind.current.key = key
-		else
+		else // idk what is going on, client has no living mob to controll
 			ghostize(FALSE)
 	key = null
 	to_chat(operator, "You've lost control of the [name].")

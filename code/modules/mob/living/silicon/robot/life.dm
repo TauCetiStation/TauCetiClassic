@@ -186,24 +186,24 @@
 	regular_hud_updates()
 	update_sight()
 
-	if (src.healths)
-		if (src.stat != DEAD)
+	if (healths)
+		if (stat != DEAD)
 			if(health >= maxHealth)
-				src.healths.icon_state = "health0"
+				healths.icon_state = "health0"
 			else if(health >= maxHealth * 0.75)
-				src.healths.icon_state = "health1"
+				healths.icon_state = "health1"
 			else if(health >= maxHealth * 0.5)
-				src.healths.icon_state = "health2"
+				healths.icon_state = "health2"
 			else if(health >= maxHealth * 0.25)
-				src.healths.icon_state = "health3"
+				healths.icon_state = "health3"
 			else if(health >= 0)
-				src.healths.icon_state = "health4"
+				healths.icon_state = "health4"
 			else if(health >= config.health_threshold_dead)
-				src.healths.icon_state = "health5"
+				healths.icon_state = "health5"
 			else
-				src.healths.icon_state = "health6"
+				healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge

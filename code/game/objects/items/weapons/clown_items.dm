@@ -237,6 +237,7 @@
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
 	var/cooldown_max = 60
+	var/click_radius = -4
 	w_class = SIZE_TINY
 	var/actions
 	var/pos_sounds 
@@ -400,7 +401,7 @@
 	flick("sound_button_up",src)
 	icon_state = "sound_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, click_radius)
 	return
 
 //Syndicate version
@@ -409,6 +410,7 @@
 	name = "sound decoy"
 	desc = "Can easily lure someone into your trap. Trust me!"
 	cooldown_max = 40
+	click_radius = -7
 
 /obj/item/toy/sound_button/syndi/init_soundboard()
 	actions = list(
@@ -459,10 +461,3 @@
 			'sound/hallucinations/over_here1.ogg',
 			'sound/hallucinations/turn_around1.ogg')
 	)
-
-/obj/item/toy/sound_button/syndi/release_cooldown()
-	flick("sound_button_up",src)
-	icon_state = "sound_button_on"
-	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -7)//more stealthy, can only be heard on the same turf
-	return

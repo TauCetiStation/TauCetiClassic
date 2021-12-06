@@ -11,6 +11,7 @@
 	name = "Maneuverability boost"
 	charge_max = 600
 	var/duration = 50
+	var/speed_bonus = -2 //negative is faster, positive is slower
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost/cast(list/targets, mob/user)
 	if(!istype(user, /mob/living/silicon/robot/drone))
@@ -18,7 +19,7 @@
 
 	var/mob/living/silicon/robot/drone/D = user
 	var/datum/robot_component/actuator/A = D.get_component("actuator")
-	D.speed -= 2
+	D.speed -= speed_bonus
 	D.lying = TRUE //for the ability to pass through other mobs
 	A.active_usage *= POWER_USAGE_MULTIPLIER
 	var/old_overlay = D.eyes_overlay //If you want to add overlays to another effect, you will need to implement some kind of overlays stack.
@@ -35,7 +36,7 @@
 	D.eyes_overlay = old_overlay
 	D.update_icon()
 	A.active_usage /= POWER_USAGE_MULTIPLIER
-	D.speed += 2
+	D.speed += speed_bonus
 	D.lying = FALSE
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke
