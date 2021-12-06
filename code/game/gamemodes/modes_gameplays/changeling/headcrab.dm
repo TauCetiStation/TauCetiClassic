@@ -9,6 +9,7 @@
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
