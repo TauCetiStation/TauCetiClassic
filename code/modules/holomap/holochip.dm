@@ -77,9 +77,9 @@
 	activator = null
 	STOP_PROCESSING(SSobj, src)
 
-#define COLOR_HMAP_DEAD "#D3212D"
-#define COLOR_HMAP_INCAPACITATED "#FFEF00"
-#define COLOR_HMAP_DEFAULT "#006A4E"
+#define COLOR_HMAP_DEAD "#d3212d"
+#define COLOR_HMAP_INCAPACITATED "#ffef00"
+#define COLOR_HMAP_DEFAULT "#006e4e"
 
 /obj/item/holochip/proc/handle_markers()
 	if(!activator || !activator.client)
