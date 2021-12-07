@@ -176,6 +176,11 @@
 	target.real_name = selected_dna.real_name
 	domutcheck(target, null)
 	target.UpdateAppearance()
+
+	var/mob/living/carbon/human/H = target
+	if(istype(H))
+		H.fixblood(FALSE) // need to change blood DNA too
+
 	feedback_add_details("changeling_powers","TS")
 	return 1
 

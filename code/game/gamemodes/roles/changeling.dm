@@ -19,7 +19,8 @@
 	var/chem_storage = 50
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 1
-	var/changelingID = "Changeling"
+	var/changelingID = "Changeling" // flavor ID like Theta/Tau/etc.
+	var/unique_changeling_marker // unique ID like DNA but secret
 	var/geneticdamage = 0
 	var/isabsorbing = 0
 	var/geneticpoints = 5
@@ -38,9 +39,13 @@
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
 	antag.current.make_changeling()
-	set_changelingID()
+	set_changeling_identifications()
+	
+	var/mob/living/carbon/human/H = antag.current
+	if(istype(H))
+		H.fixblood(FALSE) // to add changeling marker
 
-/datum/role/changeling/proc/set_changelingID()
+/datum/role/changeling/proc/set_changeling_identifications()
 	var/honorific
 	if(antag.current.gender == FEMALE)
 		honorific = "Ms."
@@ -54,6 +59,8 @@
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
+
+	unique_changeling_marker = md5("\ref[src]")
 
 /datum/role/changeling/Greet(greeting, custom)
 	if(!..())

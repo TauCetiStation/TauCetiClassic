@@ -583,6 +583,10 @@ var/global/const/INGEST = 2
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
 
+	if (trans_data["changeling_marker"])
+		var/list/v = trans_data["changeling_marker"]
+		trans_data["changeling_marker"] = v.Copy()
+
 	return trans_data
 
 /datum/reagents/Destroy()
