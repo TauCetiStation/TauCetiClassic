@@ -137,7 +137,6 @@
 	if(!..())
 		return FALSE
 
-	sight = SEE_MOBS
 	see_in_dark = 8
 	set_EyesVision(null)
 
@@ -145,8 +144,8 @@
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	return TRUE
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
