@@ -793,7 +793,7 @@
 	pixel_y = -28
 	},
 /obj/machinery/hydroponics/constructable,
-/turf/space,
+/turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "siding1"
@@ -1383,7 +1383,7 @@
 /area/station/security/main)
 "acq" = (
 /obj/machinery/hydroponics/constructable,
-/turf/space,
+/turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "siding1"
@@ -2576,7 +2576,7 @@
 	pixel_x = 22
 	},
 /obj/machinery/hydroponics/constructable,
-/turf/space,
+/turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "siding1"
@@ -3482,7 +3482,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warninglinecorners"
@@ -4764,7 +4766,7 @@
 /area/station/security/warden)
 "ahX" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/skills,
+/obj/machinery/computer/security/bodycam,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahY" = (
@@ -17247,7 +17249,9 @@
 	density = 0;
 	pixel_x = 32
 	},
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warningline"
@@ -31795,13 +31799,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bed" = (
-/mob/living/simple_animal/mouse,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -34669,11 +34673,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"bjw" = (
-/obj/structure/lattice,
-/turf/space,
-/turf/space,
-/area/space)
 "bjx" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -38790,7 +38789,7 @@
 /obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
-/turf/space,
+/turf/simulated/floor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warningline"
@@ -47420,8 +47419,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/mob/living/simple_animal/mouse,
 /obj/item/trash/candy,
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bGA" = (
@@ -69749,7 +69748,9 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "enb" = (
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warninglinecorners"
@@ -71543,13 +71544,13 @@
 	},
 /area/station/hallway/primary/central)
 "gmb" = (
-/mob/living/simple_animal/parrot/Poly,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
 	network = list("Engineering","Engineering Robots");
 	pixel_y = 30
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkyellow"
@@ -106953,7 +106954,7 @@ cib
 okb
 bhW
 biF
-bjw
+aah
 aaa
 aaa
 aaa
