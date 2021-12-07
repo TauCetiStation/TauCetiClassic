@@ -5,10 +5,10 @@
 #define ARRIVAL_SHUTTLE_EXODUS 2
 
 
-var/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
-var/moving = FALSE
-var/area/curr_location
-var/lastMove = 0
+var/global/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/global/moving = FALSE
+var/global/area/curr_location
+var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"
@@ -197,7 +197,7 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)
 		return FALSE
-	for (var/mob/living/silicon/ai/A in ai_list)
+	for (var/mob/living/silicon/ai/A as anything in ai_list)
 		if (A.can_retransmit_messages())
 			A.retransmit_message(msg)
 			return TRUE

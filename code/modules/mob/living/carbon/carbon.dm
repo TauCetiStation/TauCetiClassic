@@ -153,20 +153,17 @@
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
-			if(item_in_hand:wielded)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
-			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
-			if(s.zoom)
-				s.toggle_zoom()
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
-			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
-			if(C.zoomed)
-				C.toggle_zoom()
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
+		return
+
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_INACTIVE, src)
+
 	src.hand = !( src.hand )
+	item_in_hand = get_active_hand()
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
@@ -174,6 +171,7 @@
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
@@ -912,6 +910,69 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 	med_hud_set_status()
+
+/mob/living/carbon/update_sight()
+	if(!..())
+		return FALSE
+	if(stat == DEAD)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		set_EyesVision(transition_time = 0)
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return FALSE
+	if(blinded)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		set_EyesVision("greyscale")
+		return FALSE
+
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+
+	if(dna)
+		switch(dna.mutantrace)
+			if("slime")
+				see_in_dark = 3
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+			if("shadow")
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	if(changeling_aug)
+		sight |= SEE_MOBS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+		switch(O.mode)
+			if(0)
+				O.togge_huds()
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LIVING
+			if(1)
+				see_in_dark = 8
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			if(2)
+				sight |= SEE_MOBS
+				see_in_dark = initial(see_in_dark)
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(3)
+				sight |= SEE_TURFS
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	return TRUE
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

@@ -13,6 +13,7 @@
 
 	simulated = FALSE
 	flags = NOREACT
+	flags_2 = PROHIBIT_FOR_DEMO_2 // can corrupt the demo
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -55,7 +56,7 @@
 		if (loc)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
+			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]][COORD(oldturf)] -> [loc]\[[ loc ? loc.type : "null"]][COORD(newturf)])!")
 
 		qdel(src, TRUE)
 		return

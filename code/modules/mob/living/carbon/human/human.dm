@@ -309,28 +309,6 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/wield(obj/item/I, name, wieldsound = null)
-	if(!can_use_two_hands())
-		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
-		return FALSE
-	if(get_inactive_hand())
-		to_chat(src, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-		return FALSE
-	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
-	if(wieldsound)
-		playsound(src, wieldsound, VOL_EFFECTS_MASTER)
-
-	if(hand)
-		update_inv_l_hand()
-	else
-		update_inv_r_hand()
-
-	var/obj/item/weapon/twohanded/offhand/O = new(src)
-	O.name = "[name] - offhand"
-	O.desc = "Your second grip on the [name]"
-	put_in_inactive_hand(O)
-	return TRUE
-
 /mob/living/carbon/human/proc/is_type_organ(organ, o_type)
 	var/obj/item/organ/O
 	if(organ in organs_by_name)
@@ -1166,7 +1144,7 @@
 	if(!src_turf)
 		return
 
-	for(var/mob/living/carbon/M in carbon_list)
+	for(var/mob/living/carbon/M as anything in carbon_list)
 		var/name = M.real_name
 		if(name in names)
 			namecounts[name]++
@@ -1226,7 +1204,7 @@
 	var/count = 0
 	var/target = null	   //Chosen target.
 
-	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
+	for(var/mob/living/carbon/human/M as anything in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			count++
@@ -1281,18 +1259,6 @@
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
-
-/mob/living/carbon/human/can_pickup(obj/O)
-	// Its worst
-	if(istype(O, /obj/item/weapon/twohanded))
-		var/obj/item/weapon/twohanded/T = O
-		if(T.wielded)
-			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-			return FALSE
-		if(get_inactive_hand() && T.only_twohand)
-			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
-			return FALSE
-	return TRUE
 
 /*
 /mob/living/carbon/human/verb/simulate()

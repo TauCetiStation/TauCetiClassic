@@ -180,7 +180,7 @@
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.real_name == text("[]", msg))
 			return M
 	return 0
@@ -323,35 +323,33 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-	if(next_point_to > world.time)
+
+	if (next_point_to > world.time)
 		return
-	if(!usr || !isturf(usr.loc))
+
+	if (incapacitated() || (status_flags & FAKEDEATH))
 		return
-	if(usr.incapacitated())
+
+	if (istype(A, /obj/effect/decal/point))
 		return
-	if(usr.status_flags & FAKEDEATH)
-		return
-	if(!(A in oview(usr.loc)))
-		return
-	if(istype(A, /obj/effect/decal/point))
+
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
 		return
 
 	var/tile = get_turf(A)
-	if(!tile)
+	if (!tile)
 		return
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
-
-	QDEL_IN(P, 20)
+	point_at(A)
 
 	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
 
 	next_point_to = world.time + 1.5 SECONDS
@@ -931,6 +929,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
@@ -963,6 +962,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
 
 // =============================
 
@@ -1047,7 +1053,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

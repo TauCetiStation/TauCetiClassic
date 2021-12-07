@@ -89,68 +89,18 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
-	var/cover_open = 0
-	var/wielded = 0
+	has_cover = TRUE
+	istwohanded = TRUE
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/unwield()
-	wielded = 0
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/wield()
-	wielded = 1
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
-	if(wielded)
-		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-		return 0
-	return ..()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
-	..()
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
-	if(user)
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(istype(O))
-			O.unwield()
-	return	unwield()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/living/user)
-	unwield()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	if(wielded)
-		unwield()
-		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-		update_inv_mob()
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
-	else if(cover_open)
-		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-			return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(!H.can_use_two_hands())
-				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
-				return
-		cover_open = !cover_open
-		to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
-		update_icon()
-	else //Trying to wield it
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name))
-			if(W)
-				wield()
+/obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
+	. = ..()
+	AddComponent(/datum/component/twohanded)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	if(cover_open)
