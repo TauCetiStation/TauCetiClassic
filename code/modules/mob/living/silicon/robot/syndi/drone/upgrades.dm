@@ -350,6 +350,7 @@
 	D.name = "maintenance drone " + copytext(D.name, -5)
 	D.flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: \
 		'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
+	D.holder_type = /obj/item/weapon/holder/syndi_drone/disguised
 	D.uplink.points -= cost
 	installed = TRUE
 	return TRUE

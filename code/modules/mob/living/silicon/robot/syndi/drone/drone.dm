@@ -6,7 +6,7 @@
 	modtype = "Syndicate"
 	faction = "syndicate"
 	req_access = list(access_syndicate)
-	holder_type = /obj/item/weapon/holder/drone/syndi
+	holder_type = /obj/item/weapon/holder/syndi_drone
 	eyes_overlay = "eyes-syndibot"
 
 	var/obj/item/device/drone_uplink/uplink = null
