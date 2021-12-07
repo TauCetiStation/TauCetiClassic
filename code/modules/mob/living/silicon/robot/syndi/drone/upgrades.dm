@@ -118,7 +118,7 @@
 	desc = "The emag is a small card that unlocks hidden functions in electronic devices, \
 		subverts intended functions and characteristically breaks security mechanisms."
 	items = list(/obj/item/weapon/card/emag)
-	cost = 12
+	cost = 10
 	single_use = FALSE
 
 /datum/drone_upgrade/device_tools/emplight
@@ -145,7 +145,7 @@
 	name = "Sound decoy"
 	desc = "Can produce various sounds to distract your enemies."
 	items = list(/obj/item/toy/sound_button/syndi)
-	cost = 6
+	cost = 5
 
 //========SURVEILLANCE AND OPTICS========
 /datum/drone_upgrade/optics
@@ -252,13 +252,13 @@
 /datum/drone_upgrade/chems_poisons/dropper_refill/cyanide
 	name = "Cyanide refill"
 	desc = "A highly toxic chemical. May cause deth by suffocation."
-	cost = 6
+	cost = 4
 	reagent = "cyanide"
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/chloralhydrate
 	name = "Chloral Hydrate refill"
 	desc = "A powerful sedative."
-	cost = 4
+	cost = 3
 	reagent = "chloralhydrate"
 
 //==========UPGRADES============
