@@ -11,6 +11,11 @@
 	species_restricted = list("exclude" , DIONA , VOX)
 	var/image/lamp = null
 
+/obj/item/clothing/head/helmet/space/syndicate/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"

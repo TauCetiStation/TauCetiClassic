@@ -7,6 +7,11 @@
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/machinery/camera/camera
 
+/obj/item/clothing/head/helmet/space/rig/ert/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/ert(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)
 		..(user)
