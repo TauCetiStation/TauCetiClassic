@@ -1396,7 +1396,7 @@
 	min_age = 1
 	max_age = 10000
 
-	speed_mod = 7
+	speed_mod_no_shoes = 5
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
