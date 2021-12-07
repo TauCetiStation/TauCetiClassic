@@ -44,6 +44,7 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/move_intent
 	var/atom/movable/screen/staminadisplay
 	var/atom/movable/screen/wanted/wanted_lvl
+	var/atom/movable/screen/holomap/holomap_obj
 
 	var/list/adding
 	var/list/other

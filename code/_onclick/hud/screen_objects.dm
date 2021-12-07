@@ -856,3 +856,6 @@
 	name = "mood"
 	icon_state = "mood5"
 	screen_loc = ui_mood
+
+/atom/movable/screen/holomap
+	name = "Holomap"

@@ -142,3 +142,13 @@
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))
+
+// Holomap flags
+#define HOLOMAP_DEATHSQUAD_COLOR "#800000"
+#define HOLOMAP_NUCLEAR_COLOR "#E30000"
+#define HOLOMAP_VOX_COLOR "#3BCCCC"
+#define HOLOMAP_ERT_COLOR "#0B74B4"
+#define HOLOMAP_FILTER_DEATHSQUAD 1
+#define HOLOMAP_FILTER_NUCLEAR 2
+#define HOLOMAP_FILTER_VOX 4
+#define HOLOMAP_FILTER_ERT 8
