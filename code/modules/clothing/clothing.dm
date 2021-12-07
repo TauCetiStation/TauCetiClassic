@@ -481,7 +481,7 @@ BLIND     // can't see anything
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && H.head == src)
 			holochip.add_action(user)
-		playsound(user, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[user] modifies the [src] with the [holochip]</span>")
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!holochip)
@@ -493,7 +493,7 @@ BLIND     // can't see anything
 		if(!user.put_in_hands(holochip))
 			holochip.forceMove(get_turf(src))
 		holochip = null
-		playsound(user, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[user] removes the [holochip] from the [src]</span>")
 
 /obj/item/clothing/head/helmet/space/Destroy()
