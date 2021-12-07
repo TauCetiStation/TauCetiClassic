@@ -914,12 +914,7 @@
 /mob/living/carbon/update_sight()
 	if(!..())
 		return FALSE
-	if(stat == DEAD)
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		set_EyesVision(transition_time = 0)
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return FALSE
+
 	if(blinded)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
@@ -938,12 +933,6 @@
 			if("shadow")
 				see_in_dark = 8
 				see_invisible = SEE_INVISIBLE_LEVEL_ONE
-
-	if(XRAY in mutations)
-		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		see_in_dark = 8
-		if(!druggy)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	if(changeling_aug)
 		sight |= SEE_MOBS
