@@ -2183,6 +2183,14 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/mining
 	category = list("Support")
 
+/datum/design/holochip
+	var/name = "Holographic chip"
+	var/desc = "A holographic chip for space helmet's HUD."
+	var/id = "holochip"
+	var/build_type = PROTOLATHE
+	var/list/materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	var/build_path = /obj/item/holochip
+	var/list/category = list("Support")
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
