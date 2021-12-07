@@ -42,7 +42,6 @@
 
 /obj/item/holochip/ui_action_click()
 	if(activator)
-		world.log << "activator"
 		deactivate_holomap()
 		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
 		return

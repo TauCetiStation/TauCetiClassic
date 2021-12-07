@@ -30,7 +30,7 @@ var/global/list/deathsquad_transport_layer = list()
 #undef HOLOMAP_WALKABLE_TILE
 #undef HOLOMAP_CONCRETE_TILE
 
-/proc/generate_tls()		// Here we generate unique combinations of frequency/encryption for each predefined holochip sets
+/proc/generate_holochip_encryption()		// Here we generate unique combinations of frequency/encryption for each predefined holochip sets
 	nuclear_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
 	ert_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
 	deathsquad_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
