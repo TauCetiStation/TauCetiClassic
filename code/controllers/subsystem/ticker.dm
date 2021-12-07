@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(ticker)
 	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
 	default_holomap = image(generate_holo_map())
 	holomap_base = default_holomap
-	generate_tls()
+	generate_holochip_encryption()
 
 	..()
 

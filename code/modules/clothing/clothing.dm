@@ -482,7 +482,7 @@ BLIND     // can't see anything
 		if(istype(H) && H.head == src)
 			holochip.add_action(user)
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>[user] modifies the [src] with the [holochip]</span>")
+		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!holochip)
 			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
@@ -494,7 +494,7 @@ BLIND     // can't see anything
 			holochip.forceMove(get_turf(src))
 		holochip = null
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>[user] removes the [holochip] from the [src]</span>")
+		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
 
 /obj/item/clothing/head/helmet/space/Destroy()
 	QDEL_NULL(holochip)
