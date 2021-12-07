@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 /obj/item/holochip
 	name = "Holomap chip"
 	desc = "A small holomap module, attached to helmets."
@@ -17,7 +18,6 @@
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
 	holder = I
-	holochips += src
 	holomap_base = default_holomap
 
 /obj/item/holochip/Destroy()
