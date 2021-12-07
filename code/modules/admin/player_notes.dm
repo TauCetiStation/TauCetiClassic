@@ -5,8 +5,15 @@
 	if (!key || !note)
 		return
 
+	if(!(note_type in global.player_info_type_rights))
+		return
+
 	if(!check_rights(R_LOG))
 		return
+
+	for(var/flag in global.player_info_type_rights[note_type])
+		if(!check_rights(flag))
+			return
 
 	if(!establish_db_connection("erro_messages"))
 		return
