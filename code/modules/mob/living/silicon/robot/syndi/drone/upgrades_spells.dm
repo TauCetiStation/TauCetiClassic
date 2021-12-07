@@ -9,7 +9,7 @@
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost
 	name = "Maneuverability boost"
-	charge_max = 600
+	charge_max = 400
 	var/duration = 50
 	var/speed_bonus = -2 //negative is faster, positive is slower
 
@@ -19,25 +19,33 @@
 
 	var/mob/living/silicon/robot/drone/D = user
 	var/datum/robot_component/actuator/A = D.get_component("actuator")
-	D.speed -= speed_bonus
+	D.speed += speed_bonus
 	D.lying = TRUE //for the ability to pass through other mobs
 	A.active_usage *= POWER_USAGE_MULTIPLIER
 	var/old_overlay = D.eyes_overlay //If you want to add overlays to another effect, you will need to implement some kind of overlays stack.
 	D.eyes_overlay = "eyes-syndibot" //Otherwise, they will conflict and cause unexpected overlay changes.
 	D.update_icon()
+	addtimer(CALLBACK(src, .proc/melt, D), rand(10, 25))
+	addtimer(CALLBACK(src, .proc/melt, D), rand(35, 50))
+	addtimer(CALLBACK(src, .proc/slow_down, D, old_overlay), duration)
+
+/obj/effect/proc_holder/spell/no_target/syndi_drone/boost/proc/slow_down(mob/living/silicon/robot/drone/D, old_overlay) //reverts the spell effect
+	if(!D || !old_overlay)
+		return
+	var/datum/robot_component/actuator/A = D.get_component("actuator")
+	D.eyes_overlay = old_overlay
+	D.update_icon()
+	A.active_usage /= POWER_USAGE_MULTIPLIER
+	D.speed -= speed_bonus
+	D.lying = FALSE
+
+/obj/effect/proc_holder/spell/no_target/syndi_drone/boost/proc/melt(mob/living/silicon/robot/drone/D) //burn damage and sparks, caused by overheating
+	if(!D)
+		return
 	D.apply_damage(rand(0, BURN_DAMAGE_CAP), BURN)
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, D.loc)
 	spark_system.start()
-	sleep(duration)
-	D.apply_damage(rand(0, BURN_DAMAGE_CAP), BURN)
-	spark_system.set_up(5, 0, D.loc)
-	spark_system.start()
-	D.eyes_overlay = old_overlay
-	D.update_icon()
-	A.active_usage /= POWER_USAGE_MULTIPLIER
-	D.speed += speed_bonus
-	D.lying = FALSE
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke
 	name = "Deploy smokescreen"
