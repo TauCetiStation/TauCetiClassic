@@ -35,12 +35,3 @@
 	. = ..()
 	frequency = ert_transport_layer["frequency"]
 	encryption = ert_transport_layer["encryption"]
-
-/obj/item/holochip/ert/medical
-	marker_prefix = "ertm"
-
-/obj/item/holochip/ert/engineering
-	marker_prefix = "erte"
-
-/obj/item/holochip/ert/security
-	marker_prefix = "erts"

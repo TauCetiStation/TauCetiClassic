@@ -3,9 +3,7 @@
 	desc = "A small holomap module, attached to helmets."
 	icon = 'icons/holomaps/holochips.dmi'
 	icon_state = "holochip"
-	var/role_filter = null		//Because all holochips are stored in one list, this is used to display holochips only with same role_filters
 	var/color_filter = null		//Color for station's image, defined in flags.dm
-	var/marker_prefix = null	//Marker prefix for mob indicator on holomap, see holomap_markers.dmi
 
 	var/mob/living/carbon/human/activator = null
 	var/obj/item/holder = null
