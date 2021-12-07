@@ -2275,8 +2275,27 @@
 		var/key = ckey(href_list["add_player_info"])
 		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
 		if(!add) return
+		var/list/note_types = list()
+		for(var/NT in global.player_info_type_rights)
+			var/addthis = TRUE
+			for(var/flag in global.player_info_type_rights[NT])
+				if(!(rights & flag))
+					addthis = FALSE
+					break
+			if(addthis)
+				note_types += global.player_info_type_uitext[NT]
+		var/chosen_type
+		if(note_types.len == 0)
+			return
+		if(note_types.len == 1)
+			chosen_type = global.player_info_type_from_uitext[note_types[1]]
+		else
+			chosen_type = global.player_info_type_from_uitext[tgui_alert(usr, "Choose note type", "Add Player Info", note_types)]
 
-		notes_add(key, add, usr.client)
+		if(!chosen_type)
+			return
+
+		notes_add(key, add, usr.client, secret = TRUE, note_type = chosen_type)
 		show_player_notes(key)
 
 	/* unimplemented

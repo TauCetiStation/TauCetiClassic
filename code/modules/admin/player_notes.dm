@@ -1,14 +1,13 @@
-/proc/notes_add(key, note, client/admin, secret = 1)
+/proc/notes_add(key, note, client/admin, secret = 1, note_type = PLAYER_INFO_TYPE_ADMIN)
 	key = ckey(key)
 	note = sanitize(note)
 
 	if (!key || !note)
 		return
 
-	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+	if(!check_rights(R_LOG))
 		return
 
-	
 	if(!establish_db_connection("erro_messages"))
 		return
 
@@ -16,7 +15,7 @@
 	secret = !!secret
 
 	var/sql = {"INSERT INTO erro_messages (type, targetckey, adminckey, text, timestamp, server_ip, server_port, round_id, secret)
-	VALUES ('note', '[key]', '[admin_key]', '[sanitize_sql(note)]', Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[sanitize_sql(world.internet_address)]')), '[sanitize_sql(world.port)]', '[global.round_id]', '[secret]')"}
+	VALUES ('[note_type]', '[key]', '[admin_key]', '[sanitize_sql(note)]', Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[sanitize_sql(world.internet_address)]')), '[sanitize_sql(world.port)]', '[global.round_id]', '[secret]')"}
 	var/DBQuery/new_notes = dbcon.NewQuery(sql)
 	new_notes.Execute()
 

@@ -182,7 +182,7 @@ CREATE TABLE `erro_stickyban_matched_cid` (
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `erro_messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('note') NOT NULL,
+  `type` enum('note', 'xenonote') NOT NULL,
   `targetckey` varchar(32) NOT NULL,
   `adminckey` varchar(32) NOT NULL,
   `text` varchar(2048) NOT NULL,

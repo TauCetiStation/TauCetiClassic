@@ -208,18 +208,52 @@ var/global/BSACooldown = 0
 #define PLAYER_INFO_MISSING_JOB_TEXT        "N/A"
 #define PLAYER_INFO_MISSING_ROUND_ID_TEXT   "N/A"
 
+#define PLAYER_INFO_TYPE_ADMIN "note"
+#define PLAYER_INFO_TYPE_XENOS "xenonote"
+
+#define PLAYERINFOS(o) \
+	o(PLAYER_INFO_TYPE_ADMIN, list(R_LOG, R_BAN),       "Admin note"), \
+	o(PLAYER_INFO_TYPE_XENOS, list(R_LOG, R_WHITELIST), "Xeno note"), \
+
+#define RIGHTS(name, rights, _) name = rights
+var/global/list/player_info_type_rights = list(
+	PLAYERINFOS(RIGHTS)
+)
+#undef RIGHTS
+
+#define UITEXT(name, _, uitext) name = uitext
+var/global/list/player_info_type_uitext = list(
+	PLAYERINFOS(UITEXT)
+)
+#undef UITEXT
+
+#define UITEXTREV(name, _, uitext) uitext = name
+var/global/list/player_info_type_from_uitext = list(
+	PLAYERINFOS(UITEXTREV)
+)
+#undef UITEXTREV
+
+#undef PLAYERINFOS
+
 /datum/player_info
 	var/author = PLAYER_INFO_MISSING_AUTHOR_TEXT        // admin who authored the information
 	var/content = PLAYER_INFO_MISSING_CONTENT_TEXT      // text content of the information
 	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
 	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
+	var/note_type = PLAYER_INFO_TYPE_ADMIN // type of note, determines the access flags for message
+
+/datum/player_info/proc/can_view(datum/admins/A)
+	for(var/flag in global.player_info_type_rights[note_type])
+		if(!(A.rights & flag))
+			return FALSE
+	return TRUE
 
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
 
 /datum/admins/proc/show_player_notes(key)
-	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+	if(!check_rights(R_LOG))
 		return
 
 	key = ckey(key)
@@ -251,6 +285,9 @@ var/global/BSACooldown = 0
 	else
 		var/list/infos = generalized_players_info(db_messages, db_bans)
 		for(var/datum/player_info/I in infos)
+			if(!I.can_view(src))
+				continue
+			dat += "[global.player_info_type_uitext[I.note_type]]: "
 			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp]</i></font> "
 			dat += "<br><br>"
 	dat += "<br>"
@@ -283,7 +320,8 @@ var/global/BSACooldown = 0
 		"text",
 		"DATE_FORMAT(timestamp, '[timestamp_format]')",
 		"DATEDIFF(timestamp, '[days_ago_start_date]')",
-		"round_id"
+		"round_id",
+		"type"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -296,6 +334,7 @@ var/global/BSACooldown = 0
 		var/timestamp = query.item[3]
 		var/days_ago = text2num(query.item[4])
 		var/rid = text2num(query.item[5])
+		var/note_type = query.item[6]
 
 		if(length(a_ckey))
 			notes_record.author = a_ckey
@@ -307,6 +346,8 @@ var/global/BSACooldown = 0
 			notes_record.days_timestamp = days_ago
 		if(rid)
 			notes_record.round_id = rid
+		if(note_type)
+			notes_record.note_type = note_type
 
 		db_player_notes += notes_record
 
