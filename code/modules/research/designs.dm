@@ -2184,13 +2184,13 @@ other types of metals and chemistry for reagents).
 	category = list("Support")
 
 /datum/design/holochip
-	var/name = "Holographic chip"
-	var/desc = "A holographic chip for space helmet's HUD."
-	var/id = "holochip"
-	var/build_type = PROTOLATHE
-	var/list/materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
-	var/build_path = /obj/item/holochip
-	var/list/category = list("Support")
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
+	category = list("Support")
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
