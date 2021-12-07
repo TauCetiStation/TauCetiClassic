@@ -36,7 +36,7 @@
 	QDEL_NULL(chamber_A)
 	QDEL_NULL(chamber_B)
 
-	..()
+	return ..()
 
 /obj/item/weapon/changeling_test/prepared/atom_init()
 	. = ..()
