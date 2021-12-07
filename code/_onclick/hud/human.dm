@@ -447,8 +447,7 @@
 	holomap_obj.plane = HUD_PLANE
 	holomap_obj.layer = HUD_LAYER
 	holomap_obj.color = ui_color
-	holomap_obj.mouse_opacity = 0
-	holomap_obj.alpha = 255
+	holomap_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
