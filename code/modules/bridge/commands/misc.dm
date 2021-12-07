@@ -12,7 +12,7 @@
 		return
 
 	var/client/target
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(C.ckey == ckey)
 			target = C
 			break

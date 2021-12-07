@@ -619,6 +619,27 @@
 			if(prob(30))
 				M.adjustToxLoss(2)
 
+/datum/reagent/consumable/lean
+	name = "Lean"
+	id = "lean"
+	description = "An opiod-based recreational drug beverage, made using cough syrup, soft drink and some sugar."
+	reagent_state = LIQUID
+	color = "#de55ed" // rgb: 222, 85, 237
+	custom_metabolism = FOOD_METABOLISM * 0.5
+	taste_message = "sweet druggy soda"
+	restrict_species = list(IPC, DIONA)
+	overdose = 20
+
+/datum/reagent/consumable/lean/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(5)
+	if(!M.stuttering)
+		M.stuttering = 1
+	if(volume >= overdose)
+		if(M.losebreath <= 3)
+			M.losebreath = max(0, M.losebreath + 3)
+			M.adjustOxyLoss(1)
+
 /*boozepwr chart
 1-2 = non-toxic alcohol
 3 = medium-toxic
@@ -1529,5 +1550,60 @@
 	description = "Mixture of refreshing lemonade and sweet rum."
 	reagent_state = LIQUID
 	color = "#c5f415" // rgb: 197, 244, 21
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/sangria
+	name = "Sangria"
+	id = "sangria"
+	description = "You feel the freshness and tranquility of this berry-wine drink. Drink up!"
+	reagent_state = LIQUID
+	color = "#9d40c1" // rgb: 157, 64, 93
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/strongmandrink
+	name = "Strongman's Drink"
+	id = "strongmandrink"
+	description = "Strength and life in one glass, what more can you want?"
+	reagent_state = LIQUID
+	color = "#f36bad" // rgb: 243, 107, 173
+	boozepwr = 3
+	taste_message = "health alcohol"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/consumable/ethanol/bluelagoone
+	name = "The Blue Lagoone"
+	id = "bluelagoone"
+	description = "Sea.. Adrenaline.. How these times are missing."
+	reagent_state = LIQUID
+	color = "#4272ae" // rgb: 66, 114, 174
+	boozepwr = 5
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/bloodykuds
+	name = "Bloody Kuds"
+	id = "bloodykuds"
+	description = "A madman's drink. Scared?"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 5
+	taste_message = "heavy alcohol. How tight!"
+
+/datum/reagent/consumable/ethanol/sexbeach
+	name = "Sex On The Beach"
+	id = "sexbeach"
+	description = "For those who miss beach parties!"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 3
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/mojito
+	name = "Mojito"
+	id = "mojito"
+	description = "Good old mojito, not an aging classic."
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
 	taste_message = "sweet alcohol"

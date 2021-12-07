@@ -5,7 +5,8 @@ SUBSYSTEM_DEF(garbage)
 	wait          = SS_WAIT_GARBAGE
 	display_order = SS_DISPLAY_GARBAGE
 
-	flags = SS_FIRE_IN_LOBBY | SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
@@ -327,8 +328,8 @@ SUBSYSTEM_DEF(garbage)
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
-			SSgarbage.can_fire = 1
-			SSgarbage.next_fire = world.time + world.tick_lag
+			SSgarbage.can_fire = TRUE
+			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
 		if(tgui_alert(usr, "Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", list("Yes", "No")) == "No")
@@ -336,7 +337,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
+	SSgarbage.can_fire = FALSE
 
 	if(usr && usr.client)
 		usr.client.running_find_references = type
@@ -363,8 +364,8 @@ SUBSYSTEM_DEF(garbage)
 	running_find_references = null
 
 	//restart the garbage collector
-	SSgarbage.can_fire = 1
-	SSgarbage.next_fire = world.time + world.tick_lag
+	SSgarbage.can_fire = TRUE
+	SSgarbage.update_nextfire(reset_time = TRUE)
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"

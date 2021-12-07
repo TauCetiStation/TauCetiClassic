@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
 /datum/supply_pack
 	var/name = "Crate"
@@ -1209,6 +1209,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/bodybags)
 	crate_name = "body bags crate"
 	group = "Medical / Science"
+	
+/datum/supply_pack/body_bags
+	name = "Stasis Bags Crate"
+	cost = 10000
+	contains = list(/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag)
+	crate_name = "stasis bags crate"
+	group = "Medical / Science"
 
 /datum/supply_pack/suspension_gen
 	name = "Suspension Field Generetor Crate"
@@ -1868,3 +1883,38 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_theatre
 	group = "Miscellaneous"
 
+//----------------------------------------------
+//-----------------XENO THREAT-------------------
+//----------------------------------------------
+/datum/supply_pack/xeno_laser
+	name = "Xeno liquidator"
+	contains = list(/obj/item/clothing/suit/space/globose/recycler,
+					/obj/item/clothing/head/helmet/space/globose/recycler,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/shield/buckler,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	cost = 10000
+	crate_name = "Xeno liquidator crate"
+	group = "xeno"	//there is no such category, so these crates will not be visible in the console
+	hidden = TRUE
+
+/datum/supply_pack/xeno_incendiary
+	name = "Xeno arsonist"
+	contains = list(/obj/item/clothing/head/helmet/space/rig/security,
+					/obj/item/clothing/suit/space/rig/security,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/weapon/shield/riot,
+					/obj/item/clothing/ears/earmuffs,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	cost = 10000
+	crate_name = "Xeno arsonist crate"
+	group = "xeno"
+	hidden = TRUE

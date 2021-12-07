@@ -61,10 +61,12 @@
 /obj/item/device/assembly/timer/process()
 	if(timing && (time > 0))
 		time--
+		updateUsrDialog()
 	if(timing && time <= 0)
 		timing = 0
 		timer_end()
 		time = 10
+		updateUsrDialog()
 	return
 
 
