@@ -50539,7 +50539,7 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -54809,12 +54809,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
-"bZF" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/engineering/atmos)
 "bZH" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -55431,7 +55425,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "ccf" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -58498,9 +58492,6 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
-"clw" = (
-/turf/simulated/wall,
-/area/station/engineering/break_room)
 "clx" = (
 /turf/simulated/wall,
 /area/station/engineering/break_room)
@@ -61742,10 +61733,10 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -65290,9 +65281,6 @@
 /area/station/engineering/break_room)
 "cCr" = (
 /turf/simulated/wall/r_wall,
-/area/station/engineering/singularity)
-"cCs" = (
-/turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "cCt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -69594,12 +69582,12 @@
 	},
 /area/station/civilian/chapel)
 "ead" = (
-/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/camera{
 	c_tag = "Engineering South-West";
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -71842,7 +71830,7 @@
 	},
 /area/station/engineering/chiefs_office)
 "gDb" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkyellow"
@@ -74125,7 +74113,7 @@
 	},
 /area/station/engineering/singularity)
 "iYL" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -80542,7 +80530,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -81418,14 +81406,6 @@
 /obj/machinery/shieldgen,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"ruT" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/engineering/singularity)
 "rvb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -112897,7 +112877,7 @@ gpc
 lcX
 qmd
 cCr
-ruT
+oxb
 aaa
 aah
 aaa
@@ -116199,14 +116179,14 @@ cat
 ckO
 clG
 byL
-clw
+clx
 keh
 cfm
-clw
+clx
 wow
 jFK
 chI
-clw
+clx
 bSP
 bSP
 crK
@@ -118037,7 +118017,7 @@ gpc
 mlh
 qLs
 cCr
-ruT
+oxb
 aah
 aaa
 aaa
@@ -120306,8 +120286,8 @@ cdA
 cLn
 geb
 bSV
-bZF
-bZF
+cdZ
+cdZ
 cKr
 bSV
 cMM
