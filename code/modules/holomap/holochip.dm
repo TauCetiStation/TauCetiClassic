@@ -151,8 +151,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 
 	if (href_list["frequency"])
 		var/new_frequency = (frequency + text2num(href_list["frequency"]))
-		if(new_frequency < 1200 || new_frequency > 1600)
-			new_frequency = sanitize_frequency(new_frequency)
+		if(new_frequency < 1200)
+			new_frequency = 1200
+		else if(new_frequency > 1600)
+			new_frequency = 1600
 		frequency = new_frequency
 
 	if(href_list["encryption"])
