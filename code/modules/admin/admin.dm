@@ -212,8 +212,8 @@ var/global/BSACooldown = 0
 #define PLAYER_INFO_TYPE_XENOS "xenonote"
 
 #define PLAYERINFOS(o) \
-	o(PLAYER_INFO_TYPE_ADMIN, list(R_LOG, R_BAN),       "Admin note"), \
-	o(PLAYER_INFO_TYPE_XENOS, list(R_LOG, R_WHITELIST), "Xeno note"), \
+	o(PLAYER_INFO_TYPE_ADMIN, list(R_LOG, R_BAN),               "Admin note"), \
+	o(PLAYER_INFO_TYPE_XENOS, list(R_LOG, R_WHITELIST | R_BAN), "Xeno note"), \
 
 #define RIGHTS(name, rights, _) name = rights
 var/global/list/player_info_type_rights = list(
