@@ -1245,7 +1245,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
+	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter", "holochip")
 
 /datum/technology/bluespace_shield
 	name = "Bluespace Shields"
