@@ -68120,9 +68120,7 @@
 /area/station/maintenance/engineering)
 "cMv" = (
 /obj/machinery/computer/arcade,
-/turf/simulated/floor/plating{
-	icon_state = "arcade_carpet"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cMx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -73702,12 +73700,6 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
-"iLG" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "arcade_carpet"
-	},
-/area/station/maintenance/engineering)
 "iMb" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -78460,7 +78452,7 @@
 	id_tag = "engineering_aux_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(13);
+	req_access = list(10,13);
 	req_one_access = list(11,24)
 	},
 /turf/simulated/floor/plating,
@@ -108124,7 +108116,7 @@ cGR
 cjQ
 cMl
 cMq
-iLG
+coV
 bIZ
 bmc
 bmc
