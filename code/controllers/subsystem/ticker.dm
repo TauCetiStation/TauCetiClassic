@@ -40,7 +40,6 @@ SUBSYSTEM_DEF(ticker)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
-	var/holomap_base = null //Background for holomap
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -64,8 +63,7 @@ SUBSYSTEM_DEF(ticker)
 	global.syndicate_code_response = generate_code_phrase()
 	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
 	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
-	default_holomap = image(generate_holo_map())
-	holomap_base = default_holomap
+	global.default_holomap = image(generate_holo_map())
 	generate_holochip_encryption()
 
 	..()

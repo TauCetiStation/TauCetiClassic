@@ -18,7 +18,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
 	holder = I
-	holomap_base = default_holomap
+	holomap_base = global.default_holomap
 
 /obj/item/holochip/Destroy()
 	STOP_PROCESSING(SSobj, src)
