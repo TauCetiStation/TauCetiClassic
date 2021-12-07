@@ -844,6 +844,8 @@
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
 
 /proc/start_cooldown(atom/movable/screen/button, time, datum/callback/callback)
+	if(!time)
+		return
 	var/atom/movable/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback

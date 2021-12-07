@@ -67,7 +67,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else
 		log_ooc("[name]: [msg]")
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue
@@ -110,8 +110,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
-/client/verb/looc()
-	var/msg = sanitize(input(src, null, "looc \"text\"") as text|null)
+/client/verb/looc(msg as text)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
@@ -173,7 +172,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 				display_name = "[holder.fakekey]/([key])"
 			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/track = ""
 			if(isobserver(C.mob))

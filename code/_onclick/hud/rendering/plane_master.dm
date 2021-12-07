@@ -115,3 +115,8 @@
 	name = "fullscreen alert plane"
 	plane = FULLSCREEN_PLANE
 	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/singularity
+	name = "singularity plane"
+	plane = SINGULARITY_PLANE
+	render_relay_plane = RENDER_PLANE_ABOVE_GAME

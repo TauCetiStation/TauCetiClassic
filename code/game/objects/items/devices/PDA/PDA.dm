@@ -1231,7 +1231,7 @@
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
