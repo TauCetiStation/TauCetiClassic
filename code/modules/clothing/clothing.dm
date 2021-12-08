@@ -357,6 +357,50 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
+	var/obj/item/holochip/holochip
+
+/obj/item/clothing/head/equipped(mob/user, slot)
+	if(holochip && slot == SLOT_HEAD)
+		holochip.add_action(user)
+	..()
+
+/obj/item/clothing/head/dropped(mob/user)
+	if(holochip)
+		holochip.remove_action(user)
+		holochip.deactivate_holomap()
+	..()
+
+/obj/item/clothing/head/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/holochip))
+		if(holochip)
+			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
+			return
+		user.drop_from_inventory(I, src)
+		holochip = I
+		holochip.holder = src
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && H.head == src)
+			holochip.add_action(user)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!holochip)
+			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
+			return
+		holochip.deactivate_holomap()
+		holochip.remove_action(user)
+		holochip.holder = null
+		if(!user.put_in_hands(holochip))
+			holochip.forceMove(get_turf(src))
+		holochip = null
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
+
+/obj/item/clothing/head/Destroy()
+	QDEL_NULL(holochip)
+	return ..()
+
+
 //Mask
 /obj/item/clothing/mask
 	name = "mask"
@@ -456,47 +500,6 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
-	var/obj/item/holochip/holochip
-
-/obj/item/clothing/head/helmet/space/equipped(mob/user, slot)
-	if(holochip && slot == SLOT_HEAD)
-		holochip.add_action(user)
-	..()
-
-/obj/item/clothing/head/helmet/space/dropped(mob/user)
-	if(holochip)
-		holochip.remove_action(user)
-		holochip.deactivate_holomap()
-	..()
-
-/obj/item/clothing/head/helmet/space/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/holochip))
-		if(holochip)
-			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
-			return
-		user.drop_from_inventory(I, src)
-		holochip = I
-		var/mob/living/carbon/human/H = user
-		if(istype(H) && H.head == src)
-			holochip.add_action(user)
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		if(!holochip)
-			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
-			return
-		holochip.deactivate_holomap()
-		holochip.remove_action(user)
-		holochip.holder = null
-		if(!user.put_in_hands(holochip))
-			holochip.forceMove(get_turf(src))
-		holochip = null
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
-
-/obj/item/clothing/head/helmet/space/Destroy()
-	QDEL_NULL(holochip)
-	return ..()
 
 /obj/item/clothing/suit/space
 	name = "space suit"
