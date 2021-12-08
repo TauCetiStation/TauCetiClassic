@@ -383,3 +383,6 @@
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
+
+/datum/faction/proc/mode_trigger(message,data)
+	return

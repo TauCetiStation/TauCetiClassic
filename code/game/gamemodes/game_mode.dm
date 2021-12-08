@@ -21,6 +21,11 @@
 	// List of faction-less roles currently in the gamemode
 	var/list/orphaned_roles = list()
 
+/datum/game_mode/proc/mode_trigger(faction,message,data)
+	for(var/datum/faction/F in factions)
+		if (faction == F.name || faction == "allfactions")
+			F.mode_trigger(message,data)
+
 /datum/game_mode/proc/announce()
 	return
 

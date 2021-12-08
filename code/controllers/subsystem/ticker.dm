@@ -576,3 +576,8 @@ SUBSYSTEM_DEF(ticker)
 
 /world/proc/is_round_preparing()
 	return (SSticker && SSticker.current_state == GAME_STATE_PREGAME)
+
+/datum/controller/subsystem/ticker/proc/gamemode_trigger(modename,faction,message,data=null)
+	if (modename != mode.name && modename != "anymode") // Ignore trigger if it's not for this gamemode and not waste time to compare messages
+		return
+	mode.mode_trigger(faction,message,data)
