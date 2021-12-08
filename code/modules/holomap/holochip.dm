@@ -42,17 +42,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
 	holomap_toggle_action.Grant(wearer)
+	holomap_toggle_action.UpdateButtonIcon()
 
 /obj/item/holochip/proc/remove_action(mob/living/carbon/human/wearer)
 	holomap_toggle_action.Remove(wearer)
-
-/obj/item/holochip/ui_action_click()
-	if(activator)
-		deactivate_holomap()
-		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
-		return
-	activate_holomap(usr)
-	to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
 
 /obj/item/holochip/process()
 	if(!activator || !activator.client || activator.stat == DEAD || activator.head != holder)

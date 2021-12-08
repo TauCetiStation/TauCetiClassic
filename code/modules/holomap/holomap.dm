@@ -11,6 +11,21 @@ var/global/list/deathsquad_transport_layer = list()
 /datum/action/toggle_holomap
 	name = "Toggle holomap"
 	check_flags = AB_CHECK_ALIVE
+	action_type = AB_INNATE
+
+/datum/action/toggle_holomap/Activate()
+	to_chat(owner, "<span class='notice'>You activate the holomap.</span>")
+	var/obj/item/holochip/target_holochip = target
+	target_holochip.activate_holomap(owner)
+	target_holochip = null
+	active = TRUE
+
+/datum/action/toggle_holomap/Deactivate()
+	var/obj/item/holochip/target_holochip = target
+	target_holochip.deactivate_holomap()
+	target_holochip = null
+	to_chat(owner, "<span class='notice'>You deactivate the holomap.</span>")
+	active = FALSE
 
 #define HOLOMAP_WALKABLE_TILE "#66666699"
 #define HOLOMAP_CONCRETE_TILE "#FFFFFFDD"
