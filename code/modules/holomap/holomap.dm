@@ -1,6 +1,6 @@
 var/global/list/holochips = list()
 var/global/image/default_holomap = null
-var/list/holomap_cache = list()
+var/global/list/holomap_cache = list()
 
 // Transport layers (frequency/encryption pairs) for predefined holochips
 

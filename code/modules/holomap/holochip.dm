@@ -107,11 +107,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		var/mob/living/carbon/human/H = HC.holder.loc
 		if(H.head != HC.holder)
 			continue
-		if(!(HC in holomap_cache) || !holomap_cache[HC])
+		if(!(HC in global.holomap_cache) || !global.holomap_cache[HC])
 			var/image/NI = image(HC.holder.icon, src , HC.holder.icon_state)
 			NI.transform /= 2
-			holomap_cache[HC] = NI
-		var/image/I = holomap_cache[HC]
+			global.holomap_cache[HC] = NI
+		var/image/I = global.holomap_cache[HC]
 		I.loc = activator.hud_used.holomap_obj
 		I.filters = null
 		if(H.stat == DEAD)
