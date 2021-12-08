@@ -41,7 +41,6 @@
 	var/datum/browser/popup = new(user, "hidden", "Syndicate Uplink", 450, 550, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/item/device/drone_uplink/Topic(href, href_list)
 	..()
@@ -226,7 +225,7 @@
 			var/obj/item/weapon/reagent_containers/dropper/robot/drone/P = I
 			P.reagents.clear_reagents()
 			P.reagents.add_reagent(reagent, 10)
-			P.filled = 1
+			P.filled = TRUE
 			P.icon_state = "[initial(P.icon_state)][P.filled]"
 			to_chat(D, "<span class='notice'>Your [P.name] was refilled.</span>")
 	return TRUE
@@ -287,9 +286,9 @@
 		D.loose_control()
 		D.key = M.key
 		return TRUE
-	else
-		to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
-		return FALSE
+
+	to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
+	return FALSE
 
 /datum/drone_upgrade/internal/extra_armor
 	name = "Armor upgrade"
