@@ -20,7 +20,7 @@
 	var/mob/living/silicon/robot/drone/D = user
 	var/datum/robot_component/actuator/A = D.get_component("actuator")
 	D.speed += speed_bonus
-	D.lying = TRUE //for the ability to pass through other mobs
+	D.pass_flags |= PASSMOB
 	A.active_usage *= POWER_USAGE_MULTIPLIER
 	var/old_overlay = D.eyes_overlay //If you want to add overlays to another effect, you will need to implement some kind of overlays stack.
 	D.eyes_overlay = "eyes-syndibot" //Otherwise, they will conflict and cause unexpected overlay changes.
@@ -37,7 +37,7 @@
 	D.update_icon()
 	A.active_usage /= POWER_USAGE_MULTIPLIER
 	D.speed -= speed_bonus
-	D.lying = FALSE
+	D.pass_flags ^= PASSMOB
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost/proc/melt(mob/living/silicon/robot/drone/D) //burn damage and sparks, caused by overheating
 	if(!D)
