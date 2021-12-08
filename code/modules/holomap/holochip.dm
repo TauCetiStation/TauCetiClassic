@@ -58,7 +58,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	holomap_base = default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
-	holomap_base.loc = activator.hud_used.holomap_obj
 	activator.hud_used.holomap_obj.add_overlay(holomap_base)
 	START_PROCESSING(SSobj, src)
 
@@ -164,5 +163,3 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		encryption = max(1, encryption)
 
 	updateUsrDialog()
-
-	return

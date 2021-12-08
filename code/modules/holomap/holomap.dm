@@ -57,16 +57,17 @@ var/global/list/vox_transport_layer = list()
 #define COLOR_HMAP_DEAD "#d3212d"
 #define COLOR_HMAP_INCAPACITATED "#ffef00"
 #define COLOR_HMAP_DEFAULT "#006e4e"
+#define HOLOMAP_MAGIC_NUMBER 16    // Offset for correct placement of markers on holomap.
 
 /proc/process_holomap_markers()
 	for(var/obj/item/holochip/HC in global.holochips)
 		var/turf/marker_location = get_turf(HC)
 		if(!is_station_level(marker_location.z))
 			continue
-		if(!ishuman(HC.holder.loc))
+		if(!iscarbon(HC.holder.loc))
 			continue
-		var/mob/living/carbon/human/H = HC.holder.loc
-		if(H.head != HC.holder)
+		var/mob/living/carbon/C = HC.holder.loc
+		if(C.head != HC.holder)
 			continue
 		if(!(HC in global.holomap_cache) || !global.holomap_cache[HC])
 			var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
@@ -74,9 +75,9 @@ var/global/list/vox_transport_layer = list()
 			global.holomap_cache[HC] = NI
 		var/image/I = global.holomap_cache[HC]
 		I.filters = null
-		if(H.stat == DEAD)
+		if(C.stat == DEAD)
 			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
-		else if(H.stat == UNCONSCIOUS || H.incapacitated())
+		else if(C.stat == UNCONSCIOUS || C.incapacitated())
 			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
 		else
 			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
@@ -95,8 +96,8 @@ var/global/list/vox_transport_layer = list()
 			if(!(shuttle in global.holomap_cache) || !global.holomap_cache[shuttle])
 				global.holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "syndishuttle")
 		var/image/I = global.holomap_cache[shuttle]
-		I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
-		I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
+		I.pixel_x = (marker_location.x - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
+		I.pixel_y = (marker_location.y - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
 		I.plane = HUD_PLANE
 		I.layer = HUD_LAYER
 
