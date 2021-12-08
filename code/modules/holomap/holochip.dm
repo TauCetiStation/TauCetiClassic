@@ -34,7 +34,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	holomap_base = null
 	QDEL_NULL(self_marker)
 	QDEL_LIST(holomap_images)
-	QDEL_NULL(self_marker)
 	QDEL_NULL(holomap_toggle_action)
 	holder = null
 	activator = null
