@@ -50,7 +50,7 @@
 		if(upgrades && upgrades.len >= item)
 			var/datum/drone_upgrade/I = upgrades[item]
 			if(I)
-				I.install(usr)
+				I.try_install(usr)
 				interact(usr)
 
 //==========Datums==========
@@ -81,18 +81,22 @@
 
 	return TRUE
 
-
-/datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
+/datum/drone_upgrade/proc/try_install(mob/living/silicon/robot/drone/syndi/D)
 	if(!can_install(D))
-		return FALSE
+		return
 
+	if(!install(D)) // something went wrong, do not withdraw
+		return
+
+	D.uplink.points -= cost
+	installed = TRUE
+
+//If something goes wrong during the installation and you can't complete it, just return FALSE. Points will not be decreased.
+/datum/drone_upgrade/proc/install(mob/living/silicon/robot/drone/syndi/D)
 	if(!items.len)
 		return FALSE
 	for(var/item_type in items)
 		D.module.modules += new item_type(D.module)
-
-	D.uplink.points -= cost
-	installed = TRUE
 	return TRUE
 
 //========DEVICE AND TOOLS========
@@ -176,14 +180,9 @@
 	cost = 2
 
 /datum/drone_upgrade/optics/med_hud/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-	
 	var/datum/atom_hud/sensor = global.huds[DATA_HUD_MEDICAL]
 	sensor.add_hud_to(D)
 	D.sensor_mode = TRUE
-
-	D.uplink.points -= cost
 	return TRUE
 
 //========CHEMICALS========
@@ -222,9 +221,6 @@
 	return FALSE
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	for(var/obj/item/I in D.module.modules)
 		if(istype(I, /obj/item/weapon/reagent_containers/dropper/robot/drone))
 			var/obj/item/weapon/reagent_containers/dropper/robot/drone/P = I
@@ -233,8 +229,6 @@
 			P.filled = 1
 			P.icon_state = "[initial(P.icon_state)][P.filled]"
 			to_chat(D, "<span class='notice'>Your [P.name] was refilled.</span>")
-	
-	D.uplink.points -= cost
 	return TRUE
 
 /datum/drone_upgrade/chems_poisons/dropper_refill/chefspecial
@@ -271,16 +265,12 @@
 	cost = 2
 
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
 	var/list/drone_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate drone. Would you like to play as one?", ROLE_OPERATIVE)
 	if(drone_candicates.len)
 		var/mob/M = pick(drone_candicates)
 		D.loose_control()
 		D.key = M.key
-		D.uplink.points -= cost
 		return TRUE
 	else
 		to_chat(D, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later.</span>")
@@ -292,12 +282,7 @@
 	cost = 5
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	D.maxHealth += 20
-	installed = TRUE
-	D.uplink.points -= cost
 	return TRUE
 
 /datum/drone_upgrade/internal/speed_boost
@@ -307,12 +292,7 @@
 	cost = 4
 
 /datum/drone_upgrade/internal/speed_boost/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/boost())
-	installed = TRUE
-	D.uplink.points -= cost
 	return TRUE
 
 /datum/drone_upgrade/internal/smoke
@@ -322,19 +302,13 @@
 	single_use = FALSE
 
 /datum/drone_upgrade/internal/smoke/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	if(installed)
 		for(var/obj/effect/proc_holder/spell/S in D.spell_list)
 			if(istype(S, /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke))
 				S.charge_counter += 3
-				D.uplink.points -= cost
 				return TRUE
 
 	D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke())
-	installed = TRUE
-	D.uplink.points -= cost
 	return TRUE
 
 /datum/drone_upgrade/internal/corporate_disguise
@@ -343,14 +317,9 @@
 	cost = 5
 
 /datum/drone_upgrade/internal/corporate_disguise/install(mob/living/silicon/robot/drone/syndi/D)
-	if(!can_install(D))
-		return FALSE
-
 	D.eyes_overlay = "eyes-repairbot"
 	D.name = "maintenance drone " + copytext(D.name, -5)
 	D.flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: \
 		'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	D.holder_type = /obj/item/weapon/holder/syndi_drone/disguised
-	D.uplink.points -= cost
-	installed = TRUE
 	return TRUE
