@@ -9,6 +9,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	var/mob/living/carbon/human/activator = null
 	var/obj/item/holder = null
 	var/list/holomap_images = list()
+	var/datum/action/toggle_holomap/holomap_toggle_action = null
 
 	var/image/holomap_base
 	var/image/self_marker
@@ -23,6 +24,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
 	holder = I
+	holomap_toggle_action = new(src)
 	holomap_base = global.default_holomap
 	instantiate_self_marker()
 
@@ -33,19 +35,16 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	QDEL_NULL(self_marker)
 	QDEL_LIST(holomap_images)
 	QDEL_NULL(self_marker)
+	QDEL_NULL(holomap_toggle_action)
 	holder = null
 	activator = null
 	return ..()
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
-	var/datum/action/toggle_holomap/action = new(src)
-	action.Grant(wearer)
+	holomap_toggle_action.Grant(wearer)
 
 /obj/item/holochip/proc/remove_action(mob/living/carbon/human/wearer)
-	for(var/datum/action/toggle_holomap/action in wearer.actions)
-		if(!istype(action))
-			continue
-		action.Remove(wearer)
+	holomap_toggle_action.Remove(wearer)
 
 /obj/item/holochip/ui_action_click()
 	if(activator)
@@ -76,8 +75,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	if(!activator)
 		return
 	activator.hud_used.holomap_obj.cut_overlay(holomap_base)
-	activator.hud_used.holomap_obj.cut_overlays(holomap_images)
-	QDEL_LIST(holomap_images)
+	if(length(holomap_images) && activator.client)
+		activator.client.images -= holomap_images
+		QDEL_LIST(holomap_images)
 	holomap_base = null
 	activator = null
 	STOP_PROCESSING(SSobj, src)
@@ -193,7 +193,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		encryption = min(100, encryption)
 		encryption = max(1, encryption)
 
-	if(usr)
-		attack_self(usr)
+	updateUsrDialog()
 
 	return
