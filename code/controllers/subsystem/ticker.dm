@@ -107,6 +107,8 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
+			process_holomap_markers()
+
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED

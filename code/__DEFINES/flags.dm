@@ -150,7 +150,3 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HOLOMAP_NUCLEAR_COLOR "#e30000"
 #define HOLOMAP_VOX_COLOR "#3bcccc"
 #define HOLOMAP_ERT_COLOR "#0b74b4"
-#define HOLOMAP_FILTER_DEATHSQUAD 1
-#define HOLOMAP_FILTER_NUCLEAR 2
-#define HOLOMAP_FILTER_VOX 4
-#define HOLOMAP_FILTER_ERT 8

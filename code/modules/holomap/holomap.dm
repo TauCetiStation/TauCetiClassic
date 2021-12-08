@@ -1,12 +1,14 @@
 var/global/list/holochips = list()
 var/global/image/default_holomap = null
 var/global/list/holomap_cache = list()
+var/global/list/holomap_landmarks = list()    //List for shuttles and other stuff that might be useful
 
 // Transport layers (frequency/encryption pairs) for predefined holochips
 
 var/global/list/nuclear_transport_layer = list()
 var/global/list/ert_transport_layer = list()
 var/global/list/deathsquad_transport_layer = list()
+var/global/list/vox_transport_layer = list()
 
 /datum/action/toggle_holomap
 	name = "Toggle holomap"
@@ -50,3 +52,54 @@ var/global/list/deathsquad_transport_layer = list()
 	nuclear_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
 	ert_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
 	deathsquad_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
+	vox_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
+
+#define COLOR_HMAP_DEAD "#d3212d"
+#define COLOR_HMAP_INCAPACITATED "#ffef00"
+#define COLOR_HMAP_DEFAULT "#006e4e"
+
+/proc/process_holomap_markers()
+	for(var/obj/item/holochip/HC in global.holochips)
+		var/turf/marker_location = get_turf(HC)
+		if(!is_station_level(marker_location.z))
+			continue
+		if(!ishuman(HC.holder.loc))
+			continue
+		var/mob/living/carbon/human/H = HC.holder.loc
+		if(H.head != HC.holder)
+			continue
+		if(!(HC in global.holomap_cache) || !global.holomap_cache[HC])
+			var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
+			NI.transform /= 2
+			global.holomap_cache[HC] = NI
+		var/image/I = global.holomap_cache[HC]
+		I.filters = null
+		if(H.stat == DEAD)
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
+		else if(H.stat == UNCONSCIOUS || H.incapacitated())
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
+		else
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
+		I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
+		I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
+		I.plane = HUD_PLANE
+		I.layer = HUD_LAYER
+	for(var/obj/machinery/computer/shuttle in holomap_landmarks)
+		var/turf/marker_location = get_turf(shuttle)
+		if(!is_station_level(marker_location.z))
+			continue
+		if(istype(shuttle, /obj/machinery/computer/syndicate_station))
+			if(!(shuttle in global.holomap_cache) || !global.holomap_cache[shuttle])
+				global.holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "skipjack")
+		else if(istype(shuttle, /obj/machinery/computer/vox_stealth))
+			if(!(shuttle in global.holomap_cache) || !global.holomap_cache[shuttle])
+				global.holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "syndishuttle")
+		var/image/I = global.holomap_cache[shuttle]
+		I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
+		I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
+		I.plane = HUD_PLANE
+		I.layer = HUD_LAYER
+
+#undef COLOR_HMAP_DEAD
+#undef COLOR_HMAP_INCAPACITATED
+#undef COLOR_HMAP_DEFAULT

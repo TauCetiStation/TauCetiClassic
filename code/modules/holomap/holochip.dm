@@ -75,10 +75,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	activator = null
 	STOP_PROCESSING(SSobj, src)
 
-#define COLOR_HMAP_DEAD "#d3212d"
-#define COLOR_HMAP_INCAPACITATED "#ffef00"
-#define COLOR_HMAP_DEFAULT "#006e4e"
-
 /obj/item/holochip/proc/handle_markers()
 	if(!activator || !activator.client)
 		deactivate_holomap()
@@ -89,41 +85,24 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	for(var/obj/item/holochip/HC in holochips)
 		if(HC.frequency != frequency && HC.encryption != encryption)
 			continue
-		var/turf/marker_location = get_turf(HC)
-		if(!is_station_level(marker_location.z))
-			continue
-		if(!ishuman(HC.holder.loc))
-			continue
 		if(HC == src)
 			handle_own_marker()
 			continue
-		var/mob/living/carbon/human/H = HC.holder.loc
-		if(H.head != HC.holder)
+		if(!global.holomap_cache[HC])
 			continue
-		if(!(HC in global.holomap_cache) || !global.holomap_cache[HC])
-			var/image/NI = image(HC.holder.icon, src , HC.holder.icon_state)
-			NI.transform /= 2
-			global.holomap_cache[HC] = NI
 		var/image/I = global.holomap_cache[HC]
 		I.loc = activator.hud_used.holomap_obj
-		I.filters = null
-		if(H.stat == DEAD)
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
-		else if(H.stat == UNCONSCIOUS || H.incapacitated())
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
-		else
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
-		I.loc = activator.hud_used.holomap_obj
-		I.pixel_x = (marker_location.x - magic_number_x) * PIXEL_MULTIPLIER
-		I.pixel_y = (marker_location.y - magic_number_y) * PIXEL_MULTIPLIER
-		I.plane = HUD_PLANE
-		I.layer = HUD_LAYER
 		holomap_images += I
 		animate(I ,alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 		animate(I ,alpha = 0, time = 5, easing = SINE_EASING)
 		animate(I ,alpha = 255, time = 2, easing = SINE_EASING)
 
+	handle_markers_extra()
+
 	activator.client.images |= holomap_images
+
+/obj/item/holochip/proc/handle_markers_extra()    // For shuttle markers and other stuff
+	return
 
 /obj/item/holochip/proc/handle_own_marker()
 	if(!self_marker)   // Dunno why but it happens in runtime

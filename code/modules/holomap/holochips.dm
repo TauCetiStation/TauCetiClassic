@@ -20,6 +20,14 @@
 	frequency = nuclear_transport_layer["frequency"]
 	encryption = nuclear_transport_layer["encryption"]
 
+/obj/item/holochip/nuclear/handle_markers_extra()
+	for(var/obj/machinery/computer/syndicate_station/shuttle in holomap_landmarks)
+		if(!global.holomap_cache[shuttle])
+			continue
+		var/image/I = global.holomap_cache[shuttle]
+		I.loc = activator.hud_used.holomap_obj
+		holomap_images += I
+
 /obj/item/holochip/ert
 	desc = "A small holomap module, attached to helmets. There is a NT logo on it"
 	icon_state = "holochip_nt"
@@ -29,3 +37,19 @@
 	. = ..()
 	frequency = ert_transport_layer["frequency"]
 	encryption = ert_transport_layer["encryption"]
+
+/obj/item/holochip/vox
+	color_filter = HOLOMAP_VOX_COLOR
+
+/obj/item/holochip/vox/atom_init(obj/item/I)
+	. = ..()
+	frequency = vox_transport_layer["frequency"]
+	encryption = vox_transport_layer["encryption"]
+
+/obj/item/holochip/vox/handle_markers_extra()
+	for(var/obj/machinery/computer/vox_stealth/shuttle in holomap_landmarks)
+		if(!global.holomap_cache[shuttle])
+			continue
+		var/image/I = global.holomap_cache[shuttle]
+		I.loc = activator.hud_used.holomap_obj
+		holomap_images += I
