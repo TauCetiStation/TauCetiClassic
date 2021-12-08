@@ -474,8 +474,7 @@ BLIND     // can't see anything
 		if(holochip)
 			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
 			return
-		user.drop_item(I)
-		I.forceMove(src)
+		user.drop_from_inventory(I, src)
 		holochip = I
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && H.head == src)
