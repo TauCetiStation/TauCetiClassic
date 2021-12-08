@@ -11,20 +11,28 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	var/list/holomap_images = list()
 
 	var/image/holomap_base
+	var/image/self_marker
 
 	var/frequency		//Frequency for transmitting data
 	var/encryption 		//Encryption for double security
+
+	var/magic_number_x = 16    // Magic numbers for placing holomarker on the holomap
+	var/magic_number_y = 16
+	var/magic_number_self = 6
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
 	holder = I
 	holomap_base = global.default_holomap
+	instantiate_self_marker()
 
 /obj/item/holochip/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	deactivate_holomap()
-	QDEL_NULL(holomap_base)
+	holomap_base = null
+	QDEL_NULL(self_marker)
 	QDEL_LIST(holomap_images)
+	QDEL_NULL(self_marker)
 	holder = null
 	activator = null
 	holochips -= src
@@ -62,17 +70,16 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	if(color_filter)
 		holomap_base.color = color_filter
 	holomap_base.loc = activator.hud_used.holomap_obj
-	activator.hud_used.holomap_obj.overlays += holomap_base
+	activator.hud_used.holomap_obj.add_overlay(holomap_base)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
 	if(!activator)
 		return
-	activator.hud_used.holomap_obj.overlays.Cut()
-	if(length(holomap_images) && activator.client)
-		activator.client.images -= holomap_images
-		QDEL_LIST(holomap_images)
-	qdel(holomap_base)
+	activator.hud_used.holomap_obj.cut_overlay(holomap_base)
+	activator.hud_used.holomap_obj.cut_overlays(holomap_images)
+	QDEL_LIST(holomap_images)
+	holomap_base = null
 	activator = null
 	STOP_PROCESSING(SSobj, src)
 
@@ -95,32 +102,56 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 			continue
 		if(!ishuman(HC.holder.loc))
 			continue
-		var/image/I = image('icons/holomaps/holomap_markers.dmi', "you")
-		if(HC != src)
-			I =	image(HC.holder.icon, src , HC.holder.icon_state)
-			I.transform /= 2
-			var/mob/living/carbon/human/H = HC.holder.loc
-			if(H.head != HC.holder)
-				continue
-			if(H.stat == DEAD)
-				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
-			else if(H.stat == UNCONSCIOUS || H.incapacitated())
-				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
-			else
-				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
+		if(HC == src)
+			handle_own_marker()
+			continue
+		var/mob/living/carbon/human/H = HC.holder.loc
+		if(H.head != HC.holder)
+			continue
+		if(!(HC in holomap_cache) || !holomap_cache[HC])
+			var/image/NI = image(HC.holder.icon, src , HC.holder.icon_state)
+			NI.transform /= 2
+			holomap_cache[HC] = NI
+		var/image/I = holomap_cache[HC]
 		I.loc = activator.hud_used.holomap_obj
-		I.pixel_x = (marker_location.x - 6) * PIXEL_MULTIPLIER
-		I.pixel_y = (marker_location.y - 6) * PIXEL_MULTIPLIER
-		I.plane = ABOVE_HUD_PLANE
-		I.layer = ABOVE_HUD_LAYER
+		I.filters = null
+		if(H.stat == DEAD)
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
+		else if(H.stat == UNCONSCIOUS || H.incapacitated())
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
+		else
+			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
+		I.loc = activator.hud_used.holomap_obj
+		I.pixel_x = (marker_location.x - magic_number_x) * PIXEL_MULTIPLIER
+		I.pixel_y = (marker_location.y - magic_number_y) * PIXEL_MULTIPLIER
+		I.plane = HUD_PLANE
+		I.layer = HUD_LAYER
 		holomap_images += I
 		animate(I ,alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 		animate(I ,alpha = 0, time = 5, easing = SINE_EASING)
 		animate(I ,alpha = 255, time = 2, easing = SINE_EASING)
-	activator.client.images += holomap_images
+
+	activator.client.images |= holomap_images
+
+/obj/item/holochip/proc/handle_own_marker()
+	if(!self_marker)   // Dunno why but it happens in runtime
+		instantiate_self_marker()
+	self_marker.loc = activator.hud_used.holomap_obj
+	var/turf/src_turf = get_turf(src)
+	self_marker.pixel_x = (src_turf.x - magic_number_self) * PIXEL_MULTIPLIER
+	self_marker.pixel_y = (src_turf.y - magic_number_self) * PIXEL_MULTIPLIER
+	animate(self_marker, alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
+	animate(self_marker, alpha = 0, time = 5, easing = SINE_EASING)
+	animate(self_marker, alpha = 255, time = 2, easing = SINE_EASING)
+	holomap_images += self_marker
+
+/obj/item/holochip/proc/instantiate_self_marker()
+	self_marker = image('icons/holomaps/holomap_markers.dmi', "you")
+	self_marker.plane = ABOVE_HUD_PLANE
+	self_marker.layer = ABOVE_HUD_LAYER
 
 /obj/item/holochip/attack_self(mob/user)
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	var/dat = {"<TT>
 				<B>Transport layer</B> for holochip:<BR>
