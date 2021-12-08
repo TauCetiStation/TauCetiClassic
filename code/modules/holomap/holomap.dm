@@ -10,7 +10,7 @@ var/global/list/deathsquad_transport_layer = list()
 
 /datum/action/toggle_holomap
 	name = "Toggle holomap"
-	//check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_ALIVE
 
 #define HOLOMAP_WALKABLE_TILE "#66666699"
 #define HOLOMAP_CONCRETE_TILE "#FFFFFFDD"
