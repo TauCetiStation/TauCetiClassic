@@ -28,7 +28,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	instantiate_self_marker()
 
 /obj/item/holochip/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSholomaps, src)
 	deactivate_holomap()
 	holomap_base = null
 	QDEL_NULL(self_marker)
@@ -59,7 +59,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	if(color_filter)
 		holomap_base.color = color_filter
 	activator.hud_used.holomap_obj.add_overlay(holomap_base)
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
 	if(!activator)
@@ -70,7 +70,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		QDEL_LIST(holomap_images)
 	holomap_base = null
 	activator = null
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/handle_markers()
 	if(!activator || !activator.client)

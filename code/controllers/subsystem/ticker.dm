@@ -63,9 +63,6 @@ SUBSYSTEM_DEF(ticker)
 	global.syndicate_code_response = generate_code_phrase()
 	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
 	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
-	global.default_holomap = image(generate_holo_map())
-	generate_holochip_encryption()
-
 	..()
 
 /datum/controller/subsystem/ticker/fire()
@@ -106,8 +103,6 @@ SUBSYSTEM_DEF(ticker)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
-
-			process_holomap_markers()
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
 			if(!explosion_in_progress && mode_finished)
