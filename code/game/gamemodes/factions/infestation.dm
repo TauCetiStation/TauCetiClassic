@@ -78,7 +78,7 @@
 	for(var/list_key in alien_list)
 		if(list_key == ALIEN_FACEHUGGER)
 			continue
-		for(var/mob/living/carbon/xenomorph/A in alien_list[list_key])
+		for(var/mob/living/carbon/xenomorph/A as anything in alien_list[list_key])
 			var/turf/xeno_loc = get_turf(A)
 			if(!xeno_loc)
 				continue
@@ -113,7 +113,7 @@
 
 /datum/faction/infestation/proc/check_crew()
 	var/total_human = 0
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/turf/human_loc = get_turf(H)
 		if(!human_loc || !is_station_level(human_loc.z))
 			continue

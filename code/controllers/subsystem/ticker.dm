@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(ticker)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
-					for(var/client/C in clients)
+					for(var/client/C as anything in clients)
 						C.log_client_ingame_age_to_db()
 					world.save_last_mode(SSticker.mode.name)
 
@@ -267,7 +267,7 @@ SUBSYSTEM_DEF(ticker)
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
-	for(var/mob/M in player_list)
+	for(var/mob/M as anything in player_list)
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	if(length(SSholiday.holidays))
@@ -282,7 +282,7 @@ SUBSYSTEM_DEF(ticker)
 
 		SSevents.start_roundstart_event()
 
-		for(var/mob/dead/new_player/N in new_player_list)
+		for(var/mob/dead/new_player/N as anything in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff
@@ -297,7 +297,7 @@ SUBSYSTEM_DEF(ticker)
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/show_blurbs()
-	for(var/datum/mind/M in SSticker.minds)
+	for(var/datum/mind/M as anything in SSticker.minds)
 		show_location_blurb(M.current.client)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
@@ -312,7 +312,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode && !override)
 		override = mode.name
 	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
-	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+	for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
 		if(isliving(M))
@@ -328,7 +328,7 @@ SUBSYSTEM_DEF(ticker)
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
 
-			for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!
 					var/turf/T = get_turf(M)
 					if(T && is_station_level(T.z))
@@ -353,7 +353,7 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
-	for(var/mob/M in mob_list) //search any goodest
+	for(var/mob/M as anything in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	if(explosion)
 		flick(explosion,cinematic)
@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.client)
 			M.client.screen -= cinematic
 		if(isliving(M))
@@ -402,7 +402,7 @@ SUBSYSTEM_DEF(ticker)
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
-		for(var/mob/M in player_list)
+		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
 
@@ -417,7 +417,7 @@ SUBSYSTEM_DEF(ticker)
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
 		ai_completions += "<div class='Section'>"
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)
@@ -432,7 +432,7 @@ SUBSYSTEM_DEF(ticker)
 
 			if (aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
-				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				for(var/mob/living/silicon/robot/robo as anything in aiPlayer.connected_robots)
 					var/robokey = robo.mind ? robo.mind.key : robo.key
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [robokey]), "]"
 				ai_completions += "[robolist]"
@@ -480,7 +480,7 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player as anything in mob_list)
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -523,8 +523,7 @@ SUBSYSTEM_DEF(ticker)
 	// Add AntagHUD to everyone, see who was really evil the whole time!
 	for(var/hud in get_all_antag_huds())
 		var/datum/atom_hud/antag/H = hud
-		for(var/m in global.player_list)
-			var/mob/M = m
+		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
 	teleport_players_to_eorg_area()

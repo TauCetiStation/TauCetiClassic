@@ -24,6 +24,7 @@
 	var/list/products	= list() // For each, use the following pattern:
 	var/list/contraband	= list() // list(/type/path = amount,/type/path2 = amount2)
 	var/list/premium 	= list() // No specified amount = only one in stock
+	var/list/syndie	= list()
 	var/list/prices     = list() // Prices for each item, list(/type/path = price), items not in the list don't have a price.
 
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
@@ -31,6 +32,7 @@
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
+	var/list/emag_records = list()
 	var/list/slogan_list = list()
 	var/list/small_ads = list() // small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/vend_reply //Thank you for shopping!
@@ -72,6 +74,7 @@
 	 //Add hidden inventory
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
+	build_inventory(syndie, 0, 0, 1)
 	power_change()
 	update_wires_check()
 
@@ -107,7 +110,7 @@
 
 	return
 
-/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -124,6 +127,8 @@
 			hidden_records += R
 		else if(req_coin)
 			coin_records += R
+		else if(req_emag)
+			emag_records += R
 		else
 			product_records += R
 
@@ -250,11 +255,11 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You short out the product lock on [src]")
+	to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
 	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
-	var/list/all_products = product_records + hidden_records + coin_records
+	var/list/all_products = product_records + hidden_records + coin_records + emag_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
 			var/safety = 0 //to avoid infinite loop
@@ -373,6 +378,8 @@
 			dat += print_recors(hidden_records)
 		if(coin)
 			dat += print_recors(coin_records)
+		if(emagged)
+			dat += print_recors(emag_records)
 		dat += "</table>"
 	dat += "</div>"
 
