@@ -17,8 +17,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	var/frequency		//Frequency for transmitting data
 	var/encryption 		//Encryption for double security
 
-	var/magic_number_x = 16    // Magic numbers for placing holomarker on the holomap
-	var/magic_number_y = 16
+	// Magic numbers for placing holomarker on the holomap
 	var/magic_number_self = 6
 
 /obj/item/holochip/atom_init(obj/item/I)
