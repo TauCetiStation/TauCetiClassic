@@ -372,6 +372,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/holochip))
+		if(I.flags & ABSTRACT)
+			return    //You can't insert holochip in abstract item.
 		if(holochip)
 			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
 			return
