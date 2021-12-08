@@ -142,8 +142,8 @@ window "mainwindow"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
-		macro = "default"
+		icon = 'icons\\ss13_64_xmas.png'
+		macro = "macro"
 		menu = "menu"
 		on-size = "onresize"
 	elem "asset_cache_browser"
