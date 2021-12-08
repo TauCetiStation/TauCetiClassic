@@ -332,6 +332,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = 0
+	var/on = FALSE
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -340,6 +341,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	update_mode_stats()
+
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -390,14 +393,22 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
-
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
+	if(!on)
+		on = TRUE
+		to_chat(user, "<span class='notice'>You turned on the [src] in [mode ? "standard" : "safe"] mode. Use again to switch the mode.</span>")
+		return
+
 	mode = !mode
 
 	if(mode)
-		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now standard mode. Chance to loose some precious ore, faster digging speed.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now safe mode. No ore loss, slow digging speed.</span>")
+	update_mode_stats()
+
+/obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
+	toolspeed = mode ? initial(toolspeed) : (initial(toolspeed) * 3)
 
 
 /obj/item/weapon/pickaxe/drill/jackhammer
@@ -411,6 +422,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
+
+/obj/item/weapon/pickaxe/drill/jackhammer/rig
+	on = TRUE
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"

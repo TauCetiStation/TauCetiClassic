@@ -69,7 +69,7 @@
 	else if(from_recipe.one_per_turf && (locate(from_recipe.result_type) in here))
 		. = FALSE
 		to_chat(M, "<span class='warning'> There is another [from_recipe.title] here!</span>")
-	else if(!istype(here, /turf/simulated/floor))
+	else if(!is_type_in_list(here, from_recipe.floor_path))
 		. = FALSE
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
 	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.

@@ -789,12 +789,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
+					if(locate(/obj/structure/flora) in B.contents) // cleaning trees/bushes at LZ
+						for(var/obj/structure/flora/O in B.contents)
+							qdel(O)
 
 					var/turf/X = T.MoveTurf(B)
 
-					X.set_dir(old_dir1)
-					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+					if(!is_type_in_list(X, list(/turf/space, /turf/simulated/snow)))
+						X.dir = old_dir1
+						X.icon_state = old_icon_state1
+						X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
 					var/turf/simulated/ST = T
 					if(istype(ST) && ST.zone)
@@ -819,7 +823,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 						// Find a new turf to take on the property of
 						var/turf/nextturf = get_step(corner, direction)
-						if(!nextturf || !istype(nextturf, /turf/space))
+						if(!nextturf || !is_type_in_list(nextturf, list(/turf/space, /turf/simulated/snow)))
 							nextturf = get_step(corner, turn(direction, 180))
 
 
@@ -943,7 +947,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon1 = T.icon
 
 					if(platingRequired)
-						if(istype(B, /turf/space))
+						if(is_type_in_list(B, list(/turf/space, /turf/simulated/snow)))
 							continue moving
 
 					var/turf/X = new T.type(B)

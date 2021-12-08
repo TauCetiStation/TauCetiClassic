@@ -572,18 +572,18 @@
 	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
-	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
+	if( (breath.temperature < species.breath_cold_level_3 || breath.temperature > species.heat_level_1))
 	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
 
 		if(status_flags & GODMODE)
 			return 1
 
 		switch(breath.temperature)
-			if(-INFINITY to species.cold_level_3)
+			if(-INFINITY to species.breath_cold_level_3)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_3 to species.cold_level_2)
+			if(species.breath_cold_level_3 to species.breath_cold_level_2)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_2 to species.cold_level_1)
+			if(species.breath_cold_level_2 to species.breath_cold_level_1)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
 				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")

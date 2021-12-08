@@ -291,6 +291,8 @@ SUBSYSTEM_DEF(air)
 	map_init_levels = world.maxz // we simply set current max Z level (later on this value will be increased by maploading process).
 
 	for(var/turf/simulated/T in turfs_to_init)
+		if(T.air_unsim)
+			continue
 		T.update_air_properties()
 		CHECK_TICK
 
@@ -378,7 +380,7 @@ SUBSYSTEM_DEF(air)
 		return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = !istype(B)
+	var/space = !istype(B) || B.air_unsim
 
 	if(!space)
 		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone, B.zone) || times_fired == 0)))

@@ -415,12 +415,17 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
-	set_light(1.5)
+	if(!is_station_level(z))
+		set_light(1.5)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()
-	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-	I.plane = PLANE_SPACE
+	var/image/I
+	if(is_station_level(z))
+		I = image('icons/turf/snow2.dmi', "snow0", layer=TURF_LAYER)
+	else
+		I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+		I.plane = PLANE_SPACE
 	underlays += I
 
 	var/dirs = 0

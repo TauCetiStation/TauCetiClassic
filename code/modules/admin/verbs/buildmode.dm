@@ -197,7 +197,7 @@
 	switch(buildmode)
 		if(1)
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
-				if(istype(object,/turf/space))
+				if(is_type_in_list(object, list(/turf/space, /turf/simulated/snow)))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
 					return
@@ -216,7 +216,7 @@
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ChangeTurf(/turf/space)
+					T.ChangeTurf(T.basetype)
 					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object

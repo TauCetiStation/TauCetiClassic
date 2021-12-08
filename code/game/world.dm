@@ -1,10 +1,13 @@
 var/global/round_id = 0
 var/global/base_commit_sha = 0
 
+var/it_is_a_snow_day = FALSE
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
 #endif
+
+	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"

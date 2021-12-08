@@ -137,6 +137,7 @@ var/global/list/image/fluidtrack_cache=list()
 			track.overlay=null
 		var/image/I = image(icon, icon_state=state, dir=num2dir(truedir))
 		I.color = track.basedatum.color
+		I.alpha = track.basedatum.alpha
 
 		track.fresh=0
 		track.overlay=I

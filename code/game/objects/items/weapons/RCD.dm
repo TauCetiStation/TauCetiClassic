@@ -94,12 +94,12 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(is_type_in_list(target, list(/turf/space, /turf/simulated/snow)))
+				var/turf/T = target
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					S.ChangeTurf(/turf/simulated/floor/plating/airless)
+					T.ChangeTurf(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 

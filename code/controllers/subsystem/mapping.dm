@@ -47,6 +47,11 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 	// Space structures
 	spawn_space_structures()
+
+
+	if(!snow_map_noise)
+		snow_map_noise = new
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
