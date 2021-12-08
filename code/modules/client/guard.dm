@@ -20,6 +20,10 @@
 	var/velocity_console = FALSE
 	var/velocity_console_dock = FALSE
 
+	var/stored_href = null
+	var/href_abuse = FALSE
+	var/local_time = null
+
 /datum/guard/New(client/C)
 	holder = C
 
@@ -31,6 +35,9 @@
 /datum/guard/proc/trigger_init()
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
+
+		if(!stored_href)
+			load_browser_checks()
 
 		if(!tests_processed)
 			do_tests()
@@ -63,6 +70,30 @@
 		load_geoip()
 
 	do_tests()
+
+/datum/guard/proc/load_browser_checks()
+	var/html = {"
+		<script>
+var date = new Date();
+var href = "byond://?src=\ref[src];time=" + date.getHours();
+window.location = href;
+		</script>
+	"}
+	holder << browse(html, "window=tauceti")
+
+/datum/guard/Topic(href, href_list)
+	if(stored_href)
+		href_abuse = TRUE
+		return
+
+	stored_href = href
+
+	var/new_local_time = text2num(href_list["time"])
+	if(!isnum(new_local_time))
+		href_abuse = TRUE
+		return
+
+	local_time = new_local_time
 
 //todo: pending tests
 /datum/guard/proc/do_tests()
@@ -127,24 +158,6 @@
 
 		total_alert_weight += cookie_weight
 
-	/* ru-specific, not sure about it. 513/post-IE should be removed */
-	/*
-	if(length(config.guard_whitelisted_country_codes) && chat_processed)
-		var/charset_weight = 0
-		if(!(geoip_data["countryCode"] in config.guard_whitelisted_country_codes) && chat_data["charset"] == "windows1251")
-			charset_weight += 1
-
-			if(first_entry)
-				charset_weight += 0.5 // how he know
-
-			new_report += {"<div class='Section'><h3>Charset ([charset_weight]):</h3>
-			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
-
-			new_short_report += "Charset test failed(tw: [charset_weight]); "
-
-		total_alert_weight += charset_weight
-	*/
-
 	/* database related accounts */
 	if((length(holder.related_accounts_cid) && holder.related_accounts_cid != "Requires database") || (length(holder.related_accounts_ip) && holder.related_accounts_ip != "Requires database"))
 		var/related_db_weight = 0
@@ -178,9 +191,25 @@
 
 		total_alert_weight += multicid_weight
 
+	/* timezone test */
+	if(local_time && geoip_processed && geoip_data["offset"])
+		var/timeoffset = text2num(geoip_data["offset"])
+		if(isnum(timeoffset))
+			var/expected_time = (timeoffset / 3600 + round(world.timeofday / 36000)) % 24
+			var/deviation = abs(local_time - expected_time)
+			if(deviation > 1) // if computer time differs from tz time more than 1 hour
+				var/deviation_weight = 0.7
+				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
+				new_short_report += "TZ deviation (tw: [deviation_weight]); "
+
+	/* guard href abuse*/
+	if(href_abuse)
+		total_alert_weight += config.guard_autoban_treshhold // they really meant to do that
+		new_report += "<div class='Section'><h3>Guard href fabrication ([config.guard_autoban_treshhold]).</h3></div>"
+		new_short_report += "Guard href abuse (tw: [config.guard_autoban_treshhold]); "
+
 	// todo:
 	// age & byond profile tests (useless)
-	// timezone tests
 	// speedrun tests
 
 	/* No more tests, prepare reports (todo: some cleanup needet) */
@@ -236,7 +265,7 @@
 		geoip_processed = TRUE
 		return
 
-	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting")
+	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting,offset")
 
 	if(!geoip_data)
 		return
