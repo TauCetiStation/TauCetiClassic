@@ -263,10 +263,25 @@
 	name = "AI control"
 	desc = "Downloads personality to control the drone. Use your Syndicate Encryption Key if you want to give orders remotely."
 	cost = 2
+	var/poll_running = FALSE
+
+/datum/drone_upgrade/internal/ai/can_install(mob/living/silicon/robot/drone/syndi/D, chat_warning)
+	if(!poll_running) //to prevent installing multiple AIs
+		return ..(D, chat_warning)
+
+	if(chat_warning)
+		to_chat(D, "<span class='warning'>You are already searching for personality!</span>")
+	return FALSE
 
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
 	to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
+	poll_running = TRUE
 	var/list/drone_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate drone. Would you like to play as one?", ROLE_OPERATIVE)
+	poll_running = FALSE //other instances of poll just couldn't start, so this is safe
+
+	if(!can_install(D, TRUE)) //drone could've died or spent all points during the async poll, we need to double-check
+		return FALSE
+
 	if(drone_candicates.len)
 		var/mob/M = pick(drone_candicates)
 		D.loose_control()
