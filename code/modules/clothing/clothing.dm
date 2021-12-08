@@ -477,7 +477,6 @@ BLIND     // can't see anything
 		user.drop_item(I)
 		I.forceMove(src)
 		holochip = I
-		holochip.holder = src
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && H.head == src)
 			holochip.add_action(user)

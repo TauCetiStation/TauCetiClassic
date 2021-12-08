@@ -10,7 +10,6 @@
 /obj/item/clothing/head/helmet/space/rig/ert/atom_init()
 	. = ..()
 	holochip = new /obj/item/holochip/ert(src)
-	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)

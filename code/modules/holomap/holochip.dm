@@ -35,7 +35,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	QDEL_NULL(self_marker)
 	holder = null
 	activator = null
-	holochips -= src
 	return ..()
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
