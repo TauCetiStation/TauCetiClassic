@@ -456,12 +456,12 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/holding)
 "aaV" = (
-/obj/machinery/light/spot{
-	dir = 4
+/obj/machinery/door/airlock/centcom{
+	name = "Waiting Room"
 	},
-/obj/machinery/vending/coffee,
+/obj/item/decoration/tinsel/red,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "aaW" = (
@@ -2235,6 +2235,37 @@
 /obj/effect/landmark/mafia_game_area,
 /turf/space,
 /area/space)
+"afW" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"afX" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"afY" = (
+/obj/structure/snow,
+/obj/structure/flora/mine_rocks,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"afZ" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/evac)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -2256,12 +2287,73 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"agc" = (
+/obj/structure/snow,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agd" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"age" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agf" = (
+/obj/random/vending/snack,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/evac)
+"agg" = (
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agh" = (
+/obj/structure/snow,
+/obj/structure/flora/bush,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agi" = (
+/obj/machinery/light/spot{
+	dir = 4
+	},
+/obj/machinery/vending/coffee,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/evac)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agk" = (
+/obj/structure/snow,
+/obj/item/decoration/snowman,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "agl" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -2273,6 +2365,37 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agn" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"ago" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agp" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/brown,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"agq" = (
+/obj/structure/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "agr" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,10";
@@ -2287,6 +2410,14 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"agt" = (
+/obj/structure/snow,
+/obj/structure/snowman,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "agu" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "3,9"
@@ -2382,6 +2513,17 @@
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/garland,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "agK" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "6,8"
@@ -2394,6 +2536,13 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"agM" = (
+/obj/structure/snow,
+/obj/structure/snowman,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "agN" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "17,8";
@@ -2497,6 +2646,13 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahe" = (
+/obj/structure/snow,
+/obj/structure/flora/grass/green,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "ahf" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "18,7";
@@ -2504,6 +2660,16 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahg" = (
+/obj/structure/snow,
+/obj/item/device/flashlight/lamp/fir/special/alternative{
+	name = "New Year Tree";
+	pixel_x = -16
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "ahh" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "1,6"
@@ -2530,6 +2696,16 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahl" = (
+/obj/structure/sign/mark{
+	icon_state = "yrt"
+	},
+/obj/structure/snow,
+/obj/structure/snowman,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "ahm" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2555,6 +2731,15 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahq" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 1
+	},
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "ahr" = (
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
@@ -2634,6 +2819,18 @@
 /obj/structure/closet/wagon,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
+"ahE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/item/decoration/garland,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "ahF" = (
 /turf/simulated/mineral,
 /area/space)
@@ -2673,6 +2870,15 @@
 	},
 /turf/space,
 /area/custom/syndicate_mothership)
+"ahL" = (
+/obj/machinery/light/spot{
+	dir = 4
+	},
+/obj/random/vending/cola,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/evac)
 "ahM" = (
 /obj/machinery/light,
 /mob/living/simple_animal/hostile/tribesman{
@@ -2734,6 +2940,12 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
+"ahT" = (
+/obj/machinery/vending/cigarette,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/evac)
 "ahU" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -2747,6 +2959,22 @@
 	icon_state = "heater1"
 	},
 /turf/simulated/floor/plating/airless,
+/area/centcom/evac)
+"ahW" = (
+/obj/machinery/light,
+/obj/structure/snow,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"ahX" = (
+/obj/structure/snow,
+/obj/structure/flora/tree/dead{
+	icon_state = "tree_5"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/centcom/evac)
 "ahZ" = (
 /obj/structure/table,
@@ -15727,10 +15955,8 @@
 /turf/unsimulated/beach/water,
 /area/custom/beach)
 "aZB" = (
-/obj/random/vending/snack,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
+/obj/item/decoration/snowflake,
+/turf/unsimulated/wall,
 /area/centcom/evac)
 "aZC" = (
 /obj/structure/rack,
@@ -23904,15 +24130,8 @@
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "oDb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
+/obj/item/decoration/garland,
+/turf/unsimulated/wall,
 /area/centcom/evac)
 "oEb" = (
 /obj/structure/object_wall/evac{
@@ -23988,13 +24207,8 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "oQb" = (
-/obj/machinery/light/spot{
-	dir = 4
-	},
-/obj/random/vending/cola,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
 "oRb" = (
 /obj/structure/object_wall/evac{
@@ -24042,7 +24256,7 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "oXb" = (
-/obj/machinery/vending/cigarette,
+/obj/structure/snow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -47601,10 +47815,10 @@ aaM
 abn
 aem
 aem
-abn
+oQb
 aem
 aem
-abn
+oQb
 aaM
 abn
 pCb
@@ -47855,17 +48069,17 @@ aaM
 aaM
 aaM
 aaM
-abn
+oQb
 mVb
 afQ
 abn
 afQ
 adI
-abn
+oQb
 aaM
-abn
+oQb
 adI
-abn
+oQb
 aaM
 aaM
 aaM
@@ -48107,10 +48321,10 @@ hRb
 aVK
 aVK
 aRt
-aHv
+aZB
 abn
-abn
-abn
+oQb
+oQb
 abn
 aaX
 aFf
@@ -48364,7 +48578,7 @@ adJ
 hGb
 mub
 aYO
-afL
+aaV
 hGb
 mub
 hGb
@@ -48379,7 +48593,7 @@ hGb
 hGb
 hGb
 adD
-abn
+oQb
 aaM
 aaM
 aaM
@@ -48621,7 +48835,7 @@ aIO
 aIO
 mob
 aIO
-afL
+aaV
 aIO
 mob
 aIO
@@ -48636,7 +48850,7 @@ aIO
 aIO
 aIO
 mob
-abn
+oQb
 aaM
 aaM
 aaM
@@ -48878,21 +49092,21 @@ aSC
 aSc
 aSc
 aRt
-aHv
-aSc
-aSc
-aZB
-aaV
-aSc
-aSc
-aSc
-aSc
-aSc
-aSc
-oQb
+oDb
 oXb
-aSc
-aSc
+oXb
+agd
+oXb
+agk
+oXb
+agM
+oXb
+oXb
+oXb
+oXb
+oXb
+oXb
+agc
 abn
 aaM
 aaM
@@ -49133,24 +49347,24 @@ aHv
 aHv
 aHv
 aHv
+aZB
 aHv
-aHv
-aHv
-abn
-abn
-abn
-aHv
-aYp
-afC
-afC
-afC
-afC
 oDb
-aHv
-abn
-abn
-abn
-abn
+afW
+agc
+afX
+agg
+oXb
+agp
+ahe
+afX
+agh
+agg
+oXb
+agd
+afX
+ahW
+oQb
 aaM
 aaM
 aaM
@@ -49392,22 +49606,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aHv
-mHb
-mIb
-mJb
-hWb
-mKb
-mLb
-aHv
-aaM
-aaM
-aaM
-aaM
+abn
+afX
+oXb
+oXb
+agc
+agn
+agq
+oXb
+ahg
+agd
+agn
+agh
+oXb
+oXb
+oXb
+oQb
 aaM
 aaM
 aaM
@@ -49649,22 +49863,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aHv
-aHv
-aHv
-aHv
-aHv
-aHv
-aHv
-aHv
-aaM
-aaM
-aaM
-aaM
+oQb
+afY
+agd
+age
+oXb
+ago
+agt
+ahe
+oXb
+afX
+agq
+agd
+afX
+oXb
+ahX
+oQb
 aaM
 aaM
 aaM
@@ -49906,22 +50120,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abn
+oXb
+afX
+oXb
+agh
+oXb
+agq
+oXb
+agd
+ahl
+ahq
+oXb
+agc
+oXb
+agd
+abn
 aaM
 aaM
 aaM
@@ -50163,22 +50377,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+oQb
+afZ
+afZ
+agf
+agi
+afZ
+afZ
+afZ
+afZ
+afZ
+afZ
+ahL
+ahT
+afZ
+afZ
+oQb
 aaM
 aaM
 aaM
@@ -50420,22 +50634,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abn
+abn
+oQb
+oQb
+aHv
+aYp
+agJ
+agJ
+agJ
+afC
+ahE
+aZB
+abn
+oQb
+oQb
+abn
 aaM
 aaM
 aaM
@@ -50681,14 +50895,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aHv
+mHb
+mIb
+mJb
+hWb
+mKb
+mLb
+aHv
 aaM
 aaM
 aaM
@@ -50938,14 +51152,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aHv
+aHv
+aZB
+aHv
+aHv
+aZB
+aHv
+aHv
 aaM
 aaM
 aaM
