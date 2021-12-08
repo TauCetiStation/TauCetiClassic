@@ -34673,6 +34673,20 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"bjw" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/obj/structure/sign/warning/fire{
+	pixel_x = -32
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/station/maintenance/incinerator)
 "bjx" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -73056,17 +73070,20 @@
 	},
 /area/station/civilian/chapel/altar)
 "hRU" = (
-/obj/machinery/meter,
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
+/obj/machinery/power/terminal{
+	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellow"
+	dir = 1;
+	icon_state = "warning"
 	},
 /area/station/engineering/engine)
 "hSb" = (
@@ -74042,20 +74059,22 @@
 	},
 /area/station/medical/morgue)
 "iUt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/meter,
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "engineering_west_outer";
-	locked = 1;
-	name = "Engineering External Access";
-	req_access = list(10,13)
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
 /area/station/engineering/engine)
 "iUO" = (
 /obj/structure/cable{
@@ -74648,14 +74667,18 @@
 	},
 /area/station/engineering/singularity)
 "jCa" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
-	id_tag = "engineering_east_outer";
+	id_tag = "engineering_west_outer";
 	locked = 1;
 	name = "Engineering External Access";
 	req_access = list(10,13)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "jCb" = (
@@ -78706,16 +78729,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "owJ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "engineering_east_outer";
+	locked = 1;
+	name = "Engineering External Access";
+	req_access = list(10,13)
 	},
-/obj/structure/sign/warning/fire{
-	pixel_x = -32
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
-	},
-/area/station/maintenance/incinerator)
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "owK" = (
 /obj/machinery/door/window/eastleft{
 	req_access = list(25)
@@ -108246,7 +108268,7 @@ osb
 aKn
 iqr
 onb
-owJ
+bjw
 onb
 ceA
 gSN
@@ -113122,7 +113144,7 @@ ciq
 etF
 cIG
 cKb
-iUt
+jCa
 bSU
 rDL
 vcK
@@ -117748,7 +117770,7 @@ ciu
 fmS
 gHb
 hXl
-jCa
+owJ
 dRb
 noT
 vcK
@@ -118253,9 +118275,9 @@ doK
 ckz
 crH
 cts
-tif
-fLt
 hRU
+fLt
+iUt
 cCS
 dIT
 cJq
