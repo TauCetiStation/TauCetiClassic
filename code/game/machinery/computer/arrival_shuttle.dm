@@ -91,7 +91,7 @@ var/global/lastMove = 0
 	sleep(50)
 
 	toArea.parallax_movedir = WEST
-	fromArea.move_contents_to(toArea, null, WEST)
+	fromArea.move_contents_to(toArea, null)
 	location = ARRIVAL_SHUTTLE_TRANSIT
 	play_flying_sound(toArea)
 	SSshuttle.shake_mobs_in_area(toArea, EAST)
@@ -104,7 +104,7 @@ var/global/lastMove = 0
 	curr_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
 
-	fromArea.move_contents_to(toArea, null, WEST)
+	fromArea.move_contents_to(toArea, null)
 
 	// Sending message only on EXODUS
 	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
