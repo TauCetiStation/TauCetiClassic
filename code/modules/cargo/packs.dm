@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
 /datum/supply_pack
 	var/name = "Crate"
@@ -1888,11 +1888,12 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 //----------------------------------------------
 /datum/supply_pack/xeno_laser
 	name = "Xeno liquidator"
-	contains = list(/obj/item/clothing/suit/bio_suit/old_hazmat/firered,
-					/obj/item/clothing/head/bio_hood/old_hazmat/firered,
+	contains = list(/obj/item/clothing/suit/space/globose/recycler,
+					/obj/item/clothing/head/helmet/space/globose/recycler,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/shield/buckler,
-					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
 	cost = 10000
@@ -1908,7 +1909,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/eight_shells/incendiary,
 					/obj/item/weapon/shield/riot,
 					/obj/item/clothing/ears/earmuffs,
-					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)

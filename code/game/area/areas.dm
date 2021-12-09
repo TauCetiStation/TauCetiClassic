@@ -90,7 +90,7 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
+var/global/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in all_areas)
@@ -106,7 +106,7 @@ var/list/teleportlocs = list()
 	return 1
 
 
-var/list/ghostteleportlocs = list()
+var/global/list/ghostteleportlocs = list()
 
 /proc/process_ghost_teleport_locs()
 	for(var/area/AR in all_areas)
@@ -200,7 +200,7 @@ var/list/ghostteleportlocs = list()
 					C.add_network("Power Alarms")
 				else
 					C.remove_network("Power Alarms")
-			for (var/mob/living/silicon/aiPlayer in silicon_list)
+			for (var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
@@ -229,7 +229,7 @@ var/list/ghostteleportlocs = list()
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
 				C.remove_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
@@ -241,7 +241,7 @@ var/list/ghostteleportlocs = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
 				C.add_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
@@ -293,7 +293,7 @@ var/list/ghostteleportlocs = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras.Add(C)
 			C.add_network("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer.client)
 				continue
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
@@ -312,7 +312,7 @@ var/list/ghostteleportlocs = list()
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for (var/obj/machinery/camera/C in src)
 			C.remove_network("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer.client)
 				continue
 			aiPlayer.cancelAlarm("Fire", src, src)

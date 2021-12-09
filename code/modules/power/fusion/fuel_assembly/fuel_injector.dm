@@ -1,4 +1,4 @@
-var/list/fuel_injectors = list()
+var/global/list/fuel_injectors = list()
 
 /obj/machinery/fusion_fuel_injector
 	name = "fuel injector"
