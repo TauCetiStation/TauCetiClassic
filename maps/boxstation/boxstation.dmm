@@ -781,7 +781,27 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "abG" = (
-/obj/structure/computerframe,
+/obj/machinery/camera{
+	c_tag = "Labor Shuttle Dock North";
+	network = list("SS13","Security")
+	},
+/obj/structure/table,
+/obj/item/clothing/under/color/orange{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/color/orange{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/clothing/shoes/orange/candals{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/clothing/shoes/orange/candals{
+	pixel_x = 14;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -1314,6 +1334,7 @@
 	name = "Labor Dock APC";
 	pixel_x = 28
 	},
+/obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -1366,6 +1387,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -2892,11 +2914,9 @@
 	},
 /area/station/security/brig)
 "afo" = (
-/obj/structure/filingcabinet/chestdrawer/black,
-/obj/machinery/camera{
-	c_tag = "Security Warden Office";
-	desc = "Used to monitor areas of the Security Division and Prison Cells.";
-	network = list("SS13","Security")
+/obj/machinery/photocopier,
+/obj/machinery/newscaster/security_unit{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2933,10 +2953,12 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "afr" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/closet/secure_closet/warden,
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3486,12 +3508,28 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/security/warden)
 "ags" = (
+/obj/structure/filingcabinet/chestdrawer/black,
+/obj/machinery/camera{
+	c_tag = "Security Warden Office";
+	desc = "Used to monitor areas of the Security Division and Prison Cells.";
+	network = list("SS13","Security")
+	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to monitor areas of the Security Division and Prison Cells.";
 	name = "Security Monitor";
@@ -3499,7 +3537,8 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/warden)
 "agt" = (
@@ -3511,17 +3550,9 @@
 	},
 /area/station/construction/assembly_line)
 "agu" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/item/device/taperecorder,
-/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -3576,10 +3607,6 @@
 "agz" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
-/obj/machinery/camera{
-	c_tag = "Labor Shuttle Dock North";
-	network = list("SS13","Security")
-	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
@@ -3631,22 +3658,13 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "agD" = (
-/obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/paper/brig_arsenal,
-/obj/item/toy/cards{
-	layer = 4.1
-	},
-/obj/item/device/megaphone,
-/obj/item/weapon/storage/box/handcuffs{
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/seccarts,
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";
 	pixel_y = 28
 	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3742,14 +3760,10 @@
 	},
 /area/station/rnd/scibreak)
 "agQ" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1475;
-	listening = 0;
-	name = "Station Intercom (Security)";
+/obj/item/weapon/flora/random,
+/obj/machinery/alarm{
 	pixel_y = 28
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -3765,7 +3779,17 @@
 	},
 /area/shuttle/escape_pod3/station)
 "agS" = (
-/obj/machinery/computer/prisoner,
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/obj/item/weapon/paper/brig_arsenal,
+/obj/item/toy/cards{
+	layer = 4.1
+	},
+/obj/item/device/megaphone,
+/obj/item/weapon/storage/box/handcuffs{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/seccarts,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3787,18 +3811,18 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "agU" = (
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
+/obj/structure/stool/bed/chair/metal/red,
 /turf/simulated/floor{
-	dir = 5;
+	dir = 1;
 	icon_state = "darkred"
 	},
 /area/station/security/brig)
@@ -3866,25 +3890,19 @@
 	},
 /area/station/security/main)
 "aha" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/stool/bed/chair/metal/red,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1475;
+	listening = 0;
+	name = "Station Intercom (Security)";
+	pixel_y = 28
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkred"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/security/warden)
+/area/station/security/brig)
 "ahb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -4049,12 +4067,14 @@
 	},
 /area/station/security/warden)
 "ahr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4359,43 +4379,6 @@
 	},
 /area/station/security/brig)
 "ahO" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/warden)
-"ahP" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
-	},
-/area/station/security/brig)
-"ahQ" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/warden)
-"ahR" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -4415,6 +4398,36 @@
 	icon_state = "dark"
 	},
 /area/station/security/warden)
+"ahP" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/warden)
+"ahQ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/warden)
+"ahR" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/station/security/brig)
 "ahS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4436,15 +4449,13 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4526,9 +4537,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4612,30 +4620,25 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "aik" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
 	},
-/obj/structure/window/reinforced{
+/area/station/security/brig)
+"ail" = (
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1475;
+	listening = 0;
+	name = "Station Intercom (Security)";
+	pixel_x = -32
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/station/security/warden)
-"ail" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/structure/table,
-/obj/item/device/radio/headset,
-/obj/item/device/radio/headset,
-/obj/item/device/radio/headset,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -4662,12 +4665,20 @@
 	},
 /area/station/security/brig)
 "aio" = (
-/obj/machinery/computer/secure_data{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
 /area/station/security/warden)
 "aip" = (
 /obj/machinery/bodyscanner,
@@ -4748,17 +4759,11 @@
 	},
 /area/station/security/hos)
 "aiy" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Security Processing";
-	dir = 8;
-	network = list("SS13","Security");
-	pixel_y = -18
-	},
+/obj/structure/table,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
 /turf/simulated/floor{
-	dir = 6;
 	icon_state = "darkred"
 	},
 /area/station/security/brig)
@@ -4799,21 +4804,25 @@
 	},
 /area/station/medical/hallway)
 "aiE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/table,
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/device/taperecorder,
+/obj/item/weapon/storage/box/evidence,
+/obj/machinery/camera{
+	c_tag = "Security Processing";
+	dir = 8;
+	network = list("SS13","Security");
+	pixel_y = -18
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
 	},
-/turf/simulated/floor/plating,
-/area/station/security/warden)
+/area/station/security/brig)
 "aiF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted,
@@ -4827,15 +4836,24 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aiG" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/stool/bed/chair/office/dark,
+/obj/effect/landmark/start{
+	name = "Warden"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
+/obj/machinery/door_control{
+	id = "Secure Gate";
+	name = "Brig Lockdown";
+	pixel_x = 6;
+	pixel_y = -28;
+	req_access = list(2)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -6;
+	pixel_y = -28;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4924,17 +4942,26 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aiN" = (
-/obj/structure/stool/bed/chair/metal/red{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/security/brig)
+/turf/simulated/floor/plating,
+/area/station/security/warden)
 "aiO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4942,37 +4969,40 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "aiP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aiQ" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
-	},
-/obj/machinery/computer/security{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
 /area/station/security/warden)
 "aiR" = (
-/obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start{
-	name = "Warden"
+/obj/machinery/computer/secure_data{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4983,7 +5013,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5108,27 +5139,12 @@
 	},
 /area/station/security/brig)
 "ajh" = (
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -28;
-	pixel_y = 7;
-	req_access = list(2)
+/obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/machinery/door_control{
-	id = "Secure Gate";
-	name = "Brig Lockdown";
-	pixel_x = -28;
-	pixel_y = -3;
-	req_access = list(2)
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/crowbar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5196,9 +5212,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "ajl" = (
-/obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/weapon/crowbar,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5227,29 +5247,36 @@
 	},
 /area/station/security/detectives_office)
 "ajp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office";
+	req_access = list(3)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/warden)
 "ajq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/machinery/computer/guestpass{
-	dir = 1;
-	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5305,8 +5332,9 @@
 /area/station/security/main)
 "ajv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5314,15 +5342,14 @@
 	},
 /area/station/security/brig)
 "ajw" = (
-/obj/machinery/camera{
-	c_tag = "Brig Center";
-	network = list("SS13","Security")
-	},
 /obj/machinery/alarm{
 	pixel_y = 28
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 4;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
@@ -5343,16 +5370,12 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -5360,8 +5383,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "ajz" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/item/device/radio/intercom{
+	pixel_y = 26
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5383,19 +5409,20 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/warden)
@@ -5543,7 +5570,9 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "ajO" = (
-/obj/item/weapon/flora/random,
+/obj/machinery/computer/prisoner{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5557,11 +5586,20 @@
 	},
 /area/station/security/brig)
 "ajQ" = (
-/obj/structure/closet/secure_closet/warden,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/area/station/security/warden)
+/obj/machinery/camera{
+	c_tag = "Brig Center";
+	dir = 1;
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "ajR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -6138,31 +6176,22 @@
 	},
 /area/station/storage/primary)
 "akM" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Warden's Office";
-	req_access = list(3)
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/turf/simulated/floor/plating,
 /area/station/security/warden)
 "akN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6263,17 +6292,20 @@
 	},
 /area/station/security/brig)
 "akV" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 26
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/machinery/light{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "redcorner"
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/security/brig)
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "akW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -6732,16 +6764,17 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -6749,22 +6782,21 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -7076,6 +7108,13 @@
 	pixel_x = -26;
 	pixel_y = 26;
 	req_access = list(63)
+	},
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -26;
+	pixel_y = -7;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13866,14 +13905,24 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "azw" = (
-/obj/machinery/photocopier,
-/obj/machinery/newscaster/security_unit{
-	pixel_y = 32
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/security/warden)
 "azx" = (
 /obj/machinery/cryopod,
@@ -41799,18 +41848,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"bxR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "bxS" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
@@ -97380,11 +97417,11 @@ aaa
 aaa
 aaa
 aaa
+aah
+aah
 aaa
 aaa
-aaa
-aaa
-aRn
+apW
 aVq
 aVq
 aVq
@@ -97641,7 +97678,7 @@ aRn
 aRn
 aRn
 aRn
-bxR
+aRn
 aVq
 aVq
 aYe
@@ -97898,7 +97935,7 @@ cyq
 aOp
 bnH
 cSb
-bJH
+akV
 azh
 aQR
 tRb
@@ -111504,8 +111541,8 @@ adH
 adH
 adH
 agU
-ahP
-aiN
+afU
+aeT
 aiy
 akJ
 aiB
@@ -111763,8 +111800,8 @@ adH
 aha
 ahR
 aik
-aeq
-aeq
+aiE
+adM
 ajv
 akh
 akw
@@ -112020,9 +112057,9 @@ adH
 azw
 ahO
 aio
-aiQ
-aiE
-ajs
+aeq
+aeq
+ajw
 alI
 fmb
 adJ
@@ -112536,7 +112573,7 @@ ahQ
 aiG
 ajh
 akM
-ajx
+ajs
 alL
 ale
 amT
@@ -112793,7 +112830,7 @@ ahT
 aiP
 ajO
 ajB
-adh
+ajs
 akj
 amF
 amW
@@ -113048,11 +113085,11 @@ adH
 afr
 agr
 ahr
-ajQ
+agV
 ajp
-adh
+ajx
 alK
-amE
+ajQ
 adM
 ami
 aqE
@@ -113303,11 +113340,11 @@ afI
 afS
 adH
 agD
-ahO
+ahP
 aiS
 air
-aeq
-akV
+aiN
+adh
 akm
 alh
 alu
@@ -113563,8 +113600,8 @@ agS
 ahS
 ahq
 aiU
-aeq
-ajw
+aiQ
+adh
 alN
 amE
 amV
