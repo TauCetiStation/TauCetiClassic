@@ -470,7 +470,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function. Fits in a bag."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function. Fits in a bag."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
 	modifystate = 0
@@ -569,3 +569,6 @@
 		qdel(p_blue)
 		p_blue = P
 	crosslink()
+
+/obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
+	return

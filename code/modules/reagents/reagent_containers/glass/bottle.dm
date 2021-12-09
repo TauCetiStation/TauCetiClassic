@@ -336,6 +336,9 @@
 	icon_state = "bottle2"
 	list_reagents = list("alphaamanitin" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie
+	list_reagents = list("alphaamanitin" = 20)
+
 /obj/item/weapon/reagent_containers/glass/bottle/carpotoxin
 	name = "carpotoxin bottle"
 	desc = "A small bottle of carpotoxin. Upon receipt of substance no carp was not injured."

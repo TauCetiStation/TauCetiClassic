@@ -104,7 +104,7 @@ var/global/list/blob_nodes = list()
 			var/ded = TRUE
 			if(conglomerate.members.len)
 				for(var/datum/role/R in conglomerate.members)
-					if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+					if (R.antag.current && !(R.antag.current.is_dead()))
 						ded = FALSE
 						break
 			add_faction_member(conglomerate, B, !ded)

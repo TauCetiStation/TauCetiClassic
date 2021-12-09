@@ -37,7 +37,7 @@
 	var/alive_gangsters = 0
 	var/alive_cops = 0
 	for(var/datum/role/gangster/G in members)
-		if(!G.antag || !ishuman(G.antag.current))
+		if(!ishuman(G.antag.current))
 			continue
 		var/mob/living/carbon/human/H = G.antag.current
 		if(H.stat)
@@ -45,7 +45,7 @@
 		alive_gangsters++
 	var/datum/faction/cops/C = find_faction_by_type(/datum/faction/cops)
 	for(var/datum/role/cop/cop in C.members)
-		if(!cop.antag || !ishuman(cop.antag.current)) // always returns false
+		if(!ishuman(cop.antag.current)) // always returns false
 			continue
 		var/mob/living/carbon/human/H = cop.antag.current
 		if(H.stat)
