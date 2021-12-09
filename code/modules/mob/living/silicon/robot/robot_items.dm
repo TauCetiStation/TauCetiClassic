@@ -29,8 +29,6 @@
 				mode = 1
 			to_chat(user, "Changed printing mode to '[mode == 2 ? "Rename Paper" : "Write Paper"]'")
 
-	return
-
 // Copied over from paper's rename verb
 // see code\modules\paperwork\paper.dm line 62
 
@@ -44,7 +42,6 @@
 	if(( get_dist(user,paper) <= 1  && user.stat == CONSCIOUS))
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(user)
-	return
 
 //TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
 /obj/item/weapon/form_printer
@@ -176,4 +173,3 @@
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	R.module.remove_module_item(src)
 	qdel(src)
-	return
