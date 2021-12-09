@@ -32476,6 +32476,9 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
 /obj/structure/table,
+/obj/machinery/requests_console/cargo_bay{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
