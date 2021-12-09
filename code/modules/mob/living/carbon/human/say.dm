@@ -157,7 +157,7 @@
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in human_list)
+				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
@@ -165,7 +165,7 @@
 						continue
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
-				for(var/mob/M in observer_list)
+				for(var/mob/M as anything in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
@@ -253,7 +253,7 @@
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
 				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
-				for(var/mob/Changeling in mob_list)
+				for(var/mob/Changeling as anything in mob_list)
 					if(ischangeling(Changeling))
 						to_chat(Changeling, n_message)
 						var/datum/role/changeling/CC = Changeling.mind.GetRoleByType(/datum/role/changeling)
