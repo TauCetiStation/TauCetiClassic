@@ -59,7 +59,7 @@ body {
 	line-height: 170%;
 }
 
-a, button, a:link, a:visited, a:active, .selected, .disabled, .spoiler b {
+a:not(.nostyle), button, a:not(.nostyle):link, a:not(.nostyle):visited, a:not(.nostyle):active, .selected, .disabled, .spoiler b {
 	position: relative;
 	display: inline-block;
 	line-height: 1.6666666667em;
@@ -80,12 +80,16 @@ a, button, a:link, a:visited, a:active, .selected, .disabled, .spoiler b {
 	transition:color 50ms,background-color 50ms;
 }
 
-a:hover {
+a:not(.nostyle):hover {
 	transition:color 0ms,background-color 0ms
 }
 
-a:hover, .spoiler b:hover {
+a:not(.nostyle):hover, .spoiler b:hover {
 	background-color: #4c729d;
+}
+
+a.nostyle {
+	color: #4c729d;
 }
 
 a.fluid {

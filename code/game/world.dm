@@ -17,6 +17,8 @@ var/global/base_commit_sha = 0
 	timezoneOffset = text2num(time2text(0, "hh")) HOURS
 	load_configuration()
 
+	make_datum_references_lists_postconf() //same as above but for config dependent things
+
 	if(!setup_database_connection())
 		log_sql("Your server failed to establish a connection with the SQL database.")
 	else

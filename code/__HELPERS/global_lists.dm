@@ -227,6 +227,17 @@
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
 
+
+// in case if list depends on loaded config
+/proc/make_datum_references_lists_postconf()
+
+	global.metahelps = list()
+	for(var/help in subtypesof(/datum/metahelp))
+		var/datum/metahelp/H = new help
+		global.metahelps[H.id] = H
+
+
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
