@@ -26,9 +26,8 @@
 	if(it_is_a_snow_day)
 		if(!snow_fall_overlay)
 			snow_fall_overlay = image(icon, "snow_fall")
-			snow_fall_overlay.plane = LIGHTING_PLANE + 1
-			//win snow_fall_overlay.plane = LIGHTING_PLANE
-			//snow_fall_overlay.layer = LIGHTING_LAYER - 1
+			snow_fall_overlay.plane = GAME_PLANE
+			snow_fall_overlay.layer = 10
 		add_overlay(snow_fall_overlay)
 
 	if(IS_EVEN(x) && IS_EVEN(y))

@@ -44,8 +44,8 @@
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
-	var/cold_level_2 = 200  // Cold damage level 2 below this point.
-	var/cold_level_3 = 120  // Cold damage level 3 below this point.
+	var/cold_level_2 = 255  // Cold damage level 2 below this point.
+	var/cold_level_3 = 250  // Cold damage level 3 below this point.
 
 	var/heat_level_1 = 360  // Heat damage level 1 above this point.
 	var/heat_level_2 = 400  // Heat damage level 2 above this point.
@@ -293,8 +293,8 @@
 	darksight = 3
 
 	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
+	cold_level_2 = 275 //Default 200
+	cold_level_3 = 273 //Default 120
 
 	heat_level_1 = 420 //Default 360 - Higher is better
 	heat_level_2 = 480 //Default 400
