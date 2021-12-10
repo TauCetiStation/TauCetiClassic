@@ -13,7 +13,6 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
-	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	action_button_name = "Activate"
 	action_button_is_hands_free = 1
 	var/mode = VEST_STEALTH
@@ -24,6 +23,10 @@
 	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
 	action_button_name = "Toggle Vest"
+
+/obj/item/clothing/suit/armor/abductor/vest/atom_init()
+	. = ..()
+	armor = mode == VEST_STEALTH ? stealth_armor : combat_armor
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
