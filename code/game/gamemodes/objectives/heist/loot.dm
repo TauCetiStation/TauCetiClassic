@@ -34,6 +34,7 @@
 			loot = "an ion rifle"
 
 	explanation_text = "We are lacking in hardware. Steal [loot]."
+	return TRUE
 
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0

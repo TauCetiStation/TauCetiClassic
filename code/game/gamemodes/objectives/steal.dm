@@ -81,29 +81,30 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 
 /datum/objective/steal/find_target()
 	set_target(pick(possible_items))
-
+	return TRUE
 
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
 	if (!new_target)
-		return
+		return FALSE
 	if (new_target == "custom")
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
 		if (!custom_target)
-			return
+			return FALSE
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
 		custom_name = sanitize_safe(input("Enter target name:", "Objective target", input_default(custom_name)) as text|null)
 		if (!custom_name)
-			return
+			return FALSE
 		target_name = custom_name
 		steal_target = custom_target
 		explanation_text = "Steal [target_name]."
 	else
 		set_target(new_target)
 	auto_target = FALSE
+	return TRUE
 
 /datum/objective/steal/check_completion()
 	if(!steal_target || !owner.current)	return OBJECTIVE_LOSS

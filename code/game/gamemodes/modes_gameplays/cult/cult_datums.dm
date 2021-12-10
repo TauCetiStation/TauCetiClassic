@@ -241,7 +241,7 @@
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
-		return
+		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)
 		religion.send_message_to_members("Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)

@@ -201,4 +201,4 @@
 	if(istype(I, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/S = I
 		S.transfer_soul(SOULSTONE_CONSTRUCT, src, user)
-	return FALSE
+	return ..()

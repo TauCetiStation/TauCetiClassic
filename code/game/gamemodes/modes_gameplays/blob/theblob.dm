@@ -64,7 +64,7 @@
 /obj/effect/blob/proc/RegenHealth()
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
-		return FALSE
+		return
 	if(health < initial(health))
 		health++
 		update_icon()

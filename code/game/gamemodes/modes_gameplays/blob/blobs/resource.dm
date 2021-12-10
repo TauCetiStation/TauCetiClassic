@@ -23,6 +23,5 @@
 	resource_delay = world.time + 40 // 4 seconds
 	PulseAnimation()
 
-	if(overmind)
-		overmind.add_points(1)
+	overmind.add_points(1)
 

@@ -155,8 +155,7 @@ var/global/bomb_set
 						//anchored = FALSE
 						removal_stage = 5
 				return FALSE
-	..()
-	return FALSE
+	return ..()
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
 	. = ..()

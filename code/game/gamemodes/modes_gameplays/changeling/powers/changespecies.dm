@@ -16,7 +16,8 @@
 		return FALSE
 
 	var/S = input("Select the target species: ", "Target Species", null) as null|anything in changeling.absorbed_species
-	if(!S)	return FALSE
+	if(!S)
+		return FALSE
 
 	domutcheck(user, null)
 	user.visible_message("<span class='warning'>[user] transforms!</span>")

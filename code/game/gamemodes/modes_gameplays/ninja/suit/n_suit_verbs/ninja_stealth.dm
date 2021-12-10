@@ -8,7 +8,6 @@
 		toggle_stealth()
 	else
 		to_chat(affecting, "<span class='warning'>Stealth does not appear to work!</span>")
-	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting
@@ -27,7 +26,6 @@
 		if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 			U.swap_hand()
 			U.drop_item()
-	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
 	var/mob/living/carbon/human/U = affecting
@@ -42,8 +40,6 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return TRUE
-	return FALSE
 
 /obj/item/clothing/suit/space/space_ninja/proc/HideHuds(mob/living/target)
 	var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
@@ -76,5 +72,3 @@
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
-		return TRUE
-	return FALSE
