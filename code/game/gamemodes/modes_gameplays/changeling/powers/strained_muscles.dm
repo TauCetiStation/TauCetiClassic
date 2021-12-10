@@ -13,7 +13,7 @@
 
 	if(stacks && !active)
 		to_chat(user,"<span class='danger'>We are still exhausted.</span>")
-		return
+		return FALSE
 	owner = user
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	active = !active
@@ -31,7 +31,7 @@
 		changeling.strained_muscles = 0
 
 	feedback_add_details("changeling_powers","SANIC")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/strained_muscles/process()
 	if(active)

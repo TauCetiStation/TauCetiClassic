@@ -16,7 +16,7 @@
 		to_chat(user, "<span class='notice'>Our vision dulls. Shadows gather.</span>")
 
 	user.update_sight()
-	return 1
+	return TRUE
 
 /mob/living
 	var/changeling_aug = 0

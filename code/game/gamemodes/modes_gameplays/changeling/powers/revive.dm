@@ -22,7 +22,7 @@
 	//user.status_flags &= ~(FAKEDEATH)
 	//user.update_canmove()
 	feedback_add_details("changeling_powers","CR")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
 	if(NOCLONE in user.mutations)
@@ -30,10 +30,10 @@
 		user.fake_death = 0
 		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		C.purchasedpowers -= src //We dont need that power from now anyway.
-		return
+		return FALSE
 	if(user.stat != DEAD)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
 		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		C.purchasedpowers -= src  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
 		to_chat(user, "<span class='notice'>We need to stop any life activity in our body.</span>")
-		return
+		return FALSE
 	return ..()

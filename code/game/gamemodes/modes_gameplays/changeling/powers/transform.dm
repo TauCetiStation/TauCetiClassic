@@ -14,7 +14,7 @@
 	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 
 	if(!chosen_dna)
-		return
+		return FALSE
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 	user.dna = chosen_dna.Clone()
@@ -24,7 +24,7 @@
 	domutcheck(user, null)
 
 	feedback_add_details("changeling_powers","TR")
-	return 1
+	return TRUE
 
 /datum/role/changeling/proc/select_dna(prompt, title)
 	var/list/names = list()

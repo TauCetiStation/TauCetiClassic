@@ -154,7 +154,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = INVISIBILITY_OBSERVER //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)
