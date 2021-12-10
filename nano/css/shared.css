@@ -559,22 +559,26 @@ th.misc {
     color: #ffffff;
 }
 
-/* Damage colors for crew monitoring computer */
+/* Damage colors and fonts for crew monitoring computer */
 
 .burn {
     color: orange;
+    font-weight: bold;
 }
 
 .brute {
     color: orangered;
+    font-weight: bold;
 }
 
 .toxin {
     color: seagreen;
+    font-weight: bold;
 }
 
 .oxyloss {
     color: royalblue;
+    font-weight: bold;
 }
 
 /* 75px width used in power monitoring console buttons */
