@@ -87,13 +87,6 @@
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
-/obj/screen/plane_master/master
-	plane = BLACKNESS_PLANE
-
-/obj/screen/plane_master/master/Click(location, control, params)
-	if(usr.client.void)
-		usr.client.void.Click(location, control, params)
-
 /atom/movable/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX
