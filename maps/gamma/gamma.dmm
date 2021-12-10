@@ -1458,7 +1458,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "acj" = (
 /obj/machinery/porta_turret/station_default{
 	dir = 1
@@ -2176,7 +2176,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "adx" = (
 /obj/structure/weightlifter,
 /turf/simulated/floor{
@@ -8817,7 +8817,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "bNg" = (
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
@@ -9840,7 +9840,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "ccB" = (
 /obj/structure/toilet{
 	dir = 4
@@ -10868,7 +10868,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "cuG" = (
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -11665,7 +11665,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "cGf" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -12702,7 +12702,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "cUF" = (
 /obj/effect/landmark/start{
 	name = "Test Subject"
@@ -12796,7 +12796,7 @@
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "cWA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
@@ -16239,7 +16239,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "eed" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -20012,7 +20012,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "fnu" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -22522,7 +22522,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "gaj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -23513,7 +23513,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "grn" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -24383,7 +24383,7 @@
 	name = "HIGH VOLTAGE"
 	},
 /turf/simulated/wall,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "gFP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -26505,7 +26505,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "hlV" = (
 /obj/machinery/computer/operating{
 	name = "Robotics Operating Computer"
@@ -27600,7 +27600,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "hFq" = (
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Office";
@@ -29876,7 +29876,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "iuT" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -33856,7 +33856,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "jIG" = (
 /obj/item/device/beacon/medical,
 /turf/simulated/floor{
@@ -37159,7 +37159,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "kJV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -40635,7 +40635,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "lNh" = (
 /obj/structure/object_wall/mining{
 	icon_state = "4-2";
@@ -46325,7 +46325,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "nAc" = (
 /obj/item/weapon/scrap_lump,
 /obj/structure/cable{
@@ -46717,7 +46717,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "nFE" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -46960,7 +46960,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "nIX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -48729,7 +48729,7 @@
 /area/station/civilian/dormitories/dormtwo)
 "omg" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "omh" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor,
@@ -52363,7 +52363,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "pyY" = (
 /obj/machinery/light{
 	dir = 1
@@ -53565,7 +53565,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "pSp" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -54516,7 +54516,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "qhf" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -58328,7 +58328,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "rtt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -58528,7 +58528,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "rwf" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
@@ -59356,7 +59356,7 @@
 /area/station/rnd/xenobiology)
 "rKE" = (
 /turf/simulated/wall,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "rKF" = (
 /obj/structure/stool/bed/chair/metal/black,
 /obj/structure/sign/map/right{
@@ -64280,7 +64280,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "tnx" = (
 /obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/dirt,
@@ -64821,7 +64821,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "tvL" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor{
@@ -66266,7 +66266,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "tTa" = (
 /obj/item/device/antibody_scanner,
 /obj/structure/table/glass,
@@ -66459,7 +66459,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "tVx" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
@@ -68508,7 +68508,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "uCm" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -69285,7 +69285,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "uPd" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -71124,7 +71124,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "vvx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77323,7 +77323,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "xrJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -78847,7 +78847,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "carpetnoconnect"
 	},
-/area/station/security/lawoffice)
+/area/station/security/iaa_office)
 "xQU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
