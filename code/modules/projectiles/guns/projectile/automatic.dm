@@ -358,7 +358,7 @@
 	action_button_name = "Toggle GL"
 	fire_delay = 7
 	var/using_gl = FALSE
-	var/obj/item/weapon/gun/projectile/underslung/gl
+	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
 
 /obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
@@ -381,7 +381,7 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/atom_init()
 	. = ..()
 	update_icon()
-	gl = new /obj/item/weapon/gun/projectile/underslung(src)
+	gl = new (src)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/update_icon()
 	cut_overlays(mag_icon)

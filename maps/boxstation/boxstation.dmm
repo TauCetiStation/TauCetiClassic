@@ -3034,7 +3034,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/projectile/m79,
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
