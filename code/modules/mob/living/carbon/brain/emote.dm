@@ -68,7 +68,7 @@
 	if (message)
 		log_emote("[key_name(src)] : [message]")
 
-		for(var/mob/M in observer_list)
+		for(var/mob/M as anything in observer_list)
 			if (!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))

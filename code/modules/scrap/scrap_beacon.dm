@@ -12,6 +12,7 @@
 	var/impact_range = 2
 	var/last_summon = -3000
 	var/active = 0
+	var/emagged = FALSE
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -24,6 +25,15 @@
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"
+
+/obj/structure/scrap_beacon/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	to_chat(user, "<span class='warning'>You are overloading a dangerous range protocols.</span>")
+	emagged = TRUE
+	impact_range = 4
+	impact_speed = 1
+	return TRUE
 
 /obj/structure/scrap_beacon/proc/start_scrap_summon()
 	set waitfor = FALSE

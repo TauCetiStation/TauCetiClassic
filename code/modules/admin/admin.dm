@@ -9,7 +9,7 @@ var/global/BSACooldown = 0
 	if (emphasize)
 		style += " emphasized"
 	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
@@ -27,7 +27,7 @@ var/global/BSACooldown = 0
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
@@ -234,7 +234,7 @@ var/global/BSACooldown = 0
 	//Display player age and player warn bans
 	var/p_age
 	var/p_ingame_age
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
 			p_ingame_age = C.player_ingame_age
@@ -1182,7 +1182,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")

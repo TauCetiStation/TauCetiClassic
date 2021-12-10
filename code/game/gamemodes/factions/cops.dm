@@ -114,8 +114,6 @@
 	var/alive_cops = 0
 	for(var/M in all_gangsters)
 		var/datum/role/gangster/gangbanger = M
-		if(!gangbanger.antag)
-			continue
 		if(gangbanger.antag.current)
 			if(!ishuman(gangbanger.antag.current))
 				continue
@@ -125,8 +123,6 @@
 			alive_gangsters++
 	for(var/M in members)
 		var/datum/role/cop/bacon = M
-		if(!bacon.antag)
-			continue
 		if(bacon.antag.current)
 			if(!ishuman(bacon.antag.current)) // always returns false
 				continue

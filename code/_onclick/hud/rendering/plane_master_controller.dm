@@ -10,6 +10,7 @@
 	controlled_planes = list(
 		FLOOR_PLANE,
 		GAME_PLANE,
+		SINGULARITY_PLANE,
 		GHOST_PLANE,
 		POINT_PLANE,
 		LIGHTING_PLANE,
