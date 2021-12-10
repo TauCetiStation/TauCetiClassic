@@ -248,6 +248,7 @@
 
 	INVOKE_ASYNC(src, .proc/capture_effect, i, all_items)
 	sleep(per_obj_cd)
+	return TRUE
 
 /datum/rune/cult/capture_area/proc/capture_effect(i, list/all_items)
 	var/turf = get_turf(all_items[i])
