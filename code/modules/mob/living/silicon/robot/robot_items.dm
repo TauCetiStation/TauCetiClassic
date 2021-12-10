@@ -171,4 +171,4 @@
 /obj/item/weapon/card/emag/borg/emag_break(mob/user)
 	var/mob/living/silicon/robot/R = user
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-	R.module.remove_module_item(src)
+	R.module.remove_item(src)
