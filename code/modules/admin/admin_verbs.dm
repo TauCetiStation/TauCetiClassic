@@ -727,7 +727,7 @@ var/global/list/admin_verbs_hideable = list(
 		if("Cancel")
 			return
 
-	for(var/mob/dead/new_player/N in new_player_list)
+	for(var/mob/dead/new_player/N as anything in new_player_list)
 		N.show_titlescreen()
 
 /client/proc/object_talk(msg as text) // -- TLE

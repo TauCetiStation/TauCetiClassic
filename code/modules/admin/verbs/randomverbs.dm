@@ -82,7 +82,7 @@
 	var/missing_ages = 0
 	var/msg = ""
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(C.player_age == "Requires database")
 			missing_ages = 1
 			continue
@@ -268,7 +268,7 @@
 	if(show_log == "Yes")
 		announcement_ion_storm.play()
 
-	for(var/mob/living/silicon/ai/target in ai_list)
+	for(var/mob/living/silicon/ai/target as anything in ai_list)
 		if(istraitor(target))
 			continue
 		target.overload_ai_system()
@@ -351,7 +351,7 @@ Ccomp's first proc.
 			to_chat(src, "There doesn't appear to be any ghosts for you to select.")
 		return
 
-	for(var/mob/M in mobs)
+	for(var/mob/M as anything in mobs)
 		var/name = M.name
 		ghosts[name] = M                                        //get the name of the mob for the popup list
 	if(what==1)
@@ -610,14 +610,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/input = sanitize(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null)
 	if(!input)
 		return
-	for(var/mob/living/silicon/ai/M in ai_list)
+	for(var/mob/living/silicon/ai/M as anything in ai_list)
 		if (M.stat == DEAD)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
 		else if (M.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
 			M.add_ion_law(input)
-			for(var/mob/living/silicon/ai/O in ai_list)
+			for(var/mob/living/silicon/ai/O as anything in ai_list)
 				to_chat(O, "<span class='warning'></span>" + input + "<span class='warning'>...LAWS UPDATED</span>")
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")

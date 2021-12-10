@@ -13,7 +13,7 @@
 
 /datum/event/ionstorm/start()
 	// Ion laws.
-	for(var/mob/living/silicon/ai/target in ai_list)
+	for(var/mob/living/silicon/ai/target as anything in ai_list)
 		if(istraitor(target))
 			continue
 		target.overload_ai_system()
@@ -35,7 +35,7 @@
 
 /mob/living/silicon/ai/proc/generate_ion_law()
 	var/list/players = list()
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!H.mind || !H.client || H.client.inactivity > 10 MINUTES)
 			continue
 		players += H.real_name
