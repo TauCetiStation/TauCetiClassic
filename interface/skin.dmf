@@ -155,15 +155,6 @@ window "mainwindow"
 		is-visible = false
 		auto-format = false
 		saved-params = ""
-	elem "tauceti"
-		type = BROWSER
-		pos = 1,1
-		size = 1x1
-		anchor1 = none
-		anchor2 = none
-		is-visible = false
-		auto-format = false
-		saved-params = ""
 	elem "mainvsplit"
 		type = CHILD
 		pos = 0,0

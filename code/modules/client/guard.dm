@@ -10,7 +10,7 @@
 	var/list/geoip_data
 	var/geoip_processed = FALSE
 
-	var/list/chat_data = list("cookie_match", "charset")
+	var/list/chat_data = list("cookie_match", "charset", "local_time")
 	var/chat_processed = FALSE
 
 	var/first_entry = FALSE
@@ -19,10 +19,6 @@
 	var/time_velocity_shuttle
 	var/velocity_console = FALSE
 	var/velocity_console_dock = FALSE
-
-	var/stored_href = null
-	var/href_abuse = FALSE
-	var/local_time = null
 
 /datum/guard/New(client/C)
 	holder = C
@@ -35,9 +31,6 @@
 /datum/guard/proc/trigger_init()
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
-
-		if(!stored_href)
-			load_browser_checks()
 
 		if(!tests_processed)
 			do_tests()
@@ -70,30 +63,6 @@
 		load_geoip()
 
 	do_tests()
-
-/datum/guard/proc/load_browser_checks()
-	var/html = {"
-		<script>
-var date = new Date();
-var href = "byond://?src=\ref[src];time=" + date.getHours();
-window.location = href;
-		</script>
-	"}
-	holder << browse(html, "window=tauceti")
-
-/datum/guard/Topic(href, href_list)
-	if(stored_href)
-		href_abuse = TRUE
-		return
-
-	stored_href = href
-
-	var/new_local_time = text2num(href_list["time"])
-	if(!isnum(new_local_time))
-		href_abuse = TRUE
-		return
-
-	local_time = new_local_time
 
 //todo: pending tests
 /datum/guard/proc/do_tests()
@@ -192,21 +161,16 @@ window.location = href;
 		total_alert_weight += multicid_weight
 
 	/* timezone test */
-	if(local_time && geoip_processed && geoip_data["offset"])
+	if(chat_data["local_time"] && geoip_processed && geoip_data["offset"])
 		var/timeoffset = text2num(geoip_data["offset"])
-		if(isnum(timeoffset))
+		var/local_time = chat_data["local_time"]
+		if(isnum(timeoffset) && isnum(local_time))
 			var/expected_time = (timeoffset / 3600 + round(world.timeofday / 36000)) % 24
 			var/deviation = abs(local_time - expected_time)
 			if(deviation > 1) // if computer time differs from tz time more than 1 hour
 				var/deviation_weight = 0.7
 				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
 				new_short_report += "TZ deviation (tw: [deviation_weight]); "
-
-	/* guard href abuse*/
-	if(href_abuse)
-		total_alert_weight += config.guard_autoban_treshhold // they really meant to do that
-		new_report += "<div class='Section'><h3>Guard href fabrication ([config.guard_autoban_treshhold]).</h3></div>"
-		new_short_report += "Guard href abuse (tw: [config.guard_autoban_treshhold]); "
 
 	// todo:
 	// age & byond profile tests (useless)
