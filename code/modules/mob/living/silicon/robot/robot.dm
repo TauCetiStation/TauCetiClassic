@@ -775,9 +775,9 @@
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
 				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-						module.remove_module_item(D)
+						module.remove_item(D)
 					var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
-					module.add_module_item(D)
+					module.add_item(D)
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")

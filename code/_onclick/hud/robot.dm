@@ -319,10 +319,10 @@ var/global/atom/movable/screen/robot_inventory
 		// - or some situation might cause them to get de-emagged or something.
 		if(r.emagged)
 			if(!(r.module.emag in r.module.modules))
-				r.module.add_module_item(r.module.emag)
+				r.module.add_item(r.module.emag)
 		else
 			if(r.module.emag in r.module.modules)
-				r.module.remove_module_item(r.module.emag)
+				r.module.remove_item(r.module.emag)
 
 		for(var/atom/movable/A in r.module.modules)
 			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )

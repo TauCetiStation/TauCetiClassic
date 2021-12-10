@@ -57,7 +57,7 @@
 		if(!S)
 			src.modules -= null
 			S = new T(src, 1)
-			add_module_item(S)
+			add_item(S)
 
 		if(S.get_amount() < stacktypes[T])
 			S.add(1)
@@ -67,13 +67,13 @@
 	R.add_language("Trinary", 1)
 	R.add_language("Sol Common", 1)
 
-/obj/item/weapon/robot_module/proc/add_module_item(obj/O)
+/obj/item/weapon/robot_module/proc/add_item(obj/O)
 	O.forceMove(src)
 	modules += O
 	var/mob/living/silicon/robot/R = loc
 	R.hud_used.update_robot_modules_display()
 
-/obj/item/weapon/robot_module/proc/remove_module_item(obj/O)
+/obj/item/weapon/robot_module/proc/remove_item(obj/O)
 	if(!(locate(O) in modules))
 		return
 	modules -= O

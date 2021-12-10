@@ -134,7 +134,7 @@
 		to_chat(usr, "There's no mounting point for the module!")
 		return FALSE
 	var/obj/item/weapon/tank/jetpack/carbondioxide/J = new(R.module)
-	R.module.add_module_item(J)
+	R.module.add_item(J)
 	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 		R.internals = src
 	R.icon_state="Miner+j"
