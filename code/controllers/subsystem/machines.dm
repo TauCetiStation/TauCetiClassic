@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(machines)
 	display_order = SS_DISPLAY_MACHINES
 
 	flags = SS_KEEP_TIMING
+	msg_lobby = "Чиним машинерию..."
 
 	var/list/processing = list()
 	var/list/currentrun = list()
