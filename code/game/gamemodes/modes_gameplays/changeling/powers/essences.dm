@@ -96,7 +96,7 @@
 			return
 		message = copytext(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(ischangeling(M))
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 				var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
