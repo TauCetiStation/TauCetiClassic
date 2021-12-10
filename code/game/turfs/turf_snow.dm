@@ -48,7 +48,7 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/simulated/snow/proc/populate_flora()
-	if(locate(/obj/structure/, src)) // shuttles
+	if(locate(/obj/structure, src)) // shuttles
 		return
 	if(snow_map_noise)
 		var/land_type = snow_map_noise.map_array[x][y]
