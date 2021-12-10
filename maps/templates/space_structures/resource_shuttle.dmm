@@ -301,10 +301,6 @@
 	},
 /turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
-"SU" = (
-/obj/effect/meteor/dust,
-/turf/space,
-/area/space)
 "TJ" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,2"
@@ -424,7 +420,7 @@ Jw
 RY
 RY
 RY
-SU
+RY
 RY
 qR
 Bz
@@ -436,7 +432,7 @@ JX
 (7,1,1) = {"
 Vs
 RY
-SU
+RY
 rr
 ee
 vY
