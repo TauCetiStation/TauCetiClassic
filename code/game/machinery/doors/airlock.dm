@@ -1107,6 +1107,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/do_afterclose()
 	for(var/atom/A in orange(0, src))
 		A.airlock_crush_act()
+		check_temperature()
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()
