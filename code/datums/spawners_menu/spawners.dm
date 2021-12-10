@@ -1,5 +1,21 @@
 var/global/list/datum/spawners = list()
 
+/// A wrapper for _create_spawners that allows us to pretend we're using normal named arguments
+#define create_spawners(type, num, arguments...) _create_spawners(type, num, list(##arguments))
+/proc/_create_spawners(type, num, list/arguments)
+	for(var/i in 1 to num)
+		new type(arglist(arguments))
+
+	for(var/mob/dead/observer/ghost in observer_list)
+		if(ghost.spawners_menu)
+			SStgui.update_uis(ghost.spawners_menu)
+
+		var/datum/hud/ghost/ghost_hud = ghost.hud_used
+		var/image/I = image(ghost_hud.spawners_menu_button.icon, ghost_hud.spawners_menu_button, "spawners_update")
+		flick_overlay(I, list(ghost.client), 10 SECONDS)
+
+		to_chat(ghost, "<span class='ghostalert'>В спавнер меню появились новые роли!</span>")
+
 /datum/spawner
 	var/name
 	var/desc
@@ -23,6 +39,11 @@ var/global/list/datum/spawners = list()
 	LAZYREMOVE(spawn_list, src)
 	if(!length(spawn_list))
 		global.spawners -= type
+
+	for(var/mob/dead/observer/ghost in observer_list)
+		if(ghost.spawners_menu)
+			SStgui.update_uis(ghost.spawners_menu)
+
 	return ..()
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
@@ -165,7 +186,7 @@ var/global/list/datum/spawners = list()
 		if(L.name == "Commando")
 			correct_landmarks += L
 
-	var/spawnloc = pick(correct_landmarks)
+	var/obj/spawnloc = pick(correct_landmarks)
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)

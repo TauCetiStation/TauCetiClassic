@@ -60,7 +60,12 @@
 	var/mob/dead/observer/G = usr
 	G.toggle_darkness()
 
+/datum/hud/ghost
+	var/atom/movable/screen/spawners_menu_button
+
 /datum/hud/ghost/New()
+	var/mob/dead/observer/G = mymob
+
 	adding = list()
 	var/atom/movable/screen/using
 
@@ -84,9 +89,9 @@
 	using.screen_loc = ui_ghost_mafia
 	adding += using
 
-	using = new /atom/movable/screen/ghost/spawners_menu()
-	using.screen_loc = ui_ghost_spawners_menu
-	adding += using
+	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu()
+	spawners_menu_button.screen_loc = ui_ghost_spawners_menu
+	adding += spawners_menu_button
 
 	using = new /atom/movable/screen/ghost/toggle_darkness()
 	using.screen_loc = ui_ghost_toggle_darkness

@@ -17,6 +17,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnersMenu")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/spawners_menu/tgui_data(mob/user)

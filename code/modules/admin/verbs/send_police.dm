@@ -31,5 +31,4 @@
 	return TRUE
 
 /proc/spawn_space_police(team_size, cops_type)
-	for(var/i in 1 to team_size)
-		new cops_type()
+	create_spawners(cops_type, team_size)
