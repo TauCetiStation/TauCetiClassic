@@ -48,7 +48,7 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/simulated/snow/proc/populate_flora()
-	if(locate(/obj/structure/, src)) // shuttles
+	if(locate(/obj/structure, src)) // shuttles
 		return
 	if(snow_map_noise)
 		var/land_type = snow_map_noise.map_array[x][y]
@@ -475,9 +475,9 @@
 	return
 
 // Noise source: codepen.io/yutt/pen/rICHm
-var/datum/perlin/snow_map_noise
-var/list/raw_noise
-var/list/perlin_noise
+var/global/datum/perlin/snow_map_noise
+var/global/list/raw_noise
+var/global/list/perlin_noise
 
 /datum/perlin
 	var/list/map_array
