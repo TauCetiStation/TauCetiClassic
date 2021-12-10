@@ -20,6 +20,8 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	msg_lobby = "Заправляем шаттлы..."
+
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
 	var/location = 0			//0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13

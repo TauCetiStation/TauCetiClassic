@@ -80,3 +80,11 @@
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>У вас лёгкая поступь.</span>"
 	lose_text = "<span class='danger'>Вы начинаете топотать, как грязный варвар.</span>"
+
+/datum/quirk/fast_equip
+	name = QUIRK_FAST_EQUIP
+	desc = "Вы можете одеваться быстрее."
+	value = 2
+	mob_trait = TRAIT_FAST_EQUIP
+	gain_text = "<span class='notice'Годы жизни на станции научили вас чему-то.</span>"
+	lose_text = "<span class='danger'>Ваша координация стремительно деградировала.</span>"
