@@ -402,5 +402,10 @@
 		return ..()
 	gl.attackby(I, user)
 
+/obj/item/weapon/gun/projectile/automatic/drozd/attack_self(mob/user)
+	if(!using_gl)
+		return ..()
+	gl.attack_self(user)
+
 /obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
 	toggle_gl(usr)
