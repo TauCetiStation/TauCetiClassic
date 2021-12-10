@@ -28686,6 +28686,9 @@
 	},
 /area/station/bridge/nuke_storage)
 "baq" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /obj/machinery/camera{
 	c_tag = "Arrival Dock's North";
 	dir = 8
@@ -31433,6 +31436,9 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
 /obj/structure/table,
+/obj/machinery/requests_console/cargo_bay{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -81194,14 +81200,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
-"vnw" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/turf/simulated/floor{
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "vsv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -93469,7 +93467,7 @@ bOA
 aNw
 bis
 baq
-vnw
+bis
 biV
 bkB
 bmq
