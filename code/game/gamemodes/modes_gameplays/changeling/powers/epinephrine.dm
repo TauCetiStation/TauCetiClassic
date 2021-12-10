@@ -27,4 +27,4 @@
 		H.shock_stage = 0
 
 	feedback_add_details("changeling_powers","UNS")
-	return 1
+	return TRUE

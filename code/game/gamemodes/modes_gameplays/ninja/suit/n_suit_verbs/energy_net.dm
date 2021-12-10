@@ -65,7 +65,7 @@
 /obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	healthcheck()
-	return 0
+	return PROJECTILE_ACTED
 
 /obj/effect/energy_net/ex_act(severity)
 	switch(severity)

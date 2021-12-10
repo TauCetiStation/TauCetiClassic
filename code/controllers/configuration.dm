@@ -1,5 +1,5 @@
-var/list/net_announcer_secret = list()
-var/bridge_secret = null
+var/global/list/net_announcer_secret = list()
+var/global/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
