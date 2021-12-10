@@ -106,7 +106,6 @@
 
 /obj/effect/blob/proc/run_action()
 	PulseAnimation()
-	return
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
@@ -138,7 +137,6 @@
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
-	return
 
 /obj/effect/blob/ex_act(severity)
 	var/damage = 150

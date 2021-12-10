@@ -28,7 +28,7 @@
 /obj/machinery/abductor/gland_dispenser/interact(mob/user)
 	if(!IsAbductor(user) && !isobserver(user))
 		return
-	..()
+	return ..()
 
 /obj/machinery/abductor/gland_dispenser/ui_interact(mob/user)
 	var/dat
