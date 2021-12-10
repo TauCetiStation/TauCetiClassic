@@ -5,7 +5,16 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/m79
 	can_be_holstered = FALSE
 
-/obj/item/weapon/gun/projectile/grenade_launcher/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber()
+	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
+	if(chambered)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
+		chambered.loc = get_turf(src)//Eject casing
+		chambered.SpinAnimation(5, 1)
+		chambered = null
+	update_icon()
+
+/obj/item/weapon/gun/projectile/grenade_launcher/proc/try_chambering(obj/item/I, mob/user)
 	if(chambered)
 		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
 		return
@@ -17,15 +26,12 @@
 		update_icon()	//I.E. fix the desc
 		I.update_icon()
 
+/obj/item/weapon/gun/projectile/grenade_launcher/attackby(obj/item/I, mob/user, params)
+	try_chambering(I, user)
+
 /obj/item/weapon/gun/projectile/grenade_launcher/attack_self(mob/user)
-	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
-	if(chambered)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
-		chambered.loc = get_turf(src)//Eject casing
-		chambered.SpinAnimation(5, 1)
-		chambered = null
+	unchamber()
 	add_fingerprint(user)
-	update_icon()
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79
 	name = "m79 grenade launcher"
@@ -50,7 +56,7 @@
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/attack_self(mob/user)
 	open = !open
 	if(open)
-		..()
+		unchamber()
 	else
 		playsound(src, 'sound/weapons/guns/m79_in.ogg', VOL_EFFECTS_MASTER)
 		add_fingerprint(user)
@@ -58,7 +64,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/attackby(obj/item/I, mob/user, params)
 	if(open)
-		..()
+		try_chambering(I, user)
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/special_check(mob/user)
 	if(open)
