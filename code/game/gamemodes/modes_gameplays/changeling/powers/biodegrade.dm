@@ -33,7 +33,7 @@
 
 	if(!user.restrained() && istype(user.loc, /turf) && !used)
 		to_chat(user,"<span class='warning'>We are already free!</span>")
-		return 0
+		return FALSE
 
 	if(user.handcuffed && !used)
 		var/obj/item/weapon/handcuffs/O = user.handcuffed
@@ -69,7 +69,7 @@
 
 	if(used)
 		feedback_add_details("changeling_powers","BD")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/item/weapon/handcuffs/O)
 	if(istype(O) && user.handcuffed == O)

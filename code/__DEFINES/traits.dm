@@ -145,6 +145,7 @@
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
+#define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
 
 /*

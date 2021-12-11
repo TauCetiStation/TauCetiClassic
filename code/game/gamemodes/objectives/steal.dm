@@ -83,7 +83,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	set_target(pick(possible_items))
 	return TRUE
 
-
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
