@@ -884,11 +884,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Offsetting any human's overlay that we dont want to cut.
 /proc/human_update_offset(image/I, head = TRUE, mob/living/carbon/human/H)
-	if(head)
-		if(H.lying || H.resting || H.crawling)
+	if(head)//If your item is upper the torso - we want to shift it more.
+		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(H.height)
+			switch(H.height)//Choosing height
 				if(SHORTEST_HEIGHT)
 					I.pixel_x -= 2
 				if(SHORT_HEIGHT)
@@ -897,12 +897,12 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_x += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_x += 2
-			if(SMALLSIZE in H.mutations)
+			if(SMALLSIZE in H.mutations)//Gnome-Guy
 				I.pixel_x -= 5
-		else
+		else//Not changing directions because of no lying/resting/crawling.
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(H.height)
+			switch(H.height)//Choosing height
 				if(SHORTEST_HEIGHT)
 					I.pixel_y -= 2
 				if(SHORT_HEIGHT)
@@ -911,13 +911,13 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_y += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_y += 2
-			if(SMALLSIZE in H.mutations)
+			if(SMALLSIZE in H.mutations)//Gnome-Guy
 				I.pixel_y -= 5
-	else
-		if(H.lying || H.resting || H.crawling)
+	else//If your item is under the torso - we want to shift it less.
+		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(H.height)
+			switch(H.height)//Choosing height
 				if(SHORTEST_HEIGHT)
 					I.pixel_x -= 1
 				if(SHORT_HEIGHT)
@@ -926,12 +926,12 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_x += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_x += 1
-			if(SMALLSIZE in H.mutations)
+			if(SMALLSIZE in H.mutations)//Gnome-Guy
 				I.pixel_x -= 3
-		else
+		else//Not changing directions because of no lying/resting/crawling.
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(H.height)
+			switch(H.height)//Choosing height
 				if(SHORTEST_HEIGHT)
 					I.pixel_y -= 1
 				if(SHORT_HEIGHT)
@@ -940,7 +940,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_y += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_y += 1
-			if(SMALLSIZE in H.mutations)
+			if(SMALLSIZE in H.mutations)//Gnome-Guy
 				I.pixel_y -= 3
 	return I
 
