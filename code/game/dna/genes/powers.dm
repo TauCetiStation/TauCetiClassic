@@ -190,7 +190,7 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-		H.update_height()
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
@@ -199,7 +199,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 		H.update_size_class()
-		H.update_height()
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
