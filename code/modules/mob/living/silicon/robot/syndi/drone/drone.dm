@@ -57,6 +57,11 @@
 	real_name = "syndicate drone ([N])"
 	name = "suspicious drone ([N])"
 
+/mob/living/silicon/robot/drone/syndi/emag_act(mob/user)
+	to_chat(src, "<span class='warning'>[user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.</span>")
+	to_chat(user, "<span class='warning'>You attempt to subvert [src], but the sequencer has no effect.</span>")
+	return FALSE
+
 /mob/living/silicon/robot/drone/syndi/pick_module()
 	uplink.interact(src)
 

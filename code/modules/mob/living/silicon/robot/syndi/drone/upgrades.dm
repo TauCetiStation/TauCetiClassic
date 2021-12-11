@@ -95,7 +95,7 @@
 	if(!items.len)
 		return FALSE
 	for(var/item_type in items)
-		D.module.modules += new item_type(D.module)
+		D.module.add_item(new item_type(D.module))
 	return TRUE
 
 //========DEVICE AND TOOLS========
@@ -120,7 +120,7 @@
 	name = "Cryptographic Sequencer"
 	desc = "The emag is a small card that unlocks hidden functions in electronic devices, \
 		subverts intended functions and characteristically breaks security mechanisms."
-	items = list(/obj/item/weapon/card/emag)
+	items = list(/obj/item/weapon/card/emag/borg)
 	cost = 10
 	single_use = FALSE
 
@@ -136,7 +136,6 @@
 	desc = "Self-defence device used for blinding livebeings or stun cyborgs by overloading their optics. Has limited amount of uses."
 	items = list(/obj/item/device/flash)
 	cost = 5
-	single_use = FALSE
 
 /datum/drone_upgrade/device_tools/jetpack
 	name = "Jetpack"
