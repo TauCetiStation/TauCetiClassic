@@ -941,6 +941,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_y += 1
 			if(SMALLSIZE in mutations)
 				I.pixel_y -= 3
+	return I
 
 /mob/living/carbon/human/proc/update_height(var/image/I)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")

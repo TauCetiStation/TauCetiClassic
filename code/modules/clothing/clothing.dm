@@ -748,3 +748,68 @@ BLIND     // can't see anything
 	flags_inv = 0
 	body_parts_covered = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+
+/obj/item/clothing/proc/update_offset(var/image/I, var/head = TRUE)
+	if(!usr || !istype(usr, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(head)
+		if(H.lying || H.resting || H.crawling)
+			I.pixel_x = 0
+			I.pixel_y = 0
+			switch(H.height)
+				if(SHORTEST_HEIGHT)
+					I.pixel_x -= 2
+				if(SHORT_HEIGHT)
+					I.pixel_x -= 1
+				if(TALL_HEIGHT)
+					I.pixel_x += 1
+				if(TALLEST_HEIGHT)
+					I.pixel_x += 2
+			if(SMALLSIZE in H.mutations)
+				I.pixel_x -= 5
+		else
+			I.pixel_x = 0
+			I.pixel_y = 0
+			switch(H.height)
+				if(SHORTEST_HEIGHT)
+					I.pixel_y -= 2
+				if(SHORT_HEIGHT)
+					I.pixel_y -= 1
+				if(TALL_HEIGHT)
+					I.pixel_y += 1
+				if(TALLEST_HEIGHT)
+					I.pixel_y += 2
+			if(SMALLSIZE in H.mutations)
+				I.pixel_y -= 5
+	else
+		if(H.lying || H.resting || H.crawling)
+			I.pixel_x = 0
+			I.pixel_y = 0
+			switch(H.height)
+				if(SHORTEST_HEIGHT)
+					I.pixel_x -= 1
+				if(SHORT_HEIGHT)
+					I.pixel_x -= 1
+				if(TALL_HEIGHT)
+					I.pixel_x += 1
+				if(TALLEST_HEIGHT)
+					I.pixel_x += 1
+			if(SMALLSIZE in H.mutations)
+				I.pixel_x -= 3
+		else
+			I.pixel_x = 0
+			I.pixel_y = 0
+			switch(H.height)
+				if(SHORTEST_HEIGHT)
+					I.pixel_y -= 1
+				if(SHORT_HEIGHT)
+					I.pixel_y -= 1
+				if(TALL_HEIGHT)
+					I.pixel_y += 1
+				if(TALLEST_HEIGHT)
+					I.pixel_y += 1
+			if(SMALLSIZE in H.mutations)
+				I.pixel_y -= 3
+	return I

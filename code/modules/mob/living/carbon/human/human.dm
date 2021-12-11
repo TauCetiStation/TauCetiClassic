@@ -1885,7 +1885,9 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	I = update_height(I)
+	flick_overlay(I, viewing, anim_duration)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
