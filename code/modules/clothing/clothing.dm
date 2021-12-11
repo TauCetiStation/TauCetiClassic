@@ -750,7 +750,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 
-/obj/item/clothing/proc/update_offset(image/I, head = TRUE)
+/obj/item/clothing/proc/update_offset(var/image/I, var/head = TRUE)
 	if(!usr || !istype(usr, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = usr
