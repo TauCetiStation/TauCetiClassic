@@ -230,6 +230,8 @@
 	if(M.mind.hulkizing)
 		return
 
+	M.try_mutate_to_hulk()
+
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
@@ -271,7 +273,6 @@
 	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-
 	return
 
 /datum/dna/gene/basic/xray
