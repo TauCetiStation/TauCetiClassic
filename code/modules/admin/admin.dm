@@ -211,29 +211,20 @@ var/global/BSACooldown = 0
 #define PLAYER_INFO_TYPE_ADMIN "note"
 #define PLAYER_INFO_TYPE_XENOS "xenonote"
 
-#define PLAYERINFOS(o) \
-	o(PLAYER_INFO_TYPE_ADMIN, list(R_LOG, R_BAN),               "Admin note"), \
-	o(PLAYER_INFO_TYPE_XENOS, list(R_LOG, R_WHITELIST | R_BAN), "Xeno note"), \
-
-#define RIGHTS(name, rights, _) name = rights
 var/global/list/player_info_type_rights = list(
-	PLAYERINFOS(RIGHTS)
+	PLAYER_INFO_TYPE_ADMIN = list(R_LOG, R_BAN),
+	PLAYER_INFO_TYPE_XENOS = list(R_LOG, R_WHITELIST | R_BAN),
 )
-#undef RIGHTS
 
-#define UITEXT(name, _, uitext) name = uitext
 var/global/list/player_info_type_uitext = list(
-	PLAYERINFOS(UITEXT)
+	PLAYER_INFO_TYPE_ADMIN = "Admin note",
+	PLAYER_INFO_TYPE_XENOS = "Xeno note"
 )
-#undef UITEXT
 
-#define UITEXTREV(name, _, uitext) uitext = name
 var/global/list/player_info_type_from_uitext = list(
-	PLAYERINFOS(UITEXTREV)
+	"Admin note" = PLAYER_INFO_TYPE_ADMIN,
+	"Xeno note"  = PLAYER_INFO_TYPE_XENOS,
 )
-#undef UITEXTREV
-
-#undef PLAYERINFOS
 
 /datum/player_info
 	var/author = PLAYER_INFO_MISSING_AUTHOR_TEXT        // admin who authored the information
