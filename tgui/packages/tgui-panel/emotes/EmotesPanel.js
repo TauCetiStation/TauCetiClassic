@@ -1,29 +1,42 @@
 import { classes } from 'common/react';
 import { useDispatch, useSelector } from 'common/redux';
-import { Flex } from 'tgui/components';
+import { Flex, Section } from 'tgui/components';
 import { selectEmotes } from './selectors';
 import { emojis } from './constants';
 import { Box } from '../../tgui/components';
+
+const CopyToClipboard = (text) => {
+  if (!navigator.clipboard) {
+    const temp = document.createElement('input');
+    temp.innerText = text;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    temp.remove();
+  } else {
+    navigator.clipboard.writeText(text);
+  }
+};
 
 export const EmotesPanel = (props, context) => {
   const emotes = useSelector(context, selectEmotes);
   const dispatch = useDispatch(context);
   return (
-    <Flex align="center">
-      {emojis.map((v) => {
-        return (
-          <Flex.Item key={v}>
-            <Box
+    <Section className="emojiPicker" title="Emoji Picker" scrollable>
+      <Box as="p">Emoji will be copied to the clipboard</Box> 
+      <Flex className="emojiList" wrap="wrap" align="center">
+        {emojis.map((v) => {
+          return (
+            <Flex.Item key={v}
+              as="i"
               className={classes([
-                'emojis32x32',
-                'peka',
+                'em',
+                'em-'+v,
               ])}
-              style={{
-                'transform': 'scale(2) translate(0px, 10%)',
-                'vertical-align': 'middle',
-              }} />
-          </Flex.Item>
-        ); })}
-    </Flex>
+              onClick={() => CopyToClipboard(':'+v+':')}
+            />
+          ); })}
+      </Flex>
+    </Section>
   );
 };

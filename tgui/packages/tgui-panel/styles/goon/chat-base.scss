@@ -146,39 +146,6 @@ a.popt {
 }
 
 
-/* EMOJI PICKER currently useless */
-
-.emojiPicker {
-  padding: 10px;
-  text-align: center;
-}
-
-.emojiPicker .emojiList {
-  max-height: 185px;
-  overflow-y: auto;
-}
-
-.emojiPicker i {
-  margin: 4px;
-}
-
-.emojiPicker a {
-  font-size: 20px;
-}
-
-.emojiPicker #picker-notify {
-  display: none;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-}
-
-.emojiPicker #picker-notify span {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-
 /* ADMIN CONTEXT MENU */
 
 .contextMenu {

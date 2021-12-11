@@ -1,3 +1,35 @@
+.emojiPicker {
+  padding: 10px;
+
+  .emojiList {
+    font-size: 20px;
+    max-height: 185px;
+
+    :active {
+      border: 15px solid rgba(36, 255, 91, 0.637);
+    }
+
+    i {
+      margin: 4px;
+    }
+  }
+}
+
+.emojiPicker #picker-notify {
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.emojiPicker #picker-notify span {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+/* EMOJI CLASSES */
+
 .em{height:1.5em;width:1.5em;background-position:center;background-repeat:no-repeat;background-size:contain;display:inline-block;vertical-align:middle;text-indent:100%;white-space: nowrap;overflow:hidden;}
 
 .em-peka{background-image:url("~tgui-panel/assets/emoji/peka.png")}

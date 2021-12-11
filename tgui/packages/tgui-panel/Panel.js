@@ -57,6 +57,15 @@ export const Panel = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
+                  color="grey"
+                  selected={emotes.visible}
+                  icon="grin"
+                  tooltip="Emotes panel"
+                  tooltipPosition="bottom-start"
+                  onClick={() => emotes.toggle()} />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
                   icon={settings.visible ? 'times' : 'cog'}
                   selected={settings.visible}
                   tooltip={settings.visible
@@ -64,15 +73,6 @@ export const Panel = (props, context) => {
                     : 'Open settings'}
                   tooltipPosition="bottom-start"
                   onClick={() => settings.toggle()} />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  color="grey"
-                  selected={emotes.visible}
-                  icon="grin"
-                  tooltip="Emotes panel"
-                  tooltipPosition="bottom-start"
-                  onClick={() => emotes.toggle()} />
               </Stack.Item>
             </Stack>
           </Section>
@@ -84,14 +84,14 @@ export const Panel = (props, context) => {
             </Section>
           </Stack.Item>
         )}
-        {settings.visible && (
-          <Stack.Item>
-            <SettingsPanel />
-          </Stack.Item>
-        )}
         {emotes.visible && (
           <Stack.Item>
             <EmotesPanel />
+          </Stack.Item>
+        )}
+        {settings.visible && (
+          <Stack.Item>
+            <SettingsPanel />
           </Stack.Item>
         )}
         <Stack.Item grow>
