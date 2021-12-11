@@ -13,10 +13,11 @@
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(changeling.absorbed_species.len < 2)
 		to_chat(src, "<span class='warning'>We do not know of any other species genomes to use.</span>")
-		return
+		return FALSE
 
 	var/S = input("Select the target species: ", "Target Species", null) as null|anything in changeling.absorbed_species
-	if(!S)	return
+	if(!S)
+		return FALSE
 
 	domutcheck(user, null)
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
@@ -26,4 +27,4 @@
 	user.regenerate_icons()
 
 	feedback_add_details("changeling_powers","TS")
-	return 1
+	return TRUE

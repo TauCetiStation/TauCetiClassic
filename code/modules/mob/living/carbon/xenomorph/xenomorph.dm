@@ -11,6 +11,8 @@
 	typing_indicator_type = "alien"
 
 	see_in_dark = 8
+	sight = SEE_MOBS
+
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
