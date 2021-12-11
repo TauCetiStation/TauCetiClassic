@@ -32281,18 +32281,13 @@
 	},
 /area/station/medical/medbreak)
 "bgt" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/box/masks,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/computer/med_data,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -64907,6 +64902,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/item/weapon/storage/box/gloves,
 /obj/item/weapon/folder/white,
 /turf/simulated/floor{
 	icon_state = "dark"
