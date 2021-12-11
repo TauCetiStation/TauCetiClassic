@@ -3389,8 +3389,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	icon_state = "white"
