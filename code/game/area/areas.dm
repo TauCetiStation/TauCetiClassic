@@ -103,7 +103,6 @@ var/global/list/teleportlocs = list()
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
-	return 1
 
 
 var/global/list/ghostteleportlocs = list()
@@ -120,7 +119,6 @@ var/global/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
-	return 1
 
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
@@ -253,8 +251,8 @@ var/global/list/ghostteleportlocs = list()
 		for (var/obj/machinery/alarm/AA in src)
 			AA.update_icon()
 
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /area/proc/air_doors_close()
 	if(!air_doors_activated)
@@ -347,9 +345,9 @@ var/global/list/ghostteleportlocs = list()
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(STATIC_EQUIP)
 			return power_equip
@@ -358,7 +356,7 @@ var/global/list/ghostteleportlocs = list()
 		if(STATIC_ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 // called when power status changes
 /area/proc/power_change()
@@ -503,7 +501,7 @@ var/global/list/ghostteleportlocs = list()
 		T = get_turf(AT)
 	var/area/A = get_area(T)
 	if(istype(T, /turf/space)) // Turf never has gravity
-		return 0
+		return FALSE
 	else if(A && A.has_gravity) // Areas which always has gravity
-		return 1
-	return 0
+		return TRUE
+	return FALSE
