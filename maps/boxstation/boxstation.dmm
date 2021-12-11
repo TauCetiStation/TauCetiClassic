@@ -72610,10 +72610,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"hCE" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/wall,
-/area/station/maintenance/engineering)
 "hFb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -114137,7 +114133,7 @@ jal
 chV
 chV
 bJc
-hCE
+bIZ
 cAW
 crK
 crK
@@ -115927,7 +115923,7 @@ cal
 bTW
 bQK
 aPb
-bSP
+clx
 nbb
 bVb
 eqd
