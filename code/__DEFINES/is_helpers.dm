@@ -152,7 +152,7 @@
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
-#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+#define isanyrev(H) (isrev(H) || isrevhead(H))
 
 #define isrev(H) isrole(REV, H)
 

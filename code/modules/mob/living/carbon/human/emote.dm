@@ -24,9 +24,6 @@
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
 
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act, 1, -1)
-
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
@@ -347,6 +344,25 @@
 			message = "prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
+		if ("rock")
+			message_type = SHOWMSG_VISUAL
+			message = "plays rock."
+			mute_message = "plays rock."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+		if ("paper")
+			message_type = SHOWMSG_VISUAL
+			message = "plays paper."
+			mute_message = "plays paper."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+		if ("scissors")
+			message_type = SHOWMSG_VISUAL
+			message = "plays scissors."
+			mute_message = "plays scissors."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+
 // ========== SPECIAL ==========
 
 		if ("custom")
@@ -382,7 +398,7 @@
 		if ("help")
 			to_chat(src, "<span class='notice'>Voiced in <B>BOLD</B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
 			                                                          laugh, cry, giggle, clap, blink, drool, eyebrow, twitch, frown, nod, blush, wave, deathgasp, \
-			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute.</span>")
+			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute, rock, paper, scissors.</span>")
 
 		else
 			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
@@ -423,7 +439,7 @@
 
 	log_emote("[key_name(src)] : [message]")
 
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue // skip leavers
 		switch(M.client.prefs.chat_ghostsight)
@@ -432,6 +448,8 @@
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(!auto)
 					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
+
+	play_rock_paper_scissors_animation(act)
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)

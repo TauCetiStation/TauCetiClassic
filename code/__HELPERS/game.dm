@@ -44,9 +44,9 @@
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
-		return 1
+		return TRUE
 
-	return 0 //not in range and not telekinetic
+	return FALSE //not in range and not telekinetic
 
 /**
  * Get a bounding box of a list of atoms.
@@ -153,7 +153,7 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
+/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = TRUE, sight_check = TRUE, include_radio = TRUE)
 
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
@@ -249,8 +249,7 @@
 
 
 	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
+	for(var/mob/M as anything in player_list)
 		if(M)
 			var/turf/ear = get_turf(M)
 			if(ear)
@@ -285,14 +284,14 @@
 	var/turf/T
 	if(X1==X2)
 		if(Y1==Y2)
-			return 1 //Light cannot be blocked on same tile
+			return TRUE //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
-					return 0
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -308,21 +307,21 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(T.opacity)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
 	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
+		return TRUE
 
 	else
-		return 0
+		return FALSE
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
@@ -357,7 +356,7 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
@@ -617,7 +616,7 @@
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
-	for(var/mob/dead/observer/O in observer_list)
+	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
@@ -725,7 +724,7 @@
 		return FALSE
 	if(alpha != 255)
 		return FALSE
-	if(invisibility != 0)
+	if(invisibility != INVISIBILITY_NONE)
 		return FALSE
 	return TRUE
 

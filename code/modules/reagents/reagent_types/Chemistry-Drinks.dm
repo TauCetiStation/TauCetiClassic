@@ -1552,3 +1552,58 @@
 	color = "#c5f415" // rgb: 197, 244, 21
 	boozepwr = 3
 	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/sangria
+	name = "Sangria"
+	id = "sangria"
+	description = "You feel the freshness and tranquility of this berry-wine drink. Drink up!"
+	reagent_state = LIQUID
+	color = "#9d40c1" // rgb: 157, 64, 93
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/strongmandrink
+	name = "Strongman's Drink"
+	id = "strongmandrink"
+	description = "Strength and life in one glass, what more can you want?"
+	reagent_state = LIQUID
+	color = "#f36bad" // rgb: 243, 107, 173
+	boozepwr = 3
+	taste_message = "health alcohol"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/consumable/ethanol/bluelagoone
+	name = "The Blue Lagoone"
+	id = "bluelagoone"
+	description = "Sea.. Adrenaline.. How these times are missing."
+	reagent_state = LIQUID
+	color = "#4272ae" // rgb: 66, 114, 174
+	boozepwr = 5
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/bloodykuds
+	name = "Bloody Kuds"
+	id = "bloodykuds"
+	description = "A madman's drink. Scared?"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 5
+	taste_message = "heavy alcohol. How tight!"
+
+/datum/reagent/consumable/ethanol/sexbeach
+	name = "Sex On The Beach"
+	id = "sexbeach"
+	description = "For those who miss beach parties!"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 3
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/mojito
+	name = "Mojito"
+	id = "mojito"
+	description = "Good old mojito, not an aging classic."
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 3
+	taste_message = "sweet alcohol"

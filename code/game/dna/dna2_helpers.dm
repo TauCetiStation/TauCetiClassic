@@ -61,7 +61,6 @@
 				M.dna.SetSEValue(i,rand(1,4095),1)
 		M.dna.UpdateSE()
 		domutcheck(M, null)
-	return
 
 // I haven't yet figured out what the fuck this is supposed to do.
 /proc/miniscramble(input,rs,rd)
@@ -177,10 +176,6 @@
 		H.update_body()
 		H.update_hair()
 		H.update_height()
-
-		return 1
-	else
-		return 0
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)
