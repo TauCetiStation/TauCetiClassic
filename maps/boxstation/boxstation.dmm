@@ -1289,6 +1289,17 @@
 "acl" = (
 /turf/simulated/floor,
 /area/station/security/main)
+"acm" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/structure/table,
+/obj/item/weapon/phone,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/hallway)
 "acn" = (
 /obj/machinery/door/airlock/security{
 	name = "Execution Chamber";
@@ -1401,6 +1412,16 @@
 	icon_state = "red"
 	},
 /area/station/security/processing)
+"acw" = (
+/obj/structure/table,
+/obj/machinery/vending/wallmed2{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgery)
 "acy" = (
 /obj/structure/table,
 /obj/item/ashtray/glass{
@@ -9789,9 +9810,8 @@
 /obj/machinery/vending/wallmed2{
 	pixel_y = 32
 	},
-/obj/item/weapon/storage/visuals/surgery/full,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitehall"
 	},
 /area/station/medical/surgery2)
 "aqV" = (
@@ -25105,11 +25125,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUa" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
+/obj/machinery/vending/blood,
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "whiteblue"
 	},
 /area/station/medical/sleeper)
@@ -32001,8 +32019,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -32944,42 +32961,10 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bhM" = (
-/obj/item/weapon/reagent_containers/blood/AMinus{
-	pixel_x = -7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/structure/table/glass,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_y = 25
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -35338,26 +35323,56 @@
 	},
 /area/station/medical/chemistry)
 "bmh" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/item/weapon/reagent_containers/blood/AMinus{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Operation Observation Room APC";
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /obj/machinery/camera{
 	c_tag = "Surgery Observation";
 	dir = 8;
 	network = list("SS13","Medical")
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Operation Observation Room APC";
-	pixel_y = 24
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
@@ -36688,9 +36703,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/cleaner{
-	pixel_y = 32
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -37049,6 +37061,9 @@
 	name = "Surgery Shutters";
 	opacity = 0
 	},
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/surgery2)
 "bpr" = (
@@ -37078,28 +37093,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bpu" = (
-/obj/structure/window/reinforced/polarized{
-	dir = 8;
-	id = "op2"
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	icon_state = "blue"
 	},
-/obj/structure/window/reinforced/polarized{
-	dir = 4;
-	id = "op2"
-	},
-/obj/structure/window/reinforced/polarized{
-	id = "op2"
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Medical_Surgery2";
-	name = "Surgery Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/surgery2)
+/area/station/medical/surgeryobs)
 "bpv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -37287,11 +37285,32 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "bpP" = (
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "blue"
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "op2"
 	},
-/area/station/medical/surgeryobs)
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "op2"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery2";
+	name = "Surgery Shutters";
+	opacity = 0
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "op2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/surgery2)
 "bpQ" = (
 /obj/structure/window/reinforced/polarized{
 	dir = 1;
@@ -37357,16 +37376,12 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "bpW" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical{
-	name = "Operating Theatre 1";
-	req_access = list(45)
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "blue"
 	},
-/obj/machinery/holosign/surgery{
-	id = "op1"
-	},
-/turf/simulated/floor,
-/area/station/medical/surgery)
+/area/station/medical/surgeryobs)
 "bpX" = (
 /obj/machinery/windowtint{
 	id = "op1";
@@ -39605,8 +39620,7 @@
 	},
 /area/station/medical/storage)
 "btT" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/machinery/vending/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -40478,11 +40492,14 @@
 	},
 /area/station/cargo/recycleroffice)
 "bvx" = (
-/obj/structure/table,
-/obj/machinery/vending/wallmed2{
-	pixel_x = -32
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical{
+	name = "Operating Theatre 1";
+	req_access = list(45)
 	},
-/obj/item/weapon/storage/visuals/surgery/full,
+/obj/machinery/holosign/surgery{
+	id = "op1"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -41700,7 +41717,8 @@
 	pixel_y = -25
 	},
 /obj/structure/cable,
-/obj/machinery/vending/blood,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -41718,7 +41736,9 @@
 	},
 /area/station/cargo/storage)
 "bxw" = (
-/obj/machinery/vending/medical,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -42196,11 +42216,18 @@
 	},
 /area/station/cargo/storage)
 "byp" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
-/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Medbay South";
+	dir = 4;
+	network = list("SS13","Medical")
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -42619,14 +42646,14 @@
 /area/station/medical/sleeper)
 "bzb" = (
 /obj/structure/table,
+/obj/item/weapon/storage/visuals/surgery/full,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitehall"
+	icon_state = "white"
 	},
 /area/station/medical/surgery)
 "bzc" = (
@@ -49008,9 +49035,9 @@
 	},
 /area/station/medical/surgery2)
 "bKI" = (
-/obj/machinery/light,
 /obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
+	dir = 8;
 	icon_state = "whiteblue"
 	},
 /area/station/medical/sleeper)
@@ -49078,23 +49105,13 @@
 	},
 /area/station/medical/cryo)
 "bKP" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/table/glass,
-/obj/machinery/vending/wallmed2{
-	pixel_y = -32
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/item/weapon/phone,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/machinery/light,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/cryo)
+/area/station/medical/sleeper)
 "bKQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -49453,14 +49470,16 @@
 /area/station/medical/patients_rooms)
 "bLC" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8
 	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -25
+/obj/structure/table/glass,
+/obj/machinery/vending/wallmed2{
+	pixel_y = -32
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -52701,16 +52720,23 @@
 	},
 /area/station/medical/medbreak)
 "bRO" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 25
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -25
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
-	icon_state = "whitehall"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
-/area/station/medical/surgery2)
+/area/station/medical/cryo)
 "bRP" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -53119,18 +53145,17 @@
 	},
 /area/station/medical/genetics)
 "bSO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Medbay South";
-	dir = 4;
-	network = list("SS13","Medical")
+/obj/structure/table,
+/obj/item/weapon/storage/visuals/surgery/full,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 25
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/hallway)
+/area/station/medical/surgery2)
 "bSP" = (
 /turf/simulated/wall/r_wall,
 /area/station/engineering/break_room)
@@ -71888,7 +71913,7 @@
 	id = "MedbayFoyerOut";
 	name = "Medbay Doors Control";
 	pixel_x = 26;
-	pixel_y = -7;
+	pixel_y = -1;
 	req_access = list(5)
 	},
 /obj/machinery/door_control{
@@ -71896,7 +71921,7 @@
 	id = "MedbayFoyerIn";
 	name = "Medbay Doors Control";
 	pixel_x = 26;
-	pixel_y = 7;
+	pixel_y = 12;
 	req_access = list(5)
 	},
 /turf/simulated/floor{
@@ -74314,6 +74339,9 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -75250,7 +75278,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/sign/mark{
 	icon_state = "fdn";
-	pixel_y = 20
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -75549,7 +75577,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/sign/mark{
 	icon_state = "fdn";
-	pixel_y = 4
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -118950,7 +118978,7 @@ bIS
 bIS
 bIS
 bLF
-bRO
+aqU
 bKH
 bKy
 bNZ
@@ -119198,7 +119226,7 @@ cNh
 bAQ
 bjl
 aRc
-aUa
+bKI
 byn
 bxw
 bkV
@@ -119207,7 +119235,7 @@ bRV
 bUi
 aVe
 bLF
-aqU
+bSO
 aHm
 ckl
 ckt
@@ -119711,10 +119739,10 @@ itb
 aHi
 btg
 aRA
-btT
+aUa
 bAA
 bAP
-bKI
+bKP
 bkV
 bkV
 bkV
@@ -119722,8 +119750,8 @@ bTc
 bkV
 bLF
 bkd
-sWb
 aHm
+sWb
 bur
 bfR
 bLF
@@ -119976,11 +120004,11 @@ bkV
 bFm
 aRI
 bEX
-bKP
+bLC
 bLF
 bpq
-bpu
 bpp
+bpP
 bLF
 bLF
 bLF
@@ -120237,12 +120265,12 @@ bAX
 bJo
 bhM
 bnq
-bpP
+bpW
 bpD
 cKF
 bpX
-bvx
 bzb
+acw
 aaR
 bQR
 bLt
@@ -120494,7 +120522,7 @@ bBA
 biw
 bSD
 cAf
-bPf
+bpu
 bgn
 bix
 qhb
@@ -120753,7 +120781,7 @@ bSf
 bfL
 bPf
 bpQ
-qhb
+bnn
 bSe
 cgs
 bUg
@@ -121009,8 +121037,8 @@ bLv
 cNc
 bob
 bPf
-bpW
-bnn
+bvx
+qhb
 qhb
 ciT
 bUl
@@ -121518,7 +121546,7 @@ bkV
 aIg
 aRQ
 bpo
-bLC
+bRO
 bJo
 bJo
 bJo
@@ -121781,9 +121809,9 @@ boJ
 bfY
 bzo
 lIb
-bSO
-buC
 byp
+buC
+acm
 sJb
 cJS
 cHZ
