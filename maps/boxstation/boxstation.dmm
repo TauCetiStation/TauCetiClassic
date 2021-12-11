@@ -53615,12 +53615,6 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -58019,6 +58013,12 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
+	icon_state = "radiation";
+	name = "RADIOACTIVE AREA";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -58049,12 +58049,6 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cir" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -58432,7 +58426,7 @@
 	name = "Engineering East Large Air Vent"
 	},
 /obj/structure/closet/emergency_wall{
-	pixel_y = 32
+	pixel_x = 30
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -58637,6 +58631,11 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/machinery/requests_console/engineering{
 	pixel_x = 30
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Storage";
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -67561,6 +67560,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
+	icon_state = "radiation";
+	name = "RADIOACTIVE AREA";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -71604,7 +71609,7 @@
 	name = "Engineering West Large Air Vent"
 	},
 /obj/structure/closet/emergency_wall{
-	pixel_y = 32
+	pixel_x = -30
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -80802,11 +80807,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = 30
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering Storage";
-	dir = 8;
-	network = list("SS13","Engineering")
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -81246,14 +81246,14 @@
 	id_tag = "atmospherics_pump";
 	name = "Atmospherics Large Air Vent"
 	},
+/obj/machinery/light/small,
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
+	pixel_y = -32
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
