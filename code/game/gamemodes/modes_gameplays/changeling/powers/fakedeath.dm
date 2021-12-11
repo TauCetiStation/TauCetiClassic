@@ -37,10 +37,9 @@
 		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		C.instatis = FALSE
 		user.fake_death = FALSE
-		return
-	else
-		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-		addtimer(CALLBACK(src, .proc/give_revive_ability, user), rand(800, 2000))
+		return FALSE
+	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
+	addtimer(CALLBACK(src, .proc/give_revive_ability, user), rand(800, 2000))
 
 	feedback_add_details("changeling_powers","FD")
 	return TRUE
@@ -69,19 +68,19 @@
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(C.instatis) //We already regenerating, no need to start second time in a row.
-		return
+		return FALSE
 	if(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
 		to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
-		return
+		return FALSE
 	if(user.fake_death)
-		return
+		return FALSE
 	if(user.stat != DEAD)
 		if(tgui_alert(usr, "Are we sure we wish to fake our death?",, list("Yes","No")) == "No")
-			return
+			return FALSE
 	if(C.instatis) //In case if user clicked ability several times without making a choice.
-		return
+		return FALSE
 	if(!..())
-		return
+		return FALSE
 	C.instatis = TRUE
 	user.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
 	for(var/mob/M in C.essences)

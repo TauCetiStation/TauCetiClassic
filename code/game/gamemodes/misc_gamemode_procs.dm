@@ -140,8 +140,6 @@
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
-	return 0
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////

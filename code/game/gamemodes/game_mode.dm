@@ -152,12 +152,12 @@
 
 	if(!newRole)
 		log_mode("Role killed itself or was otherwise missing!")
-		return FALSE
+		return null
 
 	if(!newRole.AssignToRole(P.mind))
 		log_mode("Role refused mind and dropped!")
 		newRole.Drop()
-		return FALSE
+		return null
 
 	return newRole
 
@@ -206,8 +206,6 @@
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	feedback_set_details("game_mode","[SSticker.mode]")
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
-
-	return TRUE
 
 /datum/game_mode/proc/GetScoreboard()
 	completition_text = "<h2>Factions & Roles</h2>"

@@ -3,9 +3,9 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
