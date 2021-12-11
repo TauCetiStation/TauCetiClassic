@@ -103,7 +103,6 @@ var/global/list/asset_datums = list()
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
 
-
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
 		var/size = sizes[size_id]

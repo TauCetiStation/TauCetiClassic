@@ -22,6 +22,7 @@ import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
+import { emotesReducer } from './emotes';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -33,6 +34,7 @@ const store = configureStore({
     game: gameReducer,
     ping: pingReducer,
     settings: settingsReducer,
+    emotes: emotesReducer,
   }),
   middleware: {
     pre: [
@@ -113,6 +115,7 @@ const setupApp = () => {
       './ping',
       './settings',
       './telemetry',
+      './emotes',
     ], () => {
       renderApp();
     });

@@ -243,3 +243,10 @@
 			imgid = replacetext(replacetext("[content]", "[/obj]/", ""), "/", "-")
 		insert_icon_in_list(imgid, sprite)
 	return ..()
+
+/datum/asset/spritesheet/emojis
+	name = "emojis"
+
+/datum/asset/spritesheet/emojis/register()
+	InsertAll("", 'icons/obj/emojis.dmi')
+	..()
