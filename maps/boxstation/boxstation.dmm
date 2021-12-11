@@ -8728,12 +8728,21 @@
 	},
 /area/station/medical/hallway)
 "anX" = (
-/obj/machinery/portable_atmospherics/powered/pump,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
+/obj/machinery/door/airlock/command{
+	name = "MiniSat Access";
+	req_access = list(66)
 	},
-/turf/simulated/floor/plating,
-/area/station/storage/emergency3)
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bluefull"
+	},
+/area/station/engineering/engine)
 "anY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -38816,7 +38825,10 @@
 /obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "escape"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warningline"
@@ -44395,12 +44407,12 @@
 	},
 /area/station/bridge)
 "bAF" = (
-/mob/living/simple_animal/mouse,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
-/area/station/maintenance/incinerator)
+/turf/simulated/floor,
+/area/station/engineering/atmos)
 "bAG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -52501,9 +52513,12 @@
 	},
 /area/station/storage/tech)
 "bSL" = (
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/wall,
-/area/station/construction)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/mob/living/simple_animal/mouse,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/incinerator)
 "bSN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -53654,6 +53669,9 @@
 	},
 /obj/machinery/space_heater,
 /obj/machinery/light,
+/obj/structure/closet/fireaxecabinet{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -54935,6 +54953,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/construction)
 "bZQ" = (
@@ -55124,10 +55143,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"caA" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/wall,
-/area/station/construction)
 "caB" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/floor/engine/phoron,
@@ -55497,14 +55512,19 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "ccb" = (
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/engineering/atmos)
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "ccd" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -56545,9 +56565,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cfC" = (
@@ -56558,9 +56575,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
@@ -56930,11 +56944,11 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cgH" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/pipedispenser,
+/turf/simulated/floor{
+	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/engineering/atmos)
 "cgI" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -57334,12 +57348,12 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
 "chJ" = (
-/obj/structure/bookcase/manuals/engineering,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellow"
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
 	},
-/area/station/engineering/break_room)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "chK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -57453,16 +57467,16 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "cie" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
+/obj/structure/bookcase/manuals/engineering,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
+	dir = 4;
+	icon_state = "yellow"
 	},
-/area/station/engineering/atmos)
+/area/station/engineering/break_room)
 "cig" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
@@ -61795,8 +61809,9 @@
 /area/station/maintenance/engineering)
 "csM" = (
 /obj/machinery/recharge_station,
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -61970,12 +61985,11 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "ctb" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -62001,10 +62015,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
-/obj/machinery/pipedispenser,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "cte" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -63915,15 +63926,18 @@
 	},
 /area/station/construction/assembly_line)
 "cyS" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/access_button{
+	command = "cycle_interior";
 	frequency = 1379;
-	id_tag = "virology_inner";
-	locked = 1;
-	name = "Engineering External Access";
+	master_tag = "virology_airlock";
+	name = "interior access button";
+	pixel_x = 20;
+	pixel_y = -20;
 	req_one_access = list(13,45,1)
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cyT" = (
@@ -64880,11 +64894,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/closet/hydrant{
 	pixel_x = -32
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
@@ -65952,7 +65964,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cEi" = (
@@ -66814,9 +66828,7 @@
 	id_tag = "virology_pump";
 	name = "Virology Large Air Vent"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cHf" = (
 /obj/structure/cable/yellow{
@@ -67598,15 +67610,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cKf" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
-/area/station/maintenance/medbay)
 "cKh" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -67669,17 +67672,6 @@
 	icon_state = "warning"
 	},
 /area/station/engineering/atmos)
-"cKu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 8;
-	frequency = 1379;
-	id_tag = "virology_pump";
-	name = "Virology Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
-/area/station/maintenance/medbay)
 "cKv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -67988,9 +67980,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cLp" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cLq" = (
@@ -68025,18 +68015,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cLw" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "virology_airlock";
-	name = "interior access button";
-	pixel_x = 20;
-	pixel_y = -20;
-	req_one_access = list(13,45,1)
-	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/binary/pump/on,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cLy" = (
@@ -68208,7 +68187,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 5;
 	icon_state = "blue"
 	},
 /area/station/engineering/engine)
@@ -74139,9 +74118,6 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "iVS" = (
@@ -75644,19 +75620,18 @@
 /turf/simulated/wall,
 /area/station/medical/sleeper)
 "kBA" = (
-/obj/machinery/door/airlock/command{
-	name = "MiniSat Access";
-	req_access = list(66)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
-/turf/simulated/floor,
-/area/station/engineering/engine)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/engineering/atmos)
 "kCb" = (
 /obj/structure/table,
 /obj/item/weapon/cigbutt/cigarbutt,
@@ -77390,6 +77365,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mIn" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -77905,9 +77883,15 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "virology_inner";
+	locked = 1;
+	name = "Engineering External Access";
+	req_one_access = list(13,45,1)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nub" = (
@@ -81026,16 +81010,17 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "rby" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "atmospherics_airlock";
+	name = "exterior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access = list(24)
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/emergency3)
+/turf/simulated/floor/plating/airless,
+/area/space)
 "rbB" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -84202,9 +84187,6 @@
 /area/station/civilian/hydroponics)
 "vVm" = (
 /obj/random/vending/snack,
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -108550,7 +108532,7 @@ bps
 bYR
 cMb
 bkS
-bAF
+bSL
 bBe
 beg
 nCG
@@ -113149,7 +113131,7 @@ ceG
 bBu
 bIz
 wcU
-bSL
+chV
 bXC
 cmA
 cgM
@@ -114440,7 +114422,7 @@ cgK
 cFF
 eWl
 pht
-caA
+chV
 cHn
 mnb
 crH
@@ -114692,7 +114674,7 @@ cdM
 bVo
 fxg
 cJV
-caA
+chV
 chV
 chV
 jal
@@ -118295,7 +118277,7 @@ bXd
 ghX
 nrb
 hga
-chJ
+cie
 reb
 nUX
 lvV
@@ -118801,6 +118783,7 @@ myb
 bZQ
 bQQ
 ctd
+cgH
 bRT
 cyl
 cAG
@@ -118814,7 +118797,6 @@ jtH
 xbM
 cna
 mIn
-ccb
 oOd
 ckH
 odb
@@ -119070,8 +119052,8 @@ bYT
 bRY
 cKN
 cKN
-qKo
 cKN
+qKo
 bRY
 fYb
 cKN
@@ -119327,8 +119309,8 @@ jbH
 sit
 bZS
 bZS
-cie
-ocr
+kBA
+bAF
 vvH
 jnn
 ocr
@@ -119600,7 +119582,7 @@ cjh
 cjI
 bVI
 crH
-kBA
+anX
 crH
 crH
 crH
@@ -123445,7 +123427,7 @@ bVI
 bVI
 bVI
 bVI
-ceQ
+rby
 ceQ
 ceQ
 aah
@@ -128053,8 +128035,8 @@ bHY
 ccD
 bHY
 bBy
-iwb
-bFo
+cak
+cak
 bFo
 aaa
 aaa
@@ -128310,8 +128292,8 @@ cGE
 bZH
 bHY
 bBy
-iCb
-cKf
+cak
+bFo
 bFo
 bFo
 bFo
@@ -128566,7 +128548,7 @@ bgg
 bHY
 bHY
 bHY
-cFU
+ccb
 cLp
 cLw
 cyS
@@ -128826,8 +128808,8 @@ bHY
 bBy
 cLo
 cFs
+chJ
 bFo
-cKu
 cHb
 bFo
 bfK
@@ -129590,7 +129572,7 @@ bHY
 bHY
 bHY
 bej
-cgH
+cak
 cGc
 cac
 cac
@@ -131392,8 +131374,8 @@ lOb
 cbz
 cKh
 cer
-rby
-anX
+cfB
+cer
 cbz
 aaa
 aaa
