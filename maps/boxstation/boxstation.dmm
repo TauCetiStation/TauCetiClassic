@@ -2795,6 +2795,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escape"
@@ -50548,17 +50551,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
-"bNp" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "bNr" = (
 /obj/machinery/cryopod,
 /turf/simulated/floor{
@@ -52357,6 +52349,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bQX" = (
@@ -52735,13 +52732,14 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "bRT" = (
-/obj/machinery/door_control{
-	id = "atmos";
-	name = "Atmospherics Lockdown";
-	pixel_x = -24;
-	req_access = list(24)
-	},
 /obj/machinery/pipedispenser/disposal,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -54010,19 +54008,6 @@
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
-"bVz" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/engineering/atmos)
 "bVA" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -54643,15 +54628,6 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
-"bXe" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "bXl" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -55683,6 +55659,9 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -57035,17 +57014,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/engineering/engine)
-"cfu" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "cfv" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/crayons,
@@ -57276,10 +57244,8 @@
 /area/station/engineering/atmos)
 "cgg" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/machinery/camera{
-	c_tag = "Atmospherics West";
-	dir = 4;
-	network = list("SS13","Engineering")
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -57469,6 +57435,12 @@
 /area/station/engineering/break_room)
 "cgH" = (
 /obj/machinery/pipedispenser,
+/obj/machinery/door_control{
+	id = "atmos";
+	name = "Atmospherics Lockdown";
+	pixel_x = -24;
+	req_access = list(24)
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -58844,9 +58816,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "arrival"
@@ -59140,9 +59109,6 @@
 "clG" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
-	},
-/obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -59528,6 +59494,11 @@
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics West";
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -62379,6 +62350,15 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Atmospherics APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cte" = (
@@ -64000,16 +63980,6 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/engineering/engine)
-"cyl" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/engineering/atmos)
 "cym" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
@@ -64874,15 +64844,6 @@
 /obj/item/clothing/suit/space/rig/atmos,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Atmospherics APC";
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -65410,8 +65371,8 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -65549,9 +65510,6 @@
 /area/station/engineering/break_room)
 "cCr" = (
 /turf/simulated/wall/r_wall,
-/area/station/engineering/singularity)
-"cCs" = (
-/turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "cCt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -66393,6 +66351,9 @@
 /area/station/aisat/antechamber)
 "cEX" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/structure/sign/plaques/atmos{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -68468,11 +68429,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -69599,9 +69555,6 @@
 "dOS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
-	},
-/obj/structure/sign/plaques/atmos{
-	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -74363,15 +74316,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"jtH" = (
-/obj/machinery/portable_atmospherics/powered/pump,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/engineering/atmos)
 "jub" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -118300,15 +118244,15 @@ bQQ
 ctd
 cgH
 bRT
-cyl
+bNO
 cAG
-bVz
+cAG
 bVP
 cBw
 cBw
 cmE
 cgg
-jtH
+xbM
 xbM
 cna
 mIn
@@ -118557,7 +118501,7 @@ bQQ
 bQW
 cMf
 cKN
-bXe
+cKN
 cKN
 bRY
 cKN
@@ -118813,8 +118757,8 @@ cvg
 czM
 cBZ
 cMm
-bNp
-cfu
+gyP
+gyP
 gyP
 bVQ
 gyP
