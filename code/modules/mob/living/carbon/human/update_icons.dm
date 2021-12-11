@@ -308,7 +308,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(standing.len)
 		for(var/image/I in standing)
-			I = update_offset(I, TRUE)
+			I = human_update_offset(I, TRUE, src)
 		overlays_standing[HAIR_LAYER]	= standing
 
 	apply_overlay(HAIR_LAYER)
@@ -502,7 +502,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += wear_id
 		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
-		standing = update_offset(standing, TRUE)
+		standing = human_update_offset(standing, TRUE, src)
 		overlays_standing[ID_LAYER]	= standing
 
 	apply_overlay(ID_LAYER)
@@ -516,13 +516,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += gloves					//Either way, add the item to the HUD
 
 		var/image/standing = gloves.get_standing_overlay(src, 'icons/mob/hands.dmi', SPRITE_SHEET_GLOVES, -GLOVES_LAYER, "bloodyhands")
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 			bloodsies.color = hand_dirt_datum.color
-			bloodsies = update_offset(bloodsies, FALSE)
+			bloodsies = human_update_offset(bloodsies, FALSE, src)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
 	apply_overlay(GLOVES_LAYER)
@@ -538,7 +538,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += glasses				//Either way, add the item to the HUD
 
 		var/image/standing = glasses.get_standing_overlay(src, 'icons/mob/eyes.dmi', SPRITE_SHEET_EYES, -GLASSES_LAYER)
-		standing = update_offset(standing, TRUE)
+		standing = human_update_offset(standing, TRUE, src)
 		overlays_standing[GLASSES_LAYER] = standing
 
 	apply_overlay(GLASSES_LAYER)
@@ -555,7 +555,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				client.screen += l_ear					//Either way, add the item to the HUD
 
 			var/image/standing = l_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
-			standing = update_offset(standing, TRUE)
+			standing = human_update_offset(standing, TRUE, src)
 			overlays_standing[EARS_LAYER] = standing
 		if(r_ear)
 			if(client && hud_used && hud_used.hud_shown)
@@ -564,7 +564,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				client.screen += r_ear				//Either way, add the item to the HUD
 
 			var/image/standing = r_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
-			standing = update_offset(standing, TRUE)
+			standing = human_update_offset(standing, TRUE, src)
 			overlays_standing[EARS_LAYER] = standing
 
 	apply_overlay(EARS_LAYER)
@@ -604,7 +604,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)	t_state = s_store.icon_state
 		var/image/standing = image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
 		standing.color = s_store.color
-		standing = update_offset(standing, TRUE)
+		standing = human_update_offset(standing, TRUE, src)
 		overlays_standing[SUIT_STORE_LAYER]	= standing
 
 	apply_overlay(SUIT_STORE_LAYER)
@@ -632,7 +632,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			standing = head.get_standing_overlay(src, 'icons/mob/head.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
 
-		standing = update_offset(standing, TRUE)
+		standing = human_update_offset(standing, TRUE, src)
 		overlays_standing[HEAD_LAYER] = standing
 
 	apply_overlay(HEAD_LAYER)
@@ -647,7 +647,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += belt
 
 		var/image/standing = belt.get_standing_overlay(src, 'icons/mob/belt.dmi', SPRITE_SHEET_BELT, -BELT_LAYER)
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[BELT_LAYER] = standing
 
 	apply_overlay(BELT_LAYER)
@@ -712,7 +712,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += wear_mask				//Either way, add the item to the HUD
 
 		var/image/standing = wear_mask.get_standing_overlay(src, 'icons/mob/mask.dmi', SPRITE_SHEET_MASK, -FACEMASK_LAYER, "maskblood")
-		standing = update_offset(standing, TRUE)
+		standing = human_update_offset(standing, TRUE, src)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
 	apply_overlay(FACEMASK_LAYER)
@@ -727,7 +727,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += back
 
 		var/image/standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER)
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[BACK_LAYER] = standing
 	apply_overlay(BACK_LAYER)
 
@@ -748,7 +748,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
 		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[HANDCUFF_LAYER]	= standing
 	apply_overlay(HANDCUFF_LAYER)
 
@@ -774,7 +774,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += r_hand
 
 		var/image/standing = r_hand.get_standing_overlay(src, r_hand.righthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, icon_state_appendix = "_r")
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[R_HAND_LAYER] = standing
 		if(handcuffed)
 			drop_r_hand()
@@ -794,7 +794,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)
 			t_state = l_hand.icon_state
 		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
-		standing = update_offset(standing, FALSE)
+		standing = human_update_offset(standing, FALSE, src)
 		overlays_standing[L_HAND_LAYER] = standing
 		if(handcuffed)
 			drop_l_hand()
@@ -836,7 +836,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
 			standing.color = wear_suit.color
-			standing = update_offset(standing, TRUE)
+			standing = human_update_offset(standing, TRUE, src)
 			overlays_standing[COLLAR_LAYER]	= standing
 
 	apply_overlay(COLLAR_LAYER)
@@ -882,12 +882,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	out = overlays_standing.Copy()
 	return out
 
-/mob/living/carbon/human/proc/update_offset(image/I, head = TRUE)
+//Offsetting any human's overlay that we dont want to cut.
+/proc/human_update_offset(image/I, head = TRUE, mob/living/carbon/human/H)
 	if(head)
-		if(lying || resting || crawling)
+		if(H.lying || H.resting || H.crawling)
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(height)
+			switch(H.height)
 				if(SHORTEST_HEIGHT)
 					I.pixel_x -= 2
 				if(SHORT_HEIGHT)
@@ -896,12 +897,12 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_x += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_x += 2
-			if(SMALLSIZE in mutations)
+			if(SMALLSIZE in H.mutations)
 				I.pixel_x -= 5
 		else
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(height)
+			switch(H.height)
 				if(SHORTEST_HEIGHT)
 					I.pixel_y -= 2
 				if(SHORT_HEIGHT)
@@ -910,13 +911,13 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_y += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_y += 2
-			if(SMALLSIZE in mutations)
+			if(SMALLSIZE in H.mutations)
 				I.pixel_y -= 5
 	else
-		if(lying || resting || crawling)
+		if(H.lying || H.resting || H.crawling)
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(height)
+			switch(H.height)
 				if(SHORTEST_HEIGHT)
 					I.pixel_x -= 1
 				if(SHORT_HEIGHT)
@@ -925,12 +926,12 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_x += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_x += 1
-			if(SMALLSIZE in mutations)
+			if(SMALLSIZE in H.mutations)
 				I.pixel_x -= 3
 		else
 			I.pixel_x = 0
 			I.pixel_y = 0
-			switch(height)
+			switch(H.height)
 				if(SHORTEST_HEIGHT)
 					I.pixel_y -= 1
 				if(SHORT_HEIGHT)
@@ -939,10 +940,11 @@ Please contact me on #coderbus IRC. ~Carn x
 					I.pixel_y += 1
 				if(TALLEST_HEIGHT)
 					I.pixel_y += 1
-			if(SMALLSIZE in mutations)
+			if(SMALLSIZE in H.mutations)
 				I.pixel_y -= 3
 	return I
 
+//Cutting any human's overlay that we dont want to offset.
 /mob/living/carbon/human/proc/update_height(image/I)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi',"Cut2")
