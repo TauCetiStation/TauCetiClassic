@@ -364,12 +364,12 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.name == SHADOWLING && head)
 		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
+		eyes.plane = LIGHTING_PLANE + 1
 		standing += eyes
 
 	if(iszombie(src) && stat != DEAD)
 		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
+		eyes.plane = LIGHTING_PLANE + 1
 		standing += eyes
 
 	if(!dna || !(dna.mutantrace == "golem"))
@@ -882,7 +882,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	out = overlays_standing.Copy()
 	return out
 
-/mob/living/carbon/human/proc/update_offset(var/image/I, var/head = TRUE)
+/mob/living/carbon/human/proc/update_offset(image/I, head = TRUE)
 	if(head)
 		if(lying || resting || crawling)
 			I.pixel_x = 0
@@ -943,7 +943,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				I.pixel_y -= 3
 	return I
 
-/mob/living/carbon/human/proc/update_height(var/image/I)
+/mob/living/carbon/human/proc/update_height(image/I)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi',"Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi',"Cut3")
