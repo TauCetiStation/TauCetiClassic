@@ -9,7 +9,7 @@ import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
-import { highlightNode, linkifyNode } from './replaceInTextNode';
+import { highlightNode, linkifyNode, emojifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
 
@@ -316,6 +316,11 @@ class ChatRenderer {
         const linkifyNodes = node.querySelectorAll('.linkify');
         for (let i = 0; i < linkifyNodes.length; ++i) {
           linkifyNode(linkifyNodes[i]);
+        }
+        // Emojify text
+        const emojifyNodes = node.querySelectorAll('.emojify');
+        for (let i = 0; i < emojifyNodes.length; ++i) {
+          emojifyNode(emojifyNodes[i]);
         }
         // Assign an image error handler
         if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {

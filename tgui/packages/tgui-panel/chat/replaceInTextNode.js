@@ -126,3 +126,23 @@ const linkifyTextNode = replaceInTextNode(URL_REGEX, text => {
   node.textContent = text;
   return node;
 });
+
+
+// Emojify
+// --------------------------------------------------------
+
+const EMOJI_REGEX = /:[\w\d\-_]+:/g;
+
+/**
+ * Replace emoji texts with images.
+ *
+ * @param {Node} node Node which you want to process
+ * @returns {number} Number of matches
+ */
+export const emojifyNode = node => {
+  node.innerHTML = node.innerHTML.replace(EMOJI_REGEX, emojifyTextNode);
+};
+
+const emojifyTextNode = text => {
+  return '<i class="em em-'+text.slice(1, -1)+'">'+text+'</i>';
+};
