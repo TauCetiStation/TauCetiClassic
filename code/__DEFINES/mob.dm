@@ -194,4 +194,4 @@
 #define SHORT_HEIGHT	"short height"
 #define MEDIUM_HEIGHT	"medium height"
 #define TALL_HEIGHT		"tall height"
-#define	TALLEST_HEIGHT	"tallest height"
+#define TALLEST_HEIGHT	"tallest height"
