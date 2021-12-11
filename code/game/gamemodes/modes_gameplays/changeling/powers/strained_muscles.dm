@@ -2,7 +2,7 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
-	genomecost = 3
+	genomecost = 2
 	req_human = 1
 	max_genetic_damage = 5
 	var/stacks = 0 //Increments every second; damage increases over time
