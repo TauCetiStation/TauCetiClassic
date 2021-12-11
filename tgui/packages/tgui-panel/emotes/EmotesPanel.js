@@ -19,12 +19,10 @@ const CopyToClipboard = (text) => {
 };
 
 export const EmotesPanel = (props, context) => {
-  const emotes = useSelector(context, selectEmotes);
-  const dispatch = useDispatch(context);
   return (
     <Section className="emojiPicker" title="Emoji Picker" scrollable>
       <Box as="p">Emoji will be copied to the clipboard</Box> 
-      <Flex className="emojiList" wrap="wrap" align="center">
+      <Flex className="emojiList" wrap="wrap" align="center" height="125px">
         {emojis.map((v) => {
           return (
             <Flex.Item key={v}
