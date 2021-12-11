@@ -7686,6 +7686,10 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
+"amR" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "amS" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -117711,7 +117715,7 @@ bJe
 bJe
 bJe
 bEY
-cce
+amR
 bJU
 cgh
 cdF
@@ -118742,7 +118746,7 @@ aJV
 aKa
 aNe
 cdA
-cce
+amR
 bHM
 bMl
 chv
