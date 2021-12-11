@@ -58037,11 +58037,6 @@
 	pixel_y = -20;
 	req_access = list(10,13)
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
