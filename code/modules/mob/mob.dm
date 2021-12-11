@@ -1208,7 +1208,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				hud_list[hud] = list()
 			else
 				var/image/I = image('icons/mob/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM|KEEP_APART
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 
 /mob/keybind_face_direction(direction)
