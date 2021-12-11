@@ -26,4 +26,4 @@
 		L.broken()
 
 	feedback_add_details("changeling_powers","RES")
-	return 1
+	return TRUE

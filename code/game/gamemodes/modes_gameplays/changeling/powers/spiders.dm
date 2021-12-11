@@ -14,4 +14,4 @@
 		Sp.amount_grown = 1
 
 	feedback_add_details("changeling_powers","SI")
-	return 1
+	return TRUE
