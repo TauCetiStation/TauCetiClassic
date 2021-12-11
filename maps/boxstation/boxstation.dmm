@@ -57851,6 +57851,12 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
+	icon_state = "radiation";
+	name = "RADIOACTIVE AREA";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -58013,12 +58019,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -58029,7 +58029,7 @@
 	frequency = 1379;
 	master_tag = "engineering_west_airlock";
 	name = "interior access button";
-	pixel_x = -20;
+	pixel_x = 20;
 	pixel_y = -20;
 	req_access = list(10,13)
 	},
@@ -67560,12 +67560,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -67574,6 +67568,12 @@
 "cJr" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
+	icon_state = "radiation";
+	name = "RADIOACTIVE AREA";
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
