@@ -48107,6 +48107,9 @@
 	},
 /obj/item/device/healthanalyzer,
 /obj/item/device/healthanalyzer,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -74693,9 +74696,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/structure/table/glass,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
