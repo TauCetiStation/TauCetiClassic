@@ -161,16 +161,16 @@
 		total_alert_weight += multicid_weight
 
 	/* timezone test */
-	if(chat_data["local_time"] && geoip_processed && geoip_data["offset"])
+	if(chat_processed && chat_data["local_time"] && geoip_processed && geoip_data["offset"])
 		var/timeoffset = text2num(geoip_data["offset"])
 		var/local_time = chat_data["local_time"]
 		if(isnum(timeoffset) && isnum(local_time))
-			var/expected_time = (timeoffset / 3600 + round(world.timeofday / 36000)) % 24
-			var/deviation = abs(local_time - expected_time)
-			if(deviation > 1) // if computer time differs from tz time more than 1 hour
-				var/deviation_weight = 0.7
+			var/deviation = abs(local_time - timeoffset)
+			if(deviation >= 3600) // if local timezone differs from geoip timezone by 3600 seconds
+				var/deviation_weight = 0.5
 				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
 				new_short_report += "TZ deviation (tw: [deviation_weight]); "
+				total_alert_weight += deviation_weight
 
 	// todo:
 	// age & byond profile tests (useless)
