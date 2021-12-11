@@ -77118,7 +77118,7 @@
 	req_one_access = list(24)
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/engineering/atmos)
 "mKb" = (
 /obj/structure/table,
 /obj/item/clothing/mask/gas/coloured,
@@ -81859,9 +81859,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
-"sBY" = (
-/turf/simulated/wall/r_wall,
-/area/space)
 "sCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -122630,8 +122627,8 @@ cdz
 ccB
 bSV
 mKa
-sBY
-sBY
+bSV
+bSV
 aah
 aaa
 aaa
