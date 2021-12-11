@@ -18,15 +18,6 @@
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
 	)
 
-/datum/asset/simple/goonchat
-	assets = list(
-		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
-		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
-		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
-	)
-
 /datum/asset/simple/fontawesome
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
