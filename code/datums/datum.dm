@@ -74,7 +74,7 @@
 	update_filters()
 
 /datum/proc/update_filters()
-	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images and icons.
+	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	A.filters = null
 	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
@@ -107,7 +107,7 @@
 	update_filters()
 
 /datum/proc/get_filter(name)
-	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images and icons.
+	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	if(filter_data && filter_data[name])
 		return A.filters[filter_data.Find(name)]
 
@@ -123,6 +123,6 @@
 	update_filters()
 
 /datum/proc/clear_filters()
-	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images and icons.
+	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	filter_data = null
 	A.filters = null
