@@ -135,12 +135,12 @@
 
 /obj/item/weapon/changeling_test/proc/result_message()
 	if (test_stage == CHANGELING_TEST_PROCESS)
-		. = "You see light is blinking - test in progress and will be ready soon."
+		. = "You see the light is blinking - test is in progress and will be ready soon."
 	else if (test_stage == CHANGELING_TEST_DONE)
 		if(test_result_positive)
-			. = "\nTest is done. You see light is <span class='red'>RED</span>, what means test was positive!"
+			. = "\nThe test is done. You see the light is <span class='red'>RED</span>, this means the test was positive!"
 		else
-			. = "\nTest is done. You see light is <span class='nicegreen'>GREEN</span>, what means test was negative!"
+			. = "\nThe test is done. You see the light is <span class='nicegreen'>GREEN</span>, this means the test was negative!"
 
 #undef CHANGELING_TEST_INACTIVE
 #undef CHANGELING_TEST_PROCESS
