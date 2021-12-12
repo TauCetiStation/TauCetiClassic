@@ -886,9 +886,9 @@ Please contact me on #coderbus IRC. ~Carn x
 /proc/human_update_offset(image/I, mob/living/carbon/human/H, head = TRUE)
 	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
-		L = list(SHORTEST_HEIGHT = -2, SHORT_HEIGHT = -1, MEDIUM_HEIGHT = 0, TALL_HEIGHT = 1, TALLEST_HEIGHT = 2, "gnome" = -5)
+		L = list(HUMANHEIGHT_SHORTEST = -2, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 2, "gnome" = -5)
 	else
-		L = list(SHORTEST_HEIGHT = -1, SHORT_HEIGHT = -1, MEDIUM_HEIGHT = 0, TALL_HEIGHT = 1, TALLEST_HEIGHT = 1, "gnome" = -3)
+		L = list(HUMANHEIGHT_SHORTEST = -1, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 1, "gnome" = -3)
 
 	if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
 		I.pixel_x = L[H.height]
@@ -911,14 +911,14 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	I.remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso","Gnome_Cut_Torso","Gnome_Cut_Legs"))
 	switch(height)
-		if(SHORTEST_HEIGHT)
+		if(HUMANHEIGHT_SHORTEST)
 			I.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
 			I.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-		if(SHORT_HEIGHT)
+		if(HUMANHEIGHT_SHORT)
 			I.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-		if(TALL_HEIGHT)
+		if(HUMANHEIGHT_TALL)
 			I.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
-		if(TALLEST_HEIGHT)
+		if(HUMANHEIGHT_TALLEST)
 			I.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
 			I.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 	if(SMALLSIZE in mutations)

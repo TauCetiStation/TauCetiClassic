@@ -213,7 +213,7 @@
 				if("age")
 					age = rand(specie_obj.min_age, specie_obj.max_age)
 				if("height")
-					height = MEDIUM_HEIGHT
+					height = HUMANHEIGHT_MEDIUM
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)

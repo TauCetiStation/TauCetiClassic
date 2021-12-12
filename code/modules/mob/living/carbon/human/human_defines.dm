@@ -42,7 +42,7 @@
 	var/lip_color = "white"
 
 	var/age = 30                //Player's age (pure fluff)
-	var/height = MEDIUM_HEIGHT  //Player's height
+	var/height = HUMANHEIGHT_MEDIUM  //Player's height
 	var/b_type = "A+"           //Player's bloodtype
 
 	var/underwear = 1   //Which underwear the player wants

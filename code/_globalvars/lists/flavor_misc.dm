@@ -14,4 +14,4 @@ var/global/list/socks_t = list("White normal", "White normal hipster", "White sh
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Sporty Backpack", "Satchel", "Satchel Alt")
 	//Heights
-var/global/list/heights_list = list(SHORTEST_HEIGHT, SHORT_HEIGHT, MEDIUM_HEIGHT, TALL_HEIGHT, TALLEST_HEIGHT)
+var/global/list/heights_list = list(HUMANHEIGHT_SHORTEST, HUMANHEIGHT_SHORT, HUMANHEIGHT_MEDIUM, HUMANHEIGHT_TALL, HUMANHEIGHT_TALLEST)

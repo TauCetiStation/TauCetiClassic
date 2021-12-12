@@ -190,8 +190,8 @@
 #define SYNDICATE_RESPONSE 2
 #define SYNDICATE_AWARE    3
 
-#define SHORTEST_HEIGHT "shortest height"
-#define SHORT_HEIGHT	"short height"
-#define MEDIUM_HEIGHT	"medium height"
-#define TALL_HEIGHT		"tall height"
-#define TALLEST_HEIGHT	"tallest height"
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"
