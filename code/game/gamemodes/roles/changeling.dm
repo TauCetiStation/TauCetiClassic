@@ -88,7 +88,7 @@
 	return TRUE
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
-	antag.current?.hud_used.lingchemdisplay.invisibility = 101
+	antag.current?.hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
@@ -96,7 +96,7 @@
 	geneticdamage = max(0, geneticdamage-1)
 
 	if(antag.current?.hud_used?.lingchemdisplay)
-		antag.current.hud_used.lingchemdisplay.invisibility = 0
+		antag.current.hud_used.lingchemdisplay.invisibility = INVISIBILITY_NONE
 		antag.current.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[chem_charges]</font></div>"
 
 /datum/role/changeling/proc/GetDNA(dna_owner)
