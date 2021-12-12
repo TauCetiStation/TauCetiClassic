@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(sun)
 	init_order = SS_INIT_SUN
 	wait       = SS_WAIT_SUN
 
-	flags = SS_POST_FIRE_TIMING | SS_NO_INIT | SS_NO_TICK_CHECK
+	flags = SS_POST_FIRE_TIMING | SS_NO_INIT
 
 	var/angle
 	var/dx

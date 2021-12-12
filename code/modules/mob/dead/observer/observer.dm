@@ -621,12 +621,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/update_sight()
+	..()
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	updateghostimages()
-	..()
 
 /proc/updateallghostimages()
 	for (var/mob/dead/observer/O in player_list)

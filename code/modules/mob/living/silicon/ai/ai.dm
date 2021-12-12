@@ -161,7 +161,7 @@ var/global/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in ai_list)
+		for (var/mob/living/silicon/ai/A as anything in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null

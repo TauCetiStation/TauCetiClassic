@@ -120,13 +120,16 @@ var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiLi
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
 
-/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "")
+/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "", local_time = "")
 	if(owner.guard.chat_processed)
 		return
 
 	if(charset && istext(charset))
 		src.charset = ckey(charset)
 		owner.guard.chat_data["charset"] = src.charset
+
+	if(local_time && isnum(text2num(local_time)))
+		owner.guard.chat_data["local_time"] = text2num(local_time)
 
 	if(cookie && cookie != "none")
 		var/list/connData = json_decode(cookie)
@@ -242,7 +245,7 @@ var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiLi
 	return "[bicon_cache[key]]"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
-	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, message, handle_whitespace)
 		return
 	SSchat.queue(target, message, handle_whitespace)

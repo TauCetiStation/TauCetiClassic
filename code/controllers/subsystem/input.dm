@@ -27,9 +27,9 @@ SUBSYSTEM_DEF(input)
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		C.set_macros()
 
 /datum/controller/subsystem/input/fire()
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		C.keyLoop()

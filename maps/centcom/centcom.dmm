@@ -4067,6 +4067,9 @@
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/weapon/scalpel/laser3,
 /obj/item/weapon/scalpel/manager,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -24527,7 +24530,6 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "scL" = (
-/obj/item/weapon/storage/box/monkeycubes,
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,

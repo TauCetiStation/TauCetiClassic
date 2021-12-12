@@ -139,6 +139,10 @@ var/global/list/blacklisted_builds = list(
 		cmd_admin_pm(C,null)
 		return
 
+	if(href_list["metahelp"])
+		show_metahelp_message(href_list["metahelp"])
+		return
+
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
@@ -776,3 +780,8 @@ var/global/list/blacklisted_builds = list(
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.tgui_interact(mob)

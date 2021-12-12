@@ -80,7 +80,6 @@
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
-	return TRUE
 
 /// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.
 /datum/faction/cops/proc/check_wanted_level()

@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(xenoarch)
 	init_order = SS_INIT_XENOARCH
 
 	flags = SS_NO_FIRE
+	msg_lobby = "Закапываем древние артефакты..."
 
 	var/const/XENOARCH_SPAWN_CHANCE  = 10 // %
 	var/const/DIGSITESIZE_LOWER      = 5
