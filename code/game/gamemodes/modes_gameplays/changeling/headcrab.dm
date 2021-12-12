@@ -46,7 +46,7 @@
 		user.gib()
 	else
 		qdel(user)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/headcrab
 	name = "headslug"

@@ -215,7 +215,7 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
@@ -640,7 +640,7 @@
 		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || (M in dead_mob_list))
 				to_chat(M, "<font size=4><span class='shadowling'><b>\[Hive Chat\]<i> [usr.real_name] (ASCENDANT)</i>: [sanitize(text)]</b></font></span>")//Bigger text for ascendants.
 
