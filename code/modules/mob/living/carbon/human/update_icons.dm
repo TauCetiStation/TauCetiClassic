@@ -891,7 +891,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			SHORT_HEIGHT = -1,
 			TALL_HEIGHT = 1,
 			TALLEST_HEIGHT = 2,
-			SMALLSIZE = -5,
+			SMALLSIZE = -5
 		)
 	else
 		L = list(
@@ -899,7 +899,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			SHORT_HEIGHT = -1,
 			TALL_HEIGHT = 1,
 			TALLEST_HEIGHT = 1,
-			SMALLSIZE = -3,
+			SMALLSIZE = -3
 		)
 
 	if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
