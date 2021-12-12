@@ -27,6 +27,7 @@
 #define to_chat_admin_chat(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_ADMINCHAT)
 #define to_chat_admin_log(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_ADMINLOG)
 #define to_chat_attack_log(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_ATTACKLOG)
+#define to_chat_debug(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_DEBUG)
 
 
 //Define to create a tooltip when hovering over an item.
