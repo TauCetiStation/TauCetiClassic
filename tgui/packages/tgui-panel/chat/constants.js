@@ -70,7 +70,7 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_WARNING,
     name: 'Warnings',
     description: 'Urgent messages from the game and items',
-    selector: '.warning:not(.pm), .critical, .userdanger, .italics',
+    selector: '.warning:not(.pm), .critical, .italics',
   },
   {
     type: MESSAGE_TYPE_DEADCHAT,
@@ -94,7 +94,7 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_COMBAT,
     name: 'Combat Log',
     description: 'Urist McTraitor has stabbed you with a knife!',
-    selector: '.danger',
+    selector: '.danger, .userdanger',
   },
   {
     type: MESSAGE_TYPE_UNKNOWN,
