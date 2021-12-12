@@ -230,8 +230,6 @@
 	if(M.mind.hulkizing)
 		return
 
-	M.try_mutate_to_hulk()
-
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
