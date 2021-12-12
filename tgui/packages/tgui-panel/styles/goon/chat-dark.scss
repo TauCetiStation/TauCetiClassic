@@ -22,7 +22,6 @@ a:visited {
 ******************************************/
 
 /* MOTD */
-
 .motd {
   color: #a4bad6;
   font-family: Verdana, sans-serif;
@@ -37,53 +36,87 @@ a:visited {
   color: #a4bad6;
 }
 
-/* OUTPUT COLORS */
+/* ANNOUNCEMENTS */
+.host_announcements {
+  border-left: 3px solid #800000;
+  color: #800000;
+}
 
+.host_announcements h1,
+.host_announcements h2,
+.host_announcements h3,
+.host_announcements h4,
+.host_announcements h5,
+.host_announcements h6 {
+  color: #800000;
+}
+
+.host_announcements hr {
+  border-top: 1px dashed #800000;
+}
+
+/* TEST MERGES */
+.test_merges {
+  border-left: 3px solid #000; /* #013220 */
+}
+
+.emphasized {
+  border-left: 3px solid #e9e000;
+  background-color: #faffaf;
+}
+
+/* OUTPUT COLORS */
 .highlight {
   background: yellow;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #a4bad6;
-}
+/* OOC */
+.admin				{color: #5975da;}
+.adminsay			{color: #ff4500;}
+.adminnotice		{color: #6685f5;}
+.boldannounce		{color: #c51e1e;}
+.success				{color: #00bf36;}
+.vote				{color: purple;}
 
+/* Miscellaneous */
+.alert {
+  color: #d82020;
+}
 h1.alert,
 h2.alert {
   color: #a4bad6;
 }
-
-.adminobserverooc {
-  color: #0099cc;
-  font-weight: bold;
+.artefact {
+  color: #ffa500;
+}
+.electronicblue {
+  color: #00bfff;
+  background-color: #414141;
+}
+.piety {
+  color: #ceca0e;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.adminooc {
-  color: #3d5bc3;
-  font-weight: bold;
-}
+/* Radio Channels */
+.comradio		{color: #fcdf03;}
+.syndradio		{color: #8f4a4b;}
+.voxradio		{color: #88900e;}
+.centradio		{color: #2681a5;}
+.airadio		{color: #d65d95;}
+.secradio		{color: #dd3535;}
+.engradio		{color: #f37746;}
+.medradio		{color: #57b8f0;}
+.sciradio		{color: #c68cfa;}
+.supradio		{color: #b88646;}
 
-.adminsay {
-  color: #ff4500;
-  font-weight: bold;
-}
 
-.admin {
-  color: #5975da;
-  font-weight: bold;
-}
-
-.name {
-  font-weight: bold;
-}
-
-.deadsay {
-  color: #e2c1ff;
-}
+/* Radio: Misc */
+.radio			{color: #1ecc43;}
+.deptradio		{color: #993399;}
+.deadsay		{color: #e2c1ff;}
+.ghostalert		{color: #6600ff;}
+.newscaster		{color: #800000;}
 
 .binarysay {
   color: #1e90ff;
@@ -98,520 +131,82 @@ h2.alert {
   color: #88ff88;
 }
 
-/* RADIO COLORS */
-/* IF YOU CHANGE THIS KEEP IT IN SYNC WITH TGUI CONSTANTS */
-
-.radio {
-  color: #1ecc43;
-}
-
-.sciradio {
-  color: #c68cfa;
-}
-
-.comradio {
-  color: #fcdf03;
-}
-
-.secradio {
-  color: #dd3535;
-}
-
-.medradio {
-  color: #57b8f0;
-}
-
-.engradio {
-  color: #f37746;
-}
-
-.suppradio {
-  color: #b88646;
-}
-
-.servradio {
-  color: #6ca729;
-}
-
-.syndradio {
-  color: #8f4a4b;
-}
-
-.gangradio {
-  color: #ac2ea1;
-}
-
-.centcomradio {
-  color: #2681a5;
-}
-
-.aiprivradio {
-  color: #d65d95;
-}
-
-.redteamradio {
-  color: #ff4444;
-}
-
-.blueteamradio {
-  color: #3434fd;
-}
-
-.greenteamradio {
-  color: #34fd34;
-}
-
-.yellowteamradio {
-  color: #fdfd34;
-}
-
-.yell {
-  font-weight: bold;
-}
-
-.alert {
-  color: #d82020;
-}
-
-.userdanger {
-  color: #c51e1e;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.danger {
-  color: #c51e1e;
-}
-
-.warning {
-  color: #c51e1e;
-  font-style: italic;
-}
-
-.alertwarning {
-  color: #ff0000;
-  font-weight: bold;
-}
-
-.boldwarning {
-  color: #c51e1e;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.announce {
-  color: #c51e1e;
-  font-weight: bold;
-}
-
-.boldannounce {
-  color: #c51e1e;
-  font-weight: bold;
-}
-
-.minorannounce {
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.greenannounce {
-  color: #059223;
-  font-weight: bold;
-}
-
-.rose {
-  color: #ff5050;
-}
-
-.info {
-  color: #9ab0ff;
-}
-
-.notice {
-  color: #6685f5;
-}
-
-.tinynotice {
-  color: #6685f5;
-  font-size: 85%;
-}
-
-.tinynoticeital {
-  color: #6685f5;
-  font-style: italic;
-  font-size: 85%;
-}
-
-.smallnotice {
-  color: #6685f5;
-  font-size: 90%;
-}
-
-.smallnoticeital {
-  color: #6685f5;
-  font-style: italic;
-  font-size: 90%;
-}
-
-.boldnotice {
-  color: #6685f5;
-  font-weight: bold;
-}
-
-.hear {
-  color: #6685f5;
-  font-style: italic;
-}
-
-.adminnotice {
-  color: #6685f5;
-}
-
-.adminhelp {
-  color: #ff0000;
-  font-weight: bold;
-}
-
-.unconscious {
-  color: #a4bad6;
-  font-weight: bold;
-}
-
-.suicide {
-  color: #ff5050;
-  font-style: italic;
-}
-
-.green {
-  color: #059223;
-}
-
-.red {
-  color: #ff0000;
-}
-
-.blue {
-  color: #215cff;
-}
-
-.nicegreen {
-  color: #059223;
-}
-
-.cult {
-  color: #973e3b;
-}
-
-.cultitalic {
-  color: #973e3b;
-  font-style: italic;
-}
-
-.cultbold {
-  color: #973e3b;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.cultboldtalic {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.cultlarge {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.narsie {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 925%;
-}
-
-.narsiesmall {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 370%;
-}
-
-.colossus {
-  color: #7f282a;
-  font-size: 310%;
-}
-
-.hierophant {
-  color: #b441ee;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.hierophant_warning {
-  color: #c56bf1;
-  font-style: italic;
-}
-
-.purple {
-  color: #9956d3;
-}
-
-.holoparasite {
-  color: #88809c;
-}
-
-.revennotice {
-  color: #c099e2;
-}
-
-.revenboldnotice {
-  color: #c099e2;
-  font-weight: bold;
-}
-
-.revenbignotice {
-  color: #c099e2;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.revenminor {
-  color: #823abb;
-}
-
-.revenwarning {
-  color: #760fbb;
-  font-style: italic;
-}
-
-.revendanger {
-  color: #760fbb;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.deconversion_message {
-  color: #a947ff;
-  font-size: 185%;
-  font-style: italic;
-}
-
-.ghostalert {
-  color: #6600ff;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.alien {
-  color: #855d85;
-}
-
-.noticealien {
-  color: #059223;
-}
-
-.alertalien {
-  color: #059223;
-  font-weight: bold;
-}
-
-.changeling {
-  color: #059223;
-  font-style: italic;
-}
-
-.alertsyndie {
-  color: #ff0000;
-  font-size: 185%;
-  font-weight: bold;
-}
-
-.spider {
-  color: #8800ff;
-  font-weight: bold;
-  font-size: 185%;
-}
+/* Game Messages */
+.userdanger			{color: #c51e1e;}
+.danger				{color: #c51e1e;}
+.warning			{color: #c51e1e;}
+.boldwarning		{color: #c51e1e;}
+.red				{color: #ff0000;}
+.rose				{color: #ff5050;}
+.info				{color: #9ab0ff;}
+.notice				{color: #6685f5;}
+.boldnotice			{color: #6685f5;}
+.nicegreen			{color: #059223;}
+.boldnicegreen		{color: #059223;}
+
+.wet				{color: #007fbf;}
+
+/* ANTAGS */
+.shadowling			{color: #3b2769;}
+.changeling			{color: #059223;}
+.abductor_team0		{color: #800080;}
+.abductor_team1		{color: #c00070;}
+.abductor_team2		{color: #406e6a;}
+.abductor_team3		{color: #6e4040;}
+.abductor_team4		{color: #800080;}
+.cult				{color: #973e3b;}
+.alien				{color: #855d85;}
+.hive,
+.hive_queen			{color: #763983;}
+.noticealien		{color: #059223;}
+.alertalien			{color: #059223;}
+
+/* Admin: Channels */
+.admin_announce {
+  color: #000;
+  background: #bababa;
+}
+
+/* Languages */
+.tajaran				{color: #803b56;}
+.tajaran_signlang		{color: #941c1c;}
+.skrell					{color: #00ced1;}
+.soghun					{color: #73a800;}
+.vox					{color: #aa00aa;}
+.ipc					{color: #505050;}
+.syndcode				{color: #c21b1b;}
 
 .interface {
-  color: #750e75;
+	color: #750e75;
 }
 
-.sans {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+/* Popup windows */
+.embedded_tip .embedded_tip-text {
+  background-color: #353535;
+  color: white;
+  border: 1px solid black;
 }
 
-.papyrus {
-  font-family: "Papyrus", cursive, sans-serif;
+/* STAFFWHO */
+table.staffwho {
+  color: #333;
 }
 
-.robot {
-  font-family: "Courier New", cursive, sans-serif;
+table.staffwho th {
+	color: #807473;
 }
+table.staffwho .Admins			{color: #e67e22;}
+table.staffwho .Mentors			{color: #e91e63;}
+table.staffwho .Developers		{color: #5e5ed1;}
+table.staffwho .Xenovisors		{color: #2ecc71;}
 
-.tape_recorder {
-  color: #ff0000;
-  font-family: "Courier New", cursive, sans-serif;
-}
-
-.command_headset {
-  font-weight: bold;
-  font-size: 160%;
-}
-
-.small {
-  font-size: 60%;
-}
-
-.big {
-  font-size: 185%;
-}
-
-.reallybig {
-  font-size: 245%;
-}
-
-.extremelybig {
-  font-size: 310%;
-}
-
-.greentext {
-  color: #059223;
-  font-size: 185%;
-}
-
-.redtext {
-  color: #c51e1e;
-  font-size: 185%;
-}
-
+/* CLOWN */
 .clown {
   color: #ff70c1;
-  font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-weight: bold;
 }
 
-.singing {
-  font-family: "Trebuchet MS", cursive, sans-serif;
-  font-style: italic;
-}
 
-.his_grace {
-  color: #15d512;
-  font-family: "Courier New", cursive, sans-serif;
-  font-style: italic;
-}
-
-.hypnophrase {
-  color: #202020;
-  font-weight: bold;
-  animation: hypnocolor 1500ms infinite;
-  animation-direction: alternate;
-}
-
-@keyframes hypnocolor {
-  0% {
-    color: #202020;
-  }
-
-  25% {
-    color: #4b02ac;
-  }
-
-  50% {
-    color: #9f41f1;
-  }
-
-  75% {
-    color: #541c9c;
-  }
-
-  100% {
-    color: #7adbf3;
-  }
-}
-
-.phobia {
-  color: #dd0000;
-  font-weight: bold;
-  animation: phobia 750ms infinite;
-}
-
-@keyframes phobia {
-  0% {
-    color: #f75a5a;
-  }
-
-  50% {
-    color: #dd0000;
-  }
-
-  100% {
-    color: #f75a5a;
-  }
-}
-
-.icon {
-  height: 1em;
-  width: auto;
-}
-
-.bigicon {
-  font-size: 2.5em;
-}
-
-.memo {
-  color: #638500;
-  text-align: center;
-}
-
-.memoedit {
-  text-align: center;
-  font-size: 125%;
-}
-
-.abductor {
-  color: #c204c2;
-  font-style: italic;
-}
-
-.mind_control {
-  color: #df3da9;
-  font-size: 100%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.slime {
-  color: #00ced1;
-}
-
-.drone {
-  color: #848482;
-}
-
-.monkey {
-  color: #975032;
-}
-
-.swarmer {
-  color: #2c75ff;
-}
-
-.resonate {
-  color: #298f85;
-}
-
-.monkeyhive {
-  color: #a56408;
-}
-
-.monkeylead {
-  color: #af6805;
-  font-size: 80%;
-}
-
+/* CONNECTION */
 .connectionClosed,
 .fatalError {
   background: red;
@@ -624,31 +219,6 @@ h2.alert {
 }
 
 .internal.boldnshit {
-  color: #3d5bc3;
+  color: blue;
   font-weight: bold;
-}
-
-
-/* HELPER CLASSES */
-
-.text-normal {
-  font-weight: normal;
-  font-style: normal;
-}
-
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-
-.ml-1 {
-  margin-left: 1em;
-}
-
-.ml-2 {
-  margin-left: 2em;
-}
-
-.ml-3 {
-  margin-left: 3em;
 }
