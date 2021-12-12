@@ -390,7 +390,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if (C)
 			var/marker_preserve_for = timeofdeath ? timeofdeath : world.time
-			marker_preserve_for += 30 SECONDS + rand(0, 20) MINUTES
+			marker_preserve_for += 1 MINUTES + rand(0, 20) MINUTES
 			B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = marker_preserve_for)
 
 	var/list/temp_chem = list()

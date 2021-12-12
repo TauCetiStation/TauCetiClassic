@@ -19,6 +19,8 @@
 	var/datum/reagents/chamber_A
 	var/datum/reagents/chamber_B
 
+	origin_tech = "biotech=1" // after succesfull test biotech=5
+
 /obj/item/weapon/changeling_test/atom_init()
 	. = ..()
 
@@ -45,6 +47,8 @@
 
 	reagents = chamber_B
 
+	update_status()
+
 /obj/item/weapon/changeling_test/attack_self(mob/living/user)
 	if(test_stage != CHANGELING_TEST_INACTIVE)
 		to_chat(user, "<span class='notice'>[result_message()]</span>")
@@ -68,13 +72,14 @@
 	var/datum/reagent/blood/A_blood = chamber_A.get_reagent(/datum/reagent/blood)
 	var/datum/reagent/blood/B_blood = chamber_B.get_reagent(/datum/reagent/blood)
 
-	test_result_positive = TRUE
+	test_result_positive = FALSE
 
-	if(!A_blood || !A_blood.data["changeling_marker"] || !B_blood || !B_blood.data["changeling_marker"])
-		test_result_positive = FALSE
+	if(A_blood && A_blood.data["changeling_marker"] && B_blood && B_blood.data["changeling_marker"])
+		if(A_blood.data["changeling_marker"]["id"] != B_blood.data["changeling_marker"]["id"]) // no reaction between blood from the same changeling
+			test_result_positive = TRUE
 
-	if(A_blood.data["changeling_marker"]["id"] == B_blood.data["changeling_marker"]["id"]) // no reaction between blood from the same changeling
-		test_result_positive = FALSE
+	if(test_result_positive)
+		origin_tech = "biotech=5"
 
 	update_status()
 
@@ -85,7 +90,7 @@
 	if(istype(I, /obj/item/weapon/pen))
 		
 		var/new_label = sanitize_safe(input(user, "Write new label", label), MAX_NAME_LEN)
-		if(!label)
+		if(!new_label)
 			return
 		if(!Adjacent(user))
 			return
@@ -103,6 +108,8 @@
 			B.data["changeling_marker"] = null
 		else // we were fast and blood is in secured location now to preserve marker
 			B.data["changeling_marker"]["timelimit"] = FALSE
+
+	update_status()
 
 /obj/item/weapon/changeling_test/verb/switch_chamber()
 	set name = "Switch opening chamber"
@@ -135,7 +142,7 @@
 
 	var/res = result_message()
 	if(res)
-		desc += "\n [res]"
+		desc += res
 
 	update_icon()
 

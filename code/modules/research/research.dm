@@ -839,7 +839,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe")
+	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe", "changtest")
 
 /datum/technology/portable_chemistry
 	name = "Portable Chemistry"
