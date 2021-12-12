@@ -884,64 +884,35 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Offsetting any human's overlay that we dont want to cut.
 /proc/human_update_offset(image/I, mob/living/carbon/human/H, head = TRUE)
+	var/list/L = list()
 	if(head)//If your item is upper the torso - we want to shift it more.
+		L = list(
+			SHORTEST_HEIGHT = -2,
+			SHORT_HEIGHT = -1,
+			TALL_HEIGHT = 1,
+			TALLEST_HEIGHT = 2,
+			SMALLSIZE = -5,
+		)
+	else
+		L = list(
+			SHORTEST_HEIGHT = -1,
+			SHORT_HEIGHT = -1,
+			TALL_HEIGHT = 1,
+			TALLEST_HEIGHT = 1,
+			SMALLSIZE = -3,
+		)
+
+	if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
+		I.pixel_x = L[H.height]
+	else
+		I.pixel_y = L[H.height]
+
+	if(SMALLSIZE in H.mutations) //Gnome-Guy
 		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
-			I.pixel_x = 0
-			I.pixel_y = 0
-			switch(H.height)//Choosing height
-				if(SHORTEST_HEIGHT)
-					I.pixel_x -= 2
-				if(SHORT_HEIGHT)
-					I.pixel_x -= 1
-				if(TALL_HEIGHT)
-					I.pixel_x += 1
-				if(TALLEST_HEIGHT)
-					I.pixel_x += 2
-			if(SMALLSIZE in H.mutations)//Gnome-Guy
-				I.pixel_x -= 5
-		else//Not changing directions because of no lying/resting/crawling.
-			I.pixel_x = 0
-			I.pixel_y = 0
-			switch(H.height)//Choosing height
-				if(SHORTEST_HEIGHT)
-					I.pixel_y -= 2
-				if(SHORT_HEIGHT)
-					I.pixel_y -= 1
-				if(TALL_HEIGHT)
-					I.pixel_y += 1
-				if(TALLEST_HEIGHT)
-					I.pixel_y += 2
-			if(SMALLSIZE in H.mutations)//Gnome-Guy
-				I.pixel_y -= 5
-	else//If your item is under the torso - we want to shift it less.
-		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
-			I.pixel_x = 0
-			I.pixel_y = 0
-			switch(H.height)//Choosing height
-				if(SHORTEST_HEIGHT)
-					I.pixel_x -= 1
-				if(SHORT_HEIGHT)
-					I.pixel_x -= 1
-				if(TALL_HEIGHT)
-					I.pixel_x += 1
-				if(TALLEST_HEIGHT)
-					I.pixel_x += 1
-			if(SMALLSIZE in H.mutations)//Gnome-Guy
-				I.pixel_x -= 3
-		else//Not changing directions because of no lying/resting/crawling.
-			I.pixel_x = 0
-			I.pixel_y = 0
-			switch(H.height)//Choosing height
-				if(SHORTEST_HEIGHT)
-					I.pixel_y -= 1
-				if(SHORT_HEIGHT)
-					I.pixel_y -= 1
-				if(TALL_HEIGHT)
-					I.pixel_y += 1
-				if(TALLEST_HEIGHT)
-					I.pixel_y += 1
-			if(SMALLSIZE in H.mutations)//Gnome-Guy
-				I.pixel_y -= 3
+			I.pixel_x += L[SMALLSIZE]
+		else
+			I.pixel_y += L[SMALLSIZE]
+
 	return I
 
 //Cutting any human's overlay that we dont want to offset.
