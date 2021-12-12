@@ -69,16 +69,14 @@
 	var/datum/reagent/blood/A_blood = chamber_A.get_reagent(/datum/reagent/blood)
 	var/datum/reagent/blood/B_blood = chamber_B.get_reagent(/datum/reagent/blood)
 
+	test_result_positive = TRUE
 
 	if(!A_blood || !A_blood.data["changeling_marker"] || !B_blood || !B_blood.data["changeling_marker"])
-		update_status()
-		return FALSE
+		test_result_positive = FALSE
 
 	if(A_blood.data["changeling_marker"]["id"] == B_blood.data["changeling_marker"]["id"]) // no reaction between blood from the same changeling
-		update_status()
-		return FALSE
+		test_result_positive = FALSE
 
-	test_result_positive = TRUE // found you!
 	update_status()
 
 	audible_message("[bicon(src)] <span class='notice'>\The [src.name] beeps</span>")
