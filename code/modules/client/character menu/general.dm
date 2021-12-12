@@ -266,7 +266,7 @@
 						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
 				if("height")
-					var/new_height = input(user, "Choose your character's height:\n(1.6-2.0 meters)", "Character Height", height) as null|anything in heights_list
+					var/new_height = input(user, "Choose your character's height:", "Character Height", height) as null|anything in heights_list
 					if(new_height)
 						height = new_height
 

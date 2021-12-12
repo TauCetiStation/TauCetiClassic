@@ -244,7 +244,7 @@
 			H.update_body()
 			H.check_dna(H)
 		if("height")
-			var/new_height = input(H, "Choose your character's height:\n(1.6-2.0 meters)", "Character Height", H.height) as null|anything in heights_list
+			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
 			if(new_height)
 				H.height = new_height
 				H.update_hair()
