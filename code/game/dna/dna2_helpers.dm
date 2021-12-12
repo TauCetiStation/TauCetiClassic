@@ -175,7 +175,7 @@
 		H.apply_recolor()
 		H.update_body()
 		H.update_hair()
-		H.update_height()
+		H.regenerate_icons()
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)
