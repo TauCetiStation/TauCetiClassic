@@ -1,8 +1,3 @@
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-
 #define MESSAGE_TYPE_SYSTEM "system"
 #define MESSAGE_TYPE_LOCALCHAT "localchat"
 #define MESSAGE_TYPE_RADIO "radio"
