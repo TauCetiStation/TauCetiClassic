@@ -2965,6 +2965,8 @@
 	},
 /area/station/security/warden)
 "afs" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/changeling_tests,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -22974,6 +22976,7 @@
 	pixel_x = 4
 	},
 /obj/item/weapon/storage/secure/briefcase,
+/obj/item/weapon/changeling_test,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
