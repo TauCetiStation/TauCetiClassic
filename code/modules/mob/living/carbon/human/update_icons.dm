@@ -884,23 +884,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Offsetting any human's overlay that we dont want to cut.
 /proc/human_update_offset(image/I, mob/living/carbon/human/H, head = TRUE)
-	var/list/L = list()
+	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
-		L = list(
-			SHORTEST_HEIGHT = -2,
-			SHORT_HEIGHT = -1,
-			TALL_HEIGHT = 1,
-			TALLEST_HEIGHT = 2,
-			SMALLSIZE = -5
-		)
+		L = list(SHORTEST_HEIGHT = -2, SHORT_HEIGHT = -1, MEDIUM_HEIGHT = 0, TALL_HEIGHT = 1, TALLEST_HEIGHT = 2, "gnome" = -5)
 	else
-		L = list(
-			SHORTEST_HEIGHT = -1,
-			SHORT_HEIGHT = -1,
-			TALL_HEIGHT = 1,
-			TALLEST_HEIGHT = 1,
-			SMALLSIZE = -3
-		)
+		L = list(SHORTEST_HEIGHT = -1, SHORT_HEIGHT = -1, MEDIUM_HEIGHT = 0, TALL_HEIGHT = 1, TALLEST_HEIGHT = 1, "gnome" = -3)
 
 	if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
 		I.pixel_x = L[H.height]
@@ -909,10 +897,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(SMALLSIZE in H.mutations) //Gnome-Guy
 		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
-			I.pixel_x += L[SMALLSIZE]
+			I.pixel_x += L["gnome"]
 		else
-			I.pixel_y += L[SMALLSIZE]
-
+			I.pixel_y += L["gnome"]
 	return I
 
 //Cutting any human's overlay that we dont want to offset.
