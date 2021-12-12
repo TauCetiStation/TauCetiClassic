@@ -80,7 +80,7 @@
 
 	if(!recipient)
 		if(holder)
-			to_chat_admin_pm(src, "<span class='warning>Error: Admin-PM: Client not found.</span>")
+			to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: Client not found.</span>")
 			if(msg)
 				to_chat_admin_pm(src, "Returned message: [msg]") // this just returns original msg back, so you can copy and paste again or whatever.
 			return
