@@ -245,7 +245,6 @@ a.popt {
 .name,
 .prefix,
 .ooc,
-.adminooc,
 .admin,
 .adminsay,
 .wet {
@@ -368,12 +367,6 @@ em {
 }
 
 /* Admin: Channels */
-.mod,
-.modooc,
-.adminmod {
-  font-weight: bold;
-}
-
 .admin_announce {
   display: inline-block;
   width: 100%;
