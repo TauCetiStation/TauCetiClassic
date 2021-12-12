@@ -6,9 +6,8 @@
 	name = "changeling test device"
 	desc = "Single use test. Read attached instructions before use."
 
-	icon = 'icons/obj/pda.dmi'
-	icon_state = "pai"
-	item_state = "electronic"
+	icon = 'icons/obj/changeling_test.dmi'
+	icon_state = "chantest0"
 
 	var/label
 	
@@ -125,20 +124,48 @@
 	desc = initial(desc)
 
 	if(label)
-		desc += "\n Label has next text: \"[label]\""
+		desc += "\n Label has next text: \"[label]\"."
+
+	if(chamber_A.total_volume && chamber_B.total_volume)
+		desc += "\n You see both test chambers is filled."
+	else if (chamber_A.total_volume)
+		desc += "\n You see test chambers A is filled."
+	else if (chamber_B.total_volume)
+		desc += "\n You see test chambers B is filled."
 
 	var/res = result_message()
 	if(res)
 		desc += "\n [res]"
+
+	update_icon()
+
+/obj/item/weapon/changeling_test/update_icon()
+	cut_overlays()
+	icon_state = "chantest0"
+
+
+	if (test_stage == CHANGELING_TEST_PROCESS)
+		icon_state = "chantest1"
+	else if (test_stage == CHANGELING_TEST_DONE)
+		if(test_result_positive)
+			icon_state = "chantest3"
+		else
+			icon_state = "chantest2"
+
+	if(chamber_A.total_volume)
+		add_overlay("blooda")
+
+	if(chamber_B.total_volume)
+		add_overlay("bloodb")
 
 /obj/item/weapon/changeling_test/proc/result_message()
 	if (test_stage == CHANGELING_TEST_PROCESS)
 		. = "You see the light is blinking - test is in progress and will be ready soon."
 	else if (test_stage == CHANGELING_TEST_DONE)
 		if(test_result_positive)
-			. = "\nThe test is done. You see the light is <span class='red'>RED</span>, this means the test was positive!"
+			. = "\nThe test is done. You see the light is <span class='nicegreen'>GREEN</span>, this means the test was positive!"
 		else
-			. = "\nThe test is done. You see the light is <span class='nicegreen'>GREEN</span>, this means the test was negative!"
+			. = "\nThe test is done. You see the light is <span class='red'>RED</span>, this means the test was negative!"
 
 #undef CHANGELING_TEST_INACTIVE
 #undef CHANGELING_TEST_PROCESS
