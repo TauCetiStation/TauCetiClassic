@@ -108,6 +108,10 @@
 	var/gifts_dealt = 0
 	var/list/decals = list()
 
+/obj/item/device/flashlight/lamp/fir/special/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
+
 
 /obj/item/device/flashlight/lamp/fir/special/examine(mob/user)
 	..()
@@ -126,20 +130,15 @@
 			user.drop_from_inventory(present, src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
-	if(!(I.flags & ABSTRACT))
-		if(user.drop_from_inventory(I, loc))
-			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
-			I.layer = 5.1 // Item should be on the tree, not under
-			I.anchored = TRUE // Make item a part of the tree
-			decals += I
-			var/list/click_params = params2list(params)
-			// Center the icon where the user clicked.
-			I.pixel_x = (text2num(click_params[ICON_X]) - 16)
-			I.pixel_y = (text2num(click_params[ICON_Y]) - 16)
-			if(istype(I, /obj/item/organ/external/head))
-				I.pixel_y -= 10 // Head always has 10 pixels shift
-				I.set_dir(2) // Rotate head face to us
-				I.transform = turn(null, null)	//Turn it to initial angle
+	. = TRUE //passing info to the parent's proc
+	. = ..()
+	if(istype(I, /obj/item/organ/external/head))
+		I.pixel_y -= 10 // Head always has 10 pixels shift
+		I.set_dir(2) // Rotate head face to us
+		I.transform = turn(null, null)	//Turn it to initial angle
+	I.layer = 5.1
+	I.pixel_x += pixel_x
+	I.pixel_y += pixel_y
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))
