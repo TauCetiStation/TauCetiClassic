@@ -287,3 +287,7 @@ var/global/list/virusDB = list()
 
 /obj/machinery/disease2
 	allowed_checks = ALLOWED_CHECK_TOPIC
+
+#undef DISEASE_SPREAD_AIRBORNE
+#undef DISEASE_SPREAD_CONTACT
+#undef DISEASE_SPREAD_BLOOD
