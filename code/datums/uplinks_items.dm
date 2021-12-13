@@ -223,7 +223,7 @@
 	name = "Drozd OTs-114 Assault Carbine"
 	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/drozd
-	cost = 24
+	cost = 20
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/crossbow
@@ -465,14 +465,7 @@
 	cost = 4
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/grenade_launcher_rub
-	name = "Ammo-40x46mm (rubber)"
-	desc = "A single grenade for use in underslung grenade launcher. This one is rubber."
-	item = /obj/item/ammo_casing/r4046
-	cost = 1
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/ammo/grenade_launcher_exp
+/datum/uplink_item/ammo/grenade_launcher
 	name = "Ammo-40x46mm (explosive)"
 	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
 	item = /obj/item/ammo_casing/r4046/explosive
@@ -922,7 +915,7 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
-
+	
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
 	desc = "An implant, that explodes with different power when activated by a code word."
