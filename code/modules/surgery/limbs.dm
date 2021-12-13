@@ -204,7 +204,7 @@
 		target.hair_painted = B.hair_painted
 		target.update_hair()
 		target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
-		if(B.brainmob.dna != target.dna) // so they cannot be cloned if the head is not in its body
+		if(B.brainmob.dna.unique_enzymes != target.dna.unique_enzymes) // so they cannot be cloned if the head is not in its body
 			ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
