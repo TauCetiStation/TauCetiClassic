@@ -1,7 +1,11 @@
+#define DISEASE_SPREAD_AIRBORNE "Airborn"
+#define DISEASE_SPREAD_CONTACT "Contact"
+#define DISEASE_SPREAD_BLOOD "Blood"
+
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = "Contact" // Can also be "Airborne"
+	var/spreadtype = DISEASE_SPREAD_AIRBORNE
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
@@ -79,7 +83,12 @@
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = prob(60) ? "Airborne" : "Contact"
+	if (prob(40))
+		spreadtype = DISEASE_SPREAD_AIRBORNE
+	else if(prob(50))
+		spreadtype = DISEASE_SPREAD_CONTACT
+	else
+		spreadtype = DISEASE_SPREAD_BLOOD
 
 	if(all_species.len)
 		affected_species = get_infectable_species()
@@ -136,7 +145,7 @@
 			e.runeffect(mob, src)
 
 	//Short airborne spread
-	if(src.spreadtype == "Airborne" && prob(10))
+	if(src.spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
 		spread(mob, 1)
 
 	//fever
@@ -149,8 +158,10 @@
 		stage++
 
 /datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
+	if (src.spreadtype == DISEASE_SPREAD_BLOOD)
+		return
 	for(var/mob/living/carbon/M in oview(radius,mob))
-		if(airborne_can_reach(get_turf(mob), get_turf(M)))
+		if (airborne_can_reach(get_turf(mob), get_turf(M)))
 			infect_virus2(M,src)
 			mob.med_hud_set_status()
 
