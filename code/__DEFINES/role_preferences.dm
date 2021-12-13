@@ -30,7 +30,6 @@
 #define IGNORE_POSBRAIN     "Positronic brain"
 #define IGNORE_DRONE        "Drone"
 #define IGNORE_BORER        "Borer"
-#define IGNORE_FAMILIAR     "Religion familiar"
 #define IGNORE_NARSIE_SLAVE "Nar-sie slave"
 #define IGNORE_SYNDI_BORG   "Syndicate robot"
 #define IGNORE_FACEHUGGER   "Facehugger"
@@ -52,7 +51,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
 	ROLE_FAMILIES   = null,
-	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE ,IGNORE_FAMILIAR, IGNORE_BORER),
+	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE, IGNORE_BORER),
 )
 
 var/global/list/special_roles

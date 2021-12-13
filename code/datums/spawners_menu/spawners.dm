@@ -53,7 +53,7 @@ var/global/list/datum/spawners = list()
 	var/client/C = ghost.client
 	spawn_ghost(ghost)
 
-	message_admins("[C.mob] as [name] has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
+	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 
 	if(del_after_spawn)
 		qdel(src)
@@ -170,8 +170,14 @@ var/global/list/datum/spawners = list()
 /datum/spawner/ert
 	name = "ЕРТ"
 	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
+	flavor_text = "https://wiki.taucetistation.org/Emergency_Response_Team"
+	important_info = "Ваша цель: "
 
 	ranks = list(ROLE_ERT, "Security Officer")
+
+/datum/spawner/ert/New(time_to_expiration, mission)
+	..()
+	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
 	var/list/correct_landmarks = list()
@@ -246,3 +252,26 @@ var/global/list/datum/spawners = list()
 	add_faction_member(N, new_ninja, FALSE)
 
 	set_ninja_objectives(new_ninja)
+
+/datum/spawner/religion_familiar
+	name = "Фамильяр Религии"
+	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/animal
+	var/datum/religion/religion
+
+/datum/spawner/religion_familiar/New(time_to_expiration, mob/_animal, datum/religion/_religion)
+	. = ..()
+	animal = _animal
+	religion = _religion
+
+	desc = "Вы появляетесь в виде [animal.name] в подчинении [religion.name]."
+
+/datum/spawner/religion_familiar/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(animal))
+
+/datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+	animal.ckey = ghost.ckey
+	religion.add_member(animal, HOLY_ROLE_PRIEST)

@@ -126,10 +126,7 @@
 	return pick(summon_type)
 
 /datum/religion_rites/standing/spawn_item/call_animal/proc/call_ghost(mob/animal)
-	var/list/candidates = pollGhostCandidates("Do you want to become the Familiar of [religion]?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
-	if(!candidates.len)
-		return
-	var/mob/M = pick(candidates)
+	create_spawners(/datum/spawner/religion_familiar, 1, _animal = animal, _religion = religion)
 
 	var/god_name
 	if(religion.active_deities.len == 0)
@@ -138,13 +135,9 @@
 		var/mob/god = pick(religion.active_deities)
 		god_name = god.name
 
-	animal.ckey = M.ckey
 	animal.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 	animal.real_name = animal.name
-	religion.add_member(animal, HOLY_ROLE_PRIEST)
 	animal.universal_understand = TRUE
-	M.cancel_camera()
-	M.reset_view()
 
 /datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
 	INVOKE_ASYNC(src, .proc/call_ghost, animal)

@@ -43,7 +43,7 @@
 			if(timeleft(S.timer_to_expiration) < min_time)
 				min_time = timeleft(S.timer_to_expiration)
 
-		this["time_left"] = min_time
+		this["time_left"] = min_time != INFINITY ? min_time : null
 
 		data["spawners"] += list(this)
 	return data
@@ -72,11 +72,9 @@
 	switch(action)
 		if("jump")
 			spawner.jump(owner)
-			to_chat(world, "[action] - [spawner.name] is work")
 			return TRUE
 		if("spawn")
 			role_choosed = TRUE
 			spawner.do_spawn(owner)
 			role_choosed = FALSE
-			to_chat(world, "[action] - [spawner.name] is work")
 			return TRUE
