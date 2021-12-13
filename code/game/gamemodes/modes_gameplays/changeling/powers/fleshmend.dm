@@ -17,4 +17,4 @@
 			sleep(10)
 
 	feedback_add_details("changeling_powers","RR")
-	return 1
+	return TRUE

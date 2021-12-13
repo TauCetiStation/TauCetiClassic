@@ -5491,6 +5491,9 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed1{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -11753,6 +11756,9 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/toxin,
+/obj/machinery/vending/wallmed1{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
