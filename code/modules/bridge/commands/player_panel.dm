@@ -28,7 +28,7 @@
 	var/message = ""
 	var/client/online_client
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(C.ckey == ckey)
 			online_client = C
 			break

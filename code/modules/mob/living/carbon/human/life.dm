@@ -1427,6 +1427,7 @@
 /mob/living/carbon/human/update_sight()
 	if(!..())
 		return FALSE
+
 	if(daltonism)
 		set_EyesVision(sightglassesmod)
 		return FALSE
@@ -1442,6 +1443,8 @@
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 		if(G.sightglassesmod && (G.active || !G.toggleable))
 			sightglassesmod = G.sightglassesmod
+		else
+			sightglassesmod = null
 	else
 		sightglassesmod = null
 

@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
+	msg_lobby = "Строим станцию..."
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config

@@ -191,7 +191,7 @@ var/global/list/alldepartments = list("Central Command")
 	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
 	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
