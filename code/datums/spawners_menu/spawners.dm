@@ -1,4 +1,5 @@
 var/global/list/datum/spawners = list()
+var/global/list/datum/spawners_cooldown = list()
 
 /proc/_create_spawners(type, id, num, list/arguments)
 	// arguments must have at least 1 element due to the use of arglist
@@ -31,15 +32,17 @@ var/global/list/datum/spawners = list()
 
 	var/list/ranks
 	var/del_after_spawn = TRUE
-	var/cooldown
+	var/cooldown = 10 MINUTES
+
+	var/time_to_del
 	var/timer_to_expiration
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
-	if(time_to_expiration)
-		timer_to_expiration = QDEL_IN(src, time_to_expiration)
+	if(time_to_del)
+		timer_to_expiration = QDEL_IN(src, time_to_del)
 
 /datum/spawner/Destroy()
 	var/list/spawn_list = global.spawners[id]
@@ -53,6 +56,22 @@ var/global/list/datum/spawners = list()
 
 	return ..()
 
+/datum/spawner/proc/add_client_cooldown(client/C)
+	if(cooldown)
+		if(!global.spawners_cooldown[C.ckey])
+			global.spawners_cooldown[C.ckey] = list()
+		var/list/ckey_cooldowns = global.spawners_cooldown[C.ckey]
+		ckey_cooldowns[type] = world.time + cooldown
+
+/datum/spawner/proc/check_cooldown(mob/dead/observer/ghost)
+	if(global.spawners_cooldown[ghost.ckey])
+		var/list/ckey_cooldowns = global.spawners_cooldown[ghost.ckey]
+		if(world.time < ckey_cooldowns[type])
+			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
+			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
+			return FALSE
+	return TRUE
+
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
 	if(!can_spawn(ghost))
 		return
@@ -62,11 +81,15 @@ var/global/list/datum/spawners = list()
 
 	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 
+	add_client_cooldown(C)
+
 	if(del_after_spawn)
 		qdel(src)
 
 /datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
 	if(!ghost.client)
+		return FALSE
+	if(!check_cooldown(ghost))
 		return FALSE
 	if(!ranks)
 		return TRUE
@@ -181,7 +204,7 @@ var/global/list/datum/spawners = list()
 	important_info = "Ваша цель: "
 
 	ranks = list(ROLE_ERT, "Security Officer")
-	timer_to_expiration = 5 MINUTES
+	time_to_del = 5 MINUTES
 
 /datum/spawner/ert/New(mission)
 	..()
@@ -230,7 +253,7 @@ var/global/list/datum/spawners = list()
 	flavor_text = "https://wiki.taucetistation.org/Blob"
 
 	ranks = list(ROLE_BLOB)
-	timer_to_expiration = 3 MINUTES
+	time_to_del = 3 MINUTES
 
 /datum/spawner/blob_event/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart) //TODO: blobstart
@@ -246,7 +269,7 @@ var/global/list/datum/spawners = list()
 	flavor_text = "https://wiki.taucetistation.org/Space_Ninja"
 
 	ranks = list(ROLE_NINJA)
-	timer_to_expiration = 3 MINUTES
+	time_to_del = 3 MINUTES
 
 /datum/spawner/ninja_event/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(ninjastart)
@@ -291,6 +314,7 @@ var/global/list/datum/spawners = list()
 	desc = "Вы появляетесь на арене и должны выжить."
 
 	ranks = list(ROLE_GHOSTLY)
+	cooldown = 0
 	del_after_spawn = FALSE
 
 /datum/spawner/gladiator/jump(mob/dead/observer/ghost)
@@ -307,3 +331,12 @@ var/global/list/datum/spawners = list()
 
 	ranks = list("Mouse")
 	del_after_spawn = FALSE
+
+/datum/spawner/mouse/can_spawn(mob/dead/observer/ghost)
+	if(config.disable_player_mice)
+		to_chat(ghost, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/mouse/spawn_ghost(mob/dead/observer/ghost)
+	ghost.mousize()

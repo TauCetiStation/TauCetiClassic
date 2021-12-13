@@ -439,36 +439,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(t)
 		print_atmos_analysis(src, atmosanalyzer_scan(t))
 
-/mob/dead/observer/verb/become_mouse()
-	set name = "Become mouse"
-	set category = "Ghost"
-
-	if(jobban_isbanned(src, "Mouse"))
-		to_chat(src, "<span class='warning'>You have been banned from being mouse.</span>")
-		return
-
-	if(config.disable_player_mice)
-		to_chat(src, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
-		return
-
-	var/mob/dead/observer/M = usr
-	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a mouse.</span>")
-		return
-
-	var/timedifference = world.time - client.time_died_as_mouse
-	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
-		var/timedifference_text
-		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		to_chat(src, "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
-		return
-
-	var/response = tgui_alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?", list("Squeek!","Nope!"))
-	if(response != "Squeek!")
-		return  //Hit the wrong key...again.
-
-	mousize()
-
 /mob/proc/mousize()
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
