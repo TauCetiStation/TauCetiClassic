@@ -64,8 +64,6 @@
 	var/atom/movable/screen/spawners_menu_button
 
 /datum/hud/ghost/New()
-	var/mob/dead/observer/G = mymob
-
 	adding = list()
 	var/atom/movable/screen/using
 

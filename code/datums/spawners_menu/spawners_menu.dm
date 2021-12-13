@@ -1,6 +1,8 @@
 /datum/spawners_menu
 	var/mob/dead/observer/owner
 
+	var/role_choosed = FALSE
+
 /datum/spawners_menu/New(mob/dead/observer/new_owner)
 	if(!istype(new_owner))
 		qdel(src)
@@ -51,6 +53,10 @@
 	if(.)
 		return
 
+	if(role_choosed)
+		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
+		return
+
 	var/spawner_type = text2path(params["type"])
 	if(!(spawner_type in global.spawners))
 		return
@@ -69,6 +75,8 @@
 			to_chat(world, "[action] - [spawner.name] is work")
 			return TRUE
 		if("spawn")
+			role_choosed = TRUE
 			spawner.do_spawn(owner)
+			role_choosed = FALSE
 			to_chat(world, "[action] - [spawner.name] is work")
 			return TRUE
