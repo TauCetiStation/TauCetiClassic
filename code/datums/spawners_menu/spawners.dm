@@ -1,8 +1,10 @@
 var/global/list/datum/spawners = list()
 
-/// A wrapper for _create_spawners that allows us to pretend we're using normal named arguments
-#define create_spawners(type, id, num, arguments...) _create_spawners(type, id, num, list(##arguments))
 /proc/_create_spawners(type, id, num, list/arguments)
+	// arguments must have at least 1 element due to the use of arglist
+	if(!arguments.len)
+		arguments += null
+
 	for(var/i in 1 to num)
 		var/datum/spawner/spawner = new type(arglist(arguments))
 
@@ -279,3 +281,17 @@ var/global/list/datum/spawners = list()
 /datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
 	animal.ckey = ghost.ckey
 	religion.add_member(animal, HOLY_ROLE_PRIEST)
+
+/datum/spawner/gladiator
+	name = "Гладиатор"
+	desc = "Вы появляетесь на арене и должны выжить."
+
+	ranks = list(ROLE_GHOSTLY)
+	del_after_spawn = FALSE
+
+/datum/spawner/gladiator/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(eorgwarp)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/gladiator/spawn_ghost(mob/dead/observer/ghost)
+	SSticker.spawn_gladiator(ghost, FALSE)
