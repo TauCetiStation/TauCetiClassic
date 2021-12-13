@@ -48,7 +48,7 @@
 	var/open
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/process_chamber()
-	return ..(0, 0)
+	return ..(eject_casing = FALSE, empty_chamber = FALSE)
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/update_icon()
 	icon_state = "[initial(icon_state)][open ? "-open" : ""]"
