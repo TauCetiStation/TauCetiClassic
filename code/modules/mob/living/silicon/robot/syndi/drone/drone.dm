@@ -1,7 +1,5 @@
 /mob/living/silicon/robot/drone/syndi
 	real_name = "syndicate drone"
-	maxHealth = 25
-	health = 25
 	scrambledcodes = TRUE
 	modtype = "Syndicate"
 	faction = "syndicate"

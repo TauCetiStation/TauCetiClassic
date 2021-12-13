@@ -295,7 +295,7 @@
 	cost = 5
 
 /datum/drone_upgrade/internal/extra_armor/install(mob/living/silicon/robot/drone/syndi/D)
-	D.maxHealth += 20
+	D.maxHealth += 30
 	return TRUE
 
 /datum/drone_upgrade/internal/speed_boost
