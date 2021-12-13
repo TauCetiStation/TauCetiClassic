@@ -31,9 +31,10 @@ var/global/list/datum/spawners = list()
 
 	var/list/ranks
 	var/del_after_spawn = TRUE
+	var/cooldown
 	var/timer_to_expiration
 
-/datum/spawner/New(time_to_expiration)
+/datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
@@ -180,8 +181,9 @@ var/global/list/datum/spawners = list()
 	important_info = "Ваша цель: "
 
 	ranks = list(ROLE_ERT, "Security Officer")
+	timer_to_expiration = 5 MINUTES
 
-/datum/spawner/ert/New(time_to_expiration, mission)
+/datum/spawner/ert/New(mission)
 	..()
 	important_info += mission
 
@@ -228,6 +230,7 @@ var/global/list/datum/spawners = list()
 	flavor_text = "https://wiki.taucetistation.org/Blob"
 
 	ranks = list(ROLE_BLOB)
+	timer_to_expiration = 3 MINUTES
 
 /datum/spawner/blob_event/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart) //TODO: blobstart
@@ -243,6 +246,7 @@ var/global/list/datum/spawners = list()
 	flavor_text = "https://wiki.taucetistation.org/Space_Ninja"
 
 	ranks = list(ROLE_NINJA)
+	timer_to_expiration = 3 MINUTES
 
 /datum/spawner/ninja_event/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(ninjastart)
@@ -295,3 +299,11 @@ var/global/list/datum/spawners = list()
 
 /datum/spawner/gladiator/spawn_ghost(mob/dead/observer/ghost)
 	SSticker.spawn_gladiator(ghost, FALSE)
+
+/datum/spawner/mouse
+	name = "Мышь"
+	desc = "Вы появляетесь где-то в вентиляции."
+	flavor_text = "https://wiki.taucetistation.org/Mouse"
+
+	ranks = list("Mouse")
+	del_after_spawn = FALSE
