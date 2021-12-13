@@ -5,7 +5,7 @@
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = DISEASE_SPREAD_AIRBORNE
+	var/spreadtype = DISEASE_SPREAD_CONTACT
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
