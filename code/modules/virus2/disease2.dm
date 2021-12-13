@@ -17,6 +17,7 @@
 	var/max_symptoms = 6
 	var/cooldown_mul = 1
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
+	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 5, DISEASE_SPREAD_CONTACT = 3, DISEASE_SPREAD_BLOOD = 2)
 
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
@@ -83,12 +84,7 @@
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	if (prob(40))
-		spreadtype = DISEASE_SPREAD_AIRBORNE
-	else if(prob(50))
-		spreadtype = DISEASE_SPREAD_CONTACT
-	else
-		spreadtype = DISEASE_SPREAD_BLOOD
+	spreadtype = pickweight(spread_types)
 
 	if(all_species.len)
 		affected_species = get_infectable_species()
@@ -145,7 +141,7 @@
 			e.runeffect(mob, src)
 
 	//Short airborne spread
-	if(src.spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
+	if(spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
 		spread(mob, 1)
 
 	//fever
@@ -158,7 +154,7 @@
 		stage++
 
 /datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
-	if (src.spreadtype == DISEASE_SPREAD_BLOOD)
+	if (spreadtype == DISEASE_SPREAD_BLOOD)
 		return
 	for(var/mob/living/carbon/M in oview(radius,mob))
 		if (airborne_can_reach(get_turf(mob), get_turf(M)))
