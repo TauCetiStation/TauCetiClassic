@@ -1,10 +1,13 @@
 var/global/list/datum/spawners = list()
 
 /// A wrapper for _create_spawners that allows us to pretend we're using normal named arguments
-#define create_spawners(type, num, arguments...) _create_spawners(type, num, list(##arguments))
-/proc/_create_spawners(type, num, list/arguments)
+#define create_spawners(type, id, num, arguments...) _create_spawners(type, id, num, list(##arguments))
+/proc/_create_spawners(type, id, num, list/arguments)
 	for(var/i in 1 to num)
-		new type(arglist(arguments))
+		var/datum/spawner/spawner = new type(arglist(arguments))
+
+		spawner.id = id
+		LAZYADD(global.spawners[id], spawner)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(ghost.spawners_menu)
@@ -18,6 +21,8 @@ var/global/list/datum/spawners = list()
 
 /datum/spawner
 	var/name
+	var/id
+
 	var/desc
 	var/flavor_text
 	var/important_info
@@ -29,16 +34,15 @@ var/global/list/datum/spawners = list()
 /datum/spawner/New(time_to_expiration)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	LAZYADD(global.spawners[type], src)
 
 	if(time_to_expiration)
 		timer_to_expiration = QDEL_IN(src, time_to_expiration)
 
 /datum/spawner/Destroy()
-	var/list/spawn_list = global.spawners[type]
+	var/list/spawn_list = global.spawners[id]
 	LAZYREMOVE(spawn_list, src)
 	if(!length(spawn_list))
-		global.spawners -= type
+		global.spawners -= id
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(ghost.spawners_menu)

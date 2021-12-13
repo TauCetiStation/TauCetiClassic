@@ -25,11 +25,11 @@
 /datum/spawners_menu/tgui_data(mob/user)
 	var/list/data = list()
 	data["spawners"] = list()
-	for(var/spawner_type in global.spawners)
+	for(var/spawner_id in global.spawners)
 		var/list/this = list()
-		var/list/spawners_list = global.spawners[spawner_type]
+		var/list/spawners_list = global.spawners[spawner_id]
 		var/datum/spawner/spawner = pick(spawners_list)
-		this["type"] = spawner_type
+		this["type"] = spawner_id
 		this["name"] = spawner.name
 		this["short_desc"] = spawner.desc
 		this["flavor_text"] = spawner.flavor_text
@@ -57,11 +57,11 @@
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
-	var/spawner_type = text2path(params["type"])
-	if(!(spawner_type in global.spawners))
+	var/spawner_id = params["type"]
+	if(!(spawner_id in global.spawners))
 		return
 
-	var/list/spawnerlist = global.spawners[spawner_type]
+	var/list/spawnerlist = global.spawners[spawner_id]
 	if(!spawnerlist.len)
 		return
 

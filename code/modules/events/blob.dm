@@ -8,4 +8,4 @@
 		kill()
 		return
 
-	create_spawners(/datum/spawner/blob_event, 1, 3 MINUTES)
+	create_spawners(/datum/spawner/blob_event, "blob_event", 1, 3 MINUTES)

@@ -40,7 +40,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	create_spawners(/datum/spawner/dealer, 2)
+	create_spawners(/datum/spawner/dealer, "dealer", 2)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()

@@ -5,7 +5,7 @@
 			if(L.name == "ninja")
 				ninjastart.Add(L)
 
-	create_spawners(/datum/spawner/ninja_event, 1, 3 MINUTES)
+	create_spawners(/datum/spawner/ninja_event, "ninja_event", 1, 3 MINUTES)
 
 /*
 Also a dynamic ninja mission generator.

@@ -31,4 +31,4 @@
 	return TRUE
 
 /proc/spawn_space_police(team_size, cops_type)
-	create_spawners(cops_type, team_size)
+	create_spawners(cops_type, "[cops_type]", team_size)
