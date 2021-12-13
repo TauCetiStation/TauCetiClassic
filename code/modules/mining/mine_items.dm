@@ -40,8 +40,8 @@
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
-var/mining_shuttle_moving = 0
-var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+var/global/mining_shuttle_moving = 0
+var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
@@ -234,11 +234,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/weapon/sledgehammer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 35
+	TCB.force_unwielded = 15
+	TCB.icon_wielded = "sledgehammer1"
+	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()

@@ -5,8 +5,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"
-	layer = MOB_LAYER // on tg it is FLOAT LAYER
-	plane = FLOAT_PLANE
+	plane = GHOST_PLANE
 	stat = DEAD
 	density = FALSE
 	canmove = 0
@@ -620,12 +619,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	
 
 /mob/dead/observer/update_sight()
+	..()
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	updateghostimages()
-	..()
 
 /proc/updateallghostimages()
 	for (var/mob/dead/observer/O in player_list)
