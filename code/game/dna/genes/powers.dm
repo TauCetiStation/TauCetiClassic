@@ -224,7 +224,7 @@
 		return FALSE
 	return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/living/M, connected, flags)
+/datum/dna/gene/basic/hulk/activate(mob/living/carbon/human/M, connected, flags)
 	if(!M.mind)
 		return
 	if(M.mind.hulkizing)
@@ -264,6 +264,8 @@
 
 	Monster.original_body = src
 	forceMove(Monster)
+	
+	client?.show_metahelp_greeting("hulk")
 	mind.transfer_to(Monster)
 
 	Monster.attack_log = attack_log
