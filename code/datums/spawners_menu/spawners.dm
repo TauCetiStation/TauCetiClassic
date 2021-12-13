@@ -50,7 +50,10 @@ var/global/list/datum/spawners = list()
 	if(!can_spawn(ghost))
 		return
 
+	var/client/C = ghost.client
 	spawn_ghost(ghost)
+
+	message_admins("[C.mob] as [name] has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 
 	if(del_after_spawn)
 		qdel(src)
@@ -168,7 +171,6 @@ var/global/list/datum/spawners = list()
 	name = "ЕРТ"
 	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
 
-	del_after_spawn = FALSE
 	ranks = list(ROLE_ERT, "Security Officer")
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
@@ -207,3 +209,40 @@ var/global/list/datum/spawners = list()
 
 	if(ERT_team)
 		add_faction_member(ERT_team, new_commando, FALSE)
+
+/datum/spawner/blob_event
+	name = "Блоб"
+	desc = "Вы появляетесь в случайной точки станции в виде блоба."
+	flavor_text = "https://wiki.taucetistation.org/Blob"
+
+	ranks = list(ROLE_BLOB)
+
+/datum/spawner/blob_event/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(copsstart) //TODO: blobstart
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
+	var/turf/spawn_turf = pick(copsstart) //TODO: blobstart
+	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
+
+/datum/spawner/ninja_event
+	name = "Космический Ниндзя"
+	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
+	flavor_text = "https://wiki.taucetistation.org/Space_Ninja"
+
+	ranks = list(ROLE_NINJA)
+
+/datum/spawner/ninja_event/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(ninjastart)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/ninja_event/spawn_ghost(mob/dead/observer/ghost)
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
+	new_ninja.key = ghost.key
+
+	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
+	if(!N)
+		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	add_faction_member(N, new_ninja, FALSE)
+
+	set_ninja_objectives(new_ninja)

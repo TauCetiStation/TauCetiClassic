@@ -7,9 +7,9 @@ export const SpawnersMenu = (props, context) => {
   const { act, data } = useBackend(context);
   const spawners = data.spawners;
   return (
-    <Window title="Spawners Menu" width={700} height={525}>
+    <Window title="Spawner Menu" width={700} height={525}>
       <Window.Content scrollable>
-        <Flex>
+        <Flex direction="column">
           {!spawners.length && (
             <Flex.Item fontSize="14px" bold>
               Ролей нет, но не печалься, они скоро будут!
@@ -63,6 +63,7 @@ export const SpawnersMenu = (props, context) => {
                   )}
                 </LabeledList>
               </Section>
+              <br />
             </Flex.Item>
           ))}
         </Flex>
