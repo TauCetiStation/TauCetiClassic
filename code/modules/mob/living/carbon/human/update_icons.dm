@@ -891,16 +891,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		L = list(HUMANHEIGHT_SHORTEST = -1, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 1, "gnome" = -3)
 
-	if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
-		I.pixel_x = L[H.height]
-	else
-		I.pixel_y = L[H.height]
+	I.pixel_y = L[H.height]
 
 	if(SMALLSIZE in H.mutations) //Gnome-Guy
-		if(H.lying || H.resting || H.crawling)//Changing directions because of lying/resting/crawling.
-			I.pixel_x += L["gnome"]
-		else
-			I.pixel_y += L["gnome"]
+		I.pixel_y += L["gnome"]
 	return I
 
 //Cutting any human's overlay that we dont want to offset.
