@@ -60977,19 +60977,14 @@
 	},
 /area/station/rnd/xenobiology)
 "cpU" = (
-/obj/structure/grille,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
+/obj/structure/grille,
 /obj/machinery/door/firedoor,
+/obj/structure/sign/warning/securearea,
 /turf/simulated/floor/plating,
-/area/station/engineering/engine)
+/area/station/engineering/break_room)
 "cpV" = (
 /obj/structure/transit_tube{
 	icon_state = "N-S"
@@ -74206,15 +74201,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "jpD" = (
@@ -74938,14 +74927,23 @@
 	},
 /area/station/medical/chemistry)
 "keh" = (
+/obj/structure/grille,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/obj/structure/grille,
-/obj/structure/sign/warning/securearea,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/engineering/break_room)
+/area/station/engineering/engine)
 "keS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -78736,22 +78734,18 @@
 	},
 /area/station/hallway/primary/central)
 "oMx" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
 /obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/engineering/chiefs_office)
+/area/station/engineering/engine)
 "oMJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -83683,10 +83677,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering North";
-	network = list("SS13","Engineering")
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -84235,6 +84225,10 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage_secure)
 "xoJ" = (
+/obj/machinery/camera{
+	c_tag = "Engineering North";
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -114149,7 +114143,7 @@ crH
 crH
 cBT
 cBT
-cpU
+jpp
 cCx
 aaa
 aaa
@@ -114396,7 +114390,7 @@ aAZ
 gqb
 eDP
 aVH
-bkp
+crK
 xoJ
 sgJ
 cgI
@@ -114406,7 +114400,7 @@ dlq
 ewb
 baP
 hHs
-cpU
+jpp
 cCx
 aaa
 aaa
@@ -114653,7 +114647,7 @@ gmb
 cXC
 gwb
 fvU
-oMx
+bkp
 wII
 ofX
 cgI
@@ -114663,7 +114657,7 @@ cAr
 cAP
 cDe
 cBP
-cpU
+jpp
 cCx
 aaa
 aaa
@@ -114920,7 +114914,7 @@ cAs
 cAQ
 cBo
 cBQ
-jpp
+keh
 kiF
 aaa
 aaa
@@ -115177,7 +115171,7 @@ cAR
 cAR
 cBp
 cBR
-cpU
+oMx
 cCx
 haA
 aah
@@ -115434,7 +115428,7 @@ czk
 eHO
 cBq
 cBS
-cpU
+oMx
 cCx
 aaa
 aaa
@@ -115666,12 +115660,12 @@ ckO
 clG
 aeQ
 clx
-keh
+chI
 cfm
 clx
 wow
 jFK
-chI
+cpU
 clx
 bSP
 bSP
@@ -115691,7 +115685,7 @@ crH
 crH
 cBT
 cBT
-cpU
+oMx
 cCx
 aaa
 mns
