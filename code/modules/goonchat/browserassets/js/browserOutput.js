@@ -345,8 +345,9 @@ function toHex(n) {
 function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
+	var localTime = (new Date()).getTimezoneOffset() * -60; // we multiply by -60 cause value from geoip is in seconds and has opposite sign
 	if (opts.clientData && !$.isEmptyObject(opts.clientData)) {
-		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]='+JSON.stringify({'connData': opts.clientData})+'&param[local_time]='+localTime);
 
 		for (var i = 0; i < opts.clientData.length; i++) {
 			var saved = opts.clientData[i];
@@ -359,7 +360,7 @@ function handleClientData(ckey, ip, compid) {
 			opts.clientData.shift();
 		}
 	} else {
-		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]=none');
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]=none&param[local_time]='+localTime);
 	}
 
 	//Update the cookie with current details

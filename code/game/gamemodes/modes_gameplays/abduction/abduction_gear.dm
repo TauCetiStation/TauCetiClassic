@@ -90,15 +90,15 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.name != ABDUCTOR)
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
 	if(IsAbductor(user))
-		return 1
+		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
-	return 0
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
 	return isabductoragent(user)
@@ -144,15 +144,15 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.name != ABDUCTOR)
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(IsAbductor(user))
-		return 1
+		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
-	return 0
+	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
 	return isabductorsci(user)
@@ -323,8 +323,8 @@
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/energy/decloner/alien
 	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
@@ -370,13 +370,13 @@
 
 /obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
-		return 0
+		return FALSE
 	if(H.species.name != ABDUCTOR)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 //ADVANCED BATON
@@ -439,13 +439,13 @@
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
-		return 0
+		return FALSE
 	if(H.species.name != ABDUCTOR)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
 	return isabductoragent(user)

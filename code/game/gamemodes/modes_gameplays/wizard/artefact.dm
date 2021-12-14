@@ -120,7 +120,7 @@
 /obj/item/weapon/contract/Topic(href, href_list)
 	..()
 	if(!ishuman(usr))
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = usr
 	if(iswizard(H))
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")

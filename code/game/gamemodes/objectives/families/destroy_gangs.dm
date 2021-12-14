@@ -4,7 +4,7 @@
 /datum/objective/gang/destroy_gangs/check_completion()
 	var/list/all_gangs = find_factions_by_type(/datum/faction/gang)
 	if(!all_gangs.len)
-		return
+		return OBJECTIVE_LOSS
 	var/list/all_gangsters = list()
 	for(var/G in all_gangs)
 		var/datum/faction/gang/GG = G

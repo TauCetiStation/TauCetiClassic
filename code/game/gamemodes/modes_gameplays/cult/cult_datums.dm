@@ -405,7 +405,7 @@
 		break
 	if(!has_pylon)
 		to_chat(user, "<span class='warning'>Вокруг руны нету пилонов.</span>")
-		return
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/charge_pylons/action(mob/living/carbon/user)
