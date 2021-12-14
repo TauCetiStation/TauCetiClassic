@@ -235,6 +235,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	SStgui.on_transfer(src, mind.current)
 	mind.current.key = key
+	if(isbrain(mind.current))
+		mind.current.stat = DEAD // fixes a bug when you reenter in your head and cannot ghostize again
 	return 1
 
 /mob/dead/observer/proc/show_data_huds()
@@ -616,7 +618,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	update_sight()
-	
+
 
 /mob/dead/observer/update_sight()
 	..()
