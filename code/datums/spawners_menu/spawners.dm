@@ -417,6 +417,51 @@ var/global/list/datum/spawners_cooldown = list()
 		if (newname != "")
 			diona.real_name = newname
 
+/datum/spawner/borer_event
+	name = "Изначальный Борер"
+	desc = "Вы появляетесь где-то в вентиляции на станции."
+
+	ranks = list(ROLE_GHOSTLY)
+	timer_to_expiration = 3 MINUTES
+
+/datum/spawner/borer_event/spawn_ghost(mob/dead/observer/ghost)
+	var/list/vents = get_vents()
+	var/obj/vent = pick_n_take(vents)
+	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
+	B.transfer_personality(ghost.client)
+
 /datum/spawner/borer
+	name = "Борер"
+	desc = "Вы становитесь очередным отпрыском бореров."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/borer
+
+/datum/spawner/borer/New(borer)
+	. = ..()
+	borer = _borer
+
+/datum/spawner/borer/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(borer))
+
+/datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
+	borer.transfer_personality(ghost.client)
 
 /datum/spawner/alien_event
+	name = 
+	desc = 
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/alien_event/New()
+	. = ..()
+
+/datum/spawner/alien_event/can_spawn(mob/dead/observer/ghost)
+	if()
+		return FALSE
+	return ..()
+
+/datum/spawner/alien_event/jump(mob/dead/observer/ghost)
+
+/datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
