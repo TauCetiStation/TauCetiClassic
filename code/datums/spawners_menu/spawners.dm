@@ -422,7 +422,7 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Вы появляетесь где-то в вентиляции на станции."
 
 	ranks = list(ROLE_GHOSTLY)
-	timer_to_expiration = 3 MINUTES
+	time_to_del = 3 MINUTES
 
 /datum/spawner/borer_event/spawn_ghost(mob/dead/observer/ghost)
 	var/list/vents = get_vents()
@@ -438,7 +438,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/borer
 
-/datum/spawner/borer/New(borer)
+/datum/spawner/borer/New(_borer)
 	. = ..()
 	borer = _borer
 
@@ -448,6 +448,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
 	borer.transfer_personality(ghost.client)
 
+/*
 /datum/spawner/alien_event
 	name = 
 	desc = 
@@ -465,3 +466,4 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/alien_event/jump(mob/dead/observer/ghost)
 
 /datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
+*/

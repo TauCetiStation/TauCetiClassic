@@ -40,8 +40,8 @@
 		for(var/datum/spawner/S as anything in spawners_list)
 			if(!S.timer_to_expiration)
 				continue
-			if(timeleft(S.timer_to_expiration) < min_time)
-				min_time = timeleft(S.timer_to_expiration)
+			if(time_left < min_time)
+				min_time = time_left
 
 		this["time_left"] = min_time != INFINITY ? min_time : null
 
