@@ -486,6 +486,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				else
 					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 				tie.color = A.color
+				tie = human_update_offset(tie, src, TRUE)
 				standing.add_overlay(tie)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
