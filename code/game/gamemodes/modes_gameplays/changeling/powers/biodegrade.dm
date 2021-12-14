@@ -4,7 +4,7 @@
 	helptext = "This is obvious to nearby people, and can destroy \
 		standard restraints and closets."
 	chemical_cost = 30 //High cost to prevent spam
-	genomecost = 2
+	genomecost = 1
 	req_human = 1
 	genetic_damage = 10
 	max_genetic_damage = 5
