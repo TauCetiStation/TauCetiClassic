@@ -40,6 +40,7 @@
 		for(var/datum/spawner/S as anything in spawners_list)
 			if(!S.timer_to_expiration)
 				continue
+			var/time_left = timeleft(S.timer_to_expiration)
 			if(time_left < min_time)
 				min_time = time_left
 
