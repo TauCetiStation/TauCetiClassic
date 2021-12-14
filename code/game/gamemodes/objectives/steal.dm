@@ -3,7 +3,7 @@ var/global/list/possible_items_for_steal = list()
 #define ADD_TO_POIFS_LIST(type) ADD_TO_GLOBAL_LIST(type, possible_items_for_steal)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 ADD_TO_POIFS_LIST(/obj/item/weapon/hand_tele)
-ADD_TO_POIFS_LIST(/obj/item/weapon/rcd)
+ADD_TO_POIFS_LIST(/obj/item/weapon/rcd/advanced)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
@@ -38,7 +38,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	var/static/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
+		"an advanced RCD" = /obj/item/weapon/rcd/advanced,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,

@@ -160,7 +160,7 @@ Advanced RCD
 	icon = icon('icons/turf/walls/fakeglass.dmi', "grilleglass")
 	var/window_type = /obj/structure/window/basic
 
-/datum/rcd/nondense/airlock/action(turf/simulated/floor/F)
+/datum/rcd/nondense/grilleglass/action(turf/simulated/floor/F)
 	new /obj/structure/grille(F)
 	var/obj/structure/window/W = new window_type(F)
 	W.set_dir(SOUTHWEST)
@@ -213,7 +213,7 @@ Advanced RCD
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
 	rcd_list += src
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -245,14 +245,17 @@ Advanced RCD
 		qdel(I)
 		matter += A.matter
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
+		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
 
 /obj/item/weapon/rcd/attack_self(mob/user)
-	//Change the mode
-	var/choice = show_radial_menu(user, src, action_icons, tooltips = TRUE)
+	prompt_action(user)
+
+/obj/item/weapon/rcd/proc/prompt_action(mob/user)
+	// we have to do some hacking cause of rig rcd module
+	var/choice = show_radial_menu(user, user, action_icons, uniqueid = "rcd\ref[user]\ref[src]", tooltips = TRUE)
 	if(!choice)
 		return
 	current_action = action_by_name[choice]
@@ -272,14 +275,14 @@ Advanced RCD
 	if(istype(target, /area/shuttle))
 		return 0
 
-	current_action.apply(target, user)
+	current_action?.apply(target, user)
 
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)

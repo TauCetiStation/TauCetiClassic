@@ -34411,7 +34411,7 @@
 	pixel_y = 24
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/rcd,
+/obj/item/weapon/rcd/advanced,
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
