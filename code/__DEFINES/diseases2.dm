@@ -1,0 +1,4 @@
+#define DISEASE_SPREAD_AIRBORNE "Airborne"
+#define DISEASE_SPREAD_CONTACT "Contact"
+#define DISEASE_SPREAD_BLOOD "Blood"
+#define DISEASE_SPREAD_REMISSIVE "Remissive"
