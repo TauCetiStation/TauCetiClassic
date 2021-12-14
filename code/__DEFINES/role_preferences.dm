@@ -23,7 +23,6 @@
 #define ROLE_DRONE             "Maintenance Drone"
 
 //Prefs for ignore a question which give special_roles
-#define IGNORE_PLANT        "Diona"
 #define IGNORE_PAI          "Pai"
 #define IGNORE_TSTAFF       "Religion staff"
 #define IGNORE_SURVIVOR     "Survivor"
@@ -51,7 +50,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
 	ROLE_FAMILIES   = null,
-	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE, IGNORE_BORER),
+	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE, IGNORE_BORER),
 )
 
 var/global/list/special_roles

@@ -79,8 +79,11 @@ var/global/list/datum/spawners_cooldown = list()
 	var/client/C = ghost.client
 	spawn_ghost(ghost)
 
-	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
+	// check if the ghost really become a role
+	if(ghost.client == C)
+		return
 
+	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 	add_client_cooldown(C)
 
 	if(del_after_spawn)
@@ -326,7 +329,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/mouse
 	name = "Мышь"
-	desc = "Вы появляетесь где-то в вентиляции."
+	desc = "Вы появляетесь в суровом мире людей и должны выжить."
 	flavor_text = "https://wiki.taucetistation.org/Mouse"
 
 	ranks = list("Mouse")
@@ -354,3 +357,31 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/space_bum/spawn_ghost(mob/dead/observer/ghost)
 	ghost.make_bum()
+
+/datum/spawner/drone
+	name = "Дрон"
+	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
+	flavor_text = "https://wiki.taucetistation.org/Drone"
+
+	ranks = list(ROLE_DRONE)
+
+	del_after_spawn = FALSE
+
+/datum/spawner/drone/can_spawn(mob/dead/observer/ghost)
+	if(!config.allow_drone_spawn)
+		to_chat(ghost, "<span class='warning'>That verb is not currently permitted.</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/drone/jump(mob/dead/observer/ghost)
+	var/obj/machinery/drone_fabricator/DF = locate() in global.machines
+	ghost.forceMove(get_turf(DF))
+
+/datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
+	ghost.dronize()
+
+/datum/spawner/borer
+
+/datum/spawner/plant
+
+/datum/spawner/alien_event
