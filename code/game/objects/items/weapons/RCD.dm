@@ -1,6 +1,9 @@
 /*
 CONTAINS:
+RCD Action datum
 RCD
+Borg RCD
+Advanced RCD
 */
 
 /* RCD Action datum
@@ -32,6 +35,11 @@ RCD
 /datum/rcd/New(_holder)
 	holder = _holder
 
+/datum/rcd/Destroy(force, ...)
+	. = ..()
+	holder = null
+	QDEL_NULL(icon)
+
 /* action(atom/target): bool
  * Performs some particular action on target atom.
  * Returning TRUE means that action was successful
@@ -55,13 +63,14 @@ RCD
 		return
 	if(!can_act_on(target))
 		return
-	working = TRUE
+	holder.working = TRUE
 	if(!do_after(user, duration, target = target))
-		working = FALSE
+		holder.working = FALSE
 		return
 	if(action(target))
 		use_matter()
-	working = FALSE
+		holder.activate()
+	holder.working = FALSE
 
 /datum/rcd/deconstruct
 	name = "Deconstruct"
@@ -120,16 +129,13 @@ RCD
 	S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	return TRUE
 
-/datum/rcd/airlock
-	name = "Airlock"
-	cost = 10
-	duration = 5 SECONDS
+// These actions will act only on non-dense turfs
+/datum/rcd/nondense
 	can_act_on_types = list(
 		/turf/simulated/floor
 	)
-	icon = icon('icons/obj/doors/airlocks/station/maintenance.dmi', "construction")
 
-/datum/rcd/airlock/can_act_on(atom/target)
+/datum/rcd/nondense/can_act_on(atom/target)
 	if(target.density)
 		return FALSE
 	for(var/atom/A in target)
@@ -137,9 +143,35 @@ RCD
 			return FALSE
 	return ..()
 
-/datum/rcd/airlock/action(turf/simulated/floor/F)
+/datum/rcd/nondense/airlock
+	name = "Airlock"
+	cost = 10
+	duration = 5 SECONDS
+	icon = icon('icons/obj/doors/airlocks/station/maintenance.dmi', "construction")
+
+/datum/rcd/nondense/airlock/action(turf/simulated/floor/F)
 	new /obj/machinery/door/airlock(F)
 	return TRUE
+
+/datum/rcd/nondense/grilleglass
+	name = "Window"
+	cost = 3
+	duration = 1.5 SECONDS
+	icon = icon('icons/turf/walls/fakeglass.dmi', "grilleglass")
+	var/window_type = /obj/structure/window/basic
+
+/datum/rcd/nondense/airlock/action(turf/simulated/floor/F)
+	new /obj/structure/grille(F)
+	var/obj/structure/window/W = new window_type(F)
+	W.set_dir(SOUTHWEST)
+	W.ini_dir = SOUTHWEST
+
+/datum/rcd/nondense/grilleglass/reinforced
+	name = "Reinforced Window"
+	cost = 4
+	duration = 3 SECONDS
+	icon = icon('icons/turf/walls/fakeglass.dmi', "grillerglass")
+	window_type = /obj/structure/window/reinforced
 
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
@@ -165,9 +197,10 @@ RCD
 
 	var/list/action_types = list(
 		/datum/rcd/deconstruct,
-		/datum/rcd/airlock,
+		/datum/rcd/nondense/airlock,
 		/datum/rcd/floor,
 		/datum/rcd/wall,
+		/datum/rcd/nondense/grilleglass,
 	)
 	var/list/datum/rcd/actions = list()
 	// Used by radial menu
@@ -264,9 +297,26 @@ RCD
 /obj/item/weapon/rcd/borg
 	action_types = list(
 		/datum/rcd/deconstruct/advanced,
-		/datum/rcd/airlock,
+		/datum/rcd/nondense/airlock,
 		/datum/rcd/floor,
 		/datum/rcd/wall,
+		/datum/rcd/nondense/grilleglass,
+	)
+
+// More robust CE pyrometer
+/obj/item/weapon/rcd/advanced
+	name = "advanced RCD"
+	icon_state = "arcd"
+	force = 20
+	throwforce = 20
+	origin_tech = "engineering=5;materials=4"
+	max_matter = 50
+	action_types = list(
+		/datum/rcd/deconstruct/advanced,
+		/datum/rcd/nondense/airlock,
+		/datum/rcd/floor,
+		/datum/rcd/wall,
+		/datum/rcd/nondense/grilleglass/reinforced,
 	)
 
 /obj/item/weapon/rcd_ammo
