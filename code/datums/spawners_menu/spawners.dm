@@ -340,3 +340,17 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/mouse/spawn_ghost(mob/dead/observer/ghost)
 	ghost.mousize()
+
+/datum/spawner/space_bum
+	name = "Космо-бомж"
+	desc = "Вы появляетесь где-то на свалке."
+	flavor_text = "https://wiki.taucetistation.org/Junkyard"
+
+	del_after_spawn = FALSE
+
+/datum/spawner/space_bum/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(junkyard_bum_list)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/space_bum/spawn_ghost(mob/dead/observer/ghost)
+	ghost.make_bum()

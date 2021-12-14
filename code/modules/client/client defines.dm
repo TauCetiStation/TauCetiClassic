@@ -25,7 +25,6 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
-	var/time_joined_as_spacebum = null
 	var/mentorhelped = FALSE
 	var/supporter = 0
 	var/prefs_ready = FALSE
