@@ -122,20 +122,16 @@
 			break
 		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
 			if(occupant) continue
-			for(var/mob/living/carbon/brain/B in BR)
-				B.client?.perspective = EYE_PERSPECTIVE
-				B.client?.eye = src
-				occupant = B
-				break
+			BR.brainmob?.client?.perspective = EYE_PERSPECTIVE
+			BR.brainmob?.client?.eye = src
+			occupant = BR.brainmob
 			BR.loc = src
 			break
 		for(var/obj/item/organ/external/head/H in loc) // head can be put in scanner too
 			if(occupant) continue
-			for(var/mob/living/carbon/brain/B in H)
-				B.client?.perspective = EYE_PERSPECTIVE
-				B.client?.eye = src
-				occupant = B
-				break
+			H.brainmob?.client?.perspective = EYE_PERSPECTIVE
+			H.brainmob?.client?.eye = src
+			occupant = H.brainmob
 			H.loc = src
 			break
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
