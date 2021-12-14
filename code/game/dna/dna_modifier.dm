@@ -121,6 +121,26 @@
 			C.loc = src
 			C.stop_pulling()
 			break
+		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
+			if(occupant) continue
+			for(var/mob/living/carbon/brain/B in BR)
+				if(B.client)
+					B.client.perspective = EYE_PERSPECTIVE
+					B.client.eye = src
+				occupant = B
+				break
+			BR.loc = src
+			break
+		for(var/obj/item/organ/external/head/H in loc) // head can be put in scanner too
+			if(occupant) continue
+			for(var/mob/living/carbon/brain/B in H)
+				if(B.client)
+					B.client.perspective = EYE_PERSPECTIVE
+					B.client.eye = src
+				occupant = B
+				break
+			H.loc = src
+			break
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
 
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner

@@ -161,8 +161,6 @@
 	var/obj/item/organ/internal/brain/brain = new(null)
 	brain.insert_organ(target)
 	target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
-	if(B.brainmob.dna.unique_enzymes != target.dna.unique_enzymes) // so they cannot be cloned if the head is not in its body
-		ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT)
 	qdel(tool)
 
 /datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
