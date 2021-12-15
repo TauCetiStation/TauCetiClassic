@@ -321,6 +321,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
+	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
 
 	ranks = list(ROLE_GHOSTLY)
 	time_to_del = 3 MINUTES
@@ -334,6 +335,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer
 	name = "Борер"
 	desc = "Вы становитесь очередным отпрыском бореров."
+	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
 
 	ranks = list(ROLE_GHOSTLY)
 
@@ -352,25 +354,19 @@ var/global/list/datum/spawners_cooldown = list()
 /*
  * Aliens
 */
-/*
 /datum/spawner/alien_event
-	name = 
-	desc = 
+	name = "Изначальный Лицехват"
+	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
+	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
 
-	ranks = list(ROLE_GHOSTLY)
-
-/datum/spawner/alien_event/New()
-	. = ..()
-
-/datum/spawner/alien_event/can_spawn(mob/dead/observer/ghost)
-	if()
-		return FALSE
-	return ..()
-
-/datum/spawner/alien_event/jump(mob/dead/observer/ghost)
+	ranks = list(ROLE_ALIEN)
+	time_to_del = 3 MINUTES
 
 /datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
-*/
+	var/list/vents = get_vents()
+	var/obj/vent = pick(vents)
+	var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
+	new_xeno.key = ghost.key
 
 /*
  * Religion
@@ -472,6 +468,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/plant
 	name = "Нимфа Дионы"
 	desc = "Нимфу вырастили на грядке."
+	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
 
 	ranks = list(ROLE_GHOSTLY)
 
