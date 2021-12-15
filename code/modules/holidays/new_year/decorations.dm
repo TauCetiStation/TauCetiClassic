@@ -120,6 +120,8 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
+		return ..()
 	if(istype(I, /obj/item/weapon/gift))
 		var/obj/item/weapon/gift/present = I
 		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
@@ -130,12 +132,18 @@
 			user.drop_from_inventory(present, src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
+	user.visible_message("<span class='notice'>[user] stands on \his tiptoes to hang [I] on [src].</span>")
+	if(!do_after(user, 20, TRUE, src))
+		to_chat(user, "<span class='warning'>You fail to hang [I] on [src]!</span>")
+		return
 	. = TRUE //passing info to the parent's proc
 	. = ..()
 	if(istype(I, /obj/item/organ/external/head))
 		I.pixel_y -= 10 // Head always has 10 pixels shift
 		I.set_dir(2) // Rotate head face to us
 		I.transform = turn(null, null)	//Turn it to initial angle
+	I.anchored = TRUE
+	decals.Add(I)
 	I.layer = 5.1
 	I.pixel_x += pixel_x
 	I.pixel_y += pixel_y
@@ -205,7 +213,7 @@
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != INTENT_HELP))
+	/* if(decals.len && (C.a_intent != INTENT_HELP))
 		for(var/item in decals)
 			var/obj/item/I = item
 			if(!I)
@@ -217,7 +225,7 @@
 			I.anchored = FALSE
 			decals.Cut()
 
-		visible_message("Something dropped from \the [src].")
+		visible_message("Something dropped from \the [src].") */
 
 /obj/item/device/flashlight/lamp/fir/special/alternative
 	icon = 'icons/obj/flora/pinetrees.dmi'
