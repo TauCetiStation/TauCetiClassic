@@ -13,6 +13,9 @@ var/global/list/datum/spawners_cooldown = list()
 		LAZYADD(global.spawners[id], spawner)
 
 	for(var/mob/dead/observer/ghost in observer_list)
+		if(!ghost.client)
+			continue
+
 		if(ghost.spawners_menu)
 			SStgui.update_uis(ghost.spawners_menu)
 
@@ -51,6 +54,9 @@ var/global/list/datum/spawners_cooldown = list()
 		global.spawners -= id
 
 	for(var/mob/dead/observer/ghost in observer_list)
+		if(!ghost.client)
+			continue
+
 		if(ghost.spawners_menu)
 			SStgui.update_uis(ghost.spawners_menu)
 
@@ -112,6 +118,9 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/proc/jump(mob/dead/observer/ghost)
 	return
 
+/*
+ * Families
+*/
 /datum/spawner/dealer
 	name = "Контрабандист"
 	desc = "Вы появляетесь в космосе вблизи со станцией."
@@ -165,14 +174,13 @@ var/global/list/datum/spawners_cooldown = list()
 	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
 	if(!faction)
 		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
-	if(faction)
-		faction.roletype = roletype
-		add_faction_member(faction, cop, TRUE, TRUE)
+
+	faction.roletype = roletype
+	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
 	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
 	W.registered_name = cop.real_name
-
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)
@@ -198,6 +206,9 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Боец ВСНТ ОБОП"
 	roletype = /datum/role/cop/beatcop/military
 
+/*
+ * ERT
+*/
 /datum/spawner/ert
 	name = "ЕРТ"
 	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
@@ -248,6 +259,9 @@ var/global/list/datum/spawners_cooldown = list()
 	if(ERT_team)
 		add_faction_member(ERT_team, new_commando, FALSE)
 
+/*
+ * Blob
+*/
 /datum/spawner/blob_event
 	name = "Блоб"
 	desc = "Вы появляетесь в случайной точки станции в виде блоба."
@@ -264,6 +278,9 @@ var/global/list/datum/spawners_cooldown = list()
 	var/turf/spawn_turf = pick(copsstart) //TODO: blobstart
 	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
 
+/*
+ * Ninja
+*/
 /datum/spawner/ninja_event
 	name = "Космический Ниндзя"
 	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
@@ -287,6 +304,66 @@ var/global/list/datum/spawners_cooldown = list()
 
 	set_ninja_objectives(new_ninja)
 
+/*
+ * Borer
+*/
+/datum/spawner/borer_event
+	name = "Изначальный Борер"
+	desc = "Вы появляетесь где-то в вентиляции на станции."
+
+	ranks = list(ROLE_GHOSTLY)
+	time_to_del = 3 MINUTES
+
+/datum/spawner/borer_event/spawn_ghost(mob/dead/observer/ghost)
+	var/list/vents = get_vents()
+	var/obj/vent = pick_n_take(vents)
+	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
+	B.transfer_personality(ghost.client)
+
+/datum/spawner/borer
+	name = "Борер"
+	desc = "Вы становитесь очередным отпрыском бореров."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/borer
+
+/datum/spawner/borer/New(_borer)
+	. = ..()
+	borer = _borer
+
+/datum/spawner/borer/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(borer))
+
+/datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
+	borer.transfer_personality(ghost.client)
+
+/*
+ * Aliens
+*/
+/*
+/datum/spawner/alien_event
+	name = 
+	desc = 
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/alien_event/New()
+	. = ..()
+
+/datum/spawner/alien_event/can_spawn(mob/dead/observer/ghost)
+	if()
+		return FALSE
+	return ..()
+
+/datum/spawner/alien_event/jump(mob/dead/observer/ghost)
+
+/datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
+*/
+
+/*
+ * Religion
+*/
 /datum/spawner/religion_familiar
 	name = "Фамильяр Религии"
 	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
@@ -310,6 +387,9 @@ var/global/list/datum/spawners_cooldown = list()
 	animal.ckey = ghost.ckey
 	religion.add_member(animal, HOLY_ROLE_PRIEST)
 
+/*
+ * Other
+*/
 /datum/spawner/gladiator
 	name = "Гладиатор"
 	desc = "Вы появляетесь на арене и должны выжить."
@@ -416,54 +496,3 @@ var/global/list/datum/spawners_cooldown = list()
 		var/newname = sanitize_safe(input(diona,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 		if (newname != "")
 			diona.real_name = newname
-
-/datum/spawner/borer_event
-	name = "Изначальный Борер"
-	desc = "Вы появляетесь где-то в вентиляции на станции."
-
-	ranks = list(ROLE_GHOSTLY)
-	time_to_del = 3 MINUTES
-
-/datum/spawner/borer_event/spawn_ghost(mob/dead/observer/ghost)
-	var/list/vents = get_vents()
-	var/obj/vent = pick_n_take(vents)
-	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
-	B.transfer_personality(ghost.client)
-
-/datum/spawner/borer
-	name = "Борер"
-	desc = "Вы становитесь очередным отпрыском бореров."
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/borer
-
-/datum/spawner/borer/New(_borer)
-	. = ..()
-	borer = _borer
-
-/datum/spawner/borer/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(borer))
-
-/datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
-	borer.transfer_personality(ghost.client)
-
-/*
-/datum/spawner/alien_event
-	name = 
-	desc = 
-
-	ranks = list(ROLE_GHOSTLY)
-
-/datum/spawner/alien_event/New()
-	. = ..()
-
-/datum/spawner/alien_event/can_spawn(mob/dead/observer/ghost)
-	if()
-		return FALSE
-	return ..()
-
-/datum/spawner/alien_event/jump(mob/dead/observer/ghost)
-
-/datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
-*/
