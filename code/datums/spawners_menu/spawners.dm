@@ -64,6 +64,8 @@ var/global/list/datum/spawners_cooldown = list()
 	if(!length(spawn_list))
 		global.spawners -= id
 
+	deltimer(timer_to_expiration)
+
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
 			continue
