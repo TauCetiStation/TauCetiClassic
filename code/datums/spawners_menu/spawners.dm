@@ -140,8 +140,8 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_FAMILIES)
 
 /datum/spawner/dealer/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(copsstart) // TODO: dealerstart
-	copsstart -= spawnloc // TODO: dealerstart
+	var/spawnloc = pick(dealerstart)
+	dealerstart -= spawnloc
 
 	var/client/C = ghost.client
 
@@ -155,7 +155,7 @@ var/global/list/datum/spawners_cooldown = list()
 	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
 /datum/spawner/dealer/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(copsstart) // TODO: dealerstart
+	var/jump_to = pick(dealerstart)
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/cop
@@ -282,11 +282,11 @@ var/global/list/datum/spawners_cooldown = list()
 	time_to_del = 3 MINUTES
 
 /datum/spawner/blob_event/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(copsstart) //TODO: blobstart
+	var/jump_to = pick(blobstart)
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
-	var/turf/spawn_turf = pick(copsstart) //TODO: blobstart
+	var/turf/spawn_turf = pick(blobstart)
 	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
 
 /*
