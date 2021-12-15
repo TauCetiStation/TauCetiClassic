@@ -26,6 +26,8 @@ SUBSYSTEM_DEF(chat)
 			return
 
 /datum/controller/subsystem/chat/proc/queue(target, message)
+	SSdemo.write_chat(target, message_to_html(message))
+
 	if(islist(target))
 		for(var/_target in target)
 			var/client/client = CLIENT_FROM_VAR(_target)
