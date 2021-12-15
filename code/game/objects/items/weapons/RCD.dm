@@ -14,7 +14,7 @@ Advanced RCD
 	// Name of RCD action
 	var/name
 
-	// Image of action in radial menu
+	// Icon of action in radial menu
 	var/icon/icon
 
 	// Cost of this action in matter units
