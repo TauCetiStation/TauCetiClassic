@@ -64,14 +64,14 @@
 		a_ip = sanitize_sql(src.owner:address)
 
 	var/who
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(!who)
 			who = "[ckey(C)]"
 		else
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else
@@ -563,14 +563,14 @@
 	var/a_ip = "127.0.0.1"
 
 	var/who
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		if(!who)
 			who = "[ckey(C)]"
 		else
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else

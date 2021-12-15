@@ -96,7 +96,7 @@
 			return
 		message = copytext(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(ischangeling(M))
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 				var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
@@ -257,7 +257,7 @@
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling || changeling.controled_by)
-		return
+		return FALSE
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
@@ -309,6 +309,7 @@
 	var/datum/browser/popup = new(user, "essence_managing", "Essence Management Panel", 350)
 	popup.set_content(dat)
 	popup.open()
+	return FALSE
 
 /mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
 	if(!ischangeling(src))

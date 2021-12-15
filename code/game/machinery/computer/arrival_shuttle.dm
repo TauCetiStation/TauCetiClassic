@@ -197,7 +197,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)
 		return FALSE
-	for (var/mob/living/silicon/ai/A in ai_list)
+	for (var/mob/living/silicon/ai/A as anything in ai_list)
 		if (A.can_retransmit_messages())
 			A.retransmit_message(msg)
 			return TRUE

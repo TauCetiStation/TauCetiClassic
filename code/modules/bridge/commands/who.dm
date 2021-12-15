@@ -12,7 +12,7 @@
 	var/crew = ""
 	var/observers = ""
 
-	for(var/client/C in clients)
+	for(var/client/C as anything in clients)
 		var/entry = "**[C.key]**"
 
 		if(isobserver(C.mob))
