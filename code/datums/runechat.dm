@@ -126,8 +126,6 @@
 		qdel(src)
 		return
 
-	highlight_traitor_codewords(text, owner.mind)
-
 	// Non mobs speakers can be small
 	if (!ismob(target))
 		extra_classes |= "small"
