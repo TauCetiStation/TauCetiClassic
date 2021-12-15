@@ -1040,7 +1040,7 @@
 	if(ishuman(occupant))
 		mob_container = src.occupant
 		RemoveActions(occupant, human_occupant = 1)
-	else if(istype(occupant, /mob/living/carbon/brain))
+	else if(isbrain(occupant))
 		var/mob/living/carbon/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
