@@ -117,7 +117,7 @@
 			C.client?.perspective = EYE_PERSPECTIVE
 			C.client?.eye = src
 			occupant = C
-			C.foceMove(src)
+			C.forceMove(src)
 			break
 		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
 			if(occupant) continue
