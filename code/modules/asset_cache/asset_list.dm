@@ -88,7 +88,6 @@ var/global/list/asset_datums = list()
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(sprite count, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
-	var/assets = list()
 
 /datum/asset/spritesheet/register()
 	if(!name)
@@ -96,16 +95,13 @@ var/global/list/asset_datums = list()
 	ensure_stripped()
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
-		assets["[name]_[size_id].png"] = register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
-	assets[res_name] = register_asset(res_name, fcopy_rsc(fname))
+	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
-
-/datum/asset/spritesheet/send(client)
-	. = send_asset_list(client, assets)
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -199,6 +195,7 @@ var/global/list/asset_datums = list()
 
 /datum/asset/spritesheet/simple
 	_abstract = /datum/asset/spritesheet/simple
+	var/list/assets
 
 /datum/asset/spritesheet/simple/register()
 	for(var/key in assets)
