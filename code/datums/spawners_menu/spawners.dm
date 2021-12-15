@@ -1,6 +1,7 @@
 var/global/list/datum/spawners = list()
 var/global/list/datum/spawners_cooldown = list()
 
+// Don't call this proc directly! Use defines create_spawner and create_spawners
 /proc/_create_spawners(type, id, num, list/arguments)
 	// arguments must have at least 1 element due to the use of arglist
 	if(!arguments.len)
@@ -26,18 +27,28 @@ var/global/list/datum/spawners_cooldown = list()
 		to_chat(ghost, "<span class='ghostalert'>В спавнер меню появились новые роли!</span>")
 
 /datum/spawner
+	// Name of spawner, wow
 	var/name
+	// Uniq category of spawner to sorting in spawner_menu
 	var/id
 
+	// In interface: "Описание: "
 	var/desc
+	// In interface: "Дополнительно: "
 	var/flavor_text
+	// In interface: "Важная информация: "
 	var/important_info
 
+	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
+	// Delete spawner after use
 	var/del_after_spawn = TRUE
+	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
 
+	// Time to del the spawner
 	var/time_to_del
+	// Private, store id of timer
 	var/timer_to_expiration
 
 /datum/spawner/New()
