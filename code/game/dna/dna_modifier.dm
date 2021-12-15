@@ -117,22 +117,21 @@
 			C.client?.perspective = EYE_PERSPECTIVE
 			C.client?.eye = src
 			occupant = C
-			C.loc = src
-			C.stop_pulling()
+			C.foceMove(src)
 			break
 		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
 			if(occupant) continue
 			BR.brainmob?.client?.perspective = EYE_PERSPECTIVE
 			BR.brainmob?.client?.eye = src
 			occupant = BR.brainmob
-			BR.loc = src
+			BR.forceMove(src)
 			break
 		for(var/obj/item/organ/external/head/H in loc) // head can be put in scanner too
 			if(occupant) continue
 			H.brainmob?.client?.perspective = EYE_PERSPECTIVE
 			H.brainmob?.client?.eye = src
 			occupant = H.brainmob
-			H.loc = src
+			H.forceMove(src)
 			break
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
 
