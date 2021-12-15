@@ -71,6 +71,15 @@
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+
+		if(client.prefs.show_runechat)
+			var/list/span_list = list()
+			if(copytext_char(message, -2) == "!!")
+				span_list.Add("yell")
+			if(italics)
+				span_list.Add("italics")
+			show_runechat_message(speaker, language, capitalize(message), span_list)
+
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)

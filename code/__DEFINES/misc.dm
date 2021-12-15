@@ -293,3 +293,6 @@
 // If dir is EAST, then a positive number will be returned, if WEST, then a negative one.
 #define X_OFFSET(n_steps, dir) (n_steps * (!!(dir & EAST) + !!(dir & WEST) * -1))
 #define Y_OFFSET(n_steps, dir) (n_steps * (!!(dir & NORTH) + !!(dir & SOUTH) * -1))
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}

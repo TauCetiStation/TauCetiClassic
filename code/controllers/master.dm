@@ -179,6 +179,7 @@ var/global/datum/controller/master/Master = new()
 #else
 	world.sleep_offline = TRUE
 #endif
+	// this place break BUCKET_LEN, because default fps = 20. and new fps = 25
 	world.fps = config.fps
 
 	sleep(1)

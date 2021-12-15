@@ -341,6 +341,14 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
 	feedback_add_details("admin_verb", "ED")
 
+/client/verb/toggle_runechat()
+	set name = "Toggle Runechat (Above-Head-Speech)"
+	set category = "Preferences"
+	prefs.show_runechat = !prefs.show_runechat
+
+	to_chat(src, "Runechat is [prefs.show_runechat ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TRC")
+
 /client/verb/toggle_hotkeys_mode()
 	set name = "Toggle Hotkeys Mode"
 	set category = "Preferences"

@@ -241,6 +241,7 @@
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
+#include "code\datums\runechat.dm"
 #include "code\datums\space_structures.dm"
 #include "code\datums\spell.dm"
 #include "code\datums\uplinks_items.dm"
