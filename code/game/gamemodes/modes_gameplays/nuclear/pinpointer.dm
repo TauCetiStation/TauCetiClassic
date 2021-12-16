@@ -32,7 +32,12 @@
 		if(!target)
 			icon_state = "pinonnull"
 			return
-	if(target)
+	if(!target)
+		return
+	if(QDELING(target))
+		icon_state = "pinoff"
+		target = null
+	else
 		set_dir(get_dir(src, target))
 		var/turf/self_turf = get_turf(src)
 		var/turf/target_turf = get_turf(target)
