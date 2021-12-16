@@ -22,27 +22,27 @@
 
 /mob/living/carbon/brain/say_understands(other)//Goddamn is this hackish, but this say code is so odd
 	if(isautosay(other))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
 	if (isAI(other))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
 	if (istype(other, /mob/living/silicon/decoy))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
 	if (ispAI(other))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
 	if (isrobot(other))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1

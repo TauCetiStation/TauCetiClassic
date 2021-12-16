@@ -117,7 +117,7 @@
 				laws.add_inherent_law(M.newFreeFormLaw)
 				to_chat(usr, "Added a freeform law.")
 
-			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
+			if(isMMI(P) || istype(P, /obj/item/device/mmi/posibrain))
 				var/obj/item/device/mmi/M = P
 
 				if(!M.brainmob)

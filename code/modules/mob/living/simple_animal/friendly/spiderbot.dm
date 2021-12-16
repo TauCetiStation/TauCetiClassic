@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
-	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
+	if(isMMI(O) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/spiderbot/update_icon()
 	if(mmi)
-		if(istype(mmi,/obj/item/device/mmi))
+		if(isMMI(mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
 		if(istype(mmi, /obj/item/device/mmi/posibrain))

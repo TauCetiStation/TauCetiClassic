@@ -612,7 +612,7 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
+	if(isMMI(W) || istype(W, /obj/item/device/mmi/posibrain))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
@@ -1054,10 +1054,10 @@
 		occupant.reset_view()
 
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
+		if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
 			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(istype(mob_container, /obj/item/device/mmi))
+		if(isMMI(mob_container))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
