@@ -171,6 +171,16 @@
 		shake()
 	return
 
+/obj/item/device/flashlight/lamp/fir/special/Moved(atom/OldLoc, Dir)
+	. = ..()
+	for(var/obj/item/I in decals)
+		if(prob(5))
+			I.anchored = FALSE
+			decals.Remove(I)
+			I.SpinAnimation(5, 1)
+			continue
+		I.Move(loc)
+
 /obj/item/device/flashlight/lamp/fir/special/verb/shake()
 	set name = "Shake tree"
 	set category = "Object"
