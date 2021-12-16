@@ -201,7 +201,7 @@
 		add_ingame_age()
 	if(!host)
 		return
-	if(changeling)
+	if(changeling &&  host.hud_used.lingchemdisplay)
 		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
 
 	sight = host.sight
