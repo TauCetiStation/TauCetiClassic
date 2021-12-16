@@ -733,10 +733,13 @@
 		return TRUE
 	return FALSE
 
-// Returns the atom sitting on the turf.
-// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-/proc/get_atom_on_turf(atom/movable/M)
-	var/atom/mloc = M
-	while(mloc && mloc.loc && !istype(mloc.loc, /turf/))
-		mloc = mloc.loc
-	return mloc
+/**
+ * Returns the atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+ * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+**/
+/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
+	var/atom/turf_to_check = atom_on_turf
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+	return turf_to_check
