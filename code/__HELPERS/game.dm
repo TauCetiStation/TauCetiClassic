@@ -742,4 +742,6 @@
 	var/atom/turf_to_check = atom_on_turf
 	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
 		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
+			break
 	return turf_to_check
