@@ -234,9 +234,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
 	SStgui.on_transfer(src, mind.current)
+	var/oldstat = mind.current.stat
 	mind.current.key = key
-	if(isbrain(mind.current))
-		mind.current.stat = DEAD // fixes a bug when you reenter in your head and cannot ghostize again
+	mind.current.stat = oldstat // prevents bugs with body resurrection
 	return 1
 
 /mob/dead/observer/proc/show_data_huds()
