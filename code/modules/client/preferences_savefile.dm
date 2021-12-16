@@ -313,7 +313,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"]   >> outline_enabled
 	S["outline_color"]     >> outline_color
 	S["eorg_enabled"]      >> eorg_enabled
-	S["show_runechat"]     >> show_runechat
+	//S["show_runechat"]     >> show_runechat
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings
@@ -366,7 +366,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
-	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
+	//show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -441,7 +441,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] << outline_enabled
 	S["outline_color"]   << outline_color
 	S["eorg_enabled"]    << eorg_enabled
-	S["show_runechat"]   << show_runechat
+	//S["show_runechat"]   << show_runechat
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
