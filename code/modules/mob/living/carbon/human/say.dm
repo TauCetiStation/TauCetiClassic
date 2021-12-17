@@ -177,8 +177,7 @@
 
 	var/ending = copytext(message, -1)
 
-	if(ending == "!" || ending == "?" || ending == ";" || ending == ".")
-	else
+	if(!(ending == "!" || ending == "?" || ending == ";" || ending == "."))
 		if(ending == ",")
 			message = splicetext(message, length(message), , ".")
 		else
