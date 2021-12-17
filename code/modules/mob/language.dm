@@ -9,7 +9,7 @@
 	var/desc = "A language."         // Short description for 'Check Languages'.
 	var/speech_verb = "says"         // 'says', 'hisses', 'farts'.
 	var/ask_verb = "asks"            // Used when sentence ends in a ?
-	var/list/exclaim_verb = list("exclaims","shouts","yells") // Used when sentence ends in a !
+	var/exclaim_verb = "exclaims" // Used when sentence ends in a !
 	var/signlang_verb = list()       // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
 	var/colour = "body"         // CSS style to use for strings in this language.
 	var/list/key = list()                    // Character used to speak in language eg. :o for Unathi.
@@ -59,7 +59,7 @@
 /datum/language/proc/get_spoken_verb(msg_end)
 	switch(msg_end)
 		if("!")
-			return pick(exclaim_verb)
+			return exclaim_verb
 		if("?")
 			return ask_verb
 	return speech_verb
