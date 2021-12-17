@@ -541,7 +541,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -598,7 +598,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -702,7 +702,7 @@
 		var/hair_changes_occured = FALSE
 		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
-			H.eye_blurry = max(H.eye_blurry, volume)
+			H.blurEyes(volume)
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair

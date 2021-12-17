@@ -1,4 +1,4 @@
-var/GLOBAL_RADIO_TYPE = 1 // radio type to use
+var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// 0 = old radios
 	// 1 = new radios (subspace technology)
 
@@ -197,7 +197,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!connection)
 		return
 
-	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
+	var/mob/autosay/A = new /mob/autosay(src)
+	A.real_name = from
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",

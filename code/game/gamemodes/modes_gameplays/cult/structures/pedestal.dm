@@ -56,14 +56,14 @@
 
 /obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
-		return
+		return FALSE
 
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	return ..()
 
@@ -152,13 +152,12 @@
 	lying_illusions = list()
 
 /obj/structure/pedestal/proc/create_holy_outline(_color)
-	holy_outline = filter(type = "outline", size = 2, color = _color)
-	filters += holy_outline
+	add_filter("pedestal_outline", 2, outline_filter(2, _color))
 	have_outline = TRUE
 
 /obj/structure/pedestal/proc/del_holy_outline()
 	if(have_outline)
-		filters -= holy_outline
+		remove_filter("pedestal_outline")
 		have_outline = FALSE
 
 /obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

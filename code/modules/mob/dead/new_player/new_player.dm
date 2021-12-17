@@ -23,6 +23,10 @@
 	new_player_list += src
 
 /mob/dead/new_player/Destroy()
+	if(my_client)
+		hide_titlescreen()
+		my_client = null
+
 	new_player_list -= src
 	return ..()
 
@@ -79,8 +83,8 @@
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
-			client << output(null, "lobbybrowser:imgsrc")
 			ready = !ready
+			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
 
 	if(href_list["lobby_observe"])

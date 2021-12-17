@@ -75,7 +75,7 @@
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
-			return 0
+			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if((CLUMSY in user.mutations) && prob(50))
@@ -94,9 +94,9 @@
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(M, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
 					flick(G.hud.icon_state, G.hud)
@@ -275,4 +275,4 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
-	return 1
+	return TRUE

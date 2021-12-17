@@ -228,7 +228,7 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = LIGHTING_PLANE + 1
+	welding_sparks.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -462,7 +462,7 @@
 				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
 				IO.damage += rand(1, 2)
 				if(IO.damage > 12)
-					user.eye_blurry += rand(3,6)
+					user.adjustBlurriness(rand(3,6))
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
 				IO.damage += rand(2, 4)
@@ -470,7 +470,7 @@
 					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
-				user.eye_blurry += rand(12,20)
+				user.adjustBlurriness(rand(12,20))
 				IO.damage += rand(12, 16)
 		if(safety<2)
 			if(IO.damage > 10)
@@ -481,7 +481,7 @@
 			else if (IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
-				user.eye_blurry = 5
+				user.adjustBlurriness(5)
 				user.disabilities |= NEARSIGHTED
 				spawn(100)
 					user.disabilities &= ~NEARSIGHTED

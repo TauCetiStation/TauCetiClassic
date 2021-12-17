@@ -106,7 +106,6 @@
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
-			P.on_hit(src, def_zone, armor)
 			//return Nope! ~Zve
 		if(delta < 10)
 			P.sharp = 0
@@ -353,7 +352,7 @@
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
 							if(R)
-								R.RemoveFromRole(mind)
+								R.Deconvert()
 
 				if(bloody)//Apply blood
 					if(wear_mask)

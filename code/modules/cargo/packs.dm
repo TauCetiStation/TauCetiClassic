@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
 /datum/supply_pack
 	var/name = "Crate"
@@ -77,6 +77,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/glass/paint/black,
 					/obj/item/weapon/reagent_containers/glass/paint/white,
 					/obj/item/weapon/reagent_containers/glass/paint/remover,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
 					/obj/item/weapon/wrapping_paper,
 					/obj/item/weapon/wrapping_paper,
 					/obj/item/weapon/wrapping_paper)
@@ -92,6 +95,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Export scanners crate"
 	group = "Operations"
 
+/datum/supply_pack/bureaucracy
+	name = "Bureaucracy Crate"
+	contains = list(/obj/item/weapon/stamp/denied,
+					/obj/item/weapon/stamp/approve,
+					/obj/item/weapon/clipboard,
+					/obj/item/weapon/paper_bin,
+					/obj/item/weapon/pen/red,
+					/obj/item/weapon/pen/blue,
+					/obj/item/weapon/pen,
+					/obj/item/weapon/hand_labeler,
+					/obj/item/weapon/folder,
+					/obj/item/weapon/folder/blue,
+					/obj/item/weapon/folder/red)
+	cost = 1500
+	group = "Operations"
 //----------------------------------------------
 //-----------------SECURITY---------------------
 //----------------------------------------------
@@ -253,35 +271,63 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/weapon/gun/energy/sniperrifle,
 					/obj/item/weapon/gun/energy/sniperrifle)
-	cost = 5000
+	cost = 8200
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Energy marksman crate"
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_beanbag
-	name = "Shotgun shells (Beanbag)"
-	contains = list(/obj/item/weapon/storage/box/shotgun/beanbag)
-	cost = 1000
-	crate_name = "Shotgun shells (Beanbag)"
+/datum/supply_pack/shotgunammo_nonlethal 
+	name = "Shotgun shells (non-lethal)"
+	contains = list(/obj/item/ammo_box/eight_shells/beanbag,
+					/obj/item/ammo_box/eight_shells/beanbag,
+					/obj/item/ammo_box/eight_shells/beanbag,
+					/obj/item/ammo_box/eight_shells/beanbag,
+					/obj/item/ammo_box/eight_shells/beanbag,
+					/obj/item/ammo_box/eight_shells/stunslug,
+					/obj/item/ammo_box/eight_shells/stunslug,
+					/obj/item/ammo_box/eight_shells/stunslug,
+					/obj/item/ammo_box/eight_shells/stunslug,
+					/obj/item/ammo_box/eight_shells/stunslug)
+	cost = 2000
+	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
 
 /datum/supply_pack/shotgunammo_slug
 	name = "Shotgun shells (slug)"
-	contains = list(/obj/item/weapon/storage/box/shotgun/slug)
+	contains = list(/obj/item/ammo_box/eight_shells,
+					/obj/item/ammo_box/eight_shells,
+					/obj/item/ammo_box/eight_shells,
+					/obj/item/ammo_box/eight_shells,
+					/obj/item/ammo_box/eight_shells,
+					/obj/item/ammo_box/eight_shells)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (slug)"
 	access = access_armory
 	group = "Security"
 
 /datum/supply_pack/shotgunammo_buckshot
 	name = "Shotgun shells (buckshot)"
-	contains = list(/obj/item/weapon/storage/box/shotgun/buckshot)
-	cost = 2500
+	contains = list(/obj/item/ammo_box/eight_shells/buckshot,
+					/obj/item/ammo_box/eight_shells/buckshot,
+					/obj/item/ammo_box/eight_shells/buckshot,
+					/obj/item/ammo_box/eight_shells/buckshot,
+					/obj/item/ammo_box/eight_shells/buckshot,
+					/obj/item/ammo_box/eight_shells/buckshot)
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (buckshot)"
 	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/shotgunammo_incendiary
+	name = "Shotgun shells (incendiary)"
+	contains = list(/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/ammo_box/eight_shells/incendiary,)
+	cost = 2000
+	hidden = TRUE
 	group = "Security"
 
 /datum/supply_pack/r4046
@@ -1031,13 +1077,32 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/autoinjectors,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-					/obj/item/weapon/gun/energy/pyrometer/medical,)
-	cost = 1000
+					/obj/item/weapon/gun/energy/pyrometer/medical)
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "Medical crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/med_injectors
+	name = "Space First-Aid kits"
+	contains = list(/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	cost = 1500
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "Space First-Aid crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/civ_medkit
+	name = "Civilian Medkits"
+	contains = list(/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian)
+	cost = 700
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "Civilian Medkits crate"
 	group = "Medical / Science"
 
 /datum/supply_pack/roller_beds
@@ -1144,6 +1209,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/bodybags)
 	crate_name = "body bags crate"
 	group = "Medical / Science"
+	
+/datum/supply_pack/body_bags
+	name = "Stasis Bags Crate"
+	cost = 10000
+	contains = list(/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag)
+	crate_name = "stasis bags crate"
+	group = "Medical / Science"
 
 /datum/supply_pack/suspension_gen
 	name = "Suspension Field Generetor Crate"
@@ -1160,9 +1240,24 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/machinery/floodlight,
 					/obj/machinery/floodlight)
 	crate_type = /obj/structure/closet/crate/scicrate
-	crate name = "Emergency Floodlight Crate"
+	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/artifical_ventilation_machine 
+	name = "Artifical Ventilation Machine"
+	cost = 3000
+	contains = list(/obj/machinery/life_assist/artificial_ventilation)
+	crate_type = /obj/structure/largecrate
+	crate_name = "AVM Crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/cardiopulmonary_bypass_machine
+	name = "Cardiopulmonary Bypass Machine"
+	cost = 3500
+	contains = list(/obj/machinery/life_assist/cardiopulmonary_bypass)
+	crate_type = /obj/structure/largecrate
+	crate_name = "CBM crate"
+	group = "Medical / Science"
 //----------------------------------------------
 //-----------------HYDROPONICS------------------
 //----------------------------------------------
@@ -1431,11 +1526,27 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/storage/box/autoinjector/stimpack,
-					/obj/item/device/flashlight/lantern,
 					/obj/item/weapon/pickaxe/drill/jackhammer)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure/gear
 	crate_name = "Mining Supply Crate"
+	access = access_mining
+	group = "Mining"
+
+/datum/supply_pack/mining_starterkit
+	name = "Shaft Miner Gear"
+	contains = list(/obj/item/clothing/head/helmet/space/globose/mining,
+					/obj/item/clothing/suit/space/globose/mining,
+					/obj/item/device/radio/headset/headset_cargo,
+					/obj/item/clothing/glasses/hud/mining,
+					/obj/item/device/geoscanner,
+					/obj/item/clothing/gloves/black,
+					/obj/item/weapon/storage/bag/ore,
+					/obj/item/device/flashlight/lantern,
+					/obj/item/clothing/under/rank/miner)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_name = "Shaft Miner Gear Crate"
 	access = access_mining
 	group = "Mining"
 
@@ -1560,6 +1671,18 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Barber supplies"
 	group = "Supply"
 
+/datum/supply_pack/clown 
+	name = "Clown supply crate"
+	contains = list(/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/reagent_containers/food/snacks/pie,
+					/obj/item/weapon/reagent_containers/food/snacks/pie,
+					/obj/item/toy/crayon/rainbow)
+	cost = 2500
+	crate_name = "HONK supplies"
+	group = "Supply"
 //----------------------------------------------
 //--------------MISCELLANEOUS-------------------
 //----------------------------------------------
@@ -1619,6 +1742,23 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "EFTPOS scanner"
 	cost = 1000
 	crate_name = "EFTPOS crate"
+	group = "Miscellaneous"
+
+/datum/supply_pack/laser_tag
+	name = "Laser Tag Crate"
+	contains = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+					/obj/item/clothing/suit/lasertag/redtag,
+					/obj/item/clothing/suit/lasertag/redtag,
+					/obj/item/clothing/suit/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/clothing/suit/lasertag/bluetag,
+					/obj/item/clothing/suit/lasertag/bluetag,
+					/obj/item/clothing/suit/lasertag/bluetag)
+	cost = 1500
 	group = "Miscellaneous"
 
 //----------------------------------------------
@@ -1742,3 +1882,39 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Actor Costumes"
 	access = access_theatre
 	group = "Miscellaneous"
+
+//----------------------------------------------
+//-----------------XENO THREAT-------------------
+//----------------------------------------------
+/datum/supply_pack/xeno_laser
+	name = "Xeno liquidator"
+	contains = list(/obj/item/clothing/suit/space/globose/recycler,
+					/obj/item/clothing/head/helmet/space/globose/recycler,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/shield/buckler,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	cost = 10000
+	crate_name = "Xeno liquidator crate"
+	group = "xeno"	//there is no such category, so these crates will not be visible in the console
+	hidden = TRUE
+
+/datum/supply_pack/xeno_incendiary
+	name = "Xeno arsonist"
+	contains = list(/obj/item/clothing/head/helmet/space/rig/security,
+					/obj/item/clothing/suit/space/rig/security,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/weapon/shield/riot,
+					/obj/item/clothing/ears/earmuffs,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	cost = 10000
+	crate_name = "Xeno arsonist crate"
+	group = "xeno"
+	hidden = TRUE
