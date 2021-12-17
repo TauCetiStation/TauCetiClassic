@@ -158,9 +158,11 @@
 			B.brainmob.mind.transfer_to(target)
 		else
 			target.key = B.brainmob.key
+		target.dna = B.brainmob.dna
 	var/obj/item/organ/internal/brain/brain = new(null)
 	brain.insert_organ(target)
 	target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
+	ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
 	qdel(tool)
 
 /datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
