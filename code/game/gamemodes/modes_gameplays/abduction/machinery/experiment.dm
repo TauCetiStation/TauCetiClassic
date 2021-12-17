@@ -24,7 +24,7 @@
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/abductor/experiment/open_machine()
 	if(!state_open && !panel_open)
@@ -192,14 +192,12 @@
 			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			points += point_reward
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
-		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
-	else
-		visible_message("Brain activity nonexistant - disposing Sample...")
-		open_machine()
-		SendBack(H)
-		return "<span class='bad'>Specimen braindead - disposed</span>"
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+		return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
+	visible_message("Brain activity nonexistant - disposing Sample...")
+	open_machine()
+	SendBack(H)
+	return "<span class='bad'>Specimen braindead - disposed</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(16 SECONDS)

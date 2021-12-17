@@ -160,7 +160,7 @@
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
 
-	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
+	if (sight_mode & BORGXRAY)
 		set_EyesVision(transition_time = 0)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
