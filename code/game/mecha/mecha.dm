@@ -612,7 +612,7 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-	if(isMMI(W) || istype(W, /obj/item/device/mmi/posibrain))
+	if(isMMI(W))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
