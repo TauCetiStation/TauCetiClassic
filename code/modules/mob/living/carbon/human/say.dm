@@ -176,19 +176,22 @@
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	if (speaking)
+
+	if(ending == "!" || ending == "?" || ending == ";" || ending == ".")
+	else
+		if(ending == ",")
+			message = splicetext(message, length(message), , ".")
+		else
+			message += "."
+
+	if(speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
-		switch(ending)
-			if("!")
-				verb = pick("exclaims","shouts","yells")
-			if("?")
-				verb = "asks"
-			if(",")
-				message = splicetext(message, length(message), , ".")
-			if(!("." || ";"))
-				message += "."
+		if(ending == "!")
+			verb = pick("exclaims","shouts","yells")
+		if(ending == "?")
+			verb = "asks"
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
