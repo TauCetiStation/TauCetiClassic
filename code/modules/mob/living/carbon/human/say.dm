@@ -172,8 +172,7 @@
 
 	message = capitalize(trim(message))
 	if(findtext(message, ".", length(message)) || findtext(message, "?", length(message)) || \
-	   findtext(message, ";", length(message)) || findtext(message, "!", length(message)) || \
-	   findtext(message, ".", length(message)))
+	   findtext(message, ";", length(message)) || findtext(message, "!", length(message)))
 	else message += "." // auto period at the end of the message
 	if(iszombie(src))
 		message = zombie_talk(message)
