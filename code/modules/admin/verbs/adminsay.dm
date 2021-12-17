@@ -15,7 +15,7 @@
 	log_adminsay("[key_name(src)] : [msg]", "ADMINSAY")
 
 	msg = "<span class='adminsay'><span class='prefix'>ADMINSAY:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message emojify linkify'>[msg]</span></span>"
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(R_ADMIN & C.holder.rights)
 			to_chat(C, msg)
 

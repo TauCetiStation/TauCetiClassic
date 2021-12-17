@@ -86,7 +86,7 @@
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
-		C.spread_disease_to(M, "Contact")
+		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
 	if(M.pulling == src)
 		M.stop_pulling()

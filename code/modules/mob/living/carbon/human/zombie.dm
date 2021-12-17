@@ -232,7 +232,7 @@
 	D.uniqueID = rand(0,10000)
 	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
-	D.spreadtype = "Blood" // not airborn and not contact, because spreading zombie virus through air or hugs is silly
+	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
@@ -331,7 +331,7 @@ var/global/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

@@ -1427,6 +1427,7 @@
 /mob/living/carbon/human/update_sight()
 	if(!..())
 		return FALSE
+
 	if(daltonism)
 		set_EyesVision(sightglassesmod)
 		return FALSE
@@ -1442,6 +1443,8 @@
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 		if(G.sightglassesmod && (G.active || !G.toggleable))
 			sightglassesmod = G.sightglassesmod
+		else
+			sightglassesmod = null
 	else
 		sightglassesmod = null
 
@@ -1485,7 +1488,7 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
@@ -1493,7 +1496,7 @@
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 

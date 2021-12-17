@@ -235,8 +235,9 @@
 			S.use(res_list[x])
 
 /obj/item/stack/proc/zero_amount()
-	if(amount < 1 && !is_cyborg())
-		qdel(src)
+	if(amount < 1)
+		if(!is_cyborg())
+			qdel(src)
 		return TRUE
 	return FALSE
 

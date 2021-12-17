@@ -20,6 +20,8 @@ SUBSYSTEM_DEF(air)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
+	msg_lobby = "Фильтруем кислород..."
+
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 
 	var/cost_pipenets        = 0
