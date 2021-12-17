@@ -171,6 +171,8 @@
 				return ""
 
 	message = capitalize(trim(message))
+	if(message[length(message)] == ",")
+		message = splicetext(message, length(message), , ".")
 	if(message[length(message)] == "." || message[length(message)] == "?" || \
 	   message[length(message)] == "!" || message[length(message)] == ";")
 	else
