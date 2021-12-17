@@ -171,12 +171,7 @@
 				return ""
 
 	message = capitalize(trim(message))
-	if(message[length(message)] == ",")
-		message = splicetext(message, length(message), , ".")
-	if(message[length(message)] == "." || message[length(message)] == "?" || \
-	   message[length(message)] == "!" || message[length(message)] == ";")
-	else
-		message += "." // auto period at the end of the message
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
@@ -185,10 +180,15 @@
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
+		switch(ending)
+			if("!")
+				verb = pick("exclaims","shouts","yells")
+			if("?")
+				verb = "asks"
+			if(",")
+				message = splicetext(message, length(message), , ".")
+			if(!("." || ";"))
+				message += "."
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
