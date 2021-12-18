@@ -37,4 +37,4 @@
 
 /* hidden variables */
 #define VE_HIDDEN_LOG \
-	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP")
+	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP", "telemetry_connections")
