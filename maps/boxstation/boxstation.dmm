@@ -765,9 +765,9 @@
 	},
 /area/station/security/main)
 "aby" = (
-/obj/machinery/light/small/emergency,
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -887,27 +887,7 @@
 	},
 /area/station/security/armoury)
 "abK" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/brigdoor{
-	id = "ArmorDoors";
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/structure/closet/crate/secure/weapon/armory_lethal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -926,10 +906,10 @@
 	},
 /area/station/security/execution)
 "abM" = (
-/obj/machinery/light/small/emergency{
+/obj/structure/closet/crate/secure/weapon/armory_nonlethal,
+/obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/pistols,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1038,9 +1018,6 @@
 	},
 /area/station/security/armoury)
 "abT" = (
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -1057,6 +1034,9 @@
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/weapon/shield/riot,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1752,8 +1732,8 @@
 	},
 /area/station/security/brig)
 "add" = (
-/obj/machinery/light/small/emergency,
 /obj/structure/closet/bombclosetsecurity,
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -3066,9 +3046,6 @@
 /area/station/security/warden)
 "afu" = (
 /obj/structure/rack,
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3096,16 +3073,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
+/obj/item/weapon/gun/projectile/m79,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3116,11 +3088,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/projectile/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3382,13 +3356,10 @@
 /area/station/security/main)
 "afR" = (
 /obj/structure/rack,
-/obj/machinery/light/small/emergency,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/ammo_box/shotgun/beanbag,
-/obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
@@ -3396,6 +3367,7 @@
 	dir = 1;
 	name = "Weapons locker"
 	},
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4383,12 +4355,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (

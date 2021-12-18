@@ -381,3 +381,26 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/projectile/glock(src)
+
+
+/obj/structure/closet/crate/secure/weapon/armory_nonlethal
+	name = "Rubber ammo crate"
+	req_access = list(access_armory)
+	desc = "A secure ammo crate with non-lethal ballistic ammunition"
+
+/obj/structure/closet/crate/secure/weapon/armory_lethal
+	name = "Ballistic ammo crate"
+	req_access = list(access_armory)
+	desc = "A secure ammo crate with lethal ballistic ammunition"
+
+/obj/structure/closet/crate/secure/weapon/armory_nonlethal/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/eight_shells/beanbag(src)
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
+
+/obj/structure/closet/crate/secure/weapon/armory_lethal/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/eight_shells/buckshot(src)
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/magazine/m9mm_2(src)
