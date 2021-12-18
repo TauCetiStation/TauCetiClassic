@@ -20,6 +20,9 @@
 	light_color = LIGHT_COLOR_FIREPLACE
 	light_power = 3
 
+	var/heating_temperature = T20C + 5
+	var/heating_power
+
 /obj/structure/fireplace/atom_init(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -100,22 +103,51 @@
 			. += "fireplace_fire4"
 	. += "fireplace_glow"
 
-/obj/structure/fireplace/proc/adjust_light()
+/obj/structure/fireplace/proc/adjust_fire()
 	if(!lit)
 		set_light(0)
 		return
 
+	var/power = 0
+
 	switch(burn_time_remaining())
 		if(0 to 500)
-			set_light(1)
+			power = 1
 		if(500 to 1000)
-			set_light(2)
+			power = 2
 		if(1000 to 1500)
-			set_light(3)
+			power = 3
 		if(1500 to 2000)
-			set_light(4)
+			power = 4
 		if(2000 to MAXIMUM_BURN_TIMER)
-			set_light(6)
+			power = 6
+
+	set_light(power)
+	heating_power = power * 40000 // near to [power] space heaters
+
+/obj/structure/fireplace/proc/process_heating()
+	if(!lit)
+		return
+
+	var/datum/gas_mixture/env = loc.return_air()
+
+	if(env && (env.temperature - heating_temperature) >= 0.1)
+		return
+
+	var/transfer_moles = env.total_moles
+	var/datum/gas_mixture/removed = env.remove(transfer_moles)
+
+	if(!removed)
+		return
+
+	var/heat_transfer = removed.get_thermal_energy_change(heating_temperature)
+
+	if(heat_transfer > 0)	//heating air
+		heat_transfer = min(heat_transfer, heating_power)
+
+		removed.add_thermal_energy(heat_transfer)
+
+	env.merge(removed)
 
 /obj/structure/fireplace/process(delta_time)
 	if(!lit)
@@ -128,7 +160,8 @@
 	var/turf/T = get_turf(src)
 	T.hotspot_expose(700, 2.5 * delta_time)
 	update_appearance()
-	adjust_light()
+	adjust_fire()
+	process_heating()
 
 /obj/structure/fireplace/proc/extinguish()
 	if(lit)
