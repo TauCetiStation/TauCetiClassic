@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
-	if(isMMI(O) || istype(O, /obj/item/device/mmi/posibrain))
+	if(isMMI(O))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
