@@ -45,7 +45,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	name = "Хонк за хонк"
 
 /datum/ai_laws/faith/science
-	name = "Принципы Декарта"
+	name = "Первоначала Декарта"
 
 /datum/ai_laws/pai
 	name = "Стандартные законы пИИ"
