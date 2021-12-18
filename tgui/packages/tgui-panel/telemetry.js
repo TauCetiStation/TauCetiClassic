@@ -12,7 +12,7 @@ const logger = createLogger('telemetry');
 
 const MAX_CONNECTIONS_STORED = 10;
 
-const decoder = decodeURIComponent || unescape
+const decoder = decodeURIComponent || unescape;
 
 const getOldCookie = cname => {
   let name = "tau-" + cname + '=';
@@ -59,12 +59,16 @@ export const telemetryMiddleware = store => {
       logger.debug('sending');
       const limits = payload?.limits || {};
       // Trim connections according to the server limit
+      const charset = document.defaultCharset;
       const connections = telemetry.connections
         .slice(0, limits.connections);
+      const localTime = (new Date()).getTimezoneOffset() * -60;
       sendMessage({
         type: 'telemetry',
         payload: {
+          charset,
           connections,
+          localTime,
         },
       });
       return;

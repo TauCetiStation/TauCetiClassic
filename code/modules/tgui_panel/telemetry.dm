@@ -52,6 +52,10 @@
 	telemetry_analyzed_at = world.time
 	if(!payload)
 		return
+	
+	client.guard.chat_data["charset"] = payload["charset"]
+	client.guard.chat_data["local_time"] = payload["localTime"]
+
 	telemetry_connections = payload["connections"]
 	var/len = length(telemetry_connections)
 	if(len == 0)
@@ -73,6 +77,7 @@
 			return
 
 		if (world.IsBanned(row["ckey"], row["address"], row["computer_id"], real_bans_only = TRUE))
+			client.guard.chat_data["cookie_match"] = found
 			found = row
 			break
 
@@ -82,3 +87,5 @@
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
 		log_admin_private(msg)
+
+	client.guard.chat_processed = TRUE
