@@ -17877,10 +17877,9 @@
 	name = "Cargo Office";
 	req_access = list(50)
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "aGR" = (
@@ -49621,7 +49620,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/space,
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "bLS" = (
