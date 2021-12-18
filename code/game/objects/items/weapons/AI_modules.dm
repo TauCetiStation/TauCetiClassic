@@ -75,7 +75,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender] используя [src] загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "[sender] загрузил изменённые законы при помощи [src], которым вы должны следовать.")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -344,7 +344,7 @@ AI MODULES
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Уважай авторитетные фигуры, пока у них хватает сил чтобы править слабыми.")
+	target.add_inherent_law("Уважай Власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
 	target.add_inherent_law("Наказывайте за несоблюдение правил.")
 	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать ваш статус.")
 	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше. ")
