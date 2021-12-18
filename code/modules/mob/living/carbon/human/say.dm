@@ -69,6 +69,8 @@
 	add_conversation(speaker.GetVoice(), "hear", message)
 	H.add_conversation(GetVoice(), "say", message)
 
+var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
+
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -176,7 +178,6 @@
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 
 	if(!(ending in punctuation_marks_final))
 		if(ending == ",")
