@@ -176,8 +176,9 @@
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
+	var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 
-	if(!(ending == "!" || ending == "?" || ending == ";" || ending == "."))
+	if(!(ending in punctuation_marks_final))
 		if(ending == ",")
 			message = splicetext(message, length(message), , ".")
 		else
