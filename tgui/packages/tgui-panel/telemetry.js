@@ -12,6 +12,31 @@ const logger = createLogger('telemetry');
 
 const MAX_CONNECTIONS_STORED = 10;
 
+const decoder = decodeURIComponent || unescape
+
+const getOldCookie = cname => {
+  let name = "tau-" + cname + '=';
+  let ca = document.cookie.split(';');
+  for (let i=0, c; i < ca.length; i++) {
+    c = ca[i];
+    while (c.charAt(0)===' ') c = c.substring(1);
+    if (c.indexOf(name) === 0) {
+      return decoder(c.substring(name.length, c.length));
+    }
+  }
+  return null;
+};
+
+const getOldConnections = () => {
+  let dataCookie = getOldCookie('connData');
+  if (dataCookie) {
+    try {
+      return JSON.parse(dataCookie);
+    } catch {}
+  }
+  return [];
+};
+
 const connectionsMatch = (a, b) => (
   a.ckey === b.ckey
     && a.address === b.address
@@ -58,7 +83,7 @@ export const telemetryMiddleware = store => {
         if (!telemetry) {
           telemetry = await storage.get('telemetry') || {};
           if (!telemetry.connections) {
-            telemetry.connections = [];
+            telemetry.connections = getOldConnections();
           }
           logger.debug('retrieved telemetry from storage', telemetry);
         }
