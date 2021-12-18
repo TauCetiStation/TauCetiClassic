@@ -16,6 +16,7 @@
 	msg = lowertext(msg)
 
 	if(listening)
+		msg = copytext(msg, 1, length(msg)) // deleting last symbol
 		recorded = msg
 		listening = 0
 		audible_message("Activation message is '[recorded]'.", hearing_distance = 1)
