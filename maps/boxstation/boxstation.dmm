@@ -9353,6 +9353,38 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"apA" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/tank/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/weapon/tank/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "caution"
+	},
+/area/station/engineering/break_room)
 "apE" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
@@ -49818,6 +49850,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bLQ" = (
@@ -51705,6 +51742,11 @@
 "bPs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -54139,6 +54181,11 @@
 "bVv" = (
 /obj/machinery/computer/station_alert{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -57333,6 +57380,10 @@
 	dir = 8;
 	network = list("SS13","Engineering")
 	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "caution"
@@ -58208,6 +58259,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "civ" = (
@@ -58232,31 +58288,15 @@
 	},
 /area/station/engineering/engine)
 "ciz" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/tank/emergency_oxygen{
-	pixel_x = -8
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/obj/item/weapon/tank/emergency_oxygen{
-	pixel_x = -8
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 4
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 4
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "caution"
-	},
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "ciB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -65663,9 +65703,6 @@
 /area/station/engineering/break_room)
 "cCr" = (
 /turf/simulated/wall/r_wall,
-/area/station/engineering/singularity)
-"cCs" = (
-/turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "cCt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -117103,7 +117140,7 @@ geb
 bSP
 bGL
 avv
-cca
+ciz
 bUd
 ayc
 bSV
@@ -117360,7 +117397,7 @@ bFc
 bSP
 bSP
 cfW
-ciz
+apA
 bUd
 bPa
 bSV
