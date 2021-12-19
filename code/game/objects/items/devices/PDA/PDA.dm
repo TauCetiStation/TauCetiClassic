@@ -1098,7 +1098,7 @@
 			message += "It melts in a puddle of plastic."
 		else
 			message += "Your [P] shatters in a thousand pieces!"
-		qlde(P)
+		qdel(P)
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
