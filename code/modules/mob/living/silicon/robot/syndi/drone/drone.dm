@@ -21,10 +21,14 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	uplink = new /obj/item/device/drone_uplink()
 
+	var/datum/action/stop_control/A = new(src)
+	A.Grant(src)
+
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. logo and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
 	loose_control()
+	QDEL_LIST(actions)
 	return ..()
 
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
@@ -92,8 +96,28 @@
 
 //========Verbs========
 /mob/living/silicon/robot/drone/syndi/verb/stop_control()
-	set name = "Stop controling"
+	set name = "Stop controlling"
 	set desc = "Toggles RC off."
 	set category = "Drone"
 
 	loose_control()
+
+
+//==========Actions==========
+/datum/action/stop_control
+	name = "Stop controlling"
+	action_type = AB_GENERIC
+	button_icon_state = "degoggles"
+
+/datum/action/stop_control/Checks()
+	. = ..()
+	var/mob/living/silicon/robot/drone/syndi/M = owner
+	if(M.operator)
+		return TRUE
+	return FALSE
+
+/datum/action/stop_control/Trigger()
+	if(!Checks())
+		return
+	var/mob/living/silicon/robot/drone/syndi/M = owner
+	M.loose_control()

@@ -5,6 +5,7 @@
 	panel = "Drone upgrades"
 	desc = ""
 	action_icon_state = "drone"
+	action_background_icon_state = "bg_default"
 	clothes_req = FALSE
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost
@@ -49,6 +50,7 @@
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke
 	name = "Deploy smokescreen"
+	action_icon_state = "smoke"
 	charge_type = "charges"
 	charge_max = 3
 
