@@ -221,6 +221,11 @@
 
 	sortTim(bridge_commands, /proc/cmp_bridge_commands)
 
+	global.metahelps = list()
+	for(var/help in subtypesof(/datum/metahelp))
+		var/datum/metahelp/H = new help
+		global.metahelps[H.id] = H
+
 	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
 
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY

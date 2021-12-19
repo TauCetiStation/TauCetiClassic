@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	msg_lobby = "Запускаем атомные сверхточные часы..."
+
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 

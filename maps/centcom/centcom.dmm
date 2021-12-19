@@ -456,7 +456,10 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/holding)
 "aaV" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/light/spot{
+	dir = 4
+	},
+/obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -2253,23 +2256,6 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
-"agd" = (
-/obj/random/vending/snack,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/evac)
-"agg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
@@ -4081,6 +4067,9 @@
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/weapon/scalpel/laser3,
 /obj/item/weapon/scalpel/manager,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -15741,10 +15730,7 @@
 /turf/unsimulated/beach/water,
 /area/custom/beach)
 "aZB" = (
-/obj/machinery/light/spot{
-	dir = 4
-	},
-/obj/random/vending/cola,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -23920,6 +23906,17 @@
 /obj/structure/curtain/open,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
+"oDb" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "oEb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,13"
@@ -23993,6 +23990,15 @@
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
+"oQb" = (
+/obj/machinery/light/spot{
+	dir = 4
+	},
+/obj/random/vending/cola,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "oRb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "15,12"
@@ -24039,10 +24045,7 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "oXb" = (
-/obj/machinery/light/spot{
-	dir = 4
-	},
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -48881,16 +48884,16 @@ aRt
 aHv
 aSc
 aSc
-agd
-oXb
-aSc
-aSc
-aSc
-aSc
-aSc
-aSc
 aZB
 aaV
+aSc
+aSc
+aSc
+aSc
+aSc
+aSc
+oQb
+oXb
 aSc
 aSc
 abn
@@ -49145,7 +49148,7 @@ afC
 afC
 afC
 afC
-agg
+oDb
 aHv
 abn
 abn

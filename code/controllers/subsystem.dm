@@ -32,6 +32,8 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
+	var/msg_lobby = null
+
 	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
 	var/postponed_fires = 0 /// How many fires have we been requested to postpone
 
@@ -183,6 +185,8 @@
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
+	if(msg_lobby && !Master.current_runlevel)
+		to_chat(world, "<b>[msg_lobby]</b>")
 	log_initialization(msg)
 	initialized = TRUE
 	return time
