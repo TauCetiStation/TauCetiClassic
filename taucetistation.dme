@@ -36,6 +36,7 @@
 #include "code\__DEFINES\combos.dm"
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\damage_organs.dm"
+#include "code\__DEFINES\diseases2.dm"
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\footsteps.dm"
