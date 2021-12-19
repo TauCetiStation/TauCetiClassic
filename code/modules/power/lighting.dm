@@ -242,7 +242,7 @@
 /obj/machinery/light/small/emergency
 	brightness_range = 6
 	brightness_power = 2
-	brightness_color = "#C64244"
+	brightness_color = "#c64244"
 
 /obj/machinery/light/spot
 	name = "spotlight"
