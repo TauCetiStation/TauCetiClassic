@@ -32,7 +32,7 @@
 		this["type"] = spawner_id
 		this["name"] = spawner.name
 		this["short_desc"] = spawner.desc
-		this["flavor_text"] = spawner.flavor_text
+		this["wiki_ref"] = config.wikiurl && spawner.wiki_ref ? "[config.wikiurl]/[spawner.wiki_ref]" : null
 		this["important_warning"] = spawner.important_info
 		this["amount_left"] = spawners_list.len
 

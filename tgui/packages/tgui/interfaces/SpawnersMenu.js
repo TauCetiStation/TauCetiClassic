@@ -51,14 +51,14 @@ export const SpawnersMenu = (props, context) => {
                   <LabeledList.Item label="Описание">
                     {spawner.short_desc}
                   </LabeledList.Item>
-                  {spawner.flavor_text && (
-                    <LabeledList.Item label="Дополнительно">
-                      {spawner.flavor_text}
-                    </LabeledList.Item>
-                  )}
                   {spawner.important_warning && (
                     <LabeledList.Item label="Важная информация">
                       {spawner.important_warning}
+                    </LabeledList.Item>
+                  )}
+                  {spawner.wiki_ref && (
+                    <LabeledList.Item label="Вики">
+                      {spawner.wiki_ref}
                     </LabeledList.Item>
                   )}
                 </LabeledList>

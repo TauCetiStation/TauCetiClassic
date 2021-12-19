@@ -34,10 +34,10 @@ var/global/list/datum/spawners_cooldown = list()
 
 	// In interface: "Описание: "
 	var/desc
-	// In interface: "Дополнительно: "
-	var/flavor_text
 	// In interface: "Важная информация: "
 	var/important_info
+	// In interface: "Ссылка на вики: "
+	var/wiki_ref
 
 	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
@@ -137,7 +137,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/dealer
 	name = "Контрабандист"
 	desc = "Вы появляетесь в космосе вблизи со станцией."
-	flavor_text = "https://wiki.taucetistation.org/Families"
+	wiki_ref = "Families"
 
 	ranks = list(ROLE_FAMILIES)
 
@@ -163,7 +163,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/cop
 	name = "Офицер ОБОП"
 	desc = "Вы появляетесь на ЦК в полном обмундирование с целью прилететь на станцию и задержать всех бандитов."
-	flavor_text = "https://wiki.taucetistation.org/Families"
+	wiki_ref = "Families"
 
 	ranks = list(ROLE_FAMILIES)
 
@@ -225,7 +225,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/ert
 	name = "ЕРТ"
 	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
-	flavor_text = "https://wiki.taucetistation.org/Emergency_Response_Team"
+	wiki_ref = "Emergency_Response_Team"
 	important_info = "Ваша цель: "
 
 	ranks = list(ROLE_ERT, "Security Officer")
@@ -278,7 +278,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/blob_event
 	name = "Блоб"
 	desc = "Вы появляетесь в случайной точки станции в виде блоба."
-	flavor_text = "https://wiki.taucetistation.org/Blob"
+	wiki_ref = "Blob"
 
 	ranks = list(ROLE_BLOB)
 	time_to_del = 3 MINUTES
@@ -297,7 +297,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/ninja_event
 	name = "Космический Ниндзя"
 	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
-	flavor_text = "https://wiki.taucetistation.org/Space_Ninja"
+	wiki_ref = "Space_Ninja"
 
 	ranks = list(ROLE_NINJA)
 	time_to_del = 3 MINUTES
@@ -323,7 +323,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
-	flavor_text = "https://wiki.taucetistation.org/Cortical_Borer"
+	wiki_ref = "Cortical_Borer"
 
 	ranks = list(ROLE_GHOSTLY)
 	time_to_del = 3 MINUTES
@@ -337,7 +337,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer
 	name = "Борер"
 	desc = "Вы становитесь очередным отпрыском бореров."
-	flavor_text = "https://wiki.taucetistation.org/Cortical_Borer"
+	wiki_ref = "Cortical_Borer"
 
 	ranks = list(ROLE_GHOSTLY)
 
@@ -359,7 +359,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/alien_event
 	name = "Изначальный Лицехват"
 	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
-	flavor_text = "https://wiki.taucetistation.org/Xenomorph"
+	wiki_ref = "Xenomorph"
 
 	ranks = list(ROLE_ALIEN)
 	time_to_del = 3 MINUTES
@@ -402,6 +402,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/gladiator
 	name = "Гладиатор"
 	desc = "Вы появляетесь на арене и должны выжить."
+	wiki_ref = "Starter_Guide#Арена"
 
 	ranks = list(ROLE_GHOSTLY)
 	cooldown = 0
@@ -417,7 +418,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/mouse
 	name = "Мышь"
 	desc = "Вы появляетесь в суровом мире людей и должны выжить."
-	flavor_text = "https://wiki.taucetistation.org/Mouse"
+	wiki_ref = "Mouse"
 
 	ranks = list("Mouse")
 	del_after_spawn = FALSE
@@ -434,7 +435,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/space_bum
 	name = "Космо-бомж"
 	desc = "Вы появляетесь где-то на свалке."
-	flavor_text = "https://wiki.taucetistation.org/Junkyard"
+	wiki_ref = "Junkyard"
 
 	del_after_spawn = FALSE
 
@@ -448,7 +449,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone
 	name = "Дрон"
 	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
-	flavor_text = "https://wiki.taucetistation.org/Drone"
+	wiki_ref = "Drone"
 
 	ranks = list(ROLE_DRONE)
 
@@ -470,7 +471,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/plant
 	name = "Нимфа Дионы"
 	desc = "Нимфу вырастили на грядке."
-	flavor_text = "https://wiki.taucetistation.org/Dionaea"
+	wiki_ref = "Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
