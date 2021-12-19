@@ -323,7 +323,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
-	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
+	flavor_text = "https://wiki.taucetistation.org/Cortical_Borer"
 
 	ranks = list(ROLE_GHOSTLY)
 	time_to_del = 3 MINUTES
@@ -337,7 +337,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer
 	name = "Борер"
 	desc = "Вы становитесь очередным отпрыском бореров."
-	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
+	flavor_text = "https://wiki.taucetistation.org/Cortical_Borer"
 
 	ranks = list(ROLE_GHOSTLY)
 
@@ -359,7 +359,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/alien_event
 	name = "Изначальный Лицехват"
 	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
-	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
+	flavor_text = "https://wiki.taucetistation.org/Xenomorph"
 
 	ranks = list(ROLE_ALIEN)
 	time_to_del = 3 MINUTES
@@ -470,7 +470,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/plant
 	name = "Нимфа Дионы"
 	desc = "Нимфу вырастили на грядке."
-	flavor_text = "https://wiki.taucetistation.org/wiki_was_broken" // TODO
+	flavor_text = "https://wiki.taucetistation.org/Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
