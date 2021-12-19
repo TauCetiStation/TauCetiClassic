@@ -170,9 +170,17 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
-		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
-		popup.open()
+		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
+			var/window_size
+			if(window_width && window_height)
+				window_size = "[window_width]x[window_height]"
+			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
+			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		else
+			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat)
+			popup.open()
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else

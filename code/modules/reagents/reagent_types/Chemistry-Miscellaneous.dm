@@ -541,7 +541,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -598,7 +598,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
