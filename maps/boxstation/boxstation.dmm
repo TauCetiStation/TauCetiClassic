@@ -767,7 +767,7 @@
 "aby" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/machinery/light/small,
+/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -907,7 +907,7 @@
 /area/station/security/execution)
 "abM" = (
 /obj/structure/closet/crate/secure/weapon/armory_nonlethal,
-/obj/machinery/light/small{
+/obj/machinery/light/small/emergency{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1034,7 +1034,7 @@
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/weapon/shield/riot,
-/obj/machinery/light/small{
+/obj/machinery/light/small/emergency{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1733,7 +1733,7 @@
 /area/station/security/brig)
 "add" = (
 /obj/structure/closet/bombclosetsecurity,
-/obj/machinery/light/small,
+/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -3063,6 +3063,9 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3367,7 +3370,7 @@
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/machinery/light,
+/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
