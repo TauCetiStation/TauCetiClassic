@@ -141,7 +141,7 @@
 
 		env.add_thermal_energy(heat_transfer)
 
-/obj/structure/fireplace/process(delta_time)
+/obj/structure/fireplace/process()
 	if(!lit)
 		return
 	if(world.time > flame_expiry_timer)
@@ -150,7 +150,7 @@
 
 	playsound(src, 'sound/effects/comfyfire.ogg', VOL_AMBIENT, vol=50, vary=FALSE, extrarange=0, falloff=1)
 	var/turf/T = get_turf(src)
-	T.hotspot_expose(700, 2.5 * delta_time)
+	T.hotspot_expose(700, 25)
 	update_appearance()
 	adjust_fire()
 	process_heating()
