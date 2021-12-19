@@ -227,6 +227,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
 	if(current_version < 34)
 		var/list/diff = ignore_question - global.full_ignore_question
 		if(diff.len)
