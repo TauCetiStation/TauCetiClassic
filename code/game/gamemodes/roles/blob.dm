@@ -5,8 +5,6 @@
 	logo_state = "blob-logo"
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-	restricted_jobs = list("Cyborg", "AI")
-	restricted_species_flags = list(IS_SYNTHETIC)
 	disallow_job = TRUE
 
 /datum/role/blob_overmind/cerebrate
