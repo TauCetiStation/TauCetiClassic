@@ -123,7 +123,7 @@
 			power = 6
 
 	set_light(power)
-	heating_power = power * 40000 // near to [power] space heaters
+	heating_power = power * 20000
 
 /obj/structure/fireplace/proc/process_heating()
 	if(!lit)
@@ -134,20 +134,12 @@
 	if(env && (env.temperature - heating_temperature) >= 0.1)
 		return
 
-	var/transfer_moles = env.total_moles
-	var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-	if(!removed)
-		return
-
-	var/heat_transfer = removed.get_thermal_energy_change(heating_temperature)
+	var/heat_transfer = 0.25 * env.get_thermal_energy_change(heating_temperature)
 
 	if(heat_transfer > 0)	//heating air
 		heat_transfer = min(heat_transfer, heating_power)
 
-		removed.add_thermal_energy(heat_transfer)
-
-	env.merge(removed)
+		env.add_thermal_energy(heat_transfer)
 
 /obj/structure/fireplace/process(delta_time)
 	if(!lit)
@@ -193,10 +185,10 @@
 	flame_expiry_timer = world.time + fuel_added
 	fuel_added = 0
 	update_appearance()
-	adjust_light()
+	adjust_fire()
 
 /obj/structure/fireplace/proc/put_out()
 	lit = FALSE
 	update_appearance()
-	adjust_light()
+	adjust_fire()
 	desc = initial(desc)
