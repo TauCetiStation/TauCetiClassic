@@ -149,7 +149,7 @@
 
 		if(L.ckey)
 			var/found = 0
-			for(var/client/C as anything in clients)
+			for(var/client/C in clients)
 				if(C.ckey == L.ckey)
 					found = 1
 					break
