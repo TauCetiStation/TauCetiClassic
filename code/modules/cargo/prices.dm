@@ -252,7 +252,7 @@
 /obj/item/weapon/gun/energy/xray/price = 14000
 /obj/item/weapon/gun/grenadelauncher/price = 3000
 /obj/item/weapon/gun/projectile/automatic/colt1911/price = 6500
-/obj/item/weapon/gun/projectile/m79/price = 2500
+/obj/item/weapon/gun/projectile/grenade_launcher/m79/price = 2500
 /obj/item/weapon/gun/projectile/shotgun/price = 4000
 /obj/item/weapon/gun/projectile/shotgun/combat/price = 6500
 /obj/item/weapon/gun/projectile/glock/price = 3000
