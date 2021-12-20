@@ -9618,6 +9618,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"apZ" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/five,
+/obj/machinery/light_switch{
+	pixel_y = -27
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/construction/assembly_line)
 "aqa" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -26011,8 +26021,8 @@
 /obj/structure/table,
 /obj/item/clothing/suit/storage/hazardvest,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor{
-	icon_state = "damaged1"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
 "aVd" = (
@@ -33405,8 +33415,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
 "bhZ" = (
@@ -50765,9 +50775,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bNo" = (
 /obj/structure/cable{
@@ -52508,8 +52516,8 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
 "bQJ" = (
@@ -53513,9 +53521,8 @@
 /area/station/maintenance/engineering)
 "bTf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/sosjerky,
 /turf/simulated/floor{
-	icon_state = "damaged5"
+	icon_state = "damaged4"
 	},
 /area/station/construction/assembly_line)
 "bTh" = (
@@ -54193,15 +54200,19 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "damaged1"
 	},
 /area/station/construction/assembly_line)
 "bVs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/wall,
+/obj/effect/decal/cleanable/cobweb2{
+	desc = "Spider Timmy lives here."
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/construction/assembly_line)
 "bVt" = (
 /obj/structure/table,
@@ -54689,9 +54700,8 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/rack_parts,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/station/construction/assembly_line)
 "bWF" = (
 /obj/random/vending/cola,
@@ -55653,12 +55663,11 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
 "bZD" = (
-/obj/item/trash/candy,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -56700,10 +56709,11 @@
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "cdN" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/five,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
+	icon_state = "panelscorched"
 	},
 /area/station/construction/assembly_line)
 "cdP" = (
@@ -57650,9 +57660,8 @@
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 5
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/station/construction/assembly_line)
 "cgG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -57809,7 +57818,7 @@
 "chd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "damaged1"
 	},
 /area/station/construction/assembly_line)
 "che" = (
@@ -58454,7 +58463,10 @@
 	},
 /area/shuttle/escape_pod4/station)
 "cja" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "cjc" = (
@@ -58592,7 +58604,9 @@
 /area/shuttle/escape_pod4/station)
 "cjy" = (
 /obj/item/weapon/paper,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/construction/assembly_line)
 "cjB" = (
 /obj/structure/disposalpipe/segment,
@@ -58955,6 +58969,7 @@
 	},
 /area/station/engineering/atmos)
 "ckI" = (
+/obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "ckK" = (
@@ -69664,9 +69679,8 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "dJZ" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/station/construction/assembly_line)
 "dKo" = (
 /obj/machinery/camera{
@@ -113541,7 +113555,7 @@ bLZ
 bLZ
 bLW
 dJZ
-cja
+bPG
 ckI
 cjy
 bRJ
@@ -113801,7 +113815,7 @@ bZO
 bos
 bPb
 bPR
-lmg
+cdN
 cyQ
 cdK
 bVo
@@ -114572,9 +114586,9 @@ bhY
 bJZ
 bZE
 bQI
-lmg
+cja
 bTf
-cdN
+apZ
 bVo
 ceX
 ciS
