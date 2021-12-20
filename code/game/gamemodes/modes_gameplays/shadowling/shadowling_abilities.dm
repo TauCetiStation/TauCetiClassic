@@ -48,7 +48,7 @@
 		for(var/obj/item/F in T.contents)
 			if(is_type_in_list(F, blacklisted_lights))
 				for(var/obj/item/device/flashlight/flare/P)
-					P.fuel = max(P.fuel - 450, 0) //-450 fuel in flare, number cannot be 0<
+					P.fuel = max(P.fuel - 350, 0) //-350 fuel in flare, number cannot be 0<
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				return
 			F.set_light(0)
