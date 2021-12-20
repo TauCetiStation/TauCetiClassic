@@ -159,7 +159,7 @@
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/window/attack_hand(mob/living/carbon/human/user)	//specflags please!!
+/obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
