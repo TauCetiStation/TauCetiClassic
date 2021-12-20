@@ -2,7 +2,7 @@
 #define AI_CHECK_RADIO 2
 #define EMERGENCY_MESSAGE_COOLDOWN 300
 
-var/list/ai_verbs_default = list(
+var/global/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
 	/mob/living/silicon/ai/proc/ai_remove_location,
@@ -161,7 +161,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in ai_list)
+		for (var/mob/living/silicon/ai/A as anything in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null

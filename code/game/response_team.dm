@@ -1,10 +1,10 @@
 //STRIKE TEAMS
 //Thanks to Kilakk for the admin-button portion of this code.
 
-var/list/response_team_members = list()
+var/global/list/response_team_members = list()
 
-var/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
-var/can_call_ert
+var/global/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
+var/global/can_call_ert
 
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"
@@ -95,7 +95,7 @@ var/can_call_ert
 /proc/percentage_dead()
 	var/total = 0
 	var/deadcount = 0
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.client) // Monkeys and mice don't have a client, amirite?
 			if(H.stat == DEAD) deadcount++
 			total++
@@ -107,7 +107,7 @@ var/can_call_ert
 /proc/percentage_antagonists()
 	var/total = 0
 	var/antagonists = 0
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(is_special_character(H) >= 1)
 			antagonists++
 		total++

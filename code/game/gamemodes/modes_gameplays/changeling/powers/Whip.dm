@@ -70,7 +70,7 @@
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
-		return FALSE
+		return
 	var/atom/movable/T = target
 	if(grabber)
 		var/grab_chance

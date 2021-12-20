@@ -20,11 +20,12 @@
 	max_plasma = 50
 
 	density = FALSE
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide)
 
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
@@ -38,7 +39,6 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
-	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
@@ -108,7 +108,6 @@
 
 	put_in_active_hand(G)
 
-	C.grabbed_by += G
 	G.synch()
 	C.LAssailant = src
 
@@ -180,7 +179,7 @@ This is chestburster mechanic for damaging
 
 /obj/item/weapon/larva_bite
 	name = "larva_bite"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/larva_bite/hud = null
 	var/mob/affecting = null
 	var/mob/chestburster = null
@@ -336,7 +335,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/fh_grab/hud = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
@@ -359,11 +358,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
-	start_cooldown(hud, 3, CALLBACK(src, .proc/reset_cooldown))
+	start_cooldown(hud, 4, CALLBACK(src, .proc/reset_cooldown))
 	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
-	affecting.grabbed_by += src
 	synch()
 	affecting.LAssailant = assailant
 	assailant.update_hud()
@@ -458,7 +456,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			start_cooldown(hud, 5, CALLBACK(src, .proc/reset_cooldown))
+			start_cooldown(hud, 6, CALLBACK(src, .proc/reset_cooldown))
 			on_cooldown = TRUE
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"

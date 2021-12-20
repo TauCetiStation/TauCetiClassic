@@ -158,7 +158,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							if(variable=="resize")
 								M.vars[variable] = M.resize_rev
@@ -192,7 +192,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							if(variable=="resize")
 								M.vars[variable] = M.resize_rev
@@ -242,7 +242,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							if(variable == "light_color")
 								M.set_light(l_color = new_value)
@@ -266,7 +266,7 @@
 								A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							if(variable == "light_color")
 								M.set_light(l_color = new_value)
@@ -322,7 +322,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							switch(variable)
 								if("opacity")
@@ -386,7 +386,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							switch(variable)
 								if("opacity")
@@ -456,7 +456,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -474,7 +474,7 @@
 						CHECK_TICK
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -499,7 +499,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -517,7 +517,7 @@
 						CHECK_TICK
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -541,7 +541,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -560,7 +560,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK

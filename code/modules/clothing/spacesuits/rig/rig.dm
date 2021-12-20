@@ -650,7 +650,6 @@
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
 	icon_state = "rig0-syndie"
 	item_state = "syndie_helm"
-	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
@@ -662,6 +661,10 @@
 	var/glowtype = "terror"
 	flags = BLOCKHAIR | PHORONGUARD
 	light_color = "#00f397"
+
+/obj/item/clothing/head/helmet/space/rig/syndi/atom_init()
+	. = ..()
+	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 
 /obj/item/clothing/head/helmet/space/rig/syndi/AltClick(mob/user)
 	var/mob/living/carbon/wearer = loc
@@ -696,7 +699,7 @@
 		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && on)
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
-			lamp.plane = LIGHTING_PLANE + 1
+			lamp.plane = ABOVE_LIGHTING_PLANE
 			user.add_overlay(lamp)
 			lamp.alpha = 255
 		user.update_inv_head()
@@ -758,7 +761,6 @@
 	item_state = "syndie_hardsuit"
 	item_color = "rig-syndie"
 	slowdown = 1.4
-	armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
 	               /obj/item/device/suit_cooling_unit,
@@ -777,6 +779,10 @@
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
+
+/obj/item/clothing/suit/space/rig/syndi/atom_init()
+	. = ..()
+	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 
 /obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
 	if(wearer?.wear_suit != src)
@@ -826,7 +832,6 @@
 	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
 	icon_state = "rig0-heavy"
 	item_state = "syndie_helm"
-	armor = list(melee = 60, bullet = 65, laser = 65,energy = 30, bomb = 50, bio = 100, rad = 60)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	rig_type = "heavy"
@@ -838,7 +843,6 @@
 	item_state = "syndie_hardsuit"
 	item_color = "rig-heavy"
 	slowdown = 1.4
-	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 50, bullet = 40, laser = 40, energy = 45, bomb = 50, bio = 100, rad = 60)
@@ -850,7 +854,6 @@
 	icon_state = "rig0-syndie_elit"
 	rig_type = "syndie_elit"
 	item_state = "syndicate-helm-elite"
-	armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
 	space_armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
 	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
 	glowtype = "terrorelit"
@@ -870,7 +873,6 @@
 	item_state = "syndicate-elite"
 	item_color = "rig-syndie_elit"
 	slowdown = 1.5
-	armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.5
@@ -889,7 +891,6 @@
 	icon_state = "rig0-hazmat"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
-	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	glowtype = "terrohazmat"
@@ -903,7 +904,6 @@
 	item_color = "rig-hazmat"
 	slowdown = 1.4
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	unacidable = TRUE
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,

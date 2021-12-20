@@ -122,8 +122,6 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination)
 	if(moving)
-		var/list/dstturfs = list()
-		var/throwx = world.maxx
 		var/area/transit_location = locate(/area/shuttle/mining/transit)
 
 		if(istype(mine_sci_curr_location, STATION_DOCK))
@@ -144,26 +142,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		transit_location.parallax_slowdown()
 		sleep(PARALLAX_LOOP_TIME)
 
-		for(var/turf/T in destination)
-			dstturfs += T
-			if(T.x < throwx)
-				throwx = T.x
-
-		// hey you, get out of the way!
-		for(var/turf/T in dstturfs)
-			// find the turf to move things to
-			var/turf/D = locate(throwx - 1, T.y, T.z)
-			for(var/atom/movable/AM as mob|obj in T)
-				AM.Move(D)
-
-			if(istype(T, /turf/simulated))
-				qdel(T)
-
-		for(var/mob/living/carbon/bug in destination) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
-
-		for(var/mob/living/simple_animal/pest in destination) // And for the other kind of bug...
-			pest.gib()
+		SSshuttle.clean_arriving_area(destination)
 
 		transit_location.move_contents_to(destination)
 
