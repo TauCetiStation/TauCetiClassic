@@ -183,6 +183,11 @@
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	. = ..()
 
+/obj/item/device/flashlight/flare/proc/adjust_fuel(value)
+	fuel = max(fuel - value, 0)
+	if(fuel == 0)
+		turn_off()
+
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
 	if(pos)

@@ -43,15 +43,15 @@
 	light_off_range(targets, usr)
 
 /proc/light_off_range(list/targets, atom/center)
-	var/list/blacklisted_lights = list(/obj/item/device/flashlight/slime)
+	var/list/blacklisted_lights = list(/obj/item/device/flashlight/slime, /obj/item/device/flashlight/flare)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
 			if(is_type_in_list(F, blacklisted_lights))
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+				if(istype(F, /obj/item/device/flashlight/flare))
+					var/obj/item/device/flashlight/flare/P = F
+					P.adjust_fuel(950)
 				continue
-			if(istype(F, /obj/item/device/flashlight/flare))
-				var/obj/item/device/flashlight/flare/P = F
-				P.fuel = max(P.fuel - 1000, 0)
 			F.set_light(0)
 
 		for(var/obj/machinery/light/L in T.contents)
@@ -63,10 +63,10 @@
 			for(var/obj/item/F in H)
 				if(is_type_in_list(F, blacklisted_lights))
 					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+					if(istype(F, /obj/item/device/flashlight/flare))
+						var/obj/item/device/flashlight/flare/P = F
+						P.adjust_fuel(875)
 					continue
-				if(istype(F, /obj/item/device/flashlight/flare))
-					var/obj/item/device/flashlight/flare/P = F
-					P.fuel = max(P.fuel - 1000, 0)
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
 
