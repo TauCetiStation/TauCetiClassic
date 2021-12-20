@@ -34,6 +34,7 @@
 	var/mob/living/parasite/essence/trusted_entity
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
+	var/absorbedamount = 0 //precise amount of ppl absorbed
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
@@ -146,3 +147,35 @@
 			var/obj/effect/proc_holder/changeling/S = P
 			if(S.chemical_cost >= 0 && S.can_be_used_by(antag.current))
 				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S)
+
+
+#define OVEREATING_AMOUNT 6
+/datum/role/changeling/proc/handle_absorbing()
+	var/mob/living/carbon/human/changeling = antag.current
+
+	if(absorbedamount == round(OVEREATING_AMOUNT / 2))
+		to_chat(changeling, "<span class='warning'>Absorbing that many made us realise that we are halfway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
+
+	else if(absorbedamount == OVEREATING_AMOUNT - 1)
+		to_chat(changeling, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
+
+	else if(absorbedamount == OVEREATING_AMOUNT)
+		to_chat(changeling, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
+		for(var/obj/item/I in changeling) //drops all items
+			changeling.drop_from_inventory(I)
+		changeling.Stun(10)
+		addtimer(CALLBACK(src, .proc/turn_to_abomination), 30)
+
+/datum/role/changeling/proc/turn_to_abomination()
+	var/mob/living/carbon/human/changeling = antag.current
+	changeling.set_species(ABOMINATION)
+	changeling.name = "[changelingID]"
+	changeling.real_name = changeling.name
+	geneticpoints += 6
+
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")
+			M.playsound_local(null, 'sound/antag/abomination_start.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+#undef OVEREATING_AMOUNT
