@@ -29,7 +29,7 @@
 		if(upgrade.can_install(user, FALSE))
 			dat += "<A href='byond://?src=\ref[src];buy_item=[i];'>[upgrade.name]</A> [upgrade.cost] "
 		else
-			dat += "<span class='disabled'>[upgrade.name] [upgrade.cost]</span>"
+			dat += "<span class='disabled'>[upgrade.name]</span> [upgrade.cost] "
 		if(upgrade.desc)
 			dat += "<span class='spoiler'><input type='checkbox' id='[upgrade.name]'>"
 			dat += "<label for='[upgrade.name]'><b>\[?\]</b></label>"
