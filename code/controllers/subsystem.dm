@@ -6,7 +6,6 @@
 	var/init_order    = SS_INIT_DEFAULT     // Order of initialization. Higher numbers are initialized first, lower numbers later. Can be decimal and negative values.
 	var/priority      = SS_PRIORITY_DEFAULT // When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 	var/wait          = SS_WAIT_DEFAULT     // Time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
-	var/display_order = SS_DISPLAY_DEFAULT  // Display affects the order the subsystem is displayed in the MC tab
 
 	var/flags = 0    //see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
 

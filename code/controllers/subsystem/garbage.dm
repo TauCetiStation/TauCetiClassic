@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(garbage)
 
 	priority      = SS_PRIORITY_GARBAGE
 	wait          = SS_WAIT_GARBAGE
-	display_order = SS_DISPLAY_GARBAGE
 
 	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
