@@ -97,8 +97,11 @@ var/global/base_commit_sha = 0
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
-	global.gc_log  = file("[log_debug_directory]/gc_debug.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
+
+	#ifdef REFERENCE_TRACKING
+	global.gc_log  = file("[log_debug_directory]/gc_debug.log")
+	#endif
 
 	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 

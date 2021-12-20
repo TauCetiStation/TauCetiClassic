@@ -164,8 +164,7 @@
 
 #ifdef REFERENCE_TRACKING
 /proc/log_gc(text)
-	if (config.log_gc)
-		global.gc_log << "\[[time_stamp()]] [text][log_end]"
+	global.gc_log << "\[[time_stamp()]] [text][log_end]"
 	for(var/client/C in global.admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			to_chat(C, "GC DEBUG: [text]")

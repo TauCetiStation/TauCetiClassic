@@ -27,7 +27,6 @@ var/global/bridge_secret = null
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
 	var/log_qdel = 0						// same but for debug qdel logs
-	var/log_gc = 0						// same but for debug gc logs
 	var/log_asset = 0
 	var/log_tgui = 0
 	var/sql_enabled = 0					// for sql switching
@@ -332,9 +331,6 @@ var/global/bridge_secret = null
 
 				if ("log_qdel")
 					config.log_qdel = 1
-
-				if ("log_gc")
-					config.log_gc = 1
 
 				if ("log_asset")
 					config.log_asset = 1

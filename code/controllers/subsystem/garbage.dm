@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 
 		if(!skip_alert)
-			if(tgui_alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+			if(tgui_alert(usr, "Running this will lock everything up for about 5 minutes. Would you like to begin the search?", "Find References", "Yes", "No") == "No")
 				running_find_references = null
 				return
 
