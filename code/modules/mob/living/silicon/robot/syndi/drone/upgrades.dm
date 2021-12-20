@@ -105,7 +105,7 @@
 /datum/drone_upgrade/device_tools/toolkit
 	name = "Toolkit"
 	desc = "Standard engineering toolkit. Magnetic gripper is included!"
-	cost = 6
+	cost = 8
 	items = list(
 		/obj/item/weapon/gripper,
 		/obj/item/weapon/screwdriver,
@@ -129,13 +129,13 @@
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
 		Useful for disrupting headsets, cameras, and borgs during stealth operations."
 	items = list(/obj/item/device/flashlight/emp)
-	cost = 10
+	cost = 8
 
 /datum/drone_upgrade/device_tools/flash
 	name = "Flash"
 	desc = "Self-defence device used for blinding livebeings or stun cyborgs by overloading their optics. Has limited amount of uses."
 	items = list(/obj/item/device/flash)
-	cost = 5
+	cost = 4
 
 /datum/drone_upgrade/device_tools/jetpack
 	name = "Jetpack"
@@ -147,7 +147,7 @@
 	name = "Sound decoy"
 	desc = "Can produce various sounds to distract your enemies."
 	items = list(/obj/item/toy/sound_button/syndi)
-	cost = 5
+	cost = 3
 
 //========SURVEILLANCE AND OPTICS========
 /datum/drone_upgrade/optics
@@ -163,7 +163,7 @@
 /datum/drone_upgrade/optics/meson
 	name = "Optical meson scanners"
 	desc = "Used for seeing walls, floors, and stuff through anything."
-	cost = 2
+	cost = 1
 	items = list(/obj/item/borg/sight/meson)
 
 /datum/drone_upgrade/optics/night
@@ -175,7 +175,7 @@
 /datum/drone_upgrade/optics/med_hud
 	name = "Health scanner HUD"
 	desc = "An integrated scanner that scans creatures in view and provides accurate data about their health status."
-	cost = 2
+	cost = 1
 
 /datum/drone_upgrade/optics/med_hud/install(mob/living/silicon/robot/drone/syndi/D)
 	var/datum/atom_hud/sensor = global.huds[DATA_HUD_MEDICAL]
@@ -190,14 +190,8 @@
 /datum/drone_upgrade/chems_poisons/hypo //mostly for nukeops to use as in-combat medical support unit
 	name = "Medical hypospray"
 	desc = "Chemical synthesizer and injection system, designed for heavy-duty medical equipment."
-	items = list(/obj/item/weapon/reagent_containers/borghypo)
+	items = list(/obj/item/weapon/reagent_containers/borghypo/medical/drone)
 	cost = 10
-
-/datum/drone_upgrade/chems_poisons/medhypo //the same as above
-	name = "Improved medical hypospray"
-	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment. Has more types of medicines."
-	items = list(/obj/item/weapon/reagent_containers/borghypo/medical)
-	cost = 14
 
 /datum/drone_upgrade/chems_poisons/dropper
 	name = "Poison delivery system"
@@ -260,7 +254,7 @@
 /datum/drone_upgrade/internal/ai
 	name = "AI control"
 	desc = "Downloads personality to control the drone. Use your Syndicate Encryption Key if you want to give orders remotely."
-	cost = 2
+	cost = 1
 	var/poll_running = FALSE
 
 /datum/drone_upgrade/internal/ai/can_install(mob/living/silicon/robot/drone/syndi/D, chat_warning)
@@ -310,7 +304,7 @@
 
 /datum/drone_upgrade/internal/smoke
 	name = "Smokescreen charges"
-	desc = "Three smokescreen charges. Activate it to hide yourself and your fellows from the enemy sight."
+	desc = "Four smokescreen charges. Activate it to hide yourself and your fellows from the enemy sight."
 	cost = 3
 	single_use = FALSE
 
@@ -318,7 +312,7 @@
 	if(installed)
 		for(var/obj/effect/proc_holder/spell/S in D.spell_list)
 			if(istype(S, /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke))
-				S.charge_counter += 3
+				S.charge_counter += S.charge_max
 				return TRUE
 
 	D.AddSpell(new /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke())
@@ -327,7 +321,7 @@
 /datum/drone_upgrade/internal/corporate_disguise
 	name = "NanoTrasen disguise"
 	desc = "A bunch of hull modifications, that make you look exactly as an NT maintenance drone. Security protocols hack is not included!"
-	cost = 5
+	cost = 8
 
 /datum/drone_upgrade/internal/corporate_disguise/install(mob/living/silicon/robot/drone/syndi/D)
 	D.eyes_overlay = "eyes-repairbot"

@@ -21,6 +21,10 @@
 /obj/item/weapon/reagent_containers/borghypo/medical
 	reagent_ids = list("bicaridine", "kelotane", "inaprovaline", "dexalin", "tramadol", "anti_toxin")
 
+/obj/item/weapon/reagent_containers/borghypo/medical/drone
+	volume = 15
+	charge_cost = 150
+
 /obj/item/weapon/reagent_containers/borghypo/atom_init()
 	. = ..()
 	for(var/R in reagent_ids)

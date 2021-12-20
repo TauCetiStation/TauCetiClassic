@@ -52,7 +52,7 @@
 	name = "Deploy smokescreen"
 	action_icon_state = "smoke"
 	charge_type = "charges"
-	charge_max = 3
+	charge_max = 4
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/smoke/cast(list/targets, mob/user)
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
