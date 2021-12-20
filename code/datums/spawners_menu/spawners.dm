@@ -24,7 +24,7 @@ var/global/list/datum/spawners_cooldown = list()
 		var/image/I = image(ghost_hud.spawners_menu_button.icon, ghost_hud.spawners_menu_button, "spawners_update")
 		flick_overlay(I, list(ghost.client), 10 SECONDS)
 
-		to_chat(ghost, "<span class='ghostalert'>В спавнер меню появились новые роли!</span>")
+		to_chat(ghost, "<span class='ghostalert'>В меню ролей появились новые роли!</span>")
 
 /datum/spawner
 	// Name of spawner, wow
