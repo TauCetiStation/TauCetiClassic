@@ -23,9 +23,9 @@ SUBSYSTEM_DEF(mobs)
 	while(currentrun.len)
 		var/mob/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(M)
-			M.Life(seconds)
+		if(QDELETED(M))
+			mob_list -= M // just to be sure
 		else
-			mob_list -= M
+			M.Life(seconds)
 		if (MC_TICK_CHECK)
 			return
