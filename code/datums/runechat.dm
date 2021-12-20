@@ -106,10 +106,6 @@
 	if (length_char(text) > maxlen)
 		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
-	// Remove spans in the message from things like the recorder
-	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
-	text = replacetext(text, span_check, "")
-
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != target.name)
 		target.chat_color = colorize_string(target.name)
