@@ -79,7 +79,10 @@
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
 		return
-	return open ? close(user) : open(user)
+	if(open)
+		close(user)
+	else
+		open(user)
 
 /obj/machinery/dna_scannernew/container_resist()
 	var/mob/living/user = usr
@@ -106,7 +109,7 @@
 	if(open)
 		if(panel_open)
 			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
-			return 0
+			return
 		open = 0
 		density = TRUE
 		for(var/mob/living/carbon/C in loc)
@@ -129,18 +132,17 @@
 
 				if (occupant.stat == DEAD)
 					if (occupant.client) //Ghost in body?
-						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 					else
 						for(var/mob/dead/observer/ghost in player_list)
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
-									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 									var/answer = tgui_alert(ghost, "Do you want to return to corpse for cloning?", "Cloning", list("Yes","No"))
 									if(answer == "Yes")
 										ghost.reenter_corpse()
 
 								break
-		return 1
 
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
@@ -161,7 +163,6 @@
 					occupant.client.perspective = MOB_PERSPECTIVE
 				occupant = null
 			icon_state = "[initial(icon_state)]_open"
-		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user)
 	if(user.incapacitated())
@@ -170,45 +171,44 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
-
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
-		return
+		return FALSE
 
 	if(exchange_parts(user, I))
-		return
+		return FALSE
 
 	if(iscrowbar(I))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
 				O.loc = loc
 			default_deconstruction_crowbar(I)
-		return
+		return FALSE
 
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		var/obj/item/weapon/reagent_containers/glass/B = I
 		if(beaker)
 			to_chat(user, "<span class='red'>A beaker is already loaded into the machine.</span>")
-			return
+			return FALSE
 
 		beaker = B
 		user.drop_from_inventory(B, src)
 		user.visible_message("[user] adds \a [B] to \the [src]!", "You add \a [B] to \the [src]!")
-		return
+		return FALSE
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!ismob(G.affecting))
-			return
+			return FALSE
 
 		if(!open)
 			to_chat(user, "<span class='notice'>Open the scanner first.</span>")
-			return
+			return FALSE
 
 		var/mob/M = G.affecting
 		M.forceMove(loc)
 		qdel(G)
-		return
+		return FALSE
 
 	return ..()
 
@@ -239,8 +239,6 @@
 					A.ex_act(severity)
 				qdel(src)
 				return
-	return
-
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
@@ -286,9 +284,8 @@
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src
-			return
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()
@@ -312,12 +309,14 @@
 
 /obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(obj/item/weapon/dnainjector/I, blk, datum/dna2/record/buffer)
 	var/pos = findtext(blk,":")
-	if(!pos) return 0
+	if(!pos)
+		return FALSE
 	var/id = text2num(copytext(blk,1,pos))
-	if(!id) return 0
+	if(!id)
+		return FALSE
 	I.block = id
 	I.buf = buffer
-	return 1
+	return TRUE
 
  /**
   * The ui_interact proc is used to open and update Nano UIs

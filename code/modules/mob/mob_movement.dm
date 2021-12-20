@@ -9,7 +9,7 @@
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
+	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
 		return 1
 	if(buckled == mover)
 		return 1
@@ -97,13 +97,6 @@
 		if(L.incorporeal_move)//Move though walls
 			Process_Incorpmove(direct)
 			return
-		if(mob.client)
-			if(mob.client.view != world.view)
-				if(locate(/obj/item/weapon/gun/energy/sniperrifle, mob.contents))		// If mob moves while zoomed in with sniper rifle, unzoom them.
-					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in mob
-					if(s.zoom)
-						s.toggle_zoom()
-
 	Process_Grab()
 
 	if(istype(mob.buckled, /obj/vehicle))
@@ -245,17 +238,43 @@
 /mob/proc/camera_move(Dir = 0)
 	if(stat || restrained())
 		return FALSE
-
-	if(machine && istype(machine, /obj/machinery/computer/security))
-		if(!Adjacent(machine) || !machine.can_interact_with(src))
-			return FALSE
-		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.active_camera)
-		for(var/i;i<10;i++)
-			T = get_step(T, Dir)
-		console.jump_on_click(src, T)
-		return TRUE
-	return FALSE
+	if(!machine || !istype(machine, /obj/machinery/computer/security))
+		return FALSE
+	if(!Adjacent(machine) || !machine.can_interact_with(src))
+		return FALSE
+	var/obj/machinery/computer/security/console = machine
+	var/turf/T = get_turf(console.active_camera)
+	var/list/cameras = list()
+	
+	for(var/cam_tag in console.camera_cache)
+		var/obj/C = console.camera_cache[cam_tag]
+		if(C == console.active_camera)
+			continue
+		if(C.z != T.z)
+			continue
+		var/dx = C.x - T.x
+		var/dy = C.y - T.y
+		var/is_in_bounds = FALSE
+		switch(Dir)
+			if(NORTH)
+				is_in_bounds = dy >= abs(dx)
+			if(SOUTH)
+				is_in_bounds = dy <= -abs(dx)
+			if(EAST)
+				is_in_bounds = dx >= abs(dy)
+			if(WEST)
+				is_in_bounds = dx <= -abs(dy)
+		if(is_in_bounds)
+			cameras += C
+	var/minDist = INFINITY
+	var/minCam = console.active_camera
+	for(var/obj/machinery/camera/C as anything in cameras)
+		var/dist = get_dist(T, C)
+		if(dist < minDist)
+			minCam = C
+			minDist = dist
+	console.jump_on_click(src, minCam)
+	return TRUE
 
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)

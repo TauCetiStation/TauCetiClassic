@@ -5,7 +5,7 @@
 	icon_state = "paper"
 	item_state = "paper"
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_range = 2
 	throw_speed = 1
 	layer = 4
@@ -85,12 +85,12 @@
 			dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
 		else if(page == pages.len)
 			dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
-			dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/weapon/paper)) ? "paper" : "photo"]</A></DIV>"
-			dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
-		else
-			dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
 			dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/weapon/paper)) ? "paper" : "photo"]</A></DIV><BR><HR>"
 			dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'></DIV>"
+		else
+			dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
+			dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/weapon/paper)) ? "paper" : "photo"]</A></DIV>"
+			dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
 		if(istype(pages[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
 			dat += P.show_content(human_user, view = FALSE)
@@ -116,7 +116,7 @@
 
 /obj/item/weapon/paper_bundle/Topic(href, href_list)
 	..()
-	if(loc == usr || (istype(src.loc, /obj/item/weapon/folder) && loc.loc == usr))
+	if(loc == usr || istype(loc, /obj/structure/noticeboard) || (istype(src.loc, /obj/item/weapon/folder) && loc.loc == usr))
 		usr.set_machine(src)
 		var/obj/item/weapon/in_hand = usr.get_active_hand()
 		if(href_list["next_page"])
@@ -125,13 +125,13 @@
 			else if(page != pages.len)
 				page++
 				playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
-		if(href_list["prev_page"])
+		else if(href_list["prev_page"])
 			if(in_hand && (istype(in_hand, /obj/item/weapon/paper) || istype(in_hand, /obj/item/weapon/photo)))
 				insert_sheet_at(usr, page, in_hand)
 			else if(page > 1)
 				page--
 				playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
-		if(href_list["remove"])
+		else if(href_list["remove"] && !istype(loc, /obj/structure/noticeboard))
 			var/obj/item/weapon/W = pages[page]
 			usr.put_in_hands(W)
 			pages.Remove(pages[page])

@@ -20,8 +20,9 @@
 // The numbers just define the ordering, they are meaningless otherwise.
 
 #define SS_INIT_INPUT         85
-#define SS_INIT_EVENTS        12
-#define SS_INIT_FLUIDS        11
+#define SS_INIT_EVENTS        13
+#define SS_INIT_FLUIDS        12
+#define SS_INIT_HOLIDAY       11
 #define SS_INIT_JOBS          10
 #define SS_INIT_QUIRKS         9
 #define SS_INIT_MAPPING        8
@@ -44,6 +45,7 @@
 
 
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.
+#define SS_PRIORITY_TIMER        700
 #define SS_PRIORITY_OVERLAYS     500
 #define SS_PRIORITY_CHAT         400
 #define SS_PRIORITY_TICKER       200
@@ -60,6 +62,7 @@
 #define SS_PRIORITY_SPACEDRIFT    30
 #define SS_PRIORITY_THROWING      25
 #define SS_PRIORITY_FASTPROCESS   25
+#define SS_PRIORITY_PROCESS       25
 #define SS_PRIORITY_AIR           20
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15
@@ -87,18 +90,20 @@
 #define SS_WAIT_VOTE         10
 #define SS_WAIT_AIR          10
 #define SS_WAIT_QUIRKS       10
+#define SS_WAIT_DCS          10
+#define SS_WAIT_PROCESSING   10
+#define SS_WAIT_MOOD         10
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
 #define SS_WAIT_NIGHTSHIFT  600
 
+// SS runlevels
 
-#define SS_DISPLAY_AIR      1
-#define SS_DISPLAY_FLUIDS   2
-#define SS_DISPLAY_GARBAGE  3
-#define SS_DISPLAY_MACHINES 4
-#define SS_DISPLAY_MOBS     5
-#define SS_DISPLAY_LIGHTING 6
-#define SS_DISPLAY_TIMER    7
-#define SS_DISPLAY_NANOUI   8
-#define SS_DISPLAY_DEFAULT  100
+#define RUNLEVEL_INIT 0
+#define RUNLEVEL_LOBBY 1
+#define RUNLEVEL_SETUP 2
+#define RUNLEVEL_GAME 4
+#define RUNLEVEL_POSTGAME 8
+
+#define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)

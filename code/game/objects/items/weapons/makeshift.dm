@@ -1,19 +1,17 @@
-/obj/item/weapon/twohanded/spear
+/obj/item/weapon/spear
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
 	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
-/obj/item/weapon/twohanded/spear/atom_init()
+/obj/item/weapon/spear/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
@@ -21,21 +19,25 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
 
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
-	return wielded
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 18
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "spearglass1"
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
-	return wielded
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/spear/update_icon()
-	icon_state = "spearglass[wielded]"
+/obj/item/weapon/spear/proc/can_sweep_push(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
@@ -211,7 +213,7 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
@@ -220,7 +222,7 @@
 	desc = "A rolled noose."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "noose_rolled"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/noose/attack_self(mob/user)
 	var/turf/user_turf = get_turf(user)
@@ -265,7 +267,7 @@
 	var/delay_msg = 5 SECONDS
 	var/last_warn_msg = 0
 	force = 8
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 5
 //	flags = NOSHIELD
 		//var/protest_text

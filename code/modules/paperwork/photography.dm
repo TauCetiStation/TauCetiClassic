@@ -16,7 +16,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /********
@@ -27,11 +27,15 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 	var/list/photographed_names = list() // For occult purposes.
+
+/obj/item/weapon/photo/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
 
 /obj/item/weapon/photo/Destroy()
 	img = null
@@ -39,13 +43,17 @@
 	tiny = null
 	return ..()
 
-/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	..()
+/obj/item/weapon/photo/proc/summon_ectoplasm()
+	var/ghost_count = 0
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
-			if(prob(10))
-				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
-			break
+			ghost_count++
+
+	if(!ghost_count)
+		return
+
+	for(var/i in 1 to round(ghost_count / 3))
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -124,7 +132,7 @@
 		var/mob/M = usr
 		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
-		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
@@ -153,7 +161,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "photocamera"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
@@ -296,7 +304,7 @@
 		return
 	captureimage(target, user, proximity)
 
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	pictures_left--
 	update_desc()
@@ -319,7 +327,7 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye)
 		else
 			seen = hear(world.view, user)
 	else
@@ -394,7 +402,7 @@
 
 	if(usr.incapacitated())
 		return
-	if(usr.get_active_hand() != src)
+	if(usr.get_active_hand() != src && !isAI(usr))
 		to_chat(usr, "You need to hold \the [src] in your active hand.")
 		return
 

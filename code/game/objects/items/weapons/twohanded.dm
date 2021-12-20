@@ -1,144 +1,18 @@
 #define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
 
-/* Two-handed Weapons
- * Contains:
- * 		Twohanded
- *		Fireaxe
- *		Double-Bladed Energy Swords
- */
-
-/*##################################################################
-##################### TWO HANDED WEAPONS BE HERE~ -Agouri :3 ########
-####################################################################*/
-
-//Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
-//This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
-//It also tidies stuff up elsewhere.
-
-/*
- * Twohanded
- */
-/obj/item/weapon/twohanded
-	var/wielded = FALSE
-	// When you pick up an item, it will be in two hands at once
-	var/only_twohand = FALSE
-	var/force_unwielded = 0
-	var/force_wielded = 0
-	var/wieldsound = null
-	var/unwieldsound = null
-	var/obj/item/weapon/twohanded/offhand/offhand_item = /obj/item/weapon/twohanded/offhand
-
-/obj/item/weapon/twohanded/proc/unwield()
-	wielded = FALSE
-	force = force_unwielded
-	name = "[initial(name)]"
-	update_icon()
-
-/obj/item/weapon/twohanded/proc/wield()
-	wielded = TRUE
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	update_icon()
-
-/obj/item/weapon/twohanded/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
-	if(wielded)
-		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-		return FALSE
-
-	return ..()
-
-/obj/item/weapon/twohanded/flora/equipped(mob/user, slot)
-	..()
-	if(!only_twohand)
-		return
-
-	if(slot == SLOT_R_HAND || slot == SLOT_L_HAND)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name), wieldsound)
-			if(W)
-				wield()
-
-/obj/item/weapon/twohanded/dropped(mob/user)
-	..()
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
-	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
-		if(istype(O))
-			O.unwield()
-
-	return unwield()
-
-/obj/item/weapon/twohanded/update_icon()
-	return
-
-/obj/item/weapon/twohanded/pickup(mob/living/user)
-	unwield()
-
-/obj/item/weapon/twohanded/attack_self(mob/user)
-	if(only_twohand)
-		return
-
-	if(istype(user,/mob/living/carbon/monkey))
-		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
-		return
-
-	if(wielded) //Trying to unwield it
-		unwield()
-		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
-
-		if (src.unwieldsound)
-			playsound(src, unwieldsound, VOL_EFFECTS_MASTER)
-
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(istype(O))
-			O.unwield()
-		return
-
-	else if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/W = H.wield(src, initial(name), wieldsound)
-		if(W)
-			wield()
-
-///////////OFFHAND///////////////
-/obj/item/weapon/twohanded/offhand
-	w_class = ITEM_SIZE_HUGE
-	icon_state = "offhand"
-	name = "offhand"
-	flags = ABSTRACT
-
-/obj/item/weapon/twohanded/offhand/unwield()
-	if(!QDELING(src))
-		qdel(src)
-
-/obj/item/weapon/twohanded/offhand/wield()
-	qdel(src)
-
-/*
- * Fireaxe
- */
-/obj/item/weapon/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
+/obj/item/weapon/fireaxe
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
+	force = 10
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 10
-	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-
 	sweep_step = 5
 
-/obj/item/weapon/twohanded/fireaxe/atom_init()
+/obj/item/weapon/fireaxe/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
@@ -146,40 +20,26 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_spin)
 
 	AddComponent(/datum/component/swiping, SCB)
 
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 40
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "fireaxe1"
+	AddComponent(/datum/component/twohanded, TCB)
+
 	hitsound = SOUNDIN_DESCERATION
 
-/obj/item/weapon/twohanded/fireaxe/proc/can_sweep(mob/user)
-	return wielded
+/obj/item/weapon/fireaxe/proc/can_sweep(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-/obj/item/weapon/twohanded/fireaxe/proc/can_spin(mob/user)
-	return wielded
+/obj/item/weapon/fireaxe/proc/can_spin(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-/obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "fireaxe[wielded]"
-	return
-
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	..()
-	if(target && wielded) //destroys windows and grilles in one hit
-		if(istype(target,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
-			var/obj/structure/window/W = target
-			W.shatter()
-		else if(istype(target,/obj/structure/grille))
-			var/obj/structure/grille/G = target
-			new /obj/item/stack/rods(G.loc)
-			qdel(target)
-
-
-/*
- * Double-Bladed Energy Swords - Cheridan
- */
-/obj/item/weapon/twohanded/dualsaber
+/obj/item/weapon/dualsaber
 	var/reflect_chance = 0
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
@@ -188,14 +48,13 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_color = "green"
-	force_unwielded = 3
-	force_wielded = 45
 	var/hacked
 	var/slicing
-	wieldsound = 'sound/weapons/saberon.ogg'
-	unwieldsound = 'sound/weapons/saberoff.ogg'
+	var/wieldsound = 'sound/weapons/saberon.ogg'
+	var/unwieldsound = 'sound/weapons/saberoff.ogg'
+	var/hitsound_wielded = list('sound/weapons/blade1.ogg')
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -205,7 +64,7 @@
 
 	sweep_step = 2
 
-/obj/item/weapon/twohanded/dualsaber/atom_init()
+/obj/item/weapon/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
@@ -232,16 +91,36 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
-	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/get_sweep_objs)
-
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
+	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/dualsaber.proc/get_sweep_objs)
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/dualsaber/proc/can_swipe(mob/user)
-	return wielded
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.wieldsound = wieldsound
+	TCB.unwieldsound = unwieldsound
+	TCB.attacksound = hitsound_wielded
+	TCB.force_wielded = 45
+	TCB.force_unwielded = 3
+	TCB.on_wield = CALLBACK(src, .proc/on_wield)
+	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+/obj/item/weapon/dualsaber/proc/on_wield()
+	set_light(2)
+	w_class = SIZE_BIG
+	return FALSE
+
+/obj/item/weapon/dualsaber/proc/on_unwield()
+	slicing = FALSE
+	set_light(0)
+	w_class = initial(w_class)
+	return FALSE
+
+/obj/item/weapon/dualsaber/proc/can_swipe(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	var/list/directions_opposite = list()
 	for(var/dir_ in directions)
 		directions_opposite += turn(dir_, 180)
@@ -251,35 +130,35 @@
 	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
 	return sweep_objects
 
-/obj/item/weapon/twohanded/dualsaber/update_icon()
-	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+/obj/item/weapon/dualsaber/update_icon()
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		icon_state = "dualsaber[item_color]1"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
-/obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
+/obj/item/weapon/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) && prob(40))
+	if((CLUMSY in user.mutations) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(40))
 		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_bodypart_damage(20, 25)
 		return
-	if(wielded && prob(50))
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.set_dir(i)
 				sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
-	if(wielded && !slicing)
+/obj/item/weapon/dualsaber/Get_shield_chance()
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
 		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
 	else
 		return 0
 
-/obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
-	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
+/obj/item/weapon/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
+	return !slicing && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/dualsaber/attackby(obj/item/I, mob/user, params)
 	if(ismultitool(I))
 		if(!hacked)
 			hacked = TRUE
@@ -292,10 +171,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/dualsaber/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/dualsaber/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target,/obj/machinery/door/airlock) || slicing)
 		return
-	if(target.density && wielded && proximity)
+	if(target.density && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && proximity)
 		user.visible_message("<span class='danger'>[user] start slicing the [target] </span>")
 		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
@@ -317,26 +196,9 @@
 		slicing = FALSE
 		qdel(I)
 
-
-/obj/item/weapon/twohanded/dualsaber/dropped(mob/user)
- 	..()
- 	slicing = FALSE
-
-/obj/item/weapon/twohanded/dualsaber/attack_self(mob/user)
+/obj/item/weapon/dualsaber/attack_self(mob/user)
 	if(slicing)
 		return
 	..()
-
-/obj/item/weapon/twohanded/dualsaber/unwield()
-	set_light(0)
-	hitsound = initial(hitsound)
-	w_class = initial(w_class)
-	return ..()
-
-/obj/item/weapon/twohanded/dualsaber/wield()
-	set_light(2)
-	hitsound = list('sound/weapons/blade1.ogg')
-	w_class = ITEM_SIZE_HUGE
-	return ..()
 
 #undef DUALSABER_BLOCK_CHANCE_MODIFIER

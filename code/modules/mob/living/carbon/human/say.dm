@@ -1,3 +1,74 @@
+/mob/living/carbon/human
+	var/list/conversations
+	var/conversation_expiration = 45 SECONDS
+
+/mob/living/carbon/human/proc/handle_conversation(speaker, speak_tags, hear_tags)
+	var/speech_amount = speak_tags + hear_tags
+
+	if(speech_amount < 30)
+		return
+
+	var/speech_imbalance = 1.0
+	if(speak_tags > hear_tags)
+		speech_imbalance = (speak_tags + 1) / (hear_tags + 1)
+	else
+		speech_imbalance = (hear_tags + 1) / (speak_tags + 1)
+
+	if(speech_amount < 150)
+		if(speech_imbalance < 20.0)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
+		return
+
+	if(speech_imbalance < 2.0 && speech_amount > 500)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/deep_conversation, speaker)
+		return
+
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/conversation, speaker)
+
+/mob/living/carbon/human/proc/clear_conversation(speaker)
+	if(!conversations || !conversations[speaker])
+		return
+
+	handle_conversation(speaker, conversations[speaker]["say"], conversations[speaker]["hear"])
+
+	conversations -= speaker
+	if(conversations.len == 0)
+		conversations = null
+
+/mob/living/carbon/human/proc/add_conversation(speaker, tag, message)
+	if(!conversations)
+		conversations = list()
+	// Can't pay attention to all these people around.
+	if(conversations.len > 3)
+		return
+	if(!conversations[speaker])
+		conversations[speaker] = list("say" = 0, "hear" = 0)
+
+	conversations[speaker][tag] += length(message)
+	addtimer(
+		CALLBACK(
+			src, .proc/clear_conversation, speaker
+		),
+		conversation_expiration,
+		TIMER_OVERRIDE|TIMER_UNIQUE
+	)
+
+/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	. = ..()
+	if(!.)
+		return
+
+	if(speaker == src)
+		return
+
+	if(!ishuman(speaker))
+		return
+
+	var/mob/living/carbon/human/H = speaker
+
+	add_conversation(speaker.GetVoice(), "hear", message)
+	H.add_conversation(GetVoice(), "say", message)
+
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -86,7 +157,7 @@
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in human_list)
+				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
@@ -94,7 +165,7 @@
 						continue
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
-				for(var/mob/M in observer_list)
+				for(var/mob/M as anything in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
@@ -123,7 +194,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || stat)
+	if(!message || (stat && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -179,34 +250,31 @@
 			return
 		if("changeling")
 			if(ischangeling(src))
+				if(stat)
+					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-				var/n_message = message
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
-				for(var/mob/Changeling in mob_list)
+				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
+				for(var/mob/Changeling as anything in mob_list)
 					if(ischangeling(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 						var/datum/role/changeling/CC = Changeling.mind.GetRoleByType(/datum/role/changeling)
 						for(var/M in CC.essences)
-							to_chat(M, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+							to_chat(M, n_message)
 
 					else if(isobserver(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 			return
 		if("alientalk")
 			if(ischangeling(src))
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-				var/n_message = message
+				var/n_message = "<span class='shadowling'><b>[C.changelingID]:</b> [message]</span>"
 				for(var/M in C.essences)
-					to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-
-				for(var/mob/M in observer_list)
-					if(!M.client)
-						continue //skip monkeys, leavers and new players
-					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-						to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-
-				to_chat(src, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
+					to_chat(M, n_message)
+				for(var/datum/orbit/O in orbiters)
+					to_chat(O.orbiter, n_message)
+				to_chat(src, n_message)
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
 			return
 		if("mafia")
 			if(global.mafia_game)
@@ -227,6 +295,10 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
+	else if(species.name == ABOMINATION)
+		speech_sound = sound('sound/voice/abomination.ogg')
+		sound_vol = 50
+
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
@@ -239,6 +311,8 @@
 		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
+		if(isautosay(other))
+			return 1
 		if(issilicon(other))
 			return 1
 		if(isbrain(other))

@@ -1,7 +1,7 @@
 /* Custom Announcements UI */
 
-var/list/announcement_sounds_cache = list()
-var/list/datum/announcement/announcements_list
+var/global/list/announcement_sounds_cache = list()
+var/global/list/datum/announcement/announcements_list
 
 /datum/secrets_menu/custom_announce
 	title = "Custom Announce"
@@ -39,13 +39,13 @@ var/list/datum/announcement/announcements_list
 
 	switch(action)
 		if("title")
-			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", A.title) as text)
+			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", input_default(A.title)) as text)
 		if("subtitle")
-			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", A.subtitle) as text)
+			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", input_default(A.subtitle)) as text)
 		if("message")
-			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", A.message) as message, MAX_PAPER_MESSAGE_LEN, extra = TRUE)
+			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", input_default(A.message)) as text, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 		if("announcer")
-			A.announcer = sanitize_safe(input(ui.user, "Pick a announcer for the report.", "Announcer", A.announcer) as text)
+			A.announcer = sanitize_safe(input(ui.user, "Pick a announcer for the report.", "Announcer", input_default(A.announcer)) as text)
 		if("flag_text")
 			A.flags ^= ANNOUNCE_TEXT
 		if("flag_sound")

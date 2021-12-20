@@ -4,14 +4,6 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-//singularity defines
-#define STAGE_ONE	1
-#define STAGE_TWO	3
-#define STAGE_THREE	5
-#define STAGE_FOUR	7
-#define STAGE_FIVE	9
-#define STAGE_SIX	11 //From supermatter shard
-
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -121,9 +113,6 @@
 
 #define APC_MIN_TO_MALF_DECLARE 5
 //if malf apcs < than this, malf can't begin the takeover attempt
-
-#define APC_BONUS_WITH_INTERCEPT 4
-//If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
 
 #define MALF_SMALL_MODULE_PRICE 10
 #define MALF_LARGE_MODULE_PRICE 50
@@ -293,3 +282,14 @@
 // Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+// can_heal proc return values
+#define HEAL_EFFECTIVENESS_NONE 0
+#define HEAL_EFFECTIVENESS_HALF 0.5
+#define HEAL_EFFECTIVENESS_MAX 1
+
+// Calculates the offset n in the dir d.
+// For example, if you pass a non-horizontal dir to X_OFFSET, it will always be 0.
+// If dir is EAST, then a positive number will be returned, if WEST, then a negative one.
+#define X_OFFSET(n_steps, dir) (n_steps * (!!(dir & EAST) + !!(dir & WEST) * -1))
+#define Y_OFFSET(n_steps, dir) (n_steps * (!!(dir & NORTH) + !!(dir & SOUTH) * -1))

@@ -277,7 +277,8 @@
 			src.lying = 0
 			src.stat = CONSCIOUS
 
-	if (src.stuttering) src.stuttering = 0
+	if (src.stuttering > 0)
+		setStuttering(0)
 
 	if (src.eye_blind)
 		src.eye_blind = 0
@@ -295,10 +296,10 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry = 0
+		setBlurriness(0)
 
 	if (src.druggy > 0)
-		src.druggy = 0
+		setDrugginess(0)
 
 	return 1
 

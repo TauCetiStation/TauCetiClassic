@@ -35,7 +35,6 @@
 /obj/item/clothing/gloves/black/strip // gloves for stripping items
 	siemens_coefficient = 0.2
 
-
 /obj/item/clothing/gloves/black/hos
 	name = "head of security's gloves"
 	item_color = "hosred"		//Exists for washing machines.

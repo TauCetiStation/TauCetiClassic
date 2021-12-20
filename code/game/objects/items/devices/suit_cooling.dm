@@ -1,7 +1,7 @@
 /obj/item/device/suit_cooling_unit
 	name = "portable suit cooling unit"
 	desc = "A portable heat sink and liquid cooled radiator that can be hooked up to a space suit's existing temperature controls to provide industrial levels of cooling."
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "suitcooler0"
 	slot_flags = SLOT_FLAGS_BACK  // you can carry it on your back if you want, but it won't do anything unless attached to suit storage
@@ -29,8 +29,7 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	cell = new(src) // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
@@ -192,7 +191,7 @@
 /obj/item/device/suit_cooling_unit/miniature
 	name = "Miniature suit cooling device"
 	desc = "Minituarized heat sink that can be hooked up to a space suit's existing temperature controls to cool down the suit's internals. Weaker than it's bigger counterpart."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/device.dmi'
 	icon_state = "miniaturesuitcooler0"
 	max_cooling = 8

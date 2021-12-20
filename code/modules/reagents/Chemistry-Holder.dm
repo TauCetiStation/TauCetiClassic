@@ -1,5 +1,5 @@
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/global/const/TOUCH = 1
+var/global/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -182,8 +182,7 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
@@ -330,15 +329,13 @@ var/const/INGEST = 2
 	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
 /datum/reagents/proc/del_reagent(reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			reagent_list -= R
 			qdel(R)
@@ -401,41 +398,29 @@ var/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0, datum/religion/_religion)
-	if(!isnum(amount))
-		return 1
-	if(amount < 0)
-		return 0
-	if(amount > 2000)
-		return
+/datum/reagents/proc/add_reagent(reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
+	if(!isnum(amount) || amount < 0 || amount > 2000)
+		return FALSE
+
 	update_total()
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-	for(var/A in reagent_list)
 
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			R.volume += amount
-			update_total()
-			if(my_atom)
-				my_atom.on_reagent_change()
 
-			// mix dem viruses
+			// Data:
 			if(R.id == "blood" && reagent == "blood")
 				if(R.data && data)
-
-					if(R.data["viruses"] || data["viruses"])
-
+					if(R.data["viruses"] || data["viruses"]) // mix dem viruses
 						var/list/mix1 = R.data["viruses"]
 						var/list/mix2 = data["viruses"]
 
 						// Stop issues with the list changing during mixing.
 						var/list/to_mix = list()
-
-						for(var/datum/disease/advance/AD in mix1)
-							to_mix += AD
-						for(var/datum/disease/advance/AD in mix2)
-							to_mix += AD
+						to_mix += mix1
+						to_mix += mix2
 
 						var/datum/disease/advance/AD = Advance_Mix(to_mix)
 						if(AD)
@@ -444,34 +429,36 @@ var/const/INGEST = 2
 								if(!istype(D, /datum/disease/advance))
 									preserve += D
 							R.data["viruses"] = preserve
+
 			else if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
 				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
+			// Update:
+			update_total()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			if(!safety)
 				handle_reactions()
-			return 0
+			return TRUE
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
-
 		var/datum/reagent/R = new D.type()
 		reagent_list += R
 		R.holder = src
 		R.volume = amount
 		R.religion = _religion
+
+		// Data:
 		SetViruses(R, data) // Includes setting data
 
-		//debug
-		//world << "Adding data"
-		//for(var/D in R.data)
-		//	world << "Container data: [D] = [R.data[D]]"
-		//debug
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
+		// Update:
 		R.on_new()
 
 		update_total()
@@ -479,21 +466,20 @@ var/const/INGEST = 2
 			my_atom.on_reagent_change()
 		if(!safety)
 			handle_reactions()
-		return 0
+		return TRUE
 	else
 		warning("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 
 	if(!safety)
 		handle_reactions()
 
-	return 1
+	return FALSE
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
 	if(!isnum(amount) || amount < 0 || amount > 2000)
 		return FALSE
 
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			R.volume -= amount
 			update_total()
@@ -512,11 +498,11 @@ var/const/INGEST = 2
 				return R
 			else if(R.volume >= amount)
 				return R
-	return 0
+
+	return FALSE
 
 /datum/reagents/proc/get_reagent_amount(reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			return R.volume
 
@@ -632,8 +618,8 @@ var/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target

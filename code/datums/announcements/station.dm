@@ -55,22 +55,21 @@
 	name = "Secret: Gravity On"
 	message = "Генераторы гравитации снова функционируют с нормальными показателями. Приносим извинения за неудобства."
 	sound = "gravon"
-/datum/announcement/station/gravity_on/play()
+/datum/announcement/station/gravity_on/New()
 	subtitle = "Система Предотвращения Аварий [station_name_ru()]"
-	..()
 
 /datum/announcement/station/gravity_off
 	name = "Secret: Gravity Off"
 	message = "Всплеск ошибок обнаружен в системе распределения массы. Искусственная гравитация будет выключена для перезагрузки системы. " + \
 			"Дальнейшие ошибки могут привести к гравитационному коллапсу и формированию черной дыры. Хорошего дня."
 	sound = "gravoff"
-/datum/announcement/station/gravity_off/play()
+/datum/announcement/station/gravity_off/New()
 	subtitle = "Система Предотвращения Аварий [station_name_ru()]"
-	..()
 
 /* Shuttles */
 /datum/announcement/station/shuttle/crew_called
 	name = "Shuttle: Crew Called"
+	message = "Процедура смены экипажа начата. Шаттл вызван. Он прибудет через несколько минут."
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
 	message = "Процедура смены экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
@@ -83,6 +82,7 @@
 
 /datum/announcement/station/shuttle/crew_docked
 	name = "Shuttle: Crew Docked"
+	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление через несколько минут."
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
 	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление через [shuttleminutes2text()]."
@@ -99,6 +99,7 @@
 
 /datum/announcement/station/shuttle/emer_called
 	name = "Shuttle: Emergency Called"
+	message = "Эвакуационный Шаттл был вызван. Он прибудет через несколько минут."
 	sound = "emer_shut_called"
 /datum/announcement/station/shuttle/emer_called/play()
 	message = "Эвакуационный Шаттл был вызван. Он прибудет через [shuttleminutes2text()]."
@@ -111,6 +112,7 @@
 
 /datum/announcement/station/shuttle/emer_docked
 	name = "Shuttle: Emergency Docked"
+	message = "Эвакуационный Шаттл пристыковался к станции. У вас есть несколько минут для посадки."
 	sound = "emer_shut_docked"
 /datum/announcement/station/shuttle/emer_docked/play()
 	message = "Эвакуационный Шаттл пристыковался к станции. У вас есть [shuttleminutes2text()] для посадки."
@@ -134,7 +136,7 @@
 
 /datum/announcement/station/code/uptoblue
 	name = "Code: Up to Blue"
-	subtitle = "Внимание! Код безопастности повышен до Синего"
+	subtitle = "Внимание! Код безопасности повышен до Синего"
 	message = "Командование получило надежную информацию о возможной враждебной активности на борту станции. " + \
 			"Служба безопасности может носить оружие на виду, однако, не следует вынимать его без необходимости. " + \
 			"Разрешается личный обыск персонала и отсеков станции без предварительных санкций."

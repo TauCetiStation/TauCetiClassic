@@ -1,5 +1,9 @@
-var/master_mode = "extended" //"extended"
-var/secret_force_mode = "Secret" // if this is anything but "Secret", the secret rotation will forceably choose this mode
+var/global/master_mode = "extended" //"extended"
+var/global/secret_force_mode = "Secret" // if this is anything but "Secret", the secret rotation will forceably choose this mode
 
-var/wavesecret = 0
-var/master_last_mode = null // this variable contain the last played mode from previous round
+var/global/wavesecret = 0
+var/global/master_last_mode = null // this variable contain the last played mode from previous round
+
+// List of modes that failed on start, as to not repeatedly choose the same mode
+// that keeps failing over and over.
+var/global/list/modes_failed_start = list()

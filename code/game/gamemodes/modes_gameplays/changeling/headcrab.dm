@@ -9,6 +9,7 @@
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
@@ -45,7 +46,7 @@
 		user.gib()
 	else
 		qdel(user)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/headcrab
 	name = "headslug"
@@ -64,7 +65,7 @@
 	speak_emote = list("squeaks")
 	ventcrawler = 2
 	speed = -2
-	small = TRUE
+	w_class = SIZE_MINUSCULE
 	var/datum/mind/origin
 	var/egg_lain = FALSE
 

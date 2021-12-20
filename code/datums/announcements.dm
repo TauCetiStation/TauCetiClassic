@@ -1,17 +1,17 @@
-var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
+var/global/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
                                                 /area/shuttle/escape_pod1/transit,
                                                 /area/shuttle/escape_pod2/transit,
                                                 /area/shuttle/escape_pod3/transit,
                                                 /area/shuttle/escape_pod4/transit))
 
 #define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_area_transit)
-#define ANNOUNCE_TEXT 1
-#define ANNOUNCE_SOUND 2
-#define ANNOUNCE_COMMS 4
-#define ANNOUNCE_ALL 7
+#define ANNOUNCE_TEXT  (1<<0)
+#define ANNOUNCE_SOUND (1<<1)
+#define ANNOUNCE_COMMS (1<<2)
+#define ANNOUNCE_ALL (~0)
 
 /* Announcement sounds */
-var/list/announcement_sounds = list(
+var/global/list/announcement_sounds = list(
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
@@ -80,36 +80,45 @@ var/list/announcement_sounds = list(
 	var/announcer
 	var/sound
 
+	var/always_random = FALSE
 	var/volume = 100
 	var/flags
 
-/datum/announcement/proc/copy(announce_type)
-	var/datum/announcement/AT = announce_type
-	ASSERT(ispath(AT))
-	
-	name = initial(AT.name)
-	title = initial(AT.title)
-	subtitle = initial(AT.subtitle)
-	message = initial(AT.message)
-	announcer = initial(AT.announcer)
-	sound = initial(AT.sound)
+/datum/announcement/New()
+	randomize()
 
-	volume = initial(AT.volume)
-	flags = initial(AT.flags)
+/datum/announcement/proc/copy(announce_type)
+	var/datum/announcement/A = new announce_type
+
+	name = A.name
+	title = A.title
+	subtitle = A.subtitle
+	message = A.message
+	announcer = A.announcer
+	sound = A.sound
+
+	volume = A.volume
+	flags = A.flags
+
+/datum/announcement/proc/randomize()
+	return
 
 /datum/announcement/proc/play()
 	var/announce_text
 	var/announce_sound
 
+	if(always_random)
+		randomize()
+
 	if(flags & ANNOUNCE_TEXT)
 		if(title)
-			announce_text += "<h1 class='alert'>[title]</h1><br>"
+			announce_text += "<div><h1>[title]</h1></div>"
 		if(subtitle)
-			announce_text += "<h2 class='alert'>[subtitle]</h2><br>"
+			announce_text += "<div><h2>[subtitle]</h2></div>"
 		if(message)
-			announce_text += "<span class='alert'>[message]</span><br>"
+			announce_text += "<p class='alert'>[message]</p>"
 		if(announcer)
-			announce_text += "<span class='alert'> -[announcer]</span><br>"
+			announce_text += "<p class='alert'> -[announcer]</p>"
 
 	if(flags & ANNOUNCE_SOUND)
 		if(sound)
@@ -124,18 +133,18 @@ var/list/announcement_sounds = list(
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			if(announce_text)
-				to_chat(M, announce_text + "<br>")
+				to_chat(M, announce_text)
 
 			if(announce_sound)
 				if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
 					continue
 
-				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, null, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
 	if(flags & ANNOUNCE_COMMS)
 		for (var/obj/machinery/computer/communications/C in communications_list)
 			if(!(C.stat & (BROKEN | NOPOWER)))
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
 				if(title && subtitle)
 					P.name = "[title] - [subtitle]"
 				else if(title)
@@ -146,7 +155,7 @@ var/list/announcement_sounds = list(
 					P.name = "Report"
 				P.info = replacetext(message, "\n", "<br/>")
 				P.update_icon()
-				C.messagetitle.Add("[subtitle]")
+				C.messagetitle.Add("[P.name]")
 				C.messagetext.Add(P.info)
 
 
@@ -159,6 +168,3 @@ var/list/announcement_sounds = list(
 	..()
 
 /var/datum/announcement/announcement_ping = new /datum/announcement/ping // For sound-only
-
-/datum/announcement/proc/randomize_message()
-	return

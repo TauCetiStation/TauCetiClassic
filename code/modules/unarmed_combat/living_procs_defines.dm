@@ -122,8 +122,7 @@
 			visible_message("<span class='warning bold'>The [attacker] has shocked [src]!</span>")
 
 			Weaken(power)
-			if(stuttering < power)
-				stuttering = power
+			Stuttering(power)
 			Stun(power)
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -226,7 +225,7 @@
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src, visual_effect_icon = attacker.attack_disarm_vis_effect)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)

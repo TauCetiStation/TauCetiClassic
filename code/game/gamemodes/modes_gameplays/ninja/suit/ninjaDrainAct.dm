@@ -95,7 +95,7 @@
 		to_chat(U, "<span class='notice'>Hacking \the [target]...</span>")
 
 		var/turf/location = get_turf(U)
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			to_chat(AI, "<span class='warning'><b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.</span>")
 
 		var/datum/research/files = null
@@ -130,8 +130,8 @@
 			drain = round(rand(G.mindrain, G.maxdrain) / 2)
 			var/drained = 0
 			if(PN && do_after(U, 10, target = A))
-				drained = min(drain, PN.avail)
-				PN.newload += drained
+				drained = min(drain, A.delayed_surplus())
+				A.add_delayedload(drained)
 				if (drained < drain)//if no power on net, drain apcs
 					for (var/obj/machinery/power/terminal/T in PN.nodes)
 						if (istype(T.master, /obj/machinery/power/apc))
@@ -225,7 +225,7 @@
 		var/area/current_area = get_area(A)
 		var/obj/machinery/power/apc/B = current_area.get_apc()
 
-		if (!B)
+		if (!B || !B.terminal)
 			to_chat(U, "<span class='warning'>Power network could not be found. Aborting.</span>")
 			return
 
@@ -237,8 +237,8 @@
 			var/drained = 0
 
 			if(PN && do_after(U, 10, target = A))
-				drained = min(drain, PN.avail)
-				PN.newload += drained
+				drained = min(drain, B.terminal.delayed_surplus())
+				B.terminal.add_delayedload(drained)
 				if(drained < drain)//if no power on net, drain apcs
 					for(var/obj/machinery/power/terminal/T in PN.nodes)
 						if(istype(T.master, /obj/machinery/power/apc))

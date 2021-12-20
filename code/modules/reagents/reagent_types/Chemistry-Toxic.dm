@@ -330,7 +330,7 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
 				M.Weaken(2)
@@ -385,6 +385,9 @@
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
 			M.Weaken(10)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -405,6 +408,8 @@
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
 			H.Weaken(10)
+		if(volume >= overdose)
+			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -637,6 +642,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -764,7 +770,7 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 15)
+	M.adjustDrugginess(2)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))

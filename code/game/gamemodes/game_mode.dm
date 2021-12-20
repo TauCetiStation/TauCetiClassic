@@ -1,30 +1,24 @@
-/*
-	Gamemode datums
-		Used for co-ordinating factions in a round, what factions should be in operation, etc.
-	@name: String: The name of the gamemode, e.g. Changelings
-	@factions: List(reference): What factions are currently in operation in the gamemode
-	@factions_allowed: List(object): what factions will the gamemode start with, or attempt to start with
-	@minimum_player_count: Integer: Minimum required players to start the gamemode
-	@minimum_players_bundles: Integer: Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
-	@roles_allowed: List(object): What roles will the gamemode start with, or attempt to start with
-	@probability: Integer: How likely it is to roll this gamemode
-	@orphaned_roles: List(reference): List of faction-less roles currently in the gamemode
-*/
-
+// Used for co-ordinating factions in a round, what factions should be in operation, etc
 /datum/game_mode
+	// The name of the gamemode, e.g. Changelings
 	var/name
-	var/config_name // use only for config, without SSticker.mode.config_name == "malf", please
+	// Use only for config, without SSticker.mode.config_name == "malf", please
+	var/config_name
+	// What factions will the gamemode start with, or attempt to start with
 	var/list/factions_allowed = list()
-	var/list/roles_allowed = list()
+	// Minimum required players to start the gamemode
 	var/minimum_player_count
+	// Minimum number of players for that gamemode to be chose in Secret|Team Based|Mix
 	var/minimum_players_bundles
-	var/probability = 100 // this is the weight
+	// How likely it is to roll this gamemode
+	var/probability = 100
 
-	var/newscaster_announcements = null
-
+	// This is the html of all information about the current mode
 	var/completition_text = ""
 
+	// What factions are currently in operation in the gamemode
 	var/list/factions = list()
+	// List of faction-less roles currently in the gamemode
 	var/list/orphaned_roles = list()
 
 /datum/game_mode/proc/announce()
@@ -32,7 +26,7 @@
 
 /datum/game_mode/proc/get_player_count(check_ready = TRUE)
 	var/players = 0
-	for(var/mob/dead/new_player/P in new_player_list)
+	for(var/mob/dead/new_player/P as anything in new_player_list)
 		if(P.client && (!check_ready || P.ready))
 			players++
 
@@ -40,7 +34,7 @@
 
 /datum/game_mode/proc/get_ready_players(check_ready = TRUE)
 	var/list/players = list()
-	for(var/mob/dead/new_player/P in player_list)
+	for(var/mob/dead/new_player/P as anything in new_player_list)
 		if(P.client && (!check_ready || P.ready))
 			players.Add(P)
 
@@ -79,52 +73,42 @@
 		return FALSE
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
-	var/RolesSuccess = CreateRoles()
-	return FactionSuccess && RolesSuccess
+	if(!FactionSuccess)
+		DropAll()
+	return FactionSuccess
 
-//1 = station, 2 = centcomm
-/datum/game_mode/proc/ShuttleDocked(state)
-	for(var/datum/faction/F in factions)
-		F.ShuttleDocked(state)
-	for(var/datum/role/R in orphaned_roles)
-		R.ShuttleDocked(state)
+// it is necessary in those rare cases when the gamemode did not start for those reasons
+// that cannot be detected BEFORE the creation of a human
+/datum/game_mode/proc/DropAll()
+	for(var/f in factions)
+		var/datum/faction/faction = f
+		faction.Dismantle()
+	for(var/r in orphaned_roles)
+		var/datum/role/role = r
+		role.Drop()
 
 /*===FACTION RELATED STUFF===*/
 
-/datum/game_mode/proc/CreateFactions(list/factions_to_process, populate_factions = TRUE)
-	if(factions_to_process == null)
-		factions_to_process = factions_allowed
-	var/pc = get_player_count(FALSE)
-	for(var/Fac in factions_to_process)
-		if(islist(Fac))
-			var/list/L = Fac
-			CreateFactions(L, pc, FALSE)
-		else if(isnum(factions_allowed[Fac]))
-			for(var/i in 1 to factions_allowed[Fac])
-				CreateFaction(Fac, pc)
+/datum/game_mode/proc/CreateFactions()
+	var/player_count = get_player_count(FALSE)
+	for(var/faction_type in factions_allowed)
+		if(isnum(factions_allowed[faction_type]))
+			for(var/i in 1 to factions_allowed[faction_type])
+				CreateFaction(faction_type, player_count)
 		else
-			CreateFaction(Fac, pc)
-	if(populate_factions)
-		return PopulateFactions()
+			CreateFaction(faction_type, player_count)
+	return PopulateFactions()
 
-/datum/game_mode/proc/CreateFaction(Fac, population, override = 0)
-	var/datum/faction/F = new Fac
-	if(F.can_setup(population) || override)
+/datum/game_mode/proc/CreateFaction(faction_type, player_count, override = FALSE)
+	var/datum/faction/F = new faction_type
+	if(F.can_setup(player_count) || override)
 		factions += F
 		log_mode("[F] was normally created.")
 		return F
-	else
-		log_mode("Faction ([F]) could not set up properly with given population.")
-		qdel(F)
-		return null
-/*
-	Get list of available players
-	Get list of active factions
-	Loop through the players to see if they're available for certain factions
-		Not available if they
-			don't have their preferences set accordingly
-			already in another faction
-*/
+
+	log_mode("Faction ([F]) could not set up properly with given population.")
+	qdel(F)
+	return null
 
 /datum/game_mode/proc/CanPopulateFaction(check_ready = TRUE)
 	var/list/L = get_ready_players(check_ready)
@@ -151,8 +135,9 @@
 			if(F.max_roles && F.members.len >= F.max_roles)
 				break
 			if(!F.can_join_faction(P))
+				log_mode("[P] failed [F] can_join_faction!")
 				continue
-			if(!F.HandleNewMind(P.mind))
+			if(!F.HandleNewMind(P.mind, FALSE))
 				log_mode("[P] failed [F] HandleNewMind!")
 				continue
 			available_players -= P // One player cannot be a borero-ninja-malf
@@ -162,73 +147,17 @@
 	return TRUE
 
 /*=====ROLE RELATED STUFF=====*/
-
-/datum/game_mode/proc/CreateRoles() //Must return TRUE in some way, else the gamemode is scrapped.
-	if(!roles_allowed.len) //No roles to handle
-		return TRUE
-	for(var/role in roles_allowed)
-		if(isnum(roles_allowed[role]))
-			return CreateStrictNumOfRoles(role, roles_allowed[role])
-		else
-			CreateNumOfRoles(role, FilterAvailablePlayers(role))
-			return TRUE
-
-/datum/game_mode/proc/CreateNumOfRoles(role_type, list/candidates)
-	if(!candidates || !candidates.len)
-		log_mode("Ran out of available players to fill role [role_type]!")
-		return
-	for(var/mob/M in candidates)
-		CreateRole(role_type, M)
-
-/datum/game_mode/proc/CreateStrictNumOfRoles(role_type, num)
-	var/number_of_roles = 0
-	var/list/available_players = FilterAvailablePlayers(role_type)
-	for(var/i = 0 to num)
-		if(!available_players.len)
-			log_mode("Ran out of available players to fill role [role_type]!")
-			break
-		shuffle(available_players)
-		var/mob/dead/new_player/P = pick(available_players)
-		available_players.Remove(P)
-		if(!CreateRole(role_type, P))
-			i--
-			continue
-		number_of_roles++ // Get the roles we created
-	return number_of_roles
-
-
-/datum/game_mode/proc/CreateBasicRole(type_role)
-	return new type_role
-
-/datum/game_mode/proc/FilterAvailablePlayers(datum/role/role_type, list/players_to_choose = get_ready_players())
-	var/pref = initial(role_type.required_pref)
-	if(!pref)
-		log_mode("[role_type] has no required_pref")
-
-	for(var/mob/dead/new_player/P in players_to_choose)
-		if(!P.client || !P.mind)
-			players_to_choose.Remove(P)
-			continue
-		if(!P.client.prefs.be_role.Find(pref) || jobban_isbanned(P, pref) || role_available_in_minutes(P, pref) || jobban_isbanned(P, "Syndicate"))
-			players_to_choose.Remove(P)
-			continue
-	if(!players_to_choose.len)
-		log_mode("No available players for [role_type]")
-	return players_to_choose
-
 /datum/game_mode/proc/CreateRole(role_type, mob/P)
-	var/datum/role/newRole = CreateBasicRole(role_type)
+	var/datum/role/newRole = new role_type
 
 	if(!newRole)
 		log_mode("Role killed itself or was otherwise missing!")
-		return FALSE
-
-	newRole.is_roundstart_role = TRUE
+		return null
 
 	if(!newRole.AssignToRole(P.mind))
 		log_mode("Role refused mind and dropped!")
 		newRole.Drop()
-		return FALSE
+		return null
 
 	return newRole
 
@@ -277,8 +206,6 @@
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	feedback_set_details("game_mode","[SSticker.mode]")
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
-
-	return TRUE
 
 /datum/game_mode/proc/GetScoreboard()
 	completition_text = "<h2>Factions & Roles</h2>"
@@ -331,15 +258,11 @@
 			for(var/datum/faction/faction in game_mode_factions)
 				if(!faction.IsSuccessful())
 					return "lose"
-
-	if(roles_allowed.len)
-		for(var/type in roles_allowed)
-			var/list/datum/role/game_mode_roles = list()
-			for(var/datum/role/R in orphaned_roles)
-				if(istype(R, type) && R.is_roundstart_role)
-					game_mode_roles += R
-			for(var/datum/role/R in game_mode_roles)
-				if(!R.IsSuccessful())
-					return "lose"
-
 	return "win"
+
+//1 = station, 2 = centcomm
+/datum/game_mode/proc/ShuttleDocked(state)
+	for(var/datum/faction/F in factions)
+		F.ShuttleDocked(state)
+	for(var/datum/role/R in orphaned_roles)
+		R.ShuttleDocked(state)

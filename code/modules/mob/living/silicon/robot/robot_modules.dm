@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_NO_CONTAINER
+	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()
@@ -57,22 +57,29 @@
 		if(!S)
 			src.modules -= null
 			S = new T(src, 1)
-			src.modules += S
+			add_item(S)
 
 		if(S.get_amount() < stacktypes[T])
 			S.add(1)
-
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
-	var/list/temp_list = modules
-	modules = list()
-	for(var/obj/O in temp_list)
-		if(O)
-			modules += O
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
 	R.add_language("Tradeband", 1)
 	R.add_language("Trinary", 1)
 	R.add_language("Sol Common", 1)
+
+/obj/item/weapon/robot_module/proc/add_item(obj/O)
+	O.forceMove(src)
+	modules += O
+	var/mob/living/silicon/robot/R = loc
+	R.hud_used.update_robot_modules_display()
+
+/obj/item/weapon/robot_module/proc/remove_item(obj/O)
+	if(!(locate(O) in modules))
+		return
+	modules -= O
+	var/mob/living/silicon/robot/R = loc
+	R.unequip_module(O)
+	qdel(O)
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -129,7 +136,7 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
+	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -316,7 +323,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
-	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
@@ -403,6 +410,7 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)

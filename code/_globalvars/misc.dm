@@ -41,6 +41,7 @@ var/global/list/score=list(
 	"disc"           = 0, // is the disc safe and secure?
 	"nuked"          = 0, // was the station blown into little bits?
 	"destranomaly"   = 0, // anomaly of cult
+	"rec_antags"     = 0, // How many antags did we reconvert
 
 	//crew
 	"crew_escaped"   = 0,      // how many people got out alive?
@@ -107,3 +108,5 @@ var/global/list/datum/religion/all_religions = list()
 
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
+
+var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets panel

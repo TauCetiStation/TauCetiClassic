@@ -45,25 +45,12 @@
 		"biotech" = 0,
 	)
 
-	// So we don't give points for researching non-artifact item
-	var/list/artifact_types = list(
-		/obj/item/clothing/glasses/hud/mining/ancient,
-		/obj/machinery/auto_cloner,
-		/obj/machinery/power/supermatter,
-		/obj/structure/constructshell,
-		/obj/machinery/giga_drill,
-		/obj/structure/cult/pylon,
-		/obj/mecha/working/hoverpod,
-		/obj/machinery/replicator,
-		/obj/machinery/power/crystal,
-		/obj/machinery/artifact
-	)
-
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
-	var/list/saved_artifacts = list()
 	var/list/saved_symptoms = list()
 	var/list/saved_slimecores = list()
+	//xenoarcheology stuff
+	var/list/saved_artifacts = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -136,19 +123,18 @@
 			else
 				points += rand(5,10) * 200 // 1000-2000 points for random weapon
 
-	for(var/list/artifact in I.scanned_artifacts)
-		if(!(artifact["type"] in artifact_types)) // useless
-			continue
-
+	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				already_scanned = TRUE
 				break
 
 		if(!already_scanned)
-			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
-			saved_artifacts += list(artifact)
+			points += 10000 //10000 points for main effect
+			if(scanning_artifact["second_effect"] != "")
+				points += 5000 //5000 points for secondary effect
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in I.scanned_symptoms)
 		if(saved_symptoms[symptom])
@@ -191,14 +177,14 @@
 	for(var/weapon in O.saved_autopsy_weapons)
 		saved_autopsy_weapons |= weapon
 
-	for(var/list/artifact in O.saved_artifacts)
+	for(var/list/scanning_artifact in O.saved_artifacts)
 		var/has_artifact = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				has_artifact = TRUE
 				break
 		if(!has_artifact)
-			saved_artifacts += list(artifact)
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in O.saved_symptoms)
 		saved_symptoms[symptom] = O.saved_symptoms[symptom]
@@ -313,7 +299,7 @@
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -353,8 +339,8 @@
 	if(istype(target, /obj/item/weapon/paper/artifact_info))
 		var/obj/item/weapon/paper/artifact_info/report = target
 		if(report.artifact_type)
-			for(var/list/artifact in scanned_artifacts)
-				if(artifact["type"] == report.artifact_type && artifact["first_effect"] == report.artifact_first_effect && artifact["second_effect"] == report.artifact_second_effect)
+			for(var/list/scanning_artifact in scanned_artifacts)
+				if(scanning_artifact["type"] == report.artifact_type && scanning_artifact["first_effect"] == report.artifact_first_effect && scanning_artifact["second_effect"] == report.artifact_second_effect)
 					to_chat(user, "<span class='notice'>[src] already has data about this artifact report</span>")
 					return
 
@@ -399,7 +385,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/stored_points

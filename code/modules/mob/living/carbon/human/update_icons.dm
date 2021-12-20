@@ -265,7 +265,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)) || (w_uniform && (w_uniform.flags & BLOCKHAIR)))
 		return
 
 	//base icons
@@ -284,7 +284,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					head.recolor()
 			standing += facial_s
 
-	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
+	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)) && !(wear_mask && (wear_mask.flags & BLOCKHEADHAIR)) && !(wear_suit && (wear_suit.flags & BLOCKHEADHAIR)) && !(w_uniform && (w_uniform.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
@@ -357,12 +357,12 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.name == SHADOWLING && head)
 		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = LIGHTING_PLANE + 1
+		eyes.plane = ABOVE_LIGHTING_PLANE
 		standing += eyes
 
 	if(iszombie(src) && stat != DEAD)
 		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = LIGHTING_PLANE + 1
+		eyes.plane = ABOVE_LIGHTING_PLANE
 		standing += eyes
 
 	if(!dna || !(dna.mutantrace == "golem"))

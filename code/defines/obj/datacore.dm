@@ -102,7 +102,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 /obj/effect/datacore/proc/load_silicon_manifest()
 	if (Silicon_Manifest.len)
 		return
-	for (var/mob/living/silicon/M in silicon_list)
+	for (var/mob/living/silicon/M as anything in silicon_list)
 		var/name = "Unknown"
 		var/is_active = "Inactive"
 		var/rank = "Unknown"

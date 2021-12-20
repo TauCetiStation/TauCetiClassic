@@ -208,7 +208,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
@@ -257,6 +257,11 @@
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
+
+/obj/machinery/door/firedoor/do_afterclose()
+	for(var/mob/living/L in get_turf(src))
+		try_move_adjacent(L)
+	..()
 
 /obj/machinery/door/firedoor/do_open()
 	..()

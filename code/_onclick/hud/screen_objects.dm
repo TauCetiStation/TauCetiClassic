@@ -9,12 +9,13 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/mob/screen1.dmi'
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
+	plane = HUD_PLANE
+	flags = ABSTRACT
+	vis_flags = VIS_INHERIT_PLANE
+	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
-	appearance_flags = APPEARANCE_UI
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
@@ -43,7 +44,7 @@
 		if(istype(master, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = master
 			S.close(usr)
-	return 1
+	return TRUE
 
 
 /atom/movable/screen/grab
@@ -53,13 +54,13 @@
 	if(master)
 		var/obj/item/weapon/grab/G = master
 		G.s_click(src)
-	return 1
+	return TRUE
 
 /atom/movable/screen/grab/attack_hand()
 	return
 
 /atom/movable/screen/grab/attackby()
-	return
+	return FALSE
 
 
 /atom/movable/screen/storage
@@ -72,21 +73,21 @@
 
 /atom/movable/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
 			master.attackby(I, usr, params)
 			usr.next_move = world.time+2
-			return 1
+			return TRUE
 
 		var/obj/item/weapon/storage/S = master
 		if(!S || !S.storage_ui)
-			return 1
+			return TRUE
 		// Taking something out of the storage screen (including clicking on item border overlay)
 		var/list/PM = params2list(params)
 		var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
@@ -98,8 +99,8 @@
 				I = S.contents[i]
 				if (I)
 					I.Click(location, control, params)
-					return 1
-	return 1
+					return TRUE
+	return TRUE
 
 /atom/movable/screen/storage/MouseEntered(location, control, params)
 	. = ..()
@@ -176,7 +177,7 @@
 	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 	if(!choice)
-		return 1
+		return TRUE
 
 	return set_selected_zone(choice, usr)
 
@@ -265,7 +266,7 @@
 		if(istype(L))
 			L.update_combos()
 		update_icon()
-	return 1
+	return TRUE
 
 /atom/movable/screen/zone_sel/update_icon()
 	cut_overlays()
@@ -287,7 +288,10 @@
 		icon_state = "pull0"
 
 /atom/movable/screen/Click(location, control, params)
-	if(!usr)	return 1
+	if(!usr)
+		return TRUE
+
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	switch(name)
 		if("toggle")
@@ -302,7 +306,7 @@
 
 		if("equip")
 			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-				return 1
+				return TRUE
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.quick_equip()
@@ -340,14 +344,14 @@
 							var/mob/living/carbon/human/H = C
 							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 								internalsound = 'sound/misc/riginternaloff.ogg'
-						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
 						if(!istype(C.wear_mask, /obj/item/clothing/mask))
 							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
 							internal_switch = world.time + 8
-							return 1
+							return TRUE
 						else
 							if(C.wear_mask.flags & MASKINTERNALS)
 								var/list/nicename = null
@@ -421,7 +425,7 @@
 										var/mob/living/carbon/human/H = C
 										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 											internalsound = 'sound/misc/riginternalon.ogg'
-									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 								if(C.internal)
 									if(C.internals)
@@ -457,7 +461,7 @@
 				var/mob/living/silicon/robot/R = usr
 //				if(R.module)
 //					R.hud_used.toggle_show_robot_modules()
-//					return 1
+//					return TRUE
 				R.pick_module()
 
 		if("inventory")
@@ -465,7 +469,7 @@
 				var/mob/living/silicon/robot/R = usr
 				if(R.module)
 					R.hud_used.toggle_show_robot_modules()
-					return 1
+					return TRUE
 				else
 					to_chat(R, "You haven't selected a module yet.")
 
@@ -691,18 +695,18 @@
 			usr.client.ToggleGunMode()
 
 		else
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /atom/movable/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	switch(name)
 		if("r_hand")
 			if(iscarbon(usr))
@@ -723,7 +727,7 @@
 				usr.update_inv_l_hand()
 				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
-	return 1
+	return TRUE
 
 /atom/movable/screen/inventory/MouseEntered()
 	SHOULD_CALL_PARENT(TRUE)
@@ -812,21 +816,22 @@
 	deltimer(timer)
 	return ..()
 
-/atom/movable/screen/cooldown_overlay/proc/start_cooldown(delay)
+/atom/movable/screen/cooldown_overlay/proc/start_cooldown(delay, need_timer = TRUE)
 	parent_button.color = "#8000007c"
 	parent_button.vis_contents += src
-	if(delay)
-		cooldown_time = delay
+	cooldown_time = delay
 	set_maptext(cooldown_time)
-	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+	if(need_timer)
+		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/tick()
-	if(cooldown_time == 0)
+	if(cooldown_time == 1)
 		stop_cooldown()
 		return
 	cooldown_time--
 	set_maptext(cooldown_time)
-	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+	if(timer)
+		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
 	cooldown_time = 0
@@ -839,8 +844,17 @@
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
 
 /proc/start_cooldown(atom/movable/screen/button, time, datum/callback/callback)
+	if(!time)
+		return
 	var/atom/movable/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback
-	cooldown.start_cooldown(time)
+		cooldown.start_cooldown(time)
+	else
+		cooldown.start_cooldown(time, FALSE)
 	return cooldown
+
+/atom/movable/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood

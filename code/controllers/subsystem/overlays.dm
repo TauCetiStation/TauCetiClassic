@@ -1,9 +1,11 @@
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER
+
+	init_order = SS_INIT_ORDER_OVERLAY
 	wait = SS_WAIT_OVERLAYS
 	priority = SS_PRIORITY_OVERLAYS
-	init_order = SS_INIT_ORDER_OVERLAY
+
+	flags = SS_TICKER
 
 	var/list/queue = list()
 	var/list/stats = list()
@@ -150,7 +152,7 @@ SUBSYSTEM_DEF(overlays)
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !length(overlays))
-			remove_overlays = overlays
+			remove_overlays = overlays.Copy()
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE

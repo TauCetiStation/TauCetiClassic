@@ -13,6 +13,7 @@
 	var/cloud_emote = ""
 	var/sound_priority = SOUND_PRIORITY_LOW
 	var/emote_sound
+	var/sound_frequency = null
 	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
 
 	var/mute_message = "" // high priority. usuially VISIBLE
@@ -22,9 +23,6 @@
 	var/muted = HAS_TRAIT(src, TRAIT_MUTE)
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
-
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act, 1, -1)
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
@@ -210,12 +208,28 @@
 // ========== HYBRID ==========
 
 		if ("laugh")
-			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
+			message_type = can_make_a_sound ? SHOWMSG_AUDIO : SHOWMSG_VISUAL
 			message = "laughs."
 			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh."
-			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
+			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE) && !species.flags[NO_BREATHE]
+			var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
+			sound_frequency = 1.05 - (voice_frequency - 0.85)
+			switch(get_species())
+				if(SKRELL)
+					switch(gender)
+						if(FEMALE)
+							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_FEMALE)
+						else
+							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_MALE)
+				else
+					switch(gender)
+						if(FEMALE)
+							emote_sound = pick(SOUNDIN_LAUGH_FEMALE)
+						else
+							emote_sound = pick(SOUNDIN_LAUGH_MALE)
+
 
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
@@ -330,6 +344,25 @@
 			message = "prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
+		if ("rock")
+			message_type = SHOWMSG_VISUAL
+			message = "plays rock."
+			mute_message = "plays rock."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+		if ("paper")
+			message_type = SHOWMSG_VISUAL
+			message = "plays paper."
+			mute_message = "plays paper."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+		if ("scissors")
+			message_type = SHOWMSG_VISUAL
+			message = "plays scissors."
+			mute_message = "plays scissors."
+			conditions_for_emote = ONE_HAND_IS_USABLE
+
+
 // ========== SPECIAL ==========
 
 		if ("custom")
@@ -365,7 +398,7 @@
 		if ("help")
 			to_chat(src, "<span class='notice'>Voiced in <B>BOLD</B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
 			                                                          laugh, cry, giggle, clap, blink, drool, eyebrow, twitch, frown, nod, blush, wave, deathgasp, \
-			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute.</span>")
+			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute, rock, paper, scissors.</span>")
 
 		else
 			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
@@ -389,16 +422,16 @@
 	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
 			if(sound_priority == SOUND_PRIORITY_HIGH && next_high_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_high_priority_sound = world.time + 4 SECONDS
 				next_medium_priority_sound = next_high_priority_sound
 				next_low_priority_sound = next_high_priority_sound
 			else if(sound_priority == SOUND_PRIORITY_MEDIUM && next_medium_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_medium_priority_sound = world.time + 4 SECONDS
 				next_low_priority_sound = next_medium_priority_sound
 			else if(sound_priority == SOUND_PRIORITY_LOW && next_low_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 				next_low_priority_sound = world.time + 4 SECONDS
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
@@ -406,7 +439,7 @@
 
 	log_emote("[key_name(src)] : [message]")
 
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue // skip leavers
 		switch(M.client.prefs.chat_ghostsight)
@@ -415,6 +448,8 @@
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(!auto)
 					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
+
+	play_rock_paper_scissors_animation(act)
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)

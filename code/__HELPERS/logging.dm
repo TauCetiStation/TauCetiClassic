@@ -43,7 +43,7 @@
 	if (config.log_debug)
 		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			to_chat(C, "DEBUG: [text]")
 

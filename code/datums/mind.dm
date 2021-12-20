@@ -85,14 +85,11 @@
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	if(current?.my_religion)
-		current.my_religion.add_member(new_character, holy_role)
-
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 
-	if(old_character.my_religion)
+	if(old_character?.my_religion)
 		old_character.my_religion.add_member(current, holy_role)
 
 	for(var/role in antag_roles)
@@ -450,7 +447,7 @@
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)
-					R.RemoveFromRole(src)
+					R.Deconvert()
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
@@ -491,7 +488,7 @@
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	var/is_currently_brigged = 0
 
@@ -507,7 +504,7 @@
 
 	if(!is_currently_brigged)
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	if(brigged_since == -1)
 		brigged_since = world.time
@@ -743,3 +740,12 @@
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
+
+/mob/living/simple_animal/hostile/mimic/prophunt/mind_initialize()
+	..()
+
+	var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/props)
+	if(!I)
+		I = SSticker.mode.CreateFaction(/datum/faction/props)
+		I.forgeObjectives()
+	add_faction_member(I, src, TRUE)

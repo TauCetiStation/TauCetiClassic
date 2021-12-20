@@ -355,7 +355,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
-				if(I.w_class > ITEM_SIZE_SMALL && !istype(I, /obj/item/organ))
+				if(I.w_class > SIZE_TINY && !istype(I, /obj/item/organ))
 					I.loc = get_turf(src)
 			should_delete = TRUE
 		if(DROPLIMB_BLUNT)
@@ -666,7 +666,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
+	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
 
 /obj/item/organ/external/groin
@@ -686,7 +686,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 
 /obj/item/organ/external/head
@@ -707,7 +707,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
@@ -867,6 +867,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	return FALSE
 
+/obj/item/organ/external/head/abomination
+	vital = FALSE
+
 /obj/item/organ/external/l_arm
 	name = "left arm"
 
@@ -886,7 +889,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/l_arm/process()
 	..()
@@ -912,7 +915,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -937,7 +940,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -957,7 +960,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

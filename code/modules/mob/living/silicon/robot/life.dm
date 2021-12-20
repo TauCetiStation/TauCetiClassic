@@ -101,7 +101,8 @@
 		src.blinded = 1
 		src.stat = DEAD
 
-	if (src.stuttering) src.stuttering--
+	if (src.stuttering > 0)
+		AdjustStuttering(-1)
 
 	if (src.eye_blind)
 		src.eye_blind--
@@ -120,8 +121,7 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
+		adjustBlurriness(-1)
 
 	if (src.druggy > 0)
 		src.druggy--
@@ -152,39 +152,39 @@
 
 	return 1
 
+/mob/living/silicon/robot/update_sight()
+	if(!..())
+		return FALSE
+
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+	see_in_dark = 8
+
+	if (sight_mode & BORGXRAY)
+		set_EyesVision(transition_time = 0)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		see_invisible = SEE_INVISIBLE_OBSERVER
+	else if (sight_mode & BORGMESON)
+		set_EyesVision("meson")
+		sight |= SEE_TURFS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	else if (sight_mode & BORGNIGHT)
+		set_EyesVision("nvg")
+	else if (sight_mode & BORGTHERM)
+		set_EyesVision("thermal")
+		sight |= SEE_MOBS
+	else
+		set_EyesVision()
+
+	return TRUE
+
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
-		set_EyesVision()
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
-		set_EyesVision("meson")
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGNIGHT)
-		set_EyesVision("nvg")
-		src.see_in_dark = 8
-	else if (src.sight_mode & BORGTHERM)
-		set_EyesVision("thermal")
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != DEAD)
-		set_EyesVision()
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 	regular_hud_updates()
+	update_sight()
 
 	if (src.healths)
 		if (src.stat != DEAD)

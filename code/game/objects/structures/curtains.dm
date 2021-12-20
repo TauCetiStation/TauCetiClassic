@@ -18,7 +18,7 @@
 		..(P, def_zone)
 
 /obj/structure/curtain/attack_hand(mob/user)
-	playsound(src, 'sound/effects/curtain.ogg', VOL_EFFECTS_MASTER, 15, null, -5)
+	playsound(src, 'sound/effects/curtain.ogg', VOL_EFFECTS_MASTER, 15, null, FALSE, -5)
 	toggle()
 	..()
 

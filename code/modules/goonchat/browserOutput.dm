@@ -1,6 +1,6 @@
-var/savefile/iconCache = new /savefile("data/iconCache.sav")
-var/chatDebug = file("data/chatDebug.log")
-var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
+var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
+var/global/chatDebug = file("data/chatDebug.log")
+var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
 
 /datum/chatOutput
 	var/client/owner = null
@@ -120,13 +120,16 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
 
-/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "")
+/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "", local_time = "")
 	if(owner.guard.chat_processed)
 		return
 
 	if(charset && istext(charset))
 		src.charset = ckey(charset)
 		owner.guard.chat_data["charset"] = src.charset
+
+	if(local_time && isnum(text2num(local_time)))
+		owner.guard.chat_data["local_time"] = text2num(local_time)
 
 	if(cookie && cookie != "none")
 		var/list/connData = json_decode(cookie)
@@ -140,7 +143,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 					return
 
 				row["ckey"] = ckey(row["ckey"])
-				row["compid"] = sanitize_cid(row["compid"])
+				row["compid"] = sanitize_numbers(row["compid"])
 				row["ip"] = sanitize_ip(row["ip"])
 
 				if(!(row["ckey"] && row["compid"] && row["ip"]))
@@ -174,6 +177,17 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /var/list/bicon_cache = list()
 
+/icon
+	var/icon_info
+
+/icon/New(icon,icon_state,dir,frame,moving)
+	..()
+	// A link to yourself, otherwise a file. A kind of guarantee.
+	if(istype(icon, /icon))
+		icon_info = "\ref[src]#[icon_state]"
+	else
+		icon_info = "\ref[icon]#[icon_state]"
+
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
@@ -183,21 +197,39 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	iconCache[iconKey] << icon
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+	var/list/almost_partial = splittext(partial[2], "}")
+	return replacetext(copytext(almost_partial[1], 3, -5), "\n", "")
 
-/proc/bicon(obj, use_class = 1)
-	var/class = use_class ? "class='icon misc'" : null
+/proc/bicon(obj, css = "class='icon'") // if you don't want any styling just pass null to css
 	if (!obj)
 		return
 
-	if (isicon(obj))
-		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
-			bicon_cache["\ref[obj]"] = icon2base64(obj)
-		return "<img [class] src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
+	return "<img [css] src='data:image/png;base64,[bicon_raw(obj)]'>"
 
-	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
+/proc/bicon_raw(obj)
+	if (!obj)
+		return
+
+	// This check will check for an icon object that already has a cool key.
+	if (istype(obj, /icon))
+		var/icon/I = obj
+		if (!bicon_cache[I.icon_info])
+			bicon_cache[I.icon_info] = icon2base64(obj)
+		return "[bicon_cache[I.icon_info]]"
+
+	// This check will check if you pass it to this proc 'foo/bar.dmi', or something from your computer in game
+	if(isicon(obj))
+		var/key = "\ref[obj]"
+		if(!bicon_cache[key])
+			bicon_cache[key] = icon2base64(obj)
+		return "[bicon_cache[key]]"
+
+	if(!isatom(obj) && !istype(obj, /image)) // we don't need datums here. no runtimes :<
+		return
+
+	// Thanks to dynamic typing, this atom can be both an image and a mutable_apperance
 	var/atom/A = obj
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+	var/key = "\ref[A.icon]#[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I
 		if(!A.icon || !A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
@@ -209,13 +241,11 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
 		bicon_cache[key] = icon2base64(I, key)
-	if(use_class)
-		class = "class='icon [A.icon_state]'"
 
-	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
+	return "[bicon_cache[key]]"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
-	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, message, handle_whitespace)
 		return
 	SSchat.queue(target, message, handle_whitespace)

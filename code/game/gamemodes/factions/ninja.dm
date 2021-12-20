@@ -41,6 +41,5 @@
 		ninjas_alive++
 	if(ninjas_alive)
 		return FALSE
-	else
-		stage = FS_ENDGAME
-		return TRUE
+	stage = FS_ENDGAME
+	return TRUE

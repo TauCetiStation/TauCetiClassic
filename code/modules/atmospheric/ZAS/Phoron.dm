@@ -1,4 +1,4 @@
-var/image/contamination_overlay = image('icons/effects/contamination.dmi')
+var/global/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 /pl_control
 	var/PHORON_DMG = 3
@@ -128,7 +128,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 			to_chat(src, "<span class='danger'>Your eyes burn!</span>")
 
 		E.damage += 2.5
-		eye_blurry = min(eye_blurry + 1.5, 50)
+		setBlurriness(min(eye_blurry + 1.5, 50))
 
 		if (prob(max(0, E.damage - 15) + 1) &&!eye_blind)
 			to_chat(src, "<span class='danger'>You are blinded!</span>")

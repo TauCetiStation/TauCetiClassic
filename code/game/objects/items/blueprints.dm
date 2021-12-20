@@ -129,6 +129,7 @@ move an amendment</a> to the drawing.</p>
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
 	A.always_unpowered = 0
+	A.update_areasize()
 
 	spawn(5)
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]"
@@ -156,6 +157,7 @@ move an amendment</a> to the drawing.</p>
 		return
 	set_area_machinery_title(A,str,prevname)
 	A.name = str
+	A.update_areasize()
 	to_chat(usr, "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>")
 	interact()
 	return

@@ -143,7 +143,7 @@ var/global/list/uncommon_loot = list(
 		/obj/item/roller = 1,
 		/obj/item/weapon/legcuffs/bola = 1,
 		/obj/item/weapon/handcuffs/cable = 1,
-		/obj/item/weapon/twohanded/spear = 1,
+		/obj/item/weapon/spear = 1,
 		/obj/item/weapon/shield/riot = 1,
 		/obj/item/weapon/grenade/cancasing = 1,
 		/obj/item/weapon/melee/cattleprod = 1,
@@ -216,6 +216,7 @@ var/global/list/oddity_loot = list(
 #define maint_common_weight 4500
 #define maint_uncommon_weight 1000
 #define maint_oddity_weight 1 //1 out of 10,000 would give boxstation (174 spawns) a 1 in 52 chance of spawning an oddity per round
+#define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
 //Loot pool used by default maintenance loot spawners
 var/global/list/maintenance_loot = list(

@@ -83,15 +83,7 @@
 				else
 					clear_fullscreen("impaired")
 
-				if(eye_blurry)
-					overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
-				else
-					clear_fullscreen("blurry")
-
-				if(druggy)
-					overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
+					update_eye_blur()
 
 		if(machine)
 			if (!(machine.check_eye(src)))
@@ -100,8 +92,6 @@
 			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
-/mob/living/proc/update_sight()
-	return
 
 /mob/living/update_action_buttons()
 	if(!hud_used) return

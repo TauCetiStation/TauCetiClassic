@@ -8,11 +8,13 @@
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
-	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART)
+	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
+
+	var/telecrystals = 20
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -69,7 +71,7 @@
 		killer.aiRadio.keyslot1 = new /obj/item/device/encryptionkey/syndicate()
 		killer.aiRadio.recalculateChannels()
 
-/datum/role/traitor/Greet(greeting, custom)
+/datum/role/traitor/Greet(greeting = GREET_DEFAULT, custom)
 	antag.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!greeting)
@@ -78,15 +80,15 @@
 	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_ROUNDSTART)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Syndicate agent, a Traitor.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Syndicate agent, a Traitor.</span>")
 		if (GREET_AUTOTRAITOR)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are now a Traitor.<br>Your memory clears up as you remember your identity as a sleeping agent of the Syndicate. It's time to pay your debt to them. </span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are now a Traitor.<br>Your memory clears up as you remember your identity as a sleeping agent of the Syndicate. It's time to pay your debt to them. </span>")
 		if (GREET_LATEJOIN)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Traitor.<br>As a Syndicate agent, your goal is to infiltrate the crew and accomplish your objectives at all costs.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.<br>As a Syndicate agent, your goal is to infiltrate the crew and accomplish your objectives at all costs.</span>")
 		if (GREET_SYNDBEACON)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You have joined the ranks of the Syndicate and thus became a traitor to the Nanotrasen!</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You have joined the ranks of the Syndicate and thus became a traitor to the Nanotrasen!</span>")
 		else
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Traitor.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.</span>")
 
 	return TRUE
 

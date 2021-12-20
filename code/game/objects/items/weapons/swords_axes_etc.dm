@@ -37,24 +37,30 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
+		tools = list(
+			TOOL_KNIFE = 1
+		)
+		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
+		tools = list()
+		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
 			icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
@@ -105,8 +111,8 @@
 	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-			M.stuttering = 8
+		if (!(HULK in M.mutations))
+			M.Stuttering(8)
 		M.Stun(8)
 		M.Weaken(8)
 		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
@@ -127,7 +133,7 @@
 	icon_state = "telebaton_0"
 	item_state = null
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 3
 	var/on = 0
 
@@ -171,7 +177,7 @@
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton"
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
@@ -180,7 +186,7 @@
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = null
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
@@ -291,13 +297,14 @@
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = ITEM_SIZE_HUGE
+		src.w_class = SIZE_BIG
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = ITEM_SIZE_HUGE
+		src.w_class = SIZE_BIG
 	add_fingerprint(user)
+
 	return
 
 
@@ -326,7 +333,7 @@
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
@@ -334,7 +341,7 @@
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	if(user)

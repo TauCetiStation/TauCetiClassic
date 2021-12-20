@@ -238,12 +238,6 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
-	if(SMALLSIZE in mutations)
-		if(gnomed)
-			msg += "[t_He] [t_is] a gnome!\n"
-		else
-			msg += "[t_He] [t_is] a small halfling!\n"
-
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
@@ -457,6 +451,12 @@
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+		if(species.name == ABOMINATION)
+			if(C.absorbed_dna.len)
+				var/list/victims_names = list()
+				for(var/datum/dna/D in C.absorbed_dna)
+					victims_names += "[D.real_name]"
+				msg+= "<span class='warning'>Faces of [get_english_list(victims_names)] can be seen on it's ever changing body...</span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -518,11 +518,30 @@
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(!skipface && mood)
+		switch(mood.shown_mood)
+			if(-INFINITY to MOOD_LEVEL_SAD4)
+				msg += "[t_He] appears to be depressed.\n"
+			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				msg += "[t_He] appears to be very sad.\n"
+			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				msg += "[t_He] appears to be a bit down.\n"
+			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+				msg += "[t_He] appears to be quite happy.\n"
+			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+				msg += "[t_He] appears to be very happy.\n"
+			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+				msg += "[t_He] appears to be ecstatic.\n"
+
+	if(w_class)
+		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
 	if(!skipface && print_flavor_text())
 		msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span><br>"
+
 	if(applying_pressure)
 		msg += applying_pressure
 	else if(busy_with_action)
@@ -545,6 +564,9 @@
 		var/mob/dead/observer/O = user
 		if(O.started_as_observer)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
+
+	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)
 

@@ -342,7 +342,7 @@
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
 		owner.SetParalysis(2)
-		owner.eye_blurry = 2
+		owner.blurEyes(2)
 		owner.silent = 2
 		return
 	if(damage)
@@ -422,6 +422,10 @@
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/internal/brain/abomination
+	name = "deformed brain"
+	parent_bodypart = BP_CHEST
+
 /obj/item/organ/internal/eyes
 	name = "eyes"
 	organ_tag = O_EYES
@@ -434,6 +438,6 @@
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
 	if(is_bruised())
-		owner.eye_blurry = 20
+		owner.blurEyes(20)
 	if(is_broken())
 		owner.eye_blind = 20

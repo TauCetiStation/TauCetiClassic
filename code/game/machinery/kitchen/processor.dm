@@ -61,7 +61,7 @@
 	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/weapon/reagent_containers/food/snacks/dough
+	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */
@@ -103,9 +103,13 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	for(var/datum/disease/D in O.viruses)
-		if(D.spread_type != SPECIAL)
-			B.data["viruses"] += D.Copy()
+	if(O.viruses && O.viruses.len > 0)
+		if(!B.data["viruses"])
+			B.data["viruses"] = list()
+
+		for(var/datum/disease/D in O.viruses)
+			if(D.spread_type != SPECIAL)
+				B.data["viruses"] += D.Copy()
 
 	B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 	if(O.resistances&&O.resistances.len)

@@ -68,7 +68,7 @@
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra, ascii_only)
 
 /proc/paranoid_sanitize(t)
-	var/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
+	var/static/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
 	return alphanum_only.Replace(t, "#")
 
 //Filters out undesirable characters from character names
@@ -217,6 +217,10 @@
 		t = "[t] "
 	return t
 
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
+
 // Returns a string with reserved characters and spaces before the first letter removed
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)
@@ -238,6 +242,20 @@
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim(text)
 	return trim_left(trim_right(text))
+
+// Returns a string without a margin before the provided margin prefix.
+// Useful to do a code formatting when multiline strings are used.
+/proc/trim_margin(text, margin_prefix = "|")
+	var/result = ""
+
+	for (var/line in splittext(text, "\n"))
+		var/margin_idx = findtext_char(line, margin_prefix) + 1
+		line = copytext_char(line, margin_idx)
+		if (line != margin_prefix) // If the line is made of only a margin prefix, then make it an empty line.
+			result += line
+		result += "\n"
+
+	return trim(result)
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(text)
@@ -447,3 +465,6 @@
 			return two
 		else
 			return five
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

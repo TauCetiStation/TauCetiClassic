@@ -8,20 +8,20 @@
 
 /obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
-		return
+		return FALSE
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(changeling.isabsorbing)
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
-		return
+		return FALSE
 
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
 		to_chat(user, "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>")
-		return
+		return FALSE
 	if(G.state <= GRAB_NECK)
 		to_chat(user, "<span class='warning'>We must have a tighter grip to absorb this creature.</span>")
-		return
+		return FALSE
 
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
@@ -50,7 +50,7 @@
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
-			return
+			return FALSE
 
 	to_chat(user, "<span class='notice'>We have absorbed [target]!</span>")
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
@@ -58,7 +58,10 @@
 
 	changeling.absorb_dna(target)
 
-	if(user.get_nutrition() < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	var/nutr = user.get_nutrition()
+	if(nutr < 400)
+		user.nutrition += min(target.nutrition, 400 - nutr)
+
 	//Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))
@@ -103,13 +106,14 @@
 		changeling.geneticpoints += 0.5
 		changeling.chem_charges += 10
 
+	changeling.absorbedamount++
 	changeling.isabsorbing = 0
-	for(var/datum/reagent/blood/B in target.vessel.reagent_list) //We are vamplings, so we drink blood!
-		if(B.id == "blood")
-			B.volume = 0
+	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)
 	target.Drain()
-	return 1
+
+	changeling.handle_absorbing()
+	return TRUE
 
 //Absorbs the target DNA.
 /datum/role/changeling/proc/absorb_dna(mob/living/carbon/T)

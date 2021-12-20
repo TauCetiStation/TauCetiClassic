@@ -4,19 +4,19 @@
 #define SPECOPS_DOCK_AREATYPE /area/shuttle/specops/centcom	//Type of the spec ops shuttle area for dock
 #define SPECOPS_RETURN_DELAY 6000 //Time between the shuttle is capable of moving.
 
-var/specops_shuttle_moving_to_station = 0
-var/specops_shuttle_moving_to_centcom = 0
-var/specops_shuttle_at_station = 0
-var/specops_shuttle_can_send = 1
-var/specops_shuttle_time = 0
-var/specops_shuttle_timeleft = 0
+var/global/specops_shuttle_moving_to_station = 0
+var/global/specops_shuttle_moving_to_centcom = 0
+var/global/specops_shuttle_at_station = 0
+var/global/specops_shuttle_can_send = 1
+var/global/specops_shuttle_time = 0
+var/global/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle
 	name = "special operations shuttle control console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
-	req_access = list(access_cent_specops)
+	req_access = list(access_captain)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0

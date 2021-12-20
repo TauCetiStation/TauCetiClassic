@@ -1,13 +1,14 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-//#define AB_GENERIC 4
+#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
+#define AB_CHECK_ACTIVE 32
 
 
 /datum/action
@@ -21,10 +22,14 @@
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+	var/transparent_when_unavailable = TRUE
 	var/mob/living/owner
 
 /datum/action/New(Target)
 	target = Target
+	button = new
+	button.owner = src
+	button.name = name
 
 /datum/action/Destroy()
 	if(owner)
@@ -80,11 +85,18 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
+/datum/action/proc/CheckRemoval(mob/living/user) // TRUE if action is no longer valid for this mob and should be removed
+	return FALSE
 
 /datum/action/proc/IsAvailable()
 	return Checks()
+
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	if(button)
+		if(!IsAvailable())
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		else
+			button.color = rgb(255,255,255,255)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
@@ -94,26 +106,73 @@
 
 /datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
-		return 0
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUNNED)
 		if(owner.stunned || owner.weakened)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying && !owner.crawling)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
-			return 0
-	return 1
+			return FALSE
+	if(check_flags & AB_CHECK_ACTIVE)
+		if(owner.get_active_hand() != target)
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateName()
 	return name
+
+//Preset for an action with a cooldown
+/datum/action/cooldown
+	action_type = AB_GENERIC
+	check_flags = NONE
+	transparent_when_unavailable = FALSE
+	var/cooldown_time = 0
+	var/next_use_time = 0
+
+/datum/action/cooldown/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/cooldown/IsAvailable()
+	return next_use_time <= world.time
+
+/datum/action/cooldown/proc/StartCooldown()
+	next_use_time = world.time + cooldown_time
+	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
+	UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+	var/timeleft = max(next_use_time - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/owner
@@ -127,11 +186,11 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[SHIFT_CLICK])
 		moved = 0
-		return 1
+		return TRUE
 	if(usr.next_move >= world.time) // Is this needed ?
 		return
 	owner.Trigger()
-	return 1
+	return TRUE
 
 /atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
@@ -195,6 +254,35 @@
 #define AB_NORTH_OFFSET 26
 #define AB_MAX_COLUMNS 10
 
+/mob/proc/update_sight()
+	SHOULD_CALL_PARENT(TRUE)
+	if(!client)
+		return FALSE
+
+	sync_lighting_plane_alpha()
+
+	if(stat == DEAD)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		set_EyesVision(null)
+		return FALSE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	return TRUE
+
+///Set the lighting plane hud alpha to the mobs lighting_alpha var
+/mob/proc/sync_lighting_plane_alpha()
+	if(hud_used)
+		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if(L)
+			L.alpha = lighting_alpha
+
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
@@ -236,7 +324,7 @@
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/spell/spell = target
 
 	if(usr)
@@ -244,12 +332,12 @@
 	else
 		if(owner)
 			return spell.can_cast(owner)
-	return 1
+	return TRUE
 
 /datum/action/spell_action/CheckRemoval()
 	if(owner.mind)
 		if(target in owner.mind.spell_list)
-			return 0
+			return FALSE
 	return !(target in owner.spell_list)
 
 #undef AB_WEST_OFFSET

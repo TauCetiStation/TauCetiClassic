@@ -29,7 +29,7 @@
 		return /datum/role/cultist/leader
 	return ..()
 
-/datum/faction/cult/HandleRecruitedMind(datum/mind/M, override)
+/datum/faction/cult/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
 	if(.)
 		M.current.Paralyse(5)
@@ -38,7 +38,7 @@
 	if(!..())
 		return FALSE
 
-	var/list/possibles_objectives = subtypesof(/datum/objective/cult)
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
 	for(var/i in 1 to rand(2, 3))
 		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
@@ -67,7 +67,7 @@
 					R = HandleNewMind(H.mind)
 					R.OnPostSetup(TRUE)
 
-					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
+					to_chat(H, "<span class='warning'>Вы теперь новый предвестник культа.</span>")
 					added_lead = TRUE
 					break
 
@@ -122,27 +122,15 @@
 /datum/faction/cult/proc/get_active_leads()
 	var/active_leads = 0
 	for(var/datum/role/cultist/leader/R in members)
-		var/mob/M = R?.antag?.current
+		var/mob/M = R.antag.current
 		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 			active_leads++
 	return active_leads
 
-/datum/faction/cult/proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))
-		return FALSE
-	if(ishuman(mind.current))
-		if((mind.assigned_role in list("Captain", "Chaplain")))
-			return FALSE
-		if(mind.current.get_species() == GOLEM)
-			return FALSE
-	if(mind.current.ismindshielded())
-		return FALSE
-	return TRUE
-
 /datum/faction/cult/proc/get_cultists_out()
 	var/acolytes_out = 0
 	for(var/datum/role/R in members)
-		if(R.antag?.current?.stat != DEAD)
+		if(R.antag.current?.stat != DEAD)
 			var/area/A = get_area(R.antag.current)
 			if(is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_out++

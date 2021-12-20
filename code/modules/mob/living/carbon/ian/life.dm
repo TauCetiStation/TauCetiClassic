@@ -127,18 +127,7 @@
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if(healths)
 		if(stat != DEAD)
@@ -384,7 +373,7 @@
 
 	if (drowsyness)
 		drowsyness--
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if (prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
@@ -416,7 +405,7 @@
 			emote("twitch")
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)
@@ -566,7 +555,7 @@
 			eye_blind = max(eye_blind - 1,0)
 			blinded = TRUE
 		else if(eye_blurry)			//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry - 1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -583,14 +572,14 @@
 		if(weakened)
 			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = max(stuttering - 1, 0)
+		if(stuttering > 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent - 1, 0)
 
 		if(druggy)
-			druggy = max(druggy - 1, 0)
+			adjustDrugginess(-1)
 	return TRUE
 
 /mob/living/carbon/ian/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)

@@ -294,12 +294,14 @@
 	required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanobots" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
 	result_amount = 5
 
+/*
 /datum/chemical_reaction/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
 	result = "hyperzine"
 	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
 	result_amount = 3
+*/
 
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
@@ -459,7 +461,7 @@
 	var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
 	S.attach(location)
 	S.set_up(10, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 		sleep(10)
@@ -486,7 +488,7 @@
 	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 	S.attach(location)
 	S.set_up(holder, created_volume, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
 	holder.clear_reagents()
@@ -1260,8 +1262,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
-	P.loc = get_turf_loc(holder.my_atom)
+	new /obj/item/weapon/stock_parts/cell/slime(get_turf_loc(holder.my_atom))
 
 /datum/chemical_reaction/slimeglow
 	name = "Slime Glow"
@@ -2235,6 +2236,55 @@
 	id = "bacardilemonade"
 	result = "bacardilemonade"
 	required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/lean
+	name = "Lean"
+	id = "lean"
+	result = "lean"
+	required_reagents = list("dextromethorphan" = 1, "space_up" = 3, "sugar" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/sangria
+	name = "Sangria"
+	id = "sangria"
+	result = "sangria"
+	required_reagents = list("wine" = 2, "orangejuice" = 1, "limejuice" = 1, "sugar" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/strongmandrink
+	name = "Strongman's Drink"
+	id = "strongmandrink"
+	result = "strongmandrink"
+	required_reagents = list("whiskeycola" = 2, "tramadol" = 2, "doctorsdelight" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/bluelagoone
+	name = "The Blue Lagoone"
+	id = "bluelagoone"
+	result = "bluelagoone"
+	required_reagents = list("bluecuracao" = 2, "limejuice" = 1, "sodawater" = 1, "ice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/bloodykuds
+	name = "Bloody Kuds"
+	id = "bloodykuds"
+	result = "bloodykuds"
+	required_reagents = list("rum" = 2, "vodka" = 2, "tomatojuice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/sexbeach
+	name = "Sex On The Beach"
+	id = "sexbeach"
+	result = "sexbeach"
+	required_reagents = list("screwdrivercocktail" = 2, "ice" = 1, "melonliquor" = 2)
+	result_amount = 5
+
+/datum/chemical_reaction/mojito
+	name = "Mojito"
+	id = "mojito"
+	result = "mojito"
+	required_reagents = list("rum" = 2, "sodawater" = 1, "limejuice" = 2)
 	result_amount = 5
 
 //////////////////////////////////////////////

@@ -207,7 +207,7 @@
 				return
 			else if (mouth_covered)	// Reduced effects if partially protected
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
-				victim.eye_blurry = max(M.eye_blurry, 15)
+				victim.blurEyes(15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
@@ -215,12 +215,12 @@
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream")
-				victim.eye_blurry = max(M.eye_blurry, 5)
+				victim.blurEyes(5)
 				return
 			else // Oh dear :D
 				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
-				victim.eye_blurry = max(M.eye_blurry, 25)
+				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Stun(5)
 				victim.Weaken(5)
@@ -308,30 +308,27 @@
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 30)
+	M.adjustDrugginess(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 5)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(10)
 			M.make_dizzy(10)
-			M.druggy = max(M.druggy, 35)
+			M.adjustDrugginess(3)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(20)
 			M.make_dizzy(20)
-			M.druggy = max(M.druggy, 40)
+			M.adjustDrugginess(4)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++

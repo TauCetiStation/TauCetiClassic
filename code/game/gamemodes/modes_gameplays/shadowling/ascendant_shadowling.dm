@@ -11,7 +11,8 @@
 	speed = 0
 	var/phasing = 0
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	w_class = SIZE_MASSIVE
 
 	response_help   = "stares at"
 	response_disarm = "flails at"
@@ -40,7 +41,7 @@
 /mob/living/simple_animal/ascendant_shadowling/atom_init()
 	. = ..()
 	var/image/ascend = image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
-	ascend.plane = LIGHTING_PLANE + 1
+	ascend.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(ascend)
 
 /mob/living/simple_animal/ascendant_shadowling/Life()
@@ -52,4 +53,4 @@
 
 //mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)//TG
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return TRUE //copypasta from carp code

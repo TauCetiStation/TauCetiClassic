@@ -413,7 +413,7 @@
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
 	lingchemdisplay.layer = ABOVE_HUD_LAYER
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
-	lingchemdisplay.invisibility = 101
+	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 	lingstingdisplay = new /atom/movable/screen()
 	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
@@ -421,7 +421,7 @@
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
 	lingstingdisplay.layer = ABOVE_HUD_LAYER
 	lingstingdisplay.plane = ABOVE_HUD_PLANE
-	lingstingdisplay.invisibility = 101
+	lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 	mymob.pain = new /atom/movable/screen( null )
 
@@ -431,6 +431,10 @@
 	mymob.zone_sel.alpha = ui_alpha
 	mymob.zone_sel.cut_overlays()
 	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
+
+	if(isanycop(H) || isanygangster(H))
+		wanted_lvl = new /atom/movable/screen/wanted()
+		adding += wanted_lvl
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon

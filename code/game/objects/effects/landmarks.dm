@@ -3,6 +3,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = TURF_LAYER
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -102,6 +103,22 @@
 
 /obj/effect/landmark/start/new_player/atom_init(mapload)
 	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/cops_spawn
+	name = "Space Cops"
+
+/obj/effect/landmark/cops_spawn/atom_init(mapload)
+	..()
+	global.copsstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/dealer_spawn
+	name = "Dealer"
+
+/obj/effect/landmark/dealer_spawn/atom_init(mapload)
+	..()
+	global.dealerstart += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/latejoin

@@ -60,6 +60,9 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/m79/underslung
+	ammo_type = /obj/item/ammo_casing/r4046/explosive
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here!"
@@ -303,6 +306,9 @@
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m50/weakened
+	ammo_type = /obj/item/ammo_casing/a50/weakened
 
 /obj/item/ammo_box/magazine/m75
 	name = "magazine (.75)"
@@ -596,3 +602,15 @@
 
 /obj/item/ammo_box/magazine/plasma/emp_act() // just incase if someone adds emp_act in parent.
 	return
+
+/obj/item/ammo_box/magazine/drozd127
+	name = "Drozd magazine (12.7mm)"
+	icon_state = "12.7"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/drozd127
+	caliber = "12.7mm"
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/drozd127/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 12) * 12]"

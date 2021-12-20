@@ -7,8 +7,8 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
@@ -38,7 +38,7 @@
 		visible_message("<span class='warning'><B>[M] has been knocked unconscious!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 	else
 		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
-		M.eye_blurry += 3
+		M.blurEyes(3)
 
 	return
 

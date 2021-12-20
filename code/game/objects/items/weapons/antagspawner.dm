@@ -1,7 +1,7 @@
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/used = FALSE
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, mob/user)
@@ -24,7 +24,7 @@
 		return
 	to_chat(user, "<span class='notice'>Searching for available borg personality. Please wait 30 seconds...</span>")
 	used = TRUE
-	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE)
+	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE, IGNORE_SYNDI_BORG)
 	if(borg_candicates.len)
 		var/mob/M = pick(borg_candicates)
 		spawn_antag(M.client, get_turf(src.loc), user)

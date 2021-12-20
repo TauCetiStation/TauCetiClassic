@@ -17,11 +17,7 @@
 
 /datum/component/gamemode/syndicate/proc/get_current()
 	var/datum/role/role = parent
-	var/datum/mind/M = role.antag
-	if(!M)
-		return
-
-	var/mob/living/carbon/human/traitor_mob = M.current
+	var/mob/living/carbon/human/traitor_mob = role.antag.current
 	if(!traitor_mob)
 		return
 
@@ -49,6 +45,23 @@
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate a PDA, installing into a Radio instead!")
+		if (!R)
+			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
+
+	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
+		var/list/station_intercom_list = list()
+		for(var/obj/item/device/radio/intercom/I as anything in intercom_list)
+			if(is_station_level(I.z))
+				station_intercom_list += I
+
+		if(station_intercom_list.len)
+			R = pick(station_intercom_list)
+		if(!R)
+			R = locate(/obj/item/device/radio) in traitor_mob.contents
+			to_chat(traitor_mob, "Could not locate suitable Intercom, installing into a Radio instead!")
+		if (!R)
+			R = locate(/obj/item/device/pda) in traitor_mob.contents
+			to_chat(traitor_mob, "Could not locate a Radio, installing in PDA instead!")
 		if (!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
@@ -81,9 +94,15 @@
 		T.uses = uplink_uses
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		if(istype(target_radio, /obj/item/device/radio/intercom))
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed into an [R.name] intercom at [get_area(R)]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
+			target_radio.hidden_uplink.uses += 5
+		else
+			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
+
 	else if (istype(R, /obj/item/device/pda))
 		// generate a passcode if the uplink is hidden in a PDA
 		var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
@@ -154,7 +173,12 @@
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		traitor_mob.mutations.Remove(CLUMSY)
 
-	give_uplink()
+	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
+	if(!guplink)
+		give_uplink()
+	else
+		guplink.uses = uplink_uses
+		total_TC = uplink_uses
 
 	var/datum/role/R = parent
 	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
@@ -177,19 +201,12 @@
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-/datum/component/gamemode/syndicate/proc/find_syndicate_pda(mob/living/carbon/human/human)
-	var/list/L = human.GetAllContents()
-	for(var/obj/item/I in L)
-		if(I.hidden_uplink)
-			return I
-	return null
-
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()
 	if(!traitor_mob || !istype(traitor_mob))
 		return
 
-	var/obj/item/I = find_syndicate_pda(traitor_mob)
+	var/obj/item/I = find_syndicate_uplink(traitor_mob)
 	if(I?.hidden_uplink)
 		QDEL_NULL(I.hidden_uplink)
 

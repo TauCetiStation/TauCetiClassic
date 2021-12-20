@@ -1,6 +1,6 @@
-var/const/RND_WIRE_HACK    = 1
-var/const/RND_WIRE_DISABLE = 2
-var/const/RND_WIRE_SHOCK   = 4
+var/global/const/RND_WIRE_HACK    = 1
+var/global/const/RND_WIRE_DISABLE = 2
+var/global/const/RND_WIRE_SHOCK   = 4
 
 /datum/wires/rnd
 	holder_type = /obj/machinery/r_n_d

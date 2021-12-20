@@ -3,7 +3,7 @@
 	desc = "An arcane weapon wielded by the followers of Nar-Sie."
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 30
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -15,13 +15,13 @@
 	if(iscultist(user))
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 		return ..()
-	else
-		user.Paralyse(5)
-		to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")
-		var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
-		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
+	user.Paralyse(5)
+	to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")
+	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+	BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
+	. = ..()
 	if(iscultist(user))
 		var/datum/religion/cult/C = user.my_religion
 		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))
@@ -104,7 +104,7 @@
 	icon_state = "cult_armour"
 	item_state = "cult_armour"
 	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -138,7 +138,7 @@
 	desc = "The stone is made of a complex material, if you look closely, the surface structure is fractal."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "cultstone"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/toggle = FALSE
 	var/mode = HEAVEN
 	var/mob/living/carbon/human/current_user

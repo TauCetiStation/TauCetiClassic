@@ -10,7 +10,7 @@
 #define INGR_ICE 10
 #define MUCK 11
 
-var/list/ingredients_source = list(
+var/global/list/ingredients_source = list(
 "berryjuice" = FLAVOUR_STRAWBERRY,\
 "coco" = FLAVOUR_CHOCOLATE,\
 "singulo" = FLAVOUR_BLUE,\
@@ -83,7 +83,7 @@ var/list/ingredients_source = list(
 		dat += "No beaker inserted. "
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
-	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400, src)
+	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400)
 	popup.set_content(dat)
 	popup.open()
 

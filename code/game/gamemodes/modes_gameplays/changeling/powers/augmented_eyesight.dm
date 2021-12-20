@@ -12,15 +12,11 @@
 	user.changeling_aug = !user.changeling_aug
 	if(active)
 		to_chat(user, "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>")
-		user.sight |= SEE_MOBS
-		user.see_in_dark = 8
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
 	else
 		to_chat(user, "<span class='notice'>Our vision dulls. Shadows gather.</span>")
-		user.sight -= SEE_MOBS
-		user.see_in_dark = 0
-		user.see_invisible = SEE_INVISIBLE_LIVING
-	return 1
+
+	user.update_sight()
+	return TRUE
 
 /mob/living
 	var/changeling_aug = 0

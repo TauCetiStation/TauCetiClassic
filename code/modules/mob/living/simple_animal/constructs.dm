@@ -43,7 +43,7 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 	var/image/glow = image(icon, src, "glow_[icon_state]", LIGHTING_LAYER + 1)
-	glow.plane = LIGHTING_PLANE + 1
+	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
 /mob/living/simple_animal/construct/death()
@@ -67,6 +67,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
+
 	msg += "*---------*</span>"
 	to_chat(user, msg)
 
@@ -92,6 +96,7 @@
 	melee_damage = 25
 	attacktext = "smash"
 	speed = 3
+	w_class = SIZE_MASSIVE
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
@@ -148,7 +153,7 @@
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
-		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift,
 		)
 
 
@@ -196,6 +201,7 @@
 	attacktext = "brutally crush"
 	speed = 5
 	environment_smash = 2
+	w_class = SIZE_MASSIVE
 	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
 

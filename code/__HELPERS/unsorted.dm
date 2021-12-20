@@ -17,9 +17,9 @@
 
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
+	if(A < lower) return FALSE
+	if(A > upper) return FALSE
+	return TRUE
 
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
@@ -185,7 +185,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //This will update a mob's name, real_name, mind.name, data_core records, pda and id
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
+	if(!newname)
+		return FALSE
 	real_name = newname
 	name = newname
 	if(mind)
@@ -222,7 +223,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
-	return 1
+	return TRUE
 
 
 
@@ -274,7 +275,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
+	return "[pick("!","@","#","$","%","^","&","⁎")][pick("!","@","#","$","%","^","&","⁎")][pick("!","@","#","$","%","^","&","⁎")][pick("!","@","#","$","%","^","&","⁎")]"
 
 //When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
 /proc/freeborg()
@@ -293,7 +294,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //When a borg is activated, it can choose which AI it wants to be slaved to
 /proc/active_ais()
 	. = list()
-	for(var/mob/living/silicon/ai/A in ai_list)
+	for(var/mob/living/silicon/ai/A as anything in ai_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -326,7 +327,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/namecounts = list()
 
 	if(with_mobs)
-		for(var/mob/M in mobs)
+		for(var/mob/M as anything in mobs)
 			if(skip_mindless && (!M.mind && !M.ckey))
 				if(!isbot(M) && !istype(M, /mob/camera))
 					continue
@@ -614,14 +615,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/steps = 0
 
 	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
+		if(steps > length) return FALSE
+		if(current.opacity) return FALSE
 		for(var/atom/A in current)
-			if(A.opacity) return 0
+			if(A.opacity) return FALSE
 		current = get_step_towards(current, target_turf)
 		steps++
 
-	return 1
+	return TRUE
 
 /proc/is_blocked_turf(turf/T)
 	var/cant_pass = 0
@@ -662,8 +663,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
-	if(A.vars.Find(lowertext(varname))) return 1
-	else return 0
+	if(A.vars.Find(lowertext(varname))) return TRUE
+	else return FALSE
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
@@ -747,46 +748,40 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src) return 0
+	if(!A || !src)
+		return FALSE
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
+	var/list/refined_src = list()
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
-	var/list/refined_src = list()
-	for(var/turf/T in turfs_src)
 		refined_src += T
 		refined_src[T] = new/datum/coords
 		var/datum/coords/C = refined_src[T]
 		C.x_pos = (T.x - src_min_x)
 		C.y_pos = (T.y - src_min_y)
 
+	var/trg_min_x = 0
+	var/trg_min_y = 0
 	var/list/refined_trg = list()
-	for(var/turf/T in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		refined_trg += T
 		refined_trg[T] = new/datum/coords
 		var/datum/coords/C = refined_trg[T]
 		C.x_pos = (T.x - trg_min_x)
 		C.y_pos = (T.y - trg_min_y)
 
-
-	var/list/toupdate = list()
-
 	moving:
-		for (var/turf/T in refined_src)
+		for (var/turf/T as anything in refined_src)
 			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
+			for (var/turf/B as anything in refined_trg)
 				var/datum/coords/C_trg = refined_trg[B]
 				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
 
@@ -844,7 +839,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
-						if(!istype(O,/obj) || !O.simulated)
+						if(istype(O, /obj/effect/portal))
+							qdel(O)
+							continue
+						if(!O.simulated)
 							continue
 						O.loc = X
 						if (length(O.client_mobs_in_contents))
@@ -860,14 +858,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //						X.opacity = !X.opacity
 //						X.set_opacity(!X.opacity)
 
-					toupdate += X
-
 //					if(turftoleave)
 //						T.MoveTurf(turftoleave)
 
 					refined_src -= T
 					refined_trg -= B
 					continue moving
+	return TRUE
 
 
 /proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
@@ -980,7 +977,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
-					for(var/mob/M in mobs)
+					for(var/mob/M as anything in mobs)
 						newmobs += DuplicateObject(M , 1)
 
 					for(var/mob/M in newmobs)
@@ -1142,11 +1139,11 @@ var/global/list/common_tools = list(
 
 /proc/istool(O)
 	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp
-// Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
+// Returns TRUE if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
 /obj/item/proc/can_puncture()
 	return sharp
 
@@ -1204,7 +1201,7 @@ var/global/list/common_tools = list(
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
@@ -1217,29 +1214,29 @@ var/list/WALLITEMS = typecacheof(list(
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, WALLITEMS))
 			if(O.dir == dir)
-				return 1
+				return TRUE
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			switch(dir)
 				if(SOUTH)
 					if(O.pixel_y > 10)
-						return 1
+						return TRUE
 				if(NORTH)
 					if(O.pixel_y < -10)
-						return 1
+						return TRUE
 				if(WEST)
 					if(O.pixel_x > 10)
-						return 1
+						return TRUE
 				if(EAST)
 					if(O.pixel_x < -10)
-						return 1
+						return TRUE
 
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
 		if(is_type_in_typecache(O, WALLITEMS))
 			if(O.pixel_x == 0 && O.pixel_y == 0)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)
@@ -1266,11 +1263,6 @@ var/list/WALLITEMS = typecacheof(list(
 	tX = clamp(origin.x + 7 - tX, 1, world.maxx)
 	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
-
-/proc/iscatwalk(atom/A)
-	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
-		return 1
-	return 0
 
 /proc/getOPressureDifferential(turf/loc)
 	var/minp=16777216;
@@ -1521,7 +1513,7 @@ var/list/WALLITEMS = typecacheof(list(
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 //returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
 		return 1
 	if (!initial_delay)
@@ -1532,7 +1524,7 @@ var/list/WALLITEMS = typecacheof(list(
 		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
@@ -1557,9 +1549,9 @@ var/list/WALLITEMS = typecacheof(list(
 
 /atom/proc/contains(atom/location)
 	if(!location)
-		return 0
+		return FALSE
 	if(location == src)
-		return 1
+		return TRUE
 
 	return contains(location.loc)
 
@@ -1582,15 +1574,12 @@ var/list/WALLITEMS = typecacheof(list(
 	if(new_screen)
 		global.current_lobby_screen = new_screen
 	else
-		var/newyear
-		#ifdef NEWYEARCONTENT
-		global.current_lobby_screen = pick(global.new_year_screens)
-		newyear = TRUE
-		#endif
-		if(!newyear)
+		if(SSholiday.holidays[NEW_YEAR])
+			global.current_lobby_screen = pick(global.new_year_screens)
+		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
-	for(var/mob/dead/new_player/N in new_player_list)
+	for(var/mob/dead/new_player/N as anything in new_player_list)
 		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
 
 // Converts browser keycodes to BYOND keycodes.
@@ -1636,3 +1625,24 @@ var/list/WALLITEMS = typecacheof(list(
 			return "."
 		if(189)
 			return "-"
+
+// Format a power value in W, kW, MW, or GW
+/proc/DisplayPower(powerused)
+	if(powerused < 1000) // Less than a kW
+		return "[powerused] W"
+	if(powerused < 1000000) // Less than a MW
+		return "[round((powerused * 0.001), 0.01)] kW"
+	if(powerused < 1000000000) // Less than a GW
+		return "[round((powerused * 0.000001), 0.001)] MW"
+	return "[round((powerused * 0.000000001), 0.0001)] GW"
+
+//Returns a list of all locations (except the area) the movable is within.
+/proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
+	. = list()
+	var/atom/location = AM.loc
+	var/turf/turf = get_turf(AM)
+	while(location && location != turf)
+		. += location
+		location = location.loc
+	if(location && include_turf) //At this point, only the turf is left, provided it exists.
+		. += location

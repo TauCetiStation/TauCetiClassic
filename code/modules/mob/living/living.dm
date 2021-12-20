@@ -7,11 +7,17 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
+
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -80,7 +86,7 @@
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
-		C.spread_disease_to(M, "Contact")
+		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
 	if(M.pulling == src)
 		M.stop_pulling()
@@ -374,6 +380,44 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== BLUR ==========
+
+/**
+ * Make the mobs vision blurry
+ */
+/mob/proc/blurEyes(amount)
+	if(amount > 0)
+		eye_blurry = max(amount, eye_blurry)
+	update_eye_blur()
+
+/**
+ * Adjust the current blurriness of the mobs vision by amount
+ */
+/mob/proc/adjustBlurriness(amount)
+	eye_blurry = max(eye_blurry + amount, 0)
+	update_eye_blur()
+
+/**
+ * Set the mobs blurriness of vision to an amount
+ */
+/mob/proc/setBlurriness(amount)
+	eye_blurry = max(amount, 0)
+	update_eye_blur()
+
+/**
+ * Apply the blurry overlays to a mobs clients screen
+ */
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -496,6 +540,8 @@
 	if(reagents)
 		reagents.clear_reagents()
 
+	beauty.AddModifier("stat", additive=beauty_living)
+
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -505,6 +551,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -524,7 +571,7 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	setBlurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
@@ -710,9 +757,7 @@
 
 /mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(..())
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-		if(blood_volume > 0)
-			vessel.remove_reagent("blood", 1)
+		blood_remove(1)
 
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
@@ -772,7 +817,7 @@
 	return "trails_1"
 
 /mob/living/carbon/human/getTrail()
-	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+	if(blood_amount() > 0)
 		return ..()
 
 /mob/living/verb/resist()
@@ -1250,7 +1295,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1258,7 +1302,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	blurEyes(5)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
@@ -1297,6 +1341,7 @@
 
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 
@@ -1342,3 +1387,14 @@
 
 /mob/living/proc/swap_hand()
 	return
+
+/mob/living/death(gibbed)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())

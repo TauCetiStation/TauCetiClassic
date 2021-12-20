@@ -11,9 +11,7 @@
 		if(M.potential_runnable())
 			L += M.name
 		qdel(M)
-	if(!L.len) // if no mode can start, then the modes that will always start
-		var/datum/modesbundle/run_anyway/super_bundle = new
-		L = super_bundle.get_gamemodes_name()
+
 	return L
 
 /*
@@ -52,14 +50,15 @@
 		/datum/game_mode/nuclear,
 		/datum/game_mode/revolution,
 		/datum/game_mode/shadowling,
+		/datum/game_mode/families,
 	)
 
 /datum/modesbundle/mix
 	name = "Mix"
-	votable = TRUE
+	votable = FALSE
 
 /datum/modesbundle/mix/New()
-	for(var/type in subtypesof(/datum/game_mode/mix) + /datum/game_mode/extended)
+	for(var/type in subtypesof(/datum/game_mode/mix))
 		var/datum/game_mode/M = type
 		if(initial(M.name))
 			possible_gamemodes += type
@@ -88,7 +87,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended)
 	..()
 
 /datum/modesbundle/run_anyway

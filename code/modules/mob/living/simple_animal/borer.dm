@@ -2,6 +2,12 @@
 	name = "host brain"
 	real_name = "host brain"
 
+/mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
+	var/mob/living/simple_animal/borer/my_borer = loc
+	if(!istype(loc))
+		return FALSE
+	return other == my_borer.host
+
 /mob/living/captive_brain/say(message)
 
 	if (client)
@@ -50,6 +56,7 @@
 	wander = FALSE
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	w_class = SIZE_MINUSCULE
 
 	var/truename // Name used for brainworm-speak.
 	var/generation = 1
@@ -79,11 +86,11 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		for(var/mob/dead/observer/O in observer_list)
-			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
+		for(var/mob/dead/observer/O as anything in observer_list)
+			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_GHOSTLY, IGNORE_BORER)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
+	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 	..()
@@ -115,6 +122,9 @@
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
 			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+
+/mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
+	return host == other
 
 /mob/living/simple_animal/borer/say(message)
 
@@ -166,7 +176,7 @@
 	if(!message)
 		return
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 

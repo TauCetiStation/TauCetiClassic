@@ -7,12 +7,27 @@
 
 /* DATA HUD DATUMS */
 /atom/proc/add_to_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.remove_from_hud(src)
+
+/proc/get_all_data_huds()
+	RETURN_TYPE(/list)
+	var/static/list/all_data_huds
+
+	if(!all_data_huds)
+		all_data_huds = list()
+		for(var/hud_name in global.huds)
+			if(!istype(global.huds[hud_name], /datum/atom_hud/data))
+				continue
+			all_data_huds += global.huds[hud_name]
+
+	return all_data_huds
 
 /datum/atom_hud/data
 	hud_icons = null
@@ -46,7 +61,7 @@
 	return TRUE
 
 /datum/atom_hud/data/security
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
@@ -152,7 +167,7 @@
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
 	var/y = 0
-	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
+	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
 
@@ -164,6 +179,12 @@
 	if(ismindshielded())
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
+		holder.pixel_y = y
+		y += -5
+
+	if(isimplantedobedience())
+		holder = hud_list[IMPOBED_HUD]
+		holder.icon_state = "hud_imp_obedience"
 		holder.pixel_y = y
 		y += -5
 

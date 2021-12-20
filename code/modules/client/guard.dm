@@ -10,7 +10,7 @@
 	var/list/geoip_data
 	var/geoip_processed = FALSE
 
-	var/list/chat_data = list("cookie_match", "charset")
+	var/list/chat_data = list("cookie_match", "charset", "local_time")
 	var/chat_processed = FALSE
 
 	var/first_entry = FALSE
@@ -52,14 +52,17 @@
 		send2bridge_adminless_only("GUARD: [key_name(holder)]", short_report, type = list(BRIDGE_ADMINIMPORTANT))
 
 /datum/guard/proc/print_report()
-	if(!geoip_processed)
-		load_geoip()
-
-	do_tests()
+	prepare()
 
 	var/datum/browser/popup = new(usr, "guard_report_[holder.ckey]", "Guard report on [holder.key]", 350)
 	popup.set_content(src.report)
 	popup.open()
+
+/datum/guard/proc/prepare()
+	if(!geoip_processed)
+		load_geoip()
+
+	do_tests()
 
 //todo: pending tests
 /datum/guard/proc/do_tests()
@@ -124,24 +127,6 @@
 
 		total_alert_weight += cookie_weight
 
-	/* ru-specific, not sure about it. 513/post-IE should be removed */
-	/*
-	if(length(config.guard_whitelisted_country_codes) && chat_processed)
-		var/charset_weight = 0
-		if(!(geoip_data["countryCode"] in config.guard_whitelisted_country_codes) && chat_data["charset"] == "windows1251")
-			charset_weight += 1
-
-			if(first_entry)
-				charset_weight += 0.5 // how he know
-
-			new_report += {"<div class='Section'><h3>Charset ([charset_weight]):</h3>
-			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
-
-			new_short_report += "Charset test failed(tw: [charset_weight]); "
-
-		total_alert_weight += charset_weight
-	*/
-
 	/* database related accounts */
 	if((length(holder.related_accounts_cid) && holder.related_accounts_cid != "Requires database") || (length(holder.related_accounts_ip) && holder.related_accounts_ip != "Requires database"))
 		var/related_db_weight = 0
@@ -175,9 +160,20 @@
 
 		total_alert_weight += multicid_weight
 
+	/* timezone test */
+	if(chat_processed && chat_data["local_time"] && geoip_processed && geoip_data["offset"])
+		var/timeoffset = text2num(geoip_data["offset"])
+		var/local_time = chat_data["local_time"]
+		if(isnum(timeoffset) && isnum(local_time))
+			var/deviation = abs(local_time - timeoffset)
+			if(deviation >= 3600) // if local timezone differs from geoip timezone by 3600 seconds
+				var/deviation_weight = 0.5
+				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
+				new_short_report += "TZ deviation (tw: [deviation_weight]); "
+				total_alert_weight += deviation_weight
+
 	// todo:
 	// age & byond profile tests (useless)
-	// timezone tests
 	// speedrun tests
 
 	/* No more tests, prepare reports (todo: some cleanup needet) */
@@ -233,7 +229,7 @@
 		geoip_processed = TRUE
 		return
 
-	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting")
+	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting,offset")
 
 	if(!geoip_data)
 		return

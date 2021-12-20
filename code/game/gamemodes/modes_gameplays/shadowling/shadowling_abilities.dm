@@ -75,32 +75,6 @@
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
 
-/obj/effect/proc_holder/spell/targeted/shadow_walk
-	name = "Shadow Walk"
-	desc = "Phases you into the space between worlds for a short time, allowing movement through walls and invisbility."
-	panel = "Shadowling Abilities"
-	charge_max = 600
-	clothes_req = 0
-	range = -1
-	include_user = 1
-
-/obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
-	for(var/mob/living/user in targets)
-		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-		user.visible_message("<span class='warning'>[user] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
-		user.SetStunned(0)
-		user.SetWeakened(0)
-		user.incorporeal_move = 1
-		user.alpha = 0
-		if(user.buckled)
-			user.buckled.unbuckle_mob()
-		sleep(40) //4 seconds
-		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
-		user.incorporeal_move = 0
-		user.alpha = 255
-		user.eject_from_wall(gib = TRUE)
-
-
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
@@ -241,7 +215,7 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
@@ -492,7 +466,7 @@
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
-			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		if(!do_mob(usr, thrallToRevive, 100))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
@@ -666,7 +640,7 @@
 		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || (M in dead_mob_list))
 				to_chat(M, "<font size=4><span class='shadowling'><b>\[Hive Chat\]<i> [usr.real_name] (ASCENDANT)</i>: [sanitize(text)]</b></font></span>")//Bigger text for ascendants.
 

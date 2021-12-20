@@ -55,9 +55,9 @@
 			qdel(src)
 			return
 
-	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = W
-		if(S.wielded && !(flags & NODECONSTRUCT))
+	else if(istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED) && !(flags & NODECONSTRUCT))
 			new /obj/item/stack/sheet/metal(loc)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)
@@ -86,7 +86,7 @@
 	force = 10
 	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	var/obj/structure/stool/origin_stool = null
 
 /obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)

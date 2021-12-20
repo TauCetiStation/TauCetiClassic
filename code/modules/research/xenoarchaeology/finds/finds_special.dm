@@ -21,7 +21,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-var/list/bad_messages = list("Never take me off, please!",
+var/global/list/bad_messages = list("Never take me off, please!",
 		"They all want to wear me... But I'm yours!",
 		"They're all want to take me from you! Bastards!",
 		"We are one",
@@ -31,7 +31,8 @@ var/list/bad_messages = list("Never take me off, please!",
 /obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
-		M.say(pick(heard_talk))
+		if(M.stat == CONSCIOUS)
+			M.say(pick(heard_talk))
 	if(istype(src.loc, /mob/living) && prob(2))
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
@@ -84,7 +85,7 @@ var/list/bad_messages = list("Never take me off, please!",
 				charges += 0.25
 			else
 				charges += 1
-				playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+				playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	// use up stored charges
 	if(charges >= 10)
@@ -96,12 +97,12 @@ var/list/bad_messages = list("Never take me off, please!",
 			charges -= 1
 			var/spawn_type = pick(/mob/living/simple_animal/hostile/creature)
 			new spawn_type(pick(view(1,src)))
-			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 	if(charges >= 1)
 		if(shadow_wights.len < 5 && prob(5))
 			shadow_wights.Add(new /obj/effect/shadow_wight(src.loc))
-			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			charges -= 0.1
 
 	if(charges >= 0.1)
@@ -131,7 +132,7 @@ var/list/bad_messages = list("Never take me off, please!",
 /obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)
 	last_bloodcall = world.time
 	if(istype(M))
-		playsound(src, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		nearby_mobs.Add(M)
 
 		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
@@ -141,7 +142,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		B.target_turf = pick(range(1, src))
 		B.blood_DNA = list()
 		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		M.vessel.remove_reagent("blood",rand(25,50))
+		M.blood_remove(rand(25, 50))
 
 // animated blood 2 SPOOKY
 /obj/effect/decal/cleanable/blood/splatter/animated
@@ -201,7 +202,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/over_here3.ogg',
 			                          'sound/hallucinations/turn_around1.ogg',
 			                          'sound/hallucinations/turn_around2.ogg')
-			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
+			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
 			src.loc = null
 	else
@@ -235,13 +236,12 @@ var/list/bad_messages = list("Never take me off, please!",
 				var/mob/living/carbon/human/H = C
 				for(var/obj/item/organ/external/BP in H.bodyparts)
 					BP.heal_damage(rand(20,30), rand(20,30))
-				H.vessel.add_reagent("blood", 5)
+				H.blood_add(5)
+				H.fixblood()
 				H.nutrition += rand(30, 40)
 				H.adjustBrainLoss(rand(-10, -25))
 				H.radiation -= min(H.radiation, rand(20, 30))
 				H.bodytemperature = initial(H.bodytemperature)
-				spawn(1)
-					H.fixblood()
 
 			C.adjustOxyLoss(rand(-40, -20))
 			C.adjustToxLoss(rand(-40, -20))

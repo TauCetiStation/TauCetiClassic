@@ -73,6 +73,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/syringe,            CATEGORY_MEDICAL),
+	R(/obj/item/clothing/accessory/stethoscope,               CATEGORY_MEDICAL),
 	R(/obj/item/stack/cable_coil/random,             CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/stock_parts/console_screen,   CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/module/power_control,         CATEGORY_ENGINEERING),
@@ -84,6 +85,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/ammo_box/eight_shells/beanbag,   CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/c45r,          CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2/rubber, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/c38,                    CATEGORY_AMMO),
 	R(/obj/item/device/taperecorder,         CATEGORY_DEVICES),
 	R(/obj/item/device/assembly/igniter,     CATEGORY_DEVICES),
 	R(/obj/item/device/assembly/signaler,    CATEGORY_DEVICES),
@@ -126,11 +128,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
 	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
 	R(/obj/item/ammo_box/a357, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/m9mm, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/c38m,                    CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
-	R(/obj/item/ammo_box/eight_shells/dart, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
+
 )
 #undef R
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden

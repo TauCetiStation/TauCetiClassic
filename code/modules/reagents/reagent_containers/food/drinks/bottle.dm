@@ -55,6 +55,7 @@
 			stop_spin_bottle = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
+	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
 
 
@@ -182,7 +183,7 @@
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0

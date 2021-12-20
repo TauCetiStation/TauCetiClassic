@@ -31,11 +31,12 @@
 	)
 
 	bible_type = /obj/item/weapon/storage/bible/tome
+	religious_tool_type = /obj/item/weapon/storage/bible/tome
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
 	tech_agent_type = /datum/building_agent/tech/cult
-	wall_types = list(/turf/simulated/wall/cult)
+	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
 
@@ -156,7 +157,7 @@
 			if(!altars.len)
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
-			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
+			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/movable/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
@@ -218,11 +219,11 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD])
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE
@@ -234,6 +235,11 @@
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
 	return TRUE
+
+/datum/religion/cult/add_deity(mob/M)
+	..()
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
 
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
