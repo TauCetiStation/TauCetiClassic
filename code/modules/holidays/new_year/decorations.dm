@@ -1,3 +1,6 @@
+#define FLICKER_CD_MAX 5
+#define FLICKER_CD_MIN 4
+
 /obj/item/decoration
 	name = "decoration"
 	desc = "Winter is coming!"
@@ -107,11 +110,35 @@
 	layer = 5
 	var/gifts_dealt = 0
 	var/list/decals = list()
+	var/flicker_raising = FALSE
+	var/light_flicker = 5
 
 /obj/item/device/flashlight/lamp/fir/special/atom_init()
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/clickplace)
 
+/obj/item/device/flashlight/lamp/fir/special/process()
+	if(!on)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(light_flicker >= FLICKER_CD_MAX)
+		flicker_raising = FALSE
+	else if(light_flicker <= FLICKER_CD_MIN)
+		flicker_raising = TRUE
+	light_color = pick("#39ff49", "#ff2f2f", "#248aff", "#fffa18")
+	light_flicker += flicker_raising ? 1 : -1
+	set_light(light_flicker)
+
+/obj/item/device/flashlight/lamp/fir/special/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(on)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/lamp/fir/special/examine(mob/user)
 	..()
@@ -273,3 +300,6 @@
 			qdel(src)
 		else
 			visible_message("<span class='notice'>[src] is damaged!</span>")
+
+#undef FLICKER_CD_MAX
+#undef FLICKER_CD_MIN
