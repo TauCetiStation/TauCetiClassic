@@ -288,6 +288,7 @@ SUBSYSTEM_DEF(ticker)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff
+		SSjob.fallback_landmark = null
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
