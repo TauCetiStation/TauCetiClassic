@@ -70,7 +70,7 @@
 	flick("h_lathe_leave",src)
 
 	time_last_drone = world.time
-	var/mob/living/silicon/robot/drone/new_drone = new(get_turf(src))
+	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
 	new_drone.transfer_personality(player)
 
 	drone_progress = 0
