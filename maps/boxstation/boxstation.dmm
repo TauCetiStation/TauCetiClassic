@@ -57969,6 +57969,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering Center";
+	dir = 9;
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor/plating{
 	dir = 5;
 	icon_state = "warnplate"
@@ -64481,11 +64486,6 @@
 	name = "Shutters Control";
 	pixel_x = 25;
 	req_access = list(10)
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Center";
-	dir = 9;
-	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
