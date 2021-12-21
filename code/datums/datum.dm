@@ -8,8 +8,9 @@
 	var/gc_destroyed //Time when this object was destroyed.
 	var/list/active_timers
 
-#ifdef TESTING
+#ifdef REFERENCE_TRACKING
 	var/running_find_references
+	var/last_find_references = 0
 #endif
 
 // Default implementation of clean-up code.

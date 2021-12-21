@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
-					for(var/client/C as anything in clients)
+					for(var/client/C in clients)
 						C.log_client_ingame_age_to_db()
 					world.save_last_mode(SSticker.mode.name)
 

@@ -17020,7 +17020,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/projectile/m79,
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},

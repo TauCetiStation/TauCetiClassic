@@ -8,6 +8,7 @@
 	var/stacks = 0 //Increments every second; damage increases over time
 	var/active = 0
 	var/mob/living/carbon/human/owner
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 
