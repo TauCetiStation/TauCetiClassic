@@ -110,7 +110,8 @@
 	button_icon_state = "degoggles"
 
 /datum/action/stop_control/Checks()
-	. = ..()
+	if(!..())
+		return FALSE
 	var/mob/living/silicon/robot/drone/syndi/M = owner
 	if(M.operator)
 		return TRUE
