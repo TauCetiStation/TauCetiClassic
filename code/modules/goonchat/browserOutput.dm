@@ -1,5 +1,4 @@
 var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
-var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
 
 /var/list/bicon_cache = list()
 
