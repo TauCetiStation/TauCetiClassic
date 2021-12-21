@@ -867,6 +867,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	return FALSE
 
+/obj/item/organ/external/head/abomination
+	vital = FALSE
+
 /obj/item/organ/external/l_arm
 	name = "left arm"
 

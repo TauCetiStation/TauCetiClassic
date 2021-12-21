@@ -138,6 +138,10 @@ var/global/list/blacklisted_builds = list(
 		cmd_admin_pm(C,null)
 		return
 
+	if(href_list["metahelp"])
+		show_metahelp_message(href_list["metahelp"])
+		return
+
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob

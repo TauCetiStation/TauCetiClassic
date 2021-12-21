@@ -234,7 +234,7 @@ var/global/BSACooldown = 0
 	//Display player age and player warn bans
 	var/p_age
 	var/p_ingame_age
-	for(var/client/C as anything in clients)
+	for(var/client/C in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
 			p_ingame_age = C.player_ingame_age
