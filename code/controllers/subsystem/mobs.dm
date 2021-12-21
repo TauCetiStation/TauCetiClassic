@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 
 	priority      = SS_PRIORITY_MOBS
-	display_order = SS_DISPLAY_MOBS
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
@@ -24,9 +23,9 @@ SUBSYSTEM_DEF(mobs)
 	while(currentrun.len)
 		var/mob/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(M)
-			M.Life(seconds)
+		if(QDELETED(M))
+			mob_list -= M // just to be sure
 		else
-			mob_list -= M
+			M.Life(seconds)
 		if (MC_TICK_CHECK)
 			return

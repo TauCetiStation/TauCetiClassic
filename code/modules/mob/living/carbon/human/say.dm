@@ -69,6 +69,8 @@
 	add_conversation(speaker.GetVoice(), "hear", message)
 	H.add_conversation(GetVoice(), "say", message)
 
+var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
+
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -171,18 +173,26 @@
 				return ""
 
 	message = capitalize(trim(message))
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	if (speaking)
+
+	if(!(ending in punctuation_marks_final))
+		if(ending == ",")
+			message = splicetext(message, length(message), , ".")
+		else
+			message += "."
+
+	if(speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
+		if(ending == "!")
+			verb = pick("exclaims","shouts","yells")
+		if(ending == "?")
+			verb = "asks"
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
@@ -293,6 +303,10 @@
 
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
+		sound_vol = 50
+
+	else if(species.name == ABOMINATION)
+		speech_sound = sound('sound/voice/abomination.ogg')
 		sound_vol = 50
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.

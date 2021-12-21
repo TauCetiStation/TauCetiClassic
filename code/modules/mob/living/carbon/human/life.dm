@@ -1347,7 +1347,10 @@
 			if (species.flags[IS_SYNTHETIC])
 				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-				get_nutrition_max = I.maxcharge
+				if (I)
+					get_nutrition_max = I.maxcharge
+				else
+					get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 			else
 				get_nutrition_max = NUTRITION_LEVEL_FAT
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
