@@ -545,7 +545,7 @@
 						world.log << "### VarEdit by [src]: [H.type] [variable]=[html_encode("[H.height]")]"
 						log_admin("[key_name(src)] modified [original_name]'s [variable] to [H.height]")
 						log_handled = TRUE
-						H.update_height()
+						H.regenerate_icons()
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
