@@ -27,7 +27,7 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/client_mobs_in_contents
+	var/list/clients_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
@@ -132,8 +132,8 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
+
+	update_parallax_contents()
 
 	if (orbiters)
 		for (var/thing in orbiters)
