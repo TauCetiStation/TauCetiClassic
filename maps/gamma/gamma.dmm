@@ -64545,7 +64545,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/item/weapon/gun/projectile/m79{
+/obj/item/weapon/gun/projectile/grenade_launcher/m79{
 	pixel_y = 6
 	},
 /obj/item/weapon/gun/grenadelauncher,

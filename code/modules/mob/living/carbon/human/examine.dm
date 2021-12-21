@@ -451,6 +451,12 @@
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+		if(species.name == ABOMINATION)
+			if(C.absorbed_dna.len)
+				var/list/victims_names = list()
+				for(var/datum/dna/D in C.absorbed_dna)
+					victims_names += "[D.real_name]"
+				msg+= "<span class='warning'>Faces of [get_english_list(victims_names)] can be seen on it's ever changing body...</span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
