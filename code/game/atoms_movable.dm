@@ -43,13 +43,13 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
 
 	. = ..()
 
+	loc = null
 	// If we have opacity, make sure to tell (potentially) affected light sources.
 	if (opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
