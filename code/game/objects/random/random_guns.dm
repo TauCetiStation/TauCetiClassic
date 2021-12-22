@@ -114,7 +114,7 @@
 		return pick(\
 						prob(6);/obj/item/weapon/gun/grenadelauncher,\
 						prob(1);/obj/item/weapon/gun/projectile/revolver/rocketlauncher,\
-						prob(3);/obj/item/weapon/gun/projectile/m79\
+						prob(3);/obj/item/weapon/gun/projectile/grenade_launcher/m79\
 					)
 
 /obj/random/guns/weapon_item

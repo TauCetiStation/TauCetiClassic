@@ -96,7 +96,7 @@
 				spread = FALSE
 
 		if(spread)
-			attacker.spread_disease_to(src, "Contact")
+			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
 			for(var/datum/disease/D in viruses)
 				if(D.spread_by_touch())

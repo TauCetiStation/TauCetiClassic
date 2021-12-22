@@ -209,7 +209,7 @@
 		held_item = null
 
 	robogibs(loc, viruses)
-	Destroy()
+	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()

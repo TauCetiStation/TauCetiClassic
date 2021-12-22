@@ -23,22 +23,7 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_GHOSTLY, IGNORE_BORER)
-
 	if(!find_faction_by_type(/datum/faction/borers))
 		SSticker.mode.CreateFaction(/datum/faction/borers)
 
-	for(var/mob/M in candidates)
-		if(spawncount <= 0 || !vents.len)
-			break
-		var/obj/vent = pick_n_take(vents)
-		var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
-		B.transfer_personality(M.client)
-		message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
-		successSpawn = TRUE
-		spawncount--
-
-	if(!successSpawn)
-		message_admins("An event attempted to spawn a borers, but no candidates found. Shutting down.")
-		kill()
-		return
+	create_spawners(/datum/spawner/borer_event, "borer_event", spawncount)

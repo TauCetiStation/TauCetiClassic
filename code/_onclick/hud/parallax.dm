@@ -131,6 +131,8 @@
 	C.parallax_animate_timer = addtimer(CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform), min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
+	if(!C)
+		return
 	C.parallax_animate_timer = FALSE
 	for(var/thing in C.parallax_layers)
 		var/atom/movable/screen/parallax_layer/L = thing
