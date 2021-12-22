@@ -142,6 +142,7 @@ Class Procs:
 /zone/proc/c_invalidate()
 	invalid = TRUE
 	SSair.remove_zone(src)
+	frozen_objs.Cut()
 	#ifdef ZASDBG
 	for(var/turf/simulated/T in contents)
 		T.dbg(invalid_zone)
