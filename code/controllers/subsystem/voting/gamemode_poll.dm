@@ -4,8 +4,8 @@
 
 // something copypasted from old gamemode vote. maybe we should have pregame vote component?
 /datum/poll/range/gamemode
-	name = "Исключить режимы игры"
-	description = "Выберите режимы, которые вы не хотите играть."
+	name = "Выбрать режимы игры"
+	description = "Выберите режимы, которые вы хотите играть."
 	announce_winner = FALSE
 	choice_types = list()
 	minimum_voters = 0

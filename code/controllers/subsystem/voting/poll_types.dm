@@ -151,11 +151,6 @@
 	if(!world.is_round_preparing())
 		return "Доступно только перед началом игры"
 
-/datum/poll/gamemode/get_blocking_reason()
-	. = ..()
-	if(.)
-		return
-
 /datum/poll/gamemode/init_choices()
 	for(var/type in subtypesof(/datum/modesbundle))
 		var/datum/modesbundle/M = type
