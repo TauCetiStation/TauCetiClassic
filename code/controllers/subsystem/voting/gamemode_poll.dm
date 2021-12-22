@@ -48,11 +48,9 @@
 		var/datum/game_mode/T = type
 		if(!initial(T.name)) // exclude abstract gamemode types
 			continue
-		var/datum/game_mode/mode = new type()
 		var/datum/vote_choice/range/gamemode/C = new()
-		C.text = mode.name
+		C.text = initial(T.name)
 		choices.Add(C)
-		qdel(mode)
 
 /datum/poll/range/gamemode/get_winners(list/choice_votes)
 	var/max_votes = -INFINITY
@@ -74,6 +72,8 @@
 	pregame = FALSE
 	for(var/datum/poll/gamemode/P in SSvote.votes)
 		P.next_vote = last_vote + P.cooldown
+	for(var/datum/vote_choice/range/VC as anything in choices)
+		global.score["gamemode_vote"][VC.text] = VC.total_votes();
 
 /datum/vote_choice/range/gamemode
 	options = list("Не хочу" = -1, "Хочу" = 1)

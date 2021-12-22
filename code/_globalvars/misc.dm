@@ -63,7 +63,10 @@ var/global/list/score=list(
 	"dmgestname"    = 0, // who had the most damage on the shuttle (but was still alive)
 	"dmgestjob"     = 0,
 	"dmgestdamage"  = 0,
-	"dmgestkey"     = 0
+	"dmgestkey"     = 0,
+
+	// gamemode vote data
+	"gamemode_vote" = list(),
 )
 
 var/global/list/greek_pronunciation = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
