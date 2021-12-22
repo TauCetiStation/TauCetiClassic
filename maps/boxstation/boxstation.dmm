@@ -7585,20 +7585,18 @@
 	name = "Security Cadet"
 	},
 /obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
 	id = "prisonexit";
 	name = "Exit Doors";
 	pixel_x = 6;
 	pixel_y = -24;
-	range = 10
+	req_access = list(2)
 	},
 /obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
 	id = "prisonentry";
 	name = "Entry Doors";
 	pixel_x = 6;
 	pixel_y = -36;
-	range = 10
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
