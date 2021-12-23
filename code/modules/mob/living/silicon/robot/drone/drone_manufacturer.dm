@@ -70,68 +70,10 @@
 	flick("h_lathe_leave",src)
 
 	time_last_drone = world.time
-	var/mob/living/silicon/robot/drone/new_drone = new(get_turf(src))
+	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
 	new_drone.transfer_personality(player)
 
 	drone_progress = 0
-
-
-/mob/dead/observer/verb/join_as_drone()
-
-	set category = "Ghost"
-	set name = "Join As Drone"
-	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
-
-	if(SSticker.current_state < GAME_STATE_PLAYING)
-		to_chat(src, "<span class='warning'>The game hasn't started yet!</span>")
-		return
-
-	if (usr != src)
-		return 0 //something is terribly wrong
-
-	if (!src.stat)
-		return
-
-	if(!(config.allow_drone_spawn))
-		to_chat(src, "<span class='warning'>That verb is not currently permitted.</span>")
-		return
-
-	if(jobban_isbanned(src, ROLE_DRONE))
-		to_chat(usr, "<span class='warning'>You are banned from playing synthetics and cannot spawn as a drone.</span>")
-		return
-
-	var/available_in_minutes = role_available_in_minutes(src, ROLE_DRONE)
-	if(available_in_minutes)
-		to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>")
-		return
-
-	var/deathtime = world.time - src.timeofdeath
-	if(istype(src,/mob/dead/observer))
-		var/mob/dead/observer/G = src
-		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
-			return
-
-	var/deathtimeminutes = round(deathtime / 600)
-	var/pluralcheck = "minute"
-	if(deathtimeminutes == 0)
-		pluralcheck = ""
-	else if(deathtimeminutes == 1)
-		pluralcheck = " [deathtimeminutes] minute and"
-	else if(deathtimeminutes > 1)
-		pluralcheck = " [deathtimeminutes] minutes and"
-	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-
-	if (deathtime < 6000)
-		to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-		to_chat(usr, "You must wait 10 minutes to respawn as a drone!")
-		return
-
-	var/response = tgui_alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
-	if(response != "Beep!")
-		return  //Hit the wrong key...again.
-
-	dronize()
 
 /mob/proc/dronize()
 

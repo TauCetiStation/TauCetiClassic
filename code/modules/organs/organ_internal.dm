@@ -422,6 +422,10 @@
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/internal/brain/abomination
+	name = "deformed brain"
+	parent_bodypart = BP_CHEST
+
 /obj/item/organ/internal/eyes
 	name = "eyes"
 	organ_tag = O_EYES
