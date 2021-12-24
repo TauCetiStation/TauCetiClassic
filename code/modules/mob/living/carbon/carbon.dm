@@ -939,6 +939,12 @@
 		see_in_dark = 8
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
+
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
 		switch(O.mode)
