@@ -14,6 +14,19 @@
 "aaf" = (
 /turf/simulated/snow,
 /area/shuttle/vox/northwest_solars)
+"aag" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/medical/hallway)
 "aai" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
@@ -1587,6 +1600,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "acP" = (
@@ -11452,6 +11466,7 @@
 	id = "bar-m";
 	name = "Bar Shutters"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "atf" = (
@@ -14200,6 +14215,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/yellow,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/eva)
 "ayy" = (
@@ -17465,9 +17481,13 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
 "aEG" = (
@@ -23064,11 +23084,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
 "aOP" = (
@@ -25220,6 +25240,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/brainstorm_center)
 "aSP" = (
@@ -26996,6 +27017,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "aVU" = (
@@ -27832,6 +27854,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/scibreak)
 "aXm" = (
@@ -29203,6 +29226,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "aZB" = (
@@ -29221,6 +29245,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "aZC" = (
@@ -29239,6 +29264,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/decoration/snowflake,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "aZD" = (
@@ -29260,6 +29286,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "aZE" = (
@@ -39198,6 +39225,7 @@
 	pixel_y = 1
 	},
 /obj/structure/cable,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "brz" = (
@@ -45597,9 +45625,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
-"bCP" = (
-/turf/simulated/floor/carpet,
-/area/station/civilian/bar)
 "bCQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -60177,8 +60202,9 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
+/obj/item/decoration/snowflake,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/security/processing)
 "clv" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -77017,18 +77043,13 @@
 /area/station/maintenance/medbay)
 "lUb" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/medical/hallway)
+/area/station/maintenance/escape)
 "lUd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -104157,7 +104178,7 @@ aEZ
 aEZ
 aEZ
 aEZ
-clu
+lUb
 cnZ
 cnZ
 cnZ
@@ -109794,7 +109815,7 @@ aEZ
 aEZ
 alm
 alm
-acO
+clu
 cfh
 cfj
 acO
@@ -112917,7 +112938,7 @@ ijb
 aMN
 aKx
 bbo
-aGZ
+eFk
 aEZ
 aEZ
 aUG
@@ -113174,7 +113195,7 @@ cwQ
 aPv
 aKx
 bbo
-aGZ
+eBb
 aEZ
 aUG
 eUb
@@ -125272,9 +125293,9 @@ bjk
 bjk
 bjk
 bjk
-lUb
 aEF
 aOO
+aag
 bxi
 bzp
 bAW
