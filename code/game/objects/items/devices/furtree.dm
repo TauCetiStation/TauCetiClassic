@@ -11,7 +11,7 @@
 	layer = 4.1
 
 /obj/item/device/flashlight/lamp/fir/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))	//unwrenching vendomats
+	if(iswrench(I))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(!user.is_busy() && do_after(user, 4 SECONDS, target = src))
