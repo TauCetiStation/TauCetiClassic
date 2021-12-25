@@ -1,11 +1,12 @@
 // Possibles title screens
-var/global/list/lobby_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/standart.gif')
-var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/newyear.gif')
+var/global/list/lobby_default = list()
+var/global/list/lobby_ny = list('html/media/lobby-ny.mp4')
 
-var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+var/global/custom_lobby_image
+var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
 
-#define MARK_READY     "READY <span style='color:lime'>☑</span>"
-#define MARK_NOT_READY "READY <span style='color:red'>☒</span>"
+#define MARK_READY     "READY&nbsp;☑"
+#define MARK_NOT_READY "READY&nbsp;☒"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -28,11 +29,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					-ms-user-select: none;
 				}
 
-				img {
-					border-style: none;
-				}
-
-				.back {
+				.background {
 					position: absolute;
 					width: auto;
 					height: 100vmin;
@@ -49,8 +46,8 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					width: auto;
 					min-width: 100vmin;
 					min-height: 50vmin;
-					padding-left: 10vmin;
-					padding-top: 60vmin;
+					padding-left: 5vmin;
+					padding-top: 50vmin;
 					box-sizing: border-box;
 					top: 50%;
 					left: 50%;
@@ -63,28 +60,39 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					font-family: "Fixedsys";
 					font-weight: lighter;
 					text-decoration: none;
-					width: 25%;
+					/*width: 25%;*/
 					text-align: left;
 					color:white;
 					margin-right: 100%;
 					margin-top: 5px;
-					padding-left: 6px;
+					/*padding-left: 6px;*/
 					font-size: 4vmin;
 					line-height: 4vmin;
 					height: 4vmin;
 					letter-spacing: 1px;
+					opacity: 0.5;
+					color: #2baaff;
+					text-shadow: 1px 1px 3px #098fd9, -1px -1px 3px #098fd9;
 				}
 
 				.menu_a:hover {
-					border-left: 3px solid white;
 					font-weight: bolder;
-					padding-left: 3px;
+					opacity: 0.85;
+					/*border-left: 3px solid white;
+					padding-left: 3px;*/
 				}
 
+				.container_nav_rot {
+					transform: rotate3d(3, 5, 0, 25deg);
+					transform-origin: top center;
+				}
 			</style>
 		</head>
 		<body>
-			<div class="container_nav">
+	"}
+
+	dat += {"
+			<div class="container_nav"><div class="container_nav_rot">
 				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
 
@@ -98,8 +106,18 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	dat += "<br><br>"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
 
-	dat += "</div>"
-	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
+	dat += "</div></div>"
+	
+	if(global.custom_lobby_image)
+		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
+	else
+		dat += {"
+		<video class="background" width="400" height="400" loop mute autoplay>
+			<source src="background.mp4" type="video/mp4">
+			<!-- Magic worlds for IE: https://stackoverflow.com/a/24697998 -->
+		</video>
+	"}
+
 	dat += {"
 	<script>
 		var mark = document.getElementById("ready");

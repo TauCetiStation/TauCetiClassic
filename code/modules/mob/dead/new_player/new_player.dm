@@ -37,10 +37,14 @@
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby)
 	assets.send(src)
 
-	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
+	if(global.custom_lobby_image)
+		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0")
+	else
+		client << browse(global.lobby_video, "file=background.mp4;display=0") //todo: how byond cache same file with dif name?
+
 	client << browse(get_lobby_html(), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
