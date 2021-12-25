@@ -7,7 +7,6 @@ SUBSYSTEM_DEF(lighting)
 
 	init_order    = SS_INIT_LIGHTING
 	wait          = SS_WAIT_LIGHTING
-	display_order = SS_DISPLAY_LIGHTING
 
 	flags = SS_TICKER
 	msg_lobby = "Включаем свет..."

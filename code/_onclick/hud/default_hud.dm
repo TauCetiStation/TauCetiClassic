@@ -96,6 +96,15 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
+	lingchemdisplay = new /atom/movable/screen()
+	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = ABOVE_HUD_LAYER
+	lingchemdisplay.plane = ABOVE_HUD_PLANE
+	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+
 
 	mymob.client.screen = list()
 
