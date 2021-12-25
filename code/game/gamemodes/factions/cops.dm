@@ -36,27 +36,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES, IGNORE_DEALER)
-	var/spawncount = 2
-	while(spawncount > 0 && candidates.len)
-		var/spawnloc = pick(dealerstart)
-		var/mob/candidate = pick(candidates)
-
-		INVOKE_ASYNC(src, .proc/traitor_create_apperance, spawnloc, candidate.client)
-
-		candidates -= candidate
-		spawncount--
-		dealerstart -= spawnloc
-
-/datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
-	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
-
-	H.loc = spawnloc
-	H.key = C.key
-
-	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
+	create_spawners(/datum/spawner/dealer, "dealer", 2)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
