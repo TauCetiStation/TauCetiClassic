@@ -64,12 +64,18 @@ Advanced RCD
 	if(!can_act_on(target))
 		return
 	holder.working = TRUE
+	var/image/anim
+	if(duration)
+		anim = image('icons/effects/rcd.dmi', icon_state = "construction", loc = get_turf(target), layer = EFFECTS_LAYER)
+		flick_overlay_view(anim, target, duration)
 	if(!do_after(user, duration, target = target))
 		holder.working = FALSE
+		qdel(anim)
 		return
 	if(action(target))
 		use_matter()
 		holder.activate()
+	qdel(anim)
 	holder.working = FALSE
 
 /datum/rcd/deconstruct
