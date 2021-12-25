@@ -71,6 +71,10 @@
 	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Lobby Animation:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=lobbyanimation'><b>[lobbyanimation ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
@@ -182,6 +186,12 @@
 			if(parent && parent.screen && parent.screen.len)
 				var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in parent.screen
 				PM.backdrop(parent.mob)
+
+		if("lobbyanimation")
+			lobbyanimation = !lobbyanimation // shouldn't prefs changes be saved somewhere here?
+			if(isnewplayer(user))
+				var/mob/dead/new_player/M = user
+				M.show_titlescreen()
 
 		if("auto_fit_viewport")
 			auto_fit_viewport = !auto_fit_viewport

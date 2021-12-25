@@ -1,9 +1,7 @@
 // Possibles title screens
-var/global/list/lobby_default = list()
-var/global/list/lobby_ny = list('html/media/lobby-ny.mp4')
-
-var/global/custom_lobby_image
-var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
+var/global/custom_lobby_image // admins custom screens, have priority
+var/global/lobby_screens = list("lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'))
+var/global/lobby_screen = "lobby-ny"
 
 #define MARK_READY     "READY&nbsp;☑"
 #define MARK_NOT_READY "READY&nbsp;☒"
@@ -41,6 +39,10 @@ var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
 					z-index: 0;
 				}
 
+				.background.background__fallback {
+					z-index: -1;
+				}
+
 				.container_nav {
 					position: absolute;
 					width: auto;
@@ -53,6 +55,11 @@ var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
 					left: 50%;
 					transform: translate(-50%, -50%);
 					z-index: 1;
+				}
+
+				.container_nav_rot {
+					transform: rotate3d(3, 5, 0, 25deg);
+					transform-origin: top center;
 				}
 
 				.menu_a {
@@ -81,11 +88,6 @@ var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
 					/*border-left: 3px solid white;
 					padding-left: 3px;*/
 				}
-
-				.container_nav_rot {
-					transform: rotate3d(3, 5, 0, 25deg);
-					transform-origin: top center;
-				}
 			</style>
 		</head>
 		<body>
@@ -110,13 +112,16 @@ var/global/lobby_video = 'html/media/lobby-ny.mp4' //todo: fallback image
 	
 	if(global.custom_lobby_image)
 		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
-	else
+	else if (client.prefs.lobbyanimation)
 		dat += {"
 		<video class="background" width="400" height="400" loop mute autoplay>
-			<source src="background.mp4" type="video/mp4">
+			<source src="[global.lobby_screen].mp4" type="video/mp4">
 			<!-- Magic worlds for IE: https://stackoverflow.com/a/24697998 -->
 		</video>
-	"}
+		<img class="background background__fallback" src="[global.lobby_screen].png">
+		"}
+	else
+		dat += {"<img class="background" src="[global.lobby_screen].png">"}
 
 	dat += {"
 	<script>

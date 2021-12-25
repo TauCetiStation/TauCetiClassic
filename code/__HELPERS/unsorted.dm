@@ -1575,7 +1575,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 		global.custom_lobby_image = new_screen
 	else
 		custom_lobby_image = null
-		lobby_video = pick(global.lobby_ny)
+		lobby_screen = "lobby-ny"
 /*		if(SSholiday.holidays[NEW_YEAR])
 			global.lobby_screen = pick(global.new_year_screens)
 		else

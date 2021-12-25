@@ -146,6 +146,18 @@
 		prefs.save_preferences()
 		to_chat(usr, "UI was saved")
 
+/client/verb/toggle_lobby_animation()
+	set name = "Toggle Lobby Animation"
+	set category = "Preferences"
+	set desc = "Toggles lobby animations."
+	prefs.lobbyanimation = !prefs.lobbyanimation
+	prefs.save_preferences()
+	if(isnewplayer(mob))
+		var/mob/dead/new_player/M = mob
+		M.show_titlescreen()
+	to_chat(src, "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "can" : "no longer"] see animated lobby screen. You can toggle in off case of any problems.")
+	feedback_add_details("admin_verb","TLA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
 	set category = "Preferences"

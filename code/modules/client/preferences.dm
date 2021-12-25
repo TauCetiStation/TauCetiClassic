@@ -149,6 +149,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
+	var/lobbyanimation = TRUE
 
   //custom loadout
 	var/list/gear = list()
