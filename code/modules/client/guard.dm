@@ -291,6 +291,8 @@
 	log_admin("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 	message_admins("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
+	notes_add(holder.ckey, "Guard Autoban. [short_report]")
+
 	if(config.guard_autoban_sticky)
 		var/list/ban = list()
 		ban[BANKEY_ADMIN] = "Tau Kitty"

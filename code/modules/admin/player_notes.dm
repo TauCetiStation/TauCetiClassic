@@ -5,10 +5,11 @@
 	if (!key || !note)
 		return
 
-	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
-		return
+	if(admin)
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
 
-	
+
 	if(!establish_db_connection("erro_messages"))
 		return
 
