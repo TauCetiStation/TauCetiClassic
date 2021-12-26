@@ -268,12 +268,6 @@
 		set_EyesVision(null)
 		return FALSE
 
-	if(XRAY in mutations)
-		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		see_in_dark = 8
-		if(!druggy)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var

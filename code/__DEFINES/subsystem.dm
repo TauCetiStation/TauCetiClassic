@@ -98,17 +98,6 @@
 #define SS_WAIT_SUN         600
 #define SS_WAIT_NIGHTSHIFT  600
 
-
-#define SS_DISPLAY_AIR      1
-#define SS_DISPLAY_FLUIDS   2
-#define SS_DISPLAY_GARBAGE  3
-#define SS_DISPLAY_MACHINES 4
-#define SS_DISPLAY_MOBS     5
-#define SS_DISPLAY_LIGHTING 6
-#define SS_DISPLAY_TIMER    7
-#define SS_DISPLAY_NANOUI   8
-#define SS_DISPLAY_DEFAULT  100
-
 // SS runlevels
 
 #define RUNLEVEL_INIT 0
