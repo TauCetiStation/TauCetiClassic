@@ -113,26 +113,22 @@
 		open = 0
 		density = TRUE
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)	continue
-			C.client?.perspective = EYE_PERSPECTIVE
-			C.client?.eye = src
+			if(C.buckled) continue
 			occupant = C
 			C.forceMove(src)
 			break
 		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
-			if(occupant) continue
-			BR.brainmob?.client?.perspective = EYE_PERSPECTIVE
-			BR.brainmob?.client?.eye = src
+			if(occupant) break
 			occupant = BR.brainmob
 			BR.forceMove(src)
 			break
 		for(var/obj/item/organ/external/head/H in loc) // head can be put in scanner too
-			if(occupant) continue
-			H.brainmob?.client?.perspective = EYE_PERSPECTIVE
-			H.brainmob?.client?.eye = src
+			if(occupant) break
 			occupant = H.brainmob
 			H.forceMove(src)
 			break
+		occupant?.client?.perspective = EYE_PERSPECTIVE
+		occupant?.client?.eye = src
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
 
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
