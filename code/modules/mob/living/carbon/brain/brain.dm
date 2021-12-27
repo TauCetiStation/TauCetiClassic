@@ -3,6 +3,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
+	immune_to_ssd = TRUE
 	me_verb_allowed = 0 //Can't use the emote proc, it's a freaking immobile brain
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
