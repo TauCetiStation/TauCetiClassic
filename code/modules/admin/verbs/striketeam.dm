@@ -29,7 +29,7 @@ var/global/sent_strike_team = FALSE
 	var/list/candidates = list()
 	var/list/commandos = list()
 
-	for (var/client/C as anything in clients)
+	for (var/client/C in clients)
 		if (!C.is_afk())
 			candidates += C.ckey
 

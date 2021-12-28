@@ -21,6 +21,10 @@
 /obj/item/weapon/reagent_containers/borghypo/medical
 	reagent_ids = list("bicaridine", "kelotane", "inaprovaline", "dexalin", "tramadol", "anti_toxin")
 
+/obj/item/weapon/reagent_containers/borghypo/medical/drone
+	volume = 15
+	charge_cost = 150
+
 /obj/item/weapon/reagent_containers/borghypo/atom_init()
 	. = ..()
 	for(var/R in reagent_ids)
@@ -67,12 +71,12 @@
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
-	var/datum/reagents/RG = new(30)
+	var/datum/reagents/RG = new(volume)
 	RG.my_atom = src
 	reagent_list += RG
 
 	var/datum/reagents/R = reagent_list[reagent_list.len]
-	R.add_reagent(reagent, 30)
+	R.add_reagent(reagent, volume)
 
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
