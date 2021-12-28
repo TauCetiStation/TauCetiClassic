@@ -409,7 +409,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				qdel(owner.shoes)
 
 	owner.update_body()
-	if(body_zone == BP_HEAD)
+	if((body_zone == BP_HEAD) && (should_delete == FALSE))
 		owner.update_hair()
 		owner.handle_decapitation(src)
 
