@@ -15,9 +15,6 @@ var/global/list/datum/spawners_cooldown = list()
 		if(!ghost.client)
 			continue
 
-		if(ghost.spawners_menu)
-			SStgui.update_uis(ghost.spawners_menu)
-
 		var/datum/hud/ghost/ghost_hud = ghost.hud_used
 		var/image/I = image(ghost_hud.spawners_menu_button.icon, ghost_hud.spawners_menu_button, "spawners_update")
 		flick_overlay(I, list(ghost.client), 10 SECONDS)
