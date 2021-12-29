@@ -78,6 +78,8 @@
 			span_list.Add("yell")
 		if(italics)
 			span_list.Add("italics")
+		if(used_radio)
+			span_list.Add("speaker")
 		show_runechat_message(speaker, language, capitalize(message), span_list)
 
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
