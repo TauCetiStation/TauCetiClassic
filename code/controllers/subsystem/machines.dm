@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(machines)
 	name = "Machines"
 
 	init_order    = SS_INIT_MACHINES
-	display_order = SS_DISPLAY_MACHINES
 
 	flags = SS_KEEP_TIMING
 	msg_lobby = "Чиним машинерию..."

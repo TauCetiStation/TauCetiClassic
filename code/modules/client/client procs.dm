@@ -360,9 +360,7 @@ var/global/list/blacklisted_builds = list(
 	mentors -= src
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
-	if(movingmob != null)
-		movingmob.client_mobs_in_contents -= mob
-		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	LAZYREMOVE(movingmob?.clients_in_contents, src)
 	return ..()
 
 /client/proc/handle_autokick_reasons()
