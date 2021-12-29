@@ -9,16 +9,11 @@ var/global/list/datum/spawners_cooldown = list()
 
 	for(var/i in 1 to num)
 		var/datum/spawner/spawner = new type(arglist(arguments))
-
-		spawner.id = id
-		LAZYADD(global.spawners[id], spawner)
+		spawner.add_to_global_list(id)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
 			continue
-
-		if(ghost.spawners_menu)
-			SStgui.update_uis(ghost.spawners_menu)
 
 		var/datum/hud/ghost/ghost_hud = ghost.hud_used
 		var/image/I = image(ghost_hud.spawners_menu_button.icon, ghost_hud.spawners_menu_button, "spawners_update")
@@ -42,7 +37,7 @@ var/global/list/datum/spawners_cooldown = list()
 	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
 	// Delete spawner after use
-	var/del_after_spawn = TRUE
+	var/infinity = FALSE
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
 
@@ -59,12 +54,17 @@ var/global/list/datum/spawners_cooldown = list()
 		timer_to_expiration = QDEL_IN(src, time_to_del)
 
 /datum/spawner/Destroy()
-	var/list/spawn_list = global.spawners[id]
-	LAZYREMOVE(spawn_list, src)
-	if(!length(spawn_list))
-		global.spawners -= id
+	remove_from_global_list()
 
 	deltimer(timer_to_expiration)
+
+	return ..()
+
+/datum/spawner/proc/add_to_global_list(_id)
+	if(!isnull(_id))
+		id = _id
+
+	LAZYADDASSOCLIST(global.spawners, id, src)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -73,7 +73,15 @@ var/global/list/datum/spawners_cooldown = list()
 		if(ghost.spawners_menu)
 			SStgui.update_uis(ghost.spawners_menu)
 
-	return ..()
+/datum/spawner/proc/remove_from_global_list()
+	LAZYREMOVEASSOC(global.spawners, id, src)
+
+	for(var/mob/dead/observer/ghost in observer_list)
+		if(!ghost.client)
+			continue
+
+		if(ghost.spawners_menu)
+			SStgui.update_uis(ghost.spawners_menu)
 
 /datum/spawner/proc/add_client_cooldown(client/C)
 	if(cooldown)
@@ -95,17 +103,22 @@ var/global/list/datum/spawners_cooldown = list()
 	if(!can_spawn(ghost))
 		return
 
+	if(!infinity)
+		remove_from_global_list()
+
 	var/client/C = ghost.client
 	spawn_ghost(ghost)
 
 	// check if the ghost really become a role
 	if(ghost.client == C)
+		if(!infinity)
+			add_to_global_list()
 		return
 
 	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 	add_client_cooldown(C)
 
-	if(del_after_spawn)
+	if(!infinity)
 		qdel(src)
 
 /datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
@@ -406,7 +419,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_GHOSTLY)
 	cooldown = 0
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/gladiator/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(eorgwarp)
@@ -421,7 +434,7 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Mouse"
 
 	ranks = list("Mouse")
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/mouse/can_spawn(mob/dead/observer/ghost)
 	if(config.disable_player_mice)
@@ -437,7 +450,7 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Вы появляетесь где-то на свалке."
 	wiki_ref = "Junkyard"
 
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/space_bum/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(junkyard_bum_list)
@@ -453,7 +466,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_DRONE)
 
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/drone/can_spawn(mob/dead/observer/ghost)
 	if(!config.allow_drone_spawn)
