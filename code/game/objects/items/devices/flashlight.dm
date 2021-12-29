@@ -185,7 +185,8 @@
 
 /obj/item/device/flashlight/flare/proc/adjust_fuel(value)
 	fuel = max(fuel - value, 0)
-	if(fuel == 0)
+	if(fuel <= 0)
+		visible_message("<span class='danger'>Flare started flickering with a hissing sound and stopped burning.</span>")
 		turn_off()
 
 /obj/item/device/flashlight/flare/process()

@@ -47,7 +47,8 @@
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
 			if(is_type_in_list(F, blacklisted_lights))
-				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+				if(istype(F, /obj/item/device/flashlight/slime))
+					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				if(istype(F, /obj/item/device/flashlight/flare))
 					var/obj/item/device/flashlight/flare/P = F
 					P.adjust_fuel(950)
@@ -62,7 +63,8 @@
 		for(var/mob/living/carbon/human/H in T.contents)
 			for(var/obj/item/F in H)
 				if(is_type_in_list(F, blacklisted_lights))
-					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+					if(istype(F, /obj/item/device/flashlight/slime))
+						F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 					if(istype(F, /obj/item/device/flashlight/flare))
 						var/obj/item/device/flashlight/flare/P = F
 						P.adjust_fuel(875)
