@@ -204,18 +204,17 @@
 		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
-	if(length(client_mobs_in_contents))
-		for(var/thing in client_mobs_in_contents)
-			var/mob/M = thing
-			if(M && M.client && M.hud_used && length(M.client.parallax_layers))
-				M.hud_used.update_parallax()
+	if(length(clients_in_contents))
+		for(var/thing in clients_in_contents)
+			var/client/C = thing
+			if(C && length(C.parallax_layers))
+				C.mob?.hud_used?.update_parallax()
 
 /area/proc/parallax_slowdown()
 	if(parallax_movedir)
 		parallax_movedir = FALSE
 		for(var/atom/movable/AM in src)
-			if(length(AM.client_mobs_in_contents))
-				AM.update_parallax_contents()
+			AM.update_parallax_contents()
 
 /atom/movable/screen/parallax_layer
 	var/speed = 1
