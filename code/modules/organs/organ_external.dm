@@ -409,8 +409,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 				qdel(owner.shoes)
 
 	owner.update_body()
-	if((body_zone == BP_HEAD) && (should_delete == FALSE))
+	if((body_zone == BP_HEAD) && !ischangeling(owner)) //not for  changeling
 		owner.update_hair()
+		owner.handle_decapitation(src)
+	if((body_zone == BP_HEAD) && ischangeling(owner) && should_delete == FALSE) // for changeling
 		owner.handle_decapitation(src)
 
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
