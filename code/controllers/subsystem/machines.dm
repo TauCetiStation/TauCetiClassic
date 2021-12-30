@@ -1,11 +1,10 @@
 SUBSYSTEM_DEF(machines)
-/datum/controller/subsystem/machines
 	name = "Machines"
+	msg_lobby = "Чиним машинерию..."
 
-	init_order    = SS_INIT_MACHINES
+	init_order = SS_INIT_MACHINES
 
 	flags = SS_KEEP_TIMING
-	msg_lobby = "Чиним машинерию..."
 
 	var/list/processing = list()
 	var/list/processing_second = list()
@@ -63,5 +62,7 @@ SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines/Recover()
 	if (istype(SSmachines.processing))
 		processing = SSmachines.processing
+	if (istype(SSmachines.processing_second))
+		processing_second = SSmachines.processing_second
 	if (istype(SSmachines.powernets))
 		powernets = SSmachines.powernets
