@@ -236,8 +236,7 @@
 	M.adjustToxLoss(0.2)
 
 	if(prob(10))
-		M.say("Ик.")
-		playsound(M, 'sound/voice/hiccup.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		M.emote("hiccup")
 		var/list/viewing = list()
 		for(var/mob/H in viewers(M))
 			if(H.client)
