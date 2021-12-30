@@ -3,6 +3,7 @@
 	desc = "Biogel jar for supporting life in head. Extremely fragile!"
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
+	item_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
 	w_class = SIZE_SMALL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
@@ -44,7 +45,7 @@
 		headobj.forceMove(get_turf(src))
 		headobj = null
 		QDEL_NULL(display_headobj)
-		underlays.Cut()
+		cut_overlays()
 		return TRUE
 	return FALSE
 
@@ -59,10 +60,12 @@
 		commutator_enabled = FALSE
 		to_chat(usr, "<span class='warning'>You disable text to speech device, preventing [src.name]'s occupant from shouting.</span>")
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now disabled.</span>")
+		icon_state = "biocan"
 	else
 		commutator_enabled = TRUE
 		to_chat(usr, "<span class='warning'>You enable commutating device, allowing your prisoner to speak.</span>")
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
+		icon_state = "biocan_on"
 
 /obj/item/device/biocan/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))
@@ -82,11 +85,12 @@
 			display_headobj.appearance = I.appearance
 			display_headobj.transform = matrix()
 			display_headobj.dir = SOUTH
-			display_headobj.pixel_y = 0
-			display_headobj.pixel_x = 0
+			display_headobj.pixel_y = -11
+			display_headobj.pixel_x = 1
 			display_headobj.layer = FLOAT_LAYER
 			display_headobj.plane = FLOAT_PLANE
-			underlays.Add(display_headobj)
+			overlays.Add(display_headobj)
+			add_overlay(image(icon, "overlay"))
 			update_icon()
 	else
 		return ..()
