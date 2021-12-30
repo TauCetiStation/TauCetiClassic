@@ -1,7 +1,7 @@
 /datum/spawners_menu
 	var/mob/dead/observer/owner
 
-	var/role_choosed = FALSE
+	var/role_selected = FALSE
 
 /datum/spawners_menu/New(mob/dead/observer/new_owner)
 	if(!istype(new_owner))
@@ -54,7 +54,7 @@
 	if(.)
 		return
 
-	if(role_choosed)
+	if(role_selected)
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
@@ -75,7 +75,7 @@
 			spawner.jump(owner)
 			return TRUE
 		if("spawn")
-			role_choosed = TRUE
+			role_selected = TRUE
 			spawner.do_spawn(owner)
-			role_choosed = FALSE
+			role_selected = FALSE
 			return TRUE
