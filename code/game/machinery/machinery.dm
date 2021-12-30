@@ -134,6 +134,7 @@ Class Procs:
 	var/radio_filter_out
 	var/radio_filter_in
 	var/speed_process = FALSE  // Process as fast as possible?
+	var/process_last = FALSE   // Process after others
 
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
@@ -144,6 +145,8 @@ Class Procs:
 
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		START_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		START_PROCESSING(SSmachines, src)
 

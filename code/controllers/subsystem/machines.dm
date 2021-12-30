@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(machines)
 	msg_lobby = "Чиним машинерию..."
 
 	var/list/processing = list()
+	var/list/processing_second = list()
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
@@ -36,7 +37,7 @@ SUBSYSTEM_DEF(machines)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
-		src.currentrun = processing.Copy()
+		src.currentrun = processing_second + processing
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
