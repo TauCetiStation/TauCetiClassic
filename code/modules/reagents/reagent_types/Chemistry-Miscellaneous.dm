@@ -245,7 +245,7 @@
 		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		flick_overlay(I, viewing)
+		flick_overlay(I, viewing, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
