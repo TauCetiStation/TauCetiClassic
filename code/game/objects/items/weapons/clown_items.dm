@@ -89,7 +89,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
-	if(user.a_intent == INTENT_HELP)
+	if(user.a_intent == INTENT_HARM)
 		..()
 	else if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
 		var/mob/living/carbon/human/H = target
