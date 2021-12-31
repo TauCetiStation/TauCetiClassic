@@ -29,3 +29,9 @@
 
 /mob/living/carbon/xenomorph/humanoid/drone/movement_delay()
 	return(1 + move_delay_add + config.alien_delay)
+
+/mob/living/carbon/xenomorph/humanoid/drone/can_pickup(obj/O)
+	if(istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
+	else
+		return FALSE

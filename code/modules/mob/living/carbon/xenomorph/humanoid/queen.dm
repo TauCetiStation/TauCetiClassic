@@ -57,6 +57,12 @@
 /mob/living/carbon/xenomorph/humanoid/queen/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	return FALSE
 
+/mob/living/carbon/xenomorph/humanoid/queen/can_pickup(obj/O)
+	if(istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
+	else
+		return FALSE
+
 /mob/living/carbon/xenomorph/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s-old"

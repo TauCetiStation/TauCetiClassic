@@ -42,10 +42,7 @@
 	return (move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
-	if(..() && istype(O, /obj/item/clothing/mask/facehugger) && (isxenoqueen(src) || isxenodrone(src)))
-		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)
 	. = ..()
