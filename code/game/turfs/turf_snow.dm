@@ -475,30 +475,31 @@
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/global/datum/perlin/snow_map_noise
-var/global/list/raw_noise
-var/global/list/perlin_noise
 
 /datum/perlin
 	var/list/map_array
+
 	var/MAP_WIDTH
 	var/MAP_HEIGHT
+	var/list/raw_noise
+	var/list/perlin_noise
 
-/datum/perlin/New()
-	MAP_WIDTH = world.maxx
-	MAP_HEIGHT = world.maxy
+/datum/perlin/New(width, height)
+	MAP_WIDTH = width
+	MAP_HEIGHT = height
 
-	map_array = new/list(MAP_WIDTH,MAP_HEIGHT)
-	raw_noise = new/list(MAP_WIDTH,MAP_HEIGHT)
-	perlin_noise = new/list(MAP_WIDTH,MAP_HEIGHT)
+	map_array = new/list(MAP_WIDTH, MAP_HEIGHT)
+	raw_noise = new/list(MAP_WIDTH, MAP_HEIGHT)
+	perlin_noise = new/list(MAP_WIDTH, MAP_HEIGHT)
 
-	for (var/i = 1, i <= MAP_WIDTH, i++)
-		for (var/j = 1, j <= MAP_HEIGHT, j++)
+	for (var/i in 1 to MAP_WIDTH)
+		for (var/j in 1 to MAP_HEIGHT)
 			raw_noise[i][j] = rand()
 
 	perlinnoise()
 
-	for (var/i = 1, i <= MAP_WIDTH, i++)
-		for (var/j = 1, j <= MAP_HEIGHT, j++)
+	for (var/i in 1 to MAP_WIDTH)
+		for (var/j in 1 to MAP_HEIGHT)
 
 			var/result
 
@@ -522,9 +523,9 @@ var/global/list/perlin_noise
 /datum/perlin/proc/smoothnoise(octave)
 	var/smooth[MAP_WIDTH]
 
-	for (var/i = 1, i <= MAP_WIDTH, i++)
+	for (var/i in 1 to MAP_WIDTH)
 		smooth[i] = new/list(MAP_HEIGHT)
-		for (var/j = 1, j <= MAP_HEIGHT, j++)
+		for (var/j in 1 to MAP_HEIGHT)
 			smooth[i][j] = ""
 
 	var/samplePeriod = 1 << octave
@@ -554,19 +555,19 @@ var/global/list/perlin_noise
 	var/octave = 7
 	var/smooth[octave]
 
-	for(var/i = 1, i <= octave, i++)
+	for(var/i in 1 to octave)
 		smooth[i] = new/list(MAP_WIDTH,MAP_HEIGHT)
 		smooth[i] = smoothnoise(i)
 
-	for(var/o = (octave - 1), o >= 1, o--)
+	for(var/o in (octave - 1) to 1 -1)
 		amplitude = amplitude * persistance
 		totalAmp += amplitude
-		for(var/i = 1, i <= MAP_WIDTH, i++)
-			for(var/j = 1, j <= MAP_WIDTH, j++)
+		for(var/i in 1 to MAP_WIDTH)
+			for(var/j in 1 to MAP_WIDTH)
 				if(!isnum(perlin_noise[i][j]))
 					perlin_noise[i][j] = 0
 				perlin_noise[i][j] += (smooth[o][i][j] * amplitude)
 
-	for(var/i = 1, i <= MAP_WIDTH, i++)
-		for(var/j = 1, j <= MAP_WIDTH, j++)
+	for(var/i in 1 to MAP_WIDTH)
+		for(var/j in 1 to MAP_WIDTH)
 			perlin_noise[i][j] = FLOOR(perlin_noise[i][j] / totalAmp, 1)
