@@ -49,9 +49,8 @@ SUBSYSTEM_DEF(mapping)
 	// Space structures
 	spawn_space_structures()
 
-
-	if(!snow_map_noise)
-		snow_map_noise = new
+	if(!snow_map_noise && SSmapping.get_level(2).envtype == ENV_TYPE_SNOW)
+		snow_map_noise = new(world.maxx, world.maxy)
 
 	..()
 

@@ -239,15 +239,17 @@
 	if (!path)
 		return
 
-	if (path == type)
-		return src
-
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
-	if(is_station_level(z) && ispath(path, /turf/space))
-		path = /turf/simulated/snow
+	var/datum/space_level/z_level = SSmapping.get_level(z)
+
+	if(ispath(path, /turf/space))
+		path = z_level.base_turf_type
+
+	if (path == type)
+		return src
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -259,7 +261,7 @@
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
 
-	var/old_basetype = is_station_level(z) ? (basetype == /turf/space ? /turf/simulated/snow : basetype) : (basetype == /turf/simulated/snow ? /turf/space : basetype)
+	var/old_basetype = basetype
 	var/old_flooded = flooded
 	var/obj/effect/fluid/F = locate() in src
 

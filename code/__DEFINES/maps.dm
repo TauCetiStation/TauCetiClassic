@@ -30,9 +30,16 @@
     // CROSSLINKED - mixed in with the cross-linked space pool
     #define CROSSLINKED "Cross"
 
+// enum - environment type
+#define ZTRAIT_ENV_TYPE "Environment Type"
+    // ENV_TYPE_SPACE if absent - no environment generation
+    #define ENV_TYPE_SPACE "Space"
+    // ENV_TYPE_SNOW - snow environment generation
+    #define ENV_TYPE_SNOW "Snow"
+
 // default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
-#define ZTRAITS_STATION list(/*ZTRAIT_LINKAGE = CROSSLINKED,*/ ZTRAIT_STATION = TRUE)
+#define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_ASTEROID list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_MINING = TRUE)
 

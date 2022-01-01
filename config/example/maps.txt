@@ -22,3 +22,6 @@ endmap
 
 map testmap
 endmap
+
+map testmap_snow
+endmap
