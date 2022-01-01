@@ -521,22 +521,17 @@ var/global/datum/perlin/snow_map_noise
 			map_array[i][j] = result
 
 /datum/perlin/proc/smoothnoise(octave)
-	var/smooth[MAP_WIDTH]
-
-	for (var/i in 1 to MAP_WIDTH)
-		smooth[i] = new/list(MAP_HEIGHT)
-		for (var/j in 1 to MAP_HEIGHT)
-			smooth[i][j] = ""
+	var/list/smooth = new/list(MAP_WIDTH, MAP_HEIGHT)
 
 	var/samplePeriod = 1 << octave
 	var/sampleFreq = (1.0 / samplePeriod)
 
-	for (var/k = 1, k <= MAP_WIDTH, k++)
+	for (var/k in 1 to MAP_WIDTH)
 		var/_i0 = FLOOR(k / samplePeriod, 1) * samplePeriod
 		var/_i1 = (_i0 + samplePeriod) % MAP_WIDTH
 		var/h_blend = (k - _i0) * sampleFreq
 
-		for (var/l = 1, l <= MAP_HEIGHT, l++)
+		for (var/l in 1 to  MAP_HEIGHT)
 			var/_j0 = FLOOR(l / samplePeriod, 1) * samplePeriod
 			var/_j1 = (_j0 + samplePeriod) % MAP_HEIGHT
 			var/v_blend = (l - _j0) * sampleFreq
@@ -551,22 +546,20 @@ var/global/datum/perlin/snow_map_noise
 /datum/perlin/proc/perlinnoise()
 	var/persistance = 0.5
 	var/amplitude = 1.0
+	var/octave = 6
+
 	var/totalAmp = 0.0
-	var/octave = 7
-	var/smooth[octave]
+	var/list/smooth
 
-	for(var/i in 1 to octave)
-		smooth[i] = new/list(MAP_WIDTH,MAP_HEIGHT)
-		smooth[i] = smoothnoise(i)
-
-	for(var/o in (octave - 1) to 1 -1)
+	for(var/o in octave to 1 step -1)
+		smooth = smoothnoise(o)
 		amplitude = amplitude * persistance
 		totalAmp += amplitude
 		for(var/i in 1 to MAP_WIDTH)
 			for(var/j in 1 to MAP_WIDTH)
 				if(!isnum(perlin_noise[i][j]))
 					perlin_noise[i][j] = 0
-				perlin_noise[i][j] += (smooth[o][i][j] * amplitude)
+				perlin_noise[i][j] += (smooth[i][j] * amplitude)
 
 	for(var/i in 1 to MAP_WIDTH)
 		for(var/j in 1 to MAP_WIDTH)
