@@ -488,18 +488,12 @@ var/global/datum/perlin/snow_map_noise
 	MAP_WIDTH = width
 	MAP_HEIGHT = height
 
-	map_array = new/list(MAP_WIDTH, MAP_HEIGHT)
-	raw_noise = new/list(MAP_WIDTH, MAP_HEIGHT)
-	perlin_noise = new/list(MAP_WIDTH, MAP_HEIGHT)
+	map_array = new/list(width, height)
+	raw_noise = get_raw_2d_noise(width, height)
+	perlin_noise = get_perlin_noise(raw_noise, width, height)
 
-	for (var/i in 1 to MAP_WIDTH)
-		for (var/j in 1 to MAP_HEIGHT)
-			raw_noise[i][j] = rand()
-
-	perlinnoise()
-
-	for (var/i in 1 to MAP_WIDTH)
-		for (var/j in 1 to MAP_HEIGHT)
+	for (var/i in 1 to width)
+		for (var/j in 1 to height)
 
 			var/result
 
@@ -520,20 +514,29 @@ var/global/datum/perlin/snow_map_noise
 
 			map_array[i][j] = result
 
-/datum/perlin/proc/smoothnoise(octave)
-	var/list/smooth = new/list(MAP_WIDTH, MAP_HEIGHT)
+/proc/get_raw_2d_noise(width, height)
+	var/list/raw_noise = new/list(width, height)
+
+	for (var/i in 1 to width)
+		for (var/j in 1 to height)
+			raw_noise[i][j] = rand()
+
+	return raw_noise
+
+/proc/get_smooth_noise(list/raw_noise, width, height, octave)
+	var/list/smooth = new/list(width, height)
 
 	var/samplePeriod = 1 << octave
 	var/sampleFreq = (1.0 / samplePeriod)
 
-	for (var/k in 1 to MAP_WIDTH)
+	for (var/k in 1 to width)
 		var/_i0 = FLOOR(k / samplePeriod, 1) * samplePeriod
-		var/_i1 = (_i0 + samplePeriod) % MAP_WIDTH
+		var/_i1 = (_i0 + samplePeriod) % width
 		var/h_blend = (k - _i0) * sampleFreq
 
-		for (var/l in 1 to  MAP_HEIGHT)
+		for (var/l in 1 to  height)
 			var/_j0 = FLOOR(l / samplePeriod, 1) * samplePeriod
-			var/_j1 = (_j0 + samplePeriod) % MAP_HEIGHT
+			var/_j1 = (_j0 + samplePeriod) % height
 			var/v_blend = (l - _j0) * sampleFreq
 
 			var/top = raw_noise[_i0+1][_j0+1] * (1 - h_blend) + h_blend * raw_noise[_i1+1][_j0+1]
@@ -543,24 +546,24 @@ var/global/datum/perlin/snow_map_noise
 
 	return smooth
 
-/datum/perlin/proc/perlinnoise()
-	var/persistance = 0.5
-	var/amplitude = 1.0
-	var/octave = 6
+/proc/get_perlin_noise(list/raw_noise, width, height, persistance = 0.5, amplitude = 1.0, octave = 6)
+	var/list/perlin_noise = new/list(width, height)
 
 	var/totalAmp = 0.0
 	var/list/smooth
 
 	for(var/o in octave to 1 step -1)
-		smooth = smoothnoise(o)
+		smooth = get_smooth_noise(raw_noise, width, height, o)
 		amplitude = amplitude * persistance
 		totalAmp += amplitude
-		for(var/i in 1 to MAP_WIDTH)
-			for(var/j in 1 to MAP_WIDTH)
+		for(var/i in 1 to width)
+			for(var/j in 1 to height)
 				if(!isnum(perlin_noise[i][j]))
 					perlin_noise[i][j] = 0
 				perlin_noise[i][j] += (smooth[i][j] * amplitude)
 
-	for(var/i in 1 to MAP_WIDTH)
-		for(var/j in 1 to MAP_WIDTH)
+	for(var/i in 1 to width)
+		for(var/j in 1 to height)
 			perlin_noise[i][j] = FLOOR(perlin_noise[i][j] / totalAmp, 1)
+
+	return perlin_noise
