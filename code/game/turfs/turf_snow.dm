@@ -38,39 +38,11 @@
 			prob(80);icon_state + "0",
 			prob(30);icon_state + "[rand(1,12)]"
 			)
-		if(mapload && populate_flora())
-			return
 		if(ispath(basedatum))
 			basedatum = new basedatum
 
 /turf/simulated/snow/Destroy()
 	return QDEL_HINT_LETMELIVE
-
-/turf/simulated/snow/proc/populate_flora()
-	if(locate(/obj/structure, src)) // shuttles
-		return
-	if(snow_map_noise)
-		var/land_type = snow_map_noise.map_array[x][y]
-		switch(land_type)
-			if("flora")
-				if(!prob(35))
-					return
-				var/snow_flora = pick(
-					prob(65);/obj/structure/flora/grass/both,
-					prob(35);/obj/structure/flora/bush,
-					prob(10);/obj/structure/flora/tree/pine,
-					prob(10);/obj/structure/flora/tree/dead
-					)
-
-				var/obj/O = new snow_flora(src)
-
-				if(!QDELETED(O) && prob(1) && prob(5))
-					new /mob/living/simple_animal/hostile/mimic/copy(src, O)
-			if("mine_rocks")
-				new /obj/structure/flora/mine_rocks(src)
-			if("ice")
-				ChangeTurf(/turf/simulated/snow/ice)
-				return TRUE
 
 /turf/simulated/snow/attack_paw(mob/user)
 	return attack_hand(user)
@@ -116,10 +88,6 @@
 			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 
 /turf/simulated/snow/Entered(atom/movable/AM)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
-		return
-
 	..()
 
 	if(!SSticker || !SSticker.mode)
@@ -472,98 +440,3 @@
 
 /obj/item/fish_carp/mega/update_icon()
 	return
-
-// Noise source: codepen.io/yutt/pen/rICHm
-var/global/datum/perlin/snow_map_noise
-
-/datum/perlin
-	var/list/map_array
-
-	var/MAP_WIDTH
-	var/MAP_HEIGHT
-	var/list/raw_noise
-	var/list/perlin_noise
-
-/datum/perlin/New(width, height)
-	MAP_WIDTH = width
-	MAP_HEIGHT = height
-
-	map_array = new/list(width, height)
-	raw_noise = get_raw_2d_noise(width, height)
-	perlin_noise = get_perlin_noise(raw_noise, width, height)
-
-	for (var/i in 1 to width)
-		for (var/j in 1 to height)
-
-			var/result
-
-			if (perlin_noise[i][j] > 200)
-				result = "empty"
-			else if (perlin_noise[i][j] > 100)
-				if(prob(1) && prob(15))
-					result = "mine_rocks"
-				else
-					result = "flora"
-			else if (perlin_noise[i][j] > 60)
-				if(prob(1) && prob(5))
-					result = "mine_rocks"
-				else
-					result = "empty"
-			else
-				result = "ice"
-
-			map_array[i][j] = result
-
-/proc/get_raw_2d_noise(width, height)
-	var/list/raw_noise = new/list(width, height)
-
-	for (var/i in 1 to width)
-		for (var/j in 1 to height)
-			raw_noise[i][j] = rand()
-
-	return raw_noise
-
-/proc/get_smooth_noise(list/raw_noise, width, height, octave)
-	var/list/smooth = new/list(width, height)
-
-	var/samplePeriod = 1 << octave
-	var/sampleFreq = (1.0 / samplePeriod)
-
-	for (var/k in 1 to width)
-		var/_i0 = FLOOR(k / samplePeriod, 1) * samplePeriod
-		var/_i1 = (_i0 + samplePeriod) % width
-		var/h_blend = (k - _i0) * sampleFreq
-
-		for (var/l in 1 to  height)
-			var/_j0 = FLOOR(l / samplePeriod, 1) * samplePeriod
-			var/_j1 = (_j0 + samplePeriod) % height
-			var/v_blend = (l - _j0) * sampleFreq
-
-			var/top = raw_noise[_i0+1][_j0+1] * (1 - h_blend) + h_blend * raw_noise[_i1+1][_j0+1]
-			var/bottom = raw_noise[_i0+1][_j1+1] * (1 - h_blend) + h_blend * raw_noise[_i1+1][_j1+1]
-
-			smooth[k][l] = FLOOR((top * (1 - v_blend) + v_blend * bottom) * 255, 1)
-
-	return smooth
-
-/proc/get_perlin_noise(list/raw_noise, width, height, persistance = 0.5, amplitude = 1.0, octave = 6)
-	var/list/perlin_noise = new/list(width, height)
-
-	var/totalAmp = 0.0
-	var/list/smooth
-
-	for(var/o in octave to 1 step -1)
-		smooth = get_smooth_noise(raw_noise, width, height, o)
-		amplitude = amplitude * persistance
-		totalAmp += amplitude
-		for(var/i in 1 to width)
-			for(var/j in 1 to height)
-				if(!isnum(perlin_noise[i][j]))
-					perlin_noise[i][j] = 0
-				perlin_noise[i][j] += (smooth[i][j] * amplitude)
-
-	for(var/i in 1 to width)
-		for(var/j in 1 to height)
-			perlin_noise[i][j] = FLOOR(perlin_noise[i][j] / totalAmp, 1)
-
-	return perlin_noise

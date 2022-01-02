@@ -49,8 +49,7 @@ SUBSYSTEM_DEF(mapping)
 	// Space structures
 	spawn_space_structures()
 
-	if(!snow_map_noise && SSmapping.get_level(2).envtype == ENV_TYPE_SNOW)
-		snow_map_noise = new(world.maxx, world.maxy)
+	populate_environment()
 
 	..()
 
@@ -144,6 +143,14 @@ SUBSYSTEM_DEF(mapping)
 	message_admins("Couldn't find position for [structure.structure_id]")
 #endif
 	return null
+
+/datum/controller/subsystem/mapping/proc/populate_environment()
+	for(var/datum/space_level/level as anything in z_list)
+		if(!level.post_gen_type)
+			continue
+		var/datum/map_generator/gen = new level.post_gen_type
+		gen.defineRegion(locate(1, 1, level.z_value), locate(world.maxx, world.maxy, level.z_value))
+		gen.generate()
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT

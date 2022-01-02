@@ -33,7 +33,7 @@
 // enum - environment type
 #define ZTRAIT_ENV_TYPE "Environment Type"
     // ENV_TYPE_SPACE if absent - no environment generation
-    #define ENV_TYPE_SPACE "Space"
+    #define ENV_TYPE_SPACE null
     // ENV_TYPE_SNOW - snow environment generation
     #define ENV_TYPE_SNOW "Snow"
 

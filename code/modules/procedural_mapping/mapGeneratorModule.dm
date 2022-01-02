@@ -37,7 +37,7 @@
 	for(var/turfPath in spawnableTurfs)
 
 		//Clustering!
-		if(clusterMax && clusterMin)
+		if(clusterCheckFlags != CLUSTER_CHECK_NONE)
 
 			//You're the same as me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
@@ -72,7 +72,7 @@
 		for(var/atomPath in spawnableAtoms)
 
 			//Clustering!
-			if(clusterMax && clusterMin)
+			if(clusterCheckFlags != CLUSTER_CHECK_NONE)
 
 				//You're the same as me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)

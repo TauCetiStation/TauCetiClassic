@@ -2,10 +2,11 @@
 	var/name = "NAME MISSING"
 	var/list/traits
 	var/z_value = 1 //actual z placement
-	var/linkage = CROSSLINKED
-
-	// environment variables
+	var/linkage = UNAFFECTED
 	var/envtype = ENV_TYPE_SPACE
+
+	// environment-based variables
+	var/post_gen_type
 	var/turf/base_turf_type
 	var/datum/gas_mixture/base_air
 
@@ -14,7 +15,7 @@
 	name = new_name
 	traits = new_traits
 	linkage = new_traits[ZTRAIT_LINKAGE]
-	envtype = new_traits[ZTRAIT_ENV_TYPE] || envtype
+	envtype = new_traits[ZTRAIT_ENV_TYPE]
 
 	update_envtype()
 
@@ -24,6 +25,7 @@
 			base_turf_type = /turf/space
 		if (ENV_TYPE_SNOW)
 			base_turf_type = /turf/simulated/snow
+			post_gen_type = /datum/map_generator/snow
 		else
 			error("[envtype] is not valid environment type")
 
