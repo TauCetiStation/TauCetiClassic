@@ -49,12 +49,20 @@
 		gymnast.nutrition -= 6
 		gymnast.overeatduration -= 8
 		gymnast.apply_effect(15,AGONY,0)
+		if(gymnast.halloss > 40 && !HAS_TRAIT(gymnast, TRAIT_PUMPED_LEGS))
+			ADD_TRAIT(gymnast, TRAIT_PUMPED_CHEST, PUMPED_TRAIT)
+			gymnast.regenerate_icons()
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_chest, gymnast), 9000, TIMER_CLIENT_TIME)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
 
 		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 			user.try_mutate_to_hulk()
+
+/obj/structure/stacklifter/proc/unpump_chest(mob/living/carbon/human/gymnast)
+	REMOVE_TRAIT(gymnast, TRAIT_PUMPED_CHEST, PUMPED_TRAIT)
+	gymnast.regenerate_icons()
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -115,6 +123,10 @@
 		gymnast.nutrition -= 12
 		gymnast.overeatduration -= 16
 		gymnast.apply_effect(25,AGONY,0)
+		if(gymnast.halloss > 40 && !HAS_TRAIT(gymnast, TRAIT_PUMPED_LEGS))
+			ADD_TRAIT(gymnast, TRAIT_PUMPED_ARMS, PUMPED_TRAIT)
+			gymnast.regenerate_icons()
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_arms, gymnast), 9000, TIMER_CLIENT_TIME)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		cut_overlay(W)
@@ -122,3 +134,7 @@
 
 		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 			user.try_mutate_to_hulk()
+
+/obj/structure/weightlifter/proc/unpump_arms(mob/living/carbon/human/gymnast)
+	REMOVE_TRAIT(gymnast, TRAIT_PUMPED_ARMS, PUMPED_TRAIT)
+	gymnast.regenerate_icons()

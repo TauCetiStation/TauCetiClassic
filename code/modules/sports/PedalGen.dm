@@ -77,6 +77,10 @@
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
 				pedaler.apply_effect(1,AGONY,0)
+				if(pedaler.halloss > 40 && !HAS_TRAIT(pedaler, TRAIT_PUMPED_LEGS))
+					ADD_TRAIT(pedaler, TRAIT_PUMPED_LEGS, PUMPED_TRAIT)
+					pedaler.regenerate_icons()
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_legs, pedaler), 9000, TIMER_CLIENT_TIME)
 				if(pedaler.halloss > 80)
 					to_chat(user, "You pushed yourself too hard.")
 					pedaler.apply_effect(24,AGONY,0)
@@ -86,6 +90,10 @@
 			else
 				to_chat(user, "You are too exausted to pedal that thing.")
 		return 1
+
+/obj/structure/stool/bed/chair/pedalgen/proc/unpump_legs(mob/living/carbon/human/pedaler)
+	REMOVE_TRAIT(pedaler, TRAIT_PUMPED_LEGS, PUMPED_TRAIT)
+	pedaler.regenerate_icons()
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
 	if(!ishuman(user))

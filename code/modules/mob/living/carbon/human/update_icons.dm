@@ -249,6 +249,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			standing += mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
 
+	if(HAS_TRAIT(src, TRAIT_PUMPED_ARMS))
+		standing += mutable_appearance('icons/mob/human_races/special_overlays.dmi', "kachok_arms", -BODY_LAYER)
+	if(HAS_TRAIT(src, TRAIT_PUMPED_CHEST))
+		standing += mutable_appearance('icons/mob/human_races/special_overlays.dmi', "kachok_chest", -BODY_LAYER)
+	if(HAS_TRAIT(src, TRAIT_PUMPED_LEGS))
+		standing += mutable_appearance('icons/mob/human_races/special_overlays.dmi', "kachok_legs", -BODY_LAYER)
+
 	update_tail_showing()
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
