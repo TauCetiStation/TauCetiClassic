@@ -2246,6 +2246,8 @@
 	if(!HAS_TRAIT(src, TRAIT_PUMPED_ARMS) && !HAS_TRAIT(src, TRAIT_FAT))
 		if(pumped_arms < 3)
 			pumped_arms += coefficient
+			if(reagents.has_reagent("tricordrazine"))
+				pumped_arms += coefficient
 		else
 			ADD_TRAIT(src, TRAIT_PUMPED_ARMS, PUMPED_TRAIT)
 		regenerate_icons()
@@ -2260,6 +2262,8 @@
 	if(!HAS_TRAIT(src, TRAIT_PUMPED_CHEST) && !HAS_TRAIT(src, TRAIT_FAT))
 		if(pumped_chest < 5)
 			pumped_chest += coefficient
+			if(reagents.has_reagent("tricordrazine"))
+				pumped_chest += coefficient
 		else
 			ADD_TRAIT(src, TRAIT_PUMPED_CHEST, PUMPED_TRAIT)
 		regenerate_icons()
@@ -2274,6 +2278,8 @@
 	if(!HAS_TRAIT(src, TRAIT_PUMPED_LEGS) && !HAS_TRAIT(src, TRAIT_FAT))
 		if(pumped_legs < 8)
 			pumped_legs += coefficient
+			if(reagents.has_reagent("tricordrazine"))
+				pumped_legs += coefficient
 		else
 			ADD_TRAIT(src, TRAIT_PUMPED_LEGS, PUMPED_TRAIT)
 		regenerate_icons()

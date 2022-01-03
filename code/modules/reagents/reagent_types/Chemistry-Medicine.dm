@@ -294,11 +294,6 @@
 		M.heal_bodypart_damage(0, REM)
 	if(M.getToxLoss() && prob(80))
 		M.adjustToxLoss(-1 * REM)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.pump_arms(1)
-		H.pump_chest(1)
-		H.pump_legs(1)
 
 /datum/reagent/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
