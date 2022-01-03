@@ -20,6 +20,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/hair_ruffle_timer
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
@@ -57,6 +58,8 @@
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
+
+	hair_ruffle_timer = addtimer(CALLBACK(src, .proc/ruffle_hair), 10 MINUTES + rand(0, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	if(dna)
 		dna.real_name = real_name
@@ -2241,3 +2244,11 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/proc/ruffle_hair()
+	h_style = pick(hair_styles_list[h_style].messy)
+	f_style = pick(facial_hair_styles_list[f_style].messy)
+	regenerate_icons()
+	if(timeleft(hair_ruffle_timer))
+		deltimer(hair_ruffle_timer)
+	hair_ruffle_timer = addtimer(CALLBACK(src, .proc/ruffle_hair), 10 MINUTES + rand(0, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)

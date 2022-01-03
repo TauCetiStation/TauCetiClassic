@@ -232,7 +232,7 @@
 
 	H.f_style = "Shaved"
 	if(R.dna.species == HUMAN) //no more xenos losing ears/tentacles
-		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		H.ruffle_hair()
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
