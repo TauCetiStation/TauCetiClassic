@@ -44,13 +44,13 @@
 
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
-	var/list/messy = list()
+	var/list/messy = null
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
 	icon_state = "bald"
 	species_allowed = list(HUMAN , UNATHI , DIONA)
-	messy = list("Bald")
+	messy = list("Skinhead")
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
@@ -1023,7 +1023,7 @@ datum/sprite_accessory/hair/long2
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human_face.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix /w beards :P)
-	var/list/messy = list()
+	var/list/messy = null
 
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
