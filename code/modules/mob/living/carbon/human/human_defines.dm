@@ -119,3 +119,7 @@
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	var/pumped_arms = 0
+	var/pumped_chest = 0
+	var/pumped_legs = 0

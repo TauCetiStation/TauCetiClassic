@@ -2241,3 +2241,45 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/proc/pump_arms(coefficient)
+	if(!HAS_TRAIT(src, TRAIT_PUMPED_ARMS) && !HAS_TRAIT(src, TRAIT_FAT))
+		if(pumped_arms < 3)
+			pumped_arms += coefficient
+		else
+			ADD_TRAIT(src, TRAIT_PUMPED_ARMS, PUMPED_TRAIT)
+		regenerate_icons()
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_arms), 18000, TIMER_CLIENT_TIME)
+
+/mob/living/carbon/human/proc/unpump_arms()
+	pumped_arms = 0
+	REMOVE_TRAIT(src, TRAIT_PUMPED_ARMS, PUMPED_TRAIT)
+	regenerate_icons()
+
+/mob/living/carbon/human/proc/pump_chest(coefficient)
+	if(!HAS_TRAIT(src, TRAIT_PUMPED_CHEST) && !HAS_TRAIT(src, TRAIT_FAT))
+		if(pumped_chest < 5)
+			pumped_chest += coefficient
+		else
+			ADD_TRAIT(src, TRAIT_PUMPED_CHEST, PUMPED_TRAIT)
+		regenerate_icons()
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_chest), 18000, TIMER_CLIENT_TIME)
+
+/mob/living/carbon/human/proc/unpump_chest()
+	pumped_chest = 0
+	REMOVE_TRAIT(src, TRAIT_PUMPED_CHEST, PUMPED_TRAIT)
+	regenerate_icons()
+
+/mob/living/carbon/human/proc/pump_legs(coefficient)
+	if(!HAS_TRAIT(src, TRAIT_PUMPED_LEGS) && !HAS_TRAIT(src, TRAIT_FAT))
+		if(pumped_legs < 8)
+			pumped_legs += coefficient
+		else
+			ADD_TRAIT(src, TRAIT_PUMPED_LEGS, PUMPED_TRAIT)
+		regenerate_icons()
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/unpump_legs), 18000, TIMER_CLIENT_TIME)
+
+/mob/living/carbon/human/proc/unpump_legs()
+	pumped_legs = 0
+	REMOVE_TRAIT(src, TRAIT_PUMPED_LEGS, PUMPED_TRAIT)
+	regenerate_icons()
