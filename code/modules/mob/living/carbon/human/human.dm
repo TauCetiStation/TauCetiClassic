@@ -623,7 +623,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(5, 5)
+	attack_heart(clamp(shock_damage - 10, 0, 100), shock_damage)//small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
