@@ -39,10 +39,10 @@
 
 	return ..()
 
-/obj/item/weapon/table_parts/attack_self(mob/user, turf/simulated/wall)
+/obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
 	if(!T.density)
-		new /obj/structure/table( user.loc )
+		new table_type( user.loc )
 		qdel(src)
 	return
 
@@ -58,13 +58,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/reinforced/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/reinforced( user.loc )
-		qdel(src)
-	return
-
 /*
  * Glass Table Parts
  */
@@ -75,12 +68,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/glass/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/glass( user.loc )
-		qdel(src)
-	return
 
 /*
  * Wooden Table Parts
@@ -101,13 +88,6 @@
 
 	return FALSE
 
-/obj/item/weapon/table_parts/wood/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/woodentable( user.loc )
-		qdel(src)
-	return
-
 /*
  * Fancy Wooden Table Parts
  */
@@ -117,21 +97,6 @@
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/item/weapon/table_parts/wood/fancy/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/woodentable/fancy( user.loc )
-		qdel(src)
-	return
-
-/obj/item/weapon/table_parts/wood/fancy/black/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/woodentable/fancy/black( user.loc )
-		qdel(src)
-	return
-
 
 /*
  * Poker Table Parts
@@ -144,13 +109,6 @@
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user)
-	var/turf/simulated/T = get_turf(user)
-	if(!T.density)
-		new /obj/structure/table/woodentable/poker( user.loc )
-		qdel(src)
-	return
 
 /*
  * Rack Parts
