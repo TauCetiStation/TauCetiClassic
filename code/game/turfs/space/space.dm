@@ -45,7 +45,7 @@
 /turf/space/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/proc/build_floor_support(obj/item/C, mob/user, var/volume = 50)
+/turf/proc/build_floor_support(obj/item/C, mob/user, volume = 50)
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -82,10 +82,8 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 
-
 /turf/space/attackby(obj/item/C, mob/user)
 	build_floor_support(C, user)
-
 
 // Ported from unstable r355
 
