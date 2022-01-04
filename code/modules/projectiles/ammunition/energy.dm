@@ -55,6 +55,11 @@
 	e_cost = 75
 	select_name = "redtag"
 
+/obj/item/ammo_casing/energy/laser/retro
+	projectile_type = /obj/item/projectile/energy/laser
+	fire_sound = 'sound/weapons/guns/retrolaser.ogg'
+	select_name = "retro"
+
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
 	select_name = "bolt"
