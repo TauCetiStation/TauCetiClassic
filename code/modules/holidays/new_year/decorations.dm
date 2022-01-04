@@ -109,7 +109,6 @@
 
 	layer = 5
 	var/gifts_dealt = 0
-	var/list/decals = list()
 	var/flicker_raising = FALSE
 	var/light_flicker = 5
 
@@ -162,20 +161,14 @@
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] stands on \his tiptoes to hang [I] on [src].</span>")
-	if(!do_after(user, 20, TRUE, src))
+	if(!do_after(user, 10, TRUE, src))
 		to_chat(user, "<span class='warning'>You fail to hang [I] on [src]!</span>")
 		return
-	. = TRUE //passing info to the parent's proc
 	. = ..()
 	if(istype(I, /obj/item/organ/external/head))
-		I.pixel_y -= 10 // Head always has 10 pixels shift
 		I.set_dir(2) // Rotate head face to us
 		I.transform = turn(null, null)	//Turn it to initial angle
-	I.anchored = TRUE
-	decals.Add(I)
 	I.layer = 5.1
-	I.pixel_x += pixel_x
-	I.pixel_y += pixel_y
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -199,16 +192,6 @@
 	else
 		shake()
 	return
-
-/obj/item/device/flashlight/lamp/fir/special/Moved(atom/OldLoc, Dir)
-	. = ..()
-	for(var/obj/item/I in decals)
-		if(prob(5))
-			I.anchored = FALSE
-			decals.Remove(I)
-			I.SpinAnimation(5, 1)
-			continue
-		I.Move(loc)
 
 /obj/item/device/flashlight/lamp/fir/special/verb/shake()
 	set name = "Shake tree"
@@ -251,20 +234,6 @@
 			gifts_dealt = world.time
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
-
-	/* if(decals.len && (C.a_intent != INTENT_HELP))
-		for(var/item in decals)
-			var/obj/item/I = item
-			if(!I)
-				return
-			I.forceMove(src.loc)
-			I.layer = initial(layer)
-			I.pixel_x = initial(pixel_x)
-			I.pixel_y = initial(pixel_y)
-			I.anchored = FALSE
-			decals.Cut()
-
-		visible_message("Something dropped from \the [src].") */
 
 /obj/item/device/flashlight/lamp/fir/special/alternative
 	icon = 'icons/obj/flora/pinetrees.dmi'

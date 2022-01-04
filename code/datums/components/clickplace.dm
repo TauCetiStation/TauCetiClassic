@@ -82,13 +82,17 @@
 	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 		return
 
-	//var/p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	//var/p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	var/p_x = text2num(click_params[ICON_X]) - world.icon_size * 0.5
-	var/p_y = text2num(click_params[ICON_Y]) - world.icon_size * 0.5
+	var/half_icon_size = world.icon_size * 0.5
+
+	var/p_x = text2num(click_params[ICON_X]) - half_icon_size
+	var/p_y = text2num(click_params[ICON_Y]) - half_icon_size
 
 	var/atom/A = parent
-	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x - I.pixel_x, additional_pixel_y=p_y - I.pixel_y))
+
+	p_x += A.pixel_x - I.pixel_x
+	p_y += A.pixel_y - I.pixel_y
+
+	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x, additional_pixel_y=p_y))
 		return FALSE
 
 	if(on_place)

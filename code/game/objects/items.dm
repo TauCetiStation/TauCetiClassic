@@ -277,18 +277,7 @@
 		to_chat(user, stat_flavor)
 
 /obj/item/attack_hand(mob/user)
-	if (!user)
-		return
-
-	if(anchored)
-		//Taking items from a Xmas tree
-		var/turf/S = get_turf(src)
-		for(var/obj/item/device/flashlight/lamp/fir/special/T in S.contents)
-			if(src in T.decals)
-				user.visible_message("<span class='warning'>[user] tries to take [src] from [T]!</span>")
-				if(do_after(user, 40, TRUE, src))
-					anchored = FALSE
-					return attack_hand(user)
+	if (!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
