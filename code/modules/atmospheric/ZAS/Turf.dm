@@ -9,23 +9,12 @@
 /turf/simulated/air_unsim = FALSE
 /turf/simulated/snow/air_unsim = TRUE
 /turf/simulated/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
-/turf/simulated/var/obj/effect/overlay/frozen/frozen_overlay
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
 		vis_contents += graphic_add
 	if(graphic_remove && graphic_remove.len)
 		vis_contents -= graphic_remove
-
-/turf/simulated/proc/temperature_act(temp = T0C)
-	if(!is_station_level(z))
-		return
-	if(temp < T0C)
-		if(!frozen_overlay)
-			frozen_overlay = new(src)
-	else
-		if(frozen_overlay)
-			QDEL_NULL(frozen_overlay)
 
 /turf/proc/update_air_properties()
 	var/block = c_airblock(src)

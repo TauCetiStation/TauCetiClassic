@@ -281,9 +281,6 @@
 		if(S.zone)
 			S.zone.rebuild()
 
-		if(S.frozen_overlay)
-			QDEL_NULL(S.frozen_overlay)
-
 	arguments.Insert(0, src)
 
 	//BEGIN: ECS SHIT (UNTIL SOMEONE MAKES POSSIBLE TO USE QDEL IN THIS PROC FOR TURFS)
