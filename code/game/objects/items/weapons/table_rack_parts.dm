@@ -42,9 +42,10 @@
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
 	if(!T.density)
-		new table_type( user.loc )
+		new table_type( T )
 		qdel(src)
-	return
+	else
+		to_chat(user, "<span class='warning'>YOU CAN DO IT?!</span>")
 
 
 /*
@@ -126,4 +127,3 @@
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)
 		qdel(src)
-	return
