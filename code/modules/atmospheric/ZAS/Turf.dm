@@ -339,11 +339,13 @@
 		return air
 
 /turf/proc/make_air()
-	air = new/datum/gas_mixture
-	air.temperature = temperature
-	air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
-	air.group_multiplier = 1
-	air.volume = CELL_VOLUME
+	air = new
+	if(airless)
+		var/datum/space_level/my_level = SSmapping.z_list[z]
+		air.copy_from(my_level.base_air)
+	else
+		air.temperature = temperature
+		air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
 
 /turf/simulated/proc/c_copy_air()
 	if(air_unsim)

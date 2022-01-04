@@ -1,9 +1,7 @@
 /turf/simulated/floor/airless
 	icon_state = "floor"
 	name = "airless floor"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/airless/atom_init()
 	. = ..()
@@ -109,9 +107,7 @@
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0.001
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/plating
 	name = "plating"
@@ -123,9 +119,7 @@
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
 	name = "airless plating"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/plating/airless/atom_init()
 	. = ..()
@@ -406,7 +400,6 @@
 	name = "catwalk"
 	desc = "Cats really don't like these things."
 
-	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 	intact = 0

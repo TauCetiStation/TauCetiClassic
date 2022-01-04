@@ -8,12 +8,11 @@
 	name = "Rock"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "rock"
-	oxygen = 0
-	nitrogen = 0
+
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
-	temperature = TCMB
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
@@ -608,9 +607,6 @@
 	name = "Asteroid"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
 	icon_plating = "asteroid"
 	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
 	has_resources = TRUE

@@ -7,6 +7,7 @@
 	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
+	var/airless = FALSE
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
