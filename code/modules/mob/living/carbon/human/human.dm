@@ -20,7 +20,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
-	var/hair_ruffle_timer
+	var/hair_ruffle_time = 0
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
@@ -59,7 +59,7 @@
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
 
-	hair_ruffle_timer = addtimer(CALLBACK(src, .proc/ruffle_hair), 10 MINUTES + rand(0, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	hair_ruffle_time = world.time + rand(6000,12000)
 
 	if(dna)
 		dna.real_name = real_name
@@ -2254,6 +2254,4 @@
 		f_style = pick(Beard.messy)
 	update_hair()
 
-	if(timeleft(hair_ruffle_timer))
-		deltimer(hair_ruffle_timer)
-	hair_ruffle_timer = addtimer(CALLBACK(src, .proc/ruffle_hair), 10 MINUTES + rand(0, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	hair_ruffle_time = world.time + rand(6000,12000)
