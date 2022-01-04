@@ -19,14 +19,17 @@
 /datum/map_generator_module/border/generate()
 	if(!mother)
 		return
-	var/list/map = mother.map
-	for(var/turf/T in map)
-		if(is_border(T))
+	var/list/map_dict = list()
+	for(var/turf/T in mother.map)
+		map_dict[T] = TRUE
+
+	for(var/turf/T as anything in map_dict)
+		if(is_border(T, map_dict))
 			place(T)
 
-/datum/map_generator_module/border/proc/is_border(turf/T)
+/datum/map_generator_module/border/proc/is_border(turf/T, list/map_dict)
 	for(var/direction in global.cardinal)
-		if (get_step(T, direction) in mother.map)
+		if (map_dict[get_step(T, direction)])
 			continue
 		return 1
 	return 0
