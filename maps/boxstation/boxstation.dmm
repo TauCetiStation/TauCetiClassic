@@ -80290,13 +80290,7 @@
 	},
 /area/station/hallway/primary/central)
 "qNb" = (
-/obj/machinery/smartfridge/chemistry,
-/obj/machinery/door/window/eastright{
-	dir = 2;
-	layer = 2.9;
-	name = "Chemistry Storage";
-	req_access = list(5)
-	},
+/obj/machinery/smartfridge/secure/medbay,
 /turf/simulated/wall/r_wall,
 /area/station/medical/chemistry)
 "qNK" = (
