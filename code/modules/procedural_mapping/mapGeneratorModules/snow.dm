@@ -36,10 +36,7 @@
         if("mine_rocks")
             new /obj/structure/flora/mine_rocks(T)
         if("ice")
-            if(T.loc && !istype(T.loc, /area/shuttle)) // prevent placing ice under shuttles
-                T.ChangeTurf(/turf/simulated/snow/ice)
-            else
-                return FALSE
+            T.ChangeTurf(/turf/simulated/snow/ice)
         else
             return FALSE
 

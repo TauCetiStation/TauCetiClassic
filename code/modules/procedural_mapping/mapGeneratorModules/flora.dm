@@ -71,6 +71,8 @@
         return FALSE
     if(T.density)
         return FALSE
+    if(istype(T.loc, /area/shuttle)) // prevent placing flora under shuttles
+        return FALSE
     for(var/atom/A in T)
         if(A.density)
             return FALSE

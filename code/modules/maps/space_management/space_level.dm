@@ -9,6 +9,8 @@
 	var/post_gen_type
 	var/turf/base_turf_type
 	var/datum/gas_mixture/base_air
+	var/external_sensor_pressure
+	var/image/turf_image
 
 /datum/space_level/New(new_z, new_name, list/new_traits = list())
 	z_value = new_z
@@ -29,7 +31,7 @@
 		else
 			error("[envtype] is not valid environment type")
 
-	//Properties for open tiles (/floor)
+	//Properties for environment tiles
 	var/oxygen = initial(base_turf_type.oxygen)
 	var/carbon_dioxide = initial(base_turf_type.carbon_dioxide)
 	var/nitrogen = initial(base_turf_type.nitrogen)
@@ -37,4 +39,13 @@
 
 	base_air = new(_temperature=initial(base_turf_type.temperature))
 	base_air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
+
+	external_sensor_pressure = base_air.return_pressure()
+
+	turf_image = image(
+		initial(base_turf_type.icon),
+		initial(base_turf_type.icon_state),
+		layer=initial(base_turf_type.layer)
+	)
+	turf_image.plane = initial(base_turf_type.plane)
 

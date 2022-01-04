@@ -27,7 +27,7 @@
 /datum/computer/file/embedded_program/New()
 	..()
 	memory["chamber_sensor_pressure"] = ONE_ATMOSPHERE
-	memory["external_sensor_pressure"] = 77					//assume vacuum for simple airlock controller
+	memory["external_sensor_pressure"] = 0					//assume vacuum for simple airlock controller
 	memory["internal_sensor_pressure"] = ONE_ATMOSPHERE
 	memory["exterior_status"] = list(state = "closed", lock = "locked")		//assume closed and locked in case the doors dont report in
 	memory["interior_status"] = list(state = "closed", lock = "locked")

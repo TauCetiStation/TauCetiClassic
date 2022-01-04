@@ -421,11 +421,8 @@
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()
 	var/image/I
-	if(is_station_level(z))
-		I = image('icons/turf/snow2.dmi', "snow0", layer=TURF_LAYER)
-	else
-		I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-		I.plane = PLANE_SPACE
+	var/datum/space_level/my_level = SSmapping.z_list[z]
+	I = my_level.turf_image
 	underlays += I
 
 	var/dirs = 0

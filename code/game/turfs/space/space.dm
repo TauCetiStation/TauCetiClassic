@@ -45,8 +45,7 @@
 /turf/space/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/space/attackby(obj/item/C, mob/user)
-
+/turf/proc/build_floor_support(obj/item/C, mob/user, var/volume = 50)
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -57,7 +56,7 @@
 				return
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
-			if(R.use_tool(src, user, 30, amount = 2, volume = 50))
+			if(R.use_tool(src, user, 30, amount = 2, volume = volume))
 				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
@@ -68,9 +67,8 @@
 		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
-		return
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	else if (istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
@@ -83,6 +81,10 @@
 			return
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
+
+
+/turf/space/attackby(obj/item/C, mob/user)
+	build_floor_support(C, user)
 
 
 // Ported from unstable r355

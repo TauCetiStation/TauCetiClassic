@@ -103,7 +103,7 @@ Class Procs:
 
 /connection/proc/update()
 //	log_debug("Updated, \...")
-	if(!istype(A,/turf/simulated) || A.air_unsim)
+	if(!istype(A) || A.air_unsim)
 //		log_debug("Invalid A.")
 		erase()
 		return
@@ -118,7 +118,7 @@ Class Procs:
 	else
 		mark_direct()
 
-	var/b_is_space = !istype(B,/turf/simulated) || B.air_unsim
+	var/b_is_space = !istype(B) || B.air_unsim
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)

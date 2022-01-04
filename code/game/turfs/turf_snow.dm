@@ -1,7 +1,7 @@
 /turf/simulated/snow
 	icon = 'icons/turf/snow2.dmi'
 	name = "snow"
-	icon_state = "snow"
+	icon_state = "snow0"
 	dynamic_lighting = TRUE
 
 	basetype = /turf/simulated/snow
@@ -34,10 +34,8 @@
 		set_light(1.4, 1, "#0000ff")
 
 	if(type == /turf/simulated/snow)
-		icon_state = pick(
-			prob(80);icon_state + "0",
-			prob(30);icon_state + "[rand(1,12)]"
-			)
+		if(prob(27)) // ~= 100*30/110
+			icon_state = "snow[rand(1,12)]"
 		if(ispath(basedatum))
 			basedatum = new basedatum
 
@@ -48,44 +46,7 @@
 	return attack_hand(user)
 
 /turf/simulated/snow/attackby(obj/item/C, mob/user)
-	if (istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		user.SetNextMove(CLICK_CD_RAPID)
-		if(L)
-			if(R.get_amount() < 2)
-				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
-				return
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
-			if(do_after(user,30,target = src))
-				if(!R.use(2))
-					return
-				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
-				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				qdel(L)
-				return
-
-		if(!R.use(1))
-			return
-		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-		ReplaceWithLattice()
-
-	else if (istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
-			if(!S.use(1))
-				return
-			qdel(L)
-			user.SetNextMove(CLICK_CD_RAPID)
-			playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-			S.build(src)
-			return
-		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
+	build_floor_support(C, user, 100)
 
 /turf/simulated/snow/Entered(atom/movable/AM)
 	..()
