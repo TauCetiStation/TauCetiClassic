@@ -101,12 +101,21 @@
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = O_MOUTH, mob/living/carbon/human/AH = null)
-	if(location == O_MOUTH)
-		H.f_style = "Shaved"
-	else
-		H.h_style = "Skinhead"
+	var/mob/user = H
 	if(AH)
 		H.log_combat(AH, "shaved with [name]")
+		user = AH
+
+	if(location == O_MOUTH)
+		H.f_style = "Shaved"
+	else if(H.species.name == HUMAN)
+		//handle normal hair
+		var/new_style = input(user, "Select a hair style", "Grooming") as null|anything in list("Crewcut", "Bald", "Balding Hair", "Skinhead", "Flat Top", "Mohawk", "Rows", "Rows 2")
+		if(new_style)
+			H.h_style = new_style
+	else
+		H.h_style = "Skinhead"
+
 	H.update_hair()
 	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
@@ -186,6 +195,12 @@
 	item_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/sprite_accessory/hair/Prefered_Hair = hair_styles_list[user.client.prefs.h_style]
+		if(H.h_style in Prefered_Hair.messy)
+			H.h_style = Prefered_Hair.name
+		H.update_hair()
 	if(user.r_hand == src || user.l_hand == src)
 		user.visible_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a [].</span>", user, src, user.gender == FEMALE ? "lady" : "guy"))
 	return

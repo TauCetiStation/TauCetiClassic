@@ -2246,11 +2246,14 @@
 				Heart.heart_fibrillate()
 
 /mob/living/carbon/human/proc/ruffle_hair()
-	if(hair_styles_list[h_style].messy)
-		h_style = pick(hair_styles_list[h_style].messy)
-	if(facial_hair_styles_list[f_style].messy)
-		f_style = pick(facial_hair_styles_list[f_style].messy)
-	regenerate_icons()
+	var/datum/sprite_accessory/hair/Hair = hair_styles_list[h_style]
+	var/datum/sprite_accessory/hair/Beard = facial_hair_styles_list[f_style]
+	if(Hair.messy)
+		h_style = pick(Hair.messy)
+	if(Beard.messy)
+		f_style = pick(Beard.messy)
+	update_hair()
+
 	if(timeleft(hair_ruffle_timer))
 		deltimer(hair_ruffle_timer)
 	hair_ruffle_timer = addtimer(CALLBACK(src, .proc/ruffle_hair), 10 MINUTES + rand(0, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
