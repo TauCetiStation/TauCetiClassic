@@ -2244,7 +2244,7 @@
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
 
-/mob/living/carbon/human/proc/ruffle_hair(var/only_ruffle = TRUE)
+/mob/living/carbon/human/proc/ruffle_hair(only_ruffle = TRUE)
 	var/list/bedhead = list("Bedhead", "Bedhead 2", "Messy", "Long Hair 2", "Ahoge", "Vriska", "Long bedhead")
 	var/datum/sprite_accessory/hair/Hair = hair_styles_list[h_style]
 	var/datum/sprite_accessory/hair/Beard = facial_hair_styles_list[f_style]
