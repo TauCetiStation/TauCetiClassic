@@ -34,8 +34,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf))
-		//if(client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf) && client.prefs.show_runechat)
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
