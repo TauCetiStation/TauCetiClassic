@@ -374,6 +374,8 @@
 	if(H.wear_suit != src)
 		return
 
+	H.ruffle_hair()
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/rig/dropped(mob/user)

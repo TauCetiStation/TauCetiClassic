@@ -119,8 +119,6 @@
 	H.update_hair()
 	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
-	H.hair_ruffle_time = world.time + rand(6000,12000)
-
 
 /obj/item/weapon/razor/attack(mob/M, mob/user, def_zone)
 	if(ishuman(M))
@@ -203,7 +201,6 @@
 		if(H.h_style in Prefered_Hair.messy)
 			H.h_style = Prefered_Hair.name
 		H.update_hair()
-		H.hair_ruffle_time = world.time + rand(6000,12000)
 
 	if(user.r_hand == src || user.l_hand == src)
 		user.visible_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a [].</span>", user, src, user.gender == FEMALE ? "lady" : "guy"))

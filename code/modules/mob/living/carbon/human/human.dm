@@ -20,7 +20,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
-	var/hair_ruffle_time = 0
+
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
@@ -58,8 +58,6 @@
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
-
-	hair_ruffle_time = world.time + rand(6000,12000)
 
 	if(dna)
 		dna.real_name = real_name
@@ -627,6 +625,7 @@
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
 	attack_heart(5, 5)
+	ruffle_hair()
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -2245,13 +2244,13 @@
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
 
-/mob/living/carbon/human/proc/ruffle_hair()
+/mob/living/carbon/human/proc/ruffle_hair(var/only_ruffle = TRUE)
+	var/list/bedhead = list("Bedhead", "Bedhead 2", "Messy", "Long Hair 2", "Ahoge", "Vriska", "Long bedhead")
 	var/datum/sprite_accessory/hair/Hair = hair_styles_list[h_style]
 	var/datum/sprite_accessory/hair/Beard = facial_hair_styles_list[f_style]
-	if(Hair.messy)
-		h_style = pick(Hair.messy)
-	if(Beard.messy)
-		f_style = pick(Beard.messy)
+	if((only_ruffle && !(h_style in bedhead)) || !only_ruffle)
+		if(Hair.messy)
+			h_style = pick(Hair.messy)
+		if(Beard.messy)
+			f_style = pick(Beard.messy)
 	update_hair()
-
-	hair_ruffle_time = world.time + rand(6000,12000)

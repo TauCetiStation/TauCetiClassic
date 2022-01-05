@@ -41,6 +41,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
+		ruffle_hair()
 		return FALSE
 	..()
 

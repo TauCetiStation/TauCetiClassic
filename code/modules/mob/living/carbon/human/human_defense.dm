@@ -60,6 +60,7 @@
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
+				ruffle_hair()
 				var/obj/item/hand = get_active_hand()
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
@@ -344,9 +345,12 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
+				if(prob(10))
+					ruffle_hair()
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
+					ruffle_hair()
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
 						for(var/id in list(HEADREV, REV))

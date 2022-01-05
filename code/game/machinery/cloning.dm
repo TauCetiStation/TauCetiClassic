@@ -232,7 +232,7 @@
 
 	H.f_style = "Shaved"
 	if(R.dna.species == HUMAN) //no more xenos losing ears/tentacles
-		H.ruffle_hair()
+		H.ruffle_hair(FALSE)
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
