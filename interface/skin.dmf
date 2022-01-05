@@ -142,7 +142,7 @@ window "mainwindow"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true
-		icon = 'icons\\ss13_64_xmas.png'
+		icon = 'icons\\ss13_64.png'
 		macro = "default"
 		menu = "menu"
 		on-size = "onresize"
