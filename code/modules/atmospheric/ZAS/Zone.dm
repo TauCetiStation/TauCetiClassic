@@ -54,7 +54,6 @@ Class Procs:
 
 /zone/var/list/graphic_add = list()
 /zone/var/list/graphic_remove = list()
-/zone/var/z = 0
 
 /zone/New()
 	SSair.add_zone(src)
@@ -73,7 +72,6 @@ Class Procs:
 
 	add_tile_air(turf_air)
 	T.zone = src
-	z = T.z
 	contents.Add(T)
 
 	if(T.fire)
@@ -145,7 +143,6 @@ Class Procs:
 		return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
-		z = T.z
 		if(T.air_unsim)
 			continue
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt

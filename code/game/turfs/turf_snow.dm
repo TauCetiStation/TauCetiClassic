@@ -2,7 +2,7 @@
 	icon = 'icons/turf/snow2.dmi'
 	name = "snow"
 	icon_state = "snow0"
-	dynamic_lighting = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 	basetype = /turf/simulated/snow
 	footstep = FOOTSTEP_SNOWSTEP
