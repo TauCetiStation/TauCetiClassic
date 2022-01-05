@@ -29,10 +29,11 @@
                 prob(10);/obj/structure/flora/tree/dead
                 )
 
-            var/obj/O = new snow_flora(T)
+            new snow_flora(T)
 
-            if(!QDELETED(O) && prob(1) && prob(5))
-                new /mob/living/simple_animal/hostile/mimic/copy(T, O) // TODO fix copy mimic
+            if(prob(1) && prob(5))
+                new /mob/living/simple_animal/hostile/mimic/copy/flora(T)
+
         if("mine_rocks")
             new /obj/structure/flora/mine_rocks(T)
         if("ice")
