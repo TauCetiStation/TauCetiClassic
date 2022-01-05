@@ -15,7 +15,7 @@
 	temperature = TM50C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
-	//plane = GAME_PLANE
+	light_color = COLOR_BLUE
 
 	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
 	var/static/image/snow_fall_overlay
@@ -31,7 +31,7 @@
 		add_overlay(snow_fall_overlay)
 
 	if(IS_EVEN(x) && IS_EVEN(y))
-		set_light(1.4, 1, "#0000ff")
+		set_light(1.4)
 
 	if(type == /turf/simulated/snow)
 		if(prob(27)) // ~= 100*30/110

@@ -408,8 +408,9 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
-	if(!is_station_level(z))
-		set_light(1.5)
+
+	var/datum/space_level/my_level = SSmapping.z_list[z]
+	set_light(1.5, l_color = my_level.turf_light_color)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()

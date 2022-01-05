@@ -11,6 +11,7 @@
 	var/datum/gas_mixture/air
 	var/air_pressure
 	var/image/turf_image
+	var/turf_light_color
 
 /datum/space_level/New(new_z, new_name, list/new_traits = list())
 	z_value = new_z
@@ -28,6 +29,7 @@
 		if (ENV_TYPE_SNOW)
 			turf_type = /turf/simulated/snow
 			post_gen_type = /datum/map_generator/snow
+			turf_light_color = COLOR_BLUE
 		else
 			error("[envtype] is not valid environment type, revert to space")
 			envtype = ENV_TYPE_SPACE
@@ -50,4 +52,3 @@
 		layer=initial(turf_type.layer)
 	)
 	turf_image.plane = initial(turf_type.plane)
-
