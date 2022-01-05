@@ -100,6 +100,7 @@
 /datum/runechat/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
 	// Register client who owns this message
 	owned_by = owner.client
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
 
 	// Clip message
 	var/maxlen = RUNECHAT_MESSAGE_MAX_LENGTH
