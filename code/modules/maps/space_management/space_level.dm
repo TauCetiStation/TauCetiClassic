@@ -29,7 +29,9 @@
 			base_turf_type = /turf/simulated/snow
 			post_gen_type = /datum/map_generator/snow
 		else
-			error("[envtype] is not valid environment type")
+			error("[envtype] is not valid environment type, revert to space")
+			envtype = ENV_TYPE_SPACE
+			base_turf_type = /turf/space
 
 	//Properties for environment tiles
 	var/oxygen = initial(base_turf_type.oxygen)
