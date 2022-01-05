@@ -244,10 +244,10 @@
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
-	var/datum/space_level/z_level = SSmapping.get_level(z)
+	var/datum/space_level/my_level = SSmapping.get_level(z)
 
 	if(ispath(path, /turf/space))
-		path = z_level.base_turf_type
+		path = my_level.turf_type
 
 	if (path == type)
 		return src
