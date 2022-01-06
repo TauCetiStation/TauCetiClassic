@@ -113,6 +113,14 @@
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
+		if(src && ischangeling(src)) //cuz fuck runtimes
+			var/datum/role/changeling/Host = src.mind.GetRoleByType(/datum/role/changeling)
+			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+					if(istype(crab))
+						crab.sting_action(src)
+						gib()
+
 		BP.transfer_identity(src)
 
 		BP.name = "[real_name]'s head"
@@ -123,15 +131,6 @@
 
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0
-
-		if(BP.brainmob && ischangeling(BP.brainmob)) //cuz fuck runtimes
-			var/datum/role/changeling/Host = BP.brainmob.mind.GetRoleByType(/datum/role/changeling)
-			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
-				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
-					if(istype(crab))
-						BP.loc = get_turf(BP.owner)
-						crab.sting_action(BP.brainmob)
-						gib()
 
 /obj/item/organ/external/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
