@@ -49,8 +49,16 @@
 		gymnast.nutrition -= 6
 		gymnast.overeatduration -= 8
 		gymnast.apply_effect(15,AGONY,0)
-		if(gymnast.halloss > 40)
-			gymnast.pump_chest(1)
+		var/obj/item/organ/external/chest/Ch = gymnast.get_bodypart(BP_CHEST)
+		var/obj/item/organ/external/groin/Gr = gymnast.get_bodypart(BP_GROIN)
+		if(Ch)
+			Ch.pumped += 1
+			Ch.update_sprite()
+		if(Gr)
+			Gr.pumped += 1
+			Gr.update_sprite()
+		gymnast.update_body()
+
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
@@ -117,8 +125,16 @@
 		gymnast.nutrition -= 12
 		gymnast.overeatduration -= 16
 		gymnast.apply_effect(25,AGONY,0)
-		if(gymnast.halloss > 40)
-			gymnast.pump_arms(1)
+		var/obj/item/organ/external/l_arm/La = gymnast.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/r_arm/Ra = gymnast.get_bodypart(BP_R_ARM)
+		if(La)
+			La.pumped += 1
+			La.update_sprite()
+		if(Ra)
+			Ra.pumped += 1
+			Ra.update_sprite()
+		gymnast.update_body()
+
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		cut_overlay(W)

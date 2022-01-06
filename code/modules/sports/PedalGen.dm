@@ -77,8 +77,16 @@
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
 				pedaler.apply_effect(1,AGONY,0)
-				if(pedaler.halloss > 40)
-					pedaler.pump_legs(1)
+				var/obj/item/organ/external/l_leg/Ll = pedaler.get_bodypart(BP_L_LEG)
+				var/obj/item/organ/external/r_leg/Rl = pedaler.get_bodypart(BP_R_LEG)
+				if(Ll)
+					Ll.pumped += 1
+					Ll.update_sprite()
+				if(Rl)
+					Rl.pumped += 1
+					Rl.update_sprite()
+				pedaler.update_body()
+
 				if(pedaler.halloss > 80)
 					to_chat(user, "You pushed yourself too hard.")
 					pedaler.apply_effect(24,AGONY,0)

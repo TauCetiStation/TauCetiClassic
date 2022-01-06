@@ -40,6 +40,8 @@
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
+	var/pumped = null
+	var/pumped_threshold = null
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -132,6 +134,7 @@
 	var/mutations = owner ? owner.mutations : list()
 	var/fat
 	var/g
+	var/pump
 
 	if(body_zone == BP_CHEST && owner)
 		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
@@ -140,16 +143,18 @@
 
 	if (!species.has_gendered_icons)
 		g = null
+	if(pumped)
+		pump = pumped > pumped_threshold ? "pumped" : null
 
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
 	else if (status & ORGAN_MUTATED)
 		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
 		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
 	if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
@@ -667,6 +672,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
+	pumped = 0
+	pumped_threshold = 10
 
 
 /obj/item/organ/external/groin
@@ -687,6 +694,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_NORMAL
+	pumped = 0
+	pumped_threshold = 10
 
 
 /obj/item/organ/external/head
@@ -890,6 +899,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	pumped = 0
+	pumped_threshold = 10
 
 /obj/item/organ/external/l_arm/process()
 	..()
@@ -916,6 +927,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	pumped = 0
+	pumped_threshold = 10
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -941,6 +954,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	pumped = 0
+	pumped_threshold = 10
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -961,6 +976,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	pumped = 0
+	pumped_threshold = 10
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
