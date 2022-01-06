@@ -246,7 +246,7 @@
 
 	var/datum/space_level/my_level = SSmapping.get_level(z)
 
-	if(isenvironmentturf(path))
+	if(ispath(path, /turf/simulated/environment/space))
 		path = my_level.turf_type
 
 	if (path == type)
