@@ -129,7 +129,8 @@
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 					if(istype(crab))
-						crab.sting_action(BP.brainmob, BP.owner)
+						BP.loc = get_turf(BP.owner)
+						crab.sting_action(BP.brainmob)
 						gib()
 
 /obj/item/organ/external/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head

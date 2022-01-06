@@ -11,7 +11,7 @@
 	max_genetic_damage = 10
 	can_be_used_in_abom_form = FALSE
 
-/obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user, owner)
+/obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
@@ -31,7 +31,7 @@
 		C.instatis = FALSE
 		user.fake_death = FALSE
 
-	var/mob/living/simple_animal/headcrab/crab = new(get_turf(owner))
+	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)
 	for(var/mob/living/parasite/essence/E in user)
