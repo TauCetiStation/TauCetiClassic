@@ -76,7 +76,7 @@
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/atom_init
-// /turf/space/atom_init
+// /turf/simulated/environment/space/atom_init
 // /mob/dead/atom_init
 
 //Do also note that this proc always runs in New for /mob/dead
@@ -554,11 +554,7 @@
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
-		return 1
-	else
-		return 0
-
+	return isspaceturf(get_turf(src))
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 
@@ -632,7 +628,7 @@
 				C.inertia_dir = 0
 		return TRUE
 
-/turf/space/handle_slip()
+/turf/simulated/environment/space/handle_slip()
 	return
 
 // Recursive function to find everything this atom is holding.

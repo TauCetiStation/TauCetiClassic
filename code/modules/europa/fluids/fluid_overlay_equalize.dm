@@ -51,7 +51,7 @@
 
 	equalizing_fluids.Cut()
 
-	if(istype(loc, /turf/space))
+	if(isspaceturf(loc))
 		lose_fluid(max((FLUID_EVAPORATION_POINT - 1), fluid_amount * 0.5))
 		return
 

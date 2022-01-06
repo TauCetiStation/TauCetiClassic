@@ -1,4 +1,4 @@
-/turf/space
+/turf/simulated/environment/space
 	icon = 'icons/turf/space.dmi'
 	name = "space"
 	icon_state = "0"
@@ -14,7 +14,7 @@
   *
   * Doesn't call parent, see [/atom/proc/atom_init]
   */
-/turf/space/atom_init()
+/turf/simulated/environment/space/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -29,20 +29,20 @@
 
 	return INITIALIZE_HINT_NORMAL
 
-/turf/space/Destroy()
+/turf/simulated/environment/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
-/turf/space/proc/update_starlight()
+/turf/simulated/environment/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(istype(t, /turf/space))
+			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
 			set_light(2, 2)
 			return
 		set_light(0)
 
-/turf/space/attack_paw(mob/user)
+/turf/simulated/environment/space/attack_paw(mob/user)
 	return attack_hand(user)
 
 /turf/proc/build_floor_support(obj/item/C, mob/user, volume = 50)
@@ -82,12 +82,12 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 
-/turf/space/attackby(obj/item/C, mob/user)
+/turf/simulated/environment/space/attackby(obj/item/C, mob/user)
 	build_floor_support(C, user)
 
 // Ported from unstable r355
 
-/turf/space/Entered(atom/movable/A as mob|obj)
+/turf/simulated/environment/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
 		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
@@ -166,7 +166,7 @@
 			stoplag()//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
-/turf/space/proc/Sandbox_Spacemove(atom/movable/A)
+/turf/simulated/environment/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
 	var/next_x
@@ -275,8 +275,8 @@
 					A.loc.Entered(A)
 	return
 
-/turf/space/ChangeTurf(path, force_lighting_update = 0)
+/turf/simulated/environment/space/ChangeTurf(path, force_lighting_update = 0)
 	return ..(path, TRUE)
 
-/turf/space/singularity_act()
+/turf/simulated/environment/space/singularity_act()
 	return

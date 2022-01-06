@@ -222,7 +222,7 @@
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			return 0
 
 	return 1

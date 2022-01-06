@@ -151,7 +151,7 @@
 		move_delay += add_delay
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
-			if(istype(mob.loc, /turf/space))
+			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
 			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 				return mob.pulledby.relaymove(mob, direct)
@@ -357,7 +357,7 @@
 
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(isspaceturf(turf))
 				continue
 
 			if(!turf.density && !mob_negates_gravity())

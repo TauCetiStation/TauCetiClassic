@@ -32,7 +32,7 @@
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)
 		if(!C.stat)
 			var/turf/T = get_turf(C)
-			if(istype(T, /turf/space))
+			if(isenvironmentturf(T))
 				qdel(C)
 
 /datum/event/carp_migration/proc/spawn_fish(num_groups, group_size_min = 3, group_size_max = 5)
@@ -48,7 +48,7 @@
 		var/group_size = rand(group_size_min, group_size_max)
 		var/list/turfs = circlerangeturfs(spawn_locations[i], 2)
 		for(var/turf/T in turfs)
-			if(!istype(T, /turf/space) && isturf(T.loc)) // no spawn in Grille
+			if(!isspaceturf(T) && isturf(T.loc)) // no spawn in Grille
 				turfs -= T
 		group_size = min(group_size, turfs.len)
 		for(var/j in 1 to group_size)

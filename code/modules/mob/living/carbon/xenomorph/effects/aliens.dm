@@ -168,7 +168,7 @@
 	var/obj/structure/alien/weeds/node/linked_node = null
 
 /obj/structure/alien/weeds/atom_init(mapload, node)
-	if(istype(loc, /turf/space))
+	if(isspaceturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	if(icon == initial(icon))
@@ -197,7 +197,7 @@
 /obj/structure/alien/weeds/proc/Life()
 	var/turf/U = get_turf(src)
 
-	if (istype(U, /turf/space))
+	if (isspaceturf(U))
 		qdel(src)
 		return
 
@@ -208,7 +208,7 @@
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
 			for(var/obj/machinery/door/D in T)
@@ -501,7 +501,7 @@
 	if(prob(25))
 		var/turf/T = get_turf(src)
 
-		if(istype(T, /turf/space) || istype(T, /turf/unsimulated))
+		if(isspaceturf(T) || istype(T, /turf/unsimulated))
 			qdel(src)
 
 		var/datum/gas_mixture/environment = T.return_air()

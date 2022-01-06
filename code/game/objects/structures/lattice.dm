@@ -11,7 +11,7 @@
 
 /obj/structure/lattice/atom_init()
 	. = ..()
-	if(!is_type_in_list(loc, list(/turf/space, /turf/simulated/snow)))
+	if(!isenvironmentturf(loc))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
@@ -65,7 +65,7 @@
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
+	//if(!(isspaceturf(src.loc)))
 	//	qdel(src)
 	spawn(1)
 		cut_overlays()
@@ -76,7 +76,7 @@
 			if(locate(/obj/structure/lattice, get_step(src, direction)))
 				dir_sum += direction
 			else
-				if(!(istype(get_step(src, direction), /turf/space)))
+				if(!(isspaceturf(get_step(src, direction))))
 					dir_sum += direction
 
 		icon_state = "lattice[dir_sum]"

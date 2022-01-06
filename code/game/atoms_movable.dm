@@ -295,7 +295,7 @@
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src) && !(ice_slide_count && istype(get_turf(src), /turf/simulated/snow/ice)))
+	if(has_gravity(src) && !(ice_slide_count && isiceturf(get_turf(src))))
 		return 1
 
 	if(pulledby)

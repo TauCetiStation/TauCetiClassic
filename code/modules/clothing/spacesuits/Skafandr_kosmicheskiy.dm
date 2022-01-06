@@ -31,5 +31,5 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/sk/process()
-	if(istype(get_turf(src), /turf/space) && !istype(loc.loc, /obj/mecha))
+	if(isspaceturf(get_turf(src)) && !istype(loc.loc, /obj/mecha))
 		create_breaches(BRUTE,2.3)

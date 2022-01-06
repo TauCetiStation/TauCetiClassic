@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(demo)
 				var/this_appearance
 				// space turfs are difficult to RLE otherwise, because they all
 				// have different appearances despite being the same thing.
-				if(T.type == /turf/space)
+				if(isspaceturf(T))
 					this_appearance = "s" // save the bytes
 				else
 					this_appearance = T.appearance

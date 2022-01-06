@@ -257,7 +257,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/ointment/tajaran/poultice = new /obj/item/stack/medical/ointment/tajaran(user.loc)
 
@@ -267,7 +267,7 @@
 	to_chat(user, "<span class='notice'>You mash the petals into a poultice.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/bruise_pack/tajaran/poultice = new /obj/item/stack/medical/bruise_pack/tajaran(user.loc)
 
@@ -656,7 +656,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
 	qdel(src)
@@ -929,7 +929,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/mushroom(user.loc)
 	qdel(src)
@@ -967,7 +967,7 @@
 	set_light(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
 
@@ -1064,7 +1064,7 @@
 	for(var/turf/T in orange(M,outer_teleport_radius))
 		if(T in orange(M,inner_teleport_radius))
 			continue
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			continue
 		if(T.density)
 			continue

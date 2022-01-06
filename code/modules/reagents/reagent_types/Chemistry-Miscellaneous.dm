@@ -678,7 +678,7 @@
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T) || istype(T, /turf/space))
+	if(!istype(T) || isspaceturf(T))
 		return
 	if(color_weight < 15 || volume < 5)
 		return

@@ -79,7 +79,7 @@
 				return
 		else
 
-			if (((!loc.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
+			if (((!loc.power_equip) || isspaceturf(T)) && !istype(src.loc,/obj/item))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 
@@ -94,7 +94,7 @@
 						to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
 						sleep(50)
 						if (loc.power_equip)
-							if (!istype(T, /turf/space))
+							if (!isspaceturf(T))
 								to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 								src:aiRestorePowerRoutine = 0
 								return
@@ -102,7 +102,7 @@
 						sleep(20)
 						to_chat(src, "Emergency control system online. Verifying connection to power network.")
 						sleep(50)
-						if (istype(T, /turf/space))
+						if (isspaceturf(T))
 							to_chat(src, "Unable to verify! No power connection detected!")
 							src:aiRestorePowerRoutine = 2
 							return
@@ -132,7 +132,7 @@
 								src:aiRestorePowerRoutine = 2
 								return
 							if(loc.power_equip)
-								if(!istype(T, /turf/space))
+								if(!isspaceturf(T))
 									to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 									src:aiRestorePowerRoutine = 0
 									return

@@ -112,7 +112,7 @@
 	for(var/atom/A in T)
 		if(A.density)
 			return FALSE
-	if(!allowAtomsOnSpace && istype(T, /turf/space))
+	if(!allowAtomsOnSpace && isspaceturf(T))
 		return FALSE
 	return TRUE
 

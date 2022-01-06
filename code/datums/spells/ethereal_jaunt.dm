@@ -173,7 +173,7 @@
 	                  // chances of this occuring are very small
 	                  // as it requires 9x9 grid of impassable tiles ~getup1
 	for(var/turf/newloc in orange(1, mobloc))
-		if(newloc.is_mob_placeable(src) && !istype(newloc, /turf/space))
+		if(newloc.is_mob_placeable(src) && !isspaceturf(newloc))
 			found_ground = TRUE
 			to_gib = FALSE
 			forceMove(newloc)

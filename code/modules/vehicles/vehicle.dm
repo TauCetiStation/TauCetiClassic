@@ -68,7 +68,7 @@
 		return 0
 	if(!on)
 		return 0
-	if(istype(loc, /turf/space) && !istype(src, /obj/vehicle/space))
+	if(isspaceturf(loc) && !istype(src, /obj/vehicle/space))
 		return 0
 	return 1
 

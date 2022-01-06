@@ -231,7 +231,7 @@
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = list()
 			for(var/turf/T in orange(6))
-				if(istype(T,/turf/space)) continue
+				if(isenvironmentturf(T)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue

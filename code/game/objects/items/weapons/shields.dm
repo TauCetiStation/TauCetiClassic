@@ -47,7 +47,7 @@
 		if(!resolved && src)
 			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(src) && !istype(target, /turf/space))
+	if(!has_gravity(src) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target

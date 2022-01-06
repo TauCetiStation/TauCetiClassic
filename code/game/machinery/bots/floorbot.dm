@@ -168,7 +168,7 @@
 
 
 /obj/machinery/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
-	if(!t || !istype(t, /turf/space))
+	if(!t || !isspaceturf(t))
 		return FALSE
 
 	if(targetdirection) // Bridge mode, ignore areas
@@ -327,7 +327,7 @@
 
 
 		if(amount > 0)
-			for (var/turf/space/D in shuffle(view(7,src)))
+			for (var/turf/simulated/environment/space/D in shuffle(view(7,src)))
 				if(is_hull_breach(D))
 					boringness = 0
 					do_task(D, FLOORBOT_TASK_FIXHOLE)
@@ -413,7 +413,7 @@
 			return
 
 		var/turf/s = get_turf(src)
-		if(istype(s, /turf/space))
+		if(isspaceturf(s))
 			task = FLOORBOT_TASK_FIXHOLE
 			target = s
 			start_task()

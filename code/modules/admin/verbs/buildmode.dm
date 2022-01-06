@@ -197,7 +197,7 @@
 	switch(buildmode)
 		if(1)
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
-				if(is_type_in_list(object, list(/turf/space, /turf/simulated/snow)))
+				if(isenvironmentturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
 					return

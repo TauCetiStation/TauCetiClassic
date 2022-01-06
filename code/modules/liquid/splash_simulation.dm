@@ -165,9 +165,9 @@ var/global/list/datum/puddle/puddles = list()
 /turf/proc/can_leave_liquid(from_direction)
 	return 0
 
-/turf/space/can_accept_liquid(from_direction)
+/turf/simulated/environment/can_accept_liquid(from_direction)
 	return 1
-/turf/space/can_leave_liquid(from_direction)
+/turf/simulated/environment/can_leave_liquid(from_direction)
 	return 1
 
 /turf/simulated/floor/can_accept_liquid(from_direction)

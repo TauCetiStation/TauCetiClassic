@@ -114,7 +114,7 @@
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
-				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
+				if(isspaceturf(T) || isturf(T) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
@@ -248,9 +248,9 @@ Message ends."}
 			continue
 		else
 			var/T = M.loc
-			if (istype(T, /turf/space))
+			if (isspaceturf(T))
 				result["numSpace"]++
-			else if(istype(T, /turf))
+			else if(isturf(T))
 				if (M.z!=1)
 					result["numOffStation"]++
 				else

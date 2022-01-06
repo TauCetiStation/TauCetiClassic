@@ -58,7 +58,7 @@
 					var/old_icon1 = T.icon
 
 					if(platingRequired)
-						if(istype(B, /turf/space))
+						if(isenvironmentturf(B))
 							continue moving
 
 					var/turf/X = new T.type(B)

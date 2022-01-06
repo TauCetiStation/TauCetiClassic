@@ -32,7 +32,7 @@
 		if(try_start)
 			to_chat(user, "<span class='warning'>There is already a weed's node.</span>")
 		return FALSE
-	if(!isturf(user.loc) || istype(user.loc, /turf/space))
+	if(!isturf(user.loc) || isspaceturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='warning'>Bad place for a garden!</span>")
 		return FALSE

@@ -1,5 +1,5 @@
 /datum/map_generator_module/flora/snow
-    turf_type = /turf/simulated/snow
+    turf_type = /turf/simulated/environment/snow
 
 /datum/map_generator_module/flora/snow/place_flora(turf/T, noise)
     var/result
@@ -37,14 +37,14 @@
         if("mine_rocks")
             new /obj/structure/flora/mine_rocks(T)
         if("ice")
-            T.ChangeTurf(/turf/simulated/snow/ice)
+            T.ChangeTurf(/turf/simulated/environment/snow/ice)
         else
             return FALSE
 
     return TRUE
 
 /datum/map_generator_module/bottom_layer/snow
-    spawnableTurfs = list(/turf/simulated/snow = 100)
+    spawnableTurfs = list(/turf/simulated/environment/snow = 100)
 
 /datum/map_generator_module/border/pine_tree
     spawnableAtoms = list(/obj/structure/flora/tree/pine/unbreakable = 100)

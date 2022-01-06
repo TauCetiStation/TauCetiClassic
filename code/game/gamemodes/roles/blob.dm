@@ -53,7 +53,7 @@
 		if(directory[ckey(antag.key)])
 			blob_client = directory[ckey(antag.key)]
 			location = get_turf(C)
-			if(!is_station_level(location.z)|| istype(location, /turf/space))
+			if(!is_station_level(location.z) || isspaceturf(location))
 				location = null
 			C.gib()
 

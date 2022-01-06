@@ -118,20 +118,20 @@
 			var/turf/T = get_step(destination, entrydir)
 			if(!density_checks(T))
 				return FALSE
-			if(dest_checkspace && istype(T, /turf/space))
+			if(dest_checkspace && isspaceturf(T))
 				return FALSE
 			posturfs += T
 		else
 			for(var/turf/T in RANGE_TURFS(precision,center))
 				if(!density_checks(T))
 					continue
-				if(dest_checkspace && istype(T, /turf/space))
+				if(dest_checkspace && isspaceturf(T))
 					continue
 				posturfs += T
 		destturf = safepick(posturfs - center)
 	else
 		destturf = get_turf(destination)
-		if(istype(destturf, /turf/space) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
+		if(isspaceturf(destturf) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
 			return FALSE
 
 	if(!destturf || !curturf)
@@ -165,7 +165,7 @@
 	var/turf/center = get_turf(destination)
 	if(T == center)
 		return FALSE
-	if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
+	if(isspaceturf(T) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
 		return FALSE //No teleports into the void, dunno how to fix that with another method.
 	if(locate(/obj/effect/portal) in T)
 		return FALSE

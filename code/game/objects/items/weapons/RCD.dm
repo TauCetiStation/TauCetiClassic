@@ -94,7 +94,7 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(is_type_in_list(target, list(/turf/space, /turf/simulated/snow)))
+			if(isenvironmentturf(target))
 				var/turf/T = target
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")

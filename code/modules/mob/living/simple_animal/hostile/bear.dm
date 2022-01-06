@@ -56,7 +56,7 @@
 	if(!.)
 		return
 
-	if(loc && istype(loc,/turf/space))
+	if(loc && isspaceturf(loc))
 		icon_state = "bear"
 	else
 		icon_state = "bearfloor"

@@ -478,7 +478,7 @@ var/global/list/ghostteleportlocs = list()
 			thunk(H)
 
 /area/proc/thunk(mob)
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
+	if(isspaceturf(get_turf(mob))) // Can't fall onto nothing.
 		return
 
 	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
@@ -499,9 +499,7 @@ var/global/list/ghostteleportlocs = list()
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)
 		T = get_turf(AT)
-	var/area/A = get_area(T)
-	if(istype(T, /turf/space)) // Turf never has gravity
+	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	else if(A && A.has_gravity) // Areas which always has gravity
-		return TRUE
-	return FALSE
+	var/area/A = get_area(T)
+	return A?.has_gravity // Areas which always has gravity

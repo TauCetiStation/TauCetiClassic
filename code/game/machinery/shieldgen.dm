@@ -143,8 +143,8 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/target_tile in range(2, src))
-		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
+	for(var/turf/simulated/environment/space/target_tile in range(2, src))
+		if (!(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
@@ -257,7 +257,7 @@
 				shields_down()
 			anchored = FALSE
 		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+			if(isspaceturf(get_turf(src))) return //No wrenching these in space!
 			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
 			anchored = TRUE
 

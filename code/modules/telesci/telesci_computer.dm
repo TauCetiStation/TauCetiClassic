@@ -163,7 +163,7 @@
 /obj/machinery/computer/telescience/proc/create_wormhole(turf/exit)
 	if(exit.density)
 		return FALSE
-	if(istype(exit, /turf/space))
+	if(isenvironmentturf(exit))
 		if(exit.x <= TRANSITIONEDGE || exit.x >= (world.maxx - TRANSITIONEDGE - 1) || exit.y <= TRANSITIONEDGE || exit.y >= (world.maxy - TRANSITIONEDGE - 1))
 			return FALSE
 	for(var/X in exit.contents)

@@ -59,7 +59,7 @@
 		add_overlay(archaeo_overlay)
 	var/turf/T
 	for(var/direction_to_check in cardinal)
-		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
+		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (isspaceturf(get_step(src, direction_to_check))) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
 			T = get_step(src, direction_to_check)
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
@@ -579,7 +579,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2, T))
-		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
+		if(isspaceturf(S) || istype(S.loc, /area/asteroid/mine/explored))
 			sanity = FALSE
 			break
 
@@ -655,7 +655,7 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(T && istype(T, /turf/space))
+		if(T && isspaceturf(T))
 			var/lattice = 0
 			for(var/obj/O in T)
 				if(istype(O, /obj/structure/lattice))

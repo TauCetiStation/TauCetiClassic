@@ -25,15 +25,15 @@
 /datum/space_level/proc/update_envtype()
 	switch(envtype)
 		if (ENV_TYPE_SPACE)
-			turf_type = /turf/space
+			turf_type = /turf/simulated/environment/space
 		if (ENV_TYPE_SNOW)
-			turf_type = /turf/simulated/snow
+			turf_type = /turf/simulated/environment/snow
 			post_gen_type = /datum/map_generator/snow
 			turf_light_color = COLOR_BLUE
 		else
 			error("[envtype] is not valid environment type, revert to space")
 			envtype = ENV_TYPE_SPACE
-			turf_type = /turf/space
+			turf_type = /turf/simulated/environment/space
 
 	//Properties for environment tiles
 	var/oxygen = initial(turf_type.oxygen)

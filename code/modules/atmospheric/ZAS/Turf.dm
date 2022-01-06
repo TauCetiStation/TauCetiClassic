@@ -7,8 +7,8 @@
 /turf/var/air_unsim = TRUE
 /turf/var/air_unsim_multiplier = 0
 /turf/simulated/air_unsim = FALSE
-/turf/simulated/snow/air_unsim = TRUE
-/turf/simulated/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
+/turf/simulated/environment/air_unsim = TRUE
+/turf/simulated/environment/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
