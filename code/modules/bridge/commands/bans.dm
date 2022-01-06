@@ -35,7 +35,7 @@
 
 	var/mob/target_mob
 
-	for(var/client/C as anything in clients)
+	for(var/client/C in clients)
 		if(C.ckey == ckey)
 			target_mob = C.mob
 			break

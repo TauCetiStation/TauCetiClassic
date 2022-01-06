@@ -182,7 +182,8 @@
 
 		if(isautosay(speaker))
 			var/turf/T = get_turf(speaker)
-			track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
+			if(T)
+				track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
 		else
 			if(speaker.mouse_opacity && (speaker.alpha > 50))
 				if(changed_voice)

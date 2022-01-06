@@ -73,10 +73,10 @@
 // make sure we can draw power from the powernet
 /obj/machinery/power/tracker/process()
 
-	var/avail = surplus()
+	var/avail = delayed_surplus()
 
 	if(avail > 500)
-		add_load(500)
+		add_delayedload(500)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER

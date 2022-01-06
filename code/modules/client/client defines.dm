@@ -25,8 +25,6 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
-	var/time_died_as_mouse = null //when the client last died as a mouse
-	var/time_joined_as_spacebum = null
 	var/mentorhelped = FALSE
 	var/supporter = 0
 	var/prefs_ready = FALSE

@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(junkyard)
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 
+	create_spawner(/datum/spawner/space_bum, "space_bum")
+
 /datum/controller/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)
 		return
