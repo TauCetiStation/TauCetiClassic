@@ -124,7 +124,7 @@
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
-	if(T.CanPass(null, T))
+	if(T.CanPass(null, T) && T.CanPass(user.crawling, T))
 		var/obj/structure/rack/R = new /obj/structure/rack( T )
 		to_chat(user, "<span class='notice'>You assemble [src].</span>")
 		R.add_fingerprint(user)
