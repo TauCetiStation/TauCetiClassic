@@ -41,12 +41,12 @@
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
-	if(!T.density && (T.CanPass(null, get_turf(user))))
+	if (T.CanPass(null, T) && T.CanPass(user.crawling, T))
 		new table_type( T )
-		to_chat(usr, "<span class='notice'>You assemble [src].</span>")
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
 		qdel(src)
 	else
-		to_chat(user, "<span class='warning'>You can't put it here! MORON!</span>")
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 
 
 /*
@@ -124,10 +124,10 @@
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
-	if(!T.density && (T.CanPass(null, get_turf(user))))
+	if(T.CanPass(null, T))
 		var/obj/structure/rack/R = new /obj/structure/rack( T )
-		to_chat(usr, "<span class='notice'>You assemble [src].</span>")
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
 	else
-		to_chat(user, "<span class='warning'>You can't put it here! MORON!</span>")
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
