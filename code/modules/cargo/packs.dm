@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
 /datum/supply_pack
 	var/name = "Crate"
@@ -277,7 +277,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_nonlethal 
+/datum/supply_pack/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
 	contains = list(/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
@@ -342,7 +342,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/m79
 	name = "m79 grenade launcher"
-	contains = list(/obj/item/weapon/gun/projectile/m79,
+	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure
@@ -1210,6 +1210,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "body bags crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/body_bags
+	name = "Stasis Bags Crate"
+	cost = 10000
+	contains = list(/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag,
+					/obj/item/bodybag/cryobag)
+	crate_name = "stasis bags crate"
+	group = "Medical / Science"
+
 /datum/supply_pack/suspension_gen
 	name = "Suspension Field Generetor Crate"
 	cost = 3000
@@ -1228,7 +1243,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
-/datum/supply_pack/artifical_ventilation_machine 
+/datum/supply_pack/artifical_ventilation_machine
 	name = "Artifical Ventilation Machine"
 	cost = 3000
 	contains = list(/obj/machinery/life_assist/artificial_ventilation)
@@ -1656,7 +1671,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Barber supplies"
 	group = "Supply"
 
-/datum/supply_pack/clown 
+/datum/supply_pack/clown
 	name = "Clown supply crate"
 	contains = list(/obj/item/weapon/bikehorn,
 					/obj/item/weapon/bikehorn,
@@ -1868,3 +1883,38 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_theatre
 	group = "Miscellaneous"
 
+//----------------------------------------------
+//-----------------XENO THREAT-------------------
+//----------------------------------------------
+/datum/supply_pack/xeno_laser
+	name = "Xeno liquidator"
+	contains = list(/obj/item/clothing/suit/space/globose/recycler,
+					/obj/item/clothing/head/helmet/space/globose/recycler,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/shield/buckler,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	cost = 10000
+	crate_name = "Xeno liquidator crate"
+	group = "xeno"	//there is no such category, so these crates will not be visible in the console
+	hidden = TRUE
+
+/datum/supply_pack/xeno_incendiary
+	name = "Xeno arsonist"
+	contains = list(/obj/item/clothing/head/helmet/space/rig/security,
+					/obj/item/clothing/suit/space/rig/security,
+					/obj/item/weapon/gun/projectile/shotgun/combat,
+					/obj/item/ammo_box/eight_shells/incendiary,
+					/obj/item/weapon/shield/riot,
+					/obj/item/clothing/ears/earmuffs,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	cost = 10000
+	crate_name = "Xeno arsonist crate"
+	group = "xeno"
+	hidden = TRUE

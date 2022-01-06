@@ -1094,11 +1094,11 @@
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
 			message += "Your [P] shatters in a thousand pieces!"
+		qdel(P)
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
@@ -1231,7 +1231,7 @@
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")

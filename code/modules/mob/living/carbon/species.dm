@@ -1014,6 +1014,10 @@
 	attack_verb = list("slash", "claw")
 	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
+/datum/unarmed_attack/claws/abomination
+	attack_verb = list("slash", "claw", "lacerate")
+	damage = 35
+
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
@@ -1327,3 +1331,75 @@
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
+
+/datum/species/abomination
+	name = ABOMINATION
+	icobase = 'icons/mob/human_races/r_abomination.dmi'
+	deform = 'icons/mob/human_races/r_abomination.dmi'
+	language = "Sol Common"
+	unarmed_type = /datum/unarmed_attack/claws/abomination
+	dietflags = DIET_OMNI
+
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
+	siemens_coefficient = 0.1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	darksight = 8
+
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_SCAN = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
+	,NO_PAIN = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/abomination
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+	has_organ = list(
+		O_BRAIN  = /obj/item/organ/internal/brain/abomination
+		)
+	burn_mod = 0.2
+	brute_mod = 0.2
+	brain_mod = 0
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 10000
+
+	speed_mod_no_shoes = 5
+
+/datum/species/abomination/on_gain(mob/living/carbon/human/H)
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
+
+/datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
+	return

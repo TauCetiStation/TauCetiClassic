@@ -104,6 +104,9 @@
 
 		if(druggy)
 			setDrugginess(0)
+
+		if(confused)
+			confused = 0
 	return 1
 
 
@@ -130,25 +133,20 @@
 
 	return 1
 
-/mob/living/carbon/xenomorph/handle_vision()
+/mob/living/carbon/xenomorph/update_sight()
+	if(!..())
+		return FALSE
 
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	see_in_dark = 8
+	set_EyesVision(null)
+
+	if(nightvision)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
-		sight |= SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		if(nightvision)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-			see_invisible = SEE_INVISIBLE_LIVING
-		else if(!nightvision)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-	..()
+		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	return TRUE
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
 	if(!healths)

@@ -64,7 +64,7 @@
 			T = get_step(src, direction_to_check)
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-				I.plane = 6
+				I.plane = FLOOR_PLANE
 				T.add_overlay(I)
 
 	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
@@ -182,9 +182,9 @@
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = W
-		if(S.wielded)
+	if (istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
 			GetDrilled(artifact_fail = 1)
 		else
@@ -508,7 +508,6 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
 	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
@@ -584,8 +583,12 @@
 	if(!sanity)
 		return
 
-	if(prob(30))
-		SpawnMonster(T)
+	if(prob(6))
+		if(istype(loc, /area/asteroid/mine/explored))
+			return
+		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
+			return
+		new /obj/machinery/artifact/bluespace_crystal(T)
 
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
@@ -595,31 +598,10 @@
 	spawn(2)
 		t.update_overlays_full()
 
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
-	if(istype(loc, /area/asteroid/mine/explored))
-		return
-	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
-		return
-	var/randumb = pickweight(mob_spawn_list)
-	switch(randumb)
-		if("Goliath")
-			new /mob/living/simple_animal/hostile/asteroid/goliath(T)
-		if("Goldgrub")
-			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
-		if("Basilisk")
-			new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
-		if("Hivelord")
-			new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
-		if("Drone")
-			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
-	if(prob(20))
-		new /obj/machinery/artifact/bluespace_crystal(T)
-
 /**********************Asteroid**************************/
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
 	name = "Asteroid"
-	var/base_icon = 'icons/turf/asteroid.dmi'
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	oxygen = 0.01
@@ -632,8 +614,6 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_SAND
-	smooth = SMOOTH_TRUE | SMOOTH_MORE
-	canSmoothWith = list(/turf/simulated, /obj/structure/lattice)
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
@@ -643,15 +623,13 @@
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
-		smooth_subtype = "asteroid[rand(1, 10)]"
-		smooth_bake_overlay = icon(base_icon, smooth_subtype)
+		icon_state = "asteroid_stone_[rand(1, 10)]"
 
 	//I dont know how, but it gets into hudatoms
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
-	
-	make_transparent()
+
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
@@ -671,6 +649,20 @@
 				if(8)
 					overlay_name = "rock_side_4"
 			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
+
+/turf/simulated/floor/plating/airless/asteroid/update_overlays()
+	..()
+	var/turf/T
+	for(var/direction_to_check in cardinal)
+		T = get_step(src, direction_to_check)
+		if(T && istype(T, /turf/space))
+			var/lattice = 0
+			for(var/obj/O in T)
+				if(istype(O, /obj/structure/lattice))
+					lattice = 1
+			if(!lattice)
+				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
+				add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A
@@ -737,9 +729,7 @@
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
-	smooth_subtype = "asteroid_dug"
-	smooth_bake_overlay = icon(base_icon, "asteroid_dug")
-	queue_smooth(src)
+	icon_state = "asteroid_dug"
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()

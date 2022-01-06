@@ -173,7 +173,7 @@
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
+				if (M.stat == DEAD)
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
@@ -307,6 +307,11 @@
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
+					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+					for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+						if (s.stabilize_teleportation(2))
+							calibrated = 0
+							return
 					// Effects similar to mutagen.
 					if(!human.species.flags[IS_SYNTHETIC])
 						randmuti(human)

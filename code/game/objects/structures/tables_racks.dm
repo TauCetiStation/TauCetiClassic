@@ -192,10 +192,15 @@
 		return 1
 	if (get_turf(P.original) == cover)
 		var/chance = 20
+		if (!flipable)
+			chance += 20	//reinforced table covers legs so 20 common chance + lying 20 chance
 		if (ismob(P.original))
 			var/mob/M = P.original
 			if (M.lying)
-				chance += 20				//Lying down lets you catch less bullets
+				if(!flipable)
+					chance = 100				//reinforced table is REINFORCED so it cant be penetrated
+				else
+					chance += 20				//Lying down lets you catch less bullets
 		if(flipped)
 			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
 				chance += 20
@@ -264,7 +269,7 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/dualsaber))
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
@@ -645,9 +650,9 @@
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/E = W
 		can_cut = E.active
-	else if(istype(W, /obj/item/weapon/twohanded/dualsaber))
-		var/obj/item/weapon/twohanded/dualsaber/D = W
-		can_cut = D.wielded
+	else if(istype(W, /obj/item/weapon/dualsaber))
+		var/obj/item/weapon/dualsaber/D = W
+		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
 		return ..()

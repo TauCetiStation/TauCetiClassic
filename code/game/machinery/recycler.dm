@@ -1,4 +1,4 @@
-var/const/SAFETY_COOLDOWN = 100
+var/global/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
 	name = "crusher"

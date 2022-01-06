@@ -144,7 +144,7 @@
 			to_chat(usr, "There's no room for another jetpack!")
 			return 0
 	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
-	R.module.modules += jet
+	R.module.add_item(jet)
 	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) //we really need this?
 		R.internals = jet*/
 	//R.icon_state="Miner+j"

@@ -27,7 +27,7 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
-	
+
 	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
@@ -51,7 +51,7 @@
 	*/
 	if(!network || network.len < 1)
 		if(loc)
-			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
+			error("[name] in [get_area(src)] [COORD(src)] has errored. [network ? "Empty network list" : "Null network list"]")
 		else
 			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
 		ASSERT(network)
@@ -192,12 +192,12 @@
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return
 		to_chat(user, "You hold \the [P] up to the camera...")
-		for(var/mob/living/silicon/ai/O in ai_list)
+		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
 			P.show_content(O)
-	
+
 		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
 			if(S.active_camera != src)
 				continue
@@ -218,7 +218,7 @@
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
@@ -277,13 +277,13 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use(check_paint = TRUE)

@@ -16,7 +16,7 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
-var/cmp_field = "name"
+var/global/cmp_field = "name"
 /proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
 	return sorttext(b.fields[cmp_field], a.fields[cmp_field])
 
@@ -30,12 +30,10 @@ var/cmp_field = "name"
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return b.init_order - a.init_order
+	return initial(b.init_order) - initial(a.init_order)	//uses initial() so it can be used on types
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	if(a.display_order == b.display_order)
-		return sorttext(b.name, a.name)
-	return a.display_order - b.display_order
+	return sorttext(b.name, a.name)
 
 /proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
@@ -82,6 +80,7 @@ var/cmp_field = "name"
 	var/abs_b = abs(B.mood_change)
 
 	return abs_b - abs_a
+
 /proc/cmp_bridge_commands(a,b)
 	return bridge_commands[a].position - bridge_commands[b].position
 
