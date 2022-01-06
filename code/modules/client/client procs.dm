@@ -363,6 +363,10 @@ var/global/list/blacklisted_builds = list(
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+
+	if(!gc_destroyed) //Clean up signals and timers.
+		Destroy()
+
 	return ..()
 
 /client/proc/handle_autokick_reasons()
