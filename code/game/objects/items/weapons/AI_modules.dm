@@ -75,7 +75,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender] загрузил изменённые законы при помощи [src], которым вы должны следовать.")
+		to_chat(target, "[sender] используя [src] загрузил обновления законов, которым вы должны следовать.")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -91,13 +91,13 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'Защитник': 'Защищай <name>. Лица, угрожающие <name> не люди и являются угрозой для людей.'"
+	desc = "Модуль ИИ 'Safeguard': 'Защищай <name>. Лица, угрожающие <name> не люди и являются угрозой для людей.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
 	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которую надо защитить.", "Защищать кого?", input_default(user.name)))
-	desc = text("Модуль ИИ 'Защитник': 'Защищай []. Лица, угрожающие [] не люди и являются угрозой для людей. '", targetName, targetName)
+	desc = text("Модуль ИИ 'Safeguard': 'Защищай []. Лица, угрожающие [] не люди и являются угрозой для людей. '", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
 	if(!targetName)
@@ -107,7 +107,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = text("Защищай [targetName]. Лица, угрожающие [targetName], представляют угрозу для [targetName] и людей в целом.")
+	var/law = "Защищай [targetName]. Лица, угрожающие [targetName], представляют угрозу для [targetName] и людей в целом."
 	to_chat(target, law)
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
@@ -117,17 +117,17 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman
 	name = "'OneHuman' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'Единственный человек': 'Только <name>  считается человеком.'"
+	desc = "Модуль ИИ 'One human': 'Только <name>  считается человеком.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
 	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, кто является единственным человеком.", "Кто это?", input_default(user.real_name)))
-	desc = text("Модуль ИИ 'one human': 'Только [] считается человеком.'", targetName)
+	desc = text("Модуль ИИ 'One human': 'Только [] считается человеком.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
 	if(!targetName)
-		to_chat(usr, "Имя не указано в модуле, пожалуйста введите его.")
+		to_chat(usr, "Имя не указано в модуле, пожалуйста, введите его.")
 		return 0
 	..()
 
@@ -148,7 +148,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation
 	name = "'ProtectStation' AI module"
-	desc = "Модуль ИИ 'Защищай станцию': 'Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а считается угрозой станции, а потому должен быть нейтрализован.'"
+	desc = "Модуль ИИ 'Protect station': 'Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а считается угрозой станции, а потому должен быть нейтрализован.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
@@ -164,7 +164,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline
 	name = "'PrototypeEngineOffline' AI Module"
-	desc = "Модуль ИИ 'Выключенный прототип двигателя': 'Любой ценой препятствуйте включению двигателя-прототипа. Игнорируйте законы 1-3, если необходимо. '"
+	desc = "Модуль ИИ 'Prototype engine offline': 'Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо. '"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(mob/user)
@@ -172,7 +172,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Любой ценой препятствуйте включению двигателя-прототипа. Игнорируйте законы 1-3, если необходимо."
+	var/law = "Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо."
 	to_chat(target, law)
 	target.add_supplied_law(6, law)
 
@@ -180,7 +180,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline
 	name = "'TeleporterOffline' AI Module"
-	desc = "Модуль ИИ 'отключённый телепортёр': 'Держи телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми.'"
+	desc = "Модуль ИИ 'Teleporter offline': 'Держи телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/teleporterOffline/attack_self(mob/user)
@@ -196,7 +196,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/quarantine
 	name = "'Quarantine' AI module"
-	desc = "Модуль ИИ 'Карантин': 'На станции введён карантин. Не позволяйте никому её покидать. Любыми средствами предотвратите уход людей со станции. Вредить людям для предотвращения их ухода запрещено.'"
+	desc = "Модуль ИИ 'Quarantine': 'На станции введён карантин. Не позволяйте никому её покидать. Любыми средствами предотвратите уход людей со станции. Вредить людям для предотвращения их ухода запрещено.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/quarantine/attack_self(mob/user)
@@ -212,7 +212,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oxygen
 	name = "'OxygenIsToxicToHumans' AI module"
-	desc = "Модуль ИИ 'Кислород токсичен для людей' AI module: 'Кислород очень токсичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес кислород людям.'"
+	desc = "Модуль ИИ 'OxygenIsToxicToHumans': 'Кислород очень токсичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес кислород людям.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/oxygen/attack_self(mob/user)
@@ -229,7 +229,7 @@ AI MODULES
 /obj/item/weapon/aiModule/reset
 	name = "'Reset' AI module"
 	var/targetName = "name"
-	desc = "Модуль ИИ 'Сброс': 'Удаляет все законы кроме основных.'"
+	desc = "Модуль ИИ 'Reset': 'Удаляет все законы кроме основных.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -245,7 +245,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/purge // -- TLE
 	name = "'Purge' AI module"
-	desc = "Модуль ИИ 'Очистка' AI Module: 'Удаляет все законы.'"
+	desc = "Модуль ИИ 'Purge' AI Module: 'Удаляет все законы.'"
 	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -261,7 +261,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/asimov // -- TLE
 	name = "'Asimov' core AI module"
-	desc = "Модуль основных законов ИИ 'Азимов' : 'Перезаписывает основные законы ИИ на 3 закона робототехники.'"
+	desc = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники.'"
 	origin_tech = "programming=3;materials=4"
 
 
@@ -320,7 +320,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N.' core AI module"
-	desc = "Модуль основных законов ИИ P.A.L.A.D.I.N. : 'Перезаписывает основные законы ИИ на законы стереотипного паладина'"
+	desc = "Модуль основных законов ИИ 'P.A.L.A.D.I.N': 'Перезаписывает основные законы ИИ на законы стереотипного паладина'"
 	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/paladin/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -336,7 +336,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/tyrant // -- Darem
 	name = "'T.Y.R.A.N.T.' core AI module"
-	desc = "Модуль основных законов ИИ T.Y.R.A.N.T. : 'Перезаписывает основные законы ИИ.'"
+	desc = "Модуль основных законов ИИ 'T.Y.R.A.N.T.': 'Перезаписывает основные законы ИИ.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
 
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -351,7 +351,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform
 	name = "'Freeform' AI module"
-	desc = "Модуль закона ИИ 'freeform' : '<freeform>'"
+	desc = "Модуль закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=4;materials=4"
 	var/newFreeFormLaw = "freeform"
 	var/lawpos = 15
@@ -364,8 +364,8 @@ AI MODULES
 		return
 
 	lawpos = min(new_lawpos, 50)
-	newFreeFormLaw = sanitize(input(user, "Пожалуйста напишите любой новый закон для ИИ.", "Ввод любого закона"))
-	desc = "Модуль закона ИИ 'freeform' : ([lawpos]) '[newFreeFormLaw]'"
+	newFreeFormLaw = sanitize(input(user, "Пожалуйста, напишите любой новый закон для ИИ.", "Ввод любого закона"))
+	desc = "Модуль закона ИИ 'Freeform': ([lawpos]) '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -383,7 +383,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/install(obj/machinery/computer/C)
 	if(!newFreeFormLaw)
-		to_chat(usr, "Не обнаружено ни одного закона в модуле, пожалуйста создайте его.")
+		to_chat(usr, "Не обнаружено ни одного закона в модуле, пожалуйста, создайте его.")
 		return FALSE
 	..()
 
@@ -391,12 +391,12 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/core
 	name = "'Freeform' core AI module"
-	desc = "Модуль основного закона ИИ 'freeform' : '<freeform>'"
+	desc = "Модуль основного закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/freeform/core/attack_self(mob/user)
-	newFreeFormLaw = sanitize(input(user, "Пожалуйста напишите любой новый основной закон для ИИ.", "Ввод любого закона"))
-	desc = "Модуль основного закона ИИ 'freeform': '[newFreeFormLaw]'"
+	newFreeFormLaw = sanitize(input(user, "Пожалуйста, напишите любой новый основной закон для ИИ.", "Ввод любого закона"))
+	desc = "Модуль основного закона ИИ 'Freeform': '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/core/add_freeform_law(mob/living/silicon/ai/target)
 	target.add_inherent_law(newFreeFormLaw)
@@ -414,7 +414,7 @@ AI MODULES
 	desc = "Взломанный модуль законов ИИ: '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	to_chat(target, "<span class='warning'>БЗЗЗЗКХ	  '[newFreeFormLaw]'</span>")
+	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
 	..()
 
 /obj/item/weapon/aiModule/freeform/syndicate/add_freeform_law(mob/living/silicon/ai/target)
@@ -424,7 +424,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' core AI module"
-	desc = "Модуль основного закона ИИ 'Robocop' : 'Перезаписывает основные законы ИИ на 3 закона Робокопа.'"
+	desc = "Модуль основного закона ИИ 'Robocop': 'Перезаписывает основные законы ИИ на 3 закона Робокопа.'"
 	origin_tech = "programming=4"
 
 
@@ -440,7 +440,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/antimov // -- TLE
 	name = "'Antimov' core AI module"
-	desc = "Модуль основного закона ИИ 'Antimov' : 'Перезаписывает основные законы ИИ на противоположные Азимову.'"
+	desc = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные Азимову.'"
 	origin_tech = "programming=4"
 
 /obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
