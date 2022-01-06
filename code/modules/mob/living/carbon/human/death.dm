@@ -86,7 +86,7 @@
 	return ..(gibbed)
 
 // Called right after we will lost our head
-/mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
+/mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP, turf/owner)
 	if(!BP || (BP in bodyparts))
 		return
 
@@ -129,6 +129,7 @@
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 					if(istype(crab))
+						BP.brainmob.loc = get_turf(owner)
 						crab.sting_action(BP.brainmob)
 						gib()
 
