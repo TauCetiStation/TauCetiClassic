@@ -113,13 +113,12 @@
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
-		if(src && ischangeling(src)) //cuz fuck runtimes
-			var/datum/role/changeling/Host = src.mind.GetRoleByType(/datum/role/changeling)
+		if(ischangeling(src))
+			var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
-					if(istype(crab))
-						crab.sting_action(src)
-						gib()
+					crab.sting_action(src)
+
 
 		BP.transfer_identity(src)
 
