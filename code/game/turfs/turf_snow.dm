@@ -133,10 +133,6 @@
 	var/ice_slide_count = 0
 
 /turf/simulated/environment/snow/ice/Entered(atom/movable/AM)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
-		return
-
 	..()
 
 	if(QDELETED(AM) || src != AM.loc)
@@ -153,10 +149,6 @@
 		AM.ice_slide_count = rand(3,10)
 
 	AM.ice_slide_count--
-
-	if(AM.ice_slide_count)
-		stoplag() // Let a diagonal move finish, if necessary
-		AM.newtonian_move(AM.inertia_dir)
 
 /obj/structure/flora/mine_rocks
 	name = "rock"
