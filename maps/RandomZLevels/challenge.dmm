@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /turf/unsimulated/floor{
@@ -19,13 +19,13 @@
 	id = "syndicate_elite_mech_room";
 	name = "Mech Room Door"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "af" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ag" = (
 /obj/item/clothing/suit/space/syndicate/striker,
@@ -33,7 +33,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ah" = (
 /turf/simulated/floor/airless,
@@ -52,14 +52,14 @@
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ak" = (
 /obj/effect/decal/remains/human,
 /obj/structure/object_wall/erokez{
 	icon_state = "13,6"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "al" = (
 /obj/structure/sign/mark{
@@ -77,14 +77,14 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ao" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ap" = (
 /obj/item/clothing/suit/space/syndicate/jailbreaker,
@@ -104,7 +104,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "at" = (
 /obj/structure/girder,
@@ -117,7 +117,7 @@
 /obj/structure/object_wall/erokez{
 	icon_state = "13,6"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "aw" = (
 /obj/item/stack/rods,
@@ -125,7 +125,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "ax" = (
 /mob/living/simple_animal/hostile/syndicate,
@@ -141,7 +141,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/start)
 "aA" = (
 /turf/unsimulated/floor{
@@ -160,7 +160,7 @@
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "aE" = (
 /turf/simulated/wall,
@@ -172,7 +172,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "aH" = (
 /turf/simulated/floor/airless,
@@ -299,7 +299,7 @@
 /obj/structure/object_wall/erokez{
 	icon_state = "6,2"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "bb" = (
 /obj/structure/window/reinforced{
@@ -308,7 +308,7 @@
 /obj/machinery/computer/telecrystals/boss{
 	req_access = list(151)
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "bc" = (
 /obj/structure/window/reinforced{
@@ -410,7 +410,7 @@
 	icon_state = "16,4";
 	opacity = 0
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "bo" = (
 /obj/item/weapon/storage/toolbox/electrical,
@@ -424,7 +424,7 @@
 /obj/structure/object_wall/erokez{
 	icon_state = "13,3"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "bq" = (
 /obj/structure/window/reinforced,
@@ -612,7 +612,7 @@
 	pixel_y = -24;
 	req_access = list(101)
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/main)
 "bO" = (
 /obj/structure/window/reinforced{
@@ -747,7 +747,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ch" = (
 /turf/simulated/floor/bluegrid,
@@ -762,13 +762,13 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cj" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ck" = (
 /obj/structure/table/woodentable,
@@ -822,14 +822,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cs" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ct" = (
 /obj/structure/sign/warning/securearea,
@@ -875,7 +875,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cB" = (
 /obj/structure/window/reinforced{
@@ -884,7 +884,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cC" = (
 /obj/structure/window/reinforced{
@@ -893,7 +893,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cD" = (
 /obj/structure/window/reinforced{
@@ -902,7 +902,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cE" = (
 /obj/structure/window/reinforced{
@@ -911,7 +911,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cF" = (
 /obj/structure/grille,
@@ -967,7 +967,7 @@
 /obj/effect/landmark{
 	name = "Syndicate-Spawn"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cL" = (
 /obj/machinery/gateway{
@@ -982,7 +982,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cM" = (
 /obj/machinery/gateway{
@@ -1020,7 +1020,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -1045,7 +1045,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cS" = (
 /obj/machinery/gateway{
@@ -1071,7 +1071,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cU" = (
 /obj/machinery/gateway{
@@ -1080,7 +1080,7 @@
 /obj/effect/landmark{
 	name = "Syndicate-Spawn"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/challenge/end)
 "cV" = (
 /obj/structure/window/reinforced,
@@ -1106,7 +1106,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cY" = (
 /obj/structure/grille,
@@ -1174,7 +1174,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "df" = (
 /obj/structure/sign/mark{

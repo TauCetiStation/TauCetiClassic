@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /obj/machinery/power/tracker,
@@ -18,10 +18,10 @@
 /area/awaymission/stationcollision/northblock)
 "ae" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/northblock)
 "af" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/northblock)
 "ag" = (
 /turf/simulated/floor/plating/airless,
@@ -33,14 +33,14 @@
 /area/awaymission/stationcollision/northblock)
 "ai" = (
 /obj/machinery/power/solar/fake,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/northblock)
 "aj" = (
 /turf/simulated/wall,
 /area/awaymission/stationcollision/northblock)
 "ak" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "al" = (
 /turf/simulated/floor{
@@ -69,7 +69,7 @@
 /area/awaymission/stationcollision/northblock)
 "ap" = (
 /obj/singularity/academy,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/research)
 "aq" = (
 /turf/simulated/wall/r_wall,
@@ -173,7 +173,7 @@
 	},
 /area/awaymission/stationcollision/syndishuttle)
 "aD" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -214,13 +214,13 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/syndishuttle)
 "aJ" = (
 /turf/simulated/floor/plating/airless,
 /area/awaymission/stationcollision/syndishuttle)
 "aK" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/syndishuttle)
 "aL" = (
 /obj/machinery/recharge_station,
@@ -239,7 +239,7 @@
 	dir = 4;
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/syndishuttle)
 "aP" = (
 /obj/structure/shuttle/engine/heater{
@@ -521,7 +521,7 @@
 	},
 /area/awaymission/stationcollision/syndishuttle)
 "bF" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -853,7 +853,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/research)
 "cz" = (
 /obj/structure/shuttle/engine/heater{
@@ -884,7 +884,7 @@
 	dir = 4;
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/syndishuttle)
 "cD" = (
 /turf/simulated/floor/plating/airless,
@@ -1006,7 +1006,7 @@
 "cQ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/northblock)
 "cR" = (
 /obj/machinery/light{
@@ -1066,7 +1066,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cY" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/research)
 "cZ" = (
 /obj/structure/window/reinforced{
@@ -2335,7 +2335,7 @@
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "fT" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 3;
 	icon_state = "swall_f10"
@@ -4016,7 +4016,7 @@
 	icon_state = "propulsion_l"
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/arrivalblock)
 "kI" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -4024,7 +4024,7 @@
 	icon_state = "propulsion_r"
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/stationcollision/arrivalblock)
 "kJ" = (
 /turf/simulated/shuttle/wall{

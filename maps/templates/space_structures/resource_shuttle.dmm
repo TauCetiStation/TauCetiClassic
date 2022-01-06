@@ -10,17 +10,17 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "9,7"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "cL" = (
 /obj/item/stack/rods,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "dM" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "5,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "ee" = (
 /turf/simulated/shuttle/plating{
@@ -32,7 +32,7 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "0,7"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "lt" = (
 /obj/machinery/light{
@@ -50,7 +50,7 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "6,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "pI" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
@@ -68,7 +68,7 @@
 /area/space_structures/resource_shuttle)
 "qR" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "rr" = (
 /obj/machinery/door/poddoor/cargo{
@@ -84,20 +84,20 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "9,3"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "rJ" = (
 /obj/structure/object_wall/cargo,
 /obj/structure/object_wall/cargo{
 	icon_state = "8,7"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "sm" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,6"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "sy" = (
 /turf/simulated/shuttle/plating{
@@ -106,19 +106,19 @@
 /area/space_structures/resource_shuttle)
 "sI" = (
 /obj/structure/object_wall/cargo,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "tA" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,4"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "uZ" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,4"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "vY" = (
 /turf/simulated/shuttle/plating{
@@ -129,23 +129,23 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "9,4"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "wq" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,3"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "wV" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,2"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "xm" = (
 /obj/structure/closet/crate,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "xn" = (
 /obj/structure/object_wall/cargo{
@@ -154,38 +154,38 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "4,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "ye" = (
 /obj/structure/object_wall/cargo,
 /obj/structure/object_wall/cargo{
 	icon_state = "7,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "yq" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,7"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "zk" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Bd" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "2,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Bm" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Bz" = (
 /turf/simulated/shuttle/plating{
@@ -196,37 +196,37 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "0,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "BZ" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,5"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "DR" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "EA" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "2,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "EH" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Fv" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "GK" = (
 /obj/machinery/light_construct{
@@ -238,37 +238,37 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Jw" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "4,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "JX" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "5,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Lk" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "6,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Nn" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "7,7"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "NG" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "7,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Oq" = (
 /obj/machinery/light_construct{
@@ -280,19 +280,19 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "8,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "RX" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "RY" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "SI" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,6"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "SR" = (
 /obj/structure/closet/crate/secure/weapon{
@@ -305,23 +305,23 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "9,2"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Va" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,2"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "Vs" = (
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "VE" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,6"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "XB" = (
 /turf/simulated/shuttle/floor/cargo,
@@ -330,7 +330,7 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "8,5"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 "YD" = (
 /obj/structure/closet/crate{
@@ -348,7 +348,7 @@
 /obj/structure/object_wall/cargo{
 	icon_state = "3,1"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/resource_shuttle)
 
 (1,1,1) = {"

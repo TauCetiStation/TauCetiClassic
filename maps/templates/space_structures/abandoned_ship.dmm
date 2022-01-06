@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /turf/simulated/shuttle/wall{
@@ -24,7 +24,7 @@
 /area/space_structures/abandoned_ship)
 "af" = (
 /obj/structure/scrap_cube,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ag" = (
 /turf/simulated/floor{
@@ -133,7 +133,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/abandoned_ship)
 "aw" = (
 /obj/machinery/bodyscanner,
@@ -369,7 +369,7 @@
 /area/space_structures/abandoned_ship)
 "bd" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "be" = (
 /obj/structure/table,
@@ -725,7 +725,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/abandoned_ship)
 "ca" = (
 /obj/machinery/door/poddoor{

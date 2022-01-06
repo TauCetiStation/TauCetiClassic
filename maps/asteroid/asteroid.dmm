@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/syndicate/mining)
 "ac" = (
 /turf/simulated/mineral,
@@ -19,7 +19,7 @@
 	icon_state = "D-SE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ag" = (
 /obj/structure/grille,
@@ -38,7 +38,7 @@
 "ah" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ai" = (
 /obj/structure/transit_tube,
@@ -108,7 +108,7 @@
 /area/asteroid/research_outpost/hallway)
 "ar" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "as" = (
 /obj/structure/grille,
@@ -130,7 +130,7 @@
 	icon_state = "D-NW"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "au" = (
 /turf/simulated/wall/r_wall,
@@ -213,21 +213,21 @@
 "aF" = (
 /obj/structure/transit_tube,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aG" = (
 /obj/structure/transit_tube{
 	icon_state = "W-SE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aH" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "D-SW"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aI" = (
 /turf/simulated/mineral/random/high_chance,
@@ -236,7 +236,7 @@
 /obj/structure/transit_tube{
 	icon_state = "NE-SW"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aK" = (
 /obj/machinery/biogenerator,
@@ -317,14 +317,14 @@
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aV" = (
 /obj/structure/transit_tube{
 	icon_state = "NW-SE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -461,14 +461,14 @@
 	icon_state = "D-NE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bn" = (
 /obj/structure/transit_tube{
 	icon_state = "S-NW"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -595,7 +595,7 @@
 	icon_state = "N-S"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1374,14 +1374,14 @@
 	dir = 9;
 	icon_state = "pwall"
 	},
-/turf/space,
-/turf/space,
+/turf/simulated/environment/space,
+/turf/simulated/environment/space,
 /area/shuttle/alien/mine)
 "df" = (
 /obj/structure/object_wall/standart{
 	icon_state = "pwall"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/alien/mine)
 "dg" = (
 /obj/structure/object_wall/standart{
@@ -1930,8 +1930,8 @@
 	dir = 5;
 	icon_state = "pwall"
 	},
-/turf/space,
-/turf/space,
+/turf/simulated/environment/space,
+/turf/simulated/environment/space,
 /area/shuttle/alien/mine)
 "eg" = (
 /obj/structure/object_wall/standart{
@@ -2652,7 +2652,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "fs" = (
 /obj/structure/grille,
@@ -2684,7 +2684,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "fw" = (
 /obj/structure/transit_tube{
@@ -2721,7 +2721,7 @@
 /obj/structure/transit_tube{
 	icon_state = "NW-SE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "fA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3003,13 +3003,13 @@
 	icon_state = "NE-SW"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ge" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "gf" = (
 /obj/machinery/newscaster{
@@ -3182,7 +3182,7 @@
 "gz" = (
 /obj/item/stack/rods,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "gA" = (
 /obj/item/weapon/shard,
@@ -3226,7 +3226,7 @@
 	icon_state = "E-SW"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "gK" = (
 /obj/structure/table,
@@ -3357,7 +3357,7 @@
 	icon_state = "N-SE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "gZ" = (
 /obj/structure/cable{
@@ -3516,7 +3516,7 @@
 /obj/structure/transit_tube{
 	icon_state = "S-NE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "hs" = (
 /obj/structure/sign/warning/securearea{
@@ -3757,12 +3757,12 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SW"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "hT" = (
 /obj/item/weapon/shard,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "hU" = (
 /obj/item/weapon/shard{
@@ -3793,7 +3793,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "hZ" = (
 /obj/structure/cable{
@@ -4315,11 +4315,11 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/abandoned)
 "iP" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/abandoned)
 "iQ" = (
 /obj/structure/alien/weeds,
@@ -4684,7 +4684,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jy" = (
@@ -6038,7 +6038,7 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/harvesting)
 "mo" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/mining/research)
 "mp" = (
 /turf/simulated/wall,
@@ -6591,7 +6591,7 @@
 	icon_state = "W-NE"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "nC" = (
 /turf/simulated/floor{
@@ -6631,7 +6631,7 @@
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "nK" = (
 /turf/simulated/floor{
@@ -6719,7 +6719,7 @@
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "nU" = (
 /obj/machinery/conveyor{
@@ -7528,7 +7528,7 @@
 /area/asteroid/research_outpost/gearstore)
 "pF" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "pG" = (
 /obj/machinery/door/window/westleft{
@@ -7636,26 +7636,26 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "pT" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "pU" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "E-SW"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "pV" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "pW" = (
 /obj/structure/transit_tube,
@@ -7805,13 +7805,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "qo" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced,
 /obj/structure/transit_tube,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "qp" = (
 /obj/structure/sign/xeno_warning_mining{
@@ -7897,7 +7897,7 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/explored)
 "qA" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/unexplored)
 "qB" = (
 /obj/effect/decal/remains/human,
@@ -8055,7 +8055,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "qW" = (
 /obj/machinery/door/airlock{
@@ -8359,7 +8359,7 @@
 /turf/simulated/mineral/random/low_chance,
 /area/asteroid/mine/explored)
 "rL" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "rM" = (
 /obj/machinery/light/small{
@@ -9150,7 +9150,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "tR" = (
 /obj/structure/window/reinforced{
@@ -9172,7 +9172,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "tU" = (
 /obj/machinery/light{
@@ -9183,7 +9183,7 @@
 "tV" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "tW" = (
 /obj/structure/lattice,
@@ -9191,7 +9191,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "tX" = (
 /turf/simulated/wall/r_wall,
@@ -9273,7 +9273,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "uh" = (
 /obj/structure/lattice,
@@ -9283,7 +9283,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/explored)
 "ui" = (
 /obj/structure/dispenser/oxygen,
@@ -10322,14 +10322,14 @@
 	dir = 1
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/living_quarters)
 "wB" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/production)
 "wC" = (
 /obj/structure/cable{
@@ -10789,12 +10789,12 @@
 "xv" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/living_quarters)
 "xw" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/production)
 "xx" = (
 /obj/structure/cable{
@@ -11380,7 +11380,7 @@
 	},
 /area/asteroid/mine/eva)
 "zA" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/mining/outpost)
 "zB" = (
 /obj/machinery/door/firedoor,
@@ -11804,7 +11804,7 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "AB" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/asteroid/mine/unexplored)
 "AE" = (
 /turf/simulated/floor{
@@ -11969,7 +11969,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "Bf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12002,7 +12002,7 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "Bj" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/vox/mining)
 "Bk" = (
 /obj/machinery/shieldwallgen,
@@ -12022,7 +12022,7 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Bm" = (
 /obj/structure/scrap_cube,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "Bn" = (
 /obj/machinery/light{
@@ -12443,11 +12443,11 @@
 	req_access = list(47)
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "FB" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/shuttle/mining/transit)
 "FQ" = (
 /obj/structure/table,
@@ -12969,7 +12969,7 @@
 	icon_state = "N-SW"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "NR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{

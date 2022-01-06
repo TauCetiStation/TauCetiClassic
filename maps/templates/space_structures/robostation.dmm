@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ac" = (
 /mob/living/simple_animal/hostile/hivebot,
@@ -94,7 +94,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "at" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -141,7 +141,7 @@
 /area/space_structures/robostatoin)
 "aC" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aD" = (
 /obj/item/mecha_parts/part/honker_right_arm,
@@ -151,7 +151,7 @@
 "aE" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aF" = (
 /obj/structure/ore_box,
@@ -286,7 +286,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bf" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -442,7 +442,7 @@
 /area/space_structures/robostatoin)
 "bL" = (
 /obj/structure/grille,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bM" = (
 /obj/item/weapon/wirecutters,
@@ -472,11 +472,11 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/robostatoin)
 "bS" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/robostatoin)
 "bT" = (
 /obj/item/weapon/circuitboard/mecha/honker/targeting,
@@ -505,7 +505,7 @@
 "bX" = (
 /obj/item/weapon/bikehorn,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bY" = (
 /obj/structure/table,
@@ -544,7 +544,7 @@
 /area/space_structures/robostatoin)
 "cd" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ce" = (
 /obj/structure/sign/warning/docking,
@@ -565,7 +565,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "ci" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
@@ -624,7 +624,7 @@
 	},
 /area/space_structures/robostatoin)
 "cs" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
@@ -641,7 +641,7 @@
 "cv" = (
 /obj/item/weapon/reagent_containers/pill/cyanide,
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/robostatoin)
 "cw" = (
 /obj/machinery/light/small{
@@ -656,7 +656,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/robostatoin)
 "cy" = (
 /obj/item/weapon/paper{
@@ -883,7 +883,7 @@
 /area/space_structures/robostatoin)
 "dm" = (
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/robostatoin)
 "dn" = (
 /obj/structure/table,
@@ -1018,7 +1018,7 @@
 "UA" = (
 /obj/structure/lattice,
 /obj/item/weapon/shard,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "XQ" = (
 /obj/structure/stool/bed/chair/comfy/beige{

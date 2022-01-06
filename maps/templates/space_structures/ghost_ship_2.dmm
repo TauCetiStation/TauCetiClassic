@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
@@ -14,7 +14,7 @@
 	},
 /area/space_structures/ghostship)
 "ad" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -727,7 +727,7 @@
 	},
 /area/space_structures/ghostship)
 "cj" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -802,16 +802,16 @@
 	},
 /area/space_structures/ghostship)
 "cs" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
 /area/space_structures/ghostship)
 "ct" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "cu" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
@@ -839,7 +839,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cy" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},

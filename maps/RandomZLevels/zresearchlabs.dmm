@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /turf/unsimulated/jungle/rock,
@@ -8365,7 +8365,7 @@
 	dir = 5;
 	health = 1e+007
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/labs/medical)
 "ts" = (
 /obj/effect/decal/cleanable/blood/tracks,

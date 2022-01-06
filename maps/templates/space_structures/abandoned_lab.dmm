@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /turf/simulated/shuttle/wall{
@@ -501,7 +501,7 @@
 /area/space_structures/derelict_lab)
 "bC" = (
 /obj/item/weapon/spike,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bD" = (
 /obj/structure/closet/l3closet/general,
@@ -617,7 +617,7 @@
 /area/space_structures/derelict_lab)
 "bU" = (
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "bV" = (
 /turf/simulated/floor{
@@ -668,7 +668,7 @@
 /area/space_structures/derelict_lab)
 "cc" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "cd" = (
 /turf/simulated/shuttle/wall{
@@ -807,7 +807,7 @@
 /area/space_structures/derelict_lab)
 "cx" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "cy" = (
 /turf/simulated/floor{
@@ -822,7 +822,7 @@
 /area/space_structures/derelict_lab)
 "cA" = (
 /obj/item/stack/cable_coil/red,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "cB" = (
 /obj/item/weapon/storage/briefcase/inflatable,
@@ -878,7 +878,7 @@
 /area/space_structures/derelict_lab)
 "fi" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "lt" = (
 /obj/item/weapon/flora/floorleaf,
@@ -935,7 +935,7 @@
 /area/space_structures/derelict_lab)
 "My" = (
 /obj/item/weapon/circuitboard/smes,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "Np" = (
 /obj/item/clothing/shoes/magboots,
@@ -945,10 +945,10 @@
 /area/space_structures/derelict_lab)
 "VN" = (
 /obj/item/weapon/spike,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "Yw" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/derelict_lab)
 "Zu" = (
 /obj/effect/decal/remains/human,

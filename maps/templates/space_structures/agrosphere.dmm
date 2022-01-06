@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /obj/machinery/chem_dispenser,
@@ -147,7 +147,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/agrospheregarden)
 "aq" = (
 /obj/structure/table/glass,

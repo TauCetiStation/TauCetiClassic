@@ -3,25 +3,25 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "b" = (
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "c" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "d" = (
 /obj/structure/object_wall/pod{
 	icon_state = "3,2"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "e" = (
 /obj/machinery/door/unpowered/shuttle/pod,
@@ -53,31 +53,31 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "i" = (
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "j" = (
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "k" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/simulated/environment/space/shuttle,
 /area/space)
 "l" = (
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 
 (1,1,1) = {"

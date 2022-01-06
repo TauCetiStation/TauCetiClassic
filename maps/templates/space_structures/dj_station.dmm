@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/grille,
@@ -17,7 +17,7 @@
 /area/space_structures/djstation/solars)
 "ae" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "af" = (
 /turf/simulated/wall,
@@ -588,7 +588,7 @@
 /area/space)
 "bt" = (
 /obj/structure/grille,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 
 (1,1,1) = {"
