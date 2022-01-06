@@ -42,8 +42,9 @@
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
 	if (T.CanPass(null, T))
-		new table_type( T )
+		var/obj/structure/table/R = new table_type( T )
 		to_chat(user, "<span class='notice'>You assemble [src].</span>")
+		R.add_fingerprint(user)
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
