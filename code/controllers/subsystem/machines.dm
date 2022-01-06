@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(machines)
 		currentrun.len--
 		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
 			processing -= thing
+			processing_second -= thing
 			thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return

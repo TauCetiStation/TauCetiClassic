@@ -162,6 +162,8 @@ Class Procs:
 
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
 
