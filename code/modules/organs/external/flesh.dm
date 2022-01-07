@@ -11,7 +11,12 @@
 	if(BP.species && BP.species.bodypart_butcher_results)
 		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
-		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
+		var/meat_amount = 1
+		if(BP.pumped) //pumped guys are meaty
+			meat_amount += round(BP.pumped / 10)
+		if(HAS_TRAIT(BP.owner, TRAIT_FAT)) //fat guys are meaty
+			meat_amount += 2
+		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = meat_amount)
 	else if(bodypart_type == BODYPART_ROBOTIC)
 		BP.butcher_results = list(/obj/item/stack/sheet/plasteel = 1)
 
