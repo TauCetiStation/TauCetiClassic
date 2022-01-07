@@ -16,7 +16,7 @@
 		retDam += 4
 
 	if(BPHand.pumped)
-		retDam += BPHand.pumped
+		retDam += BPHand.pumped / 10
 
 	if(istype(gloves, /obj/item/clothing/gloves/boxing))
 		retDamType = HALLOSS
