@@ -112,7 +112,7 @@
 	organ_head_list += BP
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
-	if(IO && IO.parent_bodypart == BP_HEAD)
+	if(IO.parent_bodypart == BP_HEAD)
 		if(ischangeling(src))
 			var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
