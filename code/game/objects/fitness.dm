@@ -154,6 +154,7 @@
 	var/light_dumbbell = 0
 
 /obj/structure/dumbbells_rack/atom_init(mapload)
+	. = ..()
 	if(mapload)
 		contents += new /obj/item/weapon/dumbbell/light
 		contents += new /obj/item/weapon/dumbbell/light
