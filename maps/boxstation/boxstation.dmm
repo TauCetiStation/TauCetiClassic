@@ -12623,6 +12623,7 @@
 	network = list("SS13","Prison");
 	pixel_x = 22
 	},
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -52386,6 +52387,7 @@
 /area/station/storage/tech)
 "bQu" = (
 /obj/machinery/light,
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bQv" = (

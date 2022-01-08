@@ -7828,7 +7828,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bwR" = (
-/obj/structure/weightlifter,
+/obj/structure/stacklifter,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -18896,6 +18896,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
+"eVq" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/prison)
 "eVC" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -74623,6 +74629,12 @@
 	icon_state = "vault"
 	},
 /area/station/gateway)
+"wub" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "wvH" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -100868,7 +100880,7 @@ uyY
 oMm
 kzJ
 kzJ
-kzJ
+eVq
 gOl
 eHC
 amh
@@ -102479,7 +102491,7 @@ uIK
 rBj
 dhY
 uwW
-uwW
+wub
 rBj
 bRY
 caR

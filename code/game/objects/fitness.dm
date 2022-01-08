@@ -142,3 +142,103 @@
 
 		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 			user.try_mutate_to_hulk()
+
+/obj/structure/dumbbells_rack
+	name = "Dumbbells Rack"
+	desc = "Just looking at this thing makes you feel tired."
+	icon = 'icons/obj/fitness.dmi'
+	icon_state = "dumbbells_rack"
+	density = TRUE
+	anchored = TRUE
+	var/heavy_dumbbell = 0
+	var/light_dumbbell = 0
+
+/obj/structure/dumbbells_rack/atom_init(mapload)
+	if(mapload)
+		contents += new /obj/item/weapon/dumbbell/light
+		contents += new /obj/item/weapon/dumbbell/light
+		contents += new /obj/item/weapon/dumbbell/heavy
+		contents += new /obj/item/weapon/dumbbell/heavy
+		heavy_dumbbell = 2
+		light_dumbbell = 2
+		update_icon()
+
+/obj/structure/dumbbells_rack/update_icon()
+	cut_overlays()
+	if(heavy_dumbbell > 0)
+		add_overlay(icon('icons/obj/fitness.dmi', "Heavy1"))
+		if(heavy_dumbbell == 2)
+			add_overlay(icon('icons/obj/fitness.dmi', "Heavy2"))
+	if(light_dumbbell > 0)
+		add_overlay(icon('icons/obj/fitness.dmi', "light3"))
+		if(light_dumbbell == 2)
+			add_overlay(icon('icons/obj/fitness.dmi', "light4"))
+
+/obj/structure/dumbbells_rack/attack_hand(mob/living/carbon/human/user)
+	if(contents.len)
+		var/obj/item/weapon/dumbbell/choice = input("Which dumbbell would you like to remove from the shelf?") in contents
+		if(choice)
+			if(!Adjacent(usr) || usr.incapacitated())
+				return
+			if(ishuman(user))
+				user.put_in_hands(choice)
+			else
+				choice.forceMove(get_turf(src))
+			if(istype(choice, /obj/item/weapon/dumbbell/light))
+				light_dumbbell -= 1
+			else
+				heavy_dumbbell -= 1
+			update_icon()
+
+/obj/structure/dumbbells_rack/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/dumbbell/light))
+		if(light_dumbbell < 2)
+			user.drop_from_inventory(W, src)
+			light_dumbbell += 1
+	if(istype(W, /obj/item/weapon/dumbbell/heavy))
+		if(heavy_dumbbell < 2)
+			user.drop_from_inventory(W, src)
+			heavy_dumbbell += 1
+	update_icon()
+
+/obj/item/weapon/dumbbell/light
+	name = "Light Dumbbell"
+	desc = "Citius, altius, fortius!."
+	icon = 'icons/obj/fitness.dmi'
+	icon_state = "dumbbells_light"
+	force = 7.0
+	throwforce = 5.0
+	throw_speed = 5
+	throw_range = 3
+	w_class = SIZE_NORMAL
+
+/obj/item/weapon/dumbbell/heavy
+	name = "Heavy Dumbbell"
+	desc = "Citius, altius, fortius!"
+	icon = 'icons/obj/fitness.dmi'
+	icon_state = "dumbbells_heavy"
+	force = 10.0
+	throwforce = 8.0
+	throw_speed = 5
+	throw_range = 1
+	w_class = SIZE_NORMAL
+
+/obj/item/weapon/dumbbell/attack_self(mob/living/carbon/human/user)
+	var/mass = 1
+	if(istype(src, /obj/item/weapon/dumbbell/heavy))
+		mass = 2
+
+	if(user.is_busy() || issilicon(user))
+		return
+	if(do_after(user, 25 * mass, target = src))
+		var/obj/item/organ/external/BPHand = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+		if(mass == 1 && BPHand.pumped < 10)
+			BPHand.pumped += mass
+		else if(mass == 2 && BPHand.pumped < 25)
+			BPHand.pumped += mass
+		BPHand.update_sprite()
+		user.update_body()
+		user.nutrition -= 5 * mass
+		user.overeatduration -= 5 * mass
+		user.apply_effect(5 * mass,AGONY,0)
+		user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")

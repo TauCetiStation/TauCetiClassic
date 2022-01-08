@@ -249,6 +249,15 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			standing += mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
 
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump)
+			continue
+		if(BP.pumped && BP.pumped >= 25)
+			var/icon/I = icon('icons/mob/human_races/special_overlays.dmi', BP.icon_state)
+			var/icon/mask = icon('icons/effects/ss13_dark_alpha7.dmi', "6")
+			I.Blend(mask, ICON_MULTIPLY, 0, 0)
+			standing += I
+
 	update_tail_showing()
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
