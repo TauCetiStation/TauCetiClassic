@@ -16,7 +16,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
 
 #define MASKINTERNALS          (1<<3)   // Mask allows internals.
-#define NOSHIELD               (1<<3)   // Weapon not affected by shield. // Looks like it's useless now.
 
 #define NOBLOODY               (1<<4)   // Used to items if they don't want to get a blood overlay. Doesn't work properly with shoes.
 
