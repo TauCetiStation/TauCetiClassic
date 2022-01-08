@@ -110,7 +110,6 @@
 	. = ..(mapload, IPC)
 
 /mob/living/carbon/human/abductor/atom_init(mapload)
-	languages = list()
 	. = ..(mapload, ABDUCTOR)
 
 /mob/living/carbon/human/golem/atom_init(mapload)
