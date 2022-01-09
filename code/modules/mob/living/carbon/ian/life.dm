@@ -449,55 +449,19 @@
 				V.dead = TRUE
 
 /mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-
-	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-
-	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5))
+	if(istype(head, /obj/item/clothing/head/helmet/space))
 		clear_alert("pressure")
+		clear_alert("temp")
 		return
 
-	var/environment_heat_capacity = environment.heat_capacity()
-	if(isspaceturf(get_turf(src)))
-		var/turf/heat_turf = get_turf(src)
-		environment_heat_capacity = heat_turf.heat_capacity
-	if(!on_fire)
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
-
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity * transfer_coefficient)
-	if(stat == DEAD)
-		bodytemperature += 0.1 * (environment.temperature - bodytemperature) * environment_heat_capacity / (environment_heat_capacity + 270000)
-
-	//Account for massive pressure differences
-	switch(adjusted_pressure)
-		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
-		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
-		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			clear_alert("pressure")
-		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-		else
-			if( !(COLD_RESISTANCE in mutations) )
-				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
-			else
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+	..()
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	bodytemperature += BODYTEMP_HEATING_MAX
+	adjustFireLoss(2)
 	return
-
-/mob/living/carbon/ian/calculate_affecting_pressure(pressure)
-	..()
-	return pressure
 
 /mob/living/carbon/ian/updatehealth()
 	if(status_flags & GODMODE)

@@ -23,10 +23,7 @@
 	var/oxygen_alert = 0
 	var/phoron_alert = 0
 	var/fire_alert = 0
-	var/pressure_alert = 0
-	var/temperature_alert = 0
 	var/co2overloadtime = null
-	var/temperature_resistance = T0C+75
 
 	var/metabolism_factor = METABOLISM_FACTOR
 

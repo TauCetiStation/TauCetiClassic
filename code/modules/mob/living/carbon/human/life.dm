@@ -1,28 +1,3 @@
-//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
-#define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
-
-#define LIGHT_DAM_THRESHOLD 3
-#define LIGHT_HEAL_THRESHOLD 3
-#define LIGHT_DAMAGE_TAKEN 10
-
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 
@@ -147,7 +122,6 @@
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
 	if(pressure > ONE_ATMOSPHERE)
@@ -623,52 +597,43 @@
 	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
-		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
-			clear_alert("pressure")
-			clear_alert("temp")
-			return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
+		//Use heat transfer as proportional to the gas activity (pressure)
+		var/affecting_temp = (loc_temp - bodytemperature) * min(pressure / ONE_ATMOSPHERE, 1.)
 
-		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-		var/temp_adj = 0
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
-		if(!on_fire)
-			if(loc_temp < bodytemperature)			//Place is colder than we are
+		//Or if absolute temperature difference is too small
+		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire) 
+			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
+			var/temp_adj = 0
+
+			if(affecting_temp < 0.)	//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
-			else if (loc_temp > bodytemperature)			//Place is hotter than we are
+					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
+			else					//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-
-			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
-			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
-			temp_adj *= relative_density
+					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
 
 			if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
 			if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
-	else if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-		if(istype(loc, /obj/mecha))
+	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
+		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
-		if(istype(loc, /obj/structure/transit_tube_pod))
-			return
-		var/protected = 0
-		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
-			protected = 1
-		if(!protected && radiation < 100)
+		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			apply_effect(5, IRRADIATE)
 
 	if(status_flags & GODMODE)
-		return 1	//godmode
-
-	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		clear_alert("temp")
+		clear_alert("pressure")
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+		return 1	//godmode
+
 	if(bodytemperature > species.heat_level_1)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
@@ -687,23 +652,22 @@
 		else
 			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-	else if(bodytemperature < species.cold_level_1)
+	else if(bodytemperature < species.cold_level_1 && !istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 
-		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
-			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
-			else
-				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
+		if(bodytemperature < species.cold_level_3)
+			throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
+		else if(bodytemperature < species.cold_level_2)
+			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 		else
-			clear_alert("temp")
+			throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		clear_alert("temp")
 
 	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)

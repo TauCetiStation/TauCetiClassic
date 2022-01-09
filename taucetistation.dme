@@ -42,6 +42,7 @@
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\gamemodes.dm"
 #include "code\__DEFINES\genetics.dm"
+#include "code\__DEFINES\human.dm"
 #include "code\__DEFINES\is_helpers.dm"
 #include "code\__DEFINES\items_clothing.dm"
 #include "code\__DEFINES\language.dm"

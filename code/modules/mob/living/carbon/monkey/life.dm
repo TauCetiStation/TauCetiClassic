@@ -62,11 +62,6 @@
 			emote(pick("scratch","jump","roll","tail"))
 	updatehealth()
 
-
-/mob/living/carbon/monkey/calculate_affecting_pressure(pressure)
-	..()
-	return pressure
-
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
@@ -374,64 +369,12 @@
 	return 1
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
+	if(istype(head, /obj/item/clothing/head/helmet/space))
+		clear_alert("pressure")
+		clear_alert("temp")
 		return
 
-	//Moved these vars here for use in the fuck-it-skip-processing check.
-	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-
-	if(adjusted_pressure < warning_high_pressure && adjusted_pressure > warning_low_pressure && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5)
-
-		//Hopefully should fix the walk-inside-still-pressure-warning issue.
-		if(pressure_alert)
-			clear_alert("pressure")
-
-		return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
-
-	var/environment_heat_capacity = environment.heat_capacity()
-	if(isspaceturf(get_turf(src)))
-		var/turf/heat_turf = get_turf(src)
-		environment_heat_capacity = heat_turf.heat_capacity
-	if(!on_fire)
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
-
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-	if(stat==2)
-		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
-
-	//Account for massive pressure differences
-	switch(adjusted_pressure)
-		if(hazard_high_pressure to INFINITY)
-			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
-		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
-		if(warning_low_pressure to warning_high_pressure)
-			clear_alert("pressure")
-		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-		else
-			if( !(COLD_RESISTANCE in mutations) )
-				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
-			else
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-
-	return
-
-/mob/living/carbon/monkey/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(status_flags & GODMODE) return
-	var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-	//adjustFireLoss(2.5*discomfort)
-
-	if(exposed_temperature > bodytemperature)
-		adjustFireLoss(20.0*discomfort)
-
-	else
-		adjustFireLoss(5.0*discomfort)
+	..()
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
@@ -577,7 +520,8 @@
 /mob/living/carbon/monkey/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	bodytemperature += BODYTEMP_HEATING_MAX
+	adjustFireLoss(2)
 	return
 //END FIRE CODE
 

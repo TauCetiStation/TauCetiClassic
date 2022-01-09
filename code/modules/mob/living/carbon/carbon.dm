@@ -17,6 +17,57 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+/mob/living/carbon/calculate_affecting_pressure(pressure)
+	return pressure
+
+/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
+	if(!environment)
+		return
+
+	var/pressure = environment.return_pressure()
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * min(pressure / ONE_ATMOSPHERE, 1.)
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+
+	if(!on_fire)
+		if(affecting_temp > BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
+		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
+		else
+			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+
+	if(flags & GODMODE)
+		return
+
+	switch(bodytemperature)
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
+			clear_alert("temp")
+		else
+			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+
+	//Account for massive pressure differences
+	switch(adjusted_pressure)
+		if(HAZARD_HIGH_PRESSURE to INFINITY)
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
+		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+			clear_alert("pressure")
+		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+		else
+			if( !(COLD_RESISTANCE in mutations) )
+				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+			else
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(. && !ISDIAGONALDIR(Dir))

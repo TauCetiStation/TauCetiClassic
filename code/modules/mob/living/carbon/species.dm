@@ -43,21 +43,21 @@
 	var/poison_type = "phoron"           // Poisonous air.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
 
-	var/cold_level_1 = 260  // Cold damage level 1 below this point.
-	var/cold_level_2 = 255  // Cold damage level 2 below this point.
-	var/cold_level_3 = 250  // Cold damage level 3 below this point.
+	var/cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT		// Cold damage level 1 below this point.
+	var/cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 5	// Cold damage level 2 below this point.
+	var/cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 10	// Cold damage level 3 below this point.
 
-	var/heat_level_1 = 360  // Heat damage level 1 above this point.
-	var/heat_level_2 = 400  // Heat damage level 2 above this point.
-	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
+	var/heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT		// Heat damage level 1 above this point.
+	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
+	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
 	var/breath_cold_level_1 = 200
 	var/breath_cold_level_2 = 180
 	var/breath_cold_level_3 = 120
 
-	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
-	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
-	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
+	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
+	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0					//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -292,13 +292,13 @@
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 275 //Default 200
-	cold_level_3 = 273 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT + 13
 
-	heat_level_1 = 420 //Default 360 - Higher is better
-	heat_level_2 = 480 //Default 400
-	heat_level_3 = 1100 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 60
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 120
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 740
 
 	brute_mod = 0.80
 	burn_mod = 0.90
@@ -361,13 +361,13 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = 200 //Default 260
-	cold_level_2 = 140 //Default 200
-	cold_level_3 = 80 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = 330 //Default 360
-	heat_level_2 = 380 //Default 400
-	heat_level_3 = 800 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
 	primitive = /mob/living/carbon/monkey/tajara
 
@@ -1336,9 +1336,9 @@
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE
 
-	cold_level_1 = 280
-	cold_level_2 = 230
-	cold_level_3 = 150
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
 
 	flags = list(
 	 NO_BREATHE = TRUE
