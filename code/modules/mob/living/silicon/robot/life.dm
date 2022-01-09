@@ -221,12 +221,6 @@
 	else
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
-
 	..()
 
 	return 1
