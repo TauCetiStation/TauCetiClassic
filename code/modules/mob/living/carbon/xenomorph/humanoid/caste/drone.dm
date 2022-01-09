@@ -33,5 +33,4 @@
 /mob/living/carbon/xenomorph/humanoid/drone/can_pickup(obj/O)
 	if(istype(O, /obj/item/clothing/mask/facehugger))
 		return TRUE
-	else
-		return FALSE
+	return FALSE

@@ -60,8 +60,7 @@
 /mob/living/carbon/xenomorph/humanoid/queen/can_pickup(obj/O)
 	if(istype(O, /obj/item/clothing/mask/facehugger))
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
