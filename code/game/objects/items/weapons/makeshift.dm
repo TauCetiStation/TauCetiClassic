@@ -7,7 +7,6 @@
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 	throwforce = 15
-	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
@@ -269,7 +268,6 @@
 	force = 8
 	w_class = SIZE_NORMAL
 	throwforce = 5
-//	flags = NOSHIELD
 		//var/protest_text
  		//	var/protest_text_length = 100
  	//var/image/inhand_blood_overlay
