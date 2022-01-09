@@ -192,7 +192,7 @@
 	throw_range = 5
 	throwforce = 0
 	w_class = SIZE_TINY
-	flags = NOSHIELD | NOBLOODY
+	flags = NOBLOODY
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green

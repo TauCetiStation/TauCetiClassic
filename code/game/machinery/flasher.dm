@@ -78,7 +78,7 @@
 
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if(!H.eyecheck() <= 0)
+			if(H.eyecheck() > 0)
 				continue
 
 		if (istype(O, /mob/living/carbon/xenomorph))//So aliens don't get flashed (they have no external eyes)/N
