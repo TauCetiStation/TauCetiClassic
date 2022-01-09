@@ -297,7 +297,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/atom_init()
@@ -341,7 +340,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -495,7 +493,6 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = SIZE_NORMAL
-	flags = NOSHIELD
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
