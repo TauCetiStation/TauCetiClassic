@@ -368,14 +368,6 @@
 
 	return 1
 
-/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
-	if(istype(head, /obj/item/clothing/head/helmet/space))
-		clear_alert("pressure")
-		clear_alert("temp")
-		return
-
-	..()
-
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
 	if(reagents && reagents.reagent_list.len)
