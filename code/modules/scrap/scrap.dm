@@ -256,9 +256,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
 		if(W.use_tool(src, user, do_dig))
-			var/obj/item/organ/external/BPHand = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
-			if(BPHand.pumped && BPHand.pumped < 30 && prob(10))
-				BPHand.pumped += 1
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+				if(BPHand.pumped && BPHand.pumped < 30 && prob(10))
+					BPHand.pumped += 1
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)
