@@ -381,7 +381,7 @@
 	fire_delay = 12
 	origin_tech += ";syndicate=1"
 	emagged = TRUE
-	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка</span>")
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
 	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
