@@ -234,6 +234,9 @@
 					artifact_debris()
 
 		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
+			var/obj/item/organ/external/BPHand = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+			if(BPHand.pumped && BPHand.pumped < 30 && prob(10))
+				BPHand.pumped += 1
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
