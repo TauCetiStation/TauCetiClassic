@@ -520,7 +520,7 @@
 	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
-	if(breath.temperature < species.breath_cold_level_3 || breath.temperature > species.heat_level_1)
+	if(breath.temperature < species.breath_cold_level_1 || breath.temperature > species.heat_level_1)
 		switch(breath.temperature)
 			if(-INFINITY to species.breath_cold_level_3)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
