@@ -33,7 +33,8 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)

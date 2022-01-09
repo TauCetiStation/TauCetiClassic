@@ -22,6 +22,7 @@
 	new /obj/item/weapon/scissors(src)
 	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/head/santa(src)

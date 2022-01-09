@@ -28,7 +28,8 @@
 		new /obj/item/clothing/head/beret/sec(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/sec_peakedcap(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
 			new /obj/item/clothing/head/santa(src)
 			new /obj/item/clothing/suit/hooded/wintercoat/security(src)
@@ -59,7 +60,8 @@
 		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -154,7 +156,8 @@
 		new /obj/item/clothing/head/hardhat/red(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/eng(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
 			new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -178,7 +181,8 @@
 			new /obj/item/clothing/head/hardhat/yellow/visor(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/eng(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
 			new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -241,7 +245,8 @@
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/gloves/black(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
 			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -279,7 +284,8 @@
 		new /obj/item/clothing/shoes/white(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
 			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -302,7 +308,8 @@
 		new /obj/item/clothing/suit/storage/labcoat/virologist(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
@@ -330,7 +337,8 @@
 		new /obj/item/clothing/suit/storage/labcoat(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
@@ -349,7 +357,8 @@
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/grey(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
@@ -394,7 +403,8 @@
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	var/datum/space_level/mylevel = SSmapping.z_list[z]
+	if(mylevel.envtype == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
