@@ -361,7 +361,7 @@
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(istype(mover)  && buckled_mob == mover)
+	if(istype(mover) && buckled_mob == mover)
 		return 1
 	return ..()
 
