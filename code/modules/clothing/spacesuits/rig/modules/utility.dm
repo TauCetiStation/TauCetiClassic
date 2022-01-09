@@ -55,7 +55,7 @@
 	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
 	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
-	device_type = /obj/item/weapon/pickaxe/drill/jackhammer/rig // this one doesn't use energy
+	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
 /obj/item/rig_module/device/anomaly_scanner
 	name = "hardsuit anomaly scanner module"
