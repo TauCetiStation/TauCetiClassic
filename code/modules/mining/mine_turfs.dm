@@ -16,7 +16,7 @@
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
-	var/last_act = 0
+	var/next_act = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
@@ -195,16 +195,12 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act > world.time)//prevents message spam
+		if(next_act > world.time)//prevents message spam
 			return
-		last_act = world.time + P.toolspeed
+		next_act = world.time + 50 * P.toolspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
-			if(!D.on)
-				last_act = world.time + 10
-				to_chat(user, "<span class='danger'>[D] is turned off!</span>")
-				return
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")

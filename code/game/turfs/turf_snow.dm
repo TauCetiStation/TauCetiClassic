@@ -156,7 +156,7 @@
 	anchored = TRUE
 	density = TRUE
 
-	var/last_act = 0
+	var/next_act = 0
 	var/mineral/mineral
 	var/mineralSpawnChanceList = list("Uranium" = 5, "Platinum" = 5, "Iron" = 35, "Coal" = 20, "Diamond" = 3, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
 	var/ore_amount = 0
@@ -190,16 +190,12 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act > world.time)//prevents message spam
+		if(next_act > world.time)//prevents message spam
 			return
-		last_act = world.time + P.toolspeed
+		next_act = world.time + 10 * P.toolspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
-			if(!D.on)
-				last_act = world.time + 10
-				to_chat(user, "<span class='danger'>[D] is turned off!</span>")
-				return
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
@@ -215,7 +211,7 @@
 		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")
 
-		if(!user.is_busy() && do_after(user,P.toolspeed, target = src))
+		if(!user.is_busy(src) && P.use_tool(src, user, 10, volume = 100))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 			GetDrilled()
 

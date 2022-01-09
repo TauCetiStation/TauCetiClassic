@@ -332,8 +332,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell
-	var/mode = 0
-	var/on = FALSE
+	var/mode = FALSE
+	var/initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -342,6 +342,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	initial_toolspeed = toolspeed
 	update_mode_stats()
 
 
@@ -394,12 +395,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
-/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
-	if(!on)
-		on = TRUE
-		to_chat(user, "<span class='notice'>You turned on the [src] in [mode ? "standard" : "safe"] mode. Use again to switch the mode.</span>")
-		return
 
+/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
@@ -409,8 +406,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	update_mode_stats()
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
-	toolspeed = mode ? initial(toolspeed) : (initial(toolspeed) * 3)
-
+	if(mode)
+		initial_toolspeed = toolspeed
+		toolspeed *= 0.5
+	else
+		toolspeed = initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -423,9 +423,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
-
-/obj/item/weapon/pickaxe/drill/jackhammer/rig
-	on = TRUE
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
