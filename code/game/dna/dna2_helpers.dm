@@ -2,6 +2,11 @@
 // Helpers for DNA2
 /////////////////////////////
 
+#define LARGE_PROB(rs, rd, block) prob(rs * 10 + rd); block
+#define STANDARD_PROB(rs, block) prob(rs * 10); block
+#define SMALL_PROB(rs, rd, block) prob(rs * 10 - rd); block
+#define TINY_PROB(rs, rd, block) prob(rs * 5 + rd); block
+
 // DNA Gene activation boundaries, see dna2.dm.
 // Returns a list object with 4 numbers.
 /proc/GetDNABounds(block)
@@ -63,18 +68,19 @@
 		domutcheck(M, null)
 
 // I haven't yet figured out what the fuck this is supposed to do.
-/proc/miniscramble(input,rs,rd)
-	var/output
-	output = null
-	if (input == "C" || input == "D" || input == "E" || input == "F")
-		output = pick(prob((rs*10));"4",prob((rs*10));"5",prob((rs*10));"6",prob((rs*10));"7",prob((rs*5)+(rd));"0",prob((rs*5)+(rd));"1",prob((rs*10)-(rd));"2",prob((rs*10)-(rd));"3")
-	if (input == "8" || input == "9" || input == "A" || input == "B")
-		output = pick(prob((rs*10));"4",prob((rs*10));"5",prob((rs*10));"A",prob((rs*10));"B",prob((rs*5)+(rd));"C",prob((rs*5)+(rd));"D",prob((rs*5)+(rd));"2",prob((rs*5)+(rd));"3")
-	if (input == "4" || input == "5" || input == "6" || input == "7")
-		output = pick(prob((rs*10));"4",prob((rs*10));"5",prob((rs*10));"A",prob((rs*10));"B",prob((rs*5)+(rd));"C",prob((rs*5)+(rd));"D",prob((rs*5)+(rd));"2",prob((rs*5)+(rd));"3")
-	if (input == "0" || input == "1" || input == "2" || input == "3")
-		output = pick(prob((rs*10));"8",prob((rs*10));"9",prob((rs*10));"A",prob((rs*10));"B",prob((rs*10)-(rd));"C",prob((rs*10)-(rd));"D",prob((rs*5)+(rd));"E",prob((rs*5)+(rd));"F")
-	if (!output) output = "5"
+/proc/miniscramble(input, rs, rd)
+	var/output = null
+	switch(input)
+		if("C", "D", "E", "F")
+			output = pick(STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "6"), STANDARD_PROB(rs, "7"), TINY_PROB(rs, rd, "0"), TINY_PROB(rs, rd, "1"), SMALL_PROB(rs, rd, "2"), SMALL_PROB(rs, rd, "3"))
+		if ("8", "9", "A", "B")
+			output = pick(STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "A"), STANDARD_PROB(rs, "B"), TINY_PROB(rs, rd, "C"), TINY_PROB(rs, rd, "D"), STANDARD_PROB(rs, "2"), STANDARD_PROB(rs, "3"))
+		if ("4", "5", "6", "7")
+			output = pick(SMALL_PROB(rs, rd, "4"), SMALL_PROB(rs, rd, "5"), STANDARD_PROB(rs, "A"), STANDARD_PROB(rs, "B"), TINY_PROB(rs, rd, "C"), TINY_PROB(rs, rd, "D"), STANDARD_PROB(rs, "2"), STANDARD_PROB(rs, "3"))
+		if ("0", "1", "2", "3")
+			output = pick(STANDARD_PROB(rs, "8"), STANDARD_PROB(rs, "9"), STANDARD_PROB(rs, "A"), STANDARD_PROB(rs, "B"), SMALL_PROB(rs, rd, "C"), SMALL_PROB(rs, rd, "D"), TINY_PROB(rs, rd, "E"), TINY_PROB(rs, rd, "F"))
+	if(!output)
+		return "5"
 	return output
 
 // HELLO I MAKE BELL CURVES AROUND YOUR DESIRED TARGET
@@ -82,45 +88,46 @@
 // input: YOUR TARGET
 // rs: RAD STRENGTH
 // rd: DURATION
-/proc/miniscrambletarget(input,rs,rd)
+/proc/miniscrambletarget(input, rs, rd)
+	if(!input)
+		return "8"
 	var/output = null
 	switch(input)
 		if("0")
-			output = pick(prob((rs*10)+(rd));"0",prob((rs*10)+(rd));"1",prob((rs*10));"2",prob((rs*10)-(rd));"3")
+			output = pick(TINY_PROB(rs, rd, "0"), STANDARD_PROB(rs, "1"), STANDARD_PROB(rs, "2"),  SMALL_PROB(rs, rd, "3"))
 		if("1")
-			output = pick(prob((rs*10)+(rd));"0",prob((rs*10)+(rd));"1",prob((rs*10)+(rd));"2",prob((rs*10));"3",prob((rs*10)-(rd));"4")
+			output = pick(STANDARD_PROB(rs, "0"), TINY_PROB(rs, rd, "1"), STANDARD_PROB(rs, "2"), STANDARD_PROB(rs, "3"), STANDARD_PROB(rs, "4"))
 		if("2")
-			output = pick(prob((rs*10));"0",prob((rs*10)+(rd));"1",prob((rs*10)+(rd));"2",prob((rs*10)+(rd));"3",prob((rs*10));"4",prob((rs*10)-(rd));"5")
+			output = pick(STANDARD_PROB(rs, "0"), STANDARD_PROB(rs, "1"), TINY_PROB(rs, rd, "2"), STANDARD_PROB(rs, "3"), STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"))
 		if("3")
-			output = pick(prob((rs*10)-(rd));"0",prob((rs*10));"1",prob((rs*10)+(rd));"2",prob((rs*10)+(rd));"3",prob((rs*10)+(rd));"4",prob((rs*10));"5",prob((rs*10)-(rd));"6")
+			output = pick(STANDARD_PROB(rs, "0"), STANDARD_PROB(rs, "1"), STANDARD_PROB(rs, "2"), TINY_PROB(rs, rd, "3"), STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "6"))
 		if("4")
-			output = pick(prob((rs*10)-(rd));"1",prob((rs*10));"2",prob((rs*10)+(rd));"3",prob((rs*10)+(rd));"4",prob((rs*10)+(rd));"5",prob((rs*10));"6",prob((rs*10)-(rd));"7")
+			output = pick(STANDARD_PROB(rs, "1"), STANDARD_PROB(rs, "2"), STANDARD_PROB(rs, "3"), TINY_PROB(rs, rd, "4"), STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "6"), STANDARD_PROB(rs, "7"))
 		if("5")
-			output = pick(prob((rs*10)-(rd));"2",prob((rs*10));"3",prob((rs*10)+(rd));"4",prob((rs*10)+(rd));"5",prob((rs*10)+(rd));"6",prob((rs*10));"7",prob((rs*10)-(rd));"8")
+			output = pick(STANDARD_PROB(rs, "2"), STANDARD_PROB(rs, "3"), STANDARD_PROB(rs, "4"), TINY_PROB(rs, rd, "5"), STANDARD_PROB(rs, "6"), STANDARD_PROB(rs, "7"), STANDARD_PROB(rs, "8"))
 		if("6")
-			output = pick(prob((rs*10)-(rd));"3",prob((rs*10));"4",prob((rs*10)+(rd));"5",prob((rs*10)+(rd));"6",prob((rs*10)+(rd));"7",prob((rs*10));"8",prob((rs*10)-(rd));"9")
+			output = pick(STANDARD_PROB(rs, "3"), STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"), TINY_PROB(rs, rd, "6"), STANDARD_PROB(rs, "7"), STANDARD_PROB(rs, "8"), STANDARD_PROB(rs, "9"))
 		if("7")
-			output = pick(prob((rs*10)-(rd));"4",prob((rs*10));"5",prob((rs*10)+(rd));"6",prob((rs*10)+(rd));"7",prob((rs*10)+(rd));"8",prob((rs*10));"9",prob((rs*10)-(rd));"A")
+			output = pick(STANDARD_PROB(rs, "4"), STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "6"), TINY_PROB(rs, rd, "7"), STANDARD_PROB(rs, "8"), STANDARD_PROB(rs, "9"), SMALL_PROB(rs, rd, "A"))
 		if("8")
-			output = pick(prob((rs*10)-(rd));"5",prob((rs*10));"6",prob((rs*10)+(rd));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10));"A",prob((rs*10)-(rd));"B")
+			output = pick(STANDARD_PROB(rs, "5"), STANDARD_PROB(rs, "6"), STANDARD_PROB(rs, "7"), TINY_PROB(rs, rd, "8"), STANDARD_PROB(rs, "9"), STANDARD_PROB(rs, "A"), SMALL_PROB(rs, rd, "B"))
 		if("9")
-			output = pick(prob((rs*10)-(rd));"6",prob((rs*10));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10));"B",prob((rs*10)-(rd));"C")
+			output = pick(STANDARD_PROB(rs, "6"), STANDARD_PROB(rs, "7"), STANDARD_PROB(rs, "8"), TINY_PROB(rs, rd, "9"), LARGE_PROB(rs, rd, "A"), STANDARD_PROB(rs, "B"), SMALL_PROB(rs, rd, "C"))
 		if("10")//A
-			output = pick(prob((rs*10)-(rd));"7",prob((rs*10));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10));"C",prob((rs*10)-(rd));"D")
+			output = pick(STANDARD_PROB(rs, "7"), STANDARD_PROB(rs, "8"), STANDARD_PROB(rs, "9"), SMALL_PROB(rs, rd, "A"), LARGE_PROB(rs, rd, "B"), STANDARD_PROB(rs, "C"), SMALL_PROB(rs, rd, "D"))
 		if("11")//B
-			output = pick(prob((rs*10)-(rd));"8",prob((rs*10));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10));"D",prob((rs*10)-(rd));"E")
+			output = pick(STANDARD_PROB(rs, "8"), STANDARD_PROB(rs, "9"), LARGE_PROB(rs, rd, "A"), SMALL_PROB(rs, rd, "B"), LARGE_PROB(rs, rd, "C"), STANDARD_PROB(rs, "D"), SMALL_PROB(rs, rd, "E"))
 		if("12")//C
-			output = pick(prob((rs*10)-(rd));"9",prob((rs*10));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10));"E",prob((rs*10)-(rd));"F")
+			output = pick(SMALL_PROB(rs, rd, "9"), STANDARD_PROB(rs, "A"), LARGE_PROB(rs, rd, "B"), SMALL_PROB(rs, rd, "C"), LARGE_PROB(rs, rd, "D"), STANDARD_PROB(rs, "E"), SMALL_PROB(rs, rd, "F"))
 		if("13")//D
-			output = pick(prob((rs*10)-(rd));"A",prob((rs*10));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10));"F")
+			output = pick(SMALL_PROB(rs, rd, "A"), STANDARD_PROB(rs, "B"), LARGE_PROB(rs, rd, "C"), SMALL_PROB(rs, rd, "D"), LARGE_PROB(rs, rd, "E"), STANDARD_PROB(rs, "F"))
 		if("14")//E
-			output = pick(prob((rs*10)-(rd));"B",prob((rs*10));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
+			output = pick(SMALL_PROB(rs, rd, "B"), STANDARD_PROB(rs, "C"), LARGE_PROB(rs, rd, "D"), SMALL_PROB(rs, rd, "E"), LARGE_PROB(rs, rd, "F"))
 		if("15")//F
-			output = pick(prob((rs*10)-(rd));"C",prob((rs*10));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
+			output = pick(SMALL_PROB(rs, rd, "C"), STANDARD_PROB(rs, "D"), LARGE_PROB(rs, rd, "E"), SMALL_PROB(rs, rd, "F"))
 
-	if(!input || !output) //How did this happen?
-		output = "8"
-
+	if(!output)
+		return "8"
 	return output
 
 // /proc/updateappearance has changed behavior, so it's been removed
@@ -180,3 +187,8 @@
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)
 	return prob(pr+inj*pr)
+
+#undef LARGE_PROB
+#undef STANDARD_PROB
+#undef SMALL_PROB
+#undef TINY_PROB
