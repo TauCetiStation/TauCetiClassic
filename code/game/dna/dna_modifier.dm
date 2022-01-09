@@ -69,12 +69,13 @@
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
-		scan_level += P.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
-		precision_coeff = P.rating
-	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
-		damage_coeff = P.rating
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
+			scan_level += P.rating
+		else if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+			precision_coeff = P.rating ** 2
+		else if(istype(P, /obj/item/weapon/stock_parts/micro_laser))
+			damage_coeff = P.rating ** 2
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
@@ -449,7 +450,7 @@
 		connected.locked = 1//lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
+		sleep(radiation_duration SECONDS)
 
 		irradiating = 0
 
@@ -544,18 +545,18 @@
 		connected.locked = 1//lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
+		sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
 
 		irradiating = 0
 
 		if (!connected.occupant)
 			return
 
-		if (prob((80 + (radiation_duration / 2))))
+		if (prob(80 + connected.precision_coeff + radiation_duration / 2))
 			block = miniscrambletarget(num2text(selected_ui_target), radiation_intensity, radiation_duration)
 			connected.occupant.dna.SetUISubBlock(selected_ui_block, selected_ui_subblock, block)
 			connected.occupant.UpdateAppearance()
-			connected.occupant.radiation += (radiation_intensity + radiation_duration) / (connected.damage_coeff ** 2)
+			connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
 		else
 			if	(prob(20 + radiation_intensity))
 				randmutb(connected.occupant)
@@ -563,7 +564,7 @@
 			else
 				randmuti(connected.occupant)
 				connected.occupant.UpdateAppearance()
-			connected.occupant.radiation += ((radiation_intensity * 2) + radiation_duration + (connected.precision_coeff ** 2))
+			connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
 		connected.locked = lock_state
 
 	////////////////////////////////////////////////////////
@@ -600,17 +601,17 @@
 		connected.locked = 1 //lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
+		sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
 
 		irradiating = 0
 
 		if(connected.occupant)
-			if (prob((80 + (radiation_duration / 2))))
+			if (prob(80 + connected.precision_coeff + radiation_duration / 2))
 				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
 				//if ((selected_se_block != 2 || selected_se_block != 12 || selected_se_block != 8 || selected_se_block || 10) && prob (20))
 				var/real_SE_block = selected_se_block
 				block = miniscramble(block, radiation_intensity, radiation_duration)
-				if(prob(20))
+				if(prob(20 - connected.scan_level ** 2))
 					if (selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
 						real_SE_block++
 					else if (selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
@@ -618,10 +619,10 @@
 
 				//testing("Irradiated SE block [real_SE_block]:[selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-				connected.occupant.radiation += (radiation_intensity + radiation_duration) / (connected.damage_coeff ** 2)
+				connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
 				domutcheck(connected.occupant, connected, block != null, 1)//#Z2
 			else
-				connected.occupant.radiation += ((radiation_intensity * 2) + radiation_duration + (connected.precision_coeff ** 2))
+				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
 				if	(prob(80 - radiation_duration))
 					//testing("Random bad mut!")
 					randmutb(connected.occupant)
@@ -714,7 +715,7 @@
 			connected.locked = 1//lock it
 			nanomanager.update_uis(src) // update all UIs attached to src
 
-			sleep(20) // sleep for 2 seconds
+			sleep(2 SECONDS)
 
 			irradiating = 0
 			connected.locked = lock_state
@@ -730,7 +731,7 @@
 				connected.occupant.dna.SE = buf.dna.SE
 				connected.occupant.dna.UpdateSE()
 				domutcheck(connected.occupant,connected)
-			connected.occupant.radiation += rand(15 / (connected.damage_coeff ** 2), 40 / (connected.damage_coeff ** 2))
+			connected.occupant.radiation += rand(15 / (connected.damage_coeff), 40 / connected.damage_coeff)
 
 		else if (bufferOption == "createInjector")
 			if (injector_ready && !waiting_for_user_input)
