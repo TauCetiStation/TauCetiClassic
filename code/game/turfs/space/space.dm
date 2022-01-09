@@ -3,6 +3,7 @@
 	name = "space"
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	force_lighting_update = TRUE
 
 	oxygen = 0
 	carbon_dioxide = 0
@@ -279,9 +280,6 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
-
-/turf/simulated/environment/space/ChangeTurf(path, force_lighting_update = 0)
-	return ..(path, TRUE)
 
 /turf/simulated/environment/space/singularity_act()
 	return

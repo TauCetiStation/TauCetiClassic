@@ -236,7 +236,7 @@
 		ChangeTurf(turf_type)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
+/turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
 
@@ -258,6 +258,7 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
+	var/old_force_lighting_update = force_lighting_update
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
@@ -338,7 +339,7 @@
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
 		corners = old_corners
-		if (force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
 		if (dynamic_lighting != old_dynamic_lighting)

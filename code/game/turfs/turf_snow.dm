@@ -3,6 +3,7 @@
 	name = "snow"
 	icon_state = "snow0"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	force_lighting_update = TRUE
 
 	basetype = /turf/simulated/environment/snow
 	footstep = FOOTSTEP_SNOWSTEP
@@ -88,9 +89,6 @@
 
 		perp.update_inv_shoes()
 
-/turf/simulated/environment/snow/ChangeTurf(path, force_lighting_update = 0)
-	return ..(path, TRUE)
-
 /turf/simulated/environment/snow/singularity_act()
 	return
 
@@ -105,12 +103,12 @@
 	clawfootstep = FOOTSTEP_ICESTEP
 	heavyfootstep = FOOTSTEP_ICESTEP
 
-/turf/simulated/environment/snow/ice/ChangeTurf(path, force_lighting_update = 0)
+/turf/simulated/environment/snow/ice/ChangeTurf(path)
 	if(path != type)
 		var/obj/effect/overlay/ice_hole/IH = locate() in contents
 		if(IH)
 			qdel(IH)
-	return ..(path, TRUE)
+	return ..()
 
 /turf/simulated/environment/snow/ice/attackby(obj/item/O, mob/user)
 	. = ..()
