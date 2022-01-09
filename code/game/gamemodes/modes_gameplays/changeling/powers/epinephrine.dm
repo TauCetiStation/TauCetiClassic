@@ -3,7 +3,7 @@
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
 	chemical_cost = 30
-	genomecost = 3
+	genomecost = 2
 	req_human = 1
 	req_stat = UNCONSCIOUS
 

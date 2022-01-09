@@ -120,13 +120,16 @@ var/global/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiLi
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
 
-/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "")
+/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "", local_time = "")
 	if(owner.guard.chat_processed)
 		return
 
 	if(charset && istext(charset))
 		src.charset = ckey(charset)
 		owner.guard.chat_data["charset"] = src.charset
+
+	if(local_time && isnum(text2num(local_time)))
+		owner.guard.chat_data["local_time"] = text2num(local_time)
 
 	if(cookie && cookie != "none")
 		var/list/connData = json_decode(cookie)

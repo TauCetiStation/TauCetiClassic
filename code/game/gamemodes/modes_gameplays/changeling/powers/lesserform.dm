@@ -2,10 +2,11 @@
 	name = "Lesser form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
 	chemical_cost = 5
-	genomecost = 2
+	genomecost = 1
 	genetic_damage = 30
 	max_genetic_damage = 30
 	req_human = 1
+	can_be_used_in_abom_form = FALSE
 
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
