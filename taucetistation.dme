@@ -1289,6 +1289,7 @@
 #include "code\modules\atmospheric\machinery\portable\pump.dm"
 #include "code\modules\atmospheric\machinery\portable\scrubber.dm"
 #include "code\modules\atmospheric\xgm\gases.dm"
+#include "code\modules\atmospheric\xgm\overlays.dm"
 #include "code\modules\atmospheric\xgm\xgm_gas_data.dm"
 #include "code\modules\atmospheric\xgm\xgm_gas_mixture.dm"
 #include "code\modules\atmospheric\ZAS\Airflow.dm"

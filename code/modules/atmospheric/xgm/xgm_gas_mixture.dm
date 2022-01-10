@@ -347,20 +347,35 @@
 
 //Rechecks the gas_mixture and adjusts the graphic list if needed.
 //Two lists can be passed by reference if you need know specifically which graphics were added and removed.
-/datum/gas_mixture/proc/check_tile_graphic(list/graphic_add = null, list/graphic_remove = null)
-	for(var/g in gas_data.overlay_limit)
-		if(graphic.Find(gas_data.tile_overlay[g]))
-			//Overlay is already applied for this gas, check if it's still valid.
-			if(gas[g] <= gas_data.overlay_limit[g])
-				if(!graphic_remove)
-					graphic_remove = list()
-				graphic_remove += gas_data.tile_overlay[g]
-		else
-			//Overlay isn't applied for this gas, check if it's valid and needs to be added.
-			if(gas[g] > gas_data.overlay_limit[g])
-				if(!graphic_add)
-					graphic_add = list()
-				graphic_add += gas_data.tile_overlay[g]
+/datum/gas_mixture/proc/check_tile_graphic(list/graphic_add, list/graphic_remove)
+	var/tile_overlays = gas_data.tile_overlay
+	var/overlay_limits = gas_data.overlay_limit
+	var/temperature_ranges = gas_data.temperature_range
+
+	var/tile_overlay
+	var/overlay_active
+	var/temperature_range
+
+	for(var/g in overlay_limits)
+		tile_overlay = tile_overlays[g]
+		overlay_active = gas[g] > overlay_limits[g]
+
+		if(graphic.Find(tile_overlay))
+			if(!overlay_active) //Overlay is already applied for this gas, check if it's still valid.
+				graphic_remove += tile_overlay
+		else if(overlay_active) //Overlay isn't applied for this gas, check if it's valid and needs to be added.
+				graphic_add += tile_overlay
+
+	for(var/o in temperature_ranges)
+		temperature_range = temperature_ranges[o]
+		tile_overlay = tile_overlays[o]
+		overlay_active = total_moles > TEMPERATURE_OVERLAY_MOLES &&  (temperature in temperature_range[1] to temperature_range[2])
+
+		if(graphic.Find(tile_overlay))
+			if(!overlay_active) //Overlay is applied for this gas but mustn't.
+				graphic_remove += tile_overlay
+		else if(overlay_active) //Overlay isn't applied for this gas but must be.
+			graphic_add += tile_overlay
 
 	. = FALSE
 	//Apply changes
