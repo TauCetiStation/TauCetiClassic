@@ -111,14 +111,15 @@
 
 	organ_head_list += BP
 
-	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(ischangeling(src))
 		var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
 		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 				crab.sting_action(src)
+			return
 
-	if(IO.parent_bodypart == BP_HEAD)
+	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
+	if(IO && IO.parent_bodypart == BP_HEAD)
 
 		BP.transfer_identity(src)
 
