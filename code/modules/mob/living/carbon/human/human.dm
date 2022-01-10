@@ -1423,6 +1423,9 @@
 		if(species.language)
 			remove_language(species.language)
 
+		if(species.additional_languages)
+			remove_language(species.additional_languages)
+
 		species.on_loose(src, new_species)
 
 	species = all_species[new_species]

@@ -880,7 +880,6 @@
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
-	language = ""
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
