@@ -364,7 +364,7 @@
 			if(!overlay_active) //Overlay is already applied for this gas, check if it's still valid.
 				graphic_remove += tile_overlay
 		else if(overlay_active) //Overlay isn't applied for this gas, check if it's valid and needs to be added.
-				graphic_add += tile_overlay
+			graphic_add += tile_overlay
 
 	for(var/o in temperature_ranges)
 		temperature_range = temperature_ranges[o]
