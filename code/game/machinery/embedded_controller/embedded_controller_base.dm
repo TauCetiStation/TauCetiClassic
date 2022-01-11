@@ -70,8 +70,7 @@
 	new_prog.tag_interior_sensor = tag_interior_sensor
 	new_prog.memory["secure"] = tag_secure
 
-	var/datum/space_level/my_level = SSmapping.z_list[z]
-	new_prog.memory["external_sensor_pressure"] = my_level.air_pressure
+	new_prog.memory["external_sensor_pressure"] = SSenvironment.air_pressure[z]
 
 	new_prog.master = src
 	program = new_prog

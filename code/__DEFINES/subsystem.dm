@@ -26,6 +26,7 @@
 #define SS_INIT_JOBS          10
 #define SS_INIT_QUIRKS         9
 #define SS_INIT_MAPPING        8
+#define SS_INIT_ENVIRONMENT    7
 #define SS_INIT_XENOARCH       7
 #define SS_INIT_ATOMS          6
 #define SS_INIT_MACHINES       5

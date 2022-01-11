@@ -409,14 +409,11 @@
 	. = ..()
 	update_icon(1)
 
-	var/datum/space_level/my_level = SSmapping.z_list[z]
-	set_light(1.5, l_color = my_level.turf_light_color)
+	set_light(1.5, l_color = SSenvironment.turf_light_color[z])
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()
-	var/image/I
-	var/datum/space_level/my_level = SSmapping.z_list[z]
-	I = my_level.turf_image
+	var/image/I = SSenvironment.turf_image[z]
 	underlays += I
 
 	var/dirs = 0

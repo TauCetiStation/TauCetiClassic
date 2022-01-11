@@ -330,8 +330,7 @@
 /turf/proc/make_air()
 	air = new
 	if(airless)
-		var/datum/space_level/my_level = SSmapping.z_list[z]
-		air.copy_from(my_level.air)
+		air.copy_from(SSenvironment.air[z])
 	else
 		air.temperature = temperature
 		air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)

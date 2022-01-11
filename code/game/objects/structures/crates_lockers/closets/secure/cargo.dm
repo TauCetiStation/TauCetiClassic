@@ -15,8 +15,7 @@
 	new /obj/item/clothing/gloves/brown(src)
 	new /obj/item/clothing/head/soft(src)
 //	new /obj/item/weapon/cartridge/quartermaster(src)
-	var/datum/space_level/mylevel = SSmapping.z_list[z]
-	if(mylevel.envtype == ENV_TYPE_SNOW)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -51,8 +50,7 @@
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/survivalcapsule(src)
-	var/datum/space_level/mylevel = SSmapping.z_list[z]
-	if(mylevel.envtype == ENV_TYPE_SNOW)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
