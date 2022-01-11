@@ -565,7 +565,7 @@
 		var/loc_temp = get_temperature(environment)
 
 		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * min(pressure / ONE_ATMOSPHERE, 1.)
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small

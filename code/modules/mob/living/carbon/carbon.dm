@@ -26,7 +26,7 @@
 
 	var/pressure = environment.return_pressure()
 	var/temperature = environment.temperature
-	var/affecting_temp = (temperature - bodytemperature) * min(pressure / ONE_ATMOSPHERE, 1.)
+	var/affecting_temp = (temperature - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
