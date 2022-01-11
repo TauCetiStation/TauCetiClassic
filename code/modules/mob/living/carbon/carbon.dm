@@ -96,7 +96,7 @@
 				spread = FALSE
 
 		if(spread)
-			attacker.spread_disease_to(src, "Contact")
+			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
 			for(var/datum/disease/D in viruses)
 				if(D.spread_by_touch())
@@ -938,6 +938,12 @@
 		sight |= SEE_MOBS
 		see_in_dark = 8
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
 
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask

@@ -8,12 +8,4 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, IGNORE_EVENT_BLOB, poll_time = 150)
-	if(!candidates.len)
-		kill()
-		return
-
-	var/mob/candidate = pick(candidates)
-
-	var/obj/effect/blob/core/B = new /obj/effect/blob/core(T, candidate.client, 120)
-	message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
+	create_spawner(/datum/spawner/blob_event, "blob_event")

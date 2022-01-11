@@ -10,6 +10,7 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
+	var/can_be_used_in_abom_form = TRUE
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
 	return
@@ -42,7 +43,12 @@
 /obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return FALSE
-	if(req_human && !ishuman(user))
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!can_be_used_in_abom_form && H.species.name == ABOMINATION)
+			to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
+			return FALSE
+	else if(req_human)
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return FALSE
 	var/datum/role/changeling/c = user.mind.GetRoleByType(/datum/role/changeling)

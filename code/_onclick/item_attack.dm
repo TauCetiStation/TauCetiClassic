@@ -94,9 +94,9 @@
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(M, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
 					flick(G.hud.icon_state, G.hud)
@@ -105,7 +105,7 @@
 					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if (isbrain(M))
 		messagesource = M:container
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
