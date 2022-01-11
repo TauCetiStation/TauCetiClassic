@@ -81,7 +81,7 @@
 /datum/map_generator_module/flora/proc/place_flora(turf/T, noise)
     return FALSE
 
-/datum/map_generator_module/flora/place(turf/T)    
+/datum/map_generator_module/flora/place(turf/T)
     if(!checkPlaceAtom(T))
         return FALSE
 

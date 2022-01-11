@@ -17,7 +17,7 @@
         if (201 to 255)
             if(prob(1))
                 result = "mine_rocks"
-    
+
     switch(result)
         if("flora")
             if(!prob(35))

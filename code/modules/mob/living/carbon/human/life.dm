@@ -569,7 +569,7 @@
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small
-		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire) 
+		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire)
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 			var/temp_adj = 0
 
