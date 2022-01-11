@@ -20,11 +20,14 @@ SUBSYSTEM_DEF(environment)
     for(var/z_value in 1 to post_gen_type.len)
         populate(z_value)
 
+    ..()
+
 /datum/controller/subsystem/environment/proc/populate(z_value)
     if(!post_gen_type[z_value])
         return
 
-    var/datum/map_generator/gen = new (post_gen_type[z_value])
+    var/gen_type = post_gen_type[z_value]
+    var/datum/map_generator/gen = new gen_type
     gen.defineRegion(locate(1, 1, z_value), locate(world.maxx, world.maxy, z_value))
     gen.generate()
 
