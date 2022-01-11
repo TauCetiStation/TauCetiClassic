@@ -64,7 +64,7 @@
 /datum/map_generator_module/flora/New()
     var/width = world.maxx
     var/height = world.maxy
-    perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height)  
+    perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height)
 
 /datum/map_generator_module/flora/checkPlaceAtom(turf/T)
     if(!istype(T, turf_type))
