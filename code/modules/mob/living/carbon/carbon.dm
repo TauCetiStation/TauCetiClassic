@@ -43,12 +43,12 @@
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_3)
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			clear_alert("temp")
 		else
 			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_3)
 
 	//Account for massive pressure differences
 	switch(adjusted_pressure)
