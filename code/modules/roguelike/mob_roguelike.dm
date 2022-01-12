@@ -62,3 +62,5 @@
 
 		rarity_cost -= cost
 		modifier_amount -= 1
+
+mob/living/simple_animal/hostile/proc/gen_copy(source ,  target)

@@ -1,4 +1,4 @@
-var/global/list/datum/area_group/observer_groups
+/*var/global/list/datum/area_group/observer_groups
 
 
 
@@ -317,3 +317,4 @@ var/global/list/datum/area_group/observer_groups
 
 /datum/component/spawn_area/proc/CheckSpawn(turf/T)
 	return check_spawn_callback.Invoke(T)
+*/

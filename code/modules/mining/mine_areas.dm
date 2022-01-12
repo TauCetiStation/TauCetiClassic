@@ -45,7 +45,7 @@
 		'sound/music/dwarf_fortress.ogg'
 	)
 
-	var/static/list/mob_spawn_list = list(
+/*	var/static/list/mob_spawn_list = list(
 		/mob/living/simple_animal/hostile/asteroid/goliath = 5,
 		/mob/living/simple_animal/hostile/asteroid/basilisk = 4,
 		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
@@ -95,14 +95,14 @@
 	if(T.icon_state == "asteroid_dug")
 		return FALSE
 	return T.is_mob_placeable(null)
-
+*/
 // Because people didn't want for mobs to spawn on one part of the asteroid I guess
 /area/asteroid/mine/unexplored/safe
 	icon_state = "unexplored_safe"
 
-/area/asteroid/mine/unexplored/safe/InitSpawnArea()
+/*/area/asteroid/mine/unexplored/safe/InitSpawnArea()
 	return
-
+*/
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"

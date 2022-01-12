@@ -508,6 +508,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
+	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
 	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
@@ -582,14 +583,16 @@
 
 	if(!sanity)
 		return
+	if(prob(30))
+		SpawnMonster(T)
 
-	if(prob(6))
+	/*if(prob(6))
 		if(istype(loc, /area/asteroid/mine/explored))
 			return
 		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
 			return
 		new /obj/machinery/artifact/bluespace_crystal(T)
-
+*/
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
@@ -597,6 +600,27 @@
 		t = T.ChangeTurf(basetype)
 	spawn(2)
 		t.update_overlays_full()
+
+/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
+	if(istype(loc, /area/asteroid/mine/explored))
+		return
+	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
+		return
+	var/randumb = pickweight(mob_spawn_list)
+	switch(randumb)
+		if("Goliath")
+			new /mob/living/simple_animal/hostile/asteroid/spawner/goliath(T)
+		if("Goldgrub")
+			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
+		if("Basilisk")
+			new /mob/living/simple_animal/hostile/asteroid/spawner/basilisk(T)
+		if("Hivelord")
+			new /mob/living/simple_animal/hostile/asteroid/spawner/hivelord(T)
+		if("Drone")
+			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
+	if(prob(20))
+		new /obj/machinery/artifact/bluespace_crystal(T)
+
 
 /**********************Asteroid**************************/
 

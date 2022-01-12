@@ -6,7 +6,7 @@
   )
 
 //gets an empty square with RADIUS from CENTER
-#define BORDER_TURFS(RADIUS, CENTER) \
+/*#define BORDER_TURFS(RADIUS, CENTER) \
 	block( \
 		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
 		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z) \
@@ -23,7 +23,7 @@
 		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
 		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
 	) \
-
+*/
 /proc/dopage(src,target)
 	var/href_list
 	var/href
