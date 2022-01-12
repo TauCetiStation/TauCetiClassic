@@ -9,9 +9,9 @@
 	layer = 1
 	pixel_x = -15
 	pixel_y = -15
-	var max_mob = 3
+	var/max_mob = 3
 	var/list/mob/living/simple_animal/hostile/asteroid/mobs = list()
-	var type_mob
+	var/type_mob
 	var/list/spawner_mod = list()
 
 /mob/living/simple_animal/hostile/asteroid/spawner/atom_init()
