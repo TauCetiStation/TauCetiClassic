@@ -1,3 +1,3 @@
 /obj/effect/decal
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
 	anchored = TRUE
