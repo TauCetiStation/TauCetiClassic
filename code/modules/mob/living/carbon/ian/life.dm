@@ -460,7 +460,6 @@
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX
-	adjustFireLoss(2)
 	return
 
 /mob/living/carbon/ian/updatehealth()

@@ -510,7 +510,6 @@
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX
-	adjustFireLoss(2)
 	return
 //END FIRE CODE
 
