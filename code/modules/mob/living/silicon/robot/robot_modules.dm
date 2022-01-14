@@ -123,6 +123,7 @@
 	modules += new /obj/item/weapon/bonesetter(src)
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/autopsy_scanner(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
@@ -381,6 +382,8 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/scalpel(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src) //To unfuck xenobiology up
+
+	modules += new /obj/item/weapon/autopsy_scanner(src) //To unfuck autopsy up
 
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/weapon/wrench(src)
