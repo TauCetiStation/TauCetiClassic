@@ -737,7 +737,7 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/rank/atom_init()
-	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
+	sensor_mode = SUIT_SENSOR_TRACKING
 	. = ..()
 
 
