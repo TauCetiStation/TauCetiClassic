@@ -29972,6 +29972,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bbM" = (
@@ -35255,6 +35256,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
