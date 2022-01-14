@@ -582,7 +582,7 @@
 				if(thermal_protection < 1)
 					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
 
-			temp_adj = clamp(temp_adj BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
+			temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
