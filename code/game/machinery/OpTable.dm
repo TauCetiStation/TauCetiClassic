@@ -148,7 +148,6 @@
 		if(W.use_tool(src, user, 50, volume = 50))
 			destroy()
 		return TRUE
-	return FALSE
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
