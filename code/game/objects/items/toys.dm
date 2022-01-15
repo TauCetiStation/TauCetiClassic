@@ -315,7 +315,6 @@
 	item_state = "sword0"
 	var/active = 0.0
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/toy/sword/attack_self(mob/user)
