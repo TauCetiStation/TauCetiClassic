@@ -1982,7 +1982,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunshot
 	name = "Stun Shot"
-	desc = "Box of eight stunning, electrified shots for a shotgun."
+	desc = "Box of eight stunning, electrified shells for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
