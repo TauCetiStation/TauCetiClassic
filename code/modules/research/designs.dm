@@ -1980,13 +1980,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
 	category = list("Weapons")
 
-/datum/design/stunslug
-	name = "Stun Slug"
-	desc = "Box of eight stunning, electrified slugs for a shotgun."
+/datum/design/stunshot
+	name = "Stun Shot"
+	desc = "Box of eight stunning, electrified shots for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
-	build_path = /obj/item/ammo_box/eight_shells/stunslug
+	build_path = /obj/item/ammo_box/eight_shells/stunshot
 	category = list("Weapons")
 
 /datum/design/phoronpistol
