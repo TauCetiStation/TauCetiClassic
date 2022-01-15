@@ -131,9 +131,24 @@
 
 	take_victim(usr,usr)
 
+/obj/machinery/optable/proc/destroy()
+	new /obj/item/stack/sheet/plasteel(loc, 5)
+	density = FALSE
+	qdel(src)
+
+
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
 		return
+
+	if(iswrench(W))
+		if(user.is_busy(src))
+			return FALSE
+		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
+		if(W.use_tool(src, user, 50, volume = 50))
+			destroy()
+		return TRUE
+	return FALSE
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
