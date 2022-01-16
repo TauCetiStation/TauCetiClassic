@@ -10,6 +10,7 @@
 	density = TRUE
 	anchored = FALSE
 	opacity = 0
+	plane = GAME_PLANE
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,

@@ -134,7 +134,7 @@
 	var/failing_interval = 1 MINUTE
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	if(!owner.reagents.has_reagent("inaprovaline"))
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
 	else
 		take_damage(1, 0)
