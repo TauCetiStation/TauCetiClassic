@@ -491,9 +491,9 @@
 
 
 /obj/item/ammo_box/magazine/m12g/stun
-	name = "shotgun magazine (12g stun slug)"
+	name = "shotgun magazine (12g stun shot)"
 	icon_state = "m12gs"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot
 	caliber = "shotgun"
 	max_ammo = 8
 
