@@ -112,23 +112,25 @@
 			return
 		open = 0
 		density = TRUE
-		var/atom/movable/occupant_item
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled) continue
-			occupant = C
-			occupant_item = C
-			break
-		for(var/obj/item/brain/BR in loc)  // brain can be put in scanner too
-			if(occupant) break
-			occupant = BR.brainmob
-			occupant_item = BR
-			break
-		for(var/obj/item/organ/external/head/H in loc) // head can be put in scanner too
-			if(occupant) break
-			occupant = H.brainmob
-			occupant_item = H
-			break
-		occupant_item?.forceMove(src)
+		var/atom/movable/occupant_body
+		for(var/atom/movable/M in loc)
+			if(occupant)
+				break
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				occupant = occupant_body = C
+				break
+			if(isbrain(M))
+				var/obj/item/brain/B = M
+				occupant = B.brainmob
+				occupant_body = B
+				break
+			if(istype(M, /obj/item/organ/external/head))
+				var/obj/item/organ/external/head/H = M
+				occupant = H.brainmob
+				occupant_body = H
+				break
+		occupant_body?.forceMove(src)
 		occupant?.client?.perspective = EYE_PERSPECTIVE
 		occupant?.client?.eye = src
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
