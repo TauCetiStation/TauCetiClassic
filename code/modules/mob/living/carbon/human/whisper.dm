@@ -59,6 +59,7 @@
 	var/italics = 1
 
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	//TODO: handle_speech_problems for silent
 	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
