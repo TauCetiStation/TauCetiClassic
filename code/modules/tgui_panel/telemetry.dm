@@ -53,8 +53,13 @@
 	if(!payload)
 		return
 	
-	client.guard.chat_data["charset"] = payload["charset"]
-	client.guard.chat_data["local_time"] = payload["localTime"]
+	var/payload_charset = payload["charset"]
+	if(istext(payload_charset))
+		client.guard.chat_data["charset"] = payload_charset
+
+	var/payload_localtime = payload["localTime"]
+	if(isnum(payload_localtime))
+		client.guard.chat_data["local_time"] = payload_localtime
 
 	telemetry_connections = payload["connections"]
 	var/len = length(telemetry_connections)
