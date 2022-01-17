@@ -6,7 +6,6 @@
 
 import { Button, Section, Stack } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
-import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
@@ -21,7 +20,6 @@ export const Panel = (props, context) => {
       <HoboPanel />
     );
   }
-  const audio = useAudio(context);
   const settings = useSettings(context);
   const emotes = useEmotes(context);
   const game = useGame(context);
@@ -49,15 +47,6 @@ export const Panel = (props, context) => {
               <Stack.Item>
                 <Button
                   color="grey"
-                  selected={audio.visible}
-                  icon="music"
-                  tooltip="Music player"
-                  tooltipPosition="bottom-start"
-                  onClick={() => audio.toggle()} />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  color="grey"
                   selected={emotes.visible}
                   icon="grin"
                   tooltip="Emotes panel"
@@ -77,13 +66,6 @@ export const Panel = (props, context) => {
             </Stack>
           </Section>
         </Stack.Item>
-        {audio.visible && (
-          <Stack.Item>
-            <Section>
-              <NowPlayingWidget />
-            </Section>
-          </Stack.Item>
-        )}
         {emotes.visible && (
           <Stack.Item>
             <EmotesPanel />

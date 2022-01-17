@@ -2254,7 +2254,6 @@
 #include "code\modules\tgui\states\physical.dm"
 #include "code\modules\tgui\states\self.dm"
 #include "code\modules\tgui\states\zlevel.dm"
-#include "code\modules\tgui_panel\audio.dm"
 #include "code\modules\tgui_panel\external.dm"
 #include "code\modules\tgui_panel\telemetry.dm"
 #include "code\modules\tgui_panel\tgui_panel.dm"

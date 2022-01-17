@@ -15,7 +15,6 @@ import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
-import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
 import { setupPanelFocusHacks } from './panelFocus';
@@ -29,7 +28,6 @@ perf.mark('init');
 
 const store = configureStore({
   reducer: combineReducers({
-    audio: audioReducer,
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
@@ -42,7 +40,6 @@ const store = configureStore({
       pingMiddleware,
       telemetryMiddleware,
       settingsMiddleware,
-      audioMiddleware,
       gameMiddleware,
     ],
   },
@@ -107,7 +104,6 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     module.hot.accept([
-      './audio',
       './chat',
       './game',
       './Notifications',
