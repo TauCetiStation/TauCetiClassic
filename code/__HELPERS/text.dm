@@ -257,10 +257,27 @@
 
 	return trim(result)
 
-//Returns a string with the first element of the string capitalized.
+//Returns a string with the first element of the string un- or capitalized.
 /proc/capitalize(text)
 	if(text)
 		text = uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+	return text
+
+/proc/uncapitalize(text)
+	if(text)
+		text = lowertext(text[1]) + copytext(text, 1 + length(text[1]))
+	return text
+
+//Returns a string with a period at the end.
+/proc/add_period(text)
+	if(text)
+		var/static/list/punctuation_marks_final = list(".", "?", "!", ";")
+		var/ending = copytext(text, -1)
+		if(!(ending in punctuation_marks_final))
+			if(ending == ",")
+				text = splicetext(text, length(text), , ".")
+			else
+				text += "."
 	return text
 
 //Returns a string with the first element of the every word of the string capitalized.

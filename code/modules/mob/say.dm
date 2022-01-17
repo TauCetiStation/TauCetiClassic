@@ -24,6 +24,8 @@
 		return
 
 	message = sanitize(message)
+	message = uncapitalize(message)
+	message = add_period(message)
 
 	if(me_verb_allowed)
 		usr.emote("me", usr.emote_type, message, FALSE)
