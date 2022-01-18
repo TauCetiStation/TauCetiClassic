@@ -45,7 +45,7 @@
 	bound_width  = world.icon_size
 	bound_height = width * world.icon_size
 
-/obj/structure/spawner_area/proc/try_trigger_spawner(atom/movable/AM,/obj/structure/spawner_area/My_spawner)
+/obj/structure/spawner_area/proc/try_trigger_spawner(atom/movable/AM,/obj/structure/spawner/My_spawner)
 	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))
 		START_PROCESSING(SSobj,My_spawner)
 		My_spawner.Triggered()
