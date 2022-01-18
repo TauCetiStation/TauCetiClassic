@@ -61,7 +61,7 @@
 /obj/item/projectile/bullet/revbullet/price = 120
 /obj/item/projectile/bullet/rifle1/price = 240
 /obj/item/projectile/bullet/rifle2/price = 240
-/obj/item/projectile/bullet/stunslug/price = 65
+/obj/item/projectile/bullet/stunshot/price = 65
 /obj/item/projectile/bullet/weakbullet/price = 27
 /obj/item/projectile/missile/price = 1300
 

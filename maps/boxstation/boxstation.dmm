@@ -9417,6 +9417,10 @@
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering passage";
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -38735,10 +38739,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 25
@@ -58898,11 +58898,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering passage";
-	network = list("SS13","Engineering");
-	pixel_x = 32
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -70488,14 +70483,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
-"eUe" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/components/binary/valve/digital/open,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "eUl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -71111,6 +71098,20 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"fHn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "fIV" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
@@ -102570,7 +102571,7 @@ cnZ
 dib
 brq
 brK
-bbn
+fHn
 bbn
 bbn
 bee
@@ -120380,7 +120381,7 @@ bYU
 cen
 cfo
 cfV
-eUe
+uob
 cgV
 ctk
 chT

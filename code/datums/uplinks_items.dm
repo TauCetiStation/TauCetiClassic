@@ -431,8 +431,8 @@
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
-	name = "Ammo-12g Stun Slug"
-	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
+	name = "Ammo-12g Stun Shot"
+	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	cost = 4
 	uplink_types = list("nuclear")
