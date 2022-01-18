@@ -35,14 +35,20 @@
 		//	M.AddComponent(MM,1)
 
 /obj/structure/spawner_area
-	var/width = 5
-	var/height = 5 //Починить мультитайловость
-	var/obj/structure/spawner/My_spawner
+	freeze_movement = TRUE
+	can_be_pulled = FALSE
+	anchored = TRUE
+	density = FALSE
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT Откоментировать когда все доделается
+	var/width = 6
+	var/height = 6
+	var/obj/structure/spawner/My_spawner
 
 /obj/structure/spawner_area/atom_init()
 	. = ..()
-	bound_width  = world.icon_size
+	x -=3
+	y -=3
+	bound_width  = height * world.icon_size
 	bound_height = width * world.icon_size
 
 /obj/structure/spawner_area/proc/try_trigger_spawner(atom/movable/AM)
