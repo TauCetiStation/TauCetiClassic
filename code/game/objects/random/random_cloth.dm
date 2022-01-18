@@ -105,6 +105,14 @@
 /obj/random/cloth/gloves/item_to_spawn()
 	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso))
 
+/obj/random/cloth/gloves_safe
+	name = "random gloves"
+	desc = "This is a random gloves."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "orange"
+/obj/random/cloth/gloves_safe/item_to_spawn()
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja))
+
 /obj/random/cloth/glasses
 	name = "random glasses"
 	desc = "This is a random glasses."
@@ -113,6 +121,14 @@
 /obj/random/cloth/glasses/item_to_spawn()
 	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling))
 
+/obj/random/cloth/glasses_safe
+	name = "random glasses"
+	desc = "This is a random glasses."
+	icon = 'icons/obj/clothing/glasses.dmi'
+	icon_state = "material"
+/obj/random/cloth/glasses_safe/item_to_spawn()
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling) - subtypesof(/obj/item/clothing/glasses/hud) - subtypesof(/obj/item/clothing/glasses/sunglasses/hud))
+
 /obj/random/cloth/shoes
 	name = "random shoes"
 	desc = "This is a random shoes."
@@ -120,6 +136,14 @@
 	icon_state = "material"
 /obj/random/cloth/shoes/item_to_spawn()
 	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling))
+
+/obj/random/cloth/shoes_safe
+	name = "random shoes"
+	desc = "This is a random shoes."
+	icon = 'icons/obj/clothing/shoes.dmi'
+	icon_state = "material"
+/obj/random/cloth/shoes_safe/item_to_spawn()
+	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling) -  subtypesof(/obj/item/clothing/shoes/boots))
 
 /obj/random/cloth/tie
 	name = "random tie"
@@ -185,6 +209,16 @@
 				prob(1);/obj/random/cloth/spacehelmet\
 			)
 
+/obj/random/cloth/randomhead_safe
+	name = "random head"
+	desc = "This is a random head."
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "santa"
+/obj/random/cloth/randomhead_safe/item_to_spawn()
+	return pick(\
+				/obj/random/cloth/head,
+			)
+
 /obj/random/cloth/randomsuit
 	name = "random suit"
 	desc = "This is a random suit."
@@ -197,6 +231,18 @@
 				prob(16);/obj/random/cloth/storagesuit,\
 				prob(2);/obj/random/cloth/spacesuit,\
 				prob(6);/obj/random/cloth/armor\
+			)
+
+/obj/random/cloth/randomsuit_safe
+	name = "random suit"
+	desc = "This is a random suit."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "coatwinter"
+/obj/random/cloth/randomsuit_safe/item_to_spawn()
+	return pick(\
+				prob(12);/obj/random/cloth/hazmatsuit,\
+				prob(16);/obj/random/cloth/shittysuit,\
+				prob(16);/obj/random/cloth/storagesuit,\
 			)
 
 /obj/random/cloth/random_cloth
@@ -217,6 +263,23 @@
 					prob(4);/obj/random/cloth/storage\
 				)
 
+/obj/random/cloth/random_cloth_safe
+	name = "Random cloth supply"
+	desc = "This is a random cloth supply."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "coatwinter"
+/obj/random/cloth/random_cloth_safe/item_to_spawn()
+	return pick(\
+					prob(12);/obj/random/cloth/randomsuit_safe,\
+					prob(12);/obj/random/cloth/randomhead_safe,\
+					prob(12);/obj/random/cloth/under,\
+					prob(8);/obj/random/cloth/tie,\
+					prob(8);/obj/random/cloth/shoes_safe,\
+					prob(4);/obj/random/cloth/glasses_safe,\
+					prob(12);/obj/random/cloth/gloves_safe,\
+					prob(10);/obj/random/cloth/masks,\
+					prob(4);/obj/random/cloth/storage\
+				)
 
 /obj/random/cloth/ny_random_cloth
 	name = "random new year cloth"

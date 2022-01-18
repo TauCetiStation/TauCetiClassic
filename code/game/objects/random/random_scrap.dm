@@ -86,3 +86,22 @@
 						prob(2);/obj/random/scrap/sparse_weighted,\
 						prob(1);/obj/random/scrap/dense_weighted\
 					)
+
+/obj/random/scrap/safe_even
+	name = "Random safe even trash"
+	desc = "This is a random trash."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "welder"
+/obj/random/scrap/safe_even/item_to_spawn()
+	var/holiday_prob = 0
+	if(SSholiday.holidays[NEW_YEAR])
+		holiday_prob = 80
+		return pick(\
+						prob(holiday_prob);/obj/structure/scrap/newyear,\
+						prob(40);/obj/structure/scrap,\
+						prob(14);/obj/structure/scrap/medical,\
+						prob(20);/obj/structure/scrap/vehicle,\
+						prob(40);/obj/structure/scrap/food,\
+						prob(15);/obj/structure/scrap/cloth_safe,\
+						prob(10);/obj/structure/scrap/science_safe,\
+					)
