@@ -606,18 +606,19 @@
 		return
 	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
 		return
-	var/randumb = pickweight(mob_spawn_list)
+	/*var/randumb = pickweight(mob_spawn_list)
 	switch(randumb)
 		if("Goliath")
-			new /mob/living/simple_animal/hostile/asteroid/spawner/goliath(T)
+			new /obj/structure/spawner/goliath(T)
 		if("Goldgrub")
-			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
+			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)	//Убрал пока чтобы не мешало
 		if("Basilisk")
-			new /mob/living/simple_animal/hostile/asteroid/spawner/basilisk(T)
+			new /obj/structure/spawner/basilisk(T)
 		if("Hivelord")
-			new /mob/living/simple_animal/hostile/asteroid/spawner/hivelord(T)
+			new /obj/structure/spawner/hivelord(T)
 		if("Drone")
 			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
+	*/
 	if(prob(20))
 		new /obj/machinery/artifact/bluespace_crystal(T)
 
