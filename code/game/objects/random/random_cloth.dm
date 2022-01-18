@@ -111,7 +111,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja, /obj/item/clothing/gloves/security, /obj/item/clothing/gloves/security/marinad))
 
 /obj/random/cloth/glasses
 	name = "random glasses"

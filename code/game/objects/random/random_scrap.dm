@@ -99,9 +99,9 @@
 		return pick(\
 						prob(holiday_prob);/obj/structure/scrap/newyear,\
 						prob(40);/obj/structure/scrap,\
-						prob(14);/obj/structure/scrap/medical,\
-						prob(20);/obj/structure/scrap/vehicle,\
 						prob(40);/obj/structure/scrap/food,\
-						prob(15);/obj/structure/scrap/cloth_safe,\
+						prob(20);/obj/structure/scrap/vehicle,\
+						prob(15);/obj/structure/scrap/medical,\
 						prob(10);/obj/structure/scrap/science_safe,\
+						prob(5);/obj/structure/scrap/cloth_safe,\
 					)
