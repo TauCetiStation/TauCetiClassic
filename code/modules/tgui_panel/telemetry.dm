@@ -55,7 +55,7 @@
 	
 	var/payload_charset = payload["charset"]
 	if(istext(payload_charset))
-		client.guard.chat_data["charset"] = payload_charset
+		client.guard.chat_data["charset"] = ckey(payload_charset)
 
 	var/payload_localtime = payload["localTime"]
 	if(isnum(payload_localtime))
@@ -64,6 +64,7 @@
 	telemetry_connections = payload["connections"]
 	var/len = length(telemetry_connections)
 	if(len == 0)
+		client.guard.chat_processed = TRUE
 		return
 	if(len > TGUI_TELEMETRY_MAX_CONNECTIONS)
 		message_admins("[key_name(client)] was kicked for sending a huge telemetry payload")
@@ -78,17 +79,24 @@
 		var/list/row = telemetry_connections[i]
 
 		// Check for a malformed history object
-		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
-			return
+		if (!(row && row["ckey"] && row["address"] && row["computer_id"]))
+			continue
+
+		row["ckey"] = ckey(row["ckey"])
+		row["address"] = sanitize_ip(row["address"])
+		row["computer_id"] = sanitize_numbers(row["computer_id"])
+
+		if (!(row["ckey"] && row["address"] && row["computer_id"]))
+			continue
 
 		if (world.IsBanned(row["ckey"], row["address"], row["computer_id"], real_bans_only = TRUE))
-			client.guard.chat_data["cookie_match"] = found
 			found = row
 			break
 
 		CHECK_TICK
 	// This fucker has a history of playing on a banned account.
 	if(found)
+		client.guard.chat_data["cookie_match"] = found
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
 		log_admin_private(msg)

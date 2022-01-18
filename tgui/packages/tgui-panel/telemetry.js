@@ -31,7 +31,11 @@ const getOldConnections = () => {
   let dataCookie = getOldCookie('connData');
   if (dataCookie) {
     try {
-      return JSON.parse(dataCookie);
+      return JSON.parse(dataCookie).map(item => ({
+        ckey: item.ckey,
+        address: item.ip,
+        computer_id: item.compid,
+      }));
     } catch {}
   }
   return [];
