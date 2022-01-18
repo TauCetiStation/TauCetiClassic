@@ -1425,6 +1425,8 @@
 
 		if(species.additional_languages)
 			remove_language(species.additional_languages)
+
+		if(client.prefs.language)
 			remove_language(client.prefs.language)
 
 		species.on_loose(src, new_species)
