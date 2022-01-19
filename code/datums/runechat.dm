@@ -65,9 +65,10 @@
 	if (!istype(target))
 		CRASH("Invalid target given for runechat")
 	if(QDELETED(owner) || !istype(owner) || !owner.client)
-		var/crash_msg = "runechat datum created with [isnull(owner) ? "null" : "invalid"] mob owner"
+		var/crash_msg = "runechat datum created with [isnull(owner) ? "null" : "invalid"] mob owner."
+		var/additional_info = "owner: [owner] owner_type: [owner.type] owner_client: [owner.client] owner_loc: [owner.loc] owner_is_qdeleted: [QDELETED(owner)]"
 		qdel(src)
-		CRASH(crash_msg)
+		CRASH(crash_msg + additional_info)
 	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, language, extra_classes, lifespan)
 
 /datum/runechat/Destroy()
