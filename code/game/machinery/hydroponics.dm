@@ -763,19 +763,20 @@
 		qdel(myseed)
 		update_icon()
 	else
+		var/msg
 		if(planted && !dead)
-			to_chat(user, "[src] has <span class='info'>[myseed.plantname]</span> planted.")
+			msg = "[src] has <span class='info'>[myseed.plantname]</span> planted.<br>"
 			if(health <= (myseed.endurance / 2))
-				to_chat(user, "The plant looks unhealthy.")
+				msg += "The plant looks unhealthy.<br>"
 		else
-			to_chat(user, "[src] is empty.")
-		to_chat(user, "Water: [waterlevel]/[maxwater]")
-		to_chat(user, "Nutrient: [nutrilevel]/[maxnutri]")
+			msg = "[src] is empty.<br>"
+		msg += "Water: [waterlevel]/[maxwater]<br>"
+		msg += "Nutrient: [nutrilevel]/[maxnutri]<br>"
 		if(weedlevel >= 5) // Visual aid for those blind
-			to_chat(user, "[src] is filled with weeds!")
+			msg += "[src] is filled with weeds!<br>"
 		if(pestlevel >= 5) // Visual aid for those blind
-			to_chat(user, "[src] is filled with tiny worms!")
-		to_chat(user, "")// Empty line for readability.
+			msg += "[src] is filled with tiny worms!<br>"
+		to_chat(user, msg)
 
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc
