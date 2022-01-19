@@ -174,9 +174,15 @@
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 
+		//Height
+		var/height = dna.GetUIValueRange(DNA_UI_HEIGHT, heights_list.len)
+		if((0 < height) && (height <= heights_list.len))
+			H.height = heights_list[height]
+
 		H.apply_recolor()
 		H.update_body()
 		H.update_hair()
+		H.regenerate_icons()
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)
