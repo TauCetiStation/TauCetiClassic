@@ -19,9 +19,6 @@ SUBSYSTEM_DEF(chat)
 		if(client)
 			// Send to tgchat
 			client.tgui_panel?.window.send_message("chat/message", payload)
-			// Send to old chat
-			for(var/message in payload)
-				SEND_TEXT(client, message_to_html(message))
 		if(MC_TICK_CHECK)
 			return
 
