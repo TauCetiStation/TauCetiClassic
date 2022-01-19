@@ -128,10 +128,12 @@
 				to_chat_admin_pm(src, "<span class='notice'>Message: [msg]</span>")
 				return
 			else
-				var/replymsg = "<span class='warning'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>"
-				admin_ticket_log(src, replymsg)
-				to_chat_admin_pm(recipient, replymsg)
+				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span>"
+
+				to_chat_admin_pm(recipient, "<span class='warning'>[replymsg]</span>")
 				to_chat_admin_pm(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>")
+
+				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
 		recipient.mob.playsound_local(null, recipient.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
@@ -147,7 +149,7 @@
 			to_chat_admin_pm(recipient, recipmsg)
 			to_chat_admin_pm(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
 
-			admin_ticket_log(recipient, "<span class='notice'>PM From [key_name_admin(src)]: [msg]</span>")
+			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")
 
 			//always play non-admin recipients the adminhelp sound
 			recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
