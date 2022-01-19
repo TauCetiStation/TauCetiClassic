@@ -311,6 +311,18 @@
 			return 1
 	return ..()
 
+//copypaste from mob/mouse
+/mob/living/carbon/monkey/diona/verb/hide()
+	set name = "Hide"
+	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
+	set category = "Diona"
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
+	else
+		layer = MOB_LAYER
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
+
 /mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
