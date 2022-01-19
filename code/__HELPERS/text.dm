@@ -275,7 +275,7 @@
 		var/ending = copytext(text, -1)
 		if(!(ending in punctuation_marks_final))
 			if(ending == ",")
-				text = splicetext(text, length(text), , ".")
+				text = splicetext(text, length(text), 0, ".")
 			else
 				text += "."
 	return text
