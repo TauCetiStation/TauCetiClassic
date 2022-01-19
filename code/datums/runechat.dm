@@ -65,27 +65,10 @@
 	if (!istype(target))
 		CRASH("Invalid target given for runechat")
 	if(QDELETED(owner) || !istype(owner) || !owner.client)
-		var/crash_msg = "runechat datum created with [isnull(owner) ? "null" : "invalid"] mob owner."
-		var/additional_info = "owner: [owner] owner_type: [owner.type] owner_client: [owner.client] owner_loc: [owner.loc] owner_is_qdeleted: [QDELETED(owner)]"
+		var/crash_msg = "runechat datum created with [isnull(owner) ? "null" : "invalid"] mob owner"
 		qdel(src)
-		CRASH(crash_msg + additional_info)
+		CRASH(crash_msg)
 	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, language, extra_classes, lifespan)
-
-/*
-[14:49:19] Runtime in runechat.dm:70 : runechat datum created with invalid mob owner
-  proc name: New (/datum/runechat/New)
-  usr: John Don (hexo4yxa) (/mob/living/carbon/human)
-  usr.loc: The floor (154,99,2) (/turf/simulated/floor)
-  src: /datum/runechat (/datum/runechat)
-  call stack:
-  /datum/runechat (/datum/runechat): New("ТЫ ЧЕ ДЕЛАЕШЬ.", John Don (/mob/living/carbon/human), the alien facehugger (80) (/mob/living/carbon/xenomorph/facehugger), null, /list (/list), 50)
-  the alien facehugger (80) (/mob/living/carbon/xenomorph/facehugger): show runechat message(John Don (/mob/living/carbon/human), null, "ТЫ ЧЕ ДЕЛАЕШЬ.", /list (/list), 0, 50)
-  the alien facehugger (80) (/mob/living/carbon/xenomorph/facehugger): hear say("ТЫ ЧЕ ДЕЛАЕШЬ.", "says", null, "", 0, John Don (/mob/living/carbon/human), 0, null, null)
-  John Don (/mob/living/carbon/human): say("ТЫ ЧЕ ДЕЛАЕШЬ.", null, "says", "", 0, 7, /list (/list), null, null, 0, 0)
-  John Don (/mob/living/carbon/human): say("ТЫ ЧЕ ДЕЛАЕШЬ.", null)
-  John Don (/mob/living/carbon/human): Say("ТЫ ЧЕ ДЕЛАЕШЬ")
-*/
-
 
 /datum/runechat/Destroy()
 	if (owned_by)
