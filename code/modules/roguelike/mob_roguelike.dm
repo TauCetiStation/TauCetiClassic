@@ -17,8 +17,7 @@
 /mob/living/simple_animal/hostile/proc/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	return
 
-// Currently only they are meaningful to have the modifiers.
-/mob/living/simple_animal/hostile/asteroid/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
+/obj/structure/spawner/proc/pick_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	if(!prob(special_prob))
 		return
 
@@ -35,6 +34,7 @@
 
 	var/list/pos_modifiers = list() + modifiers
 	var/list/pos_incomps = list() + global.incompatible_mob_modifiers
+	var/list/final_modifiers = list()
 
 	while(modifier_amount > 0 && rarity_cost > 0 && pos_modifiers.len > 0)
 		var/datum/component/mob_modifier/MM = pick(pos_modifiers)
@@ -49,11 +49,6 @@
 			pos_modifiers -= MM
 			continue
 
-		var/datum/component/mob_modifier/new_mod = AddComponent(MM, 1)
-		if(!new_mod || !new_mod.applied)
-			pos_modifiers -= MM
-			continue
-
 		for(var/list/incomp in pos_incomps)
 			if(MM in incomp)
 				for(var/incomp_mod in incomp)
@@ -62,3 +57,5 @@
 
 		rarity_cost -= cost
 		modifier_amount -= 1
+		final_modifiers += MM
+	return final_modifiers

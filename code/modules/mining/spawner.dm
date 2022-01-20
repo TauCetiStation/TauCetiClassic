@@ -19,20 +19,18 @@
 //По задумке , при ините логова , все процессы останавливаются ,чтобы нежрать ресурсы сервера. Под гнездом , спавнится арея /obj/structure/spawner_area,котороая при наступании включает логово.
 /obj/structure/spawner/atom_init()
 	. = ..()
+	spawner_mod = pick_modifiers()
 	SP = src
 	var/obj/structure/spawner_area/My_area = new/obj/structure/spawner_area(get_turf(src))
 	My_area.My_spawner = SP
-	new MM
-	MM.gen_modifiers()
-	spawner_mod = MM.datum_components //Модификаторы пока не работают
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner/proc/Triggered()
 //	if(mobs.len < max_mob)
 	var/mob/living/simple_animal/hostile/asteroid/M = new type_mob(get_turf(src))
 	mobs += M
-	//	for(var/MM in spawner_mod)
-		//	M.AddComponent(MM,1)
+	for(var/MM in spawner_mod)
+		M.AddComponent(MM,1)
 
 /obj/structure/spawner_area
 	freeze_movement = TRUE
