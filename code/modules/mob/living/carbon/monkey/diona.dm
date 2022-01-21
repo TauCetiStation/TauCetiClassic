@@ -316,6 +316,12 @@
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Diona"
+	
+	if (getBruteLoss()>30) //balance?
+		layer = MOB_LAYER
+		to_chat(src, text("<span class='notice'>You can't hide now.</span>"))
+		return
+		
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
