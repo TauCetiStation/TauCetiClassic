@@ -281,8 +281,8 @@ var/global/list/blacklisted_builds = list(
 	if(SSinput.initialized)
 		set_macros()
 
-	spawn() // Initialize tgui panel
-		tgui_panel.initialize()
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	connection_time = world.time
 
