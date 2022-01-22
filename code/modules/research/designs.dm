@@ -1980,13 +1980,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
 	category = list("Weapons")
 
-/datum/design/stunslug
-	name = "Stun Slug"
-	desc = "Box of eight stunning, electrified slugs for a shotgun."
+/datum/design/stunshot
+	name = "Stun Shot"
+	desc = "Box of eight stunning, electrified shells for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
-	build_path = /obj/item/ammo_box/eight_shells/stunslug
+	build_path = /obj/item/ammo_box/eight_shells/stunshot
 	category = list("Weapons")
 
 /datum/design/phoronpistol
@@ -2181,6 +2181,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+	category = list("Support")
+
+/datum/design/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	id = "hud_calibrator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	build_path = /obj/item/device/hud_calibrator
 	category = list("Support")
 
 /////////////////////////////////////////

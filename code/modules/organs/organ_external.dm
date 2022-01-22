@@ -412,7 +412,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(body_zone == BP_HEAD)
 		owner.update_hair()
 		owner.handle_decapitation(src)
-
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 	release_restraints()
 
