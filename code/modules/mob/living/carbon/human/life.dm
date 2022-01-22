@@ -423,9 +423,9 @@
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if (!contents.Find(internal) && !HAS_TRAIT(src, TRAIT_AV))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+		if (!HAS_TRAIT(src, TRAIT_AV) && (!wear_mask || !(wear_mask.flags & MASKINTERNALS)))
 			internal = null
 		if(internal)
 					//internal breath sounds
@@ -1283,80 +1283,12 @@
 		else
 			clear_fullscreen("brute")
 
-	if( stat == DEAD )
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
-		if(client)
-			if(client.view != world.view)
-				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
-					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
-					if(s.zoom)
-						s.toggle_zoom()
+	update_sight()
 
+	if(stat == DEAD)
+		if(healths)
+			healths.icon_state = "health7"	//DEAD healthmeter
 	else
-		lighting_alpha = initial(lighting_alpha)
-		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = species.darksight
-		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
-		if(dna)
-			switch(dna.mutantrace)
-				if("slime")
-					see_in_dark = 3
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
-				if("shadow")
-					see_in_dark = 8
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
-
-		if(XRAY in mutations)
-			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-			see_in_dark = 8
-			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
-		if(glasses)
-			var/obj/item/clothing/glasses/G = glasses
-			if(istype(G))
-				see_in_dark += G.darkness_view
-				if(G.vision_flags)		// MESONS
-					sight |= G.vision_flags
-				if(!isnull(G.lighting_alpha))
-					lighting_alpha = min(lighting_alpha, G.lighting_alpha)
-
-		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
-			switch(O.mode)
-				if(0)
-					O.togge_huds()
-					if(!druggy)
-						lighting_alpha = initial(lighting_alpha)
-						see_invisible = SEE_INVISIBLE_LIVING
-				if(1)
-					see_in_dark = 8
-					//client.screen += global_hud.meson
-					if(!druggy)
-						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-				if(2)
-					sight |= SEE_MOBS
-					see_in_dark = initial(see_in_dark)
-					//client.screen += global_hud.thermal
-					if(!druggy)
-						lighting_alpha = initial(lighting_alpha)
-						see_invisible = SEE_INVISIBLE_LEVEL_TWO
-				if(3)
-					sight |= SEE_TURFS
-					//client.screen += global_hud.meson
-					if(!druggy)
-						lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-
-		if(changeling_aug)
-			sight |= SEE_MOBS
-			see_in_dark = 8
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-
-		if(blinded)
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
 
 		if(healths)
 			if (analgesic)
@@ -1415,7 +1347,10 @@
 			if (species.flags[IS_SYNTHETIC])
 				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-				get_nutrition_max = I.maxcharge
+				if (I)
+					get_nutrition_max = I.maxcharge
+				else
+					get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 			else
 				get_nutrition_max = NUTRITION_LEVEL_FAT
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
@@ -1493,18 +1428,26 @@
 	return 1
 
 /mob/living/carbon/human/update_sight()
-	if(stat == DEAD)
-		set_EyesVision(transition_time = 0)
-		return
-	if(blinded)
-		set_EyesVision("greyscale")
-		return
+	if(!..())
+		return FALSE
+
 	if(daltonism)
 		set_EyesVision(sightglassesmod)
-		return
+		return FALSE
+
+	see_in_dark = species.darksight
+
 	var/obj/item/clothing/glasses/G = glasses
-	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
-		sightglassesmod = G.sightglassesmod
+	if(istype(G))
+		see_in_dark += G.darkness_view
+		if(G.vision_flags) // MESONS
+			sight |= G.vision_flags
+		if(!isnull(G.lighting_alpha))
+			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+		if(G.sightglassesmod && (G.active || !G.toggleable))
+			sightglassesmod = G.sightglassesmod
+		else
+			sightglassesmod = null
 	else
 		sightglassesmod = null
 
@@ -1517,8 +1460,9 @@
 				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
+
 	set_EyesVision(sightglassesmod)
-	return ..()
+	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
@@ -1547,7 +1491,7 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
@@ -1555,7 +1499,7 @@
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 

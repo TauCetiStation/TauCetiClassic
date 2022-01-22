@@ -86,7 +86,7 @@
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
-		C.spread_disease_to(M, "Contact")
+		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
 	if(M.pulling == src)
 		M.stop_pulling()
@@ -1142,7 +1142,7 @@
 		I.color = visual_effect_color
 
 	if(I)
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 		flick_overlay(I,viewing,5)
@@ -1163,7 +1163,7 @@
 				viewing -= C
 
 			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
-			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 			flick_overlay(I, alt_viewing, 5)

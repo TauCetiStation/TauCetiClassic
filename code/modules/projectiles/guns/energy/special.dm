@@ -152,13 +152,17 @@
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_FLAGS_BACK
-	fire_delay = 35
+	fire_delay = 20
 	w_class = SIZE_NORMAL
 	var/zoom = 0
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
+	AddComponent(/datum/component/zoom, 12)
+
+/obj/item/weapon/gun/energy/sniperrifle/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_ZOOM_TOGGLE, user)
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
@@ -172,56 +176,6 @@
 				icon_state = "[initial(icon_state)][ratio]"
 				item_state = "[initial(item_state)][ratio]"
 	return
-
-/obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	if(zoom)
-		if(user.client)
-			user.client.change_view(world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoom = 0
-	..()
-
-/*
-This is called from
-modules/mob/mob_movement.dm if you move you will be zoomed out
-modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
-*/
-
-/obj/item/weapon/gun/energy/sniperrifle/attack_self()
-	toggle_zoom()
-
-/obj/item/weapon/gun/energy/sniperrifle/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set popup_menu = 0
-	if(usr.incapacitated() || !(istype(usr,/mob/living/carbon/human)))
-		to_chat(usr, "You are unable to focus down the scope of the rifle.")
-		return
-	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
-	//	usr << "Your welding equipment gets in the way of you looking down the scope"
-	//	return
-	if(!zoom && usr.get_active_hand() != src)
-		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
-		return
-
-	if(usr.client.view == world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
-		usr.client.change_view(12)
-		zoom = 1
-	else
-		usr.client.change_view(world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoom = 0
-	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
-	return
-
-/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
-	if(zoom)
-		toggle_zoom()
-	..(user, slot)
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
@@ -421,11 +375,14 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return ..()
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
-	if(!emagged)
-		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
-		origin_tech += ";syndicate=1"
-
-		emagged = TRUE
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+	fire_delay = 12
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
 	return
@@ -467,53 +424,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
 
-	var/zoomed = FALSE
-
-/obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
-	if(zoomed)
-		if(user.client)
-			user.client.change_view(world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoomed = FALSE
-	..()
-
-/obj/item/weapon/gun/energy/pyrometer/ce/attack_self()
-	toggle_zoom()
-
-/obj/item/weapon/gun/energy/pyrometer/ce/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set src in usr
-
-	if(!ishuman(usr) || usr.incapacitated())
-		to_chat(usr, "You are unable to focus down the scope of the rifle.")
-		return
-
-	var/mob/living/carbon/human/user = usr
-
-	if(!zoomed && user.get_active_hand() != src)
-		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
-		return
-
-	if(user.client.view == world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_REDUCED)
-		user.client.change_view(12)
-		zoomed = TRUE
-	else
-		usr.client.change_view(world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoomed = FALSE
-	to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
-
-/obj/item/weapon/gun/energy/pyrometer/ce/equipped(mob/user, slot)
-	if(zoomed)
-		toggle_zoom()
-	..()
-
-
+/obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
+	. = ..()
+	AddComponent(/datum/component/zoom, 12, TRUE)
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
@@ -557,3 +470,108 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
 	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+
+/obj/item/weapon/gun/energy/gun/portal
+	name = "bluespace wormhole projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function. Fits in a bag."
+	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	icon_state = "portal"
+	modifystate = 0
+	can_suicide_with = FALSE
+
+	var/obj/effect/portal/p_blue
+	var/obj/effect/portal/p_orange
+	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
+
+/obj/item/weapon/gun/energy/gun/portal/Destroy()
+	qdel(p_blue)
+	qdel(p_orange)
+	qdel(firing_core)
+	return ..()
+
+/obj/item/weapon/gun/energy/gun/portal/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(!prob(reliability))
+		if(firing_core && !is_centcom_level(z))
+			to_chat(user, "<span class='warning'>The wormhole projector malfunctions, teleporting away!</span>")
+			user.drop_from_inventory(src)
+			do_teleport(src, get_turf(src), 7, asoundin = 'sound/effects/phasein.ogg')
+			return
+	..()
+
+/obj/item/weapon/gun/energy/gun/portal/special_check(mob/M, atom/target)
+	if(!firing_core)
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
+		if(firing_core)
+			to_chat(user, "<span class='warning'>Wormhole projector already has an anomaly core installed!</span>")
+			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
+			return
+		user.drop_from_inventory(C, src)
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
+		firing_core = C
+		modifystate = 2
+		update_icon()
+		update_inv_mob()
+
+	if(isscrewdriver(C))
+		if(!firing_core)
+			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
+			return
+		firing_core.forceMove(get_turf(user))
+		firing_core = null
+		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "portal"
+		modifystate = 0
+		update_icon()
+		update_inv_mob()
+
+	return ..()
+
+/obj/item/weapon/gun/energy/gun/portal/proc/on_portal_destroy(obj/effect/portal/P)
+	SIGNAL_HANDLER
+	if(P == p_blue)
+		p_blue = null
+	else if(P == p_orange)
+		p_orange = null
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_blue_portal()
+	if(istype(p_blue) && !QDELETED(p_blue))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_orange_portal()
+	if(istype(p_orange) && !QDELETED(p_orange))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/crosslink()
+	if(!has_blue_portal() && !has_orange_portal())
+		return
+	if(!has_blue_portal() && has_orange_portal())
+		p_orange.target = null
+		return
+	if(!has_orange_portal() && has_blue_portal())
+		p_blue.target = null
+		return
+	p_orange.target = p_blue
+	p_blue.target = p_orange
+
+/obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+		qdel(p_orange)
+		p_orange = P
+		P.icon_state = "portalorange"
+	else
+		qdel(p_blue)
+		p_blue = P
+	crosslink()
+
+/obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
+	return

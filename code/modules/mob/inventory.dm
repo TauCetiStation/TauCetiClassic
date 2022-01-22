@@ -59,7 +59,7 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list(
+var/global/list/slot_equipment_priority = list(
 	SLOT_BACK,
 	SLOT_WEAR_ID,
 	SLOT_W_UNIFORM,
@@ -535,7 +535,8 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = TRUE
-	if(!do_after(usr, C.equip_time, target = C))
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(!do_after(usr, equip_time, target = C))
 		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 		return FALSE
@@ -562,7 +563,8 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(do_after(usr, equip_time, target = C))
 		equip_to_slot_if_possible(C, slot)
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
 	else

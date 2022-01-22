@@ -538,25 +538,7 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		if(changeling_aug)
-			sight &= ~SEE_TURFS
-			sight |= SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 8
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		else
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 2
-			see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if (healths)
 		if (stat != DEAD)

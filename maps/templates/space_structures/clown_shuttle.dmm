@@ -66,17 +66,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"n" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
-	},
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "burst_r"
-	},
-/turf/space,
-/area/space)
 "o" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -704,7 +693,7 @@ a
 a
 a
 a
-n
+q
 q
 q
 q

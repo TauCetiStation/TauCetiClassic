@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	immune_to_ssd = TRUE
 
 	var/icon_living = ""
 	var/icon_dead = ""
@@ -78,12 +79,6 @@
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
-
-/mob/living/simple_animal/Login()
-	..()
-	blinded = FALSE
-	stat = CONSCIOUS
-	update_canmove()
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
@@ -255,7 +250,7 @@
 		flick(icon_gib, src)
 	if(butcher_results)
 		for(var/path in butcher_results)
-			for(var/i = 0 to butcher_results[path])
+			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	..()
 

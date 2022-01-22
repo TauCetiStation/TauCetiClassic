@@ -2,18 +2,19 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
-	genomecost = 3
+	genomecost = 2
 	req_human = 1
 	max_genetic_damage = 5
 	var/stacks = 0 //Increments every second; damage increases over time
 	var/active = 0
 	var/mob/living/carbon/human/owner
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 
 	if(stacks && !active)
 		to_chat(user,"<span class='danger'>We are still exhausted.</span>")
-		return
+		return FALSE
 	owner = user
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	active = !active
@@ -31,7 +32,7 @@
 		changeling.strained_muscles = 0
 
 	feedback_add_details("changeling_powers","SANIC")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/strained_muscles/process()
 	if(active)

@@ -1,20 +1,23 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
+var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768)
+
 //PREASSURE_FLAGS BITMASK
 #define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_FLAGS_BACK) if you see it anywhere
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
 #define NOLIMB           -1    // related to "pierce_protection" check, thats why this is here.
+#define NOPIERCE         -2    // related to "pierce_protection" check
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
 #define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
-#define MASKINTERNALS          (1<<2)   // Mask allows internals.
 
-//#define USEDELAY             (1<<3)   // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
-#define NOSHIELD               (1<<4)   // Weapon not affected by shield.
+#define MASKINTERNALS          (1<<3)   // Mask allows internals.
+
+#define NOBLOODY               (1<<4)   // Used to items if they don't want to get a blood overlay. Doesn't work properly with shoes.
 
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
@@ -23,16 +26,12 @@
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
-#define NOPIERCE               (1<<8)
 #define GLASSESCOVERSEYES      (1<<8)
 #define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.
 
 #define MASKCOVERSMOUTH        (1<<9)   // on other items, these are just for mask/head.
 #define HEADCOVERSMOUTH        (1<<9)
-#define NOBLOODY               (1<<9)   // Used to items if they don't want to get a blood overlay.
-#define NOSLIP                 (1<<9)   // Prevents from slipping on wet floors, in space etc.
-#define NOATTACKANIMATION      (1<<9)   // Removes attack animation
 
 #define OPENCONTAINER          (1<<10)  // Is an open container for chemistry purposes.
 
@@ -52,10 +51,16 @@
 
 #define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
 
+#define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
+
+#define NOATTACKANIMATION      (1<<19)   // Removes attack animation
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2   (1<<1)
+/// atom with this flag will never appear on demo
+#define PROHIBIT_FOR_DEMO_2   (1<<2)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)

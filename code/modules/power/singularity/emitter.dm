@@ -131,8 +131,8 @@
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
-		if(!active_power_usage || active_power_usage <= max(surplus(), 0))
-			add_load(active_power_usage)
+		if(!active_power_usage || active_power_usage <= delayed_surplus())
+			add_delayedload(active_power_usage)
 			if(!powered)
 				powered = TRUE
 				update_icon()

@@ -281,11 +281,17 @@
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
+		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
 		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+	if(istype(D, /datum/reagents))
+		body += "<option value='?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
+		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
+		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
+		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
 
 	body += "</select></form>"
 
@@ -628,6 +634,12 @@ body
 
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
+
+	else if(href_list["edit_filters"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_filters"])
+		open_filter_editor(A)
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -1050,5 +1062,36 @@ body
 			return
 		var/last_search = href_list["filter"] ? href_list["filter"] : ""
 		debug_variables_browse(DAT, usr, last_search)
-
+	else if(href_list["reagents"])
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
+			return
+		var/datum/reagents/R = locate(href_list["reagents"])
+		var/list/current_ids = list()
+		for(var/datum/reagent/reag in R.reagent_list)
+			current_ids += reag.id
+		switch(href_list["action"])
+			if("addreag")
+				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") as null|anything in chemical_reagents_list
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num|null
+				if(!reagent_amt)
+					return
+				R.add_reagent(reagent_id, reagent_amt)
+			if("remreag")
+				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num|null
+				if(!reagent_amt)
+					return
+				R.remove_reagent(reagent_id, reagent_amt)
+			if("isoreag")
+				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				R.isolate_reagent(reagent_id)
+			if("clearreags")
+				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
+					R.clear_reagents()
 	return

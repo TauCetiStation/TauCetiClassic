@@ -43,6 +43,12 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -347,7 +353,7 @@
 
 
 /proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
@@ -366,7 +372,7 @@
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
