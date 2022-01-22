@@ -1,5 +1,5 @@
 
-var/global/normal_ooc_colour = "#002eb8"
+var/global/normal_ooc_colour = null
 var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/ooc(msg as text)
@@ -67,6 +67,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else
 		log_ooc("[name]: [msg]")
 
+	var/msg_start = "<span class='ooc'><font[colour ? " color='[colour]'" : ""]><span class='prefix'>OOC"
+	var/msg_end = "</EM> <span class='message emojify linkify'>[msg]</span></font></span>"
+
 	for(var/client/C in clients)
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
@@ -86,16 +89,16 @@ var/global/bridge_ooc_colour = "#7b804f"
 					display_name = sender.holder.fakekey
 
 		if(C.prefs.chat_toggles & CHAT_OOC)
-			var/chat_suffix = "[C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""]"
-			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>OOC[chat_suffix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
+			var/chat_suffix = C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""
+			to_chat(C, "[msg_start][chat_suffix]:</span> <EM>[display_name]:[msg_end]")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"
-	set desc = "Set to yellow for eye burning goodness."
+	set desc = "Set to yellow for eye burning goodness. #000000 reset colour."
 	set category = "OOC"
 	if(!holder)
 		return
-	normal_ooc_colour = newColor
+	normal_ooc_colour = newColor != "#000000" ? newColor : null
 
 /client/verb/set_name_ooc()
 	set name = "Set Name OOC Colour"
