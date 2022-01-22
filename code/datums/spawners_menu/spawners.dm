@@ -267,13 +267,16 @@ var/global/list/datum/spawners_cooldown = list()
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
-	var/leader_selected = isemptylist(ERT_team.members)
 
-	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, leader_selected, new_name)
+	var/is_leader = FALSE
+	if(!ERT_team.leader_selected)
+		is_leader = TRUE
+		ERT_team.leader_selected = TRUE
+
+	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, is_leader, new_name)
 	new_commando.mind.key = ghost.key
 	new_commando.key = ghost.key
 	create_random_account_and_store_in_mind(new_commando)
-	qdel(spawnloc)
 
 	to_chat(new_commando, "<span class='notice'>You are [!leader_selected ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
 	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
