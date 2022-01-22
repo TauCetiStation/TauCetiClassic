@@ -1,0 +1,97 @@
+//skills defines
+
+//ripley and odyssey
+#define SKILL_CIV_MECH_DEFAULT 0 //civilians
+#define SKILL_CIV_MECH_DABBLING 1 // 
+#define SKILL_CIV_MECH_TRAINED 2 //  engineer, medical intern, scientist
+#define SKILL_CIV_MECH_PRO 3 // cargo techincian, recycler, robotech, paramedic, medical doctor, mecha operator
+#define SKILL_CIV_MECH_MASTER 4 // RD, miner, QM, CE, CMO
+//combat_mech
+#define SKILL_COMBAT_MECH_UNTRAINED 0
+#define SKILL_COMBAT_MECH_NOVICE 1	// scientist, engineer, mecha operator
+#define SKILL_COMBAT_MECH_PRO 2  //nuclear,  HoS, RD, security, robotech
+
+//police
+#define SKILL_POLICE_UNTRAINED 0 //civilians
+#define SKILL_POLICE_TRAINED 1 // heads of staff
+#define SKILL_POLICE_PRO 2 // security
+
+
+//firearms
+#define SKILL_FIREARMS_UNTRAINED 0	//civilian
+#define SKILL_FIREARMS_TRAINED 1	// less recoil from firearms
+#define SKILL_FIREARMS_PRO 2	   // security, nuclear, ERT
+
+
+
+//melee_weapons skill
+//buff to melee weapon attack damage(+20% dmg per level)
+#define SKILL_MELEE_WEAK -1 
+#define SKILL_MELEE_DEFAULT 0 //civilian, 
+#define SKILL_MELEE_TRAINED 1 //cook, botanist, atmospheric techician
+#define SKILL_MELEE_MASTER 2  //nuclear, СБ
+
+
+// engineer skill
+#define SKILL_ENGINEER_DEFAULT 0  
+#define SKILL_ENGINEER_NOVICE 1	// c4 usage
+#define SKILL_ENGINEER_TRAINED 2 // hacking,  techincal assistant
+#define SKILL_ENGINEER_ENGI 3	//  bubble shield generators, singularity computer ,engineer, atmospheric technician
+#define SKILL_ENGINEER_MASTER 4	//   Telecomms, CE, RD
+
+
+//atmospheric skill ATMOS
+#define SKILL_ATMOS_DEFAULT 0  
+#define SKILL_ATMOS_TRAINED 1	//scientist
+#define SKILL_ATMOS_ENGI 2	//engineer, RD
+#define SKILL_ATMOS_MASTER 3	//CE, atmospheric techincian
+
+
+//construction
+#define SKILL_CONSTRUCTION_DEFAULT 0
+#define SKILL_CONSTRUCTION_NOVICE 1	// tables, glass, girder
+#define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)  
+#define SKILL_CONSTRUCTION_ADVANCED 3	//computer, machine frames,  RD, engineer
+#define SKILL_CONSTRUCTION_MASTER 4	// CE
+
+
+//chemistry
+#define SKILL_CHEMISTRY_UNTRAINED 0
+#define SKILL_CHEMISTRY_PRACTICED 1 // xenoarcheologist, intern, scientist, botanist
+#define SKILL_CHEMISTRY_COMPETENT 2 // medical doctor, surgeon, RD
+#define SKILL_CHEMISTRY_EXPERT 3 // chemist, CMO
+
+//research
+#define SKILL_RESEARCH_DEFAULT 0
+#define SKILL_RESEARCH_TRAINED 1 // genetist, research assistant, xenobiologist, xenoarcheologist, engineer, CMO
+#define SKILL_RESEARCH_PROFESSIONAL 2 // scientist, robotist, CE
+#define SKILL_RESEARCH_EXPERT 4 // RD
+
+
+
+//medical
+#define SKILL_MEDICAL_UNTRAINED 0
+#define SKILL_MEDICAL_NOVICE 1 // cook
+#define SKILL_MEDICAL_PRACTICED 2 // intern, scientist
+#define SKILL_MEDICAL_COMPETENT 3 // RD, robotech
+#define SKILL_MEDICAL_EXPERT 4 //paramedic, medical doctor, surgeon
+#define SKILL_MEDICAL_MASTER 5 //CMO
+//higher levels means faster syringe use and better defibrillation
+
+//surgery
+#define SKILL_SURGERY_DEFAULT 0 //untrained, really slow
+#define SKILL_SURGERY_AMATEUR 1 //scientist, intern, cook
+#define SKILL_SURGERY_TRAINED 2 //  robotech, paramedic
+#define SKILL_SURGERY_PROFESSIONAL 3 //medical doctor, RD
+#define SKILL_SURGERY_EXPERT 4 //CMO surgeon
+//higher levels means faster surgery.
+
+
+#define SKILL_TASK_TRIVIAL 10
+#define SKILL_TASK_VERY_EASY 20
+#define SKILL_TASK_EASY 30
+#define SKILL_TASK_AVERAGE 50
+#define SKILL_TASK_TOUGH 80
+#define SKILL_TASK_DIFFICULT 100
+#define SKILL_TASK_CHALLENGING 150
+#define SKILL_TASK_FORMIDABLE 200

@@ -40,12 +40,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts),
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 	null,
-	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE, skill_req = SKILL_CONSTRUCTION_ADVANCED),
 	null,
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20),
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60),
 	null,
-	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE, skill_req = SKILL_CONSTRUCTION_ADVANCED),
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE),
@@ -75,10 +75,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2),
 	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1),
 	null,
-	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2),
-	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2),
-	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2),
-	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1),
+	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2, skill_req = SKILL_CONSTRUCTION_TRAINED),
+	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2, skill_req = SKILL_CONSTRUCTION_TRAINED),
+	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2, skill_req = SKILL_CONSTRUCTION_TRAINED),
+	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1, skill_req = SKILL_CONSTRUCTION_TRAINED),
 	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE)
@@ -113,7 +113,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE), \
+	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE, skill_req = SKILL_CONSTRUCTION_MASTER), \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = TRUE), \
 	)
 
