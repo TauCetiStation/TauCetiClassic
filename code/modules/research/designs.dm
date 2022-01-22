@@ -2183,6 +2183,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/mining
 	category = list("Support")
 
+/datum/design/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	id = "hud_calibrator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	build_path = /obj/item/device/hud_calibrator
+	category = list("Support")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
