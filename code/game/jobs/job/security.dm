@@ -19,6 +19,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
+	skills_type = /datum/skills/hos
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -44,6 +45,7 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
+	skills_type = /datum/skills/warden
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

@@ -19,6 +19,7 @@
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/cmo
+	skills_type = /datum/skills/cmo
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -47,6 +48,7 @@
 		)
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/doctor
+	skills_type = /datum/skills/doctor
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -71,6 +73,7 @@
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
+	skills_type = /datum/skills/paramedic
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -101,6 +104,7 @@
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/chemist
+	skills_type = /datum/skills/chemist
 
 
 /datum/job/geneticist
@@ -117,6 +121,7 @@
 	salary = 180
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
+	skills_type = /datum/skills/geneticist
 
 
 /datum/job/virologist
@@ -134,6 +139,7 @@
 	minimal_player_ingame_minutes = 960
 	salary = 180
 	outfit = /datum/outfit/job/virologist
+	skills_type = /datum/skills/virologist
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -159,6 +165,7 @@
 	salary = 140
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/psychiatrist
+	skills_type = /datum/skills/psychiatrist
 
 
 /datum/job/intern
@@ -174,4 +181,5 @@
 	access = list(access_medical)
 	salary = 50
 	outfit = /datum/outfit/job/intern
+	skills_type = /datum/skills/intern
 

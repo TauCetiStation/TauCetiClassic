@@ -13,6 +13,7 @@
 	salary = 160
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
+	skills_type = /datum/skills/quartermaster
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -37,6 +38,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
+	skills_type = /datum/skills/cargotech
 
 
 /datum/job/mining
@@ -53,6 +55,7 @@
 	salary = 80
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
+	skills_type = /datum/skills/miner
 
 
 /datum/job/recycler
@@ -69,6 +72,7 @@
 	salary = 60
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
+	skills_type = /datum/skills/recycler
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -94,6 +98,7 @@
 	salary = 40
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/bartender
+	skills_type = /datum/skills/bartender
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -119,6 +124,7 @@
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/chef
+	skills_type = /datum/skills/chef
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -144,6 +150,7 @@
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
+	skills_type = /datum/skills/botanist
 
 
 /datum/job/janitor
@@ -160,6 +167,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
+	skills_type = /datum/skills/janitor
 
 
 //More or less assistants
@@ -178,6 +186,7 @@
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
+	skills_type = /datum/skills/barber
 
 
 /datum/job/librarian
@@ -195,6 +204,7 @@
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
+	skills_type = /datum/skills/librarian
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -212,6 +222,7 @@
 	salary = 200
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
+	skills_type = /datum/skills/internal_affairs
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -236,6 +247,7 @@
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
+	skills_type = /datum/skills/clown
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
@@ -254,6 +266,7 @@
 	access = list(access_mime, access_theatre)
 	salary = 20
 	outfit = /datum/outfit/job/mime
+	skills_type = /datum/skills/mime
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)

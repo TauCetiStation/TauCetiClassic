@@ -18,8 +18,9 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	skills_type = /datum/skills/scientist
+	skills_type = /datum/skills/rd
 	outfit = /datum/outfit/job/rd
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -45,6 +46,7 @@
 	salary = 180
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
+	skills_type = /datum/skills/scientist
 
 
 /datum/job/xenoarchaeologist
@@ -61,6 +63,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
+	skills_type = /datum/skills/xenoarchaeologist
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -85,6 +88,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
+	skills_type = /datum/skills/xenobiologist
 
 
 /datum/job/roboticist
@@ -102,6 +106,7 @@
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
+	skills_type = /datum/skills/roboticist
 
 
 /datum/job/research_assistant
@@ -117,4 +122,5 @@
 	access = list(access_research)
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
+	skills_type = /datum/skills/research_assistant
 

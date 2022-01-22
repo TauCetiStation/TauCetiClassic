@@ -89,11 +89,239 @@ medical, chemistry, research)
 /datum/skills/proc/getRating(rating)
 	return vars[rating]
 
+/datum/skills/proc/getList()
+	return list("police" = police,\
+		"firearms" = firearms,\
+		"melee" = melee,\
+		"engineering" = engineering,\
+		"construction" = construction,\
+		"atmospherics" = atmospherics,\
+		"civilian exosuits" = civ_mech,\
+		"combat exosuits" = combat_mech,\
+		"surgery" = surgery,\
+		"medical" = medical,\
+		"chemistry" = chemistry,\
+		"research" = research,\
+		"medical" = medical)
+
+
+
+//science
+/datum/skills/rd
+	research = SKILL_RESEARCH_EXPERT
+	atmospherics = SKILL_ATMOS_TRAINED
+	construction =  SKILL_CONSTRUCTION_ADVANCED
+	chemistry =  SKILL_CHEMISTRY_COMPETENT
+	medical = SKILL_MEDICAL_COMPETENT
+	civ_mech = SKILL_CIV_MECH_MASTER
+	combat_mech = SKILL_COMBAT_MECH_PRO
 
 /datum/skills/scientist
+	research = SKILL_RESEARCH_EXPERT
 	atmospherics = SKILL_ATMOS_TRAINED
 	construction =  SKILL_CONSTRUCTION_TRAINED
+	engineering = SKILL_ENGINEER_NOVICE
 	chemistry =  SKILL_CHEMISTRY_PRACTICED
+	medical = SKILL_MEDICAL_NOVICE
+
+/datum/skills/roboticist
 	research = SKILL_RESEARCH_PROFESSIONAL
+	surgery = SKILL_SURGERY_TRAINED
 	medical = SKILL_MEDICAL_PRACTICED
-	
+	construction = SKILL_CONSTRUCTION_TRAINED
+	engineering = SKILL_ENGINEER_NOVICE
+	civ_mech = SKILL_CIV_MECH_PRO
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
+/datum/skills/xenoarchaeologist
+	chemistry = SKILL_CHEMISTRY_COMPETENT
+	research = SKILL_RESEARCH_PROFESSIONAL
+	civ_mech = SKILL_CIV_MECH_TRAINED
+
+/datum/skills/xenobiologist
+	research = SKILL_RESEARCH_PROFESSIONAL
+	surgery = SKILL_SURGERY_AMATEUR
+	medical = SKILL_MEDICAL_PRACTICED
+/datum/skills/research_assistant
+	research = SKILL_RESEARCH_TRAINED
+	medical = SKILL_MEDICAL_NOVICE
+	surgery = SKILL_SURGERY_AMATEUR
+	construction = SKILL_CONSTRUCTION_NOVICE
+	engineering = SKILL_ENGINEER_NOVICE
+
+//medical
+/datum/skills/cmo
+	chemistry = SKILL_CHEMISTRY_EXPERT
+	medical = SKILL_MEDICAL_MASTER
+	surgery = SKILL_SURGERY_EXPERT
+	police = SKILL_POLICE_TRAINED
+	research = SKILL_RESEARCH_TRAINED
+	civ_mech = SKILL_CIV_MECH_MASTER
+
+/datum/skills/virologist
+	chemistry = SKILL_CHEMISTRY_COMPETENT
+	research = SKILL_RESEARCH_TRAINED
+	medical = SKILL_MEDICAL_COMPETENT
+	surgery = SKILL_SURGERY_AMATEUR
+	civ_mech = SKILL_CIV_MECH_NOVICE
+
+/datum/skills/chemist
+	chemistry = SKILL_CHEMISTRY_EXPERT
+	medical = SKILL_MEDICAL_COMPETENT
+	surgery = SKILL_SURGERY_AMATEUR
+	civ_mech = SKILL_CIV_MECH_NOVICE
+
+/datum/skills/doctor
+	medical = SKILL_MEDICAL_MASTER
+	surgery = SKILL_SURGERY_PROFESSIONAL
+	civ_mech = SKILL_CIV_MECH_TRAINED
+
+/datum/skills/paramedic
+	medical = SKILL_MEDICAL_EXPERT
+	surgery = SKILL_SURGERY_TRAINED
+	civ_mech = SKILL_CIV_MECH_PRO
+/datum/skills/psychiatrist
+	medical = SKILL_MEDICAL_COMPETENT
+	chemistry = SKILL_CHEMISTRY_COMPETENT
+	surgery = SKILL_SURGERY_AMATEUR
+/datum/skills/geneticist
+	research = SKILL_RESEARCH_PROFESSIONAL
+	medical = SKILL_MEDICAL_COMPETENT
+	surgery = SKILL_SURGERY_AMATEUR
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+
+/datum/skills/intern
+	medical = SKILL_MEDICAL_COMPETENT
+	surgery = SKILL_SURGERY_AMATEUR
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+	civ_mech = SKILL_CIV_MECH_TRAINED
+
+//engineering
+/datum/skills/ce
+	construction = SKILL_CONSTRUCTION_MASTER
+	engineering = SKILL_ENGINEER_MASTER
+	atmospherics = SKILL_ATMOS_MASTER
+	civ_mech = SKILL_CIV_MECH_MASTER
+	police = SKILL_POLICE_TRAINED
+
+/datum/skills/engineer
+	construction = SKILL_CONSTRUCTION_ADVANCED
+	engineering = SKILL_ENGINEER_PRO
+	atmospherics = SKILL_ATMOS_PRO
+	civ_mech = SKILL_CIV_MECH_TRAINED
+
+/datum/skills/atmostech
+	atmospherics = SKILL_ATMOS_MASTER
+	construction = SKILL_CONSTRUCTION_ADVANCED
+	engineering = SKILL_ENGINEER_TRAINED
+	melee = SKILL_MELEE_TRAINED
+	civ_mech = SKILL_CIV_MECH_TRAINED
+/datum/skills/technicassistant
+	construction = SKILL_CONSTRUCTION_TRAINED
+	engineering = SKILL_ENGINEER_TRAINED
+	atmospherics = SKILL_ATMOS_TRAINED
+	civ_mech = SKILL_CIV_MECH_NOVICE
+
+
+//security
+/datum/skills/hos
+	firearms = SKILL_FIREARMS_PRO
+	police = SKILL_POLICE_PRO
+	melee = SKILL_MELEE_MASTER
+	medical = SKILL_MEDICAL_PRACTICED
+	combat_mech = SKILL_COMBAT_MECH_PRO
+
+/datum/skills/warden
+	firearms = SKILL_FIREARMS_PRO
+	police = SKILL_POLICE_PRO
+	melee = SKILL_MELEE_MASTER
+	medical = SKILL_MEDICAL_NOVICE
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
+/datum/skills/officer
+	firearms = SKILL_FIREARMS_PRO
+	police = SKILL_POLICE_PRO
+	melee = SKILL_MELEE_MASTER
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
+/datum/skills/cadet
+	firearms = SKILL_FIREARMS_TRAINED
+	police = SKILL_POLICE_TRAINED
+	melee = SKILL_MELEE_TRAINED
+
+/datum/skills/forensic
+	police = SKILL_POLICE_TRAINED
+	surgery = SKILL_SURGERY_TRAINED
+	medical = SKILL_MEDICAL_COMPETENT
+	research = SKILL_RESEARCH_TRAINED
+
+/datum/skills/detective
+	police = SKILL_POLICE_TRAINED
+	firearms = SKILL_FIREARMS_PRO
+	medical = SKILL_MEDICAL_NOVICE
+	melee = SKILL_MELEE_TRAINED
+
+//cargo
+/datum/skills/quartermaster
+	civ_mech = SKILL_CIV_MECH_MASTER
+	police = SKILL_POLICE_TRAINED
+	construction = SKILL_CONSTRUCTION_NOVICE
+/datum/skills/miner
+	civ_mech = SKILL_CIV_MECH_MASTER
+	firearms  = SKILL_FIREARMS_TRAINED 
+/datum/skills/cargotech
+	civ_mech = SKILL_CIV_MECH_PRO
+/datum/skills/recycler
+	civ_mech = SKILL_CIV_MECH_PRO
+
+
+//civilians
+/datum/skills/captain
+	police = SKILL_POLICE_PRO
+	firearms = SKILL_FIREARMS_PRO
+	melee = SKILL_MELEE_TRAINED
+	engineering = SKILL_ENGINEER_NOVICE
+	construction = SKILL_CONSTRUCTION_NOVICE
+	research = SKILL_RESEARCH_TRAINED
+	medical = SKILL_MEDICAL_NOVICE
+	civ_mech = SKILL_CIV_MECH_TRAINED
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
+
+/datum/skills/hop
+	police = SKILL_POLICE_TRAINED
+	firearms = SKILL_FIREARMS_TRAINED
+	civ_mech = SKILL_CIV_MECH_TRAINED
+
+/datum/skills/bartender
+	firearms = SKILL_FIREARMS_TRAINED
+	police = SKILL_POLICE_TRAINED
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+
+/datum/skills/botanist
+	melee = SKILL_MELEE_TRAINED
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+
+/datum/skills/chef
+	melee = SKILL_MELEE_MASTER
+	surgery = SKILL_SURGERY_AMATEUR
+	medical = SKILL_MEDICAL_NOVICE
+
+
+/datum/skills/librarian
+	research = SKILL_RESEARCH_TRAINED
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+
+/datum/skills/barber
+	medical = SKILL_MEDICAL_NOVICE
+
+/datum/skills/clown
+	police = SKILL_POLICE_TRAINED
+	melee = SKILL_MELEE_TRAINED
+
+/datum/skills/mime
+/datum/skills/test_subject
+/datum/skills/janitor
+/datum/skills/chaplain
+/datum/skills/lawyer
+/datum/skills/internal_affairs

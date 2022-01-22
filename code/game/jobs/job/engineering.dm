@@ -19,6 +19,7 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/chief_engineer
+	skills_type = /datum/skills/ce
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -42,6 +43,7 @@
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	outfit = /datum/outfit/job/engineer
+	skills_type = /datum/skills/engineer
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
@@ -62,6 +64,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
+	skills_type = /datum/skills/atmostech
 
 
 /datum/job/technical_assistant
@@ -77,6 +80,7 @@
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
 	salary = 50
 	outfit = /datum/outfit/job/technical_assistant
+	skills_type = /datum/skills/technicassistant
 
 
 /proc/get_airlock_wires_identification()

@@ -14,6 +14,7 @@
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/chaplain
+	skills_type = /datum/skills/chaplain
 
 /datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly && H.mind)

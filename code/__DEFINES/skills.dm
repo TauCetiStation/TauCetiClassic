@@ -2,9 +2,9 @@
 
 //ripley and odyssey
 #define SKILL_CIV_MECH_DEFAULT 0 //civilians
-#define SKILL_CIV_MECH_DABBLING 1 // 
-#define SKILL_CIV_MECH_TRAINED 2 //  engineer, medical intern, scientist
-#define SKILL_CIV_MECH_PRO 3 // cargo techincian, recycler, robotech, paramedic, medical doctor, mecha operator
+#define SKILL_CIV_MECH_NOVICE 1 // 
+#define SKILL_CIV_MECH_TRAINED 2 //  engineer, medical intern, scientist, medical doctor
+#define SKILL_CIV_MECH_PRO 3 // cargo techincian, recycler, robotech, paramedic, mecha operator
 #define SKILL_CIV_MECH_MASTER 4 // RD, miner, QM, CE, CMO
 //combat_mech
 #define SKILL_COMBAT_MECH_UNTRAINED 0
@@ -19,7 +19,7 @@
 
 //firearms
 #define SKILL_FIREARMS_UNTRAINED 0	//civilian
-#define SKILL_FIREARMS_TRAINED 1	// less recoil from firearms
+#define SKILL_FIREARMS_TRAINED 1	// less recoil from firearms, usage of mines and c4
 #define SKILL_FIREARMS_PRO 2	   // security, nuclear, ERT
 
 
@@ -34,16 +34,16 @@
 
 // engineer skill
 #define SKILL_ENGINEER_DEFAULT 0  
-#define SKILL_ENGINEER_NOVICE 1	// c4 usage
-#define SKILL_ENGINEER_TRAINED 2 // hacking,  techincal assistant
-#define SKILL_ENGINEER_ENGI 3	//  bubble shield generators, singularity computer ,engineer, atmospheric technician
+#define SKILL_ENGINEER_NOVICE 1	//  hacking
+#define SKILL_ENGINEER_TRAINED 2 //   techincal assistant, atmospheric technician
+#define SKILL_ENGINEER_PRO 3	//  bubble shield generators, singularity computer ,engineer
 #define SKILL_ENGINEER_MASTER 4	//   Telecomms, CE, RD
 
 
 //atmospheric skill ATMOS
 #define SKILL_ATMOS_DEFAULT 0  
 #define SKILL_ATMOS_TRAINED 1	//scientist
-#define SKILL_ATMOS_ENGI 2	//engineer, RD
+#define SKILL_ATMOS_PRO 2	//engineer, RD
 #define SKILL_ATMOS_MASTER 3	//CE, atmospheric techincian
 
 
@@ -51,31 +51,31 @@
 #define SKILL_CONSTRUCTION_DEFAULT 0
 #define SKILL_CONSTRUCTION_NOVICE 1	// tables, glass, girder
 #define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)  
-#define SKILL_CONSTRUCTION_ADVANCED 3	//computer, machine frames,  RD, engineer
-#define SKILL_CONSTRUCTION_MASTER 4	// CE
+#define SKILL_CONSTRUCTION_ADVANCED 3	//computer, machine frames,  RD, engineer, reinforced walls
+#define SKILL_CONSTRUCTION_MASTER 4	// CE - AI core
 
 
 //chemistry
 #define SKILL_CHEMISTRY_UNTRAINED 0
-#define SKILL_CHEMISTRY_PRACTICED 1 // xenoarcheologist, intern, scientist, botanist
+#define SKILL_CHEMISTRY_PRACTICED 1 // intern, scientist, botanist
 #define SKILL_CHEMISTRY_COMPETENT 2 // medical doctor, surgeon, RD
 #define SKILL_CHEMISTRY_EXPERT 3 // chemist, CMO
 
 //research
 #define SKILL_RESEARCH_DEFAULT 0
-#define SKILL_RESEARCH_TRAINED 1 // genetist, research assistant, xenobiologist, xenoarcheologist, engineer, CMO
-#define SKILL_RESEARCH_PROFESSIONAL 2 // scientist, robotist, CE
-#define SKILL_RESEARCH_EXPERT 4 // RD
+#define SKILL_RESEARCH_TRAINED 1 
+#define SKILL_RESEARCH_PROFESSIONAL 2 //  slime console, xenoarch consoles
+#define SKILL_RESEARCH_EXPERT 4 // AI creation and law modification, telescience console
 
 
 
 //medical
 #define SKILL_MEDICAL_UNTRAINED 0
-#define SKILL_MEDICAL_NOVICE 1 // cook
-#define SKILL_MEDICAL_PRACTICED 2 // intern, scientist
-#define SKILL_MEDICAL_COMPETENT 3 // RD, robotech
-#define SKILL_MEDICAL_EXPERT 4 //paramedic, medical doctor, surgeon
-#define SKILL_MEDICAL_MASTER 5 //CMO
+#define SKILL_MEDICAL_NOVICE 1 
+#define SKILL_MEDICAL_PRACTICED 2 
+#define SKILL_MEDICAL_COMPETENT 3 //intern
+#define SKILL_MEDICAL_EXPERT 4 //paramedic, surgeon
+#define SKILL_MEDICAL_MASTER 5 //CMO, medical doctor
 //higher levels means faster syringe use and better defibrillation
 
 //surgery

@@ -1491,6 +1491,19 @@
 		W.message = message
 		W.add_fingerprint(src)
 
+/mob/living/carbon/human/verb/show_skills()
+	set category = "IC"
+	set name = "Show Skills"
+
+	var/list/dat = list()
+	var/list/skill_list = skills.getList()
+	for(var/i in skill_list)
+		dat += "[i]: [skill_list[i]]"
+
+	var/datum/browser/popup = new(src, "skills", "<div align='center'>Skills</div>", 300, 600)
+	popup.set_content(dat.Join("<br>"))
+	popup.open(FALSE)
+
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
 	set category = "OOC"

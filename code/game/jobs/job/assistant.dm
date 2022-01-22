@@ -19,6 +19,7 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
+	skills_type = /datum/skills/test_subject
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)
