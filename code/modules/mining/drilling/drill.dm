@@ -343,6 +343,11 @@
 			if(active)
 				visible_message("<span class='notice'>\The [src] lurches downwards, grinding noisily.</span>")
 				need_update_field = 1
+				var/obj/structure/spawner/O
+				var/turf/T = get_turf(src)
+				for(O in T.contents)
+					if(istype(O,/obj/structure/spawner))
+						O.is_alive = 0
 			else
 				visible_message("<span class='notice'>\The [src] shudders to a grinding halt.</span>")
 		else
