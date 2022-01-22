@@ -42,14 +42,7 @@
 	if(is_alive ==0)
 		Death()
 		icon_state = death_icon
-/*	var/turf/T = get_turf(src)
-	if(locate(/obj/machinery/mining/drill) in T.contents)
-		var/obj/machinery/mining/drill/D
-		debug = 1
-		if(D.active == 1)
-			debug = 2
-			is_alive = 0
-*/
+
 /obj/structure/spawner/proc/Triggered()
 //	if(mobs.len < max_mob)
 	if(is_alive == 0)
