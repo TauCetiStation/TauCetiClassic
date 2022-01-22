@@ -1427,7 +1427,7 @@
 			for(var/A in species.additional_languages)
 				remove_language(A)
 
-		if(client.prefs.language)
+		if(client?.prefs.language)
 			remove_language(client.prefs.language)
 
 		species.on_loose(src, new_species)
