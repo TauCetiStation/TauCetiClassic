@@ -163,6 +163,8 @@ var/global/list/department_radio_keys = list(
 			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
+			if(QDELETED(M)) // avoid not hard-deleted mobs with client
+				continue
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
