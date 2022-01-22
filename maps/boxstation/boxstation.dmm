@@ -9750,6 +9750,9 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/item/weapon/storage/fancy/vials,
+/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor{
 	icon_state = "whitered"
 	},
@@ -10881,6 +10884,8 @@
 	name = "Station Intercom (Security)";
 	pixel_y = -28
 	},
+/obj/item/device/mass_spectrometer,
+/obj/item/device/reagent_scanner,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitered"
