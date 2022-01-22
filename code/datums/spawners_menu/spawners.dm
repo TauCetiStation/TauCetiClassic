@@ -278,9 +278,9 @@ var/global/list/datum/spawners_cooldown = list()
 	new_commando.key = ghost.key
 	create_random_account_and_store_in_mind(new_commando)
 
-	to_chat(new_commando, "<span class='notice'>You are [!leader_selected ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+	to_chat(new_commando, "<span class='notice'>You are [!is_leader ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
 	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
-	if(!leader_selected)
+	if(!is_leader)
 		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
 	else
 		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
