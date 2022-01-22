@@ -398,6 +398,11 @@
 								if("resize")
 									M.vars[variable] = new_value
 									M.update_transform()
+								if("height")
+									if(ishuman(M))
+										var/mob/living/carbon/human/H = M
+										H.vars[variable] = new_value
+										H.regenerate_icons()
 								else
 									M.vars[variable] = O.vars[variable]
 						CHECK_TICK
