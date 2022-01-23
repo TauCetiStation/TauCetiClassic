@@ -9,6 +9,8 @@
 	throw_speed = 4
 	throw_range = 20
 
+	var/skill_level_needed = SKILL_MEDICAL_UNTRAINED
+	var/unskilled_delay = SKILL_TASK_TRIVIAL
 	var/self_delay = 25
 	var/other_delay = 5
 

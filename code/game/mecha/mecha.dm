@@ -90,6 +90,7 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	var/required_skill = "civ_mech"
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -293,9 +294,11 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, step_in * move_result)
+		VARSET_IN(src, can_move, TRUE, use_proficiency_bonus(step_in) * move_result)
 		return 1
 	return 0
+/obj/mecha/proc/use_proficiency_bonus(value)
+		return value -  value * 0.3 * occupant.mind.getSkillRating(required_skill)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)

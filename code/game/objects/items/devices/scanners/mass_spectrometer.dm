@@ -31,6 +31,11 @@
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
+	if(user.mind.getSkillRating("medical") < SKILL_MEDICAL_PRACTICED)
+		to_chat(user, "<span class='notice'>You start fumbling around with [src]...</span>")
+		var/fduration = max(SKILL_TASK_AVERAGE - (1 SECONDS * user.mind.getSkillRating("medical")), 0)
+		if(!do_after(user, fduration, target = usr))
+			return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)

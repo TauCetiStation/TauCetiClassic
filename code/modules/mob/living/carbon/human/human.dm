@@ -1496,9 +1496,10 @@
 	set name = "Show Skills"
 
 	var/list/dat = list()
-	var/list/skill_list = skills.getList()
-	for(var/i in skill_list)
-		dat += "[i]: [skill_list[i]]"
+	if (mind)
+		var/list/skill_list = mind.getSkillsList()
+		for(var/i in skill_list)
+			dat += "[i]: [skill_list[i]]"
 
 	var/datum/browser/popup = new(src, "skills", "<div align='center'>Skills</div>", 300, 600)
 	popup.set_content(dat.Join("<br>"))
@@ -1556,19 +1557,20 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-
+		//untrained 8 seconds, novice 6.5, practiced 5, competent 3.5, expert and master 2
+		var/injection_time = max(2 SECONDS, 8 SECONDS - 1.5 SECONDS * user.mind.getSkillRating("medical"))
 		if(!instant)
-			var/time_to_inject = HUMAN_STRIP_DELAY
+			
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
-				if(!do_mob(user, src, time_to_inject / 2, TRUE))
+				if(!do_mob(user, src, injection_time / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
 				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
-			if(!do_mob(user, src, time_to_inject, TRUE))
+			if(!do_mob(user, src, injection_time, TRUE))
 				return FALSE
 
 		if(!stealth)

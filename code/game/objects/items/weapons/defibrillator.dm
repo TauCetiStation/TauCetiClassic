@@ -328,6 +328,14 @@
 
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
+
+	var/skill = user.mind.getSkillRating("medical")
+	if(skill < SKILL_MEDICAL_PRACTICED)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
+		"<span class='notice'>You fumble around figuring out how to use [src]..</span>")
+		var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_MEDICAL_PRACTICED - skill ) ) // 3 seconds with medical skill, 5 without
+		if(!do_after(user, fumbling_time, target = H))
+			return
 	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 	user.visible_message("<span class='warning'>\The [user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	if(!do_after(user, 30, target = H))

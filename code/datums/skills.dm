@@ -90,19 +90,19 @@ medical, chemistry, research)
 	return vars[rating]
 
 /datum/skills/proc/getList()
-	return list("police" = police,\
-		"firearms" = firearms,\
-		"melee" = melee,\
-		"engineering" = engineering,\
-		"construction" = construction,\
-		"atmospherics" = atmospherics,\
-		"civilian exosuits" = civ_mech,\
-		"combat exosuits" = combat_mech,\
-		"surgery" = surgery,\
-		"medical" = medical,\
-		"chemistry" = chemistry,\
-		"research" = research,\
-		"medical" = medical)
+	return list("Police" = police,\
+		"Firearms" = firearms,\
+		"Melee" = melee,\
+		"Engineering" = engineering,\
+		"Construction" = construction,\
+		"Atmospherics" = atmospherics,\
+		"Civilian Exosuits" = civ_mech,\
+		"Combat Exosuits" = combat_mech,\
+		"Surgery" = surgery,\
+		"Medical" = medical,\
+		"Chemistry" = chemistry,\
+		"Research" = research,\
+		"Medical" = medical)
 
 
 
@@ -115,6 +115,9 @@ medical, chemistry, research)
 	medical = SKILL_MEDICAL_COMPETENT
 	civ_mech = SKILL_CIV_MECH_MASTER
 	combat_mech = SKILL_COMBAT_MECH_PRO
+	police = SKILL_POLICE_TRAINED
+	surgery = SKILL_SURGERY_PROFESSIONAL
+	engineering = SKILL_ENGINEER_MASTER
 
 /datum/skills/scientist
 	research = SKILL_RESEARCH_EXPERT
@@ -123,6 +126,7 @@ medical, chemistry, research)
 	engineering = SKILL_ENGINEER_NOVICE
 	chemistry =  SKILL_CHEMISTRY_PRACTICED
 	medical = SKILL_MEDICAL_NOVICE
+	surgery = SKILL_SURGERY_AMATEUR
 
 /datum/skills/roboticist
 	research = SKILL_RESEARCH_PROFESSIONAL

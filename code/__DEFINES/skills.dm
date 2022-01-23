@@ -1,15 +1,15 @@
 //skills defines
 
 //ripley and odyssey
-#define SKILL_CIV_MECH_DEFAULT 0 //civilians
-#define SKILL_CIV_MECH_NOVICE 1 // 
-#define SKILL_CIV_MECH_TRAINED 2 //  engineer, medical intern, scientist, medical doctor
-#define SKILL_CIV_MECH_PRO 3 // cargo techincian, recycler, robotech, paramedic, mecha operator
-#define SKILL_CIV_MECH_MASTER 4 // RD, miner, QM, CE, CMO
+#define SKILL_CIV_MECH_DEFAULT -2 //civilians
+#define SKILL_CIV_MECH_NOVICE -1 // 
+#define SKILL_CIV_MECH_TRAINED 0 //  engineer, medical intern, scientist, medical doctor
+#define SKILL_CIV_MECH_PRO 1 // cargo techincian, recycler, robotech, paramedic, mecha operator
+#define SKILL_CIV_MECH_MASTER 2 // RD, miner, QM, CE, CMO
 //combat_mech
-#define SKILL_COMBAT_MECH_UNTRAINED 0
-#define SKILL_COMBAT_MECH_NOVICE 1	// scientist, engineer, mecha operator
-#define SKILL_COMBAT_MECH_PRO 2  //nuclear,  HoS, RD, security, robotech
+#define SKILL_COMBAT_MECH_UNTRAINED -1
+#define SKILL_COMBAT_MECH_NOVICE 0	// scientist, engineer, mecha operator
+#define SKILL_COMBAT_MECH_PRO 1  //nuclear,  HoS, RD, security, robotech
 
 //police
 #define SKILL_POLICE_UNTRAINED 0 //civilians

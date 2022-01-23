@@ -80,7 +80,8 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
-	H.skills = getSkillsType(return_skills_type())
+	if (H.mind)
+		H.mind.skills = getSkillsType(return_skills_type())
 	post_equip(H, visualsOnly)
 	return TRUE
 

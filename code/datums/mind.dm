@@ -60,6 +60,8 @@
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	//skills
+	var/datum/skills/skills
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
@@ -105,6 +107,19 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
+/datum/mind/proc/getSkillRating(skill)
+	if(skills)
+		return skills.getRating(skill)
+	else
+		skills = new /datum/skills
+		return  skills.getRating(skill)
+/datum/mind/proc/getSkillsList()
+	if(skills)
+		return skills.getList()
+	else
+		skills = new /datum/skills
+		return  skills.getList()
+
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -637,6 +652,7 @@
 			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
+
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

@@ -253,8 +253,6 @@
 	// Mobs without mind can be member of a religion
 	var/datum/religion/my_religion
 
-	//skills
-	var/datum/skills/skills
 
 	// datum/atom_hud
 	hud_possible = list(ANTAG_HUD, HOLY_HUD)
