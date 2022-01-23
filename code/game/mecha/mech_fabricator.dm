@@ -49,6 +49,8 @@
 								"Misc",
 								"Stock Parts",
 								)
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
 
 /obj/machinery/mecha_part_fabricator/atom_init()
 	. = ..()
@@ -304,9 +306,11 @@
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat
 	var/left_part
-
+	
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")

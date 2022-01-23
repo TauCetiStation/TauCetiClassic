@@ -10,9 +10,13 @@
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
+	required_skill = SKILL_CIV_MECH
+	required_skill_proficiency = SKILL_CIV_MECH_PRO
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	var/dat = ""
+	if(!handle_fumbling(user))
+		return
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in mecha_tracking_list)

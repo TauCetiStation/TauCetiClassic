@@ -157,6 +157,8 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 
 /obj/machinery/body_scanconsole/atom_init()
@@ -170,7 +172,8 @@
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-
+	if(!handle_fumbling(user))
+		return
 	var/dat
 
 	if (src.connected) //Is something connected?

@@ -8,8 +8,12 @@
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
+	required_skill = SKILL_ATMOS
+	required_skill_proficiency = SKILL_ATMOS_PRO
 
 /obj/machinery/pipedispenser/ui_interact(user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = {"
 		<b>Regular pipes:</b><BR>
 		<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>

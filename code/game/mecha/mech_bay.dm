@@ -23,6 +23,8 @@
 	var/on = 0
 	var/repairability = 0
 	var/turf/recharging_turf = null
+	required_skill = SKILL_CIV_MECH
+	required_skill_proficiency = SKILL_CIV_MECH_TRAINED
 
 /obj/machinery/mech_bay_recharge_port/atom_init()
 	. = ..()
@@ -105,6 +107,8 @@
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
 
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/data
 	if(!recharge_port)
 		data += "<div class='Section'>No recharging port detected.</div><BR>"
