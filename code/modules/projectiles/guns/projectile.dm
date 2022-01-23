@@ -144,6 +144,9 @@
 		var/old_magazine = magazine
 		if(magazine)
 			playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
+			if (istype(new_magazine.loc,/obj/item/weapon/storage/))
+				var/obj/item/weapon/storage/storage = new_magazine.loc
+				storage.remove_from_storage(new_magazine,src)
 			magazine.loc = get_turf(src.loc)
 			magazine.update_icon()
 			user.drop_from_inventory(new_magazine, src)
@@ -158,5 +161,5 @@
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 		update_icon()
-		
+
 
