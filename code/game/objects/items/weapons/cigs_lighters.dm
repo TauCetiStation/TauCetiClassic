@@ -450,6 +450,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "zippoon"
 	icon_off = "zippo"
 
+/obj/item/weapon/lighter/zippo/syndi
+	name = "Syndicate zippo lighter"
+	desc = "The syndicate zippo."
+	icon_state = "zippo-syndi"
+	item_state = "zippo-syndi"
+	icon_on = "zippo-syndi-on"
+	icon_off = "zippo-syndi"
+
 /obj/item/weapon/lighter/random
 
 /obj/item/weapon/lighter/random/atom_init()
