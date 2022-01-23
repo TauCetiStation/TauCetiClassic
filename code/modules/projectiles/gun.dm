@@ -56,8 +56,9 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
+	var/skill_recoil = max(0, recoil - 2 * user.mind.getSkillRating("firearms"))
 	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)

@@ -18,9 +18,13 @@
 	if(!user.loc || user.loc.density)
 		to_chat(user, "<span class='warning'>You can't plant a mine here.</span>")
 		return
-
+	if(user.mind.getSkillRating("firearms") < SKILL_FIREARMS_TRAINED)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to deploy [src].</span>", "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>")
+		if(!do_after(user, SKILL_TASK_EASY, target = src))
+			return
+	var/planting_time =  max(SKILL_TASK_VERY_EASY, SKILL_TASK_AVERAGE - 1 SECONDS *  (2 * user.mind.getSkillRating("firearms")  + user.mind.getSkillRating("engineering")))
 	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, planting_time, target = src))
 		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", "<span class='notice'>You stop deploying \the [src].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] finishes deploying [src].</span>", "<span class='notice'>You finish deploying [src].</span>")

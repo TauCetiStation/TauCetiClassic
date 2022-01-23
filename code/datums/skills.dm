@@ -320,7 +320,6 @@ medical, chemistry, research)
 	medical = SKILL_MEDICAL_NOVICE
 
 /datum/skills/clown
-	police = SKILL_POLICE_TRAINED
 	melee = SKILL_MELEE_TRAINED
 
 /datum/skills/mime

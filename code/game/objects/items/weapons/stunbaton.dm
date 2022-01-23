@@ -44,6 +44,11 @@
 			status = 0
 			update_icon()
 		return
+	if(user.mind.getSkillRating("police") < SKILL_POLICE_PRO)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to toggle [!status ? "on" : "off"] [src].</span>", "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>")
+		var/fumbling_time = SKILL_TASK_VERY_EASY - 1 SECOND * user.mind.getSkillRating("police")
+		if (fumbling_time && !do_after(usr, fumbling_time, target = user))
+			return
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
