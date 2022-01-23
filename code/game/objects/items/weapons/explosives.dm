@@ -1,5 +1,5 @@
 /obj/item/weapon/plastique/attack_self(mob/user)
-	if(user.mind.getSkillRating("firearms") < SKILL_FIREARMS_TRAINED)
+	if(user.mind.getSkillRating(SKILL_FIREARMS) < SKILL_FIREARMS_TRAINED)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to set timer on [src].</span>", "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>")
 		if(!do_after(user, SKILL_TASK_TRIVIAL, target = user))
 			return
@@ -23,7 +23,7 @@
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
-	var/planting_time =  max(SKILL_TASK_AVERAGE, SKILL_TASK_DIFFICULT - 1 SECONDS *  (user.mind.getSkillRating("firearms")  + user.mind.getSkillRating("engineering")))
+	var/planting_time =  max(SKILL_TASK_AVERAGE, SKILL_TASK_DIFFICULT - 1 SECONDS *  (user.mind.getSkillRating(SKILL_FIREARMS)  + user.mind.getSkillRating("engineering")))
 	if(do_after(user, planting_time, target = target) && user.Adjacent(target))
 		user.drop_item()
 		target = target

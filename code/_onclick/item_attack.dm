@@ -134,7 +134,7 @@
 	var/power = force
 	if(HULK in user.mutations)
 		power *= 2
-
+	power += round(power * 0.2 *user.mind.getSkillRating("melee"))
 	if(!ishuman(M))
 		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M

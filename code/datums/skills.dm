@@ -42,7 +42,7 @@ medical = 0, chemistry = 0, research = 0)
 	var/police = SKILL_POLICE_UNTRAINED
 	var/firearms = SKILL_FIREARMS_UNTRAINED
 	var/melee = SKILL_MELEE_DEFAULT
-	var/engineering = SKILL_ENGINEER_DEFAULT
+	var/engineering = SKILL_ENGINEERING_DEFAULT
 	var/construction = SKILL_CONSTRUCTION_DEFAULT
 	var/atmospherics = SKILL_ATMOS_DEFAULT
 	var/civ_mech = SKILL_CIV_MECH_DEFAULT
@@ -117,13 +117,13 @@ medical, chemistry, research)
 	combat_mech = SKILL_COMBAT_MECH_PRO
 	police = SKILL_POLICE_TRAINED
 	surgery = SKILL_SURGERY_PROFESSIONAL
-	engineering = SKILL_ENGINEER_MASTER
+	engineering = SKILL_ENGINEERING_MASTER
 
 /datum/skills/scientist
 	research = SKILL_RESEARCH_EXPERT
 	atmospherics = SKILL_ATMOS_TRAINED
 	construction =  SKILL_CONSTRUCTION_TRAINED
-	engineering = SKILL_ENGINEER_NOVICE
+	engineering = SKILL_ENGINEERING_NOVICE
 	chemistry =  SKILL_CHEMISTRY_PRACTICED
 	medical = SKILL_MEDICAL_NOVICE
 	surgery = SKILL_SURGERY_AMATEUR
@@ -133,7 +133,7 @@ medical, chemistry, research)
 	surgery = SKILL_SURGERY_TRAINED
 	medical = SKILL_MEDICAL_PRACTICED
 	construction = SKILL_CONSTRUCTION_TRAINED
-	engineering = SKILL_ENGINEER_NOVICE
+	engineering = SKILL_ENGINEERING_NOVICE
 	civ_mech = SKILL_CIV_MECH_PRO
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
 
@@ -151,7 +151,7 @@ medical, chemistry, research)
 	medical = SKILL_MEDICAL_NOVICE
 	surgery = SKILL_SURGERY_AMATEUR
 	construction = SKILL_CONSTRUCTION_NOVICE
-	engineering = SKILL_ENGINEER_NOVICE
+	engineering =  SKILL_ENGINEERING_NOVICE
 
 //medical
 /datum/skills/cmo
@@ -203,26 +203,26 @@ medical, chemistry, research)
 //engineering
 /datum/skills/ce
 	construction = SKILL_CONSTRUCTION_MASTER
-	engineering = SKILL_ENGINEER_MASTER
+	engineering =  SKILL_ENGINEERING_MASTER
 	atmospherics = SKILL_ATMOS_MASTER
 	civ_mech = SKILL_CIV_MECH_MASTER
 	police = SKILL_POLICE_TRAINED
 
 /datum/skills/engineer
 	construction = SKILL_CONSTRUCTION_ADVANCED
-	engineering = SKILL_ENGINEER_PRO
+	engineering =  SKILL_ENGINEERING_PRO
 	atmospherics = SKILL_ATMOS_PRO
 	civ_mech = SKILL_CIV_MECH_TRAINED
 
 /datum/skills/atmostech
 	atmospherics = SKILL_ATMOS_MASTER
 	construction = SKILL_CONSTRUCTION_ADVANCED
-	engineering = SKILL_ENGINEER_TRAINED
+	engineering =  SKILL_ENGINEERING_TRAINED
 	melee = SKILL_MELEE_TRAINED
 	civ_mech = SKILL_CIV_MECH_TRAINED
 /datum/skills/technicassistant
 	construction = SKILL_CONSTRUCTION_TRAINED
-	engineering = SKILL_ENGINEER_TRAINED
+	engineering =  SKILL_ENGINEERING_TRAINED
 	atmospherics = SKILL_ATMOS_TRAINED
 	civ_mech = SKILL_CIV_MECH_NOVICE
 
@@ -284,7 +284,7 @@ medical, chemistry, research)
 	police = SKILL_POLICE_PRO
 	firearms = SKILL_FIREARMS_PRO
 	melee = SKILL_MELEE_TRAINED
-	engineering = SKILL_ENGINEER_NOVICE
+	engineering =  SKILL_ENGINEERING_NOVICE
 	construction = SKILL_CONSTRUCTION_NOVICE
 	research = SKILL_RESEARCH_TRAINED
 	medical = SKILL_MEDICAL_NOVICE

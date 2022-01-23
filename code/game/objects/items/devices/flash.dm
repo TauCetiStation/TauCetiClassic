@@ -43,7 +43,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.mind.getSkillRating("police") < SKILL_POLICE_TRAINED)
+	if(user.mind.getSkillRating(SKILL_POLICE) < SKILL_POLICE_TRAINED)
 		if (user.is_busy()) return
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>", "<span class='notice'>You fumble around figuring out how to use [src]...</span>")
 		
@@ -129,7 +129,7 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
-	if(user.mind.getSkillRating("police") < SKILL_POLICE_TRAINED)
+	if(user.mind.getSkillRating(SKILL_POLICE) < SKILL_POLICE_TRAINED)
 		if (user.is_busy()) return
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>", "<span class='notice'>You fumble around figuring out how to use [src]...</span>")
 		if (!do_after(usr, SKILL_TASK_TRIVIAL, target = user))

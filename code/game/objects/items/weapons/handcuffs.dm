@@ -49,7 +49,7 @@
 		target.visible_message("<span class='warning'><B>[user]</B> attempts to handcuff <B>[target]</B>!</span>", \
 			"<span class='warning'><B>[user]</B> attempts to handcuff you!</span>")
 		
-		var/time = max(HUMAN_STRIP_DELAY/4, HUMAN_STRIP_DELAY - HUMAN_STRIP_DELAY * 0.3 * user.mind.getSkillRating("police")) 
+		var/time = max(HUMAN_STRIP_DELAY/4, HUMAN_STRIP_DELAY - HUMAN_STRIP_DELAY * 0.3 * user.mind.getSkillRating(SKILL_POLICE)) 
 		if(do_mob(user, target, time) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)
 				var/grabbing = FALSE

@@ -1021,8 +1021,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		to_chat(src, "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>")
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
-
-	if(!do_after(U, 80, target = S))
+	var/removal_time = SKILL_TASK_DIFFICULT - 1 SECOND * U.mind.getSkillRating("medical") 
+	if(!do_after(U, removal_time, target = S))
 		return
 	if(!selection || !S || !U)
 		return
