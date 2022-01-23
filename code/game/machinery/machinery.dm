@@ -554,3 +554,9 @@ Class Procs:
 		if(!do_after(user, fumbling_time, TRUE, src))
 			return FALSE
 	return TRUE
+/obj/machinery/proc/get_skill_bonus(mob/user)
+	var/skill = user.mind.getSkillRating(required_skill)
+	if (skill < required_skill_proficiency)
+		return  1 + (required_skill_proficiency - skill) * 0.5
+	else
+		return  1 - (skill - required_skill_proficiency) * 0.2

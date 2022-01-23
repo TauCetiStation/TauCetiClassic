@@ -346,8 +346,8 @@
 			thermitemelt(user, seconds_to_melt)
 			return
 
-	var/turf/T = user.loc	//get user's location for delay checks
-
+	var/turf/T = user.loc	//get user's location for delay checks 
+	var/skill_bonus =  1 - (user.mind.getSkillRating(SKILL_ENGINEERING) - SKILL_ENGINEERING_TRAINED) * 0.1
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -358,13 +358,13 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+			if(WT.use_tool(src, user, max(5, damage / 5) * skill_bonus, volume = 100))
 				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-			if(WT.use_tool(src, user, 100, 3, 100))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT * skill_bonus, 3, 100))
 				if(!istype(src, /turf/simulated/wall))
 					return
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
@@ -374,7 +374,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-		if(W.use_tool(src, user, 60, volume = 100))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH * skill_bonus, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -391,7 +391,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
-		if(W.use_tool(src, user, 60, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH * skill_bonus, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)

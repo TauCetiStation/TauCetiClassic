@@ -30,6 +30,8 @@
 							//2 use active power
 	idle_power_usage = 20
 	active_power_usage = 100
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 /obj/machinery/shield_gen/atom_init()
 	field = list()
@@ -96,10 +98,13 @@
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
+
 	var/t = ""
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
+		if(!handle_fumbling(user))
+			return
 		t += "[owned_capacitor ? "<span class='green'>Charge capacitor connected.</span>" : "<span class='red'>Unable to locate charge capacitor!</span>"]<br>"
 		t += "This generator is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
 		t += "[time_since_fail > 2 ? "<span class='green'>Field is stable.</span>" : "<span class='red'>Warning, field is unstable!</span>"]<br>"

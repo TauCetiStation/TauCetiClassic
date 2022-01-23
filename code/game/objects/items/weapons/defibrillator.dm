@@ -333,7 +333,7 @@
 	if(skill < SKILL_MEDICAL_PRACTICED)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 		"<span class='notice'>You fumble around figuring out how to use [src]...</span>")
-		var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_MEDICAL_PRACTICED - skill ) ) // 3 seconds with medical skill, 5 without
+		var/fumbling_time = SKILL_TASK_DIFFICULT - ( SKILL_TASK_AVERAGE * ( skill - SKILL_MEDICAL_PRACTICED ) ) // 5 seconds with novice, 10 untrained
 		if(!do_after(user, fumbling_time, target = H))
 			return
 	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process

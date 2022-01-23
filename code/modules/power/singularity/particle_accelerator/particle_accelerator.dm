@@ -208,17 +208,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 		return 0
 	var/temp_state = src.construction_state
 
+	var/skill_bonus
+	var/skill = user.mind.getSkillRating(SKILL_ENGINEERING)
+	if (skill < SKILL_ENGINEERING_PRO)
+		skill_bonus = 1 + (SKILL_ENGINEERING_PRO - skill) * 2
+	else
+		skill_bonus = 1 - (skill - SKILL_ENGINEERING_PRO) * 0.2
+	
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, 20 * skill_bonus, volume = 75))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, 20 * skill_bonus, volume = 75))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
