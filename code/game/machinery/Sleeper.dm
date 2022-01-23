@@ -33,6 +33,8 @@
 		list("dexalinp", "alkysine")
 	)
 	var/upgraded = FALSE
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
@@ -227,6 +229,8 @@
 	return
 
 /obj/machinery/sleeper/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = "<div class='Section__title'>Sleeper Status</div>"
 
 	dat += "<div class='Section'>"

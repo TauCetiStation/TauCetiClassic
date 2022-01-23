@@ -310,7 +310,7 @@ medical, chemistry, research)
 	melee = SKILL_MELEE_MASTER
 	surgery = SKILL_SURGERY_AMATEUR
 	medical = SKILL_MEDICAL_NOVICE
-
+	chemistry = SKILL_CHEMISTRY_PRACTICED
 
 /datum/skills/librarian
 	research = SKILL_RESEARCH_TRAINED

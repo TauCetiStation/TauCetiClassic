@@ -11,6 +11,9 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	allowed_checks = ALLOWED_CHECK_TOPIC
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
@@ -33,7 +36,8 @@
 
 /obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
-
+	if(!handle_fumbling(user))
+		return
 	if (src.operating)
 		dat = {"
 			<TT>Building [src.being_built.name].<BR>

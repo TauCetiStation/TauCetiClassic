@@ -10,6 +10,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_TRAINED
 
 /obj/machinery/r_n_d/destructive_analyzer/atom_init()
 	. = ..()
@@ -36,6 +38,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(obj/O, mob/user)
 	if (shocked)
 		shock(user,50)
+	if(!handle_fumbling(user))
+		return
 	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
 		if(linked_console)
 			linked_console.linked_destroy = null

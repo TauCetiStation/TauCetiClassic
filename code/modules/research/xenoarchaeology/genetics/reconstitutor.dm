@@ -30,6 +30,8 @@
 	var/list/manually_placed_genomes = list()
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
 
 /obj/machinery/computer/reconstitutor/atom_init()
 	. = ..()
@@ -91,7 +93,8 @@
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
-
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 	dat += "<HR>"
 	if(!pod1)

@@ -27,6 +27,8 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_COMPETENT
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -77,6 +79,8 @@
 		qdel(src)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	tgui_interact(user)
 
 /obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
@@ -188,6 +192,8 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
+		if(!handle_fumbling(user))
+			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -244,6 +250,8 @@
 				"diethylamine"
 		)
 	)
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -344,6 +352,8 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_EXPERT
 
 
 /obj/machinery/chem_master/atom_init()
@@ -606,7 +616,8 @@
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle[i]"), "bottle[i].png")
 			updateUsrDialog()
-
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 	if(beaker)
 		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
@@ -687,12 +698,16 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_COMPETENT
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -762,6 +777,8 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_TRAINED
 
 
 /obj/machinery/computer/pandemic/set_broken()
@@ -882,6 +899,8 @@
 
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -1131,6 +1150,8 @@
 	var/dat = ""
 
 	if(!inuse)
+		if(!handle_fumbling(user))
+			return
 		for (var/obj/item/O in holdingitems)
 			processing_chamber += "\A [O.name]<BR>"
 

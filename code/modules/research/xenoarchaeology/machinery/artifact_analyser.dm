@@ -13,6 +13,8 @@
 	var/scan_duration = 100
 	var/obj/scanned_object
 	var/report_num = 0
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
 
 /obj/machinery/artifact_analyser/atom_init()
 	..()
@@ -31,7 +33,8 @@
 	if(stat & (NOPOWER|BROKEN) || !Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
-
+	if(!handle_fumbling(user))
+		return
 	var/dat = "<B>Anomalous material analyser</B><BR>"
 	dat += "<HR>"
 	if(!owned_scanner)

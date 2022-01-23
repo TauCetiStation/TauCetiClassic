@@ -26,7 +26,8 @@
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(user)
-
+	if(!handle_fumbling(user))
+		return
 	var/dat
 	dat = "<font face = \"Courier\">"
 	dat += "<br>[temp]<br>"

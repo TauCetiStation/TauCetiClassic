@@ -12,6 +12,8 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
 
 /obj/machinery/suspension_gen/atom_init()
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
@@ -91,6 +93,8 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 	if(cell)
 		var/colour = "red"
