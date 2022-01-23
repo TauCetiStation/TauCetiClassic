@@ -9,6 +9,9 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/robotics
 
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+
 	var/id = 0.0
 	var/temp = null
 	var/status = 0
@@ -25,6 +28,8 @@
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
+		return
+	if(!handle_fumbling(user))
 		return
 
 	var/dat

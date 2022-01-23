@@ -19,6 +19,8 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
+	required_skill = "medical"
+	required_skill_proficiency = SKILL_MEDICAL_NOVICE
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -28,6 +30,8 @@
 	..()
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat
 	if (src.temp)
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"

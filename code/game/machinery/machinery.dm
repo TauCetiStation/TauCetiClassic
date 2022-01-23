@@ -138,6 +138,10 @@ Class Procs:
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
 
+	var/required_skill = FALSE  //e.g. medical, engineering
+	var/required_skill_proficiency = FALSE // e.g. novice, trained, pro
+	var/fumbling_time_multiplier = 5 SECONDS
+
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
@@ -541,3 +545,12 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
+/obj/machinery/proc/handle_fumbling(mob/user)
+	if (!required_skill || !required_skill_proficiency) return TRUE
+	if(!issilicon(user) && !isobserver(user) && user.mind.getSkillRating(required_skill) < required_skill_proficiency)
+		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
+		"<span class='notice'>You fumble around figuring out how to use [src].</span>")
+		var/fumbling_time = fumbling_time_multiplier * (required_skill_proficiency - user.mind.getSkillRating(required_skill))
+		if(!do_after(user, fumbling_time, TRUE, src))
+			return FALSE
+	return TRUE

@@ -8,6 +8,9 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+	fumbling_time_multiplier = 7 SECONDS
 
 /obj/machinery/computer/aifixer/atom_init()
 	add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
@@ -25,6 +28,8 @@
 	return
 
 /obj/machinery/computer/aifixer/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 
 	if (src.occupier)

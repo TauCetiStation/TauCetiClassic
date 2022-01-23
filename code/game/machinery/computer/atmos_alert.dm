@@ -7,6 +7,8 @@
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
+	required_skill = SKILL_ATMOS
+	required_skill_proficiency = SKILL_ATMOS_TRAINED
 
 
 /obj/machinery/computer/atmos_alert/atom_init()
@@ -37,6 +39,8 @@
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = return_text()
 
 	var/datum/browser/popup = new(user, "computer")

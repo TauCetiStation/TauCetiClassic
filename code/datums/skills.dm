@@ -129,7 +129,7 @@ medical, chemistry, research)
 	surgery = SKILL_SURGERY_AMATEUR
 
 /datum/skills/roboticist
-	research = SKILL_RESEARCH_PROFESSIONAL
+	research = SKILL_RESEARCH_EXPERT
 	surgery = SKILL_SURGERY_TRAINED
 	medical = SKILL_MEDICAL_PRACTICED
 	construction = SKILL_CONSTRUCTION_TRAINED

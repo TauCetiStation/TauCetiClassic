@@ -13,8 +13,12 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	required_skill = SKILL_POLICE
+	required_skill_proficiency = SKILL_POLICE_PRO
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"

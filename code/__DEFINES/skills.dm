@@ -38,7 +38,7 @@
 
 
 // engineer skill
-#define SKILL_ENGINEER "engineering"
+#define SKILL_ENGINEERING "engineering"
 #define SKILL_ENGINEERING_DEFAULT 0  
 #define SKILL_ENGINEERING_NOVICE 1	//  hacking
 #define SKILL_ENGINEERING_TRAINED 2 //   techincal assistant, atmospheric technician
