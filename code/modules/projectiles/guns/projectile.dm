@@ -120,3 +120,43 @@
 	if (magazine)
 		boolets += magazine.ammo_count()
 	return boolets
+
+/obj/item/weapon/gun/projectile/MouseDrop_T(atom/dropping, mob/living/user)
+	if(istype(dropping, /obj/item/ammo_box/magazine/))
+		tactical_reload(dropping, user)
+	return ..()
+
+/obj/item/weapon/gun/projectile/proc/tactical_reload(obj/item/ammo_box/magazine/new_magazine, mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return
+	if(src != user.r_hand && src != user.l_hand)
+		to_chat(user, "<span class='warning'>[src] must be in your hand to do that.</span>")
+		return
+	//no tactical reload for the untrained.
+	if(!user.mind.getSkillRating("firearms"))
+		to_chat(user, "<span class='warning'>You don't know how to do tactical reloads.</span>")
+		return
+	if ((istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2) && mag_type != null)))
+		to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
+		var/tac_reload_time = max(0.5 SECONDS, 1.5 SECONDS - user.mind.getSkillRating("firearms") * 5)
+		if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
+			return
+		var/old_magazine = magazine
+		if(magazine)
+			playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
+			magazine.loc = get_turf(src.loc)
+			magazine.update_icon()
+			user.drop_from_inventory(new_magazine, src)
+			magazine = new_magazine
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+			user.put_in_hands(old_magazine)
+			chamber_round()
+		else
+			user.drop_from_inventory(new_magazine, src)
+			magazine = new_magazine
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+			chamber_round()
+		update_icon()
+		
+
