@@ -55,9 +55,10 @@
 /obj/structure/spawner/proc/Death()
 	qdel(My_area)
 	for(var/L in loot_ore)
-		var/R = rand(0,35)
-		for(var/I in R)
-			new I(get_turf(src))
+		if(!istype(L, /obj/item/weapon/ore))
+			var/R = rand(0,35)
+			for(var/I =1, I<= R, I++)
+				new L(get_turf(src))
 
 /obj/structure/spawner_area
 	freeze_movement = TRUE
