@@ -152,8 +152,9 @@
 				return TRUE
 
 			S.begin_step(user, M, target_zone, tool)		//...start on it
+			var/step_duration = max(0.5 SECONDS, rand(S.min_duration, S.max_duration) - 0.5 SECONDS * user.mind.getSkillRating(SKILL_SURGERY))
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
