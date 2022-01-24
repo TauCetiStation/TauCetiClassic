@@ -9,6 +9,8 @@
 	var/pause = 0
 
 	var/obj/item/weapon/virusdish/dish = null
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_TRAINED
 
 /obj/machinery/disease2/diseaseanalyser/attackby(obj/O, mob/user)
 	if(!istype(O,/obj/item/weapon/virusdish))
@@ -17,7 +19,8 @@
 	if(dish)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-
+	if(!handle_fumbling(user))
+		return
 	dish = O
 	user.drop_from_inventory(O, src)
 
