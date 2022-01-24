@@ -79,8 +79,6 @@
 		qdel(src)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	tgui_interact(user)
 
 /obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
@@ -417,6 +415,11 @@
 	. = ..()
 	if(!.)
 		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
+
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -616,8 +619,7 @@
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle[i]"), "bottle[i].png")
 			updateUsrDialog()
-	if(!handle_fumbling(user))
-		return
+
 	var/dat = ""
 	if(beaker)
 		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
@@ -811,6 +813,10 @@
 	if(!beaker)
 		return FALSE
 
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
+
 	if (href_list["create_vaccine"])
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -899,8 +905,6 @@
 
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -1078,6 +1082,8 @@
 
 
 	var/list/holdingitems = list()
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
@@ -1150,8 +1156,6 @@
 	var/dat = ""
 
 	if(!inuse)
-		if(!handle_fumbling(user))
-			return
 		for (var/obj/item/O in holdingitems)
 			processing_chamber += "\A [O.name]<BR>"
 
@@ -1195,7 +1199,9 @@
 	. = ..()
 	if(!.)
 		return
-
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	switch(href_list["action"])
 		if ("grind")
 			grind()

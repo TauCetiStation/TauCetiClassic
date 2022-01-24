@@ -14,6 +14,8 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()
@@ -276,6 +278,10 @@
 	. = ..()
 	if(!. || usr == occupant || panel_open)
 		return FALSE // don't update UIs attached to this object
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 
 	if(href_list["switchOn"])
 		if(!state_open)

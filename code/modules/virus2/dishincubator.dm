@@ -59,8 +59,6 @@
 		return ..()
 
 /obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!handle_fumbling(user))
-		return
 	var/data[0]
 	data["chemicals_inserted"] = !!beaker
 	data["dish_inserted"] = !!dish
@@ -141,6 +139,9 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
+	if(!handle_fumbling(user))
+		return
+	
 	if (href_list["close"])
 		user.unset_machine(src)
 		ui.close()

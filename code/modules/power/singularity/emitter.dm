@@ -176,7 +176,7 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	var/skill_bonus =   get_skill_bonus(user)
+	var/skill_bonus = get_skill_bonus(user)
 	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")

@@ -15,8 +15,6 @@
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	var/dat = ""
-	if(!handle_fumbling(user))
-		return
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in mecha_tracking_list)
@@ -40,6 +38,10 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)

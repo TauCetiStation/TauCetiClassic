@@ -107,8 +107,6 @@
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
 
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/data
 	if(!recharge_port)
 		data += "<div class='Section'>No recharging port detected.</div><BR>"
@@ -134,6 +132,9 @@
 /obj/machinery/computer/mech_bay_power_console/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 	if(href_list["reconnect"])
 		reconnect()

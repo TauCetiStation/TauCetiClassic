@@ -39,8 +39,6 @@
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat = return_text()
 
 	var/datum/browser/popup = new(user, "computer")
@@ -95,6 +93,10 @@
 /obj/machinery/computer/atmos_alert/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(href_list["priority_clear"])

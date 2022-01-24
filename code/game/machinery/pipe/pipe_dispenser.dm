@@ -12,8 +12,6 @@
 	required_skill_proficiency = SKILL_ATMOS_PRO
 
 /obj/machinery/pipedispenser/ui_interact(user)
-	if(!handle_fumbling(user))
-		return
 	var/dat = {"
 		<b>Regular pipes:</b><BR>
 		<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
@@ -86,6 +84,10 @@
 	if(unwrenched)
 		usr << browse(null, "window=pipedispenser")
 		return FALSE
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 
 	if(href_list["make"])
 		if(!wait)
@@ -197,6 +199,10 @@ Nah
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(href_list["dmake"])

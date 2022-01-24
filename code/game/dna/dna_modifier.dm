@@ -277,10 +277,14 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
+			if(!handle_fumbling(user))
+				return
 			user.drop_from_inventory(I, src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
@@ -334,7 +338,6 @@
 	if(connected && connected.is_operational())
 		if(user == connected.occupant)
 			return
-
 		// this is the data which will be sent to the ui
 		var/data[0]
 		data["selectedMenuKey"] = selected_menu_key
@@ -429,6 +432,11 @@
 	. = ..()
 	if(!.)
 		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
+
 	if(!src || !connected)
 		return FALSE // don't update uis
 	else if(irradiating) // Make sure that it isn't already irradiating someone...

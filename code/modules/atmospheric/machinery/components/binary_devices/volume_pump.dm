@@ -6,6 +6,7 @@
 	desc = "A pump. Has double the power rating of the standard gas pump."
 
 	power_rating = 15000 // 15000 W ~ 20 HP
+	required_skill_proficiency = SKILL_ATMOS_PRO
 
 /obj/machinery/atmospherics/components/binary/high_power/atmos_init()
 	..()

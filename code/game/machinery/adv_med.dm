@@ -53,6 +53,8 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
+	if(!handle_fumbling(user))
+		return
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)

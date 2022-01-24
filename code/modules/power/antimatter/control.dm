@@ -27,6 +27,8 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 
 /obj/machinery/power/am_control_unit/atom_init()
@@ -294,6 +296,10 @@
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(href_list["togglestatus"])

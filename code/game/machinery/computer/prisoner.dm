@@ -17,8 +17,6 @@
 	required_skill_proficiency = SKILL_POLICE_PRO
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
@@ -65,6 +63,9 @@
 /obj/machinery/computer/prisoner/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(href_list["inject1"])

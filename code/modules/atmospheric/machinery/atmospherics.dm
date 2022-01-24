@@ -35,6 +35,8 @@ Pipelines + Other Objects -> Pipe network
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/atmos_initalized = FALSE
+	required_skill = SKILL_ATMOS
+	required_skill_proficiency = SKILL_ATMOS_TRAINED
 
 /obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
@@ -166,13 +168,16 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
+			if(!handle_fumbling())
+				return
+			var/skill_bonus = get_skill_bonus(user)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, 20, volume = 50))
+			if (W.use_tool(src, user, 20 *skill_bonus, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

@@ -29,8 +29,6 @@
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
-	if(!handle_fumbling(user))
-		return
 
 	var/dat
 	if (src.temp)
@@ -101,6 +99,10 @@
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if (href_list["eject"])

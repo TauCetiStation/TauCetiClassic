@@ -125,7 +125,6 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	if(stat & (BROKEN|NOPOWER))
 		return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 
@@ -178,6 +177,10 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/Topic(href, href_list)
 	if(!..())
 		return FALSE
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 
 	if(href_list["power"])
 		set_power_use(!use_power)

@@ -199,6 +199,9 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	state_open = 1
 	density = FALSE
 	dropContents()
@@ -545,14 +548,19 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
-/obj/machinery/proc/handle_fumbling(mob/user)
+/obj/machinery/proc/handle_fumbling(mob/user, visual = TRUE)
 	if (!required_skill || !required_skill_proficiency) return TRUE
 	if(!issilicon(user) && !isobserver(user) && user.mind.getSkillRating(required_skill) < required_skill_proficiency)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
-		"<span class='notice'>You fumble around figuring out how to use [src].</span>")
+		if(visual)
+			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
+			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 		var/fumbling_time = fumbling_time_multiplier * (required_skill_proficiency - user.mind.getSkillRating(required_skill))
-		if(!do_after(user, fumbling_time, TRUE, src))
-			return FALSE
+		if (visual)
+			if(!do_after(user, fumbling_time, TRUE, src))
+				return FALSE
+		else
+			if(!do_after(user, fumbling_time, TRUE))
+				return FALSE
 	return TRUE
 /obj/machinery/proc/get_skill_bonus(mob/user)
 	var/skill = user.mind.getSkillRating(required_skill)

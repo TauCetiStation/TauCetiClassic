@@ -21,8 +21,7 @@
 		overridden = TRUE
 	else if(!emagged)
 		overridden = FALSE
-	if(!handle_fumbling(user))
-		return
+
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 
 	if(current)
@@ -147,7 +146,9 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 	. = ..()
 	if(!.)
 		return
-
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	if(href_list["reset"])
 		current = null
 	if(href_list["alarm"])

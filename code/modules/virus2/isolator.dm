@@ -50,8 +50,6 @@
 	attack_hand(user)
 
 /obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!handle_fumbling(user))
-		return
 	var/data[0]
 	data["syringe_inserted"] = !!sample
 	data["isolating"] = isolating
@@ -123,6 +121,8 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
+
+
 	if (href_list["close"])
 		user.unset_machine(src)
 		ui.close()
@@ -130,6 +130,9 @@
 
 	. = ..()
 	if(!.)
+		return
+
+	if(!handle_fumbling(user))
 		return
 
 	if (href_list[HOME])

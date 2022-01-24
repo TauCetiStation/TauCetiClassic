@@ -8,6 +8,7 @@
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 
+
 /obj/machinery/power/tesla_coil/atom_init()
 	. = ..()
 	component_parts = list()

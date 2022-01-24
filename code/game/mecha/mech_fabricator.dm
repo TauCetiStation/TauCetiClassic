@@ -306,8 +306,6 @@
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat
 	var/left_part
 	
@@ -368,6 +366,10 @@
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)

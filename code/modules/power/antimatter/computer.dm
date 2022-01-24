@@ -13,6 +13,8 @@
 	var/obj/machinery/power/am_engine/engine/connected_E = null
 	var/obj/machinery/power/am_engine/injector/connected_I = null
 	var/state = STATE_DEFAULT
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 /obj/machinery/computer/am_engine/atom_init()
 	..()
@@ -29,6 +31,10 @@
 /obj/machinery/computer/am_engine/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(!href_list["operation"])

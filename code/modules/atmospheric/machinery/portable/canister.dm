@@ -376,6 +376,9 @@ update_flag
 	. = ..()
 	if(. || issilicon(usr))
 		return
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	switch(action)
 		if("relabel")
 			if (can_label)

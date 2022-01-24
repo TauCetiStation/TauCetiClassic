@@ -87,8 +87,6 @@
 
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
-	if(!handle_fumbling(user))
-		return
 	var/dat = ""
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
@@ -206,6 +204,10 @@
 		return
 
 	if(loading)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if(href_list["task"])

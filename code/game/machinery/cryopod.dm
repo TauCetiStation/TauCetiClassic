@@ -19,14 +19,12 @@ var/global/list/frozen_items = list()
 	icon_state = "cellconsole"
 	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
 	var/mode = null
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_EXPERT
+
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
 	if(!SSticker)
 		return
-	if(!handle_fumbling(user))
-		return
+
 	var/dat
 
 	dat += "<div class='Section__title'>Cryogenic Oversight Control</div>"

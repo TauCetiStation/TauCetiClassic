@@ -36,8 +36,6 @@
 
 /obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
-	if(!handle_fumbling(user))
-		return
 	if (src.operating)
 		dat = {"
 			<TT>Building [src.being_built.name].<BR>
@@ -64,6 +62,10 @@
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if (href_list["make"])

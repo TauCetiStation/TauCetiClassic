@@ -45,8 +45,6 @@
 			user << browse(null, "window=powcomp")
 			return
 
-	if(!handle_fumbling(user))
-		return
 	var/t = "<TT>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
@@ -93,6 +91,10 @@
 /obj/machinery/computer/monitor/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
 		return
 
 	if( href_list["update"] )

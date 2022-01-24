@@ -213,6 +213,10 @@ Passive gate is similar to the regular pump except:
 	if(!..())
 		return FALSE
 
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
+
 	if(href_list["toggle_valve"])
 		unlocked = !unlocked
 

@@ -42,8 +42,6 @@
 	attack_hand(user)
 
 /obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!handle_fumbling(user))
-		return
 	var/data[0]
 	data["dish_inserted"] = !!dish
 	data["growth"] = 0
@@ -135,6 +133,9 @@
 
 	. = ..()
 	if(!.)
+		return
+
+	if(!handle_fumbling(user))
 		return
 
 	if (href_list["grab"])
