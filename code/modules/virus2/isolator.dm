@@ -14,6 +14,8 @@
 	var/datum/disease2/disease/virus2 = null
 	var/datum/data/record/entry = null
 	var/obj/item/weapon/reagent_containers/syringe/sample = null
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 /obj/machinery/disease2/isolator/update_icon()
 	if (stat & (BROKEN|NOPOWER))
@@ -36,7 +38,8 @@
 	if(sample)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-
+	if(!handle_fumbling(user))
+		return
 	sample = S
 	user.drop_from_inventory(S, src)
 
@@ -47,6 +50,8 @@
 	attack_hand(user)
 
 /obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+	if(!handle_fumbling(user))
+		return
 	var/data[0]
 	data["syringe_inserted"] = !!sample
 	data["isolating"] = isolating
@@ -164,6 +169,8 @@
 		return TRUE
 
 /obj/machinery/disease2/isolator/proc/print(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 
 	switch (state)

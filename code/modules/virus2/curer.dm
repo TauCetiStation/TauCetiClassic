@@ -9,6 +9,8 @@
 	var/virusing
 
 	var/obj/item/weapon/reagent_containers/container = null
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
@@ -21,6 +23,8 @@
 	if(istype(I, /obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
+			return
+		if(!handle_fumbling(user))
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
@@ -37,6 +41,8 @@
 	return ..()
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
+	if(!handle_fumbling(user))
+		return
 	var/dat
 	if(curing)
 		dat = "Antibody production in progress"

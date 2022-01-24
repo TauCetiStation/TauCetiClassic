@@ -8,11 +8,16 @@
 	item_state = "electronic"
 	flags = CONDUCT
 
+
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
 	if(!istype(M,/mob/living/carbon))
 		report("Scan aborted: Incompatible target.", user)
 		return
-
+	if(user.mind.getSkillRating("medical") < SKILL_MEDICAL_COMPETENT)
+		to_chat(user, "<span class='notice'>You start fumbling around with [src]...</span>")
+		var/fduration = max(SKILL_TASK_AVERAGE - (1 SECONDS * user.mind.getSkillRating("medical")), SKILL_TASK_TRIVIAL)
+		if(!do_after(user, fduration, target = usr))
+			return
 	var/mob/living/carbon/C = M
 	if (istype(C,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C

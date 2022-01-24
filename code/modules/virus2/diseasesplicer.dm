@@ -9,6 +9,8 @@
 	var/burning = 0
 	var/splicing = 0
 	var/scanning = 0
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_TRAINED
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(isscrewdriver(I))
@@ -19,13 +21,16 @@
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-
+		if(!handle_fumbling(user))
+			return
 		dish = I
 		c.drop_from_inventory(I, src)
 		updateUsrDialog()
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
+		if(!handle_fumbling(user))
+			return
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
@@ -37,6 +42,8 @@
 	attack_hand(user)
 
 /obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+	if(!handle_fumbling(user))
+		return
 	var/data[0]
 	data["dish_inserted"] = !!dish
 	data["growth"] = 0
