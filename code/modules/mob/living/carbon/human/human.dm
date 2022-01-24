@@ -1558,7 +1558,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.5, practiced 5, competent 3.5, expert and master 2
-		var/injection_time = max(2 SECONDS, 8 SECONDS - 1.5 SECONDS * user.mind.getSkillRating("medical"))
+		var/injection_time = max(2 SECONDS, 8 SECONDS - 1.5 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL))
 		if(!instant)
 			
 			if(hunt_injection_port) // takes additional time

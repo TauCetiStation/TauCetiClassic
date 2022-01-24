@@ -329,7 +329,7 @@
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
 
-	var/skill = user.mind.getSkillRating("medical")
+	var/skill = user.mind.getSkillRating(SKILL_MEDICAL)
 	if(skill < SKILL_MEDICAL_PRACTICED)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 		"<span class='notice'>You fumble around figuring out how to use [src]...</span>")

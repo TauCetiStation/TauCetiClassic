@@ -127,6 +127,7 @@ medical, chemistry, research)
 	chemistry =  SKILL_CHEMISTRY_PRACTICED
 	medical = SKILL_MEDICAL_NOVICE
 	surgery = SKILL_SURGERY_AMATEUR
+	civ_mech = SKILL_CIV_MECH_NOVICE
 
 /datum/skills/roboticist
 	research = SKILL_RESEARCH_EXPERT
@@ -152,6 +153,7 @@ medical, chemistry, research)
 	surgery = SKILL_SURGERY_AMATEUR
 	construction = SKILL_CONSTRUCTION_NOVICE
 	engineering =  SKILL_ENGINEERING_NOVICE
+	civ_mech = SKILL_CIV_MECH_NOVICE
 
 //medical
 /datum/skills/cmo
@@ -179,20 +181,25 @@ medical, chemistry, research)
 	medical = SKILL_MEDICAL_MASTER
 	surgery = SKILL_SURGERY_PROFESSIONAL
 	civ_mech = SKILL_CIV_MECH_TRAINED
+	chemistry = SKILL_CHEMISTRY_COMPETENT
 
 /datum/skills/paramedic
 	medical = SKILL_MEDICAL_EXPERT
 	surgery = SKILL_SURGERY_TRAINED
 	civ_mech = SKILL_CIV_MECH_PRO
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+
 /datum/skills/psychiatrist
 	medical = SKILL_MEDICAL_COMPETENT
 	chemistry = SKILL_CHEMISTRY_COMPETENT
 	surgery = SKILL_SURGERY_AMATEUR
+
 /datum/skills/geneticist
 	research = SKILL_RESEARCH_PROFESSIONAL
 	medical = SKILL_MEDICAL_COMPETENT
 	surgery = SKILL_SURGERY_AMATEUR
 	chemistry = SKILL_CHEMISTRY_PRACTICED
+	civ_mech = SKILL_CIV_MECH_NOVICE
 
 /datum/skills/intern
 	medical = SKILL_MEDICAL_COMPETENT

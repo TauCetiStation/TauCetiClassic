@@ -157,10 +157,10 @@
 	if (building_time)
 		if(usr.is_busy())
 			return
-		if(R.skill_req && usr.mind.getSkillRating("construction") < R.skill_req)
-			building_time += R.time * ( R.skill_req - usr.mind.getSkillRating("construction") ) * 0.5 // +50% time each skill point lacking.
-		if(R.skill_req && usr.mind.getSkillRating("construction") > R.skill_req)
-			building_time -= clamp(R.time * ( usr.mind.getSkillRating("construction") - R.skill_req ) * 0.40, 0 , 0.85 * building_time) // -40% time each extra skill point
+		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTION) < R.skill_req)
+			building_time += R.time * ( R.skill_req - usr.mind.getSkillRating(SKILL_CONSTRUCTUION) ) * 0.5 // +50% time each skill point lacking.
+		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTUION) > R.skill_req)
+			building_time -= clamp(R.time * ( usr.mind.getSkillRating(SKILL_CONSTRUCTUION) - R.skill_req ) * 0.40, 0 , 0.85 * building_time) // -40% time each extra skill point
 		if(building_time)
 			if(building_time > R.time)
 				to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [R.title].</span>")

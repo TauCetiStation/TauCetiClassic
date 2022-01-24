@@ -13,9 +13,9 @@
 	if(!istype(M,/mob/living/carbon))
 		report("Scan aborted: Incompatible target.", user)
 		return
-	if(user.mind.getSkillRating("medical") < SKILL_MEDICAL_COMPETENT)
+	if(user.mind.getSkillRating(SKILL_MEDICAL) < SKILL_MEDICAL_COMPETENT)
 		to_chat(user, "<span class='notice'>You start fumbling around with [src]...</span>")
-		var/fduration = max(SKILL_TASK_AVERAGE - (1 SECONDS * user.mind.getSkillRating("medical")), SKILL_TASK_TRIVIAL)
+		var/fduration = max(SKILL_TASK_AVERAGE - (1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL)), SKILL_TASK_TRIVIAL)
 		if(!do_after(user, fduration, target = usr))
 			return
 	var/mob/living/carbon/C = M

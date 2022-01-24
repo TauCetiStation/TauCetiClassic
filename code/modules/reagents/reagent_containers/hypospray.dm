@@ -28,10 +28,10 @@
 		return
 	if(!istype(M))
 		return
-	if(skill_req && user.mind.getSkillRating("medical") < skill_req)
+	if(skill_req && user.mind.getSkillRating(SKILL_MEDICAL) < skill_req)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use the [src].</span>",
 		"<span class='notice'>You fumble around figuring out how to use the [src].</span>")
-		if(!do_mob(user, M, SKILL_TASK_AVERAGE - 1 SECONDS * user.mind.getSkillRating("medical")))
+		if(!do_mob(user, M, SKILL_TASK_AVERAGE - 1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL)))
 			return
 	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
 		reagents.reaction(M, INGEST)

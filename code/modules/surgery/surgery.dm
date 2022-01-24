@@ -134,10 +134,10 @@
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
-	if(user.mind.getSkillRating("surgery") < SKILL_SURGERY_PROFESSIONAL)
+	if(user.mind.getSkillRating(SKILL_SURGERY) < SKILL_SURGERY_PROFESSIONAL)
 		if (user.is_busy()) return
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>", "<span class='notice'>You fumble around figuring out how to operate [M].</span>")
-		var/fumbling_time = max(0,SKILL_TASK_FORMIDABLE - ( 8 SECONDS * user.mind.getSkillRating("surgery") )) // 20 secs non-trained, 12 amateur, 4 trained, 0 prof
+		var/fumbling_time = max(0,SKILL_TASK_FORMIDABLE - ( 8 SECONDS * user.mind.getSkillRating(SKILL_SURGERY) )) // 20 secs non-trained, 12 amateur, 4 trained, 0 prof
 		
 		if (fumbling_time && !do_after(usr, fumbling_time, target = M))
 			return
