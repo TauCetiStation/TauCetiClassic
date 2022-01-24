@@ -159,24 +159,22 @@
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
-
-	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
-		set_EyesVision(transition_time = 0)
+	var/sight_modifier = null
+	if (sight_mode & BORGXRAY)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else if (sight_mode & BORGMESON)
-		set_EyesVision("meson")
+		sight_modifier = "meson"
 		sight |= SEE_TURFS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
-		set_EyesVision("nvg")
+		sight_modifier = "nvg"
 	else if (sight_mode & BORGTHERM)
-		set_EyesVision("thermal")
+		sight_modifier = "thermal"
 		sight |= SEE_MOBS
-	else
-		set_EyesVision()
-
+	sight_modifier = sight_mode & BORGIGNORESIGHT ? null : sight_modifier
+	set_EyesVision(sight_modifier)
 	return TRUE
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
@@ -186,42 +184,24 @@
 	regular_hud_updates()
 	update_sight()
 
-	if (src.healths)
-		if (src.stat != DEAD)
-			if(istype(src,/mob/living/silicon/robot/drone))
-				switch(health)
-					if(15 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(10 to 14)
-						src.healths.icon_state = "health1"
-					if(8 to 10)
-						src.healths.icon_state = "health2"
-					if(5 to 8)
-						src.healths.icon_state = "health3"
-					if(0 to 5)
-						src.healths.icon_state = "health4"
-					if(-15 to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
+	if (healths)
+		if (stat != DEAD)
+			if(health >= maxHealth)
+				healths.icon_state = "health0"
+			else if(health >= maxHealth * 0.75)
+				healths.icon_state = "health1"
+			else if(health >= maxHealth * 0.5)
+				healths.icon_state = "health2"
+			else if(health >= maxHealth * 0.25)
+				healths.icon_state = "health3"
+			else if(health >= 0)
+				healths.icon_state = "health4"
+			else if(health >= config.health_threshold_dead)
+				healths.icon_state = "health5"
 			else
-				switch(health)
-					if(200 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(150 to 200)
-						src.healths.icon_state = "health1"
-					if(100 to 150)
-						src.healths.icon_state = "health2"
-					if(50 to 100)
-						src.healths.icon_state = "health3"
-					if(0 to 50)
-						src.healths.icon_state = "health4"
-					if(config.health_threshold_dead to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
+				healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -253,7 +233,7 @@
 	if (src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
-			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
+			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || isMMI(I)))
 				src.client.screen += I
 	if(src.module_state_1)
 		src.module_state_1:screen_loc = ui_inv1

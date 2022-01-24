@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(quirks)
 	..()
 
 /datum/controller/subsystem/quirks/PostInitialize()
-	for(var/client/C as anything in clients)
+	for(var/client/C in clients)
 		C.prefs.UpdateAllowedQuirks()
 
 /datum/controller/subsystem/quirks/stat_entry()

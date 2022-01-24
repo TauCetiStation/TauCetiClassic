@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(nanoui)
 
 	priority      = SS_PRIORITY_NANOUI
 	wait          = SS_WAIT_NANOUI
-	display_order = SS_DISPLAY_NANOUI
 
 	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT

@@ -186,6 +186,11 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
+#ifdef REFERENCE_TRACKING
+/client/proc/find_refs,
+/client/proc/qdel_then_find_references,
+/client/proc/qdel_then_if_fail_find_references,
+#endif
 	)
 var/global/list/admin_verbs_possess = list(
 	/proc/possess,

@@ -140,8 +140,6 @@
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
-	return 0
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
@@ -151,7 +149,7 @@
 
 		if(L.ckey)
 			var/found = 0
-			for(var/client/C as anything in clients)
+			for(var/client/C in clients)
 				if(C.ckey == L.ckey)
 					found = 1
 					break

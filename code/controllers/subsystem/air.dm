@@ -15,10 +15,11 @@ SUBSYSTEM_DEF(air)
 	init_order    = SS_INIT_AIR
 	priority      = SS_PRIORITY_AIR
 	wait          = SS_WAIT_AIR
-	display_order = SS_DISPLAY_AIR
 
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+
+	msg_lobby = "Фильтруем кислород..."
 
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 
