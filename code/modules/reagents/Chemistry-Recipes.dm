@@ -1139,9 +1139,7 @@
 				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
 	var/list/fossels = list(/obj/item/weapon/fossil/bone, /obj/item/weapon/fossil/shell, /obj/item/weapon/fossil/skull, /obj/item/weapon/fossil/skull/horned)
 	var/chosen = pick(fossels)
-	var/obj/B = new chosen
-	if(B)
-		B.loc = get_turf(holder.my_atom)
+	new chosen (get_turf(holder.my_atom))
 
 //Silver
 /datum/chemical_reaction/slimebork
