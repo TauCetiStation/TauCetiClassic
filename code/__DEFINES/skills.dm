@@ -55,7 +55,7 @@
 
 
 //construction
-#define SKILL_CONSTRUCTUION "construction"
+#define SKILL_CONSTRUCTION "construction"
 #define SKILL_CONSTRUCTION_DEFAULT 0
 #define SKILL_CONSTRUCTION_NOVICE 1	// tables, glass, girder
 #define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)  

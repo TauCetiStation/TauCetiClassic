@@ -91,7 +91,7 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet-Glass"
-	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTUION)
+	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTION)
 	if(skill < required_skill) 
 		to_chat(user,"<span class='notice'>You fumble around figuring out how to use glass to make window.</span>")
 		var/fumbling_time = (required_skill - skill) * SKILL_TASK_AVERAGE
@@ -216,7 +216,7 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([get_amount()] sheet\s left)"
-	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTUION)
+	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTION)
 	if(skill < required_skill) 
 		to_chat(user,"<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>")
 		var/fumbling_time = (required_skill - skill) * SKILL_TASK_AVERAGE
