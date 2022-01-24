@@ -1137,12 +1137,11 @@
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
-	var/list/fossels = list(/obj/item/weapon/fossil/bone,/obj/item/weapon/fossil/shell,/obj/item/weapon/fossil/skull,/obj/item/weapon/fossil/skull/horned)
+	var/list/fossels = list(/obj/item/weapon/fossil/bone, /obj/item/weapon/fossil/shell, /obj/item/weapon/fossil/skull, /obj/item/weapon/fossil/skull/horned)
 	var/chosen = pick(fossels)
 	var/obj/B = new chosen
 	if(B)
 		B.loc = get_turf(holder.my_atom)
-	holder.my_atom.visible_message("<span class='warning'>The slime core fizzles disappointingly,</span>")
 
 //Silver
 /datum/chemical_reaction/slimebork
