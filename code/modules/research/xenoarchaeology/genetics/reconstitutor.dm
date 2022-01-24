@@ -119,7 +119,7 @@
 		dat += "<tr>"
 		var/num_correct = 0
 		for(var/curindex = 1, curindex <= 5, curindex++)
-			var/bgcolour = "#ffffff"//white ffffff, red ff0000
+			var/bgcolour = "#ff0000"//white ffffff, red ff0000
 
 			//background colour hints at correct positioning
 			if(manually_placed_genomes[sequence_num][curindex])
