@@ -47,6 +47,7 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
 	skills_type = /datum/skills/scientist
+	alt_skills_types = list("Phoron Researcher" = /datum/skills/scientist/phoron)
 
 
 /datum/job/xenoarchaeologist
@@ -107,6 +108,10 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
 	skills_type = /datum/skills/roboticist
+	alt_skills_types = list(
+		"Biomechanical Engineer" = /datum/skills/roboticist/bio,
+		"Mechatronic Engineer" = /datum/skills/roboticist/mecha
+	)
 
 
 /datum/job/research_assistant

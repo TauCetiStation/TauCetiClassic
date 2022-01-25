@@ -98,6 +98,14 @@
 #define SKILL_SURGERY_EXPERT 4 //CMO surgeon
 //higher levels means faster surgery.
 
+//usage of auth devices, access modification, quest passes, easier paperwork
+#define SKILL_COMMAND "command"
+#define SKILL_COMMAND_DEFAULT 0 //Anyone
+#define SKILL_COMMAND_BEGINNER 1 // officers, psychatrist, lawyer - easier paperwork, quest passes
+#define SKILL_COMMAND_TRAINED 2 // internal affair, QM -   auth devices, access modification
+#define SKILL_COMMAND_EXPERT 3 // heads, cult leaders,  gang leaders, ERT  - buffs for allies
+#define SKILL_COMMAND_MASTER 4 // captain, nuclear and strike team leaders, ERT leader
+
 
 #define SKILL_TASK_TRIVIAL 10
 #define SKILL_TASK_VERY_EASY 20

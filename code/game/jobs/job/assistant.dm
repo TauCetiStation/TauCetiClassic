@@ -20,6 +20,15 @@
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
 	skills_type = /datum/skills/test_subject
+	alt_skills_types = list(
+		"Lawyer"         = /datum/skills/test_subject/lawyer,
+		"Mecha Operator" = /datum/skills/test_subject/mecha,
+		"Private Eye"    = /datum/skills/test_subject/detective,
+		"Reporter"       = /datum/skills/test_subject/reporter,
+		"Waiter"         = /datum/skills/test_subject/waiter,
+		"Vice Officer"   = /datum/skills/test_subject/vice_officer,
+		"Paranormal Investigator" = /datum/skills/test_subject/paranormal
+		)
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)

@@ -146,6 +146,7 @@
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet
+	skills_type = /datum/skills/cadet
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

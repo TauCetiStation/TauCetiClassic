@@ -40,6 +40,7 @@
 
 	var/outfit = null
 	var/skills_type = /datum/skills
+	var/list/alt_skills_types
 
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_ingame_minutes ingame minutes old. (meaning they must play a game.)
 	var/minimal_player_ingame_minutes = 0
@@ -81,7 +82,7 @@
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	if (H.mind)
-		H.mind.skills = getSkillsType(return_skills_type())
+		H.mind.skills = getSkillsType(return_skills_type(alt_title))
 	post_equip(H, visualsOnly)
 	return TRUE
 
@@ -179,4 +180,6 @@
 	return TRUE
 
 /datum/job/proc/return_skills_type(mob/living/carbon/human/H, alt_title)
+	if(alt_title && alt_titles && alt_skills_types)
+		return alt_skills_types[alt_title] || skills_type
 	return skills_type

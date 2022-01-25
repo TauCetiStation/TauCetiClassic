@@ -49,6 +49,10 @@
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/doctor
 	skills_type = /datum/skills/doctor
+	alt_skills_types = list(
+		"Surgeon" = /datum/skills/doctor/surgeon,
+		"Nurse" = /datum/skills/doctor/nurse
+	)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
