@@ -49,8 +49,9 @@
 
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
-		var/ingestion_time = max(1 SECONDS, 3 SECONDS - 1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL))
-		if(!do_mob(user, M, ingestion_time)) return
+		var/ingestion_time = max(2 SECONDS, 6 SECONDS - 1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL))
+		if(!do_mob(user, M, ingestion_time)) 
+			return
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
