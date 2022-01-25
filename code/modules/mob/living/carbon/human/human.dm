@@ -1504,6 +1504,152 @@
 	var/datum/browser/popup = new(src, "skills", "<div align='center'>Skills</div>", 300, 600)
 	popup.set_content(dat.Join("<br>"))
 	popup.open(FALSE)
+/mob/living/carbon/human/verb/skills_menu()
+	set category = "IC"
+	set name = "Skills Menu"
+	var/list/tables_data = list(
+		"Engineering related skills" = list(
+			"Engineering" = "[SKILL_ENGINEERING]",
+			"Construction" = "[SKILL_CONSTRUCTION]",
+			"Atmospherics" ="[SKILL_ATMOS]",
+			),
+		"Medical skills" = list(
+			"Medical" = "[SKILL_MEDICAL]",
+			"Surgery" = "[SKILL_SURGERY]",
+			"Chemistry" = "[SKILL_CHEMISTRY]",
+			),
+		"Combat skills" = list(
+			"Melee" = "[SKILL_MELEE]",
+			"Firearms" = "[SKILL_FIREARMS]",
+			"Police" = "[SKILL_POLICE]",
+			"Combat exosuits" = "[SKILL_COMBAT_MECH]",
+			),
+		"Civilian skills" = list(
+			"Command" = "[SKILL_COMMAND]",
+			"Research" = "[SKILL_RESEARCH]",
+			"Civilian exosuits" = "[SKILL_CIV_MECH]"
+			)
+	)
+	
+	var/list/sliders_hint = list(
+		"[SKILL_ENGINEERING]" = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications. ",
+		"[SKILL_CONSTRUCTION]" = "Construction of tables, walls, windows and crafting.",
+		"[SKILL_ATMOS]" = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers.",
+		"[SKILL_MEDICAL]" = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery.",
+		"[SKILL_SURGERY]" = "Higher level means faster surgical operations.",
+		"[SKILL_CHEMISTRY]" = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles.",
+		"[SKILL_MELEE]" = "Higher levels means more damage with melee weapons.",
+		"[SKILL_FIREARMS]" = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives.",
+		"[SKILL_POLICE]" = "Usage of tasers and flashers. Higher levels allows for faster handcuffing.",
+		"[SKILL_COMBAT_MECH]" = "Faster moving speed of piloted combat exosuits.",
+		"[SKILL_CIV_MECH]" = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus.",
+		"[SKILL_COMMAND]" = "Low level means basic knowledge of paperwork, usage of identification computers. Higher level means you can yell at people to boost their productivity.",
+		"[SKILL_RESEARCH]" = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators.",
+		)
+	var/dat = {"
+		<style>
+			.volume_slider {
+				width: 100%;
+				position: relative;
+				padding: 0;
+			}
+			table {
+				line-height: 5px;
+				width: 100%;
+				border-collapse: collapse;
+				border: 1px solid;
+				padding: 0;
+			}
+			td {
+				width: 25%;
+			}
+			td:nth-child(2n+0) {
+				width: 65%;
+			}
+			td:nth-child(3n+0) {
+				width: 10%;
+			}
+			caption {
+				line-height: normal;
+				color: white;
+				background-color: #444;
+				font-weight: bold;
+			}
+		</style>
+		"}
+	for(var/category in tables_data)
+		dat += {"
+			<table>
+				<caption>[category]</caption>
+		"}
+
+		var/list/sliders_data = tables_data[category]
+
+		for(var/slider_name in sliders_data)
+			var/slider_id = sliders_data[slider_name]
+			var/slider_value = mind.getSkillRating(slider_id)
+			var/slider_min_value = 0
+			var/slider_max_value = 6
+			var/slider_hint = sliders_hint[slider_id]
+			dat += {"
+				<tr>
+					<td>
+						[slider_name] <span title="[slider_hint]">(?)</span>:
+					</td>
+					<td>
+						<input type="range" class="volume_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
+					</td>
+					<td>
+						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+					</td>
+				</tr>
+			"}
+
+		dat += {"
+			</table>
+		"}
+
+	dat +={"
+		<p><span id="notice">&nbsp;</span></p>
+		<input type="button" min="0" max="100" value="Save" id="myRange" onclick="saveVolume()">
+
+		<script>
+			var volumeUpdating = false
+
+			function saveVolume() {
+				window.location = 'byond://?_src_=updateVolume&proc=save';
+				showHint('check \"Preferences Saved\" message in chat, if nothing push \"Save\" again.')
+			}
+
+			function updateVolume(slider_id) {
+				if (!volumeUpdating) {
+					volumeUpdating = true;
+					setTimeout(function() {
+						setVolume(slider_id);
+					}, 300);
+				}
+
+			}
+
+			function setVolume(slider_id) {
+				var vol = document.getElementById(slider_id).value;
+				window.location = 'byond://?_src_=updateVolume&proc=sliderMoved&slider=' + slider_id + '&volume=' + vol;
+				volumeUpdating = false;
+
+				document.getElementById(slider_id + "_value").innerHTML = vol;
+			}
+
+			function showHint(text) {
+				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
+			}
+
+		</script>
+		"}
+	var/datum/browser/popup = new(usr, "volcontrols", "Skills menu", 620, 500, null, CSS_THEME_DARK)
+	popup.set_content(dat)
+	popup.open()
+
+
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
