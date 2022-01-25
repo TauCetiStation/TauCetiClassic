@@ -10,6 +10,8 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_NOVICE
 
 /obj/machinery/bodyscanner/power_change()
 	..()
