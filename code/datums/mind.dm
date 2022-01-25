@@ -111,13 +111,13 @@
 	if(skills)
 		return skills.getRating(skill)
 	else
-		skills = new /datum/skills
+		skills = new /datum/skills()
 		return  skills.getRating(skill)
 /datum/mind/proc/getSkillsList()
 	if(skills)
 		return skills.getList()
 	else
-		skills = new /datum/skills
+		skills = new /datum/skills()
 		return  skills.getList()
 
 
@@ -646,6 +646,7 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
+		mind.skills = new /datum/skills()
 		if(SSticker)
 			SSticker.minds += mind
 		else

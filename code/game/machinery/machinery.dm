@@ -549,19 +549,16 @@ Class Procs:
 	else
 		ex_act(1)
 /obj/machinery/proc/handle_fumbling(mob/user, visual = TRUE)
-	if (!required_skill || !required_skill_proficiency) return TRUE
+	if (!required_skill || !required_skill_proficiency || !user) return TRUE
 	if(!issilicon(user) && !isobserver(user) && user.mind.getSkillRating(required_skill) < required_skill_proficiency)
 		if(visual)
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 		var/fumbling_time = fumbling_time_multiplier * (required_skill_proficiency - user.mind.getSkillRating(required_skill))
-		if (visual)
-			if(!do_after(user, fumbling_time, TRUE, src))
-				return FALSE
-		else
-			if(!do_after(user, fumbling_time, TRUE))
-				return FALSE
+		if(!do_after(user, fumbling_time, TRUE))
+			return FALSE
 	return TRUE
+
 /obj/machinery/proc/get_skill_bonus(mob/user)
 	var/skill = user.mind.getSkillRating(required_skill)
 	if (skill < required_skill_proficiency)

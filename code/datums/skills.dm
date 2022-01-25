@@ -90,7 +90,7 @@ medical, chemistry, research, command)
 #undef SKILLSID
 
 
-/datum/skills/proc/getRating(rating)
+/datum/skills/proc/getRating(skill)
 	return vars[rating]
 
 /datum/skills/proc/getList()
