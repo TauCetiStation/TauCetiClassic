@@ -173,7 +173,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
-			to_chat(C, "<span class='ooc'><font color='#6699CC'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></font></span>")
+			to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
@@ -183,7 +183,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C, "[track]<span class='ooc'><font color='#6699CC'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></font></span>")
+			to_chat(C, "[track]<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 /client/verb/fix_ui()
 	set name = "Fix UI"
