@@ -143,9 +143,9 @@
 			if(!recipient.current_ticket)
 				new /datum/admin_help(msg, recipient, TRUE)
 
-			var/recipmsg = "<span class='warning' size='4'><b>-- Administrator private message --</b></span><br>"
-			recipmsg += "<span class='warning'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></span><br>"
-			recipmsg += "<span class='warning'><i>Нажмите на имя администратора для ответа.</i></span>"
+			var/recipmsg = "<span class='warning' size='4'><b>-- Administrator private message --</b></span><br>" + \
+				"<span class='warning'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></span><br>" + \
+				"<span class='warning'><i>Нажмите на имя администратора для ответа.</i></span>"
 			to_chat_admin_pm(recipient, recipmsg)
 			to_chat_admin_pm(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
 

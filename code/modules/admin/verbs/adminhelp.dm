@@ -382,9 +382,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
-		var/msg =  "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font><br>"
-		msg += "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font><br>"
-		msg += "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
+		var/msg = "<span class='warning' size='4'><b>- AdminHelp Rejected! -</b></span><br>" + \
+			"<span class='warning'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</span><br>" + \
+			"Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
 	
 		to_chat_admin_pm(initiator, msg)
 
@@ -404,9 +404,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-	msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+	var/msg = "<span class='warning' size='4'><b>- AdminHelp marked as IC issue! -</b></span><br>" + \
+		"<span class='warning'><b>Losing is part of the game!</b></span><br>" + \
+		"<span class='warning'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</span>"
 
 	if(initiator)
 		to_chat_admin_pm(initiator, msg)
