@@ -1,8 +1,7 @@
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Collapsible, Dropdown, Flex, Input, Table, Section } from '../components';
+import { Box, Button, Collapsible, Dropdown, Flex, Input, Table } from '../components';
 import { Window } from "../layouts";
-import { refocusLayout } from '../layouts';
 import { MiningUser } from './common/Mining';
 import { classes } from 'common/react';
 
@@ -76,15 +75,13 @@ const MiningVendorItems = (props, context) => {
     );
   });
   return (
-    <Flex.Item grow="1" overflow="auto">
-      <Section onClick={e => refocusLayout()}>
-        {has_contents
-          ? contents : (
-            <Box color="label">
-              No items matching your criteria was found!
-            </Box>
-          )}
-      </Section>
+    <Flex.Item grow="1">
+      {has_contents
+        ? contents : (
+          <Box color="label">
+            No items matching your criteria was found!
+          </Box>
+        )}
     </Flex.Item>
   );
 };
