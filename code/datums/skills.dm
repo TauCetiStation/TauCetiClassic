@@ -91,7 +91,7 @@ medical, chemistry, research, command)
 
 
 /datum/skills/proc/getRating(skill)
-	return vars[rating]
+	return vars[skill]
 
 /datum/skills/proc/getList()
 	return list("Command" = command,\
