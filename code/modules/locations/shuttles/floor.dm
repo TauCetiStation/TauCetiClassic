@@ -65,6 +65,11 @@
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
 	icon_state = "floor"
 
+/turf/simulated/shuttle/floor/vox
+	name = "floor"
+	icon = 'icons/locations/shuttles/vox_shuttle.dmi'
+	icon_state = "floor"
+
 //Временный и очень грубый костыль для космоса, в шаттлконтроллере он не заменяется на движущийся.
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
 //======
