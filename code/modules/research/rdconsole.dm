@@ -51,7 +51,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/selected_imprinter_category
 	var/search_text
 
-	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
+	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	required_skill = SKILL_RESEARCH
