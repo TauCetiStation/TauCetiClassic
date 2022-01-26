@@ -28,8 +28,11 @@
 
 	if(src.stat)
 		return FALSE
-
 	message = sanitize(message)	//made consistent with say
+
+	if(!message)
+		return FALSE
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
@@ -50,7 +53,7 @@
 // Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
-	if(speaking && (speaking.flags & SIGNLANG))
+	if(speaking && (speaking.flags & SIGNLANG) || !message)
 		return FALSE
 
 	var/message_range = 1
