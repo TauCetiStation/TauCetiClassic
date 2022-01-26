@@ -23,6 +23,9 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(!message)
+		return
+
 	message = sanitize(message)
 	message = uncapitalize(message)
 	message = add_period(message)
