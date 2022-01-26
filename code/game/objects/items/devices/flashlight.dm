@@ -180,13 +180,21 @@
 
 
 /obj/item/device/flashlight/flare/atom_init()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = rand(980, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	. = ..()
+
+/obj/item/device/flashlight/flare/use(used = 1, mob/M = null)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		return 0
+	if(!fuel || !on)
+		return 0
 
 /obj/item/device/flashlight/flare/proc/adjust_fuel(value)
 	fuel = max(fuel - value, 0)
+
+/obj/item/device/flashlight/flare/proc/check_fuel()
 	if(fuel <= 0)
-		visible_message("<span class='danger'>Flare started flickering with a hissing sound and stopped burning.</span>")
 		turn_off()
 
 /obj/item/device/flashlight/flare/process()

@@ -51,7 +51,8 @@
 					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				if(istype(F, /obj/item/device/flashlight/flare))
 					var/obj/item/device/flashlight/flare/P = F
-					P.adjust_fuel(950)
+					P.adjust_fuel(1000)
+					P.check_fuel()
 				continue
 			F.set_light(0)
 
@@ -67,7 +68,8 @@
 						F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 					if(istype(F, /obj/item/device/flashlight/flare))
 						var/obj/item/device/flashlight/flare/P = F
-						P.adjust_fuel(875)
+						P.adjust_fuel(975)
+						P.check_fuel()
 					continue
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
