@@ -11,6 +11,7 @@
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
 	var/telecrystals = 20
+	skills_type =  new /datum/skills/traitor()
 
 /datum/role/traitor/New()
 	..()

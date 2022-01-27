@@ -3,7 +3,6 @@
 		mind = new /datum/mind(key)
 		mind.active = TRUE
 		mind.current = src
-		mind.skills = new /datum/skills()
 
 	my_client = client
 	..()

@@ -638,7 +638,8 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-
+	if (href_list["skill"])
+		update_skils(href_list)
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1500,43 +1501,30 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/verb/show_skills()
-	set category = "IC"
-	set name = "Show Skills"
-
-	var/list/dat = list()
-	if (mind)
-		var/list/skill_list = mind.getSkillsList()
-		for(var/i in skill_list)
-			dat += "[i]: [skill_list[i]]"
-
-	var/datum/browser/popup = new(src, "skills", "<div align='center'>Skills</div>", 300, 600)
-	popup.set_content(dat.Join("<br>"))
-	popup.open(FALSE)
 /mob/living/carbon/human/verb/skills_menu()
 	set category = "IC"
 	set name = "Skills Menu"
 	var/list/tables_data = list(
 		"Engineering related skills" = list(
-			"Engineering" = "[SKILL_ENGINEERING]",
-			"Construction" = "[SKILL_CONSTRUCTION]",
-			"Atmospherics" ="[SKILL_ATMOS]",
+			"Engineering" = SKILL_ENGINEERING,
+			"Construction" = SKILL_CONSTRUCTION,
+			"Atmospherics" =SKILL_ATMOS,
 			),
 		"Medical skills" = list(
-			"Medical" = "[SKILL_MEDICAL]",
-			"Surgery" = "[SKILL_SURGERY]",
-			"Chemistry" = "[SKILL_CHEMISTRY]",
+			"Medical" = SKILL_MEDICAL,
+			"Surgery" = SKILL_SURGERY,
+			"Chemistry" = SKILL_CHEMISTRY,
 			),
 		"Combat skills" = list(
-			"Melee" = "[SKILL_MELEE]",
-			"Firearms" = "[SKILL_FIREARMS]",
-			"Police" = "[SKILL_POLICE]",
-			"Combat exosuits" = "[SKILL_COMBAT_MECH]",
+			"Melee" = SKILL_MELEE,
+			"Firearms" = SKILL_FIREARMS,
+			"Police" = SKILL_POLICE,
+			"Combat exosuits" = SKILL_COMBAT_MECH,
 			),
 		"Civilian skills" = list(
-			"Command" = "[SKILL_COMMAND]",
-			"Research" = "[SKILL_RESEARCH]",
-			"Civilian exosuits" = "[SKILL_CIV_MECH]"
+			"Command" = SKILL_COMMAND,
+			"Research" = SKILL_RESEARCH,
+			"Civilian exosuits" = SKILL_CIV_MECH
 			)
 	)
 	
@@ -1557,7 +1545,7 @@
 		)
 	var/dat = {"
 		<style>
-			.volume_slider {
+			.skill_slider {
 				width: 100%;
 				position: relative;
 				padding: 0;
@@ -1597,8 +1585,9 @@
 		for(var/slider_name in sliders_data)
 			var/slider_id = sliders_data[slider_name]
 			var/slider_value = mind.getSkillRating(slider_id)
-			var/slider_min_value = 0
-			var/slider_max_value = 6
+			var/slider_min_value = getSkillMinimum(slider_id)
+			var/datum/skills/available_skills = mind.getAvailableSkills()
+			var/slider_max_value = available_skills.getRating(slider_id)
 			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>
@@ -1606,10 +1595,10 @@
 						[slider_name] <span title="[slider_hint]">(?)</span>:
 					</td>
 					<td>
-						<input type="range" class="volume_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
+						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
 					</td>
 					<td>
-						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+						<p><b><center><a href='?src=\ref[src];skill=[slider_id]&value=[slider_value]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
 					</td>
 				</tr>
 			"}
@@ -1620,32 +1609,24 @@
 
 	dat +={"
 		<p><span id="notice">&nbsp;</span></p>
-		<input type="button" min="0" max="100" value="Save" id="myRange" onclick="saveVolume()">
-
 		<script>
-			var volumeUpdating = false
-
-			function saveVolume() {
-				window.location = 'byond://?_src_=updateVolume&proc=save';
-				showHint('check \"Preferences Saved\" message in chat, if nothing push \"Save\" again.')
-			}
-
-			function updateVolume(slider_id) {
-				if (!volumeUpdating) {
-					volumeUpdating = true;
+			var skillUpdating = false;
+			function updateSkill(slider_id) {
+				if (!skillUpdating) {
+					skillUpdating = true;
 					setTimeout(function() {
-						setVolume(slider_id);
+						setSkill(slider_id);
 					}, 300);
 				}
 
 			}
+			function setSkill(slider_id) {
+				var element =  document.getElementById(slider_id);
+				var value = element.value;
+				window.location = 'byond://?src=\ref[src];skill=' + slider_id + '&value=' + value;
+				skillUpdating = false;
 
-			function setVolume(slider_id) {
-				var vol = document.getElementById(slider_id).value;
-				window.location = 'byond://?_src_=updateVolume&proc=sliderMoved&slider=' + slider_id + '&volume=' + vol;
-				volumeUpdating = false;
-
-				document.getElementById(slider_id + "_value").innerHTML = vol;
+				document.getElementById(slider_id + "_value").innerHTML = value;
 			}
 
 			function showHint(text) {
@@ -1654,9 +1635,22 @@
 
 		</script>
 		"}
-	var/datum/browser/popup = new(usr, "volcontrols", "Skills menu", 620, 500, null, CSS_THEME_DARK)
+	var/style = CSS_THEME_DARK
+	if (mind.antag_roles.len)
+		style = CSS_THEME_SYNDICATE
+	var/datum/browser/popup = new(usr, "mob\ref[src]", "Skills menu", 620, 500, null, style)
 	popup.set_content(dat)
 	popup.open()
+
+/mob/living/carbon/human/proc/update_skils(href_list)
+	var/skill = href_list["skill"]
+	var/value = text2num(href_list["value"])
+	if(!isnum(value) || !istext(skill))
+		return
+	if(!mind)
+		return
+
+	mind.changeSkillValue(skill,value)
 
 
 

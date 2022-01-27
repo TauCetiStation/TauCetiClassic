@@ -82,7 +82,7 @@
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	if (H.mind)
-		H.mind.skills = getSkillsType(return_skills_type(H,alt_title))
+		H.mind.original_skills = getSkillsType(return_skills_type(H,alt_title))
 	post_equip(H, visualsOnly)
 	return TRUE
 

@@ -560,7 +560,7 @@ Class Procs:
 			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
 		var/fumbling_time = fumbling_time_multiplier * (required_skill_proficiency - user.mind.getSkillRating(required_skill))
-		if(!do_after(user, fumbling_time, TRUE))
+		if(!do_after(user, fumbling_time, TRUE, src))
 			return FALSE
 	return TRUE
 

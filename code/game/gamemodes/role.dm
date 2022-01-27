@@ -34,6 +34,8 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	var/datum/skills/skills_type = /datum/skills
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -441,3 +443,6 @@
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
 		set_antag_hud(antag.current, null)
+
+/datum/role/proc/return_skills_type()
+	return skills_type

@@ -82,7 +82,7 @@ medical, chemistry, research, command)
 	if(!isnull(research))
 		src.research = research
 	if(!isnull(command))
-		src.research = command
+		src.command = command
 	tag = SKILLSIDSRC(src)
 
 
@@ -93,21 +93,27 @@ medical, chemistry, research, command)
 /datum/skills/proc/getRating(skill)
 	return vars[skill]
 
-/datum/skills/proc/getList()
-	return list("Command" = command,\
-		"Police" = police,\
-		"Firearms" = firearms,\
-		"Melee" = melee,\
-		"Engineering" = engineering,\
-		"Construction" = construction,\
-		"Atmospherics" = atmospherics,\
-		"Civilian Exosuits" = civ_mech,\
-		"Combat Exosuits" = combat_mech,\
-		"Surgery" = surgery,\
-		"Medical" = medical,\
-		"Chemistry" = chemistry,\
-		"Research" = research,\
-		"Medical" = medical)
+/datum/skills/proc/mergeSkills(datum/skills/other)
+	var/datum/skills/result = new /datum/skills()
+	for(var/skill in SKILL_BOUNDS)
+		var/skill_value = max(getRating(skill), other.getRating(skill))
+		skill_value = max(skill_value, getSkillMaximum(skill))
+		skill_value = min(skill_value, getSkillMaximum(skill))
+		result.vars[skill] = skill_value
+	return result
+
+/proc/cloneSkills(datum/skills/original)
+	var/datum/skills/result = new /datum/skills()
+	for(var/skill in SKILL_BOUNDS)
+		result.vars[skill] = max(getSkillMinimum(skill), min(original.getRating(skill), getSkillMaximum(skill)))
+	return result
+
+/proc/getSkillMinimum(skill)
+	return SKILL_BOUNDS[skill][1]
+
+/proc/getSkillMaximum(skill)
+	return SKILL_BOUNDS[skill][2]
+
 
 
 //medical
@@ -306,8 +312,6 @@ medical, chemistry, research, command)
 	engineering =  SKILL_ENGINEERING_NOVICE
 	civ_mech = SKILL_CIV_MECH_NOVICE
 
-
-
 //cargo
 /datum/skills/quartermaster
 	civ_mech = SKILL_CIV_MECH_MASTER
@@ -324,7 +328,6 @@ medical, chemistry, research, command)
 	civ_mech = SKILL_CIV_MECH_PRO
 	construction = SKILL_CONSTRUCTION_NOVICE
 
-
 //civilians
 /datum/skills/captain
 	police = SKILL_POLICE_PRO
@@ -336,7 +339,6 @@ medical, chemistry, research, command)
 	medical = SKILL_MEDICAL_NOVICE
 	civ_mech = SKILL_CIV_MECH_TRAINED
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
-
 
 /datum/skills/hop
 	police = SKILL_POLICE_TRAINED
@@ -381,7 +383,6 @@ medical, chemistry, research, command)
 /datum/skills/mime
 /datum/skills/janitor
 
-
 /datum/skills/test_subject
 /datum/skills/test_subject/lawyer
 	command = SKILL_COMMAND_BEGINNER
@@ -400,3 +401,19 @@ medical, chemistry, research, command)
 	research = SKILL_RESEARCH_TRAINED
 	medical = SKILL_MEDICAL_NOVICE
 
+
+//antagonists
+/datum/skills/traitor
+	police = SKILL_POLICE_PRO
+	firearms = SKILL_FIREARMS_PRO
+	melee = SKILL_MELEE_MASTER
+	engineering = SKILL_ENGINEERING_MASTER
+	construction = SKILL_CONSTRUCTION_MASTER
+	atmospherics = SKILL_ATMOS_MASTER
+	civ_mech = SKILL_CIV_MECH_MASTER
+	combat_mech = SKILL_CIV_MECH_PRO
+	surgery = SKILL_SURGERY_EXPERT
+	medical = SKILL_MEDICAL_MASTER
+	chemistry = SKILL_CHEMISTRY_EXPERT
+	research = SKILL_RESEARCH_EXPERT
+	command = SKILL_COMMAND_MASTER
