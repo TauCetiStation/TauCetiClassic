@@ -57,3 +57,5 @@
 
 /obj/structure/object_wall/vox/internal
 	desc = "Internal shuttle wall. Cleaner than outside walls, but not by far."
+	icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
+	icon_state = "3,0"
