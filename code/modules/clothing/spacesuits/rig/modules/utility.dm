@@ -599,6 +599,9 @@
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	relay = new relay_type(src)
+	if(relay.autolinkers)
+		for(var/obj/machinery/telecomms/T in telecomms_list)
+			T.add_link(relay)
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)
