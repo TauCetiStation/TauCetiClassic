@@ -27,6 +27,7 @@
 	id = "Portable Relay"
 	heatgen = 0
 	hide = TRUE
+	long_range_link = TRUE
 	use_power = 0
 	active_power_usage = 0
 	autolinkers = list("p_relay")
