@@ -2318,8 +2318,18 @@
 	},
 /area/custom/syndicate_mothership)
 "age" = (
-/turf/simulated/floor{
-	icon_state = "Stairs2_wide"
+/obj/machinery/computer/arcade{
+	emagged = 1;
+	name = "hacked arcade machine"
+	},
+/obj/structure/sign/warning{
+	desc = "There is a washing machine behind this wall. Maybe we should take another path?";
+	name = "WARNING! DIED IN GAME - DIED IN LIFE!";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "agf" = (
@@ -2413,11 +2423,10 @@
 /area/shuttle/transport1/centcom)
 "agt" = (
 /obj/structure/stool/bed/chair/metal/red{
-	dir = 8
+	dir = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "agu" = (
@@ -2812,11 +2821,11 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "ahE" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/turf/simulated/floor{
+	icon_state = "Stairs2_wide"
 	},
 /area/custom/syndicate_mothership)
 "ahF" = (
@@ -3123,18 +3132,6 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
-"aiq" = (
-/obj/machinery/vending/cigarette{
-	name = "hacked Cigarette machine";
-	prices = list()
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
 "air" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -3248,29 +3245,11 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"aiE" = (
-/obj/machinery/vending/snack{
-	name = "hacked Getmore Chocolate Corp";
-	prices = list()
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
 "aiF" = (
 /obj/machinery/vending/cola{
 	name = "hacked Robust Softdrinks";
 	prices = list()
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
-"aiG" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/obj/machinery/vending/sovietsoda,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -3312,12 +3291,6 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
-"aiL" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
 "aiM" = (
 /turf/unsimulated/floor{
 	icon_state = "floor4"
@@ -3409,9 +3382,6 @@
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
-/area/custom/syndicate_mothership)
-"aiY" = (
-/turf/simulated/mineral,
 /area/custom/syndicate_mothership)
 "aiZ" = (
 /obj/structure/stool/bed/chair/metal/red,
@@ -3698,15 +3668,6 @@
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"ajO" = (
-/obj/machinery/computer/communications{
-	dir = 4;
-	emagged = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "ajT" = (
@@ -4086,6 +4047,9 @@
 "akR" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/stamp/syndicate{
+	pixel_y = 3
+	},
 /obj/item/weapon/pen,
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -4095,7 +4059,6 @@
 /obj/structure/table/reinforced,
 /obj/item/device/megaphone,
 /obj/structure/window/reinforced,
-/obj/item/weapon/stamp/syndicate,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -4510,9 +4473,12 @@
 	},
 /area/custom/syndicate_mothership)
 "alX" = (
-/obj/machinery/computer/arcade,
 /obj/structure/sign/poster/contraband/free_key{
 	pixel_y = 32
+	},
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -4894,8 +4860,9 @@
 	},
 /area/custom/syndicate_mothership)
 "amM" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -13189,7 +13156,9 @@
 	},
 /area/centcom/holding)
 "aQb" = (
-/obj/machinery/light,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -82321,9 +82290,9 @@ aaM
 aaM
 ahF
 ahF
-aie
-aie
-aie
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -82337,7 +82306,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahF
 ahF
 aaM
 aaM
@@ -82578,9 +82547,9 @@ ahF
 ahF
 ahF
 aie
-aie
-ajO
-aie
+aaN
+aaN
+aaN
 aaN
 aaN
 aaN
@@ -82589,9 +82558,9 @@ aaN
 aaN
 aii
 aaN
-aaM
-aaM
-aaM
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -82846,9 +82815,9 @@ alW
 aaN
 alI
 aaN
-aeD
-aeD
-aiY
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -83102,10 +83071,10 @@ akQ
 akQ
 agc
 aIb
-amy
-aip
+bnb
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -83359,10 +83328,10 @@ alY
 akQ
 agd
 aIb
-amy
-aiq
+agt
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -83616,10 +83585,10 @@ amp
 akQ
 agd
 aIb
-amy
-aiE
+agt
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -83873,10 +83842,10 @@ ale
 akQ
 agd
 aIb
-amy
-aiF
+agt
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -84128,12 +84097,12 @@ akQ
 akQ
 akQ
 akQ
-age
+ahE
 alo
 ahq
-aiG
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -84386,11 +84355,11 @@ alS
 alS
 afX
 aie
-agt
-ahE
-aiL
+aiF
+aip
 aie
-aiY
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -84897,7 +84866,7 @@ aie
 alX
 amM
 alo
-alo
+age
 aie
 agf
 agJ
