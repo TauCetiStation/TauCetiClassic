@@ -354,6 +354,11 @@
 		if (!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
 			scantemp = "Error: No signs of intelligence detected."
 			return
+	else
+		if(!isbrain(subject))
+			scantemp = "Error: Unable to locate valid genetic data."
+			return
+	if (isnull(subject) || !subject.dna)
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
