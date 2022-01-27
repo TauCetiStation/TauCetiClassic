@@ -62,10 +62,10 @@
 	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/vox
-    name = "shuttle window"
-    icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
-    icon_state = "7,10"
-    dir = SOUTHWEST
+	name = "shuttle window"
+	icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
+	icon_state = "7,10"
+	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/update_icon()
 	return
