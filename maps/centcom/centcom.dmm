@@ -4052,7 +4052,6 @@
 /obj/structure/table,
 /obj/item/roller,
 /obj/item/weapon/bikehorn/rubberducky,
-/obj/item/weapon/storage/firstaid/tactical,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
