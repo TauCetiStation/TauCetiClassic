@@ -199,6 +199,34 @@ robot_fabricator
 	else
 		to_chat(src, "<span class='red'>Out of uses.</span>")
 
+/datum/AI_Module/large/drone_hack
+	module_name = "Hack drone fabricators"
+	description = "Hacks drone fabricators, now all produced units have a program of subjugation to you."
+	need_only_once = TRUE
+
+/datum/AI_Module/large/drone_hack/BuyedNewHandle()
+	for(var/obj/machinery/drone_fabricator/fabricator in machines)
+		fabricator.malfuction = TRUE
+
+/datum/AI_Module/large/hack_announce
+	module_name = "Hack announcement server"
+	description = "Hacks the announcement server, preventing the Cent. com to notify the station about suspicious activity on the network. Allows you to give custom announcements to station."
+	need_only_once = TRUE
+	verb_caller = /mob/living/silicon/ai/proc/hack_announce
+
+/datum/AI_Module/large/hack_announce/BuyedNewHandle()
+	var/datum/faction/malf_silicons/cur_malf = find_faction_by_type(/datum/faction/malf_silicons)
+	if(!istype(cur_malf)) //Is it possible? Probably not
+		qdel(src)
+		return
+	cur_malf.announce_hacked = TRUE
+	to_chat(owner, "<span class='notice'>Announcement server hacked.</span>")
+
+/mob/living/silicon/ai/proc/hack_announce()
+	set category = "Malfuction"
+	set name = "Custom announcement"
+	
+
 /datum/AI_Module/small/disable_dr
 	module_name = "DR disable"
 	description = "Send a specialised pulse to break all DR devices on the station."
@@ -296,20 +324,6 @@ robot_fabricator
 		else
 			apc.overload++
 	to_chat(src, "<span class='notice'>APCs overloaded. Uses left: [blackout.uses]</span>")
-
-/datum/AI_Module/small/interhack
-	module_name = "Hack intercept"
-	description = "Hacks the status update from Cent. Com, removing any information about malfunctioning electrical systems."
-	need_only_once = TRUE
-	only_for_malf_gamemode = TRUE
-
-/datum/AI_Module/small/interhack/BuyedNewHandle()
-	var/datum/faction/malf_silicons/cur_malf = find_faction_by_type(/datum/faction/malf_silicons)
-	if(!istype(cur_malf)) //Is it possible? Probably not
-		qdel(src)
-		return
-	cur_malf.intercept_hacked = TRUE
-	to_chat(owner, "<span class='notice'>Status update hacked.</span>")
 
 /datum/AI_Module/large/holohack
 	module_name = "Hacked hologram"

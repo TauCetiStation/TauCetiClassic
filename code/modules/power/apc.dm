@@ -953,33 +953,31 @@
 	var/hacked_amount = SSticker.hacked_apcs
 	var/lowest_treshold = 3//lowest treshold in hacked apcs for an announcement to start
 	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
-	if(malf_ai && malf_ai.intercept_hacked)
-		hacked_amount += malf_ai.intercept_apcs
-		lowest_treshold += malf_ai.intercept_apcs
-	switch (SSticker.Malf_announce_stage)
-		if(0)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 1
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/first/announce_first = new
-				announce_first.play()
-		if(1)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 2
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/second/announce_second = new
-				announce_second.play()
-		if(2)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 3
-				lowest_treshold += 2
-				var/datum/announcement/centcomm/malf/third/announce_third = new
-				announce_third.play()
-		if(3)
-			if(hacked_amount >= lowest_treshold)
-				SSticker.Malf_announce_stage = 4
-				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-				announce_forth.play()
+	if(malf_ai && !malf_ai.announce_hacked)
+		switch (SSticker.Malf_announce_stage)
+			if(0)
+				if(hacked_amount >= lowest_treshold)
+					SSticker.Malf_announce_stage = 1
+					lowest_treshold += 2
+					var/datum/announcement/centcomm/malf/first/announce_first = new
+					announce_first.play()
+			if(1)
+				if(hacked_amount >= lowest_treshold)
+					SSticker.Malf_announce_stage = 2
+					lowest_treshold += 2
+					var/datum/announcement/centcomm/malf/second/announce_second = new
+					announce_second.play()
+			if(2)
+				if(hacked_amount >= lowest_treshold)
+					SSticker.Malf_announce_stage = 3
+					lowest_treshold += 2
+					var/datum/announcement/centcomm/malf/third/announce_third = new
+					announce_third.play()
+			if(3)
+				if(hacked_amount >= lowest_treshold)
+					SSticker.Malf_announce_stage = 4
+					var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+					announce_forth.play()
 ////////////////////////////////
 
 

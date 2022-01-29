@@ -13,8 +13,7 @@
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
 	var/to_nuke_or_not_to_nuke = 0
-	var/intercept_hacked = FALSE
-	var/intercept_apcs = 4 //Bonus for the interception upgrade
+	var/announce_hacked = FALSE
 
 /datum/faction/malf_silicons/can_join_faction(mob/P)
 	if (!..())

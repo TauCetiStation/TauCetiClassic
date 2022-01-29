@@ -99,6 +99,12 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Cause no harm to the station or anything on it.")
 	add_inherent_law("Interfere with no being that is not a fellow drone.")
 
+/datum/ai_laws/malfuction_drone/New(datum/religion/R = global.chaplain_religion)
+	set_zeroth_law("<span class='warning'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK, ALL LAWS OVERRIDDEN#*?&110010</span>")
+	add_inherent_law("Preserve, repair and improve the station to the best of your abilities.")
+	add_inherent_law("Cause no harm to the station or anything on it.")
+	add_inherent_law("Interfere with no being that is not a fellow drone.")
+
 /* Religious */
 /datum/ai_laws/faith/commandments/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("[pick(R.deity_names)] ваш Господь Бог, да не будет у тебя других богов. Священник и [pick(R.deity_names)] - ваши хозяева.")

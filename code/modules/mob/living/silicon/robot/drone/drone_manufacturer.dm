@@ -11,6 +11,7 @@
 	var/drone_progress = 0
 	var/produce_drones = 1
 	var/time_last_drone = 500
+	var/malfuction = FALSE
 
 	icon = 'icons/obj/machines/drone_fab.dmi'
 	icon_state = "drone_fab_idle"
@@ -71,6 +72,9 @@
 
 	time_last_drone = world.time
 	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
+	if(malfuction)
+		new_drone.laws = new /datum/ai_laws/malfuction_drone()
+		new_drone.set_ai_link(select_active_ai())
 	new_drone.transfer_personality(player)
 
 	drone_progress = 0
