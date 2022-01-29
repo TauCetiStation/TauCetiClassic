@@ -445,4 +445,4 @@
 		set_antag_hud(antag.current, null)
 
 /datum/role/proc/return_skills_type()
-	return skills_type
+	return new skills_type()

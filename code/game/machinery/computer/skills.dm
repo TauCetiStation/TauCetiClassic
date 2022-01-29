@@ -27,6 +27,8 @@
 	var/sortBy = "name"                      // field to sort
 	var/order = 1                            // -1 = Descending - 1 = Ascending
 	var/docname
+	required_skill = SKILL_COMMAND
+	required_skill_proficiency = SKILL_COMMAND_TRAINED
 
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -162,7 +164,8 @@ What a mess.*/
 
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-
+	if(!handle_fumbling(usr))
+		return
 	switch(href_list["choice"])
 		// SORTING!
 		if("Sorting")

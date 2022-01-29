@@ -109,6 +109,7 @@
 				return G
 			break
 /datum/mind/proc/getSkillRating(skill)
+	if(issilicon(usr)) return getSkillMaximum(skill);
 	if(!current_skills)
 		current_skills = original_skills
 	return current_skills.getRating(skill)

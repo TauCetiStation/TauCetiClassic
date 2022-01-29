@@ -35,6 +35,8 @@
 	var/stat_msg1
 	var/stat_msg2
 
+	required_skill = SKILL_COMMAND
+	required_skill_proficiency = SKILL_COMMAND_EXPERT
 	var/datum/announcement/station/command/announcement = new
 
 /obj/machinery/computer/communications/atom_init()
@@ -76,6 +78,9 @@
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
+
+	if(!handle_fumbling(usr))
+		return
 
 	var/obj/item/weapon/circuitboard/communications/CM = circuit
 	switch(href_list["operation"])
