@@ -347,16 +347,16 @@
 	for(var/department in predefined_forms_list)
 		var/color = predefined_forms_list[department]["color"]
 		var/dep_name = predefined_forms_list[department]["name"]
-		dat += "<h3>[dep_name]</h3>"
+		dat += "<h2>[dep_name]</h2>"
 		dat += "<table><tbody><tr>"
 		dat += "<th style='background:[color]; width:6em'>Номер</th>"
-		dat += "<th style='background:[color];'>Название</th></tr><tr>"
+		dat += "<th style='background:[color];'>Название</th></tr>"
 		
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></font></th>"
-			dat += "<th> [form.name]</th>"
-		dat +="</tr></tbody></table>"
+			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></font></th>"
+			dat += "<th> [form.name]</th></tr>"
+		dat +="</tbody></table>"
 
 	var/datum/browser/popup = new(user, "window=[name]", "Список форм", 700, 500, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -423,8 +423,9 @@
 						t = sanitize(form.content, free_space, extra = FALSE)
 						break
 		else
-			if(tgui_alert(usr, "Are you sure you want to write text of create form?",, list("Text","Form")) == "Form")
-				select_form(usr)
+			if (usr.mind.getSkillRating(SKILL_COMMAND) >= SKILL_COMMAND_BEGINNER && id == "end" )
+				if(tgui_alert(usr, "Are you sure you want to write text of create form?",, list("Text","Form")) == "Form")
+					select_form(usr)
 			else
 				t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 

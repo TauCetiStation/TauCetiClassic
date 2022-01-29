@@ -933,7 +933,7 @@ var/global/list/predefined_forms_list = list(
 
 
 /datum/form/misc/bar_menu
-    index = "11E"
+    index = "21A"
     name = "Меню бара"
     content = @{"
         [h][field][/h]
@@ -993,7 +993,7 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/misc/kitchen_menu
-    index = "11E"
+    index = "21B"
     name = "Меню столовой"
     content = @{"
 		[h]Меню питания[/h]
@@ -1022,7 +1022,7 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/misc/incident_report
-    index = "11E"
+    index = "5R"
     name = "Форма для описания происшествия"
     content = @{"
 		[center][large][b]Служба Безопасности КСН "Исход"[/b]
@@ -1039,7 +1039,7 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/misc/transport_visa
-    index = "11E"
+    index = "13V"
     name = "Форма транспортной визы"
     content = @{"
 		[center][large][b]НТС "Велосити"[/b]
