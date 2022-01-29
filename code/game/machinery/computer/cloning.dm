@@ -348,12 +348,14 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
+/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/subject)
+	if(ishuman(subject))
+		var/mob/living/carbon/human/Hsubject = subject
+		if (!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
+			scantemp = "Error: No signs of intelligence detected."
+			return
+	if (isnull(subject) || !isbrain(subject) || !subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
-		return
-	if (!subject.has_brain())
-		scantemp = "Error: No signs of intelligence detected."
 		return
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
