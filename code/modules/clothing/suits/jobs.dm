@@ -111,29 +111,38 @@
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
-	name = "brown coat"
+	name = "detective's brown trenchcoat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective_brown"
-	item_state = "det_suit"
+	icon_state = "detective_trenchcoat_brown"
+	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	var/is_fasten = TRUE
 
-/obj/item/clothing/suit/storage/det_suit/grey
-	name = "grey coat"
-	icon_state = "detective_grey"
+/obj/item/clothing/suit/storage/det_suit/verb/toggle()
+	set name = "Toggle Trenchcoat Belt"
+	set category = "Object"
+	set src in usr
 
-/obj/item/clothing/suit/storage/det_suit/black
-	name = "black coat"
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
+	if(usr.incapacitated())
+		return 0
 
-/obj/item/clothing/suit/storage/det_suit/noir_trenchcoat
-	name = "dark grey trenchcoat"
-	desc = "A hard-boiled private investigator's dark grey trenchcoat."
-	icon_state = "trenchcoat_darkgrey"
-	item_state = "trenchcoat_darkgrey"
+	if(!is_fasten)
+		icon_state = initial(icon_state)
+		to_chat(usr, "You have fasteneded [src]")
+		is_fasten = TRUE
+	else
+		icon_state += "_open"
+		to_chat(usr, "You have unfastened [src]")
+		is_fasten = FALSE
+	usr.update_inv_wear_suit()
+
+/obj/item/clothing/suit/storage/det_suit/gray
+	name = "detective's gray trenchcoat"
+	icon_state = "detective_trenchcoat_gray"
+	item_state = "detective_trenchcoat_gray"
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
