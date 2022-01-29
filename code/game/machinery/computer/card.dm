@@ -11,7 +11,8 @@
 	var/mode = 0.0
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
-
+	required_skill = SKILL_COMMAND
+	required_skill_proficiency = SKILL_COMMAND_EXPERT
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
 
@@ -143,6 +144,9 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	. = ..()
 	if(!.)
+		return
+
+	if(!handle_fumbling(usr))
 		return
 
 	switch(href_list["choice"])

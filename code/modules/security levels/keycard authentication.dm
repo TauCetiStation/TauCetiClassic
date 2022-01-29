@@ -99,8 +99,7 @@
 		to_chat(usr, "This device is busy.")
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
+	if(!handle_fumbling(usr))
 		return
 	
 	if(href_list["triggerevent"])

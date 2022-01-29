@@ -241,6 +241,7 @@ medical, chemistry, research, command)
 	surgery = SKILL_SURGERY_TRAINED
 	medical = SKILL_MEDICAL_COMPETENT
 	research = SKILL_RESEARCH_TRAINED
+	firearms = SKILL_FIREARMS_TRAINED
 
 /datum/skills/detective
 	police = SKILL_POLICE_TRAINED
@@ -374,20 +375,22 @@ medical, chemistry, research, command)
 	medical = SKILL_MEDICAL_NOVICE
 
 /datum/skills/clown
-	melee = SKILL_MELEE_TRAINED
+	melee = SKILL_MELEE_WEAK
+/datum/skills/mime
+	melee = SKILL_MELEE_WEAK
 
 /datum/skills/chaplain
 	command = SKILL_COMMAND_EXPERT
 	melee = SKILL_MELEE_MASTER
 
-/datum/skills/mime
+
 /datum/skills/janitor
 
 /datum/skills/test_subject
 /datum/skills/test_subject/lawyer
 	command = SKILL_COMMAND_BEGINNER
 /datum/skills/test_subject/mecha
-	civ_mech = SKILL_CIV_MECH_PRO
+	civ_mech = SKILL_CIV_MECH_MASTER
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
 /datum/skills/test_subject/detective
 	firearms = SKILL_FIREARMS_TRAINED

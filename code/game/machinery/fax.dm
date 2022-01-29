@@ -94,8 +94,7 @@ var/global/list/alldepartments = list("Central Command")
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
+	if(!handle_fumbling(usr))
 		return
 
 	if(href_list["send"])
