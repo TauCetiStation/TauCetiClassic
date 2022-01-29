@@ -197,7 +197,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	// Close all NanoUI/TGUI windows
 	nanomanager.close_user_uis(usr)
-	SStgui.force_close_all_windows(usr)
+	SStgui.close_user_uis(usr)
 
 	// Clear the user's cache so they get resent.
 	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
