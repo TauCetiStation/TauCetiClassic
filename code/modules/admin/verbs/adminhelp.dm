@@ -277,7 +277,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all admins
-	var/admin_msg = "<span class='adminnotice adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span>"
+	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
