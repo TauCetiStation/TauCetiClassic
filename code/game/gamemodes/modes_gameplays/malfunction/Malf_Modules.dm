@@ -209,8 +209,8 @@ robot_fabricator
 		fabricator.malfuction = TRUE
 
 /datum/AI_Module/large/hack_announce
-	module_name = "Hack announcement server"
-	description = "Hacks the announcement server, preventing the Cent. com to notify the station about suspicious activity on the network. Allows you to give custom announcements to station."
+	module_name = "Hack announcement system"
+	description = "Hacks the announcement system, preventing the Cent. com to notify the station about suspicious activity on the network. Allows you to give custom announcements to station."
 	need_only_once = TRUE
 	verb_caller = /mob/living/silicon/ai/proc/hack_announce
 
@@ -220,12 +220,27 @@ robot_fabricator
 		qdel(src)
 		return
 	cur_malf.announce_hacked = TRUE
-	to_chat(owner, "<span class='notice'>Announcement server hacked.</span>")
+	to_chat(owner, "<span class='notice'>Announcement system hacked.</span>")
 
+// А це то, что он должен вызывать
+/datum/AI_Module/large/hack_announce/proc/use(mob/living/silicon/ai/user)
+	var/dat
+	dat = "<B>Select an announcement template</B><BR>"
+	dat += "<HR>"
+	dat += "<B>Give announcement:</B><BR>"
+	dat += "<A href='byond://?src=\ref[src]; абоба </A>"
+	dat += "<HR>"
+
+	var/datum/browser/popup = new(user, "window=modpicker")
+	popup.set_content(dat)
+	popup.open()
+
+// Це верб
 /mob/living/silicon/ai/proc/hack_announce()
 	set category = "Malfuction"
 	set name = "Custom announcement"
-	
+	var/datum/AI_Module/large/hack_announce/malf
+	malf.use(src)
 
 /datum/AI_Module/small/disable_dr
 	module_name = "DR disable"
