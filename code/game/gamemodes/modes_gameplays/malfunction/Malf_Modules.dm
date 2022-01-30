@@ -222,24 +222,32 @@ robot_fabricator
 	cur_malf.announce_hacked = TRUE
 	to_chat(owner, "<span class='notice'>Announcement system hacked.</span>")
 
-// А це то, что он должен вызывать
 /datum/AI_Module/large/hack_announce/proc/use(mob/living/silicon/ai/user)
 	var/dat
 	dat = "<B>Select an announcement template</B><BR>"
 	dat += "<HR>"
-	dat += "<B>Give announcement:</B><BR>"
-	dat += "<A href='byond://?src=\ref[src]; абоба </A>"
+	dat += "<B>Anomalies:</B><BR>"
+	dat += "<A href='?src=\ref[src];announce_name=["Anomaly: Frost"]'>Frost</A><br>"
+	dat += "<A href='byond://?src=\ref[src];announce_name=["Anomaly: Radiation Belt"]'>Radiation storm</A>"
+	dat += "<HR>"
+	dat += "<B>Абобусы:</B><BR>"
+	dat += "<HR>"
+	dat += "<B>Приколы:</B><BR>"
 	dat += "<HR>"
 
 	var/datum/browser/popup = new(user, "window=modpicker")
 	popup.set_content(dat)
 	popup.open()
 
-// Це верб
+/datum/AI_Module/large/hack_announce/Topic(href, href_list)
+	..()
+	to_chat(owner, href)
+
+
 /mob/living/silicon/ai/proc/hack_announce()
 	set category = "Malfuction"
 	set name = "Custom announcement"
-	var/datum/AI_Module/large/hack_announce/malf
+	var/datum/AI_Module/large/hack_announce/malf = current_modules["Hack announcement system"]
 	malf.use(src)
 
 /datum/AI_Module/small/disable_dr
