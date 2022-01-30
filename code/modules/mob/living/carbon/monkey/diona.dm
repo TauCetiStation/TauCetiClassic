@@ -311,15 +311,17 @@
 			return 1
 	return ..()
 
-//copypaste from mob/mouse
 /mob/living/carbon/monkey/diona/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Diona"
 	
-	if (getBruteLoss()>30) //balance?
-		layer = MOB_LAYER
-		to_chat(src, text("<span class='notice'>You can't hide now.</span>"))
+	var/list/Allseeing = list()	//like /verb/steal blood
+	for (var/mob/living/carbon/human/A in oview(src))
+		if(!stat && A.client && A.mind)
+			Allseeing += A
+	if(!Allseeing)
+		to_chat(src, "<span class='warning'>You can't be sneaky when they're watching.</span>") //for balance...
 		return
 		
 	if (layer != TURF_LAYER+0.2)
