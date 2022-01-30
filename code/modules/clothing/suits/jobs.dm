@@ -127,7 +127,7 @@
 	set src in usr
 
 	if(usr.incapacitated())
-		return 0
+		return
 
 	if(!is_fasten)
 		icon_state = initial(icon_state)
