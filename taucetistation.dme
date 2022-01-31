@@ -1647,6 +1647,7 @@
 #include "code\modules\mining\scanners.dm"
 #include "code\modules\mining\shelters.dm"
 #include "code\modules\mining\spawner.dm"
+#include "code\modules\mining\spawner_timer.dm"
 #include "code\modules\mining\drilling\brace.dm"
 #include "code\modules\mining\drilling\circuitboard.dm"
 #include "code\modules\mining\drilling\drill.dm"

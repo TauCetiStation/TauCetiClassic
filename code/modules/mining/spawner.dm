@@ -13,6 +13,7 @@
 	var/max_mob = 3
 	var/mob/living/simple_animal/hostile/asteroid/MM
 	var/obj/structure/spawner_area/My_area
+	var/datum/spawner_timer/timer = new/datum/spawner_timer
 	var/death_icon
 	var/is_alive = 1
 
@@ -42,15 +43,17 @@
 	if(is_alive ==0)
 		Death()
 		icon_state = death_icon
+	timer.randomize_max()
+	max_mob = timer.rand_max_mob
 
 /obj/structure/spawner/proc/Triggered()
-//	if(mobs.len < max_mob)
-	if(is_alive == 0)
-		return
-	var/mob/living/simple_animal/hostile/asteroid/M = new type_mob(get_turf(src))
-	mobs += M
-	for(var/MM in spawner_mod)
-		M.AddComponent(MM,1)
+	if(mobs.len < max_mob)
+		if(is_alive == 0)
+			return
+		var/mob/living/simple_animal/hostile/asteroid/M = new type_mob(get_turf(src))
+		mobs += M
+		for(var/MM in spawner_mod)
+			M.AddComponent(MM,1)
 
 /obj/structure/spawner/proc/Death()
 	qdel(My_area)
