@@ -347,7 +347,8 @@
 				var/turf/T = get_turf(src)
 				for(O in T.contents)
 					if(istype(O,/obj/structure/spawner))
-						O.is_alive = 0
+						if(O.is_alive != 0)
+							O.is_alive = 0
 			else
 				visible_message("<span class='notice'>\The [src] shudders to a grinding halt.</span>")
 		else

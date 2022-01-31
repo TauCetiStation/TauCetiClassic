@@ -8,7 +8,6 @@
 	layer = 1
 	pixel_x = -16
 	pixel_y = -16
-	var/SP
 	var/type_mob
 	var/max_mob = 3
 	var/mob/living/simple_animal/hostile/asteroid/MM
@@ -34,9 +33,8 @@
 /obj/structure/spawner/atom_init()
 	. = ..()
 	spawner_mod = pick_modifiers()
-	SP = src
 	My_area = new/obj/structure/spawner_area(get_turf(src))
-	My_area.My_spawner = SP
+	My_area.My_spawner = src
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner/process()
@@ -62,6 +60,7 @@
 			var/R = rand(0,35)
 			for(var/I =1, I<= R, I++)
 				new L(get_turf(src))
+	is_alive = 2 //Уже умер и выплюнул ресурсы.(Чтобы в процесс() не накидывало вечно)
 
 /obj/structure/spawner_area
 	freeze_movement = TRUE
