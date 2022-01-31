@@ -9,7 +9,6 @@
 	move_to_delay = 2
 	maxHealth = 125
 	health = 125
-	loot_list = list(/obj/item/stack/sheet/mineral/uranium = 3)
 	speed = 2
 	w_class = SIZE_HUMAN
 	melee_damage = 10
@@ -31,7 +30,6 @@
 	move_to_delay = 1
 	maxHealth = 25
 	health = 25
-	loot_list = list(/obj/item/stack/sheet/mineral/silver = 1)
 	speed = 1
 	w_class = SIZE_BIG
 	melee_damage = 5
@@ -53,7 +51,6 @@
 	move_to_delay = 1
 	maxHealth = 75
 	health = 75
-	loot_list = list(/obj/item/stack/sheet/mineral/gold = 3)
 	speed = 1
 	w_class = SIZE_HUMAN
 	melee_damage = 8

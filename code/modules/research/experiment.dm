@@ -51,6 +51,7 @@
 	var/list/saved_slimecores = list()
 	//xenoarcheology stuff
 	var/list/saved_artifacts = list()
+	var/list/saved_simple_animals = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -164,6 +165,45 @@
 		points += reward
 		saved_slimecores += core
 
+	for(var/animal in I.scanned_simple_animals)
+		if(animal in saved_simple_animals)
+			continue
+
+		var/reward = 0
+		switch(animal)
+			if(/mob/living/simple_animal/hostile/diyaab)
+				reward = 2000
+			if(/mob/living/simple_animal/hostile/shantak)
+				reward = 3000
+			if(/mob/living/simple_animal/hostile/samak)
+				reward = 4000
+			if(/mob/living/simple_animal/yithian)
+				reward = 1000
+			if(/mob/living/simple_animal/tindalos)
+				reward = 1000
+			if(/mob/living/simple_animal/hostile/giant_spider)
+				reward = 5000
+			if(/mob/living/simple_animal/hostile/xenomorph)
+				reward = 5000
+			if(/mob/living/simple_animal/hostile/creature)
+				reward = 4000
+			if(/mob/living/simple_animal/borer)
+				reward = 5000
+			if(/mob/living/simple_animal/hulk)
+				reward = 10000
+			if(/mob/living/simple_animal/hostile/carp)
+				reward = 5000
+			if(/mob/living/simple_animal/hostile/carp/megacarp)
+				reward = 6000
+			if(/mob/living/simple_animal/hostile/asteroid/basilisk)
+				reward = 4000
+			if(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+				reward = 3000
+			if(/mob/living/simple_animal/hostile/asteroid/goliath)
+				reward = 4000
+		points += reward
+		saved_simple_animals += animal
+
 	I.clear_data()
 	return round(points)
 
@@ -191,6 +231,9 @@
 
 	for(var/core in O.saved_slimecores)
 		saved_slimecores |= core
+
+	for(var/animal in O.saved_simple_animals)
+		saved_simple_animals |= animal
 
 	for(var/interaction_type in saved_best_score)
 		saved_best_score[interaction_type] = max(saved_best_score[interaction_type], O.saved_best_score[interaction_type])
@@ -310,6 +353,7 @@
 	var/list/scanned_artifacts = list()
 	var/list/scanned_symptoms = list()
 	var/list/scanned_slimecores = list()
+	var/list/scanned_simple_animals = list()
 	var/datablocks = 0
 
 /obj/item/device/science_tool/atom_init()
@@ -360,6 +404,10 @@
 	if(istype(target, /obj/item/slime_extract))
 		if(!(target.type in scanned_slimecores))
 			scanned_slimecores += target.type
+			scanneddata += 1
+	if(istype(target, /mob/living/simple_animal))
+		if(!(target.type in scanned_simple_animals))
+			scanned_simple_animals += target.type
 			scanneddata += 1
 
 	if(scanneddata > 0)
