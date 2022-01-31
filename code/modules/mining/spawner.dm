@@ -10,7 +10,6 @@
 	pixel_y = -16
 	var/type_mob
 	var/max_mob = 3
-	var/mob/living/simple_animal/hostile/asteroid/MM
 	var/obj/structure/spawner_area/My_area
 	var/datum/spawner_timer/timer = new/datum/spawner_timer
 	var/death_icon
