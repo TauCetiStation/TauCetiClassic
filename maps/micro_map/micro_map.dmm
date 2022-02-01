@@ -1,5 +1,196 @@
-"a" = ()
+"aC" = (/obj/structure/stool/bar,/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"aP" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue{pixel_x = 2; pixel_y = 6},/obj/structure/noticeboard/bar{pixel_y = 32},/turf/simulated/floor/wood,/area/space)
+"bi" = (/obj/random/vending/snack,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"bI" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor/wood,/area/space)
+"ci" = (/turf/simulated/floor{icon_state = "black"},/area/space)
+"cO" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_one_access = list(12,25,28)},/turf/simulated/floor/plating,/area/space)
+"cZ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
+"dg" = (/obj/structure/table/woodentable,/obj/item/ashtray/glass,/obj/item/weapon/lighter/zippo{pixel_x = -5; pixel_y = 5},/obj/machinery/computer/security/telescreen/entertainment{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"dx" = (/turf/simulated/floor/plating/airless/catwalk,/area/space)
+"dY" = (/obj/structure/table/woodentable,/obj/machinery/reagentgrinder{layer = 3.1; pixel_y = 5},/turf/simulated/floor/wood,/area/space)
+"ev" = (/turf/simulated/floor/wood,/area/space)
+"gg" = (/obj/structure/table/reinforced,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"hf" = (/obj/item/weapon/flora/random,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"hk" = (/turf/simulated/floor/carpet/black,/area/space)
+"ho" = (/obj/machinery/media/jukebox/bar,/turf/simulated/floor/wood,/area/space)
+"hA" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
+"il" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor/wood,/area/space)
+"ix" = (/obj/structure/stool/bar,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"jm" = (/obj/structure/stool/bed/chair/comfy/black{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"jY" = (/obj/structure/table/reinforced,/turf/simulated/floor/wood,/area/space)
+"ks" = (/turf/simulated/floor{icon_state = "wood_stairs2"},/area/space)
+"kX" = (/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"mF" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/wood,/area/space)
+"mH" = (/obj/structure/sign/double/barsign,/turf/simulated/wall,/area/space)
+"nD" = (/obj/machinery/door/airlock/external{name = "Arrival Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"nY" = (/obj/machinery/door/airlock{name = "Bar Backroom"; req_access = list(25)},/turf/simulated/floor/wood,/area/space)
+"oi" = (/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"oH" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"oI" = (/turf/simulated/floor{icon_state = "white"},/area/space)
+"py" = (/obj/machinery/door/airlock/external{name = "Escape Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"qo" = (/obj/structure/table/reinforced,/obj/item/weapon/flora/pottedplant/shoot{pixel_x = -8; pixel_y = 16},/obj/item/ashtray/plastic,/turf/simulated/floor/wood,/area/space)
+"ry" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs"},/area/space)
+"sx" = (/turf/space,/area/space)
+"sT" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Bar"},/obj/machinery/door/firedoor,/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space)
+"tD" = (/turf/simulated/floor{dir = 10; icon_state = "black"},/area/space)
+"uN" = (/turf/simulated/wall,/area/space)
+"uR" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker{pixel_y = 14},/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{pixel_x = -6; pixel_y = 10},/obj/item/weapon/reagent_containers/glass/rag,/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
+"vj" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs2"},/area/space)
+"vP" = (/turf/space,/area/shuttle/escape/station)
+"wb" = (/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"wk" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
+"wG" = (/turf/simulated/floor{icon_state = "wood_stairs"},/area/space)
+"wH" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/soda{dir = 4; pixel_y = 4},/obj/structure/sign/poster/official/high_class_martini{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"xz" = (/obj/machinery/vending/cigarette,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"xX" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = -4; pixel_y = 20},/obj/machinery/light_switch{pixel_x = 10; pixel_y = 24},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"yi" = (/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"zf" = (/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
+"Aw" = (/turf/simulated/floor,/area/space)
+"AG" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
+"CK" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"CY" = (/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"Dt" = (/turf/simulated/floor{dir = 5; icon_state = "black"},/area/space)
+"Dx" = (/obj/machinery/disposal,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"DX" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
+"Eg" = (/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"Fd" = (/turf/simulated/floor{dir = 6; icon_state = "black"},/area/space)
+"FT" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"},/turf/simulated/floor/plating,/area/space)
+"Gb" = (/obj/structure/device/piano/royal,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"GJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{dock_tag = "arrival_1"; locked = 1; name = "Arrival Airlock"},/turf/simulated/floor/plating,/area/space)
+"GS" = (/obj/machinery/door/window/southright{name = "Bar Door"; req_one_access = list(25)},/turf/simulated/floor/wood,/area/space)
+"Hr" = (/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
+"HA" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
+"Ir" = (/obj/machinery/door/window/eastleft{req_access = list(25)},/obj/structure/window/reinforced,/turf/simulated/floor{icon_state = "delivery"},/area/space)
+"IQ" = (/turf/simulated/floor{icon_state = "dark"},/area/space)
+"Je" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 4},/turf/simulated/floor/carpet/black,/area/space)
+"Jp" = (/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
+"JJ" = (/turf/simulated/floor/plating,/area/space)
+"Lb" = (/obj/machinery/light/small,/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"Lr" = (/turf/simulated/floor{dir = 9; icon_state = "black"},/area/space)
+"Mm" = (/turf/space,/area/shuttle/arrival/station)
+"My" = (/obj/machinery/computer/arcade,/turf/simulated/floor/wood,/area/space)
+"MB" = (/obj/structure/table/reinforced,/obj/item/clothing/head/cakehat,/turf/simulated/floor/wood,/area/space)
+"Nf" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"Nz" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
+"NC" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_one_access = list(25)},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"ON" = (/obj/structure/stool/bar,/turf/simulated/floor/wood,/area/space)
+"PS" = (/obj/machinery/vending/coffee,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"QL" = (/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
+"QX" = (/obj/structure/closet/secure_closet/bar,/obj/item/weapon/gun/projectile/revolver/doublebarrel,/obj/item/weapon/paper{info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest."; name = "Shotgun permit"},/obj/item/clothing/suit/armor/vest,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/wood,/area/space)
+"Rp" = (/obj/item/weapon/kitchen/utensil/spoon,/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -7},/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 9; pixel_y = 4},/obj/structure/table/woodentable/fancy/black,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"SD" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
+"Tw" = (/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"TQ" = (/obj/machinery/disposal,/turf/simulated/floor/wood,/area/space)
+"Vf" = (/obj/item/weapon/flora/random,/turf/simulated/floor/wood,/area/space)
+"VI" = (/obj/machinery/vending/donut,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"VV" = (/obj/structure/closet/gmcloset{name = "formal wardrobe"},/obj/item/weapon/book/manual/wiki/barman_recipes{pixel_y = 10},/obj/item/device/eftpos{eftpos_name = "Bar EFTPOS scanner"},/turf/simulated/floor/wood,/area/space)
+"Wi" = (/obj/machinery/light/small{dir = 4},/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"Xn" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/beer{dir = 4; pixel_y = 4},/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
+"Xs" = (/obj/machinery/vending/boozeomat,/turf/simulated/floor/wood,/area/space)
+"XP" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
+"YC" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/directions/dock_tablo/arrival,/turf/simulated/floor/plating,/area/space)
+"ZE" = (/obj/random/vending/cola,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"ZP" = (/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
 
 (1,1,1) = {"
-a
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNoIoIoIuNsxsxuNuNuNuNuNuNsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIuNsxsxuNoIoIoIoIuNuNuNuNuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIuNuNuNuNoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxsxXPGJwksxsxsxsxsxwkGJXPsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxsxwkJJwkYCwkuNwkYCwkJJwksxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNuNuNwknDwkwbwbwbwbwbwknDwkuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIuNuNuNuNuNuNuNuNuNuNuNuNuNuNLrCYCYCYCYCYCYCYCYCYCYCYCYCYDtuNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxuNuNuNoIoIoIoIoIuNoIoIoIoIoIuNLrCYCYCYCYCYCYzfAwAwAwAwAwAwAwAwAwAwAwAwAwQLCYCYCYCYCYCYDtuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxsxsxvPvPvPsxsxsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIoIoILrCYCYzfAwAwAwAwAwAwHrciciciciciJpAwHrciciciciciJpAwAwAwAwAwAwQLCYCYDtuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxsxvPvPvPvPvPsxsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIoILrzfAwAwHrciciciciciciFduNuNuNuNuNkXAwTwuNuNuNuNuNtDciciciciciJpAwAwAwQLDtuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoILrzfAwHrciFduNuNuNuNuNuNuNuNsxsxsxuNkXAwTwuNsxsxsxuNuNuNuNuNuNuNtDciciJpAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIkXAwHrFduNuNuNsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxuNuNuNuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxuNuNuNuNuNuNuNuNuNLrzfAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPAGNzHAAwAwAwAwAwAwAwuNkXAwHrFduNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTCKpyAwAwAwAwAwAwAwuNkXAwTwuNuNsxsxsxsxsxsxsxuNuNuNuNuNuNuNwbuNwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTEgpyAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNJJJJJJJJuNmHuNuNuNuNcOuNuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzNzAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNsTNCuNuNuNXsVfxXaPONevMyuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTEgpyAwAwAwAwAwAwAwAwkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbNfwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNIrevQXVVuNhohkhkqoONyibIuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTLbpyAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNggggggggggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNWievevevnYoihkJejYONeviluNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzNzAwAwAwAwAwAwAwAwkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbNfwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNTQevmFdYuNwHhkhkMBONevdguNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxwkuNuNuNuNuNuNuNuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNuNuNuNuNuNXnuRGShAaCevbIuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzwkAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNsxuNZEVIbiPSuNGbixwGxzksryvjuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPDXCKcZAwAwAwAwAwAwAwuNkXAwTwuNuNsxsxsxsxsxsxsxuNuNuNuNuNuNuNwbuNwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNLrzfAwTwuNsxCYCYCYCYCYZPIQZPIQZPIQZPIQZPsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPAGNzSDAwAwAwAwAwAwAwuNkXAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwHrFduNsxAwAwAwAwAwuNDxIQjmRpoHIQhfuNsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPdxuNAwAwAwAwAwAwAwuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNuNsxciciciciciZPIQZPIQZPIQZPIQZPsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPdxuNuNuNuNuNuNuNuNuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxuNuNLrzfAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxsxsxsxsxsxsxsxsxsxuNkXAwQLDtuNuNuNsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxuNuNuNLrzfAwHrFduNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxsxsxsxsxsxsxsxsxsxuNtDJpAwQLCYDtuNuNuNuNuNuNuNuNsxsxsxuNkXAwTwuNsxsxsxuNuNuNuNuNuNLrCYCYzfAwHrFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxdxsxsxsxsxsxsxsxsxsxuNuNtDJpAwAwQLCYCYCYCYCYCYDtuNuNuNuNuNkXAwTwuNuNuNuNuNLrCYCYCYCYzfAwAwAwHrFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxdxsxsxsxsxsxsxsxsxsxsxuNuNtDciciJpAwAwAwAwAwAwQLCYCYCYCYCYzfAwQLCYCYCYCYCYzfAwAwAwAwAwAwHrciFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNtDciciciciciciJpAwAwAwAwAwAwAwAwAwAwAwAwAwHrciciciciciciFduNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNuNuNtDciciciciciciciciciciciciciFduNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNuNuNuNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
 "}
