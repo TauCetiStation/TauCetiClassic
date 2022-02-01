@@ -13,7 +13,7 @@
 	var/obj/structure/spawner_area/My_area
 	var/datum/spawner_timer/timer = new/datum/spawner_timer
 	var/death_icon
-	var/is_alive = 1
+	var/is_alive = TRUE
 
 	var/list/spawner_mod = list()
 	var/list/mob/living/simple_animal/hostile/asteroid/mobs = list()
@@ -37,7 +37,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner/process()
-	if(is_alive ==0)
+	if(!is_alive)
 		Death()
 		icon_state = death_icon
 	timer.randomize_max()
@@ -45,7 +45,7 @@
 
 /obj/structure/spawner/proc/Triggered()
 	if(mobs.len < max_mob)
-		if(is_alive == 0)
+		if(!is_alive)
 			return
 		var/mob/living/simple_animal/hostile/asteroid/M = new type_mob(get_turf(src))
 		mobs += M
