@@ -86,6 +86,7 @@
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
 #define SLIME          "Slime"
+#define ABOMINATION    "disgusting abomination"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -197,3 +198,9 @@
 #define SYNDICATE_PHRASES  1
 #define SYNDICATE_RESPONSE 2
 #define SYNDICATE_AWARE    3
+
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"

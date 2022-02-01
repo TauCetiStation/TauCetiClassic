@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	immune_to_ssd = TRUE
 
 	var/icon_living = ""
 	var/icon_dead = ""
@@ -78,12 +79,6 @@
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
-
-/mob/living/simple_animal/Login()
-	..()
-	blinded = FALSE
-	stat = CONSCIOUS
-	update_canmove()
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return

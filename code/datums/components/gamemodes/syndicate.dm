@@ -17,11 +17,7 @@
 
 /datum/component/gamemode/syndicate/proc/get_current()
 	var/datum/role/role = parent
-	var/datum/mind/M = role.antag
-	if(!M)
-		return
-
-	var/mob/living/carbon/human/traitor_mob = M.current
+	var/mob/living/carbon/human/traitor_mob = role.antag.current
 	if(!traitor_mob)
 		return
 
@@ -58,7 +54,8 @@
 			if(is_station_level(I.z))
 				station_intercom_list += I
 
-		R = pick(station_intercom_list)
+		if(station_intercom_list.len)
+			R = pick(station_intercom_list)
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate suitable Intercom, installing into a Radio instead!")

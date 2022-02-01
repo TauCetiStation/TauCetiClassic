@@ -96,7 +96,7 @@
 				spread = FALSE
 
 		if(spread)
-			attacker.spread_disease_to(src, "Contact")
+			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
 			for(var/datum/disease/D in viruses)
 				if(D.spread_by_touch())
@@ -910,6 +910,64 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 	med_hud_set_status()
+
+/mob/living/carbon/update_sight()
+	if(!..())
+		return FALSE
+
+	if(blinded)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		set_EyesVision("greyscale")
+		return FALSE
+
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+
+	if(dna)
+		switch(dna.mutantrace)
+			if("slime")
+				see_in_dark = 3
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+			if("shadow")
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+
+	if(changeling_aug)
+		sight |= SEE_MOBS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
+
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+		switch(O.mode)
+			if(0)
+				O.togge_huds()
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LIVING
+			if(1)
+				see_in_dark = 8
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			if(2)
+				sight |= SEE_MOBS
+				see_in_dark = initial(see_in_dark)
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(3)
+				sight |= SEE_TURFS
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	return TRUE
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

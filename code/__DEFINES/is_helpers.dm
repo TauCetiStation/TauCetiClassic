@@ -79,6 +79,8 @@
 
 #define isautosay(A) (istype(A, /mob/autosay))
 
+#define isMMI(A) (istype(A, /obj/item/device/mmi))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
@@ -152,7 +154,7 @@
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
-#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+#define isanyrev(H) (isrev(H) || isrevhead(H))
 
 #define isrev(H) isrole(REV, H)
 

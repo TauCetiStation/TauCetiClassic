@@ -72,20 +72,20 @@ var/global/war_device_activation_forbidden
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
-		return 0
+		return FALSE
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
-		return 0
+		return FALSE
 	if(!is_centcom_level(user.z))
 		to_chat(user, "You have to be at your base to use this.")
-		return 0
+		return FALSE
 	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)
 		to_chat(user, "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.")
-		return 0
+		return FALSE
 	if(war_device_activation_forbidden)
 		to_chat(user, "The invasion has already begun. War can not be declared at this point.")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT

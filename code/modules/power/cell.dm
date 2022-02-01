@@ -3,8 +3,10 @@
 // fits in APC to provide backup power
 /obj/item/weapon/stock_parts/cell/atom_init()
 	. = ..()
-	charge = maxcharge
-	addtimer(CALLBACK(src, .proc/updateicon), 5)
+	if(init_full)
+		charge = maxcharge
+		if(isturf(loc))
+			updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()

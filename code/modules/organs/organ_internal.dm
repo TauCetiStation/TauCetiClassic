@@ -131,16 +131,22 @@
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
+	var/failing_interval = 1 MINUTE
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	heart_status = HEART_FAILURE
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
+		heart_status = HEART_FAILURE
+	else
+		take_damage(1, 0)
+		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	to_chat(owner, "<span class='warning'>Your feel a prick in your heart.</span>")
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
-	var/failing_interval = 1 MINUTE
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	to_chat(owner, "<span class='warning'>Your heart hurts a little.</span>")
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
@@ -420,6 +426,10 @@
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/abomination
+	name = "deformed brain"
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/eyes

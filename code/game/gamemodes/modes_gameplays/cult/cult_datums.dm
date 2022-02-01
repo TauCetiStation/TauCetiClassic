@@ -257,7 +257,7 @@
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 			viewing |= M.client
 
-	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = SINGULARITY_LAYER)
+	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = FLY_LAYER)
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
 
@@ -405,7 +405,7 @@
 		break
 	if(!has_pylon)
 		to_chat(user, "<span class='warning'>Вокруг руны нету пилонов.</span>")
-		return
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/charge_pylons/action(mob/living/carbon/user)

@@ -31,8 +31,7 @@ robot_fabricator
 	return ..()
 
 /datum/AI_Module/proc/AIAltClickHandle(atom/A)
-	if(!is_type_in_list(A, valid_targets))
-		return 1
+	return !is_type_in_list(A, valid_targets)
 
 /datum/AI_Module/proc/BuyedNewHandle()
 	return
@@ -128,6 +127,7 @@ robot_fabricator
 	if(SSticker.Malf_announce_stage < 4)
 		if(tgui_alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [SSticker.hacked_apcs] APCs.", "Takeover", list("Yes", "No")) != "Yes")
 			return
+		SSticker.Malf_announce_stage = 4
 		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 		announce_forth.play()
 
@@ -161,7 +161,7 @@ robot_fabricator
 	need_only_once = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
-	for(var/mob/living/silicon/ai/ai in ai_list)
+	for(var/mob/living/silicon/ai/ai as anything in ai_list)
 		if(!ai.client)
 			continue
 		ai.fire_res_on_core = TRUE
@@ -250,11 +250,11 @@ robot_fabricator
 
 /datum/AI_Module/small/overload_machine/AIAltClickHandle(obj/machinery/M)
 	if(..())
-		return 1
+		return TRUE
 
 	if(!M.is_operational())
 		to_chat(usr, "<span class='red'>The machine is non-functional</span>")
-		return 1
+		return TRUE
 
 	uses--
 	M.audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
@@ -262,6 +262,7 @@ robot_fabricator
 	if(uses <= 0)
 		owner.active_module = null
 	addtimer(CALLBACK(src, .proc/overload_post_action, M), 50)
+	return FALSE
 
 /mob/living/silicon/ai/proc/overload_machine()
 	set name = "Overload Machine"
@@ -365,11 +366,11 @@ robot_fabricator
 
 /datum/AI_Module/small/upgrade_camera/AIAltClickHandle(obj/machinery/camera/sel_cam)
 	if(..())
-		return 1
+		return TRUE
 
 	if(sel_cam.isXRay() && sel_cam.isEmpProof())
 		to_chat(owner, "<span class='notice'>This camera is already upgraded</span>")
-		return 1
+		return TRUE
 
 	if(!sel_cam.isXRay())
 		sel_cam.upgradeXRay()
@@ -384,6 +385,7 @@ robot_fabricator
 	to_chat(owner, "<span class='notice'>Camera successully upgraded. Uses left: [uses]</span>")
 	if(uses <= 0)
 		owner.active_module = null
+	return FALSE
 
 /mob/living/silicon/ai/proc/upgrade_camera()
 	set name = "Upgrade Camera"

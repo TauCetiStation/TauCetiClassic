@@ -96,7 +96,7 @@
 	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
 	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
 
-	for(var/client/C in admins|mentors)
+	for(var/client/C as anything in admins|mentors)
 		if(C.ckey in stealth_keys)
 			continue
 		if(C.holder?.fakekey && (!holder || !(R_ADMIN & holder.rights)))

@@ -43,7 +43,7 @@
 	if (config.log_debug)
 		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			to_chat(C, "DEBUG: [text]")
 
@@ -161,6 +161,14 @@
 			preconfig_init_log = null
 
 		global.initialization_log << "[text][log_end]"
+
+#ifdef REFERENCE_TRACKING
+/proc/log_gc(text)
+	global.gc_log << "\[[time_stamp()]] [text][log_end]"
+	for(var/client/C in global.admins)
+		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
+			to_chat(C, "GC DEBUG: [text]")
+#endif
 
 /proc/log_qdel(text)
 	if (config.log_qdel)

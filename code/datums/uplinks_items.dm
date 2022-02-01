@@ -60,23 +60,23 @@
 
 /datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
 	if(!istype(U))
-		return 0
+		return FALSE
 
 	if(!user || user.incapacitated())
-		return 0
+		return FALSE
 
 	if(!( istype(user, /mob/living/carbon/human)))
-		return 0
+		return FALSE
 
 	// If the uplink's holder is in the user's contents or near him
 	if(U.Adjacent(user, recurse = 2))
 		user.set_machine(U)
 		if(cost > U.uses)
-			return 0
+			return FALSE
 
 		var/obj/I = spawn_item(get_turf(user), U, user)
 		if(!I)
-			return 0
+			return FALSE
 		var/icon/tempimage = icon(I.icon, I.icon_state)
 		end_icons += tempimage
 		var/tempstate = end_icons.len
@@ -91,8 +91,8 @@
 			A.put_in_any_hand_if_possible(I)
 			loging(A, tempstate, bundlename)
 
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/uplink_item/proc/loging(mob/living/carbon/human/user, tempstate, bundlename)
 	if(user.mind)
@@ -431,8 +431,8 @@
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
-	name = "Ammo-12g Stun Slug"
-	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
+	name = "Ammo-12g Stun Shot"
+	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	cost = 4
 	uplink_types = list("nuclear")
@@ -879,6 +879,13 @@
 	cost = 55
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/syndidrone
+	name = "Syndicate drone"
+	desc = "A remote control drone disguised as a NT maintenance drone. Comes with a RC interface."
+	item = /obj/item/weapon/storage/box/syndie_kit/drone
+	cost = 14
+	uplink_types = list("nuclear", "traitor")
+
 // IMPLANTS
 
 /datum/uplink_item/implants
@@ -914,6 +921,12 @@
 	name = "EMP Implant"
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
+
+/datum/uplink_item/implants/explosive
+	name = "Explosive Implant"
+	desc = "An implant, that explodes with different power when activated by a code word."
+	item = /obj/item/weapon/implanter/explosive
 	cost = 3
 
 // TELECRYSTALS
