@@ -30,6 +30,9 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
 
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
+
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
@@ -59,12 +62,16 @@
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
+				if(!handle_fumbling(user))
+					return
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
+				if(!handle_fumbling(user))
+					return
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
 				anchored = FALSE
 			else
@@ -86,6 +93,8 @@
 
 	else if(iscrowbar(I))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
+			if(!handle_fumbling(user))
+				return
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
@@ -97,6 +106,8 @@
 			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/syndicatebombcore))
 		if(degutted)
+			if(!handle_fumbling(user))
+				return
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
 			qdel(I)
