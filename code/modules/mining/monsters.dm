@@ -365,9 +365,6 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
-	return
-
 ////////////////Goliath////////////////
 
 /mob/living/simple_animal/hostile/asteroid/goliath
