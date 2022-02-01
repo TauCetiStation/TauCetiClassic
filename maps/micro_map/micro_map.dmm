@@ -1,196 +1,393 @@
-"aC" = (/obj/structure/stool/bar,/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
-"aP" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue{pixel_x = 2; pixel_y = 6},/obj/structure/noticeboard/bar{pixel_y = 32},/turf/simulated/floor/wood,/area/space)
-"bi" = (/obj/random/vending/snack,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"bI" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor/wood,/area/space)
-"ci" = (/turf/simulated/floor{icon_state = "black"},/area/space)
-"cO" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_one_access = list(12,25,28)},/turf/simulated/floor/plating,/area/space)
-"cZ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
-"dg" = (/obj/structure/table/woodentable,/obj/item/ashtray/glass,/obj/item/weapon/lighter/zippo{pixel_x = -5; pixel_y = 5},/obj/machinery/computer/security/telescreen/entertainment{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
-"dx" = (/turf/simulated/floor/plating/airless/catwalk,/area/space)
-"dY" = (/obj/structure/table/woodentable,/obj/machinery/reagentgrinder{layer = 3.1; pixel_y = 5},/turf/simulated/floor/wood,/area/space)
-"ev" = (/turf/simulated/floor/wood,/area/space)
-"gg" = (/obj/structure/table/reinforced,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"hf" = (/obj/item/weapon/flora/random,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
-"hk" = (/turf/simulated/floor/carpet/black,/area/space)
-"ho" = (/obj/machinery/media/jukebox/bar,/turf/simulated/floor/wood,/area/space)
-"hA" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
-"il" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor/wood,/area/space)
-"ix" = (/obj/structure/stool/bar,/turf/simulated/floor{icon_state = "dark"},/area/space)
-"jm" = (/obj/structure/stool/bed/chair/comfy/black{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
-"jY" = (/obj/structure/table/reinforced,/turf/simulated/floor/wood,/area/space)
-"ks" = (/turf/simulated/floor{icon_state = "wood_stairs2"},/area/space)
-"kX" = (/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
-"mF" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/wood,/area/space)
-"mH" = (/obj/structure/sign/double/barsign,/turf/simulated/wall,/area/space)
-"nD" = (/obj/machinery/door/airlock/external{name = "Arrival Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
-"nY" = (/obj/machinery/door/airlock{name = "Bar Backroom"; req_access = list(25)},/turf/simulated/floor/wood,/area/space)
-"oi" = (/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
-"oH" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
-"oI" = (/turf/simulated/floor{icon_state = "white"},/area/space)
-"py" = (/obj/machinery/door/airlock/external{name = "Escape Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
-"qo" = (/obj/structure/table/reinforced,/obj/item/weapon/flora/pottedplant/shoot{pixel_x = -8; pixel_y = 16},/obj/item/ashtray/plastic,/turf/simulated/floor/wood,/area/space)
-"ry" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs"},/area/space)
-"sx" = (/turf/space,/area/space)
-"sT" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Bar"},/obj/machinery/door/firedoor,/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space)
-"tD" = (/turf/simulated/floor{dir = 10; icon_state = "black"},/area/space)
-"uN" = (/turf/simulated/wall,/area/space)
-"uR" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker{pixel_y = 14},/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{pixel_x = -6; pixel_y = 10},/obj/item/weapon/reagent_containers/glass/rag,/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
-"vj" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs2"},/area/space)
-"vP" = (/turf/space,/area/shuttle/escape/station)
-"wb" = (/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"wk" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
-"wG" = (/turf/simulated/floor{icon_state = "wood_stairs"},/area/space)
-"wH" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/soda{dir = 4; pixel_y = 4},/obj/structure/sign/poster/official/high_class_martini{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
-"xz" = (/obj/machinery/vending/cigarette,/turf/simulated/floor{icon_state = "dark"},/area/space)
-"xX" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = -4; pixel_y = 20},/obj/machinery/light_switch{pixel_x = 10; pixel_y = 24},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
-"yi" = (/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
-"zf" = (/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
-"Aw" = (/turf/simulated/floor,/area/space)
-"AG" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
-"CK" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
-"CY" = (/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
-"Dt" = (/turf/simulated/floor{dir = 5; icon_state = "black"},/area/space)
-"Dx" = (/obj/machinery/disposal,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
-"DX" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
-"Eg" = (/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
-"Fd" = (/turf/simulated/floor{dir = 6; icon_state = "black"},/area/space)
-"FT" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"},/turf/simulated/floor/plating,/area/space)
-"Gb" = (/obj/structure/device/piano/royal,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
-"GJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{dock_tag = "arrival_1"; locked = 1; name = "Arrival Airlock"},/turf/simulated/floor/plating,/area/space)
-"GS" = (/obj/machinery/door/window/southright{name = "Bar Door"; req_one_access = list(25)},/turf/simulated/floor/wood,/area/space)
-"Hr" = (/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
-"HA" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
-"Ir" = (/obj/machinery/door/window/eastleft{req_access = list(25)},/obj/structure/window/reinforced,/turf/simulated/floor{icon_state = "delivery"},/area/space)
-"IQ" = (/turf/simulated/floor{icon_state = "dark"},/area/space)
-"Je" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 4},/turf/simulated/floor/carpet/black,/area/space)
-"Jp" = (/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
-"JJ" = (/turf/simulated/floor/plating,/area/space)
-"Lb" = (/obj/machinery/light/small,/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
-"Lr" = (/turf/simulated/floor{dir = 9; icon_state = "black"},/area/space)
-"Mm" = (/turf/space,/area/shuttle/arrival/station)
-"My" = (/obj/machinery/computer/arcade,/turf/simulated/floor/wood,/area/space)
-"MB" = (/obj/structure/table/reinforced,/obj/item/clothing/head/cakehat,/turf/simulated/floor/wood,/area/space)
-"Nf" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"Nz" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
-"NC" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_one_access = list(25)},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
-"ON" = (/obj/structure/stool/bar,/turf/simulated/floor/wood,/area/space)
-"PS" = (/obj/machinery/vending/coffee,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"QL" = (/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
-"QX" = (/obj/structure/closet/secure_closet/bar,/obj/item/weapon/gun/projectile/revolver/doublebarrel,/obj/item/weapon/paper{info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest."; name = "Shotgun permit"},/obj/item/clothing/suit/armor/vest,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/wood,/area/space)
-"Rp" = (/obj/item/weapon/kitchen/utensil/spoon,/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -7},/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 9; pixel_y = 4},/obj/structure/table/woodentable/fancy/black,/turf/simulated/floor{icon_state = "dark"},/area/space)
-"SD" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
-"Tw" = (/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
-"TQ" = (/obj/machinery/disposal,/turf/simulated/floor/wood,/area/space)
-"Vf" = (/obj/item/weapon/flora/random,/turf/simulated/floor/wood,/area/space)
-"VI" = (/obj/machinery/vending/donut,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"VV" = (/obj/structure/closet/gmcloset{name = "formal wardrobe"},/obj/item/weapon/book/manual/wiki/barman_recipes{pixel_y = 10},/obj/item/device/eftpos{eftpos_name = "Bar EFTPOS scanner"},/turf/simulated/floor/wood,/area/space)
-"Wi" = (/obj/machinery/light/small{dir = 4},/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
-"Xn" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/beer{dir = 4; pixel_y = 4},/obj/structure/window/reinforced,/turf/simulated/floor/wood,/area/space)
-"Xs" = (/obj/machinery/vending/boozeomat,/turf/simulated/floor/wood,/area/space)
-"XP" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
-"YC" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/directions/dock_tablo/arrival,/turf/simulated/floor/plating,/area/space)
-"ZE" = (/obj/random/vending/cola,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
-"ZP" = (/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"aj" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
+"ap" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"av" = (/obj/item/weapon/reagent_containers/spray/plantbgone{pixel_y = 3},/obj/item/weapon/reagent_containers/spray/plantbgone{pixel_y = 3},/obj/item/weapon/reagent_containers/spray/plantbgone{pixel_x = 8; pixel_y = 8},/obj/item/weapon/reagent_containers/spray/plantbgone{pixel_x = 13; pixel_y = 5},/obj/structure/table/glass,/obj/item/weapon/book/manual/wiki/hydroponics,/obj/machinery/camera{c_tag = "Hydroponics"; dir = 10},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"aG" = (/turf/simulated/floor/plating/airless/catwalk,/area/space)
+"aX" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"ba" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"bq" = (/turf/simulated/floor{dir = 5; icon_state = "black"},/area/space)
+"bx" = (/obj/structure/dresser,/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor/wood,/area/space)
+"bH" = (/obj/structure/closet/theatrecloset,/obj/item/device/camera_film,/obj/item/device/camera_film,/obj/item/device/camera,/obj/machinery/light/small,/turf/simulated/floor/wood,/area/space)
+"bJ" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"cq" = (/turf/space,/area/shuttle/arrival/station)
+"cz" = (/turf/simulated/floor{dir = 8; icon_state = "wood_stairs"},/area/space)
+"cI" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"cS" = (/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"cT" = (/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"cW" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor/plating,/area/space)
+"cY" = (/obj/structure/flora/ausbushes/fullgrass,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/grass,/area/space)
+"dj" = (/obj/structure/noticeboard/bar{pixel_y = 32},/turf/simulated/floor{dir = 9; icon_state = "wood_stairs2"},/area/space)
+"dz" = (/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"dG" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"dL" = (/turf/simulated/floor{dir = 4; icon_state = "green"},/area/space)
+"el" = (/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "black"},/area/space)
+"eH" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/simulated/floor/wood,/area/space)
+"eI" = (/obj/machinery/door/airlock/maintenance{req_access = list(12)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"eS" = (/obj/structure/table,/obj/item/weapon/book/manual/wiki/chefs_recipes,/turf/simulated/floor{icon_state = "cafeteria"},/area/space)
+"eY" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
+"fi" = (/obj/structure/flora/ausbushes/fullgrass,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor/grass,/area/space)
+"fp" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 4; icon_state = "greencorner"},/area/space)
+"fE" = (/obj/machinery/door/airlock/maintenance{req_access = list(12)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"fI" = (/turf/simulated/floor{icon_state = "white"},/area/space)
+"fL" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"gr" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Bar"},/obj/machinery/door/firedoor,/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space)
+"gG" = (/obj/item/weapon/flora/random,/turf/simulated/floor,/area/space)
+"gX" = (/obj/machinery/hydroponics/constructable,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 20},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"hh" = (/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
+"hl" = (/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"hB" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"hH" = (/obj/structure/sink/puddle,/obj/structure/flora/ausbushes/reedbush{pixel_y = 6},/turf/simulated/floor/grass,/area/space)
+"hM" = (/obj/structure/closet/secure_closet/freezer/meat,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor{icon_state = "warning"},/area/space)
+"hN" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"id" = (/obj/structure/table/reinforced,/obj/item/clothing/head/cakehat,/turf/simulated/floor/wood,/area/space)
+"iq" = (/obj/structure/flora/junglebush,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor/grass,/area/space)
+"it" = (/obj/machinery/door/airlock/glass{name = "Hydroponics"; req_access = list(35)},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"iE" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"iH" = (/obj/structure/closet/secure_closet/freezer/fridge,/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = 20},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"iK" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/wood,/area/space)
+"iL" = (/obj/machinery/door/airlock{name = "Kitchen Cold Room"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"jb" = (/obj/machinery/vending/donut,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"je" = (/obj/machinery/door/airlock/maintenance{name = "Hydroponics Maintenance"; req_one_access = list(35,28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"jx" = (/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"jK" = (/turf/simulated/floor{dir = 6; icon_state = "black"},/area/space)
+"jL" = (/obj/machinery/biogenerator,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"ka" = (/obj/machinery/vending/dinnerware,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"kp" = (/obj/machinery/vending/coffee,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"kF" = (/obj/structure/closet/theatrecloset,/obj/item/device/violin,/obj/machinery/alarm{dir = 4; pixel_x = -25},/turf/simulated/floor/wood,/area/space)
+"kG" = (/obj/item/weapon/reagent_containers/food/condiment/enzyme{pixel_x = 10},/obj/structure/table,/obj/structure/condiment_shelf{pixel_y = 32},/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/obj/item/weapon/reagent_containers/food/condiment/sugar,/obj/item/weapon/reagent_containers/food/condiment/peppermill,/obj/item/weapon/reagent_containers/food/condiment/rice,/obj/item/weapon/reagent_containers/food/condiment/ketchup,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"lf" = (/obj/structure/closet/crate{desc = "It's a storage unit for kitchen clothes and equipment."; name = "Kitchen Crate"},/obj/item/clothing/head/chefhat,/obj/item/clothing/under/rank/chef,/obj/item/weapon/storage/box/mousetraps,/obj/item/weapon/storage/box/mousetraps,/obj/item/clothing/under/waiter,/obj/item/clothing/under/waiter,/obj/item/clothing/under/sundress,/obj/item/device/eftpos{eftpos_name = "Kitchen EFTPOS scanner"},/obj/machinery/power/apc{dir = 8; name = "Cold Room APC"; pixel_x = -28},/turf/simulated/floor,/area/space)
+"lo" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/turf/simulated/floor{icon_state = "green"},/area/space)
+"lx" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/grass,/area/space)
+"lB" = (/obj/machinery/gibber,/obj/machinery/alarm{dir = 4; pixel_x = -22},/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"lF" = (/obj/machinery/vending/hydroseeds,/obj/machinery/newscaster{pixel_y = 30},/obj/machinery/requests_console/hydroponics{pixel_x = -30},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"lG" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"lR" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
+"mh" = (/obj/random/vending/snack,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"mv" = (/obj/machinery/door/window/westright{name = "Kitchen Maintenance"; req_access = list(28)},/obj/structure/window/reinforced,/turf/simulated/floor{icon_state = "delivery"},/area/space)
+"mY" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"nx" = (/obj/machinery/door/airlock/glass{name = "Bar"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"nI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"nT" = (/obj/machinery/door/airlock{name = "Honk Office"; req_access = list(46)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"od" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"of" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/obj/machinery/power/apc{name = "Bar APC"; pixel_y = -30},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"on" = (/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"or" = (/obj/machinery/chem_master/condimaster{name = "CondiMaster Neo"},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"ot" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"oC" = (/mob/living/simple_animal/cow{name = "Betsy"},/obj/structure/flora/ausbushes/lavendergrass,/obj/machinery/vending/wallmed1{pixel_y = 30},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/turf/simulated/floor/grass,/area/space)
+"oP" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/turf/simulated/floor/wood,/area/space)
+"oQ" = (/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"oZ" = (/obj/structure/flora/ausbushes/fullgrass,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/grass,/area/space)
+"pm" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/mint,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"pv" = (/obj/structure/stool/bed/chair/comfy/brown,/obj/effect/landmark/start{name = "Bartender"},/obj/structure/sign/monkey_painting{pixel_y = 32},/turf/simulated/floor/wood,/area/space)
+"pw" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/space)
+"py" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 8; icon_state = "green"},/area/space)
+"pz" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor,/area/space)
+"pA" = (/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
+"pK" = (/obj/machinery/kitchen_machine/oven,/obj/machinery/alarm{pixel_y = 24},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"qb" = (/obj/machinery/alarm{dir = 8; pixel_x = 22},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"qe" = (/obj/structure/closet/theatrecloset,/obj/item/device/guitar/electric,/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"qD" = (/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
+"qO" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
+"qV" = (/obj/machinery/hydroponics/constructable,/obj/machinery/light,/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/simulated/floor{icon_state = "dark"},/area/space)
+"ra" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_one_access = list(25)},/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/space)
+"rm" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker{pixel_y = 14},/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{pixel_x = -6; pixel_y = 10},/obj/item/weapon/reagent_containers/glass/rag,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/wood,/area/space)
+"rn" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{dock_tag = "arrival_1"; locked = 1; name = "Arrival Airlock"},/turf/simulated/floor/plating,/area/space)
+"rv" = (/obj/machinery/disposal,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"ry" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
+"rF" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"},/turf/simulated/floor/plating,/area/space)
+"sc" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/space)
+"sm" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"so" = (/obj/machinery/kitchen_machine/candymaker,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"sx" = (/obj/machinery/door/airlock/external{name = "Escape Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"sI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
+"sX" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/wood,/area/space)
+"te" = (/obj/structure/table/reinforced,/obj/structure/sign/poster/contraband/eat{pixel_y = -32},/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"tg" = (/turf/simulated/floor{icon_state = "black"},/area/space)
+"th" = (/obj/structure/flora/ausbushes/ywflowers,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/grass,/area/space)
+"tp" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"tt" = (/obj/machinery/door/airlock/external{dock_tag = "arrival_escape"; locked = 1; name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
+"tD" = (/obj/machinery/disposal,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"tF" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
+"uk" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"uY" = (/obj/machinery/door/window/southright{dir = 4; name = "Bar Door"; req_one_access = list(25)},/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"vb" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor,/area/space)
+"vn" = (/obj/machinery/hydroponics/constructable,/obj/machinery/status_display{pixel_y = 32},/turf/simulated/floor{icon_state = "dark"},/area/space)
+"vu" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"vE" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"vH" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"vQ" = (/obj/machinery/door/airlock/external{name = "Arrival Airlock"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"wy" = (/obj/machinery/hydroponics/constructable,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"wz" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"wE" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/space)
+"wK" = (/obj/machinery/media/jukebox/bar,/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/simulated/floor/wood,/area/space)
+"xH" = (/obj/machinery/door/firedoor,/turf/simulated/floor,/area/space)
+"xM" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/space)
+"yg" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"ym" = (/obj/structure/table/reinforced,/obj/machinery/door/window/eastright{name = "Kitchen"; req_access = list(28)},/obj/item/weapon/bell,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"yp" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor,/area/space)
+"yu" = (/obj/structure/stool/bar,/obj/machinery/atm{pixel_x = -30},/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"yw" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/beer{pixel_y = 4},/obj/machinery/firealarm{dir = 1; pixel_y = -25},/turf/simulated/floor/wood,/area/space)
+"yJ" = (/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"yK" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor{icon_state = "black"},/area/space)
+"yM" = (/obj/machinery/deepfryer,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"yO" = (/obj/machinery/computer/arcade,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"zo" = (/obj/machinery/icecream_vat,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"zu" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/simulated/floor{icon_state = "green"},/area/space)
+"Ag" = (/obj/structure/table,/obj/machinery/kitchen_machine/microwave{pixel_x = -3; pixel_y = 6},/obj/machinery/firealarm{pixel_y = 25},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"At" = (/turf/simulated/floor,/area/space)
+"AK" = (/obj/structure/table/woodentable,/obj/item/weapon/paper{info = "Wherah is BANANAS?"; info_links = "Clown Memo"},/obj/item/toy/prize/honk,/obj/item/weapon/reagent_containers/spray/watergun,/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/simulated/floor/carpet/purple,/area/space)
+"AX" = (/obj/machinery/kitchen_machine/grill,/obj/structure/extinguisher_cabinet{pixel_y = 30},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Bc" = (/obj/structure/kitchenspike,/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"Bk" = (/obj/structure/flora/ausbushes/fullgrass,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 20},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/grass,/area/space)
+"Bt" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor/plating,/area/space)
+"Bx" = (/obj/structure/stool/bed/chair/comfy/black{dir = 4},/obj/machinery/status_display{layer = 4; pixel_y = 32},/turf/simulated/floor/wood,/area/space)
+"Bz" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"BG" = (/obj/machinery/vending/boozeomat,/obj/machinery/light_switch{pixel_x = -30},/turf/simulated/floor/wood,/area/space)
+"BL" = (/obj/structure/table/woodentable,/obj/structure/window/reinforced{dir = 4},/obj/machinery/reagentgrinder{layer = 3.1; pixel_y = 5},/turf/simulated/floor/wood,/area/space)
+"Cf" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/structure/sink{dir = 4; pixel_x = 12},/turf/simulated/floor{icon_state = "green"},/area/space)
+"Cn" = (/obj/structure/plasticflaps{opacity = 1},/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Kitchen"},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space)
+"CB" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"CN" = (/obj/structure/closet/crate/hydroponics,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/screwdriver,/obj/item/weapon/shovel/spade,/obj/item/weapon/wrench,/obj/item/weapon/minihoe{pixel_x = 3},/obj/item/device/plant_analyzer,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"CS" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/soda{pixel_y = 4},/obj/machinery/light,/obj/structure/sign/poster/official/high_class_martini{pixel_y = -32},/turf/simulated/floor/wood,/area/space)
+"CZ" = (/obj/structure/closet/gmcloset{name = "formal wardrobe"},/obj/item/device/eftpos{eftpos_name = "Bar EFTPOS scanner"},/turf/simulated/floor/wood,/area/space)
+"Dc" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"Dd" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"Di" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/item/device/radio/intercom{dir = 1; name = "Station Intercom (General)"; pixel_y = -20},/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"Dk" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/carpet/black,/area/space)
+"Dq" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/turf/simulated/floor,/area/space)
+"Ds" = (/obj/structure/sign/double/barsign,/turf/simulated/wall,/area/space)
+"Dt" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 20},/obj/item/weapon/storage/fancy/donut_box,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Dw" = (/obj/structure/device/piano/royal,/obj/structure/extinguisher_cabinet{pixel_x = -28},/turf/simulated/floor/wood,/area/space)
+"DX" = (/obj/machinery/hologram/holopad{pixel_y = -16},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Ef" = (/obj/structure/table/glass,/obj/item/weapon/hand_labeler,/obj/item/weapon/packageWrap,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"Eg" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/turf/simulated/floor{icon_state = "black"},/area/space)
+"Er" = (/turf/space,/area/shuttle/escape/station)
+"Et" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Hydroponics"},/obj/structure/plasticflaps{opacity = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"EA" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/space)
+"EC" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{icon_state = "warning"},/area/space)
+"Fa" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"Fk" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"FJ" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{icon_state = "black"},/area/space)
+"FP" = (/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
+"FW" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/space)
+"Gd" = (/obj/machinery/seed_extractor,/obj/machinery/light_switch{pixel_y = -28},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"Gl" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Gm" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/space)
+"Gx" = (/turf/simulated/wall,/area/space)
+"Gz" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"GF" = (/obj/machinery/disposal,/obj/structure/sign/poster/official/random{pixel_x = -32},/obj/machinery/alarm{pixel_y = 28},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"GG" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"GO" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
+"GT" = (/obj/machinery/hologram/holopad{pixel_x = 16; pixel_y = -16},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{dir = 8; icon_state = "green"},/area/space)
+"GY" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/turf/simulated/floor/plating,/area/space)
+"Ha" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
+"Hh" = (/obj/machinery/vending/theater,/turf/simulated/floor/wood,/area/space)
+"HL" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/airlock,/turf/simulated/floor/plating,/area/space)
+"Im" = (/obj/item/weapon/kitchen/utensil/spoon,/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -7},/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 9; pixel_y = 4},/obj/structure/table/woodentable/fancy/black,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"Is" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"Iy" = (/obj/effect/landmark/start{name = "Chef"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"IA" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"IT" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/turf/simulated/floor/plating,/area/space)
+"IW" = (/obj/machinery/door/window/eastleft{dir = 2; name = "Hydroponics"; req_access = list(35)},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{icon_state = "delivery"},/area/space)
+"IZ" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor{icon_state = "black"},/area/space)
+"Jj" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor,/area/space)
+"Jl" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/turf/simulated/floor,/area/space)
+"JH" = (/obj/item/weapon/flora/random,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"Ka" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor{dir = 9; icon_state = "black"},/area/space)
+"Ki" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{pixel_x = -6; pixel_y = 10},/obj/item/weapon/book/manual/wiki/barman_recipes{pixel_x = 3; pixel_y = 4},/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 20},/obj/machinery/newscaster{pixel_x = 30},/turf/simulated/floor/wood,/area/space)
+"Kl" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"Ky" = (/obj/structure/stool/bar,/turf/simulated/floor/wood,/area/space)
+"KL" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor/plating,/area/space)
+"KS" = (/obj/structure/table/woodentable,/obj/item/toy/prize/honk{pixel_y = 2},/obj/structure/mirror{pixel_y = 26},/turf/simulated/floor/carpet/purple,/area/space)
+"La" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"Lb" = (/obj/structure/reagent_dispensers/beerkeg,/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/machinery/camera{c_tag = "Bar Backroom"; dir = 4},/turf/simulated/floor/wood,/area/space)
+"Lf" = (/obj/structure/table/woodentable,/obj/item/clothing/suit/santa,/obj/item/clothing/head/santahat,/obj/item/weapon/storage/backpack/santabag,/obj/item/weapon/coin/bananium{pixel_x = -3},/obj/machinery/light/small{dir = 1},/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 20},/turf/simulated/floor/carpet/purple,/area/space)
+"Li" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"Ln" = (/obj/structure/table/woodentable,/obj/item/clothing/suit/batman,/obj/item/clothing/head/batman_helmet,/obj/item/clothing/suit/superman,/obj/machinery/light_switch{pixel_x = 25},/turf/simulated/floor/carpet/purple,/area/space)
+"LP" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance{name = "Kitchen Cold Room Maintenance"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/space)
+"LS" = (/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"LT" = (/obj/structure/closet/crate/freezer,/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor{icon_state = "warning"},/area/space)
+"Mb" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
+"Mf" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/item/weapon/flora/pottedplant/shoot{pixel_x = -8; pixel_y = 16},/obj/item/ashtray/plastic,/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"MG" = (/obj/machinery/vending/cigarette,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"MI" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"MN" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/simulated/floor/wood,/area/space)
+"MR" = (/obj/structure/closet/secure_closet/bar,/obj/item/weapon/gun/projectile/revolver/doublebarrel,/obj/item/weapon/paper{info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest."; name = "Shotgun permit"},/obj/item/clothing/suit/armor/vest,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/item/weapon/storage/firstaid/regular,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor/wood,/area/space)
+"MW" = (/turf/simulated/floor{dir = 9; icon_state = "black"},/area/space)
+"MY" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"Na" = (/obj/machinery/door/airlock{name = "Kitchen Cold Room"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"Nc" = (/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"Nh" = (/turf/space,/area/space)
+"Nm" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/plating,/area/space)
+"NC" = (/turf/simulated/floor{dir = 10; icon_state = "black"},/area/space)
+"NH" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"NO" = (/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"NX" = (/obj/machinery/hydroponics/constructable,/obj/machinery/alarm{dir = 8; pixel_x = 22},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"Oh" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"Oj" = (/obj/machinery/door/airlock{name = "Bar Backroom"; req_access = list(25)},/obj/machinery/door/firedoor,/turf/simulated/floor/wood,/area/space)
+"On" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor{dir = 6; icon_state = "black"},/area/space)
+"Op" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"Os" = (/obj/structure/stool/bed/chair/wood/normal{dir = 1},/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/simulated/floor/carpet/purple,/area/space)
+"OM" = (/obj/machinery/light{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"Pf" = (/mob/living/carbon/monkey/punpun,/obj/structure/sink{pixel_y = 24},/turf/simulated/floor/wood,/area/space)
+"PC" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/turf/simulated/floor/plating,/area/space)
+"PR" = (/obj/structure/flora/junglebush/large,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor/grass,/area/space)
+"PU" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
+"Qi" = (/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"Qr" = (/obj/random/vending/cola,/turf/simulated/floor{icon_state = "dark"},/area/space)
+"Qz" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/directions/dock_tablo/arrival,/turf/simulated/floor/plating,/area/space)
+"QN" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"QY" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/turf/simulated/floor,/area/space)
+"Rc" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "showroomfloor"},/area/space)
+"Rz" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor{icon_state = "black"},/area/space)
+"RE" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
+"RF" = (/obj/structure/table/reinforced,/turf/simulated/floor/wood,/area/space)
+"RT" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor{dir = 5; icon_state = "black"},/area/space)
+"Sc" = (/obj/structure/table/woodentable,/obj/item/weapon/lipstick/jade{pixel_y = 5},/obj/item/weapon/lipstick/purple{pixel_x = 3; pixel_y = 7},/obj/item/device/flashlight/lamp/green{on = 0; pixel_x = -3; pixel_y = 8},/obj/item/weapon/poster/legit,/obj/item/weapon/poster/legit,/obj/item/weapon/poster/legit,/obj/machinery/light/small{dir = 1},/obj/machinery/newscaster{pixel_y = 30},/turf/simulated/floor/carpet/purple,/area/space)
+"Si" = (/obj/machinery/reagentgrinder{layer = 3.1; pixel_y = 5},/obj/structure/table,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Sv" = (/obj/structure/table,/obj/machinery/chem_dispenser/soda{pixel_y = 4},/obj/machinery/newscaster{pixel_y = 30},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"SG" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = -22},/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue{pixel_x = 2; pixel_y = 6},/turf/simulated/floor/wood,/area/space)
+"SH" = (/obj/machinery/processor,/obj/machinery/light_switch{pixel_x = -25; pixel_y = 4},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"SN" = (/turf/simulated/floor/grass,/area/space)
+"SS" = (/turf/simulated/floor/carpet/black,/area/space)
+"SW" = (/obj/machinery/door/airlock{name = "Honk Office"; req_access = list(46)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor/wood,/area/space)
+"Td" = (/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"Tv" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"TJ" = (/obj/structure/table/woodentable,/obj/item/ashtray/glass,/obj/item/weapon/lighter/zippo{pixel_x = -5; pixel_y = 5},/obj/machinery/computer/security/telescreen/entertainment{pixel_y = 32},/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/space)
+"TK" = (/turf/simulated/floor/plating,/area/space)
+"TT" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"Uk" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/external{name = "Escape Airlock"; req_access = list(1)},/turf/simulated/floor/plating,/area/space)
+"Up" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor{dir = 10; icon_state = "black"},/area/space)
+"Uz" = (/turf/simulated/floor{icon_state = "green"},/area/space)
+"UI" = (/obj/machinery/smartfridge,/turf/simulated/wall,/area/space)
+"UL" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor,/area/space)
+"UR" = (/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/turf/simulated/floor,/area/space)
+"Vg" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Vi" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"Vk" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/pie,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Vn" = (/turf/simulated/floor/wood,/area/space)
+"Vv" = (/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"VI" = (/obj/machinery/door/airlock/glass{name = "Hydroponics Pasture"; req_access = list(28)},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"VP" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets{pixel_x = 3; pixel_y = 3},/obj/item/weapon/packageWrap,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Wc" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"Wl" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
+"WL" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{dir = 9; icon_state = "wood_stairs"},/area/space)
+"WN" = (/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/window/reinforced{dir = 5},/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/floor/plating,/area/space)
+"Xl" = (/obj/machinery/door/airlock/glass{name = "Bar"},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"Xw" = (/obj/machinery/vending/hydronutrients,/obj/machinery/power/apc{dir = 8; name = "Hydroponics APC"; pixel_x = -28},/turf/simulated/floor{icon_state = "dark"},/area/space)
+"XG" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/plating,/area/space)
+"XK" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"XO" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/turf/simulated/floor/plating,/area/space)
+"Yc" = (/obj/machinery/door/window/eastleft{req_access = list(25)},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor{icon_state = "delivery"},/area/space)
+"Yq" = (/obj/machinery/door/firedoor,/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
+"YH" = (/obj/structure/stool/bar,/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/simulated/floor/wood,/area/space)
+"YT" = (/obj/structure/table,/obj/item/weapon/kitchen/rollingpin,/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Zg" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor{dir = 10; icon_state = "green"},/area/space)
+"Zn" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"Zo" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/obj/machinery/newscaster{pixel_y = 30},/turf/simulated/floor/wood,/area/space)
+"Zt" = (/obj/machinery/light/small,/turf/simulated/floor/plating{dir = 8; icon_state = "warnplate"},/area/space)
+"ZE" = (/turf/simulated/floor{dir = 8; icon_state = "wood_stairs2"},/area/space)
+"ZM" = (/obj/structure/flora/ausbushes/fullgrass,/mob/living/simple_animal/chicken{name = "Commander Clucky"},/turf/simulated/floor/grass,/area/space)
+"ZN" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/ywflowers,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/grass,/area/space)
 
 (1,1,1) = {"
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNoIoIoIuNsxsxuNuNuNuNuNuNsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIuNsxsxuNoIoIoIoIuNuNuNuNuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIuNuNuNuNoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxMmMmMmMmMmMmMmMmMmMmMmMmMmdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxsxXPGJwksxsxsxsxsxwkGJXPsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNdxsxwkJJwkYCwkuNwkYCwkJJwksxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIoIuNuNuNwknDwkwbwbwbwbwbwknDwkuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNoIoIoIoIoIuNuNuNuNuNuNuNuNuNuNuNuNuNuNLrCYCYCYCYCYCYCYCYCYCYCYCYCYDtuNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxuNuNuNoIoIoIoIoIuNoIoIoIoIoIuNLrCYCYCYCYCYCYzfAwAwAwAwAwAwAwAwAwAwAwAwAwQLCYCYCYCYCYCYDtuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxsxsxvPvPvPsxsxsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIoIoILrCYCYzfAwAwAwAwAwAwHrciciciciciJpAwHrciciciciciJpAwAwAwAwAwAwQLCYCYDtuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxsxvPvPvPvPvPsxsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIoILrzfAwAwHrciciciciciciFduNuNuNuNuNkXAwTwuNuNuNuNuNtDciciciciciJpAwAwAwQLDtuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoILrzfAwHrciFduNuNuNuNuNuNuNuNsxsxsxuNkXAwTwuNsxsxsxuNuNuNuNuNuNuNtDciciJpAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNoIkXAwHrFduNuNuNsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxuNuNuNuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxuNoIoIoIoIoIoIoIuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxuNuNuNuNuNuNuNuNuNLrzfAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPAGNzHAAwAwAwAwAwAwAwuNkXAwHrFduNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTCKpyAwAwAwAwAwAwAwuNkXAwTwuNuNsxsxsxsxsxsxsxuNuNuNuNuNuNuNwbuNwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTEgpyAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNJJJJJJJJuNmHuNuNuNuNcOuNuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzNzAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNsTNCuNuNuNXsVfxXaPONevMyuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTEgpyAwAwAwAwAwAwAwAwkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbwbwbwbNfwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNIrevQXVVuNhohkhkqoONyibIuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPFTLbpyAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNggggggggggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNWievevevnYoihkJejYONeviluNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzNzAwAwAwAwAwAwAwAwkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbNfwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNTQevmFdYuNwHhkhkMBONevdguNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxwkuNuNuNuNuNuNuNuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxuNuNuNuNuNuNXnuRGShAaCevbIuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPNzNzwkAwAwAwAwAwAwAwuNkXAwTwuNsxsxsxsxsxsxsxsxuNwbwbwbwbggwbwbwbwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNsxuNZEVIbiPSuNGbixwGxzksryvjuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPDXCKcZAwAwAwAwAwAwAwuNkXAwTwuNuNsxsxsxsxsxsxsxuNuNuNuNuNuNuNwbuNwbuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNLrzfAwTwuNsxCYCYCYCYCYZPIQZPIQZPIQZPIQZPsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPAGNzSDAwAwAwAwAwAwAwuNkXAwQLDtuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwHrFduNsxAwAwAwAwAwuNDxIQjmRpoHIQhfuNsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPdxuNAwAwAwAwAwAwAwuNtDJpAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxuNuNkXAwTwuNuNsxciciciciciZPIQZPIQZPIQZPIQZPsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPdxuNuNuNuNuNuNuNuNuNuNkXAwTwuNuNsxsxsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxsxsxuNuNLrzfAwTwuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxsxsxsxsxsxsxsxsxsxuNkXAwQLDtuNuNuNsxsxsxsxsxsxsxsxsxsxuNkXAwTwuNsxsxsxsxsxsxsxsxsxuNuNuNLrzfAwHrFduNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxvPvPvPvPvPvPvPvPvPvPvPvPvPvPvPsxdxsxsxsxsxsxsxsxsxsxuNtDJpAwQLCYDtuNuNuNuNuNuNuNuNsxsxsxuNkXAwTwuNsxsxsxuNuNuNuNuNuNLrCYCYzfAwHrFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxdxsxsxsxsxsxsxsxsxsxuNuNtDJpAwAwQLCYCYCYCYCYCYDtuNuNuNuNuNkXAwTwuNuNuNuNuNLrCYCYCYCYzfAwAwAwHrFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxvPvPvPvPvPvPvPvPvPvPvPvPvPsxsxdxsxsxsxsxsxsxsxsxsxsxuNuNtDciciJpAwAwAwAwAwAwQLCYCYCYCYCYzfAwQLCYCYCYCYCYzfAwAwAwAwAwAwHrciFduNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNtDciciciciciciJpAwAwAwAwAwAwAwAwAwAwAwAwAwHrciciciciciciFduNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNuNuNtDciciciciciciciciciciciciciFduNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxsxsxsxsxsxvPvPvPvPvPvPvPsxsxsxsxsxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxuNuNuNuNuNuNuNuNuNuNuNuNuNuNuNuNsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
-sxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsxsx
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKTKTKTKTKTKNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKTKNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKTKTKTKTKTKTKGxGxGxGxGxTKTKTKTKTKTKTKTKNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKGxGxGxGxGxGxGxfIfIfIGxGxGxGxGxGxGxTKTKNhaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKGxfIfIfIfIfIGxfIfIfIGxfIfIfIfIfIGxTKTKGxaGcqcqcqcqcqcqcqcqcqcqcqcqcqaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKGxfIfIfIfIfIGxfIfIfIfIfIfIfIfIfIGxTKTKGxaGcqcqcqcqcqcqcqcqcqcqcqcqcqaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKTKTKGxfIfIfIfIfIfIfIfIfIfIfIfIfIfIfIGxTKTKGxaGcqcqcqcqcqcqcqcqcqcqcqcqcqaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKGxGxGxGxfIfIfIfIfIfIfIfIGxfIfIfIfIfIGxTKTKGxaGcqcqcqcqcqcqcqcqcqcqcqcqcqaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKGxfIfIfIfIfIfIfIGxfIfIfIGxGxGxGxGxGxGxTKTKGxaGcqcqcqcqcqcqcqcqcqcqcqcqcqaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhTKTKGxfIfIfIfIfIfIfIGxfIfIfIGxfIfIfIfIGxTKTKTKGxaGNhWNrntFNhNhNhNhNhtFrnWNNhaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhGxTKTKGxfIfIfIfIfIGxGxGxfIfIfIfIfIfIfIfIGxTKTKTKGxaGNhtFTKtFQztFGxtFQztFTKtFNhaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhGxTKTKGxGxGxfIfIfIfIfIGxfIGxfIGxfIfIfIfIGxTKTKTKGxGxGxtFvQtFNONONONONOtFvQtFGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhGxTKTKTKTKGxfIfIfIfIfIGxGxGxGxGxGxGxGxGxGxGxTKGxGxMWdzcTcTcTcTcTcTcTcTcTcTcTdzbqGxGxGxGxGxGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGGxTKTKTKTKGxfIfIfIfIfIfIfIfIfIfIfIfIMWcTcTcTREFkFkryJjypypypypypDqypypypypypJjMbFkaXcTcTcTcTbqGxGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhNhNhErErErNhNhNhNhNhGxGxGxTKTKGxfIfIfIfIfIfIfIfIfIMWcTcTqDAtAtAtULAtAthheltgtgtgtgpAxMhhtgtgtgtgelpAAtULAtAtAtAtFPcTcTbqGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhNhErErErErErNhNhNhNhNhNhGxTKTKGxfIfIfIfIfIfIfIfIKaryypypsIFJFJFJEgtgtgjKGxGxGxGxGxcSxMLSGxGxGxGxGxNCtgRzFJFJFJeYypypypMbRTGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhGxTKTKGxfIfIfIfIfIfIGxMWajAthhtgjKGxGxGxfEGxGxGxGxTKTKTKGxhlpzTdGxTKTKTKGxGxGxfEGxGxGxNCtgtgpAAtlRbqGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhGxGxTKGxGxfIfIfIfIfIGxcSULhhjKGxGxGxTKTKFWTKTKTKTKTKTKTKGxcSxMLSGxTKTKTKTKTKTKFWTKTKGxGxGxGxNCpAULLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhNhGxTKTKGxfIfIfIfIGxGxcSULLSGxGxBtXGXGXGITXGXGXGXGXGXGXGeIViQYfLeIXGXGXGXGXGXGITPCXGsmXGNmGxGxcSULLSGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErNhNhGxTKGxGxGxGxGxGxGxMWqDULLSGxTKFWTKTKTKTKTKTKTKTKTKTKTKGxcSgGbJGxTKTKTKTKTKGxGxLPCnGxTKFWTKGxcSULFPbqGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErGOYqHaAtAtAtAtAtAtAtGxcSAtPUjKGxTKFWTKGxGxGxGxGxTKGxGxGxGxGxXlGGnxGxGxGxGxGxGxGxlfxMmvGxTKFWTKGxNCqOAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErrFWcsxAtAtAtAtAtAtAtGxhlxHvuGxGxyJWlGxGxScKSLfGxDsGxBxTJZoGxNOJHOhGxSvpKAXAgkGGxLTEChMGxGxFWTKGxGxnIxHTdGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErrFQisxAtAtAtAtAtAtAtGxcSAtotGxTKTKFWGxbxAKOsLnGxDwYHbaMNVndjVvNOhBDtVkukapapapNaQNIsGzBcGxFWTKTKGxvEAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErYqYqYqAtAtAtAtAtAtAtGxcSAtotGxTKTKKLnTlGiKoPNHSWsXoPsXiKiEWLcIBzvHymoQGlVPhNtpGxlBRcDiBcGxFWTKTKGxvEAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErrFQisxAtAtAtAtAtAtAtAtcSAtotGxTKTKFWGxkFbHqeHhGxyuKyKyKyKyZEVvTvhBtezoIyeSDXiHGxGxiLGxGxGxKLXGXGeILiAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErrFZtsxAtAtAtAtAtAtAtGxcSAtwzeIXGXGGYGxGxGxGxGxGxSGRFRFRFMfMGNOImOMGxyMXKYToQkaodoCfiBkIWEtFWTKTKGxvEAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErYqYqYqAtAtAtAtAtAtAtAtcSAtotGxTKTKFWGxGFPfpvKiGxidSSDkSSuYczVvCBhBpwsodGpmZnSiDdcYPRZNoZjeGYTKTKGxvEAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErNhNhtFGxGxGxGxGxGxGxGxcSAtotGxTKTKFWGxLbeHMNjxOjNcSSSSSSrmyONOVvMIVgaponapapapVIthiqSNGxGxFWTKTKGxvEAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErYqYqtFAtAtAtAtAtAtAtGxcSAtotGxTKTKFWGxYcTTMRCZGxBGwKCSywBLofVvNOqbGxSHXKoQorrvGxlxZMhHGxTKFWTKGxGxnIxHTdGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErttWcUkAtAtAtAtAtAtAtGxhlxHvuGxGxyJWlGxgrraGxGxGxGxGxGxGxGxGxNOtDMYGxGxvbUIpwGxGxFaLaGxGxTKFWTKGxMWajAtLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErGOYqHLAtAtAtAtAtAtAtGxcSAtlRbqGxTKFWTKTKFWTKTKTKTKTKTKTKTKGxXlGGnxGxlFpydLCNvngXwyNXGxTKTKFWTKGxcSULhhjKGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGErErErErErErErErErErErErErErErErEraGGxAtAtAtAtAtAtAtGxNCpAULLSGxTKFWTKTKFWTKTKTKTKTKTKTKTKGxcSgGbJGxXwGTfpEAwEEAscEAjeXGPCcWGxGxcSULLSGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGErErErErErErErErErErErErErErErErEraGGxGxGxGxGxGxGxGxGxGxcSULLSGxGxXOXGXGITPCXGXGXGXGXGXGXGeIViURKlitBzZgUzUzloUzzuCfGxTKFWGxGxMWqDULLSGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErNhaGNhNhNhNhNhNhNhNhNhGxcSULFPbqGxGxGxTKTKFWTKTKTKTKTKTKTKGxcSxMLSGmEfavjLGdqVygDcygGxGxfEGxMWqDAtPUjKGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhErErErErErErErErErErErErErErErNhaGNhNhNhNhNhNhNhNhNhGxNCqOAtFPcTbqGxGxGxfEGxGxGxGxTKTKTKGxhlpzTdGxFaOpLaGxGxFaLaGxGxMWmYFkryypsIOnGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhErErErErErErErErErErErErErNhNhaGNhNhNhNhNhNhNhNhNhGxGxUpeYypypMbFkFkFkIAcTcTbqGxGxGxGxGxcSxMLSjbkpmhQrGxMWcTcTcTcTqDULAtAthhjKGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhErErErErErErErErErErErErErNhNhaGNhNhNhNhNhNhNhNhNhNhGxGxNCtgtgpAAtAtAtULAtAtFPdzcTcTcTcTqDxMFPcTcTcTcTdzqDAtAtAtAtAtULhhtgjKGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhaGNhNhNhNhNhNhNhNhNhNhNhGxGxGxGxNCtgtgtgyKFJFJeYJjypypypypypJlypypypypypJjsIFJFJFJFJFJIZjKGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhGxGxGxGxGxGxGxGxNCeltgtgtgtgtgtgtgtgtgtgtgeljKGxGxGxGxGxGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGNhNhNhNhNhErErErErErErErNhNhNhNhNhaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhGxGxGxGxGxGxGxGxGxGxGxGxGxGxGxGxNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
+NhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNhNh
 "}
