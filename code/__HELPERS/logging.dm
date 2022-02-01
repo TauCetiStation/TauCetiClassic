@@ -174,10 +174,6 @@
 	if (config.log_qdel)
 		global.qdel_log << "[text][log_end]"
 
-/proc/log_perf(list/perf_info)
-	. = "[perf_info.Join(";")]\n"
-	global.perf_log << .
-
 /atom/proc/log_investigate(message, subject)
 	if(!message || !subject)
 		return

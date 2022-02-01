@@ -136,10 +136,6 @@ SUBSYSTEM_DEF(throwing)
 				finialize()
 				return
 
-		if (!AM.throwing) // we hit something during our move
-			finialize(hit = TRUE)
-			return
-
 		dist_travelled++
 
 		if (dist_travelled > MAX_THROWING_DIST)

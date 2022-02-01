@@ -204,7 +204,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set_dir(Dir)
 
 	if(orbiting)
-		if(ismovable(orbiting.orbiting))
+		if(ismovable(orbiting.orbiting) && !isobserver(orbiting.orbiting))
 			var/atom/movable/orb = orbiting.orbiting
 			glide_size_override = orb.glide_size
 
@@ -212,20 +212,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		set_glide_size(glide_size_override)
 
 	if(NewLoc)
-		loc = NewLoc
+		abstract_move(NewLoc)
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 		update_parallax_contents()
 		return
-	loc = get_turf(src) //Get out of closets and such as a ghost
-	if((Dir & NORTH) && y < world.maxy)
-		y++
-	else if((Dir & SOUTH) && y > 1)
-		y--
-	if((Dir & EAST) && x < world.maxx)
-		x++
-	else if((Dir & WEST) && x > 1)
-		x--
+	else
+		var/turf/destination = get_turf(src)
+
+		if((Dir & NORTH) && y < world.maxy)
+			destination = get_step(destination, NORTH)
+		else if((Dir & SOUTH) && y > 1)
+			destination = get_step(destination, SOUTH)
+
+		if((Dir & EAST) && x < world.maxx)
+			destination = get_step(destination, EAST)
+		else if((Dir & WEST) && x > 1)
+			destination = get_step(destination, WEST)
+
+		abstract_move(destination)//Get out of closets and such as a ghost
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)

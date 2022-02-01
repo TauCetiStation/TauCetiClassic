@@ -58,41 +58,62 @@
 
 	next_move_dir_add = 0
 	next_move_dir_sub = 0
-
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag
 
-	if(!mob || !mob.loc)
-		return FALSE
-	if(!new_loc || !direct)
-		return FALSE
-	if(mob.notransform)
-		return FALSE
-	if(mob.control_object)
-		return Move_object(direct)
+	if(!mob)
+		return // Moved here to avoid nullrefs below
+
+	if(!forced)
+		if(moving || mob.throwing)
+			return
+
+	if(mob.control_object)	Move_object(direct)
+
+	if(isobserver(mob) || isovermind(mob))
+		return mob.Move(new_loc, direct)
+
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
-	if(mob.stat == DEAD)
-		mob.ghostize()
-		return FALSE
-	if(!forced && !mob.canmove)
-		return FALSE
 
-	var/mob/living/L = mob //Already checked for isliving earlier
-	if(L.incorporeal_move) //Move though walls
-		Process_Incorpmove(direct)
-		return FALSE
+	if(!new_loc || !direct)
+		return
 
-	if(mob.remote_control) //we're controlling something, our movement is relayed to it
+	if(!forced && mob.stat)
+		return
+
+	if(mob.remote_control)//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
 		return AIMove(new_loc, direct, mob)
 
+	if(mob.notransform)
+		return//This is sota the goto stop mobs from moving var
+
+	var/mob/living/L = mob
+	if(L.incorporeal_move)//Move though walls
+		Process_Incorpmove(direct)
+		return
 	Process_Grab()
 
-	if(istype(mob.buckled))
-		return mob.buckled.relaymove(mob, direct)
+	if(istype(mob.buckled, /obj/vehicle))
+		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+		move_delay = world.time
+		//drunk driving
+		if(mob.confused)
+			direct = pick(cardinal)
+		return mob.buckled.relaymove(mob,direct)
+
+	if(!forced && !mob.canmove)
+		return
+
+	if(!mob.lastarea)
+		mob.lastarea = get_area(mob.loc)
+
+	if(!mob.lastarea)
+		mob.lastarea = get_area(mob.loc)
 
 	if(isobj(mob.loc) || ismob(mob.loc)) //Inside an object, tell it we moved
 		var/atom/O = mob.loc
@@ -100,9 +121,6 @@
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
-
-	if(!mob.lastarea)
-		mob.lastarea = get_area(mob.loc)
 
 	if(mob.restrained()) //Why being pulled while cuffed prevents you from moving
 		for(var/mob/M in range(mob, 1))
@@ -122,6 +140,7 @@
 
 	//We are now going to move
 	var/add_delay = 0
+	mob.last_move_intent = world.time + 10
 	switch(mob.m_intent)
 		if("run")
 			add_delay += RUN_SPEED_SLOWDOWN + config.run_speed
@@ -137,11 +156,7 @@
 	else
 		move_delay = world.time
 
-	var/mob_confusion = mob.confused
-	// Something with pulling things
-
 	var/grab_move = FALSE
-
 	if(locate(/obj/item/weapon/grab, mob))
 		move_delay = max(move_delay, world.time + 7)
 		grab_move = TRUE
@@ -162,7 +177,7 @@
 					M.other_mobs = 1
 					if(mob != M)
 						M.animate_movement = SYNC_STEPS
-				for(var/mob/M in L)
+				for(var/mob/M in grab_list)
 					spawn(0)
 						ISDIAGONALDIR(direct) ? M.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay*2)) : M.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
 						step(M, direct)
@@ -172,7 +187,8 @@
 						M.animate_movement = SLIDE_STEPS
 						return
 
-	else if(mob_confusion)
+	var/mob_confusion = mob.confused
+	if(mob_confusion)
 		var/newdir
 		if(mob_confusion > 40)
 			newdir = pick(global.alldirs)
@@ -187,10 +203,10 @@
 	if(!grab_move && mob.SelfMove(new_loc, direct))
 		. = ..()
 
-	mob.last_move_intent = world.time + 10
-
 	if(ISDIAGONALDIR(direct) && mob.loc == new_loc) //moved diagonally successfully
 		add_delay *= 2
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+	move_delay += add_delay
 
 	for(var/obj/item/weapon/grab/G in mob.GetGrabs())
 		if(G.state == GRAB_NECK)
@@ -200,8 +216,6 @@
 		G.adjust_position()
 		new_loc = get_step(L, direct)
 
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
-	move_delay += add_delay
 	if(.)
 		mob.throwing = FALSE
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, new_loc, direct)

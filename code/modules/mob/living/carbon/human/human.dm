@@ -30,8 +30,6 @@
 	beauty_living = 0
 	beauty_dead = -1500
 
-	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
-
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new

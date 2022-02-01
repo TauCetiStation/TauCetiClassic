@@ -20,6 +20,7 @@
 // The numbers just define the ordering, they are meaningless otherwise.
 
 #define SS_INIT_INPUT         85
+#define SS_INIT_TIMETRACK     47
 #define SS_INIT_EVENTS        13
 #define SS_INIT_FLUIDS        12
 #define SS_INIT_HOLIDAY       11

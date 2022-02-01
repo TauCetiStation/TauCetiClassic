@@ -156,25 +156,27 @@
 	if(AM.anchored)
 		now_pushing = FALSE
 		return
-
+	now_pushing = TRUE
 	var/dir_to_target = get_dir(src, AM)
 
 	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
 	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
 	// the window will fail as get_dir will return 0 and the player will be unable to move the window when
-	// it should be pushamachinery/door/windowble.
+	// it should be pushable.
 	// In this scenario, we will use the facing direction of the /mob/living attempting to push the atom as
 	// a fallback.
 	if(!dir_to_target)
 		dir_to_target = dir
 
-	now_pushing = TRUE
 	if(istype(AM, /obj/structure/window))
 		var/obj/structure/window/W = AM
 		if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
 			for(var/obj/structure/window/win in get_step(AM, dir_to_target))
-				now_pushing = 0
+				now_pushing = FALSE
 				return
+
+	if(pulling == AM)
+		stop_pulling()
 
 	var/current_dir
 	if(isliving(AM))
@@ -188,7 +190,7 @@
 		Move(get_step(loc, dir_to_target), dir_to_target)
 	if(current_dir)
 		AM.set_dir(current_dir)
-	now_pushing = 0
+	now_pushing = FALSE
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm

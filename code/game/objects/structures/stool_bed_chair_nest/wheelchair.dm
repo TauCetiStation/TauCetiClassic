@@ -55,6 +55,7 @@
 			user.pulledby = null
 			to_chat(user, "<span class='red'>You lost your grip!</span>")
 		return
+	move_delay += 4
 	if(user.pulling && (user == pulling))
 		pulling = null
 		user.pulledby = null

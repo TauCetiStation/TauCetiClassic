@@ -139,7 +139,6 @@
 		set_glide_size(glide_size_override)
 
 	var/atom/oldloc = loc
-	var/old_dir = dir
 
 	if(loc != NewLoc)
 		if (!ISDIAGONALDIR(Dir)) //Cardinal move
@@ -155,7 +154,6 @@
 				if(!step(src, h))
 					set_dir(v)
 			else
-				dir = old_dir // blood trails uses dir
 				. = step(src, h)
 				if(.)
 					moving_diagonally = SECOND_DIAG_STEP
@@ -194,13 +192,8 @@
 
 	last_move = Dir
 
-	set_dir(Dir)
-
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc, Dir, glide_size_override)) //movement failed due to buckled mob
 		return FALSE
-
-	if(dir != old_dir)
-		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/movable/proc/check_pulling()
 	if(pulling)
