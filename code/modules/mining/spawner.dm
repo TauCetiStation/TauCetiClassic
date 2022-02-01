@@ -39,20 +39,19 @@
 /obj/structure/spawner/process()
 	if(!is_alive)
 		Death()
-		icon_state = death_icon
+		return
 	timer.randomize_max()
 	max_mob = timer.rand_max_mob
 
 /obj/structure/spawner/proc/Triggered()
 	if(mobs.len < max_mob)
-		if(!is_alive)
-			return
 		var/mob/living/simple_animal/hostile/asteroid/M = new type_mob(get_turf(src))
 		mobs += M
 		for(var/MM in spawner_mod)
 			M.AddComponent(MM,1)
 
 /obj/structure/spawner/proc/Death()
+	icon_state = death_icon
 	qdel(My_area)
 	for(var/L in loot_ore)
 		if(!istype(L, /obj/item/weapon/ore))
@@ -60,6 +59,7 @@
 			for(var/I =1, I<= R, I++)
 				new L(get_turf(src))
 	is_alive = 2 //Уже умер и выплюнул ресурсы.(Чтобы в процесс() не накидывало вечно)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner_area
 	freeze_movement = TRUE
