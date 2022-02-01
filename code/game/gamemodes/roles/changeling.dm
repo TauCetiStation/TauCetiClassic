@@ -35,6 +35,7 @@
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
 	var/absorbedamount = 0 //precise amount of ppl absorbed
+	skills_type = /datum/skills/traitor
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()

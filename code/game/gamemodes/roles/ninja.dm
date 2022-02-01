@@ -9,6 +9,7 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 	logo_state = "ninja-logo"
+	skills_type = /datum/skills/traitor
 
 /datum/role/ninja/OnPostSetup(laterole)
 	. = ..()

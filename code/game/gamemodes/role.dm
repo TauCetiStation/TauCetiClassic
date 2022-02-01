@@ -170,6 +170,7 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	antag.current_skills = antag.getAvailableSkills()
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()

@@ -10,6 +10,7 @@
 
 	/// The action used to spawn family induction packages.
 	var/datum/action/cooldown/spawn_induction_package/package_spawner
+	skills_type = /datum/skills/gangster
 
 /datum/role/gangster/New(datum/mind/M, datum/faction/fac, override)
 	. = ..()
@@ -94,6 +95,7 @@
 
 /datum/role/gangster/leader
 	id = GANGSTER_LEADER
+	skills_type = /datum/skills/traitor
 
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()

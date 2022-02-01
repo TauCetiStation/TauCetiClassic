@@ -9,6 +9,7 @@
 	antag_hud_name = "hudwizard"
 
 	logo_state = "wizard-logo"
+	skills_type = /datum/skills/wizard
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()

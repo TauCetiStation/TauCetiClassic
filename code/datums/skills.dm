@@ -97,7 +97,7 @@ medical, chemistry, research, command)
 	var/datum/skills/result = new /datum/skills()
 	for(var/skill in SKILL_BOUNDS)
 		var/skill_value = max(getRating(skill), other.getRating(skill))
-		skill_value = max(skill_value, getSkillMaximum(skill))
+		skill_value = max(skill_value, getSkillMinimum(skill))
 		skill_value = min(skill_value, getSkillMaximum(skill))
 		result.vars[skill] = skill_value
 	return result
@@ -420,3 +420,54 @@ medical, chemistry, research, command)
 	chemistry = SKILL_CHEMISTRY_EXPERT
 	research = SKILL_RESEARCH_EXPERT
 	command = SKILL_COMMAND_MASTER
+
+/datum/skills/revolutionary
+	police = SKILL_POLICE_TRAINED
+	firearms = SKILL_FIREARMS_TRAINED
+	command = SKILL_COMMAND_BEGINNER
+	melee = SKILL_MELEE_TRAINED
+
+/datum/skills/gangster
+	firearms = SKILL_FIREARMS_PRO
+	melee = SKILL_MELEE_MASTER
+
+/datum/skills/cultist
+	melee = SKILL_MELEE_MASTER
+	surgery = SKILL_SURGERY_EXPERT
+	medical = SKILL_MEDICAL_MASTER
+	chemistry = SKILL_CHEMISTRY_PRACTICED
+	research = SKILL_RESEARCH_TRAINED
+
+/datum/skills/cultist/leader
+	command = SKILL_COMMAND_EXPERT
+	police = SKILL_POLICE_TRAINED
+	firearms = SKILL_FIREARMS_TRAINED
+	chemistry = SKILL_CHEMISTRY_COMPETENT
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+	civ_mech = SKILL_CIV_MECH_TRAINED
+	research = SKILL_RESEARCH_PROFESSIONAL
+
+
+/datum/skills/wizard
+	melee = SKILL_MELEE_MASTER
+	medical = SKILL_MEDICAL_MASTER
+	surgery = SKILL_SURGERY_EXPERT
+	chemistry = SKILL_CHEMISTRY_EXPERT
+	command = SKILL_COMMAND_TRAINED
+
+/datum/skills/undercover
+	police = SKILL_POLICE_PRO
+	firearms = SKILL_FIREARMS_PRO
+	command = SKILL_COMMAND_TRAINED
+	combat_mech = SKILL_COMBAT_MECH_NOVICE
+	melee = SKILL_MELEE_TRAINED
+
+/datum/skills/cop
+	police = SKILL_POLICE_PRO
+	firearms = SKILL_FIREARMS_PRO
+	combat_mech = SKILL_COMBAT_MECH_PRO
+	command = SKILL_COMMAND_EXPERT
+	melee = SKILL_MELEE_MASTER
+	
+
+
