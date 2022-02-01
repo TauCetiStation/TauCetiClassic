@@ -20,9 +20,12 @@
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
+	if(isAI(speaker))
+		var/mob/living/silicon/ai/S = speaker
+		speaker_name = S.GetVoice()
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src
@@ -121,6 +124,9 @@
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
+	if(isAI(speaker))
+		var/mob/living/silicon/ai/S = speaker
+		speaker_name = S.GetVoice()
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src

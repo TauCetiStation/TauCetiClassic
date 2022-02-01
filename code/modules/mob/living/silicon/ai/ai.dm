@@ -45,6 +45,8 @@ var/global/list/ai_verbs_default = list(
 	var/aiRestorePowerRoutine = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
+	var/voice_change = FALSE
+	var/voice
 	var/datum/AI_Module/active_module = null
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws

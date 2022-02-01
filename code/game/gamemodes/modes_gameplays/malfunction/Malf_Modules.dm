@@ -208,6 +208,11 @@ robot_fabricator
 	for(var/obj/machinery/drone_fabricator/fabricator in machines)
 		fabricator.malfuction = TRUE
 
+/datum/AI_Module/large/BSA_hack
+	module_name = "Hack BSA"
+	description = "Hacks drone fabricators, now all produced units have a program of subjugation to you."
+	need_only_once = TRUE
+
 /datum/AI_Module/large/hack_announce
 	module_name = "Hack announcement system"
 	description = "Hacks the announcement system, preventing the Cent. com to notify the station about suspicious activity on the network. Allows you to give custom announcements to station."
@@ -245,7 +250,7 @@ robot_fabricator
 
 
 /mob/living/silicon/ai/proc/hack_announce()
-	set category = "Malfuction"
+	set category = "Malfunction"
 	set name = "Custom announcement"
 	var/datum/AI_Module/large/hack_announce/malf = current_modules["Hack announcement system"]
 	malf.use(src)
@@ -326,6 +331,38 @@ robot_fabricator
 		qdel(M)
 	else
 		uses++
+
+/datum/AI_Module/small/overload_pda
+	module_name = "PDA overload"
+	description = ""
+	uses = 5
+	verb_caller = /mob/living/silicon/ai/proc/overload_pda
+
+/mob/living/silicon/ai/proc/overload_pda()
+
+/datum/AI_Module/small/voice_changer
+	module_name = "Voice changer"
+	description = "AoE!!!!!!!!!!"
+	need_only_once = TRUE
+	verb_caller = list(
+		/mob/living/silicon/ai/proc/voice_changer_toggle,
+		/mob/living/silicon/ai/proc/voice_change
+		)
+
+/mob/living/silicon/ai/proc/voice_changer_toggle()
+	set category = "Malfunction"
+	set name = "Voice changer toggle"
+	voice_change = !voice_change
+	to_chat(src, "<span class='notice'>Voice changer [voice_change ? "enabled" : "disabled"].</span>")
+
+/mob/living/silicon/ai/proc/voice_change()
+	set category = "Malfunction"
+	set name = "Change voice"
+	var/t = sanitize_name(input(usr, "Whose voice do you want to imitate", "Voice change"))
+	if(!t)
+		tgui_alert(usr, "Invalid voice.")
+		return
+	voice = t
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
