@@ -87,6 +87,14 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/pill/examine(mob/user)
+	..()
+	if(user.mind && user.mind.getSkillRating(SKILL_CHEMISTRY) >= SKILL_CHEMISTRY_COMPETENT)
+		to_chat(user, "It contains:")
+		if(reagents.reagent_list.len)	
+			for(var/datum/reagent/R in reagents.reagent_list)
+				to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
 ////////////////////////////////////////////////////////////////////////////////

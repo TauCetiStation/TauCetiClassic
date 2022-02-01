@@ -290,7 +290,7 @@
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
-			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
+			if(istype(src, /obj/structure/reagent_dispensers) || user.mind.getSkillRating(SKILL_CHEMISTRY) == SKILL_CHEMISTRY_EXPERT) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 			else

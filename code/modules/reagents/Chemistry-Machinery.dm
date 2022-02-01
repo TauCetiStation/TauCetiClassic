@@ -313,6 +313,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -327,7 +328,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
