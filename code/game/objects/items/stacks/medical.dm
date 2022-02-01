@@ -10,7 +10,7 @@
 	throw_range = 20
 
 	var/skill_level_needed = SKILL_MEDICAL_UNTRAINED
-	var/unskilled_delay = SKILL_TASK_TRIVIAL
+	var/unskilled_delay_multiplier = SKILL_TASK_VERY_EASY
 	var/self_delay = 25
 	var/other_delay = 5
 
@@ -69,6 +69,8 @@
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
+	if(user.mind && user.mind.getSkillRating(SKILL_MEDICAL) < skill_level_needed)
+		delay +=  unskilled_delay_multiplier * (skill_level_needed - user.mind.getSkillRating(SKILL_MEDICAL))
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
@@ -103,6 +105,8 @@
 
 	repeating = TRUE
 	heal_brute = 1
+
+	skill_level_needed = SKILL_MEDICAL_NOVICE
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -167,6 +171,8 @@
 
 	repeating = TRUE
 	heal_burn = 1
+
+	skill_level_needed = SKILL_MEDICAL_NOVICE
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -233,6 +239,7 @@
 	other_delay = 10
 
 	repeating = TRUE
+	skill_level_needed = SKILL_MEDICAL_COMPETENT
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -297,7 +304,7 @@
 	other_delay = 10
 
 	repeating = TRUE
-
+	skill_level_needed = SKILL_MEDICAL_COMPETENT
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -343,6 +350,7 @@
 	other_delay = 25
 
 	repeating = FALSE
+	skill_level_needed = SKILL_MEDICAL_EXPERT
 
 /obj/item/stack/medical/splint/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -395,6 +403,7 @@
 	other_delay = 5
 
 	repeating = FALSE
+	skill_level_needed = SKILL_MEDICAL_MASTER
 
 /obj/item/stack/medical/suture/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)

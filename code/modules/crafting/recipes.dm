@@ -7,7 +7,7 @@
 	var/time = 30                   // time in deciseconds
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
-
+	var/required_proficiency = 0
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
 	result = /obj/item/weapon/grenade/cancasing
@@ -18,6 +18,7 @@
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/can_grenade_rag
 	name = "Can Grenade (rag)"
@@ -29,6 +30,7 @@
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 30
+	required_proficiency = SKILL_CONSTRUCTION_NOVICE
 
 /datum/crafting_recipe/wirerod
 	name = "Wirerod"
@@ -36,20 +38,21 @@
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1)
 	time = 20
-
+	required_proficiency = SKILL_CONSTRUCTION_NOVICE
 /datum/crafting_recipe/spear
 	name = "Spear"
 	result = /obj/item/weapon/spear
 	reqs = list(/obj/item/weapon/wirerod = 1,
 				/obj/item/weapon/shard = 1)
 	time = 40
-
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
 	result = /obj/item/weapon/melee/cattleprod
 	reqs = list(/obj/item/weapon/wirerod = 1,
 				/obj/item/weapon/wirecutters = 1)
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/bola
 	name = "Bola"
@@ -57,6 +60,7 @@
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
 				/obj/item/stack/sheet/metal = 6)
 	time = 20 // 15 faster than crafting them by hand!
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
@@ -70,6 +74,7 @@
 	reqs = list(/obj/item/stack/cable_coil = 15)
 	result = /obj/item/weapon/handcuffs/cable
 	parts = list(/obj/item/stack/cable_coil = 1)
+	required_proficiency = SKILL_CONSTRUCTION_NOVICE
 
 /datum/crafting_recipe/noose
 	name = "Noose"
@@ -112,6 +117,7 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/shield/buckler
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_NOVICE
 
 //   CROSSBOW craft
 
@@ -120,6 +126,7 @@
 	reqs = list(/obj/item/stack/sheet/wood = 5)
 	result = /obj/item/weapon/crossbowframe1
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/crossbowframe2
 	name = "Crossbow(2 stage)"
@@ -127,13 +134,14 @@
 				/obj/item/stack/rods = 3)
 	result = /obj/item/weapon/crossbowframe2
 	time = 35
-
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 /datum/crafting_recipe/crossbowframe3
 	name = "Crossbow(3 stage)"
 	reqs = list(/obj/item/weapon/crossbowframe2 = 1)
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/crossbowframe3
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/crossbowframe4
 	name = "Crossbow(4 stage)"
@@ -141,6 +149,7 @@
 				/obj/item/stack/cable_coil = 5)
 	result = /obj/item/weapon/crossbowframe4
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/crossbowframe5
 	name = "Crossbow(5 stage)"
@@ -148,6 +157,8 @@
 				/obj/item/stack/sheet/mineral/plastic = 3)
 	result = /obj/item/weapon/crossbowframe5
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
+
 
 /datum/crafting_recipe/crossbowframe6
 	name = "Crossbow(6 stage)"
@@ -155,6 +166,7 @@
 				/obj/item/stack/cable_coil = 5)
 	result = /obj/item/weapon/crossbowframe6
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_TRAINED
 
 /datum/crafting_recipe/crossbow
 	name = "Combat crossbow"
@@ -162,6 +174,7 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	result = /obj/item/weapon/crossbow
 	time = 45
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 //   PNEUMO-GUN craft
 
@@ -170,6 +183,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 10)
 	result = /obj/item/weapon/cannonframe1
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/cannonframe2
 	name = "Pneumo-gun(2 stage)"
@@ -177,6 +191,7 @@
 				/obj/item/pipe = 1)
 	result = /obj/item/weapon/cannonframe2
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/cannonframe3
 	name = "Pneumo-gun(3 stage)"
@@ -184,6 +199,7 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/cannonframe3
 	time = 45
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/cannonframe4
 	name = "Pneumo-gun(4 stage)"
@@ -191,6 +207,7 @@
 				/obj/item/stack/sheet/metal = 5)
 	result = /obj/item/weapon/cannonframe4
 	time = 35
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/cannonframe5
 	name = "Pneumo-gun(5 stage)"
@@ -198,6 +215,7 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/cannonframe5
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/cannonframe6
 	name = "Pneumo-gun(6 stage)"
@@ -205,6 +223,7 @@
 				/obj/item/device/transfer_valve = 1)
 	result = /obj/item/weapon/cannonframe6
 	time = 40
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
 
 /datum/crafting_recipe/pneumatic
 	name = "Pneumatic gun"
@@ -212,3 +231,4 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
+	required_proficiency = SKILL_CONSTRUCTION_ADVANCED
