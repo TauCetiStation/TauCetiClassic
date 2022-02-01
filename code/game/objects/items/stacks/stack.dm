@@ -158,7 +158,7 @@
 		if(usr.is_busy())
 			return
 		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTION) < R.skill_req)
-			building_time += R.time * ( R.skill_req - usr.mind.getSkillRating(SKILL_CONSTRUCTION) ) * 0.5 // +50% time each skill point lacking.
+			building_time += R.time * ( R.skill_req - usr.mind.getSkillRating(SKILL_CONSTRUCTION) )  // +100% time each skill point lacking.
 		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTION) > R.skill_req)
 			building_time -= clamp(R.time * ( usr.mind.getSkillRating(SKILL_CONSTRUCTION) - R.skill_req ) * 0.40, 0 , 0.85 * building_time) // -40% time each extra skill point
 		if(building_time)
