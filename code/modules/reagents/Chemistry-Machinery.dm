@@ -120,6 +120,9 @@
 /obj/machinery/chem_dispenser/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	switch(action)
 		if("change_amount")
 			. = TRUE

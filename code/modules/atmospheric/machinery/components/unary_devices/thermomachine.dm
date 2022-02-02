@@ -103,7 +103,9 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Topic(href, href_list)
 	if(!..())
 		return FALSE
-
+	var/mob/living/user = usr
+	if(!handle_fumbling(user))
+		return
 	if(href_list["toggleStatus"])
 		set_power_use(!use_power)
 		update_icon()
