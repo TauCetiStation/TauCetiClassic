@@ -122,7 +122,7 @@
 	return boolets
 
 /obj/item/weapon/gun/projectile/MouseDrop_T(atom/dropping, mob/living/user)
-	if(istype(dropping, /obj/item/ammo_box/magazine/))
+	if(istype(dropping, /obj/item/ammo_box/magazine))
 		tactical_reload(dropping, user)
 	return ..()
 
@@ -144,7 +144,7 @@
 		var/old_magazine = magazine
 		if(magazine)
 			playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-			if (istype(new_magazine.loc,/obj/item/weapon/storage/))
+			if (istype(new_magazine.loc,/obj/item/weapon/storage))
 				var/obj/item/weapon/storage/storage = new_magazine.loc
 				storage.remove_from_storage(new_magazine,src)
 			magazine.loc = get_turf(src.loc)
