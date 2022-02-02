@@ -71,7 +71,7 @@
 #define SKILL_RESEARCH "research"
 #define SKILL_RESEARCH_DEFAULT 0
 #define SKILL_RESEARCH_TRAINED 1 
-#define SKILL_RESEARCH_PROFESSIONAL 2 //  slime console, xenoarch consoles
+#define SKILL_RESEARCH_PROFESSIONAL 2 //   xenoarch consoles, genetics
 #define SKILL_RESEARCH_EXPERT 4 // AI creation and law modification, telescience console
 
 //medical
