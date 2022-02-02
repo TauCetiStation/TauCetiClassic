@@ -105,6 +105,9 @@ var/global/list/department_radio_keys = list(
 		if(!message)
 			return
 
+	message = capitalize(trim(message))
+	message = add_period(message)
+
 	var/turf/T = get_turf(src)
 
 	//log
