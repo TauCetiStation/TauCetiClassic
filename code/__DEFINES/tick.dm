@@ -16,7 +16,4 @@
 
 #define TICKS2DS(T) (T TICKS)
 
-/// internal_tick_usage is updated every tick by extools
-#define MAPTICK_LAST_INTERNAL_TICK_USAGE ((global.internal_tick_usage / world.tick_lag) * 100)
-
 #define UNTIL(X) while(!(X)) stoplag()
