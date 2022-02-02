@@ -7,7 +7,6 @@
 -[S.firearms]-[S.melee]-[S.engineering]-[S.construction]-[S.atmospherics]-[S.civ_mech]\
 -[S.combat_mech]-[S.surgery]-[S.medical]-[S.chemistry]-[S.research]-[S.command]"
 
-
 /proc/getSkills(police = 0, firearms = 0,\
 melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, combat_mech = 0, surgery = 0,\
 medical = 0, chemistry = 0, research = 0, command = 0)
@@ -16,8 +15,6 @@ medical = 0, chemistry = 0, research = 0, command = 0)
 		. = new /datum/skills(police = 0, firearms = 0,\
 			melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, combat_mech = 0, surgery = 0,\
 			medical = 0, chemistry = 0, research = 0, command = 0)
-
-
 
 /proc/getSkillsType(skills_type = /datum/skills)
 	var/datum/skills/new_skill = skills_type
@@ -37,7 +34,6 @@ medical = 0, chemistry = 0, research = 0, command = 0)
 	. = locate(SKILLSID)
 	if(!.)
 		. = new skills_type
-
 
 /datum/skills
 	var/police = SKILL_POLICE_UNTRAINED
@@ -85,8 +81,6 @@ medical, chemistry, research, command)
 		src.command = command
 	tag = SKILLSIDSRC(src)
 
-
-
 #undef SKILLSID
 
 
@@ -113,8 +107,6 @@ medical, chemistry, research, command)
 
 /proc/getSkillMaximum(skill)
 	return SKILL_BOUNDS[skill][2]
-
-
 
 //medical
 /datum/skills/cmo
@@ -383,23 +375,27 @@ medical, chemistry, research, command)
 	command = SKILL_COMMAND_EXPERT
 	melee = SKILL_MELEE_MASTER
 
-
 /datum/skills/janitor
-
 /datum/skills/test_subject
 /datum/skills/test_subject/lawyer
 	command = SKILL_COMMAND_BEGINNER
+
 /datum/skills/test_subject/mecha
 	civ_mech = SKILL_CIV_MECH_MASTER
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
 /datum/skills/test_subject/detective
 	firearms = SKILL_FIREARMS_TRAINED
+
 /datum/skills/test_subject/reporter
+	command = SKILL_COMMAND_BEGINNER
 
 /datum/skills/test_subject/waiter
 	chemistry = SKILL_CHEMISTRY_PRACTICED
+
 /datum/skills/test_subject/vice_officer
 	command = SKILL_COMMAND_TRAINED
+
 /datum/skills/test_subject/paranormal
 	research = SKILL_RESEARCH_TRAINED
 	medical = SKILL_MEDICAL_NOVICE
@@ -446,6 +442,23 @@ medical, chemistry, research, command)
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
 	civ_mech = SKILL_CIV_MECH_TRAINED
 	research = SKILL_RESEARCH_PROFESSIONAL
+
+/datum/skills/abductor
+	medical = SKILL_MEDICAL_PRACTICED
+	surgery = SKILL_SURGERY_AMATEUR
+	firearms = SKILL_FIREARMS_TRAINED
+	police = SKILL_POLICE_TRAINED
+	research = SKILL_RESEARCH_TRAINED
+
+/datum/skills/abductor/agent
+	melee = SKILL_MELEE_MASTER
+	firearms = SKILL_FIREARMS_PRO
+	police = SKILL_POLICE_PRO
+
+/datum/skills/abductor/scientist
+	surgery = SKILL_SURGERY_EXPERT
+	medical = SKILL_MEDICAL_MASTER
+	research = SKILL_RESEARCH_EXPERT
 
 
 /datum/skills/wizard

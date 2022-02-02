@@ -37,7 +37,7 @@
 #define SKILL_MELEE_MASTER 2  //nuclear, СБ
 
 
-// engineer skill
+//engineering skill
 #define SKILL_ENGINEERING "engineering"
 #define SKILL_ENGINEERING_DEFAULT 0  
 #define SKILL_ENGINEERING_NOVICE 1	//  hacking
@@ -45,14 +45,12 @@
 #define SKILL_ENGINEERING_PRO 3	//  bubble shield generators, singularity computer ,engineer
 #define SKILL_ENGINEERING_MASTER 4	//   Telecomms, CE, RD
 
-
-//atmospheric skill ATMOS
+//atmospherics skill
 #define SKILL_ATMOS "atmospherics"
 #define SKILL_ATMOS_DEFAULT 0  
 #define SKILL_ATMOS_TRAINED 1	//scientist
 #define SKILL_ATMOS_PRO 2	//engineer, RD
 #define SKILL_ATMOS_MASTER 3	//CE, atmospheric techincian
-
 
 //construction
 #define SKILL_CONSTRUCTION "construction"
@@ -60,8 +58,7 @@
 #define SKILL_CONSTRUCTION_NOVICE 1	// tables, glass
 #define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)  
 #define SKILL_CONSTRUCTION_ADVANCED 3	//computer, machine frames,  RD, engineer, reinforced walls
-#define SKILL_CONSTRUCTION_MASTER 4	// CE - AI core
-
+#define SKILL_CONSTRUCTION_MASTER 4	// CE - AI core and reinforced phoron windows
 
 //chemistry
 #define SKILL_CHEMISTRY "chemistry"
@@ -85,7 +82,6 @@
 #define SKILL_MEDICAL_COMPETENT 3 //intern
 #define SKILL_MEDICAL_EXPERT 4 //paramedic, surgeon
 #define SKILL_MEDICAL_MASTER 5 //CMO, medical doctor
-//higher levels means faster syringe use and better defibrillation
 
 //surgery
 #define SKILL_SURGERY "surgery"
@@ -94,9 +90,8 @@
 #define SKILL_SURGERY_TRAINED 2 //  robotech, paramedic
 #define SKILL_SURGERY_PROFESSIONAL 3 //medical doctor, RD
 #define SKILL_SURGERY_EXPERT 4 //CMO surgeon
-//higher levels means faster surgery.
 
-//usage of auth devices, access modification, quest passes, easier paperwork
+//command
 #define SKILL_COMMAND "command"
 #define SKILL_COMMAND_DEFAULT 0 //Anyone
 #define SKILL_COMMAND_BEGINNER 1 // officers, psychatrist, lawyer - easier paperwork, quest passes

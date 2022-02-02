@@ -129,11 +129,9 @@
 		return
 	if (value > available_skills.getRating(skill))
 		return
-	
 	if (value == getSkillRating(skill))
 		return
 	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [current_skills.getRating(skill)] to [value].</span>")
-
 	var/datum/skills/edited_skills = cloneSkills(current_skills)
 	edited_skills.vars[skill] = value
 	current_skills = edited_skills

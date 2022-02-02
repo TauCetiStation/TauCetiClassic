@@ -118,7 +118,7 @@
 					to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [from_recipe.title].</span>")
 				else
 					to_chat(M, "Building [from_recipe.title] ...")
-	
+
 		if(!do_after(M, building_time, target = M))
 			failed = TRUE
 		busy = FALSE
