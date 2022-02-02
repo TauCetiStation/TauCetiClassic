@@ -1649,10 +1649,7 @@
 		return
 	if(!mind)
 		return
-
 	mind.changeSkillValue(skill,value)
-
-
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"

@@ -229,7 +229,6 @@
 	return
 
 /obj/machinery/sleeper/ui_interact(mob/user)
-
 	var/dat = "<div class='Section__title'>Sleeper Status</div>"
 
 	dat += "<div class='Section'>"

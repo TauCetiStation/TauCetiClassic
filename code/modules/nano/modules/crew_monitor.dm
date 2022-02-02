@@ -4,7 +4,6 @@
 
 /obj/nano_module/crew_monitor/Topic(href, href_list)
 	if(..()) return
-
 	var/turf/T = get_turf(src)
 	if (!T || !(T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))))
 		to_chat(usr, "<span class='warning'>Unable to establish a connection</span>: You're too far away from the station!")

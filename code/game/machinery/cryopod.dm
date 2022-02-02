@@ -20,7 +20,6 @@ var/global/list/frozen_items = list()
 	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
 	var/mode = null
 
-
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
 	if(!SSticker)
 		return

@@ -20,7 +20,6 @@
 	minimal_player_ingame_minutes = 2400
 	skills_type = /datum/skills/rd
 	outfit = /datum/outfit/job/rd
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
