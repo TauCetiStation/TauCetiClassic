@@ -15,6 +15,8 @@
 	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
 
+	process_last = TRUE
+
 	var/capacity = 0 // Maximum charge
 	var/charge = 0 // Actual charge
 
