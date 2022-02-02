@@ -79,7 +79,7 @@
 		return 0
 	return ..()
 
-/obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0)
+/obj/structure/stool/bed/roller/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 
 	if(moving_diagonally)

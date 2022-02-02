@@ -237,7 +237,7 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move(NewLoc, Dir = 0)
+/obj/mecha/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 
 	if(moving_diagonally)

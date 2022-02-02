@@ -331,10 +331,10 @@
 			try_toggle_effects(TRIGGER_HEAT)
 	return
 
-/obj/machinery/artifact/Move(NewLoc, Dir = 0)
+/obj/machinery/artifact/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 
-	if(ISDIAGONALDIR(Dir))
+	if(ISDIAGONALDIR(direction))
 		return .
 
 	if(pulledby)

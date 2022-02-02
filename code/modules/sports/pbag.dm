@@ -69,7 +69,7 @@
 	drop_down()
 	return TRUE
 
-/mob/living/pbag/Move(NewLoc, Dir = 0)
+/mob/living/pbag/Move(atom/newloc, direction, glide_size_override)
 	if(ckey && !incapacitated() && !moving_diagonally)
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 		return

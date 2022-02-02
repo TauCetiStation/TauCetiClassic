@@ -16,7 +16,7 @@
 			break
 	return ..() // delete target
 
-/obj/item/target/Move(NewLoc, Dir = 0)
+/obj/item/target/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	// After target moves, check for nearby stakes. If associated, move to target
 	for(var/obj/structure/target_stake/M in view(3,src))

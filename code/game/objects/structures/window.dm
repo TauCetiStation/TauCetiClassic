@@ -397,7 +397,7 @@
 	return ..()
 
 
-/obj/structure/window/Move(NewLoc, Dir = 0)
+/obj/structure/window/Move(atom/newloc, direction, glide_size_override)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
 

@@ -98,7 +98,7 @@
 			pedal(user)
 
 
-/obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0)
+/obj/structure/stool/bed/chair/pedalgen/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(buckled_mob && !moving_diagonally)
 		if(buckled_mob.buckled == src)

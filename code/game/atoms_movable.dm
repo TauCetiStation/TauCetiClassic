@@ -126,10 +126,10 @@
 
 	Moved(oldloc, direction)
 
-/atom/movable/Move(atom/NewLoc, Dir = 0, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direction = 0, glide_size_override = 0)
 	if(!moving_from_pull)
 		check_pulling()
-	if(!loc || !NewLoc || freeze_movement)
+	if(!loc || !newloc || freeze_movement)
 		return FALSE
 
 	var/atom/movable/pullee = pulling
@@ -140,12 +140,12 @@
 
 	var/atom/oldloc = loc
 
-	if(loc != NewLoc)
-		if (!ISDIAGONALDIR(Dir)) //Cardinal move
+	if(loc != newloc)
+		if (!ISDIAGONALDIR(direction)) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			var/v = Dir & NORTH_SOUTH
-			var/h = Dir & EAST_WEST
+			var/v = direction & NORTH_SOUTH
+			var/h = direction & EAST_WEST
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
@@ -161,15 +161,15 @@
 						set_dir(h)
 			if(moving_diagonally == SECOND_DIAG_STEP && !inertia_moving)
 				inertia_next_move = world.time + inertia_move_delay
-				newtonian_move(Dir)
+				newtonian_move(direction)
 			moving_diagonally = FALSE
 			return
 
-	if(!loc || (loc == oldloc && oldloc != NewLoc))
+	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
 		return
 
-	if(!ISDIAGONALDIR(Dir) && moving_diagonally != SECOND_DIAG_STEP)
+	if(!ISDIAGONALDIR(direction) && moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
 
@@ -190,9 +190,9 @@
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
-	last_move = Dir
+	last_move = direction
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc, Dir, glide_size_override)) //movement failed due to buckled mob
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc, direction, glide_size_override)) //movement failed due to buckled mob
 		return FALSE
 
 /atom/movable/proc/check_pulling()

@@ -106,7 +106,7 @@
 		grenade.primed(scanning)
 	return
 
-/obj/item/device/assembly/prox_sensor/Move(NewLoc, Dir = 0)
+/obj/item/device/assembly/prox_sensor/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	sense()
 

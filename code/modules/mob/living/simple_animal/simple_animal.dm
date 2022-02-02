@@ -379,9 +379,9 @@
 
 	..(message, speaking, verb, sanitize = 0)
 
-/mob/living/simple_animal/Move(NewLoc, Dir = 0)
+/mob/living/simple_animal/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
-	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
+	if(icon_move && !stat && !ISDIAGONALDIR(direction))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()

@@ -82,7 +82,7 @@
 
 	master_area=null
 
-/obj/machinery/media/Move(NewLoc, Dir = 0)
+/obj/machinery/media/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(anchored)
 		update_music()

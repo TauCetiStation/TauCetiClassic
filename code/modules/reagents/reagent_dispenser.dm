@@ -187,9 +187,9 @@
 	..() //extend the zap
 	explode()
 
-/obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0)
+/obj/structure/reagent_dispensers/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
-	if (. && modded && !ISDIAGONALDIR(Dir))
+	if (. && modded && !ISDIAGONALDIR(direction))
 		leak(amount_per_transfer_from_this * 0.1)
 
 

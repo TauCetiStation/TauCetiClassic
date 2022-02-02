@@ -64,12 +64,12 @@
 	consume(user)
 	return 1
 
-/obj/singularity/Move(NewLoc, Dir = 0)
-	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
+/obj/singularity/Move(atom/newloc, direction, glide_size_override)
+	if(current_size >= STAGE_FIVE || check_turfs_in(direction))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
-		last_failed_movement = Dir
+		last_failed_movement = direction
 		return FALSE
 
 /obj/singularity/blob_act(severity)

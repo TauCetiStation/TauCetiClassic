@@ -110,7 +110,7 @@
 		create_track()
 	driving = 0
 
-/obj/structure/stool/bed/chair/wheelchair/Move(NewLoc, Dir = 0, glide_size_override = 0)
+/obj/structure/stool/bed/chair/wheelchair/Move(atom/newloc, direction, glide_size_override)
 	if(brake)
 		return FALSE
 	. = ..()

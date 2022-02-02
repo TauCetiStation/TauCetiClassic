@@ -85,7 +85,7 @@
 	..()
 	return
 
-/obj/item/device/assembly/infra/Move(NewLoc, Dir = 0)
+/obj/item/device/assembly/infra/Move(atom/newloc, direction, glide_size_override)
 	var/t = dir
 	. = ..()
 	set_dir(t)

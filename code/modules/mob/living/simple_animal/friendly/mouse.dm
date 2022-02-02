@@ -129,7 +129,7 @@
 
 //make mice fit under tables etc? this was hacky, and not working
 /*
-/mob/living/simple_animal/mouse/Move(NewLoc, Dir = 0)
+/mob/living/simple_animal/mouse/Move(atom/newloc, direction, glide_size_override)
 
 	var/turf/target_turf = get_step(src,dir)
 	//CanReachThrough(src.loc, target_turf, src)

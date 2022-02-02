@@ -1022,11 +1022,11 @@
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
-/mob/living/silicon/robot/Move(NewLoc, Dir = 0)
+/mob/living/silicon/robot/Move(atom/newloc, direction, glide_size_override)
 
 	. = ..()
 
-	if(module && !ISDIAGONALDIR(Dir))
+	if(module && !ISDIAGONALDIR(direction))
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))

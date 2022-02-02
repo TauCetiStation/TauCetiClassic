@@ -59,7 +59,7 @@
 // This might be laggy, comment it out if there are problems.
 /mob/living/silicon/robot/var/updating = 0
 
-/mob/living/silicon/robot/Move(NewLoc, Dir = 0)
+/mob/living/silicon/robot/Move(atom/newloc, direction, glide_size_override)
 	var/oldLoc = src.loc
 	. = ..()
 	if(. && !moving_diagonally)

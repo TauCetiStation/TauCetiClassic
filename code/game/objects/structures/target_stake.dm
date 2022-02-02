@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	var/obj/item/target/pinned_target // the current pinned target
 
-/obj/structure/target_stake/Move(NewLoc, Dir = 0)
+/obj/structure/target_stake/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	// Move the pinned target along with the stake
 	if(pinned_target in view(3, src))

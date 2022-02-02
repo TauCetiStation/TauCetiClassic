@@ -6,7 +6,7 @@
 	fluid_update()
 	return ..()
 
-/obj/structure/Move(NewLoc, Dir = 0)
+/obj/structure/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	fluid_update()
 
@@ -14,7 +14,7 @@
 	. = ..()
 	fluid_update()
 
-/obj/effect/Move(NewLoc, Dir = 0)
+/obj/effect/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	fluid_update()
 

@@ -17,10 +17,10 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
-/mob/living/carbon/Move(NewLoc, Dir = 0)
+/mob/living/carbon/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(!.)
-		handle_phantom_move(NewLoc, Dir)
+		handle_phantom_move(newloc, direction)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
@@ -37,7 +37,7 @@
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
 
-		handle_rig_move(NewLoc, Dir)
+		handle_rig_move(newloc, direction)
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))

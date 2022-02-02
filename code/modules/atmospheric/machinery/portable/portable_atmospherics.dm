@@ -67,7 +67,7 @@
 	anchored = TRUE // Prevent movement
 	return TRUE
 
-/obj/machinery/portable_atmospherics/Move(NewLoc, Dir = 0)
+/obj/machinery/portable_atmospherics/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(. && !moving_diagonally)
 		disconnect()

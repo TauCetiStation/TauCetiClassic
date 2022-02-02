@@ -39,7 +39,7 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/Move(NewLoc, Dir = 0)
+/obj/vehicle/Move(atom/newloc, direction, glide_size_override)
 	if(can_move())
 		var/old_loc = get_turf(src)
 

@@ -102,11 +102,11 @@
 		stat(null, "Total Nodes: [blob_nodes.len]")
 		stat(null, "Total Cores: [blob_cores.len]")
 
-/mob/camera/blob/Move(NewLoc, Dir = 0)
+/mob/camera/blob/Move(atom/newloc, direction, glide_size_override)
 	. = FALSE
-	var/obj/effect/blob/B = locate() in range(3, NewLoc)
-	if(NewLoc && B)
-		loc = NewLoc
+	var/obj/effect/blob/B = locate() in range(3, newloc)
+	if(newloc && B)
+		loc = newloc
 		return TRUE
 
 /mob/camera/blob/Destroy()

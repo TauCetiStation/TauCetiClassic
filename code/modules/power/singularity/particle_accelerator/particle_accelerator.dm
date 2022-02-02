@@ -132,7 +132,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	return
 
 
-/obj/structure/particle_accelerator/Move(NewLoc, Dir = 0)
+/obj/structure/particle_accelerator/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(master && master.active && !moving_diagonally)
 		master.toggle_power()

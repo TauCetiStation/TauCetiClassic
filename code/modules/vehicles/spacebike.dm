@@ -146,9 +146,9 @@
 	return Move(get_step(src, direction))
 
 
-/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0)
+/obj/vehicle/space/spacebike/Move(atom/newloc, direction, glide_size_override)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(NewLoc, /turf/space) || pulledby)
+	if(istype(newloc, /turf/space) || pulledby)
 		if(!space_speed)
 			return FALSE
 		move_delay = space_speed + slow_cooef

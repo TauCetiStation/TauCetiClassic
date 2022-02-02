@@ -41,7 +41,7 @@
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
-/mob/camera/Eye/Move(NewLoc, Dir = 0)
+/mob/camera/Eye/Move(atom/newloc, direction, glide_size_override)
 	return FALSE
 
 // Hide popout menu verbs

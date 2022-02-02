@@ -24,14 +24,14 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		reagents.delete()
 	return ..()
 
-/obj/effect/effect/water/Move(NewLoc, Dir = 0)
+/obj/effect/effect/water/Move(atom/newloc, direction, glide_size_override)
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
 		qdel(src)
-	if(isatom(NewLoc))
-		var/atom/A = NewLoc
+	if(isatom(newloc))
+		var/atom/A = newloc
 		if(A.density) // this is required to prevent bump with dense turf to stop reaction, which may lead to unintended water-leaking behavior.
 			return FALSE
 	return ..()
@@ -143,7 +143,7 @@ steam.start() -- spawns the effect
 		T.hotspot_expose(1000,100)
 	return	..()
 
-/obj/effect/effect/sparks/Move(NewLoc, Dir = 0)
+/obj/effect/effect/sparks/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
@@ -238,7 +238,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/bad
 	time_to_live = 200
 
-/obj/effect/effect/smoke/bad/Move(NewLoc, Dir = 0)
+/obj/effect/effect/smoke/bad/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
@@ -266,7 +266,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/sleepy
 
-/obj/effect/effect/smoke/sleepy/Move(NewLoc, Dir = 0)
+/obj/effect/effect/smoke/sleepy/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
@@ -291,7 +291,7 @@ steam.start() -- spawns the effect
 	name = "mustard gas"
 	icon_state = "mustard"
 
-/obj/effect/effect/smoke/mustard/Move(NewLoc, Dir = 0)
+/obj/effect/effect/smoke/mustard/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		affect(R)

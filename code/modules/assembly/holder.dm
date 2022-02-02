@@ -110,7 +110,7 @@
 			S.on_found(finder)
 
 
-/obj/item/device/assembly_holder/Move(NewLoc, Dir = 0)
+/obj/item/device/assembly_holder/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()

@@ -386,7 +386,7 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/Move(NewLoc, Dir = 0)
+/obj/machinery/door/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
 	update_nearby_tiles()
 

@@ -68,9 +68,9 @@
 	..()
 	visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
 
-/mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0)
+/mob/living/simple_animal/hostile/retaliate/goat/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
-	if(!stat && !ISDIAGONALDIR(Dir))
+	if(!stat && !ISDIAGONALDIR(direction))
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
 			qdel(SV)
@@ -152,9 +152,9 @@
 		else if(prob(15))
 			playsound(src, 'sound/voice/cowmoos.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
-/mob/living/simple_animal/cow/Move(NewLoc, Dir = 0)
+/mob/living/simple_animal/cow/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
-	if(. && prob(55) && !ISDIAGONALDIR(Dir))
+	if(. && prob(55) && !ISDIAGONALDIR(direction))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 /mob/living/simple_animal/chick

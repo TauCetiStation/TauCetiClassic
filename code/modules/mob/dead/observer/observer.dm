@@ -199,9 +199,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 
-/mob/dead/observer/Move(NewLoc, Dir = 0, glide_size_override = 32)
+/mob/dead/observer/Move(atom/newloc, direction, glide_size_override = 32)
 	. = TRUE
-	set_dir(Dir)
+	set_dir(direction)
 
 	if(orbiting)
 		if(ismovable(orbiting.orbiting) && !isobserver(orbiting.orbiting))
@@ -211,23 +211,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
-	if(NewLoc)
-		abstract_move(NewLoc)
-		for(var/obj/effect/step_trigger/S in NewLoc)
+	if(newloc)
+		abstract_move(newloc)
+		for(var/obj/effect/step_trigger/S in newloc)
 			S.Crossed(src)
 		update_parallax_contents()
 		return
 	else
 		var/turf/destination = get_turf(src)
 
-		if((Dir & NORTH) && y < world.maxy)
+		if((direction & NORTH) && y < world.maxy)
 			destination = get_step(destination, NORTH)
-		else if((Dir & SOUTH) && y > 1)
+		else if((direction & SOUTH) && y > 1)
 			destination = get_step(destination, SOUTH)
 
-		if((Dir & EAST) && x < world.maxx)
+		if((direction & EAST) && x < world.maxx)
 			destination = get_step(destination, EAST)
-		else if((Dir & WEST) && x > 1)
+		else if((direction & WEST) && x > 1)
 			destination = get_step(destination, WEST)
 
 		abstract_move(destination)//Get out of closets and such as a ghost

@@ -422,7 +422,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/mob/dead/new_player/Move(NewLoc, Dir = 0)
+/mob/dead/new_player/Move(atom/newloc, direction, glide_size_override)
 	return FALSE
 
 /mob/dead/new_player/proc/close_spawn_windows()
