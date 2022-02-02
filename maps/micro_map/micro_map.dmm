@@ -518,7 +518,7 @@
 "KG" = (/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "black"},/area/space)
 "KO" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/simulated/floor,/area/space)
 "KP" = (/obj/machinery/hydroponics/constructable,/obj/machinery/light,/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/simulated/floor{icon_state = "dark"},/area/space)
-"KR" = (/obj/structure/table,/obj/machinery/reagentgrinder,/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
+"KR" = (/obj/structure/table,/obj/machinery/reagentgrinder,/obj/item/weapon/reagent_containers/glass/beaker{pixel_x = 5},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space)
 "KZ" = (/obj/machinery/power/apc{dir = 8; level = 4; name = "Medbay Reception APC"; pixel_y = -30},/turf/simulated/floor{icon_state = "blue"},/area/space)
 "Lb" = (/obj/machinery/door/window/eastright{base_state = "left"; icon_state = "left"; name = "Shower"},/obj/structure/curtain/open/shower,/obj/structure/drain{drainage = 2},/obj/item/weapon/soap/deluxe,/obj/item/weapon/bikehorn/rubberducky,/obj/machinery/shower{dir = 1},/turf/simulated/floor{icon_state = "freezerfloor2"},/area/space)
 "Ld" = (/obj/structure/table,/obj/machinery/recharger/wallcharger{pixel_x = -24; pixel_y = -6},/obj/item/weapon/storage/box/lights/mixed,/obj/item/device/radio/off{pixel_y = 9},/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor{dir = 8; icon_state = "darkred"},/area/space)
