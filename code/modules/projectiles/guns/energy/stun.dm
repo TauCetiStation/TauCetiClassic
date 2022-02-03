@@ -7,10 +7,8 @@
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
 /obj/item/weapon/gun/energy/taser/select_fire(mob/living/user)
-	if(user.mind.getSkillRating(SKILL_POLICE) < SKILL_POLICE_TRAINED)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to switch mode on [src].</span>", "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>")
-		if (!do_after(usr, SKILL_TASK_TRIVIAL, target = user))
-			return
+	if(!handle_fumbling(user,src, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to switch mode on [src].</span>"))
+		return
 	..()
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"

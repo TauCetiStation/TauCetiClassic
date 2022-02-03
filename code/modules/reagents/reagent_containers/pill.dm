@@ -89,7 +89,7 @@
 
 /obj/item/weapon/reagent_containers/pill/examine(mob/user)
 	..()
-	if(user.mind && user.mind.getSkillRating(SKILL_CHEMISTRY) >= SKILL_CHEMISTRY_COMPETENT)
+	if(isSkillCompetent(user, SKILL_CHEMISTRY, SKILL_CHEMISTRY_COMPETENT))
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)	
 			for(var/datum/reagent/R in reagents.reagent_list)

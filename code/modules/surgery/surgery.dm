@@ -134,13 +134,10 @@
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
-	if(user.mind.getSkillRating(SKILL_SURGERY) < SKILL_SURGERY_PROFESSIONAL)
-		if (user.is_busy()) return
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>", "<span class='notice'>You fumble around figuring out how to operate [M].</span>")
-		var/fumbling_time = max(0,SKILL_TASK_FORMIDABLE - ( 8 SECONDS * user.mind.getSkillRating(SKILL_SURGERY) )) // 20 secs non-trained, 12 amateur, 4 trained, 0 prof
-		
-		if (fumbling_time && !do_after(usr, fumbling_time, target = M))
-			return
+
+	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, SKILL_SURGERY, SKILL_SURGERY_PROFESSIONAL, SKILL_TASK_TOUGH, "<span class='notice'>You fumble around figuring out how to operate [M].</span>", "<span class='notice'>[user] fumbles around figuring out how to operate [M].</span>"))	
+		return
+
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
 		if(S.clothless && ishuman(M) && !check_human_covering(M, user, covered))
@@ -152,7 +149,8 @@
 				return TRUE
 
 			S.begin_step(user, M, target_zone, tool)		//...start on it
-			var/step_duration = max(0.5 SECONDS, rand(S.min_duration, S.max_duration) - 1 SECONDS * user.mind.getSkillRating(SKILL_SURGERY))
+			var/step_duration = applySkillModifier(user, rand(S.min_duration, S.max_duration), SKILL_SURGERY, SKILL_SURGERY_TRAINED, bonus = 0.3)
+
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully

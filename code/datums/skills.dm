@@ -108,6 +108,41 @@ medical, chemistry, research, command)
 /proc/getSkillMaximum(skill)
 	return SKILL_BOUNDS[skill][2]
 
+
+
+
+/proc/applySkillModifier(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
+	if(user.mind.getSkillRating(required_skill) < required_proficiency)
+		return  value + value * penalty * (required_proficiency - user.mind.getSkillRating(required_skill))
+	if(user.mind.getSkillRating(required_skill) > required_proficiency)
+		return value - value * bonus * (user.mind.getSkillRating(required_skill) - required_proficiency)
+	return value
+
+/proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", visual = TRUE)
+	if(user.mind.getSkillRating(required_skill) >= required_proficiency)
+		return TRUE
+	var/display_message_self = message_self
+	var/display_message_others = message_others
+	if(!message_self)
+		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [target].</span>"
+	if(!message_others && visual)
+		display_message_others = "<span class='notice'>[user] fumbles around figuring out how to use [target].</span>"
+
+	if(visual)
+		user.visible_message(display_message_others, display_message_self)
+	else
+		to_chat(user, display_message_self)
+
+	var/required_time = delay - time_bonus * user.mind.getSkillRating(required_skill)
+	if(!do_after(user, required_time, target = target))
+		return FALSE
+	return TRUE
+
+/proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
+	return user?.mind?.getSkillRating(required_skill) >= required_proficiency
+
+
+
 //medical
 /datum/skills/cmo
 	chemistry = SKILL_CHEMISTRY_EXPERT
