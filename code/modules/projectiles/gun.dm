@@ -56,7 +56,8 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	var/skill_recoil = max(0, recoil - 2 * user.mind.getSkillRating(SKILL_FIREARMS))
+	
+	var/skill_recoil = max(0, applySkillModifier(user, recoil, SKILL_FIREARMS, SKILL_FIREARMS_UNTRAINED, bonus = 0.5))
 	if(recoil)
 		shake_camera(user, skill_recoil + 1, skill_recoil)
 

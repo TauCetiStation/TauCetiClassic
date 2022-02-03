@@ -133,12 +133,13 @@
 		to_chat(user, "<span class='warning'>[src] must be in your hand to do that.</span>")
 		return
 	//no tactical reload for the untrained.
-	if(!user.mind.getSkillRating(SKILL_FIREARMS))
+	if(!isSkillCompetent(user, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED))
 		to_chat(user, "<span class='warning'>You don't know how to do tactical reloads.</span>")
 		return
 	if ((istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2) && mag_type != null)))
 		to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
-		var/tac_reload_time = max(0.5 SECONDS, 1.5 SECONDS - user.mind.getSkillRating(SKILL_FIREARMS) * 5)
+		
+		var/tac_reload_time = applySkillModifier(user, SKILL_TASK_TRIVIAL, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, bonus = 0.5)
 		if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
 			return
 		var/old_magazine = magazine
