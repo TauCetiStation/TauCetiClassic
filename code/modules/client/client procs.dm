@@ -322,7 +322,7 @@ var/global/list/blacklisted_builds = list(
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
+		winset(src, "rpane.changelog", "font-style=bold")
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
