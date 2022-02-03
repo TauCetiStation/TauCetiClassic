@@ -158,6 +158,10 @@
 
 /datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
 	..()
+
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
+
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
@@ -208,6 +212,11 @@
 
 /datum/reagent/consumable/drink/coffee/on_general_digest(mob/living/M)
 	..()
+
+	M.AdjustDrunkenness(-1)
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-2)
+
 	M.make_jittery(5)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
@@ -656,16 +665,15 @@
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 	color = "#404030" // rgb: 64, 64, 48
 	custom_metabolism = DRINK_METABOLISM * 0.4
+
 	var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
-	var/dizzy_adj = 3
+
+	var/dizzy_adj = 0
 	var/adj_drowsy = 0
 	var/adj_sleepy = 0
-	var/slurr_adj = 3
-	var/confused_adj = 2
-	var/slur_start = 90			//amount absorbed after which mob starts slurring
-	var/confused_start = 150	//amount absorbed after which mob starts confusing directions
-	var/blur_start = 300	//amount absorbed after which mob starts getting blurred vision
-	var/pass_out = 400	//amount absorbed after which mob starts passing out
+	var/slurr_adj = 0
+	var/confused_adj = 0
+
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 	flags = list(IS_ORGANIC)
@@ -674,49 +682,23 @@
 	if(!..())
 		return
 
-	if(adj_drowsy)
-		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
-	if(adj_sleepy)
-		M.SetSleeping(adj_sleepy)
+	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
+	M.SetSleeping(adj_sleepy)
 
-	if(!data["ticks"])
-		data["ticks"] = 1   //if it doesn't exist we set it.
-	data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
-
-	var/d = 0
-
-	// make all the beverages work together
-	for(var/datum/reagent/consumable/ethanol/A in holder.reagent_list)
-		if(A.data["ticks"])
-			d += A.data["ticks"]
+	var/drunkpwr = boozepwr
 
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
-		d *= 0.7
+		drunkpwr *= 0.7
 
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
-		d *= 2
+		drunkpwr *= 2
+
+	M.AdjustDrunkenness(drunkpwr)
 
 	M.dizziness += dizzy_adj
-	if(d >= slur_start && d < pass_out)
-		if(!M.slurring)
-			M.slurring = 1
-		M.slurring += slurr_adj
-	if(d >= confused_start && prob(33))
-		if(!M.confused)
-			M.confused = 1
-		M.confused = max(M.confused + confused_adj, 0)
-	if(d >= blur_start)
-		M.blurEyes(10)
-		M.drowsyness = max(M.drowsyness, 0)
-	if(d >= pass_out)
-		M.paralysis = max(M.paralysis, 20)
-		M.drowsyness = max(M.drowsyness, 30)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
-			if(istype(IO))
-				IO.take_damage(0.1, 1)
-			H.adjustToxLoss(0.1)
+	M.slurring += slurr_adj
+	M.AdjustConfused(confused_adj)
+
 	return TRUE
 
 /datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
@@ -789,7 +771,6 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
 	dizzy_adj = 4
-	slur_start = 30		//amount absorbed after which mob starts slurring
 	taste_message = "class"
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -889,8 +870,6 @@
 	color = "#7e4043" // rgb: 126, 64, 67
 	boozepwr = 1.5
 	dizzy_adj = 2
-	slur_start = 65			//amount absorbed after which mob starts slurring
-	confused_start = 145	//amount absorbed after which mob starts confusing directions
 	taste_message = "wine"
 
 	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
@@ -902,7 +881,6 @@
 	color = "#ab3c05" // rgb: 171, 60, 5
 	boozepwr = 1.5
 	dizzy_adj = 4
-	confused_start = 115	//amount absorbed after which mob starts confusing directions
 	taste_message = "cognac"
 
 /datum/reagent/consumable/ethanol/hooch
@@ -913,8 +891,6 @@
 	boozepwr = 2
 	dizzy_adj = 6
 	slurr_adj = 5
-	slur_start = 35			//amount absorbed after which mob starts slurring
-	confused_start = 90	//amount absorbed after which mob starts confusing directions
 	taste_message = "puke"
 
 /datum/reagent/consumable/ethanol/ale
@@ -932,8 +908,6 @@
 	color = "#33ee00" // rgb: 51, 238, 0
 	boozepwr = 4
 	dizzy_adj = 5
-	slur_start = 15
-	confused_start = 30
 	taste_message = "absinthe"
 
 
@@ -944,8 +918,6 @@
 	color = "#000000" // rgb: 0, 0, 0 SHOCKER
 	boozepwr = 1
 	dizzy_adj = 1
-	slur_start = 1
-	confused_start = 1
 	taste_message = "bitter wine"
 
 	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)

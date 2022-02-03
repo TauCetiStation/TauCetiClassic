@@ -446,6 +446,7 @@
 			Paralyse(5)
 
 	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	if(resting)
 		dizziness = max(0, dizziness - 5)

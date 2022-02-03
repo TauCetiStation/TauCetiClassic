@@ -128,6 +128,7 @@
 		src.druggy = max(0, src.druggy)
 
 	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	//update the state of modules and components here
 	if (src.stat != CONSCIOUS)

@@ -31,6 +31,7 @@
 			M.dizziness = 0
 			M.drowsyness = 0
 			M.setStuttering(0)
+			M.SetDrunkenness(0)
 			M.SetConfused(0)
 			M.jitteriness = 0
 

@@ -379,6 +379,7 @@
 			Paralyse(5)
 
 	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 
