@@ -154,7 +154,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	for(var/mob/living/carbon/M in hearers(4, get_turf(src)))
 		if(!iscultist(M))
-			M.confused += 10
+			M.AdjustConfused(10)
 			M.make_jittery(150)
 			var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 			I.override = TRUE
@@ -211,7 +211,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 		if(istype(I, /obj/item/trash/candle))
 			to_chat(user, "<span class='warning'>The wax begins to corrupt and pulse like veins as it merges itself with the [src], impressive.</span>")
-			user.confused += 10 // Sights of this are not pleasant.
+			user.AdjustConfused(10) // Sights of this are not pleasant.
 			if(ishuman(L) && prob(10))
 				var/mob/living/carbon/human/H = L
 				H.invoke_vomit_async()

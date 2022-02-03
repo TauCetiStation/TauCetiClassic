@@ -378,8 +378,7 @@
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
-	if(confused)
-		confused = max(0, confused - 1)
+	AdjustConfused(-1)
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 

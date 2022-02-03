@@ -1078,7 +1078,7 @@
 			Sleeping(10 SECONDS)
 			Paralyse(5)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
 	// decrement dizziness counter, clamped to 0
 	if(resting)
 		dizziness = max(0, dizziness - 15)

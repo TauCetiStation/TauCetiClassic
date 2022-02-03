@@ -471,7 +471,7 @@
 	if(M.dizziness !=0)
 		M.dizziness = max(0, M.dizziness - 15)
 	if(M.confused !=0)
-		M.confused = max(0, M.confused - 5)
+		M.AdjustConfused(-5)
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -511,7 +511,7 @@
 	..()
 	M.adjustDrugginess(5)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.confused = max(M.confused + 2,0)
+		M.AdjustConfused(2)
 		M.make_dizzy(10)
 	M.AdjustStuttering(4)
 	if(!data["ticks"])
@@ -542,7 +542,7 @@
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
-		M.confused = max(M.confused + 3,0)
+		M.AdjustConfused(3)
 	else if(data["ticks"] >=55)
 		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
@@ -567,7 +567,7 @@
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.confused = max(M.confused + 3,0)
+		M.AdjustConfused(3)
 	else if(data["ticks"] >=55)
 		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
@@ -1524,7 +1524,7 @@
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
 		M.AdjustStuttering(11)
 	else if(data["ticks"] >= 115 && prob(33))
-		M.confused = max(M.confused + 15, 15)
+		M.AdjustConfused(15)
 
 /datum/reagent/consumable/ethanol/bacardi
 	name = "Bacardi"

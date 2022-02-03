@@ -1236,3 +1236,53 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/ConfuseInput(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/RandomiseInputs()
+	if(!confused)
+		return
+	if(next_randomiseinputs > world.time)
+		return
+
+	next_randomiseinputs = world.time + randomiseinputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/RandomiseInputs), randomiseinputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		RandomiseInputs()
+	else
+		input_offsets = null
+		next_randomiseinputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		RandomiseInputs()
+	else
+		input_offsets = null
+		next_randomiseinputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		RandomiseInputs()
+	else
+		input_offsets = null
+		next_randomiseinputs = world.time
