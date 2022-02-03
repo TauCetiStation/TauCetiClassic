@@ -131,10 +131,9 @@
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
-	var/power = force
+	var/power = force  + (force * 0.2 *user.mind.getSkillRating(SKILL_MELEE))
 	if(HULK in user.mutations)
 		power *= 2
-	power += round(power * 0.2 *user.mind.getSkillRating(SKILL_MELEE))
 	if(!ishuman(M))
 		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M

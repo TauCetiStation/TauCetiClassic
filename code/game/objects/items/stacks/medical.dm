@@ -10,7 +10,7 @@
 	throw_range = 20
 
 	var/skill_level_needed = SKILL_MEDICAL_UNTRAINED
-	var/unskilled_delay_multiplier = SKILL_TASK_VERY_EASY
+	var/unskilled_delay_multiplier = SKILL_TASK_TRIVIAL
 	var/self_delay = 25
 	var/other_delay = 5
 
@@ -70,7 +70,7 @@
 
 	var/delay = L == user ? self_delay : other_delay
 	if(user.mind && user.mind.getSkillRating(SKILL_MEDICAL) < skill_level_needed)
-		delay +=  unskilled_delay_multiplier * (skill_level_needed - user.mind.getSkillRating(SKILL_MEDICAL))
+		delay = delay  + (delay * 0.5 * unskilled_delay_multiplier * (skill_level_needed - user.mind.getSkillRating(SKILL_MEDICAL)))
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
