@@ -30,7 +30,7 @@
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		beaker = O
 		user.drop_from_inventory(O, src)
@@ -46,7 +46,7 @@
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
 			return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		dish = O
 		user.drop_from_inventory(O, src)
@@ -139,8 +139,6 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	if(!handle_fumbling(user))
-		return
 	
 	if (href_list["close"])
 		user.unset_machine(src)

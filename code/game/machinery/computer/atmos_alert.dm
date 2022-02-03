@@ -95,10 +95,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["priority_clear"])
 		var/removing_zone = href_list["priority_clear"]
 		for(var/zone in priority_alarms)

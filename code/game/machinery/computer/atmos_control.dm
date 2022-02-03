@@ -146,9 +146,6 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 	if(href_list["reset"])
 		current = null
 	if(href_list["alarm"])

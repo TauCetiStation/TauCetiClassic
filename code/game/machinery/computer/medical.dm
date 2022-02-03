@@ -149,9 +149,6 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 	if (!( data_core.general.Find(src.active1) ))
 		src.active1 = null
 

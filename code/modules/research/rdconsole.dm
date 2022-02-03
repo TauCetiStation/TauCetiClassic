@@ -429,8 +429,6 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if((screen == "protolathe" && !linked_lathe) || (screen == "circuit_imprinter" && !linked_imprinter))
 		screen = "main" // Kick us from protolathe or imprinter screen if they were destroyed
-	if(!handle_fumbling(user))
-		return
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync

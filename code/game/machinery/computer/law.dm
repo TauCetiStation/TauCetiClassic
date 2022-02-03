@@ -30,7 +30,7 @@
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 	if(istype(O, /obj/item/weapon/aiModule))
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
@@ -42,7 +42,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	current = select_active_ai(user)
 	if (!current)
@@ -62,7 +62,7 @@
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
 	if(istype(module, /obj/item/weapon/aiModule))
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		module.install(src)
 	else
@@ -73,7 +73,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	current = freeborg()
 	if (!current)

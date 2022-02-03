@@ -206,10 +206,6 @@
 	if(loading)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["task"])
 		switch(href_list["task"])
 			if("autoprocess")

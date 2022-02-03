@@ -19,7 +19,7 @@
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		sample = O
 		user.drop_from_inventory(O, src)
@@ -36,8 +36,6 @@
 		icon_state = "centrifuge_moving"
 
 /obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!handle_fumbling(user))
-		return
 	var/data[0]
 	data["antibodies"] = null
 	data["pathogens"] = null

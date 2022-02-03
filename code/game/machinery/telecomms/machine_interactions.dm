@@ -178,10 +178,6 @@
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["input"])
 		switch(href_list["input"])
 

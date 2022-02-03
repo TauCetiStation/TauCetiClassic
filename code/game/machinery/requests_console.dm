@@ -228,8 +228,6 @@ var/global/list/departments_genitive = list()
 	. = ..()
 	if(!.)
 		return
-	if(!handle_fumbling(usr))
-		return
 	if(href_list["write"])
 		to_dpt = sanitize(href_list["write"])  //write contains the string of the receiving department's name
 

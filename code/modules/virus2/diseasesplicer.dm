@@ -21,7 +21,7 @@
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		dish = I
 		c.drop_from_inventory(I, src)
@@ -29,7 +29,7 @@
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
@@ -135,8 +135,6 @@
 	if(!.)
 		return
 
-	if(!handle_fumbling(user))
-		return
 
 	if (href_list["grab"])
 		if (dish)

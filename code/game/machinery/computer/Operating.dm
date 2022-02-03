@@ -26,7 +26,7 @@
 			user.unset_machine()
 			user << browse(null, "window=op")
 			return
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	var/dat = ""
 	if(src.table && (table.check_victim()))

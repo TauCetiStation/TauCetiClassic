@@ -169,10 +169,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["power"])
 		on = !!text2num(href_list["power"])
 		mode = HEATER_MODE_STANDBY

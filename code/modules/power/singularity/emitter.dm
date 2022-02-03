@@ -83,7 +83,7 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	activate(user)
 
@@ -176,7 +176,7 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	var/skill_bonus = get_skill_bonus(user)
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED)
 	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")

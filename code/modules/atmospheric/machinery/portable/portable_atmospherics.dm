@@ -93,7 +93,7 @@
 	connected_port_parent.update = 1
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	if (istype(W, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))

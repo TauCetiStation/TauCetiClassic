@@ -103,8 +103,6 @@
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		if(!handle_fumbling(user))
-			return
 		t += "[owned_capacitor ? "<span class='green'>Charge capacitor connected.</span>" : "<span class='red'>Unable to locate charge capacitor!</span>"]<br>"
 		t += "This generator is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
 		t += "[time_since_fail > 2 ? "<span class='green'>Field is stable.</span>" : "<span class='red'>Warning, field is unstable!</span>"]<br>"

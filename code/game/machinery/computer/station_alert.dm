@@ -18,7 +18,7 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	var/dat = ""
 	for (var/cat in src.alarms)

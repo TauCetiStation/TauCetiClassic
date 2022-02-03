@@ -93,7 +93,7 @@ field_generator power level display
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
 			else
-				if(!handle_fumbling(user))
+				if(!fumble_around(user))
 					return
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
@@ -108,7 +108,7 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
-	var/skill_bonus = get_skill_bonus(user)
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
 	else if(iswrench(W))

@@ -303,10 +303,6 @@
 	if(!. || usr == occupant)
 		return FALSE
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["refresh"])
 		updateUsrDialog()
 	else if(href_list["open"])

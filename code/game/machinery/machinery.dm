@@ -205,7 +205,7 @@ Class Procs:
 
 /obj/machinery/proc/open_machine()
 	var/mob/living/user = usr
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	state_open = 1
 	density = FALSE
@@ -339,7 +339,10 @@ Class Procs:
 
 	usr.set_machine(src)
 	add_fingerprint(usr)
-
+	
+	if(!fumble_around(usr))
+		return FALSE
+	
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -348,6 +351,8 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
+	if(!fumble_around(usr))
+		return FALSE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -553,20 +558,14 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
-/obj/machinery/proc/handle_fumbling(mob/user, visual = TRUE)
-	if (!required_skill || !required_skill_proficiency || !user) return TRUE
-	if(!issilicon(user) && !isobserver(user) && user.mind.getSkillRating(required_skill) < required_skill_proficiency)
-		if(visual)
-			user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
-			"<span class='notice'>You fumble around figuring out how to use [src].</span>")
-		var/fumbling_time = fumbling_time_multiplier * (required_skill_proficiency - user.mind.getSkillRating(required_skill))
-		if(!do_after(user, fumbling_time, TRUE, src))
-			return FALSE
-	return TRUE
+/obj/machinery/proc/fumble_around(mob/user, visual = TRUE)
+	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user)) return TRUE
+	return handle_fumbling(user, src, fumbling_time_multiplier * 5, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier)
 
-/obj/machinery/proc/get_skill_bonus(mob/user)
-	var/skill = user.mind.getSkillRating(required_skill)
-	if (skill < required_skill_proficiency)
-		return  1 + (required_skill_proficiency - skill) * 0.5
-	else
-		return  1 - (skill - required_skill_proficiency) * 0.2
+
+// /obj/machinery/proc/get_skill_bonus(mob/user)
+// 	var/skill = user.mind.getSkillRating(required_skill)
+// 	if (skill < required_skill_proficiency)
+// 		return  1 + (required_skill_proficiency - skill) * 0.5
+// 	else
+// 		return  1 - (skill - required_skill_proficiency) * 0.2

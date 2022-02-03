@@ -94,9 +94,6 @@ var/global/list/alldepartments = list("Central Command")
 	if(!.)
 		return
 
-	if(!handle_fumbling(usr))
-		return
-
 	if(href_list["send"])
 		if(sendcooldown)
 			return

@@ -231,9 +231,6 @@
 	updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
-
 	var/dat = ""
 
 	switch(screen)

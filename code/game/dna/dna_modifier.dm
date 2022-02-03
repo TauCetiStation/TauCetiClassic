@@ -295,7 +295,7 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
-			if(!handle_fumbling(user))
+			if(!fumble_around(user))
 				return
 			user.drop_from_inventory(I, src)
 			disk = I
@@ -443,10 +443,6 @@
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	. = ..()
 	if(!.)
-		return
-
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
 		return
 
 	if(!src || !connected)

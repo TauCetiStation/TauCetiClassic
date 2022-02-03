@@ -33,8 +33,6 @@
 	if(stat & (NOPOWER|BROKEN) || !Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
-	if(!handle_fumbling(user))
-		return
 	var/dat = "<B>Anomalous material analyser</B><BR>"
 	dat += "<HR>"
 	if(!owned_scanner)

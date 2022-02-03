@@ -117,8 +117,6 @@
 
 	if(user.stat && !isobserver(user))
 		return
-	if(!handle_fumbling(user))
-		return
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["scanned_item"] = (scanned_item ? scanned_item.name : "")

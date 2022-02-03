@@ -99,8 +99,6 @@
 		to_chat(usr, "This device is busy.")
 		return
 
-	if(!handle_fumbling(usr))
-		return
 	
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]

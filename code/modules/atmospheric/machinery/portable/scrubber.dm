@@ -132,10 +132,6 @@
 	if(.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	switch(action)
 		if("power")
 			on = !on

@@ -74,10 +74,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["togglep"])
 		toggle_power()
 		log_investigate("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)

@@ -101,10 +101,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if (href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
 		<BR><B><A href='?src=\ref[src];eject2=1'>Swipe ID to initiate destruction sequence</A></B><BR>

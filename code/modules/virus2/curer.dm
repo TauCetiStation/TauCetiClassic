@@ -24,7 +24,7 @@
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
 			return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
@@ -41,8 +41,6 @@
 	return ..()
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat
 	if(curing)
 		dat = "Antibody production in progress"

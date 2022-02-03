@@ -55,7 +55,7 @@ var/global/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-	var/skill_bonus = get_skill_bonus(user)
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED)
 	if (isscrewdriver(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)

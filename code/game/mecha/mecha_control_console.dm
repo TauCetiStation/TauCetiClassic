@@ -40,9 +40,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])

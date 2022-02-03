@@ -279,10 +279,6 @@
 	if(!. || usr == occupant || panel_open)
 		return FALSE // don't update UIs attached to this object
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["switchOn"])
 		if(!state_open)
 			on = 1

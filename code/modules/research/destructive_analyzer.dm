@@ -38,7 +38,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(obj/O, mob/user)
 	if (shocked)
 		shock(user,50)
-	if(!handle_fumbling(user))
+	if(!fumble_around(user))
 		return
 	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
 		if(linked_console)

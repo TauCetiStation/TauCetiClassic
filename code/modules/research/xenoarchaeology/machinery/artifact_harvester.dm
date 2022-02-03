@@ -46,8 +46,6 @@
 /obj/machinery/artifact_harvester/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(!handle_fumbling(user))
-		return
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
 	//

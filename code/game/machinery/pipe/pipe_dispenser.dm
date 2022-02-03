@@ -85,9 +85,6 @@
 		usr << browse(null, "window=pipedispenser")
 		return FALSE
 	if(href_list["make"])
-		var/mob/living/user = usr
-		if(!handle_fumbling(user))
-			return
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
@@ -202,9 +199,6 @@ Nah
 		if(unwrenched)
 			usr << browse(null, "window=pipedispenser")
 			return FALSE
-		var/mob/living/user = usr
-		if(!handle_fumbling(user))
-			return
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)

@@ -220,9 +220,6 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, MAX_PUMP_PRESSURE)
@@ -350,10 +347,6 @@ Rate: [volume_rate] L/sec<BR>"}
 /obj/machinery/computer/general_air_control/fuel_injection/Topic(href, href_list)
 	. = ..()
 	if(!.)
-		return
-
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
 		return
 
 	if(href_list["refresh_status"])

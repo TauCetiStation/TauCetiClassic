@@ -168,9 +168,9 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
-			if(!handle_fumbling())
+			if(!fumble_around())
 				return
-			var/skill_bonus = get_skill_bonus(user)
+			var/skill_bonus = applySkillModifier(user, 1, SKILL_ATMOS, SKILL_ATMOS_TRAINED)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)

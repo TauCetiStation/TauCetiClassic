@@ -120,9 +120,6 @@
 /obj/machinery/chem_dispenser/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 	switch(action)
 		if("change_amount")
 			. = TRUE
@@ -193,7 +190,7 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
-		if(!handle_fumbling(user))
+		if(!fumble_around(user))
 			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
@@ -418,10 +415,6 @@
 /obj/machinery/chem_master/Topic(href, href_list)
 	. = ..()
 	if(!.)
-		return
-
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
 		return
 
 	if(href_list["ejectp"])
@@ -817,9 +810,6 @@
 	if(!beaker)
 		return FALSE
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 
 	if (href_list["create_vaccine"])
 		if(!src.wait)
@@ -1202,9 +1192,6 @@
 /obj/machinery/reagentgrinder/Topic(href, href_list)
 	. = ..()
 	if(!.)
-		return
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
 		return
 	switch(href_list["action"])
 		if ("grind")

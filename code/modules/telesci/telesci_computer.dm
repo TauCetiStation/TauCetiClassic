@@ -315,10 +315,6 @@
 
 	if(telepad.panel_open)
 		temp_msg = "Telepad undergoing physical maintenance operations."
-		
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
 
 	if(href_list["setrotation"])
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num

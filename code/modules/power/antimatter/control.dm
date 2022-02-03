@@ -298,10 +298,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["togglestatus"])
 		toggle_power()
 

@@ -93,8 +93,6 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
-	if(!handle_fumbling(user))
-		return
 	var/dat = ""
 	if(cell)
 		var/colour = "red"

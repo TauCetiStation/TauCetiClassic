@@ -122,8 +122,6 @@
 		return
 
 	. = TRUE
-	if(!handle_fumbling(usr))
-		return
 	switch(action)
 		if("scan") // insert/remove your ID card
 			if(scan)

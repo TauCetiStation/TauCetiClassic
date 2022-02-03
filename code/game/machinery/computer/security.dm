@@ -40,8 +40,6 @@
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
-	if(!handle_fumbling(user))
-		return
 	var/dat
 	if (temp)
 		dat = "<TT>[temp]</TT><BR><BR><A href='?src=\ref[src];choice=Clear Screen'>Clear Screen</A>"

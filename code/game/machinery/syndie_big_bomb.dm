@@ -62,7 +62,7 @@
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
-				if(!handle_fumbling(user))
+				if(!fumble_around(user))
 					return
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				anchored = TRUE
@@ -70,7 +70,7 @@
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
-				if(!handle_fumbling(user))
+				if(!fumble_around(user))
 					return
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
 				anchored = FALSE
@@ -93,7 +93,7 @@
 
 	else if(iscrowbar(I))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
-			if(!handle_fumbling(user))
+			if(!fumble_around(user))
 				return
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
@@ -106,7 +106,7 @@
 			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/syndicatebombcore))
 		if(degutted)
-			if(!handle_fumbling(user))
+			if(!fumble_around(user))
 				return
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0

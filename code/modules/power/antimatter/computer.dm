@@ -33,10 +33,6 @@
 	if(!.)
 		return
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(!href_list["operation"])
 		return FALSE
 	switch(href_list["operation"])

@@ -178,10 +178,6 @@ Thus, the two variables affect pump operation are set in New():
 	if(!..())
 		return FALSE
 
-	var/mob/living/user = usr
-	if(!handle_fumbling(user))
-		return
-
 	if(href_list["power"])
 		set_power_use(!use_power)
 
