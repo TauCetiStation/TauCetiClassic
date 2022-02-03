@@ -34,7 +34,7 @@
 #define SKILL_MELEE_WEAK -1 
 #define SKILL_MELEE_DEFAULT 0 //civilian, 
 #define SKILL_MELEE_TRAINED 1 //cook, botanist, atmospheric techician
-#define SKILL_MELEE_MASTER 2  //nuclear, СБ
+#define SKILL_MELEE_MASTER 2  //nuclear, security
 
 
 //engineering skill

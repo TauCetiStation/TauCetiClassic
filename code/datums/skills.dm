@@ -119,7 +119,7 @@ medical, chemistry, research, command)
 	return value
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", visual = TRUE)
-	if(user.mind.getSkillRating(required_skill) >= required_proficiency)
+	if(isSkillCompetent(user, required_skill, required_proficiency))
 		return TRUE
 	var/display_message_self = message_self
 	var/display_message_others = message_others
@@ -134,9 +134,8 @@ medical, chemistry, research, command)
 		to_chat(user, display_message_self)
 
 	var/required_time = delay - time_bonus * user.mind.getSkillRating(required_skill)
-	if(!do_after(user, required_time, target = target))
-		return FALSE
-	return TRUE
+	return do_after(user, required_time, target = target)
+
 
 /proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
 	return user?.mind?.getSkillRating(required_skill) >= required_proficiency
