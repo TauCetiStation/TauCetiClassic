@@ -1412,6 +1412,7 @@
 
 /mob/living/proc/handle_drunkenness()
 	if(drunkenness <= 0)
+		drunkenness = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 		return
 
