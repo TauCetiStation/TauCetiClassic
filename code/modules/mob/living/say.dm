@@ -102,11 +102,10 @@ var/global/list/department_radio_keys = list(
 			return
 	if(sanitize)
 		message = sanitize(message)
+		message = capitalize(trim(message))
+		message = add_period(message)
 		if(!message)
 			return
-
-	message = capitalize(trim(message))
-	message = add_period(message)
 
 	var/turf/T = get_turf(src)
 
