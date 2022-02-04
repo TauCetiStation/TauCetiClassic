@@ -88,7 +88,7 @@
 	var/list/contents = get_surroundings(user)
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
-			var/required_time = applySkillModifier(user, R.time, SKILL_CONSTRUCTION, R.required_proficiency, pentalty = 0.5, bnous = 0.4)
+			var/required_time = applySkillModifier(user, R.time, SKILL_CONSTRUCTION, R.required_proficiency, penalty = 0.5, bnous = 0.4)
 			if(do_after(user, required_time, target = user))
 				contents = get_surroundings(user)
 				if(!check_contents(R, contents))
