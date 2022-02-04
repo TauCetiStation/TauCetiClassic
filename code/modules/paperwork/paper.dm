@@ -423,7 +423,7 @@
 						t = sanitize(form.content, free_space, extra = FALSE)
 						break
 		else
-			if (usr.mind.getSkillRating(SKILL_COMMAND) >= SKILL_COMMAND_BEGINNER && id == "end" )
+			if (isSkillCompetent(usr, SKILL_COMMAND, SKILL_COMMAND_BEGINNER) && id == "end" )
 				if(tgui_alert(usr, "Are you sure you want to write text of create form?",, list("Text","Form")) == "Form")
 					select_form(usr)
 			else

@@ -264,18 +264,11 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
-	var/skill = L.mind.getSkillRating(SKILL_ENGINEERING)
-	var/fumbling_time = 0
-	if(skill < required_skill_proficiency)
-		fumbling_time = 4 SECONDS * (required_skill_proficiency - skill)
-	var/fumble_message = "<span class='notice'>You fumble around figuring out the wiring.</span>"
+	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, required_skill_proficiency, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>", visual = FALSE))
+		return
 	switch(action)
 		if("cut")
 			if(I && iswirecutter(I))
-				if(fumbling_time)
-					to_chat(L,fumble_message)
-					if(!do_after(L, fumbling_time, TRUE, holder))
-						return
 				cut_wire_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -283,10 +276,6 @@ var/global/list/wire_daltonism_colors = list()
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			if(I && ismultitool(I))
-				if(fumbling_time)
-					to_chat(L,fumble_message)
-					if(!do_after(L, fumbling_time, TRUE, holder))
-						return
 				pulse_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -294,20 +283,12 @@ var/global/list/wire_daltonism_colors = list()
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")
 		if("attach")
 			if(is_signaler_attached(target_wire))
-				if(fumbling_time)
-					to_chat(L,fumble_message)
-					if(!do_after(L, fumbling_time, TRUE, holder))
-						return
 				var/obj/item/O = detach_signaler(target_wire)
 				if(O)
 					L.put_in_hands(O)
 					. = TRUE
 			else
 				if(issignaler(I))
-					if(fumbling_time)
-						to_chat(L,fumble_message)
-					if(!do_after(L, fumbling_time, TRUE, holder))
-						return
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else
