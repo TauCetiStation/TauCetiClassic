@@ -357,7 +357,7 @@
 	else if(!isbrain(subject))
 		scantemp = "Error: Subject's body structure is not supported."
 		return
-	if(isnull(subject) || !subject.dna)
+	if(!subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
 	if(subject.suiciding == 1)
