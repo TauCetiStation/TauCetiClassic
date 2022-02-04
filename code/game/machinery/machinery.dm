@@ -559,5 +559,6 @@ Class Procs:
 	else
 		ex_act(1)
 /obj/machinery/proc/fumble_around(mob/user, visual = TRUE)
-	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user)) return TRUE
+	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user))
+		return TRUE
 	return handle_fumbling(user, src, fumbling_time_multiplier * 2, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier)

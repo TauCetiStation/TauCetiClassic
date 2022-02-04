@@ -6,6 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
+
 /obj/item/weapon/gun/energy/taser/select_fire(mob/living/user)
 	if(!handle_fumbling(user,src, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to switch mode on [src].</span>"))
 		return

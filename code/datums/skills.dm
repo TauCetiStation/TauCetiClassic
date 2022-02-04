@@ -429,9 +429,11 @@ medical, chemistry, research, command)
 
 /datum/skills/test_subject/waiter
 	chemistry = SKILL_CHEMISTRY_PRACTICED
+	police = SKILL_POLICE_TRAINED
 
 /datum/skills/test_subject/vice_officer
 	command = SKILL_COMMAND_TRAINED
+	police = SKILL_POLICE_TRAINED
 
 /datum/skills/test_subject/paranormal
 	research = SKILL_RESEARCH_TRAINED
