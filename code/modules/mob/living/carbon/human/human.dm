@@ -1707,7 +1707,6 @@
 		
 		var/injection_time = applySkillModifier(user, SKILL_TASK_TOUGH, SKILL_MEDICAL, SKILL_MEDICAL_UNTRAINED, penalty = 0, bonus = 0.15)
 		if(!instant)
-			
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
