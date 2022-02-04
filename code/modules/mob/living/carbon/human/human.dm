@@ -1704,7 +1704,6 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.5, practiced 5, competent 3.5, expert and master 2
-		
 		var/injection_time = applySkillModifier(user, SKILL_TASK_TOUGH, SKILL_MEDICAL, SKILL_MEDICAL_UNTRAINED, penalty = 0, bonus = 0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
