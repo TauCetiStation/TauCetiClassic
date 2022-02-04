@@ -82,8 +82,8 @@
 	// Confused rework. Randomises inputs once every randomiseinputs_cooldown ticks.
 	var/confused = 0		//Carbon
 	var/list/input_offsets
-	var/next_randomiseinputs = 0
-	var/randomiseinputs_cooldown = 30 SECONDS
+	var/next_randomise_inputs = 0
+	var/randomise_inputs_cooldown = 30 SECONDS
 
 	var/antitoxs = null
 	var/phoron = null

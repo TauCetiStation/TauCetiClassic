@@ -105,7 +105,7 @@
 		move_delay = world.time
 		//drunk driving
 		if(mob.confused)
-			direct = mob.ConfuseInput(direct)
+			direct = mob.confuse_input(direct)
 		return mob.buckled.relaymove(mob,direct)
 
 	if(!forced && !mob.canmove)
@@ -205,7 +205,7 @@
 
 		else
 			if(mob.confused && !mob.crawling)
-				direct = mob.ConfuseInput(direct)
+				direct = mob.confuse_input(direct)
 				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 

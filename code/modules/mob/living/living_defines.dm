@@ -1,3 +1,8 @@
+#define DRUNKENNESS_SLUR 30
+#define DRUNKENNESS_CONFUSED 150
+#define DRUNKENNESS_BLUR 400
+#define DRUNKENNESS_PASS_OUT 600
+
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	//Health and life related vars
@@ -21,10 +26,10 @@
 	// Holly, we're drunk.
 	// Should all of this be in organ/liver ? ~Luduk
 	var/drunkenness = 0
-	var/drunkenness_slur = 30
-	var/drunkenness_confused = 150
-	var/drunkenness_blur = 400
-	var/drunkenness_pass_out = 600
+	var/drunkenness_slur = DRUNKENNESS_SLUR
+	var/drunkenness_confused = DRUNKENNESS_CONFUSED
+	var/drunkenness_blur = DRUNKENNESS_BLUR
+	var/drunkenness_pass_out = DRUNKENNESS_PASS_OUT
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -78,3 +83,8 @@
 
 	var/beauty_living = 0.0
 	var/beauty_dead = -100.0
+
+#undef DRUNKENNESS_SLUR
+#undef DRUNKENNESS_CONFUSED
+#undef DRUNKENNESS_BLUR
+#undef DRUNKENNESS_PASS_OUT
