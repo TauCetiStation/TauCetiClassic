@@ -17891,7 +17891,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/item/clothing/under/bathtowel,
 /obj/item/clothing/under/bathtowel,
@@ -74291,7 +74291,7 @@
 /area/station/engineering/atmos)
 "job" = (
 /obj/structure/table,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "jpb" = (
@@ -75870,7 +75870,7 @@
 	},
 /area/station/medical/hallway)
 "lga" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /obj/structure/dryer{
 	pixel_y = 20
 	},
@@ -82611,7 +82611,7 @@
 	icon_state = "left";
 	name = "Shower"
 	},
-/obj/item/weapon/soap/deluxe,
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/curtain/open/shower,
 /obj/machinery/shower{
