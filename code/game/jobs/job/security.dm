@@ -17,7 +17,7 @@
 	)
 	salary = 250
 	minimal_player_age = 14
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 170000
 	outfit = /datum/outfit/job/hos
 	/*
 		HEY YOU!
@@ -42,7 +42,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
 	salary = 190
 	minimal_player_age = 5
-	minimal_player_ingame_minutes = 1800
+	minimal_player_ingame_minutes = 80000
 	outfit = /datum/outfit/job/warden
 	/*
 		HEY YOU!
@@ -67,7 +67,7 @@
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 	salary = 180
 	minimal_player_age = 3
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 50000
 	outfit = /datum/outfit/job/detective
 	/*
 		HEY YOU!
@@ -92,7 +92,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
 	salary = 130
 	minimal_player_age = 3
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 60000
 	outfit = /datum/outfit/job/officer
 	/*
 		HEY YOU!
