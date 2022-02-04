@@ -31,8 +31,6 @@ var/global/bomb_set
 	var/spray_icon_state
 	var/nuketype = ""
 
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_MASTER
 	var/datum/announcement/station/nuke/announce_nuke = new
 
 /obj/machinery/nuclearbomb/atom_init()

@@ -69,12 +69,12 @@
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
-	if(user.mind && user.mind.getSkillRating(SKILL_MEDICAL) < skill_level_needed)
-		delay = delay  + (delay * 0.5 * unskilled_delay_multiplier * (skill_level_needed - user.mind.getSkillRating(SKILL_MEDICAL)))
+	if(!isSkillCompetent(user, SKILL_MEDICAL, skill_level_needed))
+		delay = applySkillModifier(user, delay, SKILL_MEDICAL, skill_level_needed, penalty = 2)
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
-		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE))
+		if(!do_mob(user, L, time = delay, check_target_zone = TRUE))
 			return
 
 	if(use(1) && heal(L, user) && repeating)

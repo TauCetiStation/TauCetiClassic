@@ -89,7 +89,7 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-
+		var/skill_bonus =  applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED, 0.4, 0.1)
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
@@ -104,7 +104,7 @@
 					if(S.get_amount() < 2)
 						return ..()
 					to_chat(user, "<span class='notice'>Now adding plating...</span>")
-					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
+					if(S.use_tool(src, user, 40 * skill_bonus, amount = 2, volume = 100))
 						to_chat(user, "<span class='notice'>You added the plating!</span>")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)

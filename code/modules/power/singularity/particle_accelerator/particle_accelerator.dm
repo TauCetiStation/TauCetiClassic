@@ -208,12 +208,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 		return 0
 	var/temp_state = src.construction_state
 
-	var/skill_bonus
-	var/skill = user.mind.getSkillRating(SKILL_ENGINEERING)
-	if (skill < SKILL_ENGINEERING_PRO)
-		skill_bonus = 1 + (SKILL_ENGINEERING_PRO - skill) * 2
-	else
-		skill_bonus = 1 - (skill - SKILL_ENGINEERING_PRO) * 0.2
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, 0.4, 0.2)
 	
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)

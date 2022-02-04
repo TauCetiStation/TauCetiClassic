@@ -6,7 +6,7 @@
 	w_class = SIZE_SMALL
 	m_amt = 1000
 	fire_delay = 0
-	recoil = 3
+	recoil = 1
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2

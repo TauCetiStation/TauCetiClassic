@@ -105,21 +105,17 @@
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
-	var/skill = user.mind.getSkillRating(SKILL_ENGINEERING)
-	var/skill_bonus =  1 - (skill - SKILL_ENGINEERING_PRO) * 0.3
+	var/skill_bonus =  applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, 0.4, 0.2)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>" ,visual = FALSE))
+					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
 				update_icon()
 				new /obj/item/stack/rods(src)
-				if(skill < SKILL_ENGINEERING_PRO)
-					to_chat(user,"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>")
-					var/fumbling_time = SKILL_TASK_TOUGH - ( SKILL_TASK_VERY_EASY * ( SKILL_ENGINEERING_PRO - skill ) )
-					if (!do_after(usr, fumbling_time, target = src))
-						return
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return
 
@@ -143,11 +139,8 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
-				if(skill < SKILL_ENGINEERING_PRO)
-					to_chat(user,"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>")
-					var/fumbling_time = SKILL_TASK_AVERAGE - ( SKILL_TASK_VERY_EASY * ( SKILL_ENGINEERING_PRO - skill ) )
-					if (!do_after(usr, fumbling_time, target = src))
-						return
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>" ,visual = FALSE))
+					return
 				d_state = INTACT
 				update_icon()
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")

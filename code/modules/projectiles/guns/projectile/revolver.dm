@@ -4,7 +4,6 @@
 	icon_state = "revolver"
 	item_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	recoil = 4
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()

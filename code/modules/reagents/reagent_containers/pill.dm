@@ -49,7 +49,8 @@
 
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
-		var/ingestion_time = max(2 SECONDS, 6 SECONDS - 1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL))
+		
+		var/ingestion_time = applySkillModifier(user, SKILL_TASK_TOUGH, SKILL_MEDICAL, SKILL_MEDICAL_PRACTICED, 0, 0.2)
 		if(!do_mob(user, M, ingestion_time)) 
 			return
 

@@ -57,8 +57,8 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	
-	var/skill_recoil = max(0, applySkillModifier(user, recoil, SKILL_FIREARMS, SKILL_FIREARMS_UNTRAINED, bonus = 0.5))
-	if(recoil)
+	var/skill_recoil = max(0, applySkillModifier(user, recoil, SKILL_FIREARMS, SKILL_FIREARMS_UNTRAINED, penalty = 2, bonus = 0.5))
+	if(skill_recoil)
 		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)

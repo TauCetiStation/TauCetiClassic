@@ -7,7 +7,7 @@
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"
-	recoil = 5 //extra kickback
+	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
 	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 	can_be_holstered = FALSE

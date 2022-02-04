@@ -153,14 +153,10 @@
 	if (R.on_floor)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 		return
-	var/building_time = R.time
+	var/building_time = applySkillModifier(user, R.time, SKILL_CONSTRUCTION, R.skill_req, 1, 0.4)
 	if (building_time)
 		if(usr.is_busy())
 			return
-		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTION) < R.skill_req)
-			building_time += R.time * ( R.skill_req - usr.mind.getSkillRating(SKILL_CONSTRUCTION) )  // +100% time each skill point lacking.
-		if(R.skill_req && usr.mind.getSkillRating(SKILL_CONSTRUCTION) > R.skill_req)
-			building_time -= clamp(R.time * ( usr.mind.getSkillRating(SKILL_CONSTRUCTION) - R.skill_req ) * 0.40, 0 , 0.85 * building_time) // -40% time each extra skill point
 		if(building_time)
 			if(building_time > R.time)
 				to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [R.title].</span>")

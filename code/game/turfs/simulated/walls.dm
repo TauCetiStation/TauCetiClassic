@@ -347,7 +347,8 @@
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks 
-	var/skill_bonus =  1 - (user.mind.getSkillRating(SKILL_ENGINEERING) - SKILL_ENGINEERING_TRAINED) * 0.1
+	var/skill_bonus =  applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED, 0.4, 0.2)
+	
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
