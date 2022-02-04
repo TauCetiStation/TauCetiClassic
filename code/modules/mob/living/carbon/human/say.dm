@@ -119,6 +119,9 @@
 		else
 			message = copytext(message,2 + length(message[2]))
 
+	if(!message)
+		return
+
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
