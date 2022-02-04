@@ -11,7 +11,6 @@
 	density = TRUE
 	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
-	appearance_flags = LONG_GLIDE
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	w_class = SIZE_MASSIVE
