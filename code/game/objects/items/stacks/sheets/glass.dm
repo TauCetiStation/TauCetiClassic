@@ -91,12 +91,8 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet-Glass"
-	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTION)
-	if(skill < required_skill) 
-		to_chat(user,"<span class='notice'>You fumble around figuring out how to use glass to make window.</span>")
-		var/fumbling_time = (required_skill - skill) * SKILL_TASK_AVERAGE
-		if (!do_after(usr, fumbling_time, target = src))
-			return
+	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, SKILL_CONSTRUCTION, required_skill, SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around figuring out how to use glass to make window.</span>", visual = FALSE))
+		return
 	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
 		if("One Direction")
@@ -216,12 +212,8 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([get_amount()] sheet\s left)"
-	var/skill = user.mind.getSkillRating(SKILL_CONSTRUCTION)
-	if(skill < required_skill) 
-		to_chat(user,"<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>")
-		var/fumbling_time = (required_skill - skill) * SKILL_TASK_AVERAGE
-		if (!do_after(usr, fumbling_time, target = src))
-			return
+	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, SKILL_CONSTRUCTION, required_skill, SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>", visual = FALSE))
+		return
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))

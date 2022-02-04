@@ -1,8 +1,6 @@
 /obj/item/weapon/plastique/attack_self(mob/user)
-	if(user.mind.getSkillRating(SKILL_FIREARMS) < SKILL_FIREARMS_TRAINED)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to set timer on [src].</span>", "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>")
-		if(!do_after(user, SKILL_TASK_TRIVIAL, target = user))
-			return
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to set timer on [src].</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 10)
 		newtime = 10

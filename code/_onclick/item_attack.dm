@@ -131,7 +131,7 @@
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
-	var/power = force  + (force * 0.2 *user.mind.getSkillRating(SKILL_MELEE))
+	var/power = applySkillModifier(user, force, SKILL_MELEE, SKILL_MELEE_DEFAULT, -0.2, -0.2)
 	if(HULK in user.mutations)
 		power *= 2
 	if(!ishuman(M))

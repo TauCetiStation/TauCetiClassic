@@ -18,10 +18,8 @@
 	if(!user.loc || user.loc.density)
 		to_chat(user, "<span class='warning'>You can't plant a mine here.</span>")
 		return
-	if(user.mind.getSkillRating(SKILL_FIREARMS) < SKILL_FIREARMS_TRAINED)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to deploy [src].</span>", "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>")
-		if(!do_after(user, SKILL_TASK_EASY, target = src))
-			return
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, message_self =  "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to deploy [src].</span>"))
+		return
 	var/planting_time =  max(SKILL_TASK_VERY_EASY, SKILL_TASK_AVERAGE - 1 SECONDS *  (2 * user.mind.getSkillRating(SKILL_FIREARMS)  + user.mind.getSkillRating(SKILL_ENGINEERING)))
 	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
 	if(!do_after(user, planting_time, target = src))

@@ -59,9 +59,8 @@ RCD
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	if(user.mind.getSkillRating(SKILL_CONSTRUCTION) < SKILL_CONSTRUCTION_TRAINED)
-		if(!do_after(user, SKILL_TASK_EASY - user.mind.getSkillRating(SKILL_CONSTRUCTION) * SKILL_TASK_VERY_EASY , TRUE, src))
-			return
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_CONSTRUCTION, SKILL_CONSTRUCTION_TRAINED, SKILL_TASK_VERY_EASY))
+		return
 	switch(mode)
 		if(1)
 			mode = 2

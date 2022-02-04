@@ -118,22 +118,25 @@ medical, chemistry, research, command)
 		return value - value * bonus * (user.mind.getSkillRating(required_skill) - required_proficiency)
 	return value
 
-/proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", visual = TRUE)
+/proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", visual = TRUE, text_target = null)
 	if(isSkillCompetent(user, required_skill, required_proficiency))
 		return TRUE
 	var/display_message_self = message_self
 	var/display_message_others = message_others
+	var/used_item = target
+	if(text_target)
+		used_item = text_target
 	if(!message_self)
-		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [target].</span>"
+		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
 	if(!message_others && visual)
-		display_message_others = "<span class='notice'>[user] fumbles around figuring out how to use [target].</span>"
+		display_message_others = "<span class='notice'>[user] fumbles around figuring out how to use [used_item].</span>"
 
 	if(visual)
 		user.visible_message(display_message_others, display_message_self)
 	else
 		to_chat(user, display_message_self)
 
-	var/required_time = delay - time_bonus * user.mind.getSkillRating(required_skill)
+	var/required_time = max(time_bonus, delay - time_bonus * user.mind.getSkillRating(required_skill))
 	return do_after(user, required_time, target = target)
 
 

@@ -25,11 +25,8 @@
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
 
-	if(user.mind.getSkillRating(SKILL_MEDICAL) < SKILL_MEDICAL_PRACTICED)
-		to_chat(user, "<span class='notice'>You start fumbling around with [src]...</span>")
-		var/fduration = max(SKILL_TASK_AVERAGE - (1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL)), 0)
-		if(!do_after(user, fduration, target = usr))
-			return
+	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, SKILL_MEDICAL, SKILL_MEDICAL_PRACTICED, SKILL_TASK_TRIVIAL, visual = FALSE))
+		return
 	if(!isnull(O.reagents))
 		var/dat = ""
 		if(O.reagents.reagent_list.len > 0)

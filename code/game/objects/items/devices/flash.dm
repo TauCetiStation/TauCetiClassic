@@ -43,12 +43,8 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.mind.getSkillRating(SKILL_POLICE) < SKILL_POLICE_TRAINED)
-		if (user.is_busy()) return
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>", "<span class='notice'>You fumble around figuring out how to use [src]...</span>")
-		
-		if (!do_after(usr, SKILL_TASK_TRIVIAL, target = M))
-			return
+	if(!handle_fumbling(user, M, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED, text_target = src))
+		return
 	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
@@ -129,11 +125,8 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
-	if(user.mind.getSkillRating(SKILL_POLICE) < SKILL_POLICE_TRAINED)
-		if (user.is_busy()) return
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>", "<span class='notice'>You fumble around figuring out how to use [src]...</span>")
-		if (!do_after(usr, SKILL_TASK_TRIVIAL, target = user))
-			return
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED))
+		return
 	flash_recharge()
 
 	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking

@@ -561,11 +561,3 @@ Class Procs:
 /obj/machinery/proc/fumble_around(mob/user, visual = TRUE)
 	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user)) return TRUE
 	return handle_fumbling(user, src, fumbling_time_multiplier * 5, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier)
-
-
-// /obj/machinery/proc/get_skill_bonus(mob/user)
-// 	var/skill = user.mind.getSkillRating(required_skill)
-// 	if (skill < required_skill_proficiency)
-// 		return  1 + (required_skill_proficiency - skill) * 0.5
-// 	else
-// 		return  1 - (skill - required_skill_proficiency) * 0.2

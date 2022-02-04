@@ -26,9 +26,8 @@
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
-				if (user.mind.getSkillRating(SKILL_CHEMISTRY) < SKILL_CHEMISTRY_PRACTICED)
-					if(!do_after(user, SKILL_TASK_EASY, target = src)) 
-						return
+				if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_CHEMISTRY, SKILL_CHEMISTRY_PRACTICED, visual = FALSE))
+					return
 				user.drop_from_inventory(I, src)
 				syringes += I
 				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")

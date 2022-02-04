@@ -13,7 +13,6 @@
 	possible_transfer_amounts = null
 	flags = OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
-	var/skill_req = SKILL_MEDICAL_EXPERT
 
 /obj/item/weapon/reagent_containers/hypospray/atom_init()
 	. = ..()
@@ -28,11 +27,6 @@
 		return
 	if(!istype(M))
 		return
-	if(skill_req && user.mind.getSkillRating(SKILL_MEDICAL) < skill_req)
-		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use the [src].</span>",
-		"<span class='notice'>You fumble around figuring out how to use the [src].</span>")
-		if(!do_mob(user, M, SKILL_TASK_AVERAGE - 1 SECONDS * user.mind.getSkillRating(SKILL_MEDICAL)))
-			return
 	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
 		reagents.reaction(M, INGEST)
 		if(M.reagents)
@@ -61,7 +55,6 @@
 	item_state = "autoinjector"
 	volume = 5
 	list_reagents = list("inaprovaline" = 5)
-	skill_req = SKILL_MEDICAL_UNTRAINED
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
 	name = "stimpack"
