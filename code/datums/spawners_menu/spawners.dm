@@ -520,3 +520,33 @@ var/global/list/datum/spawners_cooldown = list()
 		var/newname = sanitize_safe(input(diona,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 		if (newname != "")
 			diona.real_name = newname
+
+/datum/spawner/spy
+	name = "Агент Прослушки"
+	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(espionageagent_start)
+	espionageagent_start -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+	H.equipOutfit(/datum/outfit/spy)
+	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на станции Нанотрейзен \"Исход\".</span>")
+	if(SSticker.mode.name == "Extended")
+		to_chat(H, "<B>Сегодня очередной рабочий день. Ничего из ряда вон выходящего произойти не должно, так что можно расслабиться.</span>")
+	else
+		to_chat(H, "<B>Согласно сводкам, именно сегодня Ваши наниматели готовятся нанести удар по корпоративным ублюдкам, и Вы можете посодействовать засланным на станцию агентам.</B>")
+	to_chat(H, "<B>Вы ни в коем случае не должны покидать свой пост! Невыполнение своих задач приведёт к увольнению.</B>")
+
+/datum/spawner/spy/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(espionageagent_start)
+	ghost.forceMove(get_turf(jump_to))
