@@ -11,6 +11,7 @@
 	if(!handle_fumbling(user,src, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to switch mode on [src].</span>"))
 		return
 	..()
+
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
