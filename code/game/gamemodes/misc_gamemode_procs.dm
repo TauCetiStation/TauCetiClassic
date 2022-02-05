@@ -216,4 +216,4 @@
 	return pick(dudes)
 
 /proc/mode_has_antags()
-	return SSticker.mode.factions.len > 0 && SSticker.mode.orphaned_roles.len > 0
+	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0
