@@ -540,7 +540,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
-	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на станции Нанотрейзен \"Исход\".</span>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на станции Нанотрейзен \"Исход\".</B>")
 	if(SSticker.mode.name == "Extended")
 		to_chat(H, "<B>Сегодня очередной рабочий день. Ничего из ряда вон выходящего произойти не должно, так что можно расслабиться.</span>")
 	else
