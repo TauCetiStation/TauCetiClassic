@@ -94,7 +94,7 @@
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)	
 			for(var/datum/reagent/R in reagents.reagent_list)
-				to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+				to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
