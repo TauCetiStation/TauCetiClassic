@@ -6,7 +6,17 @@
 
 /mob/living/silicon/ai/GetVoice()
 	if(voice_change)
-		to_chat(src, "<span class='notice'>[voice].</span>")
 		return voice
 	else
 		return name
+
+/mob/living/silicon/ai/say_quote(text)
+	var/ending = copytext(text, -1)
+	if(voice_change)
+		if (ending == "?")
+			return "asks"
+		else if (ending == "!")
+			return "exclaims"
+		
+		return "says"
+	return ..()
