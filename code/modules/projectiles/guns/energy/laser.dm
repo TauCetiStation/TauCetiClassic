@@ -68,48 +68,29 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-
 /obj/item/weapon/gun/energy/laser/selfcharging/process()
 	charge_tick++
 	if(charge_tick < 4) return 0
 	charge_tick = 0
 	if(!power_supply) return 0
 	power_supply.give(100 * chargespeed)
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			if(R.cell.use(shot.e_cost))
+				power_supply.give(shot.e_cost)
+
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/laser/cyborg
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg
 	name = "laser gun"
 	desc = "A basic weapon designed kill with concentrated energy bolts."
 	icon_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
-	var/charge_tick = 0
 	var/recharge_time = 5
-
-/obj/item/weapon/gun/energy/laser/cyborg/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/gun/energy/laser/cyborg/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/cyborg/process() 
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] 
-			if(R.cell.use(shot.e_cost)) 		
-				power_supply.give(shot.e_cost)
-
-	update_icon()
-	return 1
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
