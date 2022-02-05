@@ -3686,7 +3686,7 @@
 /obj/machinery/shower{
 	pixel_y = 24
 	},
-/obj/item/weapon/soap/syndie,
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /obj/machinery/light/small{
 	dir = 4
 	},

@@ -17891,7 +17891,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/item/clothing/under/bathtowel,
 /obj/item/clothing/under/bathtowel,
@@ -38372,17 +38372,6 @@
 /obj/structure/closet/crate{
 	name = "Gold Crate"
 	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
@@ -39324,6 +39313,17 @@
 /area/station/bridge/nuke_storage)
 "bsQ" = (
 /obj/structure/safe,
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
 /obj/item/clothing/under/color/yellow,
 /obj/item/toy/katana,
 /turf/simulated/floor{
@@ -74291,7 +74291,7 @@
 /area/station/engineering/atmos)
 "job" = (
 /obj/structure/table,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "jpb" = (
@@ -75870,7 +75870,7 @@
 	},
 /area/station/medical/hallway)
 "lga" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /obj/structure/dryer{
 	pixel_y = 20
 	},
@@ -82611,7 +82611,7 @@
 	icon_state = "left";
 	name = "Shower"
 	},
-/obj/item/weapon/soap/deluxe,
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/curtain/open/shower,
 /obj/machinery/shower{
