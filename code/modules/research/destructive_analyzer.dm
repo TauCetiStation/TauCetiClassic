@@ -38,8 +38,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(obj/O, mob/user)
 	if (shocked)
 		shock(user,50)
-	if(!fumble_around(user))
-		return
 	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
 		if(linked_console)
 			linked_console.linked_destroy = null
@@ -70,6 +68,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
+			return
+		if(!fumble_around(user))
 			return
 		busy = 1
 		loaded_item = O

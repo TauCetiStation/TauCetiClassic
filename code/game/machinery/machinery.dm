@@ -204,9 +204,6 @@ Class Procs:
 	..()
 
 /obj/machinery/proc/open_machine()
-	var/mob/living/user = usr
-	if(!fumble_around(user))
-		return
 	state_open = 1
 	density = FALSE
 	dropContents()
