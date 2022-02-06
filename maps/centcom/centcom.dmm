@@ -8759,12 +8759,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
-"avd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/mineral/input,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
 "ave" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(150)
@@ -9216,7 +9210,20 @@
 	},
 /area/shuttle/vox/arkship)
 "awf" = (
-/obj/machinery/mineral/processing_unit,
+/obj/structure/rack,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/northright{
+	req_access = list(150)
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "awg" = (
@@ -9387,15 +9394,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awB" = (
-/obj/machinery/mineral/unloading_machine{
-	icon_state = "unloader-corner"
-	},
-/obj/machinery/mineral/processing_unit_console{
-	pixel_x = -32
-	},
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
 "awC" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/unsimulated/floor{
@@ -9884,11 +9882,20 @@
 	},
 /area/shuttle/supply/velocity)
 "axH" = (
-/obj/machinery/mineral/input,
-/obj/machinery/conveyor/auto{
+/obj/structure/rack,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/plasticflaps,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/northleft{
+	req_access = list(150)
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "axI" = (
@@ -9898,7 +9905,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "axJ" = (
-/obj/machinery/mineral/output,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -84689,7 +84696,7 @@ aoq
 arV
 auG
 avp
-awB
+aYw
 axH
 arv
 asm
@@ -84946,7 +84953,7 @@ amT
 anm
 arm
 avq
-avd
+aYs
 awf
 ary
 asn
