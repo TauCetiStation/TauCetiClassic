@@ -157,6 +157,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -279,6 +280,7 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -1050,7 +1052,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	achievements += list(list("key" = winner.key, "name" = winner.name, "title" = name, "desc" = desc))
+	SSStatistics.add_to_achievements(winner.key, winner.name, name, desc)
 
 /client/proc/aooc()
 	set category = "Admin"

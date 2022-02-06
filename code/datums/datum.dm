@@ -1,3 +1,4 @@
+// IF YOU ADD OR REMOVE VAR DECLARATION THEN UPDATE ROOT_DATUM_VARS LIST
 /datum
 	var/list/status_traits
 	var/list/datum_components //for /datum/components

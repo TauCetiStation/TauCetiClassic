@@ -316,7 +316,7 @@
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)
-		score["meals"]++
+		SSStatistics.score.meals++
 		return
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)

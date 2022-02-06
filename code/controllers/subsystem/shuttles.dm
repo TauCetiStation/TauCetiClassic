@@ -564,7 +564,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		score["stuffshipped"]++
+		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
 	SSshuttle.shoppinglist.Cut()

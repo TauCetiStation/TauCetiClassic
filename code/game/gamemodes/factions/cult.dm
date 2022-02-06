@@ -114,7 +114,7 @@
 	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Рун на станции:</B> [religion.runes.len]<BR>
-	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
+	<B>Аномалий уничтожено:</B> [SSStatistics.score.destranomaly]<BR>
 	<HR>"}
 
 	return dat

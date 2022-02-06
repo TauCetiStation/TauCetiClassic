@@ -50,6 +50,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	SSticker.generate_scoreboard(mob)
 	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
 
+/client/proc/save_statistics()
+	set category = "Debug"
+	set name = "Force save statistics"
+	set desc = "Force save statistics"
+
+	if(!holder)
+		return
+	if(!check_rights(R_DEBUG))
+		return
+
+	SSStatistics.drop_round_stats(stealth = TRUE)
+	message_admins("Admin [key_name_admin(usr)] has forced save the statistics.")
+
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))
 	set category = "Debug"

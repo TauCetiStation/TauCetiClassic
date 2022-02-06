@@ -679,7 +679,7 @@
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
-			score["stuffharvested"]++
+			SSStatistics.score.stuffharvested++
 
 	else if(iswrench(O) && unwrenchable)
 		if(anchored == 2)
@@ -826,7 +826,7 @@
 			t_amount++
 
 	if(getYield() >= 1)
-		score["stuffharvested"]++
+		SSStatistics.score.stuffharvested++
 
 	parent.update_tray()
 	return result

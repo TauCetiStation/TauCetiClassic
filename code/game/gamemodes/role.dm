@@ -303,13 +303,13 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
 
-	antagonists_completion += list(list("role" = id, "html" = text))
+	SSStatistics.add_to_completion_antagonists(null, id, text)
 
 	return text
 

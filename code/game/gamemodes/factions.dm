@@ -197,7 +197,7 @@
 			if (IsSuccessful())
 				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else if (minor_victory)
 				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
@@ -217,7 +217,7 @@
 
 		score_results += "</ul>"
 
-	antagonists_completion += list(list("faction" = ID, "html" = score_results))
+	SSStatistics.add_to_completion_antagonists(ID, null, score_results)
 
 	score_results += "<ul>"
 

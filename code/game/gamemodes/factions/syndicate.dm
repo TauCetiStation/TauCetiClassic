@@ -146,7 +146,7 @@
 	if      (!disk_rescued &&  SSticker.station_was_nuked &&          !syndies_didnt_escape)
 		dat += "<span class='red'>Syndicate Major Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
-		score["roleswon"]++
+		SSStatistics.score.roleswon++
 		feedback_add_details("[ID]_success","SUCCESS")
 
 	else if (!disk_rescued &&  SSticker.station_was_nuked &&           syndies_didnt_escape)
@@ -224,27 +224,27 @@
 	for(var/datum/role/role in members)
 		foecount++
 		if (!role.antag.current)
-			score["opkilled"]++
+			SSStatistics.score.opkilled++
 			continue
 		var/turf/T = role.antag.current.loc
 		if (T && istype(T.loc, /area/station/security/brig))
-			score["arrested"] += 1
+			SSStatistics.score.arrested += 1
 		else if (role.antag.current.stat == DEAD)
-			score["opkilled"]++
-	if(foecount == score["arrested"])
-		score["allarrested"] = 1
+			SSStatistics.score.opkilled++
+	if(foecount == SSStatistics.score.arrested)
+		SSStatistics.score.allarrested = 1
 
-	if (score["nuked"])
+	if (SSStatistics.score.nuked)
 		nukedpenalty = get_nukedpenalty()
-		if(score["disc"])
-			score["crewscore"] += 500
+		if(SSStatistics.score.disc)
+			SSStatistics.score.crewscore += 500
 
-	var/killpoints = score["opkilled"] * 250
-	var/arrestpoints = score["arrested"] * 1000
-	score["crewscore"] += killpoints
-	score["crewscore"] += arrestpoints
-	if (score["nuked"])
-		score["crewscore"] -= nukedpenalty
+	var/killpoints = SSStatistics.score.opkilled * 250
+	var/arrestpoints = SSStatistics.score.arrested * 1000
+	SSStatistics.score.crewscore += killpoints
+	SSStatistics.score.crewscore += arrestpoints
+	if (SSStatistics.score.nuked)
+		SSStatistics.score.crewscore -= nukedpenalty
 
 /datum/faction/nuclear/get_scorestat()
 	var/dat = ""
@@ -290,10 +290,10 @@
 	<B>Number of Surviving Crew:</B> [crewcount]<BR>
 	<B>Final Location of Nuke:</B> [bombdat]<BR>
 	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
-	<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
-	<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
-	<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
-	<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>"}
+	<B>Operatives Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
+	<B>Operatives Killed:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 250] Points)<BR>
+	<B>Station Destroyed:</B> [SSStatistics.score.nuked ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
+	<B>All Operatives Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
 
 	return dat
 

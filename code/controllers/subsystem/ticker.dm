@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(ticker)
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
-					drop_round_stats()
+					SSStatistics.drop_round_stats()
 
 					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
@@ -571,7 +571,7 @@ SUBSYSTEM_DEF(ticker)
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup
 	var/tempstate = end_icons.len
-	for(var/winner in achievements)
+	for(var/winner in SSStatistics.achievements)
 		var/winner_text = "<b>[winner["key"]]</b> as <b>[winner["name"]]</b> won \"<b>[winner["title"]]</b>\"! \"[winner["desc"]]\""
 		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
