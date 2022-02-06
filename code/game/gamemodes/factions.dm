@@ -217,7 +217,7 @@
 
 		score_results += "</ul>"
 
-	SSStatistics.add_to_completion_antagonists(ID, null, score_results)
+	SSStatistics.add_completion_antagonist(ID, null, score_results)
 
 	score_results += "<ul>"
 

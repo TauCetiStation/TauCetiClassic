@@ -5,7 +5,7 @@
 	flags = ANNOUNCE_TEXT | ANNOUNCE_SOUND
 /datum/announcement/station/play()
 	..()
-	SSStatistics.add_to_centcomm_communications(type = "station", title = title ? title : subtitle, author = announcer, content = message)
+	SSStatistics.add_centcomm_communication(type = "station", title = title ? title : subtitle, author = announcer, content = message)
 
 /datum/announcement/station/command/play(message)
 	if(message)

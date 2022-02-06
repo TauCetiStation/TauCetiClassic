@@ -43,6 +43,8 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+	SSStatistics.add_death_stat(src)
+
 	if(mind && is_station_level(z))
 		global.deaths_during_shift++
 

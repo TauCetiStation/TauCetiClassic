@@ -196,7 +196,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	send_fax(sender, P, "Central Command")
 
-	SSStatistics.add_to_centcomm_communications(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_centcomm_communication(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)

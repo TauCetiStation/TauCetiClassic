@@ -18,6 +18,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 #define STAT_FILE_NAME "stat.json"
 
 /datum/stat_collector
+	var/const/data_revision = STAT_OUTPUT_VERSION
 	var/round_id
 	var/start_time
 	var/end_time
@@ -34,15 +35,12 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/achievement/achievements = list()
 	var/list/datum/stat/centcomm_communication/centcomm_communications = list()
 
+	// New data
+	var/list/datum/stat/death_stat/deaths = list()
 
-
-
-
-
-	var/const/data_revision = STAT_OUTPUT_VERSION
 	// UNUSED
 	// var/enabled = 1
-	//var/list/datum/stat/death_stat/deaths = list()
+	//
 	//var/list/datum/stat/explosion_stat/explosions = list()
 	//var/list/survivors = list()
 	//var/list/uplink_purchases = list()
@@ -169,44 +167,37 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/dmgestdamage  = 0
 	var/dmgestkey     = 0
 
-
 /datum/stat/death_stat
-	var/mob_typepath = null
-	var/death_x = 0
-	var/death_y = 0
-	var/death_z = 0
-	var/time_of_death = 0
-	var/special_role = null
-	var/assigned_role = null
-	var/key = null
-	var/mind_name = null
-	var/from_suicide = 0
+	var/death_x
+	var/death_y
+	var/death_z
+	var/time_of_death
+	var/special_role
+	var/assigned_role
+	var/key
+	var/mind_name
+	var/real_name
+	var/name
+	var/from_suicide
+	var/last_attacker_name
+	var/last_attacker_key
 	var/list/damage = list(
 		"BRUTE" = 0,
 		"FIRE" = 0,
 		"TOXIN" = 0,
 		"OXY" = 0,
 		"CLONE" = 0,
-		"BRAIN" = 0)
+		"BRAIN" = 0,
+	)
 
-// this literally only exists because it's easier for me to serialize this way
-/datum/stat/survivor
-	var/mob_typepath = null
-	var/special_role = null
-	var/assigned_role = null
-	var/key = null
-	var/mind_name = null
-	var/escaped = FALSE
-	var/list/damage = list(
-		"BRUTE" = 0,
-		"FIRE" = 0,
-		"TOXIN" = 0,
-		"OXY" = 0,
-		"CLONE" = 0,
-		"BRAIN" = 0)
-	var/loc_x = 0
-	var/loc_y = 0
-	var/loc_z = 0
+/datum/stat/explosion_stat
+	var/epicenter_x = 0
+	var/epicenter_y = 0
+	var/epicenter_z = 0
+	var/devastation_range = 0
+	var/heavy_impact_range = 0
+	var/light_impact_range = 0
+	var/flash_range = 0
 
 /datum/stat/antag_objective
 	var/mind_name = null
@@ -230,14 +221,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/purchaser_key = null
 	var/purchaser_name = null
 	var/purchaser_is_traitor = TRUE
-
-/datum/stat/explosion_stat
-	var/epicenter_x = 0
-	var/epicenter_y = 0
-	var/epicenter_z = 0
-	var/devastation_range = 0
-	var/heavy_impact_range = 0
-	var/light_impact_range = 0
 
 /datum/stat/manifest_entry
 	var/key = null

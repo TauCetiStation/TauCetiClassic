@@ -1,11 +1,12 @@
-/datum/stat_collector/proc/add_to_completion_antagonists(faction, role, html)
+// Deprecated
+/datum/stat_collector/proc/add_completion_antagonist(faction, role, html)
 	var/datum/stat/antagonists_completion/stat = new
 	stat.faction = faction
 	stat.role = role
 	stat.html = html
 	completion_antagonists += stat
 
-/datum/stat_collector/proc/add_to_centcomm_communications(type, title, author, content, time = roundduration2text())
+/datum/stat_collector/proc/add_centcomm_communication(type, title, author, content, time = roundduration2text())
 	var/datum/stat/centcomm_communication/stat = new
 	stat.__type = type
 	stat.title = title
@@ -14,13 +15,66 @@
 	stat.content = content
 	centcomm_communications += stat
 
-/datum/stat_collector/proc/add_to_achievements(key, name, title, desc)
+/datum/stat_collector/proc/add_achievement(key, name, title, desc)
 	var/datum/stat/achievement/stat = new
 	stat.key = key
 	stat.name = name
 	stat.title = title
 	stat.desc = desc
 	achievements += stat
+
+/datum/stat_collector/proc/add_death_stat(mob/living/H)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		return
+	if(!isliving(H))
+		return
+	if(!H.mind)
+		return
+
+	var/datum/stat/death_stat/stat = new
+	stat.time_of_death = H.timeofdeath
+	stat.from_suicide = H.suiciding
+
+	var/turf/spot = get_turf(H)
+	stat.death_x = spot.x
+	stat.death_y = spot.y
+	stat.death_z = spot.z
+
+	stat.name = H.name
+	stat.real_name = H.real_name
+
+	if(H.lastattacker)
+		stat.last_attacker_name = H.lastattacker?.name
+		stat.last_attacker_key = H.lastattacker?.key
+
+	stat.damage["BRUTE"] = H.bruteloss
+	stat.damage["FIRE"]  = H.fireloss
+	stat.damage["TOXIN"] = H.toxloss
+	stat.damage["OXY"]   = H.oxyloss
+	stat.damage["CLONE"] = H.cloneloss
+	stat.damage["BRAIN"] = H.brainloss
+
+	if(H.mind)
+		stat.mind_name = H.mind.name
+		stat.assigned_role = H.mind.assigned_role
+		stat.special_role = H.mind.special_role
+		stat.key = ckey(H.mind.key)
+
+	deaths += stat
+
+/datum/stat_collector/proc/add_explosion_stat(turf/epicenter, dev_range, hi_range, li_range, flash_range)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		return
+
+	var/datum/stat/explosion_stat/stat = new
+	stat.epicenter_x = epicenter.x
+	stat.epicenter_y = epicenter.y
+	stat.epicenter_z = epicenter.z
+	stat.devastation_range = dev_range
+	stat.heavy_impact_range = hi_range
+	stat.light_impact_range = li_range
+	stat.flash_range = flash_range
+	explosions += stat
 
 /*
 /datum/stat_collector/proc/get_research_score()
@@ -39,95 +93,6 @@
 		var/datum/tech/KT = server.files.GetKTechByID(ID)
 		tech_level_total += KT.level
 	return tech_level_total
-
-/datum/stat_collector/proc/add_explosion_stat(turf/epicenter, const/dev_range, const/hi_range, const/li_range)
-	if(SSticker.current_state != GAME_STATE_PLAYING)
-		return
-
-	var/datum/stat/explosion_stat/e = new
-	e.epicenter_x = epicenter.x
-	e.epicenter_y = epicenter.y
-	e.epicenter_z = epicenter.z
-	e.devastation_range = dev_range
-	e.heavy_impact_range = hi_range
-	e.light_impact_range = li_range
-	explosions.Add(e)
-
-/datum/stat_collector/proc/add_death_stat(mob/living/M)
-	//if(M.iscorpse) return 0 // only ever 1 if they are a corpse landmark spawned mob
-	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING) return 0 // We don't care about pre-round or post-round deaths.
-	if(!istype(M, /mob/living))
-		return 0
-
-	var/datum/stat/death_stat/d = new
-	d.time_of_death = M.timeofdeath
-
-	var/turf/spot = get_turf(M)
-	d.death_x = spot.x
-	d.death_y = spot.y
-	d.death_z = spot.z
-
-	d.mob_typepath = M.type
-	d.mind_name = M.name
-
-	d.damage["BRUTE"] = M.bruteloss
-	d.damage["FIRE"]  = M.fireloss
-	d.damage["TOXIN"] = M.toxloss
-	d.damage["OXY"]   = M.oxyloss
-	d.damage["CLONE"] = M.cloneloss
-	d.damage["BRAIN"] = M.brainloss
-
-	if(M.mind)
-		if(M.mind.assigned_role && M.mind.assigned_role != "")
-			d.assigned_role = M.mind.assigned_role
-		// if(M.mind.special_role && M.mind.special_role != "")
-		// 	d.special_role = M.mind.special_role
-		if(M.mind.key)
-			d.key = ckey(M.mind.key) // To prevent newlines in keys
-		if(M.mind.name)
-			d.mind_name = M.mind.name
-		d.from_suicide = M.suiciding
-	deaths.Add(d)
-
-/datum/stat_collector/proc/add_survivor_stat(mob/living/M)
-	if(!istype(M, /mob/living)) return 0
-
-	var/datum/stat/survivor/s = new
-	s.mob_typepath = M.type
-	s.mind_name = M.name
-
-	var/turf/spot = get_turf(M)
-	s.loc_x = spot.x
-	s.loc_y = spot.y
-	s.loc_z = spot.z
-
-	s.damage["BRUTE"] = M.bruteloss
-	s.damage["FIRE"]  = M.fireloss
-	s.damage["TOXIN"] = M.toxloss
-	s.damage["OXY"]   = M.oxyloss
-	s.damage["CLONE"] = M.cloneloss
-	s.damage["BRAIN"] = M.brainloss
-
-	if(istype(M, /mob/living/silicon/robot))
-		borgs_at_round_end++
-	// how the scoreboard checked for escape-ness:
-	// if(istype(T.loc, /area/shuttle/escape/centcom) || istype(T.loc, /area/shuttle/escape_pod1/centcom) || istype(T.loc, /area/shuttle/escape_pod2/centcom) || istype(T.loc, /area/shuttle/escape_pod3/centcom) || istype(T.loc, /area/shuttle/escape_pod5/centcom))
-	// luckily this works for us:
-	if(is_centcom_level(M.z))
-		s.escaped = TRUE // not all survivors escape, and not all rounds end with the shuttle
-
-	if(M.mind)
-		if(M.mind.assigned_role && M.mind.assigned_role != "")
-			s.assigned_role = M.mind.assigned_role
-			if(M.mind.assigned_role in command_positions)
-				heads_at_round_end++
-		if(M.mind.special_role && M.mind.special_role != "")
-			s.special_role = M.mind.special_role
-		if(M.mind.key)
-			s.key = ckey(M.mind.key) // To prevent newlines in keys
-		if(M.mind.name)
-			s.mind_name = STRIP_NEWLINE(M.mind.name)
-	survivors.Add(s)
 
 /datum/stat_collector/proc/uplink_purchase(datum/uplink_item/bundle, obj/resulting_item, mob/user )
 	var/was_traitor = TRUE

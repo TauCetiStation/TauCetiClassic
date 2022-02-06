@@ -16,6 +16,8 @@
 	//and somethings expect us to ex_act them so they can qdel()
 	stoplag(1) //tldr, let the calling proc call qdel(src) before we explode
 
+	SSStatistic.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+
 	if(isnull(flash_range))
 		flash_range = devastation_range
 	if(flash_range)

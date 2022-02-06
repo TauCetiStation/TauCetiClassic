@@ -1052,7 +1052,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	SSStatistics.add_to_achievements(winner.key, winner.name, name, desc)
+	SSStatistics.add_achievement(winner.key, winner.name, name, desc)
 
 /client/proc/aooc()
 	set category = "Admin"

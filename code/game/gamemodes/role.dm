@@ -309,7 +309,7 @@
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
 
-	SSStatistics.add_to_completion_antagonists(null, id, text)
+	SSStatistics.add_completion_antagonist(null, id, text)
 
 	return text
 
