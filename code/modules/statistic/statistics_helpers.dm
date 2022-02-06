@@ -1,33 +1,26 @@
-// the main file for statistics is statcollection.dm, look there first
+/datum/stat_collector/proc/add_to_completion_antagonists(faction, role, html)
+	var/datum/stat/antagonists_completion/stat = new
+	stat.faction = faction
+	stat.role = role
+	stat.html = html
+	completion_antagonists += stat
 
-// generate simple body for the stat datum
-// does not support naming arguments
-#define STAT_ADD_PROC(STAT_DATUM, TO_LIST, arguments...) \
-/datum/stat_collector/proc/add_to_##TO_LIST(##arguments){\
-	var##STAT_DATUM/stat = new;\
-	var/list/stat_vars = stat.vars.Copy() - ROOT_DATUM_VARS;\
-	if(stat_vars.len != args.len) {\
-		CRASH("The number of arguments passed ([args.len]) is not equal to the number of variables ([stat_vars.len]) declared in the ([##STAT_DATUM])");\
-	}\
-	for(var/i in 1 to args.len) {\
-		stat.vars[stat_vars[i]] = args[i];\
-	}\
-	TO_LIST += stat;\
-}
+/datum/stat_collector/proc/add_to_centcomm_communications(type, title, author, content, time = roundduration2text())
+	var/datum/stat/centcomm_communication/stat = new
+	stat.__type = type
+	stat.title = title
+	stat.author = author
+	stat.time = time
+	stat.content = content
+	centcomm_communications += stat
 
-// remove this shit and add normal copypaste
-STAT_ADD_PROC(/datum/stat/antagonists_completion, completion_antagonists,
-	faction,\
-	role,\
-	html)
-
-STAT_ADD_PROC(/datum/stat/centcomm_communication, centcomm_communications)
-/proc/add_communication_log(type, title, author, content, time = roundduration2text())
-	SSStatistics.add_to_centcomm_communications(type, title, author, time, content)
-
-STAT_ADD_PROC(/datum/stat/achievement, achievements)
-
-
+/datum/stat_collector/proc/add_to_achievements(key, name, title, desc)
+	var/datum/stat/achievement/stat = new
+	stat.key = key
+	stat.name = name
+	stat.title = title
+	stat.desc = desc
+	achievements += stat
 
 /*
 /datum/stat_collector/proc/get_research_score()

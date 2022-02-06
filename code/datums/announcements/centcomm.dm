@@ -7,7 +7,7 @@
 
 /datum/announcement/centcomm/play()
 	..()
-	add_communication_log(type = "centcomm", title = title, content = message)
+	SSStatistics.add_to_centcomm_communications(type = "centcomm", title = title, content = message)
 
 
 /datum/announcement/centcomm/admin

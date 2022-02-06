@@ -48,7 +48,7 @@
 
 	send_fax(BRIDGE_FROM_SNIPPET_TEXT, P, department)
 
-	add_communication_log(type = "fax-centcomm", title = P.name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_to_centcomm_communications(type = "fax-centcomm", title = P.name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
 	message_admins("Fax message was created by [BRIDGE_FROM_SNIPPET_HTML] and sent to [department]")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
