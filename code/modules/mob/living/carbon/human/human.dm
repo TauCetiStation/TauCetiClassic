@@ -1391,6 +1391,13 @@
 		if(species.language)
 			remove_language(species.language)
 
+		if(species.additional_languages)
+			for(var/A in species.additional_languages)
+				remove_language(A)
+
+		if(client?.prefs.language)
+			remove_language(client.prefs.language)
+
 		species.on_loose(src, new_species)
 
 	species = all_species[new_species]
