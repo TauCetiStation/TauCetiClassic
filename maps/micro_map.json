@@ -1,0 +1,12 @@
+{
+    "map_name": "Falcon",
+    "map_path": "micro_map",
+    "map_file": "micro_map.dmm",
+    "station_name": "NSS Falcon",
+    "system_name" : "Tau Ceti",
+    "station_image": "Falcon",
+    "traits": [],
+    "space_ruin_levels": 2,
+    "space_empty_levels": 1,
+    "load_junkyard": 1,
+}
