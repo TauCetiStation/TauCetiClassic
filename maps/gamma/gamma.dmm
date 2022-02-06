@@ -3844,7 +3844,7 @@
 /area/station/maintenance/dormitory)
 "akg" = (
 /obj/structure/rack,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/item/clothing/under/bathtowel,
 /obj/item/clothing/under/bathtowel,
@@ -7399,7 +7399,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap/deluxe,
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/drain{
 	drainage = 2
@@ -8193,7 +8193,7 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/weapon/gun/syringe,
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -21081,7 +21081,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/soap/fluff,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -44859,7 +44859,7 @@
 "naY" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/soap/syndie,
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -60593,7 +60593,7 @@
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "sfc" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /obj/machinery/shower{
 	dir = 4
 	},
@@ -64877,7 +64877,7 @@
 	},
 /area/station/medical/morgue)
 "twO" = (
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /obj/machinery/shower{
 	dir = 8
 	},
