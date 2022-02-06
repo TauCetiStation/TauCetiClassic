@@ -14,11 +14,15 @@ Format:
 endmap
 
 map boxstation
-	default
 endmap
 
 map gamma
 endmap
 
 map testmap
+endmap
+
+map falcon
+	maxplayers 15
+	default
 endmap
