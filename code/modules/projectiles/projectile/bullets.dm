@@ -207,8 +207,8 @@
 	embed = 0
 	edge = 1
 
-/obj/item/projectile/bullet/stunslug
-	name = "stunslug"
+/obj/item/projectile/bullet/stunshot
+	name = "stunshot"
 	icon_state = "spark"
 	flag = "energy"
 	damage = 5
@@ -220,7 +220,7 @@
 	sharp = 0
 	dispersion = 1.8
 
-/obj/item/projectile/bullet/stunslug/atom_init()
+/obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
