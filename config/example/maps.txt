@@ -17,11 +17,11 @@ map boxstation
 	default
 endmap
 
+map boxstation_snow
+endmap
+
 map gamma
 endmap
 
 map testmap
-endmap
-
-map testmap_snow
 endmap
