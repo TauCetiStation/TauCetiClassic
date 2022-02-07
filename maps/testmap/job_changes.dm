@@ -26,3 +26,5 @@ MAP_REMOVE_JOB(recycler)
 MAP_REMOVE_JOB(cadet)
 
 MAP_REMOVE_JOB(forensic)
+
+#undef JOB_MODIFICATION_MAP_NAME
