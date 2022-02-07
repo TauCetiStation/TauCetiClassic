@@ -379,7 +379,7 @@
 	if(!internal)
 		return null
 
-	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && wear_mask.flags & MASKINTERNALS)))
+	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
 		if(internals)
 			internals.icon_state = "internal0"

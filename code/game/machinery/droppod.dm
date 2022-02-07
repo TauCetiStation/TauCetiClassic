@@ -254,7 +254,7 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !isspaceturf(T) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
@@ -269,7 +269,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !isspaceturf(T) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
 	flags &= ~STATE_AIMING
 	if(isemptylist(L))

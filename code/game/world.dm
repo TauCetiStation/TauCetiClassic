@@ -2,6 +2,7 @@ var/global/round_id = 0
 var/global/base_commit_sha = 0
 
 var/global/it_is_a_snow_day = FALSE
+
 /world/New()
 #ifdef DEBUG
 	enable_debugger()

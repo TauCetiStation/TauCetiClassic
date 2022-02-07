@@ -48,7 +48,7 @@
 		var/group_size = rand(group_size_min, group_size_max)
 		var/list/turfs = circlerangeturfs(spawn_locations[i], 2)
 		for(var/turf/T in turfs)
-			if(!isspaceturf(T) && isturf(T.loc)) // no spawn in Grille
+			if(!isenvironmentturf(T))
 				turfs -= T
 		group_size = min(group_size, turfs.len)
 		for(var/j in 1 to group_size)

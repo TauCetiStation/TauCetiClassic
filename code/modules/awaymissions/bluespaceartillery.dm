@@ -55,7 +55,7 @@
 		var/area/thearea = teleportlocs[A]
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
-			if(!istype(T, /turf/simulated/wall) && !isspaceturf(T))
+			if(!istype(T, /turf/simulated/wall) && !isenvironmentturf(T))
 				L+=T
 		var/loc = pick(L)
 		if(loc)

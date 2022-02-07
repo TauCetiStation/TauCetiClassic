@@ -89,9 +89,9 @@ SUBSYSTEM_DEF(demo)
 				var/turf/T = locate(x,y,z)
 				T.demo_last_appearance = T.appearance
 				var/this_appearance
-				// space turfs are difficult to RLE otherwise, because they all
+				// environment turfs are difficult to RLE otherwise, because they all
 				// have different appearances despite being the same thing.
-				if(isspaceturf(T))
+				if(isenvironmentturf(T))
 					this_appearance = "s" // save the bytes
 				else
 					this_appearance = T.appearance

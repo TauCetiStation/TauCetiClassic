@@ -289,11 +289,12 @@
 
 /obj/item/fish_carp/update_icon()
 	var/carp_color = pick(
-	500;"purple",
-	150;"ashy",
-	150;"blue",
-	150;"white",
-	50;"golden")
+		500;"purple",
+		150;"ashy",
+		150;"blue",
+		150;"white",
+		50;"golden"
+	)
 
 	icon_state = "[carp_color]_dead"
 

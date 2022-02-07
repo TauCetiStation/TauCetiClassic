@@ -143,7 +143,7 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/simulated/environment/space/target_tile in range(2, src))
+	for(var/turf/simulated/environment/target_tile in range(2, src))
 		if (!(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)

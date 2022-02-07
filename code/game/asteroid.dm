@@ -118,7 +118,7 @@ var/global/list/spawned_surprises = list()
 			valid = 0
 			continue
 
-		if(locate(/turf/simulated/environment/space) in surroundings)
+		if(locate(/turf/simulated/environment) in surroundings)
 			valid = 0
 			continue
 

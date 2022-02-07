@@ -168,7 +168,7 @@
 
 
 /obj/machinery/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
-	if(!t || !isspaceturf(t))
+	if(!t || !isenvironmentturf(t))
 		return FALSE
 
 	if(targetdirection) // Bridge mode, ignore areas
@@ -176,8 +176,7 @@
 
 	var/area/t_area = get_area(t)
 
-	if(istype(t_area, /area/station))
-		return TRUE
+	return istype(t_area, /area/station)
 
 /obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
 	if(!istype(t))
@@ -313,9 +312,15 @@
 		visible_message("<span class='notice'>[src] makes an excited booping beeping sound!</span>")
 
 	if(state == FLOORBOT_IDLE)
+		var/list/turfs_in_view = list()
+
+		for(var/turf/T in view(7, src))
+			turfs_in_view += T
+
+		turfs_in_view = shuffle(turfs_in_view)
 
 		if(emagged == 2)
-			for (var/turf/simulated/floor/F in shuffle(view(7,src)))
+			for (var/turf/simulated/floor/F in turfs_in_view)
 				if(F.floor_type)
 					do_task(F, FLOORBOT_TASK_BREAKTILE)
 					return
@@ -327,14 +332,14 @@
 
 
 		if(amount > 0)
-			for (var/turf/simulated/environment/space/D in shuffle(view(7,src)))
+			for (var/turf/simulated/environment/D in turfs_in_view)
 				if(is_hull_breach(D))
 					boringness = 0
 					do_task(D, FLOORBOT_TASK_FIXHOLE)
 					return
 
 			if(placetiles || fixtiles)
-				for (var/turf/simulated/floor/F in shuffle(view(7,src)))
+				for (var/turf/simulated/floor/F in turfs_in_view)
 					if(placetiles && is_plating(F))
 						boringness = 0
 						do_task(F, FLOORBOT_TASK_PLACETILE)
@@ -345,14 +350,14 @@
 						return
 		else
 			if(eattiles)
-				for(var/obj/item/stack/tile/plasteel/T in shuffle(view(7, src)))
+				for(var/obj/item/stack/tile/plasteel/T in turfs_in_view)
 					state = FLOORBOT_MOVING_TO_PICKUP
 					boringness = 0
 					target = T
 					path = new()
 					return
 			if(maketiles)
-				for(var/obj/item/stack/sheet/metal/M in shuffle(view(7, src)))
+				for(var/obj/item/stack/sheet/metal/M in turfs_in_view)
 					if(M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
 						state = FLOORBOT_MOVING_TO_PICKUP
 						boringness = 0
@@ -413,7 +418,7 @@
 			return
 
 		var/turf/s = get_turf(src)
-		if(isspaceturf(s))
+		if(isenvironmentturf(s))
 			task = FLOORBOT_TASK_FIXHOLE
 			target = s
 			start_task()

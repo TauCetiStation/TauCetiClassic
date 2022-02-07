@@ -501,7 +501,7 @@
 	if(prob(25))
 		var/turf/T = get_turf(src)
 
-		if(isspaceturf(T) || istype(T, /turf/unsimulated))
+		if(isspaceturf(T) || !istype(T, /turf/simulated))
 			qdel(src)
 
 		var/datum/gas_mixture/environment = T.return_air()

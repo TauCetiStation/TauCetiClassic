@@ -555,6 +555,7 @@
 
 /atom/proc/isinspace()
 	return isspaceturf(get_turf(src))
+
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 

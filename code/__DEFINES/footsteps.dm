@@ -17,7 +17,7 @@
 //misc footstep sounds
 #define FOOTSTEP_GENERIC_HEAVY "heavy"
 
-
+//snow environment footsteps
 #define FOOTSTEP_SNOWSTEP "snowstep"
 #define FOOTSTEP_ICESTEP  "icestep"
 

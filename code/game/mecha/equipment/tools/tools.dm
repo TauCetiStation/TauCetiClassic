@@ -1142,7 +1142,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !isspaceturf(T) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
 	if(isemptylist(L))
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")

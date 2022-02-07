@@ -86,7 +86,7 @@
 	teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
-	if(isspaceturf(target))
+	if(isenvironmentturf(target))
 		return
 
 	var/obj/effect/rune/rand_rune = locate(holder.type) in target

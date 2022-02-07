@@ -387,7 +387,7 @@
 
 	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
-		if(isspaceturf(T))//Counted as no air
+		if(istype(T,/turf/space))//Counted as no air
 			turf_count++//Considered a valid turf for air calcs
 			continue
 		else if(istype(T,/turf/simulated/floor))
@@ -409,7 +409,7 @@
 	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
 	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
-		if(isspaceturf(T))//Counted as no air
+		if(istype(T,/turf/space))//Counted as no air
 			continue
 		else if(istype(T,/turf/simulated/floor))
 			var/turf/simulated/S = T

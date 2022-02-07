@@ -81,7 +81,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/turf/pickedgoal
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/max_i = 10 // number of tries to spawn meteor.
-	while(!isspaceturf(pickedstart))
+	while(!isenvironmentturf(pickedstart))
 		var/startSide = pick(cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, z)
 		pickedgoal = spaceDebrisFinishLoc(startSide, z)
@@ -170,7 +170,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 		ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		if(prob(10) && !isenvironmentturf(T))//randomly takes a 'hit' from ramming
 			get_hit()
 
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user)
