@@ -98,6 +98,16 @@
 	. = ..()
 	air_contents.adjust_gas("carbon_dioxide", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
+/obj/item/weapon/tank/jetpack/nitrogen
+	name = "Jetpack (Nitrogen)"
+	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas. Painted red to indicate that it should not be used as a source for internals for humans."
+	icon_state = "jetpack-nitro"
+	item_state = "jetpack-nitro"
+
+/obj/item/weapon/tank/jetpack/nitrogen/atom_init()
+	. = ..()
+	air_contents.adjust_gas("nitrogen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
 /obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
