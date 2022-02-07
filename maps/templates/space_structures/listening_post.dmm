@@ -39,9 +39,6 @@
 	layer = 3.3;
 	pixel_y = 32
 	},
-/obj/item/device/radio/intercom{
-	pixel_x = -30
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
@@ -93,6 +90,7 @@
 /obj/machinery/shower{
 	pixel_y = 20
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -195,7 +193,9 @@
 "aA" = (
 /obj/structure/rack,
 /obj/item/device/geoscanner,
-/obj/item/weapon/pickaxe,
+/obj/item/weapon/paper{
+	info = "Прости, агент, но для твоего же блага мы забрали кирки. Команда спасения прибудет через два месяца. Слава Синдикату!"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
@@ -454,7 +454,7 @@
 "bh" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
-	amount = 25
+	amount = 50
 	},
 /obj/item/stack/sheet/metal{
 	amount = 12
