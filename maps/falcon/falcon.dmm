@@ -10,6 +10,53 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/space)
+"aad" = (
+/obj/machinery/computer/teleporter,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aae" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = -20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaf" = (
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 19
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat");
+	pixel_x = 32
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aag" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -19,6 +66,534 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"aah" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aai" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/radio/off,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aaj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aak" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aal" = (
+/obj/structure/stool,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "AI Satellite APC";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Teleporter";
+	dir = 8;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aam" = (
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/space)
+"aan" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/orientaltree{
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aao" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aap" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaq" = (
+/obj/structure/window/reinforced,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aar" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access = list(66)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aas" = (
+/turf/simulated/floor/whitegreed,
+/area/space)
+"aat" = (
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aau" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aav" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/station/aisat/ai_chamber)
+"aax" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aay" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaz" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaA" = (
+/obj/machinery/computer/telecomms/monitor,
+/obj/machinery/camera{
+	c_tag = "Telecomm Main Computer Room";
+	network = list("Tcomsat");
+	pixel_x = 10
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaB" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = -20
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaC" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaE" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	name = "General Listening Channel";
+	pixel_x = -22
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aaG" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -20
+	},
+/turf/simulated/floor/whitegreed,
+/area/space)
+"aaH" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/door_control{
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaI" = (
+/obj/effect/landmark/start{
+	name = "AI"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = 20
+	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = -20
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaJ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -26
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaK" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaL" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	locked = 1;
+	name = "AI Chamber";
+	req_access = list(16)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/aisat/ai_chamber)
+"aaM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaN" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aaO" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"aaP" = (
+/obj/machinery/telecomms/hub/preset{
+	autolinkers = list("hub","c_relay","s_relay","r_relay","science","medical","p_relay","supply","common","command","engineering","security","receiverA","receiverB","broadcasterA","broadcasterB")
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"aaQ" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -20
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaR" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaS" = (
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite Antechamber";
+	dir = 4;
+	name = "AI Satellite Antechamber";
+	pixel_x = 26
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaT" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aaU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/station/aisat/ai_chamber)
+"aaW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaY" = (
+/obj/machinery/atmospherics/components/unary/tank/nitrogen{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaZ" = (
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -31
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aba" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "interior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access = list(66)
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "abb" = (
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor{
@@ -26,6 +601,98 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"abc" = (
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/obj/structure/cable{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/space)
+"abd" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/aquatic{
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"abe" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abf" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abg" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	name = "AI Chamber APC";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abh" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_inner";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/obj/machinery/atmospherics/components/binary/pump/on,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/tcommsat/computer)
+"abi" = (
+/obj/machinery/telecomms/bus/preset_four,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "abj" = (
 /mob/living/simple_animal/cow{
 	name = "Betsy"
@@ -39,6 +706,168 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
+"abk" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber West";
+	dir = 1;
+	network = list("RD","MiniSat");
+	pixel_x = 20
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abl" = (
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_y = -20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abm" = (
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abn" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/airlock_sensor{
+	id_tag = "satellite_aux_sensor";
+	pixel_y = 25;
+	req_one_access = list(13,45,1)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abo" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abp" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abq" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/door/window{
+	dir = 8;
+	name = "AI Satellite";
+	req_access = list(66)
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "platebot"
+	},
+/area/station/aisat)
+"abr" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/weapon/tank/emergency_oxygen,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abs" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "satellite_aux_airlock";
+	pixel_x = 25;
+	req_access = list(66);
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abu" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
+"abv" = (
+/turf/simulated/wall/r_wall,
+/area/station/aisat)
+"abw" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_outer";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
 "aby" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "research_sensor";
@@ -663,22 +1492,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aGi" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/teleport/station,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "aGR" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -735,16 +1554,11 @@
 	},
 /area/station/bridge)
 "aKv" = (
-/obj/machinery/telecomms/hub/preset{
-	autolinkers = list("hub","c_relay","s_relay","r_relay","science","medical","p_relay","supply","common","command","engineering","security","receiverA","receiverB","broadcasterA","broadcasterB")
+/obj/machinery/teleport/hub,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/bluegrid{
-	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/chamber)
+/area/station/aisat/teleport)
 "aLe" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7008,21 +7822,14 @@
 	},
 /area/station/rnd/hallway)
 "gNY" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	name = "General Listening Channel";
-	pixel_x = -22
-	},
-/obj/machinery/light{
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "gOc" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -7988,17 +8795,8 @@
 	},
 /area/station/medical/storage)
 "hXh" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
-	},
-/obj/structure/sign/warning/electricshock{
-	pixel_y = -31
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "hXm" = (
 /obj/machinery/door/airlock/command/glass{
 	id_tag = null;
@@ -8860,16 +9658,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "iMs" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "iNP" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -10219,30 +11010,13 @@
 	},
 /area/station/security/checkpoint)
 "kcz" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
-	req_access = list(10, 61)
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "kcO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15150,19 +15924,23 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "oOT" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/structure/rack,
+/obj/item/device/multitool,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
-	req_access = list(10, 61)
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 4;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_x = -22
 	},
-/obj/machinery/atmospherics/components/binary/pump/on,
-/turf/simulated/floor/plating,
-/area/station/tcommsat/computer)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
 "oPe" = (
 /obj/structure/rack,
 /obj/item/stack/cable_coil/random,
@@ -17164,17 +17942,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "qCf" = (
-/obj/machinery/computer/telecomms/monitor,
-/obj/machinery/camera{
-	c_tag = "Telecomm Main Computer Room";
-	network = list("Tcomsat");
-	pixel_x = 10
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	external_pressure_bound = 140;
+	external_pressure_bound_default = 140;
+	name = "(OUT) Space Large Air Vent"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/space,
+/area/space)
 "qCA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -23625,14 +24399,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "wWW" = (
-/obj/machinery/telecomms/bus/preset_four,
-/turf/simulated/floor/bluegrid{
-	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/chamber)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/ai_chamber)
 "wXt" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -39084,13 +39852,13 @@ gay
 gay
 gay
 gay
-vlu
-vlu
-vlu
-kcz
-vlu
-vlu
-vlu
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -39341,13 +40109,13 @@ gay
 gay
 gay
 gay
-vlu
-tEk
-gNY
-aGi
-gmT
-hXh
-vlu
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -39598,15 +40366,15 @@ gay
 gay
 gay
 gay
-vlu
-qCf
-lBh
-xxm
-mKv
-iMs
-oOT
 gay
 gay
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
 gay
 gay
 gay
@@ -39855,16 +40623,16 @@ gay
 gay
 gay
 gay
-vlu
-iWz
-mWu
-bIJ
-mqs
-piu
-vlu
 gay
-gay
-gay
+tHA
+tHA
+aas
+aas
+aaG
+aas
+aas
+tHA
+tHA
 gay
 gay
 gay
@@ -40111,17 +40879,17 @@ gay
 gay
 gay
 gay
-sCX
-sCX
-sCX
-mFe
-oAf
-kjh
-rzG
-sCX
-sCX
 gay
 gay
+tHA
+aam
+aat
+wWW
+wWW
+wWW
+aat
+abc
+tHA
 gay
 gay
 gay
@@ -40368,17 +41136,17 @@ gay
 gay
 gay
 gay
-sCX
-dtz
-wLc
-pAi
-qpe
-ued
-idE
-dXi
-sCX
 gay
 gay
+wWW
+wWW
+aau
+aaB
+aaH
+aaQ
+aau
+wWW
+wWW
 gay
 gay
 gay
@@ -40625,18 +41393,18 @@ gay
 gay
 gay
 gay
-sCX
-njt
-uFO
-rzG
-qUn
-rzG
-uFO
+gay
 wWW
-sCX
-gay
-gay
-gay
+wWW
+aan
+aav
+wWW
+aaI
+wWW
+aaU
+abd
+wWW
+wWW
 gay
 gay
 gay
@@ -40882,18 +41650,18 @@ gay
 gay
 gay
 gay
-sCX
-xgl
-jyy
-ikd
-qHG
-bPW
-xlr
-cfI
-sCX
 gay
-gay
-gay
+wWW
+aae
+aao
+aaw
+wWW
+wWW
+wWW
+aaV
+abe
+abk
+wWW
 gay
 gay
 gay
@@ -41139,18 +41907,18 @@ gay
 gay
 gay
 gay
-sCX
-ffn
-gtx
-gtx
-gtx
-gtx
-gtx
-qZX
-sCX
 gay
-gay
-gay
+wWW
+aaf
+aap
+aax
+aaC
+aaJ
+aaR
+aaW
+abf
+abl
+wWW
 gay
 gay
 gay
@@ -41396,18 +42164,18 @@ gay
 gay
 gay
 gay
-sCX
-mcS
-wwe
-nmr
-gtx
-iBA
-vWz
-wju
-sCX
 gay
-gay
-gay
+wWW
+aah
+aaq
+aay
+aaD
+aaK
+aaS
+aaX
+abg
+abm
+wWW
 gay
 gay
 gay
@@ -41653,19 +42421,19 @@ gay
 gay
 gay
 gay
-sCX
-sCX
-sCX
-nGN
-aKv
-dFS
-sCX
-sCX
-sCX
-gay
-gay
-gay
-gay
+hXh
+wWW
+wWW
+wWW
+wWW
+wWW
+aaL
+wWW
+wWW
+wWW
+wWW
+wWW
+abv
 gay
 gay
 gay
@@ -41909,20 +42677,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+oOT
+aai
+vlu
+tEk
+aaE
+aaM
+gmT
+aaY
+vlu
+abn
+abr
+abu
 gay
 gay
 gay
@@ -42165,21 +42933,21 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qCf
+iMs
+aGi
+gNY
+aaj
+aar
+aaz
+aaF
+aaN
+aaT
+aaZ
+vlu
+abo
+abo
+abu
 gay
 gay
 gay
@@ -42423,20 +43191,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+aKv
+kcz
+aak
+vlu
+aaA
+lBh
+xxm
+mKv
+aba
+abh
+abp
+abs
+abw
 gay
 gay
 gay
@@ -42680,20 +43448,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+aad
+aal
+vlu
+iWz
+mWu
+bIJ
+mqs
+piu
+vlu
+abq
+abt
+abu
 gay
 gay
 gay
@@ -42938,19 +43706,19 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+sCX
+sCX
+sCX
+mFe
+oAf
+kjh
+rzG
+sCX
+sCX
+abu
+abv
 gay
 gay
 gay
@@ -43197,15 +43965,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+dtz
+wLc
+pAi
+qpe
+ued
+idE
+dXi
+sCX
 gay
 gay
 gay
@@ -43450,19 +44218,19 @@ gay
 gay
 gay
 gay
+nmW
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+njt
+uFO
+rzG
+qUn
+rzG
+uFO
+abi
+sCX
 gay
 gay
 gay
@@ -43711,15 +44479,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+xgl
+jyy
+ikd
+qHG
+bPW
+xlr
+cfI
+sCX
 gay
 gay
 gay
@@ -43968,15 +44736,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-ugK
-gay
+sCX
+ffn
+gtx
+gtx
+aaO
+gtx
+gtx
+qZX
+sCX
 gay
 gay
 gay
@@ -44225,19 +44993,19 @@ gay
 gay
 gay
 gay
+sCX
+mcS
+wwe
+nmr
+gtx
+iBA
+vWz
+wju
+sCX
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+ugK
 gay
 gay
 gay
@@ -44482,19 +45250,19 @@ gay
 gay
 gay
 gay
+sCX
+sCX
+sCX
+nGN
+aaP
+dFS
+sCX
+sCX
+sCX
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-nmW
 gay
 gay
 gay
@@ -44741,11 +45509,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+tHA
+tHA
+tHA
+tHA
+tHA
 gay
 gay
 gay
@@ -44998,22 +45766,22 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 nmW
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gEx
