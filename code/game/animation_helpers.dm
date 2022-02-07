@@ -2,7 +2,6 @@
 	// To prevent the item from being forever invisible, check this flag. If it's TRUE, don't animate.
 	var/is_invis_anim = FALSE
 	//For handling persistent filters
-	var/list/filter_data
 
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return

@@ -348,23 +348,28 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
+/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/subject)
+	if(ishuman(subject))
+		var/mob/living/carbon/human/Hsubject = subject
+		if(!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
+			scantemp = "Error: No signs of intelligence detected."
+			return
+	else if(!isbrain(subject))
+		scantemp = "Error: Subject's body structure is not supported."
+		return
+	if(!subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (!subject.has_brain())
-		scantemp = "Error: No signs of intelligence detected."
-		return
-	if (subject.suiciding == 1)
+	if(subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-	if ((!subject.ckey) || (!subject.client))
+	if((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	if ((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
+	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</span>"
 		return
-	if (!isnull(find_record(subject.ckey)))
+	if(!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
 		return
 
