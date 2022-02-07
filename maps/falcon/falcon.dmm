@@ -39,9 +39,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"ae" = (
-/turf/simulated/floor/plating/airless/catwalk,
-/area/asteroid/mine/eva)
 "af" = (
 /obj/machinery/mineral/stacking_machine,
 /turf/simulated/floor/airless{
@@ -72,9 +69,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"ai" = (
-/turf/simulated/floor/plating/airless/catwalk,
-/area/asteroid/mine/unexplored/safe)
 "aj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment{
@@ -11811,7 +11805,7 @@
 "zl" = (
 /obj/structure/closet/secure_closet/chemical{
 	req_access = list();
-	req_one_access = list(45,70))
+	req_one_access = list(45,70)
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
@@ -51478,7 +51472,7 @@ aw
 Rt
 tG
 aa
-aa
+sx
 sx
 sx
 sx
@@ -51735,7 +51729,7 @@ aa
 aa
 sx
 sx
-aa
+sx
 sx
 sx
 sx
@@ -52746,12 +52740,12 @@ OA
 OA
 aa
 aa
-dx
-dx
-dx
-dx
-dx
-dx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -53004,10 +52998,10 @@ aa
 dx
 dx
 dx
-aa
-sx
-aa
-aa
+dx
+dx
+dx
+dx
 dx
 dx
 dx
@@ -53782,7 +53776,7 @@ Zg
 Zg
 Zg
 dx
-ai
+RI
 RI
 RI
 Tx
@@ -54038,8 +54032,8 @@ Zg
 Zg
 Zg
 Zg
-aa
-ai
+dx
+RI
 RI
 RI
 Tx
@@ -54295,8 +54289,8 @@ Zg
 Zg
 Zg
 Zg
-sx
-ai
+dx
+RI
 RI
 RI
 Tx
@@ -54552,8 +54546,8 @@ Zg
 Zg
 Zg
 Zg
-aa
-ai
+dx
+RI
 RI
 RI
 Tx
@@ -54809,8 +54803,8 @@ Zg
 Zg
 Zg
 Zg
-sx
 dx
+sx
 RI
 RI
 Tx
@@ -55067,7 +55061,7 @@ Zg
 Zg
 Zg
 dx
-dx
+sx
 RI
 RI
 Tx
@@ -55831,10 +55825,10 @@ ZP
 ZP
 iY
 dx
-aa
-aa
-sx
-aa
+dx
+dx
+dx
+dx
 dx
 dx
 dx
@@ -56087,8 +56081,8 @@ wo
 ZU
 Fo
 St
-ae
-ae
+St
+St
 BK
 jI
 jI
