@@ -14,6 +14,7 @@ Format:
 endmap
 
 map boxstation
+	default
 endmap
 
 map gamma
@@ -23,6 +24,5 @@ map testmap
 endmap
 
 map falcon
-	maxplayers 15
-	default
+	maxplayers 25
 endmap
