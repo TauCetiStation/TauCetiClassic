@@ -6,6 +6,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/atmos)
+"aac" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor/plating,
+/area/space)
 "aag" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -551,8 +555,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/central)
 "aAT" = (
@@ -1283,16 +1287,11 @@
 	},
 /area/station/hallway/primary/central)
 "bkl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/firealarm{
-	pixel_y = 25
+/obj/machinery/computer/drone_control{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1638,18 +1637,13 @@
 	},
 /area/station/maintenance/engineering)
 "bCq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/structure/disposaloutlet{
+	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "packageSort2"
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
-/obj/structure/plasticflaps/mining,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
+/turf/simulated/wall,
 /area/station/cargo/storage)
 "bCC" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -2277,15 +2271,12 @@
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
 "chI" = (
-/obj/machinery/recharge_station,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/closet/wardrobe/engineering_yellow,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellow"
 	},
-/turf/simulated/floor/plating{
-	dir = 9;
-	icon_state = "warnplate"
-	},
-/area/station/engineering/drone_fabrication)
+/area/station/engineering/break_room)
 "ciD" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
@@ -5137,21 +5128,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ePx" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/firealarm{
+	pixel_y = 25
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Drone Fabrication";
-	req_access = list(32)
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
 /area/station/engineering/drone_fabrication)
 "ePz" = (
 /obj/structure/window/reinforced{
@@ -5718,9 +5699,13 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "fwz" = (
-/obj/structure/lattice,
-/turf/space,
-/area/station/cargo/storage)
+/obj/machinery/door/airlock/engineering{
+	name = "Aft Port Solar Access";
+	req_access = list(10)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor/plating,
+/area/station/engineering/drone_fabrication)
 "fxu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -6370,11 +6355,11 @@
 	},
 /area/station/engineering/drone_fabrication)
 "gks" = (
-/turf/simulated/floor/plating{
+/turf/simulated/floor{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "dark"
 	},
-/area/station/engineering/drone_fabrication)
+/area/space)
 "glg" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -6721,17 +6706,7 @@
 	},
 /area/asteroid/mine/dwarf)
 "gxH" = (
-/obj/machinery/computer/station_alert{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Storage";
-	dir = 8;
-	network = list("SS13","Engineering")
-	},
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "gxI" = (
 /obj/machinery/hydroponics/constructable,
@@ -7663,14 +7638,8 @@
 	},
 /area/station/rnd/lab)
 "hAq" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor/plating,
+/area/space)
 "hAI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8444,12 +8413,9 @@
 	},
 /area/station/engineering/break_room)
 "iqG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
+/obj/machinery/door/airlock/engineering{
+	name = "Drone Fabrication";
+	req_access = list(32)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8718,10 +8684,6 @@
 /area/station/tcommsat/chamber)
 "iCb" = (
 /obj/machinery/drone_fabricator,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
-	},
 /turf/simulated/floor/plating,
 /area/station/engineering/drone_fabrication)
 "iDh" = (
@@ -9224,10 +9186,9 @@
 /area/station/security/prison)
 "jgB" = (
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
-/area/station/engineering/break_room)
+/area/station/engineering/drone_fabrication)
 "jhe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -9491,14 +9452,10 @@
 /area/station/engineering/atmos)
 "jzF" = (
 /obj/structure/stool/bed/chair/metal/black{
-	dir = 8
+	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	dir = 5;
-	icon_state = "warnplate"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "jzK" = (
@@ -11524,17 +11481,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "lre" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/engineering/drone_fabrication)
 "lrM" = (
 /obj/structure/cable{
@@ -12365,19 +12315,7 @@
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
 "mhl" = (
-/obj/machinery/computer/drone_control{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Drone Fabrication";
-	dir = 5;
-	network = list("SS13","Engineering")
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor/plating{
-	dir = 1;
 	icon_state = "warnplate"
 	},
 /area/station/engineering/drone_fabrication)
@@ -13904,7 +13842,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "nwe" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
+/obj/machinery/computer/station_alert,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -17411,8 +17349,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "warndark"
 	},
 /area/station/engineering/break_room)
 "qHl" = (
@@ -21036,13 +20973,14 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "utF" = (
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "Engineering Drone Fabrication";
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/wall/r_wall,
 /area/station/engineering/drone_fabrication)
 "uvk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -21657,13 +21595,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "uYz" = (
-/obj/machinery/light,
-/obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/door/airlock/vault{
+	locked = 1;
+	req_access = list(53)
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space)
 "uYJ" = (
 /obj/machinery/status_display{
 	layer = 3.3;
@@ -22664,8 +22604,13 @@
 /area/station/civilian/bar)
 "waV" = (
 /obj/structure/closet/secure_closet/engineering_welding,
+/obj/machinery/camera{
+	c_tag = "Engineering Storage";
+	dir = 8;
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 4;
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
@@ -23296,9 +23241,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "wGH" = (
-/obj/machinery/recharge_station,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 5
+	},
 /turf/simulated/floor/plating{
-	dir = 8;
+	dir = 6;
 	icon_state = "warnplate"
 	},
 /area/station/engineering/drone_fabrication)
@@ -39136,13 +39084,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+vlu
+vlu
+vlu
+kcz
+vlu
+vlu
+vlu
 gay
 gay
 gay
@@ -39393,13 +39341,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+vlu
+tEk
+gNY
+aGi
+gmT
+hXh
+vlu
 gay
 gay
 gay
@@ -39650,13 +39598,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+vlu
+qCf
+lBh
+xxm
+mKv
+iMs
+oOT
 gay
 gay
 gay
@@ -39907,13 +39855,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+vlu
+iWz
+mWu
+bIJ
+mqs
+piu
+vlu
 gay
 gay
 gay
@@ -40163,15 +40111,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+sCX
+sCX
+mFe
+oAf
+kjh
+rzG
+sCX
+sCX
 gay
 gay
 gay
@@ -40420,15 +40368,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+dtz
+wLc
+pAi
+qpe
+ued
+idE
+dXi
+sCX
 gay
 gay
 gay
@@ -40677,15 +40625,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+njt
+uFO
+rzG
+qUn
+rzG
+uFO
+wWW
+sCX
 gay
 gay
 gay
@@ -40934,15 +40882,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+xgl
+jyy
+ikd
+qHG
+bPW
+xlr
+cfI
+sCX
 gay
 gay
 gay
@@ -41191,15 +41139,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+ffn
+gtx
+gtx
+gtx
+gtx
+gtx
+qZX
+sCX
 gay
 gay
 gay
@@ -41448,15 +41396,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+mcS
+wwe
+nmr
+gtx
+iBA
+vWz
+wju
+sCX
 gay
 gay
 gay
@@ -41705,15 +41653,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+sCX
+sCX
+nGN
+aKv
+dFS
+sCX
+sCX
+sCX
 gay
 gay
 gay
@@ -49924,13 +49872,13 @@ cSQ
 tGC
 mwE
 ngy
-vlu
-vlu
-vlu
-kcz
-vlu
-vlu
-vlu
+tHA
+wuN
+wuN
+iqG
+wuN
+wuN
+tHA
 nku
 nku
 tHI
@@ -50181,13 +50129,13 @@ adg
 ydN
 peN
 pQB
-vlu
-tEk
-gNY
-aGi
-gmT
-hXh
-vlu
+tHA
+iCb
+utF
+jgB
+jbE
+wuN
+hAq
 txy
 rqw
 tHI
@@ -50438,13 +50386,13 @@ ieu
 iUl
 mTA
 dZq
-vlu
-qCf
-lBh
-xxm
-mKv
-iMs
-oOT
+tHA
+lre
+mhl
+jgB
+jgB
+fwz
+aac
 fdT
 iIa
 gbi
@@ -50695,13 +50643,13 @@ tXm
 lEw
 mTA
 xyR
-vlu
-iWz
-mWu
-bIJ
-mqs
-piu
-vlu
+tHA
+ePx
+mhl
+jzF
+sWo
+wuN
+hAq
 xjf
 dws
 tHI
@@ -50948,18 +50896,18 @@ mGO
 thd
 gMz
 iqi
-wrO
 afJ
+gxH
 jRj
-sCX
-sCX
-sCX
-mFe
-oAf
-kjh
-rzG
-sCX
-sCX
+tHA
+tHA
+wuN
+wGH
+bkl
+gkk
+wuN
+tHA
+tHA
 nku
 tHI
 gay
@@ -51204,19 +51152,19 @@ vUH
 vjc
 tBC
 wci
-jgB
 aZC
+chI
 waV
 lZj
-sCX
-dtz
-wLc
-pAi
-qpe
-ued
-idE
-dXi
-sCX
+tHA
+gay
+wuN
+wuN
+wuN
+wuN
+wuN
+gay
+gay
 crv
 crv
 crv
@@ -51462,18 +51410,18 @@ mGO
 mGO
 xRQ
 qHi
-gxH
 mGO
 mGO
-sCX
-njt
-uFO
-rzG
-qUn
-rzG
-uFO
-wWW
-sCX
+mGO
+tHA
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 crv
 crv
 gay
@@ -51716,21 +51664,21 @@ wJt
 clJ
 tBU
 lZW
-wuN
-wuN
-wuN
-wuN
-wuN
+tHA
+tHA
+tHA
+tHA
+gks
+gks
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
 gay
-sCX
-xgl
-jyy
-ikd
-qHG
-bPW
-xlr
-cfI
-sCX
+gay
 crv
 crv
 crv
@@ -51972,22 +51920,22 @@ fIW
 wJt
 xKC
 ifz
-uYz
-wuN
-jbE
-mhl
-iCb
-wuN
-crv
-sCX
-ffn
-gtx
-gtx
-gtx
-gtx
-gtx
-qZX
-sCX
+cDH
+gks
+gks
+gks
+gks
+gks
+gks
+tHA
+gks
+gks
+gks
+gks
+gks
+tHA
+gay
+gay
 crv
 crv
 crv
@@ -52230,21 +52178,21 @@ dnE
 ivY
 vdi
 aAE
-ePx
-iqG
-jzF
 gks
-wuN
+gks
+gks
+gks
+gks
+gks
+uYz
+gks
+gks
+gks
+gks
+gks
+tHA
 gay
-sCX
-mcS
-wwe
-nmr
-gtx
-iBA
-vWz
-wju
-sCX
+gay
 crv
 gay
 crv
@@ -52486,22 +52434,22 @@ fIW
 jaa
 xKC
 cyF
-hAq
-wuN
-bkl
-lre
-sWo
-wuN
-crv
-sCX
-sCX
-sCX
-nGN
-aKv
-dFS
-sCX
-sCX
-sCX
+cDH
+gks
+gks
+gks
+gks
+gks
+gks
+tHA
+gks
+gks
+gks
+gks
+gks
+tHA
+gay
+gay
 crv
 gay
 crv
@@ -52743,15 +52691,15 @@ fIW
 jaa
 kQj
 msn
-gLt
-wuN
-gkk
-chI
-wGH
-wuN
-gay
-crv
-crv
+cDH
+gks
+gks
+gks
+ujh
+ujh
+ujh
+tHA
+tHA
 tHA
 tHA
 tHA
@@ -53001,19 +52949,19 @@ wDD
 hRP
 mEg
 tWj
-wuN
-wuN
-wuN
-wuN
-utF
-sFn
-fwz
-fwz
+ujh
+ujh
+ujh
+ujh
+gay
 oDr
-crv
-crv
-crv
-crv
+oDr
+oDr
+oDr
+gay
+gay
+gay
+gay
 azF
 azF
 azF
