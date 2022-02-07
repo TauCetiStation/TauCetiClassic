@@ -52,6 +52,8 @@
 /obj/mecha/combat/durand/proc/defence_mode()
 	if(usr!=src.occupant)
 		return
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [!defence? "en" : "dis"]able defence mode.</span>"))
+		return
 	playsound(src, 'sound/mecha/change_defence_mode.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	defence = !defence
 	if(defence)
