@@ -294,11 +294,9 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, use_proficiency_bonus(step_in) * move_result)
+		VARSET_IN(src, can_move, TRUE, applySkillModifier(occupant, step_in, required_skill, 0, 0.3, 0.3) * move_result)
 		return 1
 	return 0
-/obj/mecha/proc/use_proficiency_bonus(value)
-		return value -  value * 0.3 * occupant.mind.getSkillRating(required_skill)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
@@ -436,6 +434,8 @@
 	return attack_hand(user)
 
 /obj/mecha/proc/toggle_strafe()
+	if(!handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skill, 0, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to toggle strafing mode [!strafe?"on":"off"].</span>", others_can_see = FALSE))
+		return
 	strafe = !strafe
 	prev_move_dir = 0
 

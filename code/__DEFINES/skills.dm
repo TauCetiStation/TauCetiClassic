@@ -7,11 +7,12 @@
 #define SKILL_CIV_MECH_TRAINED 0 //  engineer, medical intern, scientist, medical doctor
 #define SKILL_CIV_MECH_PRO 1 // cargo techincian, recycler, robotech, paramedic, mecha operator
 #define SKILL_CIV_MECH_MASTER 2 // RD, miner, QM, CE, CMO
+
 //combat_mech
 #define SKILL_COMBAT_MECH "combat_mech"
-#define SKILL_COMBAT_MECH_UNTRAINED -1
-#define SKILL_COMBAT_MECH_NOVICE 0	// scientist, engineer, mecha operator, security
-#define SKILL_COMBAT_MECH_PRO 1  //nuclear,  HoS, RD
+#define SKILL_COMBAT_MECH_UNTRAINED -2
+#define SKILL_COMBAT_MECH_NOVICE -1	// scientist, engineer, mecha operator, security
+#define SKILL_COMBAT_MECH_PRO 0  //nuclear,  HoS, RD
 
 //police -30% handcuffs time for each level, tasers, flashes, stunbatons
 #define SKILL_POLICE "police"

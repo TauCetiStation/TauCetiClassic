@@ -264,7 +264,7 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
-	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, required_skill_proficiency, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>", visual = FALSE))
+	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, required_skill_proficiency, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>", others_can_see = FALSE))
 		return
 	switch(action)
 		if("cut")

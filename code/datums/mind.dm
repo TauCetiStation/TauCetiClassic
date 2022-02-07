@@ -112,7 +112,8 @@
 	if(issilicon(usr)) return getSkillMaximum(skill);
 	if(!current_skills)
 		current_skills = original_skills
-	return current_skills.getRating(skill)
+	var/datum/skills/available_skills = getAvailableSkills()
+	return min(current_skills.getRating(skill), available_skills.getRating(skill))
 
 /datum/mind/proc/getAvailableSkills()
 	var/datum/skills/available_skills = original_skills
@@ -121,7 +122,7 @@
 			var/datum/role/R = antag_roles[role]
 			var/datum/skills = R.return_skills_type()
 			available_skills = available_skills.mergeSkills(skills)
-	return available_skills 
+	return available_skills
 
 /datum/mind/proc/changeSkillValue(skill,value)
 	var/datum/skills/available_skills = getAvailableSkills()
