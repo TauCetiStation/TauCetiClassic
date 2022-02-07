@@ -2282,5 +2282,6 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\centcom\centcom.dmm"
+#include "maps\falcon\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
 // END_INCLUDE

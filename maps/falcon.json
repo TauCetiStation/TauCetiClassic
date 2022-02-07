@@ -1,10 +1,10 @@
 {
-    "map_name": "Falcon",
+    "map_name": "Falcon Station",
     "map_path": "falcon",
     "map_file": "falcon.dmm",
     "station_name": "NSS Falcon",
     "system_name" : "Tau Ceti",
-    "station_image": "exodus",
+    "station_image": "falcon",
     "traits": [],
     "space_ruin_levels": 2,
     "space_empty_levels": 1,
