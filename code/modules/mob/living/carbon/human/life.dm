@@ -1599,8 +1599,8 @@
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 	switch(IO.heart_status)
 		if(HEART_FAILURE)
-			return PULSE_NONE
 			to_chat(src, "<span class='danger'>Your feel a prick in your heart.</span>")
+			return PULSE_NONE
 		if(HEART_FIBR)
 			to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
 			return PULSE_SLOW
