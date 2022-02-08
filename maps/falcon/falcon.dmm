@@ -421,30 +421,10 @@
 	},
 /area/station/medical/surgery)
 "aaL" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/highsecurity{
-	locked = 1;
-	name = "AI Chamber";
-	req_access = list(16)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aaM" = (
 /obj/structure/cable{
@@ -1786,6 +1766,9 @@
 /area/station/aisat/ai_chamber)
 "ado" = (
 /obj/structure/window/reinforced,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1799,6 +1782,9 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1864,6 +1850,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Cargo Recycler";
+	pixel_x = 4
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
@@ -2039,6 +2029,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adI" = (
@@ -2049,6 +2043,11 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2285,34 +2284,54 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "adZ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"aea" = (
-/obj/machinery/door/window{
-	dir = 4;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/highsecurity{
+	locked = 1;
+	name = "AI Chamber";
+	req_access = list(16)
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/aisat/ai_chamber)
+"aea" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aeb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2363,11 +2382,27 @@
 	},
 /area/station/hallway/primary/central)
 "aef" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "darkblue"
+/obj/machinery/door/window{
+	dir = 4;
+	name = "AI Core Door";
+	req_access = list(16)
 	},
-/area/station/tcommsat/computer)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
 "aeg" = (
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
@@ -12409,16 +12444,17 @@
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
 	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/ashtray/bronze{
-	pixel_x = 5;
-	pixel_y = -4
+	pixel_y = 13
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/item/device/assembly/timer,
+/obj/item/ashtray/bronze{
+	pixel_x = 5;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17615,6 +17651,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Bridge Teleporter"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -23008,8 +23047,14 @@
 	},
 /area/station/medical/storage)
 "tHA" = (
-/turf/simulated/floor/plating/airless/catwalk,
-/area/station/cargo/storage)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/ai_status_display{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "tHI" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -27450,13 +27495,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/requests_console/engineering{
+	pixel_y = 30
+	},
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = 25
-	},
-/obj/machinery/requests_console/engineering{
-	pixel_y = 30
+	pixel_x = 20
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -41648,10 +41693,10 @@ qws
 qws
 crv
 crv
+crv
 gay
-wWW
-wWW
-wWW
+crv
+crv
 gay
 crv
 gay
@@ -41904,13 +41949,13 @@ gay
 qws
 crv
 gay
+crv
 wWW
 wWW
 wWW
 wWW
 wWW
-wWW
-wWW
+gay
 crv
 crv
 qws
@@ -42160,7 +42205,7 @@ gay
 qws
 qws
 crv
-wWW
+gay
 wWW
 wWW
 adw
@@ -42168,7 +42213,7 @@ adF
 adP
 wWW
 wWW
-wWW
+gay
 crv
 odS
 qws
@@ -42673,7 +42718,7 @@ gay
 crv
 qws
 gay
-wWW
+gay
 wWW
 acX
 adn
@@ -42683,7 +42728,7 @@ wWW
 adX
 acX
 wWW
-wWW
+crv
 crv
 qws
 gay
@@ -42930,7 +42975,7 @@ gay
 crv
 qws
 crv
-wWW
+crv
 wWW
 acY
 ado
@@ -42940,7 +42985,7 @@ wWW
 adY
 aeg
 wWW
-wWW
+crv
 crv
 qws
 gay
@@ -43187,17 +43232,17 @@ crv
 qws
 qws
 crv
-wWW
+gay
 wWW
 acZ
-aat
+aaL
 ady
 adI
 adQ
-adZ
+aea
 aeh
 wWW
-wWW
+crv
 gay
 qws
 qws
@@ -43451,7 +43496,7 @@ adp
 wWW
 adJ
 wWW
-aea
+aef
 aei
 wWW
 wWW
@@ -43700,7 +43745,7 @@ crv
 gay
 qws
 crv
-wWW
+gay
 wWW
 bsy
 aat
@@ -43712,7 +43757,7 @@ aeb
 aat
 aem
 wWW
-wWW
+gay
 crv
 qws
 gay
@@ -43957,7 +44002,7 @@ crv
 qws
 qws
 crv
-wWW
+crv
 wWW
 cXY
 adb
@@ -43969,8 +44014,8 @@ aec
 adb
 aen
 wWW
-wWW
-gay
+crv
+crv
 qws
 gay
 gay
@@ -44196,7 +44241,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 crv
 crv
 crv
@@ -44214,7 +44259,7 @@ gay
 qws
 crv
 gay
-wWW
+crv
 wWW
 pWD
 adc
@@ -44226,7 +44271,7 @@ aaX
 aej
 aeo
 wWW
-wWW
+crv
 gay
 qws
 qws
@@ -44477,7 +44522,7 @@ wWW
 wWW
 wWW
 wWW
-aaL
+adZ
 wWW
 wWW
 wWW
@@ -45250,7 +45295,7 @@ ads
 adC
 adN
 adW
-aef
+tHA
 ael
 aer
 aev
@@ -46990,9 +47035,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+crv
+crv
+crv
 gay
 gay
 crv
@@ -47245,11 +47290,11 @@ gay
 gay
 gay
 crv
-gay
-gay
-gay
-gay
-gay
+crv
+crv
+crv
+crv
+crv
 qws
 qws
 qws
@@ -49814,7 +49859,7 @@ qws
 crv
 crv
 dZx
-xol
+dZx
 dZx
 gay
 crv
@@ -50067,12 +50112,12 @@ gay
 gay
 gay
 gay
-qws
-odS
-crv
-fCH
-yfp
-cjX
+gay
+gay
+gay
+xol
+gay
+gay
 crv
 crv
 crv
@@ -50323,13 +50368,13 @@ gay
 gay
 gay
 gay
-gay
-crv
-gay
+qws
+odS
 crv
 fCH
 yfp
 cjX
+crv
 gay
 crv
 gay
@@ -50580,13 +50625,13 @@ gay
 gay
 gay
 gay
+crv
 gay
-crv
-crv
 crv
 fCH
 yfp
 cjX
+crv
 crv
 crv
 crv
@@ -50837,13 +50882,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-odS
+crv
+crv
 crv
 fCH
 yfp
 cjX
+crv
 gay
 gay
 rTG
@@ -51094,13 +51139,13 @@ gay
 gay
 gay
 gay
-gay
-gay
 odS
+gay
 crv
 fCH
-nQc
+yfp
 cjX
+crv
 crv
 crv
 rTG
@@ -51351,13 +51396,13 @@ gay
 gay
 gay
 gay
+odS
 gay
 crv
-qws
-crv
-xol
-dZx
-crv
+fCH
+nQc
+cjX
+gay
 crv
 crv
 rTG
@@ -51607,13 +51652,13 @@ gay
 nmW
 gay
 gay
-gay
-gay
-gay
 crv
-fCH
-yfp
-cjX
+qws
+crv
+crv
+xol
+dZx
+crv
 crv
 crv
 gay
@@ -51865,12 +51910,12 @@ gay
 gay
 gay
 gay
-gay
-gay
 crv
+gay
 fCH
 yfp
 cjX
+crv
 crv
 crv
 crv
@@ -52122,12 +52167,12 @@ gay
 gay
 gay
 gay
+crv
 gay
-gay
-odS
 fCH
 yfp
 cjX
+crv
 gay
 crv
 rTG
@@ -52379,13 +52424,13 @@ gay
 gay
 gay
 gay
+odS
 gay
-crv
-qws
 fCH
 yfp
 cjX
-crv
+gay
+gay
 crv
 rTG
 uJy
@@ -52635,15 +52680,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+crv
+qws
 crv
 fCH
-nQc
+yfp
 cjX
 crv
-gay
+crv
+crv
 rTG
 koD
 uPe
@@ -52893,11 +52938,11 @@ gay
 gay
 gay
 gay
-gay
-qws
 crv
-gay
-gay
+crv
+fCH
+nQc
+cjX
 crv
 crv
 gay
@@ -53149,10 +53194,10 @@ gay
 gay
 gay
 gay
-gay
 crv
 odS
-odS
+crv
+crv
 crv
 crv
 crv
@@ -53407,8 +53452,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+qws
+odS
 crv
 gay
 crv
@@ -53738,7 +53783,7 @@ acf
 acf
 gay
 gay
-gay
+crv
 uqq
 kqT
 eRf
@@ -53995,7 +54040,7 @@ acN
 aeF
 ace
 aeW
-gay
+crv
 uqq
 kqT
 eRf
@@ -54183,7 +54228,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 qws
 rTG
 xrG
@@ -54439,8 +54484,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+crv
+crv
 gay
 rTG
 dDY
@@ -54697,7 +54742,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 crv
 crv
 dDY
@@ -55212,7 +55257,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 crv
 dDY
 qZl
@@ -58099,7 +58144,7 @@ nqt
 sFn
 acb
 acb
-tHA
+acb
 idm
 idm
 idm
@@ -58356,7 +58401,7 @@ lZZ
 sFn
 acb
 acb
-tHA
+acb
 idm
 idm
 idm
@@ -69585,8 +69630,8 @@ gay
 gay
 gay
 gEx
-gEx
-gEx
+aPn
+aPn
 gEx
 gay
 gay
@@ -69843,7 +69888,7 @@ gay
 gay
 gay
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -70117,7 +70162,7 @@ gay
 gay
 gEx
 gEx
-gEx
+aPn
 gEx
 gEx
 gay
@@ -70373,9 +70418,9 @@ gay
 gay
 gay
 gEx
-gEx
 aPn
-gEx
+aPn
+aPn
 gEx
 gay
 gay
@@ -70640,7 +70685,7 @@ gay
 gEx
 gEx
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -73211,7 +73256,7 @@ gay
 gay
 gay
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -78038,7 +78083,7 @@ gay
 gay
 gay
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -80102,14 +80147,14 @@ gay
 gay
 gay
 gay
-gEx
+aPn
 gEx
 gay
 gay
 gay
 gay
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -80620,7 +80665,7 @@ gay
 gay
 gay
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -80632,7 +80677,7 @@ vES
 gay
 gEx
 gEx
-gEx
+aPn
 gEx
 gay
 gay
@@ -81139,8 +81184,8 @@ gay
 gay
 gay
 gEx
-gEx
-gEx
+aPn
+aPn
 gEx
 gay
 gay
