@@ -77,14 +77,14 @@
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
 				pedaler.apply_effect(1,AGONY,0)
-				var/obj/item/organ/external/l_leg/Ll = pedaler.get_bodypart(BP_L_LEG)
-				var/obj/item/organ/external/r_leg/Rl = pedaler.get_bodypart(BP_R_LEG)
-				if(Ll)
-					Ll.pumped += 1
-					Ll.update_sprite()
-				if(Rl)
-					Rl.pumped += 1
-					Rl.update_sprite()
+				var/obj/item/organ/external/l_leg/Left_leg = pedaler.get_bodypart(BP_L_LEG)
+				var/obj/item/organ/external/r_leg/Right_leg = pedaler.get_bodypart(BP_R_LEG)
+				if(Left_leg)
+					Left_leg.pumped += 1
+					Left_leg.update_sprite()
+				if(Right_leg)
+					Right_leg.pumped += 1
+					Right_leg.update_sprite()
 				pedaler.update_body()
 
 				if(pedaler.halloss > 80)

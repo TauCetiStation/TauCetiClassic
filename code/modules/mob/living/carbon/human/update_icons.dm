@@ -256,7 +256,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(BP.pumped && BP.pumped >= 25)
 			var/icon/I = icon('icons/mob/human_races/special_overlays.dmi', BP.icon_state)
 			var/icon/mask = icon('icons/effects/ss13_dark_alpha7.dmi', "6")
-			I.Blend(mask, ICON_MULTIPLY, 0, 0)
+			I.Blend(mask, ICON_MULTIPLY)
 			standing += I
 
 	update_tail_showing()

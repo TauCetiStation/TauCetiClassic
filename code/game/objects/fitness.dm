@@ -49,14 +49,14 @@
 		gymnast.nutrition -= 6
 		gymnast.overeatduration -= 8
 		gymnast.apply_effect(15,AGONY,0)
-		var/obj/item/organ/external/chest/Ch = gymnast.get_bodypart(BP_CHEST)
-		var/obj/item/organ/external/groin/Gr = gymnast.get_bodypart(BP_GROIN)
-		if(Ch)
-			Ch.pumped += 1
-			Ch.update_sprite()
-		if(Gr)
-			Gr.pumped += 1
-			Gr.update_sprite()
+		var/obj/item/organ/external/chest/Chest = gymnast.get_bodypart(BP_CHEST)
+		var/obj/item/organ/external/groin/Groin = gymnast.get_bodypart(BP_GROIN)
+		if(Chest)
+			Chest.pumped += 1
+			Chest.update_sprite()
+		if(Groin)
+			Groin.pumped += 1
+			Groin.update_sprite()
 		gymnast.update_body()
 
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
@@ -125,14 +125,14 @@
 		gymnast.nutrition -= 12
 		gymnast.overeatduration -= 16
 		gymnast.apply_effect(25,AGONY,0)
-		var/obj/item/organ/external/l_arm/La = gymnast.get_bodypart(BP_L_ARM)
-		var/obj/item/organ/external/r_arm/Ra = gymnast.get_bodypart(BP_R_ARM)
-		if(La)
-			La.pumped += 1
-			La.update_sprite()
-		if(Ra)
-			Ra.pumped += 1
-			Ra.update_sprite()
+		var/obj/item/organ/external/l_arm/Left_arm = gymnast.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/r_arm/Right_arm = gymnast.get_bodypart(BP_R_ARM)
+		if(Left_arm)
+			Left_arm.pumped += 1
+			Left_arm.update_sprite()
+		if(Right_arm)
+			Right_arm.pumped += 1
+			Right_arm.update_sprite()
 		gymnast.update_body()
 
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
@@ -150,30 +150,44 @@
 	icon_state = "dumbbells_rack"
 	density = TRUE
 	anchored = TRUE
-	var/heavy_dumbbell = 0
-	var/light_dumbbell = 0
+	var/heavy_dumbbell = 2
+	var/light_dumbbell = 2
+
+	var/image/Heavy_Dumbbell_1
+	var/image/Heavy_Dumbbell_2
+	var/image/Light_Dumbbell_1
+	var/image/Light_Dumbbell_2
 
 /obj/structure/dumbbells_rack/atom_init(mapload)
 	. = ..()
-	if(mapload)
-		contents += new /obj/item/weapon/dumbbell/light
-		contents += new /obj/item/weapon/dumbbell/light
-		contents += new /obj/item/weapon/dumbbell/heavy
-		contents += new /obj/item/weapon/dumbbell/heavy
-		heavy_dumbbell = 2
-		light_dumbbell = 2
-		update_icon()
+	contents += new /obj/item/weapon/dumbbell/light
+	Light_Dumbbell_1 = image('icons/obj/fitness.dmi', "light3")
+
+	contents += new /obj/item/weapon/dumbbell/light
+	Light_Dumbbell_2 = image('icons/obj/fitness.dmi', "light4")
+
+	contents += new /obj/item/weapon/dumbbell/heavy
+	Heavy_Dumbbell_1 = image('icons/obj/fitness.dmi', "Heavy1")
+
+	contents += new /obj/item/weapon/dumbbell/heavy
+	Heavy_Dumbbell_2 = image('icons/obj/fitness.dmi', "Heavy2")
+
+	update_icon()
 
 /obj/structure/dumbbells_rack/update_icon()
-	cut_overlays()
+	cut_overlay(Heavy_Dumbbell_1)
+	cut_overlay(Heavy_Dumbbell_2)
+	cut_overlay(Light_Dumbbell_1)
+	cut_overlay(Light_Dumbbell_2)
+
 	if(heavy_dumbbell > 0)
-		add_overlay(icon('icons/obj/fitness.dmi', "Heavy1"))
+		add_overlay(Heavy_Dumbbell_1)
 		if(heavy_dumbbell == 2)
-			add_overlay(icon('icons/obj/fitness.dmi', "Heavy2"))
+			add_overlay(Heavy_Dumbbell_2)
 	if(light_dumbbell > 0)
-		add_overlay(icon('icons/obj/fitness.dmi', "light3"))
+		add_overlay(Light_Dumbbell_1)
 		if(light_dumbbell == 2)
-			add_overlay(icon('icons/obj/fitness.dmi', "light4"))
+			add_overlay(Light_Dumbbell_2)
 
 /obj/structure/dumbbells_rack/attack_hand(mob/living/carbon/human/user)
 	if(contents.len)
@@ -202,6 +216,9 @@
 			heavy_dumbbell += 1
 	update_icon()
 
+/obj/item/weapon/dumbbell
+	var/mass = 1
+
 /obj/item/weapon/dumbbell/light
 	name = "Light Dumbbell"
 	desc = "Citius, altius, fortius!."
@@ -223,23 +240,20 @@
 	throw_speed = 5
 	throw_range = 1
 	w_class = SIZE_NORMAL
+	mass = 2
 
 /obj/item/weapon/dumbbell/attack_self(mob/living/carbon/human/user)
-	var/mass = 1
-	if(istype(src, /obj/item/weapon/dumbbell/heavy))
-		mass = 2
-
 	if(user.is_busy() || issilicon(user))
 		return
 	if(do_after(user, 25 * mass, target = src))
-		var/obj/item/organ/external/BPHand = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+		var/obj/item/organ/external/BPHand = user.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(mass == 1 && BPHand.pumped < 10)
 			BPHand.pumped += mass
 		else if(mass == 2 && BPHand.pumped < 25)
 			BPHand.pumped += mass
+		user.nutrition -= 2 * mass
+		user.overeatduration -= 2 * mass
+		user.apply_effect(2 * mass, AGONY, 0)
+		user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
 		BPHand.update_sprite()
 		user.update_body()
-		user.nutrition -= 5 * mass
-		user.overeatduration -= 5 * mass
-		user.apply_effect(5 * mass,AGONY,0)
-		user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
