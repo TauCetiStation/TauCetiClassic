@@ -16,19 +16,52 @@
 	},
 /area/station/bridge/server)
 "aad" = (
-/obj/machinery/teleport/station,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/machinery/computer/teleporter,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
 "aae" = (
-/obj/machinery/teleport/hub,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = -20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aaf" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 19
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat");
+	pixel_x = 32
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aag" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -39,302 +72,250 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aah" = (
-/turf/simulated/wall/r_wall,
-/area/asteroid/mine/explored)
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aai" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/radio/off,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aaj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aak" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aal" = (
+/obj/structure/stool,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "AI Satellite APC";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Teleporter";
+	dir = 8;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"aam" = (
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/space)
+"aan" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/orientaltree{
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aao" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aap" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaq" = (
+/obj/structure/window/reinforced,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aar" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/blue{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access = list(66)
+	},
+/obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/flora/pottedplant/tropicalfern,
-/turf/simulated/floor/wood,
-/area/station/bridge/captain_quarters)
-"aaj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor{
-	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/central)
-"aak" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/hallway/primary/central)
-"aal" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "black"
-	},
-/area/station/hallway/primary/central)
-"aam" = (
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/junction,
-/turf/simulated/floor{
-	icon_state = "black"
-	},
-/area/station/hallway/primary/central)
-"aan" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aao" = (
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aap" = (
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/simulated/wall,
-/area/station/cargo/storage)
-"aaq" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "packageSort2"
-	},
-/obj/structure/sign/warning/moving_parts{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
-/area/station/cargo/storage)
-"aar" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/mining{
-	name = "Recycler's workplace";
-	req_access = list(67)
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/tcommsat/computer)
 "aas" = (
-/obj/structure/table,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
+/turf/simulated/floor/whitegreed,
 /area/space)
 "aat" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aau" = (
 /turf/simulated/floor{
-	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/cargo/storage)
+/area/station/aisat/ai_chamber)
 "aav" = (
-/obj/machinery/door/airlock/mining{
-	name = "Recycler office";
-	req_access = list(67)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "dark"
+	icon_state = "darkstairs_alone"
 	},
-/area/station/cargo/storage)
-"aaw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/area/station/aisat/ai_chamber)
 "aax" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/random/tools/tool,
-/obj/structure/closet/crate,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/cargo/storage)
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aay" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
-/turf/simulated/floor{
+/obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "dark"
+	pixel_x = 24
 	},
-/area/space)
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aaz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/power/port_gen/pacman/scrap,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
-/area/space)
+/area/station/tcommsat/computer)
 "aaA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/machinery/computer/telecomms/monitor,
+/obj/machinery/camera{
+	c_tag = "Telecomm Main Computer Room";
+	network = list("Tcomsat");
+	pixel_x = 10
 	},
-/obj/structure/closet/secure_closet/recycler,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/cargo/storage)
-"aaB" = (
-/obj/random/tools/tool,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/station/cargo/storage)
-"aaC" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "recycler_outer";
-	locked = 1;
-	name = "Recycler External Access";
-	req_access = list(67)
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaD" = (
-/obj/machinery/disposal/deliveryChute,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/simulated/wall,
-/area/space)
-"aaE" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Drone Fabrication";
-	req_access = list(32)
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/drone_fabrication)
-"aaF" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/drone_fabrication)
-"aaG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/drone_fabrication)
-"aaH" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/drone_fabrication)
-"aaI" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaJ" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaK" = (
-/obj/structure/closet/crate,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/random/misc/all,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"aaL" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"aaM" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaN" = (
-/obj/machinery/conveyor_switch{
-	id = "stationscrap"
-	},
-/obj/structure/sign/warning/moving_parts{
+/obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaO" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "stationscrap"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/large,
 /turf/simulated/floor{
-	icon_state = "warning"
+	dir = 1;
+	icon_state = "darkblue"
 	},
-/area/station/cargo/storage)
-"aaQ" = (
+/area/station/tcommsat/computer)
+"aaB" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = -20
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaC" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaE" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	name = "General Listening Channel";
+	pixel_x = -22
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -343,80 +324,281 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/engineering/drone_fabrication)
-"aaR" = (
-/obj/mecha/working/ripley,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+/area/station/tcommsat/computer)
+"aaG" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
 	},
-/area/space)
-"aaS" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -20
 	},
+/turf/simulated/floor/whitegreed,
 /area/space)
-"aaT" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+"aaH" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/door_control{
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	pixel_x = -32
 	},
-/area/space)
-"aaU" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/structure/scrap_cube,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaV" = (
-/obj/machinery/pile_ripper,
-/obj/machinery/conveyor{
+/area/station/aisat/ai_chamber)
+"aaI" = (
+/obj/effect/landmark/start{
+	name = "AI"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = 20
+	},
+/obj/item/device/radio/intercom{
 	dir = 1;
-	id = "stationscrap"
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = -20
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"aaW" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Aft Port Solar Access";
-	req_access = list(10)
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
 	},
-/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaJ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -26
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaK" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaL" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	locked = 1;
+	name = "AI Chamber";
+	req_access = list(16)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/aisat/ai_chamber)
+"aaM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aaN" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aaO" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"aaP" = (
+/obj/machinery/telecomms/hub/preset{
+	autolinkers = list("hub","c_relay","s_relay","r_relay","science","medical","p_relay","supply","common","command","engineering","security","receiverA","receiverB","broadcasterA","broadcasterB")
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"aaQ" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -20
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaR" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/engineering/drone_fabrication)
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaS" = (
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite Antechamber";
+	dir = 4;
+	name = "AI Satellite Antechamber";
+	pixel_x = 26
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaT" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"aaU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aaV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/station/aisat/ai_chamber)
+"aaW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "aaX" = (
-/obj/machinery/mech_bay_recharge_port{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aaY" = (
+/obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
 	},
-/area/space)
-"aaY" = (
-/obj/random/foods/food_trash,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
+/area/station/tcommsat/computer)
 "aaZ" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor/plating/airless,
-/area/space)
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -31
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "aba" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "interior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access = list(66)
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "abb" = (
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor{
@@ -425,42 +607,97 @@
 	},
 /area/station/civilian/bar)
 "abc" = (
-/obj/machinery/floodlight,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"abd" = (
-/obj/item/weapon/scrap_lump,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"abe" = (
-/obj/machinery/light/small{
+/obj/machinery/porta_turret/station_default{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"abf" = (
-/obj/structure/sign/warning/docking,
-/turf/simulated/wall,
-/area/space)
-"abg" = (
-/obj/item/weapon/scrap_lump,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"abh" = (
-/obj/random/misc/all,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"abi" = (
-/obj/machinery/light/small{
+/obj/structure/cable{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/whitegreed,
 /area/space)
+"abd" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/aquatic{
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"abe" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abf" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abg" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	name = "AI Chamber APC";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abh" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_inner";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/obj/machinery/atmospherics/components/binary/pump/on,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/tcommsat/computer)
+"abi" = (
+/obj/machinery/telecomms/bus/preset_four,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "abj" = (
 /mob/living/simple_animal/cow{
 	name = "Betsy"
@@ -475,54 +712,171 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "abk" = (
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/foods/food_trash,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abm" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abn" = (
-/obj/random/foods/food_trash,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abo" = (
-/obj/effect/decal/cleanable/spiderling_remains,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abp" = (
-/obj/structure/scrap_beacon,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abq" = (
-/obj/item/weapon/scrap_lump,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abr" = (
-/obj/effect/decal/cleanable/spiderling_remains,
-/turf/simulated/floor/airless/ceiling,
-/area/space)
-"abs" = (
-/obj/random/foods/food_trash,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"abt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/foods/food_trash,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -20
 	},
-/area/space)
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber West";
+	dir = 1;
+	network = list("RD","MiniSat");
+	pixel_x = 20
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abl" = (
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_y = -20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abm" = (
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 20
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"abn" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/airlock_sensor{
+	id_tag = "satellite_aux_sensor";
+	pixel_y = 25;
+	req_one_access = list(13,45,1)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abo" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abp" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abq" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/door/window{
+	dir = 8;
+	name = "AI Satellite";
+	req_access = list(66)
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "platebot"
+	},
+/area/station/aisat)
+"abr" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/weapon/tank/emergency_oxygen,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abs" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "satellite_aux_airlock";
+	pixel_x = 25;
+	req_access = list(66);
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
 "abu" = (
-/turf/simulated/floor/plating/airless/catwalk,
-/area/asteroid/mine/unexplored/safe)
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
+"abv" = (
+/turf/simulated/wall/r_wall,
+/area/station/aisat)
+"abw" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_outer";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/aisat)
+"abx" = (
+/obj/effect/decal/cleanable/spiderling_remains,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
 "aby" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "research_sensor";
@@ -537,6 +891,289 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
+"abz" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
+	},
+/obj/structure/scrap_cube,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
+"abB" = (
+/obj/machinery/pile_ripper,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "stationscrap"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"abD" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abE" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abF" = (
+/obj/machinery/door/airlock/mining{
+	name = "Recycler office";
+	req_access = list(67)
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
+"abG" = (
+/obj/machinery/teleport/hub,
+/turf/simulated/floor/plating,
+/area/space)
+"abH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/large,
+/turf/simulated/floor{
+	icon_state = "warning"
+	},
+/area/station/cargo/storage)
+"abI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/mining{
+	name = "Recycler's workplace";
+	req_access = list(67)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"abK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
+"abL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"abM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space)
+"abN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"abO" = (
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"abP" = (
+/obj/machinery/conveyor_switch{
+	id = "stationscrap"
+	},
+/obj/structure/sign/warning/moving_parts{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abQ" = (
+/obj/random/misc/all,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"abR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"abS" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space)
+"abT" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "stationscrap"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
+"abV" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/gas/coloured,
+/turf/simulated/floor/plating,
+/area/space)
+"abW" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "packageSort2"
+	},
+/obj/structure/sign/warning/moving_parts{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/station/cargo/storage)
+"abX" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"abY" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space)
+"abZ" = (
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"aca" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"acb" = (
+/obj/machinery/floodlight,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acc" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"acd" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"ace" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"acf" = (
+/obj/effect/decal/cleanable/spiderling_remains,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"acg" = (
+/obj/structure/scrap_beacon,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"ach" = (
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/junction,
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
+"aci" = (
+/obj/random/tools/tool,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
+"acj" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
+"ack" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Aft Port Solar Access";
+	req_access = list(10)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/drone_fabrication)
 "acl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -550,6 +1187,198 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"acm" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"acn" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aco" = (
+/turf/simulated/wall/r_wall,
+/area/asteroid/mine/explored)
+"acp" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"acr" = (
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"acs" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Drone Fabrication";
+	req_access = list(32)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"act" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/cargo/storage)
+"acu" = (
+/obj/random/foods/food_trash,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"acv" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acw" = (
+/obj/machinery/teleport/station,
+/turf/simulated/floor/plating,
+/area/space)
+"acx" = (
+/obj/structure/closet/crate,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/random/misc/all,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"acy" = (
+/obj/mecha/working/ripley,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"acz" = (
+/obj/random/foods/food_trash,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acA" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/weapon/flora/pottedplant/tropicalfern,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
+"acB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman/scrap,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space)
+"acC" = (
+/turf/simulated/floor/plating/airless/catwalk,
+/area/asteroid/mine/unexplored/safe)
+"acD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/random/tools/tool,
+/obj/structure/closet/crate,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/cargo/storage)
+"acE" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "recycler_outer";
+	locked = 1;
+	name = "Recycler External Access";
+	req_access = list(67)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/structure/closet/secure_closet/recycler,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
+"acG" = (
+/obj/machinery/disposal/deliveryChute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/space)
+"acH" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"acI" = (
+/turf/simulated/floor/airless/ceiling,
+/area/space)
+"acJ" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acK" = (
+/obj/structure/sign/warning/docking,
+/turf/simulated/wall,
+/area/space)
+"acL" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acM" = (
+/obj/item/weapon/scrap_lump,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acN" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "adg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -1147,22 +1976,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aGi" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/teleport/station,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "aGR" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -1219,16 +2038,11 @@
 	},
 /area/station/bridge)
 "aKv" = (
-/obj/machinery/telecomms/hub/preset{
-	autolinkers = list("hub","c_relay","s_relay","r_relay","science","medical","p_relay","supply","common","command","engineering","security","receiverA","receiverB","broadcasterA","broadcasterB")
+/obj/machinery/teleport/hub,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/bluegrid{
-	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/chamber)
+/area/station/aisat/teleport)
 "aLe" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7491,21 +8305,14 @@
 	},
 /area/station/rnd/hallway)
 "gNY" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	name = "General Listening Channel";
-	pixel_x = -22
-	},
-/obj/machinery/light{
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "gOc" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -8463,17 +9270,8 @@
 	},
 /area/station/medical/storage)
 "hXh" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
-	},
-/obj/structure/sign/warning/electricshock{
-	pixel_y = -31
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "hXm" = (
 /obj/machinery/door/airlock/command/glass{
 	id_tag = null;
@@ -9347,16 +10145,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "iMs" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "iNP" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -10713,30 +11504,13 @@
 	},
 /area/station/security/checkpoint)
 "kcz" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
-	req_access = list(10, 61)
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/computer)
+/area/station/aisat/teleport)
 "kcO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15637,19 +16411,23 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "oOT" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/structure/rack,
+/obj/item/device/multitool,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
-	name = "Telecoms Control Room";
-	req_access = list(10, 61)
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 4;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_x = -22
 	},
-/obj/machinery/atmospherics/components/binary/pump/on,
-/turf/simulated/floor/plating,
-/area/station/tcommsat/computer)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
 "oPe" = (
 /obj/structure/rack,
 /obj/item/stack/cable_coil/random,
@@ -17648,17 +18426,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "qCf" = (
-/obj/machinery/computer/telecomms/monitor,
-/obj/machinery/camera{
-	c_tag = "Telecomm Main Computer Room";
-	network = list("Tcomsat");
-	pixel_x = 10
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	external_pressure_bound = 140;
+	external_pressure_bound_default = 140;
+	name = "(OUT) Space Large Air Vent"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/space,
+/area/space)
 "qCA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -24101,14 +24875,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "wWW" = (
-/obj/machinery/telecomms/bus/preset_four,
-/turf/simulated/floor/bluegrid{
-	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/chamber)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/ai_chamber)
 "wXt" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -39557,13 +40325,13 @@ gay
 gay
 gay
 gay
-vlu
-vlu
-vlu
-kcz
-vlu
-vlu
-vlu
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -39814,13 +40582,13 @@ gay
 gay
 gay
 gay
-vlu
-tEk
-gNY
-aGi
-gmT
-hXh
-vlu
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -40071,15 +40839,15 @@ gay
 gay
 gay
 gay
-vlu
-qCf
-lBh
-xxm
-mKv
-iMs
-oOT
 gay
 gay
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
+tHA
 gay
 gay
 gay
@@ -40328,16 +41096,16 @@ gay
 gay
 gay
 gay
-vlu
-iWz
-mWu
-bIJ
-mqs
-piu
-vlu
 gay
-gay
-gay
+tHA
+tHA
+aas
+aas
+aaG
+aas
+aas
+tHA
+tHA
 gay
 gay
 gay
@@ -40584,17 +41352,17 @@ gay
 gay
 gay
 gay
-sCX
-sCX
-sCX
-mFe
-oAf
-kjh
-rzG
-sCX
-sCX
 gay
 gay
+tHA
+aam
+aat
+wWW
+wWW
+wWW
+aat
+abc
+tHA
 gay
 gay
 gay
@@ -40841,17 +41609,17 @@ gay
 gay
 gay
 gay
-sCX
-dtz
-wLc
-pAi
-qpe
-ued
-idE
-dXi
-sCX
 gay
 gay
+wWW
+wWW
+aau
+aaB
+aaH
+aaQ
+aau
+wWW
+wWW
 gay
 gay
 gay
@@ -41098,18 +41866,18 @@ gay
 gay
 gay
 gay
-sCX
-njt
-uFO
-rzG
-qUn
-rzG
-uFO
+gay
 wWW
-sCX
-gay
-gay
-gay
+wWW
+aan
+aav
+wWW
+aaI
+wWW
+aaU
+abd
+wWW
+wWW
 gay
 gay
 gay
@@ -41355,18 +42123,18 @@ gay
 gay
 gay
 gay
-sCX
-xgl
-jyy
-ikd
-qHG
-bPW
-xlr
-cfI
-sCX
 gay
-gay
-gay
+wWW
+aae
+aao
+aaw
+wWW
+wWW
+wWW
+aaV
+abe
+abk
+wWW
 gay
 gay
 gay
@@ -41612,18 +42380,18 @@ gay
 gay
 gay
 gay
-sCX
-ffn
-gtx
-gtx
-gtx
-gtx
-gtx
-qZX
-sCX
 gay
-gay
-gay
+wWW
+aaf
+aap
+aax
+aaC
+aaJ
+aaR
+aaW
+abf
+abl
+wWW
 gay
 gay
 gay
@@ -41869,18 +42637,18 @@ gay
 gay
 gay
 gay
-sCX
-mcS
-wwe
-nmr
-gtx
-iBA
-vWz
-wju
-sCX
 gay
-gay
-gay
+wWW
+aah
+aaq
+aay
+aaD
+aaK
+aaS
+aaX
+abg
+abm
+wWW
 gay
 gay
 gay
@@ -42126,19 +42894,19 @@ gay
 gay
 gay
 gay
-sCX
-sCX
-sCX
-nGN
-aKv
-dFS
-sCX
-sCX
-sCX
-gay
-gay
-gay
-gay
+hXh
+wWW
+wWW
+wWW
+wWW
+wWW
+aaL
+wWW
+wWW
+wWW
+wWW
+wWW
+abv
 gay
 gay
 gay
@@ -42382,20 +43150,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+oOT
+aai
+vlu
+tEk
+aaE
+aaM
+gmT
+aaY
+vlu
+abn
+abr
+abu
 gay
 gay
 gay
@@ -42638,21 +43406,21 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qCf
+iMs
+aGi
+gNY
+aaj
+aar
+aaz
+aaF
+aaN
+aaT
+aaZ
+vlu
+abo
+abo
+abu
 gay
 gay
 gay
@@ -42896,20 +43664,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+aKv
+kcz
+aak
+vlu
+aaA
+lBh
+xxm
+mKv
+aba
+abh
+abp
+abs
+abw
 gay
 gay
 gay
@@ -43153,20 +43921,20 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+aad
+aal
+vlu
+iWz
+mWu
+bIJ
+mqs
+piu
+vlu
+abq
+abt
+abu
 gay
 gay
 gay
@@ -43411,19 +44179,19 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+hXh
+hXh
+sCX
+sCX
+sCX
+mFe
+oAf
+kjh
+rzG
+sCX
+sCX
+abu
+abv
 gay
 gay
 gay
@@ -43670,15 +44438,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+dtz
+wLc
+pAi
+qpe
+ued
+idE
+dXi
+sCX
 gay
 gay
 gay
@@ -43923,19 +44691,19 @@ gay
 gay
 gay
 gay
+nmW
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+njt
+uFO
+rzG
+qUn
+rzG
+uFO
+abi
+sCX
 gay
 gay
 gay
@@ -44184,15 +44952,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+sCX
+xgl
+jyy
+ikd
+qHG
+bPW
+xlr
+cfI
+sCX
 gay
 gay
 gay
@@ -44441,15 +45209,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-ugK
-gay
+sCX
+ffn
+gtx
+gtx
+aaO
+gtx
+gtx
+qZX
+sCX
 gay
 gay
 gay
@@ -44698,19 +45466,19 @@ gay
 gay
 gay
 gay
+sCX
+mcS
+wwe
+nmr
+gtx
+iBA
+vWz
+wju
+sCX
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+ugK
 gay
 gay
 gay
@@ -44955,19 +45723,19 @@ gay
 gay
 gay
 gay
+sCX
+sCX
+sCX
+nGN
+aaP
+dFS
+sCX
+sCX
+sCX
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-nmW
 gay
 gay
 gay
@@ -45214,11 +45982,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+tHA
+tHA
+tHA
+tHA
+tHA
 gay
 gay
 gay
@@ -45471,22 +46239,22 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 nmW
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gEx
@@ -50348,7 +51116,7 @@ ngy
 tHA
 wuN
 wuN
-aaE
+acs
 wuN
 wuN
 tHA
@@ -50605,7 +51373,7 @@ pQB
 tHA
 iCb
 utF
-aaF
+abL
 jbE
 wuN
 hAq
@@ -50862,10 +51630,10 @@ dZq
 tHA
 lre
 mhl
-aaG
-aaQ
-aaW
-aba
+acm
+abC
+ack
+aca
 fdT
 iIa
 gbi
@@ -51119,7 +51887,7 @@ xyR
 tHA
 ePx
 mhl
-aaH
+acc
 sWo
 wuN
 hAq
@@ -51383,8 +52151,8 @@ tHA
 tHA
 nku
 tHI
-aao
-aao
+acL
+acL
 gay
 gay
 gay
@@ -51630,20 +52398,20 @@ chI
 waV
 lZj
 tHA
-aao
+acL
 wuN
 wuN
 wuN
 wuN
 wuN
-aaZ
-aao
-abi
-aaM
-aaS
-abh
-aaT
-abs
+acJ
+acL
+acn
+abD
+abN
+abQ
+ace
+acz
 gay
 uqq
 kqT
@@ -51887,20 +52655,20 @@ mGO
 mGO
 mGO
 tHA
-aao
-aao
+acL
+acL
 ujh
-aaI
-aaR
-aaX
-abc
-aao
-abk
-abm
-abo
-abk
-abk
-aaM
+acp
+acy
+abX
+acb
+acL
+acI
+acH
+acf
+acI
+acI
+abD
 gay
 uqq
 qpA
@@ -52141,24 +52909,24 @@ tHA
 tHA
 tHA
 tHA
-aao
-aao
-aao
-aao
-aao
+acL
+acL
+acL
+acL
+acL
 ujh
-aaJ
-aaS
-aaS
-aaT
-abg
-abl
-abk
-abk
-abk
-abk
-aaT
-aaT
+abE
+abN
+abN
+ace
+abZ
+abR
+acI
+acI
+acI
+acI
+ace
+ace
 gay
 crv
 crv
@@ -52395,27 +53163,27 @@ xKC
 ifz
 cDH
 ujh
-aao
-aao
-aao
-aao
+acL
+acL
+acL
+acL
 ujh
 ujh
 ujh
 ujh
 ujh
-aaK
-aaM
-aaS
-aaT
-aao
-abm
-abk
-abp
-abk
-abk
-aaT
-aaT
+acx
+abD
+abN
+ace
+acL
+acH
+acI
+acg
+acI
+acI
+ace
+ace
 crv
 crv
 crv
@@ -52652,27 +53420,27 @@ ivY
 vdi
 aAE
 ujh
-aao
-aao
-aao
-aao
+acL
+acL
+acL
+acL
 ujh
-aas
-aas
+abY
+abY
 gks
 ujh
-aaL
-aaT
-aaY
-aaS
-aaT
-abm
-abm
-abm
-abm
-abq
-aaS
-abt
+acd
+ace
+acr
+abN
+ace
+acH
+acH
+acH
+acH
+abO
+abN
+acq
 gay
 crv
 gay
@@ -52907,28 +53675,28 @@ fIW
 jaa
 xKC
 cyF
-aaj
-aan
-aan
-aan
-aan
-aan
-aar
-aat
-aat
-aay
-aaC
-aaM
-aaT
-aaT
-aaS
-abh
-abk
-abn
-abk
-abk
-abr
-aaS
+abA
+acv
+acv
+acv
+acv
+acv
+abI
+abS
+abS
+abM
+acE
+abD
+ace
+ace
+abN
+abQ
+acI
+acu
+acI
+acI
+abx
+abN
 gay
 crv
 crv
@@ -53164,28 +53932,28 @@ fIW
 jaa
 kQj
 msn
-aak
+abU
 ujh
-aao
-aao
-aao
-aao
+acL
+acL
+acL
+acL
 ujh
 gks
 gks
-aaz
+acB
 ujh
-aaN
-aaU
-aao
-abd
-aao
-aaT
-aaS
-aaS
-aaM
-aao
-aaT
+abP
+abz
+acL
+acM
+acL
+ace
+abN
+abN
+abD
+acL
+ace
 gay
 crv
 crv
@@ -53421,21 +54189,21 @@ fIW
 wDD
 hRP
 mEg
-aal
+abK
 ujh
 ujh
 ujh
 ujh
-aao
+acL
 sFn
-aau
-aau
-aaA
-aaD
-aaO
-aaV
-aaT
-abe
+acj
+acj
+acF
+acG
+abT
+abB
+ace
+acN
 azF
 azF
 azF
@@ -53678,21 +54446,21 @@ bzg
 xCy
 ntn
 dJt
-aam
+ach
 hBg
 iUs
 fMO
 hBg
-aap
+act
 sFn
-aav
+abF
 sFn
 sFn
 sFn
 sFn
 ujh
-aaZ
-abf
+acJ
+acK
 idm
 idm
 idm
@@ -53959,7 +54727,7 @@ idm
 idm
 idm
 azF
-abu
+acC
 yjd
 yjd
 lEA
@@ -54197,9 +54965,9 @@ sFn
 sFn
 sFn
 sFn
-aaq
+abW
 eBO
-aaw
+abJ
 tJe
 tWv
 mZF
@@ -54216,7 +54984,7 @@ idm
 idm
 idm
 crv
-abu
+acC
 yjd
 yjd
 lEA
@@ -54473,7 +55241,7 @@ idm
 idm
 idm
 crv
-abu
+acC
 yjd
 yjd
 lEA
@@ -54714,8 +55482,8 @@ sFn
 evf
 xST
 rVV
-aax
-aaB
+acD
+aci
 mvQ
 gfQ
 aiy
@@ -54730,7 +55498,7 @@ idm
 idm
 idm
 gay
-abu
+acC
 yjd
 yjd
 lEA
@@ -54974,7 +55742,7 @@ lXu
 fsb
 ykW
 akS
-aaP
+abH
 xbK
 smt
 hrp
@@ -54987,7 +55755,7 @@ idm
 idm
 idm
 crv
-abu
+acC
 yjd
 yjd
 lEA
@@ -60593,7 +61361,7 @@ eEO
 xuu
 knh
 gZg
-aai
+acA
 uPP
 wYT
 rkB
@@ -62133,7 +62901,7 @@ aac
 bCq
 bCq
 pRR
-aad
+acw
 tnj
 eWS
 aoB
@@ -62390,7 +63158,7 @@ cFV
 oDr
 bCq
 pRR
-aae
+abG
 tnj
 jNH
 gxV
@@ -62647,7 +63415,7 @@ tHA
 oHD
 gXg
 kia
-aaf
+abV
 tnj
 tnj
 tnj
@@ -62905,7 +63673,7 @@ tHA
 tHA
 tHA
 tHA
-aah
+aco
 cXm
 tnj
 tnj
