@@ -11,7 +11,7 @@
 //combat_mech
 #define SKILL_COMBAT_MECH "combat_mech"
 #define SKILL_COMBAT_MECH_UNTRAINED -2
-#define SKILL_COMBAT_MECH_NOVICE -1	// scientist, engineer, mecha operator, security
+#define SKILL_COMBAT_MECH_NOVICE -1	// mecha operator, security
 #define SKILL_COMBAT_MECH_PRO 0  //nuclear,  HoS, RD
 
 //police -30% handcuffs time for each level, tasers, flashes, stunbatons

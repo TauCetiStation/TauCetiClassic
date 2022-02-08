@@ -11,6 +11,7 @@
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 	var/animated = 0
 	required_skill = SKILL_COMBAT_MECH
+	required_proficiency = SKILL_COMBAT_MECH_NOVICE
 
 /*
 /obj/mecha/combat/range_action(target)

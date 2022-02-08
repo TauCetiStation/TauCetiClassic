@@ -452,6 +452,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>", message_others = "<span class='notice'>[user] fumbles around figuring out how to set timer on [src].</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -466,9 +468,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
+	
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
-
-	if(do_after(user, 50, target = target))
+	var/planting_time =  max(SKILL_TASK_AVERAGE, SKILL_TASK_DIFFICULT - 1 SECONDS *  (user.mind.getSkillRating(SKILL_FIREARMS)  + user.mind.getSkillRating(SKILL_ENGINEERING)))
+	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
