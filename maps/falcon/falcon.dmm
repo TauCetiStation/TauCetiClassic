@@ -1318,6 +1318,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_x = 32;
+	supply_display = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "acA" = (
@@ -2835,6 +2840,16 @@
 	icon_state = "panelscorched"
 	},
 /area/station/cargo/recycler)
+"aeY" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/docking{
+	pixel_x = 32
+	},
+/turf/space,
+/area/space)
+"aeZ" = (
+/turf/simulated/wall,
+/area/asteroid/mine/unexplored/safe)
 "afw" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8087,9 +8102,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "faK" = (
-/obj/structure/sign/warning/docking,
-/turf/simulated/wall,
-/area/station/cargo/recycler)
+/obj/structure/sign/warning/docking{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/asteroid/mine/eva)
 "fbn" = (
 /obj/machinery/cryopod,
 /obj/machinery/alarm{
@@ -22607,8 +22624,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "tls" = (
-/obj/structure/sign/warning/docking,
-/turf/simulated/wall,
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = 32;
+	supply_display = 1
+	},
+/turf/simulated/floor/plating/airless/catwalk,
 /area/asteroid/mine/eva)
 "tmq" = (
 /obj/structure/cable{
@@ -47356,8 +47377,8 @@ vrL
 azF
 crv
 crv
-gay
-gay
+crv
+crv
 qws
 crv
 sCX
@@ -47870,7 +47891,7 @@ vrL
 azF
 crv
 gay
-odS
+rxt
 crv
 qws
 qws
@@ -55856,7 +55877,7 @@ aeG
 aeG
 azF
 azF
-crv
+aeY
 goP
 goP
 goP
@@ -56103,7 +56124,7 @@ abP
 abP
 abP
 aco
-faK
+abP
 idm
 idm
 idm
@@ -56113,7 +56134,7 @@ idm
 idm
 idm
 azF
-yjd
+aeZ
 yjd
 yjd
 lEA
@@ -58674,12 +58695,12 @@ sFn
 sFn
 sFn
 sFn
+fHe
 tls
 aeM
 aeM
 aeM
-aeM
-aeM
+faK
 aeM
 aeM
 aeM
