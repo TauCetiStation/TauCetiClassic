@@ -13,8 +13,6 @@
 	brute_dam_coeff = 0.5
 	var/protection_percent = 60
 
-	var/land_speed = 10 //if 0 it can't go on turf
-	var/space_speed = 1
 	var/bike_icon = "bike"
 	var/obj/item/weapon/key/spacebike/key
 	var/id = 0
@@ -145,18 +143,20 @@
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
 	return Move(get_step(src, direction))
 
+#define SPACE_MOVE_DELAY 1
+#define GROUND_MOVE_DELAY 10
 
 /obj/vehicle/space/spacebike/Move(atom/newloc, direction, glide_size_override)
+	. = ..()
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(newloc, /turf/space) || pulledby)
-		if(!space_speed)
-			return FALSE
-		move_delay = space_speed + slow_cooef
+		move_delay = SPACE_MOVE_DELAY + slow_cooef
 	else
-		if(!land_speed)
-			return FALSE
-		move_delay = land_speed + slow_cooef
-	return ..()
+		move_delay = GROUND_MOVE_DELAY + slow_cooef
+	set_glide_size(DELAY_TO_GLIDE_SIZE(move_delay))
+
+#undef SPACE_MOVE_DELAY
+#undef GROUND_MOVE_DELAY
 
 /obj/vehicle/space/spacebike/can_move()
 	. = ..()

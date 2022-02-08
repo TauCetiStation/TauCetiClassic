@@ -19,7 +19,7 @@
 
 /mob/living/carbon/Move(atom/newloc, direction, glide_size_override)
 	. = ..()
-	if(!.)
+	if(. && !ISDIAGONALDIR(direction))
 		handle_phantom_move(newloc, direction)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
