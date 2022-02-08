@@ -108,15 +108,15 @@ medical, chemistry, research, command)
 /proc/getSkillMaximum(skill)
 	return SKILL_BOUNDS[skill][2]
 
-
-
-
 /proc/applySkillModifier(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
 	if(user.mind.getSkillRating(required_skill) < required_proficiency)
 		return  value + value * penalty * (required_proficiency - user.mind.getSkillRating(required_skill))
 	if(user.mind.getSkillRating(required_skill) > required_proficiency)
 		return value - value * bonus * (user.mind.getSkillRating(required_skill) - required_proficiency)
 	return value
+
+/proc/do_skilled(mob/user, atom/target,  delay, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
+	return do_after(user, delay = applySkillModifier(user, delay, required_skill, required_proficiency, penalty, bonus), target = target)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", others_can_see = TRUE, text_target = null)
 	if(isSkillCompetent(user, required_skill, required_proficiency))
@@ -314,6 +314,7 @@ medical, chemistry, research, command)
 	engineering = SKILL_ENGINEERING_NOVICE
 	civ_mech = SKILL_CIV_MECH_PRO
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
+
 /datum/skills/roboticist/bio
 	surgery = SKILL_SURGERY_PROFESSIONAL
 	civ_mech = SKILL_CIV_MECH_TRAINED
@@ -334,6 +335,7 @@ medical, chemistry, research, command)
 	surgery = SKILL_SURGERY_AMATEUR
 	medical = SKILL_MEDICAL_PRACTICED
 	chemistry = SKILL_CHEMISTRY_PRACTICED
+
 /datum/skills/research_assistant
 	research = SKILL_RESEARCH_TRAINED
 	medical = SKILL_MEDICAL_NOVICE
@@ -348,9 +350,11 @@ medical, chemistry, research, command)
 	police = SKILL_POLICE_TRAINED
 	construction = SKILL_CONSTRUCTION_NOVICE
 	command = SKILL_COMMAND_TRAINED
+
 /datum/skills/miner
 	civ_mech = SKILL_CIV_MECH_MASTER
 	firearms  = SKILL_FIREARMS_TRAINED 
+
 /datum/skills/cargotech
 	civ_mech = SKILL_CIV_MECH_PRO
 	construction = SKILL_CONSTRUCTION_NOVICE

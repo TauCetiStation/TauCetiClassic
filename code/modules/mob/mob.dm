@@ -1021,9 +1021,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		to_chat(src, "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>")
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
-		
-	var/removal_time = applySkillModifier(U, SKILL_TASK_DIFFICULT, SKILL_MEDICAL, SKILL_MEDICAL_NOVICE)
-	if(!do_after(U, removal_time, target = S))
+
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, SKILL_MEDICAL, SKILL_MEDICAL_COMPETENT))
 		return
 	if(!selection || !S || !U)
 		return
