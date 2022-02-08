@@ -60,7 +60,7 @@
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
-	if(!fumble_around(usr))
+	if(!do_skill_checks(usr))
 		return
 	if(do_after(usr, 20, target = src))
 		if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))

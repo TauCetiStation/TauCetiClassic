@@ -295,7 +295,7 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
-			if(!fumble_around(user))
+			if(!do_skill_checks(user))
 				return
 			user.drop_from_inventory(I, src)
 			disk = I

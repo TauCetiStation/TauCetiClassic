@@ -30,7 +30,7 @@
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!fumble_around(user))
+		if(!do_skill_checks(user))
 			return
 		beaker = O
 		user.drop_from_inventory(O, src)
@@ -46,7 +46,7 @@
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
 			return
-		if(!fumble_around(user))
+		if(!do_skill_checks(user))
 			return
 		dish = O
 		user.drop_from_inventory(O, src)

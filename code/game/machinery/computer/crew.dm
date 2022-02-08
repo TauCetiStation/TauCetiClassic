@@ -17,6 +17,6 @@
 
 
 /obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	crew_monitor.ui_interact(user, ui_key, ui, force_open)

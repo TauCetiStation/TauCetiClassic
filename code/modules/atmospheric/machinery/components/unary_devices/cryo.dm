@@ -132,7 +132,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	close_machine(target)
 
@@ -164,14 +164,14 @@
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
-		if(!fumble_around(usr))
+		if(!do_skill_checks(usr))
 			return
 		open_machine()
 		add_fingerprint(usr)
 	else
 		if(isobserver(usr) && !IsAdminGhost(usr))
 			return
-		if(!fumble_around(usr))
+		if(!do_skill_checks(usr))
 			return
 		open_machine()
 
@@ -263,7 +263,7 @@
 
 	if(!user.incapacitated() && Adjacent(user))
 		if(!state_open)
-			if(!fumble_around(user))
+			if(!do_skill_checks(user))
 				return
 			on = !on
 			update_icon()
@@ -278,11 +278,11 @@
 
 	if(!user.incapacitated() && Adjacent(user))
 		if(state_open)
-			if(!fumble_around(user))
+			if(!do_skill_checks(user))
 				return
 			close_machine()
 		else
-			if(!fumble_around(user))
+			if(!do_skill_checks(user))
 				return
 			open_machine()
 

@@ -83,7 +83,7 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	activate(user)
 

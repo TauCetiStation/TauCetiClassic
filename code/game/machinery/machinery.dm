@@ -337,7 +337,7 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	
-	if(!fumble_around(usr))
+	if(!do_skill_checks(usr))
 		return FALSE
 	
 	return TRUE
@@ -348,7 +348,7 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(!fumble_around(usr))
+	if(!do_skill_checks(usr))
 		return FALSE
 	return FALSE
 
@@ -555,7 +555,7 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
-/obj/machinery/proc/fumble_around(mob/user, others_can_see = TRUE)
+/obj/machinery/proc/do_skill_checks(mob/user, others_can_see = TRUE)
 	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user))
 		return TRUE
 	return handle_fumbling(user, src, fumbling_time_multiplier * 2, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier, others_can_see = others_can_see)

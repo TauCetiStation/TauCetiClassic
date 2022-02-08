@@ -21,7 +21,7 @@
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!fumble_around(user))
+		if(!do_skill_checks(user))
 			return
 		dish = I
 		c.drop_from_inventory(I, src)
@@ -29,7 +29,7 @@
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
-		if(!fumble_around(user))
+		if(!do_skill_checks(user))
 			return
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect

@@ -38,7 +38,7 @@
 	if(sample)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	sample = S
 	user.drop_from_inventory(S, src)
@@ -169,7 +169,7 @@
 		return TRUE
 
 /obj/machinery/disease2/isolator/proc/print(mob/user)
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 

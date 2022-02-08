@@ -55,7 +55,7 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	return TRUE
 
@@ -176,7 +176,7 @@
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	var/dat
 

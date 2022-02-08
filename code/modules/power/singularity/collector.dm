@@ -40,7 +40,7 @@ var/global/list/rad_collectors = list()
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	if(anchored)
 		if(!locked || IsAdminGhost(user))
@@ -54,7 +54,7 @@ var/global/list/rad_collectors = list()
 			return 1
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(!fumble_around(user))
+	if(!do_skill_checks(user))
 		return
 	if(istype(W, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")

@@ -190,7 +190,7 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
-		if(!fumble_around(user))
+		if(!do_skill_checks(user))
 			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
