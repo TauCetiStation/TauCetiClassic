@@ -246,7 +246,7 @@
 	if(user.is_busy() || issilicon(user))
 		return
 	if(do_after(user, 25 * mass, target = src))
-		var/obj/item/organ/external/BPHand = user.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+		var/obj/item/organ/external/BPHand = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
 		if(mass == 1 && BPHand.pumped < 10)
 			BPHand.pumped += mass
 		else if(mass == 2 && BPHand.pumped < 25)
