@@ -33,6 +33,9 @@
 	dir = 8;
 	pixel_x = 20
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -101,7 +104,23 @@
 	},
 /area/station/medical/surgeryobs)
 "aai" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/machinery/windowtint{
+	id = "op1";
+	pixel_x = -10;
+	pixel_y = -30
+	},
+/obj/machinery/holosign_switch{
+	id = "op1";
+	pixel_x = -3;
+	pixel_y = -30
+	},
+/obj/machinery/light_switch{
+	pixel_x = 4;
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -290,6 +309,9 @@
 	},
 /obj/structure/closet/secure_closet/medical2,
 /obj/item/clothing/under/patient_gown,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/surgery)
 "aaC" = (
@@ -687,6 +709,10 @@
 /obj/item/weapon/storage/belt,
 /obj/item/weapon/storage/belt,
 /obj/item/weapon/storage/belt,
+/obj/machinery/light_switch{
+	pixel_x = -11;
+	pixel_y = 33
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -1272,6 +1298,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1397,6 +1426,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1678,7 +1711,10 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
+	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -3502,6 +3538,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = 20;
+	pixel_y = 2
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -4104,6 +4144,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowfull"
@@ -4435,6 +4478,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -21;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -4666,6 +4713,10 @@
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/light_switch{
+	pixel_x = -12;
+	pixel_y = -29
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -5571,6 +5622,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = -13;
+	pixel_y = 25
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5682,6 +5737,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -6303,6 +6361,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "duB" = (
@@ -6496,6 +6558,10 @@
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /obj/structure/table/glass,
+/obj/machinery/light_switch{
+	pixel_x = -25;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -8202,6 +8268,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "ffx" = (
@@ -10428,6 +10495,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "hEq" = (
@@ -11855,6 +11923,13 @@
 	name = "Station Intercom (General)";
 	pixel_x = -20
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = -2;
+	pixel_y = -29
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12240,6 +12315,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -12659,6 +12738,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -14021,6 +14103,10 @@
 	name = "Prison Wing flashes";
 	pixel_y = -22
 	},
+/obj/machinery/light_switch{
+	pixel_x = -12;
+	pixel_y = -29
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -14479,12 +14565,6 @@
 	icon_state = "darkpurplefull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
-"lBN" = (
-/obj/machinery/light_switch{
-	pixel_x = -30
-	},
-/turf/simulated/wall,
-/area/station/civilian/bar)
 "lBY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -14704,6 +14784,10 @@
 	},
 /obj/structure/sign/warning/enginesafety{
 	pixel_y = 31
+	},
+/obj/machinery/light_switch{
+	pixel_x = 20;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14970,6 +15054,9 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -15879,6 +15966,9 @@
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -16275,6 +16365,9 @@
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/book/manual/wiki/sop,
 /obj/machinery/light,
+/obj/machinery/light_switch{
+	pixel_y = -25
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "nkH" = (
@@ -17456,6 +17549,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "oun" = (
@@ -17520,6 +17614,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "oxf" = (
@@ -18955,6 +19050,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "pHw" = (
@@ -20458,6 +20554,9 @@
 	dir = 8;
 	network = list("Research","SS13")
 	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
@@ -21498,6 +21597,10 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/light_switch{
+	pixel_x = -13;
+	pixel_y = -31
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -21787,6 +21890,11 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/machinery/light_switch{
+	on = 0;
+	pixel_x = -10;
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -21889,6 +21997,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -23315,6 +23426,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "tST" = (
@@ -23575,6 +23687,10 @@
 /obj/machinery/camera{
 	c_tag = "Bridge";
 	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = 14;
+	pixel_y = -25
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -24333,6 +24449,9 @@
 /area/station/rnd/chargebay)
 "uUf" = (
 /obj/machinery/media/jukebox/bar,
+/obj/machinery/light_switch{
+	pixel_x = -30
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -24763,6 +24882,10 @@
 /obj/item/weapon/flora/pottedplant/smallcactus{
 	pixel_x = 4;
 	pixel_y = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = 28;
+	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -26831,6 +26954,10 @@
 	dir = 10;
 	network = list("SS13","Security")
 	},
+/obj/machinery/light_switch{
+	pixel_x = 10;
+	pixel_y = -25
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -27102,6 +27229,9 @@
 /obj/random/science,
 /obj/random/science,
 /obj/random/science,
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
@@ -27387,6 +27517,11 @@
 /obj/structure/table/reinforced,
 /obj/item/device/camera,
 /obj/item/device/guitar,
+/obj/machinery/light_switch{
+	on = 0;
+	pixel_x = -10;
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -27795,6 +27930,10 @@
 /obj/item/weapon/circuitboard/teleporter,
 /obj/item/borg/upgrade/security,
 /obj/item/weapon/disk/research_points/rare,
+/obj/machinery/light_switch{
+	on = 0;
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warndark"
@@ -55823,7 +55962,7 @@ aPE
 aYW
 bLO
 uUf
-lBN
+ixg
 ixg
 fIW
 fIW
