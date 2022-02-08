@@ -639,7 +639,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["skill"])
-		update_skils(href_list)
+		update_skills(href_list)
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
