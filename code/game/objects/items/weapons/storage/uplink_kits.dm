@@ -58,7 +58,7 @@
 			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 			new /obj/item/weapon/silencer(src)
 			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/weapon/soap/syndie(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
 			new /obj/item/clothing/under/suit_jacket/reinforced(src)

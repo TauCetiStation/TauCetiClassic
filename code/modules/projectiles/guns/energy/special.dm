@@ -375,11 +375,14 @@
 		return ..()
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
-	if(!emagged)
-		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
-		origin_tech += ";syndicate=1"
-
-		emagged = TRUE
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+	fire_delay = 12
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
 	return
