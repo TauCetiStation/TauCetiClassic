@@ -1642,7 +1642,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/mob/living/carbon/human/proc/update_skils(href_list)
+/mob/living/carbon/human/proc/update_skills(href_list)
 	var/skill = href_list["skill"]
 	var/value = text2num(href_list["value"])
 	if(!isnum(value) || !istext(skill))
