@@ -16,54 +16,66 @@
 	},
 /area/station/bridge/server)
 "aad" = (
-/obj/machinery/computer/teleporter,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
+/obj/item/weapon/storage/box/rxglasses{
+	pixel_x = -6
 	},
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "whitehall"
 	},
-/area/station/aisat/teleport)
+/area/station/medical/surgeryobs)
 "aae" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = -20
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = 24
-	},
-/obj/machinery/porta_turret/station_default{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgeryobs)
 "aaf" = (
-/obj/effect/landmark{
-	name = "tripai"
+/obj/structure/table/glass,
+/obj/machinery/vending/wallmed2{
+	pixel_x = -32
 	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = 19
+/obj/item/weapon/storage/visuals/surgery/full{
+	pixel_y = 8
 	},
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber North";
-	network = list("RD","MiniSat");
-	pixel_x = 32
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
+	name = "Surgery Cleaner";
+	pixel_x = 4
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/item/weapon/razor{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgery)
 "aag" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -72,30 +84,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aah" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = 20
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = 24
-	},
-/obj/machinery/porta_turret/station_default{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"aai" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/radio/off,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "whitehall"
 	},
-/area/station/aisat/teleport)
+/area/station/medical/surgeryobs)
+"aai" = (
+/obj/machinery/computer/operating,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/surgery)
 "aaj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -124,72 +128,71 @@
 	},
 /area/station/aisat/teleport)
 "aal" = (
-/obj/structure/stool,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "AI Satellite APC";
-	pixel_x = 26
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/camera{
-	c_tag = "MiniSat Teleporter";
-	dir = 8;
-	network = list("MiniSat")
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/teleport)
+/turf/simulated/wall/r_wall,
+/area/station/medical/surgery)
 "aam" = (
-/obj/machinery/porta_turret/station_default{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/whitegreed,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "aan" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/flora/pottedplant/orientaltree{
-	pixel_y = 12
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/grille{
+	destroyed = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/weapon/shard,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
+"aao" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarport)
+"aap" = (
+/obj/machinery/vending/junkfood,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/ai_chamber)
-"aao" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"aap" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
-/obj/machinery/door/window{
-	name = "AI Core Door";
-	req_access = list(16)
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/area/station/hallway/primary/central)
 "aaq" = (
-/obj/structure/window/reinforced,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
 "aar" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Antechamber";
-	req_one_access = list(66)
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
+"aas" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -197,28 +200,32 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/tcommsat/computer)
-"aas" = (
-/turf/simulated/floor/whitegreed,
-/area/space)
+/area/station/civilian/bar)
 "aat" = (
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aau" = (
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/area/station/aisat/ai_chamber)
+/area/space)
 "aav" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/station/aisat/ai_chamber)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space)
 "aaw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -229,21 +236,18 @@
 	},
 /area/station/aisat/ai_chamber)
 "aax" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/random/scrap/moderate_weighted,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "aay" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/structure/disposalpipe/segment,
+/obj/structure/grille{
+	destroyed = 1
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/item/stack/rods,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "aaz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -258,42 +262,52 @@
 	},
 /area/station/tcommsat/computer)
 "aaA" = (
-/obj/machinery/computer/telecomms/monitor,
-/obj/machinery/camera{
-	c_tag = "Telecomm Main Computer Room";
-	network = list("Tcomsat");
-	pixel_x = 10
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
-/obj/machinery/ai_status_display{
-	pixel_y = 32
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "aaB" = (
 /obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = -20
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
+/obj/structure/closet/secure_closet/medical2,
+/obj/item/clothing/under/patient_gown,
+/turf/simulated/floor,
+/area/station/medical/surgery)
 "aaC" = (
-/obj/machinery/ai_status_display{
-	pixel_x = -32
+/obj/structure/sink{
+	pixel_y = 24
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/machinery/life_assist/cardiopulmonary_bypass,
+/turf/simulated/floor,
+/area/station/medical/surgery)
 "aaD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/obj/structure/closet/crate/freezer,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Operating 1 APC";
+	pixel_x = 25
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/medical/surgery)
 "aaE" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -314,92 +328,91 @@
 	},
 /area/station/tcommsat/computer)
 "aaF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/wall,
+/area/station/medical/surgeryobs)
 "aaG" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/structure/closet/l3closet/general,
 /obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -20
+	pixel_y = 25
 	},
-/turf/simulated/floor/whitegreed,
-/area/space)
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
+/turf/simulated/floor{
+	icon_state = "whitecorner"
+	},
+/area/station/medical/surgeryobs)
 "aaH" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/door_control{
-	id = "AI Blast Door";
-	name = "AI Blast Door";
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
-"aaI" = (
-/obj/effect/landmark/start{
-	name = "AI"
-	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_y = 20
-	},
-/obj/item/device/radio/intercom{
-	dir = 1;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = -20
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = 20
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
-"aaJ" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -26
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"aaK" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/door/airlock/maintenance{
+	name = "Surgery Maintenance";
+	req_access = list(45)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/medical/surgery)
+"aaI" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/random/foods/food_trash,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/medbay)
+"aaJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgery)
+"aaK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "whitecorner"
+	},
+/area/station/medical/surgery)
 "aaL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -442,22 +455,32 @@
 	},
 /area/station/tcommsat/computer)
 "aaN" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "op1"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "op1"
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery1";
+	name = "Surgery Shutters";
+	opacity = 0
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "op1"
 	},
-/area/station/tcommsat/computer)
+/obj/structure/window/reinforced/polarized{
+	id = "op1"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/surgery)
 "aaO" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/bluegrid{
@@ -484,74 +507,78 @@
 	},
 /area/station/tcommsat/chamber)
 "aaQ" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = -20
-	},
+/obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "whitehall"
 	},
-/area/station/aisat/ai_chamber)
+/area/station/medical/surgeryobs)
 "aaR" = (
-/obj/machinery/ai_status_display{
-	pixel_x = -32
+/obj/item/weapon/storage/box/gloves,
+/obj/structure/table/glass,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitehall"
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/area/station/medical/surgeryobs)
 "aaS" = (
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "AI Satellite Antechamber";
-	dir = 4;
-	name = "AI Satellite Antechamber";
-	pixel_x = 26
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/area/station/medical/surgeryobs)
 "aaT" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 4
+/obj/structure/grille{
+	destroyed = 1
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/item/weapon/shard{
+	icon_state = "medium"
 	},
-/area/station/tcommsat/computer)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/medbay)
 "aaU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
-"aaV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkstairs_alone"
-	},
-/area/station/aisat/ai_chamber)
-"aaW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/medbay)
+"aaV" = (
+/obj/machinery/body_scanconsole,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/surgery)
+"aaW" = (
+/obj/machinery/bodyscanner,
+/obj/machinery/door_control{
+	id = "Medical_Surgery1";
+	name = "Privacy Shutters";
+	pixel_x = -25
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgery)
 "aaX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -572,33 +599,36 @@
 	},
 /area/station/tcommsat/computer)
 "aaZ" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_y = -31
+/obj/machinery/door/airlock/medical{
+	name = "Operating Theatre 1";
+	req_access = list(45)
 	},
-/turf/simulated/floor{
-	icon_state = "darkblue"
+/obj/machinery/holosign/surgery{
+	id = "op1"
 	},
-/area/station/tcommsat/computer)
-"aba" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "satellite_aux_airlock";
-	name = "interior access button";
-	pixel_x = -20;
-	pixel_y = -20;
-	req_access = list(66)
-	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "white"
 	},
-/area/station/tcommsat/computer)
+/area/station/medical/surgery)
+"aba" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space)
 "abb" = (
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor{
@@ -607,84 +637,58 @@
 	},
 /area/station/civilian/bar)
 "abc" = (
-/obj/machinery/porta_turret/station_default{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/structure/cable{
-	dir = 8
-	},
-/turf/simulated/floor/whitegreed,
 /area/space)
 "abd" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/flora/pottedplant/aquatic{
-	pixel_y = 12
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "abe" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "abf" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/remains/robot,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
 	},
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/area/space)
 "abg" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/table,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 22
 	},
-/obj/machinery/power/apc{
-	name = "AI Chamber APC";
-	pixel_x = 26
+/obj/machinery/newscaster{
+	pixel_y = 30
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"abh" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/item/stack/sheet/metal{
+	amount = 50
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "satellite_aux_inner";
-	locked = 1;
-	name = "Satellite External Access";
-	req_access = list(13);
-	req_one_access = list(11,24)
-	},
-/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/item/device/multitool,
+/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "vault"
+	icon_state = "brown"
 	},
-/area/station/tcommsat/computer)
+/area/station/cargo/storage)
+"abh" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "abi" = (
 /obj/machinery/telecomms/bus/preset_four,
 /obj/machinery/alarm{
@@ -712,167 +716,94 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "abk" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = -20
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber West";
-	dir = 1;
-	network = list("RD","MiniSat");
-	pixel_x = 20
-	},
-/obj/machinery/porta_turret/station_default{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "abl" = (
-/obj/effect/landmark{
-	name = "tripai"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4;
+	external_pressure_bound = 140;
+	external_pressure_bound_default = 140;
+	name = "(OUT) Space Large Air Vent"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_y = -20
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
 "abm" = (
-/obj/item/device/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = 20
+/obj/effect/decal/cleanable/dirt,
+/obj/random/tools/tool,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
-/obj/machinery/porta_turret/station_default{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/area/space)
 "abn" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/airlock_sensor{
-	id_tag = "satellite_aux_sensor";
-	pixel_y = 25;
-	req_one_access = list(13,45,1)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
 "abo" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
-"abp" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
-"abq" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/door/window{
-	dir = 8;
-	name = "AI Satellite";
-	req_access = list(66)
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
-	icon_state = "platebot"
-	},
-/area/station/aisat)
-"abr" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/tank/emergency_oxygen,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
-"abs" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
-"abt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 8;
-	frequency = 1379;
-	id_tag = "satellite_aux_pump";
-	name = "Satellite Aux Large Air Vent"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "satellite_aux_airlock";
-	pixel_x = 25;
-	req_access = list(66);
-	tag_airpump = "satellite_aux_pump";
-	tag_chamber_sensor = "satellite_aux_sensor";
-	tag_exterior_door = "satellite_aux_outer";
-	tag_interior_door = "satellite_aux_inner"
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
-"abu" = (
-/obj/machinery/door/firedoor,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5
+	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abp" = (
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"abq" = (
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"abr" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"abs" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Cargo Bay Maintenance";
+	req_access = list(50)
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
+"abt" = (
+/obj/random/tools/tech_supply,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/station/cargo/storage)
+"abu" = (
+/obj/machinery/computer/teleporter,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat)
+/area/station/aisat/teleport)
 "abv" = (
 /turf/simulated/wall/r_wall,
 /area/station/aisat)
 "abw" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "satellite_aux_outer";
-	locked = 1;
-	name = "Satellite External Access";
-	req_access = list(13);
-	req_one_access = list(11,24)
+/obj/machinery/door/airlock{
+	name = "Firefighting equipment"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/aisat)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "abx" = (
 /obj/effect/decal/cleanable/spiderling_remains,
 /turf/simulated/floor/airless/ceiling,
@@ -938,15 +869,26 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "abF" = (
-/obj/machinery/door/airlock/mining{
-	name = "Recycler office";
-	req_access = list(67)
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "white"
 	},
-/area/station/cargo/storage)
+/area/station/medical/surgeryobs)
 "abG" = (
 /obj/machinery/teleport/hub,
 /turf/simulated/floor/plating,
@@ -959,13 +901,12 @@
 	},
 /area/station/cargo/storage)
 "abI" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/mining{
-	name = "Recycler's workplace";
-	req_access = list(67)
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitehall"
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/medical/surgeryobs)
 "abJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -990,15 +931,20 @@
 	},
 /area/station/engineering/drone_fabrication)
 "abM" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/medical/surgeryobs)
 "abN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless{
@@ -1032,10 +978,11 @@
 /area/space)
 "abS" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
 	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "abT" = (
 /obj/machinery/conveyor{
@@ -1084,10 +1031,10 @@
 	},
 /area/space)
 "abY" = (
-/obj/structure/table,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/closet/toolcloset,
+/obj/random/tools/tool,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/space)
 "abZ" = (
@@ -1123,10 +1070,8 @@
 	},
 /area/station/engineering/drone_fabrication)
 "acd" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
 /area/space)
 "ace" = (
 /turf/simulated/floor/plating/airless{
@@ -1156,6 +1101,9 @@
 	},
 /area/station/cargo/storage)
 "acj" = (
+/obj/structure/closet/crate/scicrate,
+/obj/random/tools/technology_scanner,
+/obj/random/tools/technology_scanner,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -1265,15 +1213,10 @@
 /turf/simulated/floor/plating,
 /area/space)
 "acx" = (
-/obj/structure/closet/crate,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/random/misc/all,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/space)
+/obj/item/device/flashlight/lamp/fir,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "acy" = (
 /obj/mecha/working/ripley,
 /turf/simulated/floor/plating/airless{
@@ -1299,50 +1242,36 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "acB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/power/port_gen/pacman/scrap,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/disposalpipe/segment,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/space)
 "acC" = (
 /turf/simulated/floor/plating/airless/catwalk,
 /area/asteroid/mine/unexplored/safe)
 "acD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/random/scrap/moderate_weighted,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/random/tools/tool,
-/obj/structure/closet/crate,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/cargo/storage)
+/area/space)
 "acE" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "recycler_outer";
-	locked = 1;
-	name = "Recycler External Access";
-	req_access = list(67)
+/obj/random/scrap/moderate_weighted,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor/plating/airless,
 /area/space)
 "acF" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/random/tools/tool,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/structure/closet/secure_closet/recycler,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/cargo/storage)
+/area/space)
 "acG" = (
 /obj/machinery/disposal/deliveryChute,
 /obj/structure/disposalpipe/trunk{
@@ -1379,6 +1308,230 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"acO" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/radio/off,
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite Antechamber";
+	dir = 8;
+	name = "AI Satellite Antechamber";
+	pixel_x = -26
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"acP" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "AI Satellite APC";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Teleporter";
+	dir = 8;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
+"acQ" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/simulated/floor/plating,
+/area/space)
+"acR" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/fire/firefighter,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/glasses/meson,
+/turf/simulated/floor/plating,
+/area/space)
+"acS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "recycler_pump";
+	name = "Recycler Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"acT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "arrival_dock_sensor";
+	pixel_x = 25;
+	pixel_y = 12
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "arrival_dock_airlock";
+	pixel_x = 25;
+	req_one_access = list(13,45,1);
+	tag_airpump = "arrival_dock_pump";
+	tag_chamber_sensor = "arrival_dock_sensor";
+	tag_exterior_door = "arrival_dock_outer";
+	tag_interior_door = "arrival_dock_inner"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"acV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/station/cargo/storage)
+"acW" = (
+/obj/structure/closet/secure_closet/recycler,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
+"acX" = (
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"acY" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"acZ" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat")
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/aquatic{
+	pixel_y = 12
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"ada" = (
+/obj/item/weapon/aiModule/asimov,
+/obj/item/weapon/aiModule/freeform/core,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Core Modules";
+	req_access = list(20)
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/aiModule/corp,
+/obj/item/weapon/aiModule/paladin,
+/obj/item/weapon/aiModule/robocop,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adb" = (
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/aisat/ai_chamber)
+"adc" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/nanotrasen,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"add" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access = list(66)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"ade" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"adf" = (
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "adg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -1392,6 +1545,27 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
+"adh" = (
+/obj/effect/decal/remains/robot,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/station/engineering/drone_fabrication)
+"adi" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "recycler_outer";
+	locked = 1;
+	name = "Recycler External Access";
+	req_access = list(67)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "adj" = (
 /obj/structure/cable/blue{
 	d1 = 1;
@@ -1404,6 +1578,501 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"adk" = (
+/obj/random/tools/tool,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Cargo Recieving Dock";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"adl" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "mining_east_airlock";
+	name = "interior access button";
+	pixel_x = 25;
+	pixel_y = -25
+	},
+/obj/machinery/atmospherics/components/binary/pump/on,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
+"adm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/cigbutt{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/cigbutt{
+	pixel_x = 13
+	},
+/obj/item/weapon/cigbutt,
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/cargo)
+"adn" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"ado" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adp" = (
+/obj/machinery/door/window{
+	dir = 4;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"ads" = (
+/obj/machinery/computer/telecomms/monitor,
+/obj/machinery/camera{
+	c_tag = "Telecomm Main Computer Room";
+	network = list("Tcomsat")
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"adt" = (
+/obj/structure/closet/crate,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/random/misc/all,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Recycler APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"adu" = (
+/obj/structure/closet/crate,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"adv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "recycler_airlock";
+	name = "exterior access button";
+	pixel_x = -26;
+	pixel_y = 24;
+	req_access = list(67)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"adw" = (
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"ady" = (
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adz" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"adC" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"adD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"adE" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
+"adF" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -26
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber West";
+	dir = 4;
+	network = list("RD","MiniSat")
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adG" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24
+	},
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adH" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "AI Satellite APC";
+	pixel_x = -28
+	},
+/obj/machinery/power/smes/fullcharge,
+/obj/machinery/door_control{
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	pixel_y = -32
+	},
+/obj/machinery/turretid/stun/AI_special{
+	dir = 1;
+	name = "AI Chamber turret control";
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adI" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adJ" = (
+/obj/effect/landmark/start{
+	name = "AI"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = 20
+	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = -20
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adK" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/aisat/ai_chamber)
+"adM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/tcommsat/computer)
+"adN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"adO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
+"adP" = (
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	name = "AI Requests Console";
+	pixel_y = -30
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adQ" = (
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adR" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adS" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber East";
+	dir = 8;
+	network = list("RD","MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adT" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 6
+	},
+/obj/structure/closet/malf/suits,
+/obj/item/clothing/glasses/night,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite Antechamber";
+	dir = 8;
+	name = "AI Satellite Antechamber";
+	pixel_x = -26
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "adU" = (
 /obj/machinery/radiocarbon_spectrometer,
 /obj/machinery/newscaster{
@@ -1414,6 +2083,127 @@
 	icon_state = "darkpurple"
 	},
 /area/asteroid/research_outpost/spectro)
+"adV" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"adW" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
+"adX" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"adY" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"adZ" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aea" = (
+/obj/machinery/door/window{
+	dir = 4;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aeb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/station/aisat/ai_chamber)
+"aec" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"aed" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "aee" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -1421,6 +2211,208 @@
 	icon_state = "blackcorner"
 	},
 /area/station/hallway/primary/central)
+"aef" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
+"aeg" = (
+/obj/machinery/ai_slipper{
+	icon_state = "motion0"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aeh" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber South";
+	dir = 1;
+	network = list("RD","MiniSat")
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/orientaltree{
+	pixel_y = 12
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aei" = (
+/obj/item/weapon/aiModule/oxygen,
+/obj/item/weapon/aiModule/oneHuman,
+/obj/machinery/door/window{
+	dir = 4;
+	name = "High-Risk Modules";
+	req_access = list(20)
+	},
+/obj/item/weapon/aiModule/purge,
+/obj/structure/window/reinforced,
+/obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/teleporterOffline,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aej" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/freeform,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aek" = (
+/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_inner";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/tcommsat/computer)
+"ael" = (
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
+/turf/simulated/wall/r_wall,
+/area/station/tcommsat/computer)
+"aem" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -20
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/computer/borgupload,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aen" = (
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_y = -20
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aeo" = (
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 20
+	},
+/obj/structure/window/reinforced,
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/protectStation,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"aep" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Satellite Antechamber";
+	dir = 1;
+	name = "AI Satellite Antechamber";
+	pixel_y = 26
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aeq" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aer" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aes" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aet" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/rnd/hallway)
+"aeu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aev" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aew" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aex" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
 "aey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1437,6 +2429,56 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"aez" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aeA" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/aisat)
+"aeB" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_outer";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/station/aisat)
+"aeC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
+"aeD" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "afw" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1639,22 +2681,27 @@
 	},
 /area/station/civilian/hydroponics)
 "apP" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "recycler_pump";
+	name = "Recycler Large Air Vent"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/obj/item/device/guitar,
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/area/space)
 "apZ" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
 /obj/random/scrap/moderate_weighted,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "aqw" = (
@@ -2098,20 +3145,19 @@
 	},
 /area/station/engineering/atmos)
 "aMh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance";
-	req_access = list(5,6)
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = -2
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "aMA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2199,11 +3245,17 @@
 	},
 /area/station/security/prison)
 "aRT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/mucus,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/optable,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = 22
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/morgue)
 "aSK" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
@@ -2719,15 +3771,19 @@
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
 "bsy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/item/device/radio/intercom{
+	dir = 4;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = -20
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/computer/aiupload,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "btl" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
@@ -3658,17 +4714,10 @@
 	},
 /area/station/maintenance/dormitory)
 "cly" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/girder,
-/obj/item/stack/sheet/metal{
-	amount = 5
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "clJ" = (
 /obj/structure/cable{
@@ -3917,11 +4966,9 @@
 	},
 /area/station/hallway/primary/central)
 "cxH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
@@ -4374,25 +5421,20 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cXY" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/landmark{
+	name = "tripai"
 	},
-/obj/machinery/atmospherics/components/binary/valve/open,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "mining_east_airlock";
-	name = "interior access button";
-	pixel_x = 25;
-	pixel_y = -25
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 19
 	},
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "brown"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/station/cargo/storage)
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "cYF" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -4520,9 +5562,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "ddO" = (
-/obj/effect/decal/cleanable/generic,
+/obj/structure/barricade/wooden,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/genetics_cloning)
 "dgn" = (
 /obj/structure/rack,
 /obj/item/clothing/under/bathtowel,
@@ -4626,24 +5680,18 @@
 	},
 /area/station/cargo/storage)
 "dmV" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/matches{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/item/ashtray/plastic{
-	pixel_x = 6;
-	pixel_y = -5
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/item/weapon/cigbutt/cigarbutt{
-	pixel_x = 9;
-	pixel_y = -1
+/obj/item/weapon/shard{
+	icon_state = "small"
 	},
-/obj/item/device/flashlight/lamp{
-	pixel_x = 1;
-	pixel_y = 15
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dnr" = (
 /obj/structure/grille{
@@ -4742,16 +5790,12 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "dqs" = (
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/item/weapon/shard{
-	icon_state = "medium"
-	},
+/obj/item/weapon/table_parts/glass,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/maintenance/medbay)
+/area/station/medical/genetics_cloning)
 "dsj" = (
 /obj/item/weapon/scrap_lump,
 /obj/random/scrap/moderate_weighted,
@@ -4847,17 +5891,26 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "due" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = null;
+	name = "Cloning Lab";
+	req_access = list(72)
+	},
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "bot"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/cargo/storage)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/medical/genetics_cloning)
 "duj" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/simulated/floor/plating/airless{
@@ -5635,23 +6688,13 @@
 /turf/simulated/floor/carpet/black,
 /area/station/cargo/storage)
 "ebe" = (
-/obj/machinery/bodyscanner,
-/obj/machinery/camera{
-	c_tag = "Medbay Surgery";
-	dir = 6;
-	network = list("SS13","Medical")
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitehall"
+	icon_state = "white"
 	},
-/area/station/medical/surgery)
+/area/station/medical/morgue)
 "ecT" = (
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -5745,13 +6788,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ehC" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access = list(5,6)
 	},
-/turf/simulated/floor,
-/area/station/medical/surgery)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "ehM" = (
 /mob/living/simple_animal/mouse/brown/Tom{
 	name = "Jerry"
@@ -5916,19 +6969,6 @@
 /turf/simulated/wall,
 /area/station/civilian/hydroponics)
 "enB" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -6201,14 +7241,15 @@
 	},
 /area/station/civilian/bar)
 "eDx" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/random/tools/tech_supply,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
+/obj/structure/morgue,
+/obj/machinery/firealarm{
+	pixel_y = 25
 	},
-/area/station/cargo/storage)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "eDN" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -6529,11 +7570,11 @@
 	},
 /area/station/bridge)
 "eVc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -6552,19 +7593,17 @@
 	},
 /area/station/hallway/primary/central)
 "eVn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/cigbutt{
-	pixel_x = 5;
-	pixel_y = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/item/weapon/cigbutt{
-	pixel_x = 13
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/item/weapon/cigbutt,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
-/area/station/maintenance/cargo)
+/area/station/medical/morgue)
 "eWt" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/status_display{
@@ -6898,16 +7937,20 @@
 	},
 /area/station/security/prison)
 "foF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1379;
-	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent"
-	},
-/obj/machinery/light/small{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/random/tools/tool,
+/obj/structure/closet/crate,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
 /area/station/cargo/storage)
 "foP" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -6965,6 +8008,11 @@
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 5;
 	layer = 2.9
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -7305,27 +8353,17 @@
 	},
 /area/station/civilian/hydroponics)
 "fRN" = (
-/obj/machinery/optable,
-/obj/machinery/holosign_switch{
-	id = "op1";
-	pixel_x = -9;
-	pixel_y = 27
-	},
-/obj/machinery/windowtint{
-	id = "op1";
-	pixel_y = 27
-	},
-/obj/machinery/light_switch{
-	pixel_x = 9;
-	pixel_y = 27
-	},
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/station/medical/surgeryobs)
 "fSx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -7388,6 +8426,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "fXC" = (
@@ -7655,10 +8698,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "gks" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
+/turf/simulated/mineral/random/labormineral,
 /area/space)
 "glg" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -7704,20 +8744,13 @@
 	},
 /area/station/civilian/dormitories)
 "gmT" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 6
-	},
-/obj/structure/closet/malf/suits,
-/obj/item/clothing/glasses/night,
+/obj/machinery/power/tracker,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "goj" = (
 /obj/machinery/camera{
 	c_tag = "Engineering Fore Starboard Solars";
@@ -7986,18 +9019,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical{
-	name = "Morgue";
-	req_access = list(5,6)
-	},
-/turf/simulated/floor,
-/area/station/medical/morgue)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "gxr" = (
 /obj/machinery/mineral/output,
 /turf/simulated/floor/plating{
@@ -8067,8 +9091,16 @@
 	},
 /area/station/hallway/primary/central)
 "gzU" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/random/scrap/moderate_weighted,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/medbay)
 "gBX" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -8191,16 +9223,16 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "gJE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/maintenance/medbay)
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "gKV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -8334,9 +9366,21 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "gOz" = (
-/obj/random/tools/tool,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
 /area/station/cargo/storage)
 "gQc" = (
 /obj/structure/cable{
@@ -8399,29 +9443,23 @@
 	},
 /area/station/bridge)
 "gTL" = (
-/obj/structure/table/glass,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
-/obj/item/weapon/autopsy_scanner{
-	pixel_x = 5
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Morgue APC";
-	pixel_y = 24
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/weapon/scalpel,
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "whitehall"
 	},
-/area/station/medical/morgue)
+/area/station/medical/surgery)
 "gUQ" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -8454,14 +9492,17 @@
 	},
 /area/station/medical/sleeper)
 "gXb" = (
-/obj/machinery/computer/operating,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/structure/closet/secure_closet/personal/patient,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 8;
+	icon_state = "whitecorner"
 	},
-/area/station/medical/surgery)
+/area/station/medical/surgeryobs)
 "gXg" = (
 /obj/machinery/shieldwallgen,
 /obj/machinery/light/small{
@@ -8837,14 +9878,15 @@
 	},
 /area/station/engineering/chiefs_office)
 "hvu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/weapon/shard{
-	icon_state = "medium"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
 /area/station/maintenance/medbay)
 "hvD" = (
 /turf/simulated/mineral/random/caves,
@@ -9217,13 +10259,7 @@
 	},
 /area/asteroid/mine/eva)
 "hTI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/random/foods/food_trash,
+/obj/item/weapon/coin/iron,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -9238,22 +10274,9 @@
 	},
 /area/station/maintenance/auxsolarport)
 "hWZ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitecorner"
-	},
-/area/station/medical/surgery)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "hXb" = (
 /obj/structure/closet/secure_closet/chemical{
 	req_access = list();
@@ -9666,19 +10689,18 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/dwarf)
 "ioN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/barricade/wooden,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/medbay)
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/genetics_cloning)
 "iqi" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -9752,19 +10774,18 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "isM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/morgue)
+/area/station/medical/surgery)
 "iux" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -10145,9 +11166,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "iMs" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/wall/r_wall,
-/area/station/aisat/teleport)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/morgue)
 "iNP" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -10224,9 +11250,23 @@
 	},
 /area/station/security/prison)
 "iTl" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Morgue APC";
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "iUl" = (
 /obj/structure/table,
 /obj/item/device/radio/off{
@@ -10425,12 +11465,17 @@
 	},
 /area/station/civilian/bar)
 "jcF" = (
-/obj/machinery/camera{
-	c_tag = "Cargo Recieving Dock";
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "jcU" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -10688,9 +11733,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "jxL" = (
@@ -10757,13 +11799,22 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "jAA" = (
-/obj/random/scrap/moderate_weighted,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "jAD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -10908,14 +11959,15 @@
 	},
 /area/station/rnd/telesci)
 "jDy" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "black"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "jEc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -10941,22 +11993,17 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "jFb" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
+/obj/machinery/iv_drip,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/civilian/bar)
+/area/station/maintenance/medbay)
 "jGj" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11038,27 +12085,18 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "jMj" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/pen,
+/obj/item/weapon/autopsy_scanner{
+	pixel_x = 5
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
+/obj/item/weapon/scalpel,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
+	icon_state = "white"
 	},
-/area/station/medical/surgery)
+/area/station/medical/morgue)
 "jMF" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -11284,18 +12322,18 @@
 	},
 /area/asteroid/mine/dwarf)
 "jUa" = (
-/mob/living/simple_animal/walle,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/light/small{
+	dir = 4
 	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/obj/structure/stool,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/teleport)
 "jUd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -11592,9 +12630,16 @@
 	},
 /area/space)
 "kit" = (
-/obj/machinery/computer/arcade,
+/obj/item/weapon/shard,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/genetics_cloning)
 "kjg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12143,9 +13188,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kLg" = (
-/obj/structure/closet/crate/scicrate,
-/obj/random/tools/technology_scanner,
-/turf/simulated/floor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "recycler_inner";
+	locked = 1;
+	name = "Recycler External Access";
+	req_access = list(67)
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/storage)
 "kLq" = (
 /obj/effect/decal/cleanable/generic,
@@ -12180,17 +13239,28 @@
 	},
 /area/station/hallway/secondary/exit)
 "kOm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "recycler_airlock";
+	name = "interior access button";
+	pixel_x = -26;
+	pixel_y = -20;
+	req_access = list(67)
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/maintenance/medbay)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
 "kOE" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/machinery/meter,
@@ -12288,28 +13358,17 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "kSm" = (
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/pen,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/visuals/surgery/full,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner";
-	pixel_x = 4
-	},
-/obj/item/weapon/razor{
-	pixel_x = -4
-	},
-/obj/machinery/vending/wallmed2{
-	pixel_y = 32
-	},
-/obj/machinery/door_control{
-	id = "Medical_Surgery1";
-	name = "Privacy Shutters";
-	pixel_x = -25
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitehall"
 	},
-/area/station/medical/surgery)
+/area/station/medical/surgeryobs)
 "kTf" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -12492,16 +13551,16 @@
 	},
 /area/station/hallway/primary/central)
 "ldz" = (
-/obj/structure/morgue,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/medical/morgue)
+/obj/random/foods/food_trash,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "lef" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -12932,13 +13991,23 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "lBh" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 1
+/mob/living/simple_animal/walle,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/tcommsat/computer)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "lBC" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -13008,22 +14077,19 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/engineering)
 "lDB" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/area/station/medical/surgery)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/surgeryobs)
 "lDE" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -13055,13 +14121,8 @@
 /turf/simulated/mineral/random/low_chance,
 /area/asteroid/mine/unexplored/safe)
 "lES" = (
-/obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -20
-	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -13161,17 +14222,16 @@
 	},
 /area/station/maintenance/engineering)
 "lKZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitehall"
 	},
-/area/station/medical/morgue)
+/area/station/medical/surgery)
 "lLn" = (
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor,
@@ -13621,10 +14681,7 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "mjl" = (
-/obj/effect/decal/cleanable/vomit{
-	icon_state = "vomit_4"
-	},
-/obj/random/scrap/moderate_weighted,
+/obj/effect/decal/cleanable/mucus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mjT" = (
@@ -13668,16 +14725,15 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "mnh" = (
-/obj/structure/morgue,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/stack/sheet/metal{
+	amount = 12
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/station/medical/morgue)
+/turf/simulated/floor,
+/area/station/medical/genetics_cloning)
 "mob" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -13865,9 +14921,10 @@
 /turf/simulated/floor,
 /area/station/medical/reception)
 "mvf" = (
-/obj/machinery/power/tracker,
-/turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/auxport)
+/obj/structure/closet/emcloset,
+/obj/item/clothing/mask/gas/coloured,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "mvQ" = (
 /obj/structure/closet/crate/medical,
 /obj/item/weapon/storage/firstaid/regular,
@@ -14058,11 +15115,8 @@
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/nuke_storage)
 "mJj" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/turf/simulated/wall,
+/area/station/medical/genetics_cloning)
 "mJM" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -14074,23 +15128,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "mKv" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/tcommsat/computer)
+/obj/structure/rack,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "mKx" = (
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -14263,6 +15305,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mTx" = (
+/obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mTA" = (
@@ -14369,17 +15412,16 @@
 	},
 /area/station/cargo/storage)
 "mWu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "white"
 	},
-/area/station/tcommsat/computer)
+/area/station/medical/morgue)
 "mXv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -14640,11 +15682,19 @@
 	},
 /area/station/security/checkpoint)
 "nfC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/surgery)
+/area/station/medical/surgeryobs)
 "nga" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -14767,25 +15817,19 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "nkH" = (
-/obj/machinery/door/airlock/medical{
-	name = "Operating Theatre 1";
-	req_access = list(45)
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "";
+	name = "Surgery";
+	req_access = list(5)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/holosign/surgery{
-	id = "op1"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
-	},
-/area/station/medical/surgery)
+/turf/simulated/floor,
+/area/station/medical/surgeryobs)
 "nkO" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -15153,16 +16197,20 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "nAv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/structure/barricade/wooden,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/maintenance/medbay)
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/medical/genetics_cloning)
 "nAz" = (
 /obj/effect/landmark/start{
 	name = "Chef"
@@ -15435,22 +16483,14 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
 "nMM" = (
-/obj/structure/closet/secure_closet/medical2,
-/obj/item/clothing/under/patient_gown,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Operating 1 APC";
-	pixel_x = 25
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
-	},
-/area/station/medical/surgery)
+/area/station/maintenance/medbay)
 "nNt" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -15542,22 +16582,18 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "nSP" = (
-/obj/structure/table,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 22
-	},
-/obj/machinery/newscaster{
-	pixel_y = 30
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "brown"
+	dir = 4;
+	icon_state = "dark"
 	},
-/area/station/cargo/storage)
+/area/station/medical/morgue)
 "nUm" = (
 /obj/machinery/vending/tool,
 /obj/machinery/firealarm{
@@ -16052,16 +17088,11 @@
 	},
 /area/station/hallway/primary/central)
 "oyq" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Morgue";
-	dir = 10;
-	network = list("SS13","Medical")
-	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "white"
 	},
-/area/station/medical/morgue)
+/area/station/medical/surgery)
 "oyB" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16888,20 +17919,17 @@
 	},
 /area/station/rnd/hor)
 "pjQ" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "pkh" = (
 /obj/structure/closet/crate/hydroponics,
@@ -16969,12 +17997,17 @@
 /area/station/hallway/secondary/exit)
 "pmv" = (
 /obj/structure/grille,
-/obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
-	dir = 5
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/medbay)
 "pmw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -17031,14 +18064,12 @@
 	},
 /area/station/maintenance/dormitory)
 "ppw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/five,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/area/station/maintenance/medbay)
 "ppU" = (
 /obj/structure/cable/blue{
 	d1 = 2;
@@ -17095,15 +18126,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ptp" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/station/medical/surgery)
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/medbay)
 "puN" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -17290,9 +18320,12 @@
 	},
 /area/station/civilian/toilet)
 "pAE" = (
-/obj/structure/closet/crate/freezer,
-/turf/simulated/floor,
-/area/station/medical/surgery)
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitecorner"
+	},
+/area/station/medical/surgeryobs)
 "pBw" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
@@ -17309,17 +18342,43 @@
 	},
 /area/station/civilian/bar)
 "pBL" = (
-/obj/machinery/life_assist/artificial_ventilation,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/item/weapon/reagent_containers/blood/AMinus{
+	pixel_x = -7;
+	pixel_y = -3
 	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
 	},
-/turf/simulated/floor,
-/area/station/medical/surgery)
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitecorner"
+	},
+/area/station/medical/surgeryobs)
 "pCn" = (
 /obj/structure/kitchenspike,
 /turf/simulated/floor{
@@ -17583,23 +18642,24 @@
 	},
 /area/station/maintenance/medbay)
 "pOh" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable{
-	icon_state = "1-4"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
-/area/station/medical/morgue)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/surgery)
 "pOw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -17704,24 +18764,36 @@
 	},
 /area/station/medical/sleeper)
 "pVN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/medbay)
 "pWD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 10
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
 	},
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/reset,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "pWG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -17941,12 +19013,15 @@
 	},
 /area/station/civilian/kitchen)
 "qlx" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/device/flashlight/lamp/fir,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/obj/item/apc_frame,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/genetics_cloning)
 "qlH" = (
 /obj/machinery/computer/card{
 	dir = 4
@@ -18294,10 +19369,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "qxM" = (
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/constructable_frame/machine_frame,
+/obj/item/stack/cable_coil/random,
+/obj/machinery/light_switch{
+	pixel_y = -27
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/station/medical/genetics_cloning)
 "qxO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -18426,13 +19506,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "qCf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
-	external_pressure_bound = 140;
-	external_pressure_bound_default = 140;
-	name = "(OUT) Space Large Air Vent"
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/space,
-/area/space)
+/area/station/maintenance/medbay)
 "qCA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -18664,9 +19742,14 @@
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "qJb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/auxsolarport)
+/area/station/maintenance/medbay)
 "qJj" = (
 /obj/item/weapon/storage/firstaid/o2{
 	pixel_x = 4;
@@ -18711,18 +19794,28 @@
 	},
 /area/asteroid/mine/eva)
 "qLO" = (
-/obj/structure/reagent_dispensers/aqueous_foam_tank,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qMs" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/grille{
-	destroyed = 1
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
-/obj/item/weapon/shard,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/medbay)
 "qNs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19621,11 +20714,30 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "rJP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/table,
+/obj/item/weapon/storage/box/matches{
+	pixel_x = -6;
+	pixel_y = -2
 	},
+/obj/item/ashtray/plastic{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/weapon/cigbutt/cigarbutt{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = 1;
+	pixel_y = 15
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rJV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19871,11 +20983,21 @@
 	},
 /area/station/rnd/lab)
 "sdX" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/table_parts/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/cargo/storage)
 "seq" = (
 /turf/simulated/wall,
 /area/station/medical/sleeper)
@@ -19910,7 +21032,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/medbay)
 "sgZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19951,12 +21075,11 @@
 	},
 /area/asteroid/mine/dwarf)
 "shF" = (
-/obj/machinery/light/small,
+/obj/machinery/optable,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "white"
 	},
-/area/station/medical/morgue)
+/area/station/medical/surgery)
 "sig" = (
 /obj/structure/cable/blue{
 	d1 = 4;
@@ -20650,14 +21773,11 @@
 	},
 /area/station/security/main)
 "sPv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/cargo/storage)
+/obj/structure/table,
+/obj/item/device/t_scanner,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
+/area/space)
 "sQD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -20775,19 +21895,9 @@
 	},
 /area/station/engineering/drone_fabrication)
 "sYl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/item/weapon/shard{
-	icon_state = "medium"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/medbay)
+/obj/item/weapon/circuitboard/clonepod,
+/turf/simulated/floor/plating,
+/area/station/medical/genetics_cloning)
 "sYw" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod4";
@@ -21211,15 +22321,13 @@
 	},
 /area/station/hallway/primary/central)
 "tvX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/structure/window/reinforced,
+/obj/effect/spider/stickyweb,
+/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "twE" = (
 /obj/structure/cable{
@@ -21481,6 +22589,14 @@
 "tJe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -21929,14 +23045,15 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "uah" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/computer/cloning,
+/obj/machinery/light_construct{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/firealarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/genetics_cloning)
 "uao" = (
 /obj/machinery/power/apc{
 	name = "Bridge APC";
@@ -21958,16 +23075,13 @@
 	},
 /area/station/bridge)
 "uaG" = (
-/obj/machinery/optable,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 22
+/obj/machinery/constructable_frame/machine_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/medical/morgue)
+/turf/simulated/floor/plating,
+/area/station/medical/genetics_cloning)
 "ubz" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -22488,17 +23602,9 @@
 	},
 /area/station/civilian/kitchen)
 "uIb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/medical/morgue)
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "uIN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -22526,14 +23632,9 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "uJy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/stack/rods,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "uJN" = (
@@ -22644,15 +23745,13 @@
 /turf/simulated/wall,
 /area/station/rnd/chargebay)
 "uPe" = (
-/obj/machinery/life_assist/cardiopulmonary_bypass,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
+/obj/item/weapon/scrap_lump,
+/obj/item/weapon/scrap_lump,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/medical/surgery)
+/area/station/maintenance/medbay)
 "uPf" = (
 /obj/structure/cryofeed,
 /obj/item/device/radio/intercom{
@@ -22723,9 +23822,14 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "uSe" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/firecloset,
+/obj/random/scrap/moderate_weighted,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "uTN" = (
@@ -23586,11 +24690,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "vNe" = (
-/obj/machinery/body_scanconsole,
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/medical/surgery)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/random/foods/food_trash,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/medbay)
 "vNg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/moderate_weighted,
@@ -23739,15 +24850,13 @@
 	},
 /area/station/civilian/bar)
 "vUH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/item/weapon/shard{
+	icon_state = "small"
 	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "black"
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
 	},
-/area/station/hallway/primary/central)
+/area/station/medical/genetics_cloning)
 "vUY" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -23994,10 +25103,6 @@
 	name = "Gold Crate"
 	},
 /obj/item/stack/sheet/mineral/gold{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/gold{
 	pixel_y = 2
 	},
 /obj/item/stack/sheet/mineral/gold{
@@ -24005,6 +25110,7 @@
 	pixel_y = -2
 	},
 /obj/item/weapon/storage/belt/champion,
+/obj/item/stack/sheet/mineral/gold,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -24253,10 +25359,16 @@
 	},
 /area/station/cargo/storage)
 "wpX" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/foods/food_trash,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/morgue)
 "wrg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -24376,6 +25488,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/landmark/start{
+	name = "Recycler"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -24477,19 +25597,13 @@
 	},
 /area/station/rnd/lab)
 "wGd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/genetics_cloning)
 "wGH" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -24792,18 +25906,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "wUD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/morgue,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/item/weapon/cigbutt{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/morgue)
 "wUZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -25300,9 +26408,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "xrG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/random/scrap/moderate_weighted,
+/obj/machinery/computer/arcade,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -25443,18 +26549,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "xxm" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/tcommsat/computer)
+/area/station/maintenance/medbay)
 "xxI" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -25612,16 +26711,16 @@
 	},
 /area/station/engineering/chiefs_office)
 "xDq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/medbay)
+/turf/simulated/floor/plating/airless,
+/area/space)
 "xED" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -25643,6 +26742,9 @@
 "xFt" = (
 /obj/machinery/computer/cargo{
 	req_access = list()
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -25952,19 +27054,36 @@
 	},
 /area/station/cargo/storage)
 "xTy" = (
-/obj/machinery/iv_drip,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/maintenance/medbay)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "xVf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/item/device/guitar,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "xXy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -26019,6 +27138,10 @@
 /obj/item/weapon/wirecutters{
 	pixel_x = 5;
 	pixel_y = -3
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -20
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -26111,16 +27234,17 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "ydY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
+	req_access = list(5,6)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/medical/morgue)
 "yey" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -31882,13 +33006,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -32138,15 +33262,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -32385,26 +33509,26 @@ gay
 gay
 gay
 gay
+otM
+otM
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -32642,26 +33766,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -32898,27 +34022,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -33155,28 +34279,28 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -33413,27 +34537,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -33669,27 +34793,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -33926,27 +35050,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -34183,27 +35307,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -34440,27 +35564,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -34698,27 +35822,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -34954,28 +36078,28 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -35211,27 +36335,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -35468,27 +36592,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -35726,26 +36850,26 @@ gay
 gay
 gay
 gay
+otM
+otM
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -35993,15 +37117,15 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -36251,13 +37375,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+otM
+otM
+otM
+otM
+otM
+otM
+otM
 gay
 gay
 gay
@@ -37511,10 +38635,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -37768,6 +38892,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -37793,14 +38921,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38025,6 +39149,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38048,16 +39176,12 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38282,6 +39406,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38304,17 +39432,13 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
+gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38539,6 +39663,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38551,27 +39679,23 @@ gay
 gay
 gay
 gay
-otM
-otM
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38796,6 +39920,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -38808,26 +39936,22 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -39064,27 +40188,27 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -39321,28 +40445,6 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
@@ -39357,6 +40459,28 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -39550,6 +40674,13 @@ gay
 gay
 gay
 gay
+qws
+qws
+qws
+qws
+qws
+qws
+qws
 gay
 gay
 gay
@@ -39579,27 +40710,6 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
@@ -39614,6 +40724,20 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -39805,6 +40929,17 @@ gay
 gay
 gay
 gay
+qws
+qws
+qws
+crv
+crv
+crv
+gay
+crv
+qws
+qws
+qws
 gay
 gay
 gay
@@ -39832,30 +40967,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gks
+gks
+gks
 gay
 gay
 gay
@@ -39876,6 +40990,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -39884,6 +41003,11 @@ gay
 gay
 gay
 gay
+gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40061,6 +41185,48 @@ gay
 gay
 gay
 gay
+qws
+qws
+crv
+crv
+gay
+wWW
+wWW
+wWW
+gay
+crv
+gay
+qws
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40081,6 +41247,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40090,57 +41261,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40318,6 +41442,48 @@ gay
 gay
 gay
 gay
+qws
+crv
+gay
+wWW
+wWW
+wWW
+wWW
+wWW
+wWW
+wWW
+crv
+crv
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40349,55 +41515,13 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40574,6 +41698,41 @@ gay
 gay
 gay
 gay
+qws
+qws
+crv
+wWW
+wWW
+wWW
+adw
+adF
+adP
+wWW
+wWW
+wWW
+crv
+odS
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40606,27 +41765,6 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
@@ -40637,24 +41775,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40831,6 +41955,21 @@ gay
 gay
 gay
 gay
+qws
+crv
+crv
+wWW
+wWW
+aat
+adx
+adG
+adx
+aat
+wWW
+wWW
+crv
+gay
+qws
 gay
 gay
 gay
@@ -40841,13 +41980,6 @@ gay
 gay
 gay
 gay
-tHA
-tHA
-tHA
-tHA
-tHA
-tHA
-tHA
 gay
 gay
 gay
@@ -40855,36 +41987,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gks
+gks
+gks
 gay
 gay
 gay
@@ -40912,6 +42017,25 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -41088,6 +42212,21 @@ gay
 gay
 gay
 gay
+qws
+gay
+wWW
+wWW
+acX
+adn
+wWW
+wWW
+wWW
+adX
+acX
+wWW
+wWW
+crv
+qws
 gay
 gay
 gay
@@ -41097,15 +42236,17 @@ gay
 gay
 gay
 gay
-tHA
-tHA
-aas
-aas
-aaG
-aas
-aas
-tHA
-tHA
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -41120,28 +42261,11 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -41345,24 +42469,21 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-tHA
-aam
-aat
+qws
+crv
 wWW
 wWW
+acY
+ado
 wWW
-aat
-abc
-tHA
+adH
+wWW
+adY
+aeg
+wWW
+wWW
+crv
+qws
 gay
 gay
 gay
@@ -41377,27 +42498,30 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gay
+gay
+gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -41601,26 +42725,23 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+qws
+crv
 wWW
 wWW
-aau
-aaB
-aaH
-aaQ
-aau
+acZ
+aat
+ady
+adI
+adQ
+adZ
+aeh
 wWW
 wWW
 gay
+qws
+qws
 gay
 gay
 gay
@@ -41634,27 +42755,30 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -41858,26 +42982,34 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
+crv
 wWW
 wWW
-aan
-aav
+ada
+adp
 wWW
-aaI
+adJ
 wWW
-aaU
-abd
+aea
+aei
 wWW
 wWW
+crv
+crv
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+vES
 gay
 gay
 gay
@@ -41892,30 +43024,22 @@ gay
 gay
 gay
 gay
-otM
-otM
-gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gay
 gay
 gay
@@ -42115,26 +43239,34 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
 wWW
-aae
-aao
+wWW
+bsy
+aat
 aaw
 wWW
 wWW
 wWW
-aaV
-abe
-abk
+aeb
+aat
+aem
 wWW
+wWW
+crv
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -42159,21 +43291,13 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
 gay
 gay
-gay
-gay
-gay
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -42371,28 +43495,37 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+qws
+crv
 wWW
-aaf
-aap
-aax
-aaC
-aaJ
-aaR
-aaW
-abf
-abl
+wWW
+cXY
+adb
+adq
+adz
+adK
+adR
+aec
+adb
+aen
+wWW
 wWW
 gay
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -42417,20 +43550,11 @@ gay
 gay
 gay
 gay
-otM
-otM
-otM
-otM
-otM
-otM
-otM
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -42628,28 +43752,33 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
 gay
 wWW
-aah
-aaq
-aay
-aaD
-aaK
-aaS
+wWW
+pWD
+adc
+adr
+adA
+adL
+adS
 aaX
-abg
-abm
+aej
+aeo
+wWW
 wWW
 gay
+qws
+qws
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gay
 gay
 gay
@@ -42679,15 +43808,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+aPn
+gEx
 gay
 gay
 gay
@@ -42885,16 +44009,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-hXh
+qws
+crv
+abl
+wWW
 wWW
 wWW
 wWW
@@ -42906,7 +44024,10 @@ wWW
 wWW
 wWW
 wWW
-abv
+wWW
+crv
+crv
+qws
 gay
 gay
 gay
@@ -42936,14 +44057,17 @@ gay
 gay
 gay
 gay
+gEx
 gay
 gay
 gay
 gay
 gay
 gay
-gay
-gay
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -43142,28 +44266,25 @@ gay
 gay
 gay
 gay
-crv
+qws
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-hXh
+abk
 hXh
 oOT
-aai
+acO
 vlu
 tEk
 aaE
 aaM
-gmT
+adT
 aaY
 vlu
-abn
-abr
-abu
+aep
+aeu
+abv
+abv
+crv
+qws
 gay
 gay
 gay
@@ -43192,6 +44313,16 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gay
 gay
 gay
@@ -43200,14 +44331,7 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
 gay
 gay
 gay
@@ -43399,48 +44523,25 @@ crv
 crv
 crv
 crv
+qws
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-qCf
-iMs
+abn
 aGi
 gNY
 aaj
-aar
+add
 aaz
-aaF
-aaN
-aaT
-aaZ
-vlu
-abo
-abo
-abu
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+adB
+adM
+adV
+aed
+aek
+aeq
+aeq
+aex
+aeB
+aeC
+aeD
 gay
 gay
 gay
@@ -43457,6 +44558,20 @@ gay
 gay
 gay
 gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
 gEx
 gay
 gay
@@ -43467,6 +44582,15 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -43656,28 +44780,25 @@ crv
 gay
 gay
 crv
+qws
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 hXh
 aKv
 kcz
 aak
 vlu
-aaA
-lBh
-xxm
-mKv
-aba
-abh
-abp
-abs
-abw
+ads
+adC
+adN
+adW
+aef
+ael
+aer
+aev
+aez
+abv
+gay
+azF
 gay
 gay
 gay
@@ -43692,29 +44813,22 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
 gEx
 aPn
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
 gEx
 gay
 gay
@@ -43723,6 +44837,16 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -43913,48 +45037,25 @@ crv
 crv
 crv
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
 hXh
-hXh
-aad
-aal
+abu
+jUa
+acP
 vlu
 iWz
-mWu
+adD
 bIJ
 mqs
 piu
 vlu
-abq
-abt
-abu
+aes
+aew
+aeA
+abv
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+azF
 gay
 gay
 gay
@@ -43971,6 +45072,11 @@ gay
 gay
 gEx
 gEx
+gay
+gay
+gay
+gay
+gay
 gEx
 gEx
 gay
@@ -43992,6 +45098,24 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -44170,17 +45294,11 @@ azF
 azF
 gay
 crv
-gay
-nmW
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
 hXh
 hXh
+sCX
 sCX
 sCX
 sCX
@@ -44190,22 +45308,12 @@ kjh
 rzG
 sCX
 sCX
-abu
+sCX
+abv
 abv
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+azF
+azF
 gay
 gay
 gay
@@ -44227,8 +45335,6 @@ gay
 gay
 gay
 gEx
-aPn
-aPn
 gEx
 gay
 gay
@@ -44260,9 +45366,27 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -44427,27 +45551,26 @@ crv
 azF
 crv
 crv
+qws
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+crv
+crv
 sCX
 dtz
+ade
 wLc
 pAi
 qpe
 ued
 idE
+adf
 dXi
 sCX
 gay
+crv
+gay
+odS
+azF
 gay
 gay
 gay
@@ -44462,20 +45585,6 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
 gay
 gay
 gay
@@ -44485,7 +45594,6 @@ gay
 gEx
 aPn
 gEx
-gEx
 gay
 gay
 gay
@@ -44515,11 +45623,27 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
 gay
 gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -44684,46 +45808,26 @@ crv
 azF
 gay
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-nmW
-gay
-gay
+qws
+qws
+qws
 gay
 sCX
 njt
+adf
 uFO
 rzG
 qUn
 rzG
 uFO
+adf
 abi
 sCX
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+crv
+qws
+qws
+qws
+azF
 gay
 gay
 gay
@@ -44739,6 +45843,12 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gEx
+aPn
 gEx
 gEx
 gay
@@ -44752,6 +45862,9 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -44767,6 +45880,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -44775,8 +45895,12 @@ gay
 gay
 gay
 gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -44943,15 +46067,9 @@ azF
 crv
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
+sCX
 sCX
 xgl
 jyy
@@ -44961,28 +46079,40 @@ bPW
 xlr
 cfI
 sCX
+sCX
+crv
+qws
+gay
+gay
+azF
 gay
 gay
 gay
 gay
 gay
 gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
 gay
 gay
+gEx
+gEx
+gay
+gay
+gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+nmW
 gay
 gay
 gay
@@ -44991,6 +46121,7 @@ gay
 gEx
 aPn
 gEx
+gEx
 gay
 gay
 gay
@@ -45006,20 +46137,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -45200,15 +46324,9 @@ azF
 crv
 crv
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
+crv
 sCX
 ffn
 gtx
@@ -45219,20 +46337,11 @@ gtx
 qZX
 sCX
 gay
+crv
+rxt
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+azF
 gay
 gay
 gay
@@ -45240,12 +46349,14 @@ gay
 gay
 gay
 gEx
+gEx
 gay
 gay
 gay
 gay
 gay
-gay
+gEx
+gEx
 gEx
 gEx
 gay
@@ -45264,6 +46375,8 @@ gay
 gay
 gay
 gay
+gEx
+gEx
 gay
 gay
 gay
@@ -45277,6 +46390,17 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -45457,24 +46581,24 @@ azF
 crv
 crv
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+qws
 gay
 sCX
 mcS
 wwe
 nmr
-gtx
+adf
 iBA
 vWz
 wju
 sCX
+crv
+qws
+qws
+gay
+gay
+azF
 gay
 gay
 gay
@@ -45488,13 +46612,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
 gEx
 gEx
 gay
@@ -45514,6 +46633,7 @@ gay
 gay
 gay
 gay
+gEx
 gay
 gay
 gay
@@ -45531,9 +46651,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -45661,7 +46785,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 gay
 gay
 gay
@@ -45715,14 +46839,8 @@ crv
 crv
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+qws
+crv
 sCX
 sCX
 sCX
@@ -45732,6 +46850,13 @@ dFS
 sCX
 sCX
 sCX
+crv
+qws
+gay
+gay
+gay
+azF
+gay
 gay
 gay
 gay
@@ -45745,15 +46870,14 @@ gay
 gay
 gay
 gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aPn
 gEx
 gEx
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -45917,9 +47041,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+crv
+qws
+qws
 gay
 gay
 gay
@@ -45970,23 +47094,25 @@ vrL
 azF
 crv
 crv
+gay
+gay
+qws
+gay
+crv
+gay
+sCX
+sCX
+sCX
+sCX
+sCX
 crv
 crv
+crv
+qws
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-tHA
-tHA
-tHA
-tHA
-tHA
+azF
 gay
 gay
 gay
@@ -46000,18 +47126,19 @@ gay
 gay
 gay
 gay
-gEx
-aPn
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
 aPn
 gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -46027,11 +47154,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -46173,11 +47297,11 @@ gay
 gay
 gay
 gay
+odS
+crv
 gay
-gay
-gay
-gay
-gay
+crv
+crv
 crv
 qws
 qws
@@ -46228,25 +47352,25 @@ azF
 crv
 gay
 odS
+crv
 qws
 qws
-crv
-crv
+qws
 gay
 crv
 crv
+crv
+gay
+gay
+crv
+qws
+qws
+qws
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+azF
+azF
 gay
 gay
 gay
@@ -46257,16 +47381,8 @@ gay
 nmW
 gay
 gay
-gEx
-gEx
 gay
 gay
-gay
-gay
-gay
-gay
-gEx
-aPn
 gEx
 gEx
 gay
@@ -46275,11 +47391,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+yjd
 gEx
 gEx
 gEx
@@ -46289,6 +47403,16 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
 gay
 gay
 gay
@@ -46431,14 +47555,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-qws
-qws
 crv
+fCH
+hXt
+cjX
 crv
-crv
+fCH
+hXt
+cjX
 crv
 fCH
 vHw
@@ -46488,22 +47612,22 @@ crv
 gay
 crv
 gay
-crv
+qws
 odS
 odS
 odS
-crv
+odS
+qws
+odS
+qws
+qws
+gay
+gay
+gay
+gay
 gay
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-crv
-crv
+azF
 crv
 crv
 qws
@@ -46517,29 +47641,29 @@ gay
 gay
 gay
 gay
-gEx
-gEx
 gay
 gay
-gay
-gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-nmW
 gay
 gay
 gay
 gay
 gay
 gEx
+yjd
+gEx
+aPn
 aPn
 gEx
 gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -46686,16 +47810,16 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+crv
 qws
 crv
+fCH
+vHw
+cjX
 crv
-gay
-gay
+fCH
+vHw
+cjX
 crv
 fCH
 vHw
@@ -46750,8 +47874,8 @@ gay
 gay
 gay
 crv
-odS
-odS
+crv
+crv
 crv
 gay
 gay
@@ -46760,9 +47884,9 @@ gay
 gay
 gay
 crv
+azF
 qws
 qws
-qws
 crv
 gay
 crv
@@ -46773,26 +47897,19 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+aPn
 gEx
 gEx
 gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gEx
 gEx
 gay
@@ -46808,6 +47925,13 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -46944,16 +48068,16 @@ gay
 gay
 gay
 gay
-gay
+qws
 nmW
-gay
-gay
-jwL
-crv
 fCH
-hXt
+vHw
 cjX
 crv
+fCH
+vHw
+cjX
+gay
 fCH
 vHw
 cjX
@@ -47017,7 +48141,7 @@ gay
 gay
 gay
 gay
-crv
+azF
 crv
 gay
 qws
@@ -47030,27 +48154,20 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gEx
-aPn
+gEx
+gEx
 gEx
 gEx
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
 gEx
 gay
 gay
@@ -47065,6 +48182,13 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47201,16 +48325,16 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
 crv
-crv
+gay
 fCH
 vHw
 cjX
 crv
+fCH
+vHw
+cjX
+gay
 fCH
 vHw
 cjX
@@ -47273,8 +48397,8 @@ gay
 crv
 crv
 crv
-qws
-qws
+crv
+azF
 qws
 gay
 gay
@@ -47287,8 +48411,14 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gEx
-aPn
 gEx
 gEx
 gay
@@ -47303,6 +48433,9 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -47310,28 +48443,19 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47455,14 +48579,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+crv
+qws
+odS
+odS
+crv
+fCH
+vHw
+cjX
 crv
 fCH
 vHw
@@ -47531,7 +48655,7 @@ crv
 crv
 qws
 crv
-gay
+azF
 crv
 gay
 crv
@@ -47544,7 +48668,29 @@ qws
 crv
 gay
 gay
-aPn
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gEx
 gEx
 gay
@@ -47554,9 +48700,19 @@ gay
 gay
 gay
 gay
-gEx
-gEx
-gEx
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47564,43 +48720,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47712,19 +48836,19 @@ gay
 gay
 gay
 gay
+crv
+qws
+crv
 gay
-gay
-gay
-gay
-gay
-gay
-odS
 crv
 crv
-fCH
-vHw
-cjX
+cES
 gay
+gay
+gay
+cES
+dZx
+dZx
 dZx
 fSx
 fSx
@@ -47801,6 +48925,30 @@ qws
 crv
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+aPn
 gEx
 gEx
 gay
@@ -47809,12 +48957,19 @@ gay
 gay
 gay
 gay
-gEx
-gEx
-yjd
-gEx
-gEx
-gEx
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47822,42 +48977,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -47970,18 +49094,18 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 qws
+crv
+gmT
+uIb
+gay
+dZx
+dZx
+dZx
+dZx
+dZx
 gay
 crv
-fCH
-vHw
-cjX
-gay
 dZx
 fSx
 osN
@@ -48066,10 +49190,21 @@ gay
 gay
 gay
 gay
-gEx
-yjd
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gEx
 aPn
+gEx
 aPn
 gEx
 gEx
@@ -48079,6 +49214,19 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48086,35 +49234,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48227,18 +49351,18 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 qws
+crv
+crv
+dZx
+xol
+dZx
 gay
 crv
-xol
-cES
-dZx
-dZx
+gay
+crv
+gay
+crv
 luB
 uVE
 cFi
@@ -48248,7 +49372,7 @@ svD
 syP
 bxo
 fUO
-qJb
+aao
 pmw
 oPe
 rTG
@@ -48322,6 +49446,18 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gEx
 gEx
 aPn
@@ -48329,7 +49465,25 @@ gEx
 gEx
 gEx
 gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48337,41 +49491,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48484,19 +49608,19 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 qws
+odS
 crv
 fCH
 yfp
 cjX
-gay
-xol
 crv
+crv
+crv
+crv
+crv
+crv
+gay
 dDY
 dDY
 dDY
@@ -48578,14 +49702,24 @@ gay
 gay
 gay
 gay
+xXF
+xXF
+xXF
+xXF
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gEx
 gEx
 gEx
 gEx
 gEx
-gay
-gEx
 gEx
 gay
 gay
@@ -48594,6 +49728,19 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48601,34 +49748,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48741,28 +49865,28 @@ gay
 gay
 gay
 gay
+crv
 gay
-gay
-gay
-gay
-gay
-qws
 crv
 fCH
 yfp
 cjX
-crv
-mvf
 gay
+crv
+gay
+rTG
+rTG
+rTG
+rTG
 rTG
 dif
 qNs
-mJj
-pyn
-iQS
-mJj
-xHi
-qMs
+aaA
+aaI
+aaU
+aag
+aam
+aan
 ddy
 xHi
 xHi
@@ -48830,6 +49954,20 @@ gay
 gay
 gay
 gay
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -48838,7 +49976,13 @@ gay
 gay
 gEx
 gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+nmW
 gay
 gay
 gay
@@ -48849,31 +49993,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -48998,25 +50122,25 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+crv
 crv
 crv
 fCH
 yfp
 cjX
 crv
-gay
-gay
+crv
+crv
 rTG
-ydY
-xVf
-xTy
+muH
+tvX
+mKv
+koD
+jDy
+bpk
+muH
 pVN
-dqs
+aaT
 fLx
 kLq
 oag
@@ -49087,30 +50211,30 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+xXF
+xXF
+xXF
+xXF
+xXF
+xXF
+pwU
+pwU
+xXF
+xXF
 gay
 gay
 gay
 gEx
 gEx
-gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -49256,26 +50380,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-crv
-crv
+odS
 crv
 fCH
 yfp
 cjX
-crv
-crv
+gay
+gay
 rTG
 rTG
-hTI
-bpk
-xjz
-aAT
-aAT
-aAT
-oag
+qJb
+cxH
+ptp
+iQS
+jFb
+mvf
+qdP
+aaH
+qdP
+qdP
+aal
 oag
 iNP
 rzX
@@ -49343,32 +50467,32 @@ crv
 rxt
 gay
 gay
+xXF
+xXF
+xXF
+pwU
+kDp
+kDp
+kDp
+pwU
+xXF
+xXF
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
 gEx
 aPn
 gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -49513,26 +50637,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-crv
-gay
+odS
 crv
 fCH
 nQc
 cjX
 crv
 crv
-iBv
+rTG
 cUq
+pNR
+ppw
+mJj
+nAv
 ioN
-jAA
-aAT
-aAT
-mnh
-ldz
-oag
+mJj
+qdP
+aaK
+aaW
+aaf
+aal
 ewk
 hde
 osZ
@@ -49600,21 +50724,16 @@ crv
 rxt
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+xXF
+xXF
+pwU
+kDp
+kDp
+kDp
+kDp
+kDp
+xXF
+xXF
 gay
 gay
 gay
@@ -49623,9 +50742,14 @@ gay
 gEx
 aPn
 gEx
-aPn
-gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+vES
 gay
 gay
 gay
@@ -49769,27 +50893,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-qws
 crv
+qws
 crv
 xol
 dZx
 crv
-gay
-gay
-iBv
+crv
+crv
+rTG
 bJc
-pjQ
-xrG
-aAT
-uaG
-fTe
+pNR
+mJj
+mJj
+dqs
+mnh
+mJj
+aaC
+aaJ
+aaV
 oyq
-oag
+aal
 vsZ
 dBp
 bUG
@@ -49857,32 +50981,32 @@ crv
 rxt
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+xXF
+xXF
+xXF
+xXF
+pwU
+kDp
+kDp
+kDp
+xXF
+xXF
+xXF
 gay
 gay
 gay
 gay
 gEx
 gEx
-aPn
 gEx
-gEx
-gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50027,26 +51151,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-qws
 crv
 fCH
 yfp
 cjX
 crv
 crv
-crv
+gay
 rTG
 fXC
+gxa
+mJj
+uaG
+vUH
 wGd
-aag
-aMh
+mJj
+aaB
 lKZ
 isM
 shF
-oag
+aal
 uVq
 qgM
 kjL
@@ -50115,15 +51239,26 @@ rxt
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 xXF
 xXF
 xXF
 xXF
+pwU
+kDp
+pwU
+xXF
+xXF
+xXF
+gay
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50134,17 +51269,6 @@ gay
 gay
 gay
 gEx
-gEx
-gEx
-gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gay
@@ -50284,26 +51408,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-qws
-gay
+crv
 fCH
 yfp
 cjX
 crv
-ujh
+crv
+crv
 rTG
-rTG
-rTG
+cly
+pjQ
+mJj
+uah
+qlx
 sYl
-mjl
-aAT
+mJj
+aaD
 gTL
 pOh
-uIb
-oag
+aai
+aal
 jXF
 nMG
 hXm
@@ -50372,6 +51496,8 @@ rxt
 gay
 gay
 gay
+gay
+gay
 xXF
 xXF
 xXF
@@ -50380,8 +51506,14 @@ xXF
 xXF
 xXF
 xXF
-xXF
-xXF
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50394,15 +51526,7 @@ gay
 gay
 gEx
 gEx
-gay
-gay
-gay
-gay
-gay
-gay
-nmW
-gay
-gay
+vES
 gay
 gay
 gay
@@ -50541,26 +51665,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-qws
-crv
+odS
 fCH
 yfp
 cjX
 gay
-pmv
-rXq
-kit
+crv
 rTG
-pNR
-sdX
-aAT
-aAT
-gxa
-aAT
-aAT
+rTG
+gRj
+pmv
+mJj
+kit
+aMh
+qxM
+mJj
+qdP
+aaN
+aaZ
+jki
+qdP
 xki
 xsg
 qmM
@@ -50629,16 +51753,21 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
 xXF
 xXF
 xXF
 xXF
 xXF
 xXF
-pwU
-pwU
 xXF
-xXF
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50652,14 +51781,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -50797,27 +51921,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 crv
+qws
 fCH
 yfp
 cjX
 crv
-pmv
-tAK
-rXq
+crv
 rTG
-nAv
-qdP
-qdP
-ebe
+uJy
 hWZ
+uSe
+mJj
+ddO
+due
+ddO
+mJj
+aaG
+aaQ
+aae
 pBL
-jki
+abM
 pQF
 eTa
 rLf
@@ -50885,22 +52009,26 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 xXF
 xXF
 xXF
-pwU
-kDp
-kDp
-kDp
-pwU
-xXF
-xXF
+gay
+gay
+gay
+gay
 gay
 gay
 gay
 gay
 gEx
-aPn
+gEx
 gEx
 gay
 gay
@@ -50910,13 +52038,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -51055,25 +52179,25 @@ gay
 gay
 gay
 gay
-gay
-gay
-jwL
-crv
 crv
 fCH
 nQc
 cjX
 crv
-ujh
+gay
 rTG
-rTG
-rTG
+koD
+uPe
+qLO
+aAT
+eDx
+eVn
 wUD
-qdP
+aAT
 kSm
-vNe
-jMj
-ptp
+aaS
+abF
+aah
 nkH
 vlC
 bKQ
@@ -51142,16 +52266,19 @@ crv
 gay
 gay
 gay
-xXF
-xXF
-pwU
-kDp
-kDp
-kDp
-kDp
-kDp
-xXF
-xXF
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -51159,15 +52286,12 @@ gay
 gay
 gEx
 aPn
+aPn
 gEx
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-vES
 gay
 gay
 gay
@@ -51311,27 +52435,27 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
 qws
 crv
-crv
+gay
 gay
 crv
 crv
 gay
-ujh
+rTG
 npt
+xxm
+gzU
+aAT
 iTl
-mTx
-nAv
-qdP
+jAA
+nSP
+ehC
 fRN
 nfC
 lDB
-ehC
-jki
+abI
+abM
 vmd
 frG
 gBX
@@ -51399,17 +52523,19 @@ qws
 crv
 gay
 gay
-xXF
-xXF
-xXF
-xXF
-pwU
-kDp
-kDp
-kDp
-xXF
-xXF
-xXF
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -51417,6 +52543,8 @@ gay
 gEx
 gEx
 gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -51439,16 +52567,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -51567,28 +52691,28 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-qws
-qws
+crv
+odS
+odS
 crv
 crv
 crv
 crv
 crv
 rTG
-gzU
-mTx
+qCf
+gRj
+qMs
+ydY
+iMs
 wpX
-cly
-qdP
+ebe
+aAT
 gXb
-uPe
-nMM
+aaR
+aad
 pAE
-qdP
+aaF
 oIQ
 aDA
 gpZ
@@ -51657,22 +52781,9 @@ crv
 nmW
 gay
 gay
-xXF
-xXF
-xXF
-xXF
-pwU
-kDp
-pwU
-xXF
-xXF
-xXF
 gay
 gay
 gay
-gay
-gay
-gEx
 gay
 gay
 gay
@@ -51687,6 +52798,10 @@ gay
 gay
 gay
 gEx
+aPn
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -51706,6 +52821,15 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -51826,26 +52950,26 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-odS
-qws
 crv
+gay
+crv
+gay
 crv
 rTG
-hvu
-cxH
-ddO
-bsy
-qdP
-qdP
-qdP
-qdP
-qdP
-qdP
+rTG
+rTG
+rTG
+ldz
+aAT
+mWu
+aRT
+fTe
+aAT
+aaF
+aaF
+aaF
+aaF
+aaF
 krQ
 aYV
 uVv
@@ -51886,7 +53010,7 @@ mTA
 xyR
 tHA
 ePx
-mhl
+adh
 acc
 sWo
 wuN
@@ -51909,24 +53033,12 @@ eRf
 gay
 crv
 crv
-qws
 crv
 gay
 gay
 gay
 gay
 gay
-xXF
-xXF
-xXF
-xXF
-xXF
-xXF
-xXF
-xXF
-gay
-gay
-gay
 gay
 gay
 gay
@@ -51944,7 +53056,7 @@ gay
 gay
 gEx
 gEx
-vES
+gEx
 gay
 gay
 gay
@@ -51963,6 +53075,18 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -52083,21 +53207,21 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
 crv
-odS
-gay
+qws
+qws
+crv
 gay
 iBv
-uSe
-xDq
-qNs
-uJy
-rjM
+rXq
+gRj
+rTG
+pNR
+aAT
+aAT
+aAT
+jMj
+aAT
 jSG
 tHr
 wav
@@ -52164,44 +53288,14 @@ uqq
 qpA
 eRf
 crv
-qws
 crv
-qws
+crv
+crv
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-xXF
-xXF
-xXF
-xXF
-xXF
-xXF
-xXF
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-aPn
-gEx
+goP
+goP
+goP
+goP
 gay
 gay
 gay
@@ -52220,6 +53314,36 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -52341,20 +53465,20 @@ gay
 gay
 gay
 gay
-gay
-gay
+crv
 gay
 crv
-crv
-qws
-gay
 crv
 iBv
-qLO
+tAK
+hTI
+rTG
+nqW
+qNs
 eVc
-rjM
-rjM
-rjM
+aAT
+aAT
+aAT
 gzn
 hjE
 ozJ
@@ -52365,7 +53489,7 @@ waf
 kya
 dBQ
 rjM
-jDy
+aaq
 iHp
 eJe
 ifz
@@ -52389,7 +53513,7 @@ fIW
 jaa
 eJe
 tXr
-vUH
+aar
 vjc
 tBC
 wci
@@ -52398,7 +53522,7 @@ chI
 waV
 lZj
 tHA
-acL
+sPv
 wuN
 wuN
 wuN
@@ -52421,44 +53545,24 @@ gay
 crv
 crv
 gay
-qws
 crv
+goP
+goP
+goP
+goP
+goP
+goP
+goP
+goP
+yjd
+yjd
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-xXF
-xXF
-xXF
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
+yjd
+yjd
+yjd
+yjd
 gay
 gay
 gay
@@ -52477,6 +53581,26 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -52601,14 +53725,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+qws
+rTG
+xrG
 dDY
 dDY
 dDY
 koD
-hTI
+vNe
 rjM
 dcF
 uKl
@@ -52656,7 +53780,7 @@ mGO
 mGO
 tHA
 acL
-acL
+acQ
 ujh
 acp
 acy
@@ -52675,42 +53799,27 @@ qpA
 eRf
 gay
 gay
-qws
-jwL
-qws
-vFD
 crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-aPn
-aPn
-gEx
-gay
-gay
-gay
-gay
-gay
+crv
+crv
+goP
+goP
+goP
+lEA
+lEA
+lEA
+goP
+goP
+goP
+goP
+yjd
+yjd
+yjd
+yjd
+yjd
+goP
+goP
+goP
 gay
 gay
 gay
@@ -52734,6 +53843,21 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -52859,13 +53983,13 @@ gay
 gay
 gay
 gay
-crv
+rTG
 dDY
 dDY
 xjz
 dDY
 koD
-uah
+dmV
 rjM
 cFx
 aFd
@@ -52909,11 +54033,11 @@ tHA
 tHA
 tHA
 tHA
+abf
+abm
+abw
 acL
-acL
-acL
-acL
-acL
+acR
 ujh
 abE
 abN
@@ -52933,36 +54057,28 @@ crv
 crv
 crv
 crv
-crv
-crv
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gEx
-gEx
+goP
+goP
+goP
+goP
+goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+goP
+goP
+goP
+goP
+goP
+goP
+goP
 gay
 gay
 gay
@@ -52991,6 +54107,14 @@ gay
 gay
 gay
 gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -53119,7 +54243,7 @@ crv
 crv
 dDY
 hyT
-mTx
+gRj
 lrQ
 mTx
 sgd
@@ -53163,16 +54287,16 @@ xKC
 ifz
 cDH
 ujh
-acL
-acL
-acL
-acL
+aau
+abY
+acE
+abe
+abp
 ujh
 ujh
 ujh
 ujh
-ujh
-acx
+adt
 abD
 abN
 ace
@@ -53190,25 +54314,33 @@ crv
 crv
 crv
 gay
-crv
-crv
+goP
+goP
+goP
+goP
+goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
 goP
 goP
 goP
+goP
+yjd
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+vES
 gay
 gay
 gay
@@ -53216,10 +54348,8 @@ gay
 gay
 gay
 gEx
-aPn
-aPn
 gEx
-gEx
+vES
 gay
 gay
 gay
@@ -53236,18 +54366,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -53420,16 +54544,16 @@ ivY
 vdi
 aAE
 ujh
+aav
+aba
+abc
 acL
-acL
-acL
-acL
+abo
 ujh
-abY
-abY
-gks
+apP
+acS
 ujh
-acd
+adu
 ace
 acr
 abN
@@ -53447,21 +54571,29 @@ gay
 crv
 goP
 goP
+yjd
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
-gay
-gay
-gay
-gay
-gay
+yjd
 gay
 gay
 gay
@@ -53473,6 +54605,12 @@ gay
 gay
 gay
 gEx
+aPn
+gEx
+gay
+gay
+gay
+gay
 gEx
 gEx
 gay
@@ -53485,26 +54623,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -53636,10 +54760,10 @@ qZl
 iLX
 xCz
 dDY
-tvX
-aRT
-xyF
-kOm
+hvu
+mjl
+uFy
+vNg
 rjM
 rjM
 rjM
@@ -53676,17 +54800,17 @@ jaa
 xKC
 cyF
 abA
-acv
-acv
-acv
-acv
-acv
-abI
 abS
-abS
-abM
-acE
-abD
+aay
+acB
+acv
+acF
+abr
+acd
+jcF
+acT
+adi
+adv
 ace
 ace
 abN
@@ -53705,24 +54829,29 @@ goP
 goP
 goP
 goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 yjd
 yjd
-gay
-gay
-gay
-yjd
-yjd
-yjd
 yjd
 gay
 gay
@@ -53731,23 +54860,18 @@ gay
 gay
 gay
 gay
+gEx
+aPn
+gEx
+gEx
+gEx
+gEx
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+vES
 gay
 gay
 gay
@@ -53893,10 +55017,10 @@ tOb
 bko
 fis
 dDY
-dmV
 rJP
-uFy
-gJE
+nMM
+xyF
+xyF
 nWX
 pyn
 cvR
@@ -53934,14 +55058,14 @@ kQj
 msn
 abU
 ujh
-acL
-acL
-acL
-acL
+aax
+abd
+acD
+abc
+abq
 ujh
-gks
-gks
-acB
+xDq
+acU
 ujh
 abP
 abz
@@ -53961,7 +55085,20 @@ goP
 goP
 goP
 goP
-yjd
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 lEA
 lEA
 lEA
@@ -53973,12 +55110,6 @@ goP
 goP
 goP
 goP
-yjd
-yjd
-yjd
-yjd
-yjd
-goP
 goP
 goP
 gay
@@ -53986,26 +55117,19 @@ gay
 gay
 gay
 gay
+gEx
+gEx
 gay
 gay
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -54194,11 +55318,11 @@ ujh
 ujh
 ujh
 ujh
-acL
+abh
 sFn
-acj
-acj
-acF
+sFn
+kLg
+acV
 acG
 abT
 abB
@@ -54218,25 +55342,30 @@ goP
 goP
 goP
 goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
 goP
 goP
 goP
@@ -54252,17 +55381,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -54453,9 +55577,9 @@ fMO
 hBg
 act
 sFn
-abF
-sFn
-sFn
+acj
+kOm
+acW
 sFn
 sFn
 ujh
@@ -54490,26 +55614,20 @@ lEA
 lEA
 lEA
 lEA
-goP
-goP
-goP
-goP
-goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 yjd
 gay
 gay
 gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-nmW
 gay
 gay
 gay
@@ -54520,10 +55638,11 @@ gay
 gay
 gay
 gay
+gEx
 gay
 gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -54539,8 +55658,13 @@ gay
 gay
 gay
 gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -54711,9 +55835,9 @@ sFn
 nHd
 cIf
 ykW
-kLg
-jcF
-gOz
+gJE
+ykW
+adk
 edi
 aiy
 aiy
@@ -54752,19 +55876,13 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
 goP
 goP
-yjd
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-vES
+goP
+goP
 gay
 gay
 gay
@@ -54797,7 +55915,13 @@ gay
 gay
 gay
 gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -55010,24 +56134,17 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
 goP
-yjd
-yjd
-yjd
+goP
+goP
+goP
 gay
 gay
-gay
-gay
-gay
-gEx
-aPn
-gEx
-gay
-gay
-gay
-gay
-gEx
-gEx
+goP
+goP
+goP
 gay
 gay
 gay
@@ -55055,6 +56172,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -55223,9 +56347,9 @@ foZ
 vtk
 sFn
 nHd
-eDx
-qlx
-sPv
+abt
+acx
+sdX
 bUn
 iiV
 rOl
@@ -55267,6 +56391,11 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
@@ -55275,18 +56404,6 @@ goP
 goP
 gay
 gay
-gEx
-aPn
-gEx
-gEx
-gEx
-gEx
-gay
-gay
-gEx
-gEx
-gEx
-vES
 gay
 gay
 gay
@@ -55312,6 +56429,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -55482,7 +56606,7 @@ sFn
 evf
 xST
 rVV
-acD
+foF
 aci
 mvQ
 gfQ
@@ -55526,25 +56650,19 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+goP
+goP
+goP
+goP
 goP
 goP
 goP
 goP
 gay
 gay
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-aPn
-aPn
-gEx
-gEx
 gay
 gay
 gay
@@ -55568,7 +56686,13 @@ gay
 gay
 gay
 gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -55783,25 +56907,17 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
-yjd
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gEx
-aPn
-gEx
+goP
+goP
+goP
 gay
 gay
 gay
@@ -55826,6 +56942,14 @@ gay
 gay
 gay
 gay
+gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -55976,7 +57100,7 @@ thZ
 wUZ
 xuJ
 evt
-jFb
+aas
 feB
 vkl
 gIV
@@ -55996,7 +57120,7 @@ sFn
 sFn
 sFn
 ogs
-due
+gOz
 xSy
 mFC
 dmu
@@ -56040,24 +57164,17 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
 goP
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gay
-gay
-gEx
-gEx
+goP
 gay
 gay
 gay
@@ -56083,6 +57200,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -56297,14 +57421,16 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
 goP
-gay
-gay
-goP
-goP
 goP
 gay
 gay
@@ -56331,15 +57457,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -56510,7 +57634,7 @@ nIU
 wpE
 avF
 ykW
-ppw
+xTy
 ykW
 nqt
 sFn
@@ -56557,12 +57681,14 @@ lEA
 lEA
 lEA
 lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
-goP
-goP
-goP
 gay
 gay
 gay
@@ -56588,15 +57714,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -56767,7 +57891,7 @@ scr
 xFt
 ggc
 upS
-apP
+xVf
 oeD
 lZZ
 sFn
@@ -56814,11 +57938,11 @@ lEA
 lEA
 lEA
 lEA
-goP
-goP
-goP
-goP
-goP
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
@@ -57024,7 +58148,7 @@ ulA
 uNP
 mUC
 kbk
-jUa
+lBh
 iGj
 sRE
 sFn
@@ -57074,8 +58198,8 @@ lEA
 lEA
 lEA
 lEA
-goP
-goP
+lEA
+lEA
 goP
 goP
 goP
@@ -57331,8 +58455,8 @@ lEA
 lEA
 lEA
 lEA
-goP
-goP
+lEA
+lEA
 goP
 goP
 goP
@@ -57535,12 +58659,12 @@ xCy
 xCy
 xCy
 sFn
-nSP
+abg
 enB
 cso
 qFP
 mLs
-cXY
+adl
 tmq
 wZq
 vmc
@@ -57588,12 +58712,12 @@ lEA
 lEA
 lEA
 lEA
+lEA
 goP
 goP
 goP
 goP
 goP
-yjd
 gay
 gay
 gay
@@ -57605,11 +58729,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -57787,20 +58911,20 @@ kpo
 rIv
 dxN
 btp
-xaV
+vNm
 rsV
 rzk
 doI
 sFn
 sFn
-sFn
+abs
 sFn
 fHC
 oTR
 oTR
 vlw
-pWD
-foF
+adE
+adO
 gpH
 jWx
 jWx
@@ -57847,6 +58971,7 @@ lEA
 lEA
 lEA
 lEA
+lEA
 goP
 goP
 goP
@@ -57861,12 +58986,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -58104,6 +59228,7 @@ lEA
 lEA
 lEA
 lEA
+lEA
 goP
 goP
 goP
@@ -58118,12 +59243,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -58311,7 +59435,7 @@ bmp
 xZx
 vdj
 vVU
-eVn
+adm
 svM
 rsV
 pwn
@@ -58333,37 +59457,38 @@ hvD
 goP
 goP
 goP
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
+lEA
 goP
 goP
 goP
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
 gay
 gay
 gay
@@ -58375,12 +59500,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -58618,11 +59742,11 @@ lEA
 lEA
 lEA
 lEA
+lEA
 goP
 goP
 goP
 gay
-gay
 goP
 gay
 gay
@@ -58633,11 +59757,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -58908,12 +60032,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -59165,12 +60289,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -59422,12 +60546,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -59679,12 +60803,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -59936,12 +61060,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -60117,9 +61241,9 @@ rNw
 noD
 noD
 noD
-vKc
+aet
 onq
-vKc
+aet
 noD
 hvD
 hvD
@@ -60193,12 +61317,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -60342,7 +61466,7 @@ uDE
 cyx
 xCy
 axd
-qxM
+aap
 roy
 qri
 jcV
@@ -60450,12 +61574,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -60707,12 +61831,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -60849,7 +61973,7 @@ tnj
 tnj
 tnj
 tnj
-bjB
+wDD
 vAK
 jBJ
 nNt
@@ -60964,12 +62088,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -61109,7 +62233,7 @@ tnj
 kjg
 kjg
 tnj
-bjB
+wDD
 vAK
 xIK
 cjx
@@ -61981,12 +63105,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -62238,12 +63362,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -62495,12 +63619,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -62752,12 +63876,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -63009,12 +64133,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -64030,12 +65154,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -64287,12 +65411,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -64544,12 +65668,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -64801,12 +65925,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -65058,12 +66182,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -65315,12 +66439,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -65572,12 +66696,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -65829,12 +66953,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -66086,12 +67210,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -66343,12 +67467,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -66600,12 +67724,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -66986,7 +68110,7 @@ gay
 gay
 gay
 gay
-gay
+gEx
 gay
 gay
 gay
@@ -67242,8 +68366,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -67383,10 +68507,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -67487,6 +68611,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -67495,13 +68623,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -67640,10 +68764,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -67744,6 +68868,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -67753,12 +68881,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -68001,10 +69125,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -68258,10 +69382,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -68515,10 +69639,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -68772,10 +69896,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -70203,14 +71327,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -70327,7 +71451,7 @@ gay
 gay
 gay
 gay
-gay
+gEx
 gay
 gay
 gay
@@ -70460,14 +71584,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -70583,8 +71707,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+gEx
+aPn
 gay
 gay
 gay
@@ -70840,8 +71964,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -71481,10 +72605,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -71738,10 +72862,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -71995,10 +73119,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -72252,10 +73376,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -72429,10 +73553,10 @@ esQ
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -72686,10 +73810,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -72943,6 +74067,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73011,12 +74139,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -73173,6 +74297,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73187,11 +74317,17 @@ gay
 gay
 gay
 gay
+gEx
+gEx
 gay
 gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73217,6 +74353,9 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -73257,24 +74396,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -73430,6 +74554,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73443,6 +74573,10 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -73475,6 +74609,10 @@ gay
 gay
 gay
 gay
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -73516,23 +74654,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -73687,6 +74811,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73700,6 +74830,10 @@ gay
 gay
 gay
 gay
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -73732,6 +74866,8 @@ gay
 gay
 gay
 gay
+gEx
+gEx
 gay
 gay
 gay
@@ -73775,21 +74911,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -73964,6 +75088,9 @@ gay
 gay
 gay
 gay
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -73980,6 +75107,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -73992,15 +75124,7 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
 gay
 gay
 gay
@@ -74045,6 +75169,7 @@ gay
 gay
 gay
 gay
+gEx
 gay
 gay
 gay
@@ -74061,11 +75186,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74188,6 +75312,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74206,6 +75335,18 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gay
 gay
 gay
@@ -74223,28 +75364,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74319,10 +75443,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74445,6 +75569,32 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74471,37 +75621,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74576,10 +75700,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74702,6 +75826,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74720,6 +75849,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74746,6 +75878,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74767,21 +75904,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -74833,10 +75957,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74968,6 +76092,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74977,6 +76106,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74993,6 +76125,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75025,21 +76160,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -75090,10 +76214,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75225,6 +76349,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75234,6 +76363,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75250,6 +76382,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75282,21 +76417,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -75482,6 +76606,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75510,6 +76639,9 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75543,17 +76675,9 @@ gay
 gay
 gay
 gay
+aPn
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
 gay
 gay
 gay
@@ -75739,6 +76863,42 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75756,47 +76916,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -75996,6 +77120,42 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76013,47 +77173,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76271,6 +77395,24 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76288,29 +77430,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76528,6 +77652,24 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76545,29 +77687,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76785,6 +77909,24 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gks
+gks
+gks
 gay
 gay
 gay
@@ -76802,29 +77944,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77042,6 +78166,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77072,16 +78201,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77129,11 +78253,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77334,11 +78458,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77386,11 +78510,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77528,6 +78652,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77583,6 +78715,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77591,23 +78728,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77643,11 +78767,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77785,6 +78909,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77853,18 +78985,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -77900,11 +79024,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78042,6 +79166,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78110,18 +79242,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78157,11 +79281,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78299,6 +79423,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78306,6 +79438,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78361,24 +79499,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78414,11 +79538,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78556,6 +79680,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78563,6 +79695,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78570,6 +79708,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78579,6 +79724,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78604,6 +79756,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78639,43 +79795,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78813,6 +79937,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78820,6 +79952,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78827,6 +79965,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78836,6 +79981,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78861,6 +80013,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -78896,43 +80052,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79070,6 +80194,14 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79077,6 +80209,12 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79084,6 +80222,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79093,6 +80238,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79118,6 +80270,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79153,43 +80309,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79355,6 +80479,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79364,6 +80495,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79389,6 +80527,10 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79424,29 +80566,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79612,6 +80736,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79621,6 +80752,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79662,22 +80800,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
 gay
 gay
 gay
@@ -79869,6 +80993,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79878,6 +81009,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -79919,22 +81057,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
 gay
 gay
 gay
@@ -80142,6 +81266,13 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -80183,15 +81314,8 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
 gay
 gay
 gay
@@ -80673,10 +81797,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -80930,10 +82054,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81118,6 +82242,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81182,15 +82311,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81375,6 +82499,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81439,15 +82568,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81632,6 +82756,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81696,15 +82825,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81889,6 +83013,11 @@ gay
 gay
 gay
 gay
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -81953,15 +83082,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -82170,12 +83294,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -82427,12 +83551,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -82684,12 +83808,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -82941,12 +84065,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -83198,12 +84322,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -83455,12 +84579,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+gks
+gks
+gks
+gks
 gay
 gay
 gay
