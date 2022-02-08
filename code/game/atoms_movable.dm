@@ -169,7 +169,7 @@
 		last_move = 0
 		return
 
-	if(!ISDIAGONALDIR(direction) && moving_diagonally != SECOND_DIAG_STEP)
+	if(moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
 
