@@ -305,16 +305,17 @@
 		return FALSE
 
 	//Apply weapon damage
+	var/force_with_melee_skill = applySkillModifier(user, I.force, SKILL_MELEE, SKILL_MELEE_DEFAULT, -0.2, -0.2)
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/datum/wound/created_wound = apply_damage(I.force, I.damtype, BP, armor, damage_flags, I)
+	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
 		var/weapon_sharp = (damage_flags & DAM_SHARP)
-		var/damage = I.force // just the effective damage used for sorting out embedding, no further damage is applied here
+		var/damage = force_with_melee_skill // just the effective damage used for sorting out embedding, no further damage is applied here
 		if (armor)
 			damage *= blocked_mult(armor)
 
@@ -327,7 +328,7 @@
 			BP.embed(I, null, null, created_wound)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (force_with_melee_skill * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 //		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
 //		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
@@ -344,10 +345,10 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(I.force))
+				if(prob(force_with_melee_skill))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
-				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
+				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
@@ -366,11 +367,11 @@
 						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob((I.force + 10)))
+				if(prob((force_with_melee_skill + 10)))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
-				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
+				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(force_with_melee_skill + 10)) // A chance to force puke with a blunt hit.
 					for(var/obj/item/weapon/grab/G in grabbed_by)
 						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
 							vomit(punched=TRUE)
