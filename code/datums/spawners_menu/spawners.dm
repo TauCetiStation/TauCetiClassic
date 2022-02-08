@@ -541,7 +541,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
 
-	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на станции Нанотрейзен \"Исход\".</B>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
 		to_chat(H, "<B>Согласно сводкам, именно сегодня Ваши наниматели готовятся нанести удар по корпоративным ублюдкам, и Вы можете посодействовать засланным на станцию агентам.</B>")
 	else
