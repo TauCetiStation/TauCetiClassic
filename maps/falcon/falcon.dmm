@@ -3927,7 +3927,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/random/foods/donuts,
+/obj/random/foods/food_with_garbage,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -8457,12 +8457,12 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "ePI" = (
-/obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/flora/monkey,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -9138,6 +9138,11 @@
 /area/station/bridge)
 "fFg" = (
 /obj/machinery/computer/security,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 20
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -9980,11 +9985,6 @@
 	},
 /area/station/bridge/nuke_storage)
 "gww" = (
-/obj/machinery/recharger/wallcharger{
-	dir = 1;
-	pixel_x = 5;
-	pixel_y = 20
-	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
@@ -21135,6 +21135,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/flora/pottedplant/crystal,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
