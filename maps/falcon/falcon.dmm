@@ -3939,6 +3939,36 @@
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"ahu" = (
+/obj/structure/closet,
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
+"ahv" = (
+/obj/structure/dresser,
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
+"ahw" = (
+/obj/item/weapon/flora/random,
+/obj/machinery/camera{
+	c_tag = "Arrival Hallway Center";
+	dir = 1;
+	pixel_x = -4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
+"ahx" = (
+/obj/machinery/washing_machine,
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
+"ahy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
 "ahC" = (
 /obj/structure/table/woodentable,
 /obj/item/toy/plushie/space_whale,
@@ -9629,15 +9659,8 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "fCc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=HoP";
-	location = "Arrival1"
-	},
-/turf/simulated/floor{
-	icon_state = "blackcorner"
-	},
-/area/station/hallway/secondary/arrival)
+/turf/simulated/floor,
+/area/space)
 "fCH" = (
 /obj/machinery/power/solar{
 	id = "auxsolareast";
@@ -10494,10 +10517,10 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "gva" = (
-/turf/simulated/floor{
-	icon_state = "black"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/area/station/hallway/secondary/arrival)
+/area/space)
 "gvw" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -11274,20 +11297,7 @@
 	},
 /area/station/rnd/lab)
 "hgN" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Med";
-	location = "Arrival1"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "blackcorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "hgW" = (
 /turf/simulated/wall/r_wall,
@@ -11349,11 +11359,17 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "hnH" = (
-/obj/machinery/washing_machine,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Med";
+	location = "Arrival1"
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -11576,16 +11592,8 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hCQ" = (
-/obj/item/weapon/flora/random,
-/obj/machinery/camera{
-	c_tag = "Arrival Hallway Center";
-	dir = 1;
-	pixel_x = -4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "hCU" = (
 /obj/structure/cable{
@@ -14774,12 +14782,11 @@
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "kGB" = (
-/obj/structure/dresser,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/station/hallway/secondary/arrival)
+/area/space)
 "kGN" = (
 /obj/machinery/power/solar{
 	id = "starboardsolar";
@@ -16142,11 +16149,10 @@
 	},
 /area/station/cargo/storage)
 "mbf" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = -32
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
-/obj/structure/lattice,
-/turf/space,
 /area/space)
 "mbj" = (
 /obj/machinery/computer/cryopod{
@@ -16177,12 +16183,11 @@
 	},
 /area/station/tcommsat/chamber)
 "mdk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 8;
 	icon_state = "black"
 	},
-/area/station/hallway/secondary/arrival)
+/area/space)
 "mdD" = (
 /obj/item/stack/nanopaste,
 /obj/item/stack/nanopaste,
@@ -24164,16 +24169,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "twE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=HoP";
+	location = "Arrival1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "txi" = (
 /turf/simulated/floor{
@@ -26316,12 +26317,13 @@
 	},
 /area/station/engineering/chiefs_office)
 "vzI" = (
-/obj/structure/closet,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/hallway/secondary/arrival)
+/turf/simulated/floor,
+/area/space)
 "vzQ" = (
 /obj/machinery/power/solar{
 	id = "auxsolareast";
@@ -28306,11 +28308,8 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "xrG" = (
-/obj/machinery/computer/arcade,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/medbay)
+/turf/simulated/wall/r_wall,
+/area/space)
 "xsf" = (
 /obj/machinery/door/window/southright{
 	dir = 1;
@@ -28339,12 +28338,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "xtc" = (
-/obj/machinery/washing_machine,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/structure/sign/warning/docking{
+	pixel_x = -32
 	},
-/area/station/hallway/secondary/arrival)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "xtS" = (
 /obj/structure/dispenser,
 /turf/simulated/floor{
@@ -55673,14 +55671,14 @@ gay
 gay
 gay
 gay
-crv
+dDY
+dDY
+dDY
+dDY
 rTG
-xrG
-dDY
-dDY
-dDY
-dDY
-koD
+gva
+gva
+gva
 vNe
 rjM
 dcF
@@ -55930,14 +55928,14 @@ gay
 gay
 gay
 crv
-crv
-rTG
-dDY
 dDY
 xjz
 gRj
 dDY
 koD
+gva
+gva
+gva
 dmV
 rjM
 cFx
@@ -56187,14 +56185,14 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
 dDY
 hyT
 gRj
 lrQ
 mTx
+gva
+gva
+gva
 sgd
 rjM
 aSK
@@ -56444,14 +56442,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-crv
 dDY
 dDY
 piy
 dDY
 dDY
+gva
+gva
+gva
 fbu
 rjM
 rjM
@@ -56701,14 +56699,14 @@ gay
 gay
 gay
 gay
-gay
-crv
-crv
 dDY
 qZl
 iLX
 xCz
 dDY
+gva
+gva
+gva
 hvu
 mjl
 uFy
@@ -56958,14 +56956,14 @@ gay
 gay
 gay
 gay
-gay
-gay
-crv
 dDY
 tOb
 bko
 fis
 dDY
+gva
+gva
+gva
 rJP
 nMM
 xyF
@@ -57215,23 +57213,23 @@ gay
 gay
 gay
 gay
-gay
-gay
-crv
 dDY
 kwI
 lbu
 hpj
 dDY
+abm
+abm
+abm
 rTG
 rTG
 rTG
 rTG
 rTG
 rTG
-rTG
-rTG
-rTG
+gva
+gva
+gva
 aFE
 mTV
 muH
@@ -57472,15 +57470,12 @@ gay
 gay
 gay
 gay
-gay
-crv
-crv
 dDY
 nEf
 iEZ
 oga
-dDY
-mbf
+xrG
+crv
 rzB
 rzB
 rzB
@@ -57492,6 +57487,9 @@ hvW
 rTG
 cYF
 rTG
+abm
+abm
+abm
 hvW
 fOO
 eJe
@@ -57733,10 +57731,7 @@ gay
 crv
 gay
 gay
-gay
-gay
-gay
-azF
+xtc
 crv
 rzB
 rzB
@@ -57748,6 +57743,9 @@ hvW
 hvW
 bwm
 cxV
+mbf
+mbf
+mbf
 nUm
 hvW
 rzZ
@@ -57990,9 +57988,6 @@ gay
 crv
 crv
 qws
-gay
-gay
-gay
 azF
 gay
 rzB
@@ -58005,6 +58000,9 @@ rqP
 ciD
 qqb
 kZg
+mdk
+mdk
+mdk
 kZg
 khf
 iHp
@@ -58247,9 +58245,6 @@ gay
 gay
 gay
 qws
-crv
-crv
-crv
 azF
 gay
 rzB
@@ -58261,8 +58256,11 @@ noy
 lOj
 xGz
 ikn
+twE
 fCc
-mdk
+fCc
+fCc
+hCQ
 dyn
 exJ
 unh
@@ -58504,9 +58502,6 @@ gay
 gay
 crv
 qws
-crv
-gay
-crv
 azF
 crv
 rzB
@@ -58518,8 +58513,11 @@ gay
 xGz
 mPB
 bzC
-gva
-vzI
+hgN
+fCc
+fCc
+fCc
+ahu
 slH
 hnM
 unh
@@ -58761,9 +58759,6 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
 azF
 crv
 rzB
@@ -58775,8 +58770,11 @@ gay
 xGz
 jqk
 bzC
-gva
-kGB
+hgN
+fCc
+fCc
+fCc
+ahv
 gGT
 jaa
 eJe
@@ -59018,9 +59016,6 @@ gay
 gay
 gay
 gay
-crv
-gay
-crv
 azF
 crv
 rzB
@@ -59032,8 +59027,11 @@ gay
 xGz
 tQc
 ccc
-gva
-hCQ
+hgN
+fCc
+fCc
+fCc
+ahw
 hvW
 yaA
 ajf
@@ -59275,9 +59273,6 @@ gay
 gay
 gay
 crv
-crv
-crv
-crv
 azF
 azF
 rzB
@@ -59289,8 +59284,11 @@ gay
 xGz
 tEV
 bzC
-gva
-xtc
+hgN
+fCc
+fCc
+fCc
+ahx
 vEl
 jaa
 smC
@@ -59532,9 +59530,6 @@ gay
 gay
 gay
 gay
-crv
-qws
-gay
 gay
 azF
 rzB
@@ -59546,8 +59541,11 @@ gay
 xGz
 qYG
 bzC
-gva
-hnH
+hgN
+fCc
+fCc
+fCc
+ahx
 beJ
 hBk
 qtH
@@ -59790,9 +59788,6 @@ gay
 gay
 gay
 crv
-qws
-crv
-crv
 azF
 rzB
 rzB
@@ -59803,8 +59798,11 @@ xGz
 lOj
 xGz
 ezO
-hgN
-twE
+hnH
+vzI
+vzI
+vzI
+ahy
 eAC
 kgH
 ohv
@@ -60046,9 +60044,6 @@ gay
 gay
 gay
 gay
-gay
-jwL
-gay
 crv
 azF
 rzB
@@ -60061,6 +60056,9 @@ rqP
 ciD
 dNp
 bcG
+kGB
+kGB
+kGB
 lJb
 aoL
 nNt
@@ -60303,9 +60301,6 @@ gay
 gay
 gay
 gay
-gay
-qws
-gay
 crv
 azF
 rzB
@@ -60318,6 +60313,9 @@ hvW
 hvW
 hvW
 hvW
+abm
+abm
+abm
 hvW
 hvW
 ikw
@@ -60561,15 +60559,15 @@ gay
 gay
 gay
 crv
-crv
-crv
-crv
 azF
 rzB
 rzB
 rzB
 rzB
 rzB
+gay
+gay
+gay
 crv
 ifx
 aVS
@@ -60818,11 +60816,11 @@ gay
 gay
 gay
 crv
-crv
-odS
-crv
 azF
 azF
+gay
+gay
+gay
 gay
 gay
 gay
@@ -61076,14 +61074,14 @@ gay
 gay
 crv
 gay
-odS
-crv
-gay
 azF
 azF
 azF
 gay
 crv
+gay
+gay
+gay
 iqS
 iqS
 tcD
@@ -61335,12 +61333,12 @@ crv
 gay
 crv
 crv
+azF
+azF
+azF
 gay
-crv
-crv
-azF
-azF
-azF
+gay
+gay
 iqS
 ayx
 iHP
