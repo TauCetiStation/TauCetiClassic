@@ -1416,35 +1416,35 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 		return
 
-	if(drunkenness >= drunkenness_pass_out)
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
-	else if(drunkenness >= drunkenness_confused)
+	else if(drunkenness >= DRUNKENNESS_CONFUSED)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
-	else if(drunkenness >= drunkenness_slur)
+	else if(drunkenness >= DRUNKENNESS_SLUR)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 
 	if(drowsyness)
 		AdjustDrunkenness(-1)
 
-	if(drunkenness >= drunkenness_pass_out)
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		paralysis = max(paralysis, 3)
 		drowsyness = max(drowsyness, 3)
 		return
 
-	if(drunkenness >= drunkenness_blur)
+	if(drunkenness >= DRUNKENNESS_BLUR)
 		eye_blurry = max(eye_blurry, 2)
 
-	if(drunkenness >= drunkenness_slur)
+	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
 
-	if(drunkenness >= drunkenness_confused)
+	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
-	if(drunkenness >= drunkenness_pass_out)
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 		if(istype(IO))
 			IO.take_damage(0.1, 1)
