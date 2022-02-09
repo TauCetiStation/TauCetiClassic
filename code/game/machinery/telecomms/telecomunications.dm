@@ -157,6 +157,10 @@
 
 /obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
+
+	for(var/obj/machinery/telecomms/T as anything in links)
+		T.links.Remove(src)
+
 	return ..()
 
 // Used in auto linking

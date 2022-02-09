@@ -3,9 +3,9 @@ SUBSYSTEM_DEF(garbage)
 
 	priority      = SS_PRIORITY_GARBAGE
 	wait          = SS_WAIT_GARBAGE
-	display_order = SS_DISPLAY_GARBAGE
 
-	flags = SS_FIRE_IN_LOBBY | SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
@@ -25,6 +25,11 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
+
+	#ifdef REFERENCE_TRACKING
+	var/list/reference_find_on_fail = list()
+	var/ref_search_stop = FALSE
+	#endif
 
 /datum/controller/subsystem/garbage/PreInit()
 	queues = new(GC_QUEUE_COUNT)
@@ -134,13 +139,27 @@ SUBSYSTEM_DEF(garbage)
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+		#ifdef REFERENCE_TRACKING
+		var/ref_searching = FALSE
+		#endif
 		switch (level)
 			if (GC_QUEUE_CHECK)
+				#ifdef REFERENCE_TRACKING
+				if(reference_find_on_fail[refID] && !ref_search_stop)
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
-				D.find_references()
+				else if (!ref_search_stop)
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
+				#endif
+				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
+				#ifdef REFERENCE_TRACKING
+				log_gc("GC: -- \ref[src] | [type] was unable to be GC'd --")
+				#endif
 				log_qdel("GC: -- \ref[D] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
@@ -150,6 +169,11 @@ SUBSYSTEM_DEF(garbage)
 				continue
 
 		Queue(D, level+1)
+
+		#ifdef REFERENCE_TRACKING
+		if(ref_searching)
+			return
+		#endif
 
 		if (MC_TICK_CHECK)
 			break
@@ -237,6 +261,12 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+#ifdef REFERENCE_TRACKING
+/datum/proc/qdel_and_find_ref_if_fail(force = FALSE)
+	SSgarbage.reference_find_on_fail["\ref[src]"] = TRUE
+	qdel(src, force)
+
+#endif
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -296,13 +326,13 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.PreQueue(D)
-				#ifdef TESTING
+				#ifdef REFERENCE_TRACKING
 				D.find_references()
 				#endif
 			else
-				#ifdef TESTING
+				#ifdef REFERENCE_TRACKING
 				if(!I.no_hint)
-					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
+					log_gc("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				#endif
 				I.no_hint++
 				SSgarbage.PreQueue(D)
@@ -311,99 +341,152 @@ SUBSYSTEM_DEF(garbage)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-#ifdef TESTING
-/client/var/running_find_references
+#ifdef REFERENCE_TRACKING
 
-/datum/verb/find_references()
+/client/proc/find_refs(datum/D in world)
 	set category = "Debug"
 	set name = "Find References"
-	set background = 1
-	set src in world
 
+	if(!check_rights(R_DEBUG))
+		return
+	D.find_references(FALSE)
+
+/datum/proc/find_references(skip_alert)
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
-			testing("CANCELLED search for references to a [usr.client.running_find_references].")
+			log_gc("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
-			SSgarbage.can_fire = 1
-			SSgarbage.next_fire = world.time + world.tick_lag
+			SSgarbage.can_fire = TRUE
+			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
-		if(tgui_alert(usr, "Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", list("Yes", "No")) == "No")
-			running_find_references = null
-			return
+		if(!skip_alert)
+			if(tgui_alert(usr, "Running this will lock everything up for about 5 minutes. Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+				running_find_references = null
+				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
+	SSgarbage.can_fire = FALSE
 
 	if(usr && usr.client)
 		usr.client.running_find_references = type
 
-	testing("Beginning search for references to a [type].")
-	var/list/things = list()
-	for(var/client/thing)
-		things |= thing
-	for(var/datum/thing)
-		things |= thing
-	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
-	for(var/datum/thing in things)
-		if(usr && usr.client && !usr.client.running_find_references) return
-		for(var/varname in thing.vars)
-			var/variable = thing.vars[varname]
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [thing.type]'s \ref[thing] [varname] var.")
-			else if(islist(variable))
-				if(src in variable)
-					testing("Found [src.type] \ref[src] in [thing.type]'s \ref[thing] [varname] list var.")
-	testing("Completed search for references to a [type].")
+	log_gc("Beginning search for references to a [type].")
+	var/starting_time = world.time
+
+	DoSearchVar(global.vars, "global") //globals
+	log_gc("Finished searching globals")
+
+	for(var/datum/thing in world) //atoms (don't beleive it's lies)
+		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+	log_gc("Finished searching atoms")
+
+	for(var/datum/thing) //datums
+		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+	log_gc("Finished searching datums")
+
+	for(var/client/thing) //clients
+		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+	log_gc("Finished searching clients")
+
+	log_gc("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
 	running_find_references = null
 
 	//restart the garbage collector
-	SSgarbage.can_fire = 1
-	SSgarbage.next_fire = world.time + world.tick_lag
+	SSgarbage.can_fire = TRUE
+	SSgarbage.update_nextfire(reset_time = TRUE)
 
-/client/verb/purge_all_destroyed_objects()
-	set category = "Debug"
-	if(SSgarbage)
-		while(SSgarbage.queue.len)
-			var/datum/o = locate(SSgarbage.queue[1])
-			if(istype(o) && o.gc_destroyed)
-				del(o)
-				SSgarbage.totaldels++
-			SSgarbage.queue.Cut(1, 2)
-
-/datum/verb/qdel_then_find_references()
+/client/proc/qdel_then_find_references(datum/D in world)
 	set category = "Debug"
 	set name = "qdel() then Find References"
-	set background = 1
-	set src in world
+	if(!check_rights(R_DEBUG))
+		return
 
-	qdel(src)
+	qdel(D, TRUE) //force a qdel
 	if(!running_find_references)
-		find_references()
+		D.find_references(TRUE)
 
-/client/verb/show_qdeleted()
+/client/proc/qdel_then_if_fail_find_references(datum/D in world)
 	set category = "Debug"
-	set name = "Show qdel() Log"
-	set desc = "Render the qdel() log and display it"
+	set name = "qdel() then Find References if GC failure"
+	if(!check_rights(R_DEBUG))
+		return
 
-	var/dat = "<B>List of things that have been qdel()eted this round</B><BR><BR>"
+	D.qdel_and_find_ref_if_fail(TRUE)
 
-	var/tmplist = list()
-	for(var/elem in SSgarbage.qdel_list)
-		if(!(elem in tmplist))
-			tmplist[elem] = 0
-		tmplist[elem]++
+/datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
+	if((usr?.client && !usr.client.running_find_references) || SSgarbage.ref_search_stop)
+		return
 
-	for(var/path in tmplist)
-		dat += "[path] - [tmplist[path]] times<BR>"
+	if(!recursive_limit)
+		log_gc("Recursion limit reached. [container_name]")
+		return
 
-	var/datum/browser/popup = new(usr, "window=qdeletedlog")
-	popup.set_content(dat)
-	popup.open()
+	//Check each time you go down a layer. This makes it a bit slow, but it won't effect the rest of the game at all
+	#ifndef FIND_REF_NO_CHECK_TICK
+	CHECK_TICK
+	#endif
+
+	if(istype(potential_container, /datum))
+		var/datum/datum_container = potential_container
+		if(datum_container.last_find_references == search_time)
+			return
+
+		datum_container.last_find_references = search_time
+		var/list/vars_list = datum_container.vars
+
+		for(var/varname in vars_list)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
+			if(varname in list("vars", "vis_locs", "verbs", "underlays", "overlays", "contents", "screen")) //Fun fact, vis_locs don't count for references
+				continue
+			var/variable = vars_list[varname]
+
+			if(variable == src)
+				log_gc("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				continue
+
+			if(islist(variable))
+				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
+
+	else if(islist(potential_container))
+		var/normal = IS_NORMAL_LIST(potential_container)
+		var/is_assoc = is_associative_list(potential_container)
+		var/list/potential_cache = potential_container
+		for(var/element_in_list in potential_cache)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
+			//Check normal entrys
+			if(element_in_list == src)
+				log_gc("Found [type] \ref[src] in list [container_name]\[[element_in_list]\].")
+				continue
+
+			var/assoc_val = null
+			if(!isnum(element_in_list) && normal)
+				assoc_val = potential_cache[element_in_list]
+			if(!isnum(element_in_list) && is_assoc)
+				assoc_val = potential_cache[element_in_list]
+			//Check assoc entrys
+			if(assoc_val == src)
+				log_gc("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
+				continue
+			//We need to run both of these checks, since our object could be hiding in either of them
+			//Check normal sublists
+			if(islist(element_in_list))
+				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
+			//Check assoc sublists
+			if(islist(assoc_val))
+				DoSearchVar(assoc_val, "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", recursive_limit - 1, search_time)
+
+#ifndef FIND_REF_NO_CHECK_TICK
+	CHECK_TICK
+#endif
 
 #endif

@@ -71,7 +71,7 @@
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else
@@ -570,7 +570,7 @@
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else

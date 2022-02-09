@@ -18,7 +18,7 @@
 	if(!M) return
 	if(M in view(1, src))
 
-		if(!istype(src, /mob/living/carbon/brain))
+		if(!isbrain(src))
 			if(!istype(M, /mob/living/carbon/slime))
 				if(stat != DEAD)
 					if(health > -70)

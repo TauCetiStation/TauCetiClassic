@@ -13,6 +13,13 @@
 	neurotoxin_delay = 10
 	ventcrawler = 0
 	w_class = SIZE_GYGANT
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
+						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
+						/obj/effect/proc_holder/spell/no_target/resin,
+						/obj/effect/proc_holder/spell/no_target/lay_egg,
+						/obj/effect/proc_holder/spell/targeted/screech,
+						/obj/effect/proc_holder/spell/no_target/air_plant)
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()
@@ -21,7 +28,7 @@
 	R.my_atom = src
 	name = "alien queen ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin, /mob/living/carbon/xenomorph/humanoid/proc/resin, /mob/living/carbon/xenomorph/humanoid/proc/screech, /mob/living/carbon/xenomorph/humanoid/proc/air_plant, /mob/living/carbon/xenomorph/humanoid/queen/proc/lay_egg)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
 	alien_list[ALIEN_QUEEN] += src
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 	. = ..()
@@ -48,6 +55,11 @@
 	return(3 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/queen/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return FALSE
+
+/mob/living/carbon/xenomorph/humanoid/queen/can_pickup(obj/O)
+	if(istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/queen/large

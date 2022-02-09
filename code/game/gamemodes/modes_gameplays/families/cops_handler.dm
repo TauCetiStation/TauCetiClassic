@@ -48,27 +48,27 @@
 	switch(wanted_level)
 		if(1)
 			team_size = 5
-			cops_to_send = /datum/role/cop/beatcop
+			cops_to_send = /datum/spawner/cop/beatcop
 			var/datum/announcement/centcomm/gang/cops_1/announce = new
 			announce.play()
 		if(2)
 			team_size = 6
-			cops_to_send = /datum/role/cop/beatcop/armored
+			cops_to_send = /datum/spawner/cop/armored
 			var/datum/announcement/centcomm/gang/cops_2/announce = new
 			announce.play()
 		if(3)
 			team_size = 7
-			cops_to_send = /datum/role/cop/beatcop/swat
+			cops_to_send = /datum/spawner/cop/swat
 			var/datum/announcement/centcomm/gang/cops_3/announce = new
 			announce.play()
 		if(4)
 			team_size = 8
-			cops_to_send = /datum/role/cop/beatcop/fbi
+			cops_to_send = /datum/spawner/cop/fbi
 			var/datum/announcement/centcomm/gang/cops_4/announce = new
 			announce.play()
 		if(5)
 			team_size = 9
-			cops_to_send = /datum/role/cop/beatcop/military
+			cops_to_send = /datum/spawner/cop/military
 			var/datum/announcement/centcomm/gang/cops_5/announce = new
 			announce.play()
 
@@ -80,7 +80,6 @@
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
-	return TRUE
 
 /// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.
 /datum/faction/cops/proc/check_wanted_level()

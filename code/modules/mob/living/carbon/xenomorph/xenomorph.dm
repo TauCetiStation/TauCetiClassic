@@ -11,6 +11,8 @@
 	typing_indicator_type = "alien"
 
 	see_in_dark = 8
+	sight = SEE_MOBS
+
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -30,11 +32,15 @@
 	attack_push_vis_effect = ATTACK_EFFECT_CLAW
 	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
+	var/list/alien_spells = list()
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
+	for(var/spell in alien_spells)
+		AddSpell(new spell(src))
 
 /mob/living/carbon/xenomorph/Destroy()
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
@@ -164,7 +170,7 @@
 	if(statpanel("Status"))
 		if(!isxenoqueen(src))
 			var/mob/living/carbon/xenomorph/queen = null
-			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q as anything in alien_list[ALIEN_QUEEN])
 				if(Q.stat == DEAD || !Q.key)
 					continue
 				queen = Q
@@ -181,7 +187,7 @@
 			var/count = 0
 			if(key == ALIEN_QUEEN)
 				continue
-			for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+			for(var/mob/living/carbon/xenomorph/A as anything in alien_list[key])
 				if(A.stat == DEAD || !A.key)
 					continue
 				count++
@@ -297,3 +303,20 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/carbon/xenomorph/proc/toggle_nvg(message = 1)
+	if(stat != CONSCIOUS)
+		return
+
+	src.nightvision = !src.nightvision
+
+	if(!src.nightvision)
+		src.nightvisionicon.icon_state = "nightvision0"
+	else if(src.nightvision == 1)
+		src.nightvisionicon.icon_state = "nightvision1"
+
+	update_sight()
+	if(message)
+		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
+	else
+		return

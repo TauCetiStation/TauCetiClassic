@@ -94,27 +94,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/twohanded)
-
-/// triggered on wield of two handed item
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-	update_icon()
-
-/// triggered on unwield of two handed item
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
-	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	if(cover_open)
@@ -372,7 +358,7 @@
 	action_button_name = "Toggle GL"
 	fire_delay = 7
 	var/using_gl = FALSE
-	var/obj/item/weapon/gun/projectile/underslung/gl
+	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
 
 /obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
@@ -395,7 +381,7 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/atom_init()
 	. = ..()
 	update_icon()
-	gl = new /obj/item/weapon/gun/projectile/underslung(src)
+	gl = new (src)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/update_icon()
 	cut_overlays(mag_icon)
@@ -415,6 +401,11 @@
 	if(!using_gl)
 		return ..()
 	gl.attackby(I, user)
+
+/obj/item/weapon/gun/projectile/automatic/drozd/attack_self(mob/user)
+	if(!using_gl)
+		return ..()
+	gl.attack_self(user)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
 	toggle_gl(usr)
