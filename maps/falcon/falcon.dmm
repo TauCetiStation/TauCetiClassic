@@ -3275,15 +3275,18 @@
 	},
 /area/station/rnd/hallway)
 "afH" = (
-/obj/machinery/vending/hydronutrients,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools{
+	req_access = list(7)
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 22
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 6;
 	icon_state = "darkpurple"
 	},
-/area/asteroid/research_outpost/outpost_misc_lab)
+/area/station/rnd/hallway)
 "afI" = (
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/gun/energy/kinetic_accelerator{
@@ -3325,6 +3328,44 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/aisat)
+"afL" = (
+/obj/machinery/vending/hydronutrients,
+/obj/machinery/light_switch{
+	on = 0;
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkpurple"
+	},
+/area/asteroid/research_outpost/outpost_misc_lab)
+"afM" = (
+/obj/structure/table/reinforced,
+/obj/item/device/camera,
+/obj/item/device/guitar,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/asteroid/research_outpost/outpost_misc_lab)
+"afN" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/asteroid/research_outpost/outpost_misc_lab)
 "agI" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -3533,6 +3574,10 @@
 	dir = 1
 	},
 /obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5305,6 +5350,10 @@
 /area/station/maintenance/science)
 "cbd" = (
 /obj/structure/reagent_dispensers/coolanttank,
+/obj/machinery/light_switch{
+	on = 0;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -6251,15 +6300,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cWy" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/light,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
-	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "cXm" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -10210,10 +10263,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 22
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -11326,14 +11375,20 @@
 	},
 /area/station/cargo/storage)
 "hYy" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools{
-	req_access = list(7)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "darkpurple"
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/rnd/hallway)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/rnd/telesci)
 "hYL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -11918,6 +11973,11 @@
 	state = 2
 	},
 /obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "RnD Anomalous Materials Lab";
+	dir = 10;
+	network = list("Research","SS13")
+	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -11984,17 +12044,20 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/drone_fabrication)
 "iDh" = (
-/obj/machinery/suspension_gen,
-/obj/machinery/camera{
-	c_tag = "RnD South";
-	dir = 4;
-	network = list("SS13","Research")
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkpurple"
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/rnd/hallway)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/spectro)
 "iDT" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	filter_type = "oxygen";
@@ -21147,14 +21210,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "RnD Anomalous Materials Lab";
-	dir = 8;
-	network = list("Research","SS13")
-	},
-/obj/machinery/light_switch{
-	pixel_x = 25
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
@@ -22508,9 +22563,6 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -28200,19 +28252,20 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xMe" = (
-/obj/structure/table/reinforced,
-/obj/item/device/camera,
-/obj/item/device/guitar,
-/obj/machinery/light_switch{
-	on = 0;
-	pixel_x = -10;
-	pixel_y = -32
+/obj/machinery/suspension_gen,
+/obj/machinery/camera{
+	c_tag = "RnD South";
+	dir = 4;
+	network = list("SS13","Research")
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
+	dir = 8;
+	icon_state = "darkpurple"
 	},
-/area/asteroid/research_outpost/outpost_misc_lab)
+/area/station/rnd/hallway)
 "xMU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -62588,9 +62641,9 @@ sov
 uPO
 iao
 rNw
-pON
+iDh
 eEz
-pON
+iDh
 pON
 rNw
 noD
@@ -62848,7 +62901,7 @@ uDb
 ssk
 qdx
 knb
-iDh
+xMe
 afG
 afI
 bJp
@@ -63611,18 +63664,18 @@ noD
 oDH
 noD
 wyg
-wyg
+hYy
 tav
-wyg
+hYy
 wyg
 pFi
 tYi
 mBI
-hYy
+afH
 dTm
-dTm
+cWy
 jVo
-dTm
+cWy
 isF
 noD
 noD
@@ -63877,7 +63930,7 @@ uMa
 rHg
 rHg
 dTm
-afH
+afL
 uhR
 nXw
 isF
@@ -64393,7 +64446,7 @@ rHg
 afF
 fJZ
 rxP
-xMe
+afM
 isF
 goP
 goP
@@ -64907,7 +64960,7 @@ rHg
 pYv
 mBb
 fge
-cWy
+afN
 isF
 goP
 goP
