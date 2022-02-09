@@ -97,7 +97,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/drone/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Оберегай, чини и улучшай станцию в меру своих возможностей.")
 	add_inherent_law("Не причиняй вреда станции и чему-либо на ней.")
-	add_inherent_law("Не взаимодействовуй с кем-либо, кроме дронов.")
+	add_inherent_law("Не взаимодействуй с кем-либо, кроме дронов.")
 
 /* Religious */
 /datum/ai_laws/faith/commandments/New(datum/religion/R = global.chaplain_religion)
