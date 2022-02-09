@@ -9,9 +9,16 @@
 /datum/job/cyborg/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
+	total_positions = 0
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 2400
+
+/datum/job/ai/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
+	minimal_player_ingame_minutes = 3600
 
 /datum/job/rd/New()
 	..()
@@ -110,6 +117,13 @@
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 120
 
+/datum/job/chaplain/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
+	minimal_player_ingame_minutes = 240
+
 /datum/job/qm/New()
 	..()
 	MAP_JOB_CHECK
@@ -122,13 +136,16 @@
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 600
 
+/datum/job/recycler/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
+	minimal_player_ingame_minutes = 300
+
 MAP_REMOVE_JOB(barber)
 
-MAP_REMOVE_JOB(chaplain)
-
 MAP_REMOVE_JOB(cargo_tech)
-
-MAP_REMOVE_JOB(recycler)
 
 MAP_REMOVE_JOB(hydro)
 
@@ -163,7 +180,5 @@ MAP_REMOVE_JOB(warden)
 MAP_REMOVE_JOB(detective)
 
 MAP_REMOVE_JOB(forensic)
-
-MAP_REMOVE_JOB(ai)
 
 #undef JOB_MODIFICATION_MAP_NAME
