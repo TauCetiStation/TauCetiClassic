@@ -482,6 +482,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
 	S["age"]                   >> age
+	S["height"]                >> height
 	S["species"]               >> species
 	S["language"]              >> language
 
@@ -565,6 +566,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
+	height			= sanitize_inlist(height, heights_list, initial(height))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -667,6 +669,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender
 	S["age"]                   << age
+	S["height"]                << height
 	S["species"]               << species
 	S["language"]              << language
 	S["hair_red"]              << r_hair

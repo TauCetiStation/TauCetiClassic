@@ -145,7 +145,7 @@ var/global/list/department_radio_keys = list(
 
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
-	
+
 	//make sure we actually can hear there
 	if (T.sound_coefficient < 0.5)
 		message = Gibberish(message, (1.0 - max(0.0, T.sound_coefficient)) * 100 + 20)
@@ -177,7 +177,7 @@ var/global/list/department_radio_keys = list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)

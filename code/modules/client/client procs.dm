@@ -662,7 +662,9 @@ var/global/list/blacklisted_builds = list(
 			screen |= O
 		O.appearance = MA
 		O.set_dir(D)
-		O.underlays += image('icons/turf/floors.dmi', "floor")
+		var/image/floor = image('icons/turf/floors.dmi', icon_state="floor")
+		floor.appearance_flags |= KEEP_APART
+		O.underlays += floor
 		O.screen_loc = "character_preview_map:0,[pos]"
 
 /client/proc/clear_character_previews()
