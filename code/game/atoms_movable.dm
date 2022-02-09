@@ -146,23 +146,29 @@
 		else //Diagonal move, split it into cardinal moves
 			var/v = direction & NORTH_SOUTH
 			var/h = direction & EAST_WEST
+			var/diag_last_move = 0
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
 			if(.)
+				diag_last_move = h|v
 				moving_diagonally = SECOND_DIAG_STEP
 				if(!step(src, h))
 					set_dir(v)
+					diag_last_move = v
 			else
 				. = step(src, h)
 				if(.)
+					diag_last_move = h|v
 					moving_diagonally = SECOND_DIAG_STEP
 					if(!step(src, v))
 						set_dir(h)
+						diag_last_move = h
 			if(moving_diagonally == SECOND_DIAG_STEP && !inertia_moving)
 				inertia_next_move = world.time + inertia_move_delay
 				newtonian_move(direction)
 			moving_diagonally = FALSE
+			last_move = diag_last_move
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
@@ -190,7 +196,8 @@
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
-	last_move = direction
+	if(!moving_diagonally)
+		last_move = direction
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc, direction, glide_size_override)) //movement failed due to buckled mob
 		return FALSE
