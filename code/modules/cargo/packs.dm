@@ -284,11 +284,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug)
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot)
 	cost = 2000
 	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
