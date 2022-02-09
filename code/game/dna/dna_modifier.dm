@@ -242,7 +242,6 @@
 		A.loc = loc
 		A.ex_act(severity)
 	qdel(src)
-	return
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))

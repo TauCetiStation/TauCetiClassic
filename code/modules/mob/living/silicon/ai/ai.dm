@@ -465,21 +465,20 @@ var/global/list/ai_verbs_default = list(
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-	if(stat != DEAD)
-		switch(severity)
-			if(1)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-			if(2)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-			if(3)
-				adjustBruteLoss(30)
-
+	switch(severity)
+		if(1)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(2)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)

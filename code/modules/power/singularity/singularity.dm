@@ -82,7 +82,7 @@
 				log_investigate("has been destroyed by a heavy explosion.",INVESTIGATE_SINGULO)
 				qdel(src)
 				return
-	energy -= round(((energy+1)/(severity + 1)),1)
+	energy -= round(((energy + 1) / (severity + 1)), 1)
 
 /obj/singularity/Bump(atom/A)
 	consume(A)

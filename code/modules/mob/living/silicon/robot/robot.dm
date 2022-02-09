@@ -487,21 +487,21 @@
 	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-	if(stat != DEAD)
-		switch(severity)
-			if(1)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
-			if(2)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-			if(3)
-				adjustBruteLoss(30)
-
+	switch(severity)
+		if(1)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+			gib()
+			return
+		if(2)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 	updatehealth()
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)

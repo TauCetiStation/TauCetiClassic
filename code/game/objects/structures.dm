@@ -43,7 +43,6 @@
 		AM.forceMove(loc)
 		AM.ex_act(severity++)
 	qdel(src)
-	return
 
 /obj/structure/proc/climb_on()
 
