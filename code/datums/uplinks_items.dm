@@ -542,7 +542,7 @@
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
-	item = /obj/item/weapon/soap/syndie
+	item = /obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix
