@@ -356,6 +356,7 @@
 #include "code\datums\outfits\jobs\science.dm"
 #include "code\datums\outfits\jobs\security.dm"
 #include "code\datums\outfits\misc\arena.dm"
+#include "code\datums\outfits\misc\spy.dm"
 #include "code\datums\spawners_menu\spawners.dm"
 #include "code\datums\spawners_menu\spawners_menu.dm"
 #include "code\datums\spells\area_teleport.dm"
