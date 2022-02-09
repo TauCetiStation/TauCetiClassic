@@ -190,6 +190,17 @@
 /area/station/maintenance/auxsolarport)
 "aap" = (
 /obj/machinery/vending/junkfood,
+/obj/structure/sign/directions/security{
+	buildable_sign = 0;
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/science{
+	buildable_sign = 0;
+	pixel_x = -32;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -19129,7 +19140,6 @@
 	},
 /area/station/maintenance/medbay)
 "puN" = (
-/obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/weapon/pen/blue{
@@ -19147,6 +19157,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = -32
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -22642,11 +22653,11 @@
 /area/asteroid/mine/dwarf)
 "sDC" = (
 /obj/machinery/computer/skills,
-/obj/structure/table,
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = -28
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -23790,11 +23801,6 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "tOr" = (
-/obj/structure/table,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -23803,6 +23809,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/computer/aifixer,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
