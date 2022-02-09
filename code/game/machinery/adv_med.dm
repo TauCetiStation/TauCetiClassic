@@ -120,7 +120,7 @@
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(EXPLODE_LIGHT)
 			return
 		if(EXPLODE_HEAVY)
 			if(prob(50))

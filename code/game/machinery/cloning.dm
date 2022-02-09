@@ -418,7 +418,7 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
-	for(var/atom/movable/A as mob|obj in src)
+	for(var/atom/movable/A as anything in src)
 		A.loc = src.loc
 		ex_act(severity)
 	qdel(src)

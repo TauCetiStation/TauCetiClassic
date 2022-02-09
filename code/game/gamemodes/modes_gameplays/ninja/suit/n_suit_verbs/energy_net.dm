@@ -69,10 +69,10 @@
 
 /obj/effect/energy_net/ex_act(severity)
 	if(severity == EXPLODE_LIGHT && prob(50))
-		health-= 25
+		health -= 25
 		healthcheck()
 		return
-	health-=50
+	health -= 50
 	healthcheck()
 
 /obj/effect/energy_net/blob_act()
