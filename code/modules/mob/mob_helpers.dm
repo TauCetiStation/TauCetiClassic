@@ -209,7 +209,7 @@
 			if(10)
 				new_letter += "'"
 			if(11 to 15)
-				break
+				continue
 
 		new_text += new_letter
 

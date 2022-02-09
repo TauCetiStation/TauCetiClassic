@@ -248,7 +248,7 @@
 							emote("drool")
 
 			if(19 to 200)
-				break
+				return
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 

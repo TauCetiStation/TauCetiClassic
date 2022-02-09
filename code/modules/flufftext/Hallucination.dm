@@ -280,7 +280,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					hal_screwyhud = 0
 
 			if(76 to 100)
-				break
+				continue
 
 	handling_hal = 0
 
