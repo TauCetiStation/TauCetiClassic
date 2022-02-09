@@ -183,13 +183,13 @@
 
 /obj/structure/girder/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(70))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
 	var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)

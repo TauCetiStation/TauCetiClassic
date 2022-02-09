@@ -80,10 +80,10 @@
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(30))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	mined_ore = 3 - severity
 	GetDrilled()
@@ -675,10 +675,10 @@
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(30))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	gets_dug()
 

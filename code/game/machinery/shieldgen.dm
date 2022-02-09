@@ -63,10 +63,10 @@
 
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
 
@@ -167,15 +167,15 @@
 
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			src.health -= 75
 			checkhp()
-		if(2)
+		if(EXPLODE_HEAVY)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			checkhp()
-		if(3)
+		if(EXPLODE_LIGHT)
 			src.health -= 10
 			checkhp()
 	return
@@ -569,13 +569,13 @@
 		else
 			G = gen_secondary
 		switch(severity)
-			if(1) //big boom
+			if(EXPLODE_DEVASTATE)
 				G.storedpower -= 200
 
-			if(2) //medium boom
+			if(EXPLODE_HEAVY) //medium boom
 				G.storedpower -= 50
 
-			if(3) //lil boom
+			if(EXPLODE_LIGHT) //lil boom
 				G.storedpower -= 20
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

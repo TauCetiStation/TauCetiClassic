@@ -12,17 +12,17 @@
 
 /obj/structure/displaycase/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			new /obj/item/weapon/shard( src.loc )
 			if (occupied)
 				new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 				occupied = 0
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				src.health -= 15
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				src.health -= 5
 	healthcheck()

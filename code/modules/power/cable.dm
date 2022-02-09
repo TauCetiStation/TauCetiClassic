@@ -170,13 +170,13 @@ By design, d1 is the smallest direction and d2 is the highest
 //explosion handling
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
 	new /obj/item/stack/cable_coil(loc, d1 ? 2 : 1, color)

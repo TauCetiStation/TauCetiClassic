@@ -367,7 +367,7 @@
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			T.ex_act(1)
+			T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))

@@ -94,10 +94,10 @@ for reference:
 
 /obj/structure/barricade/wooden/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			src.health -= 25
 			if (src.health <= 0)
 				visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
@@ -213,9 +213,9 @@ for reference:
 
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			explode()
-		if(2)
+		if(EXPLODE_HEAVY)
 			src.health -= 25
 			if(src.health <= 0)
 				explode()

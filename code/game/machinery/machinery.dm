@@ -240,10 +240,10 @@ Class Procs:
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if (prob(75))
 				return
 	qdel(src)
@@ -535,8 +535,8 @@ Class Procs:
 	if(prob(85))
 		emp_act(2)
 	else if(prob(50))
-		ex_act(3)
+		ex_act(EXPLODE_LIGHT)
 	else if(prob(90))
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else
-		ex_act(1)
+		ex_act(EXPLODE_DEVASTATE)

@@ -105,11 +105,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(maxHealth * 0.8)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.4)
 
 ////////////Drone(miniBoss)/////////////

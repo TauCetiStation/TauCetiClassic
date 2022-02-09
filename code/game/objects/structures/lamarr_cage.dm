@@ -12,15 +12,15 @@
 
 /obj/structure/lamarr/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			new /obj/item/weapon/shard( src.loc )
 			Break()
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				src.health -= 15
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				src.health -= 5
 	healthcheck()

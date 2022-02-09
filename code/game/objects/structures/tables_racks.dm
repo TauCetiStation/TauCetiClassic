@@ -97,10 +97,10 @@
 
 /obj/structure/table/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(25))
 				destroy()
 				return
@@ -599,13 +599,13 @@
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				new /obj/item/weapon/rack_parts(src.loc)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
 	qdel(src)

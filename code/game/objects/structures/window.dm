@@ -95,11 +95,11 @@
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(30, 50))
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(5, 15))
 
 /obj/structure/window/airlock_crush_act()

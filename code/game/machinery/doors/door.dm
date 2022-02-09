@@ -194,10 +194,10 @@
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(75))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)

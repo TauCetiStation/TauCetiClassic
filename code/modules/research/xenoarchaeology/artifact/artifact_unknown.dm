@@ -318,14 +318,14 @@
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				try_toggle_effects(TRIGGER_FORCE)
 				try_toggle_effects(TRIGGER_HEAT)
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			try_toggle_effects(TRIGGER_FORCE)
 			try_toggle_effects(TRIGGER_HEAT)
 			return

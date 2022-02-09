@@ -96,14 +96,14 @@
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/O in src.contents)
 				qdel(O)
-		if(2)
+		if(EXPLODE_HEAVY)
 			for(var/obj/O in src.contents)
 				if(prob(50))
 					qdel(O)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				return
 	qdel(src)

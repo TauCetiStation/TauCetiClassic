@@ -64,10 +64,10 @@
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
 
@@ -353,10 +353,10 @@
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
 

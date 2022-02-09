@@ -139,13 +139,13 @@
 
 /obj/machinery/bot/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			explode()
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			src.health -= rand(5,10)*fire_dam_coeff
 			src.health -= rand(10,20)*brute_dam_coeff
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				src.health -= rand(1,5)*fire_dam_coeff
 				src.health -= rand(1,5)*brute_dam_coeff

@@ -34,10 +34,10 @@
 
 /obj/structure/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			return
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(loc)

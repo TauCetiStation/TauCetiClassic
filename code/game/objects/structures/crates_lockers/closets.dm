@@ -144,10 +144,10 @@
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
 	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion

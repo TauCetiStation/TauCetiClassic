@@ -449,11 +449,11 @@ var/global/list/turret_icons
 
 /obj/machinery/porta_turret/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(75))
 				take_damage(initial(health) * 8) //should instakill most turrets
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(initial(health) * 8 * 0.33) // 8/3 ~ 8*0.33
 			return
 	qdel(src)

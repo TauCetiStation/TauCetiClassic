@@ -225,14 +225,14 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				qdel(src)
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				return
 

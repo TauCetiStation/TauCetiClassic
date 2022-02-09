@@ -207,10 +207,10 @@
 	s.set_up(5, 1, src)
 	s.start()
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(prob(50))
 				return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(75))
 				return
 	empty_content()

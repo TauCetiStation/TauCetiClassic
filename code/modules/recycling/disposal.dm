@@ -863,12 +863,12 @@
 // pipe affected by explosion
 /obj/structure/disposalpipe/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			broken(0)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			health -= rand(5,15)
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= rand(0,15)
 	healthcheck()
 

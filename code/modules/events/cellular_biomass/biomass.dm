@@ -122,10 +122,10 @@
 
 /obj/effect/biomass/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(10))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				return
 	qdel(src)

@@ -492,15 +492,15 @@
 	if(!blinded)
 		flash_eyes()
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			adjustBruteLoss(100)
 			adjustFireLoss(100)
 			gib()
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 	updatehealth()
 

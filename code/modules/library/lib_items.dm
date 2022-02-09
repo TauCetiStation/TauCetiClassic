@@ -54,16 +54,16 @@
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/book/b in contents)
 				qdel(b)
-		if(2)
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/book/b in contents)
 				if(prob(50))
 					b.loc = (get_turf(src))
 				else
 					qdel(b)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				return
 			for(var/obj/item/weapon/book/b in contents)

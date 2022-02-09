@@ -101,10 +101,10 @@
 
 /obj/machinery/bodyscanner/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
 	for(var/atom/movable/A in src)
@@ -120,9 +120,9 @@
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
-		if(3)
+		if(EXPLODE_DEVASTATE)
 			return
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
 	qdel(src)

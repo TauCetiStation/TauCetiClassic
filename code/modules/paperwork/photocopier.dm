@@ -151,13 +151,13 @@
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 					toner = 0
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))

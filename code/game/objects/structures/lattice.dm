@@ -37,7 +37,7 @@
 	return
 
 /obj/structure/lattice/ex_act(severity)
-	if(severity <= 2)
+	if(severity <= EXPLODE_HEAVY)
 		qdel(src)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user)

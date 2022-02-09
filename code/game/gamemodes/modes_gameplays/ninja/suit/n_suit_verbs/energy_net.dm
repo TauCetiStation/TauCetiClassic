@@ -68,7 +68,7 @@
 	return PROJECTILE_ACTED
 
 /obj/effect/energy_net/ex_act(severity)
-	if(severity == 3 && prob(50))
+	if(severity == EXPLODE_LIGHT && prob(50))
 		health-= 25
 		healthcheck()
 		return

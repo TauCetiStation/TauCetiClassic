@@ -75,13 +75,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	if (prob(25))
 		new /obj/effect/effect/smoke(src.loc)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			new /obj/effect/scrapshot(src.loc, 1)
 			dig_amount = 0
-		if(2)
+		if(EXPLODE_HEAVY)
 			new /obj/effect/scrapshot(src.loc, 2)
 			dig_amount = dig_amount / 3
-		if(3)
+		if(EXPLODE_LIGHT)
 			dig_amount = dig_amount / 2
 	if(dig_amount < 4)
 		qdel(src)
