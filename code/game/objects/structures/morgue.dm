@@ -60,20 +60,18 @@
 		icon_state = "morgue1"
 
 /obj/structure/morgue/ex_act(severity)
-	var/chance = 0
 	switch(severity)
-		if(1.0)
-			chance = 100
-		if(2.0)
-			chance = 50
-		if(3.0)
-			chance = 5
+		if(2)
+			if(prob(50))
+				return
+		if(3)
+			if(prob(95))
+				return
 
-	if (prob(chance))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-			A.ex_act(severity)
-		qdel(src)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/structure/morgue/alter_health()
 	return loc
@@ -286,27 +284,17 @@
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
+		if(3)
+			if(prob(95))
 				return
-	return
+
+	for(var/atom/movable/A as mob|obj in src)
+		A.loc = src.loc
+		ex_act(severity)
+	qdel(src)
 
 /obj/structure/crematorium/alter_health()
 	return src.loc

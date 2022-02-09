@@ -151,22 +151,18 @@
 /mob/living/silicon/pai/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
-
+	if(stat == DEAD)
+		return
 	switch(severity)
-		if(1.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(1)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(2)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 // See software.dm for Topic()
 

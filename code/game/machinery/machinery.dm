@@ -240,19 +240,13 @@ Class Procs:
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(2)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(3)
+			if (prob(75))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/machinery/blob_act()
 	if(prob(50))

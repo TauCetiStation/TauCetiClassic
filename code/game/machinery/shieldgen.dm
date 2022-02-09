@@ -58,25 +58,17 @@
 	spawn(20) if(src) opacity = 0
 
 /obj/machinery/shield/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			if (prob(75))
-				qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-	return
+	if(prob(100 - (severity * 25)))
+		qdel(src)
 
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
-		if(1)
-			qdel(src)
 		if(2)
 			if(prob(50))
-				qdel(src)
+				return
+		if(3)
+			return
+	qdel(src)
 
 /obj/machinery/shield/blob_act()
 	qdel(src)
@@ -175,15 +167,15 @@
 
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			checkhp()
 	return
@@ -572,29 +564,19 @@
 /obj/machinery/shieldwall/ex_act(severity)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
+		if(prob(50))
+			G = gen_primary
+		else
+			G = gen_secondary
 		switch(severity)
-			if(1.0) //big boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(1) //big boom
 				G.storedpower -= 200
 
-			if(2.0) //medium boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(2) //medium boom
 				G.storedpower -= 50
 
-			if(3.0) //lil boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(3) //lil boom
 				G.storedpower -= 20
-	return
-
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1

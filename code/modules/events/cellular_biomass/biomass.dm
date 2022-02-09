@@ -122,18 +122,13 @@
 
 /obj/effect/biomass/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(90))
-				qdel(src)
+		if(2)
+			if(prob(10))
 				return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
+		if(3)
+			if(prob(50))
 				return
-	return
+	qdel(src)
 
 /obj/effect/biomass/fire_act(null, temperature, volume) //hotspots kill biomass
 	if(temperature > T0C+100)

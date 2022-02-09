@@ -142,19 +142,13 @@
 
 /obj/effect/glowshroom/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(3)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/effect/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

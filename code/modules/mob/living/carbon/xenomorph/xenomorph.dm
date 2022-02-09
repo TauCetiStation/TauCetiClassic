@@ -219,12 +219,12 @@ Hit Procs
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1)
 			b_loss += 500
 			gib()
 			return
 
-		if (2.0)
+		if(2)
 			if (!shielded)
 				b_loss += 60
 
@@ -233,7 +233,7 @@ Hit Procs
 			ear_damage += 30
 			ear_deaf += 120
 
-		if(3.0)
+		if(3)
 			b_loss += 30
 			if (prob(50) && !shielded)
 				Paralyse(1)

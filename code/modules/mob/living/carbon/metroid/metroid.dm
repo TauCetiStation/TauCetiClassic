@@ -224,17 +224,17 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if (1)
 			b_loss += 500
 			return
 
-		if (2.0)
+		if (2)
 
 			b_loss += 60
 			f_loss += 60
 
 
-		if(3.0)
+		if(3)
 			b_loss += 30
 
 	adjustBruteLoss(b_loss)

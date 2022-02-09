@@ -60,14 +60,13 @@ var/global/list/mechtoys = list(
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
-		if (1)
-			qdel(src)
-		if (2)
-			if (prob(50))
-				qdel(src)
-		if (3)
-			if (prob(5))
-				qdel(src)
+		if(2)
+			if(prob(50))
+				return
+		if(3)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return

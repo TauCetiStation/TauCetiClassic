@@ -12,18 +12,18 @@
 
 /obj/structure/lamarr/ex_act(severity)
 	switch(severity)
-		if (1)
+		if(1)
 			new /obj/item/weapon/shard( src.loc )
 			Break()
 			qdel(src)
-		if (2)
-			if (prob(50))
+			return
+		if(2)
+			if(prob(50))
 				src.health -= 15
-				healthcheck()
-		if (3)
-			if (prob(50))
+		if(3)
+			if(prob(50))
 				src.health -= 5
-				healthcheck()
+	healthcheck()
 
 
 /obj/structure/lamarr/bullet_act(obj/item/projectile/Proj)

@@ -68,15 +68,12 @@
 	return PROJECTILE_ACTED
 
 /obj/effect/energy_net/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			health-=50
-		if(2.0)
-			health-=50
-		if(3.0)
-			health-=prob(50)?50:25
+	if(severity == 3 && prob(50))
+		health-= 25
+		healthcheck()
+		return
+	health-=50
 	healthcheck()
-	return
 
 /obj/effect/energy_net/blob_act()
 	health-=50

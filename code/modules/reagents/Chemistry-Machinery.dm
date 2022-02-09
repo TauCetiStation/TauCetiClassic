@@ -64,13 +64,12 @@
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
+		if(3)
+			return
+	qdel(src)
 
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
@@ -354,13 +353,12 @@
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
+		if(3)
+			return
+	qdel(src)
 
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))

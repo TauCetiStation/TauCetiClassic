@@ -140,20 +140,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(3)
+			if(prob(75))
 				return
-		else
-	return
-
+	qdel(src)
 
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
@@ -321,19 +314,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 /obj/machinery/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(2)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(3)
+			if(prob(75))
 				return
-		else
-	return
+	qdel(src)
 
 
 /obj/machinery/particle_accelerator/blob_act()

@@ -197,7 +197,6 @@
 				dismantle_wall(1,1)
 		if(3)
 			take_damage(rand(0, 55))
-	return
 
 /turf/simulated/wall/blob_act()
 	take_damage(rand(75, 125))

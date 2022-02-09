@@ -37,17 +37,8 @@
 	return
 
 /obj/structure/lattice/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			qdel(src)
-			return
-		if(3.0)
-			return
-		else
-	return
+	if(severity <= 2)
+		qdel(src)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user)
 

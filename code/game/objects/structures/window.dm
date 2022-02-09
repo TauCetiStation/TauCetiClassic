@@ -95,15 +95,12 @@
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-			return
-		if(2.0)
+		if(2)
 			take_damage(rand(30, 50))
-			return
-		if(3.0)
+		if(3)
 			take_damage(rand(5, 15))
-			return
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2)

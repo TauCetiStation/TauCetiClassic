@@ -97,18 +97,14 @@
 
 /obj/structure/table/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(2)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
+		if(3)
+			if(prob(25))
 				destroy()
-		else
-	return
+				return
+	qdel(src)
 
 /obj/structure/table/airlock_crush_act()
 	destroy()
@@ -603,16 +599,17 @@
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
-			qdel(src)
+			return
+		if(2)
 			if(prob(50))
 				new /obj/item/weapon/rack_parts(src.loc)
-		if(3.0)
-			if(prob(25))
-				qdel(src)
-				new /obj/item/weapon/rack_parts(src.loc)
+		if(3)
+			if(prob(75))
+				return
+	qdel(src)
+	new /obj/item/weapon/rack_parts(src.loc)
 
 /obj/structure/rack/airlock_crush_act()
 	destroy()
