@@ -47,12 +47,12 @@
 		stat.last_attacker_name = H.lastattacker?.name
 		stat.last_attacker_key = H.lastattacker?.key
 
-	stat.damage["BRUTE"] = H.bruteloss
-	stat.damage["FIRE"]  = H.fireloss
-	stat.damage["TOXIN"] = H.toxloss
-	stat.damage["OXY"]   = H.oxyloss
-	stat.damage["CLONE"] = H.cloneloss
-	stat.damage["BRAIN"] = H.brainloss
+	stat.damage["BRUTE"] = H.getBruteLoss()
+	stat.damage["FIRE"]  = H.getFireLoss()
+	stat.damage["TOXIN"] = H.getToxLoss()
+	stat.damage["OXY"]   = H.getOxyLoss()
+	stat.damage["CLONE"] = H.getCloneLoss()
+	stat.damage["BRAIN"] = H.getBrainLoss()
 
 	if(H.mind)
 		stat.mind_name = H.mind.name
@@ -85,16 +85,74 @@
 	if(antag_roles?.len)
 		stat.antag_roles = list()
 		for(var/role in antag_roles)
-			antag_roles += role
+			stat.antag_roles += role
 
 	manifest_entries += stat
 
-/*
-/datum/stat_collector/proc/add_role(datum/role/R)
-	R.stat_datum.generate_statistics(R)
-	roles.Add(R.stat_datum)
+/datum/stat_collector/proc/get_objective_stat(datum/objective/O)
+	var/datum/stat/objective/stat = new
+	stat.explanation_text = O.explanation_text
+	stat.completed = O.completion_to_string(tags = FALSE)
+	stat.__type = O.type
+
+	if(O.faction)
+		stat.owner = O.faction.ID
+	else if(O.owner)
+		stat.owner = STRIP_NEWLINE(O.owner.name)
+
+	if(istype(O, /datum/objective/target))
+		var/datum/objective/target/T = O
+		stat.target_name = STRIP_NEWLINE(T.target.name)
+		stat.target_ckey = ckey(T.target.key)
+
+	return stat
+
+/datum/stat_collector/proc/get_role_stat(datum/role/R)
+	var/datum/stat/role/stat = new R.stat_type
+	stat.name = R.name
+	stat.id = R.id
+	stat.__type = R.type
+
+	if(R.faction)
+		stat.faction_id = R.faction.ID
+
+	if(R.antag)
+		stat.mind_name = STRIP_NEWLINE(R.antag.name)
+		stat.mind_ckey = ckey(R.antag.key)
+
+	stat.is_roundstart_role = R.is_roundstart_role
+	stat.victory = R.IsSuccessful()
+
+	if(R.objectives)
+		stat.objectives = list()
+		for(var/datum/objective/O in R.objectives.GetObjectives())
+			stat.objectives += get_objective_stat(O)
+
+	stat.set_custom_stat(R)
+	return stat
+
+/datum/stat_collector/proc/add_orphaned_role(datum/role/R)
+	orphaned_roles += get_role_stat(R)
 
 /datum/stat_collector/proc/add_faction(datum/faction/F)
-	F.stat_datum.generate_statistics(F)
-	factions.Add(F.stat_datum)
-*/
+	var/datum/stat/faction/stat = new F.stat_type
+
+	stat.name = F.name
+	stat.id = F.ID
+	stat.__type = F.type
+
+	stat.victory = F.IsSuccessful()
+	stat.minor_victory = F.minor_victory
+
+	if(F.objective_holder.objectives.len)
+		stat.objectives = list()
+		for(var/datum/objective/O in F.objective_holder.GetObjectives())
+			stat.objectives += get_objective_stat(O)
+
+	if(F.members.len)
+		stat.members = list()
+		for(var/datum/role/R in F.members)
+			stat.members += get_role_stat(R)
+
+	stat.set_custom_stat(F)
+	factions += stat

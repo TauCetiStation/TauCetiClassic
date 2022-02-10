@@ -43,8 +43,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	SSStatistics.add_death_stat(src)
-
 	if(mind && is_station_level(z))
 		global.deaths_during_shift++
 
@@ -84,8 +82,9 @@
 			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
+	..(gibbed)
 
-	return ..(gibbed)
+	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)

@@ -18,7 +18,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 #define STAT_FILE_NAME "stat.json"
 
 /datum/stat_collector
-	var/const/data_revision = STAT_OUTPUT_VERSION
+	var/const/statistics_version = STAT_OUTPUT_VERSION
 	var/round_id
 	var/start_time
 	var/end_time
@@ -29,7 +29,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/server_address
 
 	var/completion_html
-	// Deprecated
+	// Deprecated, use roles and factions lists instead
 	var/list/datum/stat/antagonists_completion/completion_antagonists = list()
 
 	var/datum/stat/score/score = new /datum/stat/score
@@ -40,23 +40,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/death_stat/deaths = list()
 	var/list/datum/stat/explosion_stat/explosions = list()
 	var/list/datum/stat/manifest_entry/manifest_entries = list()
-
-	// UNUSED
-	// var/enabled = 1
-	//
-	//var/list/survivors = list()
-	//var/list/uplink_purchases = list()
-	//var/list/badass_bundles = list()
-	//var/list/antag_objectives = list()
-	//var/list/datum/stat/role/roles = list()
-	//var/list/datum/stat/faction/factions = list()
-//
-	//// THESE MUST BE SET IN POSTROUNDCHECKS OR SOMEWHERE ELSE BEFORE THAT IS CALLED
-	//var/round_start_time = null
-	//var/round_end_time = null
-	//var/map_name = null
-	//var/tech_total = 0
-	//var/station_name = null
+	var/list/datum/stat/role/orphaned_roles = list()
+	var/list/datum/stat/faction/factions = list()
 
 /datum/stat_collector/proc/drop_round_stats(stealth = FALSE)
 	var/statfile = file("[global.log_directory]/[STAT_FILE_NAME]")

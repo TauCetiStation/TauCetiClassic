@@ -34,6 +34,9 @@
 	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
+	// Type for collector of statistics by this faction
+	var/datum/stat/faction/stat_type = /datum/stat/faction
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()

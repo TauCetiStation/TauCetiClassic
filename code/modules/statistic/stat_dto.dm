@@ -104,13 +104,3 @@
 	var/assignment
 	var/special_role
 	var/list/antag_roles = null // not a list
-
-/datum/stat/antag_objective
-	var/mind_name
-	var/key
-	var/special_role
-	var/objective_type
-	var/objective_desc
-	var/objective_succeeded
-	var/target_name
-	var/target_role
