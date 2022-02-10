@@ -118,6 +118,8 @@
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
