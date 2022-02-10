@@ -217,7 +217,7 @@
 	return
 
 /mob/proc/check_mob_slippery()
-	var/obj/item/device/pda/clown/slip_pda = locate() in get_contents()
+	var/obj/item/device/pda/slip_pda = locate() in get_contents()
 	var/mob/living/carbon/human/pda_user = slip_pda.loc
 	if(slip_pda.owner_slippery && (pda_user.l_store == slip_pda || pda_user.r_store == slip_pda || pda_user.belt == slip_pda || pda_user.wear_id == slip_pda))
 		src.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)

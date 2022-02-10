@@ -682,16 +682,13 @@
 				var/turf/T = loc
 				if(ismob(T))
 					T = T.loc
-				if(istype(cartridge.loc, /obj/item/device/pda/clown))
-					owner_slippery = TRUE
-				else
-					owner_slippery = FALSE
 				cartridge.loc = T
 				mode = 0
 				scanmode = 0
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
+				owner_slippery = FALSE
 
 //MENU FUNCTIONS===================================
 
@@ -1284,6 +1281,8 @@
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
+		if(istype(src, /obj/item/device/pda/clown))
+			src.owner_slippery = TRUE
 		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
