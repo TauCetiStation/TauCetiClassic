@@ -622,7 +622,6 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 	var/mob/living/U = usr
-	var/obj/item/device/pda/pda = locate() in U.loc//get_contents()
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	// if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that. // Actually, not
 	if (!can_use() || !Adjacent(U))
@@ -683,16 +682,16 @@
 				var/turf/T = loc
 				if(ismob(T))
 					T = T.loc
+				if(istype(cartridge.loc, /obj/item/device/pda/clown))
+					owner_slippery = TRUE
+				else
+					owner_slippery = FALSE
 				cartridge.loc = T
 				mode = 0
 				scanmode = 0
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
-				if(istype(pda, /obj/item/device/pda/clown))
-					owner_slippery = TRUE
-				else
-					owner_slippery = FALSE
 
 //MENU FUNCTIONS===================================
 
