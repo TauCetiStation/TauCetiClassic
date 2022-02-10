@@ -20,6 +20,9 @@
 
 	// Which slot should we use on species.sprite_sheets, as for the species specified above.
 	var/sprite_sheet_slot
+	var/list/accessories = list()
+	var/list/valid_accessory_slots
+	var/list/restricted_accessory_slots
 
 /obj/item/clothing/atom_init()
 	. = ..()
@@ -178,7 +181,6 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		icon = initial(icon)
 
-
 /obj/item/clothing/MouseDrop(obj/over_object)
 	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
@@ -213,6 +215,111 @@ var/global/list/icon_state_allowed_cache = list()
 							M.put_in_l_hand(src)
 					else
 						usr.delay_clothing_unequip(src)
+
+/obj/item/clothing/emp_act(severity)
+	..()
+	if(accessories.len)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.emplode(severity)
+
+/obj/item/clothing/AltClick()
+	handle_accessories_removal()
+
+/obj/item/clothing/proc/can_attach_accessory(obj/item/clothing/accessory/A)
+	if(valid_accessory_slots && istype(A) && (A.slot in valid_accessory_slots))
+		. = TRUE
+	else
+		return FALSE
+	if(accessories.len && restricted_accessory_slots && (A.slot in restricted_accessory_slots))
+		for(var/obj/item/clothing/accessory/AC in accessories)
+			if (AC.slot == A.slot)
+				return FALSE
+
+/obj/item/clothing/verb/removetie()
+	set name = "Remove Accessory"
+	set category = "Object"
+	set src in usr
+	handle_accessories_removal()
+
+/obj/item/clothing/proc/handle_accessories_removal()
+	if(!isliving(usr))
+		return
+	if(usr.incapacitated())
+		return
+	if(!Adjacent(usr))
+		return
+	if(!accessories.len)
+		return
+	if(!istype(usr, /mob/living))
+		return
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
+	var/obj/item/clothing/accessory/A
+	if(accessories.len > 1)
+		A = input("Select an accessory to remove from [src]") as null|anything in accessories
+	else
+		A = accessories[1]
+	remove_accessory(usr, A)
+
+/obj/item/clothing/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
+	if(QDELETED(A) || !(A in accessories))
+		return
+	if(!isliving(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user))
+		return
+	A.on_removed(user)
+	accessories -= A
+	A.update_icon()
+	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_w_uniform()
+		H.update_inv_wear_suit()
+		action_button_name = null
+
+/obj/item/clothing/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(can_attach_accessory(A))
+			user.drop_from_inventory(A, src)
+			accessories += A
+			A.on_attached(src, user)
+
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_w_uniform()
+				H.update_inv_wear_suit()
+			action_button_name = "Use inventory."
+			return
+		else
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
+
+	if(accessories.len)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.attack_accessory(I, user, params)
+		return
+
+	return ..()
+
+/obj/item/clothing/attack_hand(mob/user)
+	if(accessories.len && loc == user)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.attack_hand(user)
+		return
+
+	..()
+
+
+/obj/item/clothing/examine(mob/user)
+	..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
@@ -433,6 +540,9 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
+	valid_accessory_slots = list("armband","decor")
+	restricted_accessory_slots = list("armband")
+
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 
@@ -526,7 +636,6 @@ BLIND     // can't see anything
 		2 = Report detailed damages
 		3 = Report location
 		*/
-	var/list/accessories = list()
 	var/displays_id = 1
 	var/rolled_down = 0
 	var/basecolor
@@ -534,76 +643,14 @@ BLIND     // can't see anything
 	var/fresh_laundered_until = 0
 
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
-
-/obj/item/clothing/under/emp_act(severity)
-	..()
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emplode(severity)
+	valid_accessory_slots = list("utility","armband","decor")
+	restricted_accessory_slots = list("utility", "armband")
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
 		fresh_laundered_until = world.time
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
-
-/obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
-	if(istype(A))
-		. = TRUE
-	else
-		return FALSE
-	if(accessories.len && (A.slot in list("utility","armband")))
-		for(var/obj/item/clothing/accessory/AC in accessories)
-			if (AC.slot == A.slot)
-				return FALSE
-
-/obj/item/clothing/under/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	handle_accessories_removal()
-
-/obj/item/clothing/under/proc/handle_accessories_removal()
-	if(!isliving(usr))
-		return
-	if(usr.incapacitated())
-		return
-	if(!Adjacent(usr))
-		return
-	if(!accessories.len)
-		return
-	if(!istype(usr, /mob/living))
-		return
-
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
-	var/obj/item/clothing/accessory/A
-	if(accessories.len > 1)
-		A = input("Select an accessory to remove from [src]") as null|anything in accessories
-	else
-		A = accessories[1]
-	remove_accessory(usr, A)
-
-/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
-	if(QDELETED(A) || !(A in accessories))
-		return
-	if(!isliving(user))
-		return
-	if(user.incapacitated())
-		return
-	if(!Adjacent(user))
-		return
-	A.on_removed(user)
-	accessories -= A
-	A.update_icon()
-	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
-		action_button_name = null
-
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
@@ -612,39 +659,13 @@ BLIND     // can't see anything
 		qdel(src)
 		return
 
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(can_attach_accessory(A))
-			user.drop_from_inventory(A, src)
-			accessories += A
-			A.on_attached(src, user)
-
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
-			action_button_name = "Use inventory."
-			return
-		else
-			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
-
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_accessory(I, user, params)
-		return
-
 	return ..()
 
-/obj/item/clothing/under/AltClick()
-	handle_accessories_removal()
-
 /obj/item/clothing/under/attack_hand(mob/user)
-	//only forward to the attached accessory if the clothing is equipped (not in a storage)
-	if(accessories.len && loc == user)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_hand(user)
-		return
-
 	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
+		if(accessories.len && loc == user)
+			for(var/obj/item/clothing/accessory/A in accessories)
+				A.attack_hand(user)
 		return
 
 	..()
@@ -663,9 +684,6 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-
-	for(var/obj/item/clothing/accessory/A in accessories)
-		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr

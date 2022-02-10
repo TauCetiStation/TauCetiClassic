@@ -5,6 +5,7 @@
 	icon_state = "red"
 	item_color = "red"
 	layer_priority = 0.1
+	slot = "armband"
 
 /obj/item/clothing/accessory/armband/cargo
 	name = "cargo bay guard armband"

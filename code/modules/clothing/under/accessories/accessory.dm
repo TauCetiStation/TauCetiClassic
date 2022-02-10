@@ -9,7 +9,7 @@
 	w_class = SIZE_TINY
 
 	var/slot = "decor"
-	var/obj/item/clothing/under/has_suit = null // the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null // the suit the tie may be attached to
 	var/image/inv_overlay = null                // overlay used when attached to clothing.
 	var/layer_priority = 0                      // so things such as medals won't be drawn under webbings or holsters on mob, still problem with inside inventory.
 
@@ -18,7 +18,7 @@
 	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
+/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/S, mob/user, silent)
 	if(!istype(S))
 		return
 	has_suit = S
@@ -302,7 +302,7 @@
 		camera.status = FALSE
 	return TRUE
 
-/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
+/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/S, mob/user, silent)
 	..()
 	if(camera && !emagged)
 		camera.status = TRUE
