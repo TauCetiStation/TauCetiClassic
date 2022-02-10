@@ -1,5 +1,5 @@
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
-var/global/list/alldepartments = list("Центральное Командование")
+var/global/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
@@ -19,8 +19,8 @@ var/global/list/alldepartments = list("Центральное Командова
 	var/obj/item/weapon/paper/tofax = null // what we're sending
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
-	var/department = "Неизвестно" // our department
-	var/dptdest = "Центральное Командование" // the department we're sending to
+	var/department = "Unknown" // our department
+	var/dptdest = "Central Command" // the department we're sending to
 
 /obj/machinery/faxmachine/atom_init()
 	. = ..()
@@ -97,7 +97,7 @@ var/global/list/alldepartments = list("Центральное Командова
 			return
 
 		if(tofax)
-			if(dptdest == "Центральное Командование")
+			if(dptdest == "Central Command")
 				sendcooldown = 1800
 				centcomm_fax(usr, tofax, src)
 			else
@@ -181,7 +181,7 @@ var/global/list/alldepartments = list("Центральное Командова
 		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
-	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Получение '[P.name]' по зашифрованному каналу ... []</span>",
+	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ...[]</span>",
 	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
 	"(<a href='?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
 	"(<a href='?_src_=vars;Vars=\ref[sender]'>VV</a>)",
@@ -194,7 +194,7 @@ var/global/list/alldepartments = list("Центральное Командова
 	for(var/client/C as anything in admins)
 		to_chat(C, msg)
 
-	send_fax(sender, P, "Центральное Командование")
+	send_fax(sender, P, "Central Command")
 
 	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
