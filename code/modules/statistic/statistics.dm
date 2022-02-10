@@ -26,6 +26,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/mode
 	var/mode_result
 	var/map
+	var/server_address
 
 	var/completion_html
 	// Deprecated
@@ -49,20 +50,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	//var/list/antag_objectives = list()
 	//var/list/datum/stat/role/roles = list()
 	//var/list/datum/stat/faction/factions = list()
-//
-	//// Blood spilled in c.liters
-	//var/blood_spilled = 0
-	//var/crates_ordered = 0
-	//var/artifacts_discovered = 0
-	//var/narsie_corpses_fed = 0
-	//var/crew_score = 0
-	//var/nuked = FALSE
-	//var/borgs_at_round_end = 0
-	//var/heads_at_round_end = 0
-//
-//
-	//// GAMEMODE-SPECIFIC STATS START HERE
-	//var/datum/stat/dynamic_mode/dynamic_stats = null
 //
 	//// THESE MUST BE SET IN POSTROUNDCHECKS OR SOMEWHERE ELSE BEFORE THAT IS CALLED
 	//var/round_start_time = null
@@ -98,6 +85,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	mode = SSticker.mode.name
 	mode_result = SSticker.mode.get_mode_result()
 	map = SSmapping.config.map_name
+	server_address = BYOND_SERVER_ADDRESS
 	completion_html = SSticker.mode.completition_text
 
 	for(var/datum/mind/M in SSticker.minds)
@@ -207,17 +195,17 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/name
 	var/assignment
 	var/special_role
-	var/list/antag_roles = null
+	var/list/antag_roles = null // not a list
 
 /datum/stat/antag_objective
-	var/mind_name = null
-	var/key = null
-	var/special_role = null
-	var/objective_type = null
-	var/objective_desc = null
-	var/objective_succeeded = FALSE
-	var/target_name = null
-	var/target_role = null
+	var/mind_name
+	var/key
+	var/special_role
+	var/objective_type
+	var/objective_desc
+	var/objective_succeeded
+	var/target_name
+	var/target_role
 
 /datum/stat/uplink_purchase_stat
 	var/itemtype = null
