@@ -54,7 +54,7 @@ var/global/list/alldepartments = list("Центральное Командова
 	dat += "<hr>"
 
 	if(authenticated)
-		dat += "<b>Соединение с:</b> Квантовая Сеть Коммуникации ЦК<br><br>"
+		dat += "<b>Соединено с:</b> Квантовая Сеть Коммуникации ЦК<br><br>"
 
 		if(tofax)
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Убрать лист</a><br><br>"
@@ -64,7 +64,7 @@ var/global/list/alldepartments = list("Центральное Командова
 
 			else
 				dat += "<a href='byond://?src=\ref[src];send=1'>Отправить</a><br>"
-				dat += "<b>Текущий получатель:</b> [tofax.name]<br>"
+				dat += "<b>Документ внутри:</b> [tofax.name]<br>"
 				dat += "<b>Получатель:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
 
 		else
