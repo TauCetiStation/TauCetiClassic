@@ -10837,7 +10837,7 @@
 "due" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(5,6)
+	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11756,9 +11756,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Cloning Lab";
-	req_access = list(5,9)
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -24030,6 +24029,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
