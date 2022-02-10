@@ -7411,6 +7411,15 @@
 	icon_state = "black"
 	},
 /area/station/hallway/secondary/exit)
+"anQ" = (
+/obj/machinery/camera{
+	c_tag = "Escape Hallway";
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/station/hallway/secondary/exit)
 "aoB" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
@@ -55033,7 +55042,7 @@ anE
 qcu
 ahF
 ahT
-doQ
+anQ
 ahz
 aiv
 aij
