@@ -231,34 +231,28 @@
 	Some items allow to go WOOSH when pushing while being on chair-like structure that can move.
 	Some items allow to hit if your intent is I_HURT when pushing.
 */
-/datum/component/swiping/proc/push_on_chair(obj/structure/stool/bed/chair/C, mob/user, movementdirection)
-	if(C)
-		C.propelled = 4
-	step(C, movementdirection)
-	sleep(1)
-	step(C, movementdirection)
-	if(C)
-		C.propelled = 3
-	sleep(1)
-	step(C, movementdirection)
-	sleep(1)
-	step(C, movementdirection)
-	if(C)
-		C.propelled = 2
-	sleep(2)
-	step(C, movementdirection)
-	if(C)
-		C.propelled = 1
-	sleep(2)
-	step(C, movementdirection)
-	if(C)
-		C.propelled = 0
-	sleep(3)
-	step(C, movementdirection)
-	sleep(3)
-	step(C, movementdirection)
-	sleep(3)
-	step(C, movementdirection)
+/datum/component/swiping/proc/push_on_chair(obj/structure/stool/bed/chair/C, mob/user, movementdirection, move_repeats = 0)
+	var/glide = 8
+	var/move_timer
+	switch(move_repeats)
+		if(0 to 2)
+			glide = 8
+			C.propelled = 3
+			move_timer = 1
+		if(3 to 4)
+			glide = 6
+			C.propelled = 2
+			move_timer = 2
+		if(5 to 8)
+			glide = 4
+			C.propelled = 1
+			move_timer = 3
+		else
+			C.propelled = 0
+			return
+	move_repeats++
+	C.Move(get_step(C.loc, movementdirection), movementdirection, glide)
+	addtimer(CALLBACK(src, .proc/push_on_chair, C, user, movementdirection, move_repeats), move_timer)
 
 /datum/component/swiping/proc/sweep_push(atom/target, turf/T, mob/user)
 	if(on_sweep_push)

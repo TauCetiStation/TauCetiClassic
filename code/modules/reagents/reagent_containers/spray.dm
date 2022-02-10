@@ -98,43 +98,37 @@
 	else
 		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
 
-	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
+	var/movementdirection = turn(get_dir(get_turf(src), T), 180)
+	INVOKE_ASYNC(src, .proc/on_spray, movementdirection, user) // A proc where we do all the dirty chair riding stuff.
 
-/obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
+/obj/item/weapon/reagent_containers/spray/proc/on_spray(movementdirection, mob/user, move_repeats = 0)
 	if(!triple_shot) // Currently only the big baddies have this mechanic.
 		return
 
-	var/movementdirection = turn(get_dir(get_turf(src), T), 180)
 	if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
 		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
 		if(!buckled_to.flipped)
-			if(buckled_to)
-				buckled_to.propelled = 4
-			step(buckled_to, movementdirection)
-			sleep(1)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 3
-			sleep(1)
-			step(buckled_to, movementdirection)
-			sleep(1)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 2
-			sleep(2)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 1
-			sleep(2)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 0
-			sleep(3)
-			step(buckled_to, movementdirection)
-			sleep(3)
-			step(buckled_to, movementdirection)
-			sleep(3)
-			step(buckled_to, movementdirection)
+			var/glide = 8
+			var/move_timer
+			switch(move_repeats)
+				if(0 to 2)
+					glide = 8
+					buckled_to.propelled = 3
+					move_timer = 1
+				if(3 to 4)
+					glide = 6
+					buckled_to.propelled = 2
+					move_timer = 2
+				if(5 to 8)
+					glide = 4
+					buckled_to.propelled = 1
+					move_timer = 3
+				else
+					buckled_to.propelled = 0
+					return
+			move_repeats++
+			buckled_to.Move(get_step(loc, movementdirection), movementdirection, glide)
+			addtimer(CALLBACK(src, .proc/on_spray, movementdirection, user, move_repeats), move_timer)
 	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
 		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
 		if (ext.chassis)
