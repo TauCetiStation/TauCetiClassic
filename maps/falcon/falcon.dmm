@@ -3951,7 +3951,9 @@
 "ahu" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/tree/jungle/small,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "ahv" = (
 /obj/machinery/power/apc{
@@ -3976,11 +3978,15 @@
 "ahw" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/grassybush,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "ahx" = (
 /obj/structure/flora/junglebush/c,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "ahy" = (
 /obj/structure/cable{
@@ -8710,7 +8716,9 @@
 	pixel_x = -30
 	},
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "bwK" = (
 /obj/structure/closet/firecloset,
@@ -8764,7 +8772,9 @@
 "bzC" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "bzJ" = (
 /obj/machinery/computer/secure_data,
@@ -11367,7 +11377,9 @@
 "dOV" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "dPt" = (
 /obj/machinery/computer/crew{
@@ -11542,7 +11554,9 @@
 	},
 /area/station/tcommsat/chamber)
 "dYd" = (
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "dYA" = (
 /turf/simulated/floor{
@@ -12246,7 +12260,9 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/tree/jungle,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "eFq" = (
 /obj/machinery/power/solar_control{
@@ -14704,7 +14720,9 @@
 /area/station/rnd/lab)
 "hgN" = (
 /obj/structure/flora/rock/jungle,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "hgW" = (
 /turf/simulated/wall/r_wall,
@@ -15607,7 +15625,9 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "ikw" = (
 /obj/machinery/door/firedoor,
@@ -16661,7 +16681,9 @@
 "jqk" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/fernybush,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "jrG" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/open,
@@ -18945,7 +18967,9 @@
 "lvS" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/rock/jungle,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "lwq" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -19521,7 +19545,9 @@
 /area/station/cargo/storage)
 "mbf" = (
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "mbj" = (
 /obj/machinery/computer/cryopod{
@@ -19553,7 +19579,9 @@
 /area/station/tcommsat/chamber)
 "mdk" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "mdD" = (
 /obj/item/stack/nanopaste,
@@ -20349,7 +20377,9 @@
 /area/station/bridge/hop_office)
 "mPB" = (
 /obj/structure/flora/junglebush/b,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "mQs" = (
 /obj/machinery/door/firedoor,
@@ -20482,7 +20512,9 @@
 "mUO" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/leafybush,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "mUR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -21796,7 +21828,9 @@
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/junglebush/b,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "nVq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
@@ -23403,7 +23437,9 @@
 "pvV" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/reedbush,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "pwn" = (
 /turf/simulated/mineral,
@@ -24098,7 +24134,9 @@
 "qct" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "qcu" = (
 /turf/simulated/wall,
@@ -25245,7 +25283,9 @@
 "qYG" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/junglebush/large,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "qZl" = (
 /obj/structure/object_wall/pod{
@@ -27607,7 +27647,9 @@
 /area/station/maintenance/medbay)
 "twE" = (
 /obj/structure/stool,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "txi" = (
 /turf/simulated/floor{
@@ -27751,7 +27793,9 @@
 "tEV" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/tree/jungle,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "tFy" = (
 /obj/structure/closet/toolcloset,
@@ -28044,7 +28088,9 @@
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
 	},
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "grass1"
+	},
 /area/station/hallway/secondary/arrival)
 "tQr" = (
 /obj/structure/cable{
@@ -28544,7 +28590,7 @@
 /obj/structure/table/woodentable,
 /obj/item/toy/cards,
 /turf/simulated/floor{
-	icon_state = "asteroid"
+	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
 "unh" = (
