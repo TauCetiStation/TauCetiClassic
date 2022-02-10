@@ -2200,6 +2200,7 @@
 #include "code\modules\sports\PedalGen.dm"
 #include "code\modules\sports\wrestler.dm"
 #include "code\modules\statistic\json_helper.dm"
+#include "code\modules\statistic\stat_dto.dm"
 #include "code\modules\statistic\statistics.dm"
 #include "code\modules\statistic\statistics_helpers.dm"
 #include "code\modules\stock_market\articles.dm"
