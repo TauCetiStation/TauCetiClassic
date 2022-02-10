@@ -4530,8 +4530,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "aij" = (
@@ -4642,8 +4642,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ait" = (
@@ -4962,8 +4962,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "aiY" = (
@@ -5016,8 +5016,8 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ajd" = (
@@ -5357,8 +5357,8 @@
 "ajD" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ajE" = (
@@ -5367,8 +5367,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ajF" = (
@@ -5395,8 +5395,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ajH" = (
@@ -12253,13 +12253,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
-"eEY" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "blackcorner"
-	},
-/area/station/hallway/secondary/exit)
 "eEZ" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -21137,8 +21130,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "nqt" = (
@@ -25678,8 +25671,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "ryd" = (
@@ -26520,8 +26513,8 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "sqi" = (
@@ -26538,8 +26531,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
 "sqQ" = (
@@ -28493,18 +28486,6 @@
 /obj/effect/landmark/dealer_spawn,
 /turf/space,
 /area/space)
-"uhR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "blackcorner"
-	},
-/area/station/hallway/secondary/exit)
 "uhX" = (
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 5
@@ -53617,7 +53598,7 @@ any
 anJ
 asi
 ahQ
-eEY
+aiS
 aiX
 ajD
 ajE
@@ -53874,7 +53855,7 @@ anz
 anK
 qcu
 ahV
-uhR
+kOj
 aii
 ais
 ajG
