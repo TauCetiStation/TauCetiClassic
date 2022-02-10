@@ -321,13 +321,14 @@ var/global/list/turret_icons
 	update_power_use()
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED)
 	if(stat & BROKEN)
 		if(iscrowbar(I))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(I.use_tool(src, user, 20, volume = 50))
+			if(I.use_tool(src, user, SKILL_TASK_EASY * skill_bonus, volume = 50))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -358,7 +359,7 @@ var/global/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-		if(I.use_tool(src, user, 50, volume = 100))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE * skill_bonus, volume = 100))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
 				anchored = TRUE

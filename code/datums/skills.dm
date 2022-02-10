@@ -230,6 +230,7 @@ medical, chemistry, research, command)
 	engineering =  SKILL_ENGINEERING_TRAINED
 	melee = SKILL_MELEE_TRAINED
 	civ_mech = SKILL_CIV_MECH_TRAINED
+
 /datum/skills/technicassistant
 	construction = SKILL_CONSTRUCTION_TRAINED
 	engineering =  SKILL_ENGINEERING_TRAINED

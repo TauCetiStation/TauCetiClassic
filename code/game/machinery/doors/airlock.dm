@@ -908,6 +908,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED)
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
 		user.do_attack_animation(src)
@@ -925,9 +926,11 @@ var/global/list/airlock_overlays = list()
 	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , SKILL_ENGINEERING, SKILL_ENGINEERING_NOVICE, message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>", message_others = "<span class='notice'>[user] fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>", others_can_see = TRUE))
+				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, 30 * skill_bonus, volume = 100))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -957,7 +960,7 @@ var/global/list/airlock_overlays = list()
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, 40, volume = 100))
+			if(C.use_tool(src, user, 40 * skill_bonus, volume = 100))
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
