@@ -60,7 +60,7 @@ var/global/list/alldepartments = list("Central Command")
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Убрать лист</a><br><br>"
 
 			if(sendcooldown)
-				dat += "<b>Произовдится калибровка передатчиков. Ожидайте.</b><br>"
+				dat += "<b>Производится калибровка передатчиков. Ожидайте.</b><br>"
 
 			else
 				dat += "<a href='byond://?src=\ref[src];send=1'>Отправить</a><br>"
@@ -70,7 +70,7 @@ var/global/list/alldepartments = list("Central Command")
 		else
 			if(sendcooldown)
 				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
-				dat += "<b>Произовдится калибровка передатчиков. Ожидайте.</b><br>"
+				dat += "<b>Производится калибровка передатчиков. Ожидайте.</b><br>"
 			else
 				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
 
