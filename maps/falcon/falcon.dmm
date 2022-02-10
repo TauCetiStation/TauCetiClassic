@@ -13,6 +13,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -4879,6 +4880,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Escape Hall"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -4937,6 +4939,7 @@
 	name = "Dressing Room"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -5100,6 +5103,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "ajk" = (
@@ -5450,6 +5454,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "ajO" = (
@@ -5649,6 +5654,7 @@
 	name = "Crematorium Maintenance";
 	req_access = list(27)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/office)
 "akj" = (
@@ -6162,6 +6168,7 @@
 	dir = 4;
 	name = "Librarian"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "alm" = (
@@ -7498,6 +7505,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "asx" = (
@@ -16737,6 +16745,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/bridge/teleporter)
 "jzK" = (
@@ -17709,6 +17718,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -24881,6 +24891,7 @@
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qMs" = (
