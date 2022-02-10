@@ -216,6 +216,14 @@
 /mob/proc/show_inv(mob/user)
 	return
 
+/mob/proc/check_mob_slippery()
+	var/obj/item/device/pda/clown/slip_pda = locate() in get_contents()
+	if(slip_pda)
+		src.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+	else
+		qdel(src.GetComponent(/datum/component/slippery))
+		//(src.belt == P || src.belt == P || src.l_pocket == P || src.r_pocket == P)
+
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	var/list/grabs = GetGrabs()
 	if(!length(grabs))
@@ -790,6 +798,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
+	check_mob_slippery()
 	return canmove
 
 
