@@ -4437,8 +4437,7 @@
 "aib" = (
 /obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "aic" = (
@@ -4452,14 +4451,13 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "aid" = (
-/obj/machinery/vending/clothing,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -27
 	},
+/obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "aie" = (
@@ -4530,8 +4528,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "aij" = (
@@ -4642,15 +4640,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ait" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "aiu" = (
@@ -4962,8 +4958,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "aiY" = (
@@ -4993,10 +4989,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/dresser,
+/obj/machinery/vending/clothing,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ajb" = (
@@ -5005,6 +5000,15 @@
 	},
 /area/station/security/prison)
 "ajc" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/carpet/blue,
+/area/station/civilian/locker)
+"ajd" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/simulated/floor/plating,
+/area/station/maintenance/starboardsolar)
+"aje" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -5015,25 +5019,7 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
-/area/station/civilian/locker)
-"ajd" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/simulated/floor/plating,
-/area/station/maintenance/starboardsolar)
-"aje" = (
-/obj/structure/closet/wardrobe/mixed,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajf" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -5163,19 +5149,12 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel)
 "ajo" = (
-/obj/machinery/newscaster{
-	pixel_x = -30
+/obj/structure/closet/wardrobe/mixed,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/table/glass,
-/obj/item/clothing/under/suit_jacket/female{
-	pixel_x = 3;
-	pixel_y = 1
-	},
-/obj/item/weapon/razor,
-/obj/item/clothing/head/soft/grey,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ajp" = (
@@ -5215,10 +5194,9 @@
 /obj/machinery/light_switch{
 	pixel_x = -24
 	},
-/obj/item/weapon/flora/pottedplant/palm,
+/obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ajs" = (
@@ -5235,10 +5213,9 @@
 	},
 /area/station/civilian/chapel/office)
 "ajt" = (
-/obj/structure/closet/wardrobe/white,
+/obj/structure/dresser,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "aju" = (
@@ -5357,8 +5334,7 @@
 "ajD" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ajE" = (
@@ -5366,10 +5342,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -5394,10 +5367,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -7501,6 +7471,30 @@
 "anW" = (
 /turf/simulated/mineral/random/high_chance,
 /area/asteroid/mine/explored)
+"anX" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/locker)
+"anY" = (
+/obj/structure/closet/wardrobe/xenos,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/locker)
 "aoB" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
@@ -9302,14 +9296,14 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bWF" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/fancy/crayons{
-	pixel_y = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "bYz" = (
 /obj/structure/closet/emcloset,
@@ -21145,18 +21139,21 @@
 	},
 /area/station/hallway/primary/central)
 "npY" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/newscaster{
+	pixel_x = -30
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/clothing/under/suit_jacket/female{
+	pixel_x = 3;
+	pixel_y = 1
 	},
+/obj/item/weapon/razor,
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 5
+	},
+/obj/item/clothing/head/soft/grey,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "nqt" = (
@@ -21930,18 +21927,16 @@
 	},
 /area/station/security/checkpoint)
 "ocg" = (
-/obj/machinery/disposal,
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -25
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/trunk{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ocn" = (
 /obj/machinery/recharge_station,
@@ -22917,11 +22912,11 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "oVl" = (
-/obj/structure/closet/wardrobe/black,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "oWE" = (
 /turf/simulated/floor/plating{
@@ -25691,13 +25686,9 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "rxP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/closet/wardrobe/white,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "ryd" = (
@@ -26522,42 +26513,22 @@
 	},
 /area/station/maintenance/dormitory)
 "spI" = (
-/obj/machinery/camera{
-	c_tag = "Locker Room";
-	dir = 10
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/power/apc{
-	pixel_y = -32
-	},
+/obj/structure/closet/wardrobe/black,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "sqi" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/disposal,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -25
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "sqQ" = (
@@ -30806,11 +30777,23 @@
 	},
 /area/station/civilian/kitchen)
 "wzN" = (
-/obj/structure/closet/wardrobe/xenos,
-/obj/structure/window/reinforced,
+/obj/machinery/camera{
+	c_tag = "Locker Room";
+	dir = 10
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/locker)
 "wDB" = (
@@ -53371,9 +53354,9 @@ aig
 ajr
 aid
 aja
-ajo
-bWF
-ocg
+ajt
+npY
+sqi
 akb
 ake
 akw
@@ -53627,10 +53610,10 @@ aiS
 aiX
 ajD
 ajE
-ajD
-ajD
-rxP
-spI
+ajc
+ajc
+oVl
+wzN
 akb
 akf
 akx
@@ -53884,10 +53867,10 @@ kOj
 aii
 ais
 ajG
-ajc
-ais
-npY
-sqi
+aje
+bWF
+ocg
+anX
 ajN
 akg
 aky
@@ -54141,10 +54124,10 @@ doQ
 aig
 aib
 aib
-aje
-ajt
-oVl
-wzN
+ajo
+rxP
+spI
+anY
 akb
 akh
 akz
