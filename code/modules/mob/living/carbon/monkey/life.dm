@@ -87,7 +87,7 @@
 				return
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
 
@@ -440,7 +440,7 @@
 
 	if (drowsyness)
 		drowsyness--
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if (prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
@@ -506,7 +506,7 @@
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
 		else if(eye_blurry)			//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry-1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -523,8 +523,8 @@
 		if(weakened)
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+		if(stuttering > 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent-1, 0)
@@ -538,25 +538,7 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		if(changeling_aug)
-			sight &= ~SEE_TURFS
-			sight |= SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 8
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		else
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 2
-			see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if (healths)
 		if (stat != DEAD)

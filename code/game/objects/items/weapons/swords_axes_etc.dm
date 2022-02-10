@@ -37,6 +37,10 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
+		tools = list(
+			TOOL_KNIFE = 1
+		)
+		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -48,6 +52,8 @@
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
+		tools = list()
+		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -105,8 +111,8 @@
 	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-			M.stuttering = 8
+		if (!(HULK in M.mutations))
+			M.Stuttering(8)
 		M.Stun(8)
 		M.Weaken(8)
 		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")

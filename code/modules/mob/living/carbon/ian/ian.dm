@@ -111,7 +111,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 					else if(iscorgi(A))
 						adjustBruteLoss(-1)
 						adjustFireLoss(-1)
-				else if(istype(A, /obj/item/weapon/soap))
+				else if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/soap))
 					var/expression = pick("amused","annoyed","confused")
 					message = "<span class='notice'>[src] ate [A] and looks [expression]!</span>"
 					qdel(A)
@@ -451,6 +451,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 /mob/living/carbon/ian/throw_mode_off()
 	return
+
+/mob/living/carbon/ian/gib()
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1 to butcher_results[path])
+				new path(loc)
+	..()
 
 /mob/living/carbon/ian/say(message)
 	if(stat)

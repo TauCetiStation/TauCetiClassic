@@ -61,7 +61,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "Slice"
 	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = ABOVE_LIGHTING_PLANE
 	anchored = TRUE
 
 /obj/effect/overlay/droppod_open
@@ -81,7 +81,7 @@
 	icon = 'icons/mob/talk.dmi'
 	icon_state = "default0"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	layer = MOB_LAYER + 1
 
 /obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)

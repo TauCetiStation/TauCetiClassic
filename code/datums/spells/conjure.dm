@@ -100,8 +100,8 @@
 
 /obj/effect/forcefield/magic/CanPass(atom/movable/mover, turf/target, height=0)
 	if(mover == wizard)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/effect/forcefield/cult
 	name = "Blood Shield"

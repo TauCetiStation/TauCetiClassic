@@ -33,7 +33,7 @@
 	. = ..()
 	if(.)
 		return
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
 			return "Администрация сейчас в сети"
 
@@ -48,7 +48,7 @@
 
 /datum/vote_choice/restart/on_win()
 	var/active_admins = FALSE
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!C.is_afk() && (R_SERVER & C.holder.rights))
 			active_admins = TRUE
 			break
@@ -162,15 +162,20 @@
 		if(!initial(M.votable))
 			continue
 		var/datum/modesbundle/bundle = new type()
+
+		var/list/submodes = bundle.get_gamemodes_name()
+		if(!submodes.len)
+			continue
+
+		description += "<b>[bundle]</b>: "
+		description += submodes.Join(", ")
+		description += "<br>"
+
 		var/datum/vote_choice/gamemode/vc = new
 		vc.text = bundle.name
 		vc.new_gamemode = bundle.name
 		choices.Add(vc)
-		var/list/submodes = bundle.get_gamemodes_name()
-		if(length(submodes) > 0)
-			description += "<b>[bundle]</b>: "
-			description += submodes.Join(", ")
-			description += "<br>"
+
 		qdel(bundle)
 
 /datum/poll/gamemode/process()

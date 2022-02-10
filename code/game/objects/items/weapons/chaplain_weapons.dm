@@ -154,7 +154,7 @@
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-			C.RemoveFromRole(M.mind)
+			C.Deconvert()
 			M.Paralyse(5)
 			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 			M.mind.memory = ""
@@ -280,7 +280,6 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
 	var/god_name = pick(summoner.my_religion.deity_names)
@@ -424,7 +423,7 @@
 
 /obj/item/weapon/shield/riot/roman/religion/atom_init()
 	. = ..()
-	filters += filter(type = "outline", size = 1, color = "#fffb0064")
+	add_filter("shield_outline", 2, outline_filter(1, "#fffb0064"))
 	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
 
 	QDEL_IN(src, 1 MINUTE)

@@ -1,5 +1,6 @@
 #define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
+#define SYNDICATE_SHUTTLE_ALERT_DELAY (1 MINUTES)
 
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"
@@ -11,7 +12,8 @@
 	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
-	var/moving = 0
+	var/moving = FALSE
+	var/datum/announcement/centcomm/nuclear/announce
 	var/lastMove = 0
 
 /obj/effect/landmark/syndi_shuttle
@@ -24,13 +26,21 @@
 	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
-	if(moving)	return
-	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
-	var/area/dest_location = locate(destination)
-	if(curr_location == dest_location)	return
+/obj/machinery/computer/syndicate_station/process()
+	if(..())
+		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
 
-	moving = 1
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
+	if(moving)
+		return
+	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)
+		return
+	var/area/dest_location = locate(destination)
+	if(curr_location == dest_location)
+		return
+
+	moving = TRUE
 	lastMove = world.time
 
 	if(curr_location.z != dest_location.z)
@@ -43,8 +53,11 @@
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	moving = 0
-	return 1
+	moving = FALSE
+	if(!announce)
+		announce = new
+		addtimer(CALLBACK(announce, /datum/announcement.proc/play), SYNDICATE_SHUTTLE_ALERT_DELAY)
+	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>
@@ -101,3 +114,5 @@
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
+#undef SYNDICATE_SHUTTLE_ALERT_DELAY
+

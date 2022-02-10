@@ -61,7 +61,7 @@
 /obj/item/projectile/bullet/revbullet/price = 120
 /obj/item/projectile/bullet/rifle1/price = 240
 /obj/item/projectile/bullet/rifle2/price = 240
-/obj/item/projectile/bullet/stunslug/price = 65
+/obj/item/projectile/bullet/stunshot/price = 65
 /obj/item/projectile/bullet/weakbullet/price = 27
 /obj/item/projectile/missile/price = 1300
 
@@ -252,7 +252,7 @@
 /obj/item/weapon/gun/energy/xray/price = 14000
 /obj/item/weapon/gun/grenadelauncher/price = 3000
 /obj/item/weapon/gun/projectile/automatic/colt1911/price = 6500
-/obj/item/weapon/gun/projectile/m79/price = 2500
+/obj/item/weapon/gun/projectile/grenade_launcher/m79/price = 2500
 /obj/item/weapon/gun/projectile/shotgun/price = 4000
 /obj/item/weapon/gun/projectile/shotgun/combat/price = 6500
 /obj/item/weapon/gun/projectile/glock/price = 3000
@@ -278,7 +278,7 @@
 /obj/item/weapon/rcd_ammo/price = 1700
 /obj/item/weapon/retractor/price = 1250
 /obj/item/weapon/scalpel/price = 1250
-/obj/item/weapon/soap/nanotrasen/price = 222
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
 /obj/item/weapon/stamp/captain/price = 25000
 /obj/item/weapon/stamp/clown/price = 9900
@@ -289,7 +289,7 @@
 /obj/item/weapon/table_parts/price = 95
 /obj/item/weapon/tank/jetpack/price = 15000
 /obj/item/weapon/tank/price = 45
-/obj/item/weapon/twohanded/fireaxe/price = 2500
+/obj/item/weapon/fireaxe/price = 2500
 /obj/item/weapon/weldingtool/price = 120
 /obj/item/weapon/weldpack/price = 180
 

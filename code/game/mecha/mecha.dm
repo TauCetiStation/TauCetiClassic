@@ -101,7 +101,6 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
-	poi_list += src
 	START_PROCESSING(SSobj, src)
 	log_message("[src.name] created.")
 	loc.Entered(src)
@@ -115,9 +114,7 @@
 	diag_hud_set_mechstat()
 
 /obj/mecha/Destroy()
-	poi_list -= src
 	go_out()
-	poi_list.Remove(src)
 	for(var/mob/M in src)
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
@@ -615,7 +612,7 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
+	if(isMMI(W))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
@@ -1043,7 +1040,7 @@
 	if(ishuman(occupant))
 		mob_container = src.occupant
 		RemoveActions(occupant, human_occupant = 1)
-	else if(istype(occupant, /mob/living/carbon/brain))
+	else if(isbrain(occupant))
 		var/mob/living/carbon/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
@@ -1057,10 +1054,10 @@
 		occupant.reset_view()
 
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
+		if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
 			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(istype(mob_container, /obj/item/device/mmi))
+		if(isMMI(mob_container))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi

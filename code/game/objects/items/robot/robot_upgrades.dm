@@ -144,7 +144,7 @@
 			to_chat(usr, "There's no room for another jetpack!")
 			return 0
 	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
-	R.module.modules += jet
+	R.module.add_item(jet)
 	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) //we really need this?
 		R.internals = jet*/
 	//R.icon_state="Miner+j"
@@ -166,3 +166,36 @@
 	R.throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	R.emagged = 1
 	return 1
+
+/obj/item/borg/upgrade/security
+	name = "security safety protocols module"
+	desc = "Unlocks the ability to become a security cyborg."
+	icon_state = "cyborg_upgrade3"
+	require_module = FALSE
+
+/obj/item/borg/upgrade/security/action(mob/living/silicon/robot/R)
+	if(..())
+		return FALSE
+
+	if(R.can_be_security)
+		return FALSE
+
+	R.can_be_security = TRUE
+	return TRUE
+
+/obj/item/borg/upgrade/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	icon_state = "cyborg_upgrade2"
+	require_module = TRUE
+
+/obj/item/borg/upgrade/hud_calibrator/action(mob/living/silicon/robot/R)
+	if(..())
+		return FALSE
+	var/founded_hud = FALSE
+	for(var/obj/item/borg/sight/hud in R?.module?.modules)
+		if(!(hud.sight_mode & BORGIGNORESIGHT))
+			hud.sight_mode |= BORGIGNORESIGHT
+			founded_hud = TRUE
+	return founded_hud
+

@@ -5,9 +5,6 @@
 		return
 	if(stat == UNCONSCIOUS)
 		return
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		if(act != "hiss")
-			act = copytext(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	// These scare the enemies out, causing them to lose 10 combo points.
@@ -159,7 +156,7 @@
 				return
 		log_emote("[key_name(src)] : [message]")
 
-		for(var/mob/M in observer_list)
+		for(var/mob/M as anything in observer_list)
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))

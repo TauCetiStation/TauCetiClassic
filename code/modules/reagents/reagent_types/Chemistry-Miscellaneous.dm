@@ -231,6 +231,17 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(0.2)
+
+	if(prob(10))
+		M.emote("hiccup")
+		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		flick_overlay_view(I, M, 30)
+
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
 		qdel(O)
@@ -541,7 +552,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -598,7 +609,7 @@
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -702,7 +713,7 @@
 		var/hair_changes_occured = FALSE
 		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
-			H.eye_blurry = max(H.eye_blurry, volume)
+			H.blurEyes(volume)
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair

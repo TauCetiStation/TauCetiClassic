@@ -27,7 +27,7 @@
 	start_time = world.time
 	end_time = start_time + 80 MINUTES
 
-	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES)) // called here because cops are only faction
+	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES), TIMER_STOPPABLE) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
@@ -36,27 +36,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES)
-	var/spawncount = 2
-	while(spawncount > 0 && candidates.len)
-		var/spawnloc = pick(dealerstart)
-		var/mob/candidate = pick(candidates)
-
-		INVOKE_ASYNC(src, .proc/traitor_create_apperance, spawnloc, candidate.client)
-
-		candidates -= candidate
-		spawncount--
-		dealerstart -= spawnloc
-
-/datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
-	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
-
-	H.loc = spawnloc
-	H.key = C.key
-
-	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
+	create_spawners(/datum/spawner/dealer, "dealer", 2)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
@@ -114,8 +94,6 @@
 	var/alive_cops = 0
 	for(var/M in all_gangsters)
 		var/datum/role/gangster/gangbanger = M
-		if(!gangbanger.antag)
-			continue
 		if(gangbanger.antag.current)
 			if(!ishuman(gangbanger.antag.current))
 				continue
@@ -125,8 +103,6 @@
 			alive_gangsters++
 	for(var/M in members)
 		var/datum/role/cop/bacon = M
-		if(!bacon.antag)
-			continue
 		if(bacon.antag.current)
 			if(!ishuman(bacon.antag.current)) // always returns false
 				continue
@@ -146,4 +122,3 @@
 		report = "<span class='green'>НаноТрейзен смогла остановить деятельность банд!</span>"
 
 	return "[report]"
-

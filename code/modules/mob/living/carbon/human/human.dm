@@ -6,7 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
 	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
@@ -28,6 +28,8 @@
 
 	beauty_living = 0
 	beauty_dead = -1500
+
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
@@ -307,28 +309,6 @@
 		return FALSE
 	if(!BPL.is_usable() || !BPR.is_usable())
 		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/wield(obj/item/I, name, wieldsound = null)
-	if(!can_use_two_hands())
-		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
-		return FALSE
-	if(get_inactive_hand())
-		to_chat(src, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-		return FALSE
-	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
-	if(wieldsound)
-		playsound(src, wieldsound, VOL_EFFECTS_MASTER)
-
-	if(hand)
-		update_inv_l_hand()
-	else
-		update_inv_r_hand()
-
-	var/obj/item/weapon/twohanded/offhand/O = new(src)
-	O.name = "[name] - offhand"
-	O.desc = "Your second grip on the [name]"
-	put_in_inactive_hand(O)
 	return TRUE
 
 /mob/living/carbon/human/proc/is_type_organ(organ, o_type)
@@ -645,7 +625,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-
+	attack_heart(clamp(shock_damage - 10, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -1166,7 +1146,7 @@
 	if(!src_turf)
 		return
 
-	for(var/mob/living/carbon/M in carbon_list)
+	for(var/mob/living/carbon/M as anything in carbon_list)
 		var/name = M.real_name
 		if(name in names)
 			namecounts[name]++
@@ -1226,7 +1206,7 @@
 	var/count = 0
 	var/target = null	   //Chosen target.
 
-	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
+	for(var/mob/living/carbon/human/M as anything in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			count++
@@ -1239,6 +1219,8 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
+		if(!temp_turf)
+			continue
 		if((!is_station_level(temp_turf.z) && !is_mining_level(temp_turf.z) || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
@@ -1279,18 +1261,6 @@
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
-
-/mob/living/carbon/human/can_pickup(obj/O)
-	// Its worst
-	if(istype(O, /obj/item/weapon/twohanded))
-		var/obj/item/weapon/twohanded/T = O
-		if(T.wielded)
-			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-			return FALSE
-		if(get_inactive_hand() && T.only_twohand)
-			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
-			return FALSE
-	return TRUE
 
 /*
 /mob/living/carbon/human/verb/simulate()
@@ -1420,6 +1390,13 @@
 
 		if(species.language)
 			remove_language(species.language)
+
+		if(species.additional_languages)
+			for(var/A in species.additional_languages)
+				remove_language(A)
+
+		if(client?.prefs.language)
+			remove_language(client.prefs.language)
 
 		species.on_loose(src, new_species)
 
@@ -1553,12 +1530,12 @@
 
 		var/hunt_injection_port = FALSE
 
-		switch(check_thickmaterial(target_zone = user.get_targetzone()))
+		switch(check_pierce_protection(target_zone = user.get_targetzone()))
 			if(NOLIMB)
 				if(error_msg)
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
-			if(THICKMATERIAL)
+			if(NOPIERCE)
 				if(!pierce_armor)
 					if(error_msg)
 						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
@@ -1915,7 +1892,9 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	I = update_height(I)
+	flick_overlay(I, viewing, anim_duration)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
@@ -2011,11 +1990,11 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
-	if(check_thickmaterial(target_zone = BP_CHEST))
+	if(check_pierce_protection(target_zone = BP_CHEST))
 		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
 		return
 
@@ -2126,7 +2105,7 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(!penetrate_thick)
-		if(check_thickmaterial(target_zone = def_zone))
+		if(check_pierce_protection(target_zone = def_zone))
 			if(show_message)
 				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 			return FALSE
@@ -2255,3 +2234,21 @@
 
 	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+
+
+/mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	if(!Heart)
+		return
+	switch(Heart.heart_status)
+		if(HEART_NORMAL)
+			if(prob(damage_prob))
+				Heart.heart_fibrillate()
+		if(HEART_FIBR)
+			if(prob(damage_prob))
+				Heart.heart_stop()
+			if(prob(heal_prob))
+				Heart.heart_normalize()
+		if(HEART_FAILURE)
+			if(prob(heal_prob))
+				Heart.heart_fibrillate()

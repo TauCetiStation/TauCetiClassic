@@ -34,13 +34,14 @@
 #define DNA_UI_SKIN_R      8
 #define DNA_UI_SKIN_G      9
 #define DNA_UI_SKIN_B      10
-#define DNA_UI_EYES_R      11
-#define DNA_UI_EYES_G      12
-#define DNA_UI_EYES_B      13
-#define DNA_UI_GENDER      14
-#define DNA_UI_BEARD_STYLE 15
-#define DNA_UI_HAIR_STYLE  16
-#define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
+#define DNA_UI_HEIGHT      11
+#define DNA_UI_EYES_R      12
+#define DNA_UI_EYES_G      13
+#define DNA_UI_EYES_B      14
+#define DNA_UI_GENDER      15
+#define DNA_UI_BEARD_STYLE 16
+#define DNA_UI_HAIR_STYLE  17
+#define DNA_UI_LENGTH      17 // Update this when you add something, or you WILL break shit.
 
 #define DNA_SE_LENGTH 27
 #define DNA_UNIQUE_ENZYMES_LEN 32

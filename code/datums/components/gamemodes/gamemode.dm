@@ -1,3 +1,4 @@
+// TODO: It's not be a /datum/component
 /datum/component/gamemode
 
 /datum/component/gamemode/Initialize(...)

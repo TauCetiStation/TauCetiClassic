@@ -42,7 +42,8 @@
 /*
  * Soap
  */
-/obj/item/weapon/soap
+
+/obj/item/weapon/reagent_containers/food/snacks/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
@@ -52,25 +53,29 @@
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
+	filling_color = "#ff1c1c"
+	bitesize = 3
+	list_reagents = list("cleaner" = 5)
 
-/obj/item/weapon/soap/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/soap/atom_init()
 	. = ..()
 	AddComponent(/datum/component/slippery, 2)
 
-/obj/item/weapon/soap/nanotrasen
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
 
-/obj/item/weapon/soap/deluxe
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
 	icon_state = "soapdeluxe"
 
-/obj/item/weapon/soap/syndie
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
+	list_reagents = list("cleaner" = 3, "cyanide" = 2)
 
-/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+/obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || ishuman(target)) return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
@@ -83,8 +88,10 @@
 		target.clean_blood()
 	return
 
-/obj/item/weapon/soap/attack(mob/target, mob/user, def_zone)
-	if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
+/obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
+	if(user.a_intent == INTENT_HARM)
+		..()
+	else if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
 		var/mob/living/carbon/human/H = target
 		var/body_part_name
 		switch(def_zone)
@@ -101,8 +108,7 @@
 		if(do_after(user, 15, target = H) && src)
 			switch(body_part_name)
 				if("mouth")
-					H.lip_style = null
-					H.update_body()
+					return
 				if("groin")
 					if(H.belt)
 						if(H.belt.clean_blood())
@@ -138,7 +144,7 @@
 							H.glasses.clean_blood()
 							H.update_inv_glasses()
 						else
-							H.eye_blurry = max(H.eye_blurry, 5)
+							H.blurEyes(5)
 							H.eye_blind = max(H.eye_blind, 1)
 							to_chat(H, "<span class='warning'>Ouch! That hurts!</span>")
 				if("legs")
@@ -179,7 +185,7 @@
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
 			return
-	..()
+
 
 /*
  * Bike Horns
@@ -236,15 +242,26 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
+	var/cooldown_max = 60
+	var/click_radius = -4
 	w_class = SIZE_TINY
-	var/static/list/actions = list(
+	var/actions
+	var/pos_sounds
+
+/obj/item/toy/sound_button/atom_init()
+	. = ..()
+	init_soundboard()
+
+/obj/item/toy/sound_button/proc/init_soundboard()
+	actions = list(
 		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
 		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
 		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
 		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
 		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
 		)
-	var/static/list/pos_sounds = list(
+
+	pos_sounds = list(
 		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
 						'sound/voice/fake_laugh/laugh2.ogg',
 						'sound/voice/fake_laugh/laugh3.ogg'),
@@ -371,7 +388,6 @@
 						'sound/voice/mob/pain/male/passive_whiner_4.ogg')
 						)
 
-
 /obj/item/toy/sound_button/attack_self(mob/user)
 	if(cooldown)
 		return
@@ -380,16 +396,74 @@
 	if(!soundtype)
 		return
 
-	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MISC, 85, FALSE)
+	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MASTER, 85, FALSE)
 	flick("sound_button_down", src)
 	icon_state = "sound_button_off"
 	cooldown = TRUE
-	addtimer(CALLBACK(src, .proc/release_cooldown), 60)
+	addtimer(CALLBACK(src, .proc/release_cooldown), cooldown_max)
 	..()
 
 /obj/item/toy/sound_button/proc/release_cooldown()
 	flick("sound_button_up",src)
 	icon_state = "sound_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -4)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, click_radius)
 	return
+
+//Syndicate version
+
+/obj/item/toy/sound_button/syndi
+	name = "sound decoy"
+	desc = "Can easily lure someone into your trap. Trust me!"
+	cooldown_max = 40
+	click_radius = -7
+
+/obj/item/toy/sound_button/syndi/init_soundboard()
+	actions = list(
+		"Battle" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_traitor"),
+		"Mystical shit" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_wizard"),
+		"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
+		"Make'em paranoid!" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling")
+	)
+	pos_sounds = list(
+		"Battle" = list(
+			'sound/hallucinations/fake_battle_1_scaled.ogg',
+			'sound/hallucinations/fake_battle_2_scaled.ogg',
+			'sound/hallucinations/fake_battle_3_scaled.ogg'
+			),
+
+		"Mystical shit" = list(
+			'sound/magic/Knock.ogg',
+			'sound/magic/Fireball.ogg',
+			'sound/magic/Teleport_diss.ogg',
+			'sound/magic/Teleport_app.ogg',
+			'sound/magic/MAGIC_MISSILE.ogg',
+			'sound/magic/Repulse.ogg',
+			'sound/effects/ghost2.ogg'),
+
+		"Xenomorph" = list(
+			'sound/voice/shriek1.ogg',
+			'sound/voice/xenomorph/talk_1.ogg',
+			'sound/voice/xenomorph/talk_2.ogg',
+			'sound/voice/xenomorph/talk_3.ogg',
+			'sound/voice/xenomorph/talk_4.ogg',
+			'sound/voice/xenomorph/whimper.ogg',
+			'sound/voice/xenomorph/small_roar.ogg',
+			'sound/voice/xenomorph/spitacid_1.ogg',
+			'sound/voice/xenomorph/spitacid_2.ogg',
+			'sound/voice/xenomorph/chestburst_1.ogg',
+			'sound/voice/xenomorph/chestburst_2.ogg'),
+
+		"Make'em paranoid!" = list(
+			'sound/hallucinations/behind_you1.ogg',
+			'sound/hallucinations/behind_you2.ogg',
+			'sound/hallucinations/far_noise.ogg',
+			'sound/hallucinations/veryfar_noise.ogg',
+			'sound/hallucinations/wail.ogg',
+			'sound/hallucinations/i_see_you_1.ogg',
+			'sound/hallucinations/im_here1.ogg',
+			'sound/hallucinations/im_here2.ogg',
+			'sound/hallucinations/look_up1.ogg',
+			'sound/hallucinations/over_here1.ogg',
+			'sound/hallucinations/turn_around1.ogg')
+	)

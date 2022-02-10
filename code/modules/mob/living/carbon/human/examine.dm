@@ -451,6 +451,12 @@
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+		if(species.name == ABOMINATION)
+			if(C.absorbed_dna.len)
+				var/list/victims_names = list()
+				for(var/datum/dna/D in C.absorbed_dna)
+					victims_names += "[D.real_name]"
+				msg+= "<span class='warning'>Faces of [get_english_list(victims_names)] can be seen on it's ever changing body...</span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -512,8 +518,12 @@
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
+		var/obj/item/clothing/under/C = w_uniform
+		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
+			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
+
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(mood)
+	if(!skipface && mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)
 				msg += "[t_He] appears to be depressed.\n"
@@ -559,7 +569,7 @@
 		if(O.started_as_observer)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
-	if(user != src && !check_covered_bodypart(src, LOWER_TORSO))
+	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)

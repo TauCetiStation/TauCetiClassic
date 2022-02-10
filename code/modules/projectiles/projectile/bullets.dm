@@ -110,6 +110,17 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
+
+/obj/item/projectile/bullet/grenade/explosive
+	name = "grenade"
+	damage = 10
+	embed = 0
+	sharp = 0
+
+/obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	explosion(target, 1, 1, 2)
+	return 1
+
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
@@ -196,18 +207,20 @@
 	embed = 0
 	edge = 1
 
-/obj/item/projectile/bullet/stunslug
-	name = "stunslug"
+/obj/item/projectile/bullet/stunshot
+	name = "stunshot"
 	icon_state = "spark"
+	flag = "energy"
 	damage = 5
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 60
+	agony = 40
 	embed = 0
 	sharp = 0
+	dispersion = 1.8
 
-/obj/item/projectile/bullet/stunslug/atom_init()
+/obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
