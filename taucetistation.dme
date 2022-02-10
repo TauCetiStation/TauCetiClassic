@@ -1705,6 +1705,7 @@
 #include "code\modules\mob\living\carbon\logout.dm"
 #include "code\modules\mob\living\carbon\shock.dm"
 #include "code\modules\mob\living\carbon\species.dm"
+#include "code\modules\mob\living\carbon\telekinesis.dm"
 #include "code\modules\mob\living\carbon\update_icons.dm"
 #include "code\modules\mob\living\carbon\brain\brain.dm"
 #include "code\modules\mob\living\carbon\brain\brain_item.dm"

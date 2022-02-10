@@ -1024,3 +1024,8 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src

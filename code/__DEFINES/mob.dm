@@ -119,6 +119,28 @@
 #define SPIRIT_LOW 25
 #define SPIRIT_BAD 0
 
+//Telekinesis.
+#define TK_MAXRANGE 15
+
+// Drugs increase the level by 1.
+#define TK_LEVEL_ZERO 0
+#define TK_LEVEL_ONE 1
+#define TK_LEVEL_TWO 2
+#define TK_LEVEL_THREE 3
+
+#define TK_LEVEL_NORMAL 1
+#define TK_LEVEL_SKRELL 2
+
+// Being drugged improves your telekinesis by a level.
+#define TK_BONUS_DRUGGED 1
+// Being very desperate/angry/upset improves your telekinesis by a level.
+#define TK_BONUS_UPSET 1
+
+// How much resource should be wasted per tile of distance to target.
+#define TK_MANA_PER_TILE 10
+// How much resource should be wasted per upping of a size class of target.
+#define TK_MANA_PER_W_CLASS(cl) cl**2
+
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550

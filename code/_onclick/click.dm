@@ -205,10 +205,19 @@
 
 /mob/proc/ranged_attack_tk(atom/A)
 	var/dist = get_dist(src, A)
-	if(dist > tk_maxrange)
+	if(dist > get_tk_range())
+		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
 		return
-	SetNextMove(max(dist, CLICK_CD_MELEE))
-	A.attack_tk(src)
+
+	if(!try_tk(mana=dist * TK_MANA_PER_TILE))
+		return
+
+	SetNextMove(CLICK_CD_MELEE)
+
+	if(a_intent == INTENT_GRAB)
+		A.telekinetic_grab(src)
+	else
+		A.attack_tk(src)
 
 /*
 	Restrained ClickOn

@@ -101,6 +101,20 @@
 
 	START_PROCESSING(SSobj, src)
 
+/obj/item/weapon/grab/be_thrown(mob/living/thrower, atom/target)
+	. = throw_held() //throw the person instead of the grab
+	if(isliving(.))
+		var/mob/living/L = .
+		var/turf/start_T = get_turf(thrower.loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
+			var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
+
+			L.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
+
+	qdel(src)
+
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
 	if(affecting)

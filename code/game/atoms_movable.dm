@@ -468,3 +468,7 @@
 	var/atom/old_loc = loc
 	loc = new_loc
 	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src

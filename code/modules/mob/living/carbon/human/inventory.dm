@@ -247,12 +247,16 @@
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
 /mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot)
+		to_chat(world, "NO SLOT")
 		return
 	if(!istype(W))
+		to_chat(world, "NO ITEM")
 		return
 	if(!has_bodypart_for_slot(slot))
+		to_chat(world, "NO BODYPART")
 		return
 	if(!specie_has_slot(slot))
+		to_chat(world, "NO SPECIE")
 		return
 
 	W.screen_loc = null // will get moved if inventory is visible

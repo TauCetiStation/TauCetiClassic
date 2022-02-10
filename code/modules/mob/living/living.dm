@@ -1398,3 +1398,23 @@
 	if(beauty.Get() == 0.0)
 		return
 	AddElement(/datum/element/beauty, beauty.Get())
+
+//Throwing stuff
+/mob/living/proc/toggle_throw_mode()
+	if(in_throw_mode)
+		throw_mode_off()
+	else
+		throw_mode_on()
+
+/mob/living/proc/throw_mode_off()
+	in_throw_mode = FALSE
+
+/mob/living/proc/throw_mode_on()
+	in_throw_mode = TRUE
+
+/mob/living/in_interaction_vicinity(atom/target)
+	// Telekinetic distance is handled by the larger telekinesis system.
+	if(TK in mutations)
+		return TRUE
+
+	return ..()

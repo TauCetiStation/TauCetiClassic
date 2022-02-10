@@ -49,7 +49,7 @@
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(user))
+		new /obj/item/device/flashlight/flare/torch(get_turf(src))
 		qdel(I)
 		return
 	return ..()

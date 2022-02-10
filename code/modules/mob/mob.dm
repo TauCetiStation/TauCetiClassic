@@ -1181,7 +1181,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/proc/can_pickup(obj/O)
-	return TRUE
+	return Adjacent(O)
 
 /atom/movable/proc/is_facehuggable()
 	return FALSE
@@ -1236,3 +1236,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/in_interaction_vicinity(atom/target)
+	return Adjacent(target)
