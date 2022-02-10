@@ -1,5 +1,5 @@
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
-var/global/list/alldepartments = list("Central Command")
+var/global/list/alldepartments = list("Центральное Командование")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
@@ -19,8 +19,8 @@ var/global/list/alldepartments = list("Central Command")
 	var/obj/item/weapon/paper/tofax = null // what we're sending
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
-	var/department = "Unknown" // our department
-	var/dptdest = "Central Command" // the department we're sending to
+	var/department = "Неизвестно" // our department
+	var/dptdest = "Центральное Командование" // the department we're sending to
 
 /obj/machinery/faxmachine/atom_init()
 	. = ..()
@@ -44,41 +44,41 @@ var/global/list/alldepartments = list("Central Command")
 	else
 		scan_name = "--------"
 
-	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+	dat += "Подтверждение личности: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
 	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
+		dat += "<a href='byond://?src=\ref[src];logout=1'>Выйти</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
+		dat += "<a href='byond://?src=\ref[src];auth=1'>Войти</a>"
 
 	dat += "<hr>"
 
 	if(authenticated)
-		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
+		dat += "<b>Соединение с:</b> Квантовая Сеть Коммуникации ЦК<br><br>"
 
 		if(tofax)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><br><br>"
+			dat += "<a href='byond://?src=\ref[src];remove=1'>Убрать лист</a><br><br>"
 
 			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+				dat += "<b>Произовдится калибровка передатчиков. Ожидайте.</b><br>"
 
 			else
-				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
-				dat += "<b>Currently sending:</b> [tofax.name]<br>"
-				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
+				dat += "<a href='byond://?src=\ref[src];send=1'>Отправить</a><br>"
+				dat += "<b>Текущий получатель:</b> [tofax.name]<br>"
+				dat += "<b>Получатель:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
 
 		else
 			if(sendcooldown)
-				dat += "Please insert paper to send via secure connection.<br><br>"
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
+				dat += "<b>Произовдится калибровка передатчиков. Ожидайте.</b><br>"
 			else
-				dat += "Please insert paper to send via secure connection.<br><br>"
+				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
 
 	else
-		dat += "Proper authentication is required to use this device.<br><br>"
+		dat += "Для использования необходима авторизация.<br><br>"
 
 		if(tofax)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Paper</a><br>"
+			dat += "<a href ='byond://?src=\ref[src];remove=1'>Убрать лист</a><br>"
 
 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
 	popup.set_content(dat)
@@ -97,14 +97,14 @@ var/global/list/alldepartments = list("Central Command")
 			return
 
 		if(tofax)
-			if(dptdest == "Central Command")
+			if(dptdest == "Центральное Командование")
 				sendcooldown = 1800
 				centcomm_fax(usr, tofax, src)
 			else
 				sendcooldown = 600
 				send_fax(usr, tofax, dptdest)
 
-			audible_message("Message transmitted successfully.")
+			audible_message("Сообщение отправлено успешно.")
 
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
@@ -112,7 +112,7 @@ var/global/list/alldepartments = list("Central Command")
 	if(href_list["remove"])
 		if(tofax)
 			if(!ishuman(usr))
-				to_chat(usr, "<span class='warning'>You can't do it.</span>")
+				to_chat(usr, "<span class='warning'>Вы не можете этого сделать.</span>")
 			else
 				tofax.loc = usr.loc
 				usr.put_in_hands(tofax)
@@ -141,7 +141,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["dept"])
 		var/lastdpt = dptdest
-		dptdest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
+		dptdest = input(usr, "Какой отдел?", "Выберите отдел", "") as null|anything in alldepartments
 		if(!dptdest) dptdest = lastdpt
 
 	if(href_list["auth"])
@@ -181,7 +181,7 @@ var/global/list/alldepartments = list("Central Command")
 		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
-	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",
+	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Получение '[P.name]' по зашифрованному каналу ... []</span>",
 	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
 	"(<a href='?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
 	"(<a href='?_src_=vars;Vars=\ref[sender]'>VV</a>)",
@@ -194,7 +194,7 @@ var/global/list/alldepartments = list("Central Command")
 	for(var/client/C as anything in admins)
 		to_chat(C, msg)
 
-	send_fax(sender, P, "Central Command")
+	send_fax(sender, P, "Центральное Командование")
 
 	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
@@ -211,7 +211,7 @@ var/global/list/alldepartments = list("Central Command")
 
 /proc/send_fax(sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
-		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
+		if((department == "Все" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
 			F.print_fax(P.create_self_copy())
 
 	log_fax("[sender] sending [P.name] to [department]: [P.info]")
@@ -225,4 +225,4 @@ var/global/list/alldepartments = list("Central Command")
 	sleep(20)
 
 	P.loc = loc
-	audible_message("Received message.")
+	audible_message("Получено сообщение.")
