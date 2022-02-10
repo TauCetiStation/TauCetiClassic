@@ -685,10 +685,10 @@
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head/diona
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona
 		)
 
 	has_organ = list(
@@ -716,6 +716,11 @@
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
+	// How fast do they regenerate. Podmen regenerate 50% slower.
+	var/regen_mod = 1.0
+	// Podmen don't.
+	var/regen_limbs = TRUE
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -725,21 +730,23 @@
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage -= light_amount/5
+				O.damage -= light_amount * regen_mod / 5
 				H.nutrition -= light_amount
 				return
-	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
+
+	if(H.nutrition > 350 && light_amount >= 4 && regen_limbs) // If you don't need to regen organs, regen bodyparts.
 		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
 			H.regenerating_bodypart = H.find_damaged_bodypart()
 		if(H.regenerating_bodypart) // If it did find one.
 			H.nutrition -= 1
-			H.apply_damages(0,0,1,1,0,0)
 			H.regen_bodyparts(0, TRUE)
 			return
+
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
-		H.adjustBruteLoss(-(light_amount))
-		H.adjustToxLoss(-(light_amount))
-		H.adjustOxyLoss(-(light_amount))
+		H.adjustBruteLoss(-(light_amount * regen_mod))
+		// Dionaea don't have toxloss or oxyloss. Why is this here?
+		H.adjustToxLoss(-(light_amount * regen_mod))
+		H.adjustOxyLoss(-(light_amount * regen_mod))
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -747,16 +754,75 @@
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
+	S.name = H.name
+	S.real_name = S.name
+	S.dna = H.dna.Clone()
+	S.dna.SetSEState(MONKEYBLOCK, 1)
+	S.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
 
 	if(H.mind)
 		H.mind.transfer_to(S)
 
 	for(var/mob/living/carbon/monkey/diona/D in H.contents)
 		if(D.client)
-			D.loc = H.loc
+			D.forceMove(H.loc)
 		else
 			qdel(D)
 
+	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+
+/datum/species/diona/podman
+	name = PODMAN
+	icobase = 'icons/mob/human_races/r_podman.dmi'
+	deform = 'icons/mob/human_races/r_def_plant.dmi'
+
+	language = "Rootspeak"
+	unarmed_type = /datum/unarmed_attack/diona/podman
+	primitive = /mob/living/carbon/monkey/diona/podman
+
+	// Because they are less thicc than dionaea.
+	siemens_coefficient = 0.75
+
+	brute_mod = 1.3
+	burn_mod = 1.3
+	speed_mod = 0.7
+	speed_mod_no_shoes = -2
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
+	,RAD_ABSORB = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/podman
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona/podman
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona/podman
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona/podman
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona/podman
+		)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver/diona,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
+		)
+
+	regen_mod = 0.5
+	regen_limbs = FALSE
+
+/datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
@@ -991,6 +1057,9 @@
 /datum/unarmed_attack/diona
 	attack_verb = list("lash", "bludgeon")
 	damage = 2
+
+/datum/unarmed_attack/diona/podman
+	damage = 1
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")

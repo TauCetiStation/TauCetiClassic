@@ -499,12 +499,6 @@ var/global/list/datum/spawners_cooldown = list()
 	diona = _diona
 	realName = _realName
 
-/datum/spawner/plant/can_spawn(mob/dead/observer/ghost)
-	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
-		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
-		return FALSE
-	return ..()
-
 /datum/spawner/plant/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(diona))
 

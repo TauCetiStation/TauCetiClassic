@@ -742,7 +742,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == IPC || H.species.name == DIONA)
+	if(H.species.name == IPC || H.species.name == DIONA || H.species.name == PODMAN)
 		return FALSE
 
 	return TRUE
@@ -859,12 +859,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/head/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/head/diona/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == DIONA)
-		return TRUE
-
-	return FALSE
+	return species.name == H.species.name
 
 /obj/item/organ/external/head/abomination
 	vital = FALSE
@@ -895,6 +896,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner)
 		process_grasp(owner.l_hand, "left hand")
 
+/obj/item/organ/external/l_arm/diona
+	name = "left upper tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/l_arm/diona/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
@@ -921,6 +929,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner)
 		process_grasp(owner.r_hand, "right hand")
 
+/obj/item/organ/external/r_arm/diona
+	name = "right upper tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/r_arm/diona/podman
+	controller_type = /datum/bodypart_controller/plant
+
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	artery_name = "femoral artery"
@@ -941,6 +957,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
 
+/obj/item/organ/external/l_leg/diona
+	name = "left lower tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/l_leg/diona/podman
+	controller_type = /datum/bodypart_controller/plant
+
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
@@ -960,6 +984,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+
+/obj/item/organ/external/r_leg/diona
+	name = "right lower tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/r_leg/diona/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

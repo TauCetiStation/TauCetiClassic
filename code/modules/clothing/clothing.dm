@@ -136,7 +136,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if(HUMAN , SKRELL)	//humanoid bodytypes
+		if(HUMAN , SKRELL, PODMAN)	//humanoid bodytypes
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		else
 			species_restricted = list(target_species)
@@ -157,6 +157,8 @@ var/global/list/icon_state_allowed_cache = list()
 	//Set species_restricted list
 	switch(target_species)
 		if(SKRELL)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
+		if(PODMAN)
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		if(HUMAN)
 			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)

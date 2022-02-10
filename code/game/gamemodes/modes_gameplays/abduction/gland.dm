@@ -128,7 +128,7 @@
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
+	host.set_species_soft(pick(HUMAN, UNATHI, TAJARAN, SKRELL, DIONA, PODMAN, VOX))
 
 
 //VENTCRAWLING

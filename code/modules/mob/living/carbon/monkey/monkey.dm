@@ -131,8 +131,19 @@
 	greaterform = DIONA
 	add_language("Rootspeak")
 
+/mob/living/carbon/monkey/diona/podman/atom_init()
+	. = ..()
+	greaterform = PODMAN
+	verbs -= /mob/living/carbon/monkey/diona/verb/merge
+	verbs -= /mob/living/carbon/monkey/diona/verb/split
+	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
+	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
+
 /mob/living/carbon/monkey/diona/movement_delay()
 	return ..(tally = 3.5)
+
+/mob/living/carbon/monkey/diona/podman/movement_delay()
+	return ..(tally = 0.5)
 
 /mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
