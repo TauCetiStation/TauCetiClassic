@@ -1844,9 +1844,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
-"adm" = (
-/turf/space,
-/area/asteroid/mine/unexplored/safe)
 "adn" = (
 /obj/machinery/flasher{
 	id = "AI";
@@ -87656,7 +87653,7 @@ gay
 gay
 gay
 gay
-adm
+gEx
 gay
 gay
 gay
@@ -87912,9 +87909,9 @@ gay
 gay
 gay
 gay
-adm
-adm
-adm
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -88168,10 +88165,10 @@ gEx
 gay
 gay
 gay
-adm
-adm
-adm
-adm
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -88425,10 +88422,10 @@ gay
 gay
 gay
 gay
-adm
-adm
-adm
-adm
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -88683,8 +88680,8 @@ gay
 gEx
 gay
 gay
-adm
-adm
+gEx
+gEx
 gay
 gay
 gay
