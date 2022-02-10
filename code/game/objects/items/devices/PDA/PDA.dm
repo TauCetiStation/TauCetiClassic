@@ -69,6 +69,7 @@
 	var/last_trans_tick = 0
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+	var/owner_slippery = FALSE
 
 /obj/item/device/pda/atom_init()
 	. = ..()
@@ -145,6 +146,7 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+	owner_slippery = TRUE
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
@@ -620,6 +622,7 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 	var/mob/living/U = usr
+	var/obj/item/device/pda/pda = locate() in U.loc//get_contents()
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	// if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that. // Actually, not
 	if (!can_use() || !Adjacent(U))
@@ -686,6 +689,10 @@
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
+				if(istype(pda, /obj/item/device/pda/clown))
+					owner_slippery = TRUE
+				else
+					owner_slippery = FALSE
 
 //MENU FUNCTIONS===================================
 
@@ -734,6 +741,8 @@
 			if ( !(last_honk && world.time < last_honk + 20) )
 				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 				last_honk = world.time
+			owner_slippery = !owner_slippery
+			to_chat(user, "<span class='notice'>You toggle your slippery. HONK!</span>")
 		if("Gas Scan")
 			if(scanmode == 5)
 				scanmode = 0
