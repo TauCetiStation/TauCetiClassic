@@ -56,6 +56,8 @@ jobs:
             map_name: Box Station
           - map_meta: gamma
             map_name: Gamma Station
+          - map_meta: falcon
+            map_name: Falcon Station
     steps:
       - uses: actions/checkout@v2
       - name: Setup Cache
