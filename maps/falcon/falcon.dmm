@@ -1096,8 +1096,7 @@
 /area/station/bridge/teleporter)
 "abW" = (
 /obj/structure/disposaloutlet{
-	dir = 4;
-	throw_range = 1
+	dir = 4
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
