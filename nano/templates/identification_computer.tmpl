@@ -225,11 +225,22 @@
         {{else}}
           <div class='item'>
             <h2>{{:data.station_name}}</h2>
+            {{if data.fast_full_access}}
+                  <h3 style='backgroundColor: #EEBC1D'>
+                    {{:helper.link('Grant full station access', '', {'choice' : 'access_full'}, null)}}
+                  </h3>
+              {{/if}}
           </div>
           <div class='item' style='width: 100%'>
             {{for data.regions}}
-              <div style='float: left; width: 175px; min-height: 250px'>
-                <div class='average'><b>{{:value.name}}</b></div>
+              <div style='float: left; width: 180px; min-height: 270px'>
+                <div class='average'><b>{{:value.name}}</b>  
+                {{if data.fast_modify_region}}
+                  <span style='color: #EEBC1D'>
+                    {{:helper.link('Full ' + value.name + ' access', '', {'choice' : 'access_region', 'region_id' : value.id, 'region_allowed': value.region_allowed}, null)}}
+                  </span>
+                {{/if}}
+                </div>
                 {{for value.accesses :accessValue:accessKey}}
                   <div class='itemContentWide'>
                     {{:helper.link(accessValue.desc, '', {'choice' : 'access', 'access_target' : accessValue.ref, 'allowed' : accessValue.allowed}, null, accessValue.allowed ? 'selected' : null)}}

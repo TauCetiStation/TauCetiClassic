@@ -48,6 +48,8 @@
 	if(!usr || usr.incapacitated() || issilicon(usr))	return
 
 	if(modify)
+		if(!do_skill_checks(usr))
+			return
 		to_chat(usr, "You remove \the [modify] from \the [src].")
 		modify.loc = get_turf(src)
 		if(!usr.get_active_hand())
@@ -55,6 +57,8 @@
 		modify = null
 		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else if(scan)
+		if(!do_skill_checks(usr))
+			return
 		to_chat(usr, "You remove \the [scan] from \the [src].")
 		scan.loc = get_turf(src)
 		if(!usr.get_active_hand())
@@ -110,6 +114,9 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
+	data["fast_modify_region"] = isSkillCompetent(user, SKILL_COMMAND, SKILL_COMMAND_EXPERT)
+	data["fast_full_access"] = isSkillCompetent(user, SKILL_COMMAND, SKILL_COMMAND_MASTER)
+
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
 		for(var/access in get_all_centcom_access())
@@ -123,8 +130,10 @@
 		var/list/regions = list()
 		for(var/i = 1; i <= 7; i++)
 			var/list/accesses = list()
+			var/region_allowed = 0
 			for(var/access in get_region_accesses(i))
 				if (get_access_desc(access))
+					region_allowed += (access in modify.access) ? 1 : 0
 					accesses.Add(list(list(
 						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
@@ -132,7 +141,9 @@
 
 			regions.Add(list(list(
 				"name" = get_region_accesses_name(i),
-				"accesses" = accesses)))
+				"accesses" = accesses,
+				"id" = i,
+				"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
 
 		data["regions"] = regions
 
@@ -206,7 +217,17 @@
 						modify.access -= access_type
 						if(!access_allowed)
 							modify.access += access_type
-
+		if("access_region")
+			if(is_authenticated())
+				var/region_id = text2num(href_list["region_id"])
+				var/region_accesses = get_region_accesses(region_id)
+				var/region_allowed = text2num(href_list["region_allowed"])
+				modify.access -= region_accesses
+				if(!region_allowed)
+					modify.access += region_accesses
+		if("access_full")
+			if(is_authenticated())
+				modify.access += get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]

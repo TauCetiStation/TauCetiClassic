@@ -364,6 +364,7 @@ medical, chemistry, research, command)
 
 //civilians
 /datum/skills/captain
+	command = SKILL_COMMAND_MASTER
 	police = SKILL_POLICE_PRO
 	firearms = SKILL_FIREARMS_PRO
 	melee = SKILL_MELEE_TRAINED
@@ -375,10 +376,10 @@ medical, chemistry, research, command)
 	combat_mech = SKILL_COMBAT_MECH_NOVICE
 
 /datum/skills/hop
+	command = SKILL_COMMAND_EXPERT
 	police = SKILL_POLICE_TRAINED
 	firearms = SKILL_FIREARMS_TRAINED
 	civ_mech = SKILL_CIV_MECH_TRAINED
-	command = SKILL_COMMAND_EXPERT
 
 /datum/skills/internal_affairs
 	police = SKILL_POLICE_TRAINED
