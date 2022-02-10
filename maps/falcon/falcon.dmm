@@ -7476,6 +7476,25 @@
 	icon_state = "darkpurplefull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
+"anS" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/visible/green{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/engineering/atmos)
+"anT" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/engineering/atmos)
+"anU" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/visible/cyan,
+/turf/simulated/wall/r_wall,
+/area/station/engineering/atmos)
 "aoB" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
@@ -54151,16 +54170,16 @@ akb
 crv
 gay
 crv
-diX
-fFG
+anS
+oFi
 qJu
-nKm
-usA
-diX
-qIZ
+oFi
+anT
+anS
+rau
 vmy
-kNe
-usA
+rau
+anT
 crv
 crv
 crv
@@ -55707,7 +55726,7 @@ aRB
 rct
 eXO
 qTf
-qTf
+anU
 bbK
 ojo
 crv
@@ -55964,7 +55983,7 @@ rsx
 crv
 ojo
 lzD
-lzD
+hPs
 lzD
 ojo
 crv
@@ -56478,7 +56497,7 @@ rsx
 crv
 ojo
 dMO
-dMO
+hPs
 dMO
 ojo
 gay
@@ -56735,7 +56754,7 @@ mkA
 rct
 eXO
 iOZ
-iOZ
+anU
 jPh
 ojo
 gay
