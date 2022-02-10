@@ -218,11 +218,12 @@
 
 /mob/proc/check_mob_slippery()
 	var/obj/item/device/pda/clown/slip_pda = locate() in get_contents()
-	if(slip_pda)
+	var/mob/living/carbon/human/pda_user = slip_pda.loc
+
+	if (pda_user.l_store == slip_pda || pda_user.r_store == slip_pda || pda_user.belt == slip_pda || pda_user.wear_id == slip_pda)
 		src.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 	else
 		qdel(src.GetComponent(/datum/component/slippery))
-		//(src.belt == P || src.belt == P || src.l_pocket == P || src.r_pocket == P)
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	var/list/grabs = GetGrabs()
