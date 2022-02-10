@@ -8005,18 +8005,21 @@
 	},
 /area/station/engineering/chiefs_office)
 "aMh" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "aMA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8116,15 +8119,24 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aRT" = (
-/obj/machinery/optable,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = 22
 	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/item/weapon/pen,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "aSK" = (
@@ -10488,22 +10500,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"ddO" = (
-/obj/structure/barricade/wooden,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/genetics_cloning)
 "dgn" = (
 /obj/structure/rack,
 /obj/item/clothing/under/bathtowel,
@@ -10724,10 +10720,22 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "dqs" = (
-/obj/item/weapon/table_parts/glass,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/table/glass,
+/obj/item/weapon/pen,
+/obj/item/weapon/storage/box/bodybags,
+/obj/item/weapon/scalpel,
+/obj/item/weapon/autopsy_scanner{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/device/radio/intercom{
+	dir = 4;
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = -22
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/station/medical/genetics_cloning)
 "dsj" = (
@@ -10829,24 +10837,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "due" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Cloning Lab";
-	req_access = list(72)
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access = list(5,6)
 	},
-/obj/structure/barricade/wooden{
-	layer = 2.8;
-	name = "doorway barricade"
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/medical/genetics_cloning)
 "duj" = (
@@ -11629,16 +11638,19 @@
 /turf/simulated/floor/carpet/black,
 /area/station/cargo/storage)
 "ebe" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+/obj/machinery/light_switch{
+	pixel_y = -27
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Morgue";
+	c_tag = "Medbay Cloning";
 	dir = 10;
 	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "ecT" = (
@@ -11737,10 +11749,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ehC" = (
-/obj/machinery/door/airlock/medical{
-	name = "Morgue";
-	req_access = list(5,6)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -11749,10 +11757,13 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/curtain/medical,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = null;
+	name = "Cloning Lab";
+	req_access = list(5,9)
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "whitebluefull"
 	},
 /area/station/medical/surgeryobs)
 "ehM" = (
@@ -12194,13 +12205,13 @@
 	},
 /area/station/civilian/bar)
 "eDx" = (
-/obj/structure/morgue,
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
+/obj/machinery/computer/cloning,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "eDN" = (
@@ -12562,9 +12573,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "eWt" = (
@@ -13382,8 +13398,13 @@
 	},
 /area/station/civilian/hydroponics)
 "fTe" = (
+/obj/structure/stool/bed/roller,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 6;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "fTo" = (
@@ -13487,7 +13508,10 @@
 	pixel_y = 25
 	},
 /obj/machinery/power/apc{
-	pixel_x = -32
+	dir = 8;
+	name = "Aft Hall APC";
+	pixel_x = -25;
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -15719,19 +15743,6 @@
 "ioF" = (
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/dwarf)
-"ioN" = (
-/obj/structure/barricade/wooden,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/medical/genetics_cloning)
 "iqi" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -16888,13 +16899,17 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "white"
 	},
 /area/station/medical/morgue)
 "jAD" = (
@@ -17160,16 +17175,16 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "jMj" = (
-/obj/structure/table/glass,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
-/obj/item/weapon/autopsy_scanner{
-	pixel_x = 5
+/obj/machinery/clonepod,
+/obj/machinery/shower{
+	dir = 8
 	},
-/obj/item/weapon/scalpel,
+/obj/structure/drain{
+	drainage = 2
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/medical/morgue)
 "jMF" = (
@@ -17686,15 +17701,16 @@
 	},
 /area/station/bridge/teleporter)
 "kit" = (
-/obj/item/weapon/shard,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/book/manual/wiki/medical_genetics,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 22
+/obj/structure/morgue{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "kjg" = (
 /obj/structure/grille,
@@ -18550,7 +18566,7 @@
 /area/station/maintenance/science)
 "kXi" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
+	id_tag = null;
 	name = "Medbay"
 	},
 /obj/machinery/door/firedoor,
@@ -19780,14 +19796,10 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "mnh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/weapon/circuitboard/scan_consolenew,
-/obj/item/stack/sheet/metal{
-	amount = 12
+/obj/machinery/optable,
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/turf/simulated/floor,
 /area/station/medical/genetics_cloning)
 "mob" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -20534,17 +20546,26 @@
 	},
 /area/station/cargo/storage)
 "mWu" = (
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
-/obj/machinery/light{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Genetics Cloning APC";
+	pixel_x = 25
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "mXv" = (
@@ -20957,7 +20978,7 @@
 /area/station/security/hos)
 "nkH" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "";
+	id_tag = null;
 	name = "Surgery";
 	req_access = list(5)
 	},
@@ -20967,7 +20988,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/curtain/medical,
 /turf/simulated/floor,
 /area/station/medical/surgeryobs)
 "nkO" = (
@@ -21287,7 +21307,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
+	id_tag = null;
 	name = "Medbay"
 	},
 /obj/structure/cable{
@@ -21385,21 +21405,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"nAv" = (
-/obj/structure/barricade/wooden,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/medical/genetics_cloning)
 "nAz" = (
 /obj/effect/landmark/start{
 	name = "Chef"
@@ -21807,16 +21812,15 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "nSP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "nUm" = (
@@ -23939,6 +23943,9 @@
 /area/station/engineering/break_room)
 "pQF" = (
 /obj/machinery/body_scanconsole,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -24267,14 +24274,21 @@
 	},
 /area/station/civilian/kitchen)
 "qlx" = (
-/obj/item/apc_frame,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "qlH" = (
 /obj/machinery/computer/card{
@@ -24349,26 +24363,10 @@
 	},
 /area/station/medical/sleeper)
 "qng" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Morgue APC";
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/machinery/dna_scannernew,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "qod" = (
@@ -24632,13 +24630,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "qxM" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/stack/cable_coil/random,
+/obj/structure/morgue{
+	dir = 8
+	},
 /obj/machinery/light_switch{
 	pixel_y = -27
 	},
 /turf/simulated/floor{
-	icon_state = "damaged4"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/medical/genetics_cloning)
 "qxO" = (
@@ -27188,8 +27188,14 @@
 	},
 /area/station/engineering/drone_fabrication)
 "sYl" = (
-/obj/item/weapon/circuitboard/clonepod,
-/turf/simulated/floor/plating,
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "sYw" = (
 /obj/machinery/door/airlock/external{
@@ -28370,14 +28376,22 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "uah" = (
-/obj/machinery/computer/cloning,
-/obj/machinery/light_construct{
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Morgue APC";
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "uao" = (
 /obj/machinery/power/apc{
@@ -28400,12 +28414,14 @@
 	},
 /area/station/bridge)
 "uaG" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/structure/morgue,
+/obj/machinery/firealarm{
+	pixel_y = 25
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/medical/genetics_cloning)
 "ubz" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -28672,17 +28688,23 @@
 	},
 /area/station/hallway/primary/central)
 "uyk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
+	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "uyq" = (
@@ -30093,11 +30115,11 @@
 	},
 /area/station/civilian/bar)
 "vUH" = (
-/obj/item/weapon/shard{
-	icon_state = "small"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/station/medical/genetics_cloning)
 "vUY" = (
@@ -30606,11 +30628,16 @@
 	},
 /area/station/cargo/storage)
 "wpX" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -30857,11 +30884,16 @@
 	},
 /area/station/rnd/lab)
 "wGd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/scrap_lump,
-/obj/random/foods/food_trash,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Morgue";
+	dir = 10;
+	network = list("SS13","Medical")
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/station/medical/genetics_cloning)
 "wGH" = (
@@ -31169,10 +31201,10 @@
 	},
 /area/station/engineering/atmos)
 "wUD" = (
-/obj/structure/morgue,
+/obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/morgue)
 "wUZ" = (
@@ -55896,8 +55928,8 @@ cUq
 pNR
 ppw
 mJj
-nAv
-ioN
+mJj
+mJj
 mJj
 qdP
 aaK
@@ -57180,9 +57212,9 @@ uJy
 ycH
 uSe
 mJj
-ddO
+mJj
 due
-ddO
+mJj
 aaF
 aaG
 aaQ
