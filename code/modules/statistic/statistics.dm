@@ -37,16 +37,16 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	// New data
 	var/list/datum/stat/death_stat/deaths = list()
+	var/list/datum/stat/explosion_stat/explosions = list()
+	var/list/datum/stat/manifest_entry/manifest_entries = list()
 
 	// UNUSED
 	// var/enabled = 1
 	//
-	//var/list/datum/stat/explosion_stat/explosions = list()
 	//var/list/survivors = list()
 	//var/list/uplink_purchases = list()
 	//var/list/badass_bundles = list()
 	//var/list/antag_objectives = list()
-	//var/list/manifest_entries = list()
 	//var/list/datum/stat/role/roles = list()
 	//var/list/datum/stat/faction/factions = list()
 //
@@ -99,6 +99,9 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	mode_result = SSticker.mode.get_mode_result()
 	map = SSmapping.config.map_name
 	completion_html = SSticker.mode.completition_text
+
+	for(var/datum/mind/M in SSticker.minds)
+		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
 
 /datum/stat
 	// Hello. Nothing to see here.
@@ -199,6 +202,13 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/light_impact_range = 0
 	var/flash_range = 0
 
+/datum/stat/manifest_entry
+	var/key
+	var/name
+	var/assignment
+	var/special_role
+	var/list/antag_roles = null
+
 /datum/stat/antag_objective
 	var/mind_name = null
 	var/key = null
@@ -221,14 +231,3 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/purchaser_key = null
 	var/purchaser_name = null
 	var/purchaser_is_traitor = TRUE
-
-/datum/stat/manifest_entry
-	var/key = null
-	var/name = null
-	var/assignment = null
-
-// redo using mind list instead so we can get non-human players in its output
-/datum/stat/manifest_entry/New(datum/mind/M)
-	key = ckey(M.key)
-	name = STRIP_NEWLINE(M.name)
-	assignment = STRIP_NEWLINE(M.assigned_role)

@@ -76,6 +76,19 @@
 	stat.flash_range = flash_range
 	explosions += stat
 
+/datum/stat_collector/proc/add_manifest_entry(key, name, assignment, special_role, list/antag_roles)
+	var/datum/stat/manifest_entry/stat = new
+	stat.key = ckey(key)
+	stat.name = STRIP_NEWLINE(name)
+	stat.assignment = STRIP_NEWLINE(assignment)
+	stat.special_role = STRIP_NEWLINE(special_role)
+	if(antag_roles?.len)
+		stat.antag_roles = list()
+		for(var/role in antag_roles)
+			antag_roles += role
+
+	manifest_entries += stat
+
 /*
 /datum/stat_collector/proc/get_research_score()
 	var/obj/machinery/r_n_d/server/server = null
