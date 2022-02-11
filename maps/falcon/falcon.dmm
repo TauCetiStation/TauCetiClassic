@@ -191,7 +191,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/auxsolarport)
+/area/station/maintenance/medbay)
 "aap" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -845,9 +845,6 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/teleport)
-"abv" = (
-/turf/simulated/wall/r_wall,
-/area/station/aisat)
 "abw" = (
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -884,7 +881,7 @@
 /area/station/hallway/primary/central)
 "abB" = (
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/atmos)
+/area/station/maintenance/escape)
 "abC" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -2621,7 +2618,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aeq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -2632,7 +2629,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aer" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
@@ -2641,11 +2638,11 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aes" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aet" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -2668,13 +2665,13 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aew" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aex" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
@@ -2685,7 +2682,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2716,14 +2713,14 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aeA" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aeB" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -2739,7 +2736,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "aeC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3335,7 +3332,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor/plating,
-/area/station/aisat)
+/area/station/tcommsat/computer)
 "afL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8219,7 +8216,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/auxsolarport)
+/area/station/maintenance/medbay)
 "aqw" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
@@ -16373,7 +16370,7 @@
 /obj/item/clothing/suit/nerdshirt,
 /obj/item/weapon/beach_ball/holoball,
 /turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
+/area/station/maintenance/escape)
 "ioF" = (
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/dwarf)
@@ -29102,7 +29099,7 @@
 /area/station/maintenance/science)
 "ujh" = (
 /turf/simulated/wall,
-/area/station/maintenance/atmos)
+/area/station/maintenance/engineering)
 "ujv" = (
 /obj/machinery/computer/communications,
 /obj/structure/cable{
@@ -50158,8 +50155,8 @@ aaY
 vlu
 aep
 afK
-abv
-abv
+vlu
+vlu
 crv
 qws
 crv
@@ -50673,7 +50670,7 @@ ael
 aer
 aev
 aez
-abv
+vlu
 gay
 azF
 crv
@@ -50930,7 +50927,7 @@ vlu
 aes
 aew
 aeA
-abv
+vlu
 gay
 azF
 gay
@@ -51186,8 +51183,8 @@ rzG
 sCX
 sCX
 sCX
-abv
-abv
+vlu
+vlu
 gay
 azF
 azF
@@ -54477,7 +54474,7 @@ xSr
 cmJ
 cmJ
 cmJ
-dDY
+xSr
 dDY
 sYw
 dDY
@@ -54734,7 +54731,7 @@ xSr
 hVT
 peD
 rDe
-dDY
+xSr
 xjz
 uPe
 vUY
@@ -54991,7 +54988,7 @@ xSr
 geY
 yiT
 bKE
-dDY
+xSr
 lCq
 uph
 pMh
@@ -55793,7 +55790,7 @@ ala
 akC
 alU
 akC
-akC
+akb
 crv
 crv
 crv
@@ -56050,8 +56047,8 @@ alb
 alv
 alV
 amn
-ujh
-ujh
+akb
+akb
 abB
 uRQ
 rsx
@@ -56307,7 +56304,7 @@ alc
 alw
 alW
 amo
-ujh
+akb
 ioA
 abB
 amH
@@ -59658,7 +59655,7 @@ mGO
 mGO
 ahb
 ahf
-abP
+ujh
 acp
 acy
 acg
@@ -59915,7 +59912,7 @@ gay
 agW
 ahc
 ahg
-abP
+ujh
 acH
 acN
 acN
