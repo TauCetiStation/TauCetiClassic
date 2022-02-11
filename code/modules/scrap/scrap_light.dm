@@ -206,7 +206,7 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(isitem(A) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
 */

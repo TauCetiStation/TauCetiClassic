@@ -86,7 +86,7 @@
 		if(I.tag)
 			bundlename = "[I.tag] bundle"
 			I.tag = null
-		if(istype(I, /obj/item) && ishuman(user))
+		if(isitem(I) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			loging(A, tempstate, bundlename)

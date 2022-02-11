@@ -136,7 +136,7 @@
 	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
-	if(dtype == BRUTE && istype(O, /obj/item))
+	if(dtype == BRUTE && isitem(O))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
 			return

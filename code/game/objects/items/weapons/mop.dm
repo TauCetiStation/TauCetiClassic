@@ -61,7 +61,7 @@
 	clean(current_turf, 1)
 
 /obj/item/weapon/mop/proc/on_sweep_to_check(turf/current_turf, turf/next_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(I.anchored)
 			return

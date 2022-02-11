@@ -1883,7 +1883,7 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+							if(where == "inhand" && isliving(usr) && isitem(O))
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)

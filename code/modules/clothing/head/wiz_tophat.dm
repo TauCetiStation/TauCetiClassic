@@ -409,7 +409,7 @@ var/global/list/tophats_list = list()
 	var/put_in_delay = 0
 	if(user == AM)
 		put_in_delay += 5 // Most of the delay will come in dive_into proc.
-	else if(istype(AM, /obj/item))
+	else if(isitem(AM))
 		var/obj/item/I = AM
 		put_in_delay += I.w_class * 2 SECONDS
 	else if(istype(AM, /obj/structure) || ismachinery(AM))

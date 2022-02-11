@@ -339,7 +339,7 @@ var/global/list/slot_equipment_priority = list(
 	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(!target)
 			target = loc
 

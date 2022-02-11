@@ -156,7 +156,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator)
 
-	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 
 		O.loc = src
 		name = O.name
@@ -171,7 +171,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			if(O.density && O.anchored)
 				knockdown_people = 1
 				melee_damage *= 2
-		else if(istype(O, /obj/item))
+		else if(isitem(O))
 			var/obj/item/I = O
 			health = 15 * I.w_class
 			melee_damage = 2 + I.force

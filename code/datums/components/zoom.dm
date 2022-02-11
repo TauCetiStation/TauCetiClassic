@@ -14,7 +14,7 @@
 	var/datum/action/zoom/button
 
 /datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
-	if(!istype(parent, /obj/item))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	
 	zoom_view_range = _zoom_view_range

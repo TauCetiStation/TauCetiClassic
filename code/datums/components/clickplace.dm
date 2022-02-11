@@ -112,7 +112,7 @@
 	jump_out(I, target, rec_limit - 1)
 
 /datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/living/user)
-	if(!istype(dropping, /obj/item))
+	if(!isitem(dropping))
 		return
 
 	var/obj/item/I = dropping

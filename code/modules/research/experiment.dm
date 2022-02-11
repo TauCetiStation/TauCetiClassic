@@ -365,7 +365,7 @@
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")

@@ -65,7 +65,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /obj/check_airflow_movable(n)
 	//if(isnull(w_class))
-	if(!istype(src, /obj/item))
+	if(!isitem(src))
 		if(n < vsc.airflow_dense_pressure)
 			return FALSE //most non-item objs don't have a w_class yet
 	else

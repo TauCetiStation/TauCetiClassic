@@ -175,7 +175,7 @@
 		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
 		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)
 		files.design_created_prototypes[D.id]++
-	if(istype(I, /obj/item))
+	if(isitem(I))
 		var/obj/item/Item = I
 		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
 		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)

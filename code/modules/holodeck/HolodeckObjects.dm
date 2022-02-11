@@ -273,7 +273,7 @@
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if (isitem(W) && get_dist(src,user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return

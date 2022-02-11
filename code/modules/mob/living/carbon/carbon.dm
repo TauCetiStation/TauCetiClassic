@@ -417,7 +417,7 @@
 	if(!item)
 		return
 
-	if(istype(item, /obj/item))
+	if(isitem(item))
 		var/obj/item/W = item
 		if(!W.canremove || W.flags & NODROP)
 			return
