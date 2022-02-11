@@ -845,6 +845,21 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/teleport)
+"abv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/westleft{
+	dir = 1;
+	layer = 3.1;
+	name = "laser testing";
+	req_access = list(7)
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/asteroid/research_outpost/spectro)
 "abw" = (
 /obj/structure/table/glass,
 /turf/simulated/floor{
@@ -28552,20 +28567,16 @@
 	},
 /area/station/security/checkpoint)
 "tLY" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/machinery/door/window/westleft{
-	dir = 1;
-	layer = 3.1;
-	name = "laser testing";
-	req_access = list(65)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
-/area/asteroid/research_outpost/spectro)
+/area/station/security/prison)
 "tMa" = (
 /obj/machinery/vending/hydronutrients,
 /obj/machinery/power/apc{
@@ -66853,7 +66864,7 @@ rNw
 cbd
 vTe
 qVM
-tLY
+abv
 rNw
 aor
 aoA
@@ -69142,7 +69153,7 @@ nVz
 ahs
 sLc
 aie
-ajb
+tLY
 ajb
 kBP
 hgW
