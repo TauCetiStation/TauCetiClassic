@@ -134,34 +134,43 @@
 	var/id
 	var/id_inputing = FALSE
 
+/datum/rune/cult/teleport/teleport/proc/input_rune_id(mob/living/carbon/user)
+	id = input(user, "Выберите Id руны телепорта", "Редактор Id рун") in get_runes_ids() + "Custom"
+	if(id == "Custom")
+		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
+
+	to_chat(user, "<span class='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
+
 /datum/rune/cult/teleport/teleport/can_action(mob/living/carbon/user)
 	if(!id && !id_inputing)
 		id_inputing = TRUE
-		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
-		to_chat(user, "<span class='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
+		input_rune_id(user)
 		return FALSE // Without instant teleport
-	var/list/tp_runes = get_tp_runes()
+	var/list/tp_runes = get_tp_runes_by_id()
 	if(!tp_runes.len)
 		to_chat(user, "<span class='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span> <span class='warning'>не обнаружено</span>")
 		return FALSE
-	if(tp_runes.len >= 5)
-		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
-		user.take_overall_damage(5, 0)
-		return FALSE
 	return TRUE
 
-/datum/rune/cult/teleport/teleport/proc/get_tp_runes()
-	var/list/runes = list()
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type) || R.power == src)
-			continue
+/datum/rune/cult/teleport/teleport/proc/get_runes_ids()
+	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - src
+	var/list/uniq_ids = list()
+	for(var/obj/effect/rune/R as anything in runes)
 		var/datum/rune/cult/teleport/teleport/T = R.power
-		if(T.id == id && (!is_centcom_level(R.loc.z) || istype(get_area(R), religion.area_type)))
-			runes += R
-	return runes
+		uniq_ids |= T.id
+	return uniq_ids
+
+/datum/rune/cult/teleport/teleport/proc/get_tp_runes_by_id()
+	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - src
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		var/datum/rune/cult/teleport/teleport/T = R.power
+		if(T.id == id)
+			valid_runes += R
+	return valid_runes
 
 /datum/rune/cult/teleport/teleport/action(mob/living/carbon/user)
-	var/list/tp_runes = get_tp_runes()
+	var/list/tp_runes = get_tp_runes_by_id()
 
 	if(tp_runes.len)
 		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
@@ -171,7 +180,7 @@
 		teleporting(T, user)
 
 /datum/rune/cult/teleport/teleport/ghost_action(mob/living/carbon/user)
-	var/list/tp_runes = get_tp_runes()
+	var/list/tp_runes = get_tp_runes_by_id()
 
 	if(tp_runes.len)
 		user.forceMove(get_turf(pick(tp_runes)))
