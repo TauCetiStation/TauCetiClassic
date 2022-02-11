@@ -55,6 +55,7 @@
 	if(P.crit_fail)
 		to_chat(user, "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>")
 		return
+	var/skill_bonus = applySkillModifier(user, 1, SKILL_CONSTRUCTION, SKILL_CONSTRUCTION_ADVANCED)
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/weapon/circuitboard))
@@ -69,7 +70,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, 20, target = src, volume = 50))
+				if(P.use_tool(src, user, SKILL_TASK_EASY * skill_bonus, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -83,7 +84,7 @@
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, 40, volume = 50))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE * skill_bonus, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -94,7 +95,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE * skill_bonus, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
@@ -103,7 +104,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE * skill_bonus, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
