@@ -186,7 +186,7 @@ function match_helper {
         istype="${BASH_REMATCH[2]}"
         s=${s#*"${BASH_REMATCH[2]}"}
         istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+), \1\\\\\)/"`
-        run_test "change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
+        run_test_fail "change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
     done
 }
 
@@ -214,7 +214,7 @@ function run_code_tests {
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
 
     run_test "chech eof" "newline_at_eof"
-    run_test "use is_helper define instead" "match_is_helpers"
+    match_is_helpers
 
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
