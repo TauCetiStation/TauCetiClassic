@@ -25,7 +25,7 @@
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
 		return
-	if(isblobnormal(B))
+	if(istype(B, /obj/effect/blob/normal))
 		prompt_upgrade(B)
 		return
 	if(isblobnode(B))
