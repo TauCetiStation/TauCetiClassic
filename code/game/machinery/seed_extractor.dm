@@ -42,14 +42,14 @@
 	if(istype(O, /obj/item/organ/external))
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
-			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
-			var/t_amount = 0
-			var/t_max = rand(1,4)
-			for(var/I in t_amount to t_max)
-				new /obj/item/seeds/replicapod(loc)
+			to_chat(user, "<span class='notice'>You extract some seeds from \the [IO.name].</span>")
+			new /obj/item/seeds/replicapod(loc)
+			qdel(IO)
+		else if(IO.species.name == PODMAN)
+			to_chat(user, "<span class='warning'>You fail to extract any seeds from \the [IO.name].</span>")
 			qdel(IO)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = F.seed_type

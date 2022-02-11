@@ -786,7 +786,7 @@
 	brute_mod = 1.3
 	burn_mod = 1.3
 	speed_mod = 0.7
-	speed_mod_no_shoes = -2
+	speed_mod_no_shoes = -1
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -798,6 +798,8 @@
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_HAIR = TRUE
 	)
 
 	has_bodypart = list(
@@ -821,6 +823,12 @@
 
 	regen_mod = 0.5
 	regen_limbs = FALSE
+
+/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	H.r_hair = 86
+	H.g_hair = 75
+	H.b_hair = 35
 
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")

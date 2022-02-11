@@ -33,6 +33,32 @@
 	icon_state = "podman_nymph1"
 	race = PODMAN
 
+/mob/living/carbon/monkey/diona/podman/fake
+	name = "diona nymph"
+	voice_name = "diona nymph"
+	icon_state = "nymph1"
+
+/mob/living/carbon/monkey/diona/atom_init()
+	. = ..()
+	gender = NEUTER
+	dna.mutantrace = "plant"
+	greaterform = DIONA
+	add_language("Rootspeak")
+
+/mob/living/carbon/monkey/diona/podman/atom_init()
+	. = ..()
+	greaterform = PODMAN
+	verbs -= /mob/living/carbon/monkey/diona/verb/merge
+	verbs -= /mob/living/carbon/monkey/diona/verb/split
+	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
+	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
+
+/mob/living/carbon/monkey/diona/movement_delay(tally = 0)
+	return ..(tally = 3.5)
+
+/mob/living/carbon/monkey/diona/podman/movement_delay(tally = 0)
+	return ..(tally = 0.5)
+
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
@@ -229,9 +255,12 @@
 	evolve_message()
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
-	adult.dna = dna.Clone()
-	adult.dna.generate_unique_enzymes(adult)
 	adult.set_species(get_species())
+	adult.dna = dna.Clone()
+	//adult.dna.UpdateSE()
+	//adult.dna.UpdateUI()
+
+	adult.UpdateAppearance()
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
