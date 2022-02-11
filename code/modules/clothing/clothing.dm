@@ -225,7 +225,7 @@ var/global/list/icon_state_allowed_cache = list()
 	handle_accessories_removal()
 
 /obj/item/clothing/proc/can_attach_accessory(obj/item/clothing/accessory/A)
-	if(!valid_accessory_slots || !istype(A) || (!A.slot in valid_accessory_slots))
+	if(!valid_accessory_slots || !istype(A) || !(A.slot in valid_accessory_slots))
 		return FALSE
 	. = TRUE
 
