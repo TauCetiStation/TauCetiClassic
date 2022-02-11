@@ -1,3 +1,8 @@
+// This file is used to test the entire build
+// To use istype-defines from this file for tests, wrap your istype in brackets
+// Example: #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+// Bad example: #define isabductor(A) istype(A, /mob/living/carbon/human/abductor)
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
@@ -91,9 +96,9 @@
 
 // GOONCHAT PORT
 
-#define isatom(A) istype(A, /atom)
+#define isatom(A) (istype(A, /atom))
 
-#define isclient(A) istype(A, /client)
+#define isclient(A) (istype(A, /client))
 
 
 // ASSEMBLY HELPERS
@@ -112,19 +117,19 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+#define iswrench(A) (istype(A, /obj/item/weapon/wrench))
 
-#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+#define iswelder(A) (istype(A, /obj/item/weapon/weldingtool))
 
-#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+#define iswirecutter(A) (istype(A, /obj/item/weapon/wirecutters))
 
-#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+#define isscrewdriver(A) (istype(A, /obj/item/weapon/screwdriver))
 
-#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+#define iscrowbar(A) (istype(A, /obj/item/weapon/crowbar))
 
-#define ismultitool(A) istype(A, /obj/item/device/multitool)
+#define ismultitool(A) (istype(A, /obj/item/device/multitool))
 
-#define iscoil(A) istype(A, /obj/item/stack/cable_coil)
+#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
@@ -194,16 +199,16 @@
 
 // BLOB
 
-#define isblob(A) istype(A, /obj/effect/blob)
+#define isblob(A) (istype(A, /obj/effect/blob))
 
-#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+#define isblobnormal(A) (istype(A, /obj/effect/blob/normal))
 
-#define isblobcore(A) istype(A, /obj/effect/blob/core)
+#define isblobcore(A) (istype(A, /obj/effect/blob/core))
 
-#define isblobnode(A) istype(A, /obj/effect/blob/node)
+#define isblobnode(A) (istype(A, /obj/effect/blob/node))
 
-#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+#define isblobfactory(A) (istype(A, /obj/effect/blob/factory))
 
-#define isblobshield(A) istype(A, /obj/effect/blob/shield)
+#define isblobshield(A) (istype(A, /obj/effect/blob/shield))
 
-#define isblobresource(A) istype(A, /obj/effect/blob/resource)
+#define isblobresource(A) (istype(A, /obj/effect/blob/resource))
