@@ -200,13 +200,13 @@ function newline_at_eof {
 }
 
 function match_helper {
-    local s=$1 regex=$2
+    local s=$1 regex='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
     while [[ $s =~ $regex ]]; do
         define="${BASH_REMATCH[1]}"
         s=${s#*"${BASH_REMATCH[1]}"}
         istype="${BASH_REMATCH[2]}"
         s=${s#*"${BASH_REMATCH[2]}"}
-        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+), \1\\\\\)/"`
+        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+),\s*\1\\\\\)/"`
         run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
     done
 }
@@ -216,8 +216,7 @@ function match_is_helpers {
     grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
     while read line
     do
-        regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
-        match_helper "$line" "$regex2"
+        match_helper "$line"
     done
 }
 
