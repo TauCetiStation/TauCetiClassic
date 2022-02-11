@@ -162,6 +162,16 @@ function find_code {
     fi
 }
 
+function newline_at_eof {
+    find ./code -regex '.*\.dm' | while read line
+    do
+        if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
+        then
+            echo "No newline at end of file: $line"
+        fi
+    done
+}
+
 function run_code_tests {
     msg "*** running code tests ***"
     run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
@@ -175,6 +185,7 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
+    run_test_fail "chech eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
