@@ -116,7 +116,7 @@ What is the naming convention for planes or layers?
 #define LIGHTING_PLANE 100
 #define LIGHTING_LAYER 1
 #define ABOVE_LIGHTING_PLANE 120
-#define ABOVE_LIGHTING_LAYER 1
+#define ABOVE_LIGHTING_LAYER 3
 
 ///--------------- FULLSCREEN IMAGES ------------
 #define FULLSCREEN_PLANE 500

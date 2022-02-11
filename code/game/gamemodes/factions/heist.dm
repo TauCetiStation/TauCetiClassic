@@ -90,7 +90,8 @@
 	for(var/datum/role/vox_raider/V in members)
 		if(!V.antag.current)
 			return FALSE
-		if(get_area(V.antag.current) != get_area_by_type(/area/shuttle/vox/arkship))
+		var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
+		if(!is_type_in_list(get_area(V.antag.current), arkship_areas))
 			return FALSE
 
 	return TRUE

@@ -371,6 +371,7 @@
 		return
 	if(!isnull(find_record(subject.ckey)))
 		scantemp = "Субъект уже записан в базу данных."
+
 		return
 
 	subject.dna.check_integrity()
