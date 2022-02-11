@@ -357,7 +357,7 @@
 	else if(!isbrain(subject))
 		scantemp = "Ошибка: Тело субъекта не поддерживается сканером."
 		return
-	if(isnull(subject) || !isbrain(subject) || !subject.dna)
+	if(!subject.dna)
 		scantemp = "Ошибка: Не удалось обнаружить геннетические данные."
 		return
 	if(subject.suiciding == 1)
