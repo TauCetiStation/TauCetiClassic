@@ -679,19 +679,18 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		overlays_standing[SUIT_LAYER] = standing
 
-		if(S.accessories.len)
-			for(var/obj/item/clothing/accessory/A in wear_suit:accessories)
-				var/tie_color = A.item_color
-				if(!tie_color)
-					tie_color = A.icon_state
-				var/image/tie
-				if(A.icon_custom)
-					tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -SUIT_LAYER + A.layer_priority)
-				else
-					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -SUIT_LAYER + A.layer_priority)
-				tie.color = A.color
-				tie = human_update_offset(tie, TRUE)
-				standing.add_overlay(tie)
+		for(var/obj/item/clothing/accessory/A in S:accessories)
+			var/tie_color = A.item_color
+			if(!tie_color)
+				tie_color = A.icon_state
+			var/image/tie
+			if(A.icon_custom)
+				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -SUIT_LAYER + A.layer_priority)
+			else
+				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -SUIT_LAYER + A.layer_priority)
+			tie.color = A.color
+			tie = human_update_offset(tie, TRUE)
+			standing.add_overlay(tie)
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			drop_from_inventory(handcuffed)

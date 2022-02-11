@@ -218,19 +218,18 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/emp_act(severity)
 	..()
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emplode(severity)
+	for(var/obj/item/clothing/accessory/A in accessories)
+		A.emplode(severity)
 
 /obj/item/clothing/AltClick()
 	handle_accessories_removal()
 
 /obj/item/clothing/proc/can_attach_accessory(obj/item/clothing/accessory/A)
-	if(valid_accessory_slots && istype(A) && (A.slot in valid_accessory_slots))
-		. = TRUE
-	else
+	if(!valid_accessory_slots || !istype(A) || (!A.slot in valid_accessory_slots))
 		return FALSE
-	if(accessories.len && restricted_accessory_slots && (A.slot in restricted_accessory_slots))
+	. = TRUE
+
+	if(restricted_accessory_slots && (A.slot in restricted_accessory_slots))
 		for(var/obj/item/clothing/accessory/AC in accessories)
 			if (AC.slot == A.slot)
 				return FALSE
@@ -249,8 +248,6 @@ var/global/list/icon_state_allowed_cache = list()
 	if(!Adjacent(usr))
 		return
 	if(!accessories.len)
-		return
-	if(!istype(usr, /mob/living))
 		return
 
 	if(!usr.IsAdvancedToolUser())
@@ -277,38 +274,40 @@ var/global/list/icon_state_allowed_cache = list()
 	accessories -= A
 	A.update_icon()
 	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
-		H.update_inv_wear_suit()
-		action_button_name = null
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	H.update_inv_w_uniform()
+	H.update_inv_wear_suit()
+	action_button_name = null
 
 /obj/item/clothing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(can_attach_accessory(A))
-			user.drop_from_inventory(A, src)
-			accessories += A
-			A.on_attached(src, user)
-
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
-				H.update_inv_wear_suit()
-			action_button_name = "Use inventory."
-			return
-		else
-			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
-
-	if(accessories.len)
+	if(!istype(I, /obj/item/clothing/accessory))
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.attack_accessory(I, user, params)
+			return
+
+	var/obj/item/clothing/accessory/A = I
+	if(can_attach_accessory(A))
+		user.drop_from_inventory(A, src)
+		accessories += A
+		A.on_attached(src, user)
+
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_w_uniform()
+			H.update_inv_wear_suit()
+		action_button_name = "Use inventory."
 		return
+	else
+		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
+
+
 
 	return ..()
 
 /obj/item/clothing/attack_hand(mob/user)
-	if(accessories.len && loc == user)
+	if(loc == user)
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.attack_hand(user)
 		return
@@ -540,7 +539,7 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
-	valid_accessory_slots = list("armband","decor")
+	valid_accessory_slots = list("armband", "decor")
 	restricted_accessory_slots = list("armband")
 
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
