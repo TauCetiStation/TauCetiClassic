@@ -89,7 +89,7 @@
 		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
 		return
-	if(isblobnode(B)||isblobcore(B)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
@@ -120,7 +120,7 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(isblobnode(B)||isblobcore(B)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
@@ -133,7 +133,7 @@
 			to_chat(usr, "There is a core nearby, move away from it!")
 			creating_blob = 0
 			return
-		if(istype(B,/obj/effect/blob/factory))
+		if(isblobfactory(B))
 			to_chat(usr, "There is another porous blob nearby, move away from it!")
 			creating_blob = 0
 			return
@@ -157,7 +157,7 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(!istype(B,/obj/effect/blob/factory))
+	if(!isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find another one.")
 		creating_blob = 0
 		return

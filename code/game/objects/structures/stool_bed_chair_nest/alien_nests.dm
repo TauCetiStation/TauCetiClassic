@@ -43,7 +43,7 @@
 
 	if(isxeno(M))
 		return
-	if(!1isxenoadult(user))
+	if(!isxenoadult(user))
 		return
 
 	if(M == usr)
