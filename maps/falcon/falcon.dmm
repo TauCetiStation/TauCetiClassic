@@ -9767,9 +9767,7 @@
 /area/station/maintenance/dormitory)
 "bpk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/blood/APlus{
-	icon_state = "empty_old"
-	},
+/obj/item/weapon/reagent_containers/blood/APlus,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -12114,15 +12112,15 @@
 	},
 /area/station/medical/cmo)
 "dBQ" = (
-/obj/item/weapon/storage/firstaid/adv{
+/obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/adv{
+/obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/glass,
 /obj/machinery/light_switch{
 	pixel_x = -25;
@@ -19875,6 +19873,15 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "solar_tool_airlock";
+	name = "exterior access button";
+	pixel_x = -25;
+	pixel_y = -25;
+	req_access = list(13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
