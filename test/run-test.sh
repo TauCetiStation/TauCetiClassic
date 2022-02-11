@@ -175,7 +175,7 @@ function newline_at_eof {
                 ((counter++))
             fi
         done
-    return counter
+    return $counter
 }
 
 function match_helper {
