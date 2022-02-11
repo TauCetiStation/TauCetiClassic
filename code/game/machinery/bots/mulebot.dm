@@ -665,7 +665,7 @@
 	if(!wires.mob_avoid())		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(isrobot(M))
 				visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
 				visible_message("<span class='warning'>[src] knocks over [M]!</span>")

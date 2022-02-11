@@ -47,7 +47,7 @@
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
 			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-	if (istype(A,/mob/living/carbon))
+	if (iscarbon(A))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
 
@@ -124,7 +124,7 @@
 		this.basedatum = new Monkey.blood_datum
 		this.update_icon()
 
-	else if(istype(M,/mob/living/carbon/human))
+	else if(ishuman(M))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		var/mob/living/carbon/human/H = M

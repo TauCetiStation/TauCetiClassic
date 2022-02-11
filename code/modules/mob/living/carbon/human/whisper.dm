@@ -98,7 +98,7 @@
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
 		for(var/mob/C in L.contents)
-			if(istype(C,/mob/living))
+			if(isliving(C))
 				listening += C
 
 	//pass on the message to objects that can hear us.

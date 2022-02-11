@@ -113,8 +113,8 @@
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
 		var/mob/living/L = A
 		var/mob/living/Driver = load
-		if(istype(L,/mob/living/silicon/robot))
-			if(istype(L,/mob/living/silicon/robot/drone))
+		if(isrobot(L))
+			if(isdrone(L))
 				visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 				L.gib()
 			else

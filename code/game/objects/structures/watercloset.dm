@@ -200,7 +200,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	add_fingerprint(user)
@@ -649,7 +649,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	to_chat(usr, "<span class='notice'>You start washing \the [I].</span>")

@@ -148,7 +148,7 @@
 		variable = "[bicon(variable)]"
 		default = "icon"
 
-	else if(istype(variable,/atom) || istype(variable,/datum))
+	else if(isatom(variable) || istype(variable,/datum))
 		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 		default = "type"
 
@@ -156,7 +156,7 @@
 		to_chat(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
 
-	else if(istype(variable,/client))
+	else if(isclient(variable))
 		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
 
@@ -508,7 +508,7 @@
 					if(isnull(var_new) || var_new < 0)
 						return
 					O.vars[variable] = var_new
-					if(istype(O,/client))
+					if(isclient(O))
 						var/client/C = O
 						if(C) C.log_client_ingame_age_to_db()
 				if("stat")

@@ -31,7 +31,7 @@
 
 	var/sprite
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = 1
@@ -172,7 +172,7 @@
 
 	body += "<div align='center'>"
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
 			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
@@ -450,7 +450,7 @@ body
 			return
 
 		var/D = locate(href_list["datumedit"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -461,7 +461,7 @@ body
 			return
 
 		var/D = locate(href_list["datumchange"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 

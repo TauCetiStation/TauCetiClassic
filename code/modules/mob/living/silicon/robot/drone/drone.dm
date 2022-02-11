@@ -202,7 +202,7 @@
 /mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
 	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
 		..()
-	else if(istype(AM,/obj/item))
+	else if(isitem(AM))
 		var/obj/item/O = AM
 		if(O.w_class > SIZE_TINY)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")

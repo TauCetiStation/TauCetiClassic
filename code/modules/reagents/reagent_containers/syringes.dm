@@ -89,7 +89,7 @@
 						return
 
 					var/datum/reagent/B
-					if(istype(T,/mob/living/carbon/human))
+					if(ishuman(T))
 						var/mob/living/carbon/human/H = T
 						if(H.species && H.species.flags[NO_BLOOD])
 							H.reagents.trans_to(src,amount)
@@ -164,7 +164,7 @@
 				B = d
 				break
 			var/trans = 5
-			if(B && istype(target,/mob/living/carbon))
+			if(B && iscarbon(target))
 				var/list/virus2 = B.data["virus2"]
 				if(virus2 && virus2.len)
 					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)

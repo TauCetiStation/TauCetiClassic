@@ -433,7 +433,7 @@
 	..()
 	M.apply_effect(2 * REM,IRRADIATE, 0)
 	// radium may increase your chances to cure a disease
-	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
 			for(var/ID in C.virus2)
@@ -442,7 +442,7 @@
 					if(prob(50))
 						M.radiation += 50 // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
-						if(istype(C,/mob/living/carbon/human))
+						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 							M.adjustToxLoss(100)

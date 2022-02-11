@@ -147,7 +147,7 @@
 /proc/slime_scan(mob/living/carbon/slime/T, mob/living/user)
 	var/to_render = "========================\
 					\n<b>Slime scan results:</b>\
-					\n<span class='notice'>[T.colour] [istype(T,/mob/living/carbon/slime/adult) ? "adult" : "baby"] slime</span>\
+					\n<span class='notice'>[T.colour] [1isslimeadult(T) ? "adult" : "baby"] slime</span>\
 					\nNutrition: [T.nutrition]/[T.get_max_nutrition()]"
 	if (T.nutrition < T.get_starve_nutrition())
 		to_render += "\n<span class='warning'>Warning: slime is starving!</span>"

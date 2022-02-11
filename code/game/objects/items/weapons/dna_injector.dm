@@ -70,7 +70,7 @@
 	user.remove_from_mob(src)
 	loc = null
 
-	if(istype(M,/mob/living))
+	if(isliving(M))
 		M.radiation += rand(15,45)
 		M.dna_inject_count += rand(1,3)
 

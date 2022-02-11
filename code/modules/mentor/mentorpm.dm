@@ -3,7 +3,7 @@
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
-	if(!istype(C,/client))
+	if(!isclient(C))
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else

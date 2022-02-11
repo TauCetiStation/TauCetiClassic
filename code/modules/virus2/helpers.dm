@@ -85,12 +85,12 @@
 	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
 		return
 
-	if(istype(M,/mob/living/carbon/monkey))
+	if(ismonkey(M))
 		var/mob/living/carbon/monkey/chimp = M
 		if (!(chimp.greaterform in disease.affected_species))
 			return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/chump = M
 		if (!(chump.species.name in disease.affected_species))
 			return

@@ -43,7 +43,7 @@
 
 	if(isxeno(M))
 		return
-	if(!istype(user,/mob/living/carbon/xenomorph/humanoid))
+	if(!1isxenoadult(user))
 		return
 
 	if(M == usr)

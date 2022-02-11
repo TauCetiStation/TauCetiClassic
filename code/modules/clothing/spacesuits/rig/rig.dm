@@ -43,7 +43,7 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
 

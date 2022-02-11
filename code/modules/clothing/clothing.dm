@@ -114,7 +114,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if (!..())
 		return 0
 
-	if(species_restricted && istype(M,/mob/living/carbon/human))
+	if(species_restricted && ishuman(M))
 		var/wearable = null
 		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
@@ -226,7 +226,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
-	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+	if (src.loc != user || !ishuman(user))
 		..()
 		return
 

@@ -270,7 +270,7 @@
 			stored_comms["plastic"]++
 			return
 
-		else if(istype(M,/mob/living/silicon/robot/drone) && !M.client)
+		else if(isdrone(M) && !M.client)
 
 			var/mob/living/silicon/robot/drone/D = src.loc
 

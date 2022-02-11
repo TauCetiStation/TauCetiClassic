@@ -92,7 +92,7 @@
 				H.flash_eyes()
 				IO.damage += rand(1, 5)
 		else
-			if(!O.blinded && istype(O,/mob/living))
+			if(!O.blinded && isliving(O))
 				var/mob/living/L = O
 				L.flash_eyes()
 

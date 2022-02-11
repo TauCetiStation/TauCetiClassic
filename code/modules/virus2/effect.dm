@@ -542,7 +542,7 @@
 	cooldown = 30
 
 /datum/disease2/effect/monkey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob,/mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/h = mob
 		switch(holder.stage)
 			if(1,2,3)

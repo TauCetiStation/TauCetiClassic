@@ -481,7 +481,7 @@ var/global/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
+	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return

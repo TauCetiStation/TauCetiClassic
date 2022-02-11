@@ -263,7 +263,7 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1, 5) //Heheheh
+	var/weak_amt = isitem(A) ? A:w_class : rand(1, 5) //Heheheh
 	Weaken(weak_amt)
 	. = ..()
 

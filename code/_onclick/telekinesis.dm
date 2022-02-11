@@ -135,7 +135,7 @@ var/global/const/tk_maxrange = 15
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!istype(target, /turf) && isitem(focus) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)

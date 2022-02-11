@@ -101,7 +101,7 @@
 	else
 		client.show_popup_menus = 1
 
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)
 			client.verbs |= H.species.abilities

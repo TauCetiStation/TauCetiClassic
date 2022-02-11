@@ -266,7 +266,7 @@
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null

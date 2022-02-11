@@ -312,7 +312,7 @@
 	//This is for performance optimization only.
 	//DO NOT modify siemens_coeff here. That is checked in human/electrocute_act()
 	var/def_zone
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		def_zone = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM] //strikes only active hand
 		if(H.gloves)
