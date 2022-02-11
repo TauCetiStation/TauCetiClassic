@@ -99,6 +99,9 @@
  * * lifespan - The lifespan of the message in deciseconds
  */
 /datum/runechat/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+	if(!owner.client)
+		qdel(src)
+		return
 	// Register client who owns this message
 	owned_by = owner.client
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
@@ -149,6 +152,9 @@
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[text]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, RUNECHAT_MESSAGE_WIDTH))
+	if(!owner.client)
+		qdel(src)
+		return
 	approx_lines = max(1, mheight / RUNECHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
