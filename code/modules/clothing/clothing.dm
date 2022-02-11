@@ -310,11 +310,7 @@ var/global/list/icon_state_allowed_cache = list()
 		user.drop_from_inventory(A, src)
 		accessories += A
 		A.on_attached(src, user)
-
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
+		A.update_inv_mob()
 		action_button_name = "Use inventory."
 		return
 	else
