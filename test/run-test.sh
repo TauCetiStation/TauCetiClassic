@@ -165,16 +165,17 @@ function find_code {
 }
 
 function newline_at_eof {
-    find ./code -regex '.*\.dm' | while read line
     counter=0
-    do
-        if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
-        then
-            echo "No newline at end of file: $line"
-            ((counter++))
-        fi
-    done
-    echo counter
+    find ./code -regex '.*\.dm' | \
+        while read line
+        do
+            if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
+            then
+                echo "No newline at end of file: $line"
+                ((counter++))
+            fi
+        done
+    return counter
 }
 
 function match_helper {
