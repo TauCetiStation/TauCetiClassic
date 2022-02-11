@@ -83,7 +83,7 @@ function err {
 
 function fail {
     warn "test \"$1\" failed: $2"
-    ((FAILED++))
+    FAILED=$((FAILED + 1))
     FAILED_BYNAME+=("$1")
 }
 
@@ -102,7 +102,7 @@ function run_test {
     ret=$?
     if [[ ret -ne 0 ]]
     then fail "$name" $ret
-    else ((PASSED++))
+    else PASSED=$((PASSED + 1))
     fi
 }
 
@@ -114,7 +114,7 @@ function run_test_fail {
     ret=$?
     if [[ ret -eq 0 ]]
     then fail "$name" $ret
-    else ((PASSED++))
+    else PASSED=$((PASSED + 1))
     fi
 }
 
@@ -130,7 +130,7 @@ function run_test_fail_desc {
     then
         fail "$name" $ret
         warn $desc
-    else ((PASSED++))
+    else PASSED=$((PASSED + 1))
     fi
 }
 
@@ -213,9 +213,6 @@ function match_is_helpers {
     regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
     match_helper "$line" "$regex2"
     done
-
-    check_fail
-
 }
 
 function run_code_tests {
