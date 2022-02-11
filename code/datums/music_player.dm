@@ -82,38 +82,38 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	if(song_lines.len)
 		if(playing)
-			html += "<a href='?src=\ref[src];stop=1'>Stop Playing</a><br>"
-			html += "Repeats left: [repeat]<br><br>"
+			html += "<a href='?src=\ref[src];stop=1'>Прекратить играть</a><br>"
+			html += "Осталось повторовt: [repeat]<br><br>"
 		else
-			html += "<a href='?src=\ref[src];play=1'>Play Song</a><br>"
-			html += "<a href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times</a><br><br>"
+			html += "<a href='?src=\ref[src];play=1'>Начать играть</a><br>"
+			html += "<a href='?src=\ref[src];repeat=1'>Число повторов: [repeat]</a><br><br>"
 
 	if(!show_edit)
-		html += "<a href='?src=\ref[src];show_edit=1'>Show Editor</a><br><br>"
+		html += "<a href='?src=\ref[src];show_edit=1'>Показать редактор</a><br><br>"
 	else
-		html += "<a href='?src=\ref[src];show_edit=0'>Hide Editor</a><br>"
+		html += "<a href='?src=\ref[src];show_edit=0'>Спрятать редактор</a><br>"
 		if(song_lines.len)
-			html += "<a href='?src=\ref[src];newsong=1'>Start a New Song</a><br>"
-		html += "<a href='?src=\ref[src];import=1'>Import a Song</a><br><br>"
+			html += "<a href='?src=\ref[src];newsong=1'>Создать новую песню</a><br>"
+		html += "<a href='?src=\ref[src];import=1'>Импорт песни</a><br><br>"
 
 		if(song_lines.len)
-			html += "<a href='?src=\ref[src];change_tempo=1'>Tempo: [song_tempo] BPM</a><br><br>"
+			html += "<a href='?src=\ref[src];change_tempo=1'>Темп: [song_tempo] BPM</a><br><br>"
 
 			html += "<table>"
 			for(var/line_num in 1 to song_lines.len)
 				html += "<tr>"
-				html += "<td><b>Line [line_num]:</b></td>"
+				html += "<td><b>Строка [line_num]:</b></td>"
 				html += "<td>[song_lines[line_num]]</td>"
-				html += "<td><a href='?src=\ref[src];deleteline=[line_num]'>Delete Line</a> <a href='?src=\ref[src];modifyline=[line_num]'>Modify Line</a></td>"
+				html += "<td><a href='?src=\ref[src];deleteline=[line_num]'>Удалить строку</a> <a href='?src=\ref[src];modifyline=[line_num]'>Изменить строку</a></td>"
 				html += "</tr>"
 			html += "</table>"
 
-			html += "<a href='?src=\ref[src];newline=1'>Add Line</a><br><br>"
+			html += "<a href='?src=\ref[src];newline=1'>Добавть строку</a><br><br>"
 
 		if(!show_help)
-			html += "<a href='?src=\ref[src];show_help=1'>Show help</a>"
+			html += "<a href='?src=\ref[src];show_help=1'>Показать помощь</a>"
 		else
-			html += "<a href='?src=\ref[src];show_help=0'>Hide Help</a><br>"
+			html += "<a href='?src=\ref[src];show_help=0'>Спрятать помощь</a><br>"
 			html += {"
 					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
@@ -157,7 +157,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(playing)
 				return
 
-			var/repeat_num = input("How many times do you want to repeat this piece? (max: [MAX_REPEAT_COUNT])") as num|null
+			var/repeat_num = input("Сколько раз повторять этот сегмент? (max: [MAX_REPEAT_COUNT])") as num|null
 
 			if(!instrument.Adjacent(usr))
 				return
@@ -165,7 +165,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			repeat = clamp(repeat_num, 0, MAX_REPEAT_COUNT)
 
 		else if(href_list["change_tempo"])
-			var/new_tempo = input("Enter new tempo: ", "Change tempo", song_tempo) as num|null
+			var/new_tempo = input("Введите новый темп: ", "Изменить темп", song_tempo) as num|null
 
 			if(!instrument.Adjacent(usr))
 				return
@@ -180,7 +180,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(song_lines.len > MAX_LINES_COUNT)
 				return
 
-			var/newline = sanitize(input("Enter new line: ") as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+			var/newline = sanitize(input("Вставить новую строку: ") as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
 
 			if(!newline || !instrument.Adjacent(usr))
 				return
@@ -193,7 +193,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 		else if(href_list["modifyline"])
 			var/line_num = text2num(href_list["modifyline"])
-			var/content = sanitize(input("Enter your line: ", "Change line [line_num]", song_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+			var/content = sanitize(input("Введите свою строку: ", "Изменить строку [line_num]", song_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
 
 			if (!content || !instrument.Adjacent(usr))
 				return
@@ -204,7 +204,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			playing = FALSE
 
 		else if(href_list["import"])
-			var/song_text = sanitize(input("Please, paste the entire song formatted: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
+			var/song_text = sanitize(input("Пожалуйста, вставьте полный отформатированный вариант песни: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
 
 			if (!song_text || !instrument.Adjacent(usr))
 				return

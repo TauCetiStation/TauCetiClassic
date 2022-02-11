@@ -151,7 +151,7 @@
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
 									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-									var/answer = tgui_alert(ghost, "Do you want to return to corpse for cloning?", "Cloning", list("Yes","No"))
+									var/answer = tgui_alert(ghost, "Вы хотите вернуться в тело, чтобы стать клоном?", "Клонирование", list("Да","Нет"))
 									if(answer == "Yes")
 										ghost.reenter_corpse()
 
