@@ -207,6 +207,7 @@ function match_helper {
 }
 
 function match_is_helpers {
+    $(($FAILED + $1))
     regex="([\w]+)\(([\w]+)\) \((istype\([\w]+, [\w\d\/]+\))\)"
     grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
     while read line
@@ -230,7 +231,7 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
-    FAILED=$(match_is_helpers)
+    FAILED=$(match_is_helpers $FAILED)
 
     run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
