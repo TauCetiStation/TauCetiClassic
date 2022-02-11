@@ -210,7 +210,7 @@ function run_code_tests {
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
 
     run_test "chech eof" "newline_at_eof"
-    run_test_fail "use is_helper define instead" "match_is_helpers"
+    run_test "use is_helper define instead" "match_is_helpers"
 
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
