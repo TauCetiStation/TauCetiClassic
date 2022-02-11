@@ -98,43 +98,41 @@
 	else
 		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
 
-	var/movementdirection = turn(get_dir(get_turf(src), T), 180)
-	INVOKE_ASYNC(src, .proc/on_spray, movementdirection, user) // A proc where we do all the dirty chair riding stuff.
+	if(triple_shot)// Currently only the big baddies have this mechanic.
+		var/movementdirection = turn(get_dir(get_turf(src), T), 180)
+		if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
+			var/obj/structure/stool/bed/chair/buckled_to = user.buckled
+			if(!buckled_to.flipped)
+				INVOKE_ASYNC(src, .proc/on_spray, movementdirection, user) // A proc where we do all the dirty chair riding stuff.
+		else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
+			var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
+			ext.chassis?.newtonian_move(movementdirection)
+		else
+			user.newtonian_move(movementdirection)
 
-/obj/item/weapon/reagent_containers/spray/proc/on_spray(movementdirection, mob/user, move_repeats = 0)
-	if(!triple_shot) // Currently only the big baddies have this mechanic.
-		return
-
-	if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
-		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
-		if(!buckled_to.flipped)
-			var/glide = 8
-			var/move_timer
-			switch(move_repeats)
-				if(0 to 2)
-					glide = 8
-					buckled_to.propelled = 3
-					move_timer = 1
-				if(3 to 4)
-					glide = 6
-					buckled_to.propelled = 2
-					move_timer = 2
-				if(5 to 8)
-					glide = 4
-					buckled_to.propelled = 1
-					move_timer = 3
-				else
-					buckled_to.propelled = 0
-					return
-			move_repeats++
-			buckled_to.Move(get_step(loc, movementdirection), movementdirection, glide)
-			addtimer(CALLBACK(src, .proc/on_spray, movementdirection, user, move_repeats), move_timer)
-	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
-		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
-		if (ext.chassis)
-			ext.chassis.newtonian_move(movementdirection)
-	else
-		user.newtonian_move(movementdirection)
+/obj/item/weapon/reagent_containers/spray/proc/on_spray(movementdirection, mob/user)
+	var/glide = 8
+	var/move_timer
+	var/obj/structure/stool/bed/chair/buckled_to = user.buckled
+	for(var/tiles_to_move = 0 to 8)
+		switch(tiles_to_move)
+			if(0 to 2)
+				glide = 8
+				buckled_to.propelled = 3
+				move_timer = 1
+			if(3 to 4)
+				glide = 6
+				buckled_to.propelled = 2
+				move_timer = 2
+			if(5 to 8)
+				glide = 4
+				buckled_to.propelled = 1
+				move_timer = 3
+			else
+				buckled_to.propelled = 0
+				return
+		buckled_to.Move(get_step(loc, movementdirection), movementdirection, glide)
+		sleep(move_timer)
 
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
