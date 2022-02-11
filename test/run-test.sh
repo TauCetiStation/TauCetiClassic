@@ -49,6 +49,8 @@
 # Good luck!
 # - xales
 
+TEMPFILE=/tmp/$$.tmp
+echo 0 > $TEMPFILE
 # Global counter of failed tests
 FAILED=0
 # List of names of failed tests
@@ -83,7 +85,8 @@ function err {
 
 function fail {
     warn "test \"$1\" failed: $2"
-    ((FAILED++))
+    FAILED=$(($(cat $TEMPFILE) + 1))
+    echo $FAILED > $TEMPFILE
     FAILED_BYNAME+=("$1")
 }
 
@@ -154,6 +157,7 @@ function find_tool_deps {
     need_cmd grep
     need_cmd awk
     need_cmd sed
+    need_cmd cat
     need_cmd find
     need_cmd md5sum
     need_cmd python2
@@ -207,7 +211,6 @@ function match_helper {
 }
 
 function match_is_helpers {
-    $(($FAILED + $1))
     regex="([\w]+)\(([\w]+)\) \((istype\([\w]+, [\w\d\/]+\))\)"
     grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
     while read line
@@ -215,7 +218,6 @@ function match_is_helpers {
         regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
         match_helper "$line" "$regex2"
     done
-    return $FAILED
 }
 
 function run_code_tests {
@@ -231,7 +233,7 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
-    FAILED=$(match_is_helpers $FAILED)
+    match_is_helpers
 
     run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
@@ -300,3 +302,5 @@ function run_configured_tests {
 find_code
 run_configured_tests
 check_fail
+
+unlink $TEMPFILE
