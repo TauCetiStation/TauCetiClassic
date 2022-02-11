@@ -61,10 +61,12 @@
 	new /obj/effect/temp_visual/cult/blood/out(user.loc)
 	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
 	new /obj/effect/temp_visual/cult/blood(target)
-	var/list/companions = holder.handle_teleport_grab(target, user, FALSE)
+
+	var/list/companions = holder.handle_teleport_grab(target, user, FALSE, GRAB_NECK)
 	LAZYINITLIST(companions)
 	user.forceMove(target)
 	user.eject_from_wall(TRUE, companions = companions)
+
 	for(var/mob/M in companions + user)
 		if(M.client)
 			new /atom/movable/screen/temp/cult_teleportation(M, M)

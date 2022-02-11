@@ -55,7 +55,7 @@
 		target.forceMove(T)
 		handle_teleport_grab(T, target)
 
-/obj/proc/handle_teleport_grab(atom/T, mob/living/U, victim_spread = TRUE)
+/obj/proc/handle_teleport_grab(atom/T, mob/living/U, victim_spread = TRUE, min_grab_state = GRAB_PASSIVE)
 	var/atom/teleport_place
 	if(isturf(T))
 		if(victim_spread)
@@ -67,6 +67,8 @@
 
 	var/list/returned = list()
 	for(var/obj/item/weapon/grab/G in U.GetGrabs())
+		if(G.state < min_grab_state)
+			continue
 		returned += G.affecting
 		G.affecting.forceMove(teleport_place)
 	if(length(returned))
