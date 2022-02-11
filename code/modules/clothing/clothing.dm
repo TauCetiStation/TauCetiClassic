@@ -287,22 +287,7 @@ var/global/list/icon_state_allowed_cache = list()
 			A.attack_accessory(I, user, params)
 			return
 
-	var/obj/item/clothing/accessory/A = I
-	if(can_attach_accessory(A))
-		user.drop_from_inventory(A, src)
-		accessories += A
-		A.on_attached(src, user)
-
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-		action_button_name = "Use inventory."
-		return
-	else
-		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
-
-
+	attach_accessory(I, user)
 
 	return ..()
 
@@ -319,6 +304,21 @@ var/global/list/icon_state_allowed_cache = list()
 	..()
 	for(var/obj/item/clothing/accessory/A in accessories)
 		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
+
+/obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
+	if(can_attach_accessory(A))
+		user.drop_from_inventory(A, src)
+		accessories += A
+		A.on_attached(src, user)
+
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_w_uniform()
+			H.update_inv_wear_suit()
+		action_button_name = "Use inventory."
+		return
+	else
+		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears

@@ -20,7 +20,9 @@
 		..(over_object)
 
 /obj/item/clothing/suit/storage/attackby(obj/item/I, mob/user, params)
-	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(I, user, params) && !istype(I, /obj/item/clothing/accessory))
+	attach_accessory(I, user)
+
+	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(I, user, params))
 		return
 	return ..()
 
