@@ -118,6 +118,22 @@ function run_test_fail {
     fi
 }
 
+function run_test_fail_desc {
+    msg "running(fail) \"$1\""
+    name=$1
+    desc=$2
+    shift
+    shift
+    exec_test "$*"
+    ret=$?
+    if [[ ret -eq 0 ]]
+    then
+        fail "$name" $ret
+        warn $desc
+    else ((PASSED++))
+    fi
+}
+
 function check_fail {
     if [[ $FAILED -ne 0 ]]; then
         for t in "${FAILED_BYNAME[@]}"; do
@@ -186,7 +202,7 @@ function match_helper {
         istype="${BASH_REMATCH[2]}"
         s=${s#*"${BASH_REMATCH[2]}"}
         istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+), \1\\\\\)/"`
-        run_test_fail "change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
+        run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
     done
 }
 
@@ -212,8 +228,6 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
-
-    run_test_fail "chego" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*istype\(([A-Za-z]+), /obj/effect/blob/normal\)' code/"
 
     run_test "check eof" "newline_at_eof"
     match_is_helpers
