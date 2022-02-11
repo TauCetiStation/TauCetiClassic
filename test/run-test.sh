@@ -138,7 +138,7 @@ function run_test_fail_desc {
 }
 
 function check_fail {
-    FAILED=$(($(cat $TEMPFILE))
+    FAILED=$(cat $TEMPFILE)
     if [[ $FAILED -ne 0 ]]; then
         for t in "${FAILED_BYNAME[@]}"; do
             msg_bad "TEST FAILED: \"$t\""
