@@ -354,7 +354,7 @@
 		if(!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
 			scantemp = "Ошибка: Признаки разума не обнаружены."
 			return
-		else if(!isbrain(subject))
+	else if(!isbrain(subject))
 		scantemp = "Ошибка: Тело субъекта не поддерживается сканером."
 		return
 		if(isnull(subject) || !isbrain(subject) || !subject.dna)
