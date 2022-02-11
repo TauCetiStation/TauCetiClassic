@@ -1160,7 +1160,7 @@
 /area/station/cargo/recycler)
 "acb" = (
 /turf/simulated/mineral,
-/area/station/cargo/storage)
+/area/space)
 "acc" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -1412,7 +1412,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "acA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -1472,7 +1472,7 @@
 	dir = 1
 	},
 /turf/simulated/wall,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "acH" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -1602,7 +1602,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "acT" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -1635,7 +1635,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "acW" = (
 /obj/structure/closet/secure_closet/recycler,
 /obj/structure/disposalpipe/segment{
@@ -1802,7 +1802,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "adj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille{
@@ -3952,7 +3952,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/station/maintenance/escape)
 "ahp" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating/airless,
@@ -6957,7 +6957,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/station/maintenance/escape)
 "amK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
@@ -7480,7 +7480,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/medbay)
 "anJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -7488,18 +7488,14 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/medbay)
 "anK" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal{
 	amount = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
-"anL" = (
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/medbay)
 "anM" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -8211,7 +8207,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "apZ" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
@@ -8275,7 +8271,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/medbay)
 "asy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -8702,7 +8698,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "aMA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8820,7 +8816,7 @@
 	dir = 4;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "aSK" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
@@ -10407,7 +10403,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge)
+/area/station/bridge/hop_office)
 "cqY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -11417,7 +11413,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "dsj" = (
 /obj/item/weapon/scrap_lump,
 /obj/random/scrap/moderate_weighted,
@@ -11537,7 +11533,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "duj" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/simulated/floor/plating/airless{
@@ -12313,7 +12309,7 @@
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "edi" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -12417,7 +12413,7 @@
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/surgeryobs)
+/area/station/medical/genetics_cloning)
 "ehS" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -12861,7 +12857,7 @@
 	dir = 9;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "eDN" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -13079,7 +13075,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "ePx" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Cargo";
@@ -13235,7 +13231,7 @@
 	dir = 8;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "eWt" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/status_display{
@@ -14042,7 +14038,7 @@
 	dir = 6;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "fTo" = (
 /obj/item/device/radio/intercom/pod{
 	dir = 8;
@@ -14629,14 +14625,6 @@
 /obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/station/security/checkpoint)
-"gvG" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/cargo/recycler)
 "gww" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
@@ -17195,7 +17183,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "jcU" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -17535,7 +17523,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
-/area/station/bridge/teleporter)
+/area/station/bridge/captain_quarters)
 "jzK" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/structure/cable{
@@ -17573,7 +17561,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "jAD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -17848,7 +17836,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "jMF" = (
 /obj/structure/table,
 /obj/item/device/taperecorder,
@@ -18383,7 +18371,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "kjg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -18979,7 +18967,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "kLq" = (
 /obj/effect/decal/cleanable/generic,
 /obj/random/scrap/moderate_weighted,
@@ -20496,7 +20484,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "mob" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -21249,7 +21237,7 @@
 	dir = 5;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "mXv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -21953,7 +21941,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/station/maintenance/escape)
 "nun" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -22484,7 +22472,7 @@
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "nUm" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -23162,7 +23150,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/hallway)
+/area/station/rnd/lab)
 "oDX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -24956,7 +24944,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "qlH" = (
 /obj/machinery/computer/card{
 	dir = 4
@@ -25035,7 +25023,7 @@
 	dir = 1;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "qod" = (
 /obj/item/clothing/head/justice/blue,
 /obj/item/clothing/suit/justice,
@@ -25296,7 +25284,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "qxO" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human{
@@ -27610,7 +27598,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "sKE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -27805,7 +27793,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "sYw" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod4";
@@ -28998,7 +28986,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "uao" = (
 /obj/machinery/power/apc{
 	name = "Bridge APC";
@@ -29028,7 +29016,7 @@
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "ubz" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -29318,7 +29306,7 @@
 	dir = 1;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "uyq" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase/inflatable,
@@ -29538,8 +29526,8 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "uIN" = (
-/turf/simulated/wall,
-/area/space)
+/turf/simulated/wall/r_wall,
+/area/station/maintenance/science)
 "uIP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -30326,7 +30314,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/station/maintenance/escape)
 "vxn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -30745,7 +30733,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "vUY" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -31250,7 +31238,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "wrg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -31504,7 +31492,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/morgue)
 "wGH" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -31818,7 +31806,7 @@
 	dir = 10;
 	icon_state = "whiteblue"
 	},
-/area/station/medical/morgue)
+/area/station/medical/genetics_cloning)
 "wUZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -32606,7 +32594,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/cargo/recycler)
+/area/station/cargo/storage)
 "xED" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -53752,7 +53740,7 @@ ami
 amw
 akb
 akb
-uIN
+akb
 crv
 crv
 crv
@@ -53989,7 +53977,7 @@ xjz
 fqD
 koD
 anI
-qcu
+rTG
 ahR
 aiP
 aig
@@ -54009,7 +53997,7 @@ amj
 alp
 akb
 aho
-uIN
+akb
 agg
 crv
 crv
@@ -54503,7 +54491,7 @@ rTG
 anl
 anz
 anK
-qcu
+rTG
 ahV
 kOj
 aii
@@ -54523,7 +54511,7 @@ akx
 amA
 akb
 amJ
-uIN
+akb
 agg
 azn
 fFG
@@ -54759,8 +54747,8 @@ muH
 rTG
 anm
 anA
-anL
-qcu
+koD
+rTG
 ahU
 doQ
 aig
@@ -54779,8 +54767,8 @@ alQ
 amf
 amB
 akb
-uIN
-uIN
+akb
+akb
 crv
 anS
 oFi
@@ -55016,8 +55004,8 @@ aap
 rTG
 bBw
 anC
-qcu
-qcu
+rTG
+rTG
 ahX
 doQ
 iSt
@@ -55273,7 +55261,7 @@ aby
 rTG
 ann
 anD
-qcu
+rTG
 ahA
 ahT
 doQ
@@ -55530,7 +55518,7 @@ rTG
 rTG
 ano
 aap
-qcu
+rTG
 ahD
 ahS
 aiR
@@ -55787,7 +55775,7 @@ xXy
 yhw
 anp
 anE
-qcu
+rTG
 ahF
 ahT
 anQ
@@ -56044,7 +56032,7 @@ hEu
 ruU
 anq
 anF
-qcu
+rTG
 ahE
 ahW
 aht
@@ -56301,7 +56289,7 @@ xKi
 hrZ
 anr
 dyn
-qcu
+rTG
 ahH
 ahZ
 aiS
@@ -56537,10 +56525,10 @@ rTG
 cUq
 pNR
 ppw
-mJj
-mJj
-mJj
-mJj
+aAT
+aAT
+aAT
+aAT
 qdP
 aaK
 aaW
@@ -56558,7 +56546,7 @@ xKi
 xzF
 ans
 koD
-qcu
+rTG
 qcu
 ahY
 doQ
@@ -56787,17 +56775,17 @@ fCH
 nQc
 cjX
 gay
-uIN
+rTG
 hWZ
 rTG
 rTG
 bJc
 pNR
-mJj
-mJj
+aAT
+aAT
 dqs
 mnh
-mJj
+aAT
 aaC
 aaJ
 aaV
@@ -57044,17 +57032,17 @@ xol
 dZx
 crv
 crv
-uIN
+rTG
 hSR
 ckR
 rTG
 fXC
 gxa
-mJj
+aAT
 uaG
 vUH
 wGd
-mJj
+aAT
 aaB
 lKZ
 isM
@@ -57301,17 +57289,17 @@ yfp
 cjX
 gay
 crv
-uIN
+rTG
 xxm
 hZb
 qLO
 qMs
 pjQ
-mJj
+aAT
 uah
 qlx
 sYl
-mJj
+aAT
 aaD
 gTL
 pOh
@@ -57564,11 +57552,11 @@ rTG
 rTG
 txy
 pmv
-mJj
+aAT
 kit
 aMh
 qxM
-mJj
+aAT
 qdP
 aaN
 aaZ
@@ -57821,11 +57809,11 @@ rTG
 uJy
 ycH
 uSe
-mJj
-mJj
+aAT
+aAT
 due
-mJj
-aaF
+aAT
+aAT
 aaG
 aaQ
 aae
@@ -58078,11 +58066,11 @@ rTG
 koD
 mLF
 iMs
-aAT
+mJj
 eDx
 eVn
 wUD
-aaF
+mJj
 kSm
 aaS
 abF
@@ -58335,7 +58323,7 @@ rTG
 rTG
 ydY
 gzU
-aAT
+mJj
 qng
 jAA
 nSP
@@ -58596,7 +58584,7 @@ eOg
 uyk
 wpX
 ebe
-aaF
+mJj
 gXb
 aaR
 aad
@@ -58849,11 +58837,11 @@ rTG
 rTG
 qCf
 ldz
-aAT
+mJj
 mWu
 aRT
 fTe
-aaF
+mJj
 aaF
 aaF
 aaF
@@ -59106,11 +59094,11 @@ uKs
 rTG
 xxK
 mBb
-aAT
-aAT
-aAT
+mJj
+mJj
+mJj
 jMj
-aAT
+mJj
 jSG
 tHr
 wav
@@ -59365,9 +59353,9 @@ gta
 nqW
 cfW
 eVc
-aAT
-aAT
-aAT
+mJj
+mJj
+mJj
 gzn
 hjE
 ozJ
@@ -60181,10 +60169,10 @@ gay
 crv
 gay
 gay
-abP
-abP
-abP
-abP
+sFn
+sFn
+sFn
+sFn
 adt
 agZ
 acN
@@ -60438,10 +60426,10 @@ hqn
 hqn
 hqn
 crv
-gvG
+aiy
 apP
 acS
-abP
+sFn
 adu
 ace
 acr
@@ -60695,7 +60683,7 @@ acB
 acv
 hqn
 gay
-gvG
+aiy
 jcF
 acz
 sJs
@@ -60952,10 +60940,10 @@ abd
 acD
 hqn
 crv
-gvG
+aiy
 xDq
 adi
-abP
+sFn
 acK
 abz
 acf
@@ -61209,7 +61197,7 @@ hYv
 lhb
 hqn
 gay
-abP
+sFn
 kLg
 acV
 acG
@@ -61469,9 +61457,9 @@ crv
 sFn
 kOm
 acW
-abP
-abP
-abP
+sFn
+sFn
+sFn
 aco
 abP
 idm
@@ -66822,13 +66810,13 @@ qws
 crv
 wxl
 wxl
-wxl
-wxl
+iqS
+iqS
 cqW
-wxl
-wxl
-wxl
-wxl
+iqS
+iqS
+iqS
+iqS
 wxl
 wxl
 wxl
@@ -68140,15 +68128,15 @@ woA
 ali
 cra
 alX
-noD
-noD
+woA
+woA
 oDH
-noD
+woA
 wyg
 hYy
 tav
 hYy
-wyg
+noD
 ahd
 tYi
 mBI
@@ -69397,11 +69385,11 @@ qQB
 rox
 bTB
 dns
-cFV
+tnj
 jzF
-cFV
-cFV
-cFV
+tnj
+tnj
+tnj
 tnj
 tnj
 dxg
@@ -70204,7 +70192,7 @@ tPd
 oOT
 sln
 tPd
-wyg
+uIN
 tRH
 abY
 acE
@@ -70461,7 +70449,7 @@ wyg
 wyg
 wyg
 wyg
-wyg
+uIN
 ahe
 acd
 ayh
