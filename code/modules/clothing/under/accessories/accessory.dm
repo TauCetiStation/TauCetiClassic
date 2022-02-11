@@ -9,7 +9,7 @@
 	w_class = SIZE_TINY
 
 	var/slot = "decor"
-	var/obj/item/clothing/has_suit = null // the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null // the suit the accessory may be attached to
 	var/image/inv_overlay = null                // overlay used when attached to clothing.
 	var/layer_priority = 0                      // so things such as medals won't be drawn under webbings or holsters on mob, still problem with inside inventory.
 
