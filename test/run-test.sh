@@ -230,9 +230,6 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
-    match_is_helpers "$FAILED"
-    ((FAILED + $?))
-
 
     run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
@@ -283,6 +280,7 @@ function run_configured_tests {
             shopt -s globstar
             find_tool_deps
             run_code_tests
+            match_is_helpers
             run_map_tests
         ;;
         "COMPILE") run_build_tests ;;
