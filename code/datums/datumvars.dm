@@ -20,7 +20,7 @@
 	var/body = ""
 
 	if(!D)	return
-	if(istype(D, /atom))
+	if(isatom(D))
 		var/atom/A = D
 		title = "[A.name] (\ref[A]) = [A.type]"
 
@@ -384,7 +384,7 @@ body
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if (isclient(value))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //

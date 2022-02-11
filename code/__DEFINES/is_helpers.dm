@@ -1,7 +1,7 @@
 // This file is used to test the entire build
 // To use istype-defines from this file for tests, wrap your istype in brackets
-// Example: #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
-// Bad example: #define isabductor(A) istype(A, /mob/living/carbon/human/abductor)
+// Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+// Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
 // HUMAN
 

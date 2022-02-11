@@ -37,7 +37,7 @@
 		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 	if(!C)
 		if(holder)
@@ -75,7 +75,7 @@
 		return
 
 	var/client/recipient
-	if(istype(whom, /client))
+	if(isclient(whom))
 		recipient = whom
 
 	if(!recipient)

@@ -37,7 +37,7 @@
 	var/datum/callback/can_show
 
 /datum/component/mechanic_desc/Initialize(list/datum/mechanic_tip/tips_to_add, datum/callback/_can_show)
-	if(!istype(parent, /atom))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	can_show = _can_show

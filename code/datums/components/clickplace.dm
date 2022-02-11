@@ -31,7 +31,7 @@
 	var/datum/callback/on_slam
 
 /datum/component/clickplace/Initialize(datum/callback/_on_place = null, datum/callback/_on_slam = null)
-	if(!istype(parent, /atom))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	on_place = _on_place

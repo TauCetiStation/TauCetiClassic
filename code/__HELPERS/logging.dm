@@ -65,7 +65,7 @@
 	else if(istype(user, /mob))
 		var/mob/mob = user
 		entry += "[mob.ckey] (as [mob] at [COORD(mob)])"
-	else if(istype(user, /client))
+	else if(isclient(user))
 		var/client/client = user
 		entry += "[client.ckey]"
 	// Insert context

@@ -420,7 +420,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!whom)
 		return "*null*"
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 		key = C.ckey

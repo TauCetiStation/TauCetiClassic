@@ -23,7 +23,7 @@
 /obj/mecha/combat/melee_action(target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = safepick(oview(1,src))
-	if(!melee_can_hit || !istype(target, /atom)) return
+	if(!melee_can_hit || !isatom(target)) return
 	if(isliving(target))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
