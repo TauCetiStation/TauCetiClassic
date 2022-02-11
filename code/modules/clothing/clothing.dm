@@ -292,7 +292,7 @@ var/global/list/icon_state_allowed_cache = list()
 	return ..()
 
 /obj/item/clothing/attack_hand(mob/user)
-	if(loc == user)
+	if(slot_equipped)
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.attack_hand(user)
 		return
@@ -310,7 +310,7 @@ var/global/list/icon_state_allowed_cache = list()
 		user.drop_from_inventory(A, src)
 		accessories += A
 		A.on_attached(src, user)
-		A.update_inv_mob()
+		A.has_suit.update_inv_mob()
 		action_button_name = "Use inventory."
 		return
 	else
