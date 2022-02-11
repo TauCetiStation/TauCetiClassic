@@ -144,6 +144,8 @@
 
 	if (has_lang_prefix)
 		message = copytext(message,2+length_char(speaking.key))
+		if(!message)
+			return
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
