@@ -196,8 +196,6 @@ function newline_at_eof {
 
 function match_helper {
     local s=$1 regex=$2
-        warn $FAILED
-    warn $PASSED
     while [[ $s =~ $regex ]]; do
         define="${BASH_REMATCH[1]}"
         s=${s#*"${BASH_REMATCH[1]}"}
@@ -210,16 +208,13 @@ function match_helper {
 
 function match_is_helpers {
     regex="([\w]+)\(([\w]+)\) \((istype\([\w]+, [\w\d\/]+\))\)"
-    warn $FAILED
-    warn $PASSED
     grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
     while read line
     do
-        warn $FAILED
-         warn $PASSED
         regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
         match_helper "$line" "$regex2"
     done
+    return $1
 }
 
 function run_code_tests {
@@ -235,10 +230,11 @@ function run_code_tests {
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
+    match_is_helpers "$FAILED"
+    ((FAILED + $?))
+
 
     run_test "check eof" "newline_at_eof"
-    match_is_helpers
-
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
