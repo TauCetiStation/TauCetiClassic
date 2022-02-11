@@ -440,6 +440,8 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
+		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED, SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>", others_can_see = FALSE))
+			return
 		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
@@ -456,10 +458,14 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>", others_can_see = FALSE))
+				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>", others_can_see = FALSE))
+				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")

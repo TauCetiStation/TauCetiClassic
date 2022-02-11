@@ -158,6 +158,8 @@
 						component_check = 0
 						break
 				if(component_check)
+					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, SKILL_CONSTRUCTION, SKILL_CONSTRUCTION_ADVANCED, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to construct machine.</span>", "<span class='notice'>[user] fumbles around, figuring out how to construct machine.</span>"))
+						return
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
