@@ -1293,16 +1293,20 @@
 	set src in usr
 
 	if(issilicon(usr))
-		return
+		return FALSE
+	return TRUE
 
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
-		if(istype(src, /obj/item/device/pda/clown))
-			src.owner_slippery = TRUE
 		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+
+/obj/item/device/pda/clown/verb_reset_pda()
+	. = ..()
+	if(.)
+		owner_slippery = TRUE
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
