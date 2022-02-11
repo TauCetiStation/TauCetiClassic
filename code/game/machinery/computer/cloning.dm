@@ -351,22 +351,22 @@
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/subject)
 	if(ishuman(subject))
 		var/mob/living/carbon/human/Hsubject = subject
-		if (!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
+		if(!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
 			scantemp = "Ошибка: Признаки разума не обнаружены."
 			return
-	if (isnull(subject) || !isbrain(subject) || !subject.dna)
+	if(isnull(subject) || !isbrain(subject) || !subject.dna)
 		scantemp = "Ошибка: Не удалось обнаружить геннетические данные."
 		return
-	if (subject.suiciding == 1)
+	if(subject.suiciding == 1)
 		scantemp = "Ошибка: Мозг субъекта не реагирует."
 		return
-	if ((!subject.ckey) || (!subject.client))
+	if((!subject.ckey) || (!subject.client))
 		scantemp = "Ошибка: Не удалось установить контакт с мозгом субъекта."
 		return
-	if ((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
+	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Субъект более не имеет достаточного геннетического материала для создания клона.</span>"
 		return
-	if (!isnull(find_record(subject.ckey)))
+	if(!isnull(find_record(subject.ckey)))
 		scantemp = "Субъект уже записан в базу данных."
 		return
 
