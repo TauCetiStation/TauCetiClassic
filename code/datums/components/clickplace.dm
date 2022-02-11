@@ -131,7 +131,7 @@
 			BP_R_ARM = user.r_hand
 		)
 		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_arm)
-	else if(istype(user, /mob/living/carbon/ian))
+	else if(isIAN(user))
 		var/mob/living/carbon/ian/IAN = user
 		slots_to_check = list(
 			BP_HEAD = IAN.mouth

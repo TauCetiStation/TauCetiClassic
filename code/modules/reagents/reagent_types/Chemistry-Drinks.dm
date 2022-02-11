@@ -398,17 +398,17 @@
 			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
 			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(15,20)
 	data["ticks"]++
 
@@ -740,7 +740,7 @@
 			to_chat(usr, "It wasn't enough...")
 	return
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 15)

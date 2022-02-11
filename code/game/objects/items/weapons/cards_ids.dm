@@ -313,7 +313,7 @@
 	if(istype(target, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 

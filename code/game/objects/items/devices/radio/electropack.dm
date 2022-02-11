@@ -104,7 +104,7 @@
 
 /obj/item/device/radio/electropack/attack_self(mob/user, flag1)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>

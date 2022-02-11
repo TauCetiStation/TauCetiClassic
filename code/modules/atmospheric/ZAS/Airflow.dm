@@ -237,7 +237,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
-		else if(istype(src, /mob/living/carbon/human))
+		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
 			airborne_acceleration = 0
 	else

@@ -76,16 +76,16 @@
 		if (get_dist(src, O) > src.range)
 			continue
 
-		if (istype(O, /mob/living/carbon/human))
+		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			if(H.eyecheck() > 0)
 				continue
 
-		if (istype(O, /mob/living/carbon/xenomorph))//So aliens don't get flashed (they have no external eyes)/N
+		if (isxeno(O))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
 		O.Weaken(strength)
-		if (istype(O, /mob/living/carbon/human))
+		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 			if (IO.damage > IO.min_bruised_damage && prob(IO.damage + 50))
@@ -109,7 +109,7 @@
 	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
-	if(istype(AM, /mob/living/carbon))
+	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if ((M.m_intent != "walk") && (src.anchored))
 			flash()

@@ -65,7 +65,7 @@
 	if(!user || user.incapacitated())
 		return FALSE
 
-	if(!( istype(user, /mob/living/carbon/human)))
+	if(!( ishuman(user)))
 		return FALSE
 
 	// If the uplink's holder is in the user's contents or near him

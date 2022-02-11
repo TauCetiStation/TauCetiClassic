@@ -68,7 +68,7 @@
 			bumpopen(M)
 		return
 
-	if(istype(AM, /obj/machinery/bot))
+	if(isbot(AM))
 		var/obj/machinery/bot/bot = AM
 		if(check_access(bot.botcard) || emergency)
 			if(density)

@@ -412,7 +412,7 @@ var/global/list/tophats_list = list()
 	else if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		put_in_delay += I.w_class * 2 SECONDS
-	else if(istype(AM, /obj/structure) || istype(AM, /obj/machinery))
+	else if(istype(AM, /obj/structure) || ismachinery(AM))
 		put_in_delay += 8 SECONDS
 	else if(isliving(AM))
 		var/mob/living/L = AM

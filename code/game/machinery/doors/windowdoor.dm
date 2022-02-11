@@ -246,7 +246,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	attack_generic(attacker, attacker.melee_damage)
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)

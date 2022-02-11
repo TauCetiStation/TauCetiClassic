@@ -120,7 +120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(S.active)
 			light("<span class='warning'>[user] swings their [S], barely missing their nose. They light their [name] in the process.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter))
+	else if(isigniter(I))
 		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name].</span>")
 
 	else if(istype(I, /obj/item/weapon/pen/edagger))
@@ -203,7 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
 			if (C.stat != DEAD)
-				if(istype(loc, /mob/living/carbon/human))
+				if(ishuman(loc))
 					var/mob/living/carbon/human/H = loc
 					if(H.species.flags[NO_BREATHE])
 						return
@@ -315,7 +315,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(S.active)
 			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter))
+	else if(isigniter(I))
 		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
 
 	else if(istype(I, /obj/item/weapon/pen/edagger))
@@ -405,7 +405,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(M.lit)
 			light("<span class='notice'>[user] lights their [name] with their [M].</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter))
+	else if(isigniter(I))
 		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
 
 	else

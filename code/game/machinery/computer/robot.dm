@@ -37,12 +37,12 @@
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in silicon_list)
-				if(istype(R, /mob/living/silicon/robot/drone))
+				if(isdrone(R))
 					continue //There's a specific console for drones.
-				if(istype(user, /mob/living/silicon/ai))
+				if(isAI(user))
 					if (R.connected_ai != user)
 						continue
-				if(istype(user, /mob/living/silicon/robot))
+				if(isrobot(user))
 					if (R != user)
 						continue
 				if(R.scrambledcodes)
@@ -68,7 +68,7 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
-				if (istype(user, /mob/living/silicon))
+				if (issilicon(user))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
 				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
@@ -209,7 +209,7 @@
 	while(src.timeleft)
 
 	for(var/mob/living/silicon/robot/R in silicon_list)
-		if(!R.scrambledcodes && !istype(R, /mob/living/silicon/robot/drone))
+		if(!R.scrambledcodes && !isdrone(R))
 			R.self_destruct()
 
 	return

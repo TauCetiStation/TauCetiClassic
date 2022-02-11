@@ -188,7 +188,7 @@
 
 /mob/living/silicon/pai/proc/get_carrier(mob/living/M)
 	var/count = 0
-	while(!istype(M, /mob/living))
+	while(!isliving(M))
 		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 		M = M.loc
 		count++
@@ -525,7 +525,7 @@
 					A.extended_inventory = !A.extended_inventory
 				if(INTERACTION_VENDING_ACCOUNT_VERIFY)
 					A.check_accounts = !A.check_accounts
-		if(istype(hackobj, /obj/machinery/bot))
+		if(isbot(hackobj))
 			switch(interaction_type)
 				if(INTERACTION_ANYBOT_INTERFACE_LOCK) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
@@ -810,8 +810,8 @@
 				 <h4>Host Bioscan</h4>
 				"}
 		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
+		if(!isliving(M))
+			while (!isliving(M))
 				M = M.loc
 				if(istype(M, /turf))
 					src.temp = "Error: No biological host found. <br>"
@@ -953,7 +953,7 @@
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SPEAK];sub=0'>Speak</a> <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_CONTRABAND_MODE];sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ACCOUNT_VERIFY];sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
-			if(istype(hackobj, /obj/machinery/bot))
+			if(isbot(hackobj))
 				var/botchecked = 0 //Should we name bot as "Unknown"?
 				if(istype(hackobj, /obj/machinery/bot/secbot))
 					botchecked = 1

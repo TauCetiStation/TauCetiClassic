@@ -48,7 +48,7 @@ var/global/list/mechtoys = list(
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
 		return FALSE
 
-	else if(istype(A, /mob/living)) // You Shall Not Pass!
+	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(M.throwing) // so disposal outlets can throw mobs through plastic flaps
 			return TRUE

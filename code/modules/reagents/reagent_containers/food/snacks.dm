@@ -65,7 +65,7 @@
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!isslime(M))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
@@ -1288,7 +1288,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/On_Consume(mob/M)
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
 
-	if (istype(M, /mob/living/carbon/human))
+	if (ishuman(M))
 		//Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
 		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas

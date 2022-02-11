@@ -171,7 +171,7 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	if(istype(usr, /mob/living))
+	if(isliving(usr))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)

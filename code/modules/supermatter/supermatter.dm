@@ -118,7 +118,7 @@
 
 		if(damage > explosion_point)
 			for(var/mob/living/mob in alive_mob_list)
-				if(istype(mob, /mob/living/carbon/human))
+				if(ishuman(mob))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
@@ -252,7 +252,7 @@
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")

@@ -29,7 +29,7 @@
 	gibs(loc, viruses, dna)
 
 	dead_mob_list -= src
-	if(container && istype(container, /obj/item/device/mmi))
+	if(container && isMMI(container))
 		qdel(container)//Gets rid of the MMI if there is one
 	if(loc)
 		if(istype(loc,/obj/item/brain))

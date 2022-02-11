@@ -810,7 +810,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
@@ -1025,7 +1025,7 @@ var/global/list/admin_verbs_hideable = list(
 	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
-	if(istype(winner, /mob/living))
+	if(isliving(winner))
 		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
 	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
@@ -1210,7 +1210,7 @@ var/global/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(istype(M, /mob/living/carbon))
+	/*if(iscarbon(M))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier

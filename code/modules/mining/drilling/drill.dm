@@ -355,7 +355,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user

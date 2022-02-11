@@ -351,7 +351,7 @@
 			dat += "<td>Monkey</td>"
 		else if(isxeno(M))
 			dat += "<td>Alien</td>"
-		else if(istype(M, /mob/living/parasite/essence))
+		else if(isessence(M))
 			dat += "<td>Changelling Essence</td>"
 		else
 			dat += "<td>Unknown</td>"

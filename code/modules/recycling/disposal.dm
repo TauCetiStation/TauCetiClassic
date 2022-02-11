@@ -199,7 +199,7 @@
 	else if(istype(A, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/target = A
 
-		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || istype(user, /mob/living/silicon/ai)) return
+		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || isAI(user)) return
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
@@ -538,7 +538,7 @@
 	// note AM since can contain mobs or objs
 	for(var/atom/movable/AM in D)
 		AM.loc = src
-		if(istype(AM, /mob/living/carbon/human))
+		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			has_fat_guy = HAS_TRAIT(H, TRAIT_FAT) // is a human and fat? set flag on holder
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
@@ -548,7 +548,7 @@
 			var/obj/item/smallDelivery/T = AM
 			src.destinationTag = T.sortTag
 		//Drones can mail themselves through maint.
-		if(istype(AM, /mob/living/silicon/robot/drone))
+		if(isdrone(AM))
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))

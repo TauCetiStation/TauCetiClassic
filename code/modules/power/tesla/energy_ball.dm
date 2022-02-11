@@ -150,7 +150,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
+	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
@@ -215,7 +215,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if((dist < closest_dist || !closest_machine) && !M.being_shocked)

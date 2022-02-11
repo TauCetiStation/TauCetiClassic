@@ -53,7 +53,7 @@
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		return attack_hand(user)
 	else // trying to unlock the interface
 		if (allowed(usr))

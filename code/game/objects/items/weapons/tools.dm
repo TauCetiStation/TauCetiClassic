@@ -452,7 +452,7 @@
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
 	if(!iscarbon(user)) return 1
 	var/safety = user:eyecheck()
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])

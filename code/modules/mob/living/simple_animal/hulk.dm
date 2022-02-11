@@ -173,7 +173,7 @@
 
 	for(var/mob/M in contents)
 		M.loc = src.loc
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			L.Paralyse(15)
 			L.update_canmove()

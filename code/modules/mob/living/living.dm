@@ -202,7 +202,7 @@
 			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
 				tally -= 0.5
 		//Machinery pulling
-		if(istype(AM, /obj/machinery))
+		if(ismachinery(AM))
 			tally += 0.5
 		pull_debuff += tally
 
@@ -240,7 +240,7 @@
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(NO_SHOCK in src.mutations) //shockproof
 			return 0
@@ -253,14 +253,14 @@
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/silicon/ai))
+	else if(isAI(src))
 		return 0
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
@@ -279,7 +279,7 @@
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
+//	if(ishuman(src))
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 

@@ -345,7 +345,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if (M.real_name && M.real_name != M.name)
 				name += " \[[M.real_name]\]"
 			if (M.stat == DEAD)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					name += " \[ghost\]"
 				else
 					name += " \[dead\]"

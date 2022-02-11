@@ -98,7 +98,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 5)
@@ -464,7 +464,7 @@
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -729,7 +729,7 @@
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
-	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
+	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.notransform)
 			return

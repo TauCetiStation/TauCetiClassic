@@ -222,7 +222,7 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
+	if(isxenoqueen(user))
 		attack_hand(user)
 		return
 	else

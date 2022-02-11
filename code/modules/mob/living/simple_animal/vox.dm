@@ -88,7 +88,7 @@
 
 	var/mob/M = targets[target]
 
-	if(istype(M, /mob/dead/observer) || M.stat == DEAD)
+	if(isobserver(M) || M.stat == DEAD)
 		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 

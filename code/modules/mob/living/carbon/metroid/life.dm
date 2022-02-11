@@ -106,7 +106,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -228,7 +228,7 @@
 
 /mob/living/carbon/slime/proc/handle_regular_status_updates()
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -312,7 +312,7 @@
 	return
 /mob/living/carbon/slime/proc/handle_nutrition()
 	if(prob(20))
-		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
+		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
 
 	if(nutrition <= 0)
@@ -322,7 +322,7 @@
 			adjustToxLoss(rand(0,5))
 
 	else
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			if(nutrition >= 1000)
 				if(prob(40)) amount_grown++
 
@@ -331,7 +331,7 @@
 				if(prob(40)) amount_grown++
 
 	if(amount_grown >= max_grown && !Victim && !Target)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			if(!client)
 				for(var/i=1,i<=4,i++)
 					if(prob(70))

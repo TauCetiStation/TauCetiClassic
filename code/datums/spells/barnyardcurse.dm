@@ -44,7 +44,7 @@
 	var/randM = rand(1, 4)
 	var/choice = masks[randM]
 	var/obj/item/clothing/mask/magichead = new choice
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.speech_problem_flag = 1
 	magichead.canremove = 0

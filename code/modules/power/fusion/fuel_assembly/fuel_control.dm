@@ -13,7 +13,7 @@
 		user << browse(null, "window=fuel_control")
 		return
 
-	if (!istype(user, /mob/living/silicon) && get_dist(src, user) > 1)
+	if (!issilicon(user) && get_dist(src, user) > 1)
 		user.unset_machine()
 		user << browse(null, "window=fuel_control")
 		return

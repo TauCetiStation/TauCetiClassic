@@ -96,7 +96,7 @@
 	if(abilities)
 		client.verbs |= abilities
 
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1

@@ -448,7 +448,7 @@
 			usr.set_dir(1)
 
 		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
-			if(istype(M, /mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
@@ -513,7 +513,7 @@
 	damage_type = TOX
 
 /obj/item/projectile/energy/hulkspit/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)
 		M.adjust_fire_stacks(20)

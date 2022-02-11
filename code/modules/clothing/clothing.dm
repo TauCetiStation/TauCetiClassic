@@ -572,7 +572,7 @@ BLIND     // can't see anything
 		return
 	if(!accessories.len)
 		return
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		return
 
 	if(!usr.IsAdvancedToolUser())
@@ -599,7 +599,7 @@ BLIND     // can't see anything
 	accessories -= A
 	A.update_icon()
 	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_w_uniform()
 		action_button_name = null
@@ -619,7 +619,7 @@ BLIND     // can't see anything
 			accessories += A
 			A.on_attached(src, user)
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 			action_button_name = "Use inventory."
@@ -724,7 +724,7 @@ BLIND     // can't see anything
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 

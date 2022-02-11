@@ -26,7 +26,7 @@
 	return 0
 
 /obj/Destroy()
-	if(!istype(src, /obj/machinery))
+	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()

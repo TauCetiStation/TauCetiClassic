@@ -239,13 +239,13 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	var/distance = get_dist(user,src)
-	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
+	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 	if (src.stat || (iszombie(src) && (crawling || lying || resting)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
-		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
+		if(ishuman(user) && !user.stat && distance <= 1)
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
@@ -556,7 +556,7 @@
 		msg += "\n[t_He] is [pose]"
 
 	//someone here, but who?
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != ABDUCTOR)
 			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))

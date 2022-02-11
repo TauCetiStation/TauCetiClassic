@@ -314,14 +314,14 @@
 
 /mob/living/carbon/slime/updatehealth()
 	if(status_flags & GODMODE)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200
 		else
 			health = 150
 		stat = CONSCIOUS
 	else
 		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -498,10 +498,10 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
 	if(M.stat)
@@ -529,7 +529,7 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/adult/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
+	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
 	if(M.stat)
@@ -558,10 +558,10 @@
 	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
 	if(M.stat)

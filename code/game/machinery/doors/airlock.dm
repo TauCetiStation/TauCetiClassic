@@ -943,7 +943,7 @@ var/global/list/airlock_overlays = list()
 		return attack_hand(user)
 	else if(ismultitool(C))
 		return attack_hand(user)
-	else if(istype(C, /obj/item/device/assembly/signaler))
+	else if(issignaler(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C

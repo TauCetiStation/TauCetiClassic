@@ -659,7 +659,7 @@
 	level = 7
 
 /datum/disease2/effect/immortal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		for (var/obj/item/organ/external/BP in H.bodyparts)
 			if (BP.status & ORGAN_BROKEN && prob(30))
@@ -668,7 +668,7 @@
 	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
 /datum/disease2/effect/immortal/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
 		H.age += 8

@@ -244,7 +244,7 @@
 		return FALSE
 	if(!charge)
 		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
-	else if(!istype(target, /mob/living))
+	else if(!isliving(target))
 		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
 	else if(charging)
 		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
@@ -291,7 +291,7 @@
 
 /obj/item/weapon/gun/tesla/emp_act(severity)
 	if(charge)
-		if(istype(loc, /mob/living/carbon))
+		if(iscarbon(loc))
 			var/mob/living/carbon/M = loc
 			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
 		charge = 0

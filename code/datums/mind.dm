@@ -139,7 +139,7 @@
 
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
 			if(H.ismindshielded())

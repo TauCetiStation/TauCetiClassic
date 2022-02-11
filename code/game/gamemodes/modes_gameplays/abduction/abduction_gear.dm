@@ -35,7 +35,7 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
 			return
@@ -43,7 +43,7 @@
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
 			return

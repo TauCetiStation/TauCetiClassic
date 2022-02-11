@@ -119,7 +119,7 @@
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
-	if(istype(M, /mob/living/carbon/human) && mode)
+	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
@@ -136,7 +136,7 @@
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
@@ -157,7 +157,7 @@
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
+	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -734,7 +734,7 @@
 		return
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (isbrain(usr)))//Is humanoid, and is not a brain
+	if((!iscarbon(usr)) || (isbrain(usr)))//Is humanoid, and is not a brain
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -857,7 +857,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isxeno(M) || isslime(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 

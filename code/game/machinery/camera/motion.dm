@@ -29,7 +29,7 @@
 /obj/machinery/camera/proc/newTarget(mob/target)
 	if (!target.mouse_opacity || target.alpha < 50)
 		return
-	if (istype(target, /mob/living/silicon/ai)) return 0
+	if (isAI(target)) return 0
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	if (!(target in motionTargets))

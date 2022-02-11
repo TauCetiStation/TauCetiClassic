@@ -44,7 +44,7 @@
 	if(occupant)
 		occupant_message("The sleeper is already occupied")
 		return
-	if(istype(target, /mob/living/carbon/xenomorph))
+	if(isxeno(target))
 		occupant_message("Warning! Unauthorized life form detected!")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,target))

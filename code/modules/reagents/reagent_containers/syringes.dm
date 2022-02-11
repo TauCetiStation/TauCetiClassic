@@ -72,13 +72,13 @@
 				return
 
 			if(ismob(target))//Blood!
-				if(istype(target, /mob/living/carbon/slime))
+				if(isslime(target))
 					to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 					return
 				if(reagents.has_reagent("blood"))
 					to_chat(user, "<span class='warning'>There is already a blood sample in this syringe</span>")
 					return
-				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
+				if(iscarbon(target))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!T.dna)
@@ -304,7 +304,7 @@
 				return
 
 			if(ismob(target))
-				if(istype(target, /mob/living/carbon))//I Do not want it to suck 50 units out of people
+				if(iscarbon(target))//I Do not want it to suck 50 units out of people
 					to_chat(usr, "This needle isn't designed for drawing blood.")
 					return
 			else //if not mob

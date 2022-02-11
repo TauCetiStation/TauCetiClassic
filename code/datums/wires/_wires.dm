@@ -52,7 +52,7 @@
 		return TRUE
 	if(iswirecutter(I))
 		return TRUE
-	if(istype(I, /obj/item/device/assembly/signaler))
+	if(issignaler(I))
 		return TRUE
 	return
 

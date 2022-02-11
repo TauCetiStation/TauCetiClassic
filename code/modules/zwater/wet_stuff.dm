@@ -75,7 +75,7 @@
 		var/obj/effect/fluid/F = locate() in T
 		if(F)
 			F.electrocute_act(120)
-		else if(istype(loc, /mob/living))
+		else if(isliving(loc))
 			var/mob/living/L = loc
 			L.apply_effect(120,AGONY,0)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

@@ -164,7 +164,7 @@
 	QDEL_IN(animation, 10)		//After flick finishes, animation is invisible. One second in more than enough to finish without artifacts
 	animation.icon = 'icons/mob/slimes.dmi'
 	animation.master = src
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		flick("big_jaunt_out", animation)
 	else
 		flick("small_jaunt_out", animation)
@@ -186,7 +186,7 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(remote_eye.loc)
-			if(istype(S, /mob/living/carbon/slime/adult))
+			if(isslimeadult(S))
 				flick("big_jaunt_in", S)
 			else
 				flick("small_jaunt_in", S)
@@ -400,7 +400,7 @@
 	if (istype(turfarea, E.allowed_area_type))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(T)
-			if(istype(S, /mob/living/carbon/slime/adult))
+			if(isslimeadult(S))
 				flick("big_jaunt_in", S)
 			else
 				flick("small_jaunt_in", S)

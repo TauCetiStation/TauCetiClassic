@@ -5,7 +5,7 @@
 	block=MONKEYBLOCK
 
 /datum/dna/gene/monkey/can_activate(mob/M,flags)
-	return istype(M, /mob/living/carbon/human) || istype(M,/mob/living/carbon/monkey)
+	return ishuman(M) || istype(M,/mob/living/carbon/monkey)
 
 /datum/dna/gene/monkey/activate(mob/living/carbon/human/H, connected, flags)
 	if(!istype(H))

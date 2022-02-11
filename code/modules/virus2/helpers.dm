@@ -4,7 +4,7 @@
 	if (!istype(M))
 		return 0
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 
 		if (vector == DISEASE_SPREAD_AIRBORNE)
 			if(M.internal)	//not breathing infected air helps greatly

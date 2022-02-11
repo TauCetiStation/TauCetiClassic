@@ -19,7 +19,7 @@
 			else //injected
 				M.contract_disease(D, 1, 0)
 
-	if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
+	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
 		if(vlist.len)
 			for(var/ID in vlist)
@@ -29,7 +29,7 @@
 				else
 					infect_virus2(M,V.getcopy(),1) //injected, force infection!
 
-	if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+	if(self.data && self.data["antibodies"] && iscarbon(M))//... and curing
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
@@ -217,7 +217,7 @@
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 10)

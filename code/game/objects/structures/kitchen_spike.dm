@@ -66,7 +66,7 @@
 					                  "<span class='notice'>You hear a squishy wet noise.</span>")
 					H.forceMove(src.loc)
 					H.emote("scream")
-					if(istype(H, /mob/living/carbon)) //So you don't get human blood when you spike a giant spidere
+					if(iscarbon(H)) //So you don't get human blood when you spike a giant spidere
 						var/turf/simulated/pos = get_turf(H)
 						pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)

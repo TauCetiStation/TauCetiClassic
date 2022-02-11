@@ -284,7 +284,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			jobname = "Cyborg"
 
 		// --- Personal AI (pAI) ---
-		else if (istype(M, /mob/living/silicon/pai))
+		else if (ispAI(M))
 			jobname = "Personal AI"
 
 		// --- Unidentifiable mob ---
@@ -445,7 +445,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			eqjobname = "AI"
 		else if (isrobot(M))
 			eqjobname = "Cyborg"//Androids don't really describe these too well, in my opinion.
-		else if (istype(M, /mob/living/silicon/pai))
+		else if (ispAI(M))
 			eqjobname = "Personal AI"
 		else
 			eqjobname = "Unknown"
@@ -563,7 +563,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					J = "Unknown"
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -572,7 +572,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -581,7 +581,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -591,7 +591,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.voice_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_voice)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
