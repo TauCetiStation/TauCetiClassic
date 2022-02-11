@@ -83,7 +83,7 @@ function err {
 
 function fail {
     warn "test \"$1\" failed: $2"
-    FAILED=$((FAILED + 1))
+    ((FAILED++))
     FAILED_BYNAME+=("$1")
 }
 
@@ -102,7 +102,7 @@ function run_test {
     ret=$?
     if [[ ret -ne 0 ]]
     then fail "$name" $ret
-    else PASSED=$((PASSED + 1))
+    else ((PASSED++))
     fi
 }
 
@@ -114,7 +114,7 @@ function run_test_fail {
     ret=$?
     if [[ ret -eq 0 ]]
     then fail "$name" $ret
-    else PASSED=$((PASSED + 1))
+    else ((PASSED++))
     fi
 }
 
@@ -130,7 +130,7 @@ function run_test_fail_desc {
     then
         fail "$name" $ret
         warn $desc
-    else PASSED=$((PASSED + 1))
+    else ((PASSED++))
     fi
 }
 
@@ -196,22 +196,23 @@ function newline_at_eof {
 
 function match_helper {
     local s=$1 regex=$2
-    while [[ $s =~ $regex ]]; do
-        define="${BASH_REMATCH[1]}"
-        s=${s#*"${BASH_REMATCH[1]}"}
-        istype="${BASH_REMATCH[2]}"
-        s=${s#*"${BASH_REMATCH[2]}"}
-        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+), \1\\\\\)/"`
-        run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
-    done
+
 }
 
 function match_is_helpers {
     regex="([\w]+)\(([\w]+)\) \((istype\([\w]+, [\w\d\/]+\))\)"
-    grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | while read line
+    grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
+    while read line
     do
-    regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
-    match_helper "$line" "$regex2"
+        regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
+        while [[ $line =~ $regex2 ]]; do
+            define="${BASH_REMATCH[1]}"
+            line=${line#*"${BASH_REMATCH[1]}"}
+            istype="${BASH_REMATCH[2]}"
+            line=${line#*"${BASH_REMATCH[2]}"}
+            istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+), \1\\\\\)/"`
+            run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
+        done
     done
 }
 
