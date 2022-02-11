@@ -213,7 +213,9 @@ function run_code_tests {
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
 
-    run_test "chech eof" "newline_at_eof"
+    run_test_fail "chego" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*istype\(([A-Za-z]+), /obj/effect/blob/normal\)' code/"
+
+    run_test "check eof" "newline_at_eof"
     match_is_helpers
 
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
