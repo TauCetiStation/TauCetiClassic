@@ -679,7 +679,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		overlays_standing[SUIT_LAYER] = standing
 
-		for(var/obj/item/clothing/accessory/A in S:accessories)
+		for(var/obj/item/clothing/accessory/A in S.accessories)
 			var/tie_color = A.item_color
 			if(!tie_color)
 				tie_color = A.icon_state
