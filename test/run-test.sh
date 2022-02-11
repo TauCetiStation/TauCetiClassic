@@ -213,6 +213,9 @@ function match_is_helpers {
     regex2='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
     match_helper "$line" "$regex2"
     done
+
+    check_fail
+
 }
 
 function run_code_tests {
