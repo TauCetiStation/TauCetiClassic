@@ -8,7 +8,7 @@
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	permeability_coefficient = 0.01
-	armor = list(melee = 65, bullet = 45, laser = 45,energy = 25, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 65, bullet = 55, laser = 50,energy = 35, bomb = 50, bio = 100, rad = 50)
 	siemens_coefficient = 0.4
 
 //Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
@@ -25,7 +25,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, /obj/item/weapon/tank/jetpack)
 	slowdown = 1.5
-	armor = list(melee = 65, bullet = 45, laser = 45, energy = 25, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 65, bullet = 55, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
