@@ -8942,16 +8942,16 @@
 /area/asteroid/mine/eva)
 "aqL" = (
 /obj/structure/alien/resin/wall,
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqM" = (
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/resin/wall,
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqN" = (
 /obj/structure/alien/weeds,
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqO" = (
 /obj/structure/alien/weeds,
@@ -8960,7 +8960,7 @@
 	icon_state = "egg";
 	name = "egg"
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqP" = (
 /obj/structure/alien/weeds,
@@ -8968,7 +8968,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqQ" = (
 /obj/structure/alien/weeds,
@@ -8976,7 +8976,7 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/space,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aqR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
