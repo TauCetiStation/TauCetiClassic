@@ -1151,7 +1151,8 @@
 	},
 /obj/structure/disposaloutlet{
 	dir = 4;
-	throw_range = 1
+	throw_range = 1;
+	throw_speed = 1
 	},
 /turf/simulated/wall,
 /area/station/cargo/storage)
@@ -1640,7 +1641,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 0
 	},
 /obj/machinery/power/smes/fullcharge,
 /turf/simulated/floor{
@@ -1951,8 +1952,8 @@
 	c_tag = "Telecomm Main Computer Room";
 	network = list("Tcomsat")
 	},
-/obj/machinery/ai_status_display{
-	pixel_y = 32
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -2519,6 +2520,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "interior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access = list(66)
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -2667,6 +2677,13 @@
 /obj/item/weapon/aiModule/protectStation,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
+"aep" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
+/turf/space,
+/area/space)
 "aeq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -2684,6 +2701,16 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "Telecoms Control Room";
+	dir = 1;
+	name = "AI Satellite Antechamber";
+	pixel_y = 26
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Exterior";
+	network = list("MiniSat")
 	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
@@ -2721,14 +2748,12 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aex" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aey" = (
@@ -2748,13 +2773,6 @@
 	},
 /area/station/hallway/primary/central)
 "aez" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_y = -32
-	},
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -2763,36 +2781,36 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aeA" = (
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat West North";
+	network = list("MiniSat")
+	},
+/turf/space,
+/area/space)
+"aeB" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
-"aeB" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "satellite_aux_outer";
-	locked = 1;
-	name = "Satellite External Access";
-	req_access = list(13);
-	req_one_access = list(11,24)
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/space,
-/area/station/tcommsat/computer)
 "aeC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
 	},
-/turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/tcommsat/computer)
 "aeD" = (
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
@@ -7821,7 +7839,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/recharge_station,
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor/airless{
 	dir = 8;
 	icon_state = "asteroidwarning"
@@ -7835,7 +7853,7 @@
 	},
 /area/asteroid/mine/eva)
 "aoJ" = (
-/obj/machinery/floodlight,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "asteroidwarning"
@@ -8137,18 +8155,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "apt" = (
-/obj/machinery/mecha_part_fabricator/mining_fabricator{
-	req_access = list()
-	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell,
+/obj/item/weapon/stock_parts/cell,
 /turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "asteroidwarning"
 	},
 /area/asteroid/mine/eva)
 "apu" = (
-/obj/machinery/computer/rdconsole/mining{
-	req_access = list()
-	},
+/obj/structure/table,
+/obj/item/weapon/wrench,
+/obj/item/weapon/wrench,
+/obj/item/weapon/mining_scanner,
+/obj/item/weapon/mining_scanner,
 /turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "asteroidwarning"
@@ -8921,12 +8942,21 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/eva)
 "aqI" = (
-/obj/machinery/mineral/equipment_vendor,
-/turf/simulated/floor/airless{
-	dir = 8;
-	icon_state = "asteroidwarning"
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "satellite_aux_outer";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = list(13);
+	req_one_access = list(11,24)
 	},
-/area/asteroid/mine/eva)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/tcommsat/computer)
 "aqJ" = (
 /obj/machinery/mineral/processing_unit_console,
 /turf/simulated/wall/r_wall,
@@ -8993,6 +9023,23 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"aqS" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "exterior access button";
+	pixel_x = 24;
+	pixel_y = 22;
+	req_access = list(66)
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "aqT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -9000,14 +9047,44 @@
 	id_tag = "satellite_aux_pump";
 	name = "Satellite Aux Large Air Vent"
 	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "Telecoms Control Room";
-	dir = 1;
-	name = "AI Satellite Antechamber";
-	pixel_y = 26
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "satellite_aux_airlock";
+	pixel_y = 25;
+	req_access = list(66);
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "satellite_aux_sensor";
+	pixel_x = -25;
+	req_one_access = list(13,45,1)
 	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
+"aqU" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat South";
+	network = list("MiniSat")
+	},
+/turf/space,
+/area/space)
+"aqV" = (
+/turf/simulated/floor/airless{
+	dir = 8;
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/eva)
+"aqW" = (
+/obj/machinery/mecha_part_fabricator/mining_fabricator{
+	req_access = list()
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
 "aqX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9025,6 +9102,68 @@
 	icon_state = "darkred"
 	},
 /area/station/security/prison)
+"aqY" = (
+/obj/machinery/computer/rdconsole/mining{
+	req_access = list()
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
+"aqZ" = (
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 0
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/station/solar/starboard)
+"ara" = (
+/obj/structure/closet/crate/secure/miningsec,
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
+"arb" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/bag/ore{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore{
+	pixel_y = -3
+	},
+/obj/item/weapon/pickaxe{
+	pixel_y = 3
+	},
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe{
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/eva)
+"arc" = (
+/obj/structure/rack,
+/obj/item/weapon/mining_charge,
+/obj/item/weapon/mining_charge,
+/obj/item/weapon/mining_charge,
+/obj/item/weapon/mining_charge,
+/obj/item/weapon/mining_charge,
+/obj/item/weapon/mining_charge,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/eva)
 "ard" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -9038,6 +9177,10 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/server)
+"are" = (
+/obj/machinery/floodlight,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/eva)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10719,12 +10862,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bVJ" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+	dir = 1;
+	icon_state = "cautioncorner"
 	},
 /area/station/engineering/atmos)
 "bWg" = (
@@ -11191,16 +11334,14 @@
 /turf/space,
 /area/space)
 "csF" = (
-/obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/weapon/wrench,
-/obj/item/weapon/mining_scanner,
-/obj/item/weapon/mining_scanner,
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4;
+	external_pressure_bound = 140;
+	external_pressure_bound_default = 140;
+	name = "(OUT) Space Large Air Vent"
 	},
-/area/asteroid/mine/eva)
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/atmos)
 "ctB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -13663,19 +13804,14 @@
 	},
 /area/station/hallway/primary/central)
 "eRf" = (
-/obj/machinery/power/solar{
-	id = "starboardsolar";
-	name = "Starboard Solar Array"
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "caution"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
-	},
-/area/station/solar/starboard)
+/area/station/engineering/atmos)
 "eSf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -14297,7 +14433,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 0
 	},
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
@@ -14733,10 +14869,6 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "geY" = (
-/obj/machinery/power/solar_control{
-	id = "auxsolareast";
-	name = "Fore Port Solar Control"
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -14745,6 +14877,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/solar_control{
+	id = "auxsolareast";
+	name = "Fore Port Solar Control"
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
 	},
@@ -14829,7 +14965,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -16579,9 +16715,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/camera{
-	c_tag = "Vault";
-	dir = 8
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17844,9 +17979,6 @@
 /area/station/security/checkpoint)
 "jki" = (
 /obj/machinery/computer/telecomms/server,
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17854,6 +17986,9 @@
 /obj/machinery/power/apc/largecell{
 	dir = 4;
 	pixel_x = 27
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -18292,11 +18427,14 @@
 	},
 /area/station/bridge)
 "jGN" = (
-/obj/structure/cable{
-	dir = 8
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat East South";
+	dir = 6;
+	network = list("MiniSat")
 	},
-/turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/starboard)
+/turf/space,
+/area/space)
 "jHm" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
@@ -18445,9 +18583,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "jOO" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/mining,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -19401,7 +19537,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 0
 	},
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -19894,17 +20030,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "lfk" = (
-/obj/structure/rack,
-/obj/item/weapon/mining_charge,
-/obj/item/weapon/mining_charge,
-/obj/item/weapon/mining_charge,
-/obj/item/weapon/mining_charge,
-/obj/item/weapon/mining_charge,
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/area/asteroid/mine/eva)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "lfG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -21830,19 +21972,13 @@
 	},
 /area/station/hallway/primary/central)
 "nfa" = (
-/obj/structure/rack,
-/obj/item/weapon/pickaxe{
-	pixel_y = 3
+/obj/machinery/camera{
+	c_tag = "MiniSat East North";
+	dir = 10;
+	network = list("MiniSat")
 	},
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe{
-	pixel_y = -3
-	},
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
-	},
-/area/asteroid/mine/eva)
+/turf/space,
+/area/space)
 "nfp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/flasher_button{
@@ -22767,6 +22903,9 @@
 /area/station/hallway/primary/central)
 "nPD" = (
 /obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/engineering,
 /obj/item/clothing/mask/breath,
@@ -22887,13 +23026,13 @@
 	},
 /area/station/hallway/secondary/arrival)
 "nVq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	external_pressure_bound_default = 140;
-	name = "(OUT) Space Large Air Vent"
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat North";
+	dir = 1;
+	network = list("MiniSat")
 	},
-/turf/simulated/floor/plating/airless,
+/turf/space,
 /area/space)
 "nVz" = (
 /obj/structure/cable{
@@ -23845,12 +23984,14 @@
 	},
 /area/station/civilian/cold_room)
 "oSw" = (
-/obj/structure/closet/crate/secure/miningsec,
-/turf/simulated/floor/airless{
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat West";
 	dir = 8;
-	icon_state = "asteroidwarning"
+	network = list("MiniSat")
 	},
-/area/asteroid/mine/eva)
+/turf/space,
+/area/space)
 "oSW" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -24192,18 +24333,14 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "piu" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	icon_state = "freezer_1";
-	power_setting = 20;
-	set_temperature = 73;
-	use_power = 1
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat East";
+	dir = 4;
+	network = list("MiniSat")
 	},
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/space,
+/area/space)
 "piy" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod1"
@@ -24490,15 +24627,21 @@
 	},
 /area/station/hallway/primary/central)
 "pyj" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell,
-/obj/item/weapon/stock_parts/cell,
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1;
+	icon_state = "freezer_1";
+	power_setting = 20;
+	set_temperature = 73;
+	use_power = 1
 	},
-/area/asteroid/mine/eva)
+/obj/machinery/ai_status_display{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "pyl" = (
 /obj/machinery/door_control{
 	id = "Captain_private";
@@ -27810,10 +27953,7 @@
 	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "cautioncorner"
-	},
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "sCU" = (
 /obj/structure/window/reinforced{
@@ -28859,9 +28999,6 @@
 /area/station/medical/storage)
 "tHA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/ai_status_display{
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -31141,6 +31278,9 @@
 /area/station/rnd/hor)
 "waf" = (
 /obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/tank/emergency_oxygen/double,
@@ -31839,19 +31979,14 @@
 	},
 /area/station/engineering/drone_fabrication)
 "wHk" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/bag/ore{
-	pixel_y = 3
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat West North";
+	dir = 1;
+	network = list("MiniSat")
 	},
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore{
-	pixel_y = -3
-	},
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
-	},
-/area/asteroid/mine/eva)
+/turf/space,
+/area/space)
 "wHw" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -47383,7 +47518,7 @@ crv
 crv
 crv
 gay
-crv
+oSw
 crv
 gay
 crv
@@ -49176,7 +49311,7 @@ crv
 crv
 qws
 crv
-crv
+wHk
 wWW
 wWW
 ada
@@ -49188,7 +49323,7 @@ aef
 aei
 wWW
 wWW
-crv
+aeA
 crv
 qws
 gay
@@ -50217,7 +50352,7 @@ wWW
 wWW
 wWW
 wWW
-crv
+uao
 crv
 qws
 gay
@@ -50473,9 +50608,9 @@ aaY
 vlu
 aqT
 afK
+aeC
 vlu
-vlu
-crv
+aep
 qws
 crv
 crv
@@ -50731,8 +50866,8 @@ aek
 aeq
 aeq
 aex
-aeB
-aeC
+aqI
+aqS
 aeD
 crv
 gay
@@ -50973,7 +51108,7 @@ crv
 azF
 azF
 qws
-crv
+nVq
 hXh
 aKv
 kcz
@@ -50989,7 +51124,7 @@ aer
 aev
 aez
 vlu
-gay
+aqU
 azF
 crv
 crv
@@ -51240,11 +51375,11 @@ jki
 adD
 bIJ
 mqs
-piu
+pyj
 vlu
 aes
 aew
-aeA
+aeB
 vlu
 gay
 azF
@@ -52775,7 +52910,7 @@ crv
 gay
 qws
 qws
-gay
+nfa
 sCX
 mcS
 wwe
@@ -52785,7 +52920,7 @@ iBA
 vWz
 wju
 sCX
-crv
+jGN
 qws
 qws
 crv
@@ -53551,7 +53686,7 @@ qws
 gay
 crv
 crv
-crv
+piu
 gay
 gay
 crv
@@ -54785,7 +54920,7 @@ vHw
 cjX
 gay
 dZx
-cES
+dZx
 dZx
 dZx
 xSr
@@ -55103,11 +55238,11 @@ agg
 agg
 crv
 gay
-eRf
+aqZ
 qpA
 rpn
 gay
-eRf
+aqZ
 qpA
 rpn
 crv
@@ -55360,11 +55495,11 @@ crv
 gay
 qws
 crv
-eRf
+aqZ
 oYH
 rpn
 gay
-eRf
+aqZ
 oYH
 rpn
 crv
@@ -55617,11 +55752,11 @@ crv
 crv
 jwL
 gay
-eRf
+aqZ
 oYH
 rpn
 crv
-eRf
+aqZ
 oYH
 rpn
 gay
@@ -55855,14 +55990,14 @@ akb
 crv
 gay
 crv
-crv
+csF
 txG
 crv
 crv
 crv
 evV
 txG
-nVq
+csF
 crv
 crv
 evV
@@ -55874,11 +56009,11 @@ gay
 crv
 qws
 crv
-eRf
+aqZ
 oYH
 rpn
 gay
-eRf
+aqZ
 oYH
 rpn
 crv
@@ -56111,8 +56246,8 @@ aqu
 akb
 crv
 crv
-crv
-rsx
+uRQ
+lfk
 wmc
 rsx
 rsx
@@ -56131,11 +56266,11 @@ gay
 crv
 crv
 crv
-eRf
+aqZ
 oYH
 rpn
 crv
-eRf
+aqZ
 oYH
 rpn
 gay
@@ -56369,7 +56504,7 @@ akb
 akb
 abB
 uRQ
-rsx
+eRf
 eMX
 vKl
 eMa
@@ -56393,7 +56528,7 @@ iOP
 gay
 gay
 gay
-iOP
+uqq
 uqq
 crv
 crv
@@ -56650,7 +56785,7 @@ uqq
 uqq
 gay
 gay
-eRf
+aqZ
 qpA
 rpn
 gay
@@ -56903,11 +57038,11 @@ lzD
 ojo
 crv
 crv
-eRf
+aqZ
 qpA
 rpn
 crv
-eRf
+aqZ
 oYH
 rpn
 crv
@@ -57160,11 +57295,11 @@ hPs
 ojo
 crv
 gay
-eRf
+aqZ
 oYH
 rpn
 gay
-eRf
+aqZ
 oYH
 rpn
 crv
@@ -57417,11 +57552,11 @@ dMO
 ojo
 gay
 crv
-eRf
+aqZ
 oYH
 rpn
 crv
-eRf
+aqZ
 oYH
 rpn
 crv
@@ -57674,11 +57809,11 @@ jPh
 ojo
 gay
 crv
-eRf
+aqZ
 oYH
 rpn
 gay
-eRf
+aqZ
 oYH
 rpn
 gay
@@ -57931,7 +58066,7 @@ crv
 crv
 crv
 gay
-eRf
+aqZ
 oYH
 rpn
 gay
@@ -58189,10 +58324,10 @@ gay
 crv
 gay
 gay
-iOP
 uqq
 uqq
-jGN
+uqq
+uqq
 gay
 gay
 qws
@@ -58448,7 +58583,7 @@ gay
 uqq
 uqq
 gay
-eRf
+aqZ
 iwE
 rpn
 gay
@@ -58702,10 +58837,10 @@ gay
 iOP
 uqq
 uqq
-jGN
+uqq
 gay
 gay
-eRf
+aqZ
 iwE
 rpn
 crv
@@ -58958,11 +59093,11 @@ aeS
 aeT
 uqq
 gay
-eRf
+aqZ
 iwE
 rpn
 gay
-eRf
+aqZ
 iwE
 rpn
 gay
@@ -59215,11 +59350,11 @@ vAA
 crv
 crv
 crv
-eRf
+aqZ
 iwE
 rpn
 crv
-eRf
+aqZ
 iwE
 rpn
 gay
@@ -59472,11 +59607,11 @@ acf
 gay
 gay
 crv
-eRf
+aqZ
 iwE
 rpn
 crv
-eRf
+aqZ
 bPR
 rpn
 crv
@@ -59729,7 +59864,7 @@ aeF
 ace
 aeW
 crv
-eRf
+aqZ
 iwE
 rpn
 crv
@@ -59986,7 +60121,7 @@ aeJ
 aeJ
 abx
 gay
-eRf
+aqZ
 bPR
 rpn
 gay
@@ -63269,7 +63404,7 @@ rzB
 rzB
 rzB
 gay
-xGz
+hvW
 tQc
 lef
 hbt
@@ -65381,8 +65516,8 @@ aoH
 cVp
 jWx
 pDR
-aqI
-oSw
+aqV
+aqV
 aqK
 pmZ
 jWx
@@ -65895,11 +66030,11 @@ biV
 uJq
 jWx
 apt
-nfa
-wHk
-lfk
-uJq
-jWx
+aqW
+mKx
+ara
+arb
+are
 jWx
 hvD
 yjd
@@ -66152,10 +66287,10 @@ aoI
 uJq
 jWx
 apu
-csF
-pyj
+aqY
+mKx
 rEy
-uJq
+arc
 jWx
 jWx
 hvD
