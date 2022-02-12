@@ -41,7 +41,7 @@
 		return COMPONENT_CHECK_FAILED
 	if(!AOG.buckled_mob.mind)
 		return NONE
-	if(AOG.buckled_mob.mind && !AOG.buckled_mob.client)
+	if(!AOG.buckled_mob.client)
 		to_chat(user, "<span class='warning'>Требуется сознательная жертва на алтаре.</span>")
 		return COMPONENT_CHECK_FAILED
 	if(!consent)
