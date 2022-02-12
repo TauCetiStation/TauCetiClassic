@@ -1294,14 +1294,15 @@
 
 	if(issilicon(usr))
 		return FALSE
-	return TRUE
 
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
 		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
+		return TRUE
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+		return FALSE
 
 /obj/item/device/pda/clown/verb_reset_pda()
 	. = ..()
