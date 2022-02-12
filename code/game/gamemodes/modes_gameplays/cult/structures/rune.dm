@@ -72,11 +72,11 @@
 	if(istype(I, /obj/item/weapon/storage/bible/tome) && iscultist(user))
 		to_chat(user, "<span class='[religion?.style_text]'>Вы заставляете руну исчезнуть.</span>")
 		qdel(src)
-		return
+		return FALSE
 	if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию силой [I].</span>")
 		qdel(src)
-		return
+		return FALSE
 
 	return ..()
 

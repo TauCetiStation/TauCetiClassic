@@ -55,10 +55,18 @@
 		if(bomb.timing)
 			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
 
-/obj/item/weapon/pinpointer/Destroy()
+/obj/item/weapon/pinpointer/proc/reset_target()
+	SIGNAL_HANDLER
+	if(mode && target)
+		UnregisterSignal(target, list(COMSIG_PARENT_QDELETING))
+
 	active = FALSE
 	STOP_PROCESSING(SSobj, src)
+	icon_state = "pinoff"
 	target = null
+
+/obj/item/weapon/pinpointer/Destroy()
+	reset_target()
 	return ..()
 
 /obj/item/weapon/pinpointer/advpinpointer
@@ -70,10 +78,7 @@
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
 
-	active = FALSE
-	STOP_PROCESSING(SSobj, src)
-	icon_state = "pinoff"
-	target = null
+	reset_target()
 
 	switch(tgui_alert(usr, "Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", list("Location", "Disk Recovery", "Other Signature")))
 
@@ -137,13 +142,16 @@
 					target = target_ai
 					to_chat(usr, "You set the pinpointer to locate [target]")
 
+	if(mode && target)
+		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
+
 	return attack_self(usr)
 
 /obj/item/weapon/pinpointer/nukeop
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	..()
-	if(mode == SEARCH_FOR_OBJECT)
+	if(mode == SEARCH_FOR_DISK)
 		to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
 	else
 		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
@@ -158,12 +166,13 @@
 				return
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
+			RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
 	else
-		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
-			target = null
+			reset_target()
+		mode = SEARCH_FOR_DISK
 	return ..()
 
 #undef SEARCH_FOR_DISK

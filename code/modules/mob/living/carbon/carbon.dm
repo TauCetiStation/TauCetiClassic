@@ -96,7 +96,7 @@
 				spread = FALSE
 
 		if(spread)
-			attacker.spread_disease_to(src, "Contact")
+			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
 			for(var/datum/disease/D in viruses)
 				if(D.spread_by_touch())
@@ -283,7 +283,7 @@
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else switch(M.get_targetzone())
-				if(BP_R_ARM || BP_L_ARM)
+				if(BP_R_ARM, BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
 				if(BP_HEAD)
@@ -914,12 +914,7 @@
 /mob/living/carbon/update_sight()
 	if(!..())
 		return FALSE
-	if(stat == DEAD)
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		set_EyesVision(transition_time = 0)
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return FALSE
+
 	if(blinded)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
@@ -939,16 +934,16 @@
 				see_in_dark = 8
 				see_invisible = SEE_INVISIBLE_LEVEL_ONE
 
-	if(XRAY in mutations)
-		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		see_in_dark = 8
-		if(!druggy)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
 
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask

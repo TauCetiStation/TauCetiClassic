@@ -118,6 +118,8 @@
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
@@ -142,6 +144,8 @@
 
 	if (has_lang_prefix)
 		message = copytext(message,2+length_char(speaking.key))
+		if(!message)
+			return
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
@@ -171,18 +175,21 @@
 				return ""
 
 	message = capitalize(trim(message))
+	message = add_period(message)
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	if (speaking)
+
+	if(speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
+		if(ending == "!")
+			verb = pick("exclaims","shouts","yells")
+		if(ending == "?")
+			verb = "asks"
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
@@ -194,7 +201,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || stat)
+	if(!message || (stat && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -250,6 +257,8 @@
 			return
 		if("changeling")
 			if(ischangeling(src))
+				if(stat)
+					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
 				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
@@ -291,6 +300,10 @@
 
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
+		sound_vol = 50
+
+	else if(species.name == ABOMINATION)
+		speech_sound = sound('sound/voice/abomination.ogg')
 		sound_vol = 50
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.

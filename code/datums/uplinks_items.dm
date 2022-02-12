@@ -431,8 +431,8 @@
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
-	name = "Ammo-12g Stun Slug"
-	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
+	name = "Ammo-12g Stun Shot"
+	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	cost = 4
 	uplink_types = list("nuclear")
@@ -542,7 +542,7 @@
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
-	item = /obj/item/weapon/soap/syndie
+	item = /obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix
@@ -879,6 +879,13 @@
 	cost = 55
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/syndidrone
+	name = "Syndicate drone"
+	desc = "A remote control drone disguised as a NT maintenance drone. Comes with a RC interface."
+	item = /obj/item/weapon/storage/box/syndie_kit/drone
+	cost = 14
+	uplink_types = list("nuclear", "traitor")
+
 // IMPLANTS
 
 /datum/uplink_item/implants
@@ -915,7 +922,7 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
-	
+
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
 	desc = "An implant, that explodes with different power when activated by a code word."

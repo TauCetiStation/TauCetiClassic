@@ -116,7 +116,7 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == SHADOWLING)
+			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 

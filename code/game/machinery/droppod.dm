@@ -31,7 +31,7 @@
 	var/obj/machinery/nuclearbomb/Stored_Nuclear
 	var/list/stored_items = list()
 
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
@@ -92,11 +92,12 @@
 
 /********Datum helper with restricted and allowed areas for droping********/
 
-/datum/droppod_allowed
+/datum/droppod_vision
 	var/static/list/areas
 	var/static/list/black_list_areas
+	var/static/list/image/obscured_turfs
 
-/datum/droppod_allowed/New()
+/datum/droppod_vision/New()
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
@@ -133,6 +134,15 @@
 		for(var/i in areas)
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
+
+	if(obscured_turfs)
+		return
+	obscured_turfs = list()
+	for(var/A in black_list_areas)
+		for(var/turf/simulated/turf in get_area_turfs(A))
+			var/image/i = image('icons/effects/cameravis.dmi', turf, "black", ABOVE_LIGHTING_LAYER)
+			i.plane = ABOVE_LIGHTING_PLANE
+			obscured_turfs += i
 
 /obj/effect/landmark/droppod
 
@@ -255,7 +265,13 @@
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
 		if(!T.density && !istype(T, /turf/space) && !T.obscured)
-			L+=T
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		return
@@ -287,12 +303,15 @@
 	eyeobj.name = "[intruder.name] (Eye)"
 	intruder.client.images += eyeobj.ghostimage
 	intruder.client.eye = eyeobj
+	if (!(flags & IS_LEGITIMATE))
+		intruder.client.images += allowed_areas.obscured_turfs
+	intruder.client.show_popup_menus = FALSE
 
 /obj/structure/droppod/proc/ChooseTarget()
 	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
-	if(teleport_turf.obscured)
+	if(teleport_turf.obscured || istype(teleport_turf, /turf/space))
 		to_chat(intruder, "<span class='userdanger'>No signal here! It might be unsafe to deploy here!</span>")
 		return
 	if(!(flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
@@ -309,6 +328,7 @@
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
+		intruder.client.show_popup_menus = TRUE
 		intruder.reset_view(deleting ? loc : src)
 	flags &= ~STATE_AIMING
 

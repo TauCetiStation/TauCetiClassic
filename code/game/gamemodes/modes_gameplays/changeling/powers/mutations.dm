@@ -24,12 +24,12 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
 	 "<span class='warning'>You hear organic matter ripping and tearing!</span>")
-	return ..(user, target)
+	..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
 		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
-		return
+		return FALSE
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_active_hand(W)
 	return W
@@ -78,10 +78,10 @@
 /obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.unEquip(user.wear_suit))
 		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
-		return
+		return FALSE
 	if(!user.unEquip(user.head))
 		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
-		return
+		return FALSE
 
 	user.drop_from_inventory(user.head)
 	user.drop_from_inventory(user.wear_suit)
@@ -91,7 +91,7 @@
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/weapon/arm_blade
 	name = "Arm Blade"
