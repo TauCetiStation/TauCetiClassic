@@ -69,7 +69,6 @@
 	var/last_trans_tick = 0
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
-	var/owner_slippery = FALSE
 
 /obj/item/device/pda/atom_init()
 	. = ..()
@@ -146,7 +145,6 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
-	owner_slippery = TRUE
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
@@ -166,7 +164,7 @@
 
 /obj/item/device/pda/equipped(mob/user, slot)
 	..()
-	if(owner_slippery && (slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID))
+	if(slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID)
 		make_user_slip(user)
 	else
 		remove_user_slip(user)
@@ -705,7 +703,6 @@
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
-				owner_slippery = FALSE
 
 //MENU FUNCTIONS===================================
 
@@ -754,8 +751,6 @@
 			if ( !(last_honk && world.time < last_honk + 20) )
 				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 				last_honk = world.time
-			owner_slippery = !owner_slippery
-			to_chat(user, "<span class='notice'>You toggle your slippery. HONK!</span>")
 		if("Gas Scan")
 			if(scanmode == 5)
 				scanmode = 0
@@ -1303,11 +1298,6 @@
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 		return FALSE
-
-/obj/item/device/pda/clown/verb_reset_pda()
-	. = ..()
-	if(.)
-		owner_slippery = TRUE
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
