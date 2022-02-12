@@ -23,7 +23,7 @@
 /datum/job/rd/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 6000
+	minimal_player_ingame_minutes = 3600
 
 /datum/job/scientist/New()
 	..()
@@ -43,17 +43,17 @@
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 12000
+	minimal_player_ingame_minutes = 7200
 
 /datum/job/hop/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 6000
+	minimal_player_ingame_minutes = 3600
 
 /datum/job/hos/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 10800
+	minimal_player_ingame_minutes = 6000
 
 /datum/job/officer/New()
 	..()
@@ -73,7 +73,7 @@
 /datum/job/cmo/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 6000
+	minimal_player_ingame_minutes = 3600
 
 /datum/job/doctor/New()
 	..()
@@ -93,7 +93,7 @@
 /datum/job/chief_engineer/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 6000
+	minimal_player_ingame_minutes = 3600
 
 /datum/job/engineer/New()
 	..()
