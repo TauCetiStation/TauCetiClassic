@@ -1296,7 +1296,6 @@
 		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-		return FALSE
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
