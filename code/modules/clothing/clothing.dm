@@ -234,12 +234,6 @@ var/global/list/icon_state_allowed_cache = list()
 			if (AC.slot == A.slot)
 				return FALSE
 
-/obj/item/clothing/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	handle_accessories_removal()
-
 /obj/item/clothing/proc/handle_accessories_removal()
 	if(!isliving(usr))
 		return
