@@ -7771,6 +7771,7 @@
 /area/station/bridge/captain_quarters)
 "aoC" = (
 /obj/item/device/radio/intercom{
+	dir = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
@@ -8397,6 +8398,7 @@
 /area/station/cargo/storage)
 "apQ" = (
 /obj/item/device/radio/intercom{
+	dir = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
@@ -8507,6 +8509,7 @@
 /area/station/rnd/hallway)
 "apY" = (
 /obj/item/device/radio/intercom{
+	dir = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
@@ -9181,6 +9184,7 @@
 	},
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom{
+	dir = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
@@ -15344,6 +15348,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/device/radio/intercom{
+	dir = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
@@ -16580,7 +16585,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
@@ -27861,7 +27865,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
@@ -33622,7 +33625,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
