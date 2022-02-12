@@ -842,9 +842,9 @@
 	},
 /area/station/cargo/storage)
 "abu" = (
-/obj/machinery/computer/teleporter,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/teleport/hub,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
 /area/station/aisat/teleport)
 "abv" = (
@@ -969,7 +969,10 @@
 /area/station/medical/surgeryobs)
 "abG" = (
 /obj/machinery/teleport/hub,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/bridge/teleporter)
 "abH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1122,12 +1125,8 @@
 	req_access = list(30)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/rnd/server)
 "abU" = (
@@ -1141,7 +1140,10 @@
 /obj/structure/rack,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/bridge/teleporter)
 "abW" = (
 /obj/structure/disposalpipe/trunk{
@@ -1410,7 +1412,10 @@
 /area/station/hallway/secondary/exit)
 "acw" = (
 /obj/machinery/teleport/station,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/bridge/teleporter)
 "acx" = (
 /obj/structure/disposalpipe/segment{
@@ -1572,10 +1577,13 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/device/radio/off,
 /obj/machinery/turretid/stun/AI_special{
-	control_area = "AI Satellite Antechamber";
+	control_area = "Telecoms Control Room";
 	dir = 8;
 	name = "AI Satellite Antechamber";
 	pixel_x = -26
+	},
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 25
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2125,7 +2133,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit{
-	pixel_x = -26
+	pixel_x = -32
 	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber West";
@@ -2151,11 +2159,6 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adH" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "AI Satellite APC";
-	pixel_x = -28
-	},
 /obj/machinery/power/smes/fullcharge,
 /obj/machinery/door_control{
 	id = "AI Blast Door";
@@ -2173,6 +2176,10 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	pixel_x = -32
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2253,13 +2260,13 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/machinery/porta_turret/station_default{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2354,7 +2361,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/turretid/stun/AI_special{
-	control_area = "AI Satellite Antechamber";
+	control_area = "Telecoms Control Room";
 	dir = 8;
 	name = "AI Satellite Antechamber";
 	pixel_x = -26
@@ -2660,21 +2667,6 @@
 /obj/item/weapon/aiModule/protectStation,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
-"aep" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1379;
-	id_tag = "satellite_aux_pump";
-	name = "Satellite Aux Large Air Vent"
-	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "AI Satellite Antechamber";
-	dir = 1;
-	name = "AI Satellite Antechamber";
-	pixel_y = 26
-	},
-/turf/simulated/floor/plating,
-/area/station/tcommsat/computer)
 "aeq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -4185,8 +4177,8 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
+/obj/item/ashtray/glass,
 /obj/structure/table/woodentable/fancy/black,
-/obj/random/foods/donuts,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -7538,6 +7530,7 @@
 "anY" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
+/obj/machinery/light,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -7870,9 +7863,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/stool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/station/aisat/teleport)
 "aoO" = (
@@ -7887,11 +7880,6 @@
 	},
 /area/station/rnd/hor)
 "aoP" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "AI Satellite APC";
-	pixel_x = 26
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -7901,6 +7889,11 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	pixel_x = 27
+	},
+/obj/machinery/power/port_gen/pacman,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8985,6 +8978,36 @@
 	},
 /turf/space,
 /area/space)
+"aqR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+	dir = 8;
+	internal_pressure_bound = 4000;
+	internal_pressure_bound_default = 4000;
+	name = "Server (In) Air Vent"
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
+"aqT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "Telecoms Control Room";
+	dir = 1;
+	name = "AI Satellite Antechamber";
+	pixel_y = 26
+	},
+/turf/simulated/floor/plating,
+/area/station/tcommsat/computer)
 "aqX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9374,9 +9397,9 @@
 	},
 /area/station/bridge)
 "aKv" = (
-/obj/machinery/teleport/hub,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/teleport/station,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
 /area/station/aisat/teleport)
 "aLe" = (
@@ -12413,7 +12436,10 @@
 /area/station/hallway/primary/central)
 "dCm" = (
 /obj/machinery/computer/teleporter,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/bridge/teleporter)
 "dDY" = (
 /turf/simulated/wall/r_wall,
@@ -14193,7 +14219,7 @@
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
 "fxu" = (
@@ -15533,8 +15559,10 @@
 	dir = 8
 	},
 /obj/machinery/hologram/holopad,
+/obj/structure/stool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/station/aisat/teleport)
 "gOc" = (
@@ -17819,14 +17847,13 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Telecoms Sat. Central Compartment APC";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -18821,7 +18848,8 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/station/aisat/teleport)
 "kcO" = (
@@ -18889,7 +18917,7 @@
 /obj/structure/table,
 /obj/item/weapon/hand_tele,
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
 "kit" = (
@@ -21920,16 +21948,16 @@
 	},
 /area/station/hallway/primary/central)
 "njt" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Telecoms Sat. Control APC";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/telecomms/bus/preset_three,
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Engineering APC";
+	pixel_y = 25
+	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;
@@ -24980,7 +25008,7 @@
 /area/station/medical/sleeper)
 "pRR" = (
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
 "pSh" = (
@@ -28705,7 +28733,6 @@
 	},
 /area/station/maintenance/dormitory)
 "tEk" = (
-/obj/machinery/teleport/station,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -28714,8 +28741,9 @@
 	name = "Private AI Channel";
 	pixel_x = -22
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/computer/teleporter,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
 /area/station/aisat/teleport)
 "tEV" = (
@@ -32430,21 +32458,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/sleeper)
-"xlr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 8;
-	internal_pressure_bound = 4000;
-	internal_pressure_bound_default = 4000;
-	name = "Server (In) Air Vent"
-	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/station/tcommsat/chamber)
 "xlx" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -33143,7 +33156,8 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/station/aisat/teleport)
 "xQL" = (
@@ -50154,7 +50168,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 crv
 crv
 azF
@@ -50411,7 +50425,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 gay
 crv
 azF
@@ -50457,7 +50471,7 @@ aaM
 adT
 aaY
 vlu
-aep
+aqT
 afK
 vlu
 vlu
@@ -50668,7 +50682,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 gay
 crv
 azF
@@ -50925,7 +50939,7 @@ gay
 gay
 gay
 gay
-gay
+crv
 gay
 crv
 azF
@@ -51181,8 +51195,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+crv
+crv
 gay
 crv
 azF
@@ -51437,9 +51451,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+crv
+crv
+crv
 gay
 crv
 ahz
@@ -51694,9 +51708,9 @@ gay
 gay
 gay
 gay
+crv
 gay
-gay
-gay
+crv
 gay
 crv
 ahz
@@ -51951,7 +51965,7 @@ gay
 gay
 gay
 nmW
-gay
+crv
 gay
 crv
 gay
@@ -52254,7 +52268,7 @@ jyy
 ikd
 qHG
 bPW
-xlr
+aqR
 cfI
 sCX
 sCX
