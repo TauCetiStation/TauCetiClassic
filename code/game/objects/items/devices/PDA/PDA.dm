@@ -1288,7 +1288,7 @@
 	set src in usr
 
 	if(issilicon(usr))
-		return FALSE
+		return
 
 	if(can_use(usr))
 		mode = 0
