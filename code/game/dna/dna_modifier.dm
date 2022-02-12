@@ -309,8 +309,7 @@
 /obj/machinery/computer/scan_consolenew/atom_init_late()
 	connected = locate(/obj/machinery/dna_scannernew) in range(4, src)
 	if(!isnull(connected))
-		break
-	spawn(250)
+		spawn(250)
 		injector_ready = 1
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)

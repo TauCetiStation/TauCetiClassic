@@ -50,11 +50,9 @@
 	var/obj/machinery/dna_scannernew/scannerf = null
 	// Try to find a scanner
 	scannerf = locate(/obj/machinery/dna_scannernew) in range(4, src)
-	// If found, then we break, and return the scanner
+	// If found, then return the scanner
 	if(!isnull(scannerf))
-		break
-	// If no scanner was found, it will return null
-	return scannerf
+		return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
