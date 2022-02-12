@@ -59,8 +59,7 @@
 	podf = locate(/obj/machinery/clonepod) in range(4, src)
 	
 	if(!isnull(podf))
-		break
-	return podf
+		return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
