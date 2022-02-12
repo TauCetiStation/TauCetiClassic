@@ -47,16 +47,14 @@
 		src.pod1.connected = src // Some variable the pod needs
 
 /obj/machinery/computer/cloning/proc/findscanner()
-	var/obj/machinery/dna_scannernew/scannerf = null
 	// Try to find a scanner
-	scannerf = locate(/obj/machinery/dna_scannernew) in range(4, src)
+	var/obj/machinery/dna_scannernew/scannerf = locate(/obj/machinery/dna_scannernew) in range(4, src)
 	// If found, then return the scanner
 	if(!isnull(scannerf))
 		return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
-	var/obj/machinery/clonepod/podf = null
-	podf = locate(/obj/machinery/clonepod) in range(4, src)
+	var/obj/machinery/clonepod/podf = locate(/obj/machinery/clonepod) in range(4, src)
 	
 	if(!isnull(podf))
 		return podf
