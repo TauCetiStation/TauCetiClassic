@@ -3291,11 +3291,10 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4894,10 +4893,10 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
@@ -8342,10 +8341,10 @@
 /area/station/tcommsat/chamber)
 "apM" = (
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/light{
 	dir = 8
@@ -8862,10 +8861,10 @@
 "aqD" = (
 /obj/machinery/media/jukebox/bar,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
@@ -8921,10 +8920,10 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/camera{
 	c_tag = "RnD Lab";
@@ -9127,10 +9126,10 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -9209,10 +9208,10 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/device/suit_cooling_unit{
@@ -9227,10 +9226,10 @@
 "arh" = (
 /obj/machinery/disposal,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -9249,10 +9248,10 @@
 	},
 /obj/structure/table,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -9270,10 +9269,10 @@
 	icon_state = "0-4"
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
@@ -11002,10 +11001,10 @@
 "bYz" = (
 /obj/structure/closet/emcloset,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11813,7 +11812,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/requests_console/hydroponics{
-	pixel_x = -30
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -12091,11 +12090,11 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -12289,11 +12288,11 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -13427,8 +13426,9 @@
 /area/station/rnd/server)
 "eut" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/status_display{
-	pixel_y = 32
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -14925,16 +14925,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/cargo/recycler)
-"gbt" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/hydroponics)
 "gcL" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -15450,6 +15440,10 @@
 /area/station/engineering/break_room)
 "gxI" = (
 /obj/machinery/hydroponics/constructable,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19342,10 +19336,10 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -22355,10 +22349,10 @@
 /area/station/bridge/server)
 "npo" = (
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -22890,10 +22884,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -25549,10 +25543,10 @@
 	req_access = list(57)
 	},
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -20;
+	pixel_y = -4
 	},
 /obj/machinery/door_control{
 	id = "HoP_blast";
@@ -27751,10 +27745,10 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/skills,
 /obj/item/device/radio/intercom{
-	dir = 2;
+	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -65255,7 +65249,7 @@ dgs
 dEg
 gYN
 kpo
-gbt
+cQY
 gpD
 rEv
 fSO
