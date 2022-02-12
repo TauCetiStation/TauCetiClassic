@@ -1265,17 +1265,13 @@
 	},
 /area/station/cargo/storage)
 "acj" = (
-/obj/machinery/media/jukebox/bar,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+/obj/structure/stool{
+	pixel_y = 8
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
-/area/station/civilian/bar)
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "ack" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Port Solar Access";
@@ -3312,10 +3308,11 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -3609,7 +3606,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "agj" = (
 /obj/structure/table,
 /obj/item/device/t_scanner,
@@ -4100,7 +4097,7 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "ahw" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/grassybush,
@@ -4257,7 +4254,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "ahK" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
@@ -4914,12 +4911,13 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "aiH" = (
 /obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5007,12 +5005,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "aiO" = (
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "aiP" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -5071,7 +5069,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "aiX" = (
 /obj/machinery/door/airlock/glass{
 	name = "Dressing Room"
@@ -5100,20 +5098,20 @@
 	},
 /area/station/hallway/secondary/exit)
 "aja" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+/obj/machinery/camera{
+	c_tag = "Engineering Fore Starboard Solars";
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/machinery/vending/clothing,
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/locker)
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "ajb" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7316,7 +7314,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "anu" = (
 /obj/machinery/atm{
 	pixel_y = -32
@@ -7450,23 +7448,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "anL" = (
-/obj/machinery/disposal,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 5
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
 	},
-/obj/machinery/light_switch{
-	pixel_x = -2;
-	pixel_y = -29
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
 	},
+/obj/random/tools/tool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "floorgrime"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/maintenance/auxsolarstarboard)
 "anM" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -7893,16 +7891,20 @@
 	},
 /area/station/aisat/teleport)
 "aoO" = (
-/obj/structure/lamarr,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -22
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
+/obj/machinery/door/airlock/engineering{
+	name = "Fore Starboard Solar Access";
+	req_access = list(10)
 	},
-/area/station/rnd/hor)
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "aoP" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -8354,24 +8356,20 @@
 	},
 /area/station/tcommsat/chamber)
 "apM" = (
-/obj/machinery/power/solar_control{
-	dir = 4;
-	id = "portsolar";
-	name = "Aft Port Solar Control"
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/machinery/light{
+	dir = 8
 	},
-/area/station/maintenance/portsolar)
+/obj/machinery/vending/clothing,
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/locker)
 "apN" = (
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
@@ -8877,31 +8875,17 @@
 	},
 /area/station/engineering/break_room)
 "aqD" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/belt/champion,
-/obj/item/stack/sheet/mineral/gold,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
+/obj/machinery/media/jukebox/bar,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken6"
 	},
-/area/station/bridge/nuke_storage)
+/area/station/civilian/bar)
 "aqE" = (
 /obj/structure/closet/secure_closet/scientist,
 /obj/item/clothing/accessory/armband/science,
@@ -8925,23 +8909,48 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aqG" = (
-/obj/structure/rack,
-/obj/item/device/suit_cooling_unit{
-	pixel_y = -4
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/plasteel{
+	amount = 50
+	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
-/obj/item/clothing/shoes/magboots,
+/obj/machinery/camera{
+	c_tag = "RnD Lab";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkpurple"
+	dir = 4;
+	icon_state = "warndark"
 	},
-/area/station/rnd/hallway)
+/area/station/rnd/lab)
 "aqH" = (
 /obj/machinery/mineral/stacking_unit_console,
 /turf/simulated/wall/r_wall,
@@ -9116,6 +9125,33 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/eva)
+"aqZ" = (
+/obj/structure/closet/crate{
+	name = "Gold Crate"
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/weapon/storage/belt/champion,
+/obj/item/stack/sheet/mineral/gold,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/station/bridge/nuke_storage)
 "ara" = (
 /obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor/airless{
@@ -9172,6 +9208,91 @@
 /obj/machinery/floodlight,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
+"arf" = (
+/obj/structure/lamarr,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -36
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warndark"
+	},
+/area/station/rnd/hor)
+"arg" = (
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
+/obj/item/clothing/shoes/magboots,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/station/rnd/hallway)
+"arh" = (
+/obj/machinery/disposal,
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = -2;
+	pixel_y = -29
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"ari" = (
+/obj/machinery/artifact_analyser{
+	pixel_x = 3
+	},
+/obj/structure/table,
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/asteroid/research_outpost/spectro)
+"arj" = (
+/obj/machinery/power/solar_control{
+	dir = 4;
+	id = "portsolar";
+	name = "Aft Port Solar Control"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/station/maintenance/portsolar)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10296,7 +10417,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "buE" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -10406,6 +10527,11 @@
 /area/station/security/main)
 "bAg" = (
 /obj/structure/closet/emcloset,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -10890,9 +11016,10 @@
 "bYz" = (
 /obj/structure/closet/emcloset,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11360,23 +11487,12 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "cvX" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/skills,
-/obj/item/weapon/hand_tele,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22
-	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/wood,
-/area/station/bridge/captain_quarters)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "cwu" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/wood,
@@ -11989,10 +12105,11 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -12186,10 +12303,11 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -13111,7 +13229,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "eiF" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -13483,16 +13601,8 @@
 	},
 /area/station/hallway/secondary/arrival)
 "eAZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1379;
-	id_tag = "solar_chapel_pump";
-	name = "Solar Chapel Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "eBi" = (
 /obj/machinery/light_construct/small,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -14189,7 +14299,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "fmM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 8;
@@ -15052,20 +15162,22 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "goj" = (
-/obj/machinery/camera{
-	c_tag = "Engineering Fore Starboard Solars";
-	dir = 1;
-	network = list("SS13","Engineering")
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
-/obj/machinery/power/smes,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "solar_chapel_inner";
+	locked = 1;
+	name = "Engineering External Access";
+	req_access = list(13)
+	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "goJ" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/shaker{
@@ -15717,7 +15829,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "gOz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -15747,7 +15859,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "gQL" = (
 /obj/structure/closet/firecloset,
 /mob/living/simple_animal/mouse,
@@ -16024,12 +16136,26 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "hdN" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/machinery/power/solar_control{
+	id = "portsolar";
+	name = "Fore Starboard Solar Control"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "hes" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/robot,
@@ -16551,7 +16677,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "hPs" = (
 /turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
@@ -17189,7 +17315,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "ivM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -18735,22 +18861,11 @@
 /area/station/maintenance/science)
 "jUr" = (
 /obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 5
-	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/random/tools/tool,
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "jUL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -19220,9 +19335,10 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -19283,7 +19399,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "kqU" = (
 /obj/machinery/mineral/processing_unit,
 /turf/simulated/floor/airless{
@@ -19497,7 +19613,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "kGV" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -19970,16 +20086,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lfc" = (
+/obj/machinery/power/tracker,
 /obj/structure/cable{
-	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "lfk" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -22230,26 +22343,17 @@
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/server)
 "npo" = (
-/obj/machinery/power/solar_control{
-	id = "portsolar";
-	name = "Fore Starboard Solar Control"
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	dir = 8;
+	icon_state = "black"
 	},
-/area/station/maintenance/portsolar)
+/area/station/hallway/primary/central)
 "npp" = (
 /obj/machinery/camera{
 	c_tag = "Engineering South";
@@ -22359,22 +22463,16 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "nsG" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/item/device/multitool{
-	pixel_x = 3
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
-/obj/item/clothing/glasses/meson,
-/obj/machinery/alarm{
-	pixel_y = 21
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "nsO" = (
 /obj/structure/cryofeed,
 /obj/machinery/light_switch{
@@ -22773,22 +22871,24 @@
 	},
 /area/station/engineering/chiefs_office)
 "nKZ" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
+/obj/structure/table/woodentable,
+/obj/machinery/computer/skills,
+/obj/item/weapon/hand_tele,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "solar_chapel_sensor";
-	layer = 3.3;
-	pixel_x = 25;
-	pixel_y = 12
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "nLn" = (
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -24100,22 +24200,16 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "oZc" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
 	frequency = 1379;
-	id_tag = "solar_chapel_inner";
-	locked = 1;
-	name = "Engineering External Access";
-	req_access = list(13)
+	id_tag = "solar_chapel_pump";
+	name = "Solar Chapel Large Air Vent"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/station/maintenance/auxsolarstarboard)
 "oZh" = (
 /obj/random/scrap/moderate_weighted,
 /obj/effect/decal/cleanable/dirt,
@@ -25444,10 +25538,10 @@
 	req_access = list(57)
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /obj/machinery/door_control{
 	id = "HoP_blast";
@@ -25666,20 +25760,22 @@
 	},
 /area/station/maintenance/dormitory)
 "quA" = (
-/obj/machinery/artifact_analyser{
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/device/multitool{
 	pixel_x = 3
 	},
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22
+/obj/item/clothing/glasses/meson,
+/obj/machinery/alarm{
+	pixel_y = 21
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
+	icon_state = "floorgrime"
 	},
-/area/asteroid/research_outpost/spectro)
+/area/station/maintenance/auxsolarstarboard)
 "quF" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -27643,9 +27739,10 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/skills,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -32;
+	pixel_y = -5
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -28569,9 +28666,13 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "tqc" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "tqk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -29160,7 +29261,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "tSJ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -30246,13 +30347,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "uWY" = (
-/obj/structure/stool{
-	pixel_y = 8
-	},
-/obj/machinery/power/terminal,
 /obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "uXH" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor,
@@ -31862,47 +31959,12 @@
 	},
 /area/station/hallway/primary/central)
 "wEm" = (
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22
-	},
-/obj/machinery/camera{
-	c_tag = "RnD Lab";
-	dir = 4;
-	network = list("SS13","Research")
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warndark"
-	},
-/area/station/rnd/lab)
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "wGd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -32256,7 +32318,7 @@
 	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "wVp" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -32304,16 +32366,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "wYk" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
-	},
-/area/station/hallway/primary/central)
+/turf/simulated/wall/r_wall,
+/area/station/maintenance/auxsolarstarboard)
 "wYT" = (
 /obj/machinery/computer/communications{
 	dir = 4
@@ -32556,7 +32610,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxstarboard)
 "xlE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -33364,20 +33418,22 @@
 /turf/simulated/mineral/random/labormineral,
 /area/asteroid/mine/unexplored)
 "xYI" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Fore Starboard Solar Access";
-	req_access = list(10)
+/obj/machinery/airlock_sensor{
+	id_tag = "solar_chapel_sensor";
+	layer = 3.3;
+	pixel_x = 25;
+	pixel_y = 12
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/maintenance/auxsolarstarboard)
 "xYP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -54379,7 +54435,7 @@ aiP
 aig
 ajr
 aid
-aja
+apM
 ajt
 ake
 sqi
@@ -58771,11 +58827,11 @@ wuN
 iCb
 apf
 acI
-anL
+arh
 wuN
 hAq
 apI
-apM
+arj
 cXT
 cXT
 cXT
@@ -61076,7 +61132,7 @@ abA
 hqn
 acP
 acB
-aqD
+aqZ
 hqn
 gay
 aiy
@@ -61576,7 +61632,7 @@ qBf
 ain
 fJI
 bLO
-acj
+aqD
 ixg
 ixg
 fIW
@@ -66481,7 +66537,7 @@ rNw
 rNw
 ape
 anf
-quA
+ari
 rNw
 aop
 aov
@@ -66990,7 +67046,7 @@ uTN
 pjl
 xgV
 lmB
-aoO
+arf
 rNw
 mdD
 qPa
@@ -67734,7 +67790,7 @@ mdY
 bgQ
 nYR
 jrO
-wYk
+npo
 uDE
 nlU
 xCy
@@ -67747,7 +67803,7 @@ oou
 xCy
 rIv
 adk
-wYk
+npo
 iHp
 nYR
 ePx
@@ -67762,7 +67818,7 @@ bcR
 jCI
 guF
 xtS
-aqG
+arg
 amI
 qdx
 amK
@@ -68759,7 +68815,7 @@ uPP
 knh
 gZg
 acA
-cvX
+nKZ
 wYT
 rkB
 sLc
@@ -68781,7 +68837,7 @@ woA
 aqm
 afY
 alY
-wEm
+aqG
 amC
 hgt
 wHL
@@ -69769,7 +69825,7 @@ crv
 kGN
 xlx
 hPk
-oAN
+lfc
 crv
 gay
 gay
@@ -70024,9 +70080,9 @@ crv
 odS
 crv
 gay
-vin
+tqc
 gay
-jxk
+cvX
 crv
 crv
 crv
@@ -70282,8 +70338,8 @@ gay
 crv
 crv
 gQc
-tqc
-rIo
+uWY
+eAZ
 gay
 gay
 crv
@@ -70540,8 +70596,8 @@ crv
 kGN
 kqT
 hPk
-rIo
-rIo
+eAZ
+eAZ
 crv
 crv
 crv
@@ -70798,7 +70854,7 @@ kGN
 kqT
 hPk
 gay
-rIo
+eAZ
 gay
 crv
 gay
@@ -71055,10 +71111,10 @@ kGN
 kqT
 hPk
 gay
-rIo
-rIo
-rIo
-rIo
+eAZ
+eAZ
+eAZ
+eAZ
 crv
 gay
 crv
@@ -71315,25 +71371,25 @@ gay
 ehS
 gay
 crv
-rIo
-rIo
-rIo
-rIo
-rIo
-gay
-crv
-gay
-crv
-crv
-crv
-crv
-cXm
-cXm
-cXm
-cXm
-cXT
-ant
 eAZ
+eAZ
+eAZ
+eAZ
+eAZ
+gay
+crv
+gay
+crv
+crv
+crv
+crv
+cXm
+cXm
+cXm
+cXm
+wEm
+ant
+oZc
 oeZ
 oeZ
 oeZ
@@ -71576,26 +71632,26 @@ crv
 ehS
 gay
 gay
-rIo
-rIo
-rIo
-rIo
-rIo
-rIo
-rIo
-rIo
+eAZ
+eAZ
+eAZ
+eAZ
+eAZ
+eAZ
+eAZ
+eAZ
 cXm
 cXm
 nwP
 qUm
 wVf
-lfc
+nsG
 ivh
-nku
+wYk
 tSw
 aiG
 ahv
-nku
+wYk
 fYz
 oAx
 pcs
@@ -71845,14 +71901,14 @@ cXm
 cXm
 cXm
 cXm
-cXT
+wEm
 fmD
-nKZ
-oZc
+xYI
+goj
 agi
 aiO
 aiW
-nku
+wYk
 hgW
 hgW
 hgW
@@ -72102,14 +72158,14 @@ cXm
 cXm
 cXm
 skE
-nku
-nku
-nku
-nku
+wYk
+wYk
+wYk
+wYk
 ahJ
 aiN
 buo
-xYI
+aoO
 mDy
 oHo
 vuJ
@@ -72362,11 +72418,11 @@ skE
 yjd
 yjd
 yjd
-nku
-npo
-uWY
-goj
-nku
+wYk
+hdN
+acj
+aja
+wYk
 cWx
 oQw
 wNs
@@ -72619,11 +72675,11 @@ skE
 yjd
 yjd
 yjd
-nku
-nsG
-hdN
+wYk
+quA
 jUr
-nku
+anL
+wYk
 lUt
 lUt
 lUt
@@ -72876,11 +72932,11 @@ yjd
 yjd
 yjd
 yjd
-nku
-nku
-nku
-nku
-nku
+wYk
+wYk
+wYk
+wYk
+wYk
 yjd
 yjd
 yjd
