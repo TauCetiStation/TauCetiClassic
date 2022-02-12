@@ -48,26 +48,20 @@
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
-	// Loop through every direction
-	for(var/nextdir in cardinal)
-
-		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, nextdir))
-
-		// If found, then we break, and return the scanner
-		if(!isnull(scannerf))
-			break
+	// Try to find a scanner
+	scannerf = locate(/obj/machinery/dna_scannernew) in range(4, src)
+	// If found, then we break, and return the scanner
+	if(!isnull(scannerf))
+		break
 	// If no scanner was found, it will return null
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
-	for(var/newdir in cardinal)
-
-		podf = locate(/obj/machinery/clonepod, get_step(src, newdir))
-
-		if(!isnull(podf))
-			break
+	podf = locate(/obj/machinery/clonepod) in range(4, src)
+	
+	if(!isnull(podf))
+		break
 	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)

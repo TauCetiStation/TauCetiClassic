@@ -307,10 +307,9 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/scan_consolenew/atom_init_late()
-	for(var/newdir in cardinal)
-		connected = locate(/obj/machinery/dna_scannernew, get_step(src, newdir))
-		if(!isnull(connected))
-			break
+	connected = locate(/obj/machinery/dna_scannernew) in range(4, src)
+	if(!isnull(connected))
+		break
 	spawn(250)
 		injector_ready = 1
 
