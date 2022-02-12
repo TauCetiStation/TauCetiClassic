@@ -1137,6 +1137,21 @@
 	icon_state = "warnplate"
 	},
 /area/station/bridge/teleporter)
+"abW" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Aft Port Solar Control";
+	dir = 4;
+	network = list("SS13","Engineering")
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/portsolar)
 "abX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills,
@@ -1623,6 +1638,10 @@
 	pixel_y = 0
 	},
 /obj/machinery/power/smes/fullcharge,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -6893,10 +6912,23 @@
 	},
 /area/station/rnd/hallway)
 "amL" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor{
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 0
+	},
+/obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "caution"
+	pixel_x = 22
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
 	},
 /area/station/engineering/atmos)
 "amM" = (
@@ -8295,15 +8327,15 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "apI" = (
-/obj/machinery/power/terminal{
-	dir = 1
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "caution"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/portsolar)
+/area/station/engineering/atmos)
 "apJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -9229,12 +9261,6 @@
 /area/station/rnd/hallway)
 "arh" = (
 /obj/machinery/disposal,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -10198,6 +10224,11 @@
 	},
 /obj/machinery/computer/drone_control{
 	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11352,10 +11383,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cpz" = (
-/obj/structure/disposalpipe/segment{
-	desc = "Pipe for transfer more fuel.";
-	dir = 4;
-	name = "filling pipe"
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -11990,18 +12022,25 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "dal" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "blackcorner"
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -21
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "daw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -15044,21 +15083,13 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ghz" = (
-/obj/machinery/power/smes,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/engineering/atmos)
+/turf/simulated/floor/bluegrid,
+/area/station/rnd/chargebay)
 "ghQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -21847,6 +21878,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -22323,14 +22358,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
-"noy" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/space,
-/area/station/hallway/secondary/arrival)
 "noD" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/hallway)
@@ -23674,6 +23701,11 @@
 /area/station/maintenance/cargo)
 "oCK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -25750,6 +25782,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "black"
@@ -27479,13 +27516,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -21
-	},
 /obj/machinery/light_switch{
-	pixel_x = -13;
-	pixel_y = -31
+	pixel_y = -26
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -27802,6 +27834,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -29600,8 +29637,23 @@
 	},
 /area/station/tcommsat/chamber)
 "ueF" = (
-/turf/simulated/floor/bluegrid,
-/area/station/rnd/chargebay)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "blackcorner"
+	},
+/area/station/hallway/primary/central)
 "ueT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -31738,15 +31790,6 @@
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
-"wnW" = (
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/asteroid/research_outpost/outpost_misc_lab)
 "wob" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -32939,6 +32982,10 @@
 	dir = 4;
 	name = "Mech Bay APC";
 	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -58333,10 +58380,10 @@ pCF
 rsc
 ngy
 acT
-ghz
+amL
 oKp
 jcV
-amL
+apI
 afm
 uRQ
 gay
@@ -58853,7 +58900,7 @@ acI
 arh
 wuN
 hAq
-apI
+abW
 arj
 cXT
 cXT
@@ -62174,7 +62221,7 @@ nBe
 ixg
 bzg
 bzg
-mXv
+dal
 bzg
 nif
 dIJ
@@ -62657,7 +62704,7 @@ rzB
 rzB
 rzB
 rzB
-noy
+xGz
 lOj
 xGz
 ikn
@@ -66803,7 +66850,7 @@ cIU
 inL
 baR
 gQR
-dal
+ueF
 qtP
 stC
 oCK
@@ -67063,7 +67110,7 @@ jKM
 jUL
 xCy
 kIq
-ueF
+ghz
 bre
 uTN
 pjl
@@ -70932,7 +70979,7 @@ isF
 hCa
 hCa
 hCa
-wnW
+hCa
 isF
 aoT
 apg
