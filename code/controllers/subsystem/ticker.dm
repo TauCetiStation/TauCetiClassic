@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	msg_lobby = "Запускаем атомные сверхточные часы..."
+
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
@@ -111,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
-					for(var/client/C as anything in clients)
+					for(var/client/C in clients)
 						C.log_client_ingame_age_to_db()
 					world.save_last_mode(SSticker.mode.name)
 
@@ -286,6 +288,7 @@ SUBSYSTEM_DEF(ticker)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff
+		SSjob.fallback_landmark = null
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
@@ -293,6 +296,8 @@ SUBSYSTEM_DEF(ticker)
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
+
+		create_default_spawners()
 
 	return TRUE
 
@@ -536,19 +541,30 @@ SUBSYSTEM_DEF(ticker)
 
 	return TRUE
 
+/datum/controller/subsystem/ticker/proc/create_default_spawners()
+	// infinity spawners
+	create_spawner(/datum/spawner/mouse, "mouse")
+	create_spawner(/datum/spawner/drone, "drone")
+
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)
 		return
 	for(var/mob/living/M in global.player_list)
 		if(!M.client.prefs.eorg_enabled)
 			continue
-		var/mob/living/carbon/human/L = new(pick(eorgwarp))
+		spawn_gladiator(M)
+
+/datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
+	var/mob/living/carbon/human/L = new(pick(eorgwarp))
+	if(transfer_mind)
 		M.mind.transfer_to(L)
-		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		L.equipOutfit(/datum/outfit/arena)
-		L.name = L.key
-		L.real_name = L.name
-		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
+	else
+		L.key = M.key
+	L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	L.equipOutfit(/datum/outfit/arena)
+	L.name = L.key
+	L.real_name = L.name
+	to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"

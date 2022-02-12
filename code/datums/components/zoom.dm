@@ -20,9 +20,9 @@
 	zoom_view_range = _zoom_view_range
 	can_move = _can_move
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING), .proc/on_drop)
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
 	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_zoom)
-	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE), .proc/reset_zoom)
+	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
 	button = new(parent)
 
 /datum/component/zoom/Destroy()

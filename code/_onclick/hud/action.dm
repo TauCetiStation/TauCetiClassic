@@ -258,7 +258,16 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!client)
 		return FALSE
+
 	sync_lighting_plane_alpha()
+
+	if(stat == DEAD)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		set_EyesVision(null)
+		return FALSE
+
 	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var

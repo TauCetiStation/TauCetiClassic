@@ -280,7 +280,6 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
 	var/god_name = pick(summoner.my_religion.deity_names)

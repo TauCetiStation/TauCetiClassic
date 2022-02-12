@@ -79,6 +79,8 @@
 
 #define isautosay(A) (istype(A, /mob/autosay))
 
+#define isMMI(A) (istype(A, /obj/item/device/mmi))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))

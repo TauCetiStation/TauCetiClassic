@@ -635,7 +635,7 @@
 	for(var/mob/M in group)
 		if(!M.client)
 			continue
-		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(M, be_special_type))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
@@ -677,7 +677,7 @@
 	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
-	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 		return
 
 	if(isobserver(M))
@@ -708,7 +708,7 @@
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question |= IGNORE_BORER
+		M.client.prefs.ignore_question |= Ignore_Role
 		return
 
 	if(key || mind || stat != CONSCIOUS)

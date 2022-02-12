@@ -247,6 +247,9 @@
 						if(3)
 							emote("drool")
 
+			if(19 to 200)
+				return
+
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
 	if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.
@@ -1347,7 +1350,10 @@
 			if (species.flags[IS_SYNTHETIC])
 				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-				get_nutrition_max = I.maxcharge
+				if (I)
+					get_nutrition_max = I.maxcharge
+				else
+					get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 			else
 				get_nutrition_max = NUTRITION_LEVEL_FAT
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
@@ -1427,6 +1433,7 @@
 /mob/living/carbon/human/update_sight()
 	if(!..())
 		return FALSE
+
 	if(daltonism)
 		set_EyesVision(sightglassesmod)
 		return FALSE
@@ -1487,7 +1494,7 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
@@ -1495,7 +1502,7 @@
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						if(V.spreadtype == "Contact")
+						if(V.spreadtype == DISEASE_SPREAD_CONTACT)
 							infect_virus2(src,V.getcopy())
 
 
