@@ -306,7 +306,7 @@ var/global/list/icon_state_allowed_cache = list()
 		user.drop_from_inventory(A, src)
 		LAZYADD(accessories, A)
 		A.on_attached(src, user)
-		A.has_suit.update_inv_mob()
+		update_inv_mob()
 		action_button_name = "Use inventory."
 		return
 	else
