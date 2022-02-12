@@ -20,7 +20,7 @@
 
 	// Which slot should we use on species.sprite_sheets, as for the species specified above.
 	var/sprite_sheet_slot
-	var/list/accessories = list()
+	var/list/accessories
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
@@ -247,7 +247,7 @@ var/global/list/icon_state_allowed_cache = list()
 		return
 	if(!Adjacent(usr))
 		return
-	if(!accessories.len)
+	if(!accessories)
 		return
 
 	if(!usr.IsAdvancedToolUser())
@@ -255,7 +255,7 @@ var/global/list/icon_state_allowed_cache = list()
 		return
 
 	var/obj/item/clothing/accessory/A
-	if(accessories.len > 1)
+	if(length(accessories) > 1)
 		A = input("Select an accessory to remove from [src]") as null|anything in accessories
 	else
 		A = accessories[1]
@@ -271,7 +271,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if(!Adjacent(user))
 		return
 	A.on_removed(user)
-	accessories -= A
+	LAZYREMOVE(accessories, A)
 	A.update_icon()
 	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
 	if(!ishuman(loc))
@@ -293,12 +293,14 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/attack_hand(mob/user)
 	if(slot_equipped)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_hand(user)
-		return
-
+		if(!accessories)
+			..()
+			return
+		else
+			for(var/obj/item/clothing/accessory/A in accessories)
+				A.attack_hand(user)
+			return
 	..()
-
 
 /obj/item/clothing/examine(mob/user)
 	..()
@@ -308,7 +310,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
 	if(can_attach_accessory(A))
 		user.drop_from_inventory(A, src)
-		accessories += A
+		LAZYADD(accessories, A)
 		A.on_attached(src, user)
 		A.has_suit.update_inv_mob()
 		action_button_name = "Use inventory."
@@ -658,7 +660,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attack_hand(mob/user)
 	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
-		if(accessories.len && loc == user)
+		if(accessories && loc == user)
 			for(var/obj/item/clothing/accessory/A in accessories)
 				A.attack_hand(user)
 		return

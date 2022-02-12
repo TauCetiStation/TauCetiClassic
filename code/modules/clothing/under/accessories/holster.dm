@@ -82,7 +82,7 @@
 	var/obj/item/clothing/accessory/holster/H = locate() in src
 	if(!H && istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/S = w_uniform
-		if(S.accessories.len)
+		if(S.accessories)
 			H = locate() in S.accessories
 	return H
 

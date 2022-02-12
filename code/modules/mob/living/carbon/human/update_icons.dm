@@ -475,7 +475,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 
-		if(U.accessories.len)
+		if(U.accessories)
 			for(var/obj/item/clothing/accessory/A in w_uniform:accessories)
 				var/tie_color = A.item_color
 				if(!tie_color)
