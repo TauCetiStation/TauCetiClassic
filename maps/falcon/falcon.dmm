@@ -749,11 +749,6 @@
 /obj/machinery/requests_console/engineering{
 	pixel_y = 30
 	},
-/obj/item/device/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 22
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -829,17 +824,13 @@
 /area/station/cargo/storage)
 "abt" = (
 /obj/random/tools/tech_supply,
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/structure/disposaloutlet{
+	dir = 1
 	},
-/obj/structure/sign/warning/moving_parts{
-	pixel_x = -32
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
+/turf/simulated/wall,
 /area/station/cargo/storage)
 "abu" = (
 /obj/machinery/teleport/hub,
@@ -1145,17 +1136,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/bridge/teleporter)
-"abW" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/structure/disposaloutlet{
-	dir = 4;
-	throw_range = 1;
-	throw_speed = 1
-	},
-/turf/simulated/wall,
-/area/station/cargo/storage)
 "abX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills,
@@ -1183,8 +1163,8 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 22
+	pixel_x = -6;
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5128,6 +5108,9 @@
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "aje" = (
@@ -7304,13 +7287,12 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = -30
 	},
+/obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
 	frequency = 1379;
 	id_tag = "solar_chapel_pump";
 	name = "Solar Chapel Large Air Vent"
 	},
-/obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -9221,9 +9203,6 @@
 /area/station/rnd/hor)
 "arg" = (
 /obj/structure/rack,
-/obj/item/device/suit_cooling_unit{
-	pixel_y = -4
-	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
 /obj/item/device/radio/intercom{
@@ -9233,6 +9212,10 @@
 	pixel_y = -5
 	},
 /obj/item/clothing/shoes/magboots,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -10450,7 +10433,7 @@
 /area/station/civilian/kitchen)
 "bwm" = (
 /obj/machinery/atm{
-	pixel_x = -30
+	pixel_x = -32
 	},
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -13487,6 +13470,9 @@
 	id = "packageSort2"
 	},
 /obj/machinery/recycler,
+/obj/structure/sign/warning/moving_parts{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -13561,6 +13547,16 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -14235,6 +14231,9 @@
 	},
 /area/station/bridge)
 "fge" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -14281,9 +14280,6 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "fmD" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "solar_chapel_airlock";
 	pixel_x = 25;
@@ -14297,6 +14293,11 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "solar_chapel_pump";
+	name = "Solar Chapel Large Air Vent"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
@@ -14594,6 +14595,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 25
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -17311,9 +17313,7 @@
 	},
 /area/station/hallway/primary/central)
 "ivh" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "ivM" = (
@@ -17390,6 +17390,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "packageSort2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -21932,7 +21935,7 @@
 "nbE" = (
 /obj/machinery/vending/eva,
 /obj/machinery/atm{
-	pixel_x = -30
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -22094,6 +22097,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -22468,8 +22474,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "solar_chapel_pump";
+	name = "Solar Chapel Large Air Vent"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
@@ -22955,6 +22963,7 @@
 "nPD" = (
 /obj/structure/rack,
 /obj/item/device/suit_cooling_unit{
+	layer = 2.9;
 	pixel_y = -4
 	},
 /obj/item/clothing/shoes/magboots,
@@ -24200,11 +24209,8 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "oZc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1379;
-	id_tag = "solar_chapel_pump";
-	name = "Solar Chapel Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -26131,6 +26137,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	dir = 8;
+	layer = 3.3;
 	name = "Engineering Monitor";
 	network = list("Engineering");
 	pixel_x = 30
@@ -28239,7 +28246,7 @@
 	dir = 4
 	},
 /obj/machinery/atm{
-	pixel_x = -30
+	pixel_x = -32
 	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -30160,18 +30167,13 @@
 	},
 /area/asteroid/mine/dwarf)
 "uND" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "packageSort2"
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
-/area/station/cargo/storage)
+/turf/simulated/floor/plating,
+/area/station/engineering/break_room)
 "uNP" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -30853,6 +30855,15 @@
 	name = "Chapel Office";
 	req_access = list(22)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "vzv" = (
@@ -31323,14 +31334,15 @@
 /area/station/rnd/hor)
 "waf" = (
 /obj/structure/rack,
-/obj/item/device/suit_cooling_unit{
-	pixel_y = -4
-	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/clothing/suit/space/rig/medical,
 /obj/item/clothing/head/helmet/space/rig/medical,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -31368,6 +31380,11 @@
 	dir = 8;
 	icon_state = "pipe-c";
 	layer = 1.9
+	},
+/obj/item/device/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = 22
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -31659,6 +31676,9 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -33364,9 +33384,6 @@
 	},
 /area/station/cargo/storage)
 "xST" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "packageSort2"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -50848,7 +50865,7 @@ vrL
 vrL
 vrL
 gay
-crv
+gay
 gay
 crv
 azF
@@ -53680,7 +53697,7 @@ amF
 akb
 crv
 gay
-rxt
+gay
 crv
 qws
 qws
@@ -60359,9 +60376,9 @@ clJ
 tBU
 lZW
 mGO
-mGO
-mGO
-mGO
+uND
+uND
+uND
 mGO
 gay
 agW
@@ -62418,7 +62435,7 @@ xCy
 rOl
 rOl
 sFn
-abW
+sFn
 sFn
 sFn
 tJe
@@ -62675,7 +62692,7 @@ lmc
 foZ
 vtk
 sFn
-uND
+nHd
 abt
 aqF
 sdX
