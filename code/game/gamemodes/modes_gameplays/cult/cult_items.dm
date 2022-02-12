@@ -109,7 +109,7 @@
 	slowdown = 1
 	armor = list(melee = 50, bullet = 45, laser = 60,energy = 50, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
