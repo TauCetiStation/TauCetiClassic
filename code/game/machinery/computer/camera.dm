@@ -227,10 +227,10 @@
 
 	return camera_cache
 
-/obj/machinery/computer/security/tgui_data()
+/obj/machinery/computer/security/tgui_data(mob/user)
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
+	data["mapStyle"] = winget(user.client, "mapwindow.map", "style")
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
@@ -238,7 +238,7 @@
 		)
 	return data
 
-/obj/machinery/computer/security/tgui_static_data()
+/obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = map_name
 	var/list/cameras = get_cached_cameras()

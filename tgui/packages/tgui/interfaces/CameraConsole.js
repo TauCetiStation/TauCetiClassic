@@ -42,7 +42,7 @@ export const selectCameras = (cameras, searchText = '') => {
 
 export const CameraConsole = (props, context) => {
   const { act, data } = useBackend(context);
-  const { mapRef, activeCamera } = data;
+  const { mapRef, mapStyle, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
   const [
     prevCameraName,
@@ -83,6 +83,7 @@ export const CameraConsole = (props, context) => {
           params={{
             id: mapRef,
             type: 'map',
+            style: mapStyle,
           }} />
       </div>
     </Window>
@@ -115,8 +116,8 @@ export const CameraConsoleContent = (props, context) => {
           fill
           scrollable>
           {cameras.map(camera => (
-          // We're not using the component here because performance
-          // would be absolutely abysmal (50+ ms for each re-render).
+            // We're not using the component here because performance
+            // would be absolutely abysmal (50+ ms for each re-render).
             <div
               key={camera.name}
               title={camera.name}
