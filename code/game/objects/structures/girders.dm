@@ -183,23 +183,18 @@
 
 /obj/structure/girder/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(30))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-			return
-		if(3.0)
-			if (prob(5))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-			return
-		else
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(70))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+	new remains(loc)
+	qdel(src)
 
 /obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.environment_smash)

@@ -98,6 +98,7 @@
 	throwforce = 2
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
+	can_hold = list(/obj/item/candle)
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
@@ -182,7 +183,7 @@
 					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
 					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/living/A in viewers(3, loc))
-						A.confused += 10
+						A.AdjustConfused(10)
 						A.make_jittery(150)
 					break
 			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.

@@ -80,7 +80,7 @@
 	return
 
 /obj/item/attack_self_tk(mob/living/user)
-	if(!can_tk(level=TK_LEVEL_TWO))
+	if(!user.can_tk(level=TK_LEVEL_TWO))
 		return
 	attack_self(user)
 
@@ -93,7 +93,7 @@
 	return
 
 /obj/item/afterattack_tk(mob/living/user, atom/target, params)
-	if(!can_tk(level=TK_LEVEL_TWO))
+	if(!user.can_tk(level=TK_LEVEL_TWO))
 		return
 
 	// TG calls this a "melee attack chain"
@@ -149,7 +149,7 @@
 	if((slot == SLOT_L_HAND) || (slot == SLOT_R_HAND))
 		return
 
-	if(!can_tk(level=TK_LEVEL_THREE))
+	if(!user.can_tk(level=TK_LEVEL_THREE))
 		return
 
 	if(!focus.Adjacent(user))

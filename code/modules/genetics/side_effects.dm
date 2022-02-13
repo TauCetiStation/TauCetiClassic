@@ -74,7 +74,7 @@
 	H.emote("me", 1, "has drool running down from his mouth.")
 
 /datum/genetics/side_effect/confuse/finish(mob/living/carbon/human/H)
-	H.confused += 100
+	H.AdjustConfused(100)
 
 /datum/genetics/side_effect/bald_madness
 	name = "Bald madness"
