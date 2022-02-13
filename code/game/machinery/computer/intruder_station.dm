@@ -87,6 +87,23 @@
 		console.tools -= src
 		qdel(src)
 
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"[name] for [cost] TC."}
+			else
+				S.uplink_items_bought += {"[name] for [cost] TC."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = name
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
 
 /datum/intruder_tools/war_device
 	name = "War Device"
