@@ -628,30 +628,29 @@
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
 	else if (istype(O, /obj/item/device/plant_analyzer))
+		var/msg
+
 		if(planted && myseed)
-			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
-			to_chat(user, "-Plant Age: <span class='notice'>[age]</span>")
-			to_chat(user, "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>")
-			to_chat(user, "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>")
+			msg = "*** <B>[myseed.plantname]</B> ***<br>" //Carn: now reports the plants growing, not the seeds.
+			msg += "-Plant Age: <span class='notice'>[age]</span><br>"
+			msg += "-Plant Endurance: <span class='notice'>[myseed.endurance]</span><br>"
+			msg += "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span><br>"
 			if(myseed.yield != -1)
-				to_chat(user, "-Plant Yield: <span class='notice'>[myseed.yield]</span>")
-			to_chat(user, "-Plant Production: <span class='notice'>[myseed.production]</span>")
+				msg += "-Plant Yield: <span class='notice'>[myseed.yield]</span><br>"
+			msg += "-Plant Production: <span class='notice'>[myseed.production]</span><br>"
 			if(myseed.potency != -1)
-				to_chat(user, "-Plant Potency: <span class='notice'>[myseed.potency]</span>")
-			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
-			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
-			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
-			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/[maxwater]</span>")
-			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span>")
-			to_chat(user, "")
+				msg += "-Plant Potency: <span class='notice'>[myseed.potency]</span><br>"
 		else
-			to_chat(user, "<B>No plant found.</B>")
-			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
-			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
-			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
-			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/[maxwater]</span>")
-			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span>")
-			to_chat(user, "")
+			msg = "<B>No plant found.</B><br>"
+
+		msg += "-Weed level: <span class='notice'>[weedlevel]/10</span><br>"
+		msg += "-Pest level: <span class='notice'>[pestlevel]/10</span><br>"
+		msg += "-Toxicity level: <span class='notice'>[toxic]/100</span><br>"
+		msg += "-Water level: <span class='notice'>[waterlevel]/[maxwater]</span><br>"
+		msg += "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span><br>"
+		msg += "<br>"
+
+		to_chat(user, msg)
 
 	else if (istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
@@ -763,19 +762,20 @@
 		qdel(myseed)
 		update_icon()
 	else
+		var/msg
 		if(planted && !dead)
-			to_chat(user, "[src] has <span class='info'>[myseed.plantname]</span> planted.")
+			msg = "[src] has <span class='info'>[myseed.plantname]</span> planted.<br>"
 			if(health <= (myseed.endurance / 2))
-				to_chat(user, "The plant looks unhealthy.")
+				msg += "The plant looks unhealthy.<br>"
 		else
-			to_chat(user, "[src] is empty.")
-		to_chat(user, "Water: [waterlevel]/[maxwater]")
-		to_chat(user, "Nutrient: [nutrilevel]/[maxnutri]")
+			msg = "[src] is empty.<br>"
+		msg += "Water: [waterlevel]/[maxwater]<br>"
+		msg += "Nutrient: [nutrilevel]/[maxnutri]<br>"
 		if(weedlevel >= 5) // Visual aid for those blind
-			to_chat(user, "[src] is filled with weeds!")
+			msg += "[src] is filled with weeds!<br>"
 		if(pestlevel >= 5) // Visual aid for those blind
-			to_chat(user, "[src] is filled with tiny worms!")
-		to_chat(user, "")// Empty line for readability.
+			msg += "[src] is filled with tiny worms!<br>"
+		to_chat(user, msg)
 
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc

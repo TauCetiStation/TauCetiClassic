@@ -61,21 +61,17 @@
 
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(50))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	new /obj/effect/effect/water(src.loc)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/blob_act()
 	if(prob(50))

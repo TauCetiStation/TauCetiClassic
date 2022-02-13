@@ -27,8 +27,7 @@
 	for(var/name in religion.aspects)
 		var/datum/aspect/asp = religion.aspects[name]
 		if(asp.god_desc)
-			to_chat(user, "<font color='[asp.color]'>[name]</font>:")
-			to_chat(user, "\t[asp.god_desc]")
+			to_chat(user, "<font color='[asp.color]'>[name]</font>:<br>\t[asp.god_desc]")
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!user.mind.holy_role || !user.my_religion)

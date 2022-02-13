@@ -1070,7 +1070,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	for(var/mob/M in player_list)
 		if((isanyantag(M)) || (M.client && M.client.holder))
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(M, "<span class='antagooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 

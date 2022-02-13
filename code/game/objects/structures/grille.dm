@@ -21,11 +21,11 @@
 
 /obj/structure/grille/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			health -= rand(30, 50)
-		if(2)
+		if(EXPLODE_HEAVY)
 			health -= rand(15, 30)
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= rand(5, 15)
 	healthcheck()
 	return

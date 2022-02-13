@@ -5,10 +5,10 @@
  */
 
 import { selectBackend } from './backend';
-import { selectDebug } from './debug';
+import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces', false, /\.js$/);
+const requireInterface = require.context('./interfaces');
 
 const routingError = (type, name) => () => {
   return (
@@ -33,7 +33,8 @@ const SuspendedWindow = () => {
   );
 };
 
-export const getRoutedComponent = state => {
+export const getRoutedComponent = store => {
+  const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;
@@ -42,19 +43,31 @@ export const getRoutedComponent = state => {
     const debug = selectDebug(state);
     // Show a kitchen sink
     if (debug.kitchenSink) {
-      return require('./debug/KitchenSink').KitchenSink;
+      return require('./debug').KitchenSink;
     }
   }
   const name = config?.interface;
+  const interfacePathBuilders = [
+    name => `./${name}.tsx`,
+    name => `./${name}.js`,
+    name => `./${name}/index.tsx`,
+    name => `./${name}/index.js`,
+  ];
   let esModule;
-  try {
-    esModule = requireInterface(`./${name}.js`);
-  }
-  catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-      return routingError('notFound', name);
+  while (!esModule && interfacePathBuilders.length > 0) {
+    const interfacePathBuilder = interfacePathBuilders.shift();
+    const interfacePath = interfacePathBuilder(name);
+    try {
+      esModule = requireInterface(interfacePath);
     }
-    throw err;
+    catch (err) {
+      if (err.code !== 'MODULE_NOT_FOUND') {
+        throw err;
+      }
+    }
+  }
+  if (!esModule) {
+    return routingError('notFound', name);
   }
   const Component = esModule[name];
   if (!Component) {

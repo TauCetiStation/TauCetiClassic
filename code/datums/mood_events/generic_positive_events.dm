@@ -31,3 +31,15 @@
 
 /datum/mood_event/deep_conversation/add_effects(_speaker)
 	description = "<span class='bold nicegreen'>I just had the deepest conversation of my life with [_speaker]. Lots to ponder about...</span>"
+
+/datum/mood_event/drunk
+	mood_change = 1
+	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>\n"
+
+/datum/mood_event/very_drunk
+	mood_change = 3
+	description = "<span class='nicegreen'>I *hicc* do not feel my hands, what regrets?</span>\n"
+
+/datum/mood_event/drunk_catharsis
+	mood_change = 10
+	description = "<span class='bold nicegreen'>Whatever happens - happens. I do not care any longer. Void, consume me.</span>\n"

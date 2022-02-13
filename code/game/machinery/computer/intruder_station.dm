@@ -115,7 +115,7 @@
 
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
+	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be instruments. Caution. You'll have to buy spacesuit's in addition."
 	delete_dat_after_buying = TRUE
 	cost = 30
 
@@ -155,19 +155,19 @@
 	name = "Exosuit Drop System"
 	desc = "A module for exosuit, that allow you launching at Long distances"
 	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
-	cost = 15
+	cost = 10
 
 /datum/intruder_tools/droppod
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 14
+	cost = 7
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"
 	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
 	item =  /obj/item/weapon/simple_drop_system
-	cost = 8
+	cost = 6
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
@@ -192,7 +192,7 @@
 	name = "Syndi Assault Armor"
 	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
 	item = /obj/item/weapon/storage/box/syndie_kit/armor
-	cost = 4
+	cost = 5
 
 /datum/intruder_tools/hazmat
 	name = "Experimental Chemical Warfare Kit"
