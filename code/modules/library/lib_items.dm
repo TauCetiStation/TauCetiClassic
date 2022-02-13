@@ -309,9 +309,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR!"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	var/msg = " - Mode [mode] : [modedesc]"
 	if(src.computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		msg += "<br><font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		msg += "<br><font color=red>No associated computer found. Only local scans will function properly.</font>"
+	to_chat(user, "[msg]<br>")

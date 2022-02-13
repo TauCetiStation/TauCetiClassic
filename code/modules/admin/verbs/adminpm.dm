@@ -3,7 +3,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!check_rights(R_ADMIN))
-		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM-Context: Only administrators may use this command.</span>")
 		return
 	if( !ismob(M) || !M.client )	return
 	cmd_admin_pm(M.client,null)
@@ -14,7 +14,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!check_rights(R_ADMIN))
-		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM-Panel: Only administrators may use this command.</span>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -34,14 +34,14 @@
 
 /client/proc/cmd_ahelp_reply(whom, reply_type)
 	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>")
 		return
 	var/client/C
 	if(istype(whom, /client))
 		C = whom
 	if(!C)
 		if(holder)
-			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
+			to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: Client not found.</span>")
 		return
 	if(src in mentors)
 		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
@@ -56,7 +56,7 @@
 		cmd_admin_pm(whom, msg)
 	else
 		if(!holder && mob.mind && mob.mind.special_role && !(src in mentors))
-			to_chat(src, "<font color='red'>You cannot ask mentors for help while being antag. File a ticket instead if you wish question this to admins.</font>")
+			to_chat_admin_pm(src, "<span class='warning'>You cannot ask mentors for help while being antag. File a ticket instead if you wish question this to admins.</span>")
 			return
 		cmd_mentor_pm(whom, msg)
 
@@ -65,13 +65,13 @@
 
 /client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Private-Message: You are unable to use PM-s (muted).</span>")
 		return
 
 	if(!holder && !current_ticket)	//no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
-		to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
+		to_chat_admin_pm(src, "<span class='warning'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</span>")
 		if(msg)
-			to_chat(src, "<font color='blue'>Message: [msg]</font>")
+			to_chat_admin_pm(src, "<span class='notice'>Message: [msg]</span>")
 		return
 
 	var/client/recipient
@@ -80,9 +80,9 @@
 
 	if(!recipient)
 		if(holder)
-			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
+			to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: Client not found.</span>")
 			if(msg)
-				to_chat(src, "Returned message: [msg]") // this just returns original msg back, so you can copy and paste again or whatever.
+				to_chat_admin_pm(src, "Returned message: [msg]") // this just returns original msg back, so you can copy and paste again or whatever.
 			return
 		else if(msg) // you want to continue if there's no message instead of returning now
 			current_ticket.MessageNoRecipient(msg)
@@ -95,13 +95,13 @@
 			return
 
 		if(prefs.muted & MUTE_ADMINHELP) // maybe client were muted while typing input.
-			to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
+			to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>")
 			return
 
 		if(!recipient)
 			if(holder)
-				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-				to_chat(src, "Returned message: [msg]")
+				to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: Client not found.</span>")
+				to_chat_admin_pm(src, "Returned message: [msg]")
 			else
 				current_ticket.MessageNoRecipient(msg)
 			return
@@ -111,8 +111,9 @@
 
 	if(recipient.holder)
 		if(holder)	//both are admins
-			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
-			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
+			to_chat_admin_pm(recipient, "<span class='warning'>Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
+
+			to_chat_admin_pm(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
 
 			//omg this is dumb, just fill in both their tickets
 			var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [msg]</font>"
@@ -122,14 +123,17 @@
 
 		else		//recipient is an admin but sender is not
 			if(!current_ticket)
-				to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
-				to_chat(src, "<font color='blue'>Message: [msg]</font>")
+				to_chat_admin_pm(src, "<span class='warning'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</span>")
+				
+				to_chat_admin_pm(src, "<span class='notice'>Message: [msg]</span>")
 				return
 			else
-				var/replymsg = "<font color='red'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>"
-				admin_ticket_log(src, replymsg)
-				to_chat(recipient, replymsg)
-				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
+				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span>"
+
+				to_chat_admin_pm(recipient, "<span class='warning'>[replymsg]</span>")
+				to_chat_admin_pm(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>")
+
+				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
 		recipient.mob.playsound_local(null, recipient.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
@@ -139,10 +143,11 @@
 			if(!recipient.current_ticket)
 				new /datum/admin_help(msg, recipient, TRUE)
 
-			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
-			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></font>")
-			to_chat(recipient, "<font color='red'><i>Нажмите на имя администратора для ответа.</i></font>")
-			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
+			var/recipmsg = "<span class='warning' size='4'><b>-- Administrator private message --</b></span><br>" + \
+				"<span class='warning'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></span><br>" + \
+				"<span class='warning'><i>Нажмите на имя администратора для ответа.</i></span>"
+			to_chat_admin_pm(recipient, recipmsg)
+			to_chat_admin_pm(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
 
 			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")
 
@@ -150,7 +155,7 @@
 			recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 		else		//neither are admins
-			to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
+			to_chat_admin_pm(src, "<span class='notice'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>")
 			return
 
 	world.send2bridge(
@@ -164,4 +169,4 @@
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in global.admins)
 		if(X.key != key && X.key != recipient.key) //check client/X is an admin and isn't the sender or recipient
-			to_chat(X, "<font color='blue'><B>PM: [key_name(src, 1, 0)]-&gt;[key_name(recipient, 1, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>" )
+			to_chat_admin_pm(X, "<span class='notice'><B>PM: [key_name(src, 1, 0)]-&gt;[key_name(recipient, 1, 0)]:</B> <span class='emojify linkify'>[msg]</span></span>")

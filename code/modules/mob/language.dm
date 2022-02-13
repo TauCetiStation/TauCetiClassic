@@ -109,7 +109,7 @@
 	colour = "skrell"
 	key = list("k", "л")
 	allowed_species = list(IPC)
-	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
+	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
 
 /datum/language/vox
 	name = "Vox-pidgin"
