@@ -639,7 +639,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/curtain/medical,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -5507,16 +5506,16 @@
 	},
 /area/station/maintenance/science)
 "ajM" = (
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -21
-	},
 /obj/structure/table/reinforced,
 /obj/item/device/radio/off{
 	pixel_x = -6;
 	pixel_y = 4
 	},
 /obj/item/weapon/crowbar,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -7729,9 +7728,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aos" = (
-/obj/structure/closet/toolcloset,
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/station/rnd/hallway)
 "aot" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
@@ -7816,12 +7820,12 @@
 	},
 /area/station/rnd/telesci)
 "aoD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/scrap_lump,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
 	},
-/area/station/maintenance/science)
+/area/station/rnd/hallway)
 "aoE" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -7884,6 +7888,13 @@
 /turf/simulated/wall,
 /area/station/rnd/hallway)
 "aoL" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "wood_stairs"
 	},
@@ -8835,7 +8846,8 @@
 "aqy" = (
 /obj/skeleton,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/rnd/lab)
 "aqz" = (
@@ -8906,11 +8918,20 @@
 	},
 /area/station/civilian/bar)
 "aqE" = (
-/obj/structure/closet/secure_closet/scientist,
-/obj/item/clothing/accessory/armband/science,
-/obj/item/clothing/accessory/armband/science,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Misc Research APC";
+	pixel_x = 25
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 4;
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
@@ -8925,6 +8946,7 @@
 	dir = 8;
 	pixel_x = -32
 	},
+/obj/random/tools/tech_supply,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aqG" = (
@@ -9308,6 +9330,18 @@
 	icon_state = "platebot"
 	},
 /area/station/maintenance/portsolar)
+"ark" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
+"arl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/toolcloset,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/science)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -9397,7 +9431,7 @@
 	},
 /area/station/maintenance/science)
 "axd" = (
-/obj/structure/closet/emcloset,
+/obj/structure/bookcase/manuals/security,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -9785,11 +9819,19 @@
 /turf/simulated/mineral/random/high_chance,
 /area/asteroid/mine/unexplored/safe)
 "aPE" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "packageSort2"
 	},
-/area/station/maintenance/medbay)
+/obj/machinery/scrap/stacking_machine,
+/obj/structure/sign/warning/moving_parts{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/storage)
 "aRt" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -10077,7 +10119,7 @@
 "bcR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor{
-	dir = 9;
+	dir = 8;
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
@@ -10478,11 +10520,9 @@
 	},
 /area/station/hallway/secondary/arrival)
 "bwK" = (
-/obj/structure/closet/firecloset,
-/obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "warndark"
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "bxn" = (
@@ -10926,7 +10966,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "warndark"
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "bRG" = (
@@ -10961,8 +11001,6 @@
 /area/station/bridge/server)
 "bUn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/tools/tech_supply,
-/obj/structure/closet/crate,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bUG" = (
@@ -13512,18 +13550,12 @@
 	},
 /area/station/civilian/cold_room)
 "evf" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "packageSort2"
+/obj/machinery/vending/coffee,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
 	},
-/obj/machinery/recycler,
-/obj/structure/sign/warning/moving_parts{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
-/area/station/cargo/storage)
+/area/station/rnd/hallway)
 "evt" = (
 /obj/item/weapon/kitchen/utensil/spoon,
 /obj/item/weapon/kitchen/utensil/fork{
@@ -13652,16 +13684,13 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "eBO" = (
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "packageSort2"
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
 	},
-/obj/machinery/scrap/stacking_machine,
 /turf/simulated/floor/plating{
-	dir = 6;
-	icon_state = "warnplate"
+	icon_state = "panelscorched"
 	},
-/area/station/cargo/storage)
+/area/station/maintenance/medbay)
 "eBW" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
@@ -14409,10 +14438,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "fqD" = (
-/obj/random/scrap/moderate_weighted,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/shard,
-/turf/simulated/floor/plating,
+/turf/simulated/wall,
 /area/station/maintenance/medbay)
 "frG" = (
 /obj/effect/landmark/start{
@@ -14715,15 +14742,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "fJZ" = (
-/obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "fLl" = (
 /obj/machinery/alarm{
@@ -14940,8 +14960,7 @@
 	},
 /area/station/bridge/captain_quarters)
 "fYz" = (
-/obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/machinery/vending/sustenance,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15233,12 +15252,13 @@
 /area/asteroid/mine/unexplored/safe)
 "gpc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/sustenance,
 /obj/machinery/camera{
 	c_tag = "Security Prison Rec Room";
 	dir = 1;
 	network = list("SS13","Prison")
 	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/brown,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15344,25 +15364,15 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "gup" = (
-/obj/machinery/power/apc{
+/obj/machinery/conveyor{
 	dir = 4;
-	name = "Misc Research APC";
-	pixel_x = 25
+	id = "packageSort2"
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/recycler,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/obj/machinery/camera{
-	c_tag = "RnD North";
-	dir = 8;
-	network = list("SS13","Research")
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurple"
-	},
-/area/station/rnd/hallway)
+/area/station/cargo/storage)
 "gut" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
@@ -15378,11 +15388,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/device/radio/intercom{
-	dir = 1;
-	name = "Station Intercom (General)";
-	pixel_y = -22
-	},
 /obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -15727,11 +15732,10 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "gKV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "RnD North";
+	dir = 8;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -15842,12 +15846,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/camera{
-	c_tag = "Chapel";
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "wood_stairs"
@@ -16432,18 +16435,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "hxF" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/structure/closet/firecloset,
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 9;
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "hyT" = (
@@ -16531,13 +16529,6 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hCQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
-	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -18532,6 +18523,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Captain's Desk Door";
+	pixel_y = -4;
 	req_access = list(20)
 	},
 /turf/simulated/floor/wood,
@@ -18710,7 +18702,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "jOO" = (
-/obj/structure/plasticflaps/mining,
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Mass Driver";
+	req_access = list(22)
+	},
+/obj/machinery/door/window{
+	name = "Mass Driver";
+	req_access = list(22)
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -19363,10 +19363,6 @@
 /turf/simulated/wall,
 /area/station/civilian/hydroponics)
 "kpq" = (
-/obj/structure/dryer{
-	dir = 4;
-	pixel_x = -6
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -19376,8 +19372,14 @@
 	pixel_x = -22;
 	pixel_y = 0
 	},
+/obj/structure/closet/secure_closet/scientist,
+/obj/item/clothing/accessory/armband/science,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "kqP" = (
@@ -20446,11 +20448,10 @@
 	},
 /area/station/medical/storage)
 "lyH" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 5;
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "lyW" = (
@@ -21811,18 +21812,14 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mUe" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/washing_machine,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkpurple"
+	icon_state = "wooden-2"
 	},
-/area/station/rnd/hallway)
+/area/station/civilian/locker)
 "mUC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -22097,13 +22094,15 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -30
-	},
 /obj/machinery/camera{
 	c_tag = "Security Checkpoint";
 	dir = 1;
 	network = list("SS13","Security")
+	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	name = "Station Intercom (General)";
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -22763,8 +22762,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/station/rnd/hallway)
 "nFT" = (
@@ -22842,8 +22840,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
 "nJZ" = (
@@ -23667,6 +23665,7 @@
 "oAx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/weapon/storage/fancy/donut_box,
 /obj/item/weapon/kitchen/rollingpin{
 	force = 1
 	},
@@ -25022,8 +25021,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "Chapel";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -25075,6 +25075,10 @@
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25729,6 +25733,8 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = 22
 	},
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -26974,7 +26980,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/stool,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -28799,16 +28804,15 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "tsN" = (
-/obj/structure/closet/l3closet/scientist,
-/obj/machinery/camera{
-	c_tag = "RnD Access";
-	network = list("SS13","Research")
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warndark"
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
-/area/station/rnd/hallway)
+/area/station/civilian/chapel)
 "tud" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -29281,8 +29285,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/station/rnd/hallway)
 "tRp" = (
@@ -29525,7 +29528,7 @@
 /obj/item/device/healthanalyzer,
 /obj/item/device/healthanalyzer,
 /obj/machinery/requests_console/science{
-	pixel_x = 30
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -32235,22 +32238,20 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "wMu" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access = list(47)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hallway)
+/turf/simulated/floor/plating,
+/area/station/rnd/lab)
 "wMX" = (
 /obj/machinery/computer/cargo/request{
 	dir = 4
@@ -32477,6 +32478,9 @@
 /area/station/hallway/primary/central)
 "xbn" = (
 /obj/structure/closet/secure_closet/security,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -50420,11 +50424,11 @@ wWW
 adZ
 wWW
 wWW
-wWW
-wWW
-wWW
-wWW
-uao
+vlu
+vlu
+vlu
+vlu
+vlu
 crv
 qws
 gay
@@ -53976,7 +53980,7 @@ bOJ
 sWc
 vzT
 aiI
-aiI
+tsN
 fJZ
 ajk
 aoL
@@ -54232,13 +54236,13 @@ uao
 cJm
 fTo
 ftP
-gay
 aiI
 vmg
 oVl
 aRA
-aiI
-aiI
+rTG
+eBO
+rTG
 aiI
 aiI
 qcu
@@ -54494,10 +54498,10 @@ rTG
 rTG
 rTG
 rTG
-rTG
-aPE
 gRj
-koD
+gRj
+gRj
+xjz
 anI
 rTG
 ahR
@@ -55536,7 +55540,7 @@ iSt
 iSt
 iSt
 iSt
-ait
+mUe
 ait
 akb
 akA
@@ -63259,7 +63263,7 @@ lmc
 adU
 vdX
 sFn
-evf
+gup
 ixH
 upS
 fsb
@@ -63516,7 +63520,7 @@ xCy
 lmc
 lmc
 sFn
-eBO
+aPE
 mUC
 ogs
 gOz
@@ -67881,12 +67885,12 @@ rdJ
 fkm
 jBX
 hxF
-lyH
+guF
 kpq
-noD
+evf
 bcR
 jCI
-guF
+aoD
 xtS
 arg
 amI
@@ -68140,8 +68144,8 @@ nrh
 nJt
 tQr
 nEO
-wMu
-mUe
+dGB
+dGB
 sTX
 wlc
 xvG
@@ -68394,14 +68398,14 @@ gRB
 lhx
 ldn
 dTU
-tsN
+lyH
 bRz
 bwK
-noD
-aqE
-sos
 gKV
-gup
+bwK
+sos
+aos
+aqE
 pge
 lsQ
 cVo
@@ -68653,7 +68657,7 @@ alX
 woA
 woA
 oDH
-woA
+wMu
 wyg
 hYy
 tav
@@ -72006,8 +72010,8 @@ acF
 lUt
 aoc
 aoj
-aos
-ajK
+rtz
+bRr
 aoG
 adE
 aoS
@@ -72262,10 +72266,10 @@ lUt
 lUt
 lUt
 aod
-ako
+ark
 aot
-aoD
-ahn
+arl
+abq
 lUt
 apj
 lUt
