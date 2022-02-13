@@ -29,8 +29,8 @@ export const SpawnersMenu = (props, context) => {
                     <Flex.Item fontSize="14px" color="green" bold mt={0.4} mr={2}>
                       Мест: {
                         spawner.is_infinite
-                        ? "∞"
-                        : spawner.amount_left
+                          ? "∞"
+                          : spawner.amount_left
                       }
                     </Flex.Item>
                     <Flex.Item>
