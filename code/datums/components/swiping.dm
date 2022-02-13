@@ -234,7 +234,7 @@
 /datum/component/swiping/proc/push_on_chair(obj/structure/stool/bed/chair/C, mob/user, movementdirection)
 	var/glide = 8
 	var/move_timer
-	for(var/tiles_to_move = 0 to 8)
+	for(var/tiles_to_move = 0 to 9)
 		switch(tiles_to_move)
 			if(0 to 2)
 				glide = 8
