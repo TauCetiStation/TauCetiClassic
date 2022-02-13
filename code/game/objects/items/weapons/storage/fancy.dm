@@ -98,6 +98,7 @@
 	throwforce = 2
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
+	can_hold = list(/obj/item/candle)
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()

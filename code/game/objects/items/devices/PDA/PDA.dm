@@ -156,6 +156,23 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
+/obj/item/device/pda/proc/make_user_slip(mob/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/proc/remove_user_slip(mob/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID)
+		make_user_slip(user)
+	else
+		remove_user_slip(user)
+
+/obj/item/device/pda/dropped(mob/user)
+	..()
+	remove_user_slip(user)
+
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"

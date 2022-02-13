@@ -150,6 +150,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	M.remove_alt_appearance("spookyscary")
 
 /obj/item/candle/ghost/proc/spook()
+	if(lit)
+		return
 	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears.</span>")
 	playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	for(var/mob/living/carbon/M in hearers(4, get_turf(src)))
