@@ -77352,7 +77352,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "mVb" = (
 /obj/structure/sign/mark{
@@ -80931,7 +80931,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "rub" = (
 /obj/item/weapon/storage/fancy/vials,
