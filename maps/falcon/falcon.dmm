@@ -9338,6 +9338,28 @@
 	icon_state = "platingdmg2"
 	},
 /area/station/maintenance/science)
+"arm" = (
+/obj/machinery/camera{
+	c_tag = "Engineering South";
+	dir = 10;
+	network = list("SS13","Engineering")
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "caution"
+	},
+/area/station/engineering/atmos)
+"arn" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 9
+	},
+/turf/space,
+/area/space)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10482,15 +10504,15 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 9
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
@@ -15447,10 +15469,6 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -15458,6 +15476,7 @@
 	name = "Engineering Security Doors";
 	opacity = 0
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "gxa" = (
@@ -18303,7 +18322,10 @@
 	},
 /area/station/tcommsat/chamber)
 "jyS" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
+	},
+/obj/machinery/meter,
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
@@ -22401,17 +22423,22 @@
 	},
 /area/station/hallway/primary/central)
 "npp" = (
-/obj/machinery/camera{
-	c_tag = "Engineering South";
-	dir = 10;
-	network = list("SS13","Engineering")
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/yellow,
-/obj/machinery/meter,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "caution"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "npt" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -22685,11 +22712,8 @@
 	},
 /area/station/hallway/primary/central)
 "nAq" = (
-/obj/machinery/atmospherics/components/trinary/mixer/t_mixer/on{
-	dir = 8;
-	node1_concentration = 0.2;
-	node2_concentration = 0.8
-	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow,
+/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "nAz" = (
@@ -24935,7 +24959,9 @@
 	},
 /area/station/hallway/primary/central)
 "pEy" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/machinery/atmospherics/components/binary/valve/digital/open{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -24969,7 +24995,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "pFi" = (
@@ -26773,9 +26798,6 @@
 "rnG" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -29257,7 +29279,10 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "tPg" = (
-/obj/machinery/atmospherics/components/binary/valve/digital/open,
+/obj/machinery/atmospherics/components/trinary/mixer/on{
+	node1_concentration = 0.8;
+	node2_concentration = 0.2
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "cautioncorner"
@@ -56343,9 +56368,9 @@ rsx
 rGb
 wmc
 wmc
-rsx
-rsx
-evV
+npp
+gwx
+arn
 crv
 crv
 crv
@@ -56602,7 +56627,7 @@ isE
 icP
 pEy
 rsx
-evV
+crv
 gay
 crv
 crv
@@ -56858,8 +56883,8 @@ nxj
 iDT
 rnG
 jyS
+buE
 mkA
-gwx
 aRB
 rct
 eXO
@@ -57115,8 +57140,8 @@ sFC
 pEW
 nAq
 tPg
-npp
-buE
+arm
+rsx
 rsx
 crv
 ojo
