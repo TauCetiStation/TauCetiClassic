@@ -17,7 +17,6 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, /datum/component/mood.proc/update_beauty)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
@@ -32,9 +31,6 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
-	var/area/A = get_area(parent)
-	if(A)
-		UnregisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
 	return ..()
 
@@ -127,6 +123,7 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
+	update_mood_client_color()
 
 /datum/component/mood/proc/update_mood_icon()
 	if(!screen_obj)
@@ -178,6 +175,33 @@
 		if(abs(event.mood_change) == highest_absolute_mood)
 			screen_obj.icon_state = "[event.special_screen_obj]"
 			break
+
+/datum/component/mood/proc/update_mood_client_color()
+	var/mob/living/carbon/human/H = parent
+	if(!istype(H))
+		return
+
+	H.moody_color = null
+
+	if(H.stat == DEAD)
+		return
+
+	if(spirit_level < 4)
+		return
+
+	var/dissapointment
+	switch(spirit_level)
+		if(6)
+			dissapointment = 0.8
+		if(5)
+			dissapointment = 0.4
+		if(4)
+			dissapointment = 0.2
+
+	var/datum/ColorMatrix/CM = new
+	CM.Reset()
+	CM.SetSaturation(1.0 - dissapointment)
+	H.moody_color = CM.matrix
 
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
@@ -248,6 +272,7 @@
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
+	update_mood_client_color()
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
@@ -310,6 +335,7 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 	update_mood_icon()
+	update_mood_client_color()
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
@@ -376,11 +402,6 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER
-
-	var/area/OA = get_area(OldLoc)
-	if(OA)
-		UnregisterSignal(OA, list(COMSIG_AREA_UPDATE_BEAUTY))
-	RegisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY), /datum/component/mood.proc/update_beauty)
 
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
