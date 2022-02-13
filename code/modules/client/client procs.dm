@@ -360,9 +360,7 @@ var/global/list/blacklisted_builds = list(
 	mentors -= src
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
-	if(movingmob != null)
-		movingmob.client_mobs_in_contents -= mob
-		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	LAZYREMOVE(movingmob?.clients_in_contents, src)
 	return ..()
 
 /client/proc/handle_autokick_reasons()
@@ -660,7 +658,9 @@ var/global/list/blacklisted_builds = list(
 			screen |= O
 		O.appearance = MA
 		O.set_dir(D)
-		O.underlays += image('icons/turf/floors.dmi', "floor")
+		var/image/floor = image('icons/turf/floors.dmi', icon_state="floor")
+		floor.appearance_flags |= KEEP_APART
+		O.underlays += floor
 		O.screen_loc = "character_preview_map:0,[pos]"
 
 /client/proc/clear_character_previews()

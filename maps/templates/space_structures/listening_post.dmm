@@ -16,8 +16,7 @@
 	},
 /area/space_structures/listening_post)
 "ae" = (
-/obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/security/nuclear,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
@@ -39,9 +38,6 @@
 /obj/machinery/newscaster{
 	layer = 3.3;
 	pixel_y = 32
-	},
-/obj/item/device/radio/intercom{
-	pixel_x = -30
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -94,13 +90,15 @@
 /obj/machinery/shower{
 	pixel_y = 20
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
 /area/space_structures/listening_post)
 "ao" = (
 /obj/machinery/computer/med_data{
-	dir = 4
+	dir = 4;
+	req_one_access = list(150)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -128,7 +126,7 @@
 	},
 /area/space_structures/listening_post)
 "ar" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "as" = (
@@ -165,7 +163,7 @@
 /area/space_structures/listening_post)
 "av" = (
 /obj/structure/closet/crate/bin,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aw" = (
 /turf/simulated/floor,
@@ -175,7 +173,7 @@
 	dir = 8
 	},
 /obj/machinery/washing_machine,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "ay" = (
 /obj/structure/filingcabinet,
@@ -196,7 +194,9 @@
 "aA" = (
 /obj/structure/rack,
 /obj/item/device/geoscanner,
-/obj/item/weapon/pickaxe,
+/obj/item/weapon/paper{
+	info = "Прости, агент, но для твоего же блага мы забрали кирки. Команда спасения прибудет через два месяца. Слава Синдикату!"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
@@ -240,28 +240,15 @@
 	},
 /area/space_structures/listening_post)
 "aF" = (
+/turf/simulated/floor/carpet/red,
+/area/space_structures/listening_post)
+"aG" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/simulated/floor,
-/area/space_structures/listening_post)
-"aG" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 3
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -30
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aH" = (
 /obj/machinery/door/airlock{
@@ -276,22 +263,37 @@
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aJ" = (
-/obj/random/vending/snack,
-/turf/simulated/floor,
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 3
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -30
+	},
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aK" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aL" = (
-/obj/machinery/computer/arcade,
-/turf/simulated/floor,
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aM" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor,
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aN" = (
 /obj/structure/closet/emcloset,
@@ -299,8 +301,8 @@
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aO" = (
-/obj/random/vending/cola,
-/turf/simulated/floor,
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aP" = (
 /obj/machinery/door/airlock{
@@ -330,9 +332,11 @@
 	},
 /area/space_structures/listening_post)
 "aT" = (
-/turf/simulated/floor{
-	icon_state = "grimy"
+/obj/machinery/vending/cola{
+	name = "hacked Robust Softdrinks";
+	prices = list()
 	},
+/turf/simulated/floor,
 /area/space_structures/listening_post)
 "aU" = (
 /obj/item/weapon/bedsheet/syndie,
@@ -345,7 +349,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
@@ -354,10 +358,9 @@
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aX" = (
-/obj/machinery/sleeper/upgraded,
+/obj/effect/landmark/espionage_start,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "white"
+	icon_state = "grimy"
 	},
 /area/space_structures/listening_post)
 "aY" = (
@@ -367,7 +370,9 @@
 	},
 /area/space_structures/listening_post)
 "aZ" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/closet/secure_closet/medical1{
+	req_access = list(150)
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
@@ -375,6 +380,7 @@
 /area/space_structures/listening_post)
 "ba" = (
 /obj/machinery/power/apc{
+	cell_type = 50000;
 	dir = 1;
 	name = "Listening Post APC";
 	pixel_y = 26
@@ -440,15 +446,18 @@
 	},
 /area/space_structures/listening_post)
 "bg" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/bot/medbot/mysterious{
+	name = "Friday"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
 /area/space_structures/listening_post)
 "bh" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
-	amount = 25
+	amount = 50
 	},
 /obj/item/stack/sheet/metal{
 	amount = 12
@@ -467,13 +476,16 @@
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bj" = (
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "bk" = (
 /obj/structure/closet/wardrobe/black,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit_jacket/charcoal,
+/obj/item/weapon/storage/box/syndie_kit/light_armor,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -506,7 +518,14 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red,
+/area/space_structures/listening_post)
+"bp" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/clothing/gloves/yellow,
+/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 
 (1,1,1) = {"
@@ -1111,9 +1130,9 @@ ac
 an
 ac
 av
-aF
 aG
-aK
+aJ
+aL
 ac
 ac
 ac
@@ -1141,10 +1160,10 @@ ab
 ac
 at
 as
-aw
-aw
-aw
-aL
+aF
+aF
+aF
+aM
 ac
 aS
 bk
@@ -1174,10 +1193,10 @@ ac
 ac
 ax
 aV
-aw
-aw
+aF
+aF
 aP
-aT
+aX
 bl
 ac
 ab
@@ -1206,7 +1225,7 @@ ac
 ac
 ac
 bo
-aM
+aO
 ac
 aU
 bb
@@ -1303,7 +1322,7 @@ aw
 aQ
 al
 al
-bg
+bp
 bi
 ac
 ab
@@ -1363,7 +1382,7 @@ ac
 aI
 aw
 ac
-aX
+bg
 bd
 ac
 ab
@@ -1422,8 +1441,8 @@ ac
 ac
 aB
 ac
-aJ
-aO
+aK
+aT
 ac
 aZ
 bn

@@ -9,16 +9,11 @@ var/global/list/datum/spawners_cooldown = list()
 
 	for(var/i in 1 to num)
 		var/datum/spawner/spawner = new type(arglist(arguments))
-
-		spawner.id = id
-		LAZYADD(global.spawners[id], spawner)
+		spawner.add_to_global_list(id)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
 			continue
-
-		if(ghost.spawners_menu)
-			SStgui.update_uis(ghost.spawners_menu)
 
 		var/datum/hud/ghost/ghost_hud = ghost.hud_used
 		var/image/I = image(ghost_hud.spawners_menu_button.icon, ghost_hud.spawners_menu_button, "spawners_update")
@@ -42,7 +37,7 @@ var/global/list/datum/spawners_cooldown = list()
 	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
 	// Delete spawner after use
-	var/del_after_spawn = TRUE
+	var/infinity = FALSE
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
 
@@ -59,12 +54,17 @@ var/global/list/datum/spawners_cooldown = list()
 		timer_to_expiration = QDEL_IN(src, time_to_del)
 
 /datum/spawner/Destroy()
-	var/list/spawn_list = global.spawners[id]
-	LAZYREMOVE(spawn_list, src)
-	if(!length(spawn_list))
-		global.spawners -= id
+	remove_from_global_list()
 
 	deltimer(timer_to_expiration)
+
+	return ..()
+
+/datum/spawner/proc/add_to_global_list(_id)
+	if(!isnull(_id))
+		id = _id
+
+	LAZYADDASSOCLIST(global.spawners, id, src)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -73,7 +73,15 @@ var/global/list/datum/spawners_cooldown = list()
 		if(ghost.spawners_menu)
 			SStgui.update_uis(ghost.spawners_menu)
 
-	return ..()
+/datum/spawner/proc/remove_from_global_list()
+	LAZYREMOVEASSOC(global.spawners, id, src)
+
+	for(var/mob/dead/observer/ghost in observer_list)
+		if(!ghost.client)
+			continue
+
+		if(ghost.spawners_menu)
+			SStgui.update_uis(ghost.spawners_menu)
 
 /datum/spawner/proc/add_client_cooldown(client/C)
 	if(cooldown)
@@ -95,17 +103,22 @@ var/global/list/datum/spawners_cooldown = list()
 	if(!can_spawn(ghost))
 		return
 
+	if(!infinity)
+		remove_from_global_list()
+
 	var/client/C = ghost.client
 	spawn_ghost(ghost)
 
 	// check if the ghost really become a role
 	if(ghost.client == C)
+		if(!infinity)
+			add_to_global_list()
 		return
 
 	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 	add_client_cooldown(C)
 
-	if(del_after_spawn)
+	if(!infinity)
 		qdel(src)
 
 /datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
@@ -254,17 +267,20 @@ var/global/list/datum/spawners_cooldown = list()
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
-	var/leader_selected = isemptylist(ERT_team.members)
 
-	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, leader_selected, new_name)
+	var/is_leader = FALSE
+	if(!ERT_team.leader_selected)
+		is_leader = TRUE
+		ERT_team.leader_selected = TRUE
+
+	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, is_leader, new_name)
 	new_commando.mind.key = ghost.key
 	new_commando.key = ghost.key
 	create_random_account_and_store_in_mind(new_commando)
-	qdel(spawnloc)
 
-	to_chat(new_commando, "<span class='notice'>You are [!leader_selected ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+	to_chat(new_commando, "<span class='notice'>You are [!is_leader ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
 	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
-	if(!leader_selected)
+	if(!is_leader)
 		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
 	else
 		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
@@ -406,7 +422,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_GHOSTLY)
 	cooldown = 0
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/gladiator/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(eorgwarp)
@@ -421,7 +437,7 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Mouse"
 
 	ranks = list("Mouse")
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/mouse/can_spawn(mob/dead/observer/ghost)
 	if(config.disable_player_mice)
@@ -437,7 +453,7 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Вы появляетесь где-то на свалке."
 	wiki_ref = "Junkyard"
 
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/space_bum/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(junkyard_bum_list)
@@ -453,7 +469,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_DRONE)
 
-	del_after_spawn = FALSE
+	infinity = TRUE
 
 /datum/spawner/drone/can_spawn(mob/dead/observer/ghost)
 	if(!config.allow_drone_spawn)
@@ -507,3 +523,34 @@ var/global/list/datum/spawners_cooldown = list()
 		var/newname = sanitize_safe(input(diona,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 		if (newname != "")
 			diona.real_name = newname
+
+/datum/spawner/spy
+	name = "Агент Прослушки"
+	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(espionageagent_start)
+	espionageagent_start -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+	H.equipOutfit(/datum/outfit/spy)
+
+	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
+	if(mode_has_antags())
+		to_chat(H, "<B>Согласно сводкам, именно сегодня Ваши наниматели готовятся нанести удар по корпоративным ублюдкам, и Вы можете посодействовать засланным на станцию агентам.</B>")
+	else
+		to_chat(H, "<B>Сегодня очередной рабочий день. Ничего из ряда вон выходящего произойти не должно, так что можно расслабиться.</B>")
+	to_chat(H, "<B>Вы ни в коем случае не должны покидать свой пост! Невыполнение своих задач приведёт к увольнению.</B>")
+
+/datum/spawner/spy/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(espionageagent_start)
+	ghost.forceMove(get_turf(jump_to))

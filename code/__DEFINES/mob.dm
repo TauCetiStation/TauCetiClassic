@@ -130,6 +130,12 @@
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
 
+// Drunknenness levels and their effects.
+#define DRUNKENNESS_SLUR 30
+#define DRUNKENNESS_CONFUSED 150
+#define DRUNKENNESS_BLUR 400
+#define DRUNKENNESS_PASS_OUT 600
+
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
 
@@ -190,3 +196,9 @@
 #define SYNDICATE_PHRASES  1
 #define SYNDICATE_RESPONSE 2
 #define SYNDICATE_AWARE    3
+
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"

@@ -115,7 +115,7 @@
 		if(H == host)
 			continue
 		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
-		H.confused += 20
+		H.AdjustConfused(20)
 
 
 //POP

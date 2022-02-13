@@ -231,6 +231,17 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(0.2)
+
+	if(prob(10))
+		M.emote("hiccup")
+		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		flick_overlay_view(I, M, 30)
+
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
 		qdel(O)
@@ -537,7 +548,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -594,7 +605,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]

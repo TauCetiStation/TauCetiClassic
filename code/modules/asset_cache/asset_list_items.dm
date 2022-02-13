@@ -180,7 +180,7 @@
 			/obj/item/kinetic_upgrade/speed,
 			/obj/item/weapon/reagent_containers/food/snacks/hotchili,
 			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-			/obj/item/weapon/soap/nanotrasen,
+			/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 			/obj/item/clothing/mask/facehugger_toy,
 			/obj/item/weapon/card/mining_point_card,
 			/obj/item/weapon/spacecash/c1000,
