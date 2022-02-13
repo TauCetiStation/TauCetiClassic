@@ -186,7 +186,7 @@
 
 	if(mob.confused && !mob.crawling)
 		direct = mob.confuse_input(direct)
-		n = get_step(get_turf(mob), direct)
+		new_loc = get_step(get_turf(mob), direct)
 
 	if(!grab_move && mob.SelfMove(new_loc, direct))
 		. = ..()
