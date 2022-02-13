@@ -318,18 +318,18 @@
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				qdel(src)
-			else
 				try_toggle_effects(TRIGGER_FORCE)
 				try_toggle_effects(TRIGGER_HEAT)
-		if(3.0)
+				return
+		if(EXPLODE_LIGHT)
 			try_toggle_effects(TRIGGER_FORCE)
 			try_toggle_effects(TRIGGER_HEAT)
-	return
+			return
+	qdel(src)
 
 /obj/machinery/artifact/Move(atom/newloc, direction, glide_size_override)
 	. = ..()

@@ -79,7 +79,8 @@
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		to_chat(usr, desc)
+		if(desc)
+			to_chat(usr, desc)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
