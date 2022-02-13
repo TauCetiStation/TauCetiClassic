@@ -73,7 +73,6 @@
 	var/time_of_death
 	var/special_role
 	var/assigned_role
-	var/key
 	var/mind_name
 	var/real_name
 	var/name
@@ -99,8 +98,7 @@
 	var/flash_range = 0
 
 /datum/stat/manifest_entry
-	var/key
 	var/name
 	var/assignment
 	var/special_role
-	var/list/antag_roles = null // not a list
+	var/list/antag_roles = null

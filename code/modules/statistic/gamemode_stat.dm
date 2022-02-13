@@ -5,7 +5,8 @@
 	var/__type
 
 	var/target_name
-	var/target_ckey
+	var/target_assigned_role
+	var/target_special_role
 
 /datum/stat/faction
 	var/name

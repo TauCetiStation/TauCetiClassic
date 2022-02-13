@@ -58,7 +58,6 @@
 		stat.mind_name = H.mind.name
 		stat.assigned_role = H.mind.assigned_role
 		stat.special_role = H.mind.special_role
-		stat.key = ckey(H.mind.key)
 
 	deaths += stat
 
@@ -78,7 +77,6 @@
 
 /datum/stat_collector/proc/add_manifest_entry(key, name, assignment, special_role, list/antag_roles)
 	var/datum/stat/manifest_entry/stat = new
-	stat.key = ckey(key)
 	stat.name = STRIP_NEWLINE(name)
 	stat.assignment = STRIP_NEWLINE(assignment)
 	stat.special_role = STRIP_NEWLINE(special_role)
@@ -103,7 +101,8 @@
 	if(istype(O, /datum/objective/target))
 		var/datum/objective/target/T = O
 		stat.target_name = STRIP_NEWLINE(T.target.name)
-		stat.target_ckey = ckey(T.target.key)
+		stat.target_assigned_role = T.target.assigned_job
+		stat.target_special_role = T.target.special_role
 
 	return stat
 
