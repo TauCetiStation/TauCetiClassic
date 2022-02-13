@@ -52,7 +52,8 @@
 	if(human_owner)
 		human_owner.drowsyness = max(0, human_owner.drowsyness * 0.997)
 		human_owner.slurring = max(0, human_owner.slurring * 0.997)
-		human_owner.confused = max(0, human_owner.confused * 0.997)
+		human_owner.SetConfused(human_owner.confused * 0.997)
+		human_owner.SetDrunkenness(human_owner.drunkenness * 0.997)
 
 	if(prob(20))
 		if(carbon_owner)

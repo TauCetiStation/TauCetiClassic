@@ -212,6 +212,7 @@
 				client.eye = loc
 	return
 
+
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -1235,3 +1236,53 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time

@@ -12,7 +12,7 @@
 		if(iscarbon(M))
 			if(!ischangeling(M))
 				M.ear_deaf += 30
-				M.confused += 20
+				M.AdjustConfused(20)
 				M.make_jittery(500)
 			else
 				M.playsound_local(null, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)

@@ -17,7 +17,7 @@
 		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(1)
 		H.apply_effect(20,EYE_BLUR)
-		H.confused += 3
+		H.AdjustConfused(3)
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Weaken(3)
