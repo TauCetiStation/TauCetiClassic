@@ -30,12 +30,14 @@ var/global/list/ROOT_DATUM_VARS = list("tag", "type", "parent_type", "vars", "gc
 					if(X == parent_datum)
 						item[iter] = "parentRecursionPrevention"
 					else
-						item[iter] = datum2list(X, parent_datum)
+						item[iter] = datum2list(X, do_not_copy, parent_datum)
 			// avoid byond type
 			if(I == "__type")
 				L["type"] = item
 			else
 				L[I] = item
+		else if(istype(D.vars[I], /datum))
+			L[I] = datum2list(D.vars[I], do_not_copy, parent_datum)
 		else
 			// avoid byond type
 			if(I == "__type")
