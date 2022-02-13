@@ -132,7 +132,8 @@
 
 /obj/item/tk_grab/dropped(mob/user)
 	. = ..()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 // Allows equipping stuff while being handcuffed.
 /obj/item/tk_grab/equipped(mob/user, slot)
@@ -143,10 +144,11 @@
 	if((slot == SLOT_L_HAND) || (slot == SLOT_R_HAND))
 		return
 
-	if(focus.Adjacent(user))
-		user.equip_to_slot_if_possible(focus, slot, del_on_fail = FALSE)
+	if(!focus.Adjacent(user))
+		return
 
 	qdel(src)
+	user.equip_to_slot_if_possible(focus, slot, del_on_fail = FALSE)
 
 /obj/item/tk_grab/attack_self(mob/user)
 	focus.attack_self_tk(user)
