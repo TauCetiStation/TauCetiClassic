@@ -1414,7 +1414,7 @@
 
 /mob/living/in_interaction_vicinity(atom/target)
 	// Telekinetic distance is handled by the larger telekinesis system.
-	if(TK in mutations)
+	if(TK in mutations && can_tk(level=TK_LEVEL_TWO))
 		return TRUE
 
 	return ..()

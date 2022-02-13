@@ -127,6 +127,7 @@
 #define TK_LEVEL_ONE 1
 #define TK_LEVEL_TWO 2
 #define TK_LEVEL_THREE 3
+#define TK_LEVEL_FOUR 4
 
 #define TK_LEVEL_NORMAL 1
 #define TK_LEVEL_SKRELL 2
