@@ -69,8 +69,6 @@
 	add_conversation(speaker.GetVoice(), "hear", message)
 	H.add_conversation(GetVoice(), "say", message)
 
-var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
-
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -120,6 +118,8 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
@@ -144,6 +144,8 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 
 	if (has_lang_prefix)
 		message = copytext(message,2+length_char(speaking.key))
+		if(!message)
+			return
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
@@ -173,17 +175,12 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 				return ""
 
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	if(iszombie(src))
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-
-	if(!(ending in punctuation_marks_final))
-		if(ending == ",")
-			message = splicetext(message, length(message), , ".")
-		else
-			message += "."
 
 	if(speaking)
 		//If we've gotten this far, keep going!
