@@ -255,6 +255,9 @@
 	if(usr)
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
+
+	SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate)
+
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -299,6 +302,8 @@
 
 	if(storage_ui)
 		storage_ui.on_pre_remove(usr, W)
+
+	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, W, new_location, NoUpdate)
 
 	if(new_location)
 		if(ismob(loc))

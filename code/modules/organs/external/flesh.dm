@@ -12,8 +12,7 @@
 		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
 		var/meat_amount = 1
-		if(BP.pumped) //pumped guys are meaty
-			meat_amount += round(BP.pumped / 10)
+		meat_amount += round(BP.pumped / 10)
 		if(HAS_TRAIT(BP.owner, TRAIT_FAT)) //fat guys are meaty
 			meat_amount += 2
 		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = meat_amount)
@@ -23,6 +22,16 @@
 /datum/bodypart_controller/Destroy()
 	BP = null
 	return ..()
+
+/datum/bodypart_controller/proc/adjust_pumped(value)
+	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
+	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+		return
+
+	BP.pumped += value
+	if(BP.pumped > BP.max_pumped)
+		BP.pumped = BP.max_pumped
+	BP.update_sprite()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you

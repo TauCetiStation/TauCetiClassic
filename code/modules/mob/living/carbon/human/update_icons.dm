@@ -253,7 +253,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		if(BP.pumped && BP.pumped >= 25)
+		if(BP.pumped >= 25)
 			var/icon/I = icon('icons/mob/human_races/special_overlays.dmi', BP.icon_state)
 			var/icon/mask = icon('icons/effects/ss13_dark_alpha7.dmi', "6")
 			I.Blend(mask, ICON_MULTIPLY)

@@ -50,6 +50,13 @@
 	else
 		hands_or_legs = list(BP_L_LEG , BP_R_LEG)
 
+	// Movement delay coming from heavy items being carried.
+	var/weight_tally = 0
+	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
+	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
+	// to not negate weight that is not there. ~Luduk
+	var/weight_negation = 0
+
 	for(var/bodypart_name in hands_or_legs)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 		if(!BP || (BP.is_stump))
@@ -58,8 +65,8 @@
 			tally += 0.8
 		else if(BP.status & ORGAN_BROKEN)
 			tally += 3
-		if(BP.pumped)
-			tally -= BP.pumped / 100
+
+		weight_negation += BP.pumped / 100
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
@@ -67,16 +74,22 @@
 		chem_nullify_debuff = TRUE
 
 	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-		tally += wear_suit.slowdown
+		weight_tally += wear_suit.slowdown
 
 	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-		tally += back.slowdown
+		weight_tally += back.slowdown
 
-	if (shoes)
-		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-			tally += shoes.slowdown
+	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+		weight_tally += shoes.slowdown
 	else
 		tally += species.speed_mod_no_shoes
+
+	if(weight_tally > 0)
+		weight_tally -= weight_negation
+		if(weight_tally < 0)
+			weight_tally = 0
+
+	tally += weight_tally
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))

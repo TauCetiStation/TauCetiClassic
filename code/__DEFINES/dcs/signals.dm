@@ -48,6 +48,11 @@
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
 
+//from base of obj/item/weapon/storage/handle_item_insertion(): (obj/item/I, prevent_warning, NoUpdate)
+#define COMSIG_STORAGE_ENTERED "storage_entered"
+//from base of obj/item/weapon/storage/remove_from_storage(): (obj/item/I, atom/new_location, NoUpdate)
+#define COMSIG_STORAGE_EXITED "storage_exited"
+
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
 #define COMSIG_REL_ADD_MEMBER "rel_add_member"

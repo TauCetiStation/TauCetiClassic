@@ -60,42 +60,45 @@
 	return 0
 
 /obj/structure/stool/bed/chair/pedalgen/proc/pedal(mob/user)
-	pedaled = 1
-	if(buckled_mob.buckled == src)
-		if(buckled_mob != user)
-			buckled_mob.visible_message(\
-				"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
-				"You were unbuckled from [src] by [user.name].",\
-				"You hear metal clanking")
-			unbuckle_mob()
-			add_fingerprint(user)
-		else
-			user.SetNextMove(CLICK_CD_INTERACT)
-			if(buckled_mob.nutrition > 10)
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
-				Generator.Rotated()
-				var/mob/living/carbon/human/pedaler = buckled_mob
-				pedaler.nutrition -= 0.5
-				pedaler.apply_effect(1,AGONY,0)
-				var/obj/item/organ/external/l_leg/Left_leg = pedaler.get_bodypart(BP_L_LEG)
-				var/obj/item/organ/external/r_leg/Right_leg = pedaler.get_bodypart(BP_R_LEG)
-				if(Left_leg)
-					Left_leg.pumped += 1
-					Left_leg.update_sprite()
-				if(Right_leg)
-					Right_leg.pumped += 1
-					Right_leg.update_sprite()
-				pedaler.update_body()
+	if(buckled_mob.buckled != src)
+		return FALSE
 
-				if(pedaler.halloss > 80)
-					to_chat(user, "You pushed yourself too hard.")
-					pedaler.apply_effect(24,AGONY,0)
-					unbuckle_mob()
-				sleep(5)
-				pedaled = 0
-			else
-				to_chat(user, "You are too exausted to pedal that thing.")
-		return 1
+	if(buckled_mob != user)
+		buckled_mob.visible_message(\
+			"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
+			"You were unbuckled from [src] by [user.name].",\
+			"You hear metal clanking")
+		unbuckle_mob()
+		add_fingerprint(user)
+		return FALSE
+
+	if(buckled_mob.nutrition <= 10)
+		to_chat(user, "You are too exausted to pedal that thing.")
+		return FALSE
+
+	pedaled = TRUE
+	user.SetNextMove(CLICK_CD_INTERACT)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
+	Generator.Rotated()
+	var/mob/living/carbon/human/pedaler = buckled_mob
+	pedaler.nutrition -= 0.5
+	pedaler.apply_effect(1,AGONY,0)
+	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
+	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
+	if(LL)
+		LL.adjust_pumped(1)
+	if(RL)
+		RL.adjust_pumped(1)
+	pedaler.update_body()
+
+	if(pedaler.halloss > 80)
+		to_chat(user, "You pushed yourself too hard.")
+		pedaler.apply_effect(24,AGONY,0)
+		unbuckle_mob()
+
+	VARSET_IN(src, pedaled, FALSE, 5)
+
+	return TRUE
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
 	if(!ishuman(user))

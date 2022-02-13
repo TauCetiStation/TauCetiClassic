@@ -237,8 +237,8 @@
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
-				if(BPHand.pumped && BPHand.pumped < 30 && prob(10))
-					BPHand.pumped += 1
+				if(BPHand.pumped < 30)
+					BPHand.adjust_pumped(0.1)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
