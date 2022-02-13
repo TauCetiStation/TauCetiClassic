@@ -102,10 +102,10 @@
 		flick("flash2", src)
 		if(!issilicon(M))
 
-			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user.visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
 		else
 
-			user.visible_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
+			user.visible_message("<span class='danger'>[user] overloads [M]'s sensors with the flash!</span>")
 	else
 
 		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")

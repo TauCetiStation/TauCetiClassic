@@ -1,0 +1,155 @@
+.emojiPicker {
+  padding: 10px;
+
+  .emojiList {
+    font-size: 20px;
+
+    :active {
+      border: 15px solid rgba(36, 255, 91, 0.637);
+    }
+
+    i {
+      margin: 4px;
+    }
+  }
+}
+
+.emojiPicker #picker-notify {
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.emojiPicker #picker-notify span {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+/* EMOJI CLASSES */
+
+.em{height:1.5em;width:1.5em;background-position:center;background-repeat:no-repeat;background-size:contain;display:inline-block;vertical-align:middle;text-indent:100%;white-space: nowrap;overflow:hidden;}
+
+.em-peka{background-image:url("~tgui-panel/assets/emoji/peka.png")}
+.em-abductor{background-image:url("~tgui-panel/assets/emoji/abductor.png")}
+.em-borg{background-image:url("~tgui-panel/assets/emoji/borg.png")}
+.em-feelsgood{background-image:url("~tgui-panel/assets/emoji/feelsgood.png")}
+.em-pekasvast{background-image:url("~tgui-panel/assets/emoji/pekasvast.gif")}
+.em-ai{background-image:url("~tgui-panel/assets/emoji/ai.gif")}
+.em-carp{background-image:url("~tgui-panel/assets/emoji/carp.gif")}
+.em-goliath{background-image:url("~tgui-panel/assets/emoji/goliath.png")}
+.em-peka1{background-image:url("~tgui-panel/assets/emoji/peka1.png")}
+.em-riplie{background-image:url("~tgui-panel/assets/emoji/riplie.png")}
+.em-aimalf{background-image:url("~tgui-panel/assets/emoji/aimalf.gif")}
+.em-chicken{background-image:url("~tgui-panel/assets/emoji/chicken.png")}
+.em-headrev{background-image:url("~tgui-panel/assets/emoji/headrev.png")}
+.em-peka2{background-image:url("~tgui-panel/assets/emoji/peka2.png")}
+.em-shadowling{background-image:url("~tgui-panel/assets/emoji/shadowling.png")}
+.em-alien{background-image:url("~tgui-panel/assets/emoji/alien.png")}
+.em-cleanbot{background-image:url("~tgui-panel/assets/emoji/cleanbot.gif")}
+.em-ian{background-image:url("~tgui-panel/assets/emoji/ian.png")}
+.em-pekabest{background-image:url("~tgui-panel/assets/emoji/pekabest.gif")}
+.em-slime{background-image:url("~tgui-panel/assets/emoji/slime.gif")}
+.em-assistant{background-image:url("~tgui-panel/assets/emoji/assistant.png")}
+.em-cow{background-image:url("~tgui-panel/assets/emoji/cow.png")}
+.em-itsok{background-image:url("~tgui-panel/assets/emoji/itsok.png")}
+.em-pekadeal{background-image:url("~tgui-panel/assets/emoji/pekadeal.png")}
+.em-syndicate{background-image:url("~tgui-panel/assets/emoji/syndicate.png")}
+.em-bad2{background-image:url("~tgui-panel/assets/emoji/bad2.png")}
+.em-cult{background-image:url("~tgui-panel/assets/emoji/cult.png")}
+.em-meteor{background-image:url("~tgui-panel/assets/emoji/meteor.gif")}
+.em-pekahide{background-image:url("~tgui-panel/assets/emoji/pekahide.png")}
+.em-syndie{background-image:url("~tgui-panel/assets/emoji/syndie.png")}
+.em-basilisk{background-image:url("~tgui-panel/assets/emoji/basilisk.png")}
+.em-deathsquad{background-image:url("~tgui-panel/assets/emoji/deathsquad.png")}
+.em-ninja{background-image:url("~tgui-panel/assets/emoji/ninja.png")}
+.em-pekahiding{background-image:url("~tgui-panel/assets/emoji/pekahiding.png")}
+.em-wizard{background-image:url("~tgui-panel/assets/emoji/wizard.png")}
+.em-bolon{background-image:url("~tgui-panel/assets/emoji/bolon.png")}
+.em-ert{background-image:url("~tgui-panel/assets/emoji/ert.png")}
+.em-nuke{background-image:url("~tgui-panel/assets/emoji/nuke.gif")}
+.em-pekahurt{background-image:url("~tgui-panel/assets/emoji/pekahurt.png")}
+.em-bolon2{background-image:url("~tgui-panel/assets/emoji/bolon2.png")}
+.em-facehugger{background-image:url("~tgui-panel/assets/emoji/facehugger.png")}
+.em-nukeops{background-image:url("~tgui-panel/assets/emoji/nukeops.png")}
+.em-pekapled{background-image:url("~tgui-panel/assets/emoji/pekapled.png")}
+.em-pekaholy{background-image:url("~tgui-panel/assets/emoji/pekaholy.gif")}
+.em-khleb{background-image:url("~tgui-panel/assets/emoji/khleb.png")}
+.em-kot{background-image:url("~tgui-panel/assets/emoji/kot.png")}
+.em-disgusting{background-image:url("~tgui-panel/assets/emoji/disgusting.png")}
+.em-pekaroll{background-image:url("~tgui-panel/assets/emoji/pekaroll.gif")}
+.em-doit{background-image:url("~tgui-panel/assets/emoji/doit.png")}
+.em-istorii{background-image:url("~tgui-panel/assets/emoji/istorii.png")}
+.em-itsnotok{background-image:url("~tgui-panel/assets/emoji/itsnotok.png")}
+.em-pekaholyplus{background-image:url("~tgui-panel/assets/emoji/pekaholyplus.gif")}
+.em-pekakaif{background-image:url("~tgui-panel/assets/emoji/pekakaif.png")}
+.em-pekazm{background-image:url("~tgui-panel/assets/emoji/pekazm.png")}
+.em-pepe{background-image:url("~tgui-panel/assets/emoji/pepe.png")}
+.em-tem{background-image:url("~tgui-panel/assets/emoji/tem.gif")}
+.em-trash{background-image:url("~tgui-panel/assets/emoji/trash.png")}
+.em-cakehat{background-image:url("~tgui-panel/assets/emoji/cakehat.png")}
+.em-gachidark{background-image:url("~tgui-panel/assets/emoji/gachidark.png")}
+.em-pepesad{background-image:url("~tgui-panel/assets/emoji/pepesad.png")}
+.em-hmm{background-image:url("~tgui-panel/assets/emoji/hmm.png")}
+.em-joypain{background-image:url("~tgui-panel/assets/emoji/joypain.png")}
+.em-joypainroll{background-image:url("~tgui-panel/assets/emoji/joypainroll.gif")}
+.em-kaka{background-image:url("~tgui-panel/assets/emoji/kaka.gif")}
+.em-think{background-image:url("~tgui-panel/assets/emoji/think.gif")}
+.em-shrug{background-image:url("~tgui-panel/assets/emoji/shrug.png")}
+.em-pepewhy{background-image:url("~tgui-panel/assets/emoji/pepewhy.png")}
+.em-pepewhat{background-image:url("~tgui-panel/assets/emoji/pepewhat.gif")}
+.em-pepesalut{background-image:url("~tgui-panel/assets/emoji/pepesalut.png")}
+.em-pepemanok{background-image:url("~tgui-panel/assets/emoji/pepemanok.png")}
+.em-pepejoy{background-image:url("~tgui-panel/assets/emoji/pepejoy.png")}
+.em-pepehmm{background-image:url("~tgui-panel/assets/emoji/pepehmm.png")}
+.em-pepedamn{background-image:url("~tgui-panel/assets/emoji/pepedamn.png")}
+.em-pepecry{background-image:url("~tgui-panel/assets/emoji/pepecry.png")}
+.em-pepecross{background-image:url("~tgui-panel/assets/emoji/pepecross.png")}
+.em-pepeamazing{background-image:url("~tgui-panel/assets/emoji/pepeamazing.png")}
+.em-pekarage{background-image:url("~tgui-panel/assets/emoji/pekarage.png")}
+.em-pekapepe{background-image:url("~tgui-panel/assets/emoji/pekapepe.png")}
+.em-pekaolt{background-image:url("~tgui-panel/assets/emoji/pekaolt.png")}
+.em-pekamrazish{background-image:url("~tgui-panel/assets/emoji/pekamrazish.png")}
+.em-pekamorcrate{background-image:url("~tgui-panel/assets/emoji/pekamorcrate.png")}
+.em-pekainsanededadvice{background-image:url("~tgui-panel/assets/emoji/pekainsanededadvice.png")}
+.em-pekagachi{background-image:url("~tgui-panel/assets/emoji/pekagachi.png")}
+.em-pekadoom{background-image:url("~tgui-panel/assets/emoji/pekadoom.png")}
+.em-pekabloody{background-image:url("~tgui-panel/assets/emoji/pekabloody.png")}
+.em-pekabaton{background-image:url("~tgui-panel/assets/emoji/pekabaton.png")}
+.em-ohmycat{background-image:url("~tgui-panel/assets/emoji/ohmycat.png")}
+.em-lul{background-image:url("~tgui-panel/assets/emoji/lul.png")}
+.em-honk{background-image:url("~tgui-panel/assets/emoji/honk.png")}
+.em-flash{background-image:url("~tgui-panel/assets/emoji/flash.png")}
+.em-duck{background-image:url("~tgui-panel/assets/emoji/duck.png")}
+.em-dpepe{background-image:url("~tgui-panel/assets/emoji/dpepe.gif")}
+.em-crash{background-image:url("~tgui-panel/assets/emoji/crash.png")}
+.em-cat{background-image:url("~tgui-panel/assets/emoji/cat.png")}
+.em-glul{background-image:url("~tgui-panel/assets/emoji/glul.png")}
+.em-happyman{background-image:url("~tgui-panel/assets/emoji/happyman.png")}
+.em-jerry{background-image:url("~tgui-panel/assets/emoji/jerry.png")}
+.em-kek{background-image:url("~tgui-panel/assets/emoji/kek.png")}
+.em-pekaanon{background-image:url("~tgui-panel/assets/emoji/pekaanon.png")}
+.em-pekahmm{background-image:url("~tgui-panel/assets/emoji/pekahmm.png")}
+.em-pekaragec{background-image:url("~tgui-panel/assets/emoji/pekaragec.png")}
+.em-pekarp{background-image:url("~tgui-panel/assets/emoji/pekarp.png")}
+.em-pekasmart{background-image:url("~tgui-panel/assets/emoji/pekasmart.png")}
+.em-pekaspace{background-image:url("~tgui-panel/assets/emoji/pekaspace.png")}
+.em-pekathink{background-image:url("~tgui-panel/assets/emoji/pekathink.png")}
+.em-pepecop{background-image:url("~tgui-panel/assets/emoji/pepecop.png")}
+.em-pepelove{background-image:url("~tgui-panel/assets/emoji/pepelove.png")}
+.em-peperage{background-image:url("~tgui-panel/assets/emoji/peperage.png")}
+.em-pepewow{background-image:url("~tgui-panel/assets/emoji/pepewow.png")}
+.em-pominki{background-image:url("~tgui-panel/assets/emoji/pominki.png")}
+.em-soqa{background-image:url("~tgui-panel/assets/emoji/soqa.png")}
+.em-thinkgun{background-image:url("~tgui-panel/assets/emoji/thinkgun.png")}
+.em-topbestever{background-image:url("~tgui-panel/assets/emoji/topbestever.png")}
+.em-at{background-image:url("~tgui-panel/assets/emoji/at.png")}
+.em-pepedetectiv{background-image:url("~tgui-panel/assets/emoji/pepedetectiv.png")}
+.em-pepefeelsup{background-image:url("~tgui-panel/assets/emoji/pepefeelsup.png")}
+.em-pepesur{background-image:url("~tgui-panel/assets/emoji/pepesur.png")}
+.em-peporage{background-image:url("~tgui-panel/assets/emoji/peporage.png")}
+.em-dovolen{background-image:url("~tgui-panel/assets/emoji/dovolen.png")}
+.em-nedovolen{background-image:url("~tgui-panel/assets/emoji/nedovolen.png")}
+.em-rastroen{background-image:url("~tgui-panel/assets/emoji/rastroen.png")}
+.em-smoltaj{background-image:url("~tgui-panel/assets/emoji/smoltaj.png")}

@@ -1,7 +1,6 @@
 import { useBackend } from "../backend";
 import { Box, Button, Flex, Section } from "../components";
 import { Window } from "../layouts";
-import { Fragment } from 'inferno';
 
 export const NoticeBoard = (props, context) => {
   const { act, data } = useBackend(context);
@@ -40,7 +39,7 @@ export const NoticeBoard = (props, context) => {
                     content="Look"
                     onClick={() => act("look", { ref: notice.ref })} />
                 ) || notice.ispaper && (
-                  <Fragment>
+                  <>
                     <Button
                       icon="eye"
                       onClick={() => act("read", { ref: notice.ref })}
@@ -49,7 +48,7 @@ export const NoticeBoard = (props, context) => {
                       icon="pen"
                       onClick={() => act("write", { ref: notice.ref })}
                     />
-                  </Fragment>
+                  </>
                 ) || "Unknown Entity"}
                 <Button
                   icon="eject"
