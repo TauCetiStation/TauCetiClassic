@@ -50,7 +50,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/simulated/environment)
+					if(/turf/simulated/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -205,7 +205,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/simulated/environment)
+					if(/turf/simulated/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
