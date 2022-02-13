@@ -418,17 +418,17 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+/mob/living/carbon/human/crawl_in_blood(datum/dirt_cover/dirt_cover)
 	if(wear_suit)
-		wear_suit.add_dirt_cover(floor_blood.basedatum)
+		wear_suit.add_dirt_cover(dirt_cover)
 		update_inv_wear_suit()
 	if(w_uniform)
-		w_uniform.add_dirt_cover(floor_blood.basedatum)
+		w_uniform.add_dirt_cover(dirt_cover)
 		update_inv_w_uniform()
 	if (gloves)
-		gloves.add_dirt_cover(floor_blood.basedatum)
+		gloves.add_dirt_cover(dirt_cover)
 	else
-		add_dirt_cover(floor_blood.basedatum)
+		add_dirt_cover(dirt_cover)
 	update_inv_gloves()
 
 /mob/living/carbon/proc/check_pierce_protection(obj/item/organ/external/BP, target_zone)

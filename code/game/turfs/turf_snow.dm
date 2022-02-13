@@ -57,37 +57,7 @@
 
 	if(type == /turf/simulated/environment/snow && iscarbon(AM))
 		var/mob/living/carbon/perp = AM
-
-		var/amount = 7
-		var/hasfeet = TRUE
-		var/skip = FALSE
-		if (ishuman(perp))
-			var/mob/living/carbon/human/H = perp
-			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
-			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
-			if((!l_foot || l_foot.is_stump) && (!r_foot || r_foot.is_stump))
-				hasfeet = FALSE
-			if(perp.shoes && !perp.buckled)//Adding blood to shoes
-				var/obj/item/clothing/shoes/S = perp.shoes
-				if(istype(S))
-					if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-						S.cut_overlays()
-						S.add_dirt_cover(basedatum)
-					S.track_blood = max(amount,S.track_blood)
-					if(!S.blood_DNA)
-						S.blood_DNA = list()
-				skip = TRUE
-
-		if (hasfeet && !skip) // Or feet
-			if(perp.feet_dirt_color)
-				perp.feet_dirt_color.add_dirt(basedatum)
-			else
-				perp.feet_dirt_color = new/datum/dirt_cover(basedatum)
-			perp.track_blood = max(amount,perp.track_blood)
-			if(!perp.feet_blood_DNA)
-				perp.feet_blood_DNA = list()
-
-		perp.update_inv_shoes()
+		perp.add_feet_dirt(basedatum, 7, blood=FALSE)
 
 /turf/simulated/environment/snow/singularity_act()
 	return
