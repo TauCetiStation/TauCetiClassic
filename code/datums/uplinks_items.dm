@@ -141,7 +141,7 @@
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
-	desc = "Убойная пушка, заряжаемая патронами калибра .50 AE."
+	desc = "Robust-пушка, заряжаемая патронами калибра .50 AE."
 	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened
 	cost = 8
 	uplink_types = list("dealer")
@@ -455,7 +455,7 @@
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
-	desc = "50-ти зарядный магазин с патронами калибра 7.62x51mm для пулемета L6 SAW. К тому моменту, когда вам нужно будет использовать его, вы уже будете стоять над кучей трупов. 
+	desc = "50-ти зарядный магазин с патронами калибра 7.62x51mm для пулемета L6 SAW. К тому моменту, когда вам нужно будет использовать его, вы уже будете стоять над кучей трупов.
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 14
 	uplink_types = list("nuclear")
@@ -526,7 +526,7 @@
 	name = "Adaptive Cardboard Cutouts"
 	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
 	crayon for changing their appearances."
-	desc = "Эти картонные вырезки со специальным покрытием, который предотвращает обесцвечивание и делает изображения на них более реалистичными. В этом наборе три штуки, 
+	desc = "Эти картонные вырезки со специальным покрытием, который предотвращает обесцвечивание и делает изображения на них более реалистичными. В этом наборе три штуки,
 	а также мелок для изменения их внешнего вид"
 	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
 	cost = 1
@@ -926,7 +926,7 @@
 	desc = "Имплант содержащий три ЭМИ заряда. Активируется по желанию носителя"
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
-	
+
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
 	desc = "Имплант со взрывчатым веществом. Активируется кодовым словом."
