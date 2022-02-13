@@ -252,11 +252,13 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
+		return
+
 	if(usr)
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
-
-	SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate)
 
 	W.loc = src
 	W.on_enter_storage(src)

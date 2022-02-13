@@ -50,6 +50,7 @@
 
 //from base of obj/item/weapon/storage/handle_item_insertion(): (obj/item/I, prevent_warning, NoUpdate)
 #define COMSIG_STORAGE_ENTERED "storage_entered"
+	#define COMSIG_STORAGE_PROHIBIT 1
 //from base of obj/item/weapon/storage/remove_from_storage(): (obj/item/I, atom/new_location, NoUpdate)
 #define COMSIG_STORAGE_EXITED "storage_exited"
 
