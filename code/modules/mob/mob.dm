@@ -212,7 +212,6 @@
 				client.eye = loc
 	return
 
-
 /mob/proc/show_inv(mob/user)
 	return
 

@@ -40,18 +40,9 @@
 	used = TRUE
 	var/turf/turf = Syndie_landmark.loc
 	qdel(Syndie_landmark)
-	var/obj/item/device/radio/intercom/radio = new(null)
-	radio.autosay("Unregistered logon in the System in Progress.", "Gateway Message System", "Common")
-	addtimer(CALLBACK(src, .proc/perform_gate, turf, radio), GATEWAY_HACK_TIME)
+	addtimer(CALLBACK(src, .proc/perform_gate, turf), GATEWAY_HACK_TIME)
 
-	stationgate.hacked = TRUE
-	stationgate.update_icon()
-	stationgate.detect()
-	for(var/obj/machinery/gateway/G in stationgate.linked)
-		G.hacked = TRUE
-		G.update_icon()
-
-/obj/item/device/gateway_locker/proc/perform_gate(turf/turf, obj/item/device/radio/intercom/radio)
+/obj/item/device/gateway_locker/proc/perform_gate(turf/turf)
 	new /obj/effect/effect/sparks(turf)
 	var/obj/machinery/gateway/center/Gate = new(turf)
 	Gate.detect()
@@ -62,9 +53,14 @@
 	Gate.update_icon()
 	Gate.destination = stationgate
 	stationgate.destination = Gate
+
+	stationgate.hacked = TRUE
+	stationgate.update_icon()
+	stationgate.detect()
+	for(var/obj/machinery/gateway/G in stationgate.linked)
+		G.hacked = TRUE
+		G.update_icon()
 	opened = TRUE
-	radio.autosay("Access was granted, It's Nice day to die, Crew.", "Gateway Message System", "Common")
-	qdel(radio)
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/syndie_gateway

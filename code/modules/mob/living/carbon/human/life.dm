@@ -221,6 +221,9 @@
 						if(3)
 							emote("drool")
 
+			if(19 to 200)
+				return
+
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
 	if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.

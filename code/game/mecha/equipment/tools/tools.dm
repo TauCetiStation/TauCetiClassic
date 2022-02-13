@@ -1111,7 +1111,7 @@
 	range = 0
 	var/uses = 1
 	var/aiming = FALSE
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/atom_init()
 	. = ..()
@@ -1143,7 +1143,13 @@
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		if(!T.density && !isenvironmentturf(T) && !T.obscured)
-			L+=T
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		aiming = FALSE

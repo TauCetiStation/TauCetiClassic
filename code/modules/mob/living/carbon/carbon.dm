@@ -334,7 +334,7 @@
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else switch(M.get_targetzone())
-				if(BP_R_ARM || BP_L_ARM)
+				if(BP_R_ARM, BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
 				if(BP_HEAD)
