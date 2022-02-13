@@ -1491,10 +1491,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "acG" = (
-/obj/machinery/disposal/deliveryChute,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
 /area/station/cargo/storage)
 "acH" = (
@@ -1529,6 +1526,10 @@
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "stationscrap"
+	},
+/obj/machinery/disposal/deliveryChute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -8711,9 +8712,8 @@
 /obj/machinery/door_control{
 	desc = "A remote control-switch for a shutters.";
 	id = "RnD";
-	name = "Chemistry Shutters Control";
-	pixel_x = -5;
-	pixel_y = 27;
+	name = "RnD Shutters Control";
+	pixel_y = 28;
 	req_access = list(7)
 	},
 /obj/item/weapon/disk/research_points,
@@ -18565,7 +18565,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/device/assembly/timer,
+/obj/item/device/assembly/timer{
+	secured = 1
+	},
 /obj/item/ashtray/bronze{
 	pixel_x = 5;
 	pixel_y = -4
