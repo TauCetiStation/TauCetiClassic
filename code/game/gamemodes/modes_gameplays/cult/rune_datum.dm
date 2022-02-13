@@ -135,8 +135,10 @@
 	var/id_inputing = FALSE
 
 /datum/rune/cult/teleport/teleport/proc/input_rune_id(mob/living/carbon/user)
-	id = input(user, "Выберите Id руны телепорта", "Редактор Id рун") in get_runes_ids() + "Custom"
-	if(id == "Custom")
+	id = input(user, "Выберите Id руны телепорта", "Редактор Id рун") as null|anything in get_runes_ids() + "New ID"
+	if(!id)
+		return
+	if(id == "New ID")
 		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
 
 	to_chat(user, "<span class='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
@@ -145,6 +147,7 @@
 	if(!id && !id_inputing)
 		id_inputing = TRUE
 		input_rune_id(user)
+		id_inputing = FALSE
 		return FALSE // Without instant teleport
 	var/list/tp_runes = get_tp_runes_by_id()
 	if(!tp_runes.len)
@@ -153,7 +156,7 @@
 	return TRUE
 
 /datum/rune/cult/teleport/teleport/proc/get_runes_ids()
-	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - src
+	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - holder
 	var/list/uniq_ids = list()
 	for(var/obj/effect/rune/R as anything in runes)
 		var/datum/rune/cult/teleport/teleport/T = R.power
@@ -161,7 +164,7 @@
 	return uniq_ids
 
 /datum/rune/cult/teleport/teleport/proc/get_tp_runes_by_id()
-	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - src
+	var/list/runes = religion.get_runes_by_type(/datum/rune/cult/teleport/teleport) - holder
 	var/list/valid_runes = list()
 	for(var/obj/effect/rune/R as anything in runes)
 		var/datum/rune/cult/teleport/teleport/T = R.power
