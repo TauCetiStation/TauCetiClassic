@@ -51,7 +51,7 @@
 	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
-		winset(src, "rpane.changelog", "font-style=;background-color=#FFF;")
+		winset(src, "rpane.changelog", "font-style=")
 
 /client/verb/discord()
 	set name = "Discord"

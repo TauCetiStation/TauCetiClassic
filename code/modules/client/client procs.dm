@@ -45,9 +45,6 @@ var/global/list/blacklisted_builds = list(
 		if(!asset_cache_job)
 			return
 
-	if(href_list["_src_"] == "chat")
-		return chatOutput.Topic(href, href_list)
-
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
@@ -92,8 +89,10 @@ var/global/list/blacklisted_builds = list(
 		return
 
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
 
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
@@ -213,8 +212,6 @@ var/global/list/blacklisted_builds = list(
 	if(!guard)
 		guard = new(src)
 
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -225,6 +222,9 @@ var/global/list/blacklisted_builds = list(
 
 	clients += src
 	directory[ckey] = src
+
+	// Instantiate tgui panel
+	tgui_panel = new(src)
 
 	global.ahelp_tickets?.ClientLogin(src)
 
@@ -281,8 +281,8 @@ var/global/list/blacklisted_builds = list(
 	if(SSinput.initialized)
 		set_macros()
 
-	spawn() // Goonchat does some non-instant checks in start()
-		chatOutput.start()
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	connection_time = world.time
 
@@ -322,7 +322,7 @@ var/global/list/blacklisted_builds = list(
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
+		winset(src, "rpane.changelog", "font-style=bold")
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
