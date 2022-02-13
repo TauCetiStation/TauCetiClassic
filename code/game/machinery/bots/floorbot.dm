@@ -312,15 +312,9 @@
 		visible_message("<span class='notice'>[src] makes an excited booping beeping sound!</span>")
 
 	if(state == FLOORBOT_IDLE)
-		var/list/turfs_in_view = list()
-
-		for(var/turf/T in view(7, src))
-			turfs_in_view += T
-
-		turfs_in_view = shuffle(turfs_in_view)
 
 		if(emagged == 2)
-			for (var/turf/simulated/floor/F in turfs_in_view)
+			for (var/turf/simulated/floor/F in view(7, src))
 				if(F.floor_type)
 					do_task(F, FLOORBOT_TASK_BREAKTILE)
 					return
@@ -332,14 +326,14 @@
 
 
 		if(amount > 0)
-			for (var/turf/simulated/environment/D in turfs_in_view)
+			for (var/turf/simulated/environment/D in view(7, src))
 				if(is_hull_breach(D))
 					boringness = 0
 					do_task(D, FLOORBOT_TASK_FIXHOLE)
 					return
 
 			if(placetiles || fixtiles)
-				for (var/turf/simulated/floor/F in turfs_in_view)
+				for (var/turf/simulated/floor/F in view(7, src))
 					if(placetiles && is_plating(F))
 						boringness = 0
 						do_task(F, FLOORBOT_TASK_PLACETILE)
@@ -350,14 +344,14 @@
 						return
 		else
 			if(eattiles)
-				for(var/obj/item/stack/tile/plasteel/T in turfs_in_view)
+				for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 					state = FLOORBOT_MOVING_TO_PICKUP
 					boringness = 0
 					target = T
 					path = new()
 					return
 			if(maketiles)
-				for(var/obj/item/stack/sheet/metal/M in turfs_in_view)
+				for(var/obj/item/stack/sheet/metal/M in view(7, src))
 					if(M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
 						state = FLOORBOT_MOVING_TO_PICKUP
 						boringness = 0
