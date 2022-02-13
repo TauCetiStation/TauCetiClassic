@@ -707,11 +707,6 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "abi" = (
@@ -2282,7 +2277,15 @@
 	dir = 4
 	},
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "mining_east_pump";
+	name = "Mining East Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
 /area/station/cargo/storage)
 "adP" = (
 /obj/machinery/requests_console{
@@ -3181,7 +3184,7 @@
 "aft" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "research_airlock";
-	pixel_x = -25;
+	pixel_x = -28;
 	tag_airpump = "research_pump";
 	tag_chamber_sensor = "research_sensor";
 	tag_exterior_door = "research_outer";
@@ -3271,7 +3274,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "research_sensor";
 	layer = 3.3;
-	pixel_x = -25
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -7112,14 +7115,11 @@
 /area/station/cargo/recycler)
 "amZ" = (
 /obj/structure/rack,
-/obj/item/device/suit_cooling_unit,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
-/obj/item/clothing/gloves/latex,
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
-/obj/item/clothing/suit/bio_suit/particle_protection,
 /obj/item/clothing/head/bio_hood/particle_protection,
+/obj/item/clothing/suit/bio_suit/particle_protection,
+/obj/item/clothing/gloves/latex,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -7170,10 +7170,24 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "anf" = (
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
-/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/pill_bottle/dylovene{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/weapon/pen{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/device/healthanalyzer{
+	pixel_x = 5;
+	pixel_y = -10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -7632,35 +7646,28 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aof" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1379;
-	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent"
-	},
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
-	pixel_x = -25
+	pixel_x = -28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "mining_east_pump";
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
 /area/station/cargo/storage)
 "aog" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1379;
-	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
+/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "aoh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8073,25 +8080,27 @@
 	},
 /area/station/maintenance/science)
 "ape" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/folder/purple,
-/obj/item/weapon/pen,
-/obj/structure/cable{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
+/obj/structure/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/suit/bio_suit/particle_protection,
+/obj/item/clothing/head/bio_hood/particle_protection,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Aft Hall APC";
 	pixel_x = -25;
 	pixel_y = 1
 	},
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
+	icon_state = "darkpurple"
 	},
 /area/asteroid/research_outpost/spectro)
 "apf" = (
@@ -8945,16 +8954,16 @@
 /area/station/rnd/hallway)
 "aqF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/structure/closet/crate,
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	pixel_x = -32
 	},
 /obj/random/tools/tech_supply,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aqG" = (
@@ -14140,11 +14149,6 @@
 "eZe" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/supply_crates,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "eZP" = (
@@ -15150,18 +15154,23 @@
 	},
 /area/station/security/main)
 "gih" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
-	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_east_airlock";
-	pixel_x = -25;
+	pixel_x = -28;
 	tag_airpump = "mining_east_pump";
 	tag_chamber_sensor = "mining_east_sensor";
 	tag_exterior_door = "mining_east_outer";
 	tag_interior_door = "mining_east_inner"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "mining_east_pump";
+	name = "Mining East Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
 /area/station/cargo/storage)
 "gjt" = (
 /obj/machinery/conveyor{
@@ -16502,13 +16511,13 @@
 /area/station/rnd/lab)
 "hAq" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -21
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
@@ -19058,11 +19067,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -22022,7 +22026,8 @@
 	pixel_y = -23
 	},
 /obj/structure/cable{
-	dir = 8
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
@@ -23322,11 +23327,6 @@
 "ogs" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/pizzabox/mushroom,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ogZ" = (
@@ -27459,11 +27459,6 @@
 /area/station/civilian/chapel/office)
 "rVV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rXq" = (
@@ -27529,6 +27524,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -29837,11 +29837,6 @@
 /area/asteroid/mine/unexplored)
 "upS" = (
 /obj/random/tools/tech_supply,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -31335,17 +31330,6 @@
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
-"vUc" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "vUv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -63816,7 +63800,7 @@ wMX
 sFn
 xHu
 bac
-vUc
+lVK
 wxP
 lVK
 uYJ
