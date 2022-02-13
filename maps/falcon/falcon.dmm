@@ -1743,7 +1743,7 @@
 "adc" = (
 /obj/machinery/flasher{
 	id = "AI";
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/aiModule/nanotrasen,
@@ -1892,7 +1892,7 @@
 "adn" = (
 /obj/machinery/flasher{
 	id = "AI";
-	pixel_y = -24
+	pixel_y = -28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2145,10 +2145,6 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adG" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 24
-	},
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
 	},
@@ -2178,7 +2174,7 @@
 	},
 /obj/machinery/power/apc/largecell{
 	dir = 8;
-	pixel_x = -32
+	pixel_x = -28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2363,7 +2359,7 @@
 	control_area = "Telecoms Control Room";
 	dir = 8;
 	name = "AI Satellite Antechamber";
-	pixel_x = -26
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2424,7 +2420,7 @@
 "adX" = (
 /obj/machinery/flasher{
 	id = "AI";
-	pixel_y = 24
+	pixel_y = 28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2523,8 +2519,8 @@
 	frequency = 1379;
 	master_tag = "satellite_aux_airlock";
 	name = "interior access button";
-	pixel_x = -20;
-	pixel_y = -20;
+	pixel_x = -32;
+	pixel_y = -28;
 	req_access = list(66)
 	},
 /turf/simulated/floor{
@@ -2568,10 +2564,6 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aeh" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber South";
 	dir = 1;
@@ -2580,6 +2572,10 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/flora/pottedplant/orientaltree{
 	pixel_y = 12
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2605,14 +2601,14 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aej" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 24
-	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/aiModule/freeform,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2740,8 +2736,20 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aew" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "satellite_aux_airlock";
+	pixel_x = -28;
+	req_access = list(66);
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
 	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
@@ -8783,7 +8791,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/construction/assembly_line)
 "aqs" = (
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating{
@@ -9079,6 +9087,17 @@
 	},
 /area/station/tcommsat/chamber)
 "aqS" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "satellite_aux_sensor";
+	pixel_x = 28;
+	req_one_access = list(13,45,1)
+	},
+/turf/simulated/floor/plating,
+/area/station/tcommsat/computer)
+"aqT" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9089,35 +9108,12 @@
 	frequency = 1379;
 	master_tag = "satellite_aux_airlock";
 	name = "exterior access button";
-	pixel_x = 24;
-	pixel_y = 22;
+	pixel_x = 32;
+	pixel_y = 28;
 	req_access = list(66)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
-"aqT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1379;
-	id_tag = "satellite_aux_pump";
-	name = "Satellite Aux Large Air Vent"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "satellite_aux_airlock";
-	pixel_y = 25;
-	req_access = list(66);
-	tag_airpump = "satellite_aux_pump";
-	tag_chamber_sensor = "satellite_aux_sensor";
-	tag_exterior_door = "satellite_aux_outer";
-	tag_interior_door = "satellite_aux_inner"
-	},
-/obj/machinery/airlock_sensor{
-	id_tag = "satellite_aux_sensor";
-	pixel_x = -25;
-	req_one_access = list(13,45,1)
-	},
-/turf/simulated/floor/plating,
-/area/station/tcommsat/computer)
 "aqU" = (
 /obj/machinery/camera{
 	c_tag = "MiniSat South";
@@ -11776,8 +11772,9 @@
 "cMi" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security/hos,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/suit/space/rig/security/hos,
 /obj/item/clothing/head/helmet/space/rig/security/hos,
 /turf/simulated/floor{
 	dir = 8;
@@ -12663,6 +12660,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -15432,6 +15433,9 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -16569,7 +16573,7 @@
 "hEV" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 6
+	pixel_y = 10
 	},
 /obj/machinery/computer/guestpass{
 	dir = 1;
@@ -16577,6 +16581,10 @@
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = 7
+	},
+/obj/item/weapon/storage/box/trackimp{
+	pixel_x = -12;
+	pixel_y = -1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -19573,7 +19581,7 @@
 /obj/machinery/flasher_button{
 	id = "permflash";
 	name = "Prison Wing flashes";
-	pixel_y = -22
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -22246,6 +22254,7 @@
 	pixel_y = -25
 	},
 /obj/item/weapon/storage/box/holobadge,
+/obj/item/weapon/storage/lockbox/mind_shields,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "nkH" = (
@@ -23524,35 +23533,25 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "oun" = (
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/syringe/inaprovaline{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/glass/bottle/toxin{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/syringe/inaprovaline{
-	pixel_x = 5;
-	pixel_y = -2
-	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/masks{
-	pixel_x = 3;
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/box/gloves{
+	pixel_x = 10
+	},
+/obj/item/weapon/storage/box/chemimp{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/gloves,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = -5
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -23850,15 +23849,15 @@
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/cane,
 /obj/item/weapon/cane,
+/obj/item/device/sensor_device,
+/obj/item/device/sensor_device,
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
 /obj/structure/rack,
-/obj/item/device/sensor_device,
-/obj/item/device/sensor_device,
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
-	},
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -24726,11 +24725,11 @@
 /area/station/tcommsat/computer)
 "pyl" = (
 /obj/machinery/door_control{
-	id = "Captain_private";
+	id = "RD-shutters";
 	name = "Shutters Control";
 	pixel_x = 6;
 	pixel_y = 24;
-	req_access = list(20)
+	req_access = list(47)
 	},
 /obj/machinery/door_control{
 	id = "Biohazard";
@@ -25934,10 +25933,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel)
 "qyt" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Head of Security";
-	req_access = list(58)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -25960,6 +25955,17 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "hos_blast";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Head of Security";
+	req_access = list(58)
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -26982,6 +26988,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/stool,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -29200,7 +29207,9 @@
 /obj/structure/closet/secure_closet/hos,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/lockbox/mind_shields,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -30726,13 +30735,6 @@
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "vnl" = (
-/obj/structure/closet/secure_closet/pistols,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/machinery/keycard_auth{
 	pixel_x = 24;
 	pixel_y = -4
@@ -30947,6 +30949,9 @@
 /obj/machinery/requests_console/security{
 	pixel_y = 25
 	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -32480,6 +32485,11 @@
 /area/station/hallway/primary/central)
 "xbn" = (
 /obj/structure/closet/secure_closet/security,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/weapon/gun/projectile/glock,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
@@ -50684,9 +50694,9 @@ aaM
 adT
 aaY
 vlu
-aqT
-afK
 aeC
+aew
+afK
 vlu
 aep
 qws
@@ -50945,7 +50955,7 @@ aeq
 aeq
 aex
 aqI
-aqS
+aqT
 aeD
 crv
 gay
@@ -51456,7 +51466,7 @@ mqs
 pyj
 vlu
 aes
-aew
+aqS
 aeB
 vlu
 gay
@@ -56061,9 +56071,9 @@ alv
 tKY
 uDb
 akb
-akb
+akC
 aqr
-akb
+akC
 akb
 crv
 gay
