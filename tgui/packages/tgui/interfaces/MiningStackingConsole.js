@@ -1,9 +1,7 @@
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Collapsible, Dropdown, Flex, Input, NoticeBox, Section, LabeledList, AnimatedNumber, NumberInput } from '../components';
+import { useBackend } from "../backend";
+import { Button, Section, LabeledList, AnimatedNumber, NumberInput } from '../components';
 import { Window } from "../layouts";
-import { sortBy } from 'common/collections';
 
 export const MiningStackingConsole = (props, context) => {
   const { act, data } = useBackend(context);

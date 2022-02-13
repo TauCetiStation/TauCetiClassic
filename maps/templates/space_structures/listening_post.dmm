@@ -97,7 +97,8 @@
 /area/space_structures/listening_post)
 "ao" = (
 /obj/machinery/computer/med_data{
-	dir = 4
+	dir = 4;
+	req_one_access = list(150)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -369,7 +370,9 @@
 	},
 /area/space_structures/listening_post)
 "aZ" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/closet/secure_closet/medical1{
+	req_access = list(150)
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
