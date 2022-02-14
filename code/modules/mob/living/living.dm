@@ -181,10 +181,6 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-//			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
-//					return
 	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
 		AM.add_fingerprint(src)
 		Move(get_step(loc, dir_to_target), dir_to_target)

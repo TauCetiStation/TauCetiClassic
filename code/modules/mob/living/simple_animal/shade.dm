@@ -147,35 +147,29 @@
 /mob/living/simple_animal/shade/god/Move(atom/NewLoc, direct)
 	. = TRUE
 
-	var/oldLoc = loc
-
 	set_dir(direct)
 	if(NewLoc)
-		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return
-
-		forceMove(NewLoc)
+		abstract_move(NewLoc)
 		return
 
-	forceMove(get_turf(src)) //Get out of closets and such as a ghostly being.
-	var/new_x = x
-	var/new_y = y
+	var/turf/destination = get_turf(src)
+
 	if((direct & NORTH) && y < world.maxy)
-		new_y++
+		destination = get_step(destination, NORTH)
 	else if((direct & SOUTH) && y > 1)
-		new_y--
-	if((direct & EAST) && x < world.maxx)
-		new_x++
-	else if((direct & WEST) && x > 1)
-		new_x--
+		destination = get_step(destination, SOUTH)
 
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, locate(new_x, new_y,  z), direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+	if((direct & EAST) && x < world.maxx)
+		destination = get_step(destination, EAST)
+	else if((direct & WEST) && x > 1)
+		destination = get_step(destination, WEST)
+
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, destination, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
-	x = new_x
-	y = new_y
-
-	Moved(oldLoc, 0)
+	abstract_move(destination)//Get out of closets and such as a ghost
 
 /mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
 	return TRUE

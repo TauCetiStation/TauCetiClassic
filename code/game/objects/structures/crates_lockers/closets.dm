@@ -86,10 +86,10 @@
 			I.forceMove(src)
 			itemcount++
 
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
+		if(isgod(M))
 			continue
 		if(M.buckled)
 			continue

@@ -231,10 +231,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			destination = get_step(destination, WEST)
 
 		abstract_move(destination)//Get out of closets and such as a ghost
-
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
-		S.Crossed(src)
-
+		for(var/obj/effect/step_trigger/S in destination)
+			S.Crossed(src)
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
