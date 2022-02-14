@@ -316,20 +316,19 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Diona"
 	
-	var/list/Allseeing = list()	//like /verb/steal blood
+	var/list/allseeing = list()
 	for (var/mob/living/carbon/human/A in oview(src))
-		if(!stat && A.client && A.mind)
-			Allseeing += A
-	if(!Allseeing)
-		to_chat(src, "<span class='warning'>You can't be sneaky when they're watching.</span>") //for balance...
-		return
-		
-	if (layer != TURF_LAYER+0.2)
+		if(A.client || A.mind)
+			allseeing += A
+	if ((!allseeing.len) && (layer != TURF_LAYER+0.2)) //balance for traitor-diona
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
+		to_chat(src, ("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
+		if(!allseeing.len)
+			to_chat(src, ("<span class='notice'>You have stopped hiding.</span>"))
+		else
+			to_chat(src, "<span class='warning'>You can't be sneaky when they're watching.</span>")
 
 /mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
