@@ -14,13 +14,6 @@
 	belt = /obj/item/device/pda/lawyer2
 	l_hand = /obj/item/weapon/storage/briefcase
 
-/datum/outfit/job/assistant/mecha_operator
-	name = OUTFIT_JOB_NAME("Mecha Operator")
-
-	uniform = /obj/item/clothing/under/rank/mecha_operator
-	shoes = /obj/item/clothing/shoes/black
-	gloves = /obj/item/clothing/gloves/fingerless
-
 /datum/outfit/job/assistant/private_eye
 	name = OUTFIT_JOB_NAME("Private Eye")
 
