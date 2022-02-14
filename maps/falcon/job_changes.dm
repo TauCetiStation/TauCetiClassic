@@ -3,8 +3,8 @@
 /datum/job/assistant/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 3
+	spawn_positions = 3
 
 /datum/job/cyborg/New()
 	..()
@@ -54,6 +54,13 @@
 	..()
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 6000
+
+/datum/job/detective/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
+	minimal_player_ingame_minutes = 1800
 
 /datum/job/officer/New()
 	..()
@@ -176,8 +183,6 @@ MAP_REMOVE_JOB(xenobiologist)
 MAP_REMOVE_JOB(roboticist)
 
 MAP_REMOVE_JOB(warden)
-
-MAP_REMOVE_JOB(detective)
 
 MAP_REMOVE_JOB(forensic)
 
