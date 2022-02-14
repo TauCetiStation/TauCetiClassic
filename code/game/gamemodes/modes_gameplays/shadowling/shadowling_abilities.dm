@@ -384,7 +384,7 @@
 				var/mob/living/carbon/M = target
 				to_chat(M, "<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>")
 				M.Weaken(2)
-				M.confused += 10
+				M.AdjustConfused(10)
 				//M.setEarDamage(M.ear_damage + 3)
 				M.ear_damage += 3
 			else if(issilicon(target))
