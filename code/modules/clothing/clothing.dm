@@ -269,7 +269,6 @@ var/global/list/icon_state_allowed_cache = list()
 	A.update_icon()
 	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
 	update_inv_mob()
-	action_button_name = null
 
 /obj/item/clothing/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/clothing/accessory))
@@ -301,7 +300,6 @@ var/global/list/icon_state_allowed_cache = list()
 		LAZYADD(accessories, A)
 		A.on_attached(src, user)
 		update_inv_mob()
-		action_button_name = "Use inventory."
 		return
 	else
 		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
