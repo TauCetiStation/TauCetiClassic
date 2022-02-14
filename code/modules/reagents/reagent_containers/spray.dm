@@ -118,7 +118,7 @@
 		switch(tiles_to_move)
 			if(0 to 2)
 				glide = 8
-				buckled_to.propelled = 3
+				buckled_to.propelled = 4
 				move_timer = 1
 			if(3 to 4)
 				glide = 6
@@ -126,10 +126,9 @@
 				move_timer = 2
 			if(5 to 8)
 				glide = 4
-				buckled_to.propelled = 1
+				buckled_to.propelled = 0
 				move_timer = 3
 			else
-				buckled_to.propelled = 0
 				return
 		buckled_to.Move(get_step(loc, movementdirection), movementdirection, glide)
 		sleep(move_timer)
