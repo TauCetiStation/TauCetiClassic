@@ -648,7 +648,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attack_hand(mob/user)
 	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
-		if(accessories && loc == user)
+		if(accessories && slot_equipped)
 			for(var/obj/item/clothing/accessory/A in accessories)
 				A.attack_hand(user)
 		return
