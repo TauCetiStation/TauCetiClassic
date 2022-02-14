@@ -268,11 +268,7 @@ var/global/list/icon_state_allowed_cache = list()
 	LAZYREMOVE(accessories, A)
 	A.update_icon()
 	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
-	if(!ishuman(loc))
-		return
-	var/mob/living/carbon/human/H = loc
-	H.update_inv_w_uniform()
-	H.update_inv_wear_suit()
+	update_inv_mob()
 	action_button_name = null
 
 /obj/item/clothing/attackby(obj/item/I, mob/user, params)
@@ -286,14 +282,13 @@ var/global/list/icon_state_allowed_cache = list()
 	return ..()
 
 /obj/item/clothing/attack_hand(mob/user)
-	if(slot_equipped)
-		if(!accessories)
-			..()
-			return
-		else
-			for(var/obj/item/clothing/accessory/A in accessories)
-				A.attack_hand(user)
-			return
+	if(!slot_equipped)
+		return ..()
+	if(!accessories)
+		return ..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		A.attack_hand(user)
+		return
 	..()
 
 /obj/item/clothing/examine(mob/user)

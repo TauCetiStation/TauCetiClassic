@@ -475,19 +475,18 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 
-		if(U.accessories)
-			for(var/obj/item/clothing/accessory/A in w_uniform:accessories)
-				var/tie_color = A.item_color
-				if(!tie_color)
-					tie_color = A.icon_state
-				var/image/tie
-				if(A.icon_custom)
-					tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
-				else
-					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
-				tie.color = A.color
-				tie = human_update_offset(tie, TRUE)
-				standing.add_overlay(tie)
+		for(var/obj/item/clothing/accessory/A in U.accessories)
+			var/tie_color = A.item_color
+			if(!tie_color)
+				tie_color = A.icon_state
+			var/image/tie
+			if(A.icon_custom)
+				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
+			else
+				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+			tie.color = A.color
+			tie = human_update_offset(tie, TRUE)
+			standing.add_overlay(tie)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
