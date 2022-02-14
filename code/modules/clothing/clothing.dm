@@ -288,7 +288,6 @@ var/global/list/icon_state_allowed_cache = list()
 		return ..()
 	for(var/obj/item/clothing/accessory/A in accessories)
 		A.attack_hand(user)
-		return
 	..()
 
 /obj/item/clothing/examine(mob/user)
