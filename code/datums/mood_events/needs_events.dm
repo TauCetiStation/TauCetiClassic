@@ -39,3 +39,7 @@
 /datum/mood_event/agony
 	description = "<span class='boldwarning'>You feel like you could die any moment now.</span>"
 	mood_change = -20
+
+/datum/mood_event/lonely
+	description = "<span class='warning'>I feel lonely... I better talk to somebody, for real.</span>"
+	mood_change = -6
