@@ -139,21 +139,17 @@
 
 /obj/machinery/bot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			explode()
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			src.health -= rand(5,10)*fire_dam_coeff
 			src.health -= rand(10,20)*brute_dam_coeff
-			healthcheck()
-			return
-		if(3.0)
-			if (prob(50))
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				src.health -= rand(1,5)*fire_dam_coeff
 				src.health -= rand(1,5)*brute_dam_coeff
-				healthcheck()
-				return
-	return
+	healthcheck()
 
 /obj/machinery/bot/emp_act(severity)
 	var/was_on = on

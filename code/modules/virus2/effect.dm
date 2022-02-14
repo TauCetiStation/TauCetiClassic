@@ -388,7 +388,7 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
+		M.AdjustConfused(-2)
 		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
@@ -860,10 +860,10 @@
 		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
-		mob.confused = max(mob.confused, 2)
+		mob.MakeConfused(2)
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
-		mob.confused = max(mob.confused, 10)
+		mob.MakeConfused(10)
 
 /*/datum/disease2/effect/mutation
 	name = "DNA Degradation"
