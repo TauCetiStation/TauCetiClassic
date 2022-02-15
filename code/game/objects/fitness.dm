@@ -184,6 +184,7 @@
 	var/max_light_dumbbells = 2
 
 /obj/structure/dumbbells_rack/atom_init()
+	. = ..()
 	dumbbells = new(src)
 	dumbbells.set_slots(slots = 4, slot_size = SIZE_BIG)
 	dumbbells.can_hold = list(/obj/item/weapon/dumbbell)
