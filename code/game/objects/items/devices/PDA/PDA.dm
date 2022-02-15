@@ -67,6 +67,7 @@
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
+	var/pda_slippery = FALSE
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -145,6 +146,7 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+	pda_slippery = TRUE
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
@@ -156,20 +158,27 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
-/obj/item/device/pda/proc/make_user_slip(mob/user)
-	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+/obj/item/device/pda/clown/Destroy()
+	remove_user_slip(loc)
+	return ..()
 
-/obj/item/device/pda/proc/remove_user_slip(mob/user)
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/human/user)
+	user.slippery = TRUE
+	if(user.lying)
+		user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/human/user)
+	user.slippery = FALSE
 	qdel(user.GetComponent(/datum/component/slippery))
 
-/obj/item/device/pda/equipped(mob/user, slot)
+/obj/item/device/pda/clown/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID)
+	if(pda_slippery && (slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID))
 		make_user_slip(user)
 	else
 		remove_user_slip(user)
 
-/obj/item/device/pda/dropped(mob/user)
+/obj/item/device/pda/clown/dropped(mob/living/carbon/human/user)
 	..()
 	remove_user_slip(user)
 
@@ -1288,16 +1297,14 @@
 	set src in usr
 
 	if(issilicon(usr))
-		return FALSE
+		return
 
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
 		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
-		return TRUE
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-		return FALSE
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"

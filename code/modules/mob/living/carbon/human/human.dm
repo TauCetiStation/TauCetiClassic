@@ -20,6 +20,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/slippery = FALSE
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2

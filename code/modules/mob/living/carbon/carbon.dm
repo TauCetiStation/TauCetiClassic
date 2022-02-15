@@ -107,6 +107,15 @@
 					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
 
+/mob/living/carbon/proc/make_user_slip(mob/living/carbon/human/user)
+	if(user.slippery)
+		user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+	else
+		qdel(user.GetComponent(/datum/component/slippery))
+
+/mob/living/carbon/proc/remove_user_slip(mob/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
 
