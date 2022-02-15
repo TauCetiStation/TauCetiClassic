@@ -31,7 +31,8 @@
 			M.dizziness = 0
 			M.drowsyness = 0
 			M.setStuttering(0)
-			M.confused = 0
+			M.SetDrunkenness(0)
+			M.SetConfused(0)
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
@@ -360,7 +361,7 @@
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.setStuttering(0)
-	M.confused = 0
+	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
@@ -648,7 +649,7 @@
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.setStuttering(0)
-	M.confused = 0
+	M.SetConfused(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
@@ -735,7 +736,7 @@
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
 				M.adjustToxLoss(5)
 			else
-				M.confused += 2
+				M.AdjustConfused(2)
 		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
