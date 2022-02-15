@@ -5,7 +5,15 @@
 	deltimer(conversation_timer)
 	return ..()
 
+/mob/living/carbon/human/proc/handle_prolonged_no_socialization()
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+
 /mob/living/carbon/human/proc/handle_no_socialization()
+	conversation_timer = addtimer(
+		CALLBACK(src, .proc/handle_prolonged_no_socialization),
+		5 MINUTES,
+		TIMER_STOPPABLE
+	)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
 /mob/living/carbon/human/proc/register_conversation(mob/speaker)
@@ -15,7 +23,7 @@
 		5 MINUTES,
 		TIMER_STOPPABLE
 	)
-	SEND_SIGNAL(src, COMSIG_REMOVE_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
 /mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	. = ..()

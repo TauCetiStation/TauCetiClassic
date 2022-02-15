@@ -13,12 +13,17 @@
 
 /datum/mood_event/drunk
 	mood_change = 1
-	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>\n"
+	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>"
 
 /datum/mood_event/very_drunk
 	mood_change = 3
-	description = "<span class='nicegreen'>I *hicc* do not feel my hands, what regrets?</span>\n"
+	description = "<span class='nicegreen'>I *hicc* do not feel my hands, what regrets?</span>"
 
 /datum/mood_event/drunk_catharsis
 	mood_change = 10
-	description = "<span class='bold nicegreen'>Whatever happens - happens. I do not care any longer. Void, consume me.</span>\n"
+	description = "<span class='bold nicegreen'>Whatever happens - happens. I do not care any longer. Void, consume me.</span>"
+
+/datum/mood_event/smoked
+	description = "<span class='nicegreen'>I have had a smoke recently.</span>"
+	mood_change = 2
+	timeout = 6 MINUTES
