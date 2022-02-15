@@ -532,7 +532,6 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(espionageagent_start)
-	espionageagent_start -= spawnloc
 
 	var/client/C = ghost.client
 
@@ -543,6 +542,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
+	espionageagent_start -= spawnloc
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
