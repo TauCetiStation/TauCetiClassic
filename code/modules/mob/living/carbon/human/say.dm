@@ -6,7 +6,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/handle_no_socialization()
-
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
 /mob/living/carbon/human/proc/register_conversation(mob/speaker)
 	deltimer(conversation_timer)
@@ -15,6 +15,7 @@
 		5 MINUTES,
 		TIMER_STOPPABLE
 	)
+	SEND_SIGNAL(src, COMSIG_REMOVE_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
 /mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	. = ..()
@@ -25,6 +26,9 @@
 		return
 
 	if(stat != CONSCIOUS)
+		return
+
+	if(!client)
 		return
 
 	if(used_radio)
