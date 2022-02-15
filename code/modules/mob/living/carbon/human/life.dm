@@ -1600,7 +1600,7 @@
 	if(life_tick % 10)
 		switch(IO.heart_status)
 			if(HEART_FAILURE)
-				to_chat(src, "<span class='danger'>Your feel a prick in your heart.</span>")
+				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
 				apply_effect(5,AGONY,0)
 				return PULSE_NONE
 			if(HEART_FIBR)
