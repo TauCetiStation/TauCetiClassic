@@ -719,6 +719,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_SMALL
 
+	// No PUMPED sprite for the head means you can't pump it.
+	// Threshold is still there to not be interpreted as FULLY PUMPED
+	pumped_threshold = 20
+	max_pumped = 0
+
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
