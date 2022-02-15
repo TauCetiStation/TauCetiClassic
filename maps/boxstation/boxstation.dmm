@@ -37545,7 +37545,6 @@
 	nuketype = "NT";
 	r_code = "LOLNO"
 	},
-/obj/effect/landmark/droppod,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -42346,6 +42345,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/landmark/droppod,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bxZ" = (
@@ -77341,6 +77341,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"mUK" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Security Outer Space 2";
+	dir = 1;
+	network = list("SS13","Security")
+	},
+/turf/space,
+/area/space)
 "mVb" = (
 /obj/structure/sign/mark{
 	icon_state = "fup";
@@ -80912,6 +80921,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"rtF" = (
+/obj/machinery/camera/motion{
+	c_tag = "Security Outer Space 1";
+	dir = 1;
+	network = list("SS13","Security")
+	},
+/turf/space,
+/area/space)
 "rub" = (
 /obj/item/weapon/storage/fancy/vials,
 /obj/item/weapon/storage/fancy/vials,
@@ -113059,13 +113076,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cAd
+cAd
+cAd
+cAd
+cAd
+cAd
+cAd
 bEP
 aGr
 aNs
@@ -113316,7 +113333,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaa
@@ -113573,7 +113590,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaa
@@ -113830,7 +113847,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaa
@@ -114087,7 +114104,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaa
@@ -114344,7 +114361,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaa
@@ -114601,9 +114618,9 @@ aaa
 aaa
 aaa
 aaa
+cAd
 aaa
-aaa
-aaa
+aah
 aah
 aah
 aaj
@@ -114858,10 +114875,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
 aah
 aah
+rtF
 aaj
 aaj
 aau
@@ -115115,10 +115132,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
-aah
 aaa
+aah
+aah
 aak
 aao
 aao
@@ -115372,8 +115389,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
+aaa
 aaa
 aaa
 aBS
@@ -115629,10 +115646,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
-aah
-aah
+aaa
+aaa
+aaa
 axb
 aap
 aaH
@@ -115886,8 +115903,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
+aaa
 aaa
 aaa
 aAu
@@ -116143,8 +116160,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
+aah
 aaa
 aaa
 aat
@@ -116400,8 +116417,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
+aah
 aah
 aah
 aaj
@@ -116657,8 +116674,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cAd
+aaa
 aaa
 aaa
 aAu
@@ -116914,8 +116931,8 @@ aaa
 aaa
 aaa
 aaa
+cAd
 aaa
-aah
 aaa
 aaa
 aat
@@ -117171,9 +117188,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cAd
+cAd
+cAd
 aaV
 aaV
 aaV
@@ -117428,7 +117445,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aaa
 aaV
@@ -117685,7 +117702,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 qDo
 aaV
@@ -117942,7 +117959,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aah
 aaV
@@ -118199,7 +118216,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aah
 aaV
@@ -118456,7 +118473,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aah
 aaV
@@ -118713,9 +118730,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
 aah
+mUK
 aaV
 aaV
 aaV
@@ -118970,7 +118987,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cAd
 aaa
 aah
 aaa
@@ -119227,8 +119244,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
+aah
 aah
 aah
 cAd
@@ -119484,8 +119501,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
+aah
 aaa
 aaa
 cAe
@@ -119741,8 +119758,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
+aah
 aaa
 aaa
 cAd
@@ -119998,8 +120015,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cAd
+aah
 aaa
 aaa
 cAd
@@ -120255,11 +120272,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cAd
+cAd
+cAd
+cAd
+cAd
 aaa
 aaa
 aaa

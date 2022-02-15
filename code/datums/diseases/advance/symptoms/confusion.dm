@@ -34,6 +34,4 @@ Bonus
 				to_chat(M, "<span class='notice'>[pick("You feel confused.", "You forgot what you were thinking about.")]</span>")
 			else
 				to_chat(M, "<span class='notice'>You are unable to think straight!</span>")
-				M.confused = min(100, M.confused + 2)
-
-	return
+				M.SetConfused(min(100, M.confused + 2))
