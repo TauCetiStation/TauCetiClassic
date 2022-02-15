@@ -39,6 +39,7 @@
 #include "code\__DEFINES\damage_organs.dm"
 #include "code\__DEFINES\diseases2.dm"
 #include "code\__DEFINES\DNA.dm"
+#include "code\__DEFINES\explosions.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\gamemodes.dm"

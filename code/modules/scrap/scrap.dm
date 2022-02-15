@@ -75,13 +75,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	if (prob(25))
 		new /obj/effect/effect/smoke(src.loc)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			new /obj/effect/scrapshot(src.loc, 1)
 			dig_amount = 0
-		if(2)
+		if(EXPLODE_HEAVY)
 			new /obj/effect/scrapshot(src.loc, 2)
 			dig_amount = dig_amount / 3
-		if(3)
+		if(EXPLODE_LIGHT)
 			dig_amount = dig_amount / 2
 	if(dig_amount < 4)
 		qdel(src)
@@ -359,6 +359,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 		/obj/random/science/science_supply
 	)
 
+/obj/structure/scrap/science_safe
+	icontype = "science"
+	name = "scientific trash pile"
+	desc = "Pile of refuse from research department."
+	parts_icon = 'icons/obj/structures/scrap/science.dmi'
+	loot_list = list(
+		/obj/random/science/science_supply_safe
+	)
+
 /obj/structure/scrap/cloth
 	icontype = "cloth"
 	name = "cloth pile"
@@ -366,6 +375,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
 	loot_list = list(
 		/obj/random/cloth/random_cloth
+	)
+
+/obj/structure/scrap/cloth_safe
+	icontype = "cloth"
+	name = "cloth pile"
+	desc = "Pile of second hand clothing for charity."
+	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
+	loot_list = list(
+		/obj/random/cloth/random_cloth_safe
 	)
 
 /obj/structure/scrap/syndie
