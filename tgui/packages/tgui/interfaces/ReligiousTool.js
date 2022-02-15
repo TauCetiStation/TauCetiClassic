@@ -1,7 +1,6 @@
 import { toTitleCase, capitalize, createSearch } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex, Input } from '../components';
-import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
 const ASPECT2COLOR = [];
@@ -315,6 +314,7 @@ const Encyclopedia = (props, context) => {
       </Tabs>
       <Section
         height={52}
+        fill
         scrollable
         width="100%">
         <Flex.Item>
@@ -679,6 +679,7 @@ const RiteTab = (props, context) => {
   return (
     <Section
       height={52}
+      fill
       scrollable
       width="100%">
       <Input

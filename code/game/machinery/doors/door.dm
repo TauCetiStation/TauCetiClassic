@@ -194,17 +194,16 @@
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(25))
-				qdel(src)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(75))
+				return
+		if(EXPLODE_LIGHT)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-	return
+				return
+	qdel(src)
 
 
 /obj/machinery/door/update_icon()

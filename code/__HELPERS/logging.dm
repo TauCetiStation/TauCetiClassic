@@ -45,7 +45,7 @@
 
 	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
-			to_chat(C, "DEBUG: [text]")
+			to_chat_debug(C, "DEBUG: [text]")
 
 /proc/log_asset(text)
 	if (config && config.log_asset)

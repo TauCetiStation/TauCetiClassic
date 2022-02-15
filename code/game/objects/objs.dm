@@ -59,7 +59,7 @@
 		return null
 
 /obj/singularity_act()
-	ex_act(1.0)
+	ex_act(EXPLODE_DEVASTATE)
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
