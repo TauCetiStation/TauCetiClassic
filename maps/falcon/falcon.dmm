@@ -822,7 +822,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "abt" = (
-/obj/random/tools/tech_supply,
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
@@ -6026,7 +6025,6 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
-/obj/random/tools/tool,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "akT" = (
@@ -8942,7 +8940,6 @@
 	dir = 8;
 	pixel_x = -32
 	},
-/obj/random/tools/tech_supply,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -9372,10 +9369,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/random/tools/tech_supply,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "arq" = (
-/obj/random/tools/tool,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -9983,11 +9980,7 @@
 /obj/item/clothing/head/ushanka/black_white,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
-	pixel_x = 5;
-	pixel_y = 4
+	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -29906,13 +29899,17 @@
 "tWv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/random/tools/tool,
-/obj/structure/closet/crate,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/random/tools/tool,
+/obj/structure/closet/crate/engi,
+/obj/random/tools/toolbox,
+/obj/random/tools/tool,
+/obj/item/stack/cable_coil/random,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
