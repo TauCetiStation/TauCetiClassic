@@ -64,7 +64,7 @@
 			T = get_step(src, direction_to_check)
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-				I.plane = 6
+				I.plane = FLOOR_PLANE
 				T.add_overlay(I)
 
 	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
@@ -80,14 +80,13 @@
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
-		if(2.0)
-			if (prob(70))
-				mined_ore = 1 // some of the stuff gets blown up
-				GetDrilled()
-		if(1.0)
-			mined_ore = 2 // some of the stuff gets blown up
-			GetDrilled()
-
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
+			return
+	mined_ore = 3 - severity
+	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
 	if(istype(AM,/mob/living/carbon/human))
@@ -184,7 +183,7 @@
 
 	if (istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
-		if(S.wielded)
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
 			GetDrilled(artifact_fail = 1)
 		else
@@ -676,14 +675,12 @@
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
 			return
-		if(2.0)
-			if(prob(70))
-				gets_dug()
-		if(1.0)
-			gets_dug()
-	return
+	gets_dug()
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
 

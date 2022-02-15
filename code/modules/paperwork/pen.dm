@@ -46,7 +46,7 @@
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()
-			for(var/mob/dead/observer/D in observer_list)
+			for(var/mob/dead/observer/D as anything in observer_list)
 				if(D.started_as_observer)
 					choices += D.name
 			if(choices.len)

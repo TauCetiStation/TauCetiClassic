@@ -51,7 +51,7 @@
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return PROJECTILE_ACTED
 
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		P.agony *= get_siemens_coefficient_organ(BP)
 		P.stun *= get_siemens_coefficient_organ(BP)
@@ -352,7 +352,7 @@
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
 							if(R)
-								R.RemoveFromRole(mind)
+								R.Deconvert()
 
 				if(bloody)//Apply blood
 					if(wear_mask)

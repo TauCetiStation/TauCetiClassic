@@ -24,8 +24,8 @@
 	var/m = round(SSshuttle.timeleft()/60)
 	return pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
 
-var/next_duration_update = 0
-var/last_round_duration = 0
+var/global/next_duration_update = 0
+var/global/last_round_duration = 0
 
 /proc/roundduration2text()
 	if(!round_start_time)

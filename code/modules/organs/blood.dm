@@ -2,12 +2,12 @@
                 BLOOD SYSTEM
 ****************************************************/
 // Blood levels
-var/const/BLOOD_VOLUME_MAXIMUM = 600
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/global/const/BLOOD_VOLUME_MAXIMUM = 600
+var/global/const/BLOOD_VOLUME_NORMAL = 560
+var/global/const/BLOOD_VOLUME_SAFE = 501
+var/global/const/BLOOD_VOLUME_OKAY = 336
+var/global/const/BLOOD_VOLUME_BAD = 224
+var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 /mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.

@@ -72,7 +72,7 @@
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
-		return
+		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/blackpepper
@@ -1188,7 +1188,7 @@
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
-		return
+		return FALSE
 	return ..()
 
 

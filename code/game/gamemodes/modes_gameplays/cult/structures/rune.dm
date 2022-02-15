@@ -53,30 +53,34 @@
 	return ..()
 
 /obj/effect/rune/examine(mob/user)
+	var/msg
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "[bicon(src)] That's <span class='[religion?.style_text]'>руна!</span>")
+		msg = "[bicon(src)] That's <span class='[religion?.style_text]'>руна!</span>"
 		if(!power)
+			to_chat(user, msg)
 			return
-		to_chat(user, "Руной написано: <span class='[religion?.style_text]'>[power?.name]</span>.")
+		msg += "<br>Руной написано: <span class='[religion?.style_text]'>[power?.name]</span>."
 		if(istype(power, /datum/rune/cult/teleport/teleport))
 			var/datum/rune/cult/teleport/teleport/R = power
-			to_chat(user, "Id телепорта - <span class='[religion.style_text]'>[R.id ? R.id : "Отсутствует"]</span>.")
+			msg += "<br>Id телепорта - <span class='[religion.style_text]'>[R.id ? R.id : "Отсутствует"]</span>."
+		to_chat(user, msg)
 		return
-	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
+	msg = "[bicon(src)] That's some <span class='danger'>[name]</span>"
 	if(issilicon(user))
-		to_chat(user, "It's thick and gooey. Perhaps it's the chef's cooking?") // blood desc
+		msg += "<br>It's thick and gooey. Perhaps it's the chef's cooking?" // blood desc
 	else
-		to_chat(user, "A strange collection of symbols drawn in blood.")
+		msg += "<br>A strange collection of symbols drawn in blood."
+	to_chat(user, msg)
 
 /obj/effect/rune/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/weapon/storage/bible/tome) && iscultist(user))
 		to_chat(user, "<span class='[religion?.style_text]'>Вы заставляете руну исчезнуть.</span>")
 		qdel(src)
-		return
+		return FALSE
 	if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию силой [I].</span>")
 		qdel(src)
-		return
+		return FALSE
 
 	return ..()
 

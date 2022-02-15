@@ -127,18 +127,7 @@
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if(healths)
 		if(stat != DEAD)
@@ -389,8 +378,8 @@
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
-	if(confused)
-		confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 

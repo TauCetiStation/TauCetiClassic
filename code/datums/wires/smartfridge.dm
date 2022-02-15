@@ -1,6 +1,6 @@
-var/const/SMARTFRIDGE_WIRE_ELECTRIFY = 1
-var/const/SMARTFRIDGE_WIRE_THROW     = 2
-var/const/SMARTFRIDGE_WIRE_IDSCAN    = 4
+var/global/const/SMARTFRIDGE_WIRE_ELECTRIFY = 1
+var/global/const/SMARTFRIDGE_WIRE_THROW     = 2
+var/global/const/SMARTFRIDGE_WIRE_IDSCAN    = 4
 
 /datum/wires/smartfridge
 	holder_type = /obj/machinery/smartfridge

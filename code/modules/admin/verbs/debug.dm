@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI."
 
 	var/list/available = list()
-	for(var/mob/C in mob_list)
+	for(var/mob/C as anything in mob_list)
 		if(C.key)
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available

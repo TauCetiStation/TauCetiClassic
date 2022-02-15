@@ -95,7 +95,7 @@
 		to_chat(U, "<span class='notice'>Hacking \the [target]...</span>")
 
 		var/turf/location = get_turf(U)
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			to_chat(AI, "<span class='warning'><b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.</span>")
 
 		var/datum/research/files = null

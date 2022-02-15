@@ -71,7 +71,15 @@
 
 	return TRUE
 
-/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
+/datum/role/proc/Deconvert()
+	if(!deconverted_roles[id])
+		deconverted_roles[id] = list()
+
+	deconverted_roles[id] += antag.name
+	Drop()
+
+// if role has been deconverts use Deconvert()
+/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
@@ -195,7 +203,7 @@
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
-	var/mob/M = antag?.current
+	var/mob/M = antag.current
 	if (M)
 		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
@@ -248,7 +256,7 @@
 	else
 		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
-			if (!istype(M, /mob/living/carbon/brain))
+			if (isbrain(M))
 				flat.Turn(90)
 			var/icon/ded = icon('icons/effects/blood.dmi', "floor_old")
 			ded.Blend(flat, ICON_OVERLAY)
@@ -276,11 +284,6 @@
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
-
-	if(!antag)
-		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-		win = FALSE
-		return text
 
 	text = printplayerwithicon(antag)
 
@@ -388,7 +391,7 @@
 			O.ShuttleDocked(state)
 
 /datum/role/proc/AnnounceObjectives()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	var/text = ""

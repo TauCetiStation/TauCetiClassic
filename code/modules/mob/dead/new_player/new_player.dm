@@ -23,6 +23,10 @@
 	new_player_list += src
 
 /mob/dead/new_player/Destroy()
+	if(my_client)
+		hide_titlescreen()
+		my_client = null
+
 	new_player_list -= src
 	return ..()
 

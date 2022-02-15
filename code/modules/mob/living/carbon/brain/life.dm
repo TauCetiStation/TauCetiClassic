@@ -107,7 +107,8 @@
 
 	if(reagents) reagents.metabolize(src)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
 	if(resting)
 		dizziness = max(0, dizziness - 5)
@@ -206,18 +207,7 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in src.mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if (healths)
 		if (stat != DEAD)
@@ -245,17 +235,3 @@
 	..()
 
 	return 1
-
-
-/*/mob/living/carbon/brain/emp_act(severity)
-	if(!(container && istype(container, /obj/item/device/mmi)))
-		return
-	else
-		switch(severity)
-			if(1)
-				emp_damage += rand(20,30)
-			if(2)
-				emp_damage += rand(10,20)
-			if(3)
-				emp_damage += rand(0,10)
-	..()*/

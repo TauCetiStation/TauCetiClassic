@@ -1,6 +1,6 @@
 #define GYRO_POWER 25000
 
-var/list/gyrotrons = list()
+var/global/list/gyrotrons = list()
 
 /obj/machinery/power/emitter/gyrotron
 	name = "gyrotron"

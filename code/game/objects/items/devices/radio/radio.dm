@@ -1,4 +1,4 @@
-var/GLOBAL_RADIO_TYPE = 1 // radio type to use
+var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// 0 = old radios
 	// 1 = new radios (subspace technology)
 

@@ -7,7 +7,7 @@
 	alpha = 200
 	current_size = STAGE_TWO
 //	layer = LIGHTING_LAYER + 1
-//	plane = LIGHTING_PLANE + 1
+//	plane = ABOVE_LIGHTING_PLANE
 	pixel_x = -64
 	pixel_y = -64
 	move_self = 1
@@ -72,3 +72,6 @@
 
 /obj/singularity/scrap_ball/Bumped(atom/A)
 	consume(A)
+
+/obj/singularity/scrap_ball/update_icon(stage)
+	return

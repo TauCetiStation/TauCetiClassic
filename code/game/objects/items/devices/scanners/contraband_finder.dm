@@ -12,6 +12,8 @@
 	m_amt = 200
 	origin_tech = "magnets=4;biotech=4"
 
+	var/can_scan = TRUE
+
 	var/scanner_ready = TRUE
 
 	var/contraband_listing = /datum/contraband_listing/velocity

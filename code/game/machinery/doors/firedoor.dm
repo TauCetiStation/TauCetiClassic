@@ -208,7 +208,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && C:wielded == 1 ) )
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 

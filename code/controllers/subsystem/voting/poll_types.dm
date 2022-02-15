@@ -33,7 +33,7 @@
 	. = ..()
 	if(.)
 		return
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
 			return "Администрация сейчас в сети"
 
@@ -48,7 +48,7 @@
 
 /datum/vote_choice/restart/on_win()
 	var/active_admins = FALSE
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!C.is_afk() && (R_SERVER & C.holder.rights))
 			active_admins = TRUE
 			break

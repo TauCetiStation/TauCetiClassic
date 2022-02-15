@@ -17,7 +17,7 @@ to null does not delete the object itself. Thank you.
 
 */
 
-var/list/diseases = subtypesof(/datum/disease)
+var/global/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease
@@ -78,34 +78,34 @@ var/list/diseases = subtypesof(/datum/disease)
 	return
 
 /datum/disease/proc/has_cure()//check if affected_mob has required reagents.
-	if(!cure_id) return 0
-	var/result = 1
+	if(!cure_id) return FALSE
+	var/result = TRUE
 	if(cure_list == list(cure_id))
 		if(istype(cure_id, /list))
 			for(var/C_id in cure_id)
 				if(!affected_mob.reagents.has_reagent(C_id))
-					result = 0
+					result = FALSE
 		else if(!affected_mob.reagents.has_reagent(cure_id))
-			result = 0
+			result = FALSE
 	else
 		for(var/C_list in cure_list)
 			if(istype(C_list, /list))
 				for(var/C_id in cure_id)
 					if(affected_mob.reagents != null)
-						result = 0
+						result = FALSE
 					else if(!affected_mob.reagents.has_reagent(C_id))
-						result = 0
+						result = FALSE
 			else if(affected_mob.reagents != null)
 				if(!affected_mob.reagents.has_reagent(C_list))
-					result = 0
+					result = FALSE
 
 	return result
 
 /datum/disease/proc/spread_by_touch()
 	switch(spread_type)
 		if(CONTACT_FEET, CONTACT_HANDS, CONTACT_GENERAL)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/disease/proc/spread(atom/source=null, airborne_range = 2,  force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"
@@ -202,8 +202,8 @@ var/list/diseases = subtypesof(/datum/disease)
 
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/disease/proc/Copy(process = 0)
 	return new type(process, src)

@@ -202,12 +202,14 @@
 					new_letter = "х"
 
 		switch(rand(1,15))
-			if(1,3,5,8)
+			if(1 to 4)
 				new_letter = lowertext(new_letter)
-			if(2,4,6,15)
+			if(5 to 9)
 				new_letter = uppertext(new_letter)
-			if(7)
+			if(10)
 				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
 		new_text += new_letter
 
@@ -353,7 +355,7 @@
 
 
 /proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
@@ -372,7 +374,7 @@
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)

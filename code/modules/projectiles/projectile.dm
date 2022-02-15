@@ -436,7 +436,7 @@
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-var/static/list/taser_projectiles = list(
+var/global/static/list/taser_projectiles = list(
 	/obj/item/projectile/beam/stun,
 	/obj/item/ammo_casing/energy/electrode
 )

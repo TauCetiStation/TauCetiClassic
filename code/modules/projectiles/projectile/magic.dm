@@ -155,7 +155,7 @@
 	var/old_stat = C.stat
 	C.revive()
 	if(!C.ckey || !C.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(C.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break

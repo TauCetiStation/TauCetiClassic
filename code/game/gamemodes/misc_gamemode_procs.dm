@@ -140,14 +140,12 @@
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
-	return 0
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
 /datum/game_mode/proc/display_roundstart_logout_report()
 	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n</span>"
-	for(var/mob/living/L in living_list)
+	for(var/mob/living/L as anything in living_list)
 
 		if(L.ckey)
 			var/found = 0
@@ -175,7 +173,7 @@
 					continue //Dead
 
 			continue //Happy connected client
-		for(var/mob/dead/observer/D in observer_list)
+		for(var/mob/dead/observer/D as anything in observer_list)
 			if(D.mind && (D.mind.original == L || D.mind.current == L))
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
@@ -192,7 +190,7 @@
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
 						continue //Ghosted while alive
 
-	for(var/client/M in admins)
+	for(var/client/M as anything in admins)
 		if(M.holder)
 			to_chat(M, msg)
 	log_game(strip_html_properly(msg))
@@ -207,7 +205,7 @@
 
 /proc/get_nt_opposed()
 	var/list/dudes = list()
-	for(var/mob/living/carbon/human/man in human_list)
+	for(var/mob/living/carbon/human/man as anything in human_list)
 		if(man.client)
 			if(man.client.prefs.nanotrasen_relation == "Opposed")
 				dudes += man
@@ -216,3 +214,6 @@
 	if(dudes.len == 0)
 		return null
 	return pick(dudes)
+
+/proc/mode_has_antags()
+	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0

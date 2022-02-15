@@ -221,23 +221,16 @@
 
 	var/cooldown = FALSE
 	var/busy = FALSE
-	var/wielded = FALSE
+
+/obj/item/weapon/shockpaddles/proc/is_wielded()
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
 /obj/item/weapon/shockpaddles/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 2, 2, FALSE)
-
-/// triggered on wield of two handed item
-/obj/item/weapon/shockpaddles/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/weapon/shockpaddles/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 2
+	TCB.force_unwielded = 2
+	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
@@ -252,9 +245,9 @@
 		playsound(src, 'sound/items/surgery/defib_ready.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/weapon/shockpaddles/update_icon()
-	icon_state = "defibpaddles[wielded]"
+	icon_state = "defibpaddles[is_wielded()]"
 	if(cooldown)
-		icon_state = "defibpaddles[wielded]_cooldown"
+		icon_state = "defibpaddles[is_wielded()]_cooldown"
 
 /obj/item/weapon/shockpaddles/proc/can_use(mob/user, mob/M)
 	if(busy)
@@ -262,7 +255,7 @@
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
-	if(!wielded && !isrobot(user))
+	if(!is_wielded() && !isrobot(user))
 		to_chat(user, "<span class='warning'>You need to wield the paddles with both hands before you can use them on someone!</span>")
 		return FALSE
 	if(cooldown)

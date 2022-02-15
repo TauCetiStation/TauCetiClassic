@@ -18,8 +18,7 @@
 	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 	//WASSSSSUUUPPPP /N
 	spawn(5)
-		if(brainmob && brainmob.client)
-			brainmob.client.screen.len = null //clear the hud
+		brainmob?.client?.screen.len = null //clear the hud
 
 /obj/item/brain/proc/transfer_identity(mob/living/carbon/H)
 	name = "[H]'s brain"

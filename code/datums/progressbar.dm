@@ -80,6 +80,7 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
+	user = null
 	if (client)
 		client.images -= bar
 

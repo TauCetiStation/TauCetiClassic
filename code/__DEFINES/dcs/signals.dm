@@ -90,8 +90,6 @@
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (area/exited, atom/NewLoc)
 #define COMSIG_AREA_EXITED "area_exited"
-///from base of area/update_beauty()
-#define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty"
 
 // /atom signals
 ///from base of atom/Click(): (location, control, params, mob/user)
@@ -210,14 +208,6 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
-
-// /datum/component/twohanded signals
-
-///from base of datum/component/twohanded/proc/wield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_WIELD "twohanded_wield"
-	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
-///from base of datum/component/twohanded/proc/unwield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()

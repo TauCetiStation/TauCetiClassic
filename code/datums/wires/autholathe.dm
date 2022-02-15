@@ -1,6 +1,6 @@
-var/const/AUTOLATHE_WIRE_HACK    = 1
-var/const/AUTOLATHE_WIRE_SHOCK   = 2
-var/const/AUTOLATHE_WIRE_DISABLE = 4
+var/global/const/AUTOLATHE_WIRE_HACK    = 1
+var/global/const/AUTOLATHE_WIRE_SHOCK   = 2
+var/global/const/AUTOLATHE_WIRE_DISABLE = 4
 
 /datum/wires/autolathe
 	holder_type = /obj/machinery/autolathe

@@ -86,8 +86,7 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		for(var/mob/dead/observer/O in observer_list)
-			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_GHOSTLY, IGNORE_BORER)
+		create_spawner(/datum/spawner/borer, "borer", src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
@@ -176,7 +175,7 @@
 	if(!message)
 		return
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 

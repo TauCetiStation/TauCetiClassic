@@ -279,24 +279,25 @@
 			alt_obj = AA.alternate_obj
 			break
 
-	to_chat(user, get_examine_string(user, TRUE, alt_obj))
+	var/msg = get_examine_string(user, TRUE, alt_obj)
 
-	if(alt_obj)
-		to_chat(user, alt_obj.desc)
-	else if(desc)
-		to_chat(user, desc)
+	var/visible_desc = alt_obj?.desc || desc
+	if(visible_desc)
+		msg += "<br>[visible_desc]"
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
+		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
 			else
-				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
+				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
-			to_chat(user, "Nothing.")
+			msg += "<br>Nothing."
+
+	to_chat(user, msg)
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
@@ -681,64 +682,6 @@
 				if(istype(AM, /obj/item/weapon/storage)) //this should never happen
 					L += get_contents(AM)
 		return L
-
-/atom/proc/add_filter(name, priority, list/params)
-	LAZYINITLIST(filter_data)
-	var/list/p = params.Copy()
-	p["priority"] = priority
-	filter_data[name] = p
-	update_filters()
-
-/atom/proc/update_filters()
-	filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
-	for(var/f in filter_data)
-		var/list/data = filter_data[f]
-		var/list/arguments = data.Copy()
-		arguments -= "priority"
-		filters += filter(arglist(arguments))
-	UNSETEMPTY(filter_data)
-
-/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-
-	var/list/old_filter_data = filter_data[name]
-
-	var/list/params = old_filter_data.Copy()
-	for(var/thing in new_params)
-		params[thing] = new_params[thing]
-
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
-	for(var/param in params)
-		filter_data[name][param] = params[param]
-
-/atom/proc/change_filter_priority(name, new_priority)
-	if(!filter_data || !filter_data[name])
-		return
-
-	filter_data[name]["priority"] = new_priority
-	update_filters()
-
-/atom/proc/get_filter(name)
-	if(filter_data && filter_data[name])
-		return filters[filter_data.Find(name)]
-
-/atom/proc/remove_filter(name_or_names)
-	if(!filter_data)
-		return
-
-	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
-
-	for(var/name in names)
-		if(filter_data[name])
-			filter_data -= name
-	update_filters()
-
-/atom/proc/clear_filters()
-	filter_data = null
-	filters = null
 
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()

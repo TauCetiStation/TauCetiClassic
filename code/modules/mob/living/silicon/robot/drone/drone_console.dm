@@ -24,7 +24,7 @@
 	var/dat
 	dat += "<B>Maintenance Units</B><BR>"
 
-	for(var/mob/living/silicon/robot/drone/D in drone_list)
+	for(var/mob/living/silicon/robot/drone/D as anything in drone_list)
 		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<span class='red'>INACTIVE</span>" : "<span class='green'>ACTIVE</span>"])"
 		dat += "<BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
@@ -63,7 +63,7 @@
 	else if (href_list["ping"])
 
 		to_chat(usr, "<span class='notice'>You issue a maintenance request for all active drones, highlighting [drone_call_area].</span>")
-		for(var/mob/living/silicon/robot/drone/D in drone_list)
+		for(var/mob/living/silicon/robot/drone/D as anything in drone_list)
 			if(D.client && D.stat == CONSCIOUS)
 				to_chat(D, "-- Maintenance drone presence requested in: [drone_call_area].")
 
