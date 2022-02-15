@@ -43,6 +43,11 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/role/orphaned_roles = list()
 	var/list/datum/stat/faction/factions = list()
 
+/datum/stat_collector/New()
+	var/datum/default_datum = new
+	ROOT_DATUM_VARS = default_datum.vars.Copy()
+	qdel(default_datum)
+
 /datum/stat_collector/proc/drop_round_stats(stealth = FALSE)
 	var/statfile = file("[global.log_directory]/[STAT_FILE_NAME]")
 	if(length(statfile))

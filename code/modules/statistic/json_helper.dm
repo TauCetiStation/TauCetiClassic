@@ -1,5 +1,5 @@
 // is a list of vars to not include in the JSON output
-var/global/list/ROOT_DATUM_VARS = list("tag", "type", "parent_type", "vars", "gc_destroyed", "status_traits", "datum_components", "comp_lookup", "signal_procs", "signal_enabled", "isprocessing", "active_timers", "filter_data", "running_find_references", "last_find_references", "tgui_shared_states")
+var/global/list/ROOT_DATUM_VARS
 
 // NOTE: datum2list and datum2json are pretty snowflakey and won't recurse properly in some cases
 // specfically it checks for infinite recursion only one level down, so if you have:
