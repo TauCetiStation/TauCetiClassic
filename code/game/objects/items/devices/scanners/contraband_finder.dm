@@ -28,6 +28,7 @@
 
 	var/warrant_template_type = /obj/item/weapon/paper/warrant/velocity
 
+	var/warrant_name = "Warrant:"
 	var/list/pos_warrant_stamps = list("Cargo Industries", "Head of Security", "Captain", "Central Command")
 	// Even though Velocity Chief is not in Crew Manifest, and thus can't sign a warrant.
 	// We'll put him here for the time being.
