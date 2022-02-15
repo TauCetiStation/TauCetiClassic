@@ -75,6 +75,11 @@
 			C.remove_paint_state()
 			C.color = null
 
+/datum/reagent/water/on_general_digest(mob/living/M)
+	..()
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
+
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
 	M.nutrition += REM
