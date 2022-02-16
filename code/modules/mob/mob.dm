@@ -768,6 +768,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
+	if(lying)
+		SEND_SIGNAL(src, COMSIG_MOB_LYING)
+	else
+		SEND_SIGNAL(src, COMSIG_MOB_NOT_LYING)
+
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()

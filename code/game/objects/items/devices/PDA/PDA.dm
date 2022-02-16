@@ -162,23 +162,23 @@
 	remove_user_slip(loc)
 	return ..()
 
-/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/human/user)
-	user.slippery = TRUE
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
 	if(user.lying)
 		user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 
-/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/human/user)
-	user.slippery = FALSE
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
 	qdel(user.GetComponent(/datum/component/slippery))
 
-/obj/item/device/pda/clown/equipped(mob/living/carbon/human/user, slot)
+/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
 	..()
+	RegisterSignal(user, COMSIG_MOB_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_NOT_LYING, .proc/remove_user_slip)
 	if(pda_slippery && (slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID))
 		make_user_slip(user)
 	else
 		remove_user_slip(user)
 
-/obj/item/device/pda/clown/dropped(mob/living/carbon/human/user)
+/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
 	..()
 	remove_user_slip(user)
 

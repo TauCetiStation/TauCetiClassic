@@ -247,6 +247,10 @@
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 /// from base of /mob/stop_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_STOP_PULL "living_stop_pull"
+// send this signal when mob is lying
+#define COMSIG_MOB_LYING "mob_lying"
+// send this signal when mob is standing
+#define COMSIG_MOB_NOT_LYING "mob_not_lying"
 /// from base of atom/movable/buckle_mob(): (mob/buckled)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 /// from base of atom/movable/unbuckle_mob(): (mob/buckled)

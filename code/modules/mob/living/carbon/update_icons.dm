@@ -22,9 +22,6 @@
 			if((dir & (EAST|WEST)) && !buckled) //Facing east or west
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-			if(istype(src, /mob/living/carbon/human))
-				make_user_slip(src)
-
 	else
 		if(lying != lying_prev)
 			lying_prev = lying
@@ -35,9 +32,6 @@
 			final_pixel_x = get_pixel_x_offset()
 
 			final_layer = initial(layer)
-
-			if(istype(src, /mob/living/carbon/human))
-				remove_user_slip(src)
 
 		if(resize != RESIZE_DEFAULT_SIZE)
 			resize_rev *= 1/resize
