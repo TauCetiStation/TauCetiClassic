@@ -2249,7 +2249,9 @@
 /area/custom/syndicate_mothership)
 "afX" = (
 /obj/machinery/media/jukebox{
-	emagged = 1
+	emagged = 1;
+	name = "hacked Jukebox";
+	unsecuring_tool = null
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -13203,14 +13205,6 @@
 	icon_state = "neutral"
 	},
 /area/centcom/holding)
-"aQb" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/custom/syndicate_mothership)
 "aQg" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor,
@@ -84657,7 +84651,7 @@ ajz
 aIb
 aIb
 aIb
-aQb
+aIb
 aie
 aie
 aie
