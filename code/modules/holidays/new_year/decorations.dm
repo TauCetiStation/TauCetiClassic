@@ -107,7 +107,7 @@
 	name = "present xmas tree"
 	desc = "Hello, happy holidays, we have got presents..."
 
-	layer = 5
+	layer = FLY_LAYER
 	var/gifts_dealt = 0
 	var/flicker_raising = FALSE
 	var/light_flicker = 5
@@ -168,7 +168,7 @@
 	if(istype(I, /obj/item/organ/external/head))
 		I.set_dir(2) // Rotate head face to us
 		I.transform = turn(null, null)	//Turn it to initial angle
-	I.layer = 5.1
+	I.layer = layer + 0.1
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))
