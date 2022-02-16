@@ -347,7 +347,7 @@
 	if(!firer)
 		return
 
-	if(istype(target, /turf/space))
+	if(isspaceturf(target))
 		return
 
 	if(iscarbon(target) && def_zone == O_EYES)

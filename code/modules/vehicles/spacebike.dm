@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
-	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
+	if(isspaceturf(loc) && isliving(load) && isliving(A))
 		var/mob/living/L = A
 		var/mob/living/Driver = load
 		if(istype(L,/mob/living/silicon/robot))
@@ -148,7 +148,7 @@
 
 /obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(NewLoc, /turf/space) || pulledby)
+	if(isspaceturf(NewLoc) || pulledby)
 		if(!space_speed)
 			return FALSE
 		move_delay = space_speed + slow_cooef
@@ -237,7 +237,7 @@
 	if(kickstand)
 		visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
 	else
-		if(istype(src.loc,/turf/space))
+		if(isspaceturf(src.loc))
 			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
 			return
 		visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")

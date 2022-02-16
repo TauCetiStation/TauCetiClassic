@@ -1581,7 +1581,7 @@
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+	if(pulse == PULSE_2FAST || shock_stage >= 10 || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 
