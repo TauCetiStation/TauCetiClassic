@@ -23,22 +23,15 @@
 	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
-
 	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
+		if(EXPLODE_LIGHT)
+			if(prob(25))
 				src.density = FALSE
-		else
-	return
+				return
+	qdel(src)
 
 /obj/machinery/optable/blob_act()
 	if(prob(75))

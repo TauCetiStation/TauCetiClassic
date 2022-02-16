@@ -548,7 +548,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -605,7 +605,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]

@@ -173,15 +173,15 @@
 
 /obj/structure/mineral_door/ex_act(severity = 1)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			Dismantle(TRUE)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(20))
 				Dismantle(TRUE)
 			else
 				health--
 				CheckHealth()
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= 0.1
 			CheckHealth()
 

@@ -25,8 +25,8 @@
 		src.traumatic_shock -= 80
 	if(reagents.has_reagent("oxycodone"))
 		src.traumatic_shock -= 200
-	if(src.slurring)
-		src.traumatic_shock -= 20
+	if(src.slurring && drunkenness > DRUNKENNESS_SLUR)
+		src.traumatic_shock -= min(drunkenness - DRUNKENNESS_SLUR, 40)
 	if(src.analgesic)
 		src.traumatic_shock = 0
 
