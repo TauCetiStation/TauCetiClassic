@@ -23,11 +23,11 @@
 
 ---
 
-[Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:
-* [/tg/station13](https://tgstation13.org/)
-* [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
-* [/vg/station13](http://ss13.pomf.se/)
-* [Goonstation](http://goonhub.com/)
+[Baystation12](https://bay.ss13.me)-based build with many changes from another upstream and sibling builds like:
+* [/tg/station13](https://tgstation13.org)
+* [ParadiseSS13](https://paradisestation.org)
+* [/vg/station13](http://ss13.moe)
+* [Goonstation](https://goonhub.com)
 
 
 ### LICENSE
