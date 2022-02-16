@@ -4334,12 +4334,19 @@
 	},
 /area/custom/syndicate_mothership)
 "aly" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/roller,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/glass,
 /turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+	icon_state = "floor3"
 	},
 /area/shuttle/syndicate/start)
 "alz" = (
@@ -4459,17 +4466,15 @@
 /area/shuttle/syndicate/start)
 "alM" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 4;
+/obj/item/weapon/storage/toolbox/syndicate{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/toolbox/syndicate{
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/weapon/storage/toolbox/syndicate,
 /turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "alN" = (
@@ -4479,16 +4484,16 @@
 	},
 /area/custom/syndicate_mothership)
 "alO" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/weapon/storage/firstaid/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/weapon/storage/firstaid/fire{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/tactical,
+/obj/structure/table/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -4538,17 +4543,16 @@
 	},
 /area/shuttle/syndicate/start)
 "alV" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/item/roller,
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 2
 	},
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -79516,7 +79520,7 @@ alH
 alG
 acW
 alL
-alM
+alO
 alK
 amu
 amu
@@ -79769,11 +79773,11 @@ ahE
 acW
 acW
 acW
-alB
-aly
+alz
+alz
 amD
 alL
-alO
+alV
 amu
 amu
 amv
@@ -80026,11 +80030,11 @@ acW
 akL
 aiD
 alj
-alz
-alz
-alz
+akM
+akM
+alM
 alL
-alV
+aly
 amI
 ama
 acW
@@ -80285,7 +80289,7 @@ alz
 akM
 akM
 akM
-akM
+alB
 amj
 akM
 akM
@@ -81054,9 +81058,9 @@ acW
 anv
 ajZ
 alm
+akM
+akM
 amr
-akM
-akM
 acW
 alU
 all
@@ -81311,9 +81315,9 @@ acW
 acW
 acW
 acW
+alb
+alb
 amr
-akM
-akM
 acW
 alU
 alk
