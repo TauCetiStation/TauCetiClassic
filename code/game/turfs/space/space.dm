@@ -285,3 +285,12 @@
 
 /turf/simulated/environment/space/singularity_act()
 	return
+
+/turf/simulated/environment/space/AddTracks(mob/M, bloodDNA, comingdir, goingdir, blooddatum)
+	return
+
+/turf/simulated/environment/make_wet_floor(severity)
+	return
+
+/turf/simulated/environment/UpdateSlip()
+	return
