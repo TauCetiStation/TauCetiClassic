@@ -441,7 +441,7 @@
 	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
 	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
 	var/poison_pp = poison ? (poison / breath.total_moles) * breath_pressure : 0
-	var/SA_pp = sleeping_agent ?  (sleeping_agent / breath.total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -1284,6 +1284,8 @@
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
+		if(pressure)
+			pressure.icon_state = "pressure[pressure_alert]"
 
 		//OH cmon...
 		var/nearsighted = 0

@@ -38,6 +38,8 @@
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
+		clear_alert("temp")
+		clear_alert("pressure")
 		return
 
 	switch(bodytemperature)
