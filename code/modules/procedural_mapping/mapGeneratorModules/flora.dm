@@ -54,35 +54,35 @@
 	return perlin_noise
 
 /datum/map_generator_module/flora
-    spawnableTurfs = list()
-    spawnableAtoms = list()
+	spawnableTurfs = list()
+	spawnableAtoms = list()
 
-    var/turf_type
+	var/turf_type
 
-    var/list/perlin_map
+	var/list/perlin_map
 
 /datum/map_generator_module/flora/New()
-    var/width = world.maxx
-    var/height = world.maxy
-    perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height)
+	var/width = world.maxx
+	var/height = world.maxy
+	perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height)
 
 /datum/map_generator_module/flora/checkPlaceAtom(turf/T)
-    if(!istype(T, turf_type))
-        return FALSE
-    if(T.density)
-        return FALSE
-    if(istype(T.loc, /area/shuttle)) // prevent placing flora under shuttles
-        return FALSE
-    for(var/atom/A in T)
-        if(A.density)
-            return FALSE
-    return TRUE
+	if(!istype(T, turf_type))
+		return FALSE
+	if(T.density)
+		return FALSE
+	if(istype(T.loc, /area/shuttle)) // prevent placing flora under shuttles
+		return FALSE
+	for(var/atom/A in T)
+		if(A.density)
+			return FALSE
+	return TRUE
 
 /datum/map_generator_module/flora/proc/place_flora(turf/T, noise)
-    return FALSE
+	return FALSE
 
 /datum/map_generator_module/flora/place(turf/T)
-    if(!checkPlaceAtom(T))
-        return FALSE
+	if(!checkPlaceAtom(T))
+		return FALSE
 
-    return place_flora(T, perlin_map[T.x][T.y])
+	return place_flora(T, perlin_map[T.x][T.y])
