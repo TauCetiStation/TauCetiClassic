@@ -485,7 +485,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ghost.dronize()
 
 /datum/spawner/podman
-	name = "Крыса Подмэна"
+	name = "Подкидыш"
 	desc = "Человечка вырастили на грядке."
 	wiki_ref = "Podmen"
 
