@@ -100,7 +100,8 @@
 			stat.antag_roles += role
 
 	stat.leave_type = leave_type
-	stat.round_time = roundduration2text()
+	stat.start_time = M.creation_roundtime
+	stat.leave_time = roundduration2text()
 
 	leave_stats += stat
 

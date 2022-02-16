@@ -110,4 +110,5 @@
 	var/list/antag_roles = null
 
 	var/leave_type
-	var/round_time
+	var/start_time
+	var/leave_time
