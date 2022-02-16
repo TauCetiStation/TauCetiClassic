@@ -45,7 +45,7 @@
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj))
+			if(isobj(loc))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -321,7 +321,7 @@
 		losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
 			emote("gasp")
-		if(istype(loc, /obj))
+		if(isobj(loc))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 	else
@@ -330,7 +330,7 @@
 		//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
 
 		if(breath)
-			if(istype(loc, /obj)) //Still give containing object the chance to interact
+			if(isobj(loc)) //Still give containing object the chance to interact
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 		else //No breath from internal atmosphere so get breath from location
