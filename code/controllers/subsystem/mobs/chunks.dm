@@ -7,7 +7,6 @@ SUBSYSTEM_DEF(chunks)
     flags = SS_NO_INIT | SS_NO_FIRE
 
     var/tick = 0
-
     var/list/grid = list()
 
 /datum/controller/subsystem/chunks/fire() 
@@ -40,7 +39,7 @@ SUBSYSTEM_DEF(chunks)
     
     zone.add_faction(L.faction)
 
-/datum/controller/subsystem/chunks/proc/enemy_faction(mob/M, range)
+/datum/controller/subsystem/chunks/proc/has_enemy_faction(mob/M, range)
     var/turf/T = get_turf(M)
 
     if(!T || T.z > grid.len)
@@ -56,9 +55,9 @@ SUBSYSTEM_DEF(chunks)
         var/list/y_grid = x_grid[x_]
 
         for(var/y_ in y_start to y_end)
-            var/datum/chunk/zone = y_grid[y_]
+            var/datum/chunk/chunk = y_grid[y_]
 
-            if(zone.check_faction(M.faction))
+            if(chunk.has_enemy_faction(M.faction))
                 return TRUE
 
     return FALSE
@@ -74,7 +73,7 @@ SUBSYSTEM_DEF(chunks)
     last_updated = SSchunks.tick
     factions.len = 0
 
-/datum/chunk/proc/check_faction(faction)
+/datum/chunk/proc/has_enemy_faction(faction)
     update()
 
     if(factions.len == 1)
