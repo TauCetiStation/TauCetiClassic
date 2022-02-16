@@ -105,6 +105,8 @@
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
 				handle_blood()
 
+			handle_drunkenness()
+
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
@@ -1081,7 +1083,8 @@
 			Sleeping(10 SECONDS)
 			Paralyse(5)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
 	if(resting)
 		dizziness = max(0, dizziness - 15)
@@ -1600,11 +1603,17 @@
 		return PULSE_NORM
 
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(IO.heart_status == HEART_FAILURE)
-		return PULSE_NONE
-
-	if(IO.heart_status == HEART_FIBR)
-		return PULSE_SLOW
+	if(life_tick % 10)
+		switch(IO.heart_status)
+			if(HEART_FAILURE)
+				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+				apply_effect(5,AGONY,0)
+				return PULSE_NONE
+			if(HEART_FIBR)
+				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+				apply_effect(1,AGONY,0)
+				return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

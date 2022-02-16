@@ -5500,7 +5500,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aLu" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -9856,10 +9856,6 @@
 	icon_state = "warning"
 	},
 /area/station/gateway)
-"ccM" = (
-/obj/random/scrap/dense_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "ccS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -11879,7 +11875,7 @@
 /area/station/hallway/primary/central)
 "cKj" = (
 /obj/item/weapon/scrap_lump,
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cKC" = (
@@ -29825,7 +29821,7 @@
 /area/station/medical/hallway)
 "iun" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "iuu" = (
@@ -32350,11 +32346,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/altar)
-"jlw" = (
-/obj/random/scrap/dense_weighted,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "jlx" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -35336,7 +35327,7 @@
 	},
 /area/station/security/secconfhall)
 "keN" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -36417,7 +36408,7 @@
 	},
 /area/station/cargo/storage)
 "kxI" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kxT" = (
@@ -36458,7 +36449,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/incinerator)
 "kyk" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kyK" = (
@@ -37733,7 +37724,7 @@
 /turf/space,
 /area/space)
 "kTv" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -37819,7 +37810,7 @@
 /area/station/engineering/engine)
 "kUu" = (
 /obj/item/weapon/paper/crumpled/bloody/dickbutt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -39301,7 +39292,7 @@
 	},
 /area/station/medical/hallway)
 "lpc" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -49943,7 +49934,7 @@
 "oIv" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oIx" = (
@@ -52082,7 +52073,7 @@
 	},
 /area/station/maintenance/science)
 "pva" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -59168,7 +59159,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "rIl" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "rIs" = (
@@ -71613,7 +71604,7 @@
 	},
 /area/station/medical/surgeryobs)
 "vCt" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -73944,7 +73935,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "whL" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -76195,7 +76186,7 @@
 	},
 /area/station/medical/reception)
 "wZu" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -102889,8 +102880,8 @@ plf
 mRW
 keN
 kUu
-ccM
-ccM
+kxI
+kxI
 mRW
 qCs
 kfx
@@ -103145,9 +103136,9 @@ kHU
 plf
 mRW
 kxI
-jlw
-jlw
-ccM
+vCt
+vCt
+kxI
 mRW
 qod
 hJJ
