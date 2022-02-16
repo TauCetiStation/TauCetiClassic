@@ -1,3 +1,9 @@
+// TURFS
+
+#define isenvironmentturf(A) (istype(A, /turf/simulated/environment))
+
+#define isspaceturf(A) (istype(A, /turf/simulated/environment/space))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))

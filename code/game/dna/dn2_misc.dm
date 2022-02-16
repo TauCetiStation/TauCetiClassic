@@ -27,7 +27,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !isspaceturf(usr.loc))
 
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
@@ -160,7 +160,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !isspaceturf(usr.loc))
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
 				if(M.pulling == usr)
