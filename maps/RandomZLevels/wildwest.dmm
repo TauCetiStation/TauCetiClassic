@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /turf/simulated/shuttle/wall,
@@ -189,7 +189,7 @@
 	layer = 1;
 	name = "Blocker"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "aI" = (
 /obj/effect/forcefield{
@@ -359,7 +359,7 @@
 /area/awaymission/wildwest/refinery)
 "br" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bs" = (
 /obj/item/mine/shock/anchored,
@@ -378,14 +378,14 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bx" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -499,7 +499,7 @@
 	dir = 4;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bP" = (
 /turf/simulated/wall/mineral/sandstone,
@@ -549,7 +549,7 @@
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bU" = (
 /obj/structure/stool/bed/chair/wood/normal{
@@ -574,7 +574,7 @@
 	dir = 4;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "bX" = (
 /obj/structure/window/reinforced{
@@ -738,12 +738,12 @@
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cu" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "cv" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1033,7 +1033,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "dp" = (
 /obj/structure/stool/bed,
@@ -1286,7 +1286,7 @@
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ee" = (
 /obj/structure/lattice,
@@ -1294,7 +1294,7 @@
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ef" = (
 /obj/structure/window/reinforced{
@@ -1304,7 +1304,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "eg" = (
 /obj/structure/window/reinforced{
@@ -1328,7 +1328,7 @@
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ej" = (
 /obj/effect/decal/cleanable/blood,
@@ -1789,7 +1789,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "fz" = (
 /obj/structure/window/reinforced{
@@ -1799,7 +1799,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "fA" = (
 /obj/structure/window/reinforced{
@@ -1900,7 +1900,7 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "fO" = (
 /mob/living/simple_animal/hostile/syndicate,

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /turf/simulated/wall/r_wall,
@@ -248,7 +248,7 @@
 /area/awaymission/academy/headmaster)
 "aN" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "aO" = (
 /obj/machinery/door/airlock/gold{
@@ -1474,7 +1474,7 @@
 /area/awaymission/academy/classrooms)
 "eq" = (
 /obj/singularity/academy,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "er" = (
 /obj/structure/window/reinforced{
@@ -3354,17 +3354,17 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/academy/academyaft)
 "iP" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/academy/academyaft)
 "iQ" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/academy/academyaft)
 "iR" = (
 /obj/structure/grille,
@@ -3574,7 +3574,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "jq" = (
 /obj/machinery/igniter,

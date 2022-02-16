@@ -172,7 +172,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/nt_troopship)
 "lM" = (
 /obj/structure/closet/emergency_wall{
@@ -376,7 +376,7 @@
 "yC" = (
 /obj/structure/lattice,
 /obj/effect/meteor/dust,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/nt_troopship)
 "zq" = (
 /obj/item/weapon/disk/research_points,
@@ -707,7 +707,7 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "Rh" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "RY" = (
 /turf/simulated/shuttle/wall{
@@ -834,7 +834,7 @@
 /area/space_structures/nt_fighter_blaton)
 "Vo" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/nt_fighter_blaton)
 "Wy" = (
 /obj/structure/table/reinforced,
@@ -907,7 +907,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/nt_troopship)
 
 (1,1,1) = {"

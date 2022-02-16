@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1;
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "ac" = (
 /turf/simulated/shuttle/wall{
@@ -101,7 +101,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ao" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -136,7 +136,7 @@
 	dir = 1;
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "au" = (
 /turf/simulated/shuttle/wall{
@@ -172,7 +172,7 @@
 	},
 /area/space_structures/ghostship)
 "az" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
@@ -193,7 +193,7 @@
 /area/space_structures/ghostship)
 "aC" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aD" = (
 /turf/simulated/floor/airless,
@@ -213,10 +213,10 @@
 	},
 /area/space_structures/ghostship)
 "aG" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "aH" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
@@ -229,7 +229,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "aK" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
@@ -265,10 +265,10 @@
 /area/space_structures/ghostship)
 "aP" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aQ" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -281,7 +281,7 @@
 "aS" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "aT" = (
 /obj/structure/sign/nanotrasen,
@@ -301,7 +301,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "aW" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
@@ -322,7 +322,7 @@
 /turf/simulated/floor{
 	icon_state = "engine"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "aY" = (
 /turf/simulated/shuttle/wall{
@@ -420,7 +420,7 @@
 /area/space_structures/ghostship)
 "bq" = (
 /obj/item/stack/rods,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bs" = (
 /obj/effect/landmark/corpse/engineer/rig{
@@ -488,7 +488,7 @@
 /area/space_structures/ghostship)
 "bA" = (
 /obj/item/stack/cable_coil,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "bG" = (
 /obj/item/ammo_casing/a12mm{
@@ -528,7 +528,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "bR" = (
 /obj/item/stack/sheet/metal,
@@ -626,7 +626,7 @@
 "cf" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "cg" = (
 /obj/structure/closet/crate/secure/weapon,
@@ -654,7 +654,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "cl" = (
 /obj/structure/shuttle/engine/heater{
@@ -712,7 +712,7 @@
 "cu" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "cv" = (
 /obj/effect/landmark/corpse/bridgeofficer{
@@ -777,7 +777,7 @@
 /area/space_structures/ghostship)
 "cE" = (
 /obj/item/stack/sheet/plasteel,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "cG" = (
 /turf/simulated/shuttle/wall{
@@ -856,7 +856,7 @@
 /area/space_structures/ghostship)
 "cX" = (
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "cZ" = (
 /obj/structure/artilleryplaceholder{
@@ -959,7 +959,7 @@
 /area/space_structures/ghostship)
 "nr" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "oI" = (
 /obj/structure/artilleryplaceholder/decorative{
@@ -1087,7 +1087,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "SG" = (
 /obj/machinery/telecomms/server,
@@ -1096,7 +1096,7 @@
 "UP" = (
 /obj/structure/lattice,
 /obj/structure/scrap/vehicle,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/ghostship)
 "WC" = (
 /obj/structure/artilleryplaceholder/decorative{

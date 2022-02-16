@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "ac" = (
 /turf/simulated/floor/airless{
@@ -12,7 +12,7 @@
 	},
 /area/space)
 "ad" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -24,7 +24,7 @@
 	},
 /area/space_structures/iss)
 "af" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -214,13 +214,13 @@
 	},
 /area/space_structures/iss)
 "aH" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
 /area/space_structures/iss)
 "aI" = (
-/turf/space,
+/turf/simulated/environment/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -417,7 +417,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "External Airlock"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/iss)
 
 (1,1,1) = {"

@@ -57,7 +57,7 @@
 /area/mafia)
 "z" = (
 /obj/structure/grille,
-/turf/space,
+/turf/simulated/environment/space,
 /area/mafia)
 "B" = (
 /turf/unsimulated/wall/abductor{
@@ -85,7 +85,7 @@
 	},
 /area/mafia)
 "H" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/mafia)
 "I" = (
 /turf/unsimulated/wall/abductor{

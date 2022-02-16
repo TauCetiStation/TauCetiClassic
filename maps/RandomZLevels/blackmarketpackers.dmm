@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ab" = (
 /turf/simulated/mineral/random/high_chance,
@@ -11,7 +11,7 @@
 "ad" = (
 /obj/item/weapon/circular_saw,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "ae" = (
 /turf/simulated/shuttle/wall{
@@ -88,7 +88,7 @@
 /area/awaymission/BMPship3)
 "ar" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "as" = (
 /obj/structure/window/reinforced,
@@ -1411,7 +1411,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/BMPship1)
 "ed" = (
 /turf/simulated/floor{
@@ -2402,7 +2402,7 @@
 /area/awaymission/BMPship3)
 "gx" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission/BMPship3)
 "gy" = (
 /turf/simulated/floor/plating/airless{
@@ -2988,7 +2988,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area)
 "il" = (
 /turf/simulated/shuttle/wall{
@@ -3116,7 +3116,7 @@
 /turf/simulated/floor/engine,
 /area/awaymission/BMPship3)
 "iH" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/awaymission)
 
 (1,1,1) = {"

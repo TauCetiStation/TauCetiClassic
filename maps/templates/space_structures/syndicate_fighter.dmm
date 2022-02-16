@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "b" = (
 /turf/simulated/shuttle/wall{
@@ -102,7 +102,7 @@
 	network = list("shiv");
 	pixel_y = -10
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/syndicate_fighter)
 "l" = (
 /obj/structure/rack,

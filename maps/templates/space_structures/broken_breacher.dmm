@@ -96,7 +96,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/broken_breacher)
 "cM" = (
 /obj/structure/toilet{
@@ -131,7 +131,7 @@
 /obj/effect/decal/cleanable/blood/drip{
 	color = "#2299fc"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "dT" = (
 /obj/structure/table/woodentable,
@@ -196,7 +196,7 @@
 /area/space_structures/broken_breacher)
 "hh" = (
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "id" = (
 /obj/structure/stool/bed/roller,
@@ -482,7 +482,7 @@
 /area/space_structures/broken_breacher)
 "ru" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/broken_breacher)
 "rA" = (
 /turf/simulated/floor/plating/airless{
@@ -524,7 +524,7 @@
 	},
 /area/space_structures/broken_breacher)
 "sO" = (
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "sT" = (
 /obj/machinery/iv_drip,
@@ -881,7 +881,7 @@
 /area/space_structures/broken_breacher)
 "FV" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "FW" = (
 /obj/structure/urinal{
@@ -961,7 +961,7 @@
 /area/space_structures/broken_breacher)
 "It" = (
 /obj/item/stack/rods,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "IQ" = (
 /obj/structure/stool/bed,
@@ -992,7 +992,7 @@
 /area/space_structures/broken_breacher)
 "JF" = (
 /obj/structure/closet/gimmick,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "Kh" = (
 /obj/structure/table/woodentable,
@@ -1096,7 +1096,7 @@
 /area/space_structures/broken_breacher)
 "NY" = (
 /obj/structure/stool/bed,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "Oa" = (
 /obj/random/vending/snack,
@@ -1138,12 +1138,12 @@
 /area/space_structures/broken_breacher)
 "PC" = (
 /obj/item/stack/cable_coil,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "PJ" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "PM" = (
 /turf/simulated/floor{
@@ -1195,7 +1195,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/simulated/environment/space,
 /area/space_structures/broken_breacher)
 "SL" = (
 /obj/structure/girder,
@@ -1250,7 +1250,7 @@
 "Vd" = (
 /obj/item/stack/sheet/metal,
 /obj/structure/lattice,
-/turf/space,
+/turf/simulated/environment/space,
 /area/space)
 "Vk" = (
 /obj/item/weapon/crossbow/vox,
