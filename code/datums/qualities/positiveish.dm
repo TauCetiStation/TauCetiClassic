@@ -4,7 +4,7 @@
 	desc = "У тебя целая КУЧА денег! Как бы их потратить?"
 	restriction = "Нет."
 
-	var/list/money_types = pick(
+	var/list/money_types = list(
 		/obj/item/weapon/spacecash/c1000,
 		/obj/item/weapon/spacecash/c500,
 		/obj/item/weapon/spacecash/c200,
@@ -200,3 +200,26 @@
 
 /datum/quality/happiness/add_effect(mob/living/carbon/human/H, latespawn)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_happiness", /datum/mood_event/happiness)
+
+
+/datum/quality/polyglot
+	desc = "Ты знаешь все языки. Вот и всё, все."
+	restriction = "Мим, Библиотекарь, Агент Внутренних Дел."
+
+	var/list/polyglots = list(
+		"Mime",
+		"Librarian",
+		"Internal Affairs Agent",
+	)
+
+/datum/quality/polyglot/availability_check(client/C)
+	return job_checks(C, polyglots)
+
+/datum/quality/polyglot/restriction_check(mob/living/carbon/human/H, latespawn)
+	return H.mind.assigned_role in polyglots
+
+/datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/language in all_languages)
+		var/datum/language/L = all_languages[language]
+		if(H.get_species() in L.allowed_species)
+			H.add_language(language)

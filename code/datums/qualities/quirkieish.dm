@@ -49,7 +49,7 @@
 	var/nukecode = "ERROR"
 
 	var/nuke_type = "NT"
-	if(H.mind.assigned_role && prob(50))
+	if(H.mind.assigned_role == "Clown" && prob(50))
 		nuke_type = "Syndi"
 
 	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
@@ -67,9 +67,9 @@
 	to_chat(H, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
 	H.mind.store_memory("Код от бомбы: [nukecode]")
 
-	var/obj/item/weapon/paper/nuclear_code/NC = new(H)
+	var/obj/item/weapon/paper/nuclear_code/NC = new(H, nukecode)
 	if(H.put_in_hands(NC))
 		return
-	if(H.equip_or_collect(new /obj/item/weapon/paper/nuclear_code(H), SLOT_R_STORE))
+	if(H.equip_or_collect(NC, SLOT_R_STORE))
 		return
 	qdel(NC)
