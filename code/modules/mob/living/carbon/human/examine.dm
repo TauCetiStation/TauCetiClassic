@@ -1,12 +1,3 @@
-/atom/proc/display_accessories()
-	var/obj/item/clothing/C = src
-	var/list/displayed_accessories = list()
-	for(var/accessory in C.accessories)
-		displayed_accessories += "[bicon(accessory)] \a [accessory]"
-
-	if(displayed_accessories.len)
-		. += " with [get_english_list(displayed_accessories)] attached"
-
 /mob/living/carbon/human/examine(mob/user)
 	var/skipgloves = 0
 	var/skipsuitstorage = 0

@@ -1018,3 +1018,6 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/proc/display_accessories()
+	return
