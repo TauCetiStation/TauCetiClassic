@@ -145,3 +145,27 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	spawner_type = /datum/spawner/fake_diona
 	spawner_id = "diona_pod"
+
+	var/vine_timer
+
+/obj/item/seeds/replicapod/real_deal/Destroy()
+	deltimer(vine_timer)
+	return ..()
+
+/obj/item/seeds/replicapod/real_deal/proc/spawn_vine()
+	var/obj/machinery/hydroponics/pod = loc
+	if(!istype(pod))
+		return
+
+	if(locate(/obj/effect/spacevine_controller/diona) in pod.loc)
+		return
+
+	new /obj/effect/spacevine_controller/diona(pod.loc)
+
+// Not harvesting them ASAP leads in to kudzumeme...
+/obj/item/seeds/replicapod/real_deal/ripen()
+	vine_timer = addtimer(CALLBACK(src, .proc/spawn_vine), 1 MINUTE, TIMER_STOPPABLE)
+
+/obj/item/seeds/replicapod/real_deal/harvest()
+	deltimer(vine_timer)
+	return ..()

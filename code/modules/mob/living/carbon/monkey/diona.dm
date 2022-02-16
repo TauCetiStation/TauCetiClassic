@@ -28,8 +28,8 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 /mob/living/carbon/monkey/diona/podman
-	name = "podman rat"
-	voice_name = "podman rat"
+	name = "podkid"
+	voice_name = "podkid"
 	icon_state = "podman_nymph1"
 	race = PODMAN
 
@@ -257,8 +257,6 @@
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species(get_species())
 	adult.dna = dna.Clone()
-	//adult.dna.UpdateSE()
-	//adult.dna.UpdateUI()
 
 	adult.UpdateAppearance()
 

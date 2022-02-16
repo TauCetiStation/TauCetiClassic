@@ -31,10 +31,13 @@
 	user_unbuckle_mob(user)
 	user.SetNextMove(CLICK_CD_MELEE)
 
-
 /obj/effect/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)
 	user.SetNextMove(CLICK_CD_MELEE)
+
+
+/obj/effect/spacevine/diona
+
 
 /obj/effect/spacevine_controller
 	var/list/obj/effect/spacevine/vines = list()
@@ -43,6 +46,15 @@
 	var/reached_slowdown_size
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
+
+	var/vine_type = /obj/effect/spacevine
+
+	var/slowdown_size = 30
+	var/collapse_size = 250
+
+/obj/effect/spacevine_controller/diona
+	vine_type = /obj/effect/spacevine/diona
+
 
 /obj/effect/spacevine_controller/atom_init()
 	. = ..()
@@ -57,7 +69,7 @@
 	return ..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location)
-	var/obj/effect/spacevine/SV = new(location)
+	var/obj/effect/spacevine/SV = new vine_type(location)
 	growth_queue += SV
 	vines += SV
 	SV.master = src
@@ -69,9 +81,9 @@
 	if(!growth_queue)
 		qdel(src) //Sanity check
 		return
-	if(vines.len >= 250 && !reached_collapse_size)
+	if(vines.len >= collapse_size && !reached_collapse_size)
 		reached_collapse_size = 1
-	if(vines.len >= 30 && !reached_slowdown_size )
+	if(vines.len >= slowdown_size && !reached_slowdown_size )
 		reached_slowdown_size = 1
 
 	var/length = 0
@@ -84,7 +96,7 @@
 			length = 0
 	else
 		length = 1
-	length = min( 30 , max( length , vines.len / 5 ) )
+	length = min( slowdown_size , max( length , vines.len / 5 ) )
 	var/i = 0
 	var/list/obj/effect/spacevine/queue_end = list()
 
