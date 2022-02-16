@@ -1,11 +1,17 @@
 /mob/living/carbon/human
 	var/conversation_timer
 
+/mob/living/carbon/human/atom_init()
+	. = ..()
+	handle_socialization()
+
 /mob/living/carbon/human/Destroy()
 	deltimer(conversation_timer)
 	return ..()
 
 /mob/living/carbon/human/proc/handle_prolonged_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
 
 /mob/living/carbon/human/proc/handle_no_socialization()
@@ -14,9 +20,12 @@
 		5 MINUTES,
 		TIMER_STOPPABLE
 	)
+
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
-/mob/living/carbon/human/proc/register_conversation(mob/speaker)
+/mob/living/carbon/human/proc/handle_socialization()
 	deltimer(conversation_timer)
 	conversation_timer = addtimer(
 		CALLBACK(src, .proc/handle_no_socialization),
@@ -45,9 +54,7 @@
 	if(!ishuman(speaker))
 		return
 
-	var/mob/living/carbon/human/H = speaker
-
-	register_conversation(H)
+	handle_socialization()
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
