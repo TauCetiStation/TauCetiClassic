@@ -103,6 +103,9 @@
 	max_ammo = 6
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+	ammo_type = /obj/item/ammo_casing/c45r
+
 /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 	name = "Flare gun cylinder"
 	desc = "Oh god, this shouldn't be here."
