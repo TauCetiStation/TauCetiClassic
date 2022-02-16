@@ -15,7 +15,7 @@
 	if(HULK in mutations)
 		retDam += 4
 
-	retDam += BPHand.pumped / 10
+	retDam += BPHand.pumped * 0.1
 
 	if(istype(gloves, /obj/item/clothing/gloves/boxing))
 		retDamType = HALLOSS
