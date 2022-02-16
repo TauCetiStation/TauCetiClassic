@@ -146,7 +146,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_NO_CLONE            "no_clone"
-#define TRAIT_VACCINATED   "vaccinated"
+#define TRAIT_VACCINATED          "vaccinated"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

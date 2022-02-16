@@ -24,3 +24,50 @@
 
 	for(var/obj/item/organ/internal/IO in H.organs)
 		IO.mechanize()
+
+
+/datum/quality/nuclear_option
+	desc = "Тебе известен код от бомбы."
+
+	restriction = "Капитан, АВД, Клоун"
+
+	var/static/list/troublemakers = list(
+		"Captain",
+		"Internal Affairs Agent",
+		"Clown",
+	)
+
+/datum/quality/nuclear_option/availability_check(client/C)
+	return job_checks(C, troublemakers)
+
+/datum/quality/nuclear_option/restriction_check(mob/living/carbon/human/H)
+	return H.mind.assigned_role in troublemakers
+
+/datum/quality/nuclear_option/add_effect(mob/living/carbon/human/H)
+	var/nukecode = "ERROR"
+
+	var/nuke_type = "NT"
+	if(H.mind.assigned_role && prob(50))
+		nuke_type = "Syndi"
+
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
+		if(!bomb.r_code)
+			continue
+		if(bomb.r_code == "LOLNO")
+			continue
+		if(bomb.r_code == "ADMIN")
+			continue
+		if(bomb.nuketype != nuke_type)
+			continue
+
+		nukecode = bomb.r_code
+
+	to_chat(H, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
+	H.mind.store_memory("Код от бомбы: [nukecode]")
+
+	var/obj/item/weapon/paper/nuclear_code/NC = new(H)
+	if(H.put_in_hands(NC))
+		return
+	if(H.equip_or_collect(new /obj/item/weapon/paper/nuclear_code(H), SLOT_R_STORE))
+		return
+	qdel(NC)

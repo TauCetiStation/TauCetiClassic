@@ -117,6 +117,7 @@
 
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+		the_bomb.nuketype = "Syndi"
 		the_bomb.r_code = nuke_code
 
 	return ..()
