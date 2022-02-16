@@ -29,12 +29,14 @@
 /datum/quality/nuclear_option
 	desc = "Тебе известен код от бомбы."
 
-	restriction = "Капитан, АВД, Клоун"
+	restriction = "Капитан, АВД, Библиотекарь, Клоун, Мим."
 
 	var/static/list/troublemakers = list(
 		"Captain",
 		"Internal Affairs Agent",
+		"Librarian",
 		"Clown",
+		"Mime",
 	)
 
 /datum/quality/nuclear_option/availability_check(client/C)

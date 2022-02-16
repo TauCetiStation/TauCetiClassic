@@ -4,7 +4,7 @@
 	desc = "У тебя целая КУЧА денег! Как бы их потратить?"
 	restriction = "Нет."
 
-	var/static/list/money_types = pick(
+	var/list/money_types = pick(
 		/obj/item/weapon/spacecash/c1000,
 		/obj/item/weapon/spacecash/c500,
 		/obj/item/weapon/spacecash/c200,
@@ -44,7 +44,7 @@
 	desc = "В качестве эксперимента, тебе выдали таблетку с новейшим препаратом, чем-то напоминающим тот самый Философский Камень."
 	restriction = "Доктор, Парамедик, СМО."
 
-	var/static/list/doctors = list(
+	var/list/doctors = list(
 		"Medical Doctor",
 		"Paramedic",
 		"Chief Medical Officer",
