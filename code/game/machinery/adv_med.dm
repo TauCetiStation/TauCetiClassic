@@ -100,21 +100,17 @@
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bodyscanner/ex_act(severity)
-	var/should_destroy = FALSE
 	switch(severity)
-		if(1.0)
-			should_destroy = TRUE
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				should_destroy = TRUE
-		if(3.0)
-			if(prob(25))
-				should_destroy = TRUE
-	if(should_destroy)
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-			ex_act(severity)
-		qdel(src)
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+		ex_act(severity)
+	qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))
@@ -124,11 +120,12 @@
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+	qdel(src)
 
 /obj/machinery/body_scanconsole/blob_act()
 	if(prob(50))

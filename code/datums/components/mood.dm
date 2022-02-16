@@ -17,7 +17,6 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, /datum/component/mood.proc/update_beauty)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
@@ -32,9 +31,6 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
-	var/area/A = get_area(parent)
-	if(A)
-		UnregisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
 	return ..()
 
@@ -376,11 +372,6 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER
-
-	var/area/OA = get_area(OldLoc)
-	if(OA)
-		UnregisterSignal(OA, list(COMSIG_AREA_UPDATE_BEAUTY))
-	RegisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY), /datum/component/mood.proc/update_beauty)
 
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
