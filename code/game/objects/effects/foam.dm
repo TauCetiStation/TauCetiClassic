@@ -163,8 +163,11 @@
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
 			B.extinguish()
-		if(istype(A, /obj/item))
+		else if(istype(A, /obj/structure/fireplace))
+			var/obj/structure/fireplace/F = A
+			F.extinguish()
+		else if(istype(A, /obj/item))
 			var/obj/item/I = A
 			I.extinguish()
-		if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
+		else if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
 			qdel(A)
