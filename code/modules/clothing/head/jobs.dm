@@ -57,12 +57,14 @@
 //HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"
-	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
+	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG. Also has some space for special armor plate."
 	icon_state = "hos_peakedcap"
 	item_state = "hos_peakedcap"
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 //Medical
 /obj/item/clothing/head/surgery
