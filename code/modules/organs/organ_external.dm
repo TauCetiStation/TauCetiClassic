@@ -43,8 +43,8 @@
 	// PUMPED, yo
 	var/pumped = 0
 	// Value after which the bodypart changes it's sprite
-	var/pumped_threshold = 10
-	var/max_pumped = 20
+	var/pumped_threshold = 20
+	var/max_pumped = 60
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
