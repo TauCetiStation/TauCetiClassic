@@ -99,6 +99,15 @@
 
 /datum/stat/manifest_entry
 	var/name
-	var/assignment
+	var/assigned_role
 	var/special_role
 	var/list/antag_roles = null
+
+/datum/stat/leave_stat
+	var/name
+	var/assigned_role
+	var/special_role
+	var/list/antag_roles = null
+
+	var/leave_type
+	var/round_time

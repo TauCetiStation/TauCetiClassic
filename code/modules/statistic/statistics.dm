@@ -40,6 +40,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/death_stat/deaths = list()
 	var/list/datum/stat/explosion_stat/explosions = list()
 	var/list/datum/stat/manifest_entry/manifest_entries = list()
+	var/list/datum/stat/leave_stat/leave_stats = list()
 	var/list/datum/stat/role/orphaned_roles = list()
 	var/list/datum/stat/faction/factions = list()
 

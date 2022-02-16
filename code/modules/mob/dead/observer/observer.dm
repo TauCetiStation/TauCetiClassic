@@ -195,9 +195,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			resting = TRUE
 			Sleeping(2 SECONDS)
-		ghostize(can_reenter_corpse = FALSE)
-	return
 
+		SSStatistics.add_leave_stat(mind, "Ghosted")
+		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = TRUE

@@ -75,17 +75,34 @@
 	stat.flash_range = flash_range
 	explosions += stat
 
-/datum/stat_collector/proc/add_manifest_entry(key, name, assignment, special_role, list/antag_roles)
+/datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles)
 	var/datum/stat/manifest_entry/stat = new
 	stat.name = STRIP_NEWLINE(name)
-	stat.assignment = STRIP_NEWLINE(assignment)
+	stat.assigned_role = STRIP_NEWLINE(assigned_role)
 	stat.special_role = STRIP_NEWLINE(special_role)
+
 	if(antag_roles?.len)
 		stat.antag_roles = list()
 		for(var/role in antag_roles)
 			stat.antag_roles += role
 
 	manifest_entries += stat
+
+/datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type)
+	var/datum/stat/leave_stat/stat = new
+	stat.name = STRIP_NEWLINE(M.name)
+	stat.assigned_role = STRIP_NEWLINE(M.assigned_role)
+	stat.special_role = STRIP_NEWLINE(M.special_role)
+
+	if(M.antag_roles?.len)
+		stat.antag_roles = list()
+		for(var/role in M.antag_roles)
+			stat.antag_roles += role
+
+	stat.leave_type = leave_type
+	stat.round_time = roundduration2text()
+
+	leave_stats += stat
 
 /datum/stat_collector/proc/get_objective_stat(datum/objective/O)
 	var/datum/stat/objective/stat = new

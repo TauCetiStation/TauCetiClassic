@@ -244,6 +244,8 @@ var/global/list/frozen_items = list()
 			else
 				icon_state = "cryosleeper_left"
 
+			SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
+
 			//This should guarantee that ghosts don't spawn.
 			occupant.ckey = null
 
