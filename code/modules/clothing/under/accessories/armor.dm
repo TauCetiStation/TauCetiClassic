@@ -16,6 +16,14 @@
 	S.body_parts_covered = body_parts_covered
 	S.siemens_coefficient = siemens_coefficient
 
+/obj/item/clothing/accessory/armor/on_removed(mob/user)
+	has_suit.armor = initial(has_suit.armor)
+	has_suit.pierce_protection = initial(has_suit.pierce_protection)
+	has_suit.body_parts_covered = initial(has_suit.body_parts_covered)
+	has_suit.siemens_coefficient = initial(has_suit.siemens_coefficient)
+
+	..()
+
 /obj/item/clothing/accessory/armor/dermal
 	name = "dermal armour patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head. And now you can hide it in some hats!"
