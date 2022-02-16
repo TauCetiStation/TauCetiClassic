@@ -146,10 +146,10 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
-	if(I.abstract)
-		return
 	if(iswrench(I))
 		return ..()
+	if(I.flags & ABSTRACT)
+		return
 	if(istype(I, /obj/item/weapon/gift))
 		var/obj/item/weapon/gift/present = I
 		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
