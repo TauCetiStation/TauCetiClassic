@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-	var/turf/basetype = /turf/space
+	var/turf/basetype = /turf/simulated/environment/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 	var/can_deconstruct = FALSE
@@ -210,8 +210,8 @@
 		if(O.level == 1)
 			O.hide(src.intact)
 
-// override for space turfs, since they should never hide anything
-/turf/space/levelupdate()
+// override for environment turfs, since they should never hide anything
+/turf/simulated/environment/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
 			O.hide(0)
@@ -222,7 +222,7 @@
 	if(L)
 		qdel(L)
 
-/turf/proc/empty(turf_type=/turf/space, baseturf_type, list/ignore_typecache)
+/turf/proc/empty(turf_type=/turf/simulated/environment/space, list/ignore_typecache)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark))
 	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
@@ -232,7 +232,7 @@
 		qdel(thing, force=TRUE)
 
 	if(turf_type)
-		ChangeTurf(turf_type, baseturf_type)
+		ChangeTurf(turf_type)
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
@@ -341,7 +341,7 @@
 			else
 				lighting_clear_overlay()
 
-		for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		for(var/turf/simulated/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
 	if(F)
@@ -465,7 +465,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ChangeTurf(/turf/simulated/environment/space)
 	return(2)
 
 /turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)

@@ -67,7 +67,7 @@
 
 /proc/generate_asteroid_mapfile(size_x, size_y)
 	var/map = "\
-		\"[SPACETURF]\" = (/turf/space,/area/space)\n\
+		\"[SPACETURF]\" = (/turf/simulated/environment/space,/area/space)\n\
 		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
 		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\
