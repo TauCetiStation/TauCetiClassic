@@ -47,7 +47,7 @@
 			if(prob(5))
 				H.gib()
 		else
-			M.ex_act(pick(1,3))
+			M.ex_act(pick(EXPLODE_DEVASTATE,EXPLODE_LIGHT))
 
 	asteroid.load(T)
 
