@@ -1,3 +1,12 @@
+/atom/proc/display_accessories()
+	var/obj/item/clothing/C = src
+	var/list/displayed_accessories = list()
+	for(var/accessory in C.accessories)
+		displayed_accessories += "[bicon(accessory)] \a [accessory]"
+
+	if(displayed_accessories.len)
+		. += " with [get_english_list(displayed_accessories)] attached"
+
 /mob/living/carbon/human/examine(mob/user)
 	var/skipgloves = 0
 	var/skipsuitstorage = 0
@@ -66,38 +75,30 @@
 
 	//uniform
 	if(w_uniform && !skipjumpsuit)
-		//Ties
-		var/list/ties = list()
-		if(istype(w_uniform,/obj/item/clothing/under))
-			var/obj/item/clothing/under/U = w_uniform
-			for(var/accessory in U.accessories)
-				ties += "[bicon(accessory)] \a [accessory]"
-		var/tie_msg = ties.len ? ". Attached to it is [get_english_list(ties)]" : ""
-
 		if(w_uniform.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][w_uniform.display_accessories()]!</span>\n"
 		else if(w_uniform.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][tie_msg]!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][w_uniform.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][tie_msg].\n"
+			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][w_uniform.display_accessories()].\n"
 
 	//head
 	if(head)
 		if(head.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head[head.display_accessories()]!</span>\n"
 		else if(head.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head[head.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
+			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head[head.display_accessories()].\n"
 
 	//suit/armour
 	if(wear_suit)
 		if(wear_suit.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()][wear_suit.display_accessories()]!</span>\n"
 		else if(wear_suit.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name]!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name][wear_suit.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
+			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit][wear_suit.display_accessories()].\n"
 
 		//suit/armour storage
 		if(s_store && !skipsuitstorage)
