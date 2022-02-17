@@ -6,7 +6,7 @@
 	icon_state = "leap_off"
 
 /atom/movable/screen/xenomorph/leap/Click()
-	if(istype(usr, /mob/living/carbon/xenomorph/humanoid))
+	if(isxenoadult(usr))
 		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
@@ -15,7 +15,7 @@
 	icon_state = "nightvision1"
 
 /atom/movable/screen/xenomorph/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/xenomorph))
+	if(isxeno(usr))
 		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
@@ -180,7 +180,7 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	if(istype(mymob, /mob/living/carbon/xenomorph/humanoid/hunter))
+	if(isxenohunter(mymob))
 		mymob.leap_icon = new /atom/movable/screen/xenomorph/leap()
 		mymob.leap_icon.screen_loc = ui_storage2
 		src.adding += mymob.leap_icon

@@ -8,7 +8,7 @@
 	amount = 10
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
-	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
+	if (isrobot(M))	//Repairing cyborgs
 		var/mob/living/silicon/robot/R = M
 		if (R.getBruteLoss() || R.getFireLoss() )
 			if(!use(1))
