@@ -148,14 +148,18 @@
 	add_delay += mob.movement_delay()
 
 	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ((NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? 2 : 1 ) )) // set it now in case of pulled objects
-	if(old_move_delay + (add_delay * MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+	//If the move was recent, count using old_move_delay
+	//We want fractional behavior and all
+	if(old_move_delay + world.tick_lag > world.time)
+		//Yes this makes smooth movement stutter if add_delay is too fractional
+		//Yes this is better then the alternative
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
 
 	var/grab_move = FALSE
 	if(locate(/obj/item/weapon/grab, mob))
-		move_delay = max(move_delay, world.time + 7)
+		add_delay += 7
 		grab_move = TRUE
 		var/list/grab_list = mob.ret_grab()
 		if(istype(grab_list, /list))

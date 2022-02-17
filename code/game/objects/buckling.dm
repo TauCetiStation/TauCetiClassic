@@ -44,8 +44,11 @@
 	//reset pulling
 	if(M.pulledby)
 		M.pulledby.stop_pulling()
+	//you cant pull something you sit on
+	if(M.pulling == src)
+		M.stop_pulling()
 	if(M.grabbed_by.len)
-		for (var/obj/item/weapon/grab/G in M.grabbed_by)
+		for(var/obj/item/weapon/grab/G in M.grabbed_by)
 			qdel(G)
 	M.buckled = src
 	M.set_dir(dir)

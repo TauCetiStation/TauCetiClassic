@@ -182,9 +182,6 @@
 #define WALK_SPEED_SLOWDOWN 2.5
 #define DROWSY_SPEED_SLOWDOWN 6
 
-#define MOVEMENT_DELAY_BUFFER 0.75
-#define MOVEMENT_DELAY_BUFFER_DELTA 1.25
-
 // Indicators.
 #define IND_STAT          "stat"
 #define IND_STAT_NOCLIENT "stat_noclient"

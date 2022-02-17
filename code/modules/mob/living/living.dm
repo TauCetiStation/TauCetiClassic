@@ -178,14 +178,9 @@
 	if(pulling == AM)
 		stop_pulling()
 
-	var/current_dir
-	if(isliving(AM))
-		current_dir = AM.dir
 	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
 		AM.add_fingerprint(src)
 		Move(get_step(loc, dir_to_target), dir_to_target)
-	if(current_dir)
-		AM.set_dir(current_dir)
 	now_pushing = FALSE
 
 //mob verbs are a lot faster than object verbs
