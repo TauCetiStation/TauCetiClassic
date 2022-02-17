@@ -384,7 +384,7 @@
 	pull()
 
 /datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
-	if(!istype(AM, /obj/item))
+	if(!isitem(AM))
 		return
 
 	var/mob/living/simple_animal/hostile/H = parent
