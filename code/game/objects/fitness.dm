@@ -11,8 +11,7 @@
 	user.pixel_y = 0
 
 /obj/structure/stacklifter/proc/get_pumped(mob/living/carbon/human/user)
-	var/lifts = 0
-	while (lifts++ < 6)
+	for(var/lifts in 1 to 5)
 		animate(user, pixel_y = -2, time = 3)
 		if(!do_after(user, 3, TRUE, src, progress=FALSE))
 			return
@@ -36,7 +35,7 @@
 	user.update_body()
 
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
-	to_chat(user, "[finishmessage]")
+	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
 	if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 		user.try_mutate_to_hulk()
@@ -83,7 +82,15 @@
 	density = TRUE
 	anchored = TRUE
 
-	var/image/weight_overlay
+	var/static/image/weight_overlay
+
+/obj/structure/weightlifter/atom_init()
+	. = ..()
+	if(weight_overlay)
+		return
+
+	weight_overlay = image('icons/obj/fitness.dmi',"fitnessweight-w")
+	weight_overlay.layer = MOB_LAYER + 1
 
 /obj/structure/weightlifter/Destroy()
 	QDEL_NULL(weight_overlay)
@@ -91,17 +98,13 @@
 
 /obj/structure/weightlifter/proc/finish_pump(mob/living/carbon/human/user)
 	cut_overlay(weight_overlay)
-	QDEL_NULL(weight_overlay)
 	user.pixel_y = 0
 	icon_state = "fitnessweight"
 
 /obj/structure/weightlifter/proc/get_pumped(mob/living/carbon/human/user)
-	weight_overlay = image('icons/obj/fitness.dmi',"fitnessweight-w")
-	weight_overlay.layer = MOB_LAYER + 1
 	add_overlay(weight_overlay)
 
-	var/reps = 0
-	while (reps++ < 6)
+	for(var/reps in 1 to 5)
 		for(var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 			if(!do_after(user, 3, TRUE, src, progress=FALSE))
@@ -120,7 +123,7 @@
 
 	user.nutrition -= 12
 	user.overeatduration -= 16
-	user.apply_effect(25,AGONY,0)
+	user.apply_effect(25, AGONY, 0)
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
@@ -132,7 +135,7 @@
 	user.update_body()
 
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
-	to_chat(user, "[finishmessage]")
+	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
 	if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 		user.try_mutate_to_hulk()
