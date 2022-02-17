@@ -94,6 +94,8 @@
 		if(R.cell.use(shot.e_cost))
 			power_supply.give(shot.e_cost)
 			..()
+			
+			update_icon()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
