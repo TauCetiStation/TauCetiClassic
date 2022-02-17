@@ -62,11 +62,12 @@
 	return 0
 
 //items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
-//returns 1 if the master item's parent's attack_hand() should be called, 0 otherwise.
+//returns TRUE if the master item's parent's attack_hand() should be called, FALSE otherwise.
 //It's strange, but no other way of doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user)
 	add_fingerprint(user)
 	open(user)
+	return FALSE
 
 /obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
 	return master_item.Adjacent(neighbor)
