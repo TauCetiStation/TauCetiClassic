@@ -5,7 +5,7 @@ on:
       - master
   pull_request:
     branches:
-      - master
+      - '*'
 env:
   BYOND_MAJOR: 514
   BYOND_MINOR: 1565
