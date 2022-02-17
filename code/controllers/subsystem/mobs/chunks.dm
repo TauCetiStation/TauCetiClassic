@@ -20,14 +20,14 @@ SUBSYSTEM_DEF(chunks)
 			process_mob(L)
 
 /datum/controller/subsystem/chunks/proc/add_level()
-	var/list/x_grid[GRID_ELEM(world.maxx)][GRID_ELEM(world.maxy)]
-	grid += list(x_grid)
+	var/x_size = GRID_ELEM(world.maxx)
+	var/y_size = GRID_ELEM(world.maxy)
+	var/list/z_grid[x_size][y_size]
+	grid += list(z_grid)
 
-	for(var/x in 1 to x_grid.len)
-		var/list/y_grid = x_grid[x]
-
-		for(var/y in 1 to y_grid.len)
-			y_grid[y] = new /datum/chunk
+	for(var/x in 1 to x_size)
+		for(var/y in 1 to y_size)
+			z_grid[x][y] = new /datum/chunk
 
 /datum/controller/subsystem/chunks/proc/process_mob(mob/living/L)
 	var/turf/T = get_turf(L)
@@ -45,17 +45,15 @@ SUBSYSTEM_DEF(chunks)
 	if(!T || T.z > grid.len)
 		return FALSE
 	
-	var/x_grid = grid[T.z]
+	var/z_grid = grid[T.z]
 	var/x_start = GRID_ELEM(max(1, (T.x - range)))
 	var/x_end = GRID_ELEM(min(world.maxx, T.x + range))
 	var/y_start = GRID_ELEM(max(1, (T.y - range)))
 	var/y_end = GRID_ELEM(min(world.maxx, T.y + range))
 
 	for(var/x_ in x_start to x_end)
-		var/list/y_grid = x_grid[x_]
-
 		for(var/y_ in y_start to y_end)
-			var/datum/chunk/chunk = y_grid[y_]
+			var/datum/chunk/chunk = z_grid[x_][y_]
 
 			if(chunk.has_enemy_faction(M.faction))
 				return TRUE
