@@ -824,25 +824,6 @@
 	regen_mod = 0.5
 	regen_limbs = FALSE
 
-/*
-/datum/species/diona/podman/proc/force_hair_color(mob/living/carbon/human/H)
-	H.r_hair = 153
-	H.g_hair = 0
-	H.b_hair = 51
-
-	H.r_facial = 153
-	H.g_facial = 0
-	H.b_facial = 51
-
-	H.r_eyes = 255
-	H.g_eyes = 255
-	H.b_eyes = 0
-
-/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
-	. = ..()
-	force_hair_color(H)
-*/
-
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
