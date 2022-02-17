@@ -3448,7 +3448,7 @@
 /area/space)
 "afS" = (
 /obj/structure/closet/emergency_wall{
-	pixel_x = -30
+	pixel_x = -28
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
@@ -8463,7 +8463,9 @@
 	id_tag = "recycler_pump";
 	name = "Recycler Large Air Vent"
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -28
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -13587,20 +13589,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics_cloning)
-"edi" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = -32
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/simulated/floor{
-	icon_state = "black"
-	},
-/area/station/hallway/primary/central)
 "edC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -18396,7 +18384,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/airlock_sensor{
-	id_tag = "arrival_dock_sensor";
+	id_tag = "recycler_sensor";
 	layer = 3.3;
 	pixel_y = 28
 	},
@@ -25582,13 +25570,13 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "arrival_dock_airlock";
+	id_tag = "recycler_airlock";
 	pixel_y = 28;
-	req_one_access = list(13,45,1);
-	tag_airpump = "arrival_dock_pump";
-	tag_chamber_sensor = "arrival_dock_sensor";
-	tag_exterior_door = "arrival_dock_outer";
-	tag_interior_door = "arrival_dock_inner"
+	req_access = list(67);
+	tag_airpump = "recycler_pump";
+	tag_chamber_sensor = "recycler_sensor";
+	tag_exterior_door = "recycler_outer";
+	tag_interior_door = "recycler_inner"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -65288,7 +65276,7 @@ ifx
 hvW
 ikw
 bIB
-edi
+ble
 xCy
 fIW
 lNB
