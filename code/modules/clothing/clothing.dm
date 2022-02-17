@@ -304,6 +304,15 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
 
+
+/obj/item/clothing/display_accessories()
+	var/list/displayed_accessories = list()
+	for(var/accessory in accessories)
+		displayed_accessories += "[bicon(accessory)] \a [accessory]"
+
+	if(displayed_accessories.len)
+		. += " with [get_english_list(displayed_accessories)] attached"
+
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
