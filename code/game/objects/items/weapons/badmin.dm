@@ -87,7 +87,7 @@
 
 		user.visible_message("<span class='notice'>\the [user] takes <span class='bold'>\a [A]</span> from \a [src]!</span>")
 
-		if (istype(A, /obj/item))
+		if (isitem(A))
 			user.put_in_hands(A)
 		else
 			A.forceMove(get_turf(user))

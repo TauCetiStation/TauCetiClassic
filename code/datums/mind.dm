@@ -139,7 +139,7 @@
 
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
 			if(H.ismindshielded())
@@ -390,7 +390,7 @@
 			else
 				for (var/datum/objective/objective in unique_objectives_role)
 					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
-		else if(istype(owner, /datum/faction))
+		else if(isfaction(owner))
 			var/datum/faction/F = owner
 			var/list/faction_objectives = F.GetObjectives()
 			var/list/prev_objectives = faction_objectives.Copy()
