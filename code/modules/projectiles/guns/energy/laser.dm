@@ -81,9 +81,9 @@
 	name = "laser gun"
 	desc = "A basic weapon designed kill with concentrated energy bolts."
 	icon_state = "laser"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
-	var/recharge_time = 5
+	var/recharge_time = 12
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/process()
 	if(!isrobot(loc))
