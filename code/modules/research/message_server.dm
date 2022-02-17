@@ -200,7 +200,7 @@
 /datum/feedback_variable/proc/get_parsed()
 	return list(variable,value,details)
 
-var/obj/machinery/blackbox_recorder/blackbox
+var/global/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder
 	icon = 'icons/obj/stationobjs.dmi'
@@ -232,11 +232,12 @@ var/obj/machinery/blackbox_recorder/blackbox
 /obj/machinery/blackbox_recorder/atom_init()
 	. = ..()
 	if(blackbox)
-		if(istype(blackbox,/obj/machinery/blackbox_recorder))
-			qdel(src)
+		return INITIALIZE_HINT_QDEL
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
+	if(blackbox != src)
+		return ..() 
 	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
 	var/turf/T = locate(1,1, centcom_z)
 	if(T)

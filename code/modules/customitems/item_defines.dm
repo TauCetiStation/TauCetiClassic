@@ -153,7 +153,7 @@
 	if(isliving(user))
 		user.visible_message("<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
-/obj/item/weapon/soap/fluff/azare_siraj_1 //mister fox: Azare Siraj
+/obj/item/weapon/reagent_containers/food/snacks/soap/fluff/azare_siraj_1 //mister fox: Azare Siraj
 	name = "S'randarr's Tongue Leaf"
 	desc = "A waxy, scentless leaf."
 	icon = 'icons/obj/custom_items.dmi'

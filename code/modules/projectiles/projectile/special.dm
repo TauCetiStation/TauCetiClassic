@@ -74,7 +74,7 @@
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
 
-			A.ex_act(2)
+			A.ex_act(EXPLODE_HEAVY)
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
@@ -532,3 +532,27 @@
 		term_color = COLOR_RED
 
 	return term_color
+
+/obj/item/projectile/beam/wormhole
+	name = "bluespace beam"
+	damage = 0
+
+	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
+	tracer_type = /obj/effect/projectile/laser_blue/tracer
+	impact_type = /obj/effect/projectile/laser_blue/impact
+
+/obj/item/projectile/beam/wormhole/orange
+	name = "orange bluespace beam"
+
+	muzzle_type = /obj/effect/projectile/laser/muzzle
+	tracer_type = /obj/effect/projectile/laser/tracer
+	impact_type = /obj/effect/projectile/laser/impact
+
+/obj/item/projectile/beam/wormhole/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	var/obj/item/weapon/gun/energy/gun/portal/P = shot_from
+	if(!P)
+		qdel(src)
+		return
+	if(istype(target, /obj/effect/portal/portalgun))
+		return
+	P.create_portal(src, get_turf(src))

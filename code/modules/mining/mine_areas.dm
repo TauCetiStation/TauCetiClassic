@@ -45,6 +45,64 @@
 		'sound/music/dwarf_fortress.ogg'
 	)
 
+	var/static/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath = 5,
+		/mob/living/simple_animal/hostile/asteroid/basilisk = 4,
+		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub = 2,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 1
+	)
+
+/area/asteroid/mine/unexplored/atom_init()
+	. = ..()
+	InitSpawnArea()
+
+// Creates the spawn area component for this area.
+/area/asteroid/mine/unexplored/proc/InitSpawnArea()
+	// 8 is 1 more than client's view. So mobs spawn right after the view's border
+	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
+	AddComponent(/datum/component/spawn_area,
+		"asteroid",
+		CALLBACK(src, .proc/Spawn),
+		CALLBACK(src, .proc/Despawn),
+		CALLBACK(src, .proc/CheckSpawn),
+		8,
+		16,
+		1.2 MINUTES,
+		1 MINUTE,
+	)
+
+/area/asteroid/mine/unexplored/proc/Spawn(turf/T)
+	if(istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		var/turf/simulated/floor/plating/airless/asteroid/AT = T
+		AT.gets_dug()
+
+	var/to_spawn = pickweight(mob_spawn_list)
+	var/atom/A = new to_spawn(T)
+	if(A)
+		return list(A)
+	return null
+
+/area/asteroid/mine/unexplored/proc/Despawn(atom/movable/instance)
+	var/mob/M = instance
+	if(M.stat == DEAD)
+		return
+	qdel(M)
+
+/area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
+	if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		return FALSE
+	if(T.icon_state == "asteroid_dug")
+		return FALSE
+	return T.is_mob_placeable(null)
+
+// Because people didn't want for mobs to spawn on one part of the asteroid I guess
+/area/asteroid/mine/unexplored/safe
+	icon_state = "unexplored_safe"
+
+/area/asteroid/mine/unexplored/safe/InitSpawnArea()
+	return
+
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"

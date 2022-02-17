@@ -403,6 +403,9 @@
 				if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
 					break grab_stages_loop
 
+			if(QDELETED(victim_G))
+				break grab_stages_loop
+
 			if(grab_stages != victim_G.state)
 				victim_G.set_state(grab_stages, adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
 				cur_spin_time -= 1

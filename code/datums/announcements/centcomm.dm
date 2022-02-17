@@ -19,14 +19,12 @@
 	name = "Centcomm: ERT Approved"
 	subtitle = "Центральное Командование"
 	sound = "yesert"
-/datum/announcement/centcomm/yesert/play()
+/datum/announcement/centcomm/yesert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. Мы подготовим и отправим его в кратчайшие сроки."
-	..()
 
 /datum/announcement/centcomm/noert
 	name = "Centcomm: ERT Denied"
 	subtitle = "Центральное Командование"
 	sound = "yesert"
-/datum/announcement/centcomm/noert/play()
+/datum/announcement/centcomm/noert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
-	..()

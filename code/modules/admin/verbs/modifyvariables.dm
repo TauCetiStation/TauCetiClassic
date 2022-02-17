@@ -535,6 +535,17 @@
 					message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize]")
 					log_handled = TRUE
 					O.update_transform()
+				if("height")
+					if(ishuman(O))
+						var/mob/living/carbon/human/H = O
+						var/var_new = input("Enter new height: \n(Human will gain this height from 1.6 to 2.0)", "Num", H.vars[variable]) as null|anything in heights_list
+						if(isnull(var_new))
+							return
+						H.vars[variable] = var_new
+						world.log << "### VarEdit by [src]: [H.type] [variable]=[html_encode("[H.height]")]"
+						log_admin("[key_name(src)] modified [original_name]'s [variable] to [H.height]")
+						log_handled = TRUE
+						H.regenerate_icons()
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))

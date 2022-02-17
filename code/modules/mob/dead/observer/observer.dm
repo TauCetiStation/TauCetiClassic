@@ -5,8 +5,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"
-	layer = MOB_LAYER // on tg it is FLOAT LAYER
-	plane = FLOAT_PLANE
+	plane = GHOST_PLANE
 	stat = DEAD
 	density = FALSE
 	canmove = 0
@@ -17,7 +16,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
-	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
@@ -31,7 +29,9 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+
 	var/datum/orbit_menu/orbit_menu
+	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -101,6 +101,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
 	QDEL_NULL(adminMulti)
+	QDEL_NULL(spawners_menu)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.
@@ -142,7 +143,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(key)
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
@@ -156,7 +157,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		set_EyesVision(transition_time = 0)
 		SStgui.on_transfer(src, ghost)
 		ghost.can_reenter_corpse = can_reenter_corpse
-		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
+		ghost.timeofdeath = timeofdeath
 		ghost.key = key
 		ghost.playsound_stop(CHANNEL_AMBIENT)
 		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
@@ -180,8 +181,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
-			var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)
-			ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
+			ghostize(can_reenter_corpse = FALSE)
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
@@ -193,10 +193,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/mob/living/silicon/robot/robot = usr
 			robot.toggle_all_components()
 		else
-			resting = 1
+			resting = TRUE
 			Sleeping(2 SECONDS)
-		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
-		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
+		ghostize(can_reenter_corpse = FALSE)
 	return
 
 
@@ -440,36 +439,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(t)
 		print_atmos_analysis(src, atmosanalyzer_scan(t))
 
-/mob/dead/observer/verb/become_mouse()
-	set name = "Become mouse"
-	set category = "Ghost"
-
-	if(jobban_isbanned(src, "Mouse"))
-		to_chat(src, "<span class='warning'>You have been banned from being mouse.</span>")
-		return
-
-	if(config.disable_player_mice)
-		to_chat(src, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
-		return
-
-	var/mob/dead/observer/M = usr
-	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a mouse.</span>")
-		return
-
-	var/timedifference = world.time - client.time_died_as_mouse
-	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
-		var/timedifference_text
-		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		to_chat(src, "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
-		return
-
-	var/response = tgui_alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?", list("Squeek!","Nope!"))
-	if(response != "Squeek!")
-		return  //Hit the wrong key...again.
-
-	mousize()
-
 /mob/proc/mousize()
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
@@ -513,7 +482,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/mob/living/carbon/ian/phoron_dog
 	for(var/mob/living/carbon/ian/IAN in alive_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
-		if(IAN.mind) // Mind means someone was or is in a body.
+		if(IAN.client)
 			continue
 		phoron_dog = IAN
 		break
@@ -619,15 +588,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	update_sight()
-	
+
 
 /mob/dead/observer/update_sight()
+	..()
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	updateghostimages()
-	..()
 
 /proc/updateallghostimages()
 	for (var/mob/dead/observer/O in player_list)
@@ -662,6 +631,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game()
 	game.tgui_interact(usr)
+
+/mob/dead/observer/verb/open_spawners_menu()
+	set name = "Spawners Menu"
+	set desc = "See all currently available spawners"
+	set category = "Ghost"
+
+	if(!spawners_menu)
+		spawners_menu = new(src)
+
+	spawners_menu.tgui_interact(src)
 
 /mob/dead/observer/Stat()
 	..()

@@ -107,6 +107,7 @@
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src)
+	newRole.is_roundstart_role = !laterole
 	if(!newRole.AssignToRole(M, laterole = laterole))
 		newRole.Drop()
 		return null
@@ -281,7 +282,7 @@
 
 /datum/faction/proc/GetFactionHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = get_logo_icon()
-	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10;'> <FONT size = 3><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10;'>"}
+	var/header = {"[bicon(logo, css = "style='position:relative; top:10;'")] <FONT size = 3><B>[capitalize(name)]</B></FONT> [bicon(logo, css = "style='position:relative; top:10;'")]"}
 	return header
 
 

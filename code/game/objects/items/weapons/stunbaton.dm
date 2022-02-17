@@ -31,9 +31,9 @@
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
-		icon_state = "stunbaton_active"
+		icon_state = "[initial(icon_state)]_active"
 	else
-		icon_state = "stunbaton"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))

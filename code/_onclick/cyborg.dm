@@ -96,8 +96,8 @@
 			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params)
-		else
-			W.afterattack(A, src, 0, params)
+			return
+		W.afterattack(A, src, 0, params)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)

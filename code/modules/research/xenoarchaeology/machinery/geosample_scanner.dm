@@ -1,4 +1,3 @@
-
 /obj/machinery/radiocarbon_spectrometer
 	name = "Radiocarbon spectrometer"
 	desc = "A specialised, complex scanner for gleaning information on all manner of small things."

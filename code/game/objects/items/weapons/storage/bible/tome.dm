@@ -49,6 +49,7 @@
 		..()
 
 /obj/item/weapon/storage/bible/tome/pickup(mob/user)
+	. = ..()
 	if(!religion && user.my_religion)
 		religion = user.my_religion
 

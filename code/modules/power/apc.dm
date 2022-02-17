@@ -1198,22 +1198,22 @@
 
 /obj/machinery/power/apc/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(1.0) // more lags woohoo
+				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
 			qdel(src)
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(2.0)
-		if(3.0)
+					cell.ex_act(EXPLODE_HEAVY)
+		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(3.0)
+					cell.ex_act(EXPLODE_LIGHT)
 
 /obj/machinery/power/apc/blob_act()
 	if(prob(75))

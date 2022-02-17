@@ -31,7 +31,7 @@
 	var/g_eyes = 0
 	var/b_eyes = 0
 
-	var/s_tone = 0	//Skin tone
+	var/s_tone = 0  //Skin tone
 
 	//Skin colour
 	var/r_skin = 0
@@ -41,13 +41,14 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
-	var/age = 30		//Player's age (pure fluff)
-	var/b_type = "A+"	//Player's bloodtype
+	var/age = 30                //Player's age (pure fluff)
+	var/height = HUMANHEIGHT_MEDIUM  //Player's height
+	var/b_type = "A+"           //Player's bloodtype
 
-	var/underwear = 1	//Which underwear the player wants
-	var/undershirt = 0	//Which undershirt the player wants.
-	var/socks = 0	//Which socks the player wants.
-	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
+	var/underwear = 1   //Which underwear the player wants
+	var/undershirt = 0  //Which undershirt the player wants.
+	var/socks = 0       //Which socks the player wants.
+	var/backbag = 2     //Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 	var/use_skirt = FALSE
 	// General information
 	var/home_system = ""
@@ -76,7 +77,7 @@
 
 	var/speech_problem_flag = 0
 
-	var/miming = null //Toggle for the mime's abilities.
+	var/miming = FALSE //Toggle for the mime's abilities.
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.

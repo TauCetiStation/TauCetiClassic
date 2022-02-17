@@ -20,30 +20,12 @@
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0, user)) qdel(src)
-			else
-				user_unbuckle_mob(user)
-				return
+	var/temperature = W.get_current_temperature()
+	if(W.sharp || W.tools[TOOL_KNIFE] || temperature > 3000)
+		qdel(src)
+	else
+		return ..()
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	return ..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
@@ -192,18 +174,13 @@
 
 /obj/effect/spacevine/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(90))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(10))
 				return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				return
-	return
+	qdel(src)
 
 /obj/effect/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
 	if(temperature > T0C+100)

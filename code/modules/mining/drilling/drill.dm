@@ -9,6 +9,7 @@
 	name = "mining drill head"
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
+	interact_open = TRUE
 
 	var/braces_needed = 2
 	var/list/supports = list()
@@ -96,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 

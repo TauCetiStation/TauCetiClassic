@@ -13,7 +13,7 @@
 #define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
 #define AIRLOCK_DENY_LIGHT_COLOR "#c23b23"
 
-var/list/airlock_overlays = list()
+var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -373,7 +373,7 @@ var/list/airlock_overlays = list()
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.layer = LIGHTING_LAYER + 1
-			lights_overlay.plane = LIGHTING_PLANE + 1
+			lights_overlay.plane = ABOVE_LIGHTING_PLANE
 		cut_overlay(old_lights_overlay)
 		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
@@ -391,7 +391,7 @@ var/list/airlock_overlays = list()
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.layer = LIGHTING_LAYER + 1
-			sparks_overlay.plane = LIGHTING_PLANE + 1
+			sparks_overlay.plane = ABOVE_LIGHTING_PLANE
 		cut_overlay(old_sparks_overlay)
 		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
@@ -948,7 +948,7 @@ var/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.afterattack(src, user)
-	else if(iscrowbar(C) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
+	else if(iscrowbar(C) || istype(C, /obj/item/weapon/fireaxe) )
 		var/beingcrowbarred = null
 		if(iscrowbar(C) )
 			beingcrowbarred = 1 //derp, Agouri
@@ -999,8 +999,8 @@ var/list/airlock_overlays = list()
 		else if( !welded && !operating )
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
-					var/obj/item/weapon/twohanded/fireaxe/F = C
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = C
+					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	open(1)
 					else
 						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
@@ -1008,8 +1008,8 @@ var/list/airlock_overlays = list()
 					spawn(0)	open(1)
 			else
 				if(beingcrowbarred == 0)
-					var/obj/item/weapon/twohanded/fireaxe/F = C
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = C
+					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	close(1)
 					else
 						to_chat(user, "<span class='warning'>You need to be wielding the Fire axe to do that.</span>")
@@ -1204,7 +1204,7 @@ var/list/airlock_overlays = list()
 /obj/structure/door_scrap/atom_init()
 	. = ..()
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
-	fire_overlay.plane = LIGHTING_PLANE + 1
+	fire_overlay.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 

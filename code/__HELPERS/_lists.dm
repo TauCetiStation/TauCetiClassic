@@ -52,8 +52,8 @@
 //Checks if the list is empty
 /proc/isemptylist(list/list)
 	if(!list.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
@@ -400,10 +400,10 @@
 	var/list/out = list(pop(L))
 	for(var/entry in L)
 		if(isnum(entry))
-			var/success = 0
+			var/success = FALSE
 			for(var/i=1, i<=out.len, i++)
 				if(entry <= out[i])
-					success = 1
+					success = TRUE
 					out.Insert(i, entry)
 					break
 			if(!success)
@@ -530,7 +530,7 @@
 	return sorted_list
 */
 
-/proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
+/proc/dd_sortedtextlist(list/incoming, case_sensitive = FALSE)
 	// Returns a new list with the text values sorted.
 	// Use binary search to order by sortValue.
 	// This works by going to the half-point of the list, seeing if the node in question is higher or lower cost,
@@ -590,7 +590,7 @@
 
 
 /proc/dd_sortedTextList(list/incoming)
-	var/case_sensitive = 1
+	var/case_sensitive = TRUE
 	return dd_sortedtextlist(incoming, case_sensitive)
 
 /datum/proc/dd_SortValue()
@@ -802,6 +802,18 @@
 
 	return FALSE
 
+/proc/get_list_of_primary_keys(list/L)
+	var/primary_keys = list()
+	for (var/primary_key in L)
+		primary_keys += primary_key
+	return primary_keys
+
+/proc/get_list_of_keys_from_values_as_list_from_associative_list(list/assoc_list)
+	var/sub_keys = list()
+	for (var/primary_key in assoc_list)
+		sub_keys |= assoc_list[primary_key]
+	return sub_keys
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
@@ -810,6 +822,10 @@
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+// This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+// Removes value V and key K from associative list L
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 

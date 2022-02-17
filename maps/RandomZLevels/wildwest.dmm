@@ -827,7 +827,7 @@
 /area/awaymission/wildwest/mines)
 "cL" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/twohanded/dualsaber,
+/obj/item/weapon/dualsaber,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cM" = (

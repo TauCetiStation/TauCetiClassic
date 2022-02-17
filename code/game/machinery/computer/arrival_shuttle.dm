@@ -5,10 +5,10 @@
 #define ARRIVAL_SHUTTLE_EXODUS 2
 
 
-var/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
-var/moving = FALSE
-var/area/curr_location
-var/lastMove = 0
+var/global/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/global/moving = FALSE
+var/global/area/curr_location
+var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"
@@ -25,6 +25,11 @@ var/lastMove = 0
 	department_note = "Arrival shuttle left the [station_name()]."
 	radio = new (src)
 	. = ..()
+
+/obj/machinery/computer/arrival_shuttle/process()
+	if(..())
+		if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
@@ -141,7 +146,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 350)
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
 	popup.set_content(dat)
 	popup.open()
 
@@ -192,7 +197,7 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)
 		return FALSE
-	for (var/mob/living/silicon/ai/A in ai_list)
+	for (var/mob/living/silicon/ai/A as anything in ai_list)
 		if (A.can_retransmit_messages())
 			A.retransmit_message(msg)
 			return TRUE

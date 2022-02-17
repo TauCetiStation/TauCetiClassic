@@ -67,14 +67,15 @@
 			if(toner >= 5)
 				var/mob/living/silicon/tempAI = usr
 				var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
-
 				if(!camera)
 					return
-				var/obj/item/weapon/photo/selection = camera.selectpicture()
+
+				var/datum/picture/selection = camera.selectpicture()
 				if (!selection)
 					return
 
-				var/obj/item/weapon/photo/p = photocopy(selection)
+				var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(loc)
+				p.construct(selection)
 				if (p.desc == "")
 					p.desc += "Copied by [tempAI.name]"
 				else
@@ -150,21 +151,19 @@
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(50))
-				qdel(src)
-			else
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-					toner = 0
-		else
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 					toner = 0
-	return
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+			return
+	qdel(src)
 
 /obj/machinery/photocopier/blob_act()
 	if(prob(50))

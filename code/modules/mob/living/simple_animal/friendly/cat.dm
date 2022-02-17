@@ -182,18 +182,20 @@ var/global/cat_number = 0
 	attacktext = "slashed"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
+	faction = "untouchable"
+
 	var/const/cat_life_duration = 1 MINUTES
+	var/disappear = TRUE
 
 /mob/living/simple_animal/cat/runtime/atom_init(mapload, runtime_line)
 	. = ..()
-	cat_number += 1
 	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
 	new /obj/effect/temp_visual/pulse(loc)
 	new /obj/effect/temp_visual/sparkles(loc)
-
-	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
-	addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
-
+	if(disappear)
+		cat_number += 1
+		addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
+		addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
 	for(var/i in rand(1, 3))
 		step(src, pick(global.alldirs))
 
@@ -262,3 +264,6 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/MouseDrop(atom/over_object)
 	return
+
+/mob/living/simple_animal/cat/runtime/fake // fake runtime cat, does not disappear
+	disappear = FALSE

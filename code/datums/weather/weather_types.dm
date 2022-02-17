@@ -57,7 +57,7 @@
 	for(var/V in impacted_areas)
 		var/area/A = V
 		if(stage == MAIN_STAGE)
-			A.invisibility = 0
+			A.invisibility = INVISIBILITY_NONE
 			A.set_opacity(TRUE)
 			A.layer = overlay_layer
 			A.icon = 'icons/effects/weather_effects.dmi'

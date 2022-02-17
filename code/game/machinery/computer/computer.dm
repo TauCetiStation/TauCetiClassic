@@ -52,24 +52,21 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(25))
+		if(EXPLODE_HEAVY)
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		if(3.0)
-			if (prob(25))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		else
-	return
+			else if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/x in verbs)
+		verbs -= x
+	set_broken()
 
 /obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
@@ -239,3 +236,25 @@
 			set_broken()
 			to_chat(M, "<span class='warning'>You broke the computer.</span>")
 			return
+
+/obj/machinery/computer/proc/print_document(text, docname)
+	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()
+	Paper.info = text
+	Paper.update_icon()
+	Paper.name = docname
+	Paper.forceMove(loc)
+
+/obj/machinery/computer/proc/print_photo(datum/data/record/record, docname)
+	var/datum/picture/Picture = new()
+	Picture.fields["img"] = record.fields["image"]
+	Picture.fields["author"] = record.fields["author"]
+	Picture.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+	Picture.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+	Picture.fields["icon"] = record.fields["icon"]
+	Picture.fields["tiny"] = record.fields["small_icon"]
+	Picture.fields["pixel_x"] = rand(-10, 10)
+	Picture.fields["pixel_y"] = rand(-10, 10)
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+	Photo.name = docname
+	Photo.forceMove(loc)
+	Photo.construct(Picture)

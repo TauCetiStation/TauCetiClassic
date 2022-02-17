@@ -59,7 +59,7 @@
 		update_icon()
 		return
 		
-	if(!(Adjacent(usr) || Adjacent(over_object) || usr.Adjacent(over_object)))
+	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 		
 	if(ishuman(over_object))

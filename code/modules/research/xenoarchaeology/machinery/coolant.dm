@@ -1,4 +1,3 @@
-
 /datum/reagent/coolant
 	name = "Coolant"
 	id = "coolant"

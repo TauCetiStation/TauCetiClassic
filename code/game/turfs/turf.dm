@@ -57,6 +57,10 @@
 	if(!force)
 		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
 	..()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
+
 	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
@@ -75,7 +79,7 @@
 
 /turf/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()

@@ -1,10 +1,27 @@
 import { toTitleCase, capitalize, createSearch } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex, Input } from '../components';
-import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
 const ASPECT2COLOR = [];
+
+const GetTab = (tab, sects) => {
+  if (tab === 3) {
+    return <Encyclopedia />;
+  }
+
+  if (sects) {
+    return <SectSelectTab />;
+  }
+
+  if (tab === 1) {
+    return <ReligionTab />;
+  }
+
+  if (tab === 2) {
+    return <RiteTab />;
+  }
+};
 
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
@@ -52,19 +69,7 @@ export const ReligiousTool = (props, context) => {
           </Flex>
         </Tabs>
         <Flex.Item>
-          {tab === 1 && (
-            !!sects && (
-              <SectSelectTab />
-            ) || (
-              <ReligionTab />
-            )
-          )}
-          {tab === 2 && (
-            <RiteTab />
-          )}
-          {tab === 3 && (
-            <Encyclopedia />
-          )}
+          {GetTab(tab, sects)}
         </Flex.Item>
       </Window.Content>
     </Window>
@@ -234,6 +239,7 @@ const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     sects,
+    holds_religious_tool,
   } = data;
 
   return (
@@ -271,6 +277,7 @@ const SectSelectTab = (props, context) => {
                 textAlign="center"
                 icon="plus"
                 fluid
+                disabled={!holds_religious_tool}
                 onClick={() => act('sect_select', {
                   path: sect.path,
                 })}>
@@ -307,6 +314,7 @@ const Encyclopedia = (props, context) => {
       </Tabs>
       <Section
         height={52}
+        fill
         scrollable
         width="100%">
         <Flex.Item>
@@ -651,6 +659,7 @@ const RiteTab = (props, context) => {
     favor,
     piety,
     can_talismaning,
+    holds_religious_tool,
   } = data;
 
   const [
@@ -670,6 +679,7 @@ const RiteTab = (props, context) => {
   return (
     <Section
       height={52}
+      fill
       scrollable
       width="100%">
       <Input
@@ -687,7 +697,7 @@ const RiteTab = (props, context) => {
                 <>
                   <Button
                     fontColor="white"
-                    disabled={favor < rite.favor_cost || piety < rite.piety_cost}
+                    disabled={!holds_religious_tool || favor < rite.favor_cost || piety < rite.piety_cost}
                     icon="arrow-right"
                     onClick={() => act('perform_rite', {
                       rite_name: rite.name,

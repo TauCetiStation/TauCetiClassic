@@ -1,7 +1,7 @@
 /* Custom Announcements UI */
 
-var/list/announcement_sounds_cache = list()
-var/list/datum/announcement/announcements_list
+var/global/list/announcement_sounds_cache = list()
+var/global/list/datum/announcement/announcements_list
 
 /datum/secrets_menu/custom_announce
 	title = "Custom Announce"
@@ -43,9 +43,9 @@ var/list/datum/announcement/announcements_list
 		if("subtitle")
 			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", input_default(A.subtitle)) as text)
 		if("message")
-			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", input_default(A.message)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", input_default(A.message)) as text, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 		if("announcer")
-			A.announcer = sanitize(input(ui.user, "Pick a announcer for the report.", "Announcer", input_default(A.announcer)) as text)
+			A.announcer = sanitize_safe(input(ui.user, "Pick a announcer for the report.", "Announcer", input_default(A.announcer)) as text)
 		if("flag_text")
 			A.flags ^= ANNOUNCE_TEXT
 		if("flag_sound")

@@ -66,38 +66,30 @@
 
 	//uniform
 	if(w_uniform && !skipjumpsuit)
-		//Ties
-		var/list/ties = list()
-		if(istype(w_uniform,/obj/item/clothing/under))
-			var/obj/item/clothing/under/U = w_uniform
-			for(var/accessory in U.accessories)
-				ties += "[bicon(accessory)] \a [accessory]"
-		var/tie_msg = ties.len ? ". Attached to it is [get_english_list(ties)]" : ""
-
 		if(w_uniform.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][w_uniform.display_accessories()]!</span>\n"
 		else if(w_uniform.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][tie_msg]!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][w_uniform.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][tie_msg].\n"
+			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][w_uniform.display_accessories()].\n"
 
 	//head
 	if(head)
 		if(head.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head[head.display_accessories()]!</span>\n"
 		else if(head.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head[head.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
+			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head[head.display_accessories()].\n"
 
 	//suit/armour
 	if(wear_suit)
 		if(wear_suit.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()][wear_suit.display_accessories()]!</span>\n"
 		else if(wear_suit.wet)
-			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name]!</span>\n"
+			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name][wear_suit.display_accessories()]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
+			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit][wear_suit.display_accessories()].\n"
 
 		//suit/armour storage
 		if(s_store && !skipsuitstorage)
@@ -451,6 +443,12 @@
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+		if(species.name == ABOMINATION)
+			if(C.absorbed_dna.len)
+				var/list/victims_names = list()
+				for(var/datum/dna/D in C.absorbed_dna)
+					victims_names += "[D.real_name]"
+				msg+= "<span class='warning'>Faces of [get_english_list(victims_names)] can be seen on it's ever changing body...</span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -512,8 +510,12 @@
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
+		var/obj/item/clothing/under/C = w_uniform
+		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
+			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
+
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(mood)
+	if(!skipface && mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)
 				msg += "[t_He] appears to be depressed.\n"
@@ -559,7 +561,7 @@
 		if(O.started_as_observer)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
-	if(user != src && !check_covered_bodypart(src, LOWER_TORSO))
+	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)

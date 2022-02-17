@@ -241,7 +241,7 @@
 	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(ishuman(G.assailant) && (iscorgi(G.affecting) || isIAN(G.affecting)))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3

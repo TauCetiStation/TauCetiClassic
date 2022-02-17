@@ -2,12 +2,12 @@
                 BLOOD SYSTEM
 ****************************************************/
 // Blood levels
-var/const/BLOOD_VOLUME_MAXIMUM = 600
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/global/const/BLOOD_VOLUME_MAXIMUM = 600
+var/global/const/BLOOD_VOLUME_NORMAL = 560
+var/global/const/BLOOD_VOLUME_SAFE = 501
+var/global/const/BLOOD_VOLUME_OKAY = 336
+var/global/const/BLOOD_VOLUME_BAD = 224
+var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 /mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
@@ -130,7 +130,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = TRUE
 					update_body()
-				eye_blurry += 6
+				blurEyes(6)
 				if(oxyloss < 50)
 					oxyloss += 10
 				oxyloss += 1
@@ -324,7 +324,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 								blinding = FALSE
 								break
 					if(blinding)
-						H.eye_blurry = max(H.eye_blurry, 10)
+						H.blurEyes(10)
 						H.eye_blind = max(H.eye_blind, 5)
 						to_chat(H, "<span class='danger'>You are blinded by a spray of blood!</span>")
 					else
