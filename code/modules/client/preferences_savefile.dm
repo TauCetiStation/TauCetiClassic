@@ -238,7 +238,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 36)
 		var/datum/job/assistant/J = new
 
-		if(player_alt_titles && player_alt_titles[J.title] in list("Mecha Operator"))
+		if(player_alt_titles && (player_alt_titles[J.title] in list("Mecha Operator")))
 			player_alt_titles -= J.title
 
 /// checks through keybindings for outdated unbound keys and updates them
