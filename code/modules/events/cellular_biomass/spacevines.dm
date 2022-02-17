@@ -10,6 +10,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
+	var/block_light = TRUE
 
 /obj/effect/spacevine/Destroy()
 	if(master)
@@ -56,6 +57,7 @@
 /obj/effect/spacevine_controller/diona
 	vine_type = /obj/effect/spacevine/diona
 	opacity = FALSE
+	block_light = FALSE
 
 
 /obj/effect/spacevine_controller/atom_init()
@@ -125,7 +127,8 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		src.opacity = 1
+		if(block_light)
+			opacity = TRUE
 		layer = 5
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
@@ -151,40 +154,6 @@
 			if(F.Enter(src))
 				if(master)
 					master.spawn_spacevine_piece( F )
-
-/*
-/obj/effect/spacevine/proc/Life()
-	if (!src) return
-	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
-	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
-	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door))
-			if(O:p_open == 0 && prob(50)) O:open()
-			else dogrowth = 0
-	if (dogrowth == 1)
-		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
-		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
-		spawn(20)
-			if(B)
-				B.Life()
-	src.growth += 1
-	if (src.growth == 10)
-		src.name = "Thick Space Kudzu"
-		src.icon_state = pick("vine-med1", "vine-med2", "vine-med3")
-		src.opacity = 1
-		src.waittime = 80
-	if (src.growth == 20)
-		src.name = "Dense Space Kudzu"
-		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = TRUE
-	spawn(src.waittime)
-		if (src.growth < 20) Life()
-
-*/
 
 /obj/effect/spacevine/ex_act(severity)
 	switch(severity)

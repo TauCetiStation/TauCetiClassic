@@ -32,11 +32,13 @@
 	voice_name = "podkid"
 	icon_state = "podkid1"
 	race = PODMAN
+	holder_type = /obj/item/weapon/holder/diona/podkid
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
+	holder_type = /obj/item/weapon/holder/diona
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
