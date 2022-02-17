@@ -388,7 +388,7 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
+		M.AdjustConfused(-2)
 		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
@@ -409,7 +409,7 @@
 
 /datum/disease2/effect/sensory_restoration/activate(mob/living/carbon/M,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	if(holder.stage	== 4)
-		M.eye_blurry = max(M.eye_blurry - 5, 0)
+		M.adjustBlurriness(-5)
 		M.eye_blind = max(M.eye_blind - 5, 0)
 		M.ear_damage = max(M.ear_damage - 1, 0)
 		M.ear_deaf = max(M.ear_deaf - 1, 0)
@@ -860,10 +860,10 @@
 		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
-		mob.confused = max(mob.confused, 2)
+		mob.MakeConfused(2)
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
-		mob.confused = max(mob.confused, 10)
+		mob.MakeConfused(10)
 
 /*/datum/disease2/effect/mutation
 	name = "DNA Degradation"
@@ -948,13 +948,13 @@
 		to_chat(mob, "<span class='notice'>Your eyes itch.</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='warning'><i>Your eyes burn!</i></span>")
-		mob.eye_blurry = max(mob.eye_blurry, 2)
+		mob.blurEyes(5)
 	else if(holder.stage == 3)
-		mob.eye_blurry = max(mob.eye_blurry, 4)
+		mob.blurEyes(10)
 		mob.eye_blind = max(mob.eye_blind, 2)
 		to_chat(mob, "<span class='warning'>Your eyes burn very much!</span>")
 	else if(holder.stage == 4)
-		mob.eye_blurry = max(mob.eye_blurry, 6)
+		mob.blurEyes(20)
 		mob.eye_blind = max(mob.eye_blind, 2)
 		to_chat(mob, "<span class='userdanger'>[pick("Your eyes burn!", "Your eyes hurt!")]</span>")
 

@@ -120,7 +120,7 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, "black", LIGHTING_LAYER + 2)
-				t.obscured.plane = LIGHTING_PLANE+1
+				t.obscured.plane = ABOVE_LIGHTING_PLANE
 
 			obscured += t.obscured
 			for(var/mob/camera/Eye/m in seenby)
@@ -178,7 +178,7 @@
 		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, "black", LIGHTING_LAYER + 2)
-			t.obscured.plane = LIGHTING_PLANE+1
+			t.obscured.plane = ABOVE_LIGHTING_PLANE
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER

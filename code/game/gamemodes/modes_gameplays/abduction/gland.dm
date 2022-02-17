@@ -13,8 +13,8 @@
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)
 		if(host.stat != DEAD)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/gland/proc/Start()
 	active = 1
@@ -115,7 +115,7 @@
 		if(H == host)
 			continue
 		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
-		H.confused += 20
+		H.AdjustConfused(20)
 
 
 //POP

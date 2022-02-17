@@ -53,6 +53,8 @@
 		walk(src, 0)
 		return 0
 	if(client)
+		if(target)
+			LoseTarget()
 		return 0
 
 	if(!stat)

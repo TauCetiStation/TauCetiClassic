@@ -1,5 +1,11 @@
 /datum/event/space_ninja/setup()
-	space_ninja_arrival()
+	//Here we pick a location and spawn the ninja.
+	if(ninjastart.len == 0)
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(L.name == "ninja")
+				ninjastart.Add(L)
+
+	create_spawner(/datum/spawner/ninja_event, "ninja_event")
 
 /*
 Also a dynamic ninja mission generator.

@@ -25,7 +25,7 @@
 	for(var/datum/faction/gang/TT in gangs)
 		var/alive_gangsters = 0
 		for(var/datum/role/gangster/gangers in TT.members)
-			if(gangers.antag && ishuman(gangers.antag.current) && gangers.antag.current.client && !gangers.antag.current.stat)
+			if(ishuman(gangers.antag.current) && gangers.antag.current.client && !gangers.antag.current.stat)
 				alive_gangsters++
 		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
 			continue

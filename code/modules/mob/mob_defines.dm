@@ -68,7 +68,7 @@
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
-	var/stuttering = null	//Carbon
+	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
 	var/flavor_text = ""
@@ -78,7 +78,13 @@
 	var/blinded = null
 	var/daltonism = FALSE
 	var/druggy = 0			//Carbon
+
+	// Confused rework. Randomises inputs once every randomiseinputs_cooldown ticks.
 	var/confused = 0		//Carbon
+	var/list/input_offsets
+	var/next_randomise_inputs = 0
+	var/randomise_inputs_cooldown = 30 SECONDS
+
 	var/antitoxs = null
 	var/phoron = null
 	var/resting = 0			//Carbon

@@ -18,12 +18,10 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	potency = 30
 	plant_type = 0
 	growthstages = 6
-	var/ckey = null
 	var/realName = null
 	var/mob/living/carbon/human/source //Donor of blood, if any.
 	gender = MALE
 	var/obj/machinery/hydroponics/parent = null
-	var/found_player = FALSE
 	var/attempt_harvest = FALSE
 
 /obj/item/seeds/replicapod/attackby(obj/item/I, mob/user, params)
@@ -55,7 +53,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 		if(source.ckey)
 			realName = source.real_name
-			ckey = source.ckey
 
 		RC.reagents.clear_reagents()
 		return
@@ -70,57 +67,24 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	user.visible_message("<span class='notice'>[user] carefully begins to open the pod...</span>","<span class='notice'>You carefully begin to open the pod...</span>")
 	attempt_harvest = TRUE
 
-	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
-	if(source && source.stat == DEAD && source.client && source.ckey && config.revival_pod_plants)
-		transfer_personality(source.client)
-	else // If no sample was injected or revival is not allowed, we grab an interested observer.
-		request_player()
+	request_player()
 
 	addtimer(CALLBACK(src, .proc/dead_plant), 150) //If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
 
 /obj/item/seeds/replicapod/proc/dead_plant()
-	if(!found_player)
-		parent.visible_message("The pod has formed badly, and all you can do is salvage some of the seeds.")
-		var/seed_count = 1
+	var/seed_count = 1
 
-		if(prob(yield * parent.yieldmod * 20))
-			seed_count++
+	if(prob(yield * parent.yieldmod * 20))
+		seed_count++
 
-		for(var/i in 0 to seed_count - 1)
-			new /obj/item/seeds/replicapod(loc.loc)
+	for(var/i in 0 to seed_count - 1)
+		new /obj/item/seeds/replicapod(loc.loc)
 
-		parent.update_tray()
+	parent.update_tray()
 
 /obj/item/seeds/replicapod/proc/request_player()
-	var/list/candidates = pollGhostCandidates("Someone is harvesting a diona pod. Would you like to play as a diona?", ROLE_GHOSTLY, IGNORE_PLANT, 100, TRUE)
-	for(var/mob/M in candidates) // No random
-		if(is_alien_whitelisted_banned(M, DIONA) || !is_alien_whitelisted(M, DIONA))
-			continue
-		transfer_personality(M.client)
-		break
-
-/obj/item/seeds/replicapod/proc/transfer_personality(client/candidate)
-	if(!candidate)
-		return
-
-	found_player = TRUE
-
 	var/mob/living/carbon/monkey/diona/podman = new(parent.loc)
-	podman.key = candidate.key
-
-	if(realName)
-		podman.real_name = realName
-	podman.dna.real_name = podman.real_name
-
-	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-	if(source && ckey && podman.ckey == ckey)
-		to_chat(podman, "<B>Memories of a life as [source] drift oddly through a mind unsuited for them, like a skin of oil over a fathomless lake.</B>")
-	to_chat(podman, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
-	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
-	if(!realName)
-		var/newname = sanitize_safe(input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
-		if (newname != "")
-			podman.real_name = newname
+	create_spawner(/datum/spawner/plant, "diona_pod", podman, realName)
 
 	parent.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	parent.update_tray()

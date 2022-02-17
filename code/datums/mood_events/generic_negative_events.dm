@@ -58,3 +58,8 @@
 	description = "<span class='warning'>I had to tend my own wounds, is there nobody else to help me?</span>"
 	mood_change = -3
 	timeout = 1 MINUTE
+
+/datum/mood_event/puke
+	description = "<span class='warning'>I puked. Gross!</span>"
+	mood_change = -3
+	timeout = 5 MINUTES

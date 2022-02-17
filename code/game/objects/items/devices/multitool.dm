@@ -32,7 +32,7 @@
 		buffer = null
 		to_chat(usr, "<span class='notice'>You clear the buffer of your multitool</span>")
 	else
-		to_chat(usr, "<span class='notice'>The buffer if empty</span>")
+		to_chat(usr, "<span class='notice'>The buffer is empty</span>")
 
 /obj/item/device/multitool/Destroy()
 	doors_buffer.Cut()

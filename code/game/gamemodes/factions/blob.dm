@@ -14,6 +14,7 @@
 
 	var/datum/station_state/start
 
+	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
 	var/declared = FALSE
 	var/blobwincount = 0
@@ -23,6 +24,11 @@
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
+
+	spawn_locs += get_vents()
+	if(spawn_locs.len < max_roles)
+		// we were unable to setup because we didn't have enough spawn locations
+		return FALSE
 	return TRUE
 
 // -- Victory procs --
@@ -32,7 +38,7 @@
 	. = FALSE
 	var/ded = TRUE
 	for (var/datum/role/R in members)
-		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+		if (R.antag.current && !(R.antag.current.is_dead()))
 			ded = FALSE
 
 	if(!ded)
@@ -72,7 +78,16 @@
 	start.count()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	spawn_blob_mice()
 	return ..()
+
+/datum/faction/blob_conglomerate/proc/spawn_blob_mice()
+	for(var/datum/role/R in members)
+		var/V = pick_n_take(spawn_locs)
+		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
+		R.antag.transfer_to(M)
+		QDEL_NULL(R.antag.original)
+		M.add_ventcrawl(V)
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
 	blobwincount = 500 * max_roles
@@ -102,7 +117,7 @@
 				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
@@ -117,7 +132,7 @@
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
@@ -127,7 +142,7 @@
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
 			declared = FALSE
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)

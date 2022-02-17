@@ -116,7 +116,7 @@
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "stechkin"
-	item_state = "stechkin"
+	item_state = "9mm_glock"
 	w_class = SIZE_TINY
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"

@@ -71,10 +71,6 @@
 	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
-	. += 					"<td width='45%'>Parallax theme:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
-	. += 				"</tr>"
-	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
@@ -191,13 +187,6 @@
 			auto_fit_viewport = !auto_fit_viewport
 			if(auto_fit_viewport && parent)
 				parent.fit_viewport()
-
-		if("parallax_theme")
-			switch(parallax_theme)
-				if(PARALLAX_THEME_CLASSIC)
-					parallax_theme = PARALLAX_THEME_TG
-				if(PARALLAX_THEME_TG)
-					parallax_theme = PARALLAX_THEME_CLASSIC
 
 		if("ghost_sight")
 			switch(chat_ghostsight)

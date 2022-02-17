@@ -293,20 +293,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
-					"<span class='moderate'><b>Your [name] goes flying off!</b></span>",
+					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
 			var/gore = "[is_robotic() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
-				"<span class='moderate'><b>Your [name] flashes away into ashes!</b></span>",
+				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
 			var/gore = "[is_robotic() ? "": " in shower of gore"]"
 			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
-				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
+				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
 	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
@@ -412,7 +412,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(body_zone == BP_HEAD)
 		owner.update_hair()
 		owner.handle_decapitation(src)
-
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 	release_restraints()
 
@@ -866,6 +865,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return TRUE
 
 	return FALSE
+
+/obj/item/organ/external/head/abomination
+	vital = FALSE
 
 /obj/item/organ/external/l_arm
 	name = "left arm"

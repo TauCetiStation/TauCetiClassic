@@ -234,11 +234,11 @@
 	},
 /area/space_structures/ghostship)
 "aJ" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_1,
+/obj/item/weapon/flora/pottedplant/tropical_1,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aK" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_2,
+/obj/item/weapon/flora/pottedplant/tropical_2,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aL" = (
@@ -321,13 +321,13 @@
 	},
 /area/space_structures/ghostship)
 "aZ" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "ba" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
@@ -467,7 +467,7 @@
 	},
 /area/space_structures/ghostship)
 "bz" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /obj/machinery/light/small{
@@ -884,7 +884,7 @@
 	},
 /area/space_structures/ghostship)
 "cG" = (
-/obj/item/weapon/twohanded/flora/pottedplant,
+/obj/item/weapon/flora/pottedplant,
 /obj/machinery/light/small{
 	dir = 4
 	},

@@ -10,6 +10,7 @@
 	..()
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
+	return PROJECTILE_ACTED
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)
@@ -17,7 +18,7 @@
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	. = ..()
 	if(!.)
@@ -129,17 +130,17 @@
 			C.torture_tables += src
 			religion = C
 			name = "charged [initial(name)]"
-			filters += filter(type = "outline", size = 1, color = "#990066")
+			add_filter("torture_outline", 2, outline_filter(1, "#990066"))
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
-			return
+			return FALSE
 
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	return ..()
 
@@ -238,7 +239,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 /obj/structure/cult/anomaly/attackby(obj/item/weapon/W, mob/user)
-	return
+	return FALSE
 
 /obj/structure/cult/anomaly/attack_animal(mob/living/simple_animal/user)
 	if(iscultist(user))

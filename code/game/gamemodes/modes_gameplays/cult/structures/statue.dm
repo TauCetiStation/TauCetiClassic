@@ -30,13 +30,11 @@ var/global/list/capture_statues_list = list()
 	. = ..()
 	capture_rune = R
 	capture_statues_list += src
-	poi_list += src
 
 /obj/structure/cult/statue/capture/Destroy()
 	if(!QDELETED(capture_rune))
 		qdel(capture_rune)
 	capture_statues_list -= src
-	poi_list -= src
 	return ..()
 
 /obj/structure/cult/statue/camera

@@ -59,7 +59,7 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list(
+var/global/list/slot_equipment_priority = list(
 	SLOT_BACK,
 	SLOT_WEAR_ID,
 	SLOT_W_UNIFORM,
@@ -524,26 +524,26 @@ var/list/slot_equipment_priority = list(
 	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
 		return TRUE
 
-//Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing
-
+//Create delay for unequipping
+/mob/proc/delay_clothing_unequip(obj/item/clothing/C)
 	if(!istype(C))
-		return 0
-
+		return FALSE
 	if(usr.is_busy())
-		return
-
+		return FALSE
 	if(C.equipping) // Item is already being (un)equipped
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
-	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
-		remove_from_mob(C)
-		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
-	else
+	C.equipping = TRUE
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(!do_after(usr, equip_time, target = C))
+		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-	C.equipping = 0
+		return FALSE
+	C.equipping = FALSE
+	remove_from_mob(C)
+	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	return TRUE
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C))
@@ -563,7 +563,8 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(do_after(usr, equip_time, target = C))
 		equip_to_slot_if_possible(C, slot)
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
 	else

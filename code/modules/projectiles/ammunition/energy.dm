@@ -143,7 +143,7 @@
 /obj/item/ammo_casing/energy/sniper
 	projectile_type = /obj/item/projectile/beam/sniper
 	select_name = "sniper"
-	e_cost = 250
+	e_cost = 100
 	fire_sound = 'sound/weapons/guns/marauder.ogg'
 
 /obj/item/ammo_casing/energy/rails
@@ -161,7 +161,7 @@
 /obj/item/ammo_casing/energy/pyrometer/emagged
 	projectile_type = /obj/item/projectile/pyrometer/emagged
 	select_name = "pyrometer (overloaded)"
-	e_cost = 100
+	e_cost = 1000
 
 /obj/item/ammo_casing/energy/pyrometer/emagged/fire(atom/target, mob/living/user, params, distro, quiet)
 	var/obj/item/weapon/gun/energy/pyrometer/pyro = loc

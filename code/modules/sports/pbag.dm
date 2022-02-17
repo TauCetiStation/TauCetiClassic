@@ -55,11 +55,12 @@
 
 	ghostize(can_reenter_corpse = FALSE) // If there was a @ckey before or something.
 	ckey = attacker.ckey
+	timeofdeath = attacker.timeofdeath
 	ghosts_were_here[ckey] = world.time + 10 MINUTES
 	qdel(attacker)
 
 /mob/living/pbag/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
-	return ..(can_reenter_corpse = FALSE, bancheck = FALSE)
+	return ..(can_reenter_corpse = FALSE, bancheck = FALSE, timeofdeath = src.timeofdeath)
 
 /mob/living/pbag/UnarmedAttack(atom/A)
 	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)

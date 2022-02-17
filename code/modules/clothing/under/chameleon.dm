@@ -15,9 +15,9 @@
 /obj/item/clothing/under/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
-	for(var/U in typesof(/obj/item/clothing/under)-blocked)
-		var/obj/item/clothing/under/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/under)-blocked)
+		var/obj/item/clothing/under/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	name = "psychedelic"
@@ -77,9 +77,9 @@
 		/obj/item/clothing/head/helmet/space/golem,
 		/obj/item/clothing/head/justice,
 		/obj/item/clothing/head/collectable/tophat/badmin_magic_hat, )//Prevent infinite loops and bad hats.
-	for(var/U in typesof(/obj/item/clothing/head)-blocked)
-		var/obj/item/clothing/head/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/head)-blocked)
+		var/obj/item/clothing/head/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "grey cap"
@@ -136,9 +136,9 @@
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
 		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
 		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
-	for(var/U in typesof(/obj/item/clothing/suit)-blocked)
-		var/obj/item/clothing/suit/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/suit)-blocked)
+		var/obj/item/clothing/suit/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "armor"
@@ -194,9 +194,9 @@
 	. = ..()
 	var/blocked = list(/obj/item/clothing/shoes/chameleon,
 		/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg)//prevent infinite loops and bad shoes.
-	for(var/U in typesof(/obj/item/clothing/shoes)-blocked)
-		var/obj/item/clothing/shoes/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/shoes)-blocked)
+		var/obj/item/clothing/shoes/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black shoes"
@@ -248,9 +248,9 @@
 /obj/item/weapon/storage/backpack/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/weapon/storage/backpack/chameleon, /obj/item/weapon/storage/backpack/satchel/withwallet)
-	for(var/U in typesof(/obj/item/weapon/storage/backpack)-blocked)//Prevent infinite loops and bad backpacks.
-		var/obj/item/weapon/storage/backpack/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/weapon/storage/backpack)-blocked)//Prevent infinite loops and bad backpacks.
+		var/obj/item/weapon/storage/backpack/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "backpack"
@@ -302,10 +302,10 @@
 
 /obj/item/clothing/gloves/chameleon/atom_init()
 	. = ..()
-	var/blocked = list(/obj/item/clothing/gloves/chameleon)//Prevent infinite loops and bad hats.
-	for(var/U in typesof(/obj/item/clothing/gloves)-blocked)
-		var/obj/item/clothing/gloves/V = new U
-		clothing_choices[V.name] = U
+	var/blocked = list(/obj/item/clothing/gloves/chameleon, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/black/silence)//Prevent infinite loops and bad hats.
+	for(var/U in subtypesof(/obj/item/clothing/gloves)-blocked)
+		var/obj/item/clothing/gloves/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black gloves"
@@ -359,10 +359,9 @@
 /obj/item/clothing/mask/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/mask/chameleon)//Prevent infinite loops and bad hats.
-	for(var/U in typesof(/obj/item/clothing/mask)-blocked)
-		var/obj/item/clothing/mask/V = new U
-		if(V)
-			clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/mask)-blocked)
+		var/obj/item/clothing/mask/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
@@ -415,9 +414,9 @@
 /obj/item/clothing/glasses/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/glasses/chameleon)//Prevent infinite loops and bad hats.
-	for(var/U in typesof(/obj/item/clothing/glasses)-blocked)
-		var/obj/item/clothing/glasses/V = new U
-		clothing_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/clothing/glasses)-blocked)
+		var/obj/item/clothing/glasses/V = U
+		clothing_choices[initial(V.name)] = U
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "optical meson scanner"
@@ -470,9 +469,9 @@
 /obj/item/weapon/gun/projectile/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/weapon/gun/projectile/chameleon)
-	for(var/U in typesof(/obj/item/weapon/gun)-blocked)
-		var/obj/item/weapon/gun/V = new U
-		gun_choices[V.name] = U
+	for(var/U in subtypesof(/obj/item/weapon/gun)-blocked)
+		var/obj/item/weapon/gun/V = U
+		gun_choices[initial(V.name)] = U
 
 /obj/item/weapon/gun/projectile/chameleon/emp_act(severity)
 	name = "desert eagle"

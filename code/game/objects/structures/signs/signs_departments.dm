@@ -50,6 +50,11 @@
 	desc = "A sign labelling an area where the law is law."
 	icon_state = "security"
 
+/obj/structure/sign/departments/lawyer
+	name = "LAWYER"
+	desc = "A sign labelling an area where the Lawyers work, apply here for arrivals shuttle whiplash settlement."
+	icon_state = "lawyer"
+
 /obj/structure/sign/departments/holy
 	name = "HOLY"
 	desc = "A sign labelling a religious area."

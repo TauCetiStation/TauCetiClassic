@@ -361,7 +361,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
 			if(H.species.flags[NO_MINORCUTS])

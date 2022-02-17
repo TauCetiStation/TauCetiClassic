@@ -5,9 +5,6 @@
 	icon_state = "cultaltar"
 
 	look_piety = TRUE
-	custom_sect_type = /datum/religion_sect/custom/cult
-
-	type_of_sects = /datum/religion_sect/preset/cult
 
 /obj/structure/altar_of_gods/cult/start_rite()
 	. = ..()
@@ -17,9 +14,9 @@
 	. = ..()
 	icon_state = initial(icon_state)
 
-/obj/structure/altar_of_gods/cult/interact_bible(obj/item/I, mob/user)
+/obj/structure/altar_of_gods/cult/interact_religious_tool(obj/item/I, mob/user)
 	if(!chosen_aspect)
 		if(user.mind.holy_role != CULT_ROLE_MASTER)
 			to_chat(user, "<span class='warning'>Только лидер культа может выбирать аспекты!</span>")
 			return
-	interact_nullrod(I, user)
+	..()

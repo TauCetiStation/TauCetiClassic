@@ -77,6 +77,10 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+#define isautosay(A) (istype(A, /mob/autosay))
+
+#define isMMI(A) (istype(A, /obj/item/device/mmi))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
@@ -150,7 +154,7 @@
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
-#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+#define isanyrev(H) (isrev(H) || isrevhead(H))
 
 #define isrev(H) isrole(REV, H)
 
@@ -185,6 +189,8 @@
 #define isgundealer(H) isrole(GANGSTER_DEALER, H)
 
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
+
+#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
 
 // BLOB
 

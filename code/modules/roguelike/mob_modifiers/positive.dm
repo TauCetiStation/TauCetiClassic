@@ -243,13 +243,8 @@
 	var/my_color = pick(pos_colors)
 	var/my_color_matrix = pos_colors[my_color]
 
-	// USE FILTER AFTER 513
-	// slimy_color_filter = filter(type="color", color=my_color_matrix)
-	H.color = my_color_matrix
-	slimy_outline_filter = filter(type = "outline", size = 1, color = my_color)
-
-	//H.filters += slimy_color_filter
-	H.filters += slimy_outline_filter
+	H.add_filter("slimy_color", 2, color_matrix_filter(1, my_color_matrix))
+	H.add_filter("slimy_outline", 2, outline_filter(1, my_color))
 
 /datum/component/mob_modifier/slimy/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -273,7 +268,7 @@
 	H.color = saved_color
 
 	if(!update)
-		H.filters -= slimy_outline_filter
+		H.remove_filter("slimy_outline")
 
 	return ..()
 

@@ -1262,8 +1262,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
-	P.loc = get_turf_loc(holder.my_atom)
+	new /obj/item/weapon/stock_parts/cell/slime(get_turf_loc(holder.my_atom))
 
 /datum/chemical_reaction/slimeglow
 	name = "Slime Glow"
@@ -2237,6 +2236,55 @@
 	id = "bacardilemonade"
 	result = "bacardilemonade"
 	required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/lean
+	name = "Lean"
+	id = "lean"
+	result = "lean"
+	required_reagents = list("dextromethorphan" = 1, "space_up" = 3, "sugar" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/sangria
+	name = "Sangria"
+	id = "sangria"
+	result = "sangria"
+	required_reagents = list("wine" = 2, "orangejuice" = 1, "limejuice" = 1, "sugar" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/strongmandrink
+	name = "Strongman's Drink"
+	id = "strongmandrink"
+	result = "strongmandrink"
+	required_reagents = list("whiskeycola" = 2, "tramadol" = 2, "doctorsdelight" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/bluelagoone
+	name = "The Blue Lagoone"
+	id = "bluelagoone"
+	result = "bluelagoone"
+	required_reagents = list("bluecuracao" = 2, "limejuice" = 1, "sodawater" = 1, "ice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/bloodykuds
+	name = "Bloody Kuds"
+	id = "bloodykuds"
+	result = "bloodykuds"
+	required_reagents = list("rum" = 2, "vodka" = 2, "tomatojuice" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/sexbeach
+	name = "Sex On The Beach"
+	id = "sexbeach"
+	result = "sexbeach"
+	required_reagents = list("screwdrivercocktail" = 2, "ice" = 1, "melonliquor" = 2)
+	result_amount = 5
+
+/datum/chemical_reaction/mojito
+	name = "Mojito"
+	id = "mojito"
+	result = "mojito"
+	required_reagents = list("rum" = 2, "sodawater" = 1, "limejuice" = 2)
 	result_amount = 5
 
 //////////////////////////////////////////////

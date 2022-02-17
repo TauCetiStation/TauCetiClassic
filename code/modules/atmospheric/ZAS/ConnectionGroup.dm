@@ -111,6 +111,7 @@ Class Procs:
 			var/mob/M = AM
 			if(M.status_flags & GODMODE)
 				continue
+			INVOKE_ASYNC(M, /mob/proc/playsound_local, null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 			M.airflow_stun()
 
 		if(AM.check_airflow_movable(differential))
