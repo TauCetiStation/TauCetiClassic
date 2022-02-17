@@ -2632,14 +2632,12 @@
 /turf/space,
 /area/space)
 "aeq" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aer" = (
@@ -2658,6 +2656,12 @@
 /obj/machinery/camera{
 	c_tag = "MiniSat Exterior";
 	network = list("MiniSat")
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
 	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
@@ -2692,6 +2696,12 @@
 "aev" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
 	},
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
