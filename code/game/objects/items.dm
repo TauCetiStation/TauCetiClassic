@@ -643,7 +643,7 @@
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+				if(!uniform.can_attach_accessory(src))
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
@@ -1018,3 +1018,6 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/proc/display_accessories()
+	return
