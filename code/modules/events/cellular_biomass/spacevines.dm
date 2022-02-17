@@ -37,6 +37,7 @@
 
 
 /obj/effect/spacevine/diona
+	opacity = FALSE
 
 
 /obj/effect/spacevine_controller
@@ -54,6 +55,7 @@
 
 /obj/effect/spacevine_controller/diona
 	vine_type = /obj/effect/spacevine/diona
+	opacity = FALSE
 
 
 /obj/effect/spacevine_controller/atom_init()

@@ -30,7 +30,7 @@
 /mob/living/carbon/monkey/diona/podman
 	name = "podkid"
 	voice_name = "podkid"
-	icon_state = "podman_nymph1"
+	icon_state = "podkid1"
 	race = PODMAN
 
 /mob/living/carbon/monkey/diona/podman/fake
