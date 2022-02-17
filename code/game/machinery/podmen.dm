@@ -107,8 +107,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		D.dna.mutantrace = "plant"
 		D.real_name = D.dna.real_name
 		D.name = D.real_name
-	else
-		D.dna =
 
 	if(copycat_replica && priveleged_player && priveleged_player.current == blood_source && blood_source.stat == DEAD)
 		D.key = blood_source.key
@@ -131,15 +129,15 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	icon_state = "seed-nymph"
 	species = "nymph"
 	plantname = "Dionaea pod"
-	lifespan = 50 //no idea what those do
+	lifespan = 50
 	endurance = 8
-	maturation = 10
+	maturation = 8
 	production = 10
 	yield = 1
 	oneharvest = 1
 	potency = 30
 	plant_type = 0
-	growthstages = 5
+	growthstages = 6
 	gender = MALE
 
 	mutatelist = list(/obj/item/seeds/replicapod)
