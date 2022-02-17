@@ -31,7 +31,7 @@
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/caster = user
-		if(!caster.miming)
+		if(!ishuman(caster) || !caster.miming)
 			return FALSE
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall/perform(list/targets, recharge, mob/living/carbon/human/user = usr)
