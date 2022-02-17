@@ -8,10 +8,10 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 #define CHECK_BOX "<span style='color:lime'>☑</span>"
 
 #define MARK_READY     "READY [CHECK_BOX]"
-#define MARK_NOT_READY "READY [CROSS]"
+#define MARK_NOT_READY "READY [CROSS_BOX]"
 
 #define QUALITY_READY     "QUALITY [CHECK_BOX]"
-#define QUALITY_NOT_READY "QUALITY [CROSS]"
+#define QUALITY_NOT_READY "QUALITY [CROSS_BOX]"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
