@@ -175,16 +175,13 @@ var/global/list/ghostteleportlocs = list()
 /area/proc/update_beauty()
 	if(!areasize)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	if(areasize >= beauty_threshold)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	beauty = totalbeauty / areasize
-	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)

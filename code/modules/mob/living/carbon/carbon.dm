@@ -902,6 +902,7 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+			AdjustDrunkenness(-toxins_puked * 2)
 
 /mob/living/carbon/update_stat()
 	if(stat == DEAD)
@@ -943,7 +944,7 @@
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8
 		if(!druggy)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask

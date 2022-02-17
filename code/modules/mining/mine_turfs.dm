@@ -80,14 +80,13 @@
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
-		if(2.0)
-			if (prob(70))
-				mined_ore = 1 // some of the stuff gets blown up
-				GetDrilled()
-		if(1.0)
-			mined_ore = 2 // some of the stuff gets blown up
-			GetDrilled()
-
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
+			return
+	mined_ore = 3 - severity
+	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
 	if(istype(AM,/mob/living/carbon/human))
@@ -234,6 +233,11 @@
 					artifact_debris()
 
 		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+				if(BPHand.pumped < 30)
+					BPHand.adjust_pumped(0.1)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -676,14 +680,12 @@
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
 			return
-		if(2.0)
-			if(prob(70))
-				gets_dug()
-		if(1.0)
-			gets_dug()
-	return
+	gets_dug()
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
 

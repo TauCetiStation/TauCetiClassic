@@ -220,7 +220,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			if (!prob(getarmor(null, "bomb")))
 				gib()
@@ -232,7 +232,7 @@
 //				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				//user.throw_at(target, 200, 4)
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 			if (!shielded)
 				b_loss += 60
 
@@ -248,7 +248,7 @@
 			if (prob(70) && !shielded)
 				Paralyse(10)
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -480,9 +480,8 @@
 		dat += "&nbsp;<A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags & ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A></td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>ID:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_ID]'>[(wear_id && !(wear_id.flags & ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A></td></tr>"
 		if(suit)
-			if(suit.accessories.len)
-				for(var/obj/item/I in suit.accessories)
-					dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
+			for(var/obj/item/I in suit.accessories)
+				dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
@@ -628,7 +627,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(clamp(shock_damage - 10, 0, 100), shock_damage) //small shock can heal your heart
+	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 

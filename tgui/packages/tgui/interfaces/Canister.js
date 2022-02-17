@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, Section, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
