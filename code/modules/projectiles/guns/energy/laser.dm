@@ -83,7 +83,7 @@
 	icon_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
-	var/recharge_time = 12
+	var/charge_time = 12
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/process()
 	if(!isrobot(loc))
