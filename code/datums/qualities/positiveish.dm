@@ -90,7 +90,7 @@
 	restriction = "Все, кроме Клоуна."
 
 /datum/quality/clumsy/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Clown"
+	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
 	H.mutations.Add(CLUMSY)
