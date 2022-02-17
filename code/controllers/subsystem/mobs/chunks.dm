@@ -64,28 +64,32 @@ SUBSYSTEM_DEF(chunks)
 
 /datum/chunk
 	var/last_updated
-	var/list/factions = list()
+	var/faction = null
+	var/conflict = FALSE
 
 /datum/chunk/proc/update()
 	if (last_updated == SSchunks.tick)
 		return
 
 	last_updated = SSchunks.tick
-	factions.len = 0
+	faction = null
+	conflict = FALSE
 
 /datum/chunk/proc/has_enemy_faction(faction)
 	update()
 
-	if(factions.len == 1)
-		return factions[1] != faction
+	if(conflict)
+		return conflict
 
-	return factions.len >= 2
+	return src.faction && (src.faction != faction)
 
 /datum/chunk/proc/add_faction(faction)
 	update()
 
-	if(factions.len < 2)
-		factions |= faction
+	if(!src.faction)
+		src.faction = faction
+	else if(src.faction != faction)
+		conflict = TRUE
 
 #undef GRID_ELEM
 #undef GRID_STEP
