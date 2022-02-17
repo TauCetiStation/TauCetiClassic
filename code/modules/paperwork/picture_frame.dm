@@ -37,7 +37,7 @@
 		else
 			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
 		return
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(frame_type == /obj/structure/picture_frame/wooden)
 			new /obj/item/stack/sheet/wood(src.loc)
@@ -58,7 +58,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is already a glass in \the [src].</span>")
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(frame_glass)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			frame_glass = FALSE
@@ -184,7 +184,7 @@
 		..()
 
 /obj/structure/picture_frame/attackby(obj/item/weapon/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		if(frame_glass)
 			var/choice = input("You can either [screwed ? "unscrew from the wall" : "screw to the wall"] \the [src] or screw out the glass from it") in list("[screwed ? "Unscrew" : "Screw"]", "Screw the glass out", "Cancel")
 			switch(choice)
