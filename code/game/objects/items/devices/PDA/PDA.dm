@@ -159,6 +159,7 @@
 			cart.charges++
 
 /obj/item/device/pda/clown/Destroy()
+	no_slippery_lying(loc)
 	remove_user_slip(loc)
 	return ..()
 
@@ -171,15 +172,23 @@
 
 /obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
 	..()
+	if(pda_slippery)
+		if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+			slippery_lying(user)
+			make_user_slip(user)
+		else
+			no_slippery_lying(user)
+
+/obj/item/device/pda/clown/proc/slippery_lying(mob/living/carbon/user)
 	RegisterSignal(user, COMSIG_MOB_LYING, .proc/make_user_slip)
 	RegisterSignal(user, COMSIG_MOB_NOT_LYING, .proc/remove_user_slip)
-	if(pda_slippery && (slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID))
-		make_user_slip(user)
-	else
-		remove_user_slip(user)
+
+/obj/item/device/pda/clown/proc/no_slippery_lying(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_LYING, COMSIG_MOB_NOT_LYING))
 
 /obj/item/device/pda/clown/dropped(mob/living/carbon/user)
 	..()
+	no_slippery_lying(user)
 	remove_user_slip(user)
 
 /obj/item/device/pda/mime
