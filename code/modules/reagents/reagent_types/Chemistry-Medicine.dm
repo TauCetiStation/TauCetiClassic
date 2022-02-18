@@ -549,15 +549,27 @@
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 	reagent_state = LIQUID
 	color = "#ff4f00" // rgb: 200, 165, 220
-	custom_metabolism = 0.03
-	overdose = REAGENTS_OVERDOSE * 0.5
+	custom_metabolism = 0.1
+	overdose = REAGENTS_OVERDOSE * 0.3
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/hyperizine/on_general_digest(mob/living/M)
+/datum/reagent/hyperzine/on_general_digest(mob/living/M)
 	..()
 	if(prob(5))
 		M.emote(pick("twitch","blink","shiver"))
+		M.adjustBrainLoss(1)
+	if(prob(20))
+		M.adjustOxyLoss(5)
+	if(prob(2))
+		M.adjustDrugginess(3)
+
+	if(volume >= overdose)
+		holder.remove_reagent("hyperzine", 0.1)
+		M.hallucination += 15
+		M.adjustDrugginess(2)
+		if(prob(30))
+			M.take_bodypart_damage(2, 0)
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"
