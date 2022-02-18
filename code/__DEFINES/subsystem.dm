@@ -96,6 +96,7 @@
 #define SS_WAIT_MOOD         10
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
+#define SS_WAIT_TIME_TRACK  100
 #define SS_WAIT_SUN         600
 #define SS_WAIT_NIGHTSHIFT  600
 

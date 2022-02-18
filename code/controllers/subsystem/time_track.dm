@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
-	wait = 100
+	wait = SS_WAIT_TIME_TRACK
 	flags = SS_NO_INIT
 	init_order = SS_INIT_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(time_track)
 
 	var/current_realtime = REALTIMEOFDAY
 	var/current_byondtime = world.time
-	var/current_tickcount = world.time/world.tick_lag
+	var/current_tickcount = world.time / world.tick_lag
 
 	if (!first_run)
 		var/tick_drift = max(0, (((current_realtime - last_tick_realtime) - (current_byondtime - last_tick_byond_time)) / world.tick_lag))

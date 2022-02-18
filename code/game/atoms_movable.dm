@@ -102,9 +102,13 @@
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
+
 	loc = newloc
+
 	. = TRUE
+
 	oldloc.Exited(src, newloc)
+
 	if(oldarea != newarea)
 		oldarea.Exited(src, newloc)
 
@@ -133,12 +137,11 @@
 		return FALSE
 
 	var/atom/movable/pullee = pulling
+	var/atom/oldloc = loc
 
 	//Early override for some cases like diagonal movement
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
-
-	var/atom/oldloc = loc
 
 	if(loc != newloc)
 		if (!ISDIAGONALDIR(direction)) //Cardinal move
@@ -246,7 +249,7 @@
 		AM.locMoved(OldLoc, Dir)
 
 	if(orbiters)
-		for (var/thing in orbiters)
+		for(var/thing in orbiters)
 			var/datum/orbit/O = thing
 			O.Check()
 	if(orbiting)

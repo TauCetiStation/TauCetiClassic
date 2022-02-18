@@ -82,7 +82,7 @@
 	SpreadFire(M)
 
 	if(now_pushing)
-		return 1
+		return TRUE
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
@@ -91,17 +91,21 @@
 	if(M.pulling == src)
 		M.stop_pulling()
 
+	//No mob swap during diagonal moves
+	if(moving_diagonally)
+		return TRUE
+
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))
-			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
+			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !(MM.restrained()) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)))
+				if (!(world.time % 5))
 					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
+				return TRUE
+			if(M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS))
+				if(!(world.time % 5))
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
-				return 1
+				return TRUE
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
@@ -126,22 +130,23 @@
 					slime.UpdateFeed()
 
 			now_pushing = 0
-			return 1
+			return TRUE
+
 
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
-		return 1
+		return TRUE
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH) )
-		return 1
+		return TRUE
 	//anti-riot equipment is also anti-push
 	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
-		return 1
+		return TRUE
 	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
-		return 1
+		return TRUE
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)

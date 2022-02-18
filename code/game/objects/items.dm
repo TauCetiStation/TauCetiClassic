@@ -418,9 +418,6 @@
 /obj/item/proc/talk_into(mob/M, text)
 	return FALSE
 
-/obj/item/proc/moved(mob/user, old_loc)
-	return
-
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)

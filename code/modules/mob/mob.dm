@@ -506,53 +506,44 @@
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if(!AM.can_be_pulled || src == AM || !isturf(AM.loc) || buckled == AM)	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM.can_be_pulled || src == AM || !isturf(AM.loc) || buckled == AM) //If there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if(!AM.anchored)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(get_size_ratio(M, src) > pull_size_ratio)
-				to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
-				return
-			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
-				start_pulling(M.buckled)
-				return
-
-		AM.add_fingerprint(src)
-
-		// If we're pulling something then drop what we're currently pulling and pull this instead.
-		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			if(AM == pulling)
-				return
-			stop_pulling()
-
-		if(SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM) & COMPONENT_PREVENT_PULL)
+	if(incapacitated())
+		return
+	if(AM.anchored)
+		if(!ismob(AM))
 			return
-		if(SEND_SIGNAL(AM, COMSIG_ATOM_START_PULL, src) & COMPONENT_PREVENT_PULL)
+		var/mob/pulling_mob = AM
+		if(pulling_mob.buckled)
+			start_pulling(pulling_mob.buckled)
 			return
+	if(SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM) & COMPONENT_PREVENT_PULL)
+		return
+	if(SEND_SIGNAL(AM, COMSIG_ATOM_START_PULL, src) & COMPONENT_PREVENT_PULL)
+		return
 
-		src.pulling = AM
-		AM.pulledby = src
-		if(pullin)
-			pullin.update_icon(src)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
-		count_pull_debuff()
+	AM.add_fingerprint(src)
 
-		src.pulling = AM
-		AM.pulledby = src
+	//If we're pulling something then drop what we're currently pulling and pull this instead.
+	if(pulling != AM)
+		stop_pulling()
 
+	if(ismob(AM))
+		var/mob/M = AM
+		if(get_size_ratio(M, src) > pull_size_ratio)
+			to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
+			return
+		M.LAssailant = iscarbon(src) ? usr : null
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.pull_damage())
 				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
-		AM.set_dir(get_dir(AM, src))
+	pulling = AM
+	AM.pulledby = src
+	pullin?.update_icon(src)
+	count_pull_debuff()
+	AM.set_dir(get_dir(AM, src))
 
 /mob/verb/stop_pulling1()
 	set name = "Stop Pulling"

@@ -42,15 +42,16 @@
 	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
 		return mob.drop_item()
 	return
+
 /client/proc/Move_object(direct)
-	if(mob && mob.control_object)
+	if(mob?.control_object)
 		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)	return
+			step(mob.control_object, direct)
+			if(!mob.control_object)
+				return
 			mob.control_object.set_dir(direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
-	return
+			mob.control_object.forceMove(get_step(mob.control_object, direct))
 
 /client/Move(new_loc, direct, forced = FALSE)
 	if(world.time < move_delay) //do not move anything ahead of this check please
@@ -61,26 +62,35 @@
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag
 
-	if(!mob)
-		return // Moved here to avoid nullrefs below
+	if(!mob || !mob.loc)
+		return FALSE
+
+	if(!new_loc || !direct)
+		return FALSE
+
+	if(mob.notransform)
+		return FALSE
+
+	if(mob.control_object)
+		return Move_object(direct)
 
 	if(!forced)
 		if(moving || mob.throwing)
-			return
-
-	if(mob.control_object)	Move_object(direct)
-
-	if(isobserver(mob) || isovermind(mob))
-		return mob.Move(new_loc, direct)
+			return FALSE
 
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
 
-	if(!new_loc || !direct)
-		return
-
 	if(!forced && mob.stat)
-		return
+		mob.ghostize()
+		return FALSE
+
+	var/mob/living/L = mob
+	if(L.incorporeal_move)//Move though walls
+		Process_Incorpmove(direct)
+		return FALSE
+
+	Process_Grab()
 
 	if(mob.remote_control)//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
@@ -88,14 +98,8 @@
 	if(isAI(mob))
 		return AIMove(new_loc, direct, mob)
 
-	if(mob.notransform)
-		return//This is sota the goto stop mobs from moving var
-
-	var/mob/living/L = mob
-	if(L.incorporeal_move)//Move though walls
-		Process_Incorpmove(direct)
-		return
-	Process_Grab()
+	if(!forced && !mob.canmove)
+		return FALSE
 
 	if(istype(mob.buckled, /obj/vehicle))
 		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
@@ -105,9 +109,6 @@
 		if(mob.confused)
 			direct = mob.confuse_input(direct)
 		return mob.buckled.relaymove(mob,direct)
-
-	if(!forced && !mob.canmove)
-		return
 
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
@@ -120,16 +121,14 @@
 		return FALSE
 
 	if(mob.restrained()) //Why being pulled while cuffed prevents you from moving
-		for(var/mob/M in range(mob, 1))
-			if(M.pulling == mob)
-				if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
-					to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-					return FALSE
-				else
-					M.stop_pulling()
+		if(mob.pulledby)
+			if(!(world.time % 5))
+				to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
+			return FALSE
 
 	if(mob.pinned.len)
-		to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
+		if(!(world.time % 5))
+			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 		return FALSE
 
 	if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, new_loc, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
@@ -223,8 +222,8 @@
 
 /mob/stop_pulling()
 	. = ..()
-	if(pullin)
-		pullin.icon_state = "pull[pulling ? 1 : 0]"
+	pullin?.icon_state = "pull[pulling ? 1 : 0]"
+	count_pull_debuff()
 
 /mob/proc/camera_move(Dir = 0)
 	if(stat || restrained())
