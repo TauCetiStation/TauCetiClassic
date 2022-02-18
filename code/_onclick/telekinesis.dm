@@ -143,7 +143,7 @@
 // Allows equipping stuff while being handcuffed.
 /obj/item/tk_grab/equipped(mob/user, slot)
 	..()
-	if(!istype(focus, /obj/item))
+	if(!isitem(focus))
 		return
 
 	if((slot == SLOT_L_HAND) || (slot == SLOT_R_HAND))
