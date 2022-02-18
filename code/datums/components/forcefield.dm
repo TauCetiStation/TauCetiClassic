@@ -316,6 +316,9 @@
 	if(target in clicker.get_contents())
 		return NONE
 
+	if(clicker.can_tk(level=TK_LEVEL_THREE))
+		return
+
 	// This click should be prevented. Our "default" behaviour is to just
 	// allow examination of the target instead.
 	clicker.face_atom(target)
