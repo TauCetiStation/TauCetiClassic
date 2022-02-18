@@ -140,7 +140,7 @@
 // How much resource should be wasted per tile of distance to target.
 #define TK_MANA_PER_TILE 10
 // How much resource should be wasted per upping of a size class of target.
-#define TK_MANA_PER_W_CLASS(cl) cl**2
+#define TK_MANA_PER_W_CLASS(cl) 2**cl
 
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
