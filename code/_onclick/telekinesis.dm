@@ -25,7 +25,7 @@
 	return
 
 /mob/proc/can_tk(mana=0, level=TK_LEVEL_NORMAL)
-	if(!get_tk_level() >= level)
+	if(!get_tk_level() < level)
 		to_chat(src, "<span class='warning'>Such an action would require vastly superior psychokinetic skills.</span>")
 		return FALSE
 	if(!has_tk_power(mana))
