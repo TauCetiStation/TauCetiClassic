@@ -250,15 +250,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			standing += mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
 
-	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump)
-			continue
-		if(BP.pumped >= 25)
-			var/icon/I = icon('icons/mob/human_races/special_overlays.dmi', BP.icon_state)
-			var/icon/mask = icon('icons/effects/ss13_dark_alpha7.dmi', "6")
-			I.Blend(mask, ICON_MULTIPLY)
-			standing += I
-
 	update_tail_showing()
 	for(var/image/I in standing)
 		I = update_height(I)
