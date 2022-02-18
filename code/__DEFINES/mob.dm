@@ -29,6 +29,8 @@
 #define BP_R_ARM  "r_arm"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
+#define BP_ACTIVE_ARM "active_arm"
+#define BP_INACTIVE_ARM "inactive_arm"
 
 // Organ defines.
 #define O_MOUTH    "mouth"

@@ -62,6 +62,8 @@ var/global/list/combat_combos_by_name = list()
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
 
+	var/list/pump_bodyparts
+
 /datum/combat_combo/New()
 	gen_description()
 
@@ -344,21 +346,13 @@ var/global/list/combat_combos_by_name = list()
 
 		attacker.combo_animation = FALSE
 
-	if(require_head_to_perform)
-		var/obj/item/organ/external/BP_chest = attacker.bodyparts[BP_CHEST]
-		BP_chest?.adjust_pumped(fullness_lose_on_execute * 0.1)
+	if(!ishuman(attacker))
+		return
+	var/mob/living/carbon/human/H = attacker
 
-	if(require_arm_to_perform)
-		var/obj/item/organ/external/BP_arm = attacker.hand ? attacker.bodyparts[BP_L_ARM] : attacker.bodyparts[BP_R_ARM]
-		BP_arm?.adjust_pumped(fullness_lose_on_execute * 0.1)
-
-		var/obj/item/organ/external/BP_chest = attacker.bodyparts[BP_CHEST]
-		BP_chest?.adjust_pumped(fullness_lose_on_execute * 0.1)
-
-	if(require_leg_to_perform)
-		for(var/leg_part in list(BP_L_LEG, BP_R_LEG))
-			var/obj/item/organ/external/BP_leg = attacker.bodypart[leg_part]
-			BP_leg?.adjust_pumped(fullness_lose_on_execute * 0.1)
+	for(var/bodypart in pump_bodyparts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		BP?.adjust_pumped(pump_bodyparts[bodypart])
 
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.
