@@ -157,8 +157,11 @@
 			cart.charges++
 
 /obj/item/device/pda/clown/Destroy()
-	unslip_lying_user(loc)
-	remove_user_slip(loc)
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
 	return ..()
 
 /obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
