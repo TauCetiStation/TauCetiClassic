@@ -189,7 +189,7 @@
 			if(A.blood_DNA)
 				danger_color = "red"
 				break
-			if(istype(A, /obj/item))
+			if(isitem(A))
 				var/obj/item/I = A
 				if(I.is_sharp())
 					danger_color = "red"

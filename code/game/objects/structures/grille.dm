@@ -60,7 +60,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
+	if(isxenolarva(user))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -73,7 +73,7 @@
 		return
 
 /obj/structure/grille/attack_slime(mob/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	if(!isslimeadult(user))	return
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
