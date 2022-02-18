@@ -9,8 +9,10 @@
 /obj/structure/stacklifter/proc/finish_pump(mob/living/carbon/human/user)
 	icon_state = "fitnesslifter"
 	user.pixel_y = 0
+	in_use = !in_use
 
 /obj/structure/stacklifter/proc/get_pumped(mob/living/carbon/human/user)
+	in_use = !in_use
 	for(var/lifts in 1 to 5)
 		animate(user, pixel_y = -2, time = 3)
 		if(!do_after(user, 3, TRUE, src, progress=FALSE))
@@ -100,8 +102,10 @@
 	cut_overlay(weight_overlay)
 	user.pixel_y = 0
 	icon_state = "fitnessweight"
+	in_use = !in_use
 
 /obj/structure/weightlifter/proc/get_pumped(mob/living/carbon/human/user)
+	in_use = !in_use
 	add_overlay(weight_overlay)
 
 	for(var/reps in 1 to 5)
