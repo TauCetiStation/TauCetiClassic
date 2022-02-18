@@ -299,7 +299,7 @@
 	name = "Hyperzine"
 	id = "hyperzine"
 	result = "hyperzine"
-	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
+	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1, "phoron" = 0.5)
 	result_amount = 3
 
 /datum/chemical_reaction/ryetalyn
