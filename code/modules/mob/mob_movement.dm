@@ -81,7 +81,7 @@
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
 
-	if(!forced && mob.stat)
+	if(!forced && mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
 
