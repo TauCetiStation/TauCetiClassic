@@ -84,10 +84,7 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(weight_tally > 0)
-		weight_tally -= weight_negation
-		if(weight_tally < 0)
-			weight_tally = 0
+	weight_tally = max(weight_tally - weight_negation, 0)
 
 	tally += weight_tally
 

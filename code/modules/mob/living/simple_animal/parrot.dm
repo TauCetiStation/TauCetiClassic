@@ -364,7 +364,7 @@
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
+				if(isitem(AM) || isliving(AM))	//If stealable item
 					parrot_interest = AM
 					emote("turns and flies towards [parrot_interest]")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
@@ -516,7 +516,7 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class < SIZE_TINY)
 				return I
@@ -545,7 +545,7 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class <= SIZE_TINY)
 				return I

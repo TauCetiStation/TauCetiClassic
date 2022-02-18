@@ -300,3 +300,12 @@
 
 /obj/effect/landmark/blockway
 	density = TRUE
+
+/obj/effect/landmark/espionage_start
+	name = "Espionage Agent Start"
+
+/obj/effect/landmark/espionage_start/atom_init(mapload)
+	..()
+	global.espionageagent_start += loc
+	create_spawner(/datum/spawner/spy, "spy")
+	return INITIALIZE_HINT_QDEL

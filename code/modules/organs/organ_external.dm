@@ -43,8 +43,8 @@
 	// PUMPED, yo
 	var/pumped = 0
 	// Value after which the bodypart changes it's sprite
-	var/pumped_threshold = 10
-	var/max_pumped = 20
+	var/pumped_threshold = 20
+	var/max_pumped = 60
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -301,20 +301,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
-					"<span class='moderate'><b>Your [name] goes flying off!</b></span>",
+					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
 			var/gore = "[is_robotic() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
-				"<span class='moderate'><b>Your [name] flashes away into ashes!</b></span>",
+				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
 			var/gore = "[is_robotic() ? "": " in shower of gore"]"
 			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
-				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
+				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
 	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
@@ -719,6 +719,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_SMALL
 
+	// No PUMPED sprite for the head means you can't pump it.
+	// Threshold is still there to not be interpreted as FULLY PUMPED
+	pumped_threshold = 20
+	max_pumped = 0
+
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
@@ -837,7 +842,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				return ..()
 
-	else if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/hatchet))
+	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))

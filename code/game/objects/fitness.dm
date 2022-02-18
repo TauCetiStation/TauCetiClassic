@@ -11,12 +11,7 @@
 	user.pixel_y = 0
 
 /obj/structure/stacklifter/proc/get_pumped(mob/living/carbon/human/user)
-	var/lifts = 0
-	while (lifts++ < 6)
-		if (user.loc != src.loc)
-			break
-		if(!do_after(user, 3, TRUE, src, progress=FALSE))
-			return
+	for(var/lifts in 1 to 5)
 		animate(user, pixel_y = -2, time = 3)
 		if(!do_after(user, 3, TRUE, src, progress=FALSE))
 			return
@@ -40,7 +35,7 @@
 	user.update_body()
 
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
-	to_chat(user, "[finishmessage]")
+	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
 	if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 		user.try_mutate_to_hulk()
@@ -70,7 +65,6 @@
 
 	icon_state = "fitnesslifter2"
 	user.set_dir(SOUTH)
-	user.Stun(4)
 	user.forceMove(loc)
 	var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 	user.visible_message("<B>[user] is [bragmessage]!</B>")
@@ -78,7 +72,7 @@
 	if((HULK in user.mutations) && user.hulk_activator == ACTIVATOR_HEAVY_MUSCLE_LOAD)
 		to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
-	INVOKE_ASYNC(src, .proc/get_pumped, user)
+	INVOKE_ASYNC(src, .proc/try_pump, user)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -88,7 +82,15 @@
 	density = TRUE
 	anchored = TRUE
 
-	var/image/weight_overlay
+	var/static/image/weight_overlay
+
+/obj/structure/weightlifter/atom_init()
+	. = ..()
+	if(weight_overlay)
+		return
+
+	weight_overlay = image('icons/obj/fitness.dmi',"fitnessweight-w")
+	weight_overlay.layer = MOB_LAYER + 1
 
 /obj/structure/weightlifter/Destroy()
 	QDEL_NULL(weight_overlay)
@@ -96,28 +98,20 @@
 
 /obj/structure/weightlifter/proc/finish_pump(mob/living/carbon/human/user)
 	cut_overlay(weight_overlay)
-	QDEL_NULL(weight_overlay)
 	user.pixel_y = 0
+	icon_state = "fitnessweight"
 
 /obj/structure/weightlifter/proc/get_pumped(mob/living/carbon/human/user)
-	weight_overlay = image('icons/obj/fitness.dmi',"fitnessweight-w")
-	weight_overlay.layer = MOB_LAYER + 1
 	add_overlay(weight_overlay)
 
-	var/reps = 0
-	while (reps++ < 6)
-		if (user.loc != src.loc)
-			break
-
+	for(var/reps in 1 to 5)
 		for(var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
+			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 			if(!do_after(user, 3, TRUE, src, progress=FALSE))
 				return
-			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
-	if(!do_after(user, 3, TRUE, src, progress=FALSE))
-		return
 	animate(user, pixel_y = 2, time = 3)
 	if(!do_after(user, 3, TRUE, src, progress=FALSE))
 		return
@@ -129,7 +123,7 @@
 
 	user.nutrition -= 12
 	user.overeatduration -= 16
-	user.apply_effect(25,AGONY,0)
+	user.apply_effect(25, AGONY, 0)
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
@@ -141,9 +135,7 @@
 	user.update_body()
 
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
-	icon_state = "fitnessweight"
-	cut_overlay(W)
-	to_chat(user, "[finishmessage]")
+	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
 	if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
 		user.try_mutate_to_hulk()
@@ -169,7 +161,6 @@
 
 	icon_state = "fitnessweight-c"
 	user.set_dir(SOUTH)
-	user.Stun(4)
 	user.forceMove(loc)
 
 	var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
@@ -196,6 +187,7 @@
 	var/max_light_dumbbells = 2
 
 /obj/structure/dumbbells_rack/atom_init()
+	. = ..()
 	dumbbells = new(src)
 	dumbbells.set_slots(slots = 4, slot_size = SIZE_BIG)
 	dumbbells.can_hold = list(/obj/item/weapon/dumbbell)
@@ -203,11 +195,16 @@
 	RegisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED), .proc/add_dumbbell)
 	RegisterSignal(dumbbells, list(COMSIG_STORAGE_EXITED), .proc/remove_dumbbell)
 
-	new /obj/item/weapon/dumbbell/light(dumbbells)
-	new /obj/item/weapon/dumbbell/light(dumbbells)
+	var/list/dumbbells_to_add = list()
 
-	new /obj/item/weapon/dumbbell/heavy(dumbbells)
-	new /obj/item/weapon/dumbbell/heavy(dumbbells)
+	dumbbells_to_add += new /obj/item/weapon/dumbbell/light
+	dumbbells_to_add += new /obj/item/weapon/dumbbell/light
+
+	dumbbells_to_add += new /obj/item/weapon/dumbbell/heavy
+	dumbbells_to_add += new /obj/item/weapon/dumbbell/heavy
+
+	for(var/obj/item/I as anything in dumbbells_to_add)
+		dumbbells.handle_item_insertion(I, TRUE, TRUE)
 
 /obj/structure/dumbbells_rack/Destroy()
 	for(var/ref in dumbbells_overlays)
@@ -249,15 +246,15 @@
 
 	return ..()
 
-/obj/structure/dumbbells_rack/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && dumbbells.attackby(I, user, params))
-		return
-	return ..()
-
-/obj/item/clothing/suit/storage/MouseDrop(obj/over_object)
+/obj/structure/dumbbells_rack/MouseDrop(obj/over_object)
 	if(dumbbells.handle_mousedrop(usr, over_object))
 		return
 
+	return ..()
+
+/obj/structure/dumbbells_rack/attackby(obj/item/I, mob/user, params)
+	if(user.a_intent != INTENT_HARM && dumbbells.attackby(I, user, params))
+		return
 	return ..()
 
 /obj/item/weapon/dumbbell

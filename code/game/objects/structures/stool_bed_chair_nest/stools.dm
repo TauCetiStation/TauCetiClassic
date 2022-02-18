@@ -12,18 +12,13 @@
 
 /obj/structure/stool/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-	return
+	qdel(src)
 
 /obj/structure/stool/airlock_crush_act()
 	if(has_buckled_mobs())

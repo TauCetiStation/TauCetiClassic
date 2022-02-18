@@ -29,7 +29,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 
 		if(uplinkholder)
 			to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")

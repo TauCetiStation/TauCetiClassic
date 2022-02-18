@@ -167,7 +167,7 @@
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
 			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
-			M.confused += 10
+			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"

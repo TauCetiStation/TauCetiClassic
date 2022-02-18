@@ -298,7 +298,7 @@ Message ends."}
 						grille += 1
 				else if(istype(O, /obj/machinery/door))
 					door += 1
-				else if(istype(O, /obj/machinery))
+				else if(ismachinery(O))
 					mach += 1
 
 	if(count_territories)
