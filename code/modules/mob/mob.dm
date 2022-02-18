@@ -770,9 +770,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying != was_lying)
 		if(lying)
-			SEND_SIGNAL(src, COMSIG_MOB_LYING)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
 		else
-			SEND_SIGNAL(src, COMSIG_MOB_NOT_LYING)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))

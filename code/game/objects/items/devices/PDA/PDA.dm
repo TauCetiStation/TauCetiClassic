@@ -67,7 +67,6 @@
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
-	var/pda_slippery = FALSE
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -146,7 +145,6 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
-	pda_slippery = TRUE
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
@@ -159,36 +157,35 @@
 			cart.charges++
 
 /obj/item/device/pda/clown/Destroy()
-	no_slippery_lying(loc)
+	unslip_lying_user(loc)
 	remove_user_slip(loc)
 	return ..()
 
 /obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
-	if(user.lying)
-		user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 
 /obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
 	qdel(user.GetComponent(/datum/component/slippery))
 
 /obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
 	..()
-	if(pda_slippery)
-		if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
-			slippery_lying(user)
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
 			make_user_slip(user)
-		else
-			no_slippery_lying(user)
+	else
+		unslip_lying_user(user)
 
-/obj/item/device/pda/clown/proc/slippery_lying(mob/living/carbon/user)
-	RegisterSignal(user, COMSIG_MOB_LYING, .proc/make_user_slip)
-	RegisterSignal(user, COMSIG_MOB_NOT_LYING, .proc/remove_user_slip)
+/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
 
-/obj/item/device/pda/clown/proc/no_slippery_lying(mob/living/carbon/user)
-	UnregisterSignal(user, list(COMSIG_MOB_LYING, COMSIG_MOB_NOT_LYING))
+/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
 
 /obj/item/device/pda/clown/dropped(mob/living/carbon/user)
 	..()
-	no_slippery_lying(user)
+	unslip_lying_user(user)
 	remove_user_slip(user)
 
 /obj/item/device/pda/mime
