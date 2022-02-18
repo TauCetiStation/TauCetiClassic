@@ -41,6 +41,7 @@
 	if(O.get_current_temperature() > 300)
 		ignite()
 		return TRUE
+	return FALSE
 
 /obj/structure/fireplace/attackby(obj/item/T, mob/user)
 	if(istype(T, /obj/item/stack/sheet/wood))
