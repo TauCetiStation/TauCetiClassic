@@ -188,7 +188,7 @@
 	. = (amount)
 
 /obj/item/stack/proc/is_cyborg()
-	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
+	return istype(loc, /obj/item/weapon/robot_module) || issilicon(loc)
 
 /obj/item/stack/use(used, transfer = FALSE)
 	if(used < 0)

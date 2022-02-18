@@ -112,7 +112,7 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.w_class <= SIZE_MINUSCULE)
 			return
@@ -166,7 +166,7 @@
 		else if(istype(A, /obj/structure/fireplace))
 			var/obj/structure/fireplace/F = A
 			F.extinguish()
-		else if(istype(A, /obj/item))
+		else if(isitem(A))
 			var/obj/item/I = A
 			I.extinguish()
 		else if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))

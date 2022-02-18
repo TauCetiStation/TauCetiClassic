@@ -41,7 +41,7 @@
 
 /obj/singularity/scrap_ball/event()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(isbrain(M)) //Ignore brains
 			continue
 		to_chat(M, "<span class='red'>You [pick("look in awe on", "can't withstand")] the [src.name].</span>")
 		M.apply_effect(3, STUN)
