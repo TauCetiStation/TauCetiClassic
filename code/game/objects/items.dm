@@ -1026,3 +1026,12 @@
 
 /obj/item/proc/display_accessories()
 	return
+
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	. = ..()
+	// We failed to be put into hands, but still got into some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)

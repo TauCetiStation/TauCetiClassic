@@ -44,7 +44,7 @@
 	else
 		return ..()
 
-/obj/item/stack/rods/attack_self(mob/user)
+/obj/item/stack/rods/attack_self(mob/living/user)
 	add_fingerprint(user)
 
 	if(!istype(user.loc,/turf)) return 0
@@ -71,7 +71,8 @@
 			return
 		if (!use(2))
 			return
-		var/obj/structure/grille/F = new /obj/structure/grille( usr.loc )
+		var/obj/structure/grille/F = new /obj/structure/grille(loc)
+		user.try_take(F, loc)
 		to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
 		F.add_fingerprint(usr)
 	return

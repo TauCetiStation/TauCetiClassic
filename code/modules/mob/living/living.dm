@@ -1416,7 +1416,7 @@
 
 /mob/living/in_interaction_vicinity(atom/target)
 	// Telekinetic distance is handled by the larger telekinesis system.
-	if(TK in mutations && can_tk(level=TK_LEVEL_TWO))
+	if(TK in mutations && can_tk(level=TK_LEVEL_TWO, show_warnings=FALSE))
 		return TRUE
 
 	return ..()
@@ -1469,3 +1469,11 @@
 		if(istype(IO))
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
+
+/*
+	Try to take AM, if it's impossible
+	try to put AM into fallback.
+	If it's impossible, return FALSE.
+*/
+/mob/living/proc/try_take(atom/movable/AM, atom/fallback)
+	return AM.taken(src, fallback)

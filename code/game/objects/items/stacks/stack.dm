@@ -115,12 +115,11 @@
 	)
 
 /obj/item/stack/tgui_state(mob/user)
-	return global.hands_state
+	return global.interactive_reach_state
 
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
-		to_chat(world, "CAN'T USE TGUI_ACT")
 		return
 
 	switch(action)
@@ -138,7 +137,7 @@
 			produce_recipe(R, multiplier, usr)
 			return TRUE
 
-/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/living/user)
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
@@ -163,8 +162,7 @@
 	if(!use(R.req_amount*multiplier))
 		return
 	var/atom/movable/O = new R.result_type( loc )
-	if(ismob(O.loc))
-		O.forceMove(O.loc.loc)
+	user.try_take(O, loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -307,14 +305,11 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
+/obj/item/stack/proc/change_stack(mob/living/user, amount)
 	var/obj/item/stack/F = new type(loc, amount, FALSE)
-	if(ismob(F.loc))
-		F.forceMove(F.loc.loc)
+	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
-	if(user.Adjacent(F))
-		user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)

@@ -24,12 +24,14 @@
 /mob/proc/spend_tk_power(amount)
 	return
 
-/mob/proc/can_tk(mana=0, level=TK_LEVEL_NORMAL)
+/mob/proc/can_tk(mana=0, level=TK_LEVEL_NORMAL, show_warnings=TRUE)
 	if(get_tk_level() < level)
-		to_chat(src, "<span class='warning'>Such an action would require vastly superior psychokinetic skills.</span>")
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>Such an action would require vastly superior psychokinetic skills.</span>")
 		return FALSE
 	if(!has_tk_power(mana))
-		to_chat(src, "<span class='warning'>Not enough mental resources for such an action.</span>")
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>Not enough mental resources for such an action.</span>")
 		return FALSE
 	return TRUE
 
