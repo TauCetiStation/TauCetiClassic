@@ -260,8 +260,8 @@
 	if (!target.Adjacent(user))
 		return
 
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(user))
+		var/mob/living/L = user
 		if(L.prevent_item_animations())
 			return
 
@@ -319,11 +319,6 @@
 		return
 	if (QDELETED(target))
 		return
-
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.prevent_item_animations())
-			return
 
 	if(is_invis_anim)
 		return
