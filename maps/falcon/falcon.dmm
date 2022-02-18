@@ -1421,6 +1421,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "acB" = (
@@ -5514,7 +5518,7 @@
 "ajM" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/off{
-	pixel_x = -6;
+	pixel_x = -9;
 	pixel_y = 4
 	},
 /obj/item/weapon/crowbar,
@@ -9767,6 +9771,11 @@
 	icon_state = "asteroidwarning"
 	},
 /area/asteroid/mine/explored)
+"arS" = (
+/obj/machinery/disposal,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/station/construction/assembly_line)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -9873,6 +9882,9 @@
 	name = "Bridge Blast Door Control";
 	pixel_y = -28;
 	req_access = list(19)
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -10100,9 +10112,6 @@
 	},
 /area/station/civilian/kitchen)
 "aIz" = (
-/obj/structure/table/glass,
-/obj/item/ashtray/bronze,
-/obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -10111,6 +10120,9 @@
 	},
 /obj/machinery/ai_status_display{
 	pixel_x = 32
+	},
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10295,6 +10307,7 @@
 /obj/machinery/bot/secbot/beepsky{
 	name = "Officer Beepsky"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "aRT" = (
@@ -10595,6 +10608,7 @@
 "bgQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blackcorner"
@@ -10887,6 +10901,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -11866,6 +11883,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12807,6 +12827,9 @@
 /obj/machinery/requests_console/bridge{
 	pixel_y = -30
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -13686,6 +13709,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -14105,6 +14132,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -14177,6 +14205,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "eEZ" = (
@@ -15002,10 +15031,18 @@
 	},
 /area/station/solar/auxport)
 "fCM" = (
-/obj/machinery/disposal,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/station/maintenance/atmos)
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = -22;
+	pixel_y = 0
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
 "fDS" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
@@ -16087,6 +16124,7 @@
 	},
 /area/station/civilian/bar)
 "gIY" = (
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "gJf" = (
@@ -16471,6 +16509,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "gZM" = (
@@ -17861,6 +17900,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -18571,6 +18611,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blackcorner"
@@ -18770,6 +18811,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "jAT" = (
@@ -19675,7 +19717,7 @@
 /area/station/bridge/captain_quarters)
 "knb" = (
 /obj/machinery/door/airlock/glass{
-	name = "Chapel"
+	name = "Gym"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -19721,6 +19763,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -19979,6 +20022,10 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -21154,10 +21201,7 @@
 	},
 /area/station/medical/surgery)
 "lLn" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
+/obj/structure/disposalpipe/junction,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "lMc" = (
@@ -21483,6 +21527,7 @@
 "mdY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkstairs_middle"
 	},
@@ -21934,6 +21979,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -22395,6 +22441,9 @@
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -22520,21 +22569,15 @@
 /turf/space,
 /area/space)
 "nfp" = (
-/obj/structure/table/reinforced,
-/obj/machinery/camera{
-	c_tag = "Security Checkpoint";
-	dir = 1;
-	network = list("SS13","Security")
-	},
-/obj/machinery/door_control{
-	id = "Security_private";
-	name = "Shutters Control";
-	pixel_y = -28
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	dir = 4;
+	icon_state = "blackcorner"
 	},
-/area/station/security/checkpoint)
+/area/station/hallway/primary/central)
 "nfC" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -22779,6 +22822,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -23287,10 +23333,13 @@
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "nKz" = (
-/obj/structure/stool/bed/chair/comfy/brown,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -23353,6 +23402,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 26
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "nMG" = (
@@ -23831,6 +23881,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24134,19 +24185,13 @@
 	},
 /area/station/hallway/primary/central)
 "oDq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/lobby)
+/area/station/hallway/primary/central)
 "oDr" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/crowbar,
@@ -26563,6 +26608,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "qDp" = (
@@ -26719,6 +26765,9 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -21
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -27829,13 +27878,22 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/spectro)
 "rOl" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/table/reinforced,
+/obj/machinery/camera{
+	c_tag = "Security Checkpoint";
+	dir = 1;
+	network = list("SS13","Security")
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/dormitories/dormone)
+/obj/machinery/door_control{
+	id = "Security_private";
+	name = "Shutters Control";
+	pixel_y = -28
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/station/security/checkpoint)
 "rOx" = (
 /obj/machinery/door/airlock/glass{
 	name = "Bar"
@@ -30193,6 +30251,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -30536,6 +30597,10 @@
 	dir = 4;
 	pixel_x = -21
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "black"
@@ -30817,6 +30882,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "uRb" = (
@@ -31554,6 +31620,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -32101,6 +32168,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -33593,7 +33664,18 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "xCK" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
 "xDn" = (
@@ -34069,6 +34151,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -54252,7 +54335,7 @@ qUm
 qWs
 gXR
 vkz
-nfp
+rOl
 pNu
 akb
 akb
@@ -57598,7 +57681,7 @@ aik
 aqj
 ald
 alx
-fCM
+arS
 qyK
 qyK
 qyK
@@ -62999,8 +63082,8 @@ eSJ
 xhi
 rJd
 xCy
-rOl
-rOl
+lmc
+lmc
 sFn
 sFn
 sFn
@@ -68372,9 +68455,9 @@ vGv
 mBg
 mdY
 bgQ
-nYR
+wNy
 jrO
-npo
+fCM
 uDE
 nlU
 nKV
@@ -68632,7 +68715,7 @@ qho
 tud
 jhe
 vJE
-bdB
+oDq
 qaJ
 kei
 ncM
@@ -68889,10 +68972,10 @@ tnj
 wDD
 vAK
 jBJ
-nNt
-nYR
+nfp
+wNy
+abO
 xCK
-oDq
 gIY
 aRD
 jAD
