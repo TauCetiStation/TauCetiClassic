@@ -116,7 +116,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 					message = "<span class='notice'>[src] ate [A] and looks [expression]!</span>"
 					qdel(A)
 					soap_eaten += 200
-				else if(istype(A, /obj/item))
+				else if(isitem(A))
 					var/obj/item/I = A
 					I.make_wet()
 				visible_message(message)
