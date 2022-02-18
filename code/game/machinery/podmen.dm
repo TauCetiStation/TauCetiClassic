@@ -111,9 +111,10 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(copycat_replica && priveleged_player && priveleged_player.current == blood_source && blood_source.stat == DEAD)
 		D.key = blood_source.key
 
-		to_chat(D, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-		to_chat(D, "<B>You are alive. Again. But you are not you. You are a mere Podmen, a husk of what you should have been. Neither of humans, nor of them. A hollow shell, filled with disease.</B>")
-		to_chat(D, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
+		var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+		msg += "<B>You are alive. Again. But you are not you. You are a mere Podmen, a husk of what you should have been. Neither of humans, nor of them. A hollow shell, filled with disease.</B><BR>"
+		msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+		to_chat(D, msg)
 		return
 
 	else

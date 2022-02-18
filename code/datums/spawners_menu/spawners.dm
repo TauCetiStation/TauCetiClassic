@@ -503,8 +503,8 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
 	podman.key = ghost.key
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>"
-	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B>"
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
 	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 	to_chat(podman, msg)
 
@@ -527,8 +527,8 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
 	diona.key = ghost.key
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>"
-	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B>"
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
 	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 	to_chat(diona, msg)
 
