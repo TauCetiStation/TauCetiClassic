@@ -59,7 +59,7 @@
 
 	var/damagetype = held_item.suicide_act(src)
 	if(!damagetype)
-		to_chat(user, "You can't figure out how to commit suicide with [held_item]")
+		to_chat(src, "You can't figure out how to commit suicide with [held_item]")
 		suiciding = FALSE
 		return
 
