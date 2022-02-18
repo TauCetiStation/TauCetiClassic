@@ -15,7 +15,7 @@
 
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if(mood)
-		if(mood.mood_level == 1) // lowest mood level
+		if(mood.spirit_level == 6 && mood.mood_level <= 3) // highest spirit level (worst) and mood level in the lower third
 			permitted = TRUE
 
 	if(!permitted)
