@@ -166,7 +166,6 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 
 	qualities = null
-	tools = list()
 	flags = NOBLOODY
 
 	var/on = 0

@@ -546,7 +546,7 @@
 	throwforce = 7.0
 	item_state = "crowbar"
 
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	m_amt = 50
 	origin_tech = "engineering=1"

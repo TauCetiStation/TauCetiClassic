@@ -10,8 +10,8 @@
 	throw_speed = 1
 	throw_range = 7
 
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE + 3 // fits all tools and around 2 extra items
 
 	origin_tech = "combat=1"

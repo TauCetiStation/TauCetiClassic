@@ -80,8 +80,6 @@ var/global/list/wedge_icon_cache = list()
 	if(dir)
 		set_dir(dir)
 
-	verbs += /obj/machinery/door/airlock/proc/try_wedge_item_verb
-
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -1118,28 +1116,37 @@ var/global/list/wedge_icon_cache = list()
 	return FALSE
 
 /obj/machinery/door/airlock/close()
-	if(safe && !wedged_item)
-		for(var/turf/turf in locs)
-			for(var/obj/item/I in turf)
-				if(I.qualities && I.qualities[QUALITY_PRYING] && I.w_class >= ITEM_SIZE_NORMAL)
-					operating = TRUE
-					density = TRUE
-					do_animate("closing")
-					sleep(7)
-					if(QDELETED(src) || QDELETED(I))
-						return
-					force_wedge_item(I)
-					playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
-					//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
-					sleep(7)
-					if(QDELETED(src))
-						return
-					playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
-					density = FALSE
-					do_animate("opening")
-					operating = FALSE
-					return
-	. = ..()
+	if(!safe)
+		return ..()
+	if(wedged_item)
+		return ..()
+
+	for(var/turf/turf in locs)
+		for(var/obj/item/I in turf)
+			if(!I.qualities[QUALITY_PRYING])
+				continue
+			if(I.w_class < SIZE_SMALL)
+				continue
+
+			operating = TRUE
+			density = TRUE
+			do_animate("closing")
+			sleep(7)
+			if(QDELETED(src) || QDELETED(I))
+				return
+			force_wedge_item(I)
+			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
+			//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+			sleep(7)
+			if(QDELETED(src))
+				return
+			playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
+			density = FALSE
+			do_animate("opening")
+			operating = FALSE
+			return
+
+	return ..()
 
 /obj/machinery/door/airlock/normal_open_checks()
 	if(hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -1202,8 +1209,6 @@ var/global/list/wedge_icon_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	verbs -= /obj/machinery/door/airlock/proc/try_wedge_item_verb
-	verbs += /obj/machinery/door/airlock/proc/take_out_wedged_item_verb
 
 /obj/machinery/door/airlock/proc/try_wedge_item_verb()
 	set name = "Wedge item"
@@ -1221,27 +1226,21 @@ var/global/list/wedge_icon_cache = list()
 
 /obj/machinery/door/airlock/proc/try_wedge_item(mob/living/user)
 	var/obj/item/I = user.get_active_hand()
-	if(istype(I) && I.w_class >= ITEM_SIZE_NORMAL)
-		if(!density)
-			user.drop_item()
-			force_wedge_item(I)
-			to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
-		else
-			to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
-
-/obj/machinery/door/airlock/proc/take_out_wedged_item_verb()
-	set name = "Remove Blockage"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-	if(!usr.Adjacent(src))
-		return
-	if(!usr.IsAdvancedToolUser())
+	if(!istype(I))
 		return
 
-	take_out_wedged_item(usr)
+	if(I.w_class < SIZE_SMALL)
+		return
+
+	if(density)
+		to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
+		return
+
+	if(!user.drop_from_inventory(I))
+		return
+
+	force_wedge_item(I)
+	to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
 
 /obj/machinery/door/airlock/proc/take_out_wedged_item(mob/living/user)
 	if(wedged_item)
@@ -1253,8 +1252,6 @@ var/global/list/wedge_icon_cache = list()
 			user.put_in_hands(wedged_item)
 			to_chat(user, "<span class='notice'>You took [wedged_item] out of [src].</span>")
 		wedged_item = null
-		verbs -= /obj/machinery/door/airlock/proc/take_out_wedged_item_verb
-		verbs += /obj/machinery/door/airlock/proc/try_wedge_item_verb
 		update_icon()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
