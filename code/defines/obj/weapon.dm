@@ -579,7 +579,7 @@
 /obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)
 		return
-	if(!istype(target, /obj/machinery))
+	if(!ismachinery(target))
 		return
 	var/obj/machinery/T = target
 	if(works_from_distance && T.component_parts)

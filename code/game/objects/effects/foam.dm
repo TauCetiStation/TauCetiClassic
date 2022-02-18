@@ -112,7 +112,7 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.w_class <= SIZE_MINUSCULE)
 			return
@@ -163,7 +163,7 @@
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
 			B.extinguish()
-		if(istype(A, /obj/item))
+		if(isitem(A))
 			var/obj/item/I = A
 			I.extinguish()
 		if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))

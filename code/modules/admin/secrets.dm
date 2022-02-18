@@ -261,7 +261,7 @@
 				if(!security)
 					//strip their stuff before they teleport into a cell :downs:
 					for(var/obj/item/weapon/W in H)
-						if(istype(W, /obj/item/organ/external))
+						if(isbodypart(W))
 							continue
 							//don't strip organs
 						H.drop_from_inventory(W)
