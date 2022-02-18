@@ -752,7 +752,6 @@
 	return R.on_diona_digest(M)
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
-
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
 	S.name = H.name
 	S.real_name = S.name
@@ -764,10 +763,7 @@
 		H.mind.transfer_to(S)
 
 	for(var/mob/living/carbon/monkey/diona/D in H.contents)
-		if(D.client)
-			D.forceMove(H.loc)
-		else
-			qdel(D)
+		D.splitting(H)
 
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 

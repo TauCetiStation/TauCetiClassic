@@ -758,7 +758,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == IPC || H.species.name == DIONA || H.species.name == PODMAN)
+	if(H.get_species() in list(IPC, DIONA, PODMAN))
 		return FALSE
 
 	return TRUE

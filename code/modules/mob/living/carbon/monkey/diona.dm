@@ -273,7 +273,9 @@
 
 	adult.name = name
 	adult.real_name = adult.name
-	adult.ckey = ckey
+
+	if(mind)
+		mind.transfer_to(adult)
 
 	for (var/obj/item/W in contents)
 		drop_from_inventory(W)

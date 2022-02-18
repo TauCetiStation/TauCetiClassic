@@ -503,9 +503,10 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
 	podman.key = ghost.key
 
-	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-	to_chat(podman, "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B>")
-	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>"
+	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(podman, msg)
 
 /datum/spawner/fake_diona
 	name = "Нимфа Дионы"
@@ -526,9 +527,10 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
 	diona.key = ghost.key
 
-	to_chat(diona, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-	to_chat(diona, "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B>")
-	to_chat(diona, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>"
+	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(diona, msg)
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
