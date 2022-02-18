@@ -6,17 +6,20 @@
 	density = TRUE
 	anchored = TRUE
 
+	var/taken = FALSE
+
 /obj/structure/stacklifter/proc/finish_pump(mob/living/carbon/human/user)
 	icon_state = "fitnesslifter"
 	user.pixel_y = 0
+	taken = FALSE
 
 /obj/structure/stacklifter/proc/get_pumped(mob/living/carbon/human/user)
 	for(var/lifts in 1 to 5)
 		animate(user, pixel_y = -2, time = 3)
-		if(!do_after(user, 3, TRUE, src, progress=FALSE))
+		if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 			return
 		animate(user, pixel_y = -4, time = 3)
-		if(!do_after(user, 3, TRUE, src, progress=FALSE))
+		if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 			return
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
@@ -52,7 +55,7 @@
 	if(!istype(gymnast) || gymnast.lying)
 		return
 
-	if(in_use)
+	if(taken)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(user.buckled && user.buckled != src)
@@ -62,6 +65,8 @@
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
 		to_chat(user, "You are too exausted.")
 		return
+
+	taken = TRUE
 
 	icon_state = "fitnesslifter2"
 	user.set_dir(SOUTH)
@@ -82,6 +87,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	var/taken = FALSE
+
 	var/static/image/weight_overlay
 
 /obj/structure/weightlifter/atom_init()
@@ -100,6 +107,7 @@
 	cut_overlay(weight_overlay)
 	user.pixel_y = 0
 	icon_state = "fitnessweight"
+	taken = FALSE
 
 /obj/structure/weightlifter/proc/get_pumped(mob/living/carbon/human/user)
 	add_overlay(weight_overlay)
@@ -107,18 +115,18 @@
 	for(var/reps in 1 to 5)
 		for(var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
-			if(!do_after(user, 3, TRUE, src, progress=FALSE))
+			if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 				return
 
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 	animate(user, pixel_y = 2, time = 3)
-	if(!do_after(user, 3, TRUE, src, progress=FALSE))
+	if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 		return
 	playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 
 	animate(user, pixel_y = 0, time = 3)
-	if(!do_after(user, 3, TRUE, src, progress=FALSE))
+	if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 		return
 
 	user.nutrition -= 12
@@ -149,7 +157,7 @@
 		return
 	if(!istype(user) || user.lying)
 		return
-	if(in_use)
+	if(taken)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(user.buckled && user.buckled != src)
@@ -158,6 +166,8 @@
 	if(user.halloss > 80 || user.shock_stage > 80)
 		to_chat(user, "You are too exausted.")
 		return
+
+	taken = TRUE
 
 	icon_state = "fitnessweight-c"
 	user.set_dir(SOUTH)
