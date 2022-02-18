@@ -120,6 +120,7 @@
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
+		to_chat(world, "CAN'T USE TGUI_ACT")
 		return
 
 	switch(action)
@@ -161,7 +162,9 @@
 			return
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/O = new R.result_type( usr.loc )
+	var/atom/movable/O = new R.result_type( loc )
+	if(ismob(O.loc))
+		O.forceMove(O.loc.loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -305,10 +308,13 @@
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
 /obj/item/stack/proc/change_stack(mob/user, amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+	var/obj/item/stack/F = new type(loc, amount, FALSE)
+	if(ismob(F.loc))
+		F.forceMove(F.loc.loc)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
+	if(user.Adjacent(F))
+		user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)

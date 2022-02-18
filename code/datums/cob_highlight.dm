@@ -86,7 +86,7 @@
 		animate(b_overlay, time = 5, color = "white")
 
 /datum/craft_or_build/proc/try_to_build(mob/M)
-	if(!can_build(M, over_this, get_turf(M)))
+	if(!can_build(M, over_this, get_turf(using_this)))
 		return
 
 	M.face_atom(over_this)
@@ -118,10 +118,10 @@
 		if(failed)
 			return
 
-	if(!can_build(M, over_this_saved, get_turf(M)))
+	if(!can_build(M, over_this_saved, get_turf(using_this)))
 		return
 
-	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
+	if(over_this_saved && using_this.Adjacent(over_this_saved))
 		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.set_dir(build_direction)
@@ -133,12 +133,15 @@
 	if(!usr.client.cob)
 		return
 	if(usr.client.cob.in_building_mode)
-		if(usr.incapacitated() || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
+		if(usr.incapacitated())
+			usr.client.cob.remove_build_overlay(usr.client)
+			return
+		if(!(TK in usr.mutations) && usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this)
 			usr.client.cob.remove_build_overlay(usr.client)
 			return
 		var/turf/T = src
-		if(get_dist(usr, src) > 0)
-			var/direction = get_dir(usr, src)
+		if(Adjacent(usr.client.cob.using_this))
+			var/direction = get_dir(usr.client.cob.using_this, src)
 			switch(direction)
 				if(NORTHEAST)
 					direction = EAST
@@ -149,7 +152,7 @@
 				if(NORTHWEST)
 					direction = NORTH
 
-			T = get_step(usr, direction)
+			T = get_step(usr.client.cob.using_this, direction)
 			if(!T)
 				return
 
