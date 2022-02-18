@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(job)
 	init_order = SS_INIT_JOBS
 
 	flags = SS_NO_FIRE
+	msg_lobby = "Размещаем вакансии..."
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
@@ -11,6 +12,7 @@ SUBSYSTEM_DEF(job)
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/obj/effect/landmark/start/fallback_landmark
+
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
@@ -25,7 +27,7 @@ SUBSYSTEM_DEF(job)
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
 		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
-		return 0
+		return FALSE
 
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
@@ -37,14 +39,14 @@ SUBSYSTEM_DEF(job)
 		name_occupations[job.title] = job
 		type_occupations[J] = job
 
-	return 1
+	return TRUE
 
 
 /datum/controller/subsystem/job/proc/Debug(text)
 	if(!Debug2)
-		return 0
+		return FALSE
 	job_debug.Add(text)
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/job/proc/GetJob(rank)
 	if(!occupations.len)
@@ -64,13 +66,13 @@ SUBSYSTEM_DEF(job)
 	if(player && player.mind && rank)
 		var/datum/job/job = GetJob(rank)
 		if(!job)
-			return 0
+			return FALSE
 		if(jobban_isbanned(player, rank))
-			return 0
+			return FALSE
 		if(!job.player_old_enough(player.client))
-			return 0
+			return FALSE
 		if(!job.map_check())
-			return 0
+			return FALSE
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -80,16 +82,16 @@ SUBSYSTEM_DEF(job)
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
 		job.current_positions++
-		return 1
+		return TRUE
 	Debug("AR has failed, Player: [player], Rank: [rank]")
-	return 0
+	return FALSE
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)	//making additional slot on the fly
 	var/datum/job/job = GetJob(rank)
 	if(job && job.current_positions >= job.total_positions && job.total_positions != -1)
 		job.total_positions++
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
@@ -177,8 +179,8 @@ SUBSYSTEM_DEF(job)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
@@ -202,17 +204,17 @@ SUBSYSTEM_DEF(job)
 	var/ai_selected = 0
 	var/datum/job/job = GetJob("AI")
 	if(!job)
-		return 0
+		return FALSE
 	if((job.title == "AI") && (config) && (!config.allow_ai))
-		return 0
+		return FALSE
 
-	if(SSticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
+	if(istype(SSticker.mode, /datum/game_mode/malfunction) && job.spawn_positions)//no additional AIs with malf
 		job.total_positions = job.spawn_positions
 		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
-			if(SSticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+			if(istype(SSticker.mode, /datum/game_mode/malfunction))//Make sure they want to malf if its malf
 				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
@@ -222,7 +224,7 @@ SUBSYSTEM_DEF(job)
 					ai_selected++
 					break
 		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-		if((SSticker.mode.name == "AI malfunction")&&(!ai_selected))
+		if(istype(SSticker.mode, /datum/game_mode/malfunction) && !ai_selected)
 			unassigned = shuffle(unassigned)
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
@@ -232,8 +234,8 @@ SUBSYSTEM_DEF(job)
 						ai_selected++
 						break
 	if(ai_selected)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /** Proc DivideOccupations
@@ -259,7 +261,7 @@ SUBSYSTEM_DEF(job)
 				player.client.prefs.random_character()
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return FALSE
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
@@ -278,7 +280,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, AC1 end")
 
 	//Check for an AI
-	if(SSticker.mode.name == "AI malfunction")
+	if(istype(SSticker.mode, /datum/game_mode/malfunction))
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -289,7 +291,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, Head Check end")
 
 	//Check for an AI
-	if(!(SSticker.mode.name == "AI malfunction"))
+	if(!istype(SSticker.mode, /datum/game_mode/malfunction))
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -359,16 +361,15 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
-			player.ready = 0
-			player.client << output(player.ready, "lobbybrowser:imgsrc")
+			player.ready = FALSE
+			player.client << output(player.ready, "lobbybrowser:setReadyStatus")
 			unassigned -= player
-			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
-	return 1
+	return TRUE
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
-	if(!H)	return 0
+	if(!H)	return FALSE
 	var/datum/job/job = GetJob(rank)
 	var/list/spawn_in_storage = list()
 
@@ -485,7 +486,7 @@ SUBSYSTEM_DEF(job)
 		switch(rank)
 			if("Cyborg")
 				H.Robotize()
-				return 1
+				return TRUE
 			if("AI")
 				return H
 			if("Clown")	//don't need bag preference stuff!
@@ -511,7 +512,7 @@ SUBSYSTEM_DEF(job)
 		H.species.after_job_equip(H, job)
 
 	// Happy Valentines day!
-	if(Holiday == "Valentine's Day")
+	if(SSholiday.holidays[VALENTINES])
 		for(var/obj/item/weapon/storage/backpack/BACKP in H)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
@@ -546,10 +547,10 @@ SUBSYSTEM_DEF(job)
 
 //		H.update_icons()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)
-	if(!H)	return 0
+	if(!H)	return FALSE
 	var/obj/item/weapon/card/id/C = null
 
 	var/datum/job/job = null
@@ -591,11 +592,11 @@ SUBSYSTEM_DEF(job)
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/job/proc/LoadJobs(jobsfile)
 	if(!config.load_jobs_from_txt)
-		return 0
+		return FALSE
 
 	var/list/jobEntries = file2list(jobsfile)
 
@@ -625,7 +626,7 @@ SUBSYSTEM_DEF(job)
 			J.spawn_positions = text2num(value)
 			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
 				J.total_positions = 0
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
@@ -657,3 +658,71 @@ SUBSYSTEM_DEF(job)
 					never++
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
+
+
+/proc/show_location_blurb(client/C)
+	set waitfor = FALSE
+
+	if(!C)
+		return
+
+	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/obj/effect/overlay/blurb/B = new()
+
+	var/list/style_for_line[4]
+	var/list/lines[4]
+
+	var/age
+	if(ishuman(C.mob))
+		var/mob/living/carbon/human/H = C.mob
+		age += ", [H.age] years old"
+
+	lines[1] = "[C.mob.real_name][age]"
+
+	if(length(C.mob.mind.antag_roles))
+		lines[2] = C.mob.mind.antag_roles[1]
+		style_for_line[2] = "color:red;"
+	else
+		lines[2] = C.mob.mind.role_alt_title
+
+	var/station_name
+	if(is_station_level(C.mob.z))
+		station_name = "[station_name()], "
+
+	var/area/A = get_area(C.mob)
+	lines[3] = "[station_name][A.name]"
+
+	lines[4] = "[current_date_string], [worldtime2text()]"
+
+	C.screen += B
+
+	var/newline_flag = TRUE
+	for(var/j in 1 to lines.len)
+		var/new_line = uppertext(lines[j])
+		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
+		animate(B, alpha = 255, time = 10)
+		newline_flag = !newline_flag
+		for(var/i = 2 to length_char(new_line) + 1)
+			var/cur_line = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
+			if(newline_flag)
+				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
+			else
+				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
+			sleep(1)
+		if(newline_flag || j == lines.len)
+			sleep(15)
+			animate(B, alpha = 0, time = 15)
+			sleep(15)
+
+	if(C)
+		C.screen -= B
+	qdel(B)
+
+/obj/effect/overlay/blurb
+	maptext_height = 64
+	maptext_width = 512
+	layer = FLOAT_LAYER
+	plane = HUD_PLANE
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = "LEFT+1,BOTTOM+2"

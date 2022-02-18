@@ -10,7 +10,7 @@ var/global/list/cached_icons = list()
 	item_state = "paintcan"
 	m_amt = 200
 	g_amt = 0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
@@ -22,9 +22,7 @@ var/global/list/cached_icons = list()
 		return
 	if(istype(target, /turf/simulated) && reagents.total_volume > 0)
 		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>", "<span class='notice'>You splash [target] with [src].</span>")
-		reagents.reaction(target, TOUCH)
-		reagents.remove_any(5)
-		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
+		reagents.standard_splash(target, amount=5, user=user)
 	else
 		..()
 

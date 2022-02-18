@@ -46,7 +46,7 @@
 
 /obj/structure/ladder/attack_hand(mob/user)
 	if(up && down)
-		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
+		switch(tgui_alert(usr, "Go up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
 			if("Up")
 				user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src]!</span>")

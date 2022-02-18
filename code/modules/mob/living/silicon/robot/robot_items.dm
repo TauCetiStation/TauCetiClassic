@@ -29,8 +29,6 @@
 				mode = 1
 			to_chat(user, "Changed printing mode to '[mode == 2 ? "Rename Paper" : "Write Paper"]'")
 
-	return
-
 // Copied over from paper's rename verb
 // see code\modules\paperwork\paper.dm line 62
 
@@ -44,7 +42,6 @@
 	if(( get_dist(user,paper) <= 1  && user.stat == CONSCIOUS))
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(user)
-	return
 
 //TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
 /obj/item/weapon/form_printer
@@ -126,9 +123,52 @@
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
 	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num
 	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."
+
+/obj/item/weapon/shockpaddles/robot
+	name = "defibrillator paddles"
+	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
+	charge_cost = 50
+	combat = TRUE
+	cooldown_time = 3 SECONDS
+
+/obj/item/weapon/shockpaddles/robot/check_charge(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.charge >= charge_amt)
+
+/obj/item/weapon/shockpaddles/robot/checked_use(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.use(charge_amt))
+
+/obj/item/weapon/shockpaddles/robot/attack_self(mob/user)
+	return //No, this can't be wielded
+
+/obj/item/weapon/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		if(IO.damage < 50)
+			if(do_mob(user, H, 2 SECONDS))
+				visible_message("<span class='danger'>[user] performs a heart massage on [H]!</span>")
+				if(H.health > config.health_threshold_dead)
+					IO.heart_fibrillate()
+					to_chat(user, "<span class='notice'>You detect an irregular heartbeat coming form [H]'s body. It is in need of defibrillation you assume!</span>")
+				else
+					to_chat(user, "<span class='warning'>[H]'s body seems to be too weak, you do not feel a heart beat.</span>")
+		else
+			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
+	..()
+
+/obj/item/weapon/card/emag/borg
+	name = "robotic cryptographic sequencer"
+
+/obj/item/weapon/card/emag/borg/emag_break(mob/user)
+	var/mob/living/silicon/robot/R = user
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	R.module.remove_item(src)

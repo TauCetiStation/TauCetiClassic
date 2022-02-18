@@ -19,7 +19,7 @@
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -188,16 +188,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1)
-			src.ChangeTurf(basetype)
-		if(2)
+		if(EXPLODE_DEVASTATE)
+			ChangeTurf(basetype)
+		if(EXPLODE_HEAVY)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(0, 55))
-	return
 
 /turf/simulated/wall/blob_act()
 	take_damage(rand(75, 125))
@@ -220,11 +219,11 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
+	O.anchored = TRUE
+	O.density = TRUE
 	O.layer = 5
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
@@ -240,7 +239,7 @@
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -299,15 +298,10 @@
 
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -325,10 +319,10 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
-			src.dismantle_wall(1)
+			dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -470,6 +464,12 @@
 	else if(istype(W,/obj/item/door_control_frame))
 		var/obj/item/door_control_frame/AH = W
 		AH.try_build(src)
+		return
+
+	// why is all of this here help me
+	else if(istype(W, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = W
+		NF.try_build(user, src)
 		return
 
 	//Poster stuff

@@ -4,7 +4,7 @@
 		word_to_uristrune_table = list()
 
 		var/bit = 1
-		var/list/words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+		var/list/words = RUNE_WORDS
 
 		while(length(words))
 			var/w = pick(words)
@@ -26,7 +26,7 @@
 	return get_uristrune(bits, animated)
 
 
-var/list/uristrune_cache = list()
+var/global/list/uristrune_cache = list()
 
 /proc/get_uristrune(symbol_bits, animated = 0)
 	var/lookup = "[symbol_bits]-[animated]"

@@ -80,13 +80,15 @@
 	if(!user || !target)
 		return FALSE
 
+	time *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
+
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
 
 	target.in_use_action = TRUE
 
 	if(check_target_zone)
-		check_target_zone = user.zone_sel.selecting
+		check_target_zone = user.get_targetzone()
 
 	var/user_loc = user.loc
 
@@ -133,7 +135,7 @@
 				. = FALSE
 				break
 
-		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
+		if(check_target_zone && user.get_targetzone() != check_target_zone)
 			. = FALSE
 			break
 	if(progress)
@@ -146,6 +148,8 @@
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
+
+	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)

@@ -17,6 +17,8 @@
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
 			return 1
+		if (isautosay(other))
+			return 1
 		if (issilicon(other))
 			return 1
 		if (isbrain(other))
@@ -29,7 +31,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
 	message = sanitize(message)
@@ -44,11 +46,11 @@
 		return emote(copytext(message,2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		bot_type = IS_AI
-	else if(istype(src, /mob/living/silicon/robot))
+	else if(isrobot(src))
 		bot_type = IS_ROBOT
-	else if(istype(src, /mob/living/silicon/pai))
+	else if(ispAI(src))
 		bot_type = IS_PAI
 
 	var/mob/living/silicon/ai/AI = src		//and let's not declare vars over and over and over for these guys.
@@ -213,7 +215,7 @@
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, SHOWMSG_AUDIO)
-			else if(istype(S, /mob/living/carbon/brain))
+			else if(isbrain(S))
 				S.show_message(rendered, SHOWMSG_AUDIO)
 			else
 				var/mob/living/silicon/robot/borg = S
@@ -237,7 +239,7 @@
 
 	var/list/heard = list()
 	for (var/mob/M in listening)
-		if(!istype(M, /mob/living/silicon) && !M.robot_talk_understand)
+		if(!issilicon(M) && !M.robot_talk_understand)
 			heard += M
 	if (length(heard))
 		var/message_beep

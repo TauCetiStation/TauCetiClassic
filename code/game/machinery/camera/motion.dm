@@ -17,7 +17,8 @@
 			triggerAlarm()
 	else if (detectTime == -1)
 		for (var/mob/target in motionTargets)
-			if (target.stat == DEAD) lostTarget(target)
+			if (target.stat == DEAD)
+				lostTarget(target)
 			// If not detecting with motion camera...
 			if (!area_motion)
 				// See if the camera is still in range
@@ -28,7 +29,7 @@
 /obj/machinery/camera/proc/newTarget(mob/target)
 	if (!target.mouse_opacity || target.alpha < 50)
 		return
-	if (istype(target, /mob/living/silicon/ai)) return 0
+	if (isAI(target)) return 0
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	if (!(target in motionTargets))

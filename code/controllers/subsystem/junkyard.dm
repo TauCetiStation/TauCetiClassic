@@ -2,6 +2,7 @@
 SUBSYSTEM_DEF(junkyard)
 	name = "Junkyard"
 	flags = SS_NO_FIRE
+	msg_lobby = "Уничтожаем Землю..."
 	var/list/junk = list()
 	var/junkyard_initialised = 0
 
@@ -17,7 +18,7 @@ SUBSYSTEM_DEF(junkyard)
 	var/savefile/S = new /savefile("data/junkyard/stats.sav")
 	S["junk"] 	>> junk
 	if(isnull(junk))
-		junk = new/list()
+		junk = list()
 
 /datum/controller/subsystem/junkyard/proc/populate_junkyard()
 	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
@@ -35,6 +36,8 @@ SUBSYSTEM_DEF(junkyard)
 		CHECK_TICK
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard
+
+	create_spawner(/datum/spawner/space_bum, "space_bum")
 
 /datum/controller/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)

@@ -45,7 +45,7 @@
 					alarm_playing = 1
 		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER)
 		if(alarm_playing != 1)
-			src.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
+			visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 			alarm_playing = 1
 		addtimer(CALLBACK(src, .proc/alarm_stop), 60)
 
@@ -67,7 +67,7 @@
 
 	if(usr.incapacitated())
 		return
-	src.interact(usr)
+	interact(usr)
 
 /obj/item/clothing/gloves/pipboy/verb/switch_off()
 	set name = "Switch Off"
@@ -125,7 +125,7 @@
 		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/clothing/gloves/pipboy/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/clothing/gloves/pipboy/interact(mob/user)
 	health_analyze_mode = FALSE
@@ -235,7 +235,7 @@
 	if (!t)
 		return
 
-	if (!in_range(src, U))
+	if (!Adjacent(U))
 		return
 
 	if (!(on))

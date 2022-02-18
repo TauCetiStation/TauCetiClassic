@@ -14,7 +14,7 @@
 	force = 2
 	throwforce = 20
 	throw_speed = 6
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	sharp = 1
 	edge = 1
 	can_embed = 1

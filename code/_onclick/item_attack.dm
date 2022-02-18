@@ -16,10 +16,10 @@
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(.) // Clickplace, no need for attack animation.
-		return
+		return FALSE
 
 	if(user.a_intent != INTENT_HARM)
-		return
+		return FALSE
 
 	var/had_effect = FALSE
 	if(!(W.flags & NOATTACKANIMATION))
@@ -31,7 +31,7 @@
 		had_effect = TRUE
 
 	if(!had_effect)
-		return
+		return FALSE
 
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
@@ -39,6 +39,8 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(W)
 	SSdemo.mark_dirty(user)
+
+	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -73,7 +75,7 @@
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
-			return 0
+			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if((CLUMSY in user.mutations) && prob(50))
@@ -92,9 +94,9 @@
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(M, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
 					flick(G.hud.icon_state, G.hud)
@@ -103,7 +105,7 @@
 					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if (isbrain(M))
 		messagesource = M:container
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
@@ -147,14 +149,14 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(isslimeadult(slime))
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)
 							if(prob(80) && !slime.client)
 								slime.Discipline++
 						slime.Victim = null
-						slime.anchored = 0
+						slime.anchored = FALSE
 
 						spawn()
 							if(slime)
@@ -191,7 +193,7 @@
 											slime.SStun = 0
 
 							slime.Victim = null
-							slime.anchored = 0
+							slime.anchored = FALSE
 
 
 						spawn(0)
@@ -255,7 +257,7 @@
 	else
 		switch(damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
+				if(isslime(src))
 					M.adjustBrainLoss(power)
 
 				else
@@ -273,4 +275,4 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
-	return 1
+	return TRUE

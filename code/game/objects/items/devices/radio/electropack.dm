@@ -6,7 +6,7 @@
 	frequency = 1449
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	g_amt = 2500
 	m_amt = 10000
 	var/code = 2
@@ -43,7 +43,7 @@
 	//..()
 	if(usr.incapacitated())
 		return
-	if(((istype(usr, /mob/living/carbon/human) && ((!( SSticker ) || (SSticker && SSticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
+	if((ishuman(usr) && Adjacent(usr)))
 		usr.set_machine(src)
 		if(href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -104,7 +104,7 @@
 
 /obj/item/device/radio/electropack/attack_self(mob/user, flag1)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>

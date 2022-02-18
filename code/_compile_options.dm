@@ -3,6 +3,16 @@
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
+/***** All toggles for the GC ref finder *****/
+
+// #define REFERENCE_TRACKING		// Uncomment to enable ref finding
+
+// #define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
+
+// #define FIND_REF_NO_CHECK_TICK	//Sets world.loop_checks to false and prevents find references from sleeping
+
+/***** End toggles for the GC ref finder *****/
+
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
 
@@ -13,14 +23,12 @@
 #define MAX_NAME_LEN          26
 #define MAX_LNAME_LEN         64
 
-//#define NEWYEARCONTENT		// Closets use this to spawn items like santa clothes. // TODO: convert this to holiday event?
-
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 513
+#define MIN_COMPILER_VERSION 514
 #if DM_VERSION < MIN_COMPILER_VERSION
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513 or higher
+#error You need version 514 or higher
 #endif
 
-#define RECOMMENDED_VERSION 513
+#define RECOMMENDED_VERSION 514

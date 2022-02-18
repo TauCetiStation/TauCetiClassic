@@ -55,6 +55,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
+	..()
 	if(prob(50))
 		spawn_food(get_turf(AOG), 1)
 
@@ -136,6 +137,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
+	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 
@@ -145,7 +147,7 @@
  */
 /datum/religion_rites/standing/animation
 	name = "Анимация"
-	desc = "Возраждает вещи на алтаре."
+	desc = "Возрождает вещи на алтаре."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
@@ -232,7 +234,7 @@
 		if(M?.mind?.holy_role)
 			M.make_jittery(50)
 		else
-			M.confused += 10 * divine_power
+			M.AdjustConfused(10 * divine_power)
 			M.make_jittery(50)
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
@@ -325,6 +327,7 @@
 							  "...God helps, and in my words the work is strengthened...",)
 	invoke_msg = "...Let it be so!"
 	favor_cost = 150
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,

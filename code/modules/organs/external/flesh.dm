@@ -11,13 +11,27 @@
 	if(BP.species && BP.species.bodypart_butcher_results)
 		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
-		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
+		var/meat_amount = 1
+		meat_amount += round(BP.pumped / 10)
+		if(HAS_TRAIT(BP.owner, TRAIT_FAT)) //fat guys are meaty
+			meat_amount += 2
+		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = meat_amount)
 	else if(bodypart_type == BODYPART_ROBOTIC)
 		BP.butcher_results = list(/obj/item/stack/sheet/plasteel = 1)
 
 /datum/bodypart_controller/Destroy()
 	BP = null
 	return ..()
+
+/datum/bodypart_controller/proc/adjust_pumped(value)
+	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
+	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+		return
+
+	BP.pumped += value
+	if(BP.pumped > BP.max_pumped)
+		BP.pumped = BP.max_pumped
+	BP.update_sprite()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
@@ -268,7 +282,7 @@ This function completely restores a damaged organ to perfect condition.
 			if(BURN)  fluid_loss_severity = FLUIDLOSS_WIDE_BURN
 			if(LASER) fluid_loss_severity = FLUIDLOSS_CONC_BURN
 		var/fluid_loss = (damage / (BP.owner.maxHealth - config.health_threshold_dead)) * 560/*owner.species.blood_volume*/ * fluid_loss_severity
-		BP.owner.remove_blood(fluid_loss)
+		BP.owner.blood_remove(fluid_loss)
 
 	// first check whether we can widen an existing wound
 	if(BP.wounds.len > 0 && prob(max(50 + (BP.number_wounds - 1) * 10, 90)))
@@ -574,7 +588,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
 		BP.owner.try_mutate_to_hulk()
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
 	BP.broken_description = pick("broken", "fracture", "hairline fracture")
 	BP.perma_injury = BP.brute_dam

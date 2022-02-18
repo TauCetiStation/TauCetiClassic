@@ -9,7 +9,7 @@
 	icon_state = "autopsy_main"
 	item_state = "autopsy"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_body_part/organs = list()
 	var/list/datum/autopsy_body_part/chemtraces = list()
@@ -181,7 +181,7 @@
 	P.updateinfolinks()
 	P.update_icon()
 
-	if(istype(usr,/mob/living/carbon))
+	if(iscarbon(usr))
 		// place the item in the usr's hand if possible
 		if(!usr.r_hand)
 			P.loc = usr
@@ -194,7 +194,7 @@
 			P.layer = ABOVE_HUD_LAYER
 			P.plane = ABOVE_HUD_PLANE
 
-	if(istype(usr,/mob/living/carbon/human))
+	if(ishuman(usr))
 		usr.update_inv_l_hand()
 		usr.update_inv_r_hand()
 
@@ -223,6 +223,6 @@
 		M.visible_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]</span>")
 		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "[bicon(src)]<span class='notice'>Scanning completed!</span>")
-		src.add_data(BP)
+		add_data(BP)
 		flick("autopsy_scanning",src)
 		return 1

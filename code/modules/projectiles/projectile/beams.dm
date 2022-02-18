@@ -136,9 +136,7 @@
 /obj/item/projectile/beam/sniper
 	name = "sniper beam"
 	icon_state = "laser"
-	damage = 60
-	stun = 5
-	weaken = 5
+	damage = 50
 	stutter = 5
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle

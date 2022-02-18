@@ -290,7 +290,7 @@
 			return FALSE
 		if(!isturf(walker.loc))
 			return FALSE
-		if(!in_range(walker, carry_obj))
+		if(!walker.Adjacent(carry_obj))
 			return FALSE
 		if(walker.lying)
 			lying_am++

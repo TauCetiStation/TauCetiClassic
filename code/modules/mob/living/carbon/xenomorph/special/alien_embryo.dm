@@ -19,7 +19,7 @@ This is emryo growth procs
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/alien_embryo/atom_init_late()
-	if(istype(loc, /mob/living/carbon))
+	if(iscarbon(loc))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
 		add_infected_hud()
@@ -83,7 +83,7 @@ This is emryo growth procs
 
 	if(baby && baby.client)
 		if(growth_rate == 1)
-			baby.throw_alert("alien_embryo", /obj/screen/alert/alien_embryo)
+			baby.throw_alert("alien_embryo", /atom/movable/screen/alert/alien_embryo)
 		else
 			baby.clear_alert("alien_embryo")
 
@@ -137,7 +137,7 @@ This is emryo growth procs
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
 		// to 4, so we don't do a process heavy check everytime.
-		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN, IGNORE_LAVRA)
 
 		var/client/larva_candidate
 		if(candidates.len)
@@ -163,9 +163,8 @@ This is emryo growth procs
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
-		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // To get the player's attention
+		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))

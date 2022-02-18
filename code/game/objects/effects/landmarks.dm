@@ -3,6 +3,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = TURF_LAYER
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -70,6 +71,9 @@
 		if("ninjastart")
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
+		if("eorgwarp")
+			eorgwarp += loc
+			return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/sound_source
 	name = "Sound Source"
@@ -99,6 +103,22 @@
 
 /obj/effect/landmark/start/new_player/atom_init(mapload)
 	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/cops_spawn
+	name = "Space Cops"
+
+/obj/effect/landmark/cops_spawn/atom_init(mapload)
+	..()
+	global.copsstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/dealer_spawn
+	name = "Dealer"
+
+/obj/effect/landmark/dealer_spawn/atom_init(mapload)
+	..()
+	global.dealerstart += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/latejoin
@@ -263,7 +283,7 @@
 	..()
 	new /obj/item/clothing/suit/wizrobe/fake(loc)
 	new /obj/item/clothing/head/wizard/fake(loc)
-	new /obj/item/weapon/staff/(loc)
+	new /obj/item/weapon/staff(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/sexyclown/atom_init()
@@ -280,3 +300,12 @@
 
 /obj/effect/landmark/blockway
 	density = TRUE
+
+/obj/effect/landmark/espionage_start
+	name = "Espionage Agent Start"
+
+/obj/effect/landmark/espionage_start/atom_init(mapload)
+	..()
+	global.espionageagent_start += loc
+	create_spawner(/datum/spawner/spy, "spy")
+	return INITIALIZE_HINT_QDEL

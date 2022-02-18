@@ -23,7 +23,7 @@
 				break
 
 		if(growth_rate == 1)
-			throw_alert("alien_queen", /obj/screen/alert/alien_queen)
+			throw_alert("alien_queen", /atom/movable/screen/alert/alien_queen)
 		else
 			clear_alert("alien_queen")
 

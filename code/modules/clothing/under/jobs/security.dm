@@ -165,3 +165,20 @@
 	flags_inv = 0
 	siemens_coefficient = 0.6
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/*
+ * Space Police
+ */
+/obj/item/clothing/under/rank/security/beatcop
+	name = "NanoTrasen uniform"
+	desc = "A NanoTrasen uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	item_color = "spacepolice_families"
+
+/obj/item/clothing/under/rank/clownpolice
+	name = "police uniform"
+	desc = "A police uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	item_color = "spacepolice_families"

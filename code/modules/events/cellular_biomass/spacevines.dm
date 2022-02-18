@@ -4,8 +4,8 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
@@ -20,30 +20,12 @@
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0, user)) qdel(src)
-			else
-				user_unbuckle_mob(user)
-				return
+	var/temperature = W.get_current_temperature()
+	if(W.sharp || W.tools[TOOL_KNIFE] || temperature > 3000)
+		qdel(src)
+	else
+		return ..()
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	return ..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
@@ -123,7 +105,7 @@
 
 	growth_queue = growth_queue + queue_end
 	//sleep(5)
-	//src.process()
+	//process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -165,7 +147,7 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
+		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || isblob(O) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0
@@ -184,26 +166,21 @@
 	if (src.growth == 20)
 		src.name = "Dense Space Kudzu"
 		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = 1
+		src.density = TRUE
 	spawn(src.waittime)
-		if (src.growth < 20) src.Life()
+		if (src.growth < 20) Life()
 
 */
 
 /obj/effect/spacevine/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(90))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(10))
 				return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				return
-	return
+	qdel(src)
 
 /obj/effect/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
 	if(temperature > T0C+100)

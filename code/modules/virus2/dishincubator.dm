@@ -1,7 +1,7 @@
 /obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -30,13 +30,12 @@
 			return
 
 		beaker = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 		return
 
 	else if(istype(O, /obj/item/weapon/virusdish))
@@ -46,13 +45,12 @@
 			return
 
 		dish = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 

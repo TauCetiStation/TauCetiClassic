@@ -13,8 +13,8 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	dir = 1
 	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
@@ -105,11 +105,11 @@
 
 /obj/machinery/am_shielding/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			stability -= 80
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			stability -= 40
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			stability -= 20
 	check_stability()
 	return
@@ -205,7 +205,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1

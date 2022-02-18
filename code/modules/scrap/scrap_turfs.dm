@@ -17,8 +17,8 @@
 			size = pick(20, 20, 30)
 			maintype = /obj/random/scrap/dense_even
 
-	var/list/makescrap = new/list()
-	var/list/makesparse = new/list()
+	var/list/makescrap = list()
+	var/list/makesparse = list()
 	makescrap += src.loc
 
 	for(var/i = 0 to size)

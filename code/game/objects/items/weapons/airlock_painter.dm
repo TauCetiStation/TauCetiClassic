@@ -4,7 +4,7 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
@@ -96,7 +96,7 @@
 	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
 		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
 		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, target))
+		!user.Adjacent(target))
 	{
 		return
 	}

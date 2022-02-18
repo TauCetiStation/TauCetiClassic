@@ -16,7 +16,7 @@
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	amount_per_transfer_from_this = 5
@@ -30,8 +30,8 @@
 /obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		user.visible_message("<span class='warning'>\The [target] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
+		// Yeah, it turns out the rag splashes.
+		reagents.standard_splash(target, user=user)
 		return
 	else
 		..()

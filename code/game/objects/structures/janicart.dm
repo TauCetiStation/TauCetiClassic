@@ -106,7 +106,7 @@
 		..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/soap))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap))
 		if(mybucket)
 			if(I.reagents.total_volume < I.reagents.maximum_volume)
 				if(mybucket.reagents.total_volume < 1)
@@ -194,7 +194,7 @@
 	popup.open()
 
 /obj/structure/stool/bed/chair/janitorialcart/Topic(href, href_list)
-	if(!in_range(src, usr))
+	if(!Adjacent(usr))
 		return
 	if(!isliving(usr))
 		return

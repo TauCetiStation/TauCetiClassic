@@ -54,7 +54,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M)
 
-	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
+	M.throw_alert("buckled", /atom/movable/screen/alert/buckled, new_master = src)
 	correct_pixel_shift(M)
 	M.update_canmove()
 	return TRUE

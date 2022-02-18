@@ -117,7 +117,7 @@
 
 	charge_per_tick = max_health / recharge_time
 
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
@@ -157,7 +157,7 @@
 
 /// Reactivate the shield.
 /datum/component/forcefield/proc/reactivate()
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	var/atom/play_at = get_sound_atom()
@@ -167,7 +167,7 @@
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	var/atom/play_at = get_sound_atom()
@@ -365,7 +365,7 @@
 /// A wrapper function to add A to protected list from a signal.
 /datum/component/forcefield/proc/add_protected(datum/source, atom/A)
 	LAZYADD(protected, A)
-	RegisterSignal(A, list(COMSIG_PARENT_QDELETED), CALLBACK(src, .proc/stop_protecting, A))
+	RegisterSignal(A, list(COMSIG_PARENT_QDELETING), CALLBACK(src, .proc/stop_protecting, A))
 
 	if(active)
 		start_protecting(A)
@@ -375,7 +375,7 @@
 	if(active)
 		stop_protecting(A)
 
-	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
+	UnregisterSignal(A, list(COMSIG_PARENT_QDELETING))
 	LAZYREMOVE(protected, A)
 
 #undef FORCEFIELDING_TIP

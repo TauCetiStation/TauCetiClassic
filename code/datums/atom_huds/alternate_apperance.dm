@@ -228,6 +228,22 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys
+	// Dictionary of form list(ckey = TRUE) for all who shouldn't see this appearance.
+	var/list/ckeys
+
+	add_ghost_version = FALSE
+
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/New(key, image/I, ckeys)
+	..(key, I, FALSE)
+	src.ckeys = ckeys
+	for(var/mob in global.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/mobShouldSee(mob/M)
+	return !ckeys || !ckeys[M.ckey]
+
 // Fake-image can see only mime
 /datum/atom_hud/alternate_appearance/basic/mime
 

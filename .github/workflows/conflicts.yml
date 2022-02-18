@@ -1,0 +1,17 @@
+# https://github.com/mschilde/auto-label-merge-conflicts
+
+name: 'Check for merge conflicts'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mschilde/auto-label-merge-conflicts@2e8fcc76c6430272ec8bb64fb74ec1592156aa6a
+        with:
+          CONFLICT_LABEL_NAME: "Merge Conflict"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAX_RETRIES: 5
+          WAIT_MS: 10000

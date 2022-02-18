@@ -1,5 +1,5 @@
-<!-- 
-Title: DNA Modifier UI 
+<!--
+Title: DNA Modifier UI
 Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
  -->
 <h3>Status</h3>
@@ -78,8 +78,8 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 			Target:
 		</div>
 		<div class="itemContentWide">
-			{{:helper.link('-', null, {'changeUITarget' : 0}, (data.selectedUITarget > 0) ? null : 'disabled')}} 
-            <div class="statusValue">&nbsp;{{:data.selectedUITargetHex}}&nbsp;</div> 
+			{{:helper.link('-', null, {'changeUITarget' : 0}, (data.selectedUITarget > 0) ? null : 'disabled')}}
+            <div class="statusValue">&nbsp;{{:data.selectedUITargetHex}}&nbsp;</div>
             {{:helper.link('+', null, {'changeUITarget' : 1}, (data.selectedUITarget < 15) ? null : 'disabled')}}
 		</div>
 	</div>
@@ -87,7 +87,7 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 		<div class="itemContentWide">
 			{{:helper.link('Irradiate Block', 'radiation', {'pulseUIRadiation' : 1}, !data.occupant.isViableSubject ? 'disabled' : null)}}
 		</div>
-	</div>    
+	</div>
 {{else data.selectedMenuKey == 'se'}}
 	<h3>Modify Structural Enzymes</h3>
     {{:helper.displayDNABlocks(data.occupant.structuralEnzymes, data.selectedSEBlock, data.selectedSESubBlock, data.dnaBlockSize, 'SE')}}
@@ -96,7 +96,7 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 		<div class="itemContentWide">
 			{{:helper.link('Irradiate Block', 'radiation', {'pulseSERadiation' : 1}, !data.occupant.isViableSubject ? 'disabled' : null)}}
 		</div>
-	</div> 
+	</div>
 {{else data.selectedMenuKey == 'buffer'}}
 	<h3>Transfer Buffers</h3>
 	{{for data.buffers}}
@@ -260,8 +260,8 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 			Intensity:
 		</div>
 		<div class="itemContentWide">
-			{{:helper.link('-', null, {'radiationIntensity' : 0}, (data.radiationIntensity > 1) ? null : 'disabled')}} 
-            <div class="statusValue">&nbsp;{{:data.radiationIntensity}}&nbsp;</div> 
+			{{:helper.link('-', null, {'radiationIntensity' : 0}, (data.radiationIntensity > 1) ? null : 'disabled')}}
+            <div class="statusValue">&nbsp;{{:data.radiationIntensity}}&nbsp;</div>
             {{:helper.link('+', null, {'radiationIntensity' : 1}, (data.radiationIntensity < 10) ? null : 'disabled')}}
 		</div>
 	</div>
@@ -270,7 +270,7 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 			Duration:
 		</div>
 		<div class="itemContentWide">
-			{{:helper.link('-', null, {'radiationDuration' : 0}, (data.radiationDuration > 2) ? null : 'disabled')}} 
+			{{:helper.link('-', null, {'radiationDuration' : 0}, (data.radiationDuration > 2) ? null : 'disabled')}}
             <div class="statusValue">&nbsp;{{:data.radiationDuration}}&nbsp;</div>
             {{:helper.link('+', null, {'radiationDuration' : 1}, (data.radiationDuration < 20) ? null : 'disabled')}}
 		</div>

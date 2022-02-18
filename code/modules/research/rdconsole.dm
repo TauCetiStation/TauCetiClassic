@@ -51,7 +51,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/selected_imprinter_category
 	var/search_text
 
-	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
+	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
@@ -292,7 +292,7 @@ cause a ton of data to be lost, an admin can go send it back.
 				linked_imprinter = null
 	if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
-		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = tgui_alert(usr, "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "R&D Console Database Reset", list("Continue", "Cancel"))
 		if(choice == "Continue")
 			screen = "working"
 			qdel(files)

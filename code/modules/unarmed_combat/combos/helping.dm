@@ -48,8 +48,8 @@
 		victim.Stun(1)
 
 		victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = turn(attacker.dir, 180))
-		// Currently grab position adjusting changes your pixel_y to 0.
-		victim.pixel_y += 4
+		victim.pixel_y = 4
+		victim.layer = attacker.layer - 0.01
 
 		var/shake_degree = min(scale_value(15, scale_damage_coeff, victim, attacker, attack_obj), 30)
 		var/max_shake_height = min(scale_value(4, scale_damage_coeff, victim, attacker, attack_obj), 8)
@@ -57,27 +57,18 @@
 		var/matrix/prev_transform = matrix(victim.transform)
 		var/prev_pixel_y = victim.pixel_y
 
-		var/matrix/prev_attacker_transform = matrix(attacker.transform)
-		var/shake_attacker = (prob(0))
-
-		var/matrix/M_attacker = matrix(attacker.transform)
-		if(shake_attacker)
-			M_attacker.Turn(pick(-shake_degree * 0.5, shake_degree * 0.5))
-
 		var/matrix/M = matrix(victim.transform)
 		M.Turn(pick(-shake_degree, shake_degree))
 
 		var/shake_height = rand(0, max_shake_height)
 
-		animate(victim, transform = M, pixel_y = victim.pixel_y + shake_height, time = delay)
-		if(shake_attacker)
-			animate(attacker, transform = M_attacker, time = delay * pick(0.6, 0.8, 1.0))
+		var/shift_dir = attacker.dir == EAST ? 1 : -1
+
+		animate(victim, transform = M, pixel_x = shift_dir * 2, pixel_y = victim.pixel_y + shake_height, time = delay)
 		if(!do_combo(victim, attacker, shake_delay))
 			return
 
 		animate(victim, transform = prev_transform, pixel_y = prev_pixel_y, time = 1)
-		if(shake_attacker)
-			animate(attacker, transform = prev_attacker_transform, time = 1)
 		if(!do_combo(victim, attacker, 1))
 			return
 

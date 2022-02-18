@@ -7,7 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD, IMPOBED_HUD)
 
 	typing_indicator_type = "robot"
 
@@ -20,14 +20,14 @@
 
 //Hud stuff
 
-	var/obj/screen/inv1 = null
-	var/obj/screen/inv2 = null
-	var/obj/screen/inv3 = null
+	var/atom/movable/screen/inv1 = null
+	var/atom/movable/screen/inv2 = null
+	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/shown_robot_pda = 0
 	var/shown_robot_foto = 0
-	var/obj/screen/robot_modules_background
+	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -58,7 +58,7 @@
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
-	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect/effect/system/spark_spread/spark_system //So they can initialize sparks whenever/N
 	var/jeton = 0
 	var/killswitch = 0
 	var/killswitch_time = 60
@@ -73,6 +73,7 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -152,6 +153,9 @@
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/Destroy()
+	if(connected_ai) // Remove robot from connected to ai robots
+		connected_ai.connected_robots -= src
+		connected_ai = null
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -167,8 +171,7 @@
 		var/list/modules = list(
 				"Standard" = "robot_old",
 				"Engineering" = "Engineering",
-				"Surgeon" = "medicalrobot",
-				"Crisis" = "Medbot",
+				"Medical" = "medicalrobot",
 				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
@@ -237,8 +240,8 @@
 			module_sprites["Kodiak"] = "kodiak-miner"
 			give_hud(DATA_HUD_MINER)
 
-		if("Crisis")
-			module = new /obj/item/weapon/robot_module/crisis(src)
+		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			module.channels = list("Medical" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
@@ -246,34 +249,27 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-medical"
-			module_sprites["Acheron"] = "mechoid-Medical"
-
-		if("Surgeon")
-			module = new /obj/item/weapon/robot_module/surgeon(src)
-			module.channels = list("Medical" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Medical")
-			module_sprites["Basic"] = "Medbot"
-			module_sprites["Standard"] = "surgeon"
-			module_sprites["Advanced Droid"] = "droid-medical"
-			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-surgery"
+			module_sprites["Drone Red"] = "drone-surgery"
+			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			module.channels = list("Security" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Security")
-			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
-			module_sprites["Black Knight"] = "securityrobot"
-			module_sprites["Bloodhound"] = "bloodhound"
-			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-			module_sprites["Drone"] = "drone-sec"
-			module_sprites["Acheron"] = "mechoid-Security"
-			module_sprites["Kodiak"] = "kodiak-sec"
+			if(can_be_security)
+				module = new /obj/item/weapon/robot_module/security(src)
+				module.channels = list("Security" = 1)
+				if(camera && ("Robots" in camera.network))
+					camera.add_network("Security")
+				module_sprites["Basic"] = "secborg"
+				module_sprites["Red Knight"] = "Security"
+				module_sprites["Black Knight"] = "securityrobot"
+				module_sprites["Bloodhound"] = "bloodhound"
+				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+				module_sprites["Drone"] = "drone-sec"
+				module_sprites["Acheron"] = "mechoid-Security"
+				module_sprites["Kodiak"] = "kodiak-sec"
+			else
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
+				return
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -308,7 +304,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
 	// Radial menu for choose icon_state
@@ -340,7 +336,7 @@
 	if(custom_name)
 		changed_name = custom_name
 		if(client)
-			for(var/obj/screen/screen in client.screen)
+			for(var/atom/movable/screen/screen in client.screen)
 				if(screen.name == "Namepick")
 					client.screen -= screen
 					qdel(screen)
@@ -450,15 +446,14 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = SSticker.mode
-		for (var/datum/mind/malfai in malf.malf_ai)
-			if(connected_ai)
-				if(connected_ai.mind == malfai)
-					if(malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-			else if(SSticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(SSticker.mode:AI_win_timeleft/(SSticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+	if(ismalf(connected_ai))
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(SSticker.hacked_apcs >= 3)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
+	else
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(malf?.malf_mode_declared)
+			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -478,6 +473,9 @@
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
 				stat("Internal Atmosphere Info: [current_jetpack.name]")
 				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
+		if(locate(/obj/item/device/gps/cyborg))
+			var/turf/T = get_turf(src)
+			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
@@ -489,24 +487,21 @@
 	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+			gib()
+			return
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
@@ -575,7 +570,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -612,7 +607,7 @@
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
-				src.Destroy()
+				qdel(src)
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -654,8 +649,7 @@
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
@@ -716,8 +710,7 @@
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
-				usr.drop_item()
-				U.loc = src
+				usr.drop_from_inventory(U, src)
 			else
 				to_chat(usr, "Upgrade error!")
 
@@ -748,7 +741,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked", /obj/screen/alert/hacked)
+				throw_alert("hacked", /atom/movable/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				set_ai_link(null)
@@ -782,9 +775,9 @@
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
 				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-						qdel(D)
-					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					src.module.rebuild()
+						module.remove_item(D)
+					var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
+					module.add_item(D)
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -793,7 +786,7 @@
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
-	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
+	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
@@ -815,12 +808,12 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
@@ -1030,7 +1023,7 @@
 
 	. = ..()
 
-	if(module)
+	if(module && !ISDIAGONALDIR(Dir))
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
@@ -1042,10 +1035,10 @@
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 							qdel(A)
-					else if(istype(A, /obj/item))
+					else if(isitem(A))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
@@ -1072,14 +1065,14 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.set_ai_link(null)
+		set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.clear_all_networks()
+		camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
 	update_manifest()
 
@@ -1133,3 +1126,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

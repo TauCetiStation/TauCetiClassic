@@ -123,24 +123,11 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
-
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if(healths)
 		if(stat != DEAD)
@@ -163,19 +150,19 @@
 			healths.icon_state = "health7"
 
 	if(hud_used && hud_used.staminadisplay)
-		var/obj/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
+		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	if(oxygen_alert)
-		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
+		throw_alert("ian_oxy", /atom/movable/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
 	if(phoron_alert)
-		throw_alert("ian_tox", /obj/screen/alert/ian_tox)
+		throw_alert("ian_tox", /atom/movable/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
 	if(fire_alert)
-		throw_alert("ian_hot", /obj/screen/alert/ian_hot)
+		throw_alert("ian_hot", /atom/movable/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")
 
@@ -386,13 +373,13 @@
 
 	if (drowsyness)
 		drowsyness--
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if (prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
-	if(confused)
-		confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 
@@ -418,7 +405,7 @@
 			emote("twitch")
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)
@@ -488,19 +475,19 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
@@ -568,7 +555,7 @@
 			eye_blind = max(eye_blind - 1,0)
 			blinded = TRUE
 		else if(eye_blurry)			//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry - 1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -585,14 +572,14 @@
 		if(weakened)
 			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = max(stuttering - 1, 0)
+		if(stuttering > 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent - 1, 0)
 
 		if(druggy)
-			druggy = max(druggy - 1, 0)
+			adjustDrugginess(-1)
 	return TRUE
 
 /mob/living/carbon/ian/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
@@ -622,7 +609,5 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(SSticker.mode)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

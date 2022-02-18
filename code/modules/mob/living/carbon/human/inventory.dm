@@ -128,7 +128,7 @@
 		var/update_hair = 0
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair = 1
-		else if(istype(W, /obj/item))
+		else if(isitem(W))
 			var/obj/item/I = W
 			if(I.flags_inv & HIDEMASK)
 				update_hair = 1
@@ -161,7 +161,7 @@
 		var/update_hair = 0
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair = 1
-		else if(istype(W, /obj/item))
+		else if(isitem(W))
 			var/obj/item/I = W
 			if(I.flags_inv & HIDEMASK)
 				update_hair = 1
@@ -286,7 +286,7 @@
 			W.equipped(src, slot)
 			update_inv_r_hand()
 		if(SLOT_BELT)
-			playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
+			playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.belt = W
 			W.equipped(src, slot)
 			update_inv_belt()
@@ -335,7 +335,7 @@
 			W.equipped(src, slot)
 			update_inv_head()
 		if(SLOT_SHOES)
-			playsound(src, 'sound/effects/equip_shoes.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
+			playsound(src, 'sound/effects/equip_shoes.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.shoes = W
 			W.equipped(src, slot)
 			update_inv_shoes()
@@ -346,7 +346,7 @@
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(SLOT_W_UNIFORM)
-			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
+			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
 			update_suit_sensors()
@@ -364,8 +364,8 @@
 			W.equipped(src, slot)
 			update_inv_s_store()
 		if(SLOT_IN_BACKPACK)
-			if(src.get_active_hand() == W)
-				src.remove_from_mob(W)
+			if(get_active_hand() == W)
+				remove_from_mob(W)
 			W.loc = src.back
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform

@@ -8,8 +8,8 @@
 	icon = null
 	icon_state = "null"
 
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	opacity = 0
 	var/faction = "generic"
 	var/grip = 0
@@ -42,7 +42,6 @@
 /obj/structure/cellular_biomass/ex_act(severity)
 	health -= 100 / severity
 	healthcheck()
-	return
 
 /obj/structure/cellular_biomass/blob_act()
 	health -= 50
@@ -73,8 +72,8 @@
 ////////////////////////////
 
 /obj/structure/cellular_biomass/wall
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 	layer = 4
 

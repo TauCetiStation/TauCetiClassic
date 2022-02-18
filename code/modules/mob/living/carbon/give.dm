@@ -2,10 +2,12 @@
 	set category = "IC"
 	set name = "Give"
 
+	if(!M)
+		return
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
-	var/obj/item/I = src.get_active_hand()
+	var/obj/item/I = get_active_hand()
 	if(!I)
 		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
 		return
@@ -13,10 +15,10 @@
 		to_chat(src, "<span class='red'>You can't give this to [name]</span>")
 		return
 	if(HULK in M.mutations)
-		if(I.w_class < ITEM_SIZE_LARGE)
+		if(I.w_class < SIZE_NORMAL)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
-	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
+	switch(tgui_alert(M,"[src] wants to give you \a [I]?",, list("Yes","No")))
 		if("Yes")
 			if(!can_give(M, show_warnings = TRUE))
 				return
@@ -33,7 +35,7 @@
 				to_chat(M, "<span class='red'>[src] seem to have given up on giving \the [I] to you.</span>")
 				return
 			else
-				drop_from_inventory(I)
+				drop_from_inventory(I, M)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")
@@ -62,19 +64,6 @@
 		if(show_warnings)
 			to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
 		return FALSE
-
-	var/obj/item/item_in_hand = giver.get_active_hand()
-	if(item_in_hand)
-		if(istype(item_in_hand, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = item_in_hand
-			if(T.wielded || T.only_twohand)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return FALSE
-		if(istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))
-			var/obj/item/weapon/gun/projectile/automatic/l6_saw/T = item_in_hand
-			if(T.wielded)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return FALSE
 	return TRUE
 
 /mob/living/carbon/ian/can_accept_gives(mob/giver, show_warnings = FALSE)

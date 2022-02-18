@@ -25,10 +25,10 @@
 
 	// Stuff needed to render the map
 	var/map_name
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	/// All the plane masters that need to be applied.
 	var/list/cam_plane_masters
-	var/obj/screen/background/cam_background
+	var/atom/movable/screen/background/cam_background
 
 	var/camera_cache = null
 
@@ -45,8 +45,10 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -107,7 +109,7 @@
 		var/c_tag = params["name"]
 		var/list/cameras = get_cached_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		
+
 		switch_to_camera(selected_camera)
 
 		return TRUE
@@ -222,7 +224,7 @@
 /obj/machinery/computer/security/proc/get_cached_cameras()
 	if (isnull(camera_cache))
 		camera_cache = get_available_cameras()
-	
+
 	return camera_cache
 
 /obj/machinery/computer/security/tgui_data()
@@ -255,10 +257,10 @@
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (!network)
-		world.log << "A computer lacks a network at [x],[y],[z]."
+		world.log << "A computer lacks a network at [COORD(src)]."
 		return
 	if (!istype(network, /list))
-		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+		world.log << "The computer at [COORD(src)] has a network that is not a list!"
 		return
 
 	..()
@@ -279,7 +281,7 @@
 	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
-	density = 0
+	density = FALSE
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -372,7 +374,16 @@
 	icon_state = "camera_alt"
 	state_broken_preset = null
 	state_nopower_preset = null
-	network = list("SS13")
+	network = list("SS13", "SECURITY UNIT")
 	light_color = "#642850"
+
+/obj/machinery/computer/security/bodycam
+	name = "bodycam monitoring computer"
+	desc = "Used to access the security body cameras."
+	icon_state = "laptop_security"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+	network = list("SECURITY UNIT")
+	req_one_access = list(access_hos)
 
 #undef DEFAULT_MAP_SIZE

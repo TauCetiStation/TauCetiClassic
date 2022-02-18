@@ -17,6 +17,11 @@
 
 	var/datum/action/innate/mecha/mech_defence_mode/defence_action = new
 
+/obj/mecha/combat/durand/Destroy()
+	QDEL_NULL(defence_action)
+	return ..()
+
+
 /obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	defence_action.Grant(user, src)
@@ -60,7 +65,7 @@
 		if(animated)
 			icon_state = reset_icon()
 		occupant_message("<font color='red'>You disable [src] defence mode.</font>")
-	src.log_message("Toggled defence mode.")
+	log_message("Toggled defence mode.")
 	return
 
 
@@ -83,7 +88,7 @@
 /obj/mecha/combat/durand/Topic(href, href_list)
 	..()
 	if (href_list["toggle_defence_mode"])
-		src.defence_mode()
+		defence_mode()
 	return
 
 /obj/mecha/combat/durand/vindicator

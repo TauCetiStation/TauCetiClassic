@@ -1,6 +1,6 @@
-var/const/NUKE_WIRE_LIGHT  = 1
-var/const/NUKE_WIRE_TIMING = 2
-var/const/NUKE_WIRE_SAFETY = 4
+var/global/const/NUKE_WIRE_LIGHT  = 1
+var/global/const/NUKE_WIRE_TIMING = 2
+var/global/const/NUKE_WIRE_SAFETY = 4
 
 /datum/wires/nuclearbomb
 	random = TRUE

@@ -595,7 +595,7 @@
 	},
 /area/space_structures/derelict_lab)
 "bR" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -881,7 +881,7 @@
 /turf/space,
 /area/space_structures/derelict_lab)
 "lt" = (
-/obj/item/weapon/twohanded/flora/floorleaf,
+/obj/item/weapon/flora/floorleaf,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

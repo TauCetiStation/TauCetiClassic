@@ -7,6 +7,7 @@
 	health = 100
 	maxhealth = 100
 
+	layer = INFRONT_MOB_LAYER
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
 
@@ -52,12 +53,16 @@
 /obj/machinery/bot/secbot/ed209/update_icon()
 	icon_state = "[lasertag_color]ed209[on]"
 
-/obj/machinery/bot/secbot/ed209/is_operational_topic()
-	if(lasertag_color && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+/obj/machinery/bot/secbot/ed209/can_interact_with(mob/user)
+	if(!..())
+		return FALSE
+
+	if(lasertag_color && ishuman(user))
+		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 		if(istype(L) && L.lasertag_color != lasertag_color)
 			return FALSE
+
 	return TRUE
 
 /obj/machinery/bot/secbot/ed209/ui_interact(mob/user)
@@ -177,7 +182,7 @@
 	if(!on)
 		return
 
-	anchored = 0
+	anchored = FALSE
 	threatlevel = 0
 	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
 		if(L.stat || (lasertag_color && L.lying && !L.crawling))
@@ -245,7 +250,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasertag_color)
-		var/obj/item/weapon/gun/energy/taser/stunrevolver/G = new /obj/item/weapon/gun/energy/taser/stunrevolver(Tsec)
+		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
 		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
@@ -330,7 +335,7 @@
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
-		pulse2.anchored = 1
+		pulse2.anchored = TRUE
 		pulse2.set_dir(pick(cardinal))
 		QDEL_IN(pulse2, 10)
 		var/list/mob/living/carbon/targets = new
@@ -363,7 +368,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!user.Adjacent(src))
 			return
 		created_name = t
 		return
@@ -450,7 +455,7 @@
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser))
 						return
 					name = "taser ED-209 assembly"
 				else

@@ -56,7 +56,7 @@
 	return (!isSwitchingStates && anchored)
 
 /obj/structure/mineral_door/proc/MobChecks(mob/user)
-	if(!user.small)
+	if(user.w_class >= SIZE_SMALL)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			if(!C.handcuffed)
@@ -151,9 +151,11 @@
 					set_opacity(TRUE)
 
 	else
+		. = ..()
+		if(!.)
+			return FALSE
 		health -= W.force
 		CheckHealth()
-		return ..()
 
 /obj/structure/mineral_door/proc/CheckHealth()
 	if(health <= 0)
@@ -171,15 +173,15 @@
 
 /obj/structure/mineral_door/ex_act(severity = 1)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			Dismantle(TRUE)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(20))
 				Dismantle(TRUE)
 			else
 				health--
 				CheckHealth()
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= 0.1
 			CheckHealth()
 
@@ -202,7 +204,6 @@
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
 		return
-	..()
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
@@ -275,7 +276,7 @@
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 /obj/structure/mineral_door/wood/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/twohanded/fireaxe))
+	if(istype(W, /obj/item/weapon/fireaxe))
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You start cutting the [name] with the axe.</span>")
@@ -289,7 +290,7 @@
 	icon = 'icons/mob/alien.dmi'
 	operating_sound = 'sound/effects/attackblob.ogg'
 	icon_state = "resin"
-	health = 150
+	health = 250
 	can_unwrench = FALSE
 	var/close_delay = 100
 

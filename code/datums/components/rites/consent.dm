@@ -27,7 +27,7 @@
 	if(!victim)
 		return
 
-	if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
+	if(tgui_alert(victim, consent_msg, "Rite", list("Yes", "No")) == "Yes")
 		consent = TRUE
 		to_chat(victim, "<span class='notice'>Вы согласились на ритуал.</span>")
 
@@ -39,7 +39,9 @@
 	if(!AOG.buckled_mob)
 		to_chat(user, "<span class='warning'>Требуется прикрепить жертву к алтарю.</span>")
 		return COMPONENT_CHECK_FAILED
-	if(AOG.buckled_mob.mind && !AOG.buckled_mob.client)
+	if(!AOG.buckled_mob.mind)
+		return NONE
+	if(!AOG.buckled_mob.client)
 		to_chat(user, "<span class='warning'>Требуется сознательная жертва на алтаре.</span>")
 		return COMPONENT_CHECK_FAILED
 	if(!consent)

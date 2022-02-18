@@ -21,10 +21,11 @@
 	return "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 /proc/shuttleminutes2text()
-	return "[round(SSshuttle.timeleft()/60)]"
+	var/m = round(SSshuttle.timeleft()/60)
+	return pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
 
-var/next_duration_update = 0
-var/last_round_duration = 0
+var/global/next_duration_update = 0
+var/global/last_round_duration = 0
 
 /proc/roundduration2text()
 	if(!round_start_time)
@@ -58,23 +59,24 @@ var/last_round_duration = 0
 	return"[ph][hh]:[pm][mm]:[ps][ss]"
 */
 
-/* Returns 1 if it is the selected month and day */
+/* Returns TRUE if it is the selected month and day */
 /proc/isDay(month, day)
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
 		if(month == MM && day == DD)
-			return 1
+			return TRUE
 
 		// Uncomment this out when debugging!
 		//else
-			//return 1
+			//return TRUE
 
-/var/midnight_rollovers = 0
-/var/rollovercheck_last_timeofday = 0
+var/global/midnight_rollovers = 0
+var/global/rollovercheck_last_timeofday = 0
 /proc/update_midnight_rollover()
-	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return midnight_rollovers++
+	if (world.timeofday < global.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+		global.midnight_rollovers++
+	global.rollovercheck_last_timeofday = world.timeofday
 	return midnight_rollovers
 
 //Takes a value of time in deciseconds.

@@ -4,7 +4,7 @@
 	icon_state = "export_scanner"
 	item_state = "radio"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
 

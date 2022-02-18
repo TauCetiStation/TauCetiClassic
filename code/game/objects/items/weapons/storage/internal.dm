@@ -36,10 +36,10 @@
 			return 0
 
 		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
-			src.open(user)
+			open(user)
 			return 0
 
-		if (!( istype(over_object, /obj/screen) ))
+		if (!( istype(over_object, /atom/movable/screen) ))
 			return 1
 
 		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
@@ -61,31 +61,38 @@
 			return 0
 	return 0
 
-//items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
-//returns 1 if the master item's parent's attack_hand() should be called, 0 otherwise.
+//objects that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
+//returns TRUE if the master item's parent's attack_hand() should be called, FALSE otherwise.
 //It's strange, but no other way of doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user)
+	if(isitem(master_item))
+		if(master_item.loc == user.loc)
+			add_fingerprint(user)
+			open(user)
+			return FALSE
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.l_store == master_item && !H.get_active_hand())	//Prevents opening if it's in a pocket.
-			H.put_in_hands(master_item)
-			H.l_store = null
-			return 0
-		if(H.r_store == master_item && !H.get_active_hand())
-			H.put_in_hands(master_item)
-			H.r_store = null
-			return 0
+		//Prevents opening if it's in a pocket.
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
 
-	src.add_fingerprint(user)
-	if (master_item.loc == user)
-		src.open(user)
-		return 0
+			if(H.l_store == master_item && !H.get_active_hand())
+				add_fingerprint(H)
+				H.put_in_hands(master_item)
+				H.l_store = null
+				return FALSE
 
-	for(var/mob/M in range(1, master_item.loc))
-		if (M.s_active == src)
-			src.close(M)
-	return 1
+			if(H.r_store == master_item && !H.get_active_hand())
+				add_fingerprint(H)
+				H.put_in_hands(master_item)
+				H.r_store = null
+				return TRUE
+
+	if(istype(master_item, /obj/structure))
+		add_fingerprint(user)
+		open(user)
+		return FALSE
+
+	return TRUE
 
 /obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
 	return master_item.Adjacent(neighbor)

@@ -159,7 +159,7 @@
 			new /obj/item/clothing/shoes/sandal(src)
 			new /obj/item/clothing/suit/wizrobe/fake(src)
 			new /obj/item/clothing/head/wizard/fake(src)
-			new /obj/item/weapon/staff/(src)
+			new /obj/item/weapon/staff(src)
 		if (21)
 			new /obj/item/clothing/mask/gas/sexyclown(src)
 			new /obj/item/clothing/under/sexyclown(src)

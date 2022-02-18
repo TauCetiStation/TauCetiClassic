@@ -73,7 +73,7 @@
 	name = "shotgun shells box (buckshot)"
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "pellet_box"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	max_ammo = 20
@@ -121,7 +121,7 @@
 	icon_state = "purpleshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
 
-/obj/item/ammo_box/eight_shells/stunslug
-	name = "shotgun shells box (stunslug)"
+/obj/item/ammo_box/eight_shells/stunshot
+	name = "shotgun shells box (stunshot)"
 	icon_state = "stanshellbox"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot

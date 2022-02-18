@@ -3,8 +3,8 @@
 	desc = "Splits the vegetation into micro and macro nutriments, synthesizers, fertilizers, fiber, and etc."
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	var/processing = 0

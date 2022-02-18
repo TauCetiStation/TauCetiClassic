@@ -3,22 +3,20 @@
 	name = "web"
 	desc = "It's stringy and sticky."
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/effect/spider/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
@@ -65,7 +63,7 @@
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return 1
-	else if(istype(mover, /mob/living))
+	else if(isliving(mover))
 		if(prob(50))
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return 0
@@ -97,7 +95,7 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
-	anchored = 0
+	anchored = FALSE
 	layer = 2.7
 	health = 3
 	var/amount_grown = -1
@@ -144,7 +142,7 @@
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			/*if(prob(50))
-				src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
+				visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
 
 			spawn(rand(20,60))
 				loc = exit_vent
@@ -157,7 +155,7 @@
 						return
 
 					if(prob(50))
-						src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
+						visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
@@ -177,7 +175,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom, 5)
 			if(prob(25))
-				src.visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
+				visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(5))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
@@ -187,7 +185,7 @@
 				break
 
 	if(prob(1))
-		src.visible_message("<span class='notice'>\the [src] chitters.</span>")
+		visible_message("<span class='notice'>\the [src] chitters.</span>")
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
@@ -225,7 +223,7 @@
 		qdel(src)
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("<span class='warning'>\the [src] splits open.</span>")
+	visible_message("<span class='warning'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	return ..()

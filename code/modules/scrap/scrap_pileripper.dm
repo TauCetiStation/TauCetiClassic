@@ -11,8 +11,8 @@
 	icon = 'icons/obj/structures/scrap/recycling.dmi'
 	icon_state = "grinder-b0"
 	layer = MOB_LAYER+1 // Overhead
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 
@@ -153,22 +153,9 @@
 				return
 
 	// Start shredding meat
-
-	var/slab_name = L.name
-	var/slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-
-	if(istype(L,/mob/living/carbon/human))
-		slab_name = L.real_name
-		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	else if(istype(L, /mob/living/carbon/monkey))
-		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 4)))
-	new_meat.name = "[slab_name] [new_meat.name]"
-
-	new_meat.reagents.add_reagent("nutriment", 10)
 	L.nutrition -= 100
 	if(L.nutrition > 0)
 		L.adjustBruteLoss(45)
-	else
-		L.gib()
+		return
 
+	L.harvest(null, get_step(src, EAST))

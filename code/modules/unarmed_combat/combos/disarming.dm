@@ -9,6 +9,63 @@
 
 	allowed_target_zones = TARGET_ZONE_ALL
 
+/datum/combat_combo/disarm/proc/item_swaparoo(mob/living/victim, mob/living/attacker)
+	if(!iscarbon(attacker))
+		return
+
+	var/mob/living/carbon/C = attacker
+
+	if(!victim.can_accept_gives(attacker, show_warnings=FALSE) || !C.can_give(victim, show_warnings=FALSE) || victim.client == null)
+		return
+
+	var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
+	if(to_give)
+		if(to_give.flags & (ABSTRACT|DROPDEL))
+			to_give = null
+		else if(!to_give.canremove)
+			to_give = null
+		else if(to_give.w_class < SIZE_NORMAL && (HULK in victim.mutations))
+			to_give = null
+
+	if(!to_give && istype(C.back, /obj/item/weapon/storage) && C.back.contents.len > 0)
+		var/obj/item/weapon/storage/S = C.back
+		var/obj/item/I = S.contents[S.contents.len]
+
+		if(I.flags & (ABSTRACT | DROPDEL))
+			return
+		if(!I.canremove)
+			return
+		if(I.w_class < SIZE_NORMAL && (HULK in victim.mutations))
+			return
+
+		if(!S.remove_from_storage(I, C))
+			return
+		if(!attacker.put_in_hands(I))
+			return
+
+		to_give = I
+
+	if(!to_give)
+		return
+
+	if(!attacker.drop_from_inventory(to_give, victim))
+		return
+
+	if(!victim.put_in_hands(to_give))
+		return
+
+	victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
+	to_give.add_fingerprint(victim)
+	// Extra ! ! ! F U N ! ! !
+	if(C.a_intent != INTENT_HARM)
+		event_log(victim, C, "Forced in-hand use of [to_give]")
+		to_give.attack_self(victim)
+	else
+		event_log(victim, C, "Forced self-attack by [to_give]")
+		var/resolved = victim.attackby(to_give, victim)
+		if(!resolved && victim && to_give)
+			to_give.afterattack(victim, victim, TRUE)
+
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
 
@@ -22,47 +79,14 @@
 		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
+	if(!(CLUMSY in attacker.mutations))
+		return
+
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
 	// And then either force the opponent to attack themselves with that item(if intent is hurt)
 	// Or force the opponent to activate the item(if intent is not hurt)
-	if(CLUMSY in attacker.mutations)
-		if(iscarbon(attacker))
-			var/mob/living/carbon/C = attacker
-			var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
-			if(to_give)
-				if(to_give.flags & (ABSTRACT | DROPDEL))
-					to_give = null
-				else if(to_give.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
-					to_give = null
 
-			if(!to_give && istype(C.back, /obj/item/weapon/storage) && C.back.contents.len > 0)
-				var/obj/item/weapon/storage/S = C.back
-				var/obj/item/I = S.contents[S.contents.len]
-
-				if(I.flags & (ABSTRACT | DROPDEL))
-					return
-				if(I.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
-					return
-
-				if(!S.remove_from_storage(I, C))
-					return
-				attacker.put_in_hands(I)
-				to_give = I
-
-			if(to_give)
-				attacker.drop_from_inventory(to_give)
-				if(victim.put_in_hands(to_give))
-					victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
-					to_give.add_fingerprint(victim)
-					// Extra ! ! ! F U N ! ! !
-					if(attacker.a_intent != INTENT_HARM)
-						event_log(victim, attacker, "Forced in-hand use of [to_give]")
-						to_give.attack_self(victim)
-					else
-						event_log(victim, attacker, "Forced self-attack by [to_give]")
-						var/resolved = victim.attackby(to_give, victim)
-						if(!resolved && victim && to_give)
-							to_give.afterattack(victim, victim, TRUE)
+	item_swaparoo(victim, attacker)
 
 /datum/combat_combo/push
 	name = COMBO_PUSH
@@ -98,6 +122,35 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+// Returns what to replace the append to the slide kick message with
+/datum/combat_combo/slide_kick/proc/take_pants_off(mob/living/L, mob/living/attacker)
+	if(!ishuman(L))
+		return ""
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/clothing/PANTS = H.w_uniform
+	var/obj/item/clothing/BELT = H.belt
+
+	var/first = TRUE
+	for(var/obj/item/I in list(BELT, PANTS))
+		if(!I)
+			continue
+		// Perhaps they fell off during the slide-kick or something.
+		if(I.loc != L)
+			continue
+		if((I.flags & (ABSTRACT|NODROP)) || !I.canremove)
+			continue
+		if(first)
+			. = ", taking off their [I]"
+		else
+			. += ", [I]"
+		. += "!"
+		event_log(L, attacker, "Taking off [I]")
+		L.drop_from_inventory(I, L.loc)
+
+	if(!first)
+		. += "!"
 
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
@@ -140,35 +193,14 @@
 					continue slide_kick_loop
 
 				var/end_string = "to the ground!"
+
 				// Clowns take off the uniform while slidekicking.
 				// A little funny.
 				if(CLUMSY in attacker.mutations)
-					if(ishuman(L))
-						var/mob/living/carbon/human/H = L
-						var/obj/item/clothing/PANTS = H.w_uniform
-						var/obj/item/clothing/BELT = H.belt
+					var/temp_end_string = take_pants_off(L, attacker)
+					if(temp_end_string != "")
+						end_string = temp_end_string
 
-						var/first = TRUE
-						pants_takeoff_loop:
-							for(var/obj/item/I in list(BELT, PANTS))
-								if(!I)
-									continue pants_takeoff_loop
-								if(I.loc != L) // Perhaps they fell off during this or something.
-									continue pants_takeoff_loop
-								if(I.flags & (ABSTRACT|NODROP) && I.canremove)
-									continue pants_takeoff_loop
-								if(first)
-									end_string = ", taking off their [I]"
-								else
-									end_string += ", [I]"
-								end_string += "!"
-								event_log(L, attacker, "Taking off [I]")
-								L.drop_from_inventory(I, L.loc)
-								// attacker is crawling, so they can't anyway.
-								// attacker.put_in_hands(I)
-
-						if(!first)
-							end_string += "!"
 				L.visible_message("<span class='danger'>[attacker] slide-kicks [L][end_string]</span>")
 
 		if(!do_after(attacker, attacker.movement_delay() * 0.4, can_move = TRUE, target = victim, progress = FALSE))

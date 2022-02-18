@@ -6,9 +6,6 @@
 		param = copytext(act, t1 + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,-1)
-
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)
@@ -19,7 +16,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -37,11 +34,11 @@
 				playsound(src, 'sound/misc/nymphchirp.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				m_type = SHOWMSG_AUDIO
 		if("sign")
-			if (!src.restrained())
+			if (!restrained())
 				message = text("<B>The monkey</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = SHOWMSG_VISUAL
 		if("scratch")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
 		if("whimper")
@@ -65,7 +62,7 @@
 			message = "<B>The [src.name]</B> drools."
 			m_type = SHOWMSG_VISUAL
 		if("paw")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> flails his paw."
 				m_type = SHOWMSG_VISUAL
 		if("scretch")
@@ -94,11 +91,11 @@
 			message = "<B>The [src.name]</B> twitches violently."
 			m_type = SHOWMSG_VISUAL
 		if("dance")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> dances around happily."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> rolls."
 				m_type = SHOWMSG_VISUAL
 		if("shake")

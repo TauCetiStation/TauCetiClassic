@@ -9,10 +9,10 @@
 
 #define RANDOM_STARTING_LEVEL 2
 
-var/list/archive_diseases = list()
+var/global/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
-var/list/advance_cures = 	list(
+var/global/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
 									"spaceacillin", "kelotane", "ethanol",
 									"leporazine", "synaptizine", "lipozine",
@@ -96,11 +96,11 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
 	if(!(istype(D, /datum/disease/advance)))
-		return 0
+		return FALSE
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
-		return 0
-	return 1
+	if(GetDiseaseID() != D.GetDiseaseID())
+		return FALSE
+	return TRUE
 
 // To add special resistances.
 /datum/disease/advance/cure(resistance=1)
@@ -124,7 +124,7 @@ var/list/advance_cures = 	list(
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(new S.type)
@@ -132,8 +132,8 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
 		if(symp.id == S.id)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(type_level_limit = RANDOM_STARTING_LEVEL, amount_get = 0)
@@ -361,15 +361,14 @@ var/list/advance_cures = 	list(
 
 /proc/SetViruses(datum/reagent/R, list/data)
 	if(data)
-		var/list/preserve = list()
 		if(istype(data) && data["viruses"])
+			var/list/preserve = list()
 			for(var/datum/disease/A in data["viruses"])
 				preserve += A.Copy()
 			R.data = data.Copy()
+			R.data["viruses"] = preserve
 		else
 			R.data = data
-		if(preserve.len)
-			R.data["viruses"] = preserve
 
 /proc/AdminCreateVirus(mob/user)
 	var/i = 5
@@ -410,7 +409,7 @@ var/list/advance_cures = 	list(
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [get_english_list(name_symptoms)]")
 
 /*
 /mob/verb/test()

@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -28,13 +28,13 @@
 	if(!istype(M))
 		return
 	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
-		src.reagents.reaction(M, INGEST)
+		reagents.reaction(M, INGEST)
 		if(M.reagents)
 
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
-			var/contained = english_list(injected)
+			var/contained = get_english_list(injected)
 
 			M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 

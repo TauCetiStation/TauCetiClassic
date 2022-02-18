@@ -5,16 +5,16 @@
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
-they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
+they are simply references used as part of a "has materials?" type proc.
 The currently supporting non-reagent materials:
-- $metal (/obj/item/stack/metal).
-- $glass (/obj/item/stack/glass).
-- $phoron (/obj/item/stack/phoron).
-- $silver (/obj/item/stack/silver).
-- $gold (/obj/item/stack/gold).
-- $uranium (/obj/item/stack/uranium).
-- $diamond (/obj/item/stack/diamond).
-- $Bananium (/obj/item/stack/Bananium).
+- metal (/obj/item/stack/metal).
+- glass (/obj/item/stack/glass).
+- phoron (/obj/item/stack/phoron).
+- silver (/obj/item/stack/silver).
+- gold (/obj/item/stack/gold).
+- uranium (/obj/item/stack/uranium).
+- diamond (/obj/item/stack/diamond).
+- Bananium (/obj/item/stack/Bananium).
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
@@ -770,6 +770,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/device/science_tool
+	category = list("Misc")
+
+/datum/design/portalgun
+	name = "Portal Gun"
+	desc = "Experimental bluespace projector able to create interconnected wormholes at user's will."
+	id = "portalgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 5000, MAT_SILVER = 5000, MAT_PHORON = 10000, MAT_URANIUM = 5000)
+	build_path = /obj/item/weapon/gun/energy/gun/portal
 	category = list("Misc")
 
 ////////////////////////////////////////
@@ -1748,7 +1757,7 @@ other types of metals and chemistry for reagents).
 	id = "defibrillators_standalone"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
-	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
+	build_path = /obj/item/weapon/shockpaddles/standalone
 	category = list("Support")
 
 /datum/design/sensor_device
@@ -1890,6 +1899,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/temperature
 	category = list("Weapons")
 
+/datum/design/emp_mine
+	name = "EMP Mine"
+	desc = "A mine which will generate ion impulse upon activation."
+	id = "emp_mine"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
+	build_path = /obj/item/mine/emp
+	category = list("Weapons")
+
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
 	desc = "A gun which uses electrical discharges to hit multiple targets"
@@ -1962,13 +1980,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
 	category = list("Weapons")
 
-/datum/design/stunslug
-	name = "Stun Slug"
-	desc = "Box of eight stunning, electrified slugs for a shotgun."
+/datum/design/stunshot
+	name = "Stun Shot"
+	desc = "Box of eight stunning, electrified shells for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
-	build_path = /obj/item/ammo_box/eight_shells/stunslug
+	build_path = /obj/item/ammo_box/eight_shells/stunshot
 	category = list("Weapons")
 
 /datum/design/phoronpistol
@@ -2165,6 +2183,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/mining
 	category = list("Support")
 
+/datum/design/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	id = "hud_calibrator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	build_path = /obj/item/device/hud_calibrator
+	category = list("Support")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
@@ -2187,7 +2214,7 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/design/blueprint
@@ -2703,4 +2730,40 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
 	build_path = /obj/item/rig_module/metalfoam_spray
+	category = list("Rig Modules")
+
+/datum/design/riganalyzer
+	name = "Hardsuit Analyzer Module"
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
+	id = "riganalyzer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/analyzer
+	category = list("Rig Modules")
+
+/datum/design/rigsciencetool
+	name = "Hardsuit Science Tool Module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	id = "rigsciencetool"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/science_tool
+	category = list("Rig Modules")
+
+/datum/design/rigrelay
+	name = "Hardsuit Mounted Relay Module"
+	desc = "Can relay radio signals from other sectors."
+	id = "rigrelay"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/rig_module/mounted_relay
+	category = list("Rig Modules")
+
+/datum/design/rigstabilizer
+	name = "Hardsuit Teleporter stabilizer"
+	desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	id = "rigstabilizer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
+	build_path = /obj/item/rig_module/teleporter_stabilizer
 	category = list("Rig Modules")

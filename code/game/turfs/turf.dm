@@ -57,6 +57,10 @@
 	if(!force)
 		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
 	..()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
+
 	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
@@ -75,7 +79,7 @@
 
 /turf/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		src.ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()
@@ -111,7 +115,7 @@
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if (!CanPass(mover, src))
 		mover.Bump(src, 1)
 		return 0
 
@@ -217,6 +221,18 @@
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L)
 		qdel(L)
+
+/turf/proc/empty(turf_type=/turf/space, baseturf_type, list/ignore_typecache)
+	// Remove all atoms except observers, landmarks, docking ports
+	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark))
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
+	allowed_contents -= src
+	for(var/i in 1 to allowed_contents.len)
+		var/thing = allowed_contents[i]
+		qdel(thing, force=TRUE)
+
+	if(turf_type)
+		ChangeTurf(turf_type, baseturf_type)
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
@@ -403,7 +419,7 @@
 
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(basetype)
+	ChangeTurf(basetype)
 	spawn()
 		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
@@ -457,7 +473,7 @@
 		var/mob/living/L = AM
 		L.turf_collision(src)
 
-/turf/proc/update_icon()
+/turf/update_icon()
 	if(is_flooded(absolute = 1))
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)

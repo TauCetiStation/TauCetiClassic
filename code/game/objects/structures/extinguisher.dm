@@ -24,8 +24,7 @@
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers/spray/extinguisher) && !has_extinguisher && opened)
-		user.drop_item()
-		O.forceMove(src)
+		user.drop_from_inventory(O, src)
 		has_extinguisher = O
 		user.visible_message("<span class='notice'>[user] places \the [O] in \the [src].</span>", "<span class='notice'>You place \the [O] in \the [src].</span>")
 	else

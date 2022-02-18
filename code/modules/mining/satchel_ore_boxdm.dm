@@ -6,7 +6,7 @@
 	icon_state = "orebox0"
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
-	density = 1
+	density = TRUE
 	var/last_update = 0
 	var/list/stored_ore = list()
 
@@ -48,7 +48,7 @@
 	..()
 
 	// Borgs can now check contents too.
-	if((!istype(user, /mob/living/carbon/human)) && (!istype(user, /mob/living/silicon/robot)))
+	if((!ishuman(user)) && (!isrobot(user)))
 		return
 
 	if(!Adjacent(user)) //Can only check the contents of ore boxes if you can physically reach them.
@@ -69,12 +69,12 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["removeall"])
 		for (var/obj/item/weapon/ore/O in contents)
 			O.Move(src.loc)
 		to_chat(usr, "<span class='notice'>You empty the box</span>")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/structure/ore_box/verb/empty_box()
@@ -82,7 +82,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living/carbon/human)) //Only living, intelligent creatures with hands can empty ore boxes.
+	if(!ishuman(usr)) //Only living, intelligent creatures with hands can empty ore boxes.
 		to_chat(usr, "<span class='warning'>You are physically incapable of emptying the ore box.</span>")
 		return
 

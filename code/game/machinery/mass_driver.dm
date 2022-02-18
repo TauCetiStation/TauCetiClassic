@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mass_driver"
 	layer = BELOW_CONTAINERS_LAYER
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 50

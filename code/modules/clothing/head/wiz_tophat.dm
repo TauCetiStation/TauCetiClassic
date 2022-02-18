@@ -187,7 +187,7 @@ var/global/list/tophats_list = list()
 
 /obj/effect/overlay/tophat_portal/examine(mob/user)
 	..()
-	if(user.client && global.tophats_list.len && isliving(user) && in_range(user, src))
+	if(user.client && global.tophats_list.len && isliving(user) && Adjacent(user))
 		var/mob/living/L = user
 		L.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
@@ -292,7 +292,7 @@ var/global/list/tophats_list = list()
 	return FALSE
 
 /obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
-	..()
+	. = ..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)
 
@@ -409,10 +409,10 @@ var/global/list/tophats_list = list()
 	var/put_in_delay = 0
 	if(user == AM)
 		put_in_delay += 5 // Most of the delay will come in dive_into proc.
-	else if(istype(AM, /obj/item))
+	else if(isitem(AM))
 		var/obj/item/I = AM
 		put_in_delay += I.w_class * 2 SECONDS
-	else if(istype(AM, /obj/structure) || istype(AM, /obj/machinery))
+	else if(istype(AM, /obj/structure) || ismachinery(AM))
 		put_in_delay += 8 SECONDS
 	else if(isliving(AM))
 		var/mob/living/L = AM
@@ -462,7 +462,7 @@ var/global/list/tophats_list = list()
 			return
 		drop_into(I, user)
 		return TRUE
-	if(user.mind && user.mind.special_role == "Wizard")
+	if(iswizard(user))
 		drop_into(I, user)
 		return TRUE
 	return ..()
@@ -473,7 +473,7 @@ var/global/list/tophats_list = list()
 			to_chat(user, "<span class='notice'>There's nothing in the hat.</span>")
 			return
 		next_trick = world.time + trick_delay
-		if(user.mind && user.mind.special_role == "Wizard")
+		if(iswizard(user))
 			if(try_get_monkey(user))
 				user.visible_message("<span class='notice'>[user] takes something big out of [src]!</span>",
 									 "<span class='notice'>You take something unproportionally big out of [src].</span>")

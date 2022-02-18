@@ -6,26 +6,30 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
+	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
-	var/agent = 0
-	var/team = 0
 	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 
 	var/last_massage = 0
 	var/massages_done_right = 0
-
+	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
+	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
+
+	beauty_living = 0
+	beauty_dead = -1500
+
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
@@ -51,7 +55,10 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
+	AddComponent(/datum/component/mood)
 	human_list += src
+
+	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
 
 	if(dna)
 		dna.real_name = real_name
@@ -124,14 +131,14 @@
 	update_mutantrace()
 	regenerate_icons()
 
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
@@ -173,8 +180,6 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
 
-		CHANGELING_STATPANEL_STATS(null)
-
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
@@ -195,9 +200,12 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-	CHANGELING_STATPANEL_POWERS(null)
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
-	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
 		rig_setup_stat(rig)
 
@@ -209,7 +217,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			if (!prob(getarmor(null, "bomb")))
 				gib()
@@ -221,7 +229,7 @@
 //				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				//user.throw_at(target, 200, 4)
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 			if (!shielded)
 				b_loss += 60
 
@@ -237,7 +245,7 @@
 			if (prob(70) && !shielded)
 				Paralyse(10)
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -303,28 +311,6 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/wield(obj/item/I, name, wieldsound = null)
-	if(!can_use_two_hands())
-		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
-		return FALSE
-	if(get_inactive_hand())
-		to_chat(src, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-		return FALSE
-	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
-	if(wieldsound)
-		playsound(src, wieldsound, VOL_EFFECTS_MASTER)
-
-	if(hand)
-		update_inv_l_hand()
-	else
-		update_inv_r_hand()
-
-	var/obj/item/weapon/twohanded/offhand/O = new(src)
-	O.name = "[name] - offhand"
-	O.desc = "Your second grip on the [name]"
-	put_in_inactive_hand(O)
-	return TRUE
-
 /mob/living/carbon/human/proc/is_type_organ(organ, o_type)
 	var/obj/item/organ/O
 	if(organ in organs_by_name)
@@ -353,10 +339,9 @@
 	return FALSE // In case we didn't find anything.
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
-	if(vessel && regenerating_bodypart) // start fixing broken/destroyed limb
+	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)
-			for(var/datum/reagent/blood/B in vessel.reagent_list)
-				B.volume -= remove_blood_amount
+			blood_remove(remove_blood_amount)
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
@@ -492,9 +477,8 @@
 		dat += "&nbsp;<A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags & ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A></td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>ID:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_ID]'>[(wear_id && !(wear_id.flags & ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A></td></tr>"
 		if(suit)
-			if(suit.accessories.len)
-				for(var/obj/item/I in suit.accessories)
-					dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
+			for(var/obj/item/I in suit.accessories)
+				dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
@@ -626,11 +610,6 @@
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
 		try_mutate_to_hulk()
 
-	if(!def_zone)
-		def_zone = pick(BP_L_ARM , BP_R_ARM)
-
-	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
-
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -642,9 +621,10 @@
 			if(S.siemens_coefficient <= 0)
 				total_coeff -= 0.95
 		siemens_coeff = total_coeff
-	else
+	else if(def_zone)
+		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-
+	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -699,7 +679,7 @@
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
@@ -827,10 +807,10 @@
 										PDA_Manifest.Cut()
 
 									spawn()
-										if(istype(usr,/mob/living/carbon/human))
+										if(ishuman(usr))
 											var/mob/living/carbon/human/U = usr
 											U.handle_regular_hud_updates()
-										if(istype(usr,/mob/living/silicon/robot))
+										if(isrobot(usr))
 											var/mob/living/silicon/robot/U = usr
 											U.handle_regular_hud_updates()
 
@@ -894,10 +874,10 @@
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(ishuman(usr))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
-								if(istype(usr,/mob/living/silicon/robot))
+								if(isrobot(usr))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
@@ -1104,7 +1084,7 @@
 	s_tone =  -s_tone + 35
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
 	var/list/hairs = list()
 
 	// loop through potential hairs
@@ -1120,7 +1100,7 @@
 		h_style = new_style
 
 	// facial hair
-	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/all_fhairs = subtypesof(/datum/sprite_accessory/facial_hair)
 	var/list/fhairs = list()
 
 	for(var/x in all_fhairs)
@@ -1133,7 +1113,7 @@
 	if(new_style)
 		f_style = new_style
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			gender = MALE
@@ -1165,7 +1145,7 @@
 	if(!src_turf)
 		return
 
-	for(var/mob/living/carbon/M in carbon_list)
+	for(var/mob/living/carbon/M as anything in carbon_list)
 		var/name = M.real_name
 		if(name in names)
 			namecounts[name]++
@@ -1214,10 +1194,10 @@
 		reset_view(0)
 		return
 
-	if(src.getBrainLoss() >= 100) //#Z2
+	if(getBrainLoss() >= 100) //#Z2
 		to_chat(src, "Too hard to concentrate... Better stop trying!")
-		src.adjustBrainLoss(7)
-		if(src.getBrainLoss() >= 125) return
+		adjustBrainLoss(7)
+		if(getBrainLoss() >= 125) return
 
 	var/list/names = list()
 	var/list/creatures = list()
@@ -1225,7 +1205,7 @@
 	var/count = 0
 	var/target = null	   //Chosen target.
 
-	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
+	for(var/mob/living/carbon/human/M as anything in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			count++
@@ -1238,6 +1218,8 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
+		if(!temp_turf)
+			continue
 		if((!is_station_level(temp_turf.z) && !is_mining_level(temp_turf.z) || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
@@ -1246,11 +1228,11 @@
 
 	if (!target)//Make sure we actually have a target
 		return
-	if(src.getBrainLoss() >= 100)
+	if(getBrainLoss() >= 100)
 		to_chat(src, "Too hard to concentrate...")
 		return
 	if (target && (creatures[target] != src))
-		src.adjustBrainLoss(4)
+		adjustBrainLoss(4)
 		remoteview_target = creatures[target]
 		reset_view(creatures[target])
 	else
@@ -1276,20 +1258,8 @@
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
 	if(!IO.is_bruised())
-		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
-
-/mob/living/carbon/human/can_pickup(obj/O)
-	// Its worst
-	if(istype(O, /obj/item/weapon/twohanded))
-		var/obj/item/weapon/twohanded/T = O
-		if(T.wielded)
-			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-			return FALSE
-		if(get_inactive_hand() && T.only_twohand)
-			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
-			return FALSE
-	return TRUE
 
 /*
 /mob/living/carbon/human/verb/simulate()
@@ -1332,7 +1302,7 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_dirt_datum = new(dirt_overlay)
 
-	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
@@ -1368,7 +1338,7 @@
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
 					BP.status |= ORGAN_BLEEDING
-					src.adjustToxLoss(rand(1,3))
+					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
@@ -1401,7 +1371,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
-		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
+		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 
@@ -1419,6 +1389,13 @@
 
 		if(species.language)
 			remove_language(species.language)
+
+		if(species.additional_languages)
+			for(var/A in species.additional_languages)
+				remove_language(A)
+
+		if(client?.prefs.language)
+			remove_language(client.prefs.language)
 
 		species.on_loose(src, new_species)
 
@@ -1552,25 +1529,25 @@
 
 		var/hunt_injection_port = FALSE
 
-		switch(check_thickmaterial(target_zone = user.zone_sel.selecting))
+		switch(check_pierce_protection(target_zone = user.get_targetzone()))
 			if(NOLIMB)
 				if(error_msg)
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
-			if(THICKMATERIAL)
+			if(NOPIERCE)
 				if(!pierce_armor)
 					if(error_msg)
-						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 					return FALSE
 			if(PHORONGUARD)
 				if(!pierce_armor)
 					if(user.a_intent == INTENT_HARM)
 						if(error_msg)
-							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 						return FALSE
 					hunt_injection_port = TRUE
 
-		if(isSynthetic(user.zone_sel.selecting))
+		if(isSynthetic(user.get_targetzone()))
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
@@ -1598,7 +1575,7 @@
 
 	return TRUE
 
-/obj/screen/leap
+/atom/movable/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
@@ -1608,15 +1585,15 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/atom_init()
+/atom/movable/screen/leap/atom_init()
 	. = ..()
 	add_overlay(image(icon, "leap"))
 	update_icon()
 
-/obj/screen/leap/update_icon()
+/atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/obj/screen/leap/Click()
+/atom/movable/screen/leap/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.toggle_leap()
@@ -1831,6 +1808,49 @@
 			h_style = "IPC off screen"
 		update_hair()
 
+/mob/living/carbon/human/proc/IPC_display_text()
+	set category = "IPC"
+	set name = "Display Text On Screen"
+	set desc = "Display text on your monitor"
+
+	if(stat)
+		return
+
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || BP.is_stump)
+		return
+
+	if(BP.ipc_head != "Default")
+		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
+		return
+
+	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
+	if(!S)
+		return
+	if(!length(S))
+		return
+
+	if(get_species() != IPC)
+		return
+
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+
+	BP.display_text = S
+	h_style = "IPC text screen"
+	update_hair()
+
+	var/skipface = FALSE
+	if(head)
+		skipface = head.flags_inv & HIDEFACE
+	if(wear_mask)
+		skipface |= wear_mask.flags_inv & HIDEFACE
+
+	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
+		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
+
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
@@ -1871,7 +1891,9 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	I = update_height(I)
+	flick_overlay(I, viewing, anim_duration)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
@@ -1967,11 +1989,11 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
-	if(check_thickmaterial(target_zone = BP_CHEST))
+	if(check_pierce_protection(target_zone = BP_CHEST))
 		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
 		return
 
@@ -2049,7 +2071,7 @@
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)
 				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				var/answer = tgui_alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
 				if(answer == "Yes")
 					ghost.reenter_corpse()
 				break
@@ -2082,17 +2104,150 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(!penetrate_thick)
-		if(check_thickmaterial(target_zone = def_zone))
+		if(check_pierce_protection(target_zone = def_zone))
 			if(show_message)
-				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 			return FALSE
 
 	if(isSynthetic(def_zone))
 		if(show_message)
-			to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+			to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 		return FALSE
 
 	return TRUE
 
+/mob/living/carbon/human/update_size_class()
+
+	var/new_w_class = initial(w_class)
+
+	if(SMALLSIZE in mutations)
+		new_w_class -= 1
+
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		new_w_class += 1
+
+	w_class = new_w_class
+
+	return w_class
+
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
+
+/mob/living/carbon/human/proc/AdjustWetClothes(amount)
+	wet_clothes += amount
+	if(wet_clothes <= 0)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "wet_clothes")
+		return
+
+	if(species.flags[IS_SYNTHETIC])
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/dangerous_clothes, -wet_clothes * 2)
+		return
+	if(get_species() in list(SKRELL, DIONA))
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/refreshing_clothes, wet_clothes)
+		return
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/wet_clothes, -wet_clothes)
+
+/mob/living/carbon/human/proc/AdjustDirtyClothes(amount)
+	dirty_clothes += amount
+	if(dirty_clothes <= 0)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "dirty_clothes")
+		return
+
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "dirty_clothes", /datum/mood_event/dirty_clothes, -dirty_clothes)
+
+/mob/living/carbon/human/proc/mood_item_equipped(datum/source, obj/item/I, slot)
+	SIGNAL_HANDLER
+
+	if(I.slot_equipped)
+		return
+
+	if(I.wet)
+		AdjustWetClothes(1)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	else
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+
+	if(I.dirt_overlay)
+		AdjustDirtyClothes(1)
+		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	else
+		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+
+	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), .proc/mood_item_dropped)
+
+/mob/living/carbon/human/proc/mood_item_dropped(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	if(I.wet)
+		AdjustWetClothes(-1)
+		UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+	else
+		UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
+
+	if(I.dirt_overlay)
+		AdjustDirtyClothes(-1)
+		UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
+	else
+		UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
+
+	UnregisterSignal(I, list(COMSIG_ITEM_DROPPED))
+
+/mob/living/carbon/human/proc/mood_item_add_dirt(datum/source, datum/dirt_cover/dirt_datum)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustDirtyClothes(1)
+
+	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
+
+/mob/living/carbon/human/proc/mood_item_clean_blood(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustDirtyClothes(-1)
+
+	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+	UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
+
+/mob/living/carbon/human/proc/mood_item_make_wet(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustWetClothes(1)
+
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
+
+/mob/living/carbon/human/proc/mood_item_make_dry(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustWetClothes(-1)
+
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+
+
+/mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	if(!Heart)
+		return
+	switch(Heart.heart_status)
+		if(HEART_NORMAL)
+			if(prob(damage_prob))
+				Heart.heart_fibrillate()
+		if(HEART_FIBR)
+			if(prob(damage_prob))
+				Heart.heart_stop()
+			if(prob(heal_prob))
+				Heart.heart_normalize()
+		if(HEART_FAILURE)
+			if(prob(heal_prob))
+				Heart.heart_fibrillate()

@@ -5,9 +5,6 @@
 		return
 	if(stat == UNCONSCIOUS)
 		return
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		if(act != "hiss")
-			act = copytext(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	// These scare the enemies out, causing them to lose 10 combo points.
@@ -92,11 +89,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> [pick("deftly", "quickly", "erotically", "joyfully")] moves its body."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> falls on its back and[pick("", " cheerfully", " awkwardly")] rolls on the floor kinda like a kitten. [pick("Really cute.", "Very cute.", "So cute!")]"
 				m_type = SHOWMSG_VISUAL
 				if(prob(50)) // xenomorphs are not kittens!
@@ -125,7 +122,7 @@
 					return
 				m_type = SHOWMSG_AUDIO
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
 		if ("me")
@@ -133,7 +130,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='danger'>You cannot send IC messages(muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -159,7 +156,7 @@
 				return
 		log_emote("[key_name(src)] : [message]")
 
-		for(var/mob/M in observer_list)
+		for(var/mob/M as anything in observer_list)
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))

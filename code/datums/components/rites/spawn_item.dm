@@ -93,7 +93,7 @@
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)
-		// In ritual_lenght already writeen SECONDS
+		// In ritual_length already writeen SECONDS
 		for(var/I in illusion_to_sacrifice)
 			animate(I, time = ((rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10)), alpha = ratiominus - rand(0, 10) - 15)
 		for(var/I in spawning_item)

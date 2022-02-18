@@ -7,8 +7,8 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	light_color = "#00ff00"
 
 /obj/machinery/bodyscanner/power_change()
@@ -69,7 +69,7 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -80,22 +80,37 @@
 	close_machine(target)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/bodyscanner/AltClick(mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant)
+		open_machine()
+		add_fingerprint(user)
+		return
+	var/mob/living/carbon/target = locate() in loc
+	if(!target)
+		return
+	if(!move_inside_checks(target, user))
+		return
+	add_fingerprint(user)
+	close_machine(target)
+	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /obj/machinery/bodyscanner/ex_act(severity)
-	var/should_destroy = FALSE
 	switch(severity)
-		if(1.0)
-			should_destroy = TRUE
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				should_destroy = TRUE
-		if(3.0)
-			if(prob(25))
-				should_destroy = TRUE
-	if(should_destroy)
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-			ex_act(severity)
-		qdel(src)
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+		ex_act(severity)
+	qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))
@@ -105,11 +120,12 @@
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+	qdel(src)
 
 /obj/machinery/body_scanconsole/blob_act()
 	if(prob(50))
@@ -130,12 +146,12 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
-	anchored = 1
+	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
 
@@ -166,13 +182,12 @@
 					t1 = "Unconscious"
 				else
 					t1 = "*dead*"
-			if (!istype(occupant,/mob/living/carbon/human))
+			if (!ishuman(occupant))
 				dat += "<font color='red'>This device can only scan human occupants.</font>"
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
-				//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
-				if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
+				if(ischangeling(occupant) && occupant.fake_death)
 					dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 				if(occupant.virus2.len)
@@ -192,11 +207,10 @@
 				if(occupant.has_brain_worms())
 					dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<BR/>"
 
-				if(occupant.vessel)
-					var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
-					var/blood_percent =  blood_volume / 560
-					blood_percent *= 100
-					dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume > 448 ? "blue" : "red"), blood_percent, blood_volume)
+				var/blood_volume = occupant.blood_amount()
+				var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+				dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume >= BLOOD_VOLUME_SAFE ? "blue" : "red"), blood_percent, blood_volume)
+
 				if(occupant.reagents)
 					dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
 					dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
@@ -277,7 +291,7 @@
 
 					if(unknown_body || BP.hidden)
 						imp += "Unknown body present:"
-					if(!AN && !open && !infected & !imp)
+					if(!AN && !open && !infected && !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
 						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"

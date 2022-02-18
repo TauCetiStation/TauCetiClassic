@@ -15,8 +15,8 @@
 	name = "bookcase"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "book-0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 
 /obj/structure/bookcase/atom_init()
@@ -28,8 +28,7 @@
 
 /obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
@@ -44,7 +43,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(usr.incapacitated() || !in_range(loc, usr))
+			if(usr.incapacitated() || !Adjacent(usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
@@ -55,25 +54,21 @@
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/book/b in contents)
 				qdel(b)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else qdel(b)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
+				if(prob(50))
 					b.loc = (get_turf(src))
-				qdel(src)
-			return
-		else
-	return
+				else
+					qdel(b)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+			for(var/obj/item/weapon/book/b in contents)
+				b.loc = (get_turf(src))
+	qdel(src)
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -148,7 +143,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = SIZE_SMALL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	var/dat			 // Actual page content
 	var/due_date = 0 // Game time in 1/10th seconds
@@ -171,9 +166,17 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
-		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
-		popup.open()
+		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
+			var/window_size
+			if(window_width && window_height)
+				window_size = "[window_width]x[window_height]"
+			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
+			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		else
+			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat)
+			popup.open()
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else
@@ -182,7 +185,7 @@
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
 		if(!store)
-			if(I.w_class < ITEM_SIZE_NORMAL)
+			if(I.w_class < SIZE_SMALL)
 				user.drop_from_inventory(I, src)
 				store = I
 				to_chat(user, "<span class='notice'>You put [I] in [title].</span>")
@@ -284,7 +287,7 @@
 	icon_state ="scanner"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer // Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book	 //  Currently scanned book
 	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
@@ -306,9 +309,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR!"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	var/msg = " - Mode [mode] : [modedesc]"
 	if(src.computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		msg += "<br><font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		msg += "<br><font color=red>No associated computer found. Only local scans will function properly.</font>"
+	to_chat(user, "[msg]<br>")

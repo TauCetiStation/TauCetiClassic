@@ -208,7 +208,7 @@
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
@@ -257,8 +257,6 @@
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		H.verbs += /client/proc/mimespeak
-		H.verbs += /client/proc/mimewall
-		H.mind.special_verbs += /client/proc/mimespeak
-		H.mind.special_verbs += /client/proc/mimewall
-		H.miming = 1
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
+		H.miming = TRUE

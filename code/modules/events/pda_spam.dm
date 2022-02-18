@@ -27,7 +27,6 @@
 	if(useMS)
 		last_spam_time = world.time
 		if(prob(2))
-			// /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
 			var/obj/item/device/pda/P
 			var/list/viables = list()
 			for(var/obj/item/device/pda/check_pda in sortAtom(PDAs))
@@ -94,7 +93,7 @@
 			useMS.send_pda_message("[P.owner]", sender, message)
 
 			if (prob(50)) //Give the AI an increased chance to intercept the message
-				for(var/mob/living/silicon/ai/ai in ai_list)
+				for(var/mob/living/silicon/ai/ai as anything in ai_list)
 					// Allows other AIs to intercept the message but the AI won't intercept their own message.
 					if(ai.pda != P && ai.pda != src)
 						to_chat(ai, "<i>Перехваченное сообщение от <b>[sender]</b></i> (Неизвестно / спам?) <i>to <b>[P:owner]</b>: [message]</i>")

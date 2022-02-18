@@ -403,6 +403,9 @@
 				if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
 					break grab_stages_loop
 
+			if(QDELETED(victim_G))
+				break grab_stages_loop
+
 			if(grab_stages != victim_G.state)
 				victim_G.set_state(grab_stages, adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
 				cur_spin_time -= 1
@@ -411,7 +414,7 @@
 				var/turf/target = get_turf(attacker)
 
 				var/turf/start_T = target
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
+				var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
 
 				target_search:
 					for(var/i in 1 to 7)
@@ -432,7 +435,7 @@
 				attacker.newtonian_move(get_dir(target, attacker))
 
 				var/turf/end_T = target
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
 				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 

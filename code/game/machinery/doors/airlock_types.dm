@@ -369,6 +369,10 @@
 
 /obj/machinery/door/airlock/multi_tile/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
 		bound_height = width * world.icon_size

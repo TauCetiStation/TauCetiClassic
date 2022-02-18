@@ -9,9 +9,7 @@
 	update_canmove()
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
-	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	update_sight()
 	client.screen.Cut()
 	remove_ai_verbs(src)
 
@@ -38,7 +36,7 @@
 			break
 		callshuttle++
 
-	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met

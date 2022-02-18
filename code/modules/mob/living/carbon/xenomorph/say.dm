@@ -17,7 +17,7 @@
 		return emote(copytext(message, 2))
 
 	if(length(message) >= 2)
-		if(department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+		if(parse_message_mode(message) == "alientalk")
 			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			alien_talk(message)
@@ -53,18 +53,17 @@
 
 	var/rendered = "<span class='[tag]'>УЛЕЙ: <i>[name] шепчет, \"[message]\"</i></span>"
 	for(var/key in alien_list)
-		for(var/mob/living/carbon/xenomorph/S in alien_list[key])
+		for(var/mob/living/carbon/xenomorph/S as anything in alien_list[key])
 			if(!S.client)
 				continue
 			if(S.stat == CONSCIOUS)
 				S.show_message(rendered, SHOWMSG_AUDIO)
 
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
-		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-			var/tracker = FOLLOW_LINK(M, src)
-			to_chat(M, "[tracker] [rendered]")
+		var/tracker = FOLLOW_LINK(M, src)
+		to_chat(M, "[tracker] [rendered]")
 
 	var/list/listening = hearers(1, src)
 	listening -= src

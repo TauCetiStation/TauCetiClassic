@@ -30,7 +30,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			return
 
 	else
-		if(src.resistances.Find(virus.type))
+		if(resistances.Find(virus.type))
 			//world << "Normal virus and resisted"
 			return
 
@@ -51,7 +51,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	if(skip_this == 1)
 		//world << "infectin"
 		//if(src.virus)				< -- this used to replace the current disease. Not anymore!
-			//src.virus.cure(0)
+			//virus.cure(0)
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v
 		v.affected_mob = src
@@ -112,7 +112,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
@@ -156,7 +156,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					//
 					to_chat(world, "Shoes pass [passed]")
 			*/		//
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
 			if(1)

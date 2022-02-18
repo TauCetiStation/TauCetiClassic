@@ -22,11 +22,3 @@
 	if(message)
 		say_verb(message)
 	set_typing_indicator(FALSE)
-
-/mob/verb/me_wrapper()
-	set name = ".Me"
-	set hidden = 1
-
-	var/message = input("","me (text)") as text|null
-	if(message)
-		me_verb(message)

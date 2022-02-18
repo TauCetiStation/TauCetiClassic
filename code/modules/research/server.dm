@@ -172,7 +172,7 @@
 	if(!.)
 		return
 
-	if(!src.allowed(usr) && !emagged)
+	if(!allowed(usr) && !emagged)
 		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return FALSE
 
@@ -216,12 +216,12 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = tgui_alert(usr, "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Rest", list("Continue", "Cancel"))
 		if(choice == "Continue")
 			temp_server.files.forget_all(href_list["reset_tech"])
 
 	else if(href_list["reset_techology"])
-		var/choice = alert("Techology Deletion", "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = tgui_alert(usr, "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Techology Deletion", list("Continue", "Cancel"))
 		var/techology = temp_server.files.researched_tech[href_list["reset_techology"]]
 		if(choice == "Continue" && techology)
 			temp_server.files.forget_techology(techology)
@@ -294,7 +294,7 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)

@@ -14,7 +14,7 @@
 	var/mob/event_confirmed_by
 	//1 = select event
 	//2 = authenticate
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -161,17 +161,9 @@
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
-			if(is_ert_blocked())
-				to_chat(usr, "<span class='warning'>All emergency response teams are dispatched and can not be called at this time.</span>")
-				return
-
 			trigger_armed_response_team(1)
 			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
-
-/obj/machinery/keycard_auth/proc/is_ert_blocked()
-	if(config.ert_admin_call_only) return 1
-	return SSticker.mode && SSticker.mode.ert_disabled
 
 var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
                                                 // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)

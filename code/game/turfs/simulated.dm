@@ -47,7 +47,7 @@
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
 			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-	if (istype(A,/mob/living/carbon))
+	if (iscarbon(A))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
 
@@ -77,7 +77,7 @@
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
+			AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
 			var/turf/simulated/from = get_step(M, turn(M.dir, 180))
 			if(istype(from) && from)
 				from.AddTracks(M,bloodDNA,0,M.dir,blooddatum) // Going
@@ -117,14 +117,14 @@
 
 // Only adds blood on the floor -- Skie
 /turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(M, /mob/living/carbon/monkey))
+	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Monkey = M
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		this.blood_DNA[Monkey.dna.unique_enzymes] = Monkey.dna.b_type
 		this.basedatum = new Monkey.blood_datum
 		this.update_icon()
 
-	else if(istype(M,/mob/living/carbon/human))
+	else if(ishuman(M))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		var/mob/living/carbon/human/H = M

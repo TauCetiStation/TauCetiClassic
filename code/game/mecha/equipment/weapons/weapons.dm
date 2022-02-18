@@ -61,7 +61,7 @@
 	if(isbrain(chassis.occupant))
 		P.def_zone = ran_zone()
 	else
-		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
+		P.def_zone = check_zone(chassis.occupant.get_targetzone())
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
 	P.process()
@@ -149,13 +149,13 @@
 	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 				continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
-		M.stuttering += 20
+		M.AdjustStuttering(20)
 		M.ear_deaf += 30
 		M.Weaken(3)
 		if(prob(30))
@@ -164,7 +164,7 @@
 		else
 			M.make_jittery(500)
 		/* //else the mousetraps are useless
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(isobj(H.shoes))
 				var/thingy = H.shoes
@@ -194,14 +194,14 @@
 			projectiles++
 			projectiles_to_add--
 			chassis.use_power(projectile_energy_cost)
-	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	log_message("Rearmed [src.name].")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
 	..()
 	if (href_list["rearm"])
-		src.rearm()
+		rearm()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine

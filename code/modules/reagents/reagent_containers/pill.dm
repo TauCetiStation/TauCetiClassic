@@ -8,8 +8,9 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	volume = 50
+	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
@@ -17,7 +18,22 @@
 		icon_state = "pill[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
-	return
+	if(halved)
+		return
+	user.drop_from_inventory(src)
+	var/volume_half = reagents.total_volume / 2
+	for(var/part in list("top", "bottom"))
+		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
+		P.name = "half of [name]"
+		P.icon_state = icon_state
+		P.add_filter("pill_alpha", 3, alpha_mask_filter(icon = icon(icon, "pill_half_[part]")))
+		P.add_overlay(icon(icon, "pill_half_border_[part]"))
+		P.halved = TRUE
+		reagents.trans_to(P.reagents, volume_half)
+		user.put_in_any_hand_if_possible(P)
+	to_chat(user, "<span class='notice'>You split [src] in two halves.</span>")
+	qdel(src)
+
 /obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)

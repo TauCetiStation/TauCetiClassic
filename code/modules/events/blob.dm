@@ -1,7 +1,6 @@
 /datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
-	announcement = new /datum/announcement/centcomm/blob/outbreak5
 
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)
@@ -9,12 +8,4 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, poll_time = 150)
-	if(!candidates.len)
-		kill()
-		return
-
-	var/mob/candidate = pick(candidates)
-
-	var/obj/effect/blob/core/B = new /obj/effect/blob/core(T, 120, candidate.client)
-	message_admins("[B] has spawned at [B.x],[B.y],[B.z] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
+	create_spawner(/datum/spawner/blob_event, "blob_event")

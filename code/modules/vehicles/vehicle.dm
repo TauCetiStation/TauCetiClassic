@@ -8,14 +8,16 @@
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
 	layer = MOB_LAYER + 0.1 //so it sits above objects including mobs
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	animate_movement = 1
 	light_range = 3
 
 	can_buckle = 1
 	buckle_movable = 1
 	buckle_lying = 0
+
+	w_class = SIZE_MASSIVE
 
 	var/attack_log = null
 	var/on = 0
@@ -42,7 +44,7 @@
 		var/old_loc = get_turf(src)
 
 		var/init_anc = anchored
-		anchored = 0
+		anchored = FALSE
 		. = ..()
 		if(!.)
 			anchored = init_anc
@@ -117,21 +119,17 @@
 
 /obj/vehicle/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			explode()
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			health -= rand(5,10)*fire_dam_coeff
 			health -= rand(10,20)*brute_dam_coeff
-			healthcheck()
-			return
-		if(3.0)
-			if (prob(50))
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff
-				healthcheck()
-				return
-	return
+	healthcheck()
 
 /obj/vehicle/attack_ai(mob/user)
 	return
@@ -162,7 +160,7 @@
 	update_icon()
 
 /obj/vehicle/proc/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>")
+	visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/stack/rods(Tsec)
@@ -170,7 +168,7 @@
 	new /obj/item/stack/cable_coil/red(Tsec, 2)
 
 	//stuns people who are thrown off a train that has been blown up
-	if(istype(load, /mob/living))
+	if(isliving(load))
 		var/mob/living/M = load
 		M.apply_effects(5, 5)
 
@@ -211,7 +209,7 @@
 
 	C.forceMove(loc)
 	C.set_dir(dir)
-	C.anchored = 1
+	C.anchored = TRUE
 
 	load = C
 

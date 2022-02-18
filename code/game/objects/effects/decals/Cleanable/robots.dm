@@ -6,6 +6,7 @@
 	basedatum = /datum/dirt_cover/oil
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
+	beauty = -50
 
 /obj/effect/decal/cleanable/blood/gibs/robot/dry()	//pieces of robots do not dry up like
 	return
@@ -39,6 +40,8 @@
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
 	basedatum = /datum/dirt_cover/oil
+
+	beauty = -100
 
 /obj/effect/decal/cleanable/blood/oil/dry()
 	return

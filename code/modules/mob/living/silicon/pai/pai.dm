@@ -77,8 +77,6 @@
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
-	verbs -= /mob/living/verb/ghost
-
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -113,8 +111,8 @@
 
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != DEAD)
-		src.adjustBruteLoss(60)
-		src.updatehealth()
+		adjustBruteLoss(60)
+		updatehealth()
 		return 1
 	return 0
 
@@ -132,7 +130,7 @@
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
 		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", blind_message = "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>")
-		return src.death(0)
+		return death(0)
 
 	switch(pick(1,2,3))
 		if(1)
@@ -151,29 +149,25 @@
 			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(30)
-
-	src.updatehealth()
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
+	updatehealth()
 
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	if(istype(usr, /mob/living))
+	if(isliving(usr))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
@@ -194,17 +188,20 @@
 /mob/living/silicon/pai/cancel_camera()
 	set category = "pAI Commands"
 	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
+
+/mob/living/silicon/pai/ghost()
+	suicide()
 
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
 

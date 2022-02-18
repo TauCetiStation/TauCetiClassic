@@ -5,7 +5,7 @@
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	force = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 500
 	var/channel
 	var/cooldown = 70
@@ -40,7 +40,7 @@
 		"plays a upbeat"
 		)
 	last_played = world.time + cooldown
-	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, falloff = 5, channel = channel)
+	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, null, falloff = 5, channel = channel)
 	user.visible_message("<span class='notice'>[user] [pick(message)] tune with his harmonica!</span>")
 
 /obj/item/device/harmonica/dropped(mob/user)

@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1
 	light_range = 8
 
@@ -33,16 +33,15 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/cargo
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
-var/mining_shuttle_moving = 0
-var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+var/global/mining_shuttle_moving = 0
+var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
@@ -102,7 +101,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 						shake_camera(M, 3, 1) // buckled, not a lot of shaking
 					else
 						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				if(!M.buckled)
 					M.Weaken(3)
 
@@ -137,10 +136,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(SSticker.mode.name == "blob")
-		//	if(SSticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		//		return
 
 		if (!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
@@ -177,7 +172,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750 //one sheet, but where can you make them?
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
@@ -208,7 +203,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	damtype = "fire"
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
@@ -227,32 +222,35 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
 /*****************************Sledgehammer********************************/
-/obj/item/weapon/twohanded/sledgehammer
+/obj/item/weapon/sledgehammer
 	name = "Sledgehammer"
 	icon_state = "sledgehammer0"
 	force = 15
 	origin_tech = "materials=3"
 	desc = "This thing breaks skulls pretty well, right?"
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 15
-	force_wielded = 35
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
 
-/obj/item/weapon/twohanded/sledgehammer/update_icon()
-	icon_state = "sledgehammer[wielded]"
+/obj/item/weapon/sledgehammer/atom_init()
+	. = ..()
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 35
+	TCB.force_unwielded = 15
+	TCB.icon_wielded = "sledgehammer1"
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
 	if(next_hit < world.time)
 		asshole_counter = 0
 	next_hit = world.time + COUNTER_COOLDOWN
 	asshole_counter += 1
 
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
@@ -261,15 +259,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
 		asshole_counter = 0
-	if(wielded)
-		INVOKE_ASYNC(src, .proc/spin, user)
+	INVOKE_ASYNC(src, .proc/spin, user)
 
-/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
+/obj/item/weapon/sledgehammer/proc/spin(mob/living/user)
 	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
 		user.set_dir(i)
 		sleep(1)
 
-/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+/obj/item/weapon/sledgehammer/dropped(mob/living/carbon/user)
 	..()
 	asshole_counter = 0
 
@@ -284,7 +281,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -300,7 +297,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -309,7 +306,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Mining car (not for rails)"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
-	density = 1
+	density = TRUE
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
 
@@ -327,7 +324,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/drill.ogg'
@@ -451,7 +448,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/timer = 10
 	var/atom/target = null
 	var/blast_range = 1
@@ -475,7 +472,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -489,7 +486,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(target)
 				explosion(location, 3, 2, 2)
-				target.ex_act(1)
+				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
 
@@ -608,7 +605,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule_classic"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -631,13 +628,13 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "This capsule has the [template.name] stored.")
 	to_chat(user, template.description)
 
-/obj/item/weapon/survivalcapsule/attack_self()
+/obj/item/weapon/survivalcapsule/attack_self(mob/living/user)
 	// Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
 		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
-			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit and shut up!</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)
 			new /obj/item/weapon/tank/air(T)
@@ -646,7 +643,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/clothing/head/helmet/space/cheap(T)
 			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
-			src.loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+			visible_message("<span class='warning'>\The [src] begins to shake.</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"Stand back!\"</span>")
 			used = TRUE
 			sleep(50)
 
@@ -654,11 +652,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			var/status = template.check_deploy(T)
 			switch(status)
 				if(SHELTER_DEPLOY_BAD_AREA)
-					src.loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
+					to_chat(user, "<span class='warning'>\The [src] will not function in this area.</span>")
 				if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
 					var/width = template.width
 					var/height = template.height
-					src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
+					audible_message("<span class='game say'><span class='name'>[src]</span> says, \"There is no room to deply! A cleared space of [width]x[height] size is required!\"</span>")
 
 			if(status != SHELTER_DEPLOY_ALLOWED)
 				used = FALSE
@@ -668,7 +666,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
-				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [COORD(T)]")
 			template.load(T, centered = TRUE)
 
 		new /datum/effect/effect/system/smoke_spread(T)
@@ -679,7 +677,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Version of emergency shelter with all the amenities for survival."
 	icon_state = "capsule_improved"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=4;bluespace=3"
 	template_id = "shelter_beta"
 
@@ -688,7 +686,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Wow, this is a mining bar? In a capsule?"
 	icon_state = "capsule_elite"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=5;bluespace=4"
 	template_id = "shelter_gamma"
 
@@ -717,7 +715,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/structure/inflatable/survival
 	name = "pod wall"
@@ -785,8 +783,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/survival_pod_computer.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
@@ -835,7 +833,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(O.flags & NODROP || !O.canremove)
 			return 0
 		return 1
@@ -904,8 +902,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "fans"
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
@@ -924,7 +922,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
-	density = 0
+	density = FALSE
 	icon_state = "fan_tiny"
 
 /obj/structure/fans/tiny/atom_init()
@@ -969,8 +967,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "tubes"
 	icon = 'icons/obj/survival_pod.dmi'
 	name = "tubes"
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	density = 0
+	density = FALSE
 
 #undef COUNTER_COOLDOWN

@@ -13,7 +13,7 @@
 	throwforce = 10
 	light_color = "#4c4cff"
 	light_power = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	// Deconvering mobs
 	var/deconverting = FALSE
@@ -64,7 +64,7 @@
 	return ..()
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		START_PROCESSING(SSobj, src)
 	..()
 
@@ -83,7 +83,12 @@
 	last_process = world.time
 	var/turf/turf = get_turf(loc)
 	for(var/A in range(6, turf))
-		if(iscultist(A) || is_type_in_typecache(A, scum))
+		if(ismob(A))
+			var/mob/M = A
+			if(iscultist(M))
+				set_light(3)
+				addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+		if(is_type_in_typecache(A, scum))
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
@@ -94,6 +99,14 @@
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_turf_deconvert > world.time)
+		return
+
+	if(iscultist(user))
+		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.adjustBruteLoss(10)
+			H.Paralyse(20)
 		return
 
 	// Captured area is too strong
@@ -118,7 +131,7 @@
 		user.Paralyse(20)
 		return
 
-	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST || deconverting)
+	if(user.mind?.holy_role < HOLY_ROLE_HIGHPRIEST || deconverting)
 		return
 
 	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
@@ -133,8 +146,20 @@
 
 	if(M.stat != DEAD)
 		if(iscultist(M))
+			if(iscultist(user))
+				to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+				user.adjustBruteLoss(10)
+				user.Paralyse(20)
+				return
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
-			SSticker.mode.remove_cultist(M.mind)
+
+			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+			C.Deconvert()
+			M.Paralyse(5)
+			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
+			M.mind.memory = ""
+			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
 			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
 		else
@@ -142,7 +167,7 @@
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
 			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
-			M.confused += 10
+			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -150,11 +175,9 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
 	item_state = "talking_staff"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	req_access = list(access_chapel_office)
 
-	var/god_name = "Space-Jesus"
-	var/god_lore = ""
 	var/mob/living/simple_animal/shade/god/brainmob = null
 	var/searching = FALSE
 	var/next_ping = 0
@@ -162,11 +185,6 @@
 	var/image/god_image
 
 	var/list/next_apply = list()
-
-/obj/item/weapon/nullrod/staff/atom_init()
-	. = ..()
-	god_name = pick(global.chaplain_religion.deity_names)
-	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
@@ -203,10 +221,14 @@
 		hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST && brainmob)
+		if(istype(I, /obj/item/device/soulstone))
+			if(iscultist(user))
+				to_chat(user, "<span class ='warning'>You can't use weapon of [brainmob.name] against him!</span>")
+				return
+
 			var/obj/item/device/soulstone/S = I
-			if(S.imprinted == "empty")
+			if(!S.imprinted)
 				S.imprinted = brainmob.name
 				S.transfer_soul(SOULSTONE_SHADE, brainmob, user)
 
@@ -223,7 +245,7 @@
 		return ..()
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		if(user.my_religion.aspects.len == 0)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
@@ -258,8 +280,10 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
+
+	var/god_name = pick(summoner.my_religion.deity_names)
+	var/god_lore = summoner.my_religion.lore
 
 	brainmob.ckey = candidate.ckey
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
@@ -347,7 +371,7 @@
 	name = "forcefield staff"
 	desc = "Makes the wielder believe that they are protected by something, anything, really. Probably works on AA batteries."
 
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 
 	icon_state = "godstaff"
@@ -399,7 +423,7 @@
 
 /obj/item/weapon/shield/riot/roman/religion/atom_init()
 	. = ..()
-	filters += filter(type = "outline", size = 1, color = "#fffb0064")
+	add_filter("shield_outline", 2, outline_filter(1, "#fffb0064"))
 	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
 
 	QDEL_IN(src, 1 MINUTE)

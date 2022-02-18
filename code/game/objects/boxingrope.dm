@@ -1,8 +1,11 @@
+/obj/decal
+	flags = ABSTRACT
+	
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
@@ -20,11 +23,8 @@
 /obj/decal/boxingropeenter
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-
-
-

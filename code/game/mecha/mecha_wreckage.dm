@@ -7,9 +7,10 @@
 	name = "Exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'icons/mecha/mecha.dmi'
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
+	plane = GAME_PLANE
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,
@@ -27,7 +28,7 @@
 	var/salvage_num = 15
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
 	return
 

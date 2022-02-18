@@ -3,7 +3,7 @@
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -30,9 +30,6 @@
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
-		return
-	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()

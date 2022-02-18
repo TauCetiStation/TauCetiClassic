@@ -86,7 +86,7 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.set_machine(src)
+	set_machine(src)
 
 	if(temp)
 		left_part = temp
@@ -98,31 +98,31 @@
 			if("main")
 				left_part = ""
 			if("directives")
-				left_part = src.directives()
+				left_part = directives()
 			if("pdamessage")
-				left_part = src.pdamessage()
+				left_part = pdamessage()
 			if("buy")
 				left_part = downloadSoftware()
 			if("manifest")
-				left_part = src.softwareManifest()
+				left_part = softwareManifest()
 			if("medicalrecord")
-				left_part = src.softwareMedicalRecord()
+				left_part = softwareMedicalRecord()
 			if("securityrecord")
-				left_part = src.softwareSecurityRecord()
+				left_part = softwareSecurityRecord()
 			if("translator")
-				left_part = src.softwareTranslator()
+				left_part = softwareTranslator()
 			if("atmosensor")
-				left_part = src.softwareAtmo()
+				left_part = softwareAtmo()
 			if("securityhud")
-				left_part = src.facialRecognition()
+				left_part = facialRecognition()
 			if("medicalhud")
-				left_part = src.medicalAnalysis()
+				left_part = medicalAnalysis()
 			if("interaction")
-				left_part = src.softwareInteraction()
+				left_part = softwareInteraction()
 			if("signaller")
-				left_part = src.softwareSignal()
+				left_part = softwareSignal()
 			if("radio")
-				left_part = src.softwareRadio()
+				left_part = softwareRadio()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -188,7 +188,7 @@
 
 /mob/living/silicon/pai/proc/get_carrier(mob/living/M)
 	var/count = 0
-	while(!istype(M, /mob/living))
+	while(!isliving(M))
 		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 		M = M.loc
 		count++
@@ -216,7 +216,7 @@
 					var/cost = src.available_software[target]
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.software.Add(target)
+						software.Add(target)
 					else
 						src.temp = "Insufficient RAM available."
 				else
@@ -258,7 +258,7 @@
 					pID = 8
 				if("What")
 					pID = 9
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 
@@ -299,7 +299,7 @@
 					pda.message_silent = !pda.message_silent
 				else if(href_list["target"])
 					if(silence_time)
-						return alert("Communications circuits remain uninitialized.")
+						return tgui_alert(usr, "Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)
@@ -355,7 +355,7 @@
 
 		if("translator")
 			if(href_list["toggle"])
-				src.translator_toggle()
+				translator_toggle()
 		if("interaction")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -396,11 +396,11 @@
 					C.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto someone's hand"].</span>", "<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto your hand"].</span>", "<span class='warning'>You hear the soft click of something light and hard falling [C ? "onto someone's hand" : "to the ground"].</span>")
 				if(href_list["cable"] == "2")
 					if(cable)
-						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
+						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
 						QDEL_NULL(cable)
 					hackobj = null
-	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
+	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
 // Interaction module - proc
@@ -525,7 +525,7 @@
 					A.extended_inventory = !A.extended_inventory
 				if(INTERACTION_VENDING_ACCOUNT_VERIFY)
 					A.check_accounts = !A.check_accounts
-		if(istype(hackobj, /obj/machinery/bot))
+		if(isbot(hackobj))
 			switch(interaction_type)
 				if(INTERACTION_ANYBOT_INTERFACE_LOCK) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
@@ -810,8 +810,8 @@
 				 <h4>Host Bioscan</h4>
 				"}
 		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
+		if(!isliving(M))
+			while (!isliving(M))
 				M = M.loc
 				if(istype(M, /turf))
 					src.temp = "Error: No biological host found. <br>"
@@ -953,7 +953,7 @@
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SPEAK];sub=0'>Speak</a> <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_CONTRABAND_MODE];sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ACCOUNT_VERIFY];sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
-			if(istype(hackobj, /obj/machinery/bot))
+			if(isbot(hackobj))
 				var/botchecked = 0 //Should we name bot as "Unknown"?
 				if(istype(hackobj, /obj/machinery/bot/secbot))
 					botchecked = 1
@@ -1004,7 +1004,7 @@
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf_or_move(loc)
 	if(is_type_in_list(hackobj, list(/obj/machinery/door, /obj/machinery/camera, /obj/machinery/bot)))
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			if(T.loc)
 				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 			else
@@ -1018,7 +1018,7 @@
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
 		if(src.screen == "interaction" && src.subscreen == 0) // Update our view, if appropriate
-			src.paiInterface()
+			paiInterface()
 		if(hackprogress == 100)
 			hackprogress = 0
 			src.hacksuccess = TRUE

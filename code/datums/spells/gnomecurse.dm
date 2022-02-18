@@ -76,7 +76,7 @@
 /obj/item/clothing/mask/gnome_beard
 	name = "gnome beard"
 	desc = "A nice looking beard, well cut."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	flags = MASKCOVERSMOUTH
 	icon_state = "gnome_beard"
 	body_parts_covered = 0

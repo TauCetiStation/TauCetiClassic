@@ -103,6 +103,9 @@
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
+	if(w_class)
+		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

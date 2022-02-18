@@ -2,8 +2,8 @@
 	name = "Robotic Fabricator"
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
@@ -17,7 +17,7 @@
 		var/obj/item/stack/sheet/metal/M = O
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			src.add_overlay("fab-load-metal")
+			add_overlay("fab-load-metal")
 			spawn(15)
 				if(!M.get_amount())
 					return
@@ -26,7 +26,7 @@
 					count++
 
 				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
-				src.cut_overlay("fab-load-metal")
+				cut_overlay("fab-load-metal")
 				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
@@ -115,7 +115,7 @@
 
 					src.being_built = new build_type(src)
 
-					src.add_overlay("fab-active")
+					add_overlay("fab-active")
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
@@ -123,6 +123,6 @@
 							src.being_built = null
 						set_power_use(IDLE_POWER_USE)
 						src.operating = 0
-						src.cut_overlay("fab-active")
+						cut_overlay("fab-active")
 
 	updateUsrDialog()

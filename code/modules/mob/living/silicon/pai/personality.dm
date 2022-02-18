@@ -14,7 +14,7 @@
 	if(IsGuestKey(user.key))
 		return 0
 
-	var/savefile/F = new /savefile(src.savefile_path(user))
+	var/savefile/F = new /savefile(savefile_path(user))
 
 
 	F["name"] << src.name
@@ -50,7 +50,7 @@
 	if (isnull(version) || version != 1)
 		fdel(path)
 		if (!silent)
-			alert(user, "Your savefile was incompatible with this version and was deleted.")
+			tgui_alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 
 	F["name"] >> src.name

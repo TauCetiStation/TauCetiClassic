@@ -15,7 +15,7 @@ CHANGING ICONS
 Several new procs have been added to the /icon datum to simplify working with icons. To use them,
 remember you first need to setup an /icon var like so:
 
-var/icon/my_icon = new('iconfile.dmi')
+var/global/icon/my_icon = new('iconfile.dmi')
 
 icon/ChangeOpacity(amount = 1)
     A very common operation in DM is to try to make an icon more or less transparent. Making an icon more
@@ -875,9 +875,11 @@ var/global/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
+		var/datum/species/S
 		if(prefs)
 			prefs.copy_to(body)
-		var/datum/species/S = all_species[prefs.species]
+			S = all_species[prefs.species]
+
 		if(S)
 			S.before_job_equip(body, J, TRUE)
 		if(J)

@@ -1,5 +1,5 @@
 /obj/structure/window/reinforced/shuttle
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/locations/shuttles/shuttle.dmi'
 	dir = SOUTHWEST
 	can_merge = 0
 
@@ -37,7 +37,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
@@ -46,13 +46,13 @@
 
 /obj/structure/window/reinforced/shuttle/mining
 	name = "shuttle window"
-	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
+	icon = 'icons/locations/shuttles/shuttle_mining.dmi'
 	dir = SOUTHWEST
 	icon_state = "1"
 
 /obj/structure/window/reinforced/shuttle/evac
 	name = "shuttle window"
-	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
 	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/default
@@ -61,8 +61,14 @@
 	icon_state = "window"
 	dir = SOUTHWEST
 
+/obj/structure/window/reinforced/shuttle/vox
+	name = "shuttle window"
+	icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
+	icon_state = "7,10"
+	dir = SOUTHWEST
+
 /obj/structure/window/reinforced/shuttle/update_icon()
 	return
 
 /obj/structure/shuttle/window/new_shuttle
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/locations/shuttles/shuttle.dmi'

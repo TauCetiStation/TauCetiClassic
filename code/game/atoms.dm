@@ -1,6 +1,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+
 	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
@@ -10,6 +11,8 @@
 
 	var/list/blood_DNA      //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
+
+	var/uncleanable = 0
 
 	var/last_bumped = 0
 	var/pass_flags = NONE
@@ -148,7 +151,7 @@
 		return null
 
 /atom/proc/check_eye(user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+	if (isAI(user)) // WHYYYY
 		return 1
 	return
 
@@ -276,24 +279,25 @@
 			alt_obj = AA.alternate_obj
 			break
 
-	to_chat(user, get_examine_string(user, TRUE, alt_obj))
+	var/msg = get_examine_string(user, TRUE, alt_obj)
 
-	if(alt_obj)
-		to_chat(user, alt_obj.desc)
-	else if(desc)
-		to_chat(user, desc)
+	var/visible_desc = alt_obj?.desc || desc
+	if(visible_desc)
+		msg += "<br>[visible_desc]"
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
+		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
 			else
-				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
+				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
-			to_chat(user, "Nothing.")
+			msg += "<br>Nothing."
+
+	to_chat(user, msg)
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
@@ -507,15 +511,25 @@
 	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
-	if(flags & NOBLOODY) return 0
-	if(!dirt_datum) return 0
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(flags & NOBLOODY)
+		return FALSE
+	if(!dirt_datum)
+		return FALSE
 	if(!dirt_overlay)
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)
-	return 1
+	SEND_SIGNAL(src, COMSIG_ATOM_ADD_DIRT, dirt_datum)
+	return TRUE
 
 /atom/proc/clean_blood()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(uncleanable)
+		return 0
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEAN_BLOOD)
 	src.germ_level = 0
 	if(dirt_overlay)
 		dirt_overlay = null
@@ -588,7 +602,7 @@
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 		var/olddir = C.dir
 
@@ -675,7 +689,7 @@
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
-		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+		INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 /atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
@@ -683,7 +697,7 @@
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)
-	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+	INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 	if(severity >= 3)
 		for(var/dir_ in cardinal)
@@ -702,3 +716,62 @@
 				continue
 			return AA.alternate_obj.name
 	return name
+
+/*
+ * Returns:
+ * An assoc list of kind image = list(viewers)
+ */
+/atom/proc/get_perceived_images(list/viewers)
+	var/list/imgs = list()
+
+	for(var/key in alternate_appearances)
+		var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+
+		var/image/I = image(AA.theImage.icon, AA.theImage.icon_state)
+		I.appearance = AA.theImage
+		I.dir = AA.theImage.dir
+
+		var/list/img_viewers = list()
+		for(var/v in viewers)
+			if(v in AA.hudusers)
+				img_viewers += v
+
+		imgs[I] = img_viewers
+
+		if(AA.theImage.override)
+			for(var/v in img_viewers)
+				viewers -= v
+
+	var/image/I = image(icon, icon_state)
+	I.appearance = src
+	I.dir = dir
+
+	imgs[I] = viewers
+
+	return imgs
+
+/atom/proc/update_icon()
+	return
+
+/**
+ * Point at an atom
+ *
+ * Intended to enable and standardise the pointing animation for all atoms
+ *
+ * Not intended as a replacement for the mob verb
+ */
+/atom/proc/point_at(atom/pointed_atom)
+	if (!isturf(loc))
+		return FALSE
+
+	var/turf/tile = get_turf(pointed_atom)
+	if (!tile)
+		return FALSE
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new /obj/effect/decal/point(our_tile, invisibility)
+	QDEL_IN(visual, 20)
+
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+
+	return TRUE

@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/in_hand/Click()
 	if(cast_check())
 		cast()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
 	return (!user.lying && ..())
@@ -262,7 +262,7 @@
 	animation.pixel_y = 32
 	animation.alpha = 0
 	animation.layer = LIGHTING_LAYER + 1
-	animation.plane = LIGHTING_PLANE + 1
+	animation.plane = ABOVE_LIGHTING_PLANE
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)
@@ -285,7 +285,7 @@
 	L.revive()
 
 	if(!L.ckey || !L.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(L.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
@@ -297,7 +297,7 @@
 /obj/effect/proc_holder/spell/in_hand/heal
 	name = "Лечение"
 	desc = "Лечит физически и ментально. Иногда цель получает двойной эффект на низких уровнях. Цель должна быть жива. \
-		<br>Можно заряжать до семи раз. (Клик на заклинание в руке.) Каждый уровень дает разный эффект и увеличивает время перезардяки. 1 до 5 нельзя кидать. \
+		<br>Можно заряжать до семи раз. (Клик на заклинание в руке.) Каждый уровень дает разный эффект и увеличивает время перезарядки. 1 до 5 нельзя кидать. \
 		<br>1 до 3 лечение. \
 		<br>4 лечит вирусы, но восстанавливает меньше здоровья. \
 		<br>5 очищает гены от мутаций, но восстанавливает меньше здоровья. \

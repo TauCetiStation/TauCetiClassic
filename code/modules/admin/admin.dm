@@ -3,12 +3,15 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN, emphasize = FALSE)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	for(var/client/C in admins)
+	var/style = "admin"
+	if (emphasize)
+		style += " emphasized"
+	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
-			to_chat(C, msg)
+			to_chat_admin_log(C, msg)
 
 // do not use with formatted messages (html), we don't need it in logs
 /proc/admin_log_and_message_admins(message as text)
@@ -24,12 +27,12 @@ var/global/BSACooldown = 0
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
 			continue
-		to_chat(C, msg)
+		to_chat_attack_log(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -170,7 +173,7 @@ var/global/BSACooldown = 0
 				Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A>|
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A>
-				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A>
+				<A href='?src=\ref[src];simplemake=dusty;mob=\ref[M]'>Dusty</A>
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A>
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A>
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A>|
@@ -669,7 +672,7 @@ var/global/BSACooldown = 0
 	var/dat = {"
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(master_mode == "Secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
 
 	dat += {"
@@ -729,7 +732,7 @@ var/global/BSACooldown = 0
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr, "Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -756,21 +759,31 @@ var/global/BSACooldown = 0
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
-		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
+		do_admin_announce(message, (usr.client.holder.fakekey ? "Administrator" : usr.key))
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/do_admin_announce(message, from)
+	to_chat(world, "<span class='admin_announce'><b>[from] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
-	else
-		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.")
+
+	ooc_allowed = !ooc_allowed
+
+	world.send2bridge(
+		type = list(BRIDGE_OOC),
+		attachment_msg = "[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"]!</B>")
+
+	log_admin("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()
@@ -824,18 +837,28 @@ var/global/BSACooldown = 0
 	set name="Start Now"
 
 	if(SSticker.current_state < GAME_STATE_PREGAME)
-		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
-		return 0
+		to_chat(usr, "<span class='danger large'>Unable to start the game as it is not yet set up.</span>")
+		SSticker.start_ASAP = !SSticker.start_ASAP
+		if(SSticker.start_ASAP)
+			to_chat(usr, "<span class='warning large'>The game will begin as soon as possible.</span>")
+			log_admin("[key_name(usr)] will begin the game as soon as possible.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as soon as possible.</font>")
+		else
+			to_chat(usr, "<span class='warning large'>The game will begin as normal.</span>")
+			log_admin("[key_name(usr)] will begin the game as normal.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as normal.</font>")
+		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		return FALSE
 
 	if(SSticker.start_now())
 		log_admin("[key_name(usr)] has started the game.")
 		message_admins("<font color='blue'>[key_name_admin(usr)] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return 1
+		return TRUE
 	else
 		to_chat(usr, "<span class='warning'>Error: Start Now: Game has already started.</span>")
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -927,7 +950,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(R_SERVER))	return
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.timeLeft/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!")
+		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.timeLeft = newtime * 10
 		if(newtime < 0)
@@ -964,7 +987,7 @@ var/global/BSACooldown = 0
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
-		return alert("The game has not started yet!")
+		return tgui_alert(usr, "The game has not started yet!")
 
 /datum/admins/proc/adjump()
 	set category = "Server"
@@ -995,7 +1018,7 @@ var/global/BSACooldown = 0
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if(!usr.client.holder)	return
-	if( alert("Reboot server?",,"Yes","No") == "No")
+	if(tgui_alert(usr, "Reboot server?",, list("Yes","No")) == "No")
 		return
 	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
@@ -1020,6 +1043,15 @@ var/global/BSACooldown = 0
 	message_admins("[key_name(usr)] toggled Job restrictions for xenos.")
 	feedback_add_details("admin_verb","TJR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggle_deathmatch_arena()
+	set category = "Server"
+	set desc = "Toggle arena on the round end."
+	set name = "Toggle Roundend Deathmatch"
+	config.deathmatch_arena = !config.deathmatch_arena
+	log_admin("[key_name(usr)] toggled Deathmatch Arena to [config.deathmatch_arena].")
+	message_admins("[key_name_admin(usr)] toggled Deathmatch Arena [config.deathmatch_arena ? "on" : "off"].")
+	feedback_add_details("admin_verb","TDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
@@ -1029,54 +1061,27 @@ var/global/BSACooldown = 0
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 		else
-			alert("Admin jumping disabled")
+			tgui_alert(usr, "Admin jumping disabled")
 	else
-		alert("[M.name] is not prisoned.")
+		tgui_alert(usr, "[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker || !SSticker.mode || !istype(M))
 		return 0
-	if (!istype(M))
-		return 0
-	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "rp-revolution")
-			return 2
-		return 1
-	if(global.cult_religion?.is_member(M))
-		if (SSticker.mode.config_tag == "cult")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
-			return 2
+	if(isanyantag(M) || M.mind?.special_role)
+		for(var/id in M.mind.antag_roles)
+			var/datum/role/role = M.mind.antag_roles[id]
+			if(role.is_roundstart_role)
+				return 2
 		return 1
 
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
-				return 2
-			return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		return 1
 
 	return 0
 
@@ -1129,7 +1134,7 @@ var/global/BSACooldown = 0
 	else
 		new chosen(usr.loc)
 
-	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	log_admin("[key_name(usr)] spawned [chosen] at [COORD(usr)]")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -1177,7 +1182,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -1216,7 +1221,7 @@ var/global/BSACooldown = 0
 		return "<b>(*null*)</b>"
 	var/mob/M
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 	else if(istype(whom, /mob))
@@ -1256,7 +1261,7 @@ var/global/BSACooldown = 0
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return 1
 
@@ -1276,7 +1281,7 @@ var/global/BSACooldown = 0
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /proc/move_admin_shuttle()
 	var/area/fromArea
@@ -1317,7 +1322,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+var/global/ferry_location = 0 // 0 = centcom , 1 = station
 
 /proc/move_ferry()
 	var/area/fromArea
@@ -1358,7 +1363,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 /**********************Alien ship**************************/
 
-var/alien_ship_location = 1 // 0 = base , 1 = mine
+var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /proc/move_alien_ship()
 	var/area/fromArea

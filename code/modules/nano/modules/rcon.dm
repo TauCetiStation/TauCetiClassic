@@ -105,12 +105,12 @@
 // Parameters: None
 // Description: Refreshes local list of known devices.
 /obj/nano_module/rcon/proc/FindDevices()
-	known_SMESs = new /list()
+	known_SMESs = list()
 	for(var/obj/machinery/power/smes/buildable/SMES in smes_list)
 		if(SMES.RCon_tag && (SMES.RCon_tag != "NO_TAG") && SMES.RCon)
 			known_SMESs.Add(SMES)
 
-	known_breakers = new /list()
+	known_breakers = list()
 	for(var/obj/machinery/power/breakerbox/breaker in machines)
 		if(breaker.RCon_tag != "NO_TAG")
 			known_breakers.Add(breaker)

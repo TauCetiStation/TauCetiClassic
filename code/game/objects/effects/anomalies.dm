@@ -6,13 +6,12 @@
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "vortex"
 	unacidable = 1
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/atom_init()
 	. = ..()
-	poi_list += src
 	set_light(3, 5, light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
@@ -21,10 +20,6 @@
 	aSignal.frequency = rand(1200, 1599)
 	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
-
-/obj/effect/anomaly/Destroy()
-	poi_list -= src
-	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
@@ -46,15 +41,49 @@
 
 ///////////////////////
 
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "emfield_s7"
+	pixel_x = -100
+	pixel_y = -100
+
+/atom/movable/warp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("warp_blure", 1, gauss_blur_filter(4))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/warp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/warp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix())
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
-	density = 1
+	density = TRUE
 	var/boing = 0
+	///Warp effect holder for displacement filter to "pulse" the anomaly
+	var/atom/movable/warp_effect/warp
 
 /obj/effect/anomaly/grav/atom_init()
 	. = ..()
+
+	appearance_flags &= ~TILE_BOUND // no tile bound so you can see it around corners and so
+
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
+
+	warp = new(src)
+	vis_contents += warp
+
+/obj/effect/anomaly/grav/Destroy()
+	vis_contents -= warp
+	QDEL_NULL(warp)
+	return ..()
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -98,7 +127,7 @@
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
-	density = 1
+	density = TRUE
 	light_color = "#009eff"
 
 /obj/effect/anomaly/bluespace/atom_init()
@@ -159,7 +188,7 @@
 			O.throw_at(target, 5, 10)
 			return
 		else
-			O.ex_act(2)
+			O.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
@@ -305,7 +334,7 @@
 		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
-	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Хотите стать рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		return
 
@@ -333,6 +362,13 @@
 	new /obj/effect/temp_visual/cult/sparks(T)
 
 	C.key = slave.key
+
+	if(global.cult_religion)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
+	else
+		SSticker.mode.CreateFaction(/datum/faction/cult)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
+
 	var/rand_num = rand(1, 3)
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))

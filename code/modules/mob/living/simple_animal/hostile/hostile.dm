@@ -53,6 +53,8 @@
 		walk(src, 0)
 		return 0
 	if(client)
+		if(target)
+			LoseTarget()
 		return 0
 
 	if(!stat)
@@ -125,7 +127,7 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return FALSE
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		if(L.faction == "untouchable" || L.faction == faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return FALSE
 		if(L in friends)
 			return FALSE

@@ -1,6 +1,6 @@
 // Cheap, shitty, hacky means of draining water without a proper pipe system.
 // TODO: water pipes.
-var/list/gurgles = list(
+var/global/list/gurgles = list(
 	'sound/effects/gurgle1.ogg',
 	'sound/effects/gurgle2.ogg',
 	'sound/effects/gurgle3.ogg',
@@ -12,8 +12,8 @@ var/list/gurgles = list(
 	desc = "You probably can't get sucked down the plughole."
 	icon = 'icons/obj/structures/drain.dmi'
 	icon_state = "drain"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = TURF_LAYER+0.1
 	var/drainage = 0.5
 	var/last_gurgle = 0

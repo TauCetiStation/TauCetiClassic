@@ -32,7 +32,7 @@
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
-	for(var/client/X in admins)
+	for(var/client/X as anything in admins)
 		if(R_ADMIN & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
@@ -66,3 +66,9 @@
 
 	feedback_add_details("admin_verb", "MH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[prefix]: [key_name(src)]: [msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins.")
+
+/client/proc/get_mentorhelp()
+	var/msg = sanitize(input(src, null, "mentorhelp \"text\"") as text|null)
+	if(!msg)
+		return
+	mentorhelp(msg)

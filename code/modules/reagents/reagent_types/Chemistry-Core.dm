@@ -75,6 +75,11 @@
 			C.remove_paint_state()
 			C.color = null
 
+/datum/reagent/water/on_general_digest(mob/living/M)
+	..()
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
+
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
 	M.nutrition += REM
@@ -98,7 +103,10 @@
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
-		SSticker.mode.remove_cultist(M.mind)
+		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+		C.Deconvert()
+		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
+				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 
 /datum/reagent/water/holywater/reaction_obj(obj/O, volume)
 	src = null
@@ -430,7 +438,7 @@
 	..()
 	M.apply_effect(2 * REM,IRRADIATE, 0)
 	// radium may increase your chances to cure a disease
-	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
 			for(var/ID in C.virus2)
@@ -439,7 +447,7 @@
 					if(prob(50))
 						M.radiation += 50 // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
-						if(istype(C,/mob/living/carbon/human))
+						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 							M.adjustToxLoss(100)

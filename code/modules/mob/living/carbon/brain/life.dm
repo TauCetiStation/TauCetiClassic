@@ -32,9 +32,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	if(client)
-		handle_regular_hud_updates()
-
 
 /mob/living/carbon/brain/proc/handle_mutations_and_radiation()
 
@@ -110,7 +107,8 @@
 
 	if(reagents) reagents.metabolize(src)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
 	if(resting)
 		dizziness = max(0, dizziness - 5)
@@ -137,7 +135,7 @@
 
 		//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
 		if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
-			if(!(container && istype(container, /obj/item/device/mmi)))
+			if(!(container && isMMI(container)))
 				emp_damage = 0
 			else
 				emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
@@ -163,7 +161,7 @@
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
-					eye_blurry = 1
+					blurEyes(1)
 					ear_damage = 1
 					if(!alert)
 						emote("alert")
@@ -173,7 +171,7 @@
 						emp_damage -= 1
 				if(10)
 					alert = 0
-					eye_blurry = 0
+					setBlurriness(0)
 					ear_damage = 0
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
@@ -196,31 +194,20 @@
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent-1, 0)
 
 		if(druggy)
-			druggy = max(druggy-1, 0)
+			adjustDrugginess(-1)
 	return 1
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in src.mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if (healths)
 		if (stat != DEAD)
@@ -248,17 +235,3 @@
 	..()
 
 	return 1
-
-
-/*/mob/living/carbon/brain/emp_act(severity)
-	if(!(container && istype(container, /obj/item/device/mmi)))
-		return
-	else
-		switch(severity)
-			if(1)
-				emp_damage += rand(20,30)
-			if(2)
-				emp_damage += rand(10,20)
-			if(3)
-				emp_damage += rand(0,10)
-	..()*/

@@ -2,7 +2,7 @@
 #define AI_CHECK_RADIO 2
 #define EMERGENCY_MESSAGE_COOLDOWN 300
 
-var/list/ai_verbs_default = list(
+var/global/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
 	/mob/living/silicon/ai/proc/ai_remove_location,
@@ -38,6 +38,7 @@ var/list/ai_verbs_default = list(
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
 	shouldnt_see = list(/obj/effect/rune)
+	w_class = SIZE_HUMAN
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
@@ -136,7 +137,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
-	verbs -= /mob/living/verb/ghost
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -153,7 +153,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
-	verbs += /mob/living/verb/ghost
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -162,7 +161,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in ai_list)
+		for (var/mob/living/silicon/ai/A as anything in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -229,8 +228,8 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
-	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
-		src.show_laws()
+	if(!ismalf(src))
+		show_laws()
 		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
@@ -299,12 +298,11 @@ var/list/ai_verbs_default = list(
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
-	if(SSticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = SSticker.mode
-		for (var/datum/mind/malfai in malf.malf_ai)
-			if (mind == malfai) // are we the evil one?
-				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
+	var/datum/role/malfAI/M = ismalf(src)
+	if(M)
+		var/datum/faction/malf_silicons/malf = M.GetFaction()
+		if (SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
@@ -363,7 +361,7 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	
+
 	if(!input)
 		return
 
@@ -382,7 +380,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
@@ -434,7 +432,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert("Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", list("Yes", "No"))
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
@@ -467,24 +465,20 @@ var/list/ai_verbs_default = list(
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -512,7 +506,7 @@ var/list/ai_verbs_default = list(
 		checklaws()
 
 	if (href_list["lawr"]) // Selects on which channel to state laws
-		var/setchannel = input(usr, "Specify channel.", "Channel selection") in list("State","Common","Science","Command","Medical","Engineering","Security","Supply","Binary","Holopad", "Cancel")
+		var/setchannel = tgui_input_list(usr, "Specify channel.", "Channel selection", list("State","Common","Science","Command","Medical","Engineering","Security","Supply","Binary","Holopad", "Cancel"))
 		if(setchannel == "Cancel")
 			return
 		lawchannel = setchannel
@@ -538,11 +532,15 @@ var/list/ai_verbs_default = list(
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in living_list
-		if(target || html_decode(href_list["trackname"]) == target:get_visible_name())
+		if(target)
 			ai_actual_track(target)
-		else
-			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
+		var/mob/living/carbon/human/H = locate(href_list["track"]) in living_list
+		if(html_decode(href_list["trackname"]) == H.get_visible_name())
+			ai_actual_track(H)
+			return
+		to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
+		return
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in living_list
@@ -560,6 +558,15 @@ var/list/ai_verbs_default = list(
 				continue
 
 		return
+
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			eyeobj.forceMove(target)
+			return
 
 	return
 
@@ -622,7 +629,7 @@ var/list/ai_verbs_default = list(
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.view_core()
+	view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
@@ -652,7 +659,7 @@ var/list/ai_verbs_default = list(
 			for(var/i in tempnetwork)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+	network = tgui_input_list(U, "Which network would you like to view?", "Jump To Network", cameralist)
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -682,7 +689,7 @@ var/list/ai_verbs_default = list(
 		return
 
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = tgui_input_list(usr, "Please, select a status!", "AI Status", ai_emotions)
 	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
 		AISD.emotion = emote
 	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
@@ -732,17 +739,15 @@ var/list/ai_verbs_default = list(
 				if(!state)
 					return
 				if(chooses_ai_staff[state])
-					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
-				alert("No suitable records found. Aborting.")
+				tgui_alert(usr, "No suitable records found. Aborting.")
 
 		if("Unique Category")
 			gen_ai_uniq_holo()
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
 			if(!state)
 				return
-			qdel(holo_icon)
 			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
@@ -799,20 +804,20 @@ var/list/ai_verbs_default = list(
 		if(src.camera)
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && src.camera != camera)
-				src.camera.set_light(0)
+				camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_LUMINOSITY)
+					camera.set_light(AI_CAMERA_LUMINOSITY)
 				else
 					src.camera = null
 			else if(isnull(camera))
-				src.camera.set_light(0)
+				camera.set_light(0)
 				src.camera = null
 		else
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_LUMINOSITY)
+				camera.set_light(AI_CAMERA_LUMINOSITY)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
@@ -825,7 +830,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
-			anchored = 0
+			anchored = FALSE
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
@@ -833,7 +838,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
-			anchored = 1
+			anchored = TRUE
 			return
 	else
 		return ..()
@@ -845,7 +850,7 @@ var/list/ai_verbs_default = list(
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (src.aiRadio)
-		src.aiRadio.interact(src)
+		aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)
@@ -884,3 +889,19 @@ var/list/ai_verbs_default = list(
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
 #undef EMERGENCY_MESSAGE_COOLDOWN
+
+/mob/living/silicon/ai/ghost()
+	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
+		return ..()
+	if(ismalf(usr) && stat != DEAD)
+		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
+		return
+	if(stat)
+		return ..()
+
+	// Wipe Core
+	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
+	if(tgui_alert(usr, "WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
+					"Wipe Core", list("No", "Yes")) != "Yes")
+		return
+	perform_wipe_core()

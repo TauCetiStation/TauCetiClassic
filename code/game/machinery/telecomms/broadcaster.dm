@@ -5,8 +5,8 @@
 	They receive their message from a server after the message has been logged.
 */
 
-var/list/recentmessages = list() // global list of recent messages broadcasted : used to circumvent massive radio spam
-var/message_delay = 0 // To make sure restarting the recentmessages list is kept in sync
+var/global/list/recentmessages = list() // global list of recent messages broadcasted : used to circumvent massive radio spam
+var/global/message_delay = 0 // To make sure restarting the recentmessages list is kept in sync
 
 /obj/machinery/telecomms/broadcaster
 	name = "Subspace Broadcaster"
@@ -730,7 +730,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 

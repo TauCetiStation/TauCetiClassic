@@ -20,6 +20,9 @@
 
 	// Which slot should we use on species.sprite_sheets, as for the species specified above.
 	var/sprite_sheet_slot
+	var/list/accessories
+	var/list/valid_accessory_slots
+	var/list/restricted_accessory_slots
 
 /obj/item/clothing/atom_init()
 	. = ..()
@@ -114,7 +117,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if (!..())
 		return 0
 
-	if(species_restricted && istype(M,/mob/living/carbon/human))
+	if(species_restricted && ishuman(M))
 		var/wearable = null
 		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
@@ -178,7 +181,6 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		icon = initial(icon)
 
-
 /obj/item/clothing/MouseDrop(obj/over_object)
 	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
@@ -188,23 +190,133 @@ var/global/list/icon_state_allowed_cache = list()
 			return
 		if (!over_object)
 			return
-
-		if (!usr.incapacitated())
+		if (usr.incapacitated())
+			return
+		add_fingerprint(usr)
+		if(!equip_time)
 			switch(over_object.name)
 				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
+					if(M.unEquip(src))
+						M.put_in_r_hand(src)
 				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
+					if(M.unEquip(src))
+						M.put_in_l_hand(src)
+		else
+			switch(over_object.name)
+				if("r_hand")
+					if(slot_equipped == SLOT_L_HAND) //item swap
+						if(M.unEquip(src))
+							M.put_in_r_hand(src)
+					else
+						usr.delay_clothing_unequip(src)
+				if("l_hand")
+					if(slot_equipped == SLOT_R_HAND) //item swap
+						if(M.unEquip(src))
+							M.put_in_l_hand(src)
+					else
+						usr.delay_clothing_unequip(src)
+
+/obj/item/clothing/emp_act(severity)
+	..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		A.emplode(severity)
+
+/obj/item/clothing/AltClick()
+	handle_accessories_removal()
+
+/obj/item/clothing/proc/can_attach_accessory(obj/item/clothing/accessory/A)
+	if(!valid_accessory_slots || !istype(A) || !(A.slot in valid_accessory_slots))
+		return FALSE
+	. = TRUE
+
+	if(restricted_accessory_slots && (A.slot in restricted_accessory_slots))
+		for(var/obj/item/clothing/accessory/AC in accessories)
+			if (AC.slot == A.slot)
+				return FALSE
+
+/obj/item/clothing/proc/handle_accessories_removal()
+	if(!isliving(usr))
+		return
+	if(usr.incapacitated())
+		return
+	if(!Adjacent(usr))
+		return
+	if(!accessories)
+		return
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
+	var/obj/item/clothing/accessory/A
+	if(length(accessories) > 1)
+		A = input("Select an accessory to remove from [src]") as null|anything in accessories
+	else
+		A = accessories[1]
+	remove_accessory(usr, A)
+
+/obj/item/clothing/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
+	if(QDELETED(A) || !(A in accessories))
+		return
+	if(!isliving(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user))
+		return
+	A.on_removed(user)
+	LAZYREMOVE(accessories, A)
+	A.update_icon()
+	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
+	update_inv_mob()
+
+/obj/item/clothing/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/clothing/accessory))
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.attack_accessory(I, user, params)
+			return
+
+	attach_accessory(I, user)
+
+	return ..()
+
+/obj/item/clothing/attack_hand(mob/user)
+	if(!slot_equipped)
+		return ..()
+	if(!accessories)
+		return ..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		A.attack_hand(user)
+	..()
+
+/obj/item/clothing/examine(mob/user)
+	..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
+
+/obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
+	if(can_attach_accessory(A))
+		user.drop_from_inventory(A, src)
+		LAZYADD(accessories, A)
+		A.on_attached(src, user)
+		update_inv_mob()
+		return
+	else
+		to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
+
+
+/obj/item/clothing/display_accessories()
+	var/list/displayed_accessories = list()
+	for(var/accessory in accessories)
+		displayed_accessories += "[bicon(accessory)] \a [accessory]"
+
+	if(displayed_accessories.len)
+		. += " with [get_english_list(displayed_accessories)] attached"
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
@@ -213,7 +325,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
-	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+	if (src.loc != user || !ishuman(user))
 		..()
 		return
 
@@ -248,7 +360,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/ears/offear
 	name = "Other ear"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
@@ -273,7 +385,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_FLAGS_EYES
 	var/vision_flags = 0
@@ -284,6 +396,7 @@ var/global/list/icon_state_allowed_cache = list()
 	// Default huds for fix
 	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
+	var/lighting_alpha = null
 
 /obj/item/clothing/glasses/atom_init()
 	. = ..()
@@ -306,7 +419,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = FALSE
@@ -338,7 +451,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/blockTracking = 0
 
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
@@ -415,9 +528,12 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_OCLOTHING
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
+
+	valid_accessory_slots = list("armband", "decor")
+	restricted_accessory_slots = list("armband")
 
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
@@ -429,13 +545,14 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
+	pierce_protection = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
@@ -447,13 +564,14 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM
+	flags = PHORONGUARD | BLOCKUNIFORM
 	flags_pressure = STOPS_PRESSUREDMAGE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 3
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
@@ -502,7 +620,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -510,76 +628,21 @@ BLIND     // can't see anything
 		2 = Report detailed damages
 		3 = Report location
 		*/
-	var/list/accessories = list()
 	var/displays_id = 1
 	var/rolled_down = 0
 	var/basecolor
 
+	var/fresh_laundered_until = 0
+
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
+	valid_accessory_slots = list("utility","armband","decor")
+	restricted_accessory_slots = list("utility", "armband")
 
-/obj/item/clothing/under/emp_act(severity)
+/obj/item/clothing/under/equipped(mob/user, slot)
 	..()
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emplode(severity)
-
-/obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
-	if(istype(A))
-		. = TRUE
-	else
-		return FALSE
-	if(accessories.len && (A.slot in list("utility","armband")))
-		for(var/obj/item/clothing/accessory/AC in accessories)
-			if (AC.slot == A.slot)
-				return FALSE
-
-/obj/item/clothing/under/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	handle_accessories_removal()
-
-/obj/item/clothing/under/proc/handle_accessories_removal()
-	if(!isliving(usr))
-		return
-	if(usr.incapacitated())
-		return
-	if(!Adjacent(usr))
-		return
-	if(!accessories.len)
-		return
-	if(!istype(usr, /mob/living))
-		return
-
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
-	var/obj/item/clothing/accessory/A
-	if(accessories.len > 1)
-		A = input("Select an accessory to remove from [src]") as null|anything in accessories
-	else
-		A = accessories[1]
-	remove_accessory(usr, A)
-
-/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
-	if(QDELETED(A) || !(A in accessories))
-		return
-	if(!isliving(user))
-		return
-	if(user.incapacitated())
-		return
-	if(!Adjacent(user))
-		return
-	A.on_removed(user)
-	accessories -= A
-	A.update_icon()
-	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
-		action_button_name = null
-
+	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
+		fresh_laundered_until = world.time
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
@@ -588,45 +651,22 @@ BLIND     // can't see anything
 		qdel(src)
 		return
 
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(can_attach_accessory(A))
-			user.drop_item()
-			accessories += A
-			A.on_attached(src, user)
-
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
-			action_button_name = "Use inventory."
-			return
-		else
-			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
-
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_accessory(I, user, params)
-		return
-
 	return ..()
 
-/obj/item/clothing/under/AltClick()
-	handle_accessories_removal()
-
 /obj/item/clothing/under/attack_hand(mob/user)
-	//only forward to the attached accessory if the clothing is equipped (not in a storage)
-	if(accessories.len && loc == user)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_hand(user)
-		return
-
 	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
+		if(accessories && slot_equipped)
+			for(var/obj/item/clothing/accessory/A in accessories)
+				A.attack_hand(user)
 		return
 
 	..()
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
+	if(fresh_laundered_until > world.time)
+		to_chat(user, "It looks fresh and clean.")
+
 	switch(src.sensor_mode)
 		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")
@@ -636,9 +676,6 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-
-	for(var/obj/item/clothing/accessory/A in accessories)
-		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
@@ -697,7 +734,7 @@ BLIND     // can't see anything
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -712,3 +749,12 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()
+
+
+/obj/item/clothing/head/festive
+	name = "festive paper hat"
+	icon_state = "xmashat"
+	desc = "A crappy paper hat that you are REQUIRED to wear."
+	flags_inv = 0
+	body_parts_covered = 0
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)

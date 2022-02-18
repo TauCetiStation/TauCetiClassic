@@ -1,4 +1,4 @@
-var/list/ventcrawl_machinery = list(
+var/global/list/ventcrawl_machinery = list(
 	/obj/machinery/atmospherics/components/unary/vent_scrubber,
 	/obj/machinery/atmospherics/components/unary/vent_pump
 	)
@@ -90,8 +90,8 @@ var/list/ventcrawl_machinery = list(
 		return
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
-	if(small)
-		time = 5
+	if(w_class)
+		time = w_class ** 2
 	if(!do_after(src, time, null, vent_found))
 		return
 

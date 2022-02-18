@@ -7,10 +7,10 @@
 
 		if (src.stat!=0)
 			src.cameraFollow = null
-			src.reset_view(null)
-			src.unset_machine()
+			reset_view(null)
+			unset_machine()
 
-		src.updatehealth()
+		updatehealth()
 		update_gravity(mob_has_gravity())
 		update_action_buttons()
 
@@ -26,8 +26,8 @@
 			return
 
 		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
+			if (!( machine.check_eye(src) ))
+				reset_view(null)
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)
@@ -38,7 +38,7 @@
 			adjustOxyLoss(-1)
 
 		//stage = 1
-		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
+		//if (isAI(src)) // Are we not sure what we are?
 		var/blind = 0
 		//stage = 2
 		var/area/loc = null
@@ -51,15 +51,9 @@
 					//stage = 5
 					blind = 1
 
+		update_sight(blind)
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
-			//stage = 4.5
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 
 			//Congratulations!  You've found a way for AI's to run without using power!
 			//Todo:  Without snowflaking up master_controller procs find a way to make AI use_power but only when APC's clear the area usage the tick prior
@@ -85,13 +79,6 @@
 				return
 		else
 
-			//stage = 6
-			src.sight = src.sight&~SEE_TURFS
-			src.sight = src.sight&~SEE_MOBS
-			src.sight = src.sight&~SEE_OBJS
-			src.see_in_dark = 0
-			src.see_invisible = SEE_INVISIBLE_LIVING
-
 			if (((!loc.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
@@ -99,8 +86,8 @@
 					to_chat(src, "You've lost power!")
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 					if (!is_special_character(src))
-						src.set_zeroth_law("")
-					//src.clear_supplied_laws() // Don't reset our laws.
+						set_zeroth_law("")
+					//clear_supplied_laws() // Don't reset our laws.
 					//var/time = time2text(world.realtime,"hh:mm:ss")
 					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 					spawn(20)
@@ -167,7 +154,7 @@
 									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									to_chat(src, "Here are your current laws:")
-									src.show_laws()
+									show_laws()
 							sleep(50)
 							theAPC = null
 
@@ -189,3 +176,18 @@
 /mob/living/silicon/ai/rejuvenate()
 	..()
 	add_ai_verbs(src)
+
+/mob/living/silicon/ai/update_sight(blind)
+	if(!..())
+		return FALSE
+
+	sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	if(blind)
+		sight = initial(sight)
+		see_in_dark = 0
+		see_invisible = SEE_INVISIBLE_LIVING
+
+	return TRUE

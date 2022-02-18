@@ -19,8 +19,8 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(access_brig)
-	anchored = 1.0    		// can't pick it up
-	density = 0       		// can walk through it.
+	anchored = TRUE    		// can't pick it up
+	density = FALSE       		// can walk through it.
 	var/screen = MAIN_SCREEN
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
@@ -91,11 +91,11 @@
 				for(var/mob/living/carbon/human/H in global.human_list)
 					if(H.real_name == prisoner_name)
 						H.sec_hud_set_security_status()
-			src.timer_end() // open doors, reset timer, clear status screen
+			timer_end() // open doors, reset timer, clear status screen
 			cell_open()
 
-		src.updateUsrDialog()
-		src.update_icon()
+		updateUsrDialog()
+		update_icon()
 
 	return
 
@@ -206,7 +206,7 @@
 	switch(screen)
 		if(MAIN_SCREEN)
 			dat += "<HR>Таймер камеры:</hr>"
-			dat += " <b>Контроллирует двери камеры [id]</b><br/>"
+			dat += " <b>Контролирует двери камеры [id]</b><br/>"
 			dat +={"
 				<HR><B>Все поля должны быть заполнены правильно.</B>
 				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Имя</A>:</B> [prisoner_name] <B><A href='?src=\ref[src];set_manually_name=TRUE'>Ввести вручную</A></B>
@@ -278,20 +278,20 @@
 					continue
 				available_targets += target_name
 		if(available_targets.len == 0)
-			alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
+			tgui_alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
 			return
 		prisoner_name = sanitize(input(usr, "Выберите имя заключенного.", "Таймер камеры", "") in available_targets)
 		var/record_id = find_record_by_name(usr, prisoner_name)
 		security_data = find_security_record("id", record_id)
 		if(!security_data)
-			alert(usr, "Человек с таким именем не найден в базе данных. Введите имя вручную.")
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных. Введите имя вручную.")
 
 	if(href_list["set_manually_name"])
 		prisoner_name = sanitize(input(usr, "Введите имя", "Таймер камеры", input_default(prisoner_name)), MAX_LNAME_LEN)
 		var/record_id = find_record_by_name(usr, prisoner_name)
 		security_data = find_security_record("id", record_id)
 		if(!security_data)
-			alert(usr, "Человек с таким именем не найден в базе данных.")
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных.")
 
 	if(href_list["set_prisoner_crimes"])
 		prisoner_crimes = sanitize(input(usr, "Введите статьи", "Таймер камеры", input_default(prisoner_crimes)), MAX_LNAME_LEN)
@@ -299,7 +299,7 @@
 	if(href_list["set_prisoner_details"])
 		prisoner_details = sanitize(input(usr, "Введите подробности", "Таймер камеры", input_default(prisoner_details)), MAX_LNAME_LEN)
 
-	if(!src.allowed(usr))
+	if(!allowed(usr))
 		return
 
 	if(href_list["timing"])
@@ -309,7 +309,7 @@
 			src.timing = text2num(href_list["timing"])
 
 			if(src.timing)
-				src.timer_start(usr.name)
+				timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
 				var/data = ""
 				if(security_data)
@@ -330,7 +330,7 @@
 					for(var/mob/living/carbon/human/H in global.human_list)
 						if(H.real_name == prisoner_name)
 							H.sec_hud_set_security_status()
-				src.timer_end()
+				timer_end()
 				cell_open()
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
@@ -346,14 +346,14 @@
 				F.flash()
 
 		if(href_list["change"])
-			src.timer_start(usr.name)
+			timer_start(usr.name)
 			cell_close()
 
 	if(href_list["setScreen"])
 		src.screen = text2num(href_list["setScreen"])
 
-	src.updateUsrDialog()
-	src.update_icon()
+	updateUsrDialog()
+	update_icon()
 
 //icon update function
 // if NOPOWER, display blank

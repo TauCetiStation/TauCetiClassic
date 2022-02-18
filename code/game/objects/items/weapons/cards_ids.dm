@@ -13,7 +13,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -36,7 +36,7 @@
 		src.name = text("data disk- '[]'", t)
 	else
 		src.name = "data disk"
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return
 
 /obj/item/weapon/card/data/clown
@@ -78,14 +78,16 @@
 		uses--
 
 	if(uses < 1)
-		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-		user.drop_item()
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
-		qdel(src)
+		emag_break(user)
 		return
 
 	..()
+
+/obj/item/weapon/card/emag/proc/emag_break(mob/user)
+	var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+	junk.add_fingerprint(user)
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -121,7 +123,7 @@
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/card/id/examine(mob/user)
@@ -311,7 +313,7 @@
 	if(istype(target, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
@@ -320,13 +322,13 @@
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
-			alert("Invalid name.")
+			tgui_alert(usr, "Invalid name.")
 			return
 		src.registered_name = t
 
 		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
-			alert("Invalid assignment.")
+			tgui_alert(usr, "Invalid assignment.")
 			src.registered_name = ""
 			return
 		src.assignment = u
@@ -337,17 +339,17 @@
 
 		if(!registered_user) registered_user = user  //
 
-		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
+		switch(tgui_alert(usr, "Would you like to display the ID, change its look, or retitle it?","Choose.", list("Rename", "Change look","Show")))
 			if("Rename")
 				var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
-					alert("Invalid name.")
+					tgui_alert(usr, "Invalid name.")
 					return
 				src.registered_name = t
 
 				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
-					alert("Invalid assignment.")
+					tgui_alert(usr, "Invalid assignment.")
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
@@ -366,7 +368,7 @@
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state
 					src.desc = newc.desc
-				src.update_icon()
+				update_icon()
 				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
 				return
 
@@ -437,3 +439,13 @@
 	icon_state = "ert"
 	assignment = "Emergency Response Team"
 	rank = "Emergency Response Team"
+
+/obj/item/weapon/card/id/space_police
+	assignment = "Organized Crimes Department"
+	rank = "Organized Crimes Department"
+
+	icon_state = "ert"
+
+/obj/item/weapon/card/id/space_police/atom_init()
+	. = ..()
+	access = get_all_accesses()

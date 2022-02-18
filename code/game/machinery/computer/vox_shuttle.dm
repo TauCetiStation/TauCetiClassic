@@ -12,8 +12,8 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 
@@ -47,8 +47,8 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station
 	name = "skipjack terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_cont"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 	var/area/curr_location
@@ -63,6 +63,11 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
 	curr_location = locate(/area/shuttle/vox/arkship)
+
+/obj/machinery/computer/vox_station/process()
+	if(..())
+		if(lastMove + VOX_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)
@@ -139,7 +144,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(SSticker && (istype(SSticker.mode,/datum/game_mode/heist)))
+		if(find_faction_by_type(/datum/faction/heist))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = TRUE

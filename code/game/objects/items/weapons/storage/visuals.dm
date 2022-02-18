@@ -95,10 +95,10 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 	max_storage_space = 18
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/retractor,
 		/obj/item/weapon/hemostat,

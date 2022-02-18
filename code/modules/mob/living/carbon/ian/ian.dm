@@ -3,6 +3,7 @@
 #define POSE_REST 4
 #define POSE_STAT 8
 
+ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian
 	name = "Ian"
 	real_name = "Ian"
@@ -29,10 +30,14 @@
 	var/wander = TRUE
 	var/obj/movement_target
 
+	attack_push_vis_effect = ATTACK_EFFECT_BITE
+	attack_disarm_vis_effect = ATTACK_EFFECT_BITE
+
 	universal_speak = FALSE
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)
 
+	w_class = SIZE_BIG
 	var/obj/item/weapon/card/id/wear_id = null
 
 	var/dodged = FALSE
@@ -106,12 +111,12 @@
 					else if(iscorgi(A))
 						adjustBruteLoss(-1)
 						adjustFireLoss(-1)
-				else if(istype(A, /obj/item/weapon/soap))
+				else if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/soap))
 					var/expression = pick("amused","annoyed","confused")
 					message = "<span class='notice'>[src] ate [A] and looks [expression]!</span>"
 					qdel(A)
 					soap_eaten += 200
-				else if(istype(A, /obj/item))
+				else if(isitem(A))
 					var/obj/item/I = A
 					I.make_wet()
 				visible_message(message)
@@ -347,14 +352,14 @@
 		flash_eyes()
 
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				updatehealth()
-		if(3)
+		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 				updatehealth()
@@ -446,6 +451,13 @@
 
 /mob/living/carbon/ian/throw_mode_off()
 	return
+
+/mob/living/carbon/ian/gib()
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1 to butcher_results[path])
+				new path(loc)
+	..()
 
 /mob/living/carbon/ian/say(message)
 	if(stat)

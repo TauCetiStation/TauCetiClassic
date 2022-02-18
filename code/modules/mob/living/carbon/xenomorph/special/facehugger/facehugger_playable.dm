@@ -20,11 +20,12 @@
 	max_plasma = 50
 
 	density = FALSE
-	small = TRUE
+	w_class = SIZE_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide)
 
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
@@ -38,11 +39,10 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
-	verbs += /mob/living/carbon/xenomorph/proc/hide
-	alien_list[ALIEN_FACEHAGGER] += src
+	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
-	alien_list[ALIEN_FACEHAGGER] -= src
+	alien_list[ALIEN_FACEHUGGER] -= src
 	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
@@ -58,7 +58,7 @@
 
 /mob/living/carbon/xenomorph/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
+	if (isfacehugger(src)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
 
@@ -108,7 +108,6 @@
 
 	put_in_active_hand(G)
 
-	C.grabbed_by += G
 	G.synch()
 	C.LAssailant = src
 
@@ -163,25 +162,25 @@
 This is chestburster mechanic for damaging
  victim chest to get out from stomach
 ----------------------------------------*/
-/obj/screen/larva_bite
+/atom/movable/screen/larva_bite
 	name = "larva_bite"
 
-/obj/screen/larva_bite/Click()
+/atom/movable/screen/larva_bite/Click()
 	var/obj/item/weapon/larva_bite/G = master
 	if(G)
 		G.s_click(src)
 		return TRUE
 
-/obj/screen/larva_bite/attack_hand()
+/atom/movable/screen/larva_bite/attack_hand()
 	return
 
-/obj/screen/larva_bite/attackby()
+/atom/movable/screen/larva_bite/attackby()
 	return
 
 /obj/item/weapon/larva_bite
 	name = "larva_bite"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	var/obj/screen/larva_bite/hud = null
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
+	var/atom/movable/screen/larva_bite/hud = null
 	var/mob/affecting = null
 	var/mob/chestburster = null
 	var/state = null
@@ -191,7 +190,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -199,7 +198,7 @@ This is chestburster mechanic for damaging
 	chestburster = loc
 	affecting = victim
 
-	hud = new /obj/screen/larva_bite(src)
+	hud = new /atom/movable/screen/larva_bite(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Burst thru chest"
@@ -223,7 +222,7 @@ This is chestburster mechanic for damaging
 		chestburster.client.screen -= hud
 		chestburster.client.screen += hud
 
-/obj/item/weapon/larva_bite/proc/s_click(obj/screen/S)
+/obj/item/weapon/larva_bite/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!chestburster)
@@ -246,7 +245,7 @@ This is chestburster mechanic for damaging
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
@@ -259,7 +258,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.shock_stage = 20
+			H.SetShockStage(20)
 			H.Weaken(1)
 			H.emote("scream")
 	else if(ismonkey(affecting))
@@ -268,7 +267,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -319,25 +318,25 @@ With third step, we start to reinforce grip to its maximum phase and when that p
 With fourth step, we just confirm embryo injection and with firth, we actually start injecting embryo.
 When we finish, facehugger's player will be transfered inside embryo.
 ----------------------------------------*/
-/obj/screen/fh_grab
+/atom/movable/screen/fh_grab
 	name = "fh_grab"
 
-/obj/screen/fh_grab/Click()
+/atom/movable/screen/fh_grab/Click()
 	var/obj/item/weapon/fh_grab/G = master
 	if(G)
 		G.s_click(src)
 		return TRUE
 
-/obj/screen/fh_grab/attack_hand()
+/atom/movable/screen/fh_grab/attack_hand()
 	return
 
-/obj/screen/fh_grab/attackby()
+/atom/movable/screen/fh_grab/attackby()
 	return
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
-	var/obj/screen/fh_grab/hud = null
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
+	var/atom/movable/screen/fh_grab/hud = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
 	var/state = GRAB_LEAP
@@ -346,7 +345,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)
@@ -354,16 +353,15 @@ When we finish, facehugger's player will be transfered inside embryo.
 	assailant = loc
 	affecting = victim
 
-	hud = new /obj/screen/fh_grab(src)
+	hud = new /atom/movable/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
-	start_cooldown(hud, 3, CALLBACK(src, .proc/reset_cooldown))
+	start_cooldown(hud, 4, CALLBACK(src, .proc/reset_cooldown))
 	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
-	affecting.grabbed_by += src
 	synch()
 	affecting.LAssailant = assailant
 	assailant.update_hud()
@@ -412,7 +410,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(iscarbon(affecting))
 			affecting.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
 
-/obj/item/weapon/fh_grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/fh_grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(affecting.stat == DEAD)
@@ -458,7 +456,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			start_cooldown(hud, 5, CALLBACK(src, .proc/reset_cooldown))
+			start_cooldown(hud, 6, CALLBACK(src, .proc/reset_cooldown))
 			on_cooldown = TRUE
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"

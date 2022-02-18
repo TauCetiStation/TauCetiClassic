@@ -31,11 +31,12 @@
 	)
 
 	bible_type = /obj/item/weapon/storage/bible/tome
+	religious_tool_type = /obj/item/weapon/storage/bible/tome
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
 	tech_agent_type = /datum/building_agent/tech/cult
-	wall_types = list(/turf/simulated/wall/cult)
+	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
 
@@ -47,15 +48,9 @@
 	symbol_icon_state = null
 
 	/*
-		Tech
-	*/
-	var/blade_with_shield = FALSE
-
-	/*
 		Only cult
 	*/
-	// Just gamemode of cult
-	var/datum/game_mode/cult/mode
+	var/datum/faction/cult/mode
 	// Is the area captured by /datum/rune/cult/capture_area
 	var/capturing_area = FALSE
 
@@ -66,7 +61,7 @@
 	// Created anomalies at the beginning and the number of possible anomalies after
 	var/max_spawned_anomalies = 12
 	// Types
-	var/list/strange_anomalies = list(/obj/structure/cult/anomaly/spacewhole, /obj/structure/cult/anomaly/timewhole, /obj/structure/cult/anomaly/orb, /obj/structure/cult/anomaly/shell)
+	var/list/strange_anomalies
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 
@@ -84,11 +79,12 @@
 							"Н͆̈́͠У̔͊͝Ж̾͘͝Н͌̾́О̽͑̕ Б͒̔̿О͆̈́Л̈́̾̕Ь͒̒̈́Ш͐̔͝Е͋̓ Д́̚̚У͋͊́Ш̾̈́", "В͆̿̓О̐̿'̓͠͝Х͛̚Ѐ͠͝Д͒̓͒О͛͑К͋͊͛-͛̾̕Г̿̿̿Л̒̿͘У͑̒̓Т̓͐", "В̐͋̕О́͊͛'̐̀͘Х́̀͘А͊͘͘Д͒̓͆О͋̓К̓͊͝ Г̓͌͝Р́̓͘Ѝ͌̾Ш̈́̓.͊̐ С̽́О͊͛̽Л͘̕͝ И͑̔͝Ч̓̔А͋̾̚ О́̒́Ж͌͒͝")
 	// Motivation to kill!
 	var/list/possible_human_phrases = list("Я убью тебя!", "Ты чё?", "Я вырву твой имплант сердца и сожгу его!", "Я выпью твою кровь!", "Я уничтожу тебя!", "Молись, сука!", "Я вырву и съем твои кишки!", "Моргало выколю!", "Эй ты!", "Я измельчу тебя на мелкие кусочки и выброшу их в чёрную дыру!", "Пошёл нахуй!", "Ты умрешь в ужасных судорогах!", "Ильс'м уль чах!", "Твое призвание - это чистить канализацию на Марсе!", "Тупое животное!", "АХ-ХА-ХА-ХА-ХА-ХА!", "Что б ты бобов объелся!", "Ёбаный в рот этого ада!", "Эй обезьяна свинорылая!", "Обабок бля!", "Ну ты и маслёнок!",\
-	 						"Пиздакряк ты тупой!", "Твои потраха съедят кибер-свиньи вместе с помоями, а мозг будут разрывать на куски бездомные космо-кошки!", "Твою плоть разорвут космо-карпы, а кишки съедят мыши!", "Тупоголовый дегенерат!", "Ты никому не нужный биомусор!", "Ты тупое ничтожество!", "Лучшеб ты у папы на синих трусах засох!", "ААА-Р-Р-Р-Р-Р-Г-Г-Г-Х-Х-Х!")
+	 						"Пиздакряк ты тупой!", "Твои потроха съедят кибер-свиньи вместе с помоями, а мозг будут разрывать на куски бездомные космо-кошки!", "Твою плоть разорвут космо-карпы, а кишки съедят мыши!", "Тупоголовый дегенерат!", "Ты никому не нужный биомусор!", "Ты тупое ничтожество!", "Лучше б ты у папы на синих трусах засох!", "ААА-Р-Р-Р-Р-Р-Г-Г-Г-Х-Х-Х!")
 
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
+	strange_anomalies = subtypesof(/obj/structure/cult/anomaly)
 	var/area/area = get_area_by_type(/area/custom/cult)
 	for(var/i in 1 to max_spawned_anomalies)
 		var/turf/T = get_turf(pick(area.contents))
@@ -108,8 +104,6 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		mode = SSticker.mode
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)
@@ -163,7 +157,7 @@
 			if(!altars.len)
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
-			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
+			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/movable/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
@@ -223,20 +217,29 @@
 /datum/religion/cult/can_convert(mob/M)
 	if(M.my_religion)
 		return FALSE
+	if(M.stat == DEAD)
+		return FALSE
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
+		return FALSE
 	if(ishuman(M))
-		if(M.mind.assigned_role == "Captain")
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[NO_BLOOD])
 			return FALSE
-		if(M.get_species() == GOLEM)
-			return FALSE
-	if(ismindshielded(M) || isloyal(M))
+	if(M.ismindprotect())
 		return FALSE
 	return TRUE
 
 /datum/religion/cult/add_member(mob/M, holy_role)
 	if(!..())
 		return FALSE
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", M)
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
 	return TRUE
+
+/datum/religion/cult/add_deity(mob/M)
+	..()
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
 
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)

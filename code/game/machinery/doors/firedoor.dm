@@ -5,7 +5,7 @@
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
-	density = 0
+	density = FALSE
 	layer = FIREDOOR_LAYER
 	base_layer = FIREDOOR_LAYER
 	glass = 0
@@ -95,7 +95,7 @@
 	return
 
 /obj/machinery/door/firedoor/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
+	if(isxenoadult(user))
 		if(blocked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -138,14 +138,6 @@
 		if(A.fire || A.air_doors_activated)
 			alarmed = 1
 			break
-
-	var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
-	"\The [src]", "Yes, [density ? "open" : "close"]", "No")
-	if(answer == "No")
-		return
-	if(user.incapacitated() || (get_dist(src, user) > 1  && !isAI(user)))
-		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
-		return
 
 	var/needs_to_close = 0
 	if(density)
@@ -205,8 +197,8 @@
 					new/obj/item/weapon/airalarm_electronics(src.loc)
 
 					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = 1
-					FA.density = 1
+					FA.anchored = TRUE
+					FA.density = TRUE
 					FA.wired = 1
 					FA.update_icon()
 					qdel(src)
@@ -216,7 +208,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
@@ -265,6 +257,11 @@
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
+
+/obj/machinery/door/firedoor/do_afterclose()
+	for(var/mob/living/L in get_turf(src))
+		try_move_adjacent(L)
+	..()
 
 /obj/machinery/door/firedoor/do_open()
 	..()

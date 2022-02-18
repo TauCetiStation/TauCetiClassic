@@ -52,7 +52,7 @@
 	name = "cross me"
 	desc = "for crossing"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"
@@ -98,6 +98,7 @@
 		walk_link(W)
 	else
 		walk_link(user)
+	return FALSE
 
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)

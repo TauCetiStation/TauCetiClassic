@@ -75,7 +75,7 @@
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
 	desc = "A device used for teleporting injured(critical) or dead people."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
@@ -115,7 +115,7 @@
 
 	user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of device on [target.name]!</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, H))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = H
 		loc = null

@@ -6,10 +6,11 @@
 	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
+	w_class = SIZE_MASSIVE
 	maxHealth = INFINITY
 	health = INFINITY
 	immune_to_ssd = 1
-	density = 1
+	density = TRUE
 
 	speak_emote = list("")
 	emote_hear = list("")
@@ -121,7 +122,7 @@
 		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
-				src.set_dir(L.dir)
+				set_dir(L.dir)
 				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()
 				did_move = 1

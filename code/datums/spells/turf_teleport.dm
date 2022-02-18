@@ -10,7 +10,7 @@
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets)
 	for(var/mob/living/target in targets)
-		var/list/turfs = new/list()
+		var/list/turfs = list()
 		for(var/turf/T in range(target,outer_tele_radius))
 			if(T in range(target,inner_tele_radius)) continue
 			if(istype(T,/turf/space) && !include_space) continue

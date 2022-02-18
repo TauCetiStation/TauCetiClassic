@@ -5,6 +5,7 @@
 	icon_state = "spaceworm"
 	icon_living = "spaceworm"
 	icon_dead = "spacewormdead"
+	w_class = SIZE_MASSIVE
 	status_flags = 0
 
 	speak_emote = list("transmits") //not supposed to be used under AI control
@@ -123,7 +124,7 @@
 
 	return
 
-/mob/living/simple_animal/space_worm/proc/update_icon() //only for the sake of consistency with the other update icon procs
+/mob/living/simple_animal/space_worm/update_icon() //only for the sake of consistency with the other update icon procs
 	if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 		if(previous) //midsection
 			icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below
@@ -181,7 +182,7 @@
 					new /obj/item/stack/sheet/mineral/phoron(src, oldStack.get_amount())
 					qdel(oldStack)
 					continue
-			else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
+			else if(isitem(stomachContent)) //converts to plasma, keeping the w_class
 				var/obj/item/oldItem = stomachContent
 				new /obj/item/stack/sheet/mineral/phoron(src, oldItem.w_class)
 				qdel(oldItem)

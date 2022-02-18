@@ -16,11 +16,17 @@
 	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
 	return ..()
+
+
+/mob/examine(mob/user)
+	. = ..()
+	if(w_class)
+		to_chat(user, "It is a [get_size_flavor()] sized creature.")
 
 /mob/atom_init()
 	spawn()
@@ -47,7 +53,7 @@
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	var/t = "<span class='notice'>Coordinates: [COORD(T)]</span>\n"
 	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
 	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
 	for(var/g in env.gas)
@@ -157,7 +163,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -170,7 +180,7 @@
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.real_name == text("[]", msg))
 			return M
 	return 0
@@ -314,34 +324,35 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!usr || !isturf(usr.loc))
+	if (next_point_to > world.time)
 		return
-	if(usr.incapacitated())
+
+	if (incapacitated() || (status_flags & FAKEDEATH))
 		return
-	if(usr.status_flags & FAKEDEATH)
+
+	if (istype(A, /obj/effect/decal/point))
 		return
-	if(!(A in oview(usr.loc)))
-		return
-	if(istype(A, /obj/effect/decal/point))
+
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
 		return
 
 	var/tile = get_turf(A)
-	if(!tile)
+	if (!tile)
 		return
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
-
-	QDEL_IN(P, 20)
+	point_at(A)
 
 	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
+
+	next_point_to = world.time + 1.5 SECONDS
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -355,7 +366,7 @@
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -460,7 +471,7 @@
 
 /mob/Topic(href, href_list)
 	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
@@ -573,7 +584,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -662,10 +673,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = SSticker.mode
-					if(GM.malf_mode_declared)
-						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+				if(GM?.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -676,7 +686,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "([x], [y], [z])")
+					stat("Location:", "[COORD(src)]")
 					stat("Instances:", "[world.contents.len]")
 					config.stat_entry()
 					stat(null)
@@ -766,7 +776,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
-			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+			if(G.state == GRAB_NECK && G.assailant.get_targetzone() == BP_CHEST)
 				lying = FALSE
 				density = TRUE
 			break
@@ -920,6 +930,46 @@ note dizziness decrements automatically in the mob's Life() proc.
 	resting = max(resting + amount, 0)
 	return
 
+// ========== DRUGGINESS ==========
+/mob/proc/adjustDrugginess(amount)
+	druggy = max(druggy + amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/setDrugginess(amount)
+	druggy = max(amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/updateDrugginesOverlay()
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
+
+// ========== STUTTERING ==========
+/mob/proc/Stuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering, amount, 0)
+
+/mob/proc/AdjustStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering + amount, 0)
+
+/mob/proc/setStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
+
 // =============================
 
 /mob/proc/get_species()
@@ -1003,7 +1053,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
@@ -1019,7 +1069,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = 0
+			anchored = FALSE
 	return 1
 
 ///Get the ghost of this mob (from the mind)
@@ -1071,14 +1121,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
-	if(ishuman(src) && druggy)
-		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
-		var/multiplied
-		if(preset)
-			var/datum/ColorMatrix/CM = new(preset)
-			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
-		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
-	else if(preset)
+	if(preset)
 		var/datum/ColorMatrix/CM = new(preset)
 		animate(client, color = CM.matrix, time = transition_time)
 	else
@@ -1098,7 +1141,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(XRAY in mutations)
 				return
 			else
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 				if(A)
 					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
@@ -1110,7 +1153,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
@@ -1168,6 +1211,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 
+/mob/keybind_face_direction(direction)
+	facedir(direction)
+
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -1190,3 +1236,53 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time

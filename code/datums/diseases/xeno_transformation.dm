@@ -56,10 +56,11 @@
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40))
-				if(gibbed != 0) return 0
+				if(gibbed != 0)
+					return
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
-				src.cure(0)
+				cure(0)
 				gibbed = 1
 				affected_mob:Alienize()
 

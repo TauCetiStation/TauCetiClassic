@@ -48,17 +48,12 @@ LOG_TGUI
 ## Minutes until user will be kicked for being AFK
 # AFK_TIME_BRACKET 10
 
-## probablities for game modes chosen in "secret" and "random" modes
+## probablities for game modes chosen in bundles of modes
 ##
-## default probablity is 1, increase to make that mode more likely to be picked
+## default probablity is 100, increase to make that mode more likely to be picked
 ## set to 0 to disable that mode
-PROBABILITY EXTENDED 1
-PROBABILITY MALFUNCTION 1
-PROBABILITY NUCLEAR 1
-PROBABILITY WIZARD 1
-PROBABILITY CHANGELING 1
-PROBABILITY CULT 1
-PROBABILITY EXTEND-A-TRAITORMONGOUS 6
+
+# PROBABILITY EXTENDED 40
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS 1
@@ -227,8 +222,8 @@ REQ_CULT_GHOSTWRITER 6
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
 ##by default will be used build RECOMMENDED_VERSION (latest compatible major version)
-# BYOND_VERSION_MIN 513
-# BYOND_VERSION_RECOMMEND 513
+# BYOND_VERSION_MIN 514
+# BYOND_VERSION_RECOMMEND 514
 
 ## Changelog link
 CHANGELOG_LINK https://changelog.taucetistation.org
@@ -280,3 +275,12 @@ OOC_ROUND_ONLY
 SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 100
+
+## This config option enables or disables deathmatch arena after round end.
+DEATHMATCH_ARENA 1
+
+## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
+#HARD_DELETES_OVERRUN_THRESHOLD 0.5
+
+## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
+#HARD_DELETES_OVERRUN_LIMIT 0

@@ -6,8 +6,8 @@ var/global/list/image/splatter_cache=list()
 	name = "blood"
 	desc = "It's thick and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mfloor1"
@@ -19,6 +19,8 @@ var/global/list/image/splatter_cache=list()
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
 	var/drytime
+
+	beauty = -100
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
@@ -169,20 +171,22 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "blank"
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 2
 	random_icon_states = null
 	amount = 3
 	var/list/existing_dirs = list()
 	blood_DNA = list()
 
+	beauty = -50
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbearcore"
@@ -250,8 +254,8 @@ var/global/list/image/splatter_cache=list()
 	name = "mucus"
 	desc = "Disgusting mucus."
 	gender = PLURAL
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mucus"
@@ -259,6 +263,8 @@ var/global/list/image/splatter_cache=list()
 
 	var/list/datum/disease2/disease/virus2 = list()
 	var/dry = 0 // Keeps the lag down
+
+	beauty = -50
 
 /obj/effect/decal/cleanable/mucus/atom_init()
 	. = ..()

@@ -5,7 +5,7 @@
 	name = "advanced roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	anchored = 0
+	anchored = FALSE
 	type_roller = /obj/item/roller/roller_holder_surg
 
 /obj/item/roller/roller_holder_surg

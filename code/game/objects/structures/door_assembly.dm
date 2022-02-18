@@ -34,7 +34,7 @@
 		var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && src.loc != usr)
+		if(!Adjacent(usr))
 			return
 		created_name = t
 		return
@@ -102,8 +102,7 @@
 			user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
 			if(W.use_tool(src, user, 40, volume = 50))
-				user.drop_item()
-				AE.loc = src
+				user.drop_from_inventory(AE, src)
 				to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE

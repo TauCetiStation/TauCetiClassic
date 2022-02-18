@@ -14,7 +14,7 @@
 			message_admins("[key_name_admin(usr)] jumped to [A]")
 			feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
@@ -26,11 +26,11 @@
 		if(src.mob)
 			var/mob/A = src.mob
 			A.forceMove(T)
-			log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-			message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
+			log_admin("[key_name(usr)] jumped to [COORD(T)] in [T.loc]")
+			message_admins("[key_name_admin(usr)] jumped to [COORD(T)] in [T.loc]")
 			feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 	return
 
 /client/proc/jumptomob(mob/M in (global.mob_list - global.dummy_mob_list))
@@ -54,7 +54,7 @@
 			else
 				to_chat(A, "This mob is not located in the game world.")
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
@@ -72,7 +72,7 @@
 			message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 			feedback_add_details("admin_verb","JC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/jumptokey()
 	set category = "Admin"
@@ -98,7 +98,7 @@
 			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
 			feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/Getmob(mob/M in (global.mob_list - global.dummy_mob_list))
 	set category = "Admin"
@@ -113,7 +113,7 @@
 		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]")
 		feedback_add_details("admin_verb","GM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/Getkey()
 	set category = "Admin"
@@ -142,7 +142,7 @@
 			message_admins("[key_name_admin(usr)] teleported [key_name(M)]")
 			feedback_add_details("admin_verb","GK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
-		alert("Admin jumping disabled")
+		tgui_alert(usr, "Admin jumping disabled")
 
 /client/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
@@ -158,4 +158,4 @@
 			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 			feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		else
-			alert("Admin jumping disabled")
+			tgui_alert(usr, "Admin jumping disabled")

@@ -977,6 +977,13 @@
 	do_colouration = FALSE
 	ipc_head_compatible = null
 
+/datum/sprite_accessory/hair/ipc_screen_text // it can be selected by setting text to display
+	name = "IPC text screen"
+	icon_state = "ipc_text"
+	species_allowed = list(IPC)
+	ipc_head_compatible = null
+	do_colouration = FALSE
+
 /datum/sprite_accessory/hair/ipc_screen_pink
 	name = "pink IPC screen"
 	icon_state = "ipc_pink"

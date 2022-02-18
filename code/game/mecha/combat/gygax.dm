@@ -18,6 +18,11 @@
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 
+/obj/mecha/combat/gygax/Destroy()
+	QDEL_NULL(overload_action)
+	return ..()
+
+
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Grant(user, src)
@@ -92,7 +97,7 @@
 		if(animated)
 			flick("ultra-gofasta-on",src)
 			icon_state = "ultra-gofasta"
-	src.log_message("Toggled leg actuators overload.")
+	log_message("Toggled leg actuators overload.")
 	return
 
 /obj/mecha/combat/gygax/dyndomove(direction)
@@ -129,5 +134,5 @@
 /obj/mecha/combat/gygax/Topic(href, href_list)
 	..()
 	if (href_list["toggle_leg_overload"])
-		src.overload()
+		overload()
 	return

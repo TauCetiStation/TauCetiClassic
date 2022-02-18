@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -30,7 +30,7 @@
 	                                 /obj/item/weapon/reagent_containers/food,
 	                                 /obj/item/weapon/cartridge/clown,
 	                                 /obj/item/weapon/bananapeel,
-	                                 /obj/item/weapon/soap,
+	                                 /obj/item/weapon/reagent_containers/food/snacks/soap,
 	                                 /obj/item/weapon/bikehorn,
 	                                 /obj/item/toy/sound_button,
 	                                 /obj/item/device/tabletop_assistant,
@@ -60,7 +60,7 @@
 	                             /obj/item/weapon/storage/box/syndie_kit/cutouts,
 	                             /obj/item/cardboard_cutout,
 	                             /obj/item/clothing/gloves/black/strip,
-	                             /obj/item/weapon/soap/syndie,
+	                             /obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 	                             /obj/item/weapon/cartridge/syndicate,
 	                             /obj/item/toy/carpplushie/dehy_carp,
 	                             /obj/item/weapon/storage/box/syndie_kit/chameleon,
@@ -167,9 +167,6 @@
 	scan(target, user)
 
 /obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
-	if(!dropping.Adjacent(user))
-		return
-
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
@@ -192,7 +189,7 @@
 			if(A.blood_DNA)
 				danger_color = "red"
 				break
-			if(istype(A, /obj/item))
+			if(isitem(A))
 				var/obj/item/I = A
 				if(I.is_sharp())
 					danger_color = "red"

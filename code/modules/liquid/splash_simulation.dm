@@ -1,8 +1,8 @@
 #define LIQUID_TRANSFER_THRESHOLD 0.05
 
-var/liquid_delay = 4
+var/global/liquid_delay = 4
 
-var/list/datum/puddle/puddles = list()
+var/global/list/datum/puddle/puddles = list()
 
 /datum/puddle
 	var/list/obj/effect/liquid/liquid_objects = list()
@@ -136,7 +136,7 @@ var/list/datum/puddle/puddles = list()
 	return FALSE
 
 /obj/effect/liquid/Destroy()
-	src.controller.liquid_objects.Remove(src)
+	controller.liquid_objects.Remove(src)
 	return ..()
 
 /obj/effect/liquid/proc/update_icon2()

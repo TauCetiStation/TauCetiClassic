@@ -121,3 +121,33 @@
 	structure_id = "NASA satellite"
 	desc = "Unknown small object"
 	mappath = "maps/templates/space_structures/satellite.dmm"
+
+/datum/map_template/space_structure/tree_asteroid
+	name = "Tree Asteroid"
+	structure_id = "tree_asteroid"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/tree_asteroid.dmm"
+
+/datum/map_template/space_structure/recourse_shuttle
+	name = "Abandoned Cargo Shuttle"
+	structure_id = "recourse_shuttle"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/recourse_shuttle.dmm"
+
+/datum/map_template/space_structure/ships_squad
+	name = "NT Ships Squad"
+	structure_id = "ships_squad"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/ships_squad.dmm"
+
+/datum/map_template/space_structure/secrete_lab
+	name = "Secrete Lab"
+	structure_id = "secrete_lab"
+	desc = "Debris of an unknown lab"
+	mappath = "maps/templates/space_structures/sectere_lab.dmm"
+
+/datum/map_template/space_structure/broken_breacher
+	name = "Broken Breacher"
+	structure_id = "broken_breacher"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/broken_breacher.dmm"

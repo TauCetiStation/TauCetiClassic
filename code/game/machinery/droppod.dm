@@ -10,8 +10,8 @@
 	desc = "We are coming. Look to the skies for your salvation."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 	bound_height = 64
 	icon = 'icons/obj/structures/droppod.dmi'
@@ -31,7 +31,7 @@
 	var/obj/machinery/nuclearbomb/Stored_Nuclear
 	var/list/stored_items = list()
 
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
@@ -92,11 +92,12 @@
 
 /********Datum helper with restricted and allowed areas for droping********/
 
-/datum/droppod_allowed
+/datum/droppod_vision
 	var/static/list/areas
 	var/static/list/black_list_areas
+	var/static/list/image/obscured_turfs
 
-/datum/droppod_allowed/New()
+/datum/droppod_vision/New()
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
@@ -133,6 +134,15 @@
 		for(var/i in areas)
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
+
+	if(obscured_turfs)
+		return
+	obscured_turfs = list()
+	for(var/A in black_list_areas)
+		for(var/turf/simulated/turf in get_area_turfs(A))
+			var/image/i = image('icons/effects/cameravis.dmi', turf, "black", ABOVE_LIGHTING_LAYER)
+			i.plane = ABOVE_LIGHTING_PLANE
+			obscured_turfs += i
 
 /obj/effect/landmark/droppod
 
@@ -255,7 +265,13 @@
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
 		if(!T.density && !istype(T, /turf/space) && !T.obscured)
-			L+=T
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		return
@@ -287,12 +303,15 @@
 	eyeobj.name = "[intruder.name] (Eye)"
 	intruder.client.images += eyeobj.ghostimage
 	intruder.client.eye = eyeobj
+	if (!(flags & IS_LEGITIMATE))
+		intruder.client.images += allowed_areas.obscured_turfs
+	intruder.client.show_popup_menus = FALSE
 
 /obj/structure/droppod/proc/ChooseTarget()
 	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
-	if(teleport_turf.obscured)
+	if(teleport_turf.obscured || istype(teleport_turf, /turf/space))
 		to_chat(intruder, "<span class='userdanger'>No signal here! It might be unsafe to deploy here!</span>")
 		return
 	if(!(flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
@@ -309,6 +328,7 @@
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
+		intruder.client.show_popup_menus = TRUE
 		intruder.reset_view(deleting ? loc : src)
 	flags &= ~STATE_AIMING
 
@@ -367,7 +387,7 @@
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			T.ex_act(1)
+			T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))
@@ -475,7 +495,7 @@
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
-	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
+	if(do_after(usr, 100, 1, src) && Stored_Nuclear)
 		EjectNuclear()
 
 /obj/structure/droppod/proc/EjectNuclear()
@@ -730,8 +750,8 @@
 	desc = "Remains of some unfortunate Pod. Completely unrepairable."
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "crashed_droppod"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
 
 /obj/effect/decal/droppod_wreckage/atom_init(mapload, icon_modifier)
@@ -792,4 +812,4 @@
 	desc = "Simple Aim system, can be installed in poor Drop pods"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY

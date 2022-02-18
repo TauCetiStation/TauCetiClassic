@@ -8,7 +8,7 @@
 	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	religify_cd = 5 MINUTES
 
@@ -49,6 +49,7 @@
 		..()
 
 /obj/item/weapon/storage/bible/tome/pickup(mob/user)
+	. = ..()
 	if(!religion && user.my_religion)
 		religion = user.my_religion
 
@@ -81,15 +82,9 @@
 	if(!istype(religion, /datum/religion/cult))
 		return
 
-	var/datum/religion/cult/C = religion
-	if(target.type in C.strange_anomalies)
-		animate(target, 1 SECONDS, alpha = 0)
-		sleep(1 SECONDS)
-		religion.adjust_favor(rand(1, 5))
-		qdel(target)
-		destr_next[user.ckey] = world.time + destr_cd
-		// statistics!
-		score["destranomaly"]++
+	if(istype(target, /obj/structure/cult/anomaly))
+		var/obj/structure/cult/anomaly/A = target
+		A.destroying(religion)
 		return
 
 	if(!toggle_deconstruct || !proximity)
@@ -150,7 +145,7 @@
 	if(religion.runes_by_mob[H])
 		var/list/L = religion.runes_by_mob[H]
 		if(L.len > religion.max_runes_on_mob)
-			to_chat(H, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+			to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
 			return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
@@ -162,7 +157,7 @@
 		return
 	scribing = FALSE
 
-	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), ((rand(9) + 1) / 10))
+	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 
 	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion, H)
 	R.icon = rune_choices_image[choice]
@@ -246,7 +241,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/can_build_here(mob/user, datum/rune/rune)
 	var/area/area = get_area(user)
-	if(!religion.can_build_everywhere && !istype(religion, area.religion?.type))
+	if(!religion.get_tech(RTECH_BUILD_EVERYWHERE) && !istype(religion, area.religion?.type))
 		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
 		return FALSE
 	return TRUE

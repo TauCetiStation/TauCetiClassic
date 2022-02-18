@@ -5,7 +5,7 @@
 /obj/machinery/vending/newyearmate
 	name = "NewYearMate"
 	desc = "A vending machine for new year clothing and decorations!"
-	icon = 'code/modules/holidays/new_year/new_year_mate.dmi'
+	icon = 'icons/holidays/new_year/new_year_mate.dmi'
 	icon_state = "NYM"
 	vend_delay = 10
 	vend_reply = "Thank you for using the NewYearMate!"

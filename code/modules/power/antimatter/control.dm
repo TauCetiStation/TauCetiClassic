@@ -3,8 +3,8 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000
@@ -116,11 +116,11 @@
 
 /obj/machinery/power/am_control_unit/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			stability -= 60
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			stability -= 40
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			stability -= 20
 	check_stability()
 	return
@@ -153,14 +153,14 @@
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"You secure the anchor bolts to the floor.", \
 				"You hear a ratchet")
-			src.anchored = 1
+			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"You remove the anchor bolts.", \
 				"You hear a ratchet")
-			src.anchored = 0
+			src.anchored = FALSE
 			disconnect_from_network()
 		else
 			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
@@ -258,7 +258,7 @@
 
 /obj/machinery/power/am_control_unit/ui_interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)) || !anchored)
-		if(!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return

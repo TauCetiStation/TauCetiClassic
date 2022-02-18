@@ -98,7 +98,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 5)
@@ -158,10 +158,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 		if(6 to INFINITY)
 			M.SetSleeping(20 SECONDS)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	if(data["ticks"] % 3 == 0)
 		M.emote("gasp")
 
@@ -330,7 +330,7 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
 				M.Weaken(2)
@@ -360,7 +360,7 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
 			M.Weaken(30)
@@ -385,6 +385,9 @@
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
 			M.Weaken(10)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -405,6 +408,8 @@
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
 			H.Weaken(10)
+		if(volume >= overdose)
+			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -422,7 +427,7 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 50)
 			M.SetSleeping(20 SECONDS)
@@ -459,7 +464,7 @@
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -518,7 +523,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -637,6 +642,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -723,7 +729,7 @@
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
-	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
+	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.notransform)
 			return
@@ -764,7 +770,7 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 15)
+	M.adjustDrugginess(2)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
@@ -802,9 +808,7 @@
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
 	..()
 	M.make_dizzy(1)
-	if(!M.confused)
-		M.confused = 1
-	M.confused = max(M.confused, 20)
+	M.MakeConfused(20)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"

@@ -6,9 +6,6 @@
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,-1)
-
 	var/regenerate_icons
 
 	switch(act)
@@ -19,7 +16,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return

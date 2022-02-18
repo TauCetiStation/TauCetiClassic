@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 60
 	g_amt = 30
 	var/emagged = FALSE
@@ -12,8 +12,8 @@
 	var/playing = FALSE
 	var/timerecorded = FALSE
 	var/playsleepseconds = 0
-	var/list/storedinfo = new/list()
-	var/list/timestamp = new/list()
+	var/list/storedinfo = list()
+	var/list/timestamp = list()
 	var/canprint = TRUE
 	flags = CONDUCT
 	throwforce = 2

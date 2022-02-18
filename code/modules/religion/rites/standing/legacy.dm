@@ -46,6 +46,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/legacy/rite_step(mob/living/user, obj/AOG, current_stage)
+	..()
 	if(on_invocation_spell && prob(invocation_prob))
 		cast_spell(user, AOG, on_invocation_spell)
 
@@ -69,4 +70,4 @@
 		ASPECT_RESCUE = 1,
 	)
 
-	invoke_spelltype = /obj/effect/proc_holder/spell/targeted/charge/religion
+	invoke_spelltype = /obj/effect/proc_holder/spell/no_target/charge/religion

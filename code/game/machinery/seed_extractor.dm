@@ -3,8 +3,8 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
@@ -39,7 +39,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/organ/external))
+	if(isbodypart(O))
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
@@ -51,7 +51,6 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = F.seed_type
 		var/t_amount = 0
@@ -70,7 +69,6 @@
 
 	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
-		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = F.seed_type
 		var/t_amount = 0

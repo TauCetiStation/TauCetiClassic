@@ -1,4 +1,3 @@
-
 /datum/reagent/coolant
 	name = "Coolant"
 	id = "coolant"
@@ -40,9 +39,9 @@
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)
 	S.start()
-	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
-	var/datum/gas_mixture/env = src.loc.return_air()
+	var/datum/gas_mixture/env = loc.return_air()
 	if(env)
 		if (reagents.total_volume > 750)
 			env.temperature = 0

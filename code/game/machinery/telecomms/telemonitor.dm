@@ -123,7 +123,7 @@
 
 /obj/machinery/computer/telecomms/monitor/attackby(obj/item/weapon/D, mob/user)
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/computer/telecomms/monitor/emag_act(mob/user)

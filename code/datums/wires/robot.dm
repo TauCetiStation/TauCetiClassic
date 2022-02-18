@@ -1,8 +1,8 @@
-var/const/BORG_WIRE_LAWCHECK    = 1
-var/const/BORG_WIRE_MAIN_POWER  = 2
-var/const/BORG_WIRE_LOCKED_DOWN = 4
-var/const/BORG_WIRE_AI_CONTROL  = 8
-var/const/BORG_WIRE_CAMERA      = 16
+var/global/const/BORG_WIRE_LAWCHECK    = 1
+var/global/const/BORG_WIRE_MAIN_POWER  = 2
+var/global/const/BORG_WIRE_LOCKED_DOWN = 4
+var/global/const/BORG_WIRE_AI_CONTROL  = 8
+var/global/const/BORG_WIRE_CAMERA      = 16
 
 /datum/wires/robot
 	random = TRUE

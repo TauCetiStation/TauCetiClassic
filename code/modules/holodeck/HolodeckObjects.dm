@@ -52,8 +52,8 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
@@ -73,7 +73,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 
 /obj/item/clothing/gloves/boxing/hologlove
@@ -121,7 +121,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
@@ -151,11 +151,11 @@
 			take_damage(aforce)
 		return
 
-	src.add_fingerprint(user)
-	if (!src.requiresID())
+	add_fingerprint(user)
+	if (!requiresID())
 		user = null
 
-	if (src.allowed(user))
+	if (allowed(user))
 		if (src.density)
 			open()
 		else
@@ -167,7 +167,7 @@
 	return
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
-	src.density = 0
+	src.density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
@@ -191,8 +191,8 @@
 	throw_speed = 1
 	throw_range = 5
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
-	flags = NOSHIELD | NOBLOODY
+	w_class = SIZE_TINY
+	flags = NOBLOODY
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green
@@ -224,17 +224,17 @@
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -250,15 +250,15 @@
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their bags/pockets
+	w_class = SIZE_NORMAL //Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
@@ -273,13 +273,13 @@
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if (isitem(W) && get_dist(src,user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -298,7 +298,7 @@
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6

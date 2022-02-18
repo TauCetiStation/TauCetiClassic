@@ -3,8 +3,8 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	flags = CONDUCT
 	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
@@ -21,11 +21,11 @@
 
 /obj/structure/grille/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			health -= rand(30, 50)
-		if(2)
+		if(EXPLODE_HEAVY)
 			health -= rand(15, 30)
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= rand(5, 15)
 	healthcheck()
 	return
@@ -60,7 +60,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
+	if(isxenolarva(user))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -73,7 +73,7 @@
 		return
 
 /obj/structure/grille/attack_slime(mob/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	if(!isslimeadult(user))	return
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
@@ -182,17 +182,17 @@
 				WD = new/obj/structure/window/basic(loc) //normal window
 			WD.set_dir(dir_to_set)
 			WD.ini_dir = dir_to_set
-			WD.anchored = 0
+			WD.anchored = FALSE
 			WD.state = 0
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
 		return
 //window placing end
 
-	if(user.a_intent != INTENT_HARM)
-		return
-
 	. = ..()
+	if(!.)
+		return FALSE
+
 	if((W.flags & CONDUCT) && shock(user, 70))
 		return
 
@@ -213,7 +213,7 @@
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"
-			density = 0
+			density = FALSE
 			destroyed = 1
 			new /obj/item/stack/rods(get_turf(src))
 
@@ -232,7 +232,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	if(!Adjacent(user))//To prevent TK and mech users from getting shocked
 		return 0
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()

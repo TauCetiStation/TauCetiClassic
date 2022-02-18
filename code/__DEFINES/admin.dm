@@ -56,6 +56,10 @@
 
 #define R_HOST			65535
 
+#define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_SANDBOX "Sandbox Admin"
+#define ADMIN_RANK_REMOVED "Removed"
+
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
 #define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
 #define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"
@@ -74,6 +78,17 @@
 
 #define AHELP_REPLY 1 // actually not used anywhere, remove this comment otherwise.
 #define MHELP_REPLY 2
+
+///Max length of a keypress command before it's considered to be a forged packet/bogus command
+#define MAX_KEYPRESS_COMMANDLENGTH 16
+///Maximum keys that can be bound to one button
+#define MAX_COMMANDS_PER_KEY 5
+///Maximum keys per keybind
+#define MAX_KEYS_PER_KEYBIND 3
+///Max amount of keypress messages per second over two seconds before client is autokicked
+#define MAX_KEYPRESS_AUTOKICK 50
+///Length of held key buffer
+#define HELD_KEY_BUFFER_LENGTH 15
 
 #define STICKYBAN_DB_CACHE_TIME    10 SECONDS // DB update cache
 #define STICKYBAN_ROGUE_CHECK_TIME 5 // Timeout for rogue check

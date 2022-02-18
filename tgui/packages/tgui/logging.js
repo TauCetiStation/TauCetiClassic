@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { sendLogEntry } from 'tgui-dev-server/link/client';
+import { sendLogEntry } from 'tgui-dev-server/link/client.cjs';
 
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
@@ -36,6 +36,7 @@ const log = (level, ns, ...args) => {
       tgui: 1,
       window_id: window.__windowId__,
       type: 'log',
+      ns,
       message: logEntry,
     });
   }

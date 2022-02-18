@@ -2,7 +2,7 @@
 // is not in use.
 
 // The SPACEMAN_DMM define is set by the linter and other tooling when it runs.
-// See https://github.com/SpaceManiac/SpacemanDMM/tree/suite-1.6/src/dreamchecker
+// See https://github.com/SpaceManiac/SpacemanDMM/tree/suite-1.7.2/crates/dreamchecker
 #ifdef SPACEMAN_DMM
 	#define RETURN_TYPE(X) set SpacemanDMM_return_type = X
 	#define SHOULD_CALL_PARENT(X) set SpacemanDMM_should_call_parent = X
@@ -32,8 +32,23 @@
 #endif
 
 #ifdef DEBUG
+/proc/auxtools_stack_trace(msg)
+	CRASH(msg)
+
+/proc/auxtools_expr_stub()
+	CRASH("auxtools not loaded")
+
+/proc/enable_debugging(mode, port)
+	CRASH("auxtools not loaded")
+
 /world/proc/enable_debugger()
-	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-	if (dll)
-		call(dll, "debug_initialize")()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_init")()
+		enable_debugging()
+
+/world/proc/disable_debugger()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
 #endif

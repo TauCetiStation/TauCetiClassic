@@ -21,9 +21,9 @@
 
 /obj/effect/proc_holder/spell/dumbfire/choose_targets(mob/user = usr)
 
-	var/turf/T = get_turf(usr)
-	for(var/i = 1; i < range; i++)
-		var/turf/new_turf = get_step(T, usr.dir)
+	var/turf/T = get_turf(user)
+	for(var/i in 1 to range)
+		var/turf/new_turf = get_step(T, user.dir)
 		if(new_turf.density)
 			break
 		T = new_turf
@@ -40,7 +40,7 @@
 			projectile.set_dir(get_dir(projectile, target))
 			projectile.name = proj_name
 
-			var/current_loc = usr.loc
+			var/current_loc = user.loc
 
 			projectile.loc = current_loc
 
@@ -57,7 +57,7 @@
 					projectile.cast(current_loc)
 					break
 
-				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - usr
+				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
 				if(L)
 					projectile.cast(L.loc)
 					break
@@ -68,7 +68,7 @@
 							var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
-							trail.density = 0
+							trail.density = FALSE
 							spawn(proj_trail_lifespan)
 								qdel(trail)
 

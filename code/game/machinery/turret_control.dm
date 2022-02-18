@@ -11,8 +11,8 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
 
 	var/enabled = 0
@@ -83,15 +83,15 @@
 
 	return FALSE
 
-/obj/machinery/turretid/is_operational_topic()
-	return !(stat & (NOPOWER|BROKEN))
+/obj/machinery/turretid/is_operational()
+	return !(stat & (NOPOWER | BROKEN))
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
-		if(src.allowed(usr))
+		if(allowed(usr))
 			if(emagged)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 			else

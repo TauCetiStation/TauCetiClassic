@@ -3,7 +3,7 @@
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	opacity = 1
-	density = 1
+	density = TRUE
 
 	damage_cap = 200
 	max_temperature = 20000
@@ -38,17 +38,12 @@
 
 	/*user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
+	add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
 	..()
 	return
 
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -67,10 +62,10 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
-			src.dismantle_wall()
+			dismantle_wall()
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -323,6 +318,12 @@
 	else if(istype(W,/obj/item/door_control_frame))
 		var/obj/item/door_control_frame/AH = W
 		AH.try_build(src)
+		return
+
+	// why is all of this here help me
+	else if(istype(W, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = W
+		NF.try_build(user, src)
 		return
 
 	//Poster stuff

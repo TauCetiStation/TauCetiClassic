@@ -11,7 +11,7 @@
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
@@ -64,7 +64,7 @@
 			T = get_step(src, direction_to_check)
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-				I.plane = 6
+				I.plane = FLOOR_PLANE
 				T.add_overlay(I)
 
 	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
@@ -80,17 +80,16 @@
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
-		if(2.0)
-			if (prob(70))
-				mined_ore = 1 // some of the stuff gets blown up
-				GetDrilled()
-		if(1.0)
-			mined_ore = 2 // some of the stuff gets blown up
-			GetDrilled()
-
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
+			return
+	mined_ore = 3 - severity
+	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
 			if(istype(H.l_hand,/obj/item/weapon/pickaxe/drill))
@@ -105,14 +104,14 @@
 					return
 			attackby(H.r_hand,H)
 
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			attackby(R.module_active,R)
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
@@ -160,10 +159,6 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
-		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -186,9 +181,9 @@
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = W
-		if(S.wielded)
+	if (istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
 			GetDrilled(artifact_fail = 1)
 		else
@@ -238,6 +233,11 @@
 					artifact_debris()
 
 		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+				if(BPHand.pumped < 30)
+					BPHand.adjust_pumped(0.1)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -512,7 +512,6 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
 	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
@@ -567,7 +566,7 @@
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
-					new src.type(tunnel, rand(10, 15), 0, dir)
+					new type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -588,8 +587,12 @@
 	if(!sanity)
 		return
 
-	if(prob(30))
-		SpawnMonster(T)
+	if(prob(6))
+		if(istype(loc, /area/asteroid/mine/explored))
+			return
+		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
+			return
+		new /obj/machinery/artifact/bluespace_crystal(T)
 
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
@@ -598,26 +601,6 @@
 		t = T.ChangeTurf(basetype)
 	spawn(2)
 		t.update_overlays_full()
-
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
-	if(istype(loc, /area/asteroid/mine/explored))
-		return
-	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
-		return
-	var/randumb = pickweight(mob_spawn_list)
-	switch(randumb)
-		if("Goliath")
-			new /mob/living/simple_animal/hostile/asteroid/goliath(T)
-		if("Goldgrub")
-			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
-		if("Basilisk")
-			new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
-		if("Hivelord")
-			new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
-		if("Drone")
-			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
-	if(prob(20))
-		new /obj/machinery/artifact/bluespace_crystal(T)
 
 /**********************Asteroid**************************/
 
@@ -683,7 +666,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.add_overlay(I)
+				add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A
@@ -697,14 +680,12 @@
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
 			return
-		if(2.0)
-			if(prob(70))
-				gets_dug()
-		if(1.0)
-			gets_dug()
-	return
+	gets_dug()
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
 

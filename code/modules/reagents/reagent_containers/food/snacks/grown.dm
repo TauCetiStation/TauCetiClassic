@@ -143,7 +143,7 @@
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
 			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
-			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new(get_turf(user))
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
 			qdel(src)
@@ -297,13 +297,14 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
-	src.set_light(0)
+	. = ..()
+	set_light(0)
 	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
 	..()
 	user.set_light(0)
-	src.set_light(2,1)
+	set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed_type = /obj/item/seeds/cocoapodseed
@@ -389,11 +390,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("bicaridine", 1+round(potency / 8, 1))
-	reagents.add_reagent("synaptizine", 1+round(potency / 8, 1))
-	reagents.add_reagent("hyperzine", 1+round(potency / 10, 1))
-	reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("bicaridine", 1+round(potency / 6, 1))
+	reagents.add_reagent("synaptizine", 1+round(potency / 6, 1))
+	reagents.add_reagent("space_drugs", 1+round(potency / 9, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -475,7 +475,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
+	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
 		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		qdel(src)
@@ -632,7 +632,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
@@ -687,7 +687,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
@@ -710,7 +710,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
@@ -728,7 +728,7 @@
 
 		C.stop_pulling()
 		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		if(!C.buckled)
 			C.Stun(8)
 			C.Weaken(5)
@@ -1017,7 +1017,7 @@
 	. = ..()
 	switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		if(0 to 10)
-			new/obj/item/weapon/spacecash/(loc)
+			new/obj/item/weapon/spacecash(loc)
 		if(11 to 20)
 			new/obj/item/weapon/spacecash/c10(loc)
 		if(21 to 30)
@@ -1054,11 +1054,11 @@
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
-		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 		qdel(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
@@ -1101,5 +1101,5 @@
 				s.set_up(3, 1, A)
 				s.start()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)

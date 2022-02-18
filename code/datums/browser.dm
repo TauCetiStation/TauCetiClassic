@@ -313,12 +313,12 @@
 		if(hsrc)
 			//world << "[src] Topic [href] [hsrc]"
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
+			Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		//world << "[src] was [src.mob.machine], setting to null"
-		src.mob.unset_machine()
+		mob.unset_machine()
 	return

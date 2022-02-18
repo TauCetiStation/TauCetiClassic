@@ -96,6 +96,7 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
+	w_class = SIZE_MASSIVE
 
 	randomify = FALSE
 
@@ -108,6 +109,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
+	w_class = SIZE_HUMAN
 
 	turns_per_move = 5
 	speed = -15
@@ -134,4 +136,4 @@
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
-		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, FALSE, null, -3)

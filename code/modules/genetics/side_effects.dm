@@ -74,7 +74,7 @@
 	H.emote("me", 1, "has drool running down from his mouth.")
 
 /datum/genetics/side_effect/confuse/finish(mob/living/carbon/human/H)
-	H.confused += 100
+	H.AdjustConfused(100)
 
 /datum/genetics/side_effect/bald_madness
 	name = "Bald madness"
@@ -95,7 +95,7 @@
 	set waitfor = 0
 	if(!H || !istype(H))
 		return
-	var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
+	var/tp = pick(subtypesof(/datum/genetics/side_effect))
 	var/datum/genetics/side_effect/S = new tp
 	S.start(H)
 

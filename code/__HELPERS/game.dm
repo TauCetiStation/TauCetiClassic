@@ -5,6 +5,25 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+//gets an empty square with RADIUS from CENTER
+#define BORDER_TURFS(RADIUS, CENTER) \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z) \
+	) + \
+	block( \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+	) \
+
 /proc/dopage(src,target)
 	var/href_list
 	var/href
@@ -13,12 +32,6 @@
 	src:temphtml = null
 	src:Topic(href, href_list)
 	return null
-
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
@@ -31,9 +44,9 @@
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
-		return 1
+		return TRUE
 
-	return 0 //not in range and not telekinetic
+	return FALSE //not in range and not telekinetic
 
 /**
  * Get a bounding box of a list of atoms.
@@ -71,7 +84,7 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/T in range(radius, centerturf))
@@ -86,7 +99,7 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/A in view(radius, centerturf))
@@ -109,7 +122,7 @@
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
@@ -122,7 +135,7 @@
 /proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in view(radius, centerturf))
@@ -140,7 +153,7 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
+/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = TRUE, sight_check = TRUE, include_radio = TRUE)
 
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
@@ -155,7 +168,7 @@
 			if(sight_check && !isInSight(A, O))
 				continue
 			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - [COORD(M)]"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && !isInSight(A, O))
@@ -185,7 +198,7 @@
 			var/mob/M = A
 			if(M.client)
 				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			//world.log << "Start = [M] - [get_turf(M)] - [COORD(M)]"
 		else if(istype(A, /obj/item/device/radio))
 			hear += A
 
@@ -236,13 +249,12 @@
 
 
 	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
+	for(var/mob/M as anything in player_list)
 		if(M)
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -250,7 +262,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()
@@ -272,14 +284,14 @@
 	var/turf/T
 	if(X1==X2)
 		if(Y1==Y2)
-			return 1 //Light cannot be blocked on same tile
+			return TRUE //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
-					return 0
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -295,21 +307,21 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(T.opacity)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
 	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
+		return TRUE
 
 	else
-		return 0
+		return FALSE
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
@@ -344,13 +356,21 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
 
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
+	if(M?.current)
+		if(enforce_human)
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current)
+		if(isliving(M.current))
+			return M.current.stat != DEAD
+	return FALSE
+
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))	O = new /obj/screen/text()
+	if(!isobj(O))	O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -448,20 +468,22 @@
 	var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
 	var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 	if(M.client.player_age == 0)
-		var/adminmsg = {"New player notify
-					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
-					Byond profile: <a href='[player_byond_profile]'>open</a>
-					Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"}
+		var/adminmsg = trim_margin({"
+		|New player notify
+		|Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
+		|Byond profile: <a href='[player_byond_profile]'>open</a>
+		|Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"})
 
-		message_admins(adminmsg)
+		message_admins(adminmsg, emphasize = TRUE)
 
 	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
-		var/mentormsg = {"New player notify
-					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
-					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
-					Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"}
+		var/mentormsg = trim_margin({"
+		|New player notify
+		|Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
+		|Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
+		|Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"})
 
-		message_mentors(mentormsg, 1)
+		message_mentors(mentormsg, TRUE, TRUE)
 
 // Better get_dir proc
 /proc/get_general_dir(atom/Loc1, atom/Loc2)
@@ -504,8 +526,8 @@
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
-	var/list/processed_list = new/list()
-	var/found_atoms = new/list()
+	var/list/processed_list = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -526,16 +548,24 @@
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
-		return new/list()
+		return list()
 
 //============TG PORTS============
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
+
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/mob/M in viewers(target))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
 
 //============Bay12 atmos=============
 /proc/convert_k2c(temp)
@@ -545,7 +575,7 @@
 	return ((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
-	var/list/temps = new/list(4)
+	var/list/temps[4]
 	for(var/dir in cardinal)
 		var/direction
 		switch(dir)
@@ -558,7 +588,7 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		var/list/rstats = new /list(stats.len)
+		var/list/rstats[stats.len]
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			for(var/i in 1 to stats.len)
@@ -586,7 +616,7 @@
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
-	for(var/mob/dead/observer/O in observer_list)
+	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
@@ -605,7 +635,7 @@
 	for(var/mob/M in group)
 		if(!M.client)
 			continue
-		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(M, be_special_type))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
@@ -622,15 +652,15 @@
 	return candidates
 
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
-	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", "No", "Yes", "Not This Round")
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"))
 	switch(ans)
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
 				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 				return
 			candidates += M
 		if("No")
@@ -639,15 +669,15 @@
 		if("Not This Round")
 			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
 			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
-			M.client.prefs.ignore_question += Ignore_Role
+			M.client.prefs.ignore_question |= Ignore_Role
 			return
 
 // first answer "Yes" > transfer
 /mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
-	if(key || mind || stat != CONSCIOUS)
+	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
-	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 		return
 
 	if(isobserver(M))
@@ -672,13 +702,13 @@
 /mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
 	var/ans
 	if(Ignore_Role)
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes", "Not This Round")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("Yes", "No", "Not This Round"))
 	else
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("Yes", "No"))
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question += IGNORE_BORER
+		M.client.prefs.ignore_question |= Ignore_Role
 		return
 
 	if(key || mind || stat != CONSCIOUS)
@@ -688,3 +718,17 @@
 
 /mob/proc/transfer_personality(client/C)
 	return
+
+/atom/proc/has_valid_appearance()
+	if(!check_sprite())
+		return FALSE
+	if(alpha != 255)
+		return FALSE
+	if(invisibility != INVISIBILITY_NONE)
+		return FALSE
+	return TRUE
+
+/atom/proc/check_sprite()
+	if(icon_state in icon_states(icon))
+		return TRUE
+	return FALSE

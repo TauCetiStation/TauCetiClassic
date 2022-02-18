@@ -1,5 +1,5 @@
 // NanoStateManager handles data from the server and uses it to render templates
-NanoStateManager = function () 
+NanoStateManager = function ()
 {
 	// _isInitialised is set to true when all of this ui's templates have been processed/rendered
 	var _isInitialised = false;
@@ -19,7 +19,7 @@ NanoStateManager = function ()
 	
 	// the init function is called when the ui has loaded
 	// this function sets up the templates and base functionality
-	var init = function () 
+	var init = function ()
 	{
 		// We store initialData and templateData in the body tag, it's as good a place as any
 		_data = $('body').data('initialData');	
@@ -119,11 +119,11 @@ NanoStateManager = function ()
 	};
 
 	return {
-        init: function () 
+        init: function ()
 		{
             init();
         },
-		receiveUpdateData: function (jsonString) 
+		receiveUpdateData: function (jsonString)
 		{
 			receiveUpdateData(jsonString);
         },
@@ -205,7 +205,7 @@ NanoStateManager = function ()
 
             if (previousState != null) {
                 previousState.onRemove(_currentState);
-            }            
+            }
 			
 			_currentState.onAdd(previousState);
 
@@ -217,4 +217,3 @@ NanoStateManager = function ()
 		}
 	};
 } ();
- 

@@ -125,9 +125,10 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		if(O.mind.changeling)
-			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			O.changeling_update_languages(O.mind.changeling.absorbed_languages)
+		var/datum/role/changeling/C = O.mind.GetRoleByType(/datum/role/changeling)
+		if(C)
+			C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
 
@@ -266,8 +267,9 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		if(O.mind.changeling)
-			O.changeling_update_languages(O.mind.changeling.absorbed_languages)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C)
+			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
 
@@ -432,7 +434,6 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
-	new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.
@@ -500,7 +501,7 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", mobtypes)
 
 	if(!safe_animal(mobpath))
 		to_chat(usr, "<span class='warning'>Sorry but this mob type is currently unavailable.</span>")
@@ -599,4 +600,11 @@
 	//Not in here? Must be untested!
 	return 1
 
-
+/mob/proc/Blobize()
+	if (notransform)
+		return
+	if(!client)
+		new /obj/effect/blob/core(loc)
+	else
+		new /obj/effect/blob/core(loc, client)
+	gib()

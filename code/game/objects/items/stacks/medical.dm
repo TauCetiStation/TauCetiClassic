@@ -4,8 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_MINUSCULE
+	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 
@@ -34,6 +34,8 @@
 		"<span class='notice'>You begin applying \the [src] on [to_self ? "yourself" : L].</span>")
 
 /obj/item/stack/medical/proc/can_heal(mob/living/L, mob/user)
+	if(zero_amount())
+		return FALSE
 	if(!istype(L))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
 		return FALSE
@@ -61,6 +63,9 @@
 	if(!can_heal(L, user))
 		return
 
+	if(L == user)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
+
 	var/delay = L == user ? self_delay : other_delay
 	if(delay)
 		if(!silent)
@@ -68,9 +73,8 @@
 		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE))
 			return
 
-	if(heal(L, user) && use(1) && repeating && !zero_amount())
+	if(use(1) && heal(L, user) && repeating)
 		try_heal(L, user, TRUE)
-		return
 
 	L.updatehealth()
 
@@ -147,7 +151,7 @@
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = clamp(amount, 1, max_amount)
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
@@ -188,7 +192,7 @@
 	return ..()
 
 /obj/item/stack/medical/ointment/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = clamp(amount, 1, max_amount)
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
@@ -229,7 +233,8 @@
 	repeating = TRUE
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -293,7 +298,8 @@
 
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -328,8 +334,8 @@
 	item_state = "splint"
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_SMALL
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
+	full_w_class = SIZE_TINY
 
 	self_delay = 50
 	other_delay = 25
@@ -389,7 +395,8 @@
 	repeating = FALSE
 
 /obj/item/stack/medical/suture/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/suture/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
@@ -399,7 +406,7 @@
 		// Suturing yourself brings much more pain.
 		var/pain_factor = H == user ? 40 : 20
 		if(H.stat == CONSCIOUS)
-			H.shock_stage += pain_factor
+			H.AdjustShockStage(pain_factor)
 		BP.status &= ~ORGAN_ARTERY_CUT
 		BP.strap()
 		user.visible_message(

@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_NO_CONTAINER
+	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()
@@ -57,22 +57,29 @@
 		if(!S)
 			src.modules -= null
 			S = new T(src, 1)
-			src.modules += S
+			add_item(S)
 
 		if(S.get_amount() < stacktypes[T])
 			S.add(1)
-
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
-	var/list/temp_list = modules
-	modules = list()
-	for(var/obj/O in temp_list)
-		if(O)
-			modules += O
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
 	R.add_language("Tradeband", 1)
 	R.add_language("Trinary", 1)
 	R.add_language("Sol Common", 1)
+
+/obj/item/weapon/robot_module/proc/add_item(obj/O)
+	O.forceMove(src)
+	modules += O
+	var/mob/living/silicon/robot/R = loc
+	R.hud_used.update_robot_modules_display()
+
+/obj/item/weapon/robot_module/proc/remove_item(obj/O)
+	if(!(locate(O) in modules))
+		return
+	modules -= O
+	var/mob/living/silicon/robot/R = loc
+	R.unequip_module(O)
+	qdel(O)
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -85,6 +92,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
@@ -93,18 +101,19 @@
 	if(B.charges < 10)
 		B.charges += 1
 
-/obj/item/weapon/robot_module/surgeon
-	name = "surgeon robot module"
+/obj/item/weapon/robot_module/medical
+	name = "medical robot module"
 	stacktypes = list(
 		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/nanopaste = 5
+		/obj/item/stack/medical/advanced/ointment = 5,
+		/obj/item/stack/nanopaste = 5,
+		/obj/item/stack/medical/splint = 10
 		)
 
-/obj/item/weapon/robot_module/surgeon/atom_init()
+/obj/item/weapon/robot_module/medical/atom_init()
 	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/weapon/scalpel/manager(src)
 	modules += new /obj/item/weapon/FixOVein(src)
 	modules += new /obj/item/weapon/hemostat(src)
@@ -117,63 +126,34 @@
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
+	modules += new /obj/item/stack/medical/advanced/ointment(src)
 	modules += new /obj/item/stack/nanopaste(src)
-
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
-
-	emag.reagents.add_reagent("pacid", 250)
-	emag.name = "Polyacid spray"
-
-/obj/item/weapon/robot_module/surgeon/respawn_consumable(mob/living/silicon/robot/R)
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
-		PS.reagents.add_reagent("pacid", 2)
-	..()
-
-/obj/item/weapon/robot_module/crisis
-	name = "crisis robot module"
-	stacktypes = list(
-		/obj/item/stack/medical/ointment = 25,
-		/obj/item/stack/medical/bruise_pack = 25,
-		/obj/item/stack/medical/splint = 10
-		)
-
-/obj/item/weapon/robot_module/crisis/atom_init()
-	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/gripper/chemistry(src)
-	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/weapon/gripper/medical(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
-	modules += new /obj/item/stack/medical/ointment(src, 25)
-	modules += new /obj/item/stack/medical/bruise_pack(src, 25)
 	modules += new /obj/item/stack/medical/splint(src, 10)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
-	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
+	modules += new /obj/item/weapon/shockpaddles/robot(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
 
-/obj/item/weapon/robot_module/crisis/respawn_consumable(mob/living/silicon/robot/R)
-
+/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
+	if(emag)
+		var/obj/item/weapon/reagent_containers/spray/PS = emag
+		PS.reagents.add_reagent("pacid", 2)
 	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
 	if(S.mode == 2)
 		S.reagents.clear_reagents()
 		S.mode = initial(S.mode)
 		S.desc = initial(S.desc)
 		S.update_icon()
-
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
-		PS.reagents.add_reagent("pacid", 2)
-
 	..()
 
 /obj/item/weapon/robot_module/engineering
@@ -205,6 +185,7 @@
 	modules += new /obj/item/taperoll/engineering(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/borg/stun(src)
 
@@ -223,6 +204,7 @@
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
@@ -244,7 +226,7 @@
 /obj/item/weapon/robot_module/janitor/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/soap/nanotrasen(src)
+	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer(src)
@@ -276,7 +258,7 @@
 	M.matter = 30
 	modules += M
 
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1
@@ -330,6 +312,7 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/geoscanner(src)
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
+	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/borg/stun(src)
 
 /obj/item/weapon/robot_module/syndicate
@@ -340,7 +323,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
-	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
@@ -352,6 +335,13 @@
 	//basic set+Sy-Code
 	. = ..()
 
+	R.add_language("Sy-Code", TRUE)
+
+/obj/item/weapon/robot_module/syndidrone
+	name = "syndicate drone module"
+
+/obj/item/weapon/robot_module/syndidrone/add_languages(mob/living/silicon/robot/R)
+	. = ..()
 	R.add_language("Sy-Code", TRUE)
 
 /obj/item/weapon/robot_module/combat
@@ -398,6 +388,7 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
+	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
@@ -426,6 +417,7 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)

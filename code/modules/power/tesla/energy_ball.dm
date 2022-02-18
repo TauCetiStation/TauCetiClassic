@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,
@@ -22,14 +22,14 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = ABOVE_LIGHTING_PLANE
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
 	move_self = 1
 	grav_pull = 0
 	contained = 0
-	density = 1
+	density = TRUE
 	energy = 0
 
 	var/list/orbiting_balls = list()
@@ -48,6 +48,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	return ..()
 
+
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
@@ -55,7 +56,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
-		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -95,7 +96,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.5
 
-		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
@@ -149,10 +150,19 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
+	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
+
+/obj/singularity/energy_ball/update_icon(stage)
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(2)
+		vis_contents += singulo_effect
+
+	singulo_effect.icon = icon
+	singulo_effect.icon_state = icon_state
 
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
@@ -205,7 +215,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if((dist < closest_dist || !closest_machine) && !M.being_shocked)

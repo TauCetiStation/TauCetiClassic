@@ -10,7 +10,7 @@
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
-	if(!src.Adjacent(user) || !over.Adjacent(user))
+	if(!Adjacent(user) || !over.Adjacent(user))
 		return FALSE // should stop you from dragging through windows
 	return TRUE
 

@@ -33,7 +33,7 @@
 	clamp_values()
 	UpdateDamage()
 	if(health < 0)
-		src.dust()
+		dust()
 
 
 /mob/living/blob/proc/clamp_values()
@@ -59,7 +59,7 @@
 		ghost.key = key
 		if (ghost.client)
 			ghost.client.eye = ghost
-		return ..(gibbed)
+	return ..(gibbed)
 
 
 /mob/living/blob/blob_act()
@@ -89,7 +89,7 @@
 		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
 		return
-	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
@@ -101,7 +101,7 @@
 		to_chat(usr, "There is a porus blob nearby, move more than 2 tiles away from it!")
 		creating_blob = 0
 	B.change_to("Node")
-	src.dust()
+	dust()
 	return
 
 
@@ -120,25 +120,25 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
 	for(var/obj/effect/blob/blob in orange(2))//Not right next to nodes/cores
-		if(istype(B,/obj/effect/blob/node))
+		if(isblobnode(B))
 			to_chat(usr, "There is a node nearby, move away from it!")
 			creating_blob = 0
 			return
-		if(istype(B,/obj/effect/blob/core))
+		if(isblobcore(B))
 			to_chat(usr, "There is a core nearby, move away from it!")
 			creating_blob = 0
 			return
-		if(istype(B,/obj/effect/blob/factory))
+		if(isblobfactory(B))
 			to_chat(usr, "There is another porous blob nearby, move away from it!")
 			creating_blob = 0
 			return
 	B.change_to("Factory")
-	src.dust()
+	dust()
 	return
 
 
@@ -157,12 +157,12 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(!istype(B,/obj/effect/blob/factory))
+	if(!isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find another one.")
 		creating_blob = 0
 		return
 	B.change_to("Normal")
-	src.dust()
+	dust()
 	return
 
 
@@ -182,7 +182,7 @@
 		creating_blob = 0
 		return
 	new/obj/effect/blob(src.loc)
-	src.dust()
+	dust()
 	return
 
 
@@ -229,7 +229,7 @@
 				break
 
 	if(!G_found)//If a ghost was not found.
-		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
+		tgui_alert(usr, "There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
 
 	if(G_found.client)

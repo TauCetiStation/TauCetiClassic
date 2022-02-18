@@ -12,7 +12,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
-	var/obj/screen/grab/hud = null
+	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
 	var/state = GRAB_NONE
@@ -25,7 +25,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
@@ -71,7 +71,7 @@
 	assailant = loc
 	affecting = victim
 
-	hud = new /obj/screen/grab(src)
+	hud = new /atom/movable/screen/grab(src)
 	hud.master = src
 
 	victim.grabbed_by += src
@@ -153,7 +153,8 @@
 /mob/proc/GetGrabs()
 	. = list()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
-		. += G
+		if(!QDELETED(G)) // slots are wacky and clean itself some time after qdel
+			. += G
 
 /obj/item/weapon/grab/process()
 	confirm()
@@ -207,7 +208,7 @@
 		affecting.drop_l_hand()
 		affecting.drop_r_hand()
 
-		var/hit_zone = assailant.zone_sel.selecting
+		var/hit_zone = assailant.get_targetzone()
 		var/announce = 0
 		if(hit_zone != last_hit_zone)
 			announce = 1
@@ -247,7 +248,7 @@
 
 	if(state >= GRAB_KILL)
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
-		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
+		affecting.Stuttering(5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
@@ -324,7 +325,7 @@
 				affecting.pixel_y = 0
 			animate(affecting, pixel_x =-shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 
-/obj/item/weapon/grab/proc/s_click(obj/screen/S)
+/obj/item/weapon/grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)
 		return
 	if(!assailant)
@@ -413,7 +414,7 @@
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/hit_zone = assailant.zone_sel.selecting
+			var/hit_zone = assailant.get_targetzone()
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
 				if(INTENT_HELP)

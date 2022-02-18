@@ -35,6 +35,20 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	usr.client.debug_variables(target)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
+/client/proc/generate_round_scoreboard()
+	set category = "Debug"
+	set name = "Throw Scoreboad"
+	set desc = "Generates and sends statistics to all players"
+
+	if(!holder)
+		return
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SSticker)
+		return
+
+	SSticker.generate_scoreboard(mob)
+	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
 
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))

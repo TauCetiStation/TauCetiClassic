@@ -21,6 +21,19 @@
 	colors["rainbow"] = /obj/item/clothing/head/soft/rainbow
 	gear_tweaks += new/datum/gear_tweak/path(colors)
 
+/datum/gear/head/ushanka
+	display_name = "Ushanka selection"
+	path = /obj/item/clothing/head/ushanka
+
+/datum/gear/head/ushanka/New()
+	..()
+	var/colors = list()
+	colors["black brown"] = /obj/item/clothing/head/ushanka
+	colors["brown"] = /obj/item/clothing/head/ushanka/brown
+	colors["black white"] = /obj/item/clothing/head/ushanka/black_white
+	colors["brown white"] = /obj/item/clothing/head/ushanka/brown_white
+	gear_tweaks += new/datum/gear_tweak/path(colors)
+
 /datum/gear/head/bandana
 	display_name = "Bandana selection"
 	path = /obj/item/clothing/head/bandana

@@ -21,7 +21,7 @@ def userChoice = System.console().readLine '\nPlease select maps to clean (examp
 def mapNumbersToClean = []
 
 try {
-    userChoice.tokenize(',').each { 
+    userChoice.tokenize(',').each {
         if (it.contains('-')) {
             def range = it.split('-')
             ((range[0] as int)..(range[1] as int)).each { mapNumbersToClean << it }
@@ -47,7 +47,7 @@ if (mapNumbersToClean.empty) {
 
     println '\nNext maps will be cleaned:'
     mapNumbersToClean.each { mapIndex ->
-        printf ' [%2d]: %s\n', mapIndex, mapFiles.get(mapIndex).name 
+        printf ' [%2d]: %s\n', mapIndex, mapFiles.get(mapIndex).name
     }
 
     userChoice = System.console().readLine '\nContinue? (y/n): '

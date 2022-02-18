@@ -6,7 +6,7 @@
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || (locate(/obj/structure/table, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))))
 		return ..()
 
-	if(user.zone_sel.selecting != part)
+	if(user.get_targetzone() != part)
 		to_chat(user, "<span class='warning'>That doesn't fit there!</span>")
 		return ..()
 

@@ -57,7 +57,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (busy)
 		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (isitem(O) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
@@ -69,8 +69,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
 		if(linked_console)

@@ -1,8 +1,8 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -52,24 +52,21 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(25))
+		if(EXPLODE_HEAVY)
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		if(3.0)
-			if (prob(25))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		else
-	return
+			else if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/x in verbs)
+		verbs -= x
+	set_broken()
 
 /obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
@@ -124,7 +121,7 @@
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			transfer_fingerprints_to(A)
 			A.circuit = circuit
-			A.anchored = 1
+			A.anchored = TRUE
 			A.set_dir(dir)
 			circuit = null
 			for (var/obj/C in src)
@@ -166,7 +163,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
@@ -222,7 +219,7 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
+	if(isxenoqueen(user))
 		attack_hand(user)
 		return
 	else
@@ -231,6 +228,7 @@
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = M
+		Hulk.do_attack_animation(src)
 		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
 		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
 		Hulk.health -= rand(2,4)
@@ -238,3 +236,25 @@
 			set_broken()
 			to_chat(M, "<span class='warning'>You broke the computer.</span>")
 			return
+
+/obj/machinery/computer/proc/print_document(text, docname)
+	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()
+	Paper.info = text
+	Paper.update_icon()
+	Paper.name = docname
+	Paper.forceMove(loc)
+
+/obj/machinery/computer/proc/print_photo(datum/data/record/record, docname)
+	var/datum/picture/Picture = new()
+	Picture.fields["img"] = record.fields["image"]
+	Picture.fields["author"] = record.fields["author"]
+	Picture.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+	Picture.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+	Picture.fields["icon"] = record.fields["icon"]
+	Picture.fields["tiny"] = record.fields["small_icon"]
+	Picture.fields["pixel_x"] = rand(-10, 10)
+	Picture.fields["pixel_y"] = rand(-10, 10)
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+	Photo.name = docname
+	Photo.forceMove(loc)
+	Photo.construct(Picture)

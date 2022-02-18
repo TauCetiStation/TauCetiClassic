@@ -31,6 +31,8 @@
 	// Radial menu
 	var/list/bible_skins
 
+	var/religious_tool_type
+
 	/*
 	var/lecturn_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -108,8 +110,6 @@
 	var/list/runes_by_mob = list()
 	// Max runes on mob
 	var/max_runes_on_mob
-	// Is the rune removed after use
-	var/reusable_rune = FALSE
 
 	/*
 		Others
@@ -118,6 +118,8 @@
 	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
+	// Tech_id by ref
+	var/list/all_techs = list()
 	// Used for cloning and round result
 	var/list/datum/mind/members_minds = list()
 	// Easy access
@@ -126,6 +128,8 @@
 	var/style_text
 	// It`s hud
 	var/symbol_icon_state
+	// String information about rituals, sects, aspects, etc.
+	var/datum/religion_interface/encyclopedia = new
 
 	/*
 		Building
@@ -142,8 +146,6 @@
 	var/list/datum/building_agent/available_techs = list()
 	// Type of initial tech agent for which available_runes will be generated
 	var/tech_agent_type
-	// Is it possible to build not only within the religious area
-	var/can_build_everywhere = FALSE
 
 	/*
 		Holy reagents
@@ -163,6 +165,8 @@
 
 	area_types = typesof(area_type)
 	religify_area(null, null, null, TRUE)
+
+	encyclopedia.init_encyclopedia(src)
 
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
@@ -192,7 +196,6 @@
 
 	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.choosing_sects = initial(altar.choosing_sects)
 		altar.religion = initial(altar.religion)
 		altar.performing_rite = initial(altar.performing_rite)
 
@@ -326,15 +329,9 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, custom_type)
-	var/obj/item/weapon/storage/bible/B
-	if(custom_type)
-		B = new custom_type(location)
-	else
-		B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
-	B.deity_name = pick(deity_names)
-	B.god_lore = lore
 	B.religion = src
 	return B
 
@@ -607,6 +604,8 @@
 	if(!is_member(M))
 		return FALSE
 
+	SEND_SIGNAL(src, COMSIG_REL_REMOVE_MEMBER, M)
+
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	if(M.mind)
@@ -669,7 +668,25 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name) // As a god
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
+
+/datum/religion/proc/add_tech(tech_type)
+	var/datum/religion_tech/T = new tech_type
+	T.on_add(src)
+	all_techs[T.id] = T
+
+/datum/religion/proc/get_tech(tech_id)
+	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes

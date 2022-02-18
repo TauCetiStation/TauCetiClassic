@@ -1,44 +1,49 @@
-
-//todo
 /datum/artifact_effect/celldrain
-	effect_name = "Cell Drain"
-	effect_type = ARTIFACT_EFFECT_ELECTRO
+	log_name = "Cell Drain"
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/celldrain/DoEffectTouch(mob/user)
-	if(user)
-		if(istype(user, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/R = user
-			for (var/obj/item/weapon/stock_parts/cell/D in R.contents)
-				D.charge = max(D.charge - rand() * 100, 0)
-				to_chat(R, "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>")
-			return 1
-
-		return 1
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/item/weapon/stock_parts/cell/D in user.contents)
+		D.use(150)
+		if(isrobot(user))
+			to_chat(user, "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>")
 
 /datum/artifact_effect/celldrain/DoEffectAura()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge = max(B.charge - 50,0)
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge = max(S.charge - 100,0)
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge = max(D.charge - 50,0)
-				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
-	return 1
+	. = ..()
+	if(!.)
+		return
+	discharge_everything_in_range(150, range, holder)
 
 /datum/artifact_effect/celldrain/DoEffectPulse()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge = max(B.charge - rand() * 150,0)
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge = max(S.charge - 250,0)
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge = max(D.charge - rand() * 150,0)
-				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
-	return 1
+	. = ..()
+	if(!.)
+		return
+	var/used_power = .
+	discharge_everything_in_range(200 * used_power, range, holder)
+
+/datum/artifact_effect/celldrain/DoEffectDestroy()
+	discharge_everything_in_range(10000, 7, holder)
+
+/datum/artifact_effect/celldrain/proc/try_use_charge(atom/reciever_atmon, power)
+	if(istype(reciever_atmon, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = reciever_atmon
+		C.use(power)
+	if(istype(reciever_atmon, /obj/machinery/power/apc))
+		for(var/obj/item/weapon/stock_parts/cell/C in reciever_atmon.contents)
+			C.use(power)
+	if(istype(reciever_atmon, /obj/machinery/power/smes))
+		for(var/obj/item/weapon/stock_parts/cell/C in reciever_atmon.contents)
+			C.use(power)
+	if(isrobot(reciever_atmon))
+		for(var/obj/item/weapon/stock_parts/cell/D in reciever_atmon.contents)
+			D.use(power)
+		to_chat(reciever_atmon, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
+
+/datum/artifact_effect/celldrain/proc/discharge_everything_in_range(power, range, center)
+	var/turf/curr_turf = get_turf(holder)
+	var/list/captured_atoms = range(range, curr_turf)
+	for(var/atom/A in captured_atoms)
+		try_use_charge(A, power)

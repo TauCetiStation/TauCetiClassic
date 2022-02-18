@@ -56,7 +56,7 @@
 			tile.break_tile()
 		var/o=3
 		for(var/i=0, i<14, i++)
-			usr.density = 0
+			usr.density = FALSE
 			usr.canmove = 0
 			o++
 			if(o == 4)
@@ -73,7 +73,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 					BP.take_damage(20, null, null, "Hulk Foot")
@@ -105,7 +105,7 @@
 			usr.weakened += 10
 			usr.stunned += 5
 
-		usr.density = 1
+		usr.density = TRUE
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
@@ -203,7 +203,7 @@
 				if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
-							S.ex_act(2)
+							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
 				if(istype(T,/turf/simulated/wall))
@@ -230,7 +230,7 @@
 							H.Weaken(5)
 			if(i > 20)
 				usr.canmove = 0
-				usr.density = 0
+				usr.density = FALSE
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
 						M.log_combat(usr, "hulk_dashed")
@@ -240,7 +240,7 @@
 						for(var/o=0, o<10, o++)
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
-						if(istype(H,/mob/living/carbon/human))
+						if(ishuman(H))
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 							BP.take_damage(20, null, null, "Hulk Shoulder")
 							BP.fracture()
@@ -285,7 +285,7 @@
 			usr.weakened += 10
 			usr.stunned += 5
 
-		usr.density = 1
+		usr.density = TRUE
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
@@ -334,9 +334,9 @@
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
-			usr.anchored = 1
+			usr.anchored = TRUE
 			sleep(1)
-		usr.anchored = 0
+		usr.anchored = FALSE
 		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
@@ -356,7 +356,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 					if(HAS_TRAIT(usr, TRAIT_FAT))
@@ -388,7 +388,7 @@
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
 			if(istype(S,/obj/structure/window))
-				S.ex_act(2)
+				S.ex_act(EXPLODE_HEAVY)
 			if(istype(S,/obj/structure/grille))
 				qdel(S)
 		sleep(3)
@@ -402,7 +402,7 @@
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
-					S.ex_act(2)
+					S.ex_act(EXPLODE_HEAVY)
 				if(istype(S,/obj/structure/grille))
 					qdel(S)
 		usr.canmove = 1
@@ -433,7 +433,7 @@
 
 //Girders!!!!!
 /obj/structure/girder/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)

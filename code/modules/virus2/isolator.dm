@@ -5,8 +5,8 @@
 
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "isolator"
 	var/isolating = 0
@@ -38,14 +38,13 @@
 		return
 
 	sample = S
-	user.drop_item()
-	S.loc = src
+	user.drop_from_inventory(S, src)
 
 	user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 	nanomanager.update_uis(src)
 	update_icon()
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
@@ -70,7 +69,7 @@
 
 						var/mob/living/carbon/human/D = B.data["donor"]
 						pathogen_pool.Add(list(list(\
-							"name" = "[D.get_species()] [B.name]", \
+							"name" = "[istype(D) ? D.get_species() : ""] [B.name]", \
 							"dna" = B.data["blood_DNA"], \
 							"unique_id" = V.uniqueID, \
 							"reference" = "\ref[V]", \
@@ -184,11 +183,11 @@
 
 			for(var/datum/reagent/blood/B in sample.reagents.reagent_list)
 				var/mob/living/carbon/human/D = B.data["donor"]
-				P.info += "<large><u>[D.get_species()] [B.name]:</u></large><br>[B.data["blood_DNA"]]<br>"
+				P.info += "<large><u>[istype(D) ? D.get_species() : ""] [B.name]:</u></large><br>[B.data["blood_DNA"]]<br>"
 
 				var/list/virus = B.data["virus2"]
 				P.info += "<u>Pathogens:</u> <br>"
-				if (virus.len > 0)
+				if (virus && virus.len > 0)
 					for (var/ID in virus)
 						var/datum/disease2/disease/V = virus[ID]
 						P.info += "[V.name()]<br>"

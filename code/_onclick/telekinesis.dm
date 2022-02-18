@@ -3,7 +3,7 @@
 
 	This needs more thinking out, but I might as well.
 */
-var/const/tk_maxrange = 15
+var/global/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
@@ -67,7 +67,6 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
-	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
@@ -136,7 +135,7 @@ var/const/tk_maxrange = 15
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!istype(target, /turf) && isitem(focus) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
@@ -168,8 +167,8 @@ var/const/tk_maxrange = 15
 	if(!focus)	return
 	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
 	O.name = "sparkles"
-	O.anchored = 1
-	O.density = 0
+	O.anchored = TRUE
+	O.density = FALSE
 	O.layer = FLY_LAYER
 	O.set_dir(pick(cardinal))
 	O.icon = 'icons/effects/effects.dmi'
@@ -189,18 +188,18 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/check_path()
 	var/turf/ref = get_turf(src.loc)
 	var/turf/target = get_turf(focus.loc)
-	if(!ref || !target)	return 0
+	if(!ref || !target)	return FALSE
 	var/distance = get_dist(ref, target)
-	if(distance >= 10)	return 0
+	if(distance >= 10)	return FALSE
 	for(var/i = 1 to distance)
 		ref = get_step_to(ref, target, 0)
-	if(ref != target)	return 0
-	return 1
+	if(ref != target)	return FALSE
+	return TRUE
 */
 
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
-		if(istype(user, /mob/living/carbon))
+		if(iscarbon(user))
 			if(user:mutations & TK && get_dist(source, user) <= 7)
 				if(user:get_active_hand())	return 0
 				var/X = source:x

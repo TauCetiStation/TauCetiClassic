@@ -69,7 +69,7 @@
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	log_game("[key_name(src)] accessed file: [path]")
 
-	switch(alert("View (in game), Open (in your system's text editor), or Download?", path, "View", "Open", "Download", "Cancel"))
+	switch(tgui_alert(usr, "View (in game), Open (in your system's text editor), or Download?", path, list("View", "Open", "Download", "Cancel")))
 		if ("View")
 			var/datum/browser/popup = new(src, "window=viewfile.[path]", "[path]", ntheme = CSS_THEME_LIGHT)
 			popup.set_content("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>")
@@ -123,6 +123,9 @@
 		if (I.hard_deletes)
 			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
 			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+			dellog += "<li>Highest Time Spent Hard Deleting: [I.hard_delete_max]ms</li>"
+			if (I.hard_deletes_over_threshold)
+				dellog += "<li>Hard Deletes Over Threshold: [I.hard_deletes_over_threshold]</li>"
 		if (I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
 		if (I.no_respect_force)

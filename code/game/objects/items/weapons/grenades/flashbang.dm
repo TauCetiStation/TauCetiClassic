@@ -35,7 +35,7 @@
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)	// Added a new proc called 'bang' that takes a location and a person to be banged.
 	to_chat(M, "<span class='warning'><B>BANG</B></span>")
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, null, 5)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 
 //Checking for protections
 	var/eye_safety = 0
@@ -59,7 +59,26 @@
 
 //Now applying sound
 	var/distance = get_dist(M, T)
-	if((distance <= 2 || loc == M.loc || loc == M))
+
+
+	if(distance == 0 || loc == M.loc || loc == M)
+		to_chat(M, "<span class='userdanger'>The close blast from \the [src] severly disorients you!</span>")
+		if(ear_safety > 1)
+			M.Stun(10)
+			M.Weaken(4)
+		else if(ear_safety > 0)
+			M.Stun(12)
+			M.Weaken(5)
+		else
+			M.Stun(14)
+			M.Weaken(6)
+			if((prob(14) || (M == loc && prob(70))))
+				M.ear_damage += rand(1, 10)
+			else
+				M.ear_damage += rand(0, 5)
+				M.ear_deaf = max(M.ear_deaf, 15)
+
+	else if(distance <= 2)
 		if(ear_safety > 1)
 			M.Stun(1.5)
 		else if(ear_safety > 0)
@@ -123,7 +142,7 @@
 	for(var/i in 1 to numspawned)
 		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)	//Creates 'segments' that launches a few more payloads
 
-	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 
 
@@ -151,7 +170,7 @@
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
-	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 
 //////////////////////////////////
