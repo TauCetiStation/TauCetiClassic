@@ -132,31 +132,37 @@
 /turf/MouseEntered(location, control, params)
 	if(!usr.client.cob)
 		return
-	if(usr.client.cob.in_building_mode)
-		if(usr.incapacitated())
-			usr.client.cob.remove_build_overlay(usr.client)
-			return
-		if(!(TK in usr.mutations) && usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this)
-			usr.client.cob.remove_build_overlay(usr.client)
-			return
-		var/turf/T = src
-		if(Adjacent(usr.client.cob.using_this))
-			var/direction = get_dir(usr.client.cob.using_this, src)
-			switch(direction)
-				if(NORTHEAST)
-					direction = EAST
-				if(SOUTHEAST)
-					direction = SOUTH
-				if(SOUTHWEST)
-					direction = WEST
-				if(NORTHWEST)
-					direction = NORTH
+	if(!usr.client.cob.in_building_mode)
+		return
 
-			T = get_step(usr.client.cob.using_this, direction)
-			if(!T)
-				return
+	if(usr.incapacitated())
+		usr.client.cob.remove_build_overlay(usr.client)
+		return
+	if(!(TK in usr.mutations) && usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this)
+		usr.client.cob.remove_build_overlay(usr.client)
+		return
 
-		usr.client.cob.over_this = T
-		usr.client.cob.b_overlay.loc = T
+	if(!Adjacent(usr.client.cob.using_this))
+		return
+
+	var/turf/T = src
+	if(Adjacent(usr.client.cob.using_this))
+		var/direction = get_dir(usr.client.cob.using_this, src)
+		switch(direction)
+			if(NORTHEAST)
+				direction = EAST
+			if(SOUTHEAST)
+				direction = SOUTH
+			if(SOUTHWEST)
+				direction = WEST
+			if(NORTHWEST)
+				direction = NORTH
+
+		T = get_step(usr.client.cob.using_this, direction)
+		if(!T)
+			return
+
+	usr.client.cob.over_this = T
+	usr.client.cob.b_overlay.loc = T
 
 #undef COB_HINT
