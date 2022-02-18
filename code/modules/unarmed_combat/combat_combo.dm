@@ -344,6 +344,22 @@ var/global/list/combat_combos_by_name = list()
 
 		attacker.combo_animation = FALSE
 
+	if(require_head_to_perform)
+		var/obj/item/organ/external/BP_chest = attacker.bodyparts[BP_CHEST]
+		BP_chest?.adjust_pumped(fullness_lose_on_execute * 0.1)
+
+	if(require_arm_to_perform)
+		var/obj/item/organ/external/BP_arm = attacker.hand ? attacker.bodyparts[BP_L_ARM] : attacker.bodyparts[BP_R_ARM]
+		BP_arm?.adjust_pumped(fullness_lose_on_execute * 0.1)
+
+		var/obj/item/organ/external/BP_chest = attacker.bodyparts[BP_CHEST]
+		BP_chest?.adjust_pumped(fullness_lose_on_execute * 0.1)
+
+	if(require_leg_to_perform)
+		for(var/leg_part in list(BP_L_LEG, BP_R_LEG))
+			var/obj/item/organ/external/BP_leg = attacker.bodypart[leg_part]
+			BP_leg?.adjust_pumped(fullness_lose_on_execute * 0.1)
+
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.
 /datum/combat_combo/proc/event_log(mob/living/victim, mob/living/attacker, msg)
