@@ -214,8 +214,9 @@
 
 	SetNextMove(CLICK_CD_MELEE)
 
-	if(a_intent == INTENT_GRAB)
-		A.telekinetic_grab(src)
+	if(a_intent == INTENT_GRAB && ismovable(A))
+		var/atom/movable/AM = A
+		AM.telekinetic_grab(src)
 	else
 		A.attack_tk(src)
 

@@ -68,7 +68,7 @@
 
 	By default, focuses the item.
 */
-/atom/proc/telekinetic_grab(mob/living/user)
+/atom/movable/proc/telekinetic_grab(mob/living/user)
 	var/obj/item/tk_grab/O = new(src)
 	O.focus_object(src)
 	user.put_in_active_hand(O)
