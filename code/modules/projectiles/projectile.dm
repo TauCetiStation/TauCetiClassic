@@ -121,13 +121,13 @@
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
-	return check_trajectory(target, user, pass_flags, flags)
+	return check_trajectory(target, src, pass_flags, flags)
 
-/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
-	if(!istype(target) || !istype(firer))
+/proc/check_trajectory(atom/target, atom/gun, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
+	if(!istype(target) || !istype(gun))
 		return FALSE
 
-	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(gun)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
 	trace.flags = flags
