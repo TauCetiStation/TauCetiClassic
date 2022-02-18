@@ -11,16 +11,22 @@
 		to_chat(src, "You can't commit suicide before the game starts!")
 		return
 
+	var/permitted = FALSE
 
-	var/permitted = 0
-	var/list/allowed = list(NUKE_OP,TRAITOR,WIZARD,HEADREV,CULTIST,CHANGELING)
-	for(var/T in allowed)
-		if(isrole(T, src))
-			permitted = 1
-			break
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(mood)
+		if(mood.mood_level == 1) // lowest mood level
+			permitted = TRUE
 
 	if(!permitted)
-		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human. [ADMIN_JMP(usr)]")
+		var/static/list/allowed = list(NUKE_OP, TRAITOR, WIZARD, HEADREV, CULTIST, CHANGELING)
+		for(var/T in allowed)
+			if(isrole(T, src))
+				permitted = TRUE
+				break
+
+	if(!permitted)
+		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human and being in a good mood. [ADMIN_JMP(usr)]")
 		to_chat(src, "No. Adminhelp if there is a legitimate reason.")
 		return
 
@@ -30,60 +36,56 @@
 
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
-	if(confirm == "Yes")
-		if(restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-			to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
-			return
-		suiciding = 1
-		var/obj/item/held_item = get_active_hand()
-		if(held_item)
-			var/damagetype = held_item.suicide_act(src)
-			if(damagetype)
-				var/damage_mod = 1
-				switch(damagetype) //Sorry about the magic numbers.
-								   //brute = 1, burn = 2, tox = 4, oxy = 8
-					if(15) //4 damage types
-						damage_mod = 4
+	if(confirm != "Yes")
+		return
 
-					if(6, 11, 13, 14) //3 damage types
-						damage_mod = 3
+	if(restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
+		return
 
-					if(3, 5, 7, 9, 10, 12) //2 damage types
-						damage_mod = 2
+	suiciding = 1
+	var/obj/item/held_item = get_active_hand()
 
-					if(1, 2, 4, 8) //1 damage type
-						damage_mod = 1
-
-					else //This should not happen, but if it does, everything should still work
-						damage_mod = 1
-
-				//Do 175 damage divided by the number of damage types applied.
-				if(damagetype & BRUTELOSS)
-					adjustBruteLoss(175/damage_mod)
-
-				if(damagetype & FIRELOSS)
-					adjustFireLoss(175/damage_mod)
-
-				if(damagetype & TOXLOSS)
-					adjustToxLoss(175/damage_mod)
-
-				if(damagetype & OXYLOSS)
-					adjustOxyLoss(175/damage_mod)
-
-				//If something went wrong, just do normal oxyloss
-				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
-					adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-
-				updatehealth()
-				return
-
-
-		to_chat(viewers(src), pick("<span class='warning'><b>[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[src] is jamming \his thumbs into \his eye sockets! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[src] is twisting \his own neck! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b></span>"))
+	if(!held_item)
+		to_chat(viewers(src), pick( \
+			"<span class='warning'><b>[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.</b></span>", \
+			"<span class='warning'><b>[src] is jamming \his thumbs into \his eye sockets! It looks like \he's trying to commit suicide.</b></span>", \
+			"<span class='warning'><b>[src] is twisting \his own neck! It looks like \he's trying to commit suicide.</b></span>", \
+			"<span class='warning'><b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b></span>" \
+			))
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		return
+
+	var/damagetype = held_item.suicide_act(src)
+	if(!damagetype)
+		return
+
+	var/is_brute = damagetype & BRUTELOSS
+	var/is_burn = damagetype & FIRELOSS
+	var/is_tox = damagetype & TOXLOSS
+	var/is_oxy = damagetype & OXYLOSS
+	var/damage_mod = (is_brute != 0) + (is_burn != 0) + (is_tox != 0) + (is_oxy != 0)
+
+	if(!damage_mod) // smt went wrong let's crush
+		CRASH("Wrong damage type '[damagetype]' for suicide_act")
+
+	//Do 175 damage divided by the number of damage types applied.
+	var/dmg = 175 / damage_mod
+
+	if(is_brute)
+		adjustBruteLoss(dmg)
+
+	if(is_burn)
+		adjustFireLoss(dmg)
+
+	if(is_tox)
+		adjustToxLoss(dmg)
+
+	if(is_oxy)
+		adjustOxyLoss(dmg)
+
+	updatehealth()
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
