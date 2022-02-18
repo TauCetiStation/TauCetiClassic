@@ -458,7 +458,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		"mime",
 		"clown",
 		"jolly gravedigger",
-		"jolly gravedigger supreme"
+		"jolly gravedigger supreme",
+		"psyops officer",
 		)
 	var/list/dresspacks_without_money = list(
 		"strip",
