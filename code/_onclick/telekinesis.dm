@@ -37,8 +37,11 @@
 	spend_tk_power(mana)
 
 /mob/proc/try_tk(mana=0, level=TK_LEVEL_NORMAL)
+	mana = mana / get_tk_level()
+
 	if(!can_tk(mana, level))
 		return FALSE
+
 	resolve_tk(mana, level)
 	return TRUE
 

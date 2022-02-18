@@ -1,5 +1,5 @@
 /mob/living/carbon/has_tk_power(amount)
-	return nutrition > (amount / get_tk_level())
+	return nutrition > amount
 
 /mob/living/carbon/spend_tk_power(amount)
-	nutrition -= amount / get_tk_level()
+	nutrition -= amount
