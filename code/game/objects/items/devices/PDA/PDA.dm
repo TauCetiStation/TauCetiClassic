@@ -189,7 +189,8 @@
 /obj/item/device/pda/clown/dropped(mob/living/carbon/user)
 	..()
 	unslip_lying_user(user)
-	remove_user_slip(user)
+	if(user.lying)
+		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
