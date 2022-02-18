@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = FALSE
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
@@ -43,7 +43,7 @@
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 
-	suiciding = 1
+	suiciding = TRUE
 	var/obj/item/held_item = get_active_hand()
 
 	if(!held_item)
@@ -59,6 +59,8 @@
 
 	var/damagetype = held_item.suicide_act(src)
 	if(!damagetype)
+		to_chat(user, "You can't figure out how to commit suicide with [held_item]")
+		suiciding = FALSE
 		return
 
 	var/is_brute = damagetype & BRUTELOSS
@@ -68,6 +70,7 @@
 	var/damage_mod = (is_brute != 0) + (is_burn != 0) + (is_tox != 0) + (is_oxy != 0)
 
 	if(!damage_mod) // smt went wrong let's crush
+		suiciding = FALSE
 		CRASH("Wrong damage type '[damagetype]' for suicide_act")
 
 	//Do 175 damage divided by the number of damage types applied.
@@ -105,11 +108,10 @@
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		to_chat(viewers(loc), "<span class='warning'><b>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</b></span>")
 		spawn(50)
 			death(0)
-			suiciding = 0
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -132,7 +134,7 @@
 		if(restrained())
 			to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 			return
-		suiciding = 1
+		suiciding = TRUE
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		to_chat(viewers(src), "<span class='warning'><b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b></span>")
 		adjustOxyLoss(max(175- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -152,7 +154,7 @@
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		to_chat(viewers(src), "<span class='warning'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -172,7 +174,7 @@
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		to_chat(viewers(src), "<span class='warning'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -203,7 +205,7 @@
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		to_chat(viewers(src), "<span class='warning'><b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b></span>")
 		//put em at -175
 		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -223,7 +225,7 @@
 	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		setOxyLoss(100)
 		adjustBruteLoss(100 - getBruteLoss())
 		setToxLoss(100)

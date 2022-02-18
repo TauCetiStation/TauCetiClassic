@@ -104,7 +104,7 @@
 				else
 					flush = 1
 					for(var/mob/living/silicon/ai/A in src)
-						A.suiciding = 1
+						A.suiciding = TRUE
 						to_chat(A, "Your core files are being wiped!")
 						while (A.stat != DEAD)
 							A.adjustOxyLoss(2)
