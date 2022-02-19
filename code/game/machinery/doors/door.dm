@@ -317,6 +317,8 @@ var/global/list/wedge_icon_cache = list()
 	sleep(7)
 	if(QDELETED(src) || QDELETED(I))
 		return
+	if(I.loc != loc)
+		return
 	force_wedge_item(I)
 	playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
 	//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
@@ -341,6 +343,7 @@ var/global/list/wedge_icon_cache = list()
 				operating = TRUE
 				density = TRUE
 				wedging = TRUE
+
 				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
 				return
 
