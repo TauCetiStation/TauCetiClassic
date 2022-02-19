@@ -438,7 +438,14 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	remove_from_mob(item)
+	if(item.loc == src)
+		var/atom/to_loc = loc
+		if(ismob(to_loc))
+			to_loc = loc.loc
+		if(ismob(to_loc))
+			return
+		if(!remove_from_mob(item, to_loc))
+			return
 
 	//actually throw it!
 	if (item)
