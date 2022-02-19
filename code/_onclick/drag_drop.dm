@@ -8,7 +8,7 @@
 /atom/proc/CanMouseDrop(atom/over, mob/user = usr)
 	if(!user || !over)
 		return FALSE
-	if(user.CanUseMouseDrop(over, src))
+	if(!user.CanUseMouseDrop(over, src))
 		return FALSE
 	return TRUE
 
@@ -23,8 +23,8 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
-	if(!Adjacent(usr) || !over.Adjacent(usr))
-		return // should stop you from dragging through windows
+	if(!CanMouseDrop(over, usr))
+		return
 
 	INVOKE_ASYNC(over, /atom.proc/MouseDrop_T, src, usr)
 
