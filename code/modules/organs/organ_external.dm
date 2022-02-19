@@ -40,6 +40,11 @@
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
+	// PUMPED, yo
+	var/pumped = 0
+	// Value after which the bodypart changes it's sprite
+	var/pumped_threshold = 20
+	var/max_pumped = 60
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -132,6 +137,7 @@
 	var/mutations = owner ? owner.mutations : list()
 	var/fat
 	var/g
+	var/pump
 
 	if(body_zone == BP_CHEST && owner)
 		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
@@ -141,15 +147,17 @@
 	if (!species.has_gendered_icons)
 		g = null
 
+	pump = pumped > pumped_threshold ? "pumped" : null
+
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
 	else if (status & ORGAN_MUTATED)
 		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
 		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
 	if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
@@ -293,20 +301,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
-					"<span class='moderate'><b>Your [name] goes flying off!</b></span>",
+					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
 			var/gore = "[is_robotic() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
-				"<span class='moderate'><b>Your [name] flashes away into ashes!</b></span>",
+				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
 			var/gore = "[is_robotic() ? "": " in shower of gore"]"
 			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
-				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
+				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
 	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
@@ -645,6 +653,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H.drop_from_inventory(W)
 	W.loc = owner
 
+/obj/item/organ/external/proc/adjust_pumped(value, cap)
+	controller.adjust_pumped(value, cap)
+
 /****************************************************
 			   ORGAN DEFINES
 ****************************************************/
@@ -707,6 +718,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_SMALL
+
+	// No PUMPED sprite for the head means you can't pump it.
+	// Threshold is still there to not be interpreted as FULLY PUMPED
+	pumped_threshold = 20
+	max_pumped = 0
 
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
@@ -826,7 +842,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				return ..()
 
-	else if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/hatchet))
+	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))

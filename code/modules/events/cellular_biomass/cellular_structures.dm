@@ -42,7 +42,6 @@
 /obj/structure/cellular_biomass/ex_act(severity)
 	health -= 100 / severity
 	healthcheck()
-	return
 
 /obj/structure/cellular_biomass/blob_act()
 	health -= 50

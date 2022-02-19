@@ -33,14 +33,6 @@
 	force = 0
 	hitsound = list()
 
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "dermal armour patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
-	siemens_coefficient = 0.6
-	body_parts_covered = 1
-
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
