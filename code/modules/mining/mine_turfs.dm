@@ -10,14 +10,16 @@
 	icon_state = "rock"
 	oxygen = 0
 	nitrogen = 0
+
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
-	var/last_act = 0
+	var/next_act = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
@@ -195,9 +197,9 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
+		if(next_act > world.time)//prevents message spam
 			return
-		last_act = world.time
+		next_act = world.time + 50 * P.toolspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
@@ -236,8 +238,7 @@
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
-				if(BPHand.pumped < 30)
-					BPHand.adjust_pumped(0.1)
+				BPHand.adjust_pumped(0.1, 30)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
