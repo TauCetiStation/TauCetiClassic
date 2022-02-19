@@ -470,7 +470,9 @@
 	Moved(old_loc)
 
 /atom/movable/proc/jump_from_contents(rec_level=1)
-	while(rec_level > 0 && ismovable(loc))
+	for(var/i in 1 to rec_level)
+		if(!ismovable(loc))
+			return
 		var/atom/movable/AM = loc
 
 		if(!AM.drop_from_contents(src))
