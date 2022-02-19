@@ -85,12 +85,10 @@
 	pedaler.nutrition -= 0.5
 	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
 	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
-	if(LL && pedal && (LL.pumped < LL.max_pumped))
-		LL.adjust_pumped(1)
-		pedaler.apply_effect(1,AGONY,0)
-	if(RL && !pedal && (RL.pumped < RL.max_pumped))
-		RL.adjust_pumped(1)
-		pedaler.apply_effect(1,AGONY,0)
+	if(LL && pedal)
+		pedaler.apply_effect(LL.adjust_pumped(1),AGONY,0)
+	if(RL && !pedal)
+		pedaler.apply_effect(RL.adjust_pumped(1),AGONY,0)
 	pedaler.update_body()
 
 	pedal = !pedal

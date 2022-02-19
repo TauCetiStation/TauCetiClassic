@@ -31,12 +31,10 @@
 
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
-	if(C && (C.pumped < C.max_pumped))
-		C.adjust_pumped(1)
-		user.apply_effect(7,AGONY,0)
-	if(G && (G.pumped < G.max_pumped))
-		C.adjust_pumped(1)
-		user.apply_effect(7,AGONY,0)
+	if(C)
+		user.apply_effect(7 * C.adjust_pumped(1),AGONY,0)
+	if(G)
+		user.apply_effect(7 * C.adjust_pumped(1),AGONY,0)
 
 	user.update_body()
 
@@ -137,12 +135,10 @@
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
-	if(LA && (LA.pumped < LA.max_pumped))
-		LA.adjust_pumped(1)
-		user.apply_effect(12, AGONY, 0)
-	if(RA && (RA.pumped < RA.max_pumped))
-		RA.adjust_pumped(1)
-		user.apply_effect(12, AGONY, 0)
+	if(LA)
+		user.apply_effect(12 * LA.adjust_pumped(1), AGONY, 0)
+	if(RA)
+		user.apply_effect(12 * RA.adjust_pumped(1), AGONY, 0)
 
 	user.update_body()
 
@@ -315,10 +311,7 @@
 	if(!BP)
 		return
 
-	if(BP.pumped < max_pumped)
-		BP.adjust_pumped(mass, max_pumped)
-		user.apply_effect(3 * mass, AGONY, 0)
-
+	user.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
 	user.update_body()
 
 	user.nutrition -= 2 * mass
