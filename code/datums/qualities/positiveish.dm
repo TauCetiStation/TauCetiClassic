@@ -44,17 +44,11 @@
 	desc = "В качестве эксперимента, тебе выдали таблетку с новейшим препаратом, чем-то напоминающим тот самый Философский Камень."
 	restriction = "Доктор, Парамедик, СМО."
 
-	var/list/doctors = list(
+	jobs_required = list(
 		"Medical Doctor",
 		"Paramedic",
 		"Chief Medical Officer",
 	)
-
-/datum/quality/wonder_doctor/availability_check(client/C)
-	return job_checks(C, doctors)
-
-/datum/quality/wonder_doctor/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role in doctors
 
 /datum/quality/wonder_doctor/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>В твоем кармане лежит фиолетовая таблетка, которая способна излечить любые раны... как жаль, что в ней лишь одна единица вещества.</span>")
@@ -73,11 +67,7 @@
 	desc = "С ЦК тебе прислали прикольную посылочку с лучшим в мире камуфляжем."
 	restriction = "Клоун."
 
-/datum/quality/disguise/availability_check(client/C)
-	return job_checks(C, list("Clown"))
-
-/datum/quality/disguise/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Clown"
+	jobs_required = list("Clown")
 
 /datum/quality/disguise/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Карта в твоих руках способна менять свой внешний вид и имя владельца, а одежда в коробке заменит целый гардероб.</span>")
@@ -100,11 +90,7 @@
 	desc = "По программе усиления СБ тебе была выдана экипировка получше."
 	restriction = "Офицер СБ."
 
-/datum/quality/heavy_equipment/availability_check(client/C)
-	return job_checks(C, list("Security Officer"))
-
-/datum/quality/heavy_equipment/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Security Officer"
+	jobs_required = list("Security Officer")
 
 /datum/quality/heavy_equipment/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest/fullbody(H), SLOT_WEAR_SUIT)
@@ -117,11 +103,7 @@
 	desc = "Эта станция слишком мала для тебя и преступности."
 	restriction = "Детектив."
 
-/datum/quality/big_iron/availability_check(client/C)
-	return job_checks(C, list("Detective"))
-
-/datum/quality/big_iron/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Detective"
+	jobs_required = list("Detective")
 
 /datum/quality/big_iron/add_effect(mob/living/carbon/human/H, latespawn)
 	if(prob(50))
@@ -140,11 +122,7 @@
 	desc = "У тебя полный доступ. Да начнётся расследование."
 	restriction = "Агент Внутренних Дел."
 
-/datum/quality/all_affairs/availability_check(client/C)
-	return job_checks(C, list("Internal Affairs Agent"))
-
-/datum/quality/all_affairs/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Internal Affairs Agent"
+	jobs_required = list("Internal Affairs Agent")
 
 /datum/quality/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
@@ -156,11 +134,7 @@
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
 	restriction = "Унатх."
 
-/datum/quality/cultural_heritage/availability_check(client/C)
-	return species_checks(C, list(UNATHI))
-
-/datum/quality/cultural_heritage/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.get_species() == UNATHI
+	jobs_required = list(UNATHI)
 
 /datum/quality/cultural_heritage/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/space/unathi/breacher(H), SLOT_WEAR_SUIT)
@@ -206,17 +180,11 @@
 	desc = "Ты знаешь все языки. Вот и всё, все."
 	restriction = "Мим, Библиотекарь, Агент Внутренних Дел."
 
-	var/list/polyglots = list(
+	jobs_required = list(
 		"Mime",
 		"Librarian",
 		"Internal Affairs Agent",
 	)
-
-/datum/quality/polyglot/availability_check(client/C)
-	return job_checks(C, polyglots)
-
-/datum/quality/polyglot/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role in polyglots
 
 /datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/language in all_languages)
