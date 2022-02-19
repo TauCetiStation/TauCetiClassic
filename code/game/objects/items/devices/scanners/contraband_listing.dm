@@ -97,7 +97,7 @@ var/global/list/contraband_listings
 	if(target.blood_DNA)
 		add_info(., "orange", "Has traces of blood.", full)
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(I.is_sharp())
 			add_info(., "orange", "Is a sharp object.", full)
