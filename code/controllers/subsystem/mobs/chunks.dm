@@ -1,4 +1,4 @@
-#define GRID_STEP 8
+#define GRID_STEP 10
 #define GRID_ELEM(value) CEIL(value / GRID_STEP)
 
 SUBSYSTEM_DEF(chunks)
