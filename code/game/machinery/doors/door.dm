@@ -224,7 +224,10 @@ var/global/list/wedge_icon_cache = list()
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return TRUE
-	to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
+	if(!hasPower())
+		to_chat(user, "<span class='warning'>You can't use a emag on a non-powered airlock.</span>")
+	else if(wedged_item)
+		to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
 	return FALSE
 
 /obj/machinery/door/blob_act()
