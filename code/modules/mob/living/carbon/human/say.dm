@@ -54,7 +54,7 @@
 	if(!ishuman(speaker))
 		return
 
-	handle_socialization()
+	speaker.handle_socialization()
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
