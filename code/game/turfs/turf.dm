@@ -499,26 +499,17 @@
 	if (!..())
 		return 0
 
-	var/obj/effect/decal/cleanable/blood/B = locate() in contents
-
-	if(B)
-		if(!B.blood_DNA[M.dna.unique_enzymes])
-			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			B.virus2 = virus_copylist(M.virus2)
-		return 1 //we bloodied the floor
-
-	//if there isn't a blood decal already, make one.
-	var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(src)
+	var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basedatum = new(M.species.blood_datum)
+		this.basedatum = new(M.species.blood_datum)
 	else
-		newblood.basedatum = new/datum/dirt_cover/red_blood()
+		this.basedatum = new/datum/dirt_cover/red_blood()
+	this.update_icon()
 
-	newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	newblood.virus2 = virus_copylist(M.virus2)
-	newblood.update_icon()
+	this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	this.virus2 = virus_copylist(M.virus2)
 
 	return 1 //we bloodied the floor
 
@@ -536,18 +527,7 @@
 		this.update_icon()
 
 	else if(ishuman(M))
-
-		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
-		var/mob/living/carbon/human/H = M
-
-		//Species-specific blood.
-		if(H.species)
-			this.basedatum = new(H.species.blood_datum)
-		else
-			this.basedatum = new/datum/dirt_cover/red_blood()
-		this.update_icon()
-
-		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+		add_blood(M)
 
 	else if(isxeno(M))
 		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
