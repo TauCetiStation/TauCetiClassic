@@ -20573,9 +20573,18 @@
 /area/station/maintenance/medbay)
 "lef" = (
 /obj/structure/table/woodentable,
-/obj/random/randomfigure,
-/obj/random/randomfigure,
-/obj/random/randomfigure,
+/obj/random/randomfigure{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/random/randomfigure{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/random/randomfigure{
+	pixel_x = 3;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
