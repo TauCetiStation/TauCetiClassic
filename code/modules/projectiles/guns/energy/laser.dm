@@ -98,6 +98,7 @@
 			..()
 			
 			update_icon()
+			return 1
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
