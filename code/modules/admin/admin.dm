@@ -1221,7 +1221,7 @@ var/global/BSACooldown = 0
 		return "<b>(*null*)</b>"
 	var/mob/M
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 	else if(istype(whom, /mob))

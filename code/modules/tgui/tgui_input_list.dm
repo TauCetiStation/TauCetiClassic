@@ -15,7 +15,7 @@
 	if(!length(buttons))
 		return
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -45,7 +45,7 @@
 	if(!length(buttons))
 		return
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
