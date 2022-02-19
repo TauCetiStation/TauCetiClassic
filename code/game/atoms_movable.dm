@@ -483,7 +483,14 @@
 	return FALSE
 
 /mob/drop_from_contents(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.slot_equipped)
+			return drop_from_inventory(I, loc)
+
 	AM.forceMove(loc)
+	return TRUE
 
 /obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
 	AM.forceMove(loc)
+	return TRUE
