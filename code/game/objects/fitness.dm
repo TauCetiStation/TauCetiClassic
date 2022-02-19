@@ -24,16 +24,19 @@
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 	playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+
 	user.nutrition -= 6
 	user.overeatduration -= 8
-	user.apply_effect(15,AGONY,0)
+
 
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
-	if(C)
+	if(C && (C.pumped < C.max_pumped))
 		C.adjust_pumped(1)
-	if(G)
+		user.apply_effect(7,AGONY,0)
+	if(G && (G.pumped < G.max_pumped))
 		C.adjust_pumped(1)
+		user.apply_effect(7,AGONY,0)
 
 	user.update_body()
 
@@ -131,14 +134,15 @@
 
 	user.nutrition -= 12
 	user.overeatduration -= 16
-	user.apply_effect(25, AGONY, 0)
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
-	if(LA)
+	if(LA && (LA.pumped < LA.max_pumped))
 		LA.adjust_pumped(1)
-	if(RA)
+		user.apply_effect(12, AGONY, 0)
+	if(RA && (RA.pumped < RA.max_pumped))
 		RA.adjust_pumped(1)
+		user.apply_effect(12, AGONY, 0)
 
 	user.update_body()
 
@@ -277,6 +281,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "dumbbells_light"
 	force = 7.0
+	sharp = 0
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 3
@@ -291,6 +296,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "dumbbells_heavy"
 	force = 10.0
+	sharp = 0
 	throwforce = 8.0
 	throw_speed = 5
 	throw_range = 1
@@ -309,10 +315,13 @@
 	if(!BP)
 		return
 
-	BP.adjust_pumped(mass, max_pumped)
+	if(BP.pumped < max_pumped)
+		BP.adjust_pumped(mass, max_pumped)
+		user.apply_effect(3 * mass, AGONY, 0)
+
 	user.update_body()
 
 	user.nutrition -= 2 * mass
 	user.overeatduration -= 2 * mass
-	user.apply_effect(2 * mass, AGONY, 0)
+
 	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")

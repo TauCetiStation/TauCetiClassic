@@ -26,6 +26,7 @@
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
+	var/pedal = FALSE
 
 /obj/structure/stool/bed/chair/pedalgen/atom_init()
 	. = ..()
@@ -85,12 +86,13 @@
 	pedaler.apply_effect(1,AGONY,0)
 	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
 	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
-	if(LL)
+	if(LL && pedal && (LL.pumped < LL.max_pumped))
 		LL.adjust_pumped(1)
-	if(RL)
+	if(RL && !pedal && (RL.pumped < RL.max_pumped))
 		RL.adjust_pumped(1)
 	pedaler.update_body()
 
+	pedal = !pedal
 	if(pedaler.halloss > 80)
 		to_chat(user, "You pushed yourself too hard.")
 		pedaler.apply_effect(24,AGONY,0)
