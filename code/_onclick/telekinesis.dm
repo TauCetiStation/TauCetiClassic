@@ -135,7 +135,7 @@ var/global/const/tk_maxrange = 15
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!istype(target, /turf) && isitem(focus) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
@@ -199,7 +199,7 @@ var/global/const/tk_maxrange = 15
 
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
-		if(istype(user, /mob/living/carbon))
+		if(iscarbon(user))
 			if(user:mutations & TK && get_dist(source, user) <= 7)
 				if(user:get_active_hand())	return 0
 				var/X = source:x

@@ -1057,6 +1057,8 @@
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
+		for(var/obj/item/organ/external/BP in bodyparts)
+			met_factor += BP.pumped / 100
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 			var/pain = getHalLoss()
@@ -1603,11 +1605,17 @@
 		return PULSE_NORM
 
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(IO.heart_status == HEART_FAILURE)
-		return PULSE_NONE
-
-	if(IO.heart_status == HEART_FIBR)
-		return PULSE_SLOW
+	if(life_tick % 10)
+		switch(IO.heart_status)
+			if(HEART_FAILURE)
+				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+				apply_effect(5,AGONY,0)
+				return PULSE_NONE
+			if(HEART_FIBR)
+				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+				apply_effect(1,AGONY,0)
+				return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

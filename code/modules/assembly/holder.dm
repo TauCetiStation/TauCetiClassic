@@ -231,9 +231,9 @@
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
 			holder=gren.detonator
 		var/obj/item/device/assembly/timer/tmr = holder.a_left
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			tmr = holder.a_right
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 
