@@ -115,7 +115,7 @@
 		if(H == host)
 			continue
 		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
-		H.confused += 20
+		H.AdjustConfused(20)
 
 
 //POP
@@ -160,7 +160,7 @@
 	D.makerandom()
 	D.infectionchance = rand(1,100)
 
-	if(istype(host,/mob/living/carbon/human))
+	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		if (H.species)
 			D.affected_species = list(H.species.name)

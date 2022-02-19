@@ -127,9 +127,8 @@
 		src.druggy--
 		src.druggy = max(0, src.druggy)
 
-	if (src.confused > 0)
-		src.confused--
-		src.confused = max(0, src.confused)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	//update the state of modules and components here
 	if (src.stat != CONSCIOUS)
@@ -218,12 +217,6 @@
 				throw_alert("charge", /atom/movable/screen/alert/emptycell)
 	else
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
-
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
 
 	..()
 
