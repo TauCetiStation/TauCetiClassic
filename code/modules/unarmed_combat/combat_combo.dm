@@ -346,14 +346,6 @@ var/global/list/combat_combos_by_name = list()
 
 		attacker.combo_animation = FALSE
 
-	if(!ishuman(attacker))
-		return
-	var/mob/living/carbon/human/H = attacker
-
-	for(var/bodypart in pump_bodyparts)
-		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
-		BP?.adjust_pumped(pump_bodyparts[bodypart])
-
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.
 /datum/combat_combo/proc/event_log(mob/living/victim, mob/living/attacker, msg)
@@ -366,6 +358,15 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/datum/combat_combo/proc/after_combo_finished(mob/living/victim, mob/living/attacker)
+	if(!ishuman(attacker))
+		return
+	var/mob/living/carbon/human/H = attacker
+
+	for(var/bodypart in pump_bodyparts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		BP?.adjust_pumped(pump_bodyparts[bodypart])
 
 /// A lot of combos currently have such mechanic, so it's somewhat reasonable to abstract it here.
 /datum/combat_combo/proc/prepare_grab(mob/living/victim, mob/living/attacker, state)
