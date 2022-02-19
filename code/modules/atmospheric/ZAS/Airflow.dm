@@ -285,7 +285,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
 	if(prob(33) && b_loss > 0)
-		loc:add_blood(src)
+		loc.add_blood(src)
 		bloody_body(src)
 
 	var/blocked = run_armor_check(BP_HEAD,"melee")

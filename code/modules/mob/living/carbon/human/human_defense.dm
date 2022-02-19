@@ -334,7 +334,7 @@
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc
-			if(istype(location, /turf/simulated))
+			if(isturf(location))
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user

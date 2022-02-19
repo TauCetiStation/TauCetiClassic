@@ -262,7 +262,7 @@
 
 				else
 					if(prob(33)) // Added blood for whacking non-humans too
-						var/turf/simulated/T = M.loc
+						var/turf/T = M.loc
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
