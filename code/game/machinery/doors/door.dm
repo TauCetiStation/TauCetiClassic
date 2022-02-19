@@ -313,6 +313,7 @@ var/global/list/wedge_icon_cache = list()
 	density = FALSE
 	do_animate("opening")
 	operating = FALSE
+	wedging = FALSE
 	update_icon()
 
 /obj/machinery/door/proc/crush_wedge_animation(obj/item/I)
@@ -333,7 +334,6 @@ var/global/list/wedge_icon_cache = list()
 	if(QDELETED(src))
 		return
 	finish_crush_wedge_animation()
-	wedging = FALSE
 
 /obj/machinery/door/proc/close(forced = FALSE)
 	if(density)
