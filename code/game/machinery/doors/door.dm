@@ -426,6 +426,11 @@ var/global/list/wedge_icon_cache = list()
 	if(!wedged_item)
 		return
 
+	if(wedging)
+		if(user)
+			to_chat(user, "<span class='notice'>It would be too dangerous to try taking out a [wedged_item] while it's being chewed up by [src].</span>")
+		return
+
 	// If some stats are added should check for agility/strength.
 	if(user && !wedged_item.use_tool(src, user, 5, quality=QUALITY_PRYING))
 		return

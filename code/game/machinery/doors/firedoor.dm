@@ -120,6 +120,10 @@
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
+	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
+		take_out_wedged_item(user)
+		return
+
 	if(operating)
 		return//Already doing something.
 
