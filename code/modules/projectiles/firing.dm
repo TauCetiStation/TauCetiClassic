@@ -7,7 +7,10 @@
 
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++
-		var/curloc = loc.loc
+		// Ammunition in gun in mob in turf
+		var/atom/curloc = loc.loc
+		if(ismob(curloc))
+			curloc = curloc.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
@@ -33,6 +36,8 @@
 
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, boolet_number)
 	var/turf/curloc = loc.loc
+	if(ismob(curloc))
+		curloc = curloc.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)
