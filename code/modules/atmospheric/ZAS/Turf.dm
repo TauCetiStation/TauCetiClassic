@@ -4,9 +4,7 @@
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
-/turf/var/air_unsim = TRUE
 /turf/var/air_unsim_multiplier = 0
-/turf/simulated/air_unsim = FALSE
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
@@ -40,9 +38,6 @@
 		var/r_block = c_airblock(unsim)
 
 		if(r_block & AIR_BLOCKED)
-			continue
-
-		if(unsim.air_unsim)
 			continue
 
 		if(istype(unsim, /turf/simulated))
@@ -98,9 +93,6 @@
 				. |= dir
 
 /turf/simulated/update_air_properties()
-	if(air_unsim)
-		return ..()
-
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
@@ -160,7 +152,7 @@
 
 			//Check that our zone hasn't been cut off recently.
 			//This happens when windows move or are constructed. We need to rebuild.
-			if((previously_open & d) && istype(unsim, /turf/simulated) && !unsim.air_unsim)
+			if((previously_open & d) && istype(unsim, /turf/simulated))
 				var/turf/simulated/sim = unsim
 				if(zone && sim.zone == zone)
 					zone.rebuild()
@@ -170,7 +162,7 @@
 
 		open_directions |= d
 
-		if(istype(unsim, /turf/simulated) && !unsim.air_unsim)
+		if(istype(unsim, /turf/simulated))
 
 			var/turf/simulated/sim = unsim
 			sim.open_directions |= reverse_dir[d]
@@ -281,16 +273,10 @@
 	return GM
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
-	if(air_unsim)
-		return ..()
-
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
 /turf/simulated/assume_gas(gasid, moles, temp = null)
-	if(air_unsim)
-		return ..()
-
 	var/datum/gas_mixture/my_air = return_air()
 
 	if(isnull(temp))
@@ -301,16 +287,10 @@
 	return TRUE
 
 /turf/simulated/remove_air(amount as num)
-	if(air_unsim)
-		return ..()
-
 	var/datum/gas_mixture/my_air = return_air()
 	return my_air.remove(amount)
 
 /turf/simulated/return_air()
-	if(air_unsim)
-		return ..()
-
 	if(zone)
 		if(!zone.invalid)
 			SSair.mark_zone_update(zone)
@@ -333,9 +313,6 @@
 	air.volume = CELL_VOLUME
 
 /turf/simulated/proc/c_copy_air()
-	if(air_unsim)
-		return
-
 	if(!air)
 		air = new/datum/gas_mixture
 	air.copy_from(zone.air)

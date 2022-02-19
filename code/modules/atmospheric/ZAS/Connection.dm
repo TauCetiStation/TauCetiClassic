@@ -66,7 +66,7 @@ Class Procs:
 	src.A = A
 	src.B = B
 	zoneA = A.zone
-	if(!istype(B) || B.air_unsim)
+	if(!istype(B))
 		mark_space()
 		edge = SSair.get_edge(A.zone,B)
 		edge.add_connection(src)
@@ -103,7 +103,7 @@ Class Procs:
 
 /connection/proc/update()
 //	log_debug("Updated, \...")
-	if(!istype(A) || A.air_unsim)
+	if(!istype(A))
 //		log_debug("Invalid A.")
 		erase()
 		return
@@ -118,7 +118,7 @@ Class Procs:
 	else
 		mark_direct()
 
-	var/b_is_space = !istype(B) || B.air_unsim
+	var/b_is_space = !istype(B)
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)
