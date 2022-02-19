@@ -787,7 +787,7 @@
 	},
 /area/station/maintenance/medbay)
 "abp" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb2{
 	desc = "Spider Timmy lives here."
 	},
@@ -795,7 +795,7 @@
 /area/station/maintenance/medbay)
 "abq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -3603,7 +3603,7 @@
 "agl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/wood,
 /area/station/maintenance/science)
 "agm" = (
@@ -3729,7 +3729,7 @@
 "agD" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -3880,7 +3880,7 @@
 	},
 /area/station/maintenance/science)
 "agY" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
@@ -3932,7 +3932,7 @@
 	},
 /area/station/rnd/hallway)
 "ahe" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -3945,7 +3945,7 @@
 /area/station/maintenance/engineering)
 "ahg" = (
 /obj/machinery/light_construct/small,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -3965,7 +3965,7 @@
 	},
 /area/station/maintenance/cargo)
 "ahi" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -5199,7 +5199,7 @@
 /turf/simulated/floor/goonplaque,
 /area/station/hallway/primary/central)
 "ajg" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -5503,7 +5503,7 @@
 	},
 /area/station/civilian/locker)
 "ajK" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -5611,11 +5611,11 @@
 	},
 /area/station/civilian/chapel)
 "ajT" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/civilian/locker)
+/area/station/maintenance/escape)
 "ajU" = (
 /mob/living/pbag,
 /obj/machinery/status_display{
@@ -5661,7 +5661,7 @@
 /area/station/hallway/primary/central)
 "ajZ" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/machinery/alarm{
 	pixel_y = 21
 	},
@@ -5722,7 +5722,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "akh" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aki" = (
@@ -5996,7 +5996,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "akN" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
@@ -6068,7 +6068,7 @@
 "akX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "akY" = (
@@ -6251,7 +6251,7 @@
 "alr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "als" = (
@@ -6784,7 +6784,7 @@
 	},
 /area/station/maintenance/escape)
 "amy" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "amz" = (
@@ -7605,7 +7605,7 @@
 	},
 /area/station/maintenance/cargo)
 "aob" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -7667,7 +7667,7 @@
 /area/station/maintenance/cargo)
 "aoi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -7775,7 +7775,7 @@
 /area/station/engineering/atmos)
 "aov" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aow" = (
@@ -7791,7 +7791,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aoy" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aoz" = (
@@ -8585,7 +8585,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -10520,7 +10520,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "bcz" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable{
 	d1 = 1;
@@ -12615,7 +12615,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "dif" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -12794,7 +12794,7 @@
 /area/station/medical/morgue)
 "dsj" = (
 /obj/item/weapon/scrap_lump,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "dss" = (
@@ -13013,7 +13013,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "dyn" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -13670,7 +13670,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ehC" = (
@@ -17075,7 +17075,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "hNg" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -17407,7 +17407,7 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "ibW" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -19824,7 +19824,7 @@
 	},
 /area/station/engineering/break_room)
 "koD" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kpo" = (
@@ -19980,7 +19980,7 @@
 	},
 /area/station/medical/storage)
 "kyl" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -20077,7 +20077,7 @@
 	},
 /area/station/hallway/primary/central)
 "kFa" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -20202,7 +20202,7 @@
 /area/station/cargo/storage)
 "kLq" = (
 /obj/effect/decal/cleanable/generic,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kMv" = (
@@ -21882,7 +21882,7 @@
 	},
 /area/station/medical/storage)
 "muH" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -24496,7 +24496,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oQa" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oQo" = (
@@ -24745,7 +24745,7 @@
 	},
 /area/station/security/main)
 "oZh" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -24959,7 +24959,7 @@
 	},
 /area/station/hallway/primary/central)
 "pkn" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -21
@@ -27017,7 +27017,7 @@
 	},
 /area/station/civilian/kitchen)
 "qTB" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -30912,7 +30912,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "uTN" = (
@@ -31764,7 +31764,7 @@
 /area/station/maintenance/medbay)
 "vNg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -32269,7 +32269,7 @@
 /area/station/rnd/hallway)
 "wlm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "wlr" = (
@@ -33198,7 +33198,7 @@
 /area/station/civilian/cold_room)
 "xhK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xhU" = (
