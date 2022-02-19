@@ -318,9 +318,13 @@ var/global/list/wedge_icon_cache = list()
 /obj/machinery/door/proc/crush_wedge_animation(obj/item/I)
 	do_animate("closing")
 	sleep(7)
-	if(QDELETED(src) || QDELETED(I))
+	if(QDELETED(src))
+		return
+	if(QDELETED(I))
+		finish_crush_wedge_animation()
 		return
 	if(I.loc != loc)
+		finish_crush_wedge_animation()
 		return
 	force_wedge_item(I)
 	playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
