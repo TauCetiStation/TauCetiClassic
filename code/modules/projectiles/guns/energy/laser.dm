@@ -92,6 +92,8 @@
 	if(R.cell)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(R.cell.use(shot.e_cost))
+			if(power_supply.charge == power_supply.maxcharge)
+				return 0
 			power_supply.give(shot.e_cost)
 			..()
 			
