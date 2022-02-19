@@ -221,6 +221,10 @@
 	name = "Vox Skipjack"
 	icon_state = "yellow"
 
+/area/shuttle/vox/arkship_hold
+	name = "Vox Skipjack Hold"
+	icon_state = "yellow"
+
 /area/shuttle/vox/transit
 	name = "hyperspace"
 	icon_state = "shuttle"

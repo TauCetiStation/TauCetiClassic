@@ -121,7 +121,7 @@
 	icon_state = "purpleshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
 
-/obj/item/ammo_box/eight_shells/stunslug
-	name = "shotgun shells box (stunslug)"
+/obj/item/ammo_box/eight_shells/stunshot
+	name = "shotgun shells box (stunshot)"
 	icon_state = "stanshellbox"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot

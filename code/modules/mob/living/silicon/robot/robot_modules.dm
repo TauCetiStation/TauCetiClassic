@@ -226,7 +226,7 @@
 /obj/item/weapon/robot_module/janitor/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/soap/nanotrasen(src)
+	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer(src)

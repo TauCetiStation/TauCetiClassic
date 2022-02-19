@@ -9,13 +9,15 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
 #define NOLIMB           -1    // related to "pierce_protection" check, thats why this is here.
+#define NOPIERCE         -2    // related to "pierce_protection" check
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
 #define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
+
 #define MASKINTERNALS          (1<<3)   // Mask allows internals.
 
-#define NOSHIELD               (1<<4)   // Weapon not affected by shield.
+#define NOBLOODY               (1<<4)   // Used to items if they don't want to get a blood overlay. Doesn't work properly with shoes.
 
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
@@ -24,16 +26,12 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
-#define NOPIERCE               (1<<8)
 #define GLASSESCOVERSEYES      (1<<8)
 #define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.
 
 #define MASKCOVERSMOUTH        (1<<9)   // on other items, these are just for mask/head.
 #define HEADCOVERSMOUTH        (1<<9)
-#define NOBLOODY               (1<<9)   // Used to items if they don't want to get a blood overlay.
-#define NOSLIP                 (1<<9)   // Prevents from slipping on wet floors, in space etc.
-#define NOATTACKANIMATION      (1<<9)   // Removes attack animation
 
 #define OPENCONTAINER          (1<<10)  // Is an open container for chemistry purposes.
 
@@ -52,6 +50,10 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
 #define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
+
+#define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
+
+#define NOATTACKANIMATION      (1<<19)   // Removes attack animation
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)

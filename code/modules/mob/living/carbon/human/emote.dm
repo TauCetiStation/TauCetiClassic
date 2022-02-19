@@ -110,6 +110,16 @@
 				sound_priority = SOUND_PRIORITY_MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
+		if("hiccup")
+			message_type = SHOWMSG_AUDIO
+			message = "икает."
+			muzzled_message = "издаёт отрывистый звук."
+			mute_message = "приглушённо икает."
+			miming_message = "икает."
+			if(auto)
+				sound_priority = SOUND_PRIORITY_MEDIUM
+				emote_sound = 'sound/voice/hiccup.ogg'
+
 		if("beep")
 			message_type = SHOWMSG_AUDIO
 			conditions_for_emote = (species.flags[IS_SYNTHETIC])

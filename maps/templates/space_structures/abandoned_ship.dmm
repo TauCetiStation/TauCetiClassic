@@ -356,7 +356,7 @@
 	},
 /area/space_structures/abandoned_ship)
 "bb" = (
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

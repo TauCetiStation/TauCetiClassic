@@ -403,7 +403,7 @@
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)
 			return
-		if(istype(occupant, /mob/living/carbon/brain))
+		if(isbrain(occupant))
 			occupant_message("You are a brain. No.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return

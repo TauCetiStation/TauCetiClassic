@@ -207,8 +207,8 @@
 	embed = 0
 	edge = 1
 
-/obj/item/projectile/bullet/stunslug
-	name = "stunslug"
+/obj/item/projectile/bullet/stunshot
+	name = "stunshot"
 	icon_state = "spark"
 	flag = "energy"
 	damage = 5
@@ -220,7 +220,7 @@
 	sharp = 0
 	dispersion = 1.8
 
-/obj/item/projectile/bullet/stunslug/atom_init()
+/obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
@@ -233,7 +233,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
 		M.IgniteMob()
@@ -261,7 +261,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()

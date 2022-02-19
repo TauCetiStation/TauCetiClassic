@@ -487,24 +487,21 @@
 	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+			gib()
+			return
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
@@ -573,7 +570,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -789,7 +786,7 @@
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
-	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
+	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
@@ -811,12 +808,12 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
@@ -1038,10 +1035,10 @@
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 							qdel(A)
-					else if(istype(A, /obj/item))
+					else if(isitem(A))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)

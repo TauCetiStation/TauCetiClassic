@@ -57,7 +57,7 @@
 	occupant.apply_effect(2, WEAKEN, 0)
 	occupant.apply_effect(6, STUTTER, 0)
 	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/victim = A
 		victim.apply_effect(4, STUN, 0)
 		victim.apply_effect(4, WEAKEN, 0)

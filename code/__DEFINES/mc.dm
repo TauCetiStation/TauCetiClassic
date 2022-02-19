@@ -19,8 +19,11 @@
 #define MC_AVG_FAST_UP_SLOW_DOWN(average, current) (average > current ? MC_AVERAGE_SLOW(average, current) : MC_AVERAGE_FAST(average, current))
 #define MC_AVG_SLOW_UP_FAST_DOWN(average, current) (average < current ? MC_AVERAGE_SLOW(average, current) : MC_AVERAGE_FAST(average, current))
 
-#define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.processing += Datum}
-#define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = 0;Processor.processing -= Datum
+#define START_PROCESSING_NAMED(Processor, Datum, Varname) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.##Varname += Datum}
+#define STOP_PROCESSING_NAMED(Processor, Datum, Varname) Datum.isprocessing = 0;Processor.##Varname -= Datum
+
+#define START_PROCESSING(Processor, Datum) START_PROCESSING_NAMED(Processor, Datum, processing)
+#define STOP_PROCESSING(Processor, Datum) STOP_PROCESSING_NAMED(Processor, Datum, processing)
 
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 

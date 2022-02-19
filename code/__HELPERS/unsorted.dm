@@ -282,7 +282,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/select = null
 	var/list/borgs = list()
 	for (var/mob/living/silicon/robot/A in player_list)
-		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
+		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || isdrone(A))
 			continue
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
@@ -345,7 +345,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if (M.real_name && M.real_name != M.name)
 				name += " \[[M.real_name]\]"
 			if (M.stat == DEAD)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					name += " \[ghost\]"
 				else
 					name += " \[dead\]"
@@ -420,7 +420,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!whom)
 		return "*null*"
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 		key = C.ckey
@@ -845,8 +845,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						if(!O.simulated)
 							continue
 						O.loc = X
-						if (length(O.client_mobs_in_contents))
-							O.update_parallax_contents()
+						O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
