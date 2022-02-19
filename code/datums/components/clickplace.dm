@@ -31,7 +31,7 @@
 	var/datum/callback/on_slam
 
 /datum/component/clickplace/Initialize(datum/callback/_on_place = null, datum/callback/_on_slam = null)
-	if(!istype(parent, /atom))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	on_place = _on_place
@@ -118,7 +118,7 @@
 	jump_out(I, target, rec_limit - 1)
 
 /datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/living/user)
-	if(!istype(dropping, /obj/item))
+	if(!isitem(dropping))
 		return
 
 	var/obj/item/I = dropping
@@ -137,7 +137,7 @@
 			BP_R_ARM = user.r_hand
 		)
 		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_arm)
-	else if(istype(user, /mob/living/carbon/ian))
+	else if(isIAN(user))
 		var/mob/living/carbon/ian/IAN = user
 		slots_to_check = list(
 			BP_HEAD = IAN.mouth

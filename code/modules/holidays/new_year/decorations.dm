@@ -107,7 +107,7 @@
 	name = "present xmas tree"
 	desc = "Hello, happy holidays, we have got presents..."
 
-	layer = 5
+	layer = FLY_LAYER
 	var/gifts_dealt = 0
 	var/flicker_raising = FALSE
 	var/light_flicker = 5
@@ -146,10 +146,10 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
-	if(I.abstract)
-		return
 	if(iswrench(I))
 		return ..()
+	if(I.flags & ABSTRACT)
+		return
 	if(istype(I, /obj/item/weapon/gift))
 		var/obj/item/weapon/gift/present = I
 		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
@@ -168,7 +168,7 @@
 	if(istype(I, /obj/item/organ/external/head))
 		I.set_dir(2) // Rotate head face to us
 		I.transform = turn(null, null)	//Turn it to initial angle
-	I.layer = 5.1
+	I.layer = layer + 0.1
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))

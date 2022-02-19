@@ -36,7 +36,7 @@
 	var/datum/religion/religion
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return FALSE
 	var/datum/reagent/self = src
 	src = null //of the reagent to the mob on TOUCHING it.
