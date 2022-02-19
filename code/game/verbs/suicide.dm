@@ -69,7 +69,7 @@
 	var/is_oxy = damagetype & OXYLOSS
 	var/damage_mod = (is_brute != 0) + (is_burn != 0) + (is_tox != 0) + (is_oxy != 0)
 
-	if(!damage_mod) // smt went wrong let's crush
+	if(damage_mod == 0) // smt went wrong let's crush
 		suiciding = FALSE
 		CRASH("Wrong damage type '[damagetype]' for suicide_act")
 
