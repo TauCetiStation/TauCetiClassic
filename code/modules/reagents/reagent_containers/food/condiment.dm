@@ -137,7 +137,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -198,7 +198,7 @@
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(iswrench(O))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")

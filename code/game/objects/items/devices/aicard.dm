@@ -10,7 +10,7 @@
 
 
 /obj/item/device/aicard/attack(mob/living/silicon/ai/M, mob/user)
-	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
+	if(!isAI(M))//If target is not an AI.
 		return ..()
 
 	M.log_combat(user, "carded via [name]")

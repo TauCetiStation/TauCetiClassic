@@ -638,7 +638,7 @@
 			update_icon()
 
 	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(W))
-		if(istype(user, /mob/living/silicon))
+		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
