@@ -237,7 +237,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if (!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (H.wear_id)
 			var/obj/item/weapon/card/id/id = H.wear_id
@@ -1828,12 +1828,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/saved_key = M.key
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
 		//domutcheck(M,null,MUTCHK_FORCED)  //#Z2
 		genemutcheck(M,block,null,MUTCHK_FORCED) //#Z2
-		if(istype(M, /mob/living/carbon))
+		if(iscarbon(M))
 			M.update_mutations()
 			var/state="[M.dna.GetSEState(block)?"on":"off"]"
 			var/blockname=assigned_blocks[block]

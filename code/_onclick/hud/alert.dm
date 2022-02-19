@@ -2,7 +2,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -30,7 +30,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (!istype(user, /client))
+		if (!isclient(user))
 			return
 		var/client/client = user
 		user = client.mob

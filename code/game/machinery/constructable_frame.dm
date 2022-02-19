@@ -200,7 +200,7 @@
 				update_req_desc()
 				return
 
-			if(istype(P, /obj/item) && get_req_components_amt())
+			if(isitem(P) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
 						if(iscoil(P))

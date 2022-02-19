@@ -20,7 +20,7 @@
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
@@ -38,7 +38,7 @@
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
 			return
 		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
