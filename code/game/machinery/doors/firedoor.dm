@@ -195,7 +195,7 @@
 										"You have removed the electronics from [src].")
 
 					new/obj/item/weapon/airalarm_electronics(src.loc)
-
+					take_out_wedged_item()
 					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
 					FA.anchored = TRUE
 					FA.density = TRUE
@@ -301,6 +301,13 @@
 		icon_state = "door_open"
 		if(blocked)
 			add_overlay("welded_open")
+
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
 	SSdemo.mark_dirty(src)
 
 	// CHECK PRESSURE

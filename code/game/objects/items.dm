@@ -759,9 +759,11 @@
 	delay *= toolspeed
 
 	if(!isnull(quality))
-		if(!qualities || !qualities[quality])
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
 			return
-		delay *= 1 / qualities[quality]
+
+		delay *= 1 / qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -1025,10 +1027,11 @@
 		remove_outline()
 
 /obj/item/airlock_crush_act()
-	if(!qualities || !qualities[QUALITY_PRYING])
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
 		return
 
-	var/chance = w_class / (qualities[QUALITY_PRYING] * (m_amt + 1))
+	var/chance = w_class / (qual_prying * (m_amt + 1))
 
 	if(prob(chance * 100))
 		qdel(src)
@@ -1036,3 +1039,8 @@
 
 /obj/item/proc/display_accessories()
 	return
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]

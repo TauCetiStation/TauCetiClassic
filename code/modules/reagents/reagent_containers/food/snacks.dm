@@ -1729,7 +1729,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if(W.qualities[QUALITY_CUTTING] || W.sharp)
+	if(W.get_quality(QUALITY_CUTTING) > 0 || W.sharp)
 		inaccurate = 1
 	else
 		return FALSE

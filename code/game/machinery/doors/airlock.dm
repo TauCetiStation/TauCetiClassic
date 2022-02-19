@@ -15,8 +15,6 @@
 
 var/global/list/airlock_overlays = list()
 
-var/global/list/wedge_icon_cache = list()
-
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -69,8 +67,6 @@ var/global/list/wedge_icon_cache = list()
 	var/door_bolt_up_sound      = 'sound/machines/airlock/bolts_up_1.ogg'
 	var/door_bolt_down_sound    = 'sound/machines/airlock/bolts_down_1.ogg'
 
-	var/obj/item/wedged_item
-
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
 	airlock_list += src
@@ -97,7 +93,6 @@ var/global/list/wedge_icon_cache = list()
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
-	QDEL_NULL(wedged_item)
 	return ..()
 
 /obj/machinery/door/airlock/process()
@@ -124,6 +119,10 @@ var/global/list/wedge_icon_cache = list()
 			user.stunned += 10
 			return
 	..(user)
+
+/obj/machinery/door/airlock/finish_crush_wedge_animation()
+	playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
+	..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
@@ -454,38 +453,6 @@ var/global/list/wedge_icon_cache = list()
 //aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
 //aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 lift access override
 
-/obj/machinery/door/airlock/AltClick(mob/user)
-	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
-		if(!wedged_item)
-			try_wedge_item(user)
-		else
-			take_out_wedged_item(user)
-
-/obj/machinery/door/airlock/MouseDrop(obj/over_object)
-	if(usr.IsAdvancedToolUser() && usr == over_object && !usr.incapacitated() && Adjacent(usr))
-		take_out_wedged_item(usr)
-		return
-	return ..()
-
-/obj/machinery/door/airlock/examine(mob/user)
-	. = ..()
-	if(wedged_item)
-		to_chat(user, "You can see [bicon(wedged_item)] [wedged_item] wedged into it.")
-
-/obj/machinery/door/airlock/proc/generate_wedge_overlay()
-	var/cache_string = "[wedged_item.icon]||[wedged_item.icon_state]||[wedged_item.overlays.len]||[wedged_item.underlays.len]"
-
-	if(!global.wedge_icon_cache[cache_string])
-		var/icon/I = getFlatIcon(wedged_item, SOUTH)
-
-		I.Shift(SOUTH, 15) // These numbers I got by sticking the crowbar in and looking what will look good.
-		I.Shift(WEST, 4)
-
-		global.wedge_icon_cache[cache_string] = I
-		underlays += I
-	else
-		underlays += global.wedge_icon_cache[cache_string]
-
 /obj/machinery/door/airlock/proc/show_unified_command_interface(mob/user)
 	user.set_machine(src)
 	var/t1 = ""
@@ -739,15 +706,12 @@ var/global/list/wedge_icon_cache = list()
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(wires.interact(user))
 		return
-	else
-		if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
-			take_out_wedged_item(user)
-			return
 
-		if(HULK in user.mutations)
-			hulk_break_reaction(user)
-			return
-		..()
+	if(HULK in user.mutations)
+		hulk_break_reaction(user)
+		return
+
+	return ..()
 
 
 /obj/machinery/door/airlock/Topic(href, href_list, no_window = 0)
@@ -1092,18 +1056,6 @@ var/global/list/wedge_icon_cache = list()
 
 /obj/machinery/door/airlock/close_checks()
 	if(..() && !welded && !locked)
-		if(wedged_item)
-			// we can't have nice things because somebody really wanted to do some bullshit
-			// where instead of flicking() an opening/closing animation we instead set icon_state
-			// to a non-looping animation which ends on a open/closed sprite, which of course
-			// when you in any way update the icon_state/invisibility for the airlock
-			// causes the animation to play again, which shake_animation used
-			// so we can't both have this thingy and the nice animation and I don't have the strength
-			// to replace this with flick-s() ~Luduk
-			//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
-			wedged_item.airlock_crush_act(DOOR_CRUSH_DAMAGE)
-			return FALSE
-
 		if(safe)
 			for(var/turf/T in locs)
 				if(locate(/mob/living) in T)
@@ -1114,39 +1066,6 @@ var/global/list/wedge_icon_cache = list()
 					return FALSE
 		return TRUE
 	return FALSE
-
-/obj/machinery/door/airlock/close()
-	if(!safe)
-		return ..()
-	if(wedged_item)
-		return ..()
-
-	for(var/turf/turf in locs)
-		for(var/obj/item/I in turf)
-			if(!I.qualities[QUALITY_PRYING])
-				continue
-			if(I.w_class < SIZE_SMALL)
-				continue
-
-			operating = TRUE
-			density = TRUE
-			do_animate("closing")
-			sleep(7)
-			if(QDELETED(src) || QDELETED(I))
-				return
-			force_wedge_item(I)
-			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
-			//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
-			sleep(7)
-			if(QDELETED(src))
-				return
-			playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
-			density = FALSE
-			do_animate("opening")
-			operating = FALSE
-			return
-
-	return ..()
 
 /obj/machinery/door/airlock/normal_open_checks()
 	if(hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -1204,55 +1123,6 @@ var/global/list/wedge_icon_cache = list()
 	open()
 	bolt()
 	return
-
-/obj/machinery/door/airlock/proc/force_wedge_item(obj/item/I)
-	I.forceMove(src)
-	wedged_item = I
-	update_icon()
-
-/obj/machinery/door/airlock/proc/try_wedge_item_verb()
-	set name = "Wedge item"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-	if(!usr.Adjacent(src))
-		return
-	if(!usr.IsAdvancedToolUser())
-		return
-
-	try_wedge_item(usr)
-
-/obj/machinery/door/airlock/proc/try_wedge_item(mob/living/user)
-	var/obj/item/I = user.get_active_hand()
-	if(!istype(I))
-		return
-
-	if(I.w_class < SIZE_SMALL)
-		return
-
-	if(density)
-		to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
-		return
-
-	if(!user.drop_from_inventory(I))
-		return
-
-	force_wedge_item(I)
-	to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
-
-/obj/machinery/door/airlock/proc/take_out_wedged_item(mob/living/user)
-	if(wedged_item)
-		// If some stats are added should check for agility/strength.
-		if(user && !wedged_item.use_tool(src, user, 5, quality=QUALITY_PRYING))
-			return
-		wedged_item.forceMove(loc)
-		if(user)
-			user.put_in_hands(wedged_item)
-			to_chat(user, "<span class='notice'>You took [wedged_item] out of [src].</span>")
-		wedged_item = null
-		update_icon()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W

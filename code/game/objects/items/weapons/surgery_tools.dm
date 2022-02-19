@@ -101,7 +101,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	qualities = list(
 		QUALITY_CUTTING = 1
-		)
+	)
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
