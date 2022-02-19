@@ -23,7 +23,7 @@
 	BP = null
 	return ..()
 
-/datum/bodypart_controller/proc/adjust_pumped(value)
+/datum/bodypart_controller/proc/adjust_pumped(value, cap)
 	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return
@@ -31,6 +31,8 @@
 	BP.pumped += value
 	if(BP.pumped > BP.max_pumped)
 		BP.pumped = BP.max_pumped
+	if(BP.pumped > cap)
+		BP.pumped = cap
 	BP.update_sprite()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
