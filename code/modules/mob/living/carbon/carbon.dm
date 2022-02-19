@@ -439,12 +439,11 @@
 	if(!item) return //Grab processing has a chance of returning null
 
 	if(item.loc == src)
-		var/atom/to_loc = loc
-		if(ismob(to_loc))
-			to_loc = loc.loc
-		if(ismob(to_loc))
+		// Holder and the mob holding it.
+		item.jump_from_contents(rec_level=2)
+		if(!isturf(item.loc))
 			return
-		if(!remove_from_mob(item, to_loc))
+		if(!remove_from_mob(item, item.loc))
 			return
 
 	//actually throw it!

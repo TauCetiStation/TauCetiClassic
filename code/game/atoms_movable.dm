@@ -468,3 +468,22 @@
 	var/atom/old_loc = loc
 	loc = new_loc
 	Moved(old_loc)
+
+/atom/movable/proc/jump_from_contents(rec_level=1)
+	while(rec_level > 0 && ismovable(loc))
+		var/atom/movable/AM = loc
+
+		if(!AM.drop_from_contents(src))
+			return
+
+/*
+	Return TRUE on successful drop.
+*/
+/atom/movable/proc/drop_from_contents(atom/movable/AM)
+	return FALSE
+
+/mob/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
+
+/obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
