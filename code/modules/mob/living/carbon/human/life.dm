@@ -45,7 +45,7 @@
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj))
+			if(isobj(loc))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -321,7 +321,7 @@
 		losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
 			emote("gasp")
-		if(istype(loc, /obj))
+		if(isobj(loc))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 	else
@@ -330,7 +330,7 @@
 		//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
 
 		if(breath)
-			if(istype(loc, /obj)) //Still give containing object the chance to interact
+			if(isobj(loc)) //Still give containing object the chance to interact
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 		else //No breath from internal atmosphere so get breath from location
@@ -342,9 +342,9 @@
 
 				// Handle smoke filtering
 				if( \
-					!(wear_mask && wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT) && \
-					!(glasses && glasses.flags & BLOCK_GAS_SMOKE_EFFECT) && \
-					!(head && head.flags & BLOCK_GAS_SMOKE_EFFECT) \
+					!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+					!(glasses && (glasses.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+					!(head && (head.flags & BLOCK_GAS_SMOKE_EFFECT)) \
 					)
 
 					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
@@ -441,7 +441,7 @@
 	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
 	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
 	var/poison_pp = poison ? (poison / breath.total_moles) * breath_pressure : 0
-	var/SA_pp = sleeping_agent ?  (sleeping_agent / breath.total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
