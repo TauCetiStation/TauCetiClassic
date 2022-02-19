@@ -83,6 +83,7 @@
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE         "#faa019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+#define LIGHT_COLOR_FIREPLACE    "#f07f13"
 #define LIGHT_COLOR_FLARE        "#fa644b" //Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_GHOST_CANDLE "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
 #define LIGHT_COLOR_PLASMA       "#2be4b8" // Used in plasma gun. rgb(43, 228, 184)

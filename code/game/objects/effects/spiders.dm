@@ -10,15 +10,13 @@
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/effect/spider/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
@@ -65,7 +63,7 @@
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return 1
-	else if(istype(mover, /mob/living))
+	else if(isliving(mover))
 		if(prob(50))
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return 0

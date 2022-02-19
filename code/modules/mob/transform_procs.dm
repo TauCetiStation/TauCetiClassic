@@ -79,7 +79,7 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
-		suiciding = null
+		suiciding = FALSE
 	O.a_intent = INTENT_HARM
 
 	//keep viruses?
@@ -216,7 +216,7 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
-		suiciding = null
+		suiciding = FALSE
 	O.a_intent = INTENT_HELP
 
 	//keep viruses?

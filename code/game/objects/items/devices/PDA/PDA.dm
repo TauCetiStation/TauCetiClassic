@@ -156,23 +156,6 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
-/obj/item/device/pda/proc/make_user_slip(mob/user)
-	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
-
-/obj/item/device/pda/proc/remove_user_slip(mob/user)
-	qdel(user.GetComponent(/datum/component/slippery))
-
-/obj/item/device/pda/equipped(mob/user, slot)
-	..()
-	if(slot == SLOT_L_STORE || slot == SLOT_R_STORE || slot == SLOT_BELT || slot == SLOT_WEAR_ID)
-		make_user_slip(user)
-	else
-		remove_user_slip(user)
-
-/obj/item/device/pda/dropped(mob/user)
-	..()
-	remove_user_slip(user)
-
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
@@ -1270,7 +1253,7 @@
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[issilicon(loc)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
@@ -1387,7 +1370,7 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (istype(L, /mob/living/carbon))
+	if (iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
@@ -1403,7 +1386,7 @@
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(istype(C, /mob/living/carbon/human))
+				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
@@ -1423,7 +1406,7 @@
 			if(2)
 				if (!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
-				else if(istype(C, /mob/living/carbon/human))
+				else if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(H.gloves)
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
@@ -1524,7 +1507,7 @@
 		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/receiver = target
 		if(receiver.mind.initial_account)
 			target_account_number = text2num(receiver.mind.initial_account.account_number)
