@@ -264,7 +264,7 @@
 
 	var/mob/living/carbon/target_mob
 	if(target)
-		if(istype(target,/mob/living/carbon))
+		if(iscarbon(target))
 			target_mob = target
 		else
 			return FALSE
