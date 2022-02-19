@@ -101,7 +101,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
 	var/have_q = client.prefs.have_quality
-	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>QUALITY [have_q ? "☑" : "☒"]</a>"}
+	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[have_q ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
