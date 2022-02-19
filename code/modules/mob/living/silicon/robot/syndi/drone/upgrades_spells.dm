@@ -15,7 +15,7 @@
 	var/speed_bonus = -2 //negative is faster, positive is slower
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost/cast(list/targets, mob/user)
-	if(!istype(user, /mob/living/silicon/robot/drone))
+	if(!isdrone(user))
 		return
 
 	var/mob/living/silicon/robot/drone/D = user

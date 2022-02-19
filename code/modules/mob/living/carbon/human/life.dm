@@ -1057,6 +1057,8 @@
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
+		for(var/obj/item/organ/external/BP in bodyparts)
+			met_factor += BP.pumped / 100
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 			var/pain = getHalLoss()

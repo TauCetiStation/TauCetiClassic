@@ -66,7 +66,7 @@
 			blood_am = I.reagents.get_reagent_amount("blood")
 		return blood_am
 
-	else if(istype(I, /obj/item/organ/external))
+	else if(isbodypart(I))
 		return 50
 
 	else if(istype(I, /obj/item/brain))
@@ -193,7 +193,7 @@
 	else if(istype(I, /obj/item/weapon/circuitboard))
 		return 30
 
-	else if(istype(I, /obj/item/device/assembly))
+	else if(isassembly(I))
 		return 10 * I.w_class
 
 	return 0

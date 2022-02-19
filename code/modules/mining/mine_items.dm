@@ -101,7 +101,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 						shake_camera(M, 3, 1) // buckled, not a lot of shaking
 					else
 						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				if(!M.buckled)
 					M.Weaken(3)
 
@@ -829,7 +829,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(O.flags & NODROP || !O.canremove)
 			return 0
 		return 1
