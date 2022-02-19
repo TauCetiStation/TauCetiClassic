@@ -31,19 +31,13 @@
 
 	restriction = "Капитан, АВД, Библиотекарь, Клоун, Мим."
 
-	var/static/list/troublemakers = list(
+	jobs_required = list(
 		"Captain",
 		"Internal Affairs Agent",
 		"Librarian",
 		"Clown",
 		"Mime",
 	)
-
-/datum/quality/nuclear_option/availability_check(client/C)
-	return job_checks(C, troublemakers)
-
-/datum/quality/nuclear_option/restriction_check(mob/living/carbon/human/H)
-	return H.mind.assigned_role in troublemakers
 
 /datum/quality/nuclear_option/add_effect(mob/living/carbon/human/H)
 	var/nukecode = "ERROR"

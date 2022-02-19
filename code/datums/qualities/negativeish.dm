@@ -43,11 +43,9 @@
 
 	restriction = "Варден"
 
-/datum/quality/true_keeper/availability_check(client/C)
-	return job_checks(C, list("Warden"))
-
-/datum/quality/true_keeper/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Warden"
+	jobs_required = list(
+		"Warden",
+	)
 
 /datum/quality/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
 	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
@@ -67,11 +65,9 @@
 
 	restriction = "Капитан"
 
-/datum/quality/rts/availability_check(client/C)
-	return job_checks(C, list("Captain"))
-
-/datum/quality/rts/restriction_check(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role == "Captain"
+	jobs_required = list(
+		"Captain",
+	)
 
 /datum/quality/rts/add_effect(mob/living/carbon/human/H, latespawn)
 	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
