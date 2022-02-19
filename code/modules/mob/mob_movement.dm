@@ -65,9 +65,6 @@
 	if(!mob || !mob.loc)
 		return FALSE
 
-	if(!new_loc || !direct)
-		return FALSE
-
 	if(mob.notransform)
 		return FALSE
 
@@ -80,6 +77,9 @@
 
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
+
+	if(!new_loc || !direct)
+		return FALSE
 
 	if(!forced && mob.stat == DEAD)
 		mob.ghostize()
