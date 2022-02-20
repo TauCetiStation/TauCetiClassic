@@ -133,7 +133,8 @@
 
 	var/power = force
 	if(ishuman(user))
-		var/obj/item/organ/external/BP = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
 			power += (BP.pumped / 10)
 	if(HULK in user.mutations)
