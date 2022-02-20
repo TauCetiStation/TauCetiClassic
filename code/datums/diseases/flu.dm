@@ -17,12 +17,12 @@
 		if(2)
 /*
 			if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed --Blaank
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 				stage--
 				return
 */
 			if(affected_mob.lying && prob(20))  //added until sleeping is fixed --Blaank
-				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 				stage--
 				return
 			if(prob(1))
@@ -30,11 +30,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете боль в мышцах.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваши мышцы болят.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в животе.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваш живот болит.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -42,12 +42,12 @@
 		if(3)
 /*
 			if(affected_mob.sleeping && prob(15))  //removed until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 				stage--
 				return
 */
 			if(affected_mob.lying && prob(15))  //added until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 				stage--
 				return
 			if(prob(1))
@@ -55,11 +55,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете боль в мышцах.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваши мышцы болят.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в животе.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваш живот болит.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
