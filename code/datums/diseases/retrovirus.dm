@@ -68,7 +68,7 @@
 				to_chat(affected_mob, "<span class='warning'>Вы чувствуете острую боль в голове!</span>")
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				to_chat(affected_mob, "<span class='warning'>Ваш желудок выворчаивает на изнанку.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваш желудок выворчаивает наизнанку.</span>")
 		if(3)
 			if(restcure)
 /*
