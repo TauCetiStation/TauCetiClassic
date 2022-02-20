@@ -323,7 +323,7 @@
 		to_chat(usr, "Вы не можете этого сделать, потому что Вы мертвы!")
 		return
 	toff = !toff
-	to_chat(usr, "<span class='notice'>Отправитель/получатель КПК [(toff ? "выключен" : "включен")]!</span>")
+	to_chat(usr, "<span class='notice'>Передатчик КПК [(toff ? "выключен" : "включен")]!</span>")
 
 
 /obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
@@ -433,8 +433,8 @@
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
-	data["money"] = owner_account ? owner_account.money : "ошибка"
-	data["salary"] = owner_account ? owner_account.owner_salary : "ошибка"
+	data["money"] = owner_account ? owner_account.money : "error"
+	data["salary"] = owner_account ? owner_account.owner_salary : "error"
 	data["target_account_number"] = target_account_number
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
@@ -557,7 +557,7 @@
 			if (total_moles)
 				var/o2_level = environment.gas["oxygen"] / total_moles
 				var/n2_level = environment.gas["nitrogen"] / total_moles
-				var/co2_level = environment.gas["carbon dioxide"] / total_moles
+				var/co2_level = environment.gas["carbon_dioxide"] / total_moles
 				var/phoron_level = environment.gas["phoron"] / total_moles
 				var/unknown_level =  1 - (o2_level + n2_level + co2_level + phoron_level)
 				data["aircontents"] = list(
@@ -663,7 +663,7 @@
 			ownjob = id.assignment
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
-			name = "КПК-[owner] ([ownjob])"
+			name = "PDA-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
