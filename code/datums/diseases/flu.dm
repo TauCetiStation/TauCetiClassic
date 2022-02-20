@@ -34,7 +34,7 @@
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в желудке.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в животе.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
