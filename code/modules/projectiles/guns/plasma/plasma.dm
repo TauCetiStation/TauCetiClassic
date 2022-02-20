@@ -36,7 +36,7 @@
 
 /obj/item/weapon/gun/plasma/p104sass
 	name = "plasma 104-sass" // its actually 10/4. 10 - because its based in some technical aspects of carbine and even shoots the same projectiles. 4 - stands for prototype number.
-	desc = "Плазменный полуавтоматический дробовки."
+	desc = "Плазменный полуавтоматический дробовик."
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"

@@ -50,7 +50,7 @@
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
-	desc = "Устройство,созданное для вызова мутаций у растений."
+	desc = "Устройство, испускающее контролируемое излучение, вызывающее мутацию в растительных клетках."
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
