@@ -205,12 +205,12 @@
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
-					to_chat(src, "<span class='warning'>Вы не контролируете свою руку и роняете, что держали в ней.</span>")
+					to_chat(src, "<span class='warning'>Ваши руки вас не слушаются и вы роняете предмет на пол.</span>")
 					drop_item()
 
 			if(10 to 12)
 				if(getBrainLoss() >= 50 && !lying)
-					to_chat(src, "<span class='warning'>Вы не контролируете свои ноги и теряете равновесие.</span>")
+					to_chat(src, "<span class='warning'>Ваши ноги вас не слушаются и вы теряете равновесие.</span>")
 					resting = 1
 
 			if(13 to 18)
