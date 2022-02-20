@@ -65,5 +65,5 @@
 		affected_mob.dna.UpdateSE()
 		affected_mob.real_name = original_dna["name"]
 
-		to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя самим собой.</span>")
+		to_chat(affected_mob, "<span class='notice'>Вы снова чувствуете себя самим собой.</span>")
 	return ..()
