@@ -122,6 +122,14 @@
 			var/datum/role/R = antag_roles[role]
 			var/datum/skills = R.return_skills_type()
 			available_skills = available_skills.mergeSkills(skills)
+	
+	var/datum/role/changeling/Host = GetRoleByType(/datum/role/changeling)
+	if(!Host)
+		return available_skills
+	for(var/mob/living/parasite/essence/E in Host.essences)
+		var/datum/skills = E.mind.getAvailableSkills()
+		available_skills = available_skills.mergeSkills(skills)
+	
 	return available_skills
 
 /datum/mind/proc/changeSkillValue(skill,value)
