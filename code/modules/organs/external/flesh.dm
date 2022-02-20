@@ -29,16 +29,13 @@
 		return
 
 	var/old_pumped = BP.pumped
-	if(!isnull(cap) && (BP.pumped >= cap))
-		return
 
 	if(isnull(cap))
 		cap = BP.max_pumped
-	BP.pumped += value
-	if(BP.pumped > cap)
-		BP.pumped = cap
+	if(BP.pumped >= cap)
+		return
 
-
+	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
 
 	return BP.pumped - old_pumped
