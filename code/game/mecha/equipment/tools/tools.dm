@@ -23,7 +23,7 @@
 	if(!cargo_holder) return
 	if(istype(target, /obj/structure/stool)) return
 	for(var/M in target.contents)
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			return
 
 	if(istype(target,/obj))
@@ -69,7 +69,7 @@
 				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				return 1
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -138,12 +138,12 @@
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -179,7 +179,7 @@
 			if(istype(target, /turf/simulated/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
-					target.ex_act(3)
+					target.ex_act(EXPLODE_LIGHT)
 			else if(istype(target, /turf/simulated/mineral))
 				for(var/turf/simulated/mineral/M in range(chassis,1))
 					if(get_dir(chassis,M)&chassis.dir)
@@ -201,11 +201,11 @@
 						for(var/obj/item/weapon/ore/ore in range(target,1))
 							ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/can_attach(obj/mecha/M)
@@ -1059,7 +1059,7 @@
 		else
 			chassis.occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -1174,7 +1174,7 @@
 	for(var/atom/movable/T in loc)
 		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
 			if(T.loc != chassis)
-				T.ex_act(1)
+				T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))

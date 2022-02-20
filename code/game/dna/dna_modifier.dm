@@ -232,26 +232,16 @@
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
 				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
+	for(var/atom/movable/A as anything in src)
+		A.loc = loc
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))

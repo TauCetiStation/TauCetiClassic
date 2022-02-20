@@ -366,7 +366,7 @@
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -584,7 +584,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -1236,3 +1236,53 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time

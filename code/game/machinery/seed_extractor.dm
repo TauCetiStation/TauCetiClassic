@@ -39,7 +39,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/organ/external))
+	if(isbodypart(O))
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")

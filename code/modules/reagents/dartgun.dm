@@ -170,7 +170,7 @@
 
 			if(D)
 				for(var/mob/living/carbon/M in D.loc)
-					if(!istype(M,/mob/living/carbon)) continue
+					if(!iscarbon(M)) continue
 					if(M == user) continue
 					//Syringe gun attack logging by Yvarov
 					var/R

@@ -360,7 +360,7 @@
 	if(!subject.dna)
 		scantemp = "Ошибка: Не удалось обнаружить геннетические данные."
 		return
-	if(subject.suiciding == 1)
+	if(subject.suiciding)
 		scantemp = "Ошибка: Мозг субъекта не реагирует."
 		return
 	if((!subject.ckey) || (!subject.client))
