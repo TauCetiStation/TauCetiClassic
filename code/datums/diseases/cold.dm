@@ -58,7 +58,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "<span class='warning'>У вас болит горло.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется макротой.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется мокротой.</span>")
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
