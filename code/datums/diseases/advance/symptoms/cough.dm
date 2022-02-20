@@ -32,7 +32,7 @@ BONUS
 			return
 		switch(A.stage)
 			if(1, 2, 3)
-				to_chat(M, "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
+				to_chat(M, "<span notice='notice'>[pick("Вы проглотили свою макроту.", "Вы вынуждены прокашляться.")]</span>")
 			else
 				M.emote("cough")
 				var/obj/item/I = M.get_active_hand()
