@@ -159,21 +159,21 @@
 			if (candidates.len)
 				var/obj/item/organ/external/BP = pick(candidates)
 				BP.mutate()
-				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
+				to_chat(src, "<span class = 'notice'>Вам кажется, что у вас повреждена [BP.name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
 			for (var/obj/item/organ/external/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
 					BP.unmutate()
-					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
+					to_chat(src, "<span class = 'notice'>Ваша [BP.name] снова правильной формы.</span>")
 					return
 
 	if (getCloneLoss() < 1)
 		for (var/obj/item/organ/external/BP in bodyparts)
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
-				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
+				to_chat(src, "<span class = 'notice'>Ваша [BP.name] снова правильной формы.</span>")
 	med_hud_set_health()
 
 
