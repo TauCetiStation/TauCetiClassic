@@ -122,7 +122,6 @@ medical, chemistry, research, command)
 	if(isSkillCompetent(user, required_skill, required_proficiency))
 		return TRUE
 	var/display_message_self = message_self
-	var/display_message_others = message_others
 	var/used_item = target
 	if(text_target)
 		used_item = text_target
