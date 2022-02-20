@@ -119,7 +119,7 @@
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
 		M.loc = src.loc
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+		visible_message("<span class='danger'>[M] вырывается из [src]!</span>")
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
@@ -182,8 +182,8 @@
 		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
-			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
-			"<span class='rose'>You hear a heavy electrical crack.</span>" \
+			"<span class='danger'>Сильнейший электрический удар проходит сквозь ваше тело!</span>", \
+			"<span class='rose'>Вы слышите электрическое потрескивание.</span>" \
 		)
 		make_jittery(1000)
 		AdjustStuttering(2)
@@ -198,8 +198,8 @@
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
-			"<span class='rose'>You feel a mild shock course through your body.</span>", \
-			"<span class='rose'>You hear a light zapping.</span>" \
+			"<span class='rose'>Вы чувствуете как ток проходит по вашему телу.</span>", \
+			"<span class='rose'>Вы слышите потрескивание света.</span>" \
 		)
 	return shock_damage
 
@@ -254,7 +254,7 @@
 			var/mob/living/carbon/human/H = src
 			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
-				"<span class='notice'>You check yourself for injuries.</span>" \
+				"<span class='notice'>Вы проверяете себя на наличие травм.</span>" \
 				)
 
 			for(var/obj/item/organ/external/BP in H.bodyparts)
@@ -823,7 +823,7 @@
 	if(user.is_busy(src))
 		return
 
-	visible_message("<span class='danger'>[user] is trying perform AV on [src]!</span>")
+	visible_message("<span class='danger'>[user] пытается сделать ИВЛ [src]!</span>")
 
 	if(health <= (config.health_threshold_dead + 5))
 		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
@@ -832,31 +832,31 @@
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
+			to_chat(user, "<span class='notice bold'>Ваша раса не может делать ИВЛ!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
-			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
+			to_chat(user, "<span class='notice bold'>Снимите свою маску!</span>")
 			return
 
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
+				to_chat(user, "<span class='notice bold'>Этой расе нельзя делать ИВЛ!</span>")
 				return
 			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
-				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
+				to_chat(user, "<span class='notice bold'>Снимите [wear_mask] с[src]!</span>")
 				return
 
 		if(head && head.flags & HEADCOVERSMOUTH)
-			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
+			to_chat(user, "<span class='notice bold'>Снимите [head] с [src]!</span>")
 			return
 
 		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
-			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
-			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
-			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+			visible_message("<span class='warning'>[user] делает ИВЛ [src]!</span>")
+			to_chat(src, "<span class='notice'>Вы чувтсвуете поток свежего воздуха, наполняющий ваши лёгкие. Приятно.</span>")
+			to_chat(user, "<span class='warning'>Повторяйте каждые 7 секунд, как минимум.</span>")
 		updatehealth()
 
 /mob/living/carbon/Topic(href, href_list)
