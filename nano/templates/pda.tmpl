@@ -77,11 +77,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 <b>Общие</b>:
             </div>
             <div class="itemContent">
-                {{:helper.link('Блокнот', 'note', {'choice' : "1"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Мессенджер', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Список членов экипажа', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
-				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
-				{{:helper.link('Управление финансами', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
+                {{:helper.link('Блокнот', 'note', {'choice' : "1"}, null, 'fixedLeftWider')}}
+                {{:helper.link('Мессенджер', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWider')}}
+                {{:helper.link('Список экипажа', 'contact', {'choice' : "41"}, null, 'fixedLeftWider')}}
+				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWider')}} -->
+				{{:helper.link('Управление финансами', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWider')}}
             </div>
         </div>
         <br>
@@ -92,7 +92,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <b>Клоун</b>:
                     </div>
                     <div class="itemContent">
-                        {{:helper.link('Синтезатор гудка', 'gear', {'choice' : "Honk"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Синтезатор гудка', 'gear', {'choice' : "Honk"}, null, 'fixedLeftWider')}}
                     </div>
                 </div>
                 <br>
@@ -103,7 +103,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <b>Инженерия</b>:
                     </div>
                     <div class="itemContent">
-                        {{:helper.link('Монитор электроэнергии', 'alert', {'choice' : "43"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Монитор энергии', 'alert', {'choice' : "43"}, null, 'fixedLeftWider')}}
                     </div>
                 </div>
                  <br>
@@ -114,8 +114,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                             <b>Медицина</b>:
                     </div>
                     <div class="itemContent">
-                            {{:helper.link('Медицинские документы', 'gear', {'choice' : "44"}, null, 'fixedLeftWide')}}
-                            {{:helper.link(data.scanmode == 1 ? 'Отключить медсканер' : 'Включить медсканер', 'gear', {'choice' : "Medical Scan"}, null , 'fixedLeftWide')}}
+                            {{:helper.link('Медицинские карты', 'gear', {'choice' : "44"}, null, 'fixedLeftWider')}}
+                            {{:helper.link(data.scanmode == 1 ? 'Отключить медсканер' : 'Включить медсканер', 'gear', {'choice' : "Medical Scan"}, null , 'fixedLeftWider')}}
                     </div>
                 </div>
                 <br>
@@ -126,8 +126,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                             <b>Служба безопасности</b>:
                     </div>
                     <div class="itemContent">
-                        {{:helper.link('Записи охраны', 'gear', {'choice' : "45"}, null, 'fixedLeftWide')}}
-                        {{if data.cartridge.radio ==1}} {{:helper.link('Управление охранными ботами', 'gear', {'choice' : "46"}, null, 'fixedLeftWide')}} {{/if}}
+                        {{:helper.link('Записи охраны', 'gear', {'choice' : "45"}, null, 'fixedLeftWider')}}
+                        {{if data.cartridge.radio ==1}} {{:helper.link('Управление охранными ботами', 'gear', {'choice' : "46"}, null, 'fixedLeftWider')}} {{/if}}
                         <br>
                     </div>
                 </div>
@@ -139,8 +139,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <b>Завхоз</b>:
                     </div>
                     <div class="itemContent">
-                        {{:helper.link('Список заказов', 'gear', {'choice' : "47"}, null, 'fixedLeftWide')}}
-                        {{if data.cartridge.radio == 3}} {{:helper.link('Управление ботами доставки', 'gear', {'choice' : "48"}, null, 'fixedLeftWide')}} {{/if}}
+                        {{:helper.link('Список заказов', 'gear', {'choice' : "47"}, null, 'fixedLeftWider')}}
+                        {{if data.cartridge.radio == 3}} {{:helper.link('Управление ботами доставки', 'gear', {'choice' : "48"}, null, 'fixedLeftWider')}} {{/if}}
                          <br>
                     </div>
                 </div>
@@ -155,29 +155,29 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class = "itemContent">
                 {{if data.cartridge}}
                     {{if data.cartridge.access.access_status_display == 1}}
-                        {{:helper.link('Дисплей состояния', 'gear', {'choice' : "42"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Дисплей состояния', 'gear', {'choice' : "42"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.access.access_janitor==1}}
-                        {{:helper.link('Локатор уборщика', 'gear', {'choice' : "49"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Локатор уборщика', 'gear', {'choice' : "49"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.radio == 2}}
-                        {{:helper.link('Радиосигнальный модуль', 'gear', {'choice' : "40"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Радиосигнальный модуль', 'gear', {'choice' : "40"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.access.access_reagent_scanner==1}}
-                        {{:helper.link(data.scanmode == 3 ? 'Выключить сканер реагентов' : 'Включить сканер реагентов', 'gear', {'choice' : "Reagent Scan"}, null, 'fixedLeftWider')}}
+                        {{:helper.link(data.scanmode == 3 ? 'Выкл. сканер реагентов' : 'Вкл. сканер реагентов', 'gear', {'choice' : "Reagent Scan"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.access.access_engine==1}}
-                        {{:helper.link(data.scanmode == 4 ? 'Выключить галогеновый счетчик' : 'Включить галогеновый счетчик', 'gear', {'choice' : "Halogen Counter"}, null, 'fixedLeftWider')}}
+                        {{:helper.link(data.scanmode == 4 ? 'Выкл. галогеновый счетчик' : 'Вкл. галогеновый счетчик', 'gear', {'choice' : "Halogen Counter"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.access.access_atmos==1}}
-                        {{:helper.link(data.scanmode == 5 ? 'Выключить сканер газов' : 'Включить сканер газов', 'gear', {'choice' : "Gas Scan"}, null, 'fixedLeftWide')}}
+                        {{:helper.link(data.scanmode == 5 ? 'Выкл. сканер газов' : 'Вкл. сканер газов', 'gear', {'choice' : "Gas Scan"}, null, 'fixedLeftWider')}}
                     {{/if}}
                     {{if data.cartridge.access.access_remote_door==1}}
-                        {{:helper.link('Открыть дверь', 'gear', {'choice' : "Toggle Door"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Открыть дверь', 'gear', {'choice' : "Toggle Door"}, null, 'fixedLeftWider')}}
                     {{/if}}
                 {{/if}}
-                {{:helper.link('Сканирование атмосферы', 'gear', {'choice' : "3"}, null, 'fixedLeftWide')}}
-                {{:helper.link(data.fon==1 ? 'Выключить фонарик' : 'Включить фонарик', 'lightbulb', {'choice' : "Light"}, null,'fixedLeftWide')}}
+                {{:helper.link('Анализ воздуха', 'gear', {'choice' : "3"}, null, 'fixedLeftWider')}}
+                {{:helper.link(data.fon==1 ? 'Выкл. фонарик' : 'Вкл. фонарик', 'lightbulb', {'choice' : "Light"}, null,'fixedLeftWider')}}
             </div>
         </div>
         {{if data.pai}}
@@ -1046,7 +1046,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><td><span class="good">Номер целевого счета:</span></td>
                     <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
                     <td><div class="itemContent">{{:helper.link('Список', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
-                    <td><div class="itemContent">{{:helper.link('Перейти', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
+                    <td><div class="itemContent">{{:helper.link('Нажать', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
 
                     <tr><td><span class="good">Сумма перевода($):</span></td>
                     <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>

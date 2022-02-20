@@ -850,7 +850,7 @@
 
 		if("Look for")
 			ui.close()
-			to_chat(U, "[bicon(src)]<span class='notice'>Выберите получателя перевода.</span>")
+			to_chat(U, "[bicon(src)]<span class='notice'>Нажмите на получателя перевода.</span>")
 			pda_paymod = TRUE
 
 		if("Show Manifest")
