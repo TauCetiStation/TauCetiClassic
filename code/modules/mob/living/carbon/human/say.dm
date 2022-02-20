@@ -132,14 +132,14 @@
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		if (!(speaking && (speaking.flags & SIGNLANG)))
-			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			to_chat(usr, "<span class='userdanger'>Вы немы.</span>")
 			return
 
 	if (speaking && (speaking.flags & SIGNLANG))
 		var/obj/item/organ/external/LH = get_bodypart(BP_L_ARM)
 		var/obj/item/organ/external/RH = get_bodypart(BP_R_ARM)
 		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
-			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			to_chat(usr, "<span class='userdanger'>Вы попытались сделать жест, но ваши руки вас не слушаются.</span>")
 			return
 
 	if (has_lang_prefix)
