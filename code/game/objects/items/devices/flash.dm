@@ -43,8 +43,6 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-	if(!handle_fumbling(user, M, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED, text_target = src))
-		return
 	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
@@ -124,8 +122,6 @@
 		return
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
-		return
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, SKILL_POLICE, SKILL_POLICE_TRAINED))
 		return
 	flash_recharge()
 
