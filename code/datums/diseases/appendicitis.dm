@@ -40,7 +40,7 @@
 				var/mob/living/carbon/human/H = affected_mob
 				H.vomit()
 			else
-				to_chat(affected_mob, "<span class='warning'>Вы ворачиваетесь наизнанку в попытке вызвать рвоту, но в вашем желудке ничего не осталось!</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы выворачиваетесь наизнанку в попытке вызвать рвоту, но в вашем желудке ничего не осталось!</span>")
 				affected_mob.Weaken(10)
 				affected_mob.adjustToxLoss(3)
 	if(stage > 3)
