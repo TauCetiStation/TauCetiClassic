@@ -28,13 +28,17 @@
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return
 
+	var/old_pumped = BP.pumped
+	if(!isnull(cap) && (BP.pumped >= cap))
+		return
+
 	if(isnull(cap))
 		cap = BP.max_pumped
-	var/old_pumped = BP.pumped
-
 	BP.pumped += value
 	if(BP.pumped > cap)
 		BP.pumped = cap
+
+
 	BP.update_sprite()
 
 	return BP.pumped - old_pumped
