@@ -88,7 +88,7 @@
 // /area signals
 ///from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_ENTERED "area_entered"
-///from base of area/Exited(): (atom/movable/M)
+///from base of area/Exited(): (area/exited, atom/NewLoc)
 #define COMSIG_AREA_EXITED "area_exited"
 ///from base of area/update_beauty()
 #define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty"
