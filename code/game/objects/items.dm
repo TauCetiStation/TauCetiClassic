@@ -78,6 +78,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is using this item requires any specific skill?
+	var/required_skill
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -747,7 +749,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -756,8 +758,14 @@
 	if(!delay && !tool_start_check(user, amount))
 		return
 
+	var/skill_bonus = 1
+	if(required_skill)
+		skill_bonus = applySkillModifier(user, 1, required_skill, required_proficiency)
+	//skill bonus for tool but use other skill than defined in `required_skill`. E.g. check surgergy skill for screwdriver in case of ghetto surgery
+	if(other_skill)
+		skill_bonus = applySkillModifier(user, 1, other_skill, required_proficiency)
 	delay *= toolspeed
-
+	delay *= skill_bonus
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 

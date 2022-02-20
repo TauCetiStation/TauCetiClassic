@@ -16,6 +16,8 @@
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 /obj/machinery/particle_accelerator/control_box/atom_init()
 	connected_parts = list()

@@ -13,6 +13,8 @@
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor
 	var/datum/powernet/powernet = null
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_TRAINED
 
 //fix for issue 521, by QualityVan.
 //someone should really look into why circuits have a powernet var, it's several kinds of retarded.
@@ -42,7 +44,6 @@
 			user.unset_machine()
 			user << browse(null, "window=powcomp")
 			return
-
 
 	var/t = "<TT>"
 

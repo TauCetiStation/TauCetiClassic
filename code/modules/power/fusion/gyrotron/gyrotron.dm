@@ -14,6 +14,7 @@ var/global/list/gyrotrons = list()
 	var/id_tag
 	var/rate = 3
 	var/mega_energy = 1
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 /obj/machinery/power/emitter/gyrotron/atom_init_late()
 	..(board_path = /obj/item/weapon/circuitboard/emitter/gyrotron)

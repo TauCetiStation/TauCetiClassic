@@ -23,6 +23,8 @@
 	var/on = 0
 	var/repairability = 0
 	var/turf/recharging_turf = null
+	required_skill = SKILL_CIV_MECH
+	required_skill_proficiency = SKILL_CIV_MECH_TRAINED
 
 /obj/machinery/mech_bay_recharge_port/atom_init()
 	. = ..()

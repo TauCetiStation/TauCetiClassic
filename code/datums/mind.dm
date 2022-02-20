@@ -60,6 +60,9 @@
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	//skills
+	var/datum/skills/original_skills
+	var/datum/skills/current_skills
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
@@ -105,6 +108,42 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
+/datum/mind/proc/getSkillRating(skill)
+	if(issilicon(usr)) return getSkillMaximum(skill);
+	if(!current_skills)
+		current_skills = original_skills
+	var/datum/skills/available_skills = getAvailableSkills()
+	return min(current_skills.getRating(skill), available_skills.getRating(skill))
+
+/datum/mind/proc/getAvailableSkills()
+	var/datum/skills/available_skills = original_skills
+	if(antag_roles.len)
+		for(var/role in antag_roles)
+			var/datum/role/R = antag_roles[role]
+			var/datum/skills = R.return_skills_type()
+			available_skills = available_skills.mergeSkills(skills)
+	
+	var/datum/role/changeling/Host = GetRoleByType(/datum/role/changeling)
+	if(!Host)
+		return available_skills
+	for(var/mob/living/parasite/essence/E in Host.essences)
+		var/datum/skills = E.mind.getAvailableSkills()
+		available_skills = available_skills.mergeSkills(skills)
+	
+	return available_skills
+
+/datum/mind/proc/changeSkillValue(skill,value)
+	var/datum/skills/available_skills = getAvailableSkills()
+	if (value > getSkillMaximum(skill) || value < getSkillMinimum(skill))
+		return
+	if (value > available_skills.getRating(skill))
+		return
+	if (value == getSkillRating(skill))
+		return
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [current_skills.getRating(skill)] to [value].</span>")
+	var/datum/skills/edited_skills = cloneSkills(current_skills)
+	edited_skills.vars[skill] = value
+	current_skills = edited_skills
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -631,12 +670,14 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
+		mind.original_skills = new /datum/skills()
 		if(SSticker)
 			SSticker.minds += mind
 		else
 			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
+
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

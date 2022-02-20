@@ -146,6 +146,7 @@
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("power")
 			on = !on

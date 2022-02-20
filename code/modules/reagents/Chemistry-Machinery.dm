@@ -27,6 +27,8 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_COMPETENT
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -187,6 +189,8 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
+		if(!do_skill_checks(user))
+			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -243,6 +247,8 @@
 				"diethylamine"
 		)
 	)
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -306,6 +312,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -320,7 +327,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -343,6 +350,8 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_EXPERT
 
 
 /obj/machinery/chem_master/atom_init()
@@ -405,6 +414,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -685,12 +695,16 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_COMPETENT
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -760,6 +774,8 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_TRAINED
 
 
 /obj/machinery/computer/pandemic/set_broken()
@@ -791,6 +807,7 @@
 
 	if(!beaker)
 		return FALSE
+
 
 	if (href_list["create_vaccine"])
 		if(!src.wait)
@@ -1057,6 +1074,8 @@
 
 
 	var/list/holdingitems = list()
+	required_skill = SKILL_CHEMISTRY
+	required_skill_proficiency = SKILL_CHEMISTRY_PRACTICED
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
@@ -1172,7 +1191,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	switch(href_list["action"])
 		if ("grind")
 			grind()

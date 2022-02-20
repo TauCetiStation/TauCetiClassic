@@ -100,6 +100,7 @@
 
 	frequency = 0
 	var/id = null
+	required_skill_proficiency = SKILL_ATMOS_PRO
 
 /obj/machinery/atmospherics/components/binary/valve/digital/open
 	open = TRUE
