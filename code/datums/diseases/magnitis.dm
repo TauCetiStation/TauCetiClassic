@@ -38,7 +38,7 @@
 			if(prob(2))
 				to_chat(affected_mob, "<span class='warning'>Вы чувствуете как сильный ток ударяет по вашему телу.</span>")
 			if(prob(2))
-				to_chat(affected_mob, "<span class='warning'>Вам кажется,что пришло время подурачиться.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вам кажется, что пришло время подурачиться.</span>")
 			if(prob(4))
 				for(var/obj/M in orange(4,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
