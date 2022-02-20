@@ -322,6 +322,14 @@
 	icon_state = "warning"
 	},
 /area/centcom)
+"aS" = (
+/obj/effect/landmark/start{
+	name = "AI"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "aT" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -5142,7 +5150,7 @@ an
 aq
 al
 ay
-ay
+aS
 ay
 aM
 ay

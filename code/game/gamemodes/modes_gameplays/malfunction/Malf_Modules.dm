@@ -208,11 +208,6 @@ robot_fabricator
 	for(var/obj/machinery/drone_fabricator/fabricator in machines)
 		fabricator.malfuction = TRUE
 
-/datum/AI_Module/large/BSA_hack
-	module_name = "Hack BSA"
-	description = "Hacks drone fabricators, now all produced units have a program of subjugation to you."
-	need_only_once = TRUE
-
 /datum/AI_Module/large/hack_announce
 	module_name = "Hack announcement system"
 	description = "Hacks the announcement system, preventing the Cent. com to notify the station about suspicious activity on the network. Allows you to give custom announcements to station."
@@ -231,13 +226,29 @@ robot_fabricator
 	var/dat
 	dat = "<B>Select an announcement template</B><BR>"
 	dat += "<HR>"
+	dat += "<A href='byond://?src=\ref[src];announce_type=[/datum/announcement/station]'>["Custom announce"]</A>"
+	dat += "<HR>"
+
+	dat += "<B>Centcomm:</B><BR>"
+	var/list/available_announces = subtypesof(/datum/announcement/centcomm)
+	available_announces -= subtypesof(/datum/announcement/centcomm/anomaly)
+	for(var/announce in available_announces)
+		var/datum/announcement/announce_type = announce
+		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"
+	dat += "<HR>"
+
 	dat += "<B>Anomalies:</B><BR>"
-	dat += "<A href='?src=\ref[src];announce_name=["Anomaly: Frost"]'>Frost</A><br>"
-	dat += "<A href='byond://?src=\ref[src];announce_name=["Anomaly: Radiation Belt"]'>Radiation storm</A>"
+	available_announces = subtypesof(/datum/announcement/centcomm/anomaly)
+	for(var/announce in available_announces)
+		var/datum/announcement/announce_type = announce
+		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"
 	dat += "<HR>"
-	dat += "<B>Абобусы:</B><BR>"
-	dat += "<HR>"
-	dat += "<B>Приколы:</B><BR>"
+
+	dat += "<B>Station:</B><BR>"
+	available_announces = subtypesof(/datum/announcement/station)
+	for(var/announce in available_announces)
+		var/datum/announcement/announce_type = announce
+		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"
 	dat += "<HR>"
 
 	var/datum/browser/popup = new(user, "window=modpicker")
@@ -246,8 +257,11 @@ robot_fabricator
 
 /datum/AI_Module/large/hack_announce/Topic(href, href_list)
 	..()
-	to_chat(owner, href)
-
+	if(href_list["clear"])
+		return
+	var/selected_announce_path = text2path(href_list["announce_type"])
+	var/datum/announcement/announce = new selected_announce_path		
+	announce.play()
 
 /mob/living/silicon/ai/proc/hack_announce()
 	set category = "Malfunction"
@@ -331,14 +345,6 @@ robot_fabricator
 		qdel(M)
 	else
 		uses++
-
-/datum/AI_Module/small/overload_pda
-	module_name = "PDA overload"
-	description = ""
-	uses = 5
-	verb_caller = /mob/living/silicon/ai/proc/overload_pda
-
-/mob/living/silicon/ai/proc/overload_pda()
 
 /datum/AI_Module/small/voice_changer
 	module_name = "Voice changer"
