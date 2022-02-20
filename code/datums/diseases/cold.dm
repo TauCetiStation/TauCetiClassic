@@ -21,11 +21,11 @@
 				return
 */
 			if(affected_mob.lying && prob(40))  //changed FROM prob(10) until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя гораздо лучше.</span>")
 				cure()
 				return
 			if(prob(1) && prob(5))
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 				cure()
 				return
 			if(prob(1))
@@ -33,9 +33,9 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
+				to_chat(affected_mob, "<span class='warning'>У вас пересохло горло.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется макротой.</span>")
 		if(3)
 /*
 			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
@@ -44,11 +44,11 @@
 				return
 */
 			if(affected_mob.lying && prob(25))  //changed FROM prob(5) until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 				cure()
 				return
 			if(prob(1) && prob(1))
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 				cure()
 				return
 			if(prob(1))
@@ -56,9 +56,9 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
+				to_chat(affected_mob, "<span class='warning'>У вас пересохло горло.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется макротой.</span>")
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
