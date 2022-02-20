@@ -31,7 +31,7 @@
 			affected_mob.emote("groan")
 	if(stage > 1)
 		if(prob(3))
-			to_chat(affected_mob, "<span class='warning'>Вы испытываете колющую боль в своём животе!</span>")
+			to_chat(affected_mob, "<span class='warning'>Вы чувствуете колющую боль в своём животе!</span>")
 			affected_mob.emote("groan")
 			affected_mob.adjustToxLoss(1)
 	if(stage > 2)
