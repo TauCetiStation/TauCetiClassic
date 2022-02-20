@@ -22,7 +22,7 @@
 	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	usesound = 'sound/items/surgery/Retract.ogg'
-
+	required_skill = SKILL_SURGERY
 /*
  * Hemostat
  */
@@ -38,7 +38,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 	usesound = 'sound/items/surgery/Hemostat.ogg'
-
+	required_skill = SKILL_SURGERY
 /*
  * Cautery
  */
@@ -54,7 +54,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 	usesound = 'sound/items/surgery/cautery.ogg'
-
+	required_skill = SKILL_SURGERY
 
 /*
  * Surgical Drill
@@ -73,6 +73,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 	usesound = 'sound/items/surgery/SurgDrill.ogg'
+	required_skill = SKILL_SURGERY
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
@@ -102,6 +103,7 @@
 	tools = list(
 		TOOL_KNIFE = 1
 		)
+	required_skill = SKILL_SURGERY
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -166,6 +168,7 @@
 	sharp = 1
 	edge = 1
 	usesound = 'sound/items/surgery/Bone_Saw.ogg'
+	required_skill = SKILL_SURGERY
 
 
 //misc, formerly from code/defines/weapons.dm
@@ -177,6 +180,7 @@
 	w_class = SIZE_TINY
 	throwforce = 1.0
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
+	required_skill = SKILL_SURGERY
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
@@ -188,6 +192,7 @@
 	w_class = SIZE_TINY
 	var/usage_amount = 10
 	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
+	required_skill = SKILL_SURGERY
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"
@@ -200,5 +205,6 @@
 	w_class = SIZE_TINY
 	attack_verb = list("attacked", "hit", "bludgeoned")
 	usesound = 'sound/items/surgery/BonSet.ogg'
+	required_skill = SKILL_SURGERY
 
 

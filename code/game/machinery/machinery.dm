@@ -474,12 +474,11 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_NOVICE, penalty = 0.5, bonus = 0.1)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = SKILL_TASK_VERY_EASY)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time * skill_bonus, volume = 50))
+		if(W.use_tool(src, user, time, volume = 50, required_proficiency = SKILL_ENGINEERING_NOVICE))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

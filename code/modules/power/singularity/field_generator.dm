@@ -108,7 +108,6 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
-	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
 	else if(iswrench(W))
@@ -142,7 +141,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if(WT.use_tool(src, user, 20 * skill_bonus, volume = 50))
+					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_PRO))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
@@ -151,7 +150,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, 20 * skill_bonus, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_PRO))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else

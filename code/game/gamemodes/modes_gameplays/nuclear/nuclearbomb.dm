@@ -53,7 +53,6 @@ var/global/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_TRAINED)
 	if (isscrewdriver(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)
@@ -108,7 +107,7 @@ var/global/bomb_set
 						return FALSE
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING * skill_bonus, amount = 5, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
 				return FALSE
@@ -117,7 +116,7 @@ var/global/bomb_set
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return FALSE
-					if(O.use_tool(src, user, SKILL_TASK_AVERAGE * skill_bonus, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
 				return FALSE
@@ -133,7 +132,7 @@ var/global/bomb_set
 						return FALSE
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT * skill_bonus, amount = 5, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
 				return FALSE
@@ -142,7 +141,7 @@ var/global/bomb_set
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH * skill_bonus, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
 				return FALSE
@@ -151,7 +150,7 @@ var/global/bomb_set
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH * skill_bonus, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = FALSE
 						removal_stage = 5

@@ -182,6 +182,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	sharp = 1
 
 	var/excavation_amount = 100
+	required_skill = SKILL_ENGINEERING
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
@@ -333,6 +334,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = FALSE
 	var/initial_toolspeed
+
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()

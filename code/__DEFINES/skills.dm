@@ -20,14 +20,11 @@
 #define SKILL_POLICE_TRAINED 1 // heads of staff
 #define SKILL_POLICE_PRO 2 // security
 
-
 //firearms
 #define SKILL_FIREARMS "firearms"
 #define SKILL_FIREARMS_UNTRAINED 0	//civilian
 #define SKILL_FIREARMS_TRAINED 1	// less recoil from firearms, usage of mines and c4
 #define SKILL_FIREARMS_PRO 2	   // security, nuclear, ERT
-
-
 
 //melee_weapons skill
 //buff to melee weapon attack damage(+20% dmg per level)
@@ -36,7 +33,6 @@
 #define SKILL_MELEE_DEFAULT 0 //civilian, 
 #define SKILL_MELEE_TRAINED 1 //cook, botanist, atmospheric techician
 #define SKILL_MELEE_MASTER 2  //nuclear, security
-
 
 //engineering skill
 #define SKILL_ENGINEERING "engineering"
@@ -116,7 +112,6 @@
     SKILL_SURGERY = list(SKILL_SURGERY_DEFAULT, SKILL_SURGERY_EXPERT), \
     SKILL_COMMAND = list(SKILL_COMMAND_DEFAULT, SKILL_COMMAND_MASTER) \
 )
-
 
 
 #define SKILL_TASK_TRIVIAL 10

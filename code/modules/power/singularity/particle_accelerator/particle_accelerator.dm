@@ -201,19 +201,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 		return 0
 	var/temp_state = src.construction_state
 
-	var/skill_bonus = applySkillModifier(user, 1, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, 0.8, 0.2)
-	
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20 * skill_bonus, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_proficiency = SKILL_ENGINEERING_PRO))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20 * skill_bonus, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_proficiency = SKILL_ENGINEERING_PRO))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
@@ -344,14 +342,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_proficiency = SKILL_ENGINEERING_PRO))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_proficiency = SKILL_ENGINEERING_PRO))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")

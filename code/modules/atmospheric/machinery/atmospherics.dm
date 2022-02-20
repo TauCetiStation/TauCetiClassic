@@ -170,14 +170,13 @@ Pipelines + Other Objects -> Pipe network
 			add_fingerprint(user)
 			if(!do_skill_checks())
 				return
-			var/skill_bonus = applySkillModifier(user, 1, SKILL_ATMOS, SKILL_ATMOS_TRAINED)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, 20 *skill_bonus, volume = 50))
+			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ATMOS_TRAINED))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",
