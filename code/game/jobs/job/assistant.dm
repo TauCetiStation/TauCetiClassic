@@ -19,8 +19,8 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
-	skills_type = /datum/skills/test_subject
-	alt_skills_types = list(
+	skill_sets = list(
+		"Test Subject"   = /datum/skills/test_subject,
 		"Lawyer"         = /datum/skills/test_subject/lawyer,
 		"Mecha Operator" = /datum/skills/test_subject/mecha,
 		"Private Eye"    = /datum/skills/test_subject/detective,

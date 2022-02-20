@@ -18,7 +18,7 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	skills_type = /datum/skills/rd
+	skill_sets = list("Research Director" = /datum/skills/rd)
 	outfit = /datum/outfit/job/rd
 	/*
 		HEY YOU!
@@ -45,8 +45,10 @@
 	salary = 180
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
-	skills_type = /datum/skills/scientist
-	alt_skills_types = list("Phoron Researcher" = /datum/skills/scientist/phoron)
+	skill_sets = list(
+		"Scientist" = /datum/skills/scientist,
+		"Phoron Researcher" = /datum/skills/scientist/phoron
+		)
 
 
 /datum/job/xenoarchaeologist
@@ -63,7 +65,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
-	skills_type = /datum/skills/xenoarchaeologist
+	skill_sets = list("Xenoarchaeologist" = /datum/skills/xenoarchaeologist)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -88,7 +90,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
-	skills_type = /datum/skills/xenobiologist
+	skill_sets = list("Xenobiologist" = /datum/skills/xenobiologist)
 
 
 /datum/job/roboticist
@@ -106,8 +108,8 @@
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
-	skills_type = /datum/skills/roboticist
-	alt_skills_types = list(
+	skill_sets = list(
+		"Roboticist" = /datum/skills/roboticist,
 		"Biomechanical Engineer" = /datum/skills/roboticist/bio,
 		"Mechatronic Engineer" = /datum/skills/roboticist/mecha
 	)
@@ -126,5 +128,5 @@
 	access = list(access_research)
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
-	skills_type = /datum/skills/research_assistant
+	skill_sets = list("Research Assistant" = /datum/skills/research_assistant)
 
