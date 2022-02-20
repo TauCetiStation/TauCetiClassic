@@ -30,8 +30,8 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				to_chat(M, "<span class='notice'>[pick("You feel dizzy.", "Your head starts spinning.")]</span>")
+				to_chat(M, "<span class='notice'>[pick("Вы испытываете головокружение.", "Ваша голова ходит кругом.")]</span>")
 			else
-				to_chat(M, "<span class='notice'>You are unable to look straight!</span>")
+				to_chat(M, "<span class='notice'>Вы не можете смотреть прямо!</span>")
 				M.make_dizzy(5)
 	return
