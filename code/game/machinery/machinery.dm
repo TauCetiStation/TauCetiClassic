@@ -339,7 +339,7 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-		return FALSE
+	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
 	if(istype(S) && allowed(S))
