@@ -163,4 +163,3 @@
 			chamber_round()
 		update_icon()
 
-
