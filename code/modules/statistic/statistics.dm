@@ -18,7 +18,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 #define STAT_FILE_NAME "stat.json"
 
 /datum/stat_collector
-	var/const/statistics_version = STAT_OUTPUT_VERSION
+	var/const/version = STAT_OUTPUT_VERSION
 	var/round_id
 	var/start_time
 	var/end_time
@@ -26,15 +26,18 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/mode
 	var/mode_result
 	var/map
+	// You can get the nanoui map using
+	// "https://cdn.jsdelivr.net/gh/TauCetiStation/TauCetiClassic@" + base_commit_sha + "/" + nanoui_map_path
+	var/nanoui_map_path
 	var/server_address
+	var/base_commit_sha
+	var/test_merges
 
 	var/completion_html
-	// Deprecated, use roles and factions lists instead
-	var/list/datum/stat/antagonists_completion/completion_antagonists = list()
 
 	var/datum/stat/score/score = new /datum/stat/score
 	var/list/datum/stat/achievement/achievements = list()
-	var/list/datum/stat/centcomm_communication/centcomm_communications = list()
+	var/list/datum/stat/communication_log/communication_logs = list()
 
 	// New data
 	var/list/datum/stat/death_stat/deaths = list()
@@ -76,7 +79,10 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	mode = SSticker.mode.name
 	mode_result = SSticker.mode.get_mode_result()
 	map = SSmapping.config.map_name
+	nanoui_map_path = "nano/images/nanomap_[SSmapping.config.map_path]_1.png"
 	server_address = BYOND_SERVER_ADDRESS
+	base_commit_sha = global.base_commit_sha
+	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
 
 	for(var/datum/mind/M in SSticker.minds)

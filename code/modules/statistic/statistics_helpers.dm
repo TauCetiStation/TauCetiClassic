@@ -1,19 +1,11 @@
-// Deprecated
-/datum/stat_collector/proc/add_completion_antagonist(faction, role, html)
-	var/datum/stat/antagonists_completion/stat = new
-	stat.faction = faction
-	stat.role = role
-	stat.html = html
-	completion_antagonists += stat
-
-/datum/stat_collector/proc/add_centcomm_communication(type, title, author, content, time = roundduration2text())
-	var/datum/stat/centcomm_communication/stat = new
+/datum/stat_collector/proc/add_communication_log(type, title, author, content, time = roundduration2text())
+	var/datum/stat/communication_log/stat = new
 	stat.__type = type
 	stat.title = title
 	stat.author = author
 	stat.time = time
 	stat.content = content
-	centcomm_communications += stat
+	communication_logs += stat
 
 /datum/stat_collector/proc/add_achievement(key, name, title, desc)
 	var/datum/stat/achievement/stat = new

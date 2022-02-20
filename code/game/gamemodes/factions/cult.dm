@@ -9,7 +9,7 @@
 	min_roles = 3
 	max_roles = 3
 
-	stat_type = /datum/stat/faction/cult_info
+	stat_type = /datum/stat/faction/cult
 
 	// For objectives
 	var/datum/mind/sacrifice_target = null

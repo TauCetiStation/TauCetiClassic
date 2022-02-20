@@ -312,8 +312,6 @@
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
 
-	SSStatistics.add_completion_antagonist(null, id, text)
-
 	return text
 
 /datum/role/proc/extraPanelButtons(datum/mind/M)

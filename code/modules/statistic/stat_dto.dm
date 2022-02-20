@@ -2,13 +2,7 @@
 /datum/stat
 	// Hello. Nothing to see here.
 
-// Deprecated
-/datum/stat/antagonists_completion
-	var/faction
-	var/role
-	var/html
-
-/datum/stat/centcomm_communication
+/datum/stat/communication_log
 	var/__type
 	var/title
 	var/author
