@@ -83,7 +83,7 @@
 			var/ian = 0
 			//for(var/mob/M in oviewers(7, src))
 			for(var/mob/M in oview(src,7))
-				if(istype(M, /mob/living/carbon/ian))
+				if(isIAN(M))
 					if(M.client)
 						alone = 0
 						break

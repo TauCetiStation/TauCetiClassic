@@ -139,14 +139,12 @@
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	to_chat(owner, "<span class='warning'>Your feel a prick in your heart.</span>")
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
-	to_chat(owner, "<span class='warning'>Your heart hurts a little.</span>")
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
