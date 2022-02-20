@@ -855,7 +855,7 @@
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
 			visible_message("<span class='warning'>[user] делает ИВЛ [src]!</span>")
-			to_chat(src, "<span class='notice'>Вы чувтсвуете поток свежего воздуха, наполняющий ваши лёгкие. Приятно.</span>")
+			to_chat(src, "<span class='notice'>Вы чувствуете поток свежего воздуха, наполняющий ваши лёгкие. Приятно.</span>")
 			to_chat(user, "<span class='warning'>Повторяйте каждые 7 секунд, как минимум.</span>")
 		updatehealth()
 
