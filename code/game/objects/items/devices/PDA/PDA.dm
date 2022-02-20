@@ -4,7 +4,7 @@
 
 /obj/item/device/pda
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
+	desc = "Портативный микрокомпьютер от компании \"Синктроник Системс Лимитед\". Набор функций определяет специальный картридж ПЗУ."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
@@ -34,11 +34,11 @@
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
 	var/last_tap_sound = 0 // prevents tap sounds spam
-	var/ttone = "beep" //The PDA ringtone!
+	var/ttone = "бип" //The PDA ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
+	var/note = "Спасибо, что выбрали КПК Синктроник 5230!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
@@ -59,7 +59,7 @@
 	var/datum/money_account/owner_account = null
 	var/target_account_number = 0
 	var/funds_amount = 0
-	var/transfer_purpose = "Funds transfer"
+	var/transfer_purpose = "Перевод средств"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
 	var/list/trans_log = list()
 	var/list/safe_pages = list(7, 71, 72, 73)
@@ -94,9 +94,9 @@
 	..()
 	if(src in user)
 		if (SSshuttle.online)
-			to_chat(user, "The time [worldtime2text()] and shuttle ETA [shuttleeta2text()] are displayed in the corner of the screen.")
+			to_chat(user, "В углу экрана отображается время [worldtime2text()]. Шаттл прибудет через [shuttleeta2text()].")
 		else
-			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
+			to_chat(user, "В углу экрана отображается время [worldtime2text()].")
 
 /obj/item/device/pda/AltClick(mob/user)
 	if (can_use(user) && id)
@@ -133,18 +133,18 @@
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
 	icon_state = "pda-j"
-	ttone = "slip"
+	ttone = "хлюп"
 
 /obj/item/device/pda/science
 	default_cartridge = /obj/item/weapon/cartridge/signal/science
 	icon_state = "pda-tox"
-	ttone = "boom"
+	ttone = "бум"
 
 /obj/item/device/pda/clown
 	default_cartridge = /obj/item/weapon/cartridge/clown
 	icon_state = "pda-clown"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
-	ttone = "honk"
+	desc = "Портативный микрокомпьютер от компании \"Синктроник Системс Лимитед\". Поверхность покрыта политетрафторэтиленом и банановой крошкой."
+	ttone = "хонк"
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
@@ -160,7 +160,7 @@
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
 	message_silent = 1
-	ttone = "silence"
+	ttone = "тишина"
 
 /obj/item/device/pda/velocity
 	default_cartridge = /obj/item/weapon/cartridge/hos
@@ -220,7 +220,7 @@
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
-	ttone = "holy"
+	ttone = "аминь"
 
 /obj/item/device/pda/lawyer
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
@@ -241,8 +241,8 @@
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
-	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
+	desc = "Портативный микрокомпьютер от компании \"Синктроник Системс Лимитед\". Данная модель поставляется с электронной книгой серии WGW-11."
+	note = "Спасибо, что выбрали электронную книгу и КПК Синктроник 5290!"
 	message_silent = 1 //Quiet in the library!
 
 /obj/item/device/pda/reporter
@@ -255,8 +255,8 @@
 
 /obj/item/device/pda/clear
 	icon_state = "pda-transp"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
-	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
+	desc = "Портативный микрокомпьютер от компании \"Синктроник Системс Лимитед\". Модель с прозрачным корпусом."
+	note = "Спасибо, что выбрали КПК Синктроник 5230 ограниченной серии \"Делюкс Турбо Макс\"!"
 
 /obj/item/device/pda/chef
 	icon_state = "pda-chef"
@@ -283,7 +283,7 @@
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/device/pda/silicon
 	icon_state = "NONE"
-	ttone = "data"
+	ttone = "данные"
 	detonate = 0
 
 
@@ -304,11 +304,11 @@
 	set src in usr
 	set hidden = 1
 	if(usr.stat == DEAD)
-		to_chat(usr, "You can't send PDA messages because you are dead!")
+		to_chat(usr, "Вы не можете отправлять сообщения с КПК, потому что Вы мертвы!")
 		return
 	var/list/plist = available_pdas()
 	if (plist)
-		var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
+		var/c = input(usr, "Пожалуйста, выберите КПК") as null|anything in sortList(plist)
 		if (!c) // if the user hasn't selected a PDA file we can't send a message
 			return
 		var/selected = plist[c]
@@ -320,10 +320,10 @@
 	set name = "Toggle Sender/Receiver"
 	set src in usr
 	if(usr.stat == DEAD)
-		to_chat(usr, "You can't do that because you are dead!")
+		to_chat(usr, "Вы не можете этого сделать, потому что Вы мертвы!")
 		return
 	toff = !toff
-	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
+	to_chat(usr, "<span class='notice'>Отправитель/получатель КПК [(toff ? "выключен" : "включен")]!</span>")
 
 
 /obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
@@ -331,10 +331,10 @@
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == DEAD)
-		to_chat(usr, "You can't do that because you are dead!")
+		to_chat(usr, "Вы не можете этого сделать, потому что Вы мертвы!")
 		return
 	message_silent = !message_silent
-	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
+	to_chat(usr, "<span class='notice'>Беззвучный режим КПК [(message_silent ? "включен" : "выключен")]!</span>")
 
 
 /obj/item/device/pda/silicon/verb/cmd_show_message_log()
@@ -343,14 +343,14 @@
 	set src in usr
 	set hidden = 1
 	if(usr.stat == DEAD)
-		to_chat(usr, "You can't do that because you are dead!")
+		to_chat(usr, "Вы не можете этого сделать, потому что Вы мертвы!")
 		return
 	var/HTML = ""
 	for(var/index in tnote)
 		if(index["sent"])
-			HTML += addtext("<i><b>&rarr; To <a href='byond://?src=\ref[src];choice=Message;target=",index["src"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
+			HTML += addtext("<i><b>&rarr; Для <a href='byond://?src=\ref[src];choice=Message;target=",index["src"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 		else
-			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
+			HTML += addtext("<i><b>&larr; От <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 
 	var/datum/browser/popup = new(usr, "log", "AI PDA Message Log", 400, 444)
 	popup.set_window_options("border=1;can_minimize=0")
@@ -381,7 +381,7 @@
 	..()
 
 /obj/item/device/pda/silicon/pai
-	ttone = "assist"
+	ttone = "данные"
 
 
 /*
@@ -426,15 +426,15 @@
 
 	lastmode = mode
 
-	var/title = "Personal Data Assistant"
+	var/title = "Карманный Персональный Компьютер"
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
-	data["money"] = owner_account ? owner_account.money : "error"
-	data["salary"] = owner_account ? owner_account.owner_salary : "error"
+	data["money"] = owner_account ? owner_account.money : "ошибка"
+	data["salary"] = owner_account ? owner_account.owner_salary : "ошибка"
 	data["target_account_number"] = target_account_number
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
@@ -557,7 +557,7 @@
 			if (total_moles)
 				var/o2_level = environment.gas["oxygen"] / total_moles
 				var/n2_level = environment.gas["nitrogen"] / total_moles
-				var/co2_level = environment.gas["carbon_dioxide"] / total_moles
+				var/co2_level = environment.gas["carbon dioxide"] / total_moles
 				var/phoron_level = environment.gas["phoron"] / total_moles
 				var/unknown_level =  1 - (o2_level + n2_level + co2_level + phoron_level)
 				data["aircontents"] = list(
@@ -663,7 +663,7 @@
 			ownjob = id.assignment
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
-			name = "PDA-[owner] ([ownjob])"
+			name = "КПК-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
@@ -743,7 +743,7 @@
 //MESSENGER/NOTE FUNCTIONS===================================
 
 		if("Edit")
-			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
+			var/n = sanitize(input(U, "Пожалуйста, введите сообщение", name, input_default(notehtml)) as message, extra = FALSE)
 			if(Adjacent(U) && mode == 1)
 				note = n
 				notehtml = note
@@ -771,10 +771,10 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
+			var/t = sanitize(input(U, "Пожалуйста, введите новый рингтон", name, input_default(ttone)) as text, 20)
 			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
-					to_chat(U, "The PDA softly beeps.")
+					to_chat(U, "КПК тихонько пищит.")
 					ui.close()
 				else
 					ttone = t
@@ -806,10 +806,10 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						to_chat(U, "<span class='notice'>Virus sent!</span>")
+						to_chat(U, "<span class='notice'>Вирус отправлен!</span>")
 						P.honkamt = (rand(15,20))
 				else
-					to_chat(U, "PDA not found.")
+					to_chat(U, "КПК не найден.")
 			else
 				ui.close()
 				return 0
@@ -819,11 +819,11 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						to_chat(U, "<span class='notice'>Virus sent!</span>")
+						to_chat(U, "<span class='notice'>Вирус отправлен!</span>")
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
-					to_chat(U, "PDA not found.")
+					to_chat(U, "КПК не найден.")
 			else
 				ui.close()
 				return 0
@@ -850,18 +850,18 @@
 
 		if("Look for")
 			ui.close()
-			to_chat(U, "[bicon(src)]<span class='notice'>Select transfer recipient.</span>")
+			to_chat(U, "[bicon(src)]<span class='notice'>Выберите получателя перевода.</span>")
 			pda_paymod = TRUE
 
 		if("Show Manifest")
 			mode = 41
 
 		if("target_acc_number")
-			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+			target_account_number = text2num(input(U, "Укажите номер счета", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
 		if("funds_amount")
-			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
+			funds_amount =  round(text2num(input(U, "Укажите количество средств", name, funds_amount) as text), 1)
 		if("purpose")
-			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+			transfer_purpose = sanitize(input(U, "Укажите цель транзакции", name, transfer_purpose) as text, 20)
 
 		if("make_transfer")
 		//============check telecoms and message server=================
@@ -878,25 +878,25 @@
 			if(signal && signal.data["done"])
 				useTC = TRUE
 			if(!useMS || !useTC)
-				to_chat(U, "[bicon(src)]<span class='warning'>Communication Error</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Ошибка передачи данных</span>")
 				return
 		//==============================================================
 			if(owner_account.suspended)
-				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Ваш счет заблокирован!</span>")
 				return
 			if(funds_amount <= 0)
-				to_chat(U, "[bicon(src)]<span class='warning'>That is not a valid amount!</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Неверная сумма!</span>")
 				return
 			if(funds_amount > owner_account.money)
-				to_chat(U, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>У Вас недостаточно средств для этого!</span>")
 				return
 			if(target_account_number == owner_account.account_number)
-				to_chat(U, "[bicon(src)]<span class='warning'>Eror! [target_account_number] is your account number, [owner].</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Ошибка! [target_account_number] это Ваш номер счета, [owner].</span>")
 				return
 			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
 				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
 			else
-				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Перевод средств не удался. Целевой счет заблокирован.</span>")
 			target_account_number = 0
 			funds_amount = 0
 			last_trans_tick = world.time + TRANSCATION_COOLDOWN
@@ -947,10 +947,10 @@
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
+					U.show_message("<span class='warning'>На экране [src] мигает сообщение об ошибке: Связь недоступна</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *бип*</span>", SHOWMSG_AUDIO)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
+					U.show_message("<span class='warning'>На экране [src] мигает сообщение об ошибке: Получатель недоступен</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *бип*</span>", SHOWMSG_AUDIO)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -969,22 +969,22 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("<span class='warning'>An error flashes on your [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
+							U.show_message("<span class='warning'>На экране [src] мигает сообщение об ошибке.</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *бип*</span>", SHOWMSG_AUDIO)
 						else if (prob(difficulty * 7))
-							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
+							U.show_message("<span class='warning'>Энергия возвращается в Ваш [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *бип*</span>", SHOWMSG_AUDIO)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							to_chat("<span class='notice'>Success!</span>")
+							to_chat("<span class='notice'>Успех!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
 					else
-						to_chat(U, "No charges left.")
+						to_chat(U, "Заряды закончились.")
 				else
-					to_chat(U, "PDA not found.")
+					to_chat(U, "КПК не найден.")
 			else
 				U.unset_machine()
 				ui.close()
@@ -1053,51 +1053,51 @@
 	if(i<=10) //The traditional explosion
 		P.explode()
 		j=1
-		message += "Your [P] suddenly explodes!"
+		message += "Ваш [P] внезапно взрывается!"
 	if(i>=10 && i<= 20) //The PDA burns a hole in the holder.
 		j=1
 		if(M && isliving(M))
 			M.apply_damage( rand(30,60) , BURN)
-		message += "You feel a searing heat! Your [P] is burning!"
+		message += "Вы чувствуете обжигающее тепло! Ваш [P] горит!"
 	if(i>=20 && i<=25) //EMP
 		empulse(P.loc, 3, 6, 1)
-		message += "Your [P] emits a wave of electromagnetic energy!"
+		message += "Ваш [P] излучает волну электромагнитной энергии!"
 	if(i>=25 && i<=40) //Smoke
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
 		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		S.start()
-		message += "Large clouds of smoke billow forth from your [P]!"
+		message += "Большие клубы дыма вырываются из Вашего [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
 		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		B.start()
-		message += "Large clouds of noxious smoke billow forth from your [P]!"
+		message += "Большие клубы ядовитого дыма вырываются из Вашего [P]!"
 	if(i>=65 && i<=75) //Weaken
 		if(M && isliving(M))
 			M.apply_effects(0,1)
-		message += "Your [P] flashes with a blinding white light! You feel weaker."
+		message += "Ваш [P] вспыхивает ослепительным белым светом! Вы чувствуете слабость."
 	if(i>=75 && i<=85) //Stun and stutter
 		if(M && isliving(M))
 			M.apply_effects(1,0,0,0,1)
-		message += "Your [P] flashes with a blinding white light! You feel weaker."
+		message += "Ваш [P] вспыхивает ослепительным белым светом! Вы чувствуете слабость."
 	if(i>=85) //Sparks
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(n = 2, c = 1, loca = P.loc)
 		s.start()
-		message += "Your [P] begins to spark violently!"
+		message += "Ваш [P] начинает бурно искрить!"
 	if(i>45 && i<65 && prob(50)) //Nothing happens
-		message += "Your [P] bleeps loudly."
+		message += "Ваш [P] громко пищит."
 		j = prob(10)
 
 	if(j) //This kills the PDA
 		if(message)
-			message += "It melts in a puddle of plastic."
+			message += "Он расплавляется в пластиковую лужицу."
 		else
-			message += "Your [P] shatters in a thousand pieces!"
+			message += "Ваш [P] разлетается на тысячи осколков!"
 		qdel(P)
 
 	if(M && isliving(M))
@@ -1114,13 +1114,13 @@
 				user.put_in_hands(id)
 			else
 				id.forceMove(get_turf(src))
-			to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
+			to_chat(user, "<span class='notice'>Вы вынимаете идентификационную карту из [name].</span>")
 			id = null
 			update_icon()
 		else
-			to_chat(user, "<span class='notice'>This PDA does not have an ID in it.</span>")
+			to_chat(user, "<span class='notice'>В этом КПК нет идентификационной карты.</span>")
 	else
-		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
+		to_chat(user, "<span class='notice'>Вы не можете этого сделать, пока Вы связанны.</span>")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -1138,12 +1138,12 @@
 				playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
 			else
 				pen.forceMove(get_turf(src))
-			to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
+			to_chat(user, "<span class='notice'>Вы вытаскиваете [pen] из [src].</span>")
 			pen = null
 		else
-			to_chat(user, "<span class='notice'>This PDA does not have a pen in it.</span>")
+			to_chat(user, "<span class='notice'>В этом КПК нет ручки.</span>")
 	else
-		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
+		to_chat(user, "<span class='notice'>Вы не можете этого сделать, пока Вы связаны.</span>")
 
 /obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
 	var/pda_ref = null
@@ -1165,9 +1165,9 @@
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap && iscarbon(U))
-		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
+		U.visible_message("<span class='notice'>[U] постукивает по экрану своего КПК.</span>")
 	U.last_target_click = world.time
-	var/t = sanitize(input(U, "Please enter message", name, null) as text)
+	var/t = sanitize(input(U, "Пожалуйста, введите сообщение", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
 	if (!t || !istype(P))
@@ -1210,7 +1210,7 @@
 
 	if(useMS && useTC) // only send the message if it's stable
 		if(useTC != 2) // Does our recipient have a broadcaster on their level?
-			to_chat(U, "ERROR: Cannot reach recipient.")
+			to_chat(U, "ОШИБКА: Невозможно установить связь с получателем.")
 			return
 
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
@@ -1220,7 +1220,7 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 				if(isnewplayer(M))
 					continue
-				to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
+				to_chat(M, "<span class='game say'>Сообщение на КПК - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
 
 		if(!conversations.Find("\ref[P]"))
 			conversations.Add("\ref[P]")
@@ -1234,7 +1234,7 @@
 			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
-					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
+					to_chat(ai, "<i>Перехваченное сообщение от <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
@@ -1253,7 +1253,7 @@
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Сообщение от [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Ответить</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
@@ -1263,7 +1263,7 @@
 		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else
-		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
+		to_chat(U, "<span class='notice'>ОШИБКА: Сервер передачи сообщений не отвечает.</span>")
 
 /obj/item/device/pda/verb/verb_reset_pda()
 	set category = "Object"
@@ -1276,9 +1276,9 @@
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
-		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
+		to_chat(usr, "<span class='notice'>Вы нажимаете кнопку сброса на [src].</span>")
 	else
-		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+		to_chat(usr, "<span class='notice'>Вы не можете этого сделать, пока Вы связаны.</span>")
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1320,7 +1320,7 @@
 	if(istype(I, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = I
 		user.drop_from_inventory(I, src)
-		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
+		to_chat(user, "<span class='notice'>Вы вставляете [cartridge] в [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -1328,7 +1328,7 @@
 	else if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = I
 		if(!idcard.registered_name)
-			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
+			to_chat(user, "<span class='notice'>[src] не принимает идентификационную карту.</span>")
 			return
 		if(!owner)
 			owner = idcard.registered_name
@@ -1341,12 +1341,12 @@
 				owner_account = account			//bind the account to the pda
 				owner_fingerprints = list()		//remove old fingerprints
 			name = "PDA-[owner] ([ownjob])"
-			to_chat(user, "<span class='notice'>Card scanned.</span>")
+			to_chat(user, "<span class='notice'>Карта отсканирована.</span>")
 		else
 			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
 			if(idcard.loc == user)
 				id_check(user, 2)
-				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
+				to_chat(user, "<span class='notice'>Вы помещаете идентификационную карту в разъем [src].</span>")
 				updateSelfDialog()//Update self dialog on success.
 				if(ishuman(loc))
 					var/mob/living/carbon/human/human_wearer = loc
@@ -1357,15 +1357,15 @@
 	else if(istype(I, /obj/item/device/paicard) && !src.pai)
 		user.drop_from_inventory(I, src)
 		pai = I
-		to_chat(user, "<span class='notice'>You slot \the [I] into [src].</span>")
+		to_chat(user, "<span class='notice'>Вы вставляете [I] в [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 	else if(istype(I, /obj/item/weapon/pen))
 		if(pen)
-			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
+			to_chat(user, "<span class='notice'>В [src] уже есть ручка.</span>")
 		else
 			pen = I
 			user.drop_from_inventory(I, src)
-			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
+			to_chat(user, "<span class='notice'>Вы вставляете [I] в [src].</span>")
 	else
 		return ..()
 
@@ -1375,61 +1375,61 @@
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
-				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
-				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
+				data_message += "<span class='notice'>Результаты анализа для [C]:\n</span>"
+				data_message += "<span class='notice'>&emsp; Общее состояние: [C.stat > 1 ? "труп" : "[C.health - C.halloss]% здоровья"]\n</span>"
 				var/has_oxy_damage = (C.getOxyLoss() > 50)
 				var/has_tox_damage = (C.getToxLoss() > 50)
 				var/has_fire_damage = (C.getFireLoss() > 50)
 				var/has_brute_damage = (C.getBruteLoss() > 50)
-				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
-				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
-				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
+				data_message += "<span class='notice'>&emsp; Специфика повреждений: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span>\n</span>"
+				data_message += "<span class='notice'>&emsp; Ключевые слова: Удушье/Токсины/Ожоги/Физические\n</span>"
+				data_message += "<span class='notice'>&emsp; Температура тела: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)\n</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
+					data_message += "<span class='notice'>&emsp; Время смерти: [C.tod]\n</span>"
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
+					data_message += "<span class='notice'>&emsp; Локализация повреждений: Физические/Ожоги:\n</span>"
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
+							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]\n</span>":0)
 					else
-						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
+						data_message += "<span class='notice'>&emsp; Конечности в норме.\n</span>"
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
+						data_message += "<span class='warning'><b>Внимание: Обнаружено [D.form]</b>\nНазвание: [D.name].\nТип: [D.spread].\nСтадия: [D.stage]/[D.max_stages].\nВозможное лечение: [D.cure]</span>"
 
-				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
+				visible_message("<span class='warning'>[user] проанализировал жизненные показатели [C]!</span>")
 				to_chat(user, data_message)
 
 			if(2)
 				if (!istype(C.dna, /datum/dna))
-					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
+					data_message += "<span class='notice'>Отпечатки пальцев на [C] не обнаружены.</span>"
 				else if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					if(H.gloves)
-						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
+						data_message += "<span class='notice'>Отпечатки пальцев на [C] не обнаружены.</span>"
 				else
-					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C.dna.uni_identity)]</span>")
+					data_message += text("<span class='notice'>Отпечатки пальцев [C]: [md5(C.dna.uni_identity)]</span>")
 				if ( !(C.blood_DNA) )
-					data_message += "<span class='notice'>No blood found on [C]</span>"
+					data_message += "<span class='notice'>Кровь не обнаружена на [C]</span>"
 					if(C.blood_DNA)
 						C.blood_DNA = null
 				else
-					data_message += "<span class='notice'>Blood found on [C]. Analysing...</span>"
+					data_message += "<span class='notice'>Кровь обнаружена на [C]. Анализ...</span>"
 					spawn(15)
 						for(var/blood in C.blood_DNA)
-							data_message += "<span class='notice'>Blood type: [C.blood_DNA[blood]]\nDNA: [blood]</span>"
+							data_message += "<span class='notice'>Группа крови: [C.blood_DNA[blood]]\nДНК: [blood]</span>"
 				to_chat(user, data_message)
 
 			if(4)
-				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
+				data_message += "<span class='notice'>Результаты анализа для [C]: </span>"
 				if(C.radiation)
-					data_message += "<span class='notice'>Radiation Level:</span> [C.radiation]"
+					data_message += "<span class='notice'>Уровень радиации:</span> [C.radiation]"
 				else
-					data_message += "<span class='notice'>No radiation detected.</span>"
-				visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+					data_message += "<span class='notice'>Радиация не обнаружена.</span>"
+				visible_message("<span class='warning'>[user] проанализировал уровень радиации [C]!</span>")
 				to_chat(user, data_message)
 
 /obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
@@ -1442,13 +1442,13 @@
 			if(!isnull(target.reagents))
 				if(target.reagents.reagent_list.len > 0)
 					var/reagents_length = target.reagents.reagent_list.len
-					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
+					to_chat(user, "<span class='notice'>[reagents_length] химическое вещество[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in target.reagents.reagent_list)
 						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
-					to_chat(user, "<span class='notice'>No active chemical agents found in [target].</span>")
+					to_chat(user, "<span class='notice'>Химических веществ в [target] не обнаружено.</span>")
 			else
-				to_chat(user, "<span class='notice'>No significant chemical agents found in [target].</span>")
+				to_chat(user, "<span class='notice'>Химических веществ на [target] не обнаружено.</span>")
 
 		if(5)
 			analyze_gases(target, user)
@@ -1456,7 +1456,7 @@
 	if (!scanmode && istype(target, /obj/item/weapon/paper) && owner)
 		var/obj/item/weapon/paper/P = target
 		note = P.info
-		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Лист отсканирован.</span>")//concept of scanning paper copyright brainoblivion 2009
 
 /obj/item/device/pda/get_current_temperature()
 	. = 5
@@ -1477,7 +1477,7 @@
 	var/list/namecounts = list()
 
 	if (toff)
-		to_chat(usr, "Turn on your receiver in order to send messages.")
+		to_chat(usr, "Включите приемник, чтобы отправлять сообщения.")
 		return
 
 	for (var/obj/item/device/pda/P in PDAs)
@@ -1514,35 +1514,35 @@
 			mode = 7
 			pda_paymod = FALSE
 			ui_interact(usr)
-			to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
+			to_chat(usr, "[bicon(src)]<span class='info'>Целевой счет [target_account_number]</span>")
 			return
 		else
-			to_chat(usr, "[bicon(src)]<span class='warning'>Target haven't account.</span>")
+			to_chat(usr, "[bicon(src)]<span class='warning'>Цель не имеет счета. </span>")
 			pda_paymod = FALSE
 			return
 	else
-		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
+		to_chat(usr, "[bicon(src)]<span class='warning'>Некорректная цель.</span>")
 		pda_paymod = FALSE
 		return
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "Ошибка! Информация о счете не сохранена в этом КПК, пожалуйста, вставьте идентификационную карту в КПК и обновите информацию.")
 		return FALSE
 	if(!user.dna)	//just in case
-		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Ошибка! КПК не может считать Ваши отпечатки пальцев.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
 		return TRUE
 	else
-		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
+		var/tried_pin =  text2num(input(user, "[owner] пожалуйста, введите пароль Вашей учетной записи", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
 			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
-			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
+			to_chat(user, "[bicon(src)]<span class='info'>Пароль верный</span>")
 			return TRUE
 		else
-			tgui_alert(usr, "Invalid Password!")
+			tgui_alert(usr, "Неверный пароль!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)
@@ -1557,16 +1557,16 @@
 	if(L)
 		if(salary_change)
 			if(amount > 0)
-				to_chat(L, "[bicon(src)]<font color='#579914'><b>[owner], your salary was increased by [source] by [amount]%!</b></font>")
+				to_chat(L, "[bicon(src)]<font color='#579914'><b>[owner], Ваша зарплата была увеличена [source] на [amount]%!</b></font>")
 			else if(amount < 0)
-				to_chat(L, "[bicon(src)]<span class='red'>[owner], your salary was reduced by [source] by [amount]%!</span>")
+				to_chat(L, "[bicon(src)]<span class='red'>[owner], Ваша зарплата была уменьшена [source] на [amount]%!</span>")
 			else
-				to_chat(L, "[bicon(src)]<span class='notice'><b>[owner], [source] returned your base salary.</b></span>")
+				to_chat(L, "[bicon(src)]<span class='notice'><b>[owner], [source] вернул Вашу изначальную зарплату.</b></span>")
 		else
 			if(amount > 0)
-				to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+				to_chat(L, "[bicon(src)]<span class='notice'>[owner], на Ваш счет была переведена сумма в размере [amount]$ от [source].</span>")
 			else
-				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
+				to_chat(L, "[bicon(src)]<span class='notice'>Вы успешно перевели [amount]$ на номер счета [target].</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)

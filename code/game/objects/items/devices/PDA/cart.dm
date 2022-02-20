@@ -1,6 +1,6 @@
 /obj/item/weapon/cartridge
 	name = "generic cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативных микрокомпьютеров."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/cartridge/janitor
 	name = "CustodiPRO Cartridge"
-	desc = "The ultimate in clean-room design."
+	desc = "Идеальное решение для обеспечения чистоты помещений."
 	icon_state = "cart-j"
 	access_janitor = 1
 
@@ -105,11 +105,11 @@
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
-	desc = "A data cartridge with an integrated radio signaler module."
+	desc = "Картридж с данными со встроенным радиосигнальным модулем."
 
 /obj/item/weapon/cartridge/signal/science
 	name = "Signal Ace 2"
-	desc = "Complete with integrated radio signaler!"
+	desc = "В комплекте со встроенным радиосигнальным прибором!"
 	icon_state = "cart-tox"
 	access_reagent_scanner = 1
 	access_atmos = 1
@@ -120,7 +120,7 @@
 
 /obj/item/weapon/cartridge/quartermaster
 	name = "Space Parts & Space Vendors Cartridge"
-	desc = "Perfect for the Quartermaster on the go!"
+	desc = "Идеально подходит для работы Завхозом на ходу!"
 	icon_state = "cart-q"
 	access_quartermaster = 1
 
@@ -182,7 +182,7 @@
 
 /obj/item/weapon/cartridge/captain
 	name = "Value-PAK Cartridge"
-	desc = "Now with 200% more value!"
+	desc = "Теперь с увеличенной на 200% стоимостью!"
 	icon_state = "cart-c"
 	access_quartermaster = 1
 	access_janitor = 1
