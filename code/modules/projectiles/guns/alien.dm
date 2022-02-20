@@ -16,7 +16,7 @@
 /obj/item/weapon/spikethrower
 
 	name = "Vox spike thrower"
-	desc = "A vicious alien projectile weapon. Parts of it quiver gelatinously, as though the thing is insectile and alive."
+	desc = "Страшное метательное оружие пришельцев. Части оружия дрожат, так, будто это какое-то живое насекомое."
 
 	var/last_regen = 0
 	var/spike_gen_time = 10 SECONDS
@@ -127,7 +127,7 @@
 /obj/item/weapon/gun/energy/noisecannon
 
 	name = "alien heavy cannon"
-	desc = "It's some kind of enormous alien weapon, as long as a man is tall."
+	desc = "Это какое-то огромное инопланетное оружие, оно размером с человека."
 
 	icon = 'icons/obj/gun.dmi' //Actual on-sprite is handled by icon_override.
 	icon_state = "noisecannon"
