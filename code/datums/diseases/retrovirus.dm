@@ -39,15 +39,15 @@
 					return
 */
 				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 					cure()
 					return
 			if (prob(8))
-				to_chat(affected_mob, "<span class='warning'>Your head hurts.</span>")
+				to_chat(affected_mob, "<span class='warning'>У вас болит голова.</span>")
 			if (prob(9))
-				to_chat(affected_mob, "You feel a tingling sensation in your chest.")
+				to_chat(affected_mob, "Вы чувствуете лёгкое покалывание в груди.")
 			if (prob(9))
-				to_chat(affected_mob, "<span class='warning'>You feel angry.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы испытываете сильную злобу.</span>")
 		if(2)
 			if(restcure)
 /*
@@ -57,18 +57,18 @@
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 					cure()
 					return
 			if (prob(8))
-				to_chat(affected_mob, "<span class='warning'>Your skin feels loose.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваша кожа становится эластичней.</span>")
 			if (prob(10))
-				to_chat(affected_mob, "You feel very strange.")
+				to_chat(affected_mob, "Вы чувствуете себя очень странно.")
 			if (prob(4))
-				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your head!</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете острую боль в голове!</span>")
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				to_chat(affected_mob, "<span class='warning'>Your stomach churns.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваш желудок выворчаивает на изнанку.</span>")
 		if(3)
 			if(restcure)
 /*
@@ -78,11 +78,11 @@
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вас становится лучше.</span>")
 					cure()
 					return
 			if (prob(10))
-				to_chat(affected_mob, "<span class='warning'>Your entire body vibrates.</span>")
+				to_chat(affected_mob, "<span class='warning'>Все ваше тело трясет.</span>")
 
 			if (prob(35))
 				if(prob(50))
@@ -99,7 +99,7 @@
 					return
 */
 				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 					cure()
 					return
 			if (prob(60))
