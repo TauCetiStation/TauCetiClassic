@@ -132,6 +132,10 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
+	if(ishuman(user))
+		var/obj/item/organ/external/BP = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+		if(BP.pumped)
+			power += (BP.pumped / 10)
 	if(HULK in user.mutations)
 		power *= 2
 
