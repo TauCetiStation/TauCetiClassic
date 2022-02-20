@@ -29,16 +29,16 @@ STI KALY - blind
 	switch(stage)
 		if(2)
 			if(prob(1)&&prob(50))
-				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
+				affected_mob.say(pick("Ты не пройдёшь!", "Экспелирамус!", "Борода Мерлина!", "Вы чувствуете силу стороны тьмы!"))
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>You feel [pick("that you don't have enough mana.", "that the winds of magic are gone.", "an urge to summon familiar.")]</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете, что [pick("у вас недостаточно маны.", "ветра магии покинули вас.", "нужно вызвать фамильяра.")]</span>")
 
 
 		if(3)
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar.")].</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете, что [pick("в ваших венах течет магия","эта локация придаёт вам +1 к ИНТ","пришло время вызвать фамильяра.")].</span>")
 
 		if(4)
 
@@ -46,7 +46,7 @@ STI KALY - blind
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
 				return
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете [pick("сгусток первобытной энергии, накапливающийся внутри вас","+2 к ИНТ и +1 к МУДР получаемые на этой локации","нужду использвать телепортацию")].</span>")
 				spawn_wizard_clothes(50)
 			if(prob(1)&&prob(1))
 				teleport()
