@@ -56,7 +56,7 @@
 				if(prob(2))
 					to_chat(affected_mob, "<span class='warning'>Странный гул наполняет вашу голову, заменяя собой любые мысли.</span>")
 			if(prob(3))
-				affected_mob.visible_message("[affected_mob] suddenly collapses", self_message = "<span class='warning'>Вы теряете своё сознание...</span>")
+				affected_mob.visible_message("[affected_mob] suddenly collapses", self_message = "<span class='warning'>Вы теряете сознание...</span>")
 				affected_mob.Paralyse(rand(5,10))
 				if(prob(1))
 					affected_mob.emote("snore")
