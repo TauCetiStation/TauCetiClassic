@@ -178,6 +178,8 @@
 			make_user_slip(user)
 	else
 		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
 
 /obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
 	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
