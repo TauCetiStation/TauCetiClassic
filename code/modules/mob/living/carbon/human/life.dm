@@ -136,7 +136,7 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
+			visible_message("<span class='danger'>[src] впадает в припадок!</span>", self_message = "<span class='warning'>У вас начинается припадок!</span>")
 			Paralyse(10)
 			make_jittery(1000)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
@@ -196,21 +196,21 @@
 		switch(rand(0, 200))
 			if(0 to 3)
 				if(getBrainLoss() >= 5)
-					custom_pain("Your head feels numb and painful.")
+					custom_pain("Ваша голова болезненно немеет.")
 
 			if(4 to 6)
 				if(getBrainLoss() >= 15 && eye_blurry <= 0)
-					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
+					to_chat(src, "<span class='warning'>Вам становиться тяжело видеть.</span>")
 					blurEyes(10)
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
-					to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
+					to_chat(src, "<span class='warning'>Вы не контролируете свою руку и роняете, что держали в ней.</span>")
 					drop_item()
 
 			if(10 to 12)
 				if(getBrainLoss() >= 50 && !lying)
-					to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
+					to_chat(src, "<span class='warning'>Вы не контролируете свои ноги и теряете равновесие.</span>")
 					resting = 1
 
 			if(13 to 18)
@@ -252,7 +252,7 @@
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
 				if(!lying)
-					to_chat(src, "<span class='warning'>You feel weak.</span>")
+					to_chat(src, "<span class='warning'>Вы чувствуете себя неважно.</span>")
 					emote("collapse")
 
 		if (radiation < 0)
@@ -282,18 +282,18 @@
 					h_style = "Bald"
 					f_style = "Shaved"
 					update_hair()
-					to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
+					to_chat(src, "<span class='notice'>У вас внезапно выпали все волосы!</span>")
 				if(prob(5))
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "<span class='warning'>You feel weak.</span>")
+						to_chat(src, "<span class='warning'>Вы чувтсвуете себя неважно.</span>")
 						emote("collapse")
 			if(radiation > 75)
 				radiation--
 				damage = 3
 				if(prob(1))
-					to_chat(src, "<span class='warning'>You mutate!</span>")
+					to_chat(src, "<span class='warning'>Вы мутируете!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")
@@ -454,7 +454,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
@@ -943,7 +943,7 @@
 
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
-			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
+			to_chat(src, "<span class='userdanger'>Свет! Он обжигает вас!</span>")
 			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
@@ -957,7 +957,7 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
 		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
-			to_chat(src, "<span class='notice'>You feel fit again!</span>")
+			to_chat(src, "<span class='notice'>Вы снова в форме!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			update_body()
 			update_mutantrace()
@@ -1339,7 +1339,7 @@
 						else
 							adjustBrainLoss(1)
 				else
-					to_chat(src, "Too hard to concentrate...")
+					to_chat(src, "Так тяжело сконцентрироваться...")
 					remoteview_target = null
 					reset_view(null)//##Z2
 			if(force_remote_viewing)
@@ -1462,35 +1462,35 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
+		to_chat(src, "<span class='danger'>[pick("Как же больно!", "Вам бы не помешало болеутоляющее..", "Боже, остановите эту боль!")]</span>")
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+		if(shock_stage == 30) emote("me",1,"с трудом держит глаза открытыми.")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+		to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!", "Всё ваше тело немеет!")]</span>")
 
 	if (shock_stage >= 60)
 		if(shock_stage == 60)
-			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
+			visible_message("<span class='name'>[src]</span> больше не в силах управлять своим телом.")
 		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!", "Всё ваше тело немеет!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!!", "Всё ваше тело немеет!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Всё вокруг темнеет!", "Вы чувствуете, что можете в любой момент погибнуть.", "Вы вот-вот потеряете сознание.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)
-		emote("me",1,"can no longer stand, collapsing!")
+		emote("me",1,"больше не в силах стоять на ногах и падает!")
 		Weaken(20)
 
 	if(shock_stage >= 150)
@@ -1525,11 +1525,11 @@
 	if(life_tick % 10)
 		switch(IO.heart_status)
 			if(HEART_FAILURE)
-				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+				to_chat(src, "<span class='userdanger'>Вы чувствуете покалывание в сердце!</span>")
 				apply_effect(5,AGONY,0)
 				return PULSE_NONE
 			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+				to_chat(src, "<span class='danger'>Вы чувствуете слабую боль в сердце.</span>")
 				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				apply_effect(1,AGONY,0)
 				return PULSE_SLOW
