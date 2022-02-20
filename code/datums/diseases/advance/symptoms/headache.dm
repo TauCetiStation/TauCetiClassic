@@ -29,5 +29,5 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		to_chat(M, "<span class='notice'>[pick("Your head hurts.", "Your head starts pounding.")]</span>")
+		to_chat(M, "<span class='notice'>[pick("Ваша голова раскалывается от боли.", "Ваша голова вот-вот взорвётся от боли.")]</span>")
 	return
