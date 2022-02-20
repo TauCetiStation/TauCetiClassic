@@ -287,7 +287,7 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "<span class='warning'>Вы чувтсвуете себя неважно.</span>")
+						to_chat(src, "<span class='warning'>Вы чувствуете себя неважно.</span>")
 						emote("collapse")
 			if(radiation > 75)
 				radiation--
