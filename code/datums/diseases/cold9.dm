@@ -26,7 +26,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "<span class='warning'>У вас пересохло в горле.</span>")
 			if(prob(5))
-				to_chat(affected_mob, "<span class='warning'>В испытываете вялость.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы испытываете вялость.</span>")
 		if(3)
 			affected_mob.bodytemperature -= 20
 			if(prob(1))
