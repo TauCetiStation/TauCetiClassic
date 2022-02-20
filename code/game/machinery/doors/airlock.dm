@@ -926,7 +926,7 @@ var/global/list/airlock_overlays = list()
 	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY , SKILL_ENGINEERING, SKILL_ENGINEERING_NOVICE, message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>", message_others = "<span class='notice'>[user] fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>", others_can_see = TRUE))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , SKILL_ENGINEERING, SKILL_ENGINEERING_NOVICE, message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
 				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")

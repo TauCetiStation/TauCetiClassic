@@ -299,7 +299,7 @@
 		return 1
 	return 0
 /obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skill, required_proficiency, SKILL_TASK_TRIVIAL, fumble_text, others_can_see = FALSE)
+	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skill, required_proficiency, SKILL_TASK_TRIVIAL, fumble_text)
 
 
 /obj/mecha/proc/mechturn(direction)

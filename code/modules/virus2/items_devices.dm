@@ -13,7 +13,7 @@
 	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
 		return
-	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, SKILL_MEDICAL, SKILL_MEDICAL_COMPETENT, SKILL_TASK_TRIVIAL, others_can_see = FALSE, text_target = src))
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, SKILL_MEDICAL, SKILL_MEDICAL_COMPETENT, SKILL_TASK_TRIVIAL, text_target = src))
 		return
 	var/mob/living/carbon/C = M
 	if (ishuman(C))
