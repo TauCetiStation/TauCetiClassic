@@ -32,6 +32,6 @@ Bonus
 			if(1, 2, 3, 4)
 				to_chat(M, "<span class='notice'>[pick("Вы испытываете головокружение.", "Ваша голова ходит кругом.")]</span>")
 			else
-				to_chat(M, "<span class='notice'>Вы не можете смотреть прямо!</span>")
+				to_chat(M, "<span class='notice'>Пол уходит из-под ваших ног!</span>")
 				M.make_dizzy(5)
 	return
