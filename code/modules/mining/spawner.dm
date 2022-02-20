@@ -10,7 +10,7 @@
 	pixel_y = -16
 	var/type_mob
 	var/max_mob = 3
-	var/obj/structure/spawner_area/My_area
+	var/obj/structure/spawner_area/my_area
 	var/datum/spawner_timer/timer = new/datum/spawner_timer
 	var/death_icon
 	var/is_alive = TRUE
@@ -32,8 +32,8 @@
 /obj/structure/spawner/atom_init()
 	. = ..()
 	spawner_mod = pick_modifiers()
-	My_area = new/obj/structure/spawner_area(get_turf(src))
-	My_area.My_spawner = src
+	my_area = new/obj/structure/spawner_area(get_turf(src))
+	my_area.My_spawner = src
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner/process()
@@ -52,7 +52,10 @@
 
 /obj/structure/spawner/proc/Death()
 	icon_state = death_icon
-	qdel(My_area)
+	spawner_mod = null
+	timer = null
+	qdel(my_area)
+	my_area = null
 	for(var/L in loot_ore)
 		if(!istype(L, /obj/item/weapon/ore))
 			var/R = rand(0,35)
