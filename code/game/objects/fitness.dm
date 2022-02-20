@@ -32,9 +32,9 @@
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
 	if(C)
-		user.apply_effect(7 * C.adjust_pumped(1),AGONY,0)
+		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
 	if(G)
-		user.apply_effect(7 * C.adjust_pumped(1),AGONY,0)
+		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
 
 	user.update_body()
 

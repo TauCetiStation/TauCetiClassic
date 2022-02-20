@@ -86,9 +86,9 @@
 	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
 	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
 	if(LL && pedal)
-		pedaler.apply_effect(LL.adjust_pumped(1),AGONY,0)
+		pedaler.apply_effect(LL.adjust_pumped(1), AGONY, 0)
 	if(RL && !pedal)
-		pedaler.apply_effect(RL.adjust_pumped(1),AGONY,0)
+		pedaler.apply_effect(RL.adjust_pumped(1), AGONY, 0)
 	pedaler.update_body()
 
 	pedal = !pedal
