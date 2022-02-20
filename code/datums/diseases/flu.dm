@@ -22,7 +22,7 @@
 				return
 */
 			if(affected_mob.lying && prob(20))  //added until sleeping is fixed --Blaank
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 				stage--
 				return
 			if(prob(1))
@@ -30,11 +30,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете боль в мышцах.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your stomach hurts.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в желудке.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -47,7 +47,7 @@
 				return
 */
 			if(affected_mob.lying && prob(15))  //added until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
 				stage--
 				return
 			if(prob(1))
@@ -55,11 +55,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете боль в мышцах.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Your stomach hurts.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувтсувете боль в желудке.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
