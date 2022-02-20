@@ -117,6 +117,8 @@
 	SSStatistics.score.crewscore -= messpoints
 	SSStatistics.score.crewscore -= plaguepoints
 
+	completions += scorestats()
+
 	if(one_mob)
 		one_mob.scorestats(completions)
 	else
@@ -124,11 +126,7 @@
 			if(E.client)
 				E.scorestats(completions)
 
-/mob/proc/scorestats(completions)//omg why we count this for every player
-	// Show the score - might add "ranks" later
-	to_chat(src, "<b>The crew's final score is:</b>")
-	to_chat(src, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
-
+/datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
 
@@ -204,13 +202,19 @@
 		if(50000 to INFINITY) SSStatistics.score.rating = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [SSStatistics.score.rating]"
 	dat += "</div>"
+
+	log_game(dat)
+
+	return dat
+
+/mob/proc/scorestats(completions)//omg why we count this for every player
+	// Show the score - might add "ranks" later
+	to_chat(src, "<b>The crew's final score is:</b>")
+	to_chat(src, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
+
 	for(var/i in 1 to end_icons.len)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
-	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
-		endgame_info_logged = 1
-		log_game(dat)
-
 	var/datum/browser/popup = new(src, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
-	popup.set_content(dat)
+	popup.set_content(completions)
 	popup.open()

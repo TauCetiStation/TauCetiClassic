@@ -22,7 +22,7 @@ var/global/list/greek_pronunciation = list("Alpha","Beta","Gamma","Delta","Epsil
 
 // Icons that appear on the Round End pop-up browser
 var/global/list/end_icons = list()
-var/global/endgame_info_logged = 0
+var/global/endgame_scoreboard
 
 // Xenomorphs
 var/global/facehuggers_control_type = FACEHUGGERS_PLAYABLE
