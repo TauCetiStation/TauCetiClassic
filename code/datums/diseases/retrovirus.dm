@@ -39,7 +39,7 @@
 					return
 */
 				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вам чувствуете себя лучше.</span>")
 					cure()
 					return
 			if (prob(8))
@@ -61,7 +61,7 @@
 					cure()
 					return
 			if (prob(8))
-				to_chat(affected_mob, "<span class='warning'>Ваша кожа становится эластичней.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваша кожа будто бы становится эластичней.</span>")
 			if (prob(10))
 				to_chat(affected_mob, "Вы чувствуете себя очень странно.")
 			if (prob(4))
@@ -73,12 +73,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>Вас становится лучше.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 					cure()
 					return
 			if (prob(10))
@@ -99,7 +99,7 @@
 					return
 */
 				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					to_chat(affected_mob, "<span class='notice'>Вам становится лучше.</span>")
+					to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
 					cure()
 					return
 			if (prob(60))
