@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
-	desc = "Базированный энергетический пистолет."
+	desc = "Базовый энерго-пистолет."
 	can_be_holstered = FALSE
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses

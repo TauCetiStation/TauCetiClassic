@@ -250,7 +250,7 @@
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
-	desc = "Omar's coming!"
+	desc = Омар идёт!"
 	can_be_holstered = TRUE
 	short = 1
 
