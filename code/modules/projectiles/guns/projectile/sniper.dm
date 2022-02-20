@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/heavyrifle
 	name = "PTR-7 rifle"
-	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
+	desc = "Переносное противотанковое ружьё. Используется для уничтожения механизированных противников, пули этой винтовки с лёгкостью проходят сквозь обычные и укреплённые стекла. Стреляет бронебойными снарядами калибра 14.5mm."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
 	w_class = SIZE_BIG

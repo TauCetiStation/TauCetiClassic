@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic/silenced
 	name = "silenced pistol"
-	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
+	desc = "Лёгкий, тихий  и легкоскрываемый пистолет. Использует патроны .45-того калибра."
 	icon_state = "silenced_pistol"
 	w_class = SIZE_SMALL
 	silenced = 1
@@ -11,7 +11,7 @@
 
 /obj/item/weapon/gun/projectile/glock
 	name = "G17"
-	desc = "Semi-automatic service pistol of 9x19mm cal. Designed for professionals."
+	desc = "Полуавтоматический пистолет калибра 9x19. Создан для профессионалов."
 	icon_state = "9mm_glock"
 	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
-	desc = "A robust handgun that uses .50 AE ammo."
+	desc = "Крутой пистолет, использует пули калибра .50 АЕ."
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
@@ -79,7 +79,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
-	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	desc = "Покрытая золотом пушка, она была перекована миллионы раз лучшими оружейниками Марса. Использует патроны калибра .50 AE."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
@@ -87,13 +87,13 @@
 	mag_type = /obj/item/ammo_box/magazine/m50/weakened
 
 /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
-	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	desc = "Покрытая золотом пушка, она была перекована миллионы раз лучшими оружейниками Марса. Использует патроны калибра .50 AE."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
-	desc = "A bulky pistol designed to fire self propelled rounds."
+	desc = "Крупный пистолет,созданный для стрельбы разрывными снарядами."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
@@ -114,7 +114,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "Stechkin pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "Маленький и легкоскрываемый пистолет. Использует патроны 9ММ."
 	icon_state = "stechkin"
 	item_state = "9mm_glock"
 	w_class = SIZE_TINY
@@ -142,7 +142,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
-	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
+	desc = "Дешёвая Марсианская копия пистолета Кольт М1911. Использует слабые патроны калибра .45."
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
@@ -167,7 +167,7 @@
 
 /obj/item/weapon/gun/projectile/sec_pistol
 	name = "pistol"
-	desc = "AT-7 .45 caliber pistol."
+	desc = "Пистолет AT-7, использует калибр .45."
 	icon_state = "at7"
 	fire_sound = 'sound/weapons/guns/gunshot_at7.ogg'
 	mag_type = /obj/item/ammo_box/magazine/at7_45

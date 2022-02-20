@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser rifle"
-	desc = "a basic weapon designed kill with concentrated energy bolts."
+	desc = "Обычное оружие, используется для убийства врагов с помощью сконцентрированных энергетических снарядов."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
-	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	desc = "Модифицированная версия лазерной винтовки, она стреляет менее концентрированными лазерными лучами, используется для тренировок."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
@@ -52,7 +52,7 @@
 /obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	desc = "Старший брат обычной лазерной винтовки, более не используется охранными или военными структурами НТ. Тем не менее, он всё ещё смертоносен и прост в обслуживании , это делает его очень популярным среди пиратов и прочих криминальных элементов."
 	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/energy/laser/selfcharging
@@ -91,7 +91,7 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	desc = "Это антикварный лазерный пистолет. Все детали высочайшего качества. Он украшен кожей ассистента и хромом. Он просто сяет энергией! На нём изображена станция 13. Станция взрывается."
 	force = 10
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = null
@@ -101,7 +101,7 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
 	icon_state = "egun"
-	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
+	desc = " Эта штука сияет энергией! Ты не понимаешь,как использовать это оружие."
 	force = 5
 	origin_tech = null
 	chargespeed = 2
@@ -126,7 +126,7 @@
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"
-	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
+	desc = "Л.А.З.Е.Р.-ная пушка, она генерирует лучи энергии с помощью заполенной ураном-235 трубки и заряда ядерного реактора. Эта чудесная технология позволит ВАМ достичь высочайшего урона с достаточно небольшим потреблением заряда!"
 	icon_state = "lasercannon"
 	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
@@ -146,7 +146,7 @@
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
+	desc = "Мощная лазерная пушка, способная излучать сконцентрированные рентгеновские лучи."
 	icon_state = "xray"
 	item_state = null
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
@@ -157,7 +157,7 @@
 /obj/item/weapon/gun/energy/laser/lasertag
 	name = "laser tag gun"
 	icon_state = "retro"
-	desc = "Standard issue weapon of the Imperial Guard."
+	desc = "Стандартное оружие Имперской Гвардии."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/omnitag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/shotgun
 	name = "shotgun"
-	desc = "Useful for sweeping alleys."
+	desc = "Хорошо подходит для уничтожения противника на небольшом расстоянии."
 	icon_state = "shotgun"
 	item_state = "shotgun"
 	w_class = SIZE_NORMAL
@@ -73,7 +73,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
-	desc = "A true classic."
+	desc = "Настоящая класссика."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
 	w_class = SIZE_NORMAL
@@ -177,7 +177,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/repeater
 	name = "repeater rifle"
-	desc = "Winchester Model 1894."
+	desc = "Винчествер модели 1894-того года."
 	icon_state = "repeater"
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
@@ -207,7 +207,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
 	name = "bolt-action rifle"
-	desc = "Springfield M1903."
+	desc = "Спрингфилд M1903."
 	icon_state = "bolt-action"
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"

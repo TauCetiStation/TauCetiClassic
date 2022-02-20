@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	desc = "Портативная винтовка,созданная для уничтожения механизированных и механических противников."
 	icon_state = "ionrifle"
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
@@ -42,7 +42,7 @@
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	desc = "Пистолет, который выпускает большое количество контролируемого излучения, чтобы медленно разбить цель на молекулы."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	can_be_holstered = TRUE
@@ -50,7 +50,7 @@
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
-	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
+	desc = "Устройство,созданное для вызова мутаций у растений."
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
@@ -145,7 +145,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle
 	name = "sniper rifle"
-	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	desc = "Разработанная компанией W&J, W2500-E снайперская винтовка W2500-E созданна из лёгковесных материалов и с вмонтированной УМНОЙ системой прицеливания."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "w2500e"
 	item_state = "w2500e"
@@ -179,7 +179,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
-	desc = "With this weapon you'll be the boss at any Arena."
+	desc = "С этой пушкой вы станете боссом любой арены."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
@@ -191,7 +191,7 @@
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
-	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Пушка, использующая электрический заряд для поражения нескольких целей. Поверните ручку генератора, чтобы зарядить его."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
@@ -299,7 +299,7 @@
 
 /obj/item/weapon/gun/tesla/rifle
 	name = "Tesla rifle"
-	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Винтовка, использующая электрический заряд для поражения нескольких целей. Поверните ручку генератора, чтобы зарядить его."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"

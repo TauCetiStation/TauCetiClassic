@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
-	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
+	desc = "Голиаф - это однозарядная ракетная установка."
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
@@ -70,7 +70,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
-	desc = "Experimental Anti-Singularity Launcher. In case of extreme emergency you should point it at super-massive blackhole expanding towards you."
+	desc = "Эксперементальный Анти-Сингулярный гранатомёт. В случае чрезвычайной ситуации,вы должны направить его на сверхмассивную черную дыру, расширяющуюся к вам."
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	desc = "Обычный энергетический пистолет с двумя настройками: Оглушить и убить."
 	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
@@ -17,12 +17,12 @@
 		user.update_inv_r_hand()
 
 /obj/item/weapon/gun/energy/gun/head
-	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
+	desc = "Обычный энергетический пистолет с двумя настройками: Оглушить и убить У этого пистолета деревянная рукоятка."
 	icon_state = "energy"
 
 /obj/item/weapon/gun/energy/gun/carbine
 	name = "energy carbine"
-	desc = "A basic energy-based carbine with two settings: Stun and kill."
+	desc = "Обычный энергетический карабин с двумя настройками: Оглушить и убить."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "ecar"
 	icon_custom = null
@@ -43,14 +43,14 @@
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"
-	desc = "Feat of weapon engineering, this pistol is able to fire taser bolts, lasers and EMP bursts. Only issued to high-ranking members of security teams."
+	desc = "Новая ступень оружейной инженерии, этот пистолет способен стрелять оглушающими и лазерными лучами,а также испускать ЭМ импульсы. Только для высокопоставленных офицеров охранных структур."
 	icon_state = "hosgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	desc = "Энергетический карабин с небольшим экспериментальным реактором."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"

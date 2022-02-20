@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/revolver
-	desc = "A classic revolver. Uses 357 ammo."
+	desc = "Классический револьвер. Использует патроны .357-того калибра."
 	name = "revolver"
 	icon_state = "revolver"
 	item_state = "revolver"
@@ -58,7 +58,7 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 
 /obj/item/weapon/gun/projectile/revolver/detective
-	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
+	desc = "Дешёвая Марсианская копия револьвера Смит & Вессон десятой Модели. Использует патроны .38-Special."
 	name = "S&W Model 10"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
@@ -123,7 +123,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
-	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
+	desc = "Когда тебе нужно сделать сантиметровую дырку в плохом парне - используй этот револьвер. Использует патроны .357-го калибра."	//>10mm hole >.357
 	icon_state = "mateba"
 	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
@@ -133,7 +133,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian
 	name = "Russian Revolver"
-	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in its chamber for a bullet."
+	desc = "Револьвер,сделан русскими. Использует патроны .357-го калибра. В его патроннике есть один слот для пули."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
@@ -214,7 +214,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker
 	name = "Colt SAA"
-	desc = "A legend of Wild West."
+	desc = "Легенда Дикого Запада."
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
 
@@ -234,7 +234,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
-	desc = "Fires flares."
+	desc = "Стреляет огнями."
 	icon_state = "flaregun"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
@@ -256,6 +256,6 @@
 
 /obj/item/weapon/gun/projectile/revolver/syndie
 	name = "revolver"
-	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
+	desc = "Мощный револьвер, очень популярен среди наёмников и пиратов. Использует патроны .357-го калибра."
 	icon_state = "synd_revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder

@@ -35,7 +35,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79
 	name = "m79 grenade launcher"
-	desc = "Uses 40x46 ammunition."
+	desc = "Использует снаряды 40x46."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
 	item_state = "m79"

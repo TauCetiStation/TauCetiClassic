@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
-	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
+	desc = "Лёгкий и скорострельный пистолет-пулемёт. Использует 9ММ патроны."
 	icon_state = "saber"	//ugly
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
@@ -18,7 +18,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	desc = "Лёгкая и скорострельная пушка,для случаев,когда вам точно нужно кого-то убить. Использует 9ММ патроны."
 	icon_state = "mac"
 	item_state = "mac"
 	w_class = SIZE_SMALL
@@ -34,7 +34,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
-	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	desc = "Лёгкий и компактный ПП компановки булл-пап. Стреляет пулями 45-того калибра, заряженными в магазины средней вместимости, на стволе есть разьба для глушителя. Имеет клеймо компании Scarborough Arms,которое гласит: «Scarborough Arms - Per falcis, per ravitas»."
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = SIZE_SMALL
@@ -81,7 +81,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
-	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
+	desc = "Сильно модифицированный лёгкий пулемёт с пластальевой рамой, основаной на классическом огнестрельном оружии. Имеет гравировку: "Оружейная Aussec - 2531", использует патроны 7,62х51 ."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = SIZE_BIG
@@ -146,7 +146,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "thompson SMG"
-	desc = "Based on the classic 'Chicago Typewriter'."
+	desc = "Создано на основе оригинальной 'Чикагской пишущей машинки'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
 	w_class = SIZE_BIG
@@ -171,7 +171,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c5
 	name = "security submachine gun"
-	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
+	desc = "Пистолет-пулемёт С-5 - дёшиво и легко. Использует 9ММ патроны."
 	icon_state = "c5"
 	item_state = "c5"
 	w_class = SIZE_SMALL
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
-	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
+	desc = "Л13 личное оружие для самозащиты - созданное для проведения охранных и боевых операций. Использует патроны .38."
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = SIZE_SMALL
@@ -212,7 +212,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
-	desc = "A genuine Chicago Typewriter."
+	desc = "Гениальная Чикагская строчильная машинка."
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	slot_flags = 0
@@ -222,7 +222,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
-	desc = "Browning Automatic Rifle."
+	desc = "Автоматическая винтовка Браунинга."
 	icon_state = "bar"
 	item_state = "bar"
 	w_class = SIZE_BIG
@@ -232,7 +232,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/luger
 	name = "Luger P08"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "Лёгкая и простоскрываемая пушка. Использует 9ММ патроны."
 	icon_state = "p08"
 	w_class = SIZE_TINY
 	origin_tech = "combat=2;materials=2;syndicate=2"
@@ -244,7 +244,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
-	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	desc = "Полуавтоматический пистолет 45-того калибра одиночного действия,с магазинным питанием и почти нулевой отдачей."
 	name = "Colt M1911"
 	mag_type = /obj/item/ammo_box/magazine/c45m
 	mag_type2 = /obj/item/ammo_box/magazine/c45r
@@ -271,7 +271,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	desc = "Компактный дробовик с магазинным питанием,хорошо подходит для перестрелок в коридоре. Совместим только со специальными магазинами."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = SIZE_SMALL
@@ -326,7 +326,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
-	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
+	desc = "Чудо,созданное космическо-советской корпорацией Стради и Практикант , базируется на оригинальной валыне 20-того столетия,выстрелы звучат как струны балалайки,использует калибр 7.74"
 	mag_type = /obj/item/ammo_box/magazine/a74mm
 	w_class = SIZE_SMALL
 	icon_state = "a74"
@@ -349,7 +349,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
-	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
+	desc = "Также известен как Дрозд, этот мелкий сукин сын идёт вместе с кровавым гранатомётом! Насколько это круто?"
 	icon_state = "drozd"
 	item_state = "drozd"
 	mag_type = /obj/item/ammo_box/magazine/drozd127
