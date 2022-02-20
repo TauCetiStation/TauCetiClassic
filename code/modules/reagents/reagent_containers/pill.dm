@@ -50,7 +50,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 		
-		var/ingestion_time = applySkillModifier(user, SKILL_TASK_TOUGH, SKILL_MEDICAL, SKILL_MEDICAL_PRACTICED, 0, 0.2)
+		var/ingestion_time = applySkillModifier(user, SKILL_TASK_TOUGH, SKILL_MEDICAL, SKILL_MEDICAL_PRACTICED, 0, 0.25)
 		if(!do_mob(user, M, ingestion_time)) 
 			return
 
