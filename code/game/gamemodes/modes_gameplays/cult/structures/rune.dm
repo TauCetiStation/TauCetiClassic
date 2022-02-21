@@ -9,20 +9,20 @@
 
 	var/datum/rune/power
 	var/datum/religion/religion
-	var/mob/creator
+	var/creator_ckey
 
 /obj/effect/rune/atom_init(mapload, datum/religion/R, mob/user, rand_icon = FALSE)
 	. = ..()
 	if(R)
 		ASSERT(user)
-		creator = user
+		creator_ckey = user.ckey
 		religion = R
 		religion.runes += src
 
-		if(!religion.runes_by_mob.Find(creator))
-			religion.runes_by_mob[creator] = list(src)
+		if(!religion.runes_by_ckey[creator_ckey])
+			religion.runes_by_ckey[creator_ckey] = list(src)
 		else
-			var/list/L = religion.runes_by_mob[creator]
+			var/list/L = religion.runes_by_ckey[creator_ckey]
 			L += src
 
 	if(rand_icon)
@@ -41,14 +41,13 @@
 	color = "#a10808"
 
 /obj/effect/rune/Destroy()
-	QDEL_NULL(power)
-	if(religion && creator)
-		var/list/L = religion.runes_by_mob[creator]
+	if(religion && creator_ckey)
+		var/list/L = religion.runes_by_ckey[creator_ckey]
 		L -= src
 		religion.runes -= src
 		religion = null
 
-	creator = null
+		QDEL_NULL(power)
 
 	return ..()
 

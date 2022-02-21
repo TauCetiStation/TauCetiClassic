@@ -42,8 +42,8 @@
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
 		var/list/L
-		if(religion.runes_by_mob[user])
-			L = religion.runes_by_mob[user]
+		if(religion.runes_by_ckey[user.ckey])
+			L = religion.runes_by_ckey[user.ckey]
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 	else
 		..()
@@ -142,9 +142,9 @@
 		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
-	if(religion.runes_by_mob[H])
-		var/list/L = religion.runes_by_mob[H]
-		if(L.len > religion.max_runes_on_mob)
+	if(religion.runes_by_ckey[H.ckey])
+		var/list/L = religion.runes_by_ckey[H.ckey]
+		if(L.len >= religion.max_runes_on_mob)
 			to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
 			return
 

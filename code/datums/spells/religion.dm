@@ -394,9 +394,9 @@
 		user.RemoveSpell(src)
 		return
 
-	if(user.my_religion.runes_by_mob[user])
-		var/list/L = user.my_religion.runes_by_mob[user]
-		if(L.len > user.my_religion.max_runes_on_mob)
+	if(user.my_religion.runes_by_ckey[user.ckey])
+		var/list/L = user.my_religion.runes_by_ckey[user.ckey]
+		if(L.len >= user.my_religion.max_runes_on_mob)
 			to_chat(user, "<span class='warning'>Вуаль пространства не сможет сдержать больше рун!</span>")
 			return
 
