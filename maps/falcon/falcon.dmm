@@ -2710,7 +2710,8 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aew" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -8237,11 +8238,10 @@
 	},
 /area/asteroid/mine/eva)
 "apv" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -8257,16 +8257,15 @@
 	},
 /area/asteroid/mine/eva)
 "apx" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
 	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
