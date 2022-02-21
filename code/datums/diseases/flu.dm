@@ -17,7 +17,7 @@
 		if(2)
 /*
 			if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed --Blaank
-				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
+				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				stage--
 				return
 */
@@ -30,7 +30,7 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>У вас ломит мышцы.</span>")
+				to_chat(affected_mob, "<span class='warning'>У Вас ломит мышцы.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))

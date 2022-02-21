@@ -182,8 +182,8 @@
 		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
-			"<span class='danger'>Сильнейший электрический удар проходит сквозь ваше тело!</span>", \
-			"<span class='rose'>Вы слышите электрическое потрескивание.</span>" \
+			"<span class='danger'>Вы чувствуете мощнейший электрический разряд, проходящий через Ваше тело.</span>", \
+			"<span class='rose'>Вы слышите гулкий электрический треск.</span>" \
 		)
 		make_jittery(1000)
 		AdjustStuttering(2)
@@ -198,8 +198,8 @@
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
-			"<span class='rose'>Вы чувствуете как ток проходит по вашему телу.</span>", \
-			"<span class='rose'>Вы слышите потрескивание света.</span>" \
+			"<span class='rose'>Вы чувствуете легкий импульс, проходящий через ваше тело.</span>", \
+			"<span class='rose'>Вы слышите тихое пиканье.</span>" \
 		)
 	return shock_damage
 
@@ -823,7 +823,7 @@
 	if(user.is_busy(src))
 		return
 
-	visible_message("<span class='danger'>[user] пытается сделать ИВЛ [src]!</span>")
+	visible_message("<span class='danger'>[user] пытается сделать искусственное дыхание [src]!</span>")
 
 	if(health <= (config.health_threshold_dead + 5))
 		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
@@ -832,7 +832,7 @@
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Ваша раса не может делать ИВЛ!</span>")
+			to_chat(user, "<span class='notice bold'>Ваша раса не может делать искусственное дыхание!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
 			to_chat(user, "<span class='notice bold'>Снимите свою маску!</span>")
@@ -841,22 +841,22 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>Этой расе нельзя делать ИВЛ!</span>")
+				to_chat(user, "<span class='notice bold'>Этой расе нельзя делать искусственное дыхание!</span>")
 				return
 			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
-				to_chat(user, "<span class='notice bold'>Снимите [wear_mask] с[src]!</span>")
+				to_chat(user, "<span class='notice bold'>Снимите маску с[src]!</span>")
 				return
 
 		if(head && head.flags & HEADCOVERSMOUTH)
-			to_chat(user, "<span class='notice bold'>Снимите [head] с [src]!</span>")
+			to_chat(user, "<span class='notice bold'>Снимите головной убор с [src]!</span>")
 			return
 
 		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
-			visible_message("<span class='warning'>[user] делает ИВЛ [src]!</span>")
-			to_chat(src, "<span class='notice'>Вы чувствуете поток свежего воздуха, наполняющий ваши лёгкие. Приятно.</span>")
-			to_chat(user, "<span class='warning'>Повторяйте каждые 7 секунд, как минимум.</span>")
+			visible_message("<span class='warning'>[user] делает искусственное дыхание [src]!</span>")
+			to_chat(src, "<span class='notice'>Вы чувствуете, как глоток свежего воздуха входит в ваши легкие. Это приятное чувство.</span>")
+			to_chat(user, "<span class='warning'>Повторяйте как минимум каждые 7 секунд</span>")
 		updatehealth()
 
 /mob/living/carbon/Topic(href, href_list)

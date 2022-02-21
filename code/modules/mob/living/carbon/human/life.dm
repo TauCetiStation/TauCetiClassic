@@ -136,7 +136,7 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			visible_message("<span class='danger'>[src] впадает в припадок!</span>", self_message = "<span class='warning'>У вас начинается припадок!</span>")
+			visible_message("<span class='danger'>У [src] начинается припадок!</span>", self_message = "<span class='warning'>У вас начинается припадок!</span>")
 			Paralyse(10)
 			make_jittery(1000)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
@@ -196,21 +196,21 @@
 		switch(rand(0, 200))
 			if(0 to 3)
 				if(getBrainLoss() >= 5)
-					custom_pain("Ваша голова болезненно немеет.")
+					custom_pain("Ваша голова онемела и болит.")
 
 			if(4 to 6)
 				if(getBrainLoss() >= 15 && eye_blurry <= 0)
-					to_chat(src, "<span class='warning'>Вам становиться тяжело видеть.</span>")
+					to_chat(src, "<span class='warning'>По какой-то причине становится тяжело видеть.</span>")
 					blurEyes(10)
 
 			if(7 to 9)
 				if(getBrainLoss() >= 35 && get_active_hand())
-					to_chat(src, "<span class='warning'>Ваши руки вас не слушаются и вы роняете предмет на пол.</span>")
+					to_chat(src, "<span class='warning'>Ваши руки Вас не слушается, Вы роняете то, что в них держали.</span>")
 					drop_item()
 
 			if(10 to 12)
 				if(getBrainLoss() >= 50 && !lying)
-					to_chat(src, "<span class='warning'>Ваши ноги вас не слушаются и вы теряете равновесие.</span>")
+					to_chat(src, "<span class='warning'>Ваши ноги Вас не слушаются и Вы теряете равновесие.</span>")
 					resting = 1
 
 			if(13 to 18)
@@ -252,7 +252,7 @@
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
 				if(!lying)
-					to_chat(src, "<span class='warning'>Вы чувствуете себя неважно.</span>")
+					to_chat(src, "<span class='warning'>Вы чувствуете слабость.</span>")
 					emote("collapse")
 
 		if (radiation < 0)
@@ -943,7 +943,7 @@
 
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
-			to_chat(src, "<span class='userdanger'>Свет! Он обжигает вас!</span>")
+			to_chat(src, "<span class='userdanger'>Свет вас обжигает!</span>")
 			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
@@ -1339,7 +1339,7 @@
 						else
 							adjustBrainLoss(1)
 				else
-					to_chat(src, "Так тяжело сконцентрироваться...")
+					to_chat(src, "Слишком трудно сосредоточиться...")
 					remoteview_target = null
 					reset_view(null)//##Z2
 			if(force_remote_viewing)
@@ -1462,7 +1462,7 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<span class='danger'>[pick("Как же больно!", "Вам бы не помешало болеутоляющее..", "Боже, остановите эту боль!")]</span>")
+		to_chat(src, "<span class='danger'>[pick("Как же больно!", "Вам точно нужно обезболивающее.", "Господи, какая боль!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"с трудом держит глаза открытыми.")
@@ -1470,23 +1470,23 @@
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!", "Всё ваше тело немеет!")]</span>")
+		to_chat(src, "<span class='danger'>[pick("Боль просто невыносимая!", "Умоляю, просто избавьте меня от боли!", "Всё ваше тело немеет!")]</span>")
 
 	if (shock_stage >= 60)
 		if(shock_stage == 60)
-			visible_message("<span class='name'>[src]</span> больше не в силах управлять своим телом.")
+			visible_message("<span class='name'>Тело [src] обмякло</span>")
 		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!", "Всё ваше тело немеет!")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Боль просто невыносимая!", "Умоляю, просто избавьте меня от боли!", "Всё ваше тело немеет!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
-			to_chat(src, "<span class='danger'>[pick("Эта боль невыносима!", "Пожалуйста, прекратите эту боль!!", "Всё ваше тело немеет!")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Боль просто невыносимая!!", "Умоляю, просто избавьте меня от боли!", "Всё ваше тело немеет!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("Всё вокруг темнеет!", "Вы чувствуете, что можете в любой момент погибнуть.", "Вы вот-вот потеряете сознание.")]</span>")
+			to_chat(src, "<span class='danger'>[pick("Вы теряете сознание!", "Вы чувствуете, что можете умереть в любой момент.", "Вы вот-вот потеряете сознание.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)
@@ -1529,7 +1529,7 @@
 				apply_effect(5,AGONY,0)
 				return PULSE_NONE
 			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Вы чувствуете слабую боль в сердце.</span>")
+				to_chat(src, "<span class='danger'>Ваше сердце немного болит.</span>")
 				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				apply_effect(1,AGONY,0)
 				return PULSE_SLOW

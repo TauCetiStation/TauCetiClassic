@@ -32,7 +32,7 @@
 			if (prob(8))
 				affected_mob.say(pick("Бип, буп", "Бип, бип!", "Буп...Боп"))
 			if (prob(10))
-				to_chat(affected_mob, "Ваша кожа становится эластичной.")
+				to_chat(affected_mob, "Ваша кожа становится дряблой.")
 				affected_mob.take_bodypart_damage(5)
 			if (prob(4))
 				to_chat(affected_mob, "<span class='warning'>Вы чувтсвуете колющую боль в голове.</span>")

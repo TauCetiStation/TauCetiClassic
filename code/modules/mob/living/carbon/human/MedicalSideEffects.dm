@@ -84,16 +84,16 @@
 	name = "Headache"
 	triggers = list("cryoxadone" = 10, "bicaridine" = 15, "tricordrazine" = 15)
 	cures = list("alkysine", "tramadol", "paracetamol", "oxycodone")
-	cure_message = "Ваша головная боль постепенно проходит..."
+	cure_message = "Пульсирующая боль в голове проходит..."
 
 /datum/medical_effect/headache/on_life(mob/living/carbon/human/H, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("Вы чувствуете слабую боль в голове.",0)
+			H.custom_pain("Вы чувствуете лёгкую боль в голове.",0)
 		if(11 to 30)
-			H.custom_pain("Вы чувствуете сильную боль в голове!",1)
+			H.custom_pain("Вы чувствуете пульсирующую боль в голове!",1)
 		if(31 to INFINITY)
-			H.custom_pain("Вы чувствуете сильнейшую боль в голове!",1)
+			H.custom_pain("Вы чувствуете мучительную боль в голове!",1)
 
 // BAD STOMACH
 // ===========
@@ -101,16 +101,16 @@
 	name = "Bad Stomach"
 	triggers = list("kelotane" = 30, "dermaline" = 15)
 	cures = list("anti_toxin")
-	cure_message = "Ваш живот постепенно выздоравливает..."
+	cure_message = "Ваш живот немного проходит..."
 
 /datum/medical_effect/bad_stomach/on_life(mob/living/carbon/human/H, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("Вы чувствуете странную пустоту в области живота.",0)
+			H.custom_pain("Вы чувствуете тяжесть в животе",0)
 		if(11 to 30)
-			H.custom_pain("Вы чувтсвуете боль в животе.",0)
+			H.custom_pain("У вас болит живот",0)
 		if(31 to INFINITY)
-			H.custom_pain("Вас сильно тошнит.",1)
+			H.custom_pain("Вам дурно.",1)
 
 // CRAMPS
 // ======
@@ -118,17 +118,17 @@
 	name = "Cramps"
 	triggers = list("anti_toxin" = 30, "tramadol" = 15)
 	cures = list("inaprovaline")
-	cure_message = "Судорога постепенно проходит..."
+	cure_message = "Судороги прошли..."
 
 /datum/medical_effect/cramps/on_life(mob/living/carbon/human/H, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("Вы чувствуете мышечную боль по всему вашему телу.",0)
+			H.custom_pain("Ваши мышцы немного болят.",0)
 		if(11 to 30)
-			H.custom_pain("Мышцы по всему вашему телу болезненно охватываются судорогой.",0)
+			H.custom_pain("Мышцы Вашего тела болезненно сводит судорогами",0)
 		if(31 to INFINITY)
-			H.emote("me",1,"вздрагивает от внезапной судороги по всему телу.")
-			H.custom_pain("Всё ваше тело болит.",1)
+			H.emote("me",1,"вздрагивает, когда все его мышцы сводит судорогой.")
+			H.custom_pain("Вы чувствуете боль по всему телу",1)
 
 // ITCH
 // ====
@@ -136,14 +136,14 @@
 	name = "Itch"
 	triggers = list("space_drugs" = 10)
 	cures = list("inaprovaline")
-	cure_message = "Чесотка прекращается..."
+	cure_message = "Зуд прекращается..."
 
 /datum/medical_effect/itch/on_life(mob/living/carbon/human/H, strength)
 	switch(strength)
 		if(1 to 10)
 			H.custom_pain("Вы чувствуете лёгкий зуд.",0)
 		if(11 to 30)
-			H.custom_pain("Вы очень сильно хотите расчесать зудящее место.",0)
+			H.custom_pain("Вы сильно хотите почесать зудящее место.",0)
 		if(31 to INFINITY)
-			H.emote("me",1,"немного трясётся.")
-			H.custom_pain("Из-за этой чесотки тяжело сконцентрироваться.",1)
+			H.emote("me",1,"слегка вздрагивает.")
+			H.custom_pain("Из-за этого зуда очень трудно сосредоточиться.",1)

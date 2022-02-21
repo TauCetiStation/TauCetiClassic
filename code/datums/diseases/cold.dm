@@ -35,7 +35,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "<span class='warning'>У Вас першит в горле.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется мокротой.</span>")
+				to_chat(affected_mob, "<span class='warning'>Мокрота стекает по Вашему горлу.</span>")
 		if(3)
 /*
 			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
