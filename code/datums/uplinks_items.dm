@@ -327,6 +327,13 @@
 	cost = 4
 	uplink_types = list("traitor")
 
+/datum/uplink_item/dangerous/cheap_armor
+	name = "Standard Armor Set"
+  desc = "A set of basic armor to protect against enemies"
+  item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
+  cost = 12
+  uplink_types = list("dealer")
+
 /datum/uplink_item/dangerous/mine
 	name = "High Explosive Mine"
 	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
