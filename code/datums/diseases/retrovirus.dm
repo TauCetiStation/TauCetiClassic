@@ -47,7 +47,7 @@
 			if (prob(9))
 				to_chat(affected_mob, "Вы чувствуете лёгкое покалывание в груди.")
 			if (prob(9))
-				to_chat(affected_mob, "<span class='warning'>Вы испытываете сильную злобу.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы злитесь.</span>")
 		if(2)
 			if(restcure)
 /*
@@ -65,10 +65,10 @@
 			if (prob(10))
 				to_chat(affected_mob, "Вы чувствуете себя очень странно.")
 			if (prob(4))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете острую боль в голове!</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете колющую боль в голове!</span>")
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				to_chat(affected_mob, "<span class='warning'>Ваш желудок выворчаивает наизнанку.</span>")
+				to_chat(affected_mob, "<span class='warning'>У Вас бурлит в желудке.</span>")
 		if(3)
 			if(restcure)
 /*
@@ -82,7 +82,7 @@
 					cure()
 					return
 			if (prob(10))
-				to_chat(affected_mob, "<span class='warning'>Все ваше тело трясет.</span>")
+				to_chat(affected_mob, "<span class='warning'>Ваше тело вибрирует.</span>")
 
 			if (prob(35))
 				if(prob(50))

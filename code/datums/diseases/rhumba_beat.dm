@@ -20,15 +20,15 @@
 				to_chat(affected_mob, "<span class='warning'>Вы чувствуете себя очень странно...</span>")
 		if(3)
 			if(prob(5))
-				to_chat(affected_mob, "<span class='warning'>Вы испытываете острое желание танцевать...</span>")
+				to_chat(affected_mob, "<span class='warning'>Вам хочется танцевать...</span>")
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			else if(prob(10))
-				to_chat(affected_mob, "<span class='warning'>Вы испытываете неуталимую тягу к чики чики бум...</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы хотите делать ча-ча-ча...</span>")
 		if(4)
 			if(prob(10))
 				affected_mob.emote("gasp")
-				to_chat(affected_mob, "<span class='warning'>Вы слышите зажигательную музыку в своей голове...</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете жгучее биение внутри...</span>")
 			if(prob(20))
 				affected_mob.adjustToxLoss(5)
 				affected_mob.updatehealth()
@@ -37,7 +37,7 @@
 				return
 			if(affected_mob.notransform)
 				return
-			to_chat(affected_mob, "<span class='warning'>Ваше тело не может выдержать ритм румбы...</span>")
+			to_chat(affected_mob, "<span class='warning'>Ваше тело не в состоянии остановить этот ритм...</span>")
 			if(prob(50))
 				affected_mob.gib()
 		else

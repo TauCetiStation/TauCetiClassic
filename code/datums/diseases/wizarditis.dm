@@ -31,14 +31,14 @@ STI KALY - blind
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("Ты не пройдёшь!", "Экспелиармус!", "Борода Мерлина!", "Вы чувствуете силу тёмной стороны!"))
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете, что [pick("у вас недостаточно маны.", "ветра магии покинули вас.", "нужно вызвать фамильяра.")]</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете, что [pick("у вас недостаточно маны.", "ветра магии стихли.", "нужно вызвать фамильяра.")]</span>")
 
 
 		if(3)
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете, что [pick("в ваших венах течет магия","эта локация придаёт вам +1 к ИНТ","пришло время вызвать фамильяра.")].</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете [pick("магию бурлящую в ваших венах","что эта локация дает вам +1 к интеллекту","стремление призвать фамильяра.")].</span>")
 
 		if(4)
 
@@ -46,7 +46,7 @@ STI KALY - blind
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
 				return
 			if(prob(1)&&prob(50))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете [pick("сгусток первобытной энергии, накапливающийся внутри вас","+2 к ИНТ и +1 к МУДР получаемые на этой локации","нужду использвать телепортацию")].</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы чувствуете [pick("что эта локация дает вам +2 к интеллекту и +1 к магии","нужду телепортироваться")].</span>")
 				spawn_wizard_clothes(50)
 			if(prob(1)&&prob(1))
 				teleport()

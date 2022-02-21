@@ -29,5 +29,5 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		to_chat(M, "<span class='notice'>Ваша [pick("спина", "рука", "нога", "задница", "голова")] сильно чешется.</span>")
+		to_chat(M, "<span class='notice'>Ваша [pick("спина", "рука", "нога", "пятка", "голова")] сильно чешется.</span>")
 	return

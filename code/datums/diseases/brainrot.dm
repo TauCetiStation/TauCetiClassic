@@ -21,7 +21,7 @@
 			if(prob(2))
 				affected_mob.emote("yawn")
 			if(prob(2))
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете себя... другим.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы не чувствуете себя самим собой.</span>")
 			if(prob(5))
 				affected_mob.adjustBrainLoss(1)
 				affected_mob.updatehealth()
@@ -39,7 +39,7 @@
 				affected_mob.adjustToxLoss(3)
 				affected_mob.updatehealth()
 				if(prob(2))
-					to_chat(affected_mob, "<span class='warning'>У вас болит голова.</span>")*/
+					to_chat(affected_mob, "<span class='warning'>Your head hurts</span>")*/
 		if(4)
 			if(prob(2))
 				affected_mob.emote("stare")
@@ -49,12 +49,12 @@
 				affected_mob.adjustToxLoss(4)
 				affected_mob.updatehealth()
 				if(prob(2))
-					to_chat(affected_mob, "<span class='warning'>У вас болит голова.</span>")*/
+					to_chat(affected_mob, "<span class='warning'>Your head hurts</span>")*/
 			if(prob(15) && affected_mob.getBrainLoss()<=98) //shouldn't retard you to death now
 				affected_mob.adjustBrainLoss(3)
 				affected_mob.updatehealth()
 				if(prob(2))
-					to_chat(affected_mob, "<span class='warning'>Странный гул наполняет вашу голову, заменяя собой любые мысли.</span>")
+					to_chat(affected_mob, "<span class='warning'>Странное жужжание заполняет голову, вытесняя собою все мысли.</span>")
 			if(prob(3))
 				affected_mob.visible_message("[affected_mob] suddenly collapses", self_message = "<span class='warning'>Вы теряете сознание...</span>")
 				affected_mob.Paralyse(rand(5,10))

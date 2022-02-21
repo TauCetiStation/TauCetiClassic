@@ -21,7 +21,7 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Вы сгораете заживо под собственной кожей!</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы горите в собсвтенной шкуре!</span>")
 				affected_mob.take_bodypart_damage(0,5)
 
 		if(3)
@@ -31,6 +31,6 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 			if(prob(5))
-				to_chat(affected_mob, "<span class='warning'>Вы сгораете заживо под собственной кожей!</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы горите в собсвтенной шкуре!</span>")
 				affected_mob.take_bodypart_damage(0,5)
 	return

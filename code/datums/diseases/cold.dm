@@ -16,7 +16,7 @@
 		if(2)
 /*
 			if(affected_mob.sleeping && prob(40))  //removed until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
+				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
 				return
 */
@@ -33,13 +33,13 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>У вас болит горло.</span>")
+				to_chat(affected_mob, "<span class='warning'>У Вас першит в горле.</span>")
 			if(prob(1))
 				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется мокротой.</span>")
 		if(3)
 /*
 			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
-				to_chat(affected_mob, "<span class='notice'>Вы чувствуете себя лучше.</span>")
+				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
 				return
 */
@@ -56,9 +56,9 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>У вас болит горло.</span>")
+				to_chat(affected_mob, "<span class='warning'>У Вас першит в горле.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Ваше горло наполняется мокротой.</span>")
+				to_chat(affected_mob, "<span class='warning'>Мокрота стекает по Вашему горлу.</span>")
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)

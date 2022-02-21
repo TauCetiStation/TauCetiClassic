@@ -37,7 +37,7 @@
 				return
 			if(affected_mob.notransform)
 				return
-			to_chat(affected_mob, "<span class='warning'>Вы чувствуете себя так, словно ваше тело рвётся изнутри...</span>")
+			to_chat(affected_mob, "<span class='warning'>Ваше тело как будто пытается разорваться...</span>")
 			if(prob(50))
 				affected_mob.gib()
 		else

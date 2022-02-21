@@ -23,11 +23,11 @@
 			if(prob(8))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'У вас болят мышцы.</span>")
+				to_chat(affected_mob, "<span class='warning'У Вас ломит мышцы.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>У вас болит живот.</span>")
+				to_chat(affected_mob, "<span class='warning'>У Вас болит живот.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(2)
 					affected_mob.updatehealth()
@@ -42,7 +42,7 @@
 				src.original_dna["UI"] = affected_mob.dna.UI.Copy()
 				src.original_dna["SE"] = affected_mob.dna.SE.Copy()
 
-				to_chat(affected_mob, "<span class='warning'>Вы чувствуете себя... другим.</span>")
+				to_chat(affected_mob, "<span class='warning'>Вы не чувствуете себя самим собой.</span>")
 				var/list/newUI=strain_data["UI"]
 				var/list/newSE=strain_data["SE"]
 				affected_mob.UpdateAppearance(newUI.Copy())
