@@ -30,7 +30,7 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "<span class='warning'>Ваши мышцы болят.</span>")
+				to_chat(affected_mob, "<span class='warning'>У вас ломит мышцы.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
