@@ -1,4 +1,4 @@
-var/global/list/wedge_icon_cache = list()
+var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door
 	name = "Door"
@@ -120,16 +120,22 @@ var/global/list/wedge_icon_cache = list()
 /obj/machinery/door/proc/generate_wedge_overlay()
 	var/cache_string = "[wedged_item.icon]||[wedged_item.icon_state]||[wedged_item.overlays.len]||[wedged_item.underlays.len]"
 
-	if(!global.wedge_icon_cache[cache_string])
-		var/icon/I = getFlatIcon(wedged_item, SOUTH)
+	if(!global.wedge_image_cache[cache_string])
+		var/image/I = image(wedged_item.icon, wedged_item.icon_state)
+		I.appearance = wedged_item
 
-		I.Shift(SOUTH, 15) // These numbers I got by sticking the crowbar in and looking what will look good.
-		I.Shift(WEST, 4)
+		I.layer = layer
+		I.plane = plane
 
-		global.wedge_icon_cache[cache_string] = I
+		I.pixel_x = -4
+		I.pixel_y = -15
+
+		I.add_filter("half-cut", 1, alpha_mask_filter(icon=icon('icons/effects/cut.dmi', "cut_up")))
+
+		global.wedge_image_cache[cache_string] = I
 		underlays += I
 	else
-		underlays += global.wedge_icon_cache[cache_string]
+		underlays += global.wedge_image_cache[cache_string]
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return !block_air_zones
