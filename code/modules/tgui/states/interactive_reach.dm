@@ -1,5 +1,5 @@
 /**
- * tgui state: hands_state
+ * tgui state: interactive_reach
  *
  * Checks that the src_object is in some way interactable by user.
  * Be it being in hands, or being in TK range.
