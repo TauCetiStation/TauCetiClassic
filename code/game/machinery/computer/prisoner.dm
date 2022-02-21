@@ -13,6 +13,8 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	required_skill = SKILL_POLICE
+	required_skill_proficiency = SKILL_POLICE_PRO
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat = ""
@@ -62,7 +64,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["inject1"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
 		if(I)	I.activate(1)
