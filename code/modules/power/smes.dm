@@ -35,6 +35,8 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_NOVICE
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
@@ -391,7 +393,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt

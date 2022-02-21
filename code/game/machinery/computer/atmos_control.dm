@@ -13,6 +13,8 @@
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
+	required_skill = SKILL_ATMOS
+	required_skill_proficiency = SKILL_ATMOS_MASTER
 
 /obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
 	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.
@@ -144,7 +146,6 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["reset"])
 		current = null
 	if(href_list["alarm"])

@@ -165,6 +165,7 @@
 			changeling.drop_from_inventory(I)
 		changeling.Stun(10)
 		addtimer(CALLBACK(src, .proc/turn_to_abomination), 30)
+	changeling.mind.current_skills = changeling.mind.getAvailableSkills()
 
 /datum/role/changeling/proc/turn_to_abomination()
 	var/mob/living/carbon/human/changeling = antag.current

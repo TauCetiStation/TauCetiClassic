@@ -6,6 +6,7 @@
 	antag_hud_name = "abductor"
 
 	logo_state = "abductor-logo"
+	skills_type = /datum/skills/abductor
 
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
@@ -50,6 +51,7 @@
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT
+	skills_type = /datum/skills/abductor/agent
 
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
@@ -78,6 +80,7 @@
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
+	skills_type = /datum/skills/abductor/scientist
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())

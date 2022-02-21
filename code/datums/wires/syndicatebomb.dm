@@ -8,6 +8,7 @@ var/global/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if 
 	random = TRUE
 	holder_type = /obj/machinery/syndicatebomb
 	wire_count = 5
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
 
 /datum/wires/syndicatebomb/can_use()
 	var/obj/machinery/syndicatebomb/S = holder

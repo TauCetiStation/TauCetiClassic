@@ -66,7 +66,7 @@
 //It's strange, but no other way of doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user)
 	if(isitem(master_item))
-		if(master_item.loc == user.loc)
+		if(master_item.loc == user)
 			add_fingerprint(user)
 			open(user)
 			return FALSE

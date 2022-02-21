@@ -6,7 +6,9 @@
 	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+	fumbling_time_multiplier = 7 SECONDS
 
 /obj/machinery/computer/aiupload/verb/AccessInternals()
 	set category = "Object"
@@ -28,6 +30,8 @@
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 	if(istype(O, /obj/item/weapon/aiModule))
+		if(!do_skill_checks(user))
+			return
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
 	else
@@ -38,7 +42,8 @@
 	. = ..()
 	if(.)
 		return
-
+	if(!do_skill_checks(user))
+		return
 	current = select_active_ai(user)
 	if (!current)
 		to_chat(user, "No active AIs detected.")
@@ -51,10 +56,14 @@
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 	var/mob/living/silicon/robot/current = null
-
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+	fumbling_time_multiplier = 7 SECONDS
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
 	if(istype(module, /obj/item/weapon/aiModule))
+		if(!do_skill_checks(user))
+			return
 		module.install(src)
 	else
 		return ..()
@@ -64,9 +73,9 @@
 	. = ..()
 	if(.)
 		return
-
+	if(!do_skill_checks(user))
+		return
 	current = freeborg()
-
 	if (!current)
 		to_chat(user, "No free cyborgs detected.")
 	else
