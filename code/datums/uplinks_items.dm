@@ -325,10 +325,12 @@
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
 	cost = 4
-	uplink_types = list("traitor")
+	uplink_types = list("traitor", "dealer")
+
+	need_wanted_level = 5
 
 /datum/uplink_item/dangerous/cheap_armor
-	name = "Standard Armor Set"
+  name = "Standard Armor Set"
   desc = "A set of basic armor to protect against enemies"
   item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
   cost = 12
