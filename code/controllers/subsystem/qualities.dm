@@ -23,28 +23,53 @@ SUBSYSTEM_DEF(qualities)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/quality_type = pick(qualities_pool)
-	var/datum/quality/quality = qualities_pool[quality_type]
+	if(!SSjob)
+		if(C.mob)
+			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
+		return
 
-	registered_clients[C.ckey] = quality_type
+	if(!C.prefs)
+		if(C.mob)
+			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
+		return
 
-	if(C.mob && quality)
+	var/list/possible_qualities = qualities_pool.Copy()
+	var/datum/quality/selected_quality
+
+	while(possible_qualities.len)
+		var/quality_type = pick(qualities_pool)
+		var/datum/quality/quality = qualities_pool[quality_type]
+
+		possible_qualities -= quality_type
+
+		if(!quality.availability_check(C))
+			continue
+
+		selected_quality = quality
+		break
+
+	if(!selected_quality)
+		return
+
+	registered_clients[C.ckey] = selected_quality.type
+
+	if(C.mob && selected_quality)
 		var/mob/M = C.mob
 		to_chat(M, "<font color='green'><b>Вы особенный.</b></font>")
-		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [quality.desc]</font>")
-		to_chat(M, "<font color='green'><b>Ограничение:</b> [quality.restriction]</font>")
+		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [selected_quality.desc]</font>")
+		to_chat(M, "<font color='green'><b>Ограничение:</b> [selected_quality.restriction]</font>")
 
 		C.prefs.have_quality = TRUE
 		C << output(TRUE, "lobbybrowser:set_quality")
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
 	for(var/mob/living/carbon/human/player in player_list)
-		SSqualities.give_quality(player)
+		SSqualities.give_quality(player, FALSE)
 
-/datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H)
+/datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H, latespawn)
 	if(!H.client.prefs.have_quality)
 		return
 
 	var/datum/quality/quality = qualities_pool[registered_clients[H.client.ckey]]
-	if(quality.restriction_check(H))
-		quality.add_effect(H)
+	if(quality.restriction_check(H, latespawn))
+		quality.add_effect(H, latespawn)

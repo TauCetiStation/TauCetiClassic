@@ -101,8 +101,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
 	var/have_q = client.prefs.have_quality
-	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>QUALITY [have_q ? "☑" : "☒"]</a>
-	"}
+	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[have_q ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
@@ -111,10 +110,11 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	dat += "</div>"
 	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
 	dat += {"
+
 	<script>
-		var mark = document.getElementById("ready");
+		var ready_mark = document.getElementById("ready");
 		function setReadyStatus(isReady) {
-			mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
+			ready_mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
 		}
 
 		var quality_mark=document.getElementById("quality");
