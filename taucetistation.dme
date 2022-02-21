@@ -267,7 +267,6 @@
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\silence.dm"
 #include "code\datums\components\slippery.dm"
-#include "code\datums\components\spawn_area.dm"
 #include "code\datums\components\swiping.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\twohanded.dm"
