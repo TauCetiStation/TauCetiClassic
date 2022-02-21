@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/shotgun
 	name = "shotgun"
-	desc = "Хорошо подходит для уничтожения противника на небольшом расстоянии."
+	desc = "Хорошо подходит для уборки коридоров."
 	icon_state = "shotgun"
 	item_state = "shotgun"
 	w_class = SIZE_NORMAL
