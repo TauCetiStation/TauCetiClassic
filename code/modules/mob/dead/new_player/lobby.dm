@@ -4,8 +4,8 @@ var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'ic
 
 var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
-#define MARK_READY     "READY <span style='color:lime'>☑</span>"
-#define MARK_NOT_READY "READY <span style='color:red'>☒</span>"
+#define MARK_READY     "ГОТОВНОСТЬ <span style='color:lime'>☑</span>"
+#define MARK_NOT_READY "ГОТОВНОСТЬ <span style='color:red'>☒</span>"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -63,7 +63,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					font-family: "Fixedsys";
 					font-weight: lighter;
 					text-decoration: none;
-					width: 25%;
+					width: 30%;
 					text-align: left;
 					color:white;
 					margin-right: 100%;
@@ -85,18 +85,18 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		</head>
 		<body>
 			<div class="container_nav">
-				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
+				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>НАСТРОЙКИ</a>
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
 		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1'>[ready ? MARK_READY : MARK_NOT_READY]</a>"}
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>"}
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>ЭКИПАЖ</a>"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>ЗАЙТИ В ИГРУ</a>"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>НАБЛЮДАТЬ</a>"}
 	dat += "<br><br>"
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>ЧЕЙНЖЛОГ</a>"}
 
 	dat += "</div>"
 	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
