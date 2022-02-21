@@ -117,7 +117,7 @@
 
 	charge_per_tick = max_health / recharge_time
 
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
@@ -157,7 +157,7 @@
 
 /// Reactivate the shield.
 /datum/component/forcefield/proc/reactivate()
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	var/atom/play_at = get_sound_atom()
@@ -167,7 +167,7 @@
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
-	if(istype(parent, /obj/item))
+	if(isitem(parent))
 		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
 	var/atom/play_at = get_sound_atom()

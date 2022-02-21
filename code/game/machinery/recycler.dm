@@ -111,7 +111,7 @@ var/global/const/SAFETY_COOLDOWN = 100
 				eat(AM)
 			else
 				stop(AM)
-		else if(istype(AM, /obj/item))
+		else if(isitem(AM))
 			recycle(AM)
 		else // Can't recycle
 			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)

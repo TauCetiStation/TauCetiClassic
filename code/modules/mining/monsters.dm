@@ -40,7 +40,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/T = AM
 		if(!stat)
 			Aggro()

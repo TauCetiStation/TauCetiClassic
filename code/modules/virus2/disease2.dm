@@ -283,4 +283,3 @@ var/global/list/virusDB = list()
 
 /obj/machinery/disease2
 	allowed_checks = ALLOWED_CHECK_TOPIC
-	

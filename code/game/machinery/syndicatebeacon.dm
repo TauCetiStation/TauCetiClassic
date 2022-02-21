@@ -65,7 +65,7 @@
 			spawn(rand(50,200))
 				selfdestruct()
 			return
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/N = M
 			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
 			T.Greet(GREET_SYNDBEACON)
