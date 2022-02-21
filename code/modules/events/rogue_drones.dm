@@ -1,9 +1,9 @@
 /datum/event/rogue_drone
 	startWhen = 10
 	endWhen = 1000
-	announcement = new /datum/announcement/centcomm/icarus_lost
-	var/datum/announcement/announcement_recoverd = new /datum/announcement/centcomm/icarus_recovered
-	var/datum/announcement/announcement_destroyed = new /datum/announcement/centcomm/icarus_destroyed
+	announcement = new /datum/announcement/centcomm/event/icarus_lost
+	var/datum/announcement/announcement_recoverd = new /datum/announcement/centcomm/event/icarus_recovered
+	var/datum/announcement/announcement_destroyed = new /datum/announcement/centcomm/event/icarus_destroyed
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()

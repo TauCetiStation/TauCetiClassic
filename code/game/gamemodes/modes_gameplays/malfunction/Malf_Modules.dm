@@ -232,6 +232,7 @@ robot_fabricator
 	dat += "<B>Centcomm:</B><BR>"
 	var/list/available_announces = subtypesof(/datum/announcement/centcomm)
 	available_announces -= subtypesof(/datum/announcement/centcomm/anomaly)
+	available_announces -= subtypesof(/datum/announcement/centcomm/event)
 	for(var/announce in available_announces)
 		var/datum/announcement/announce_type = announce
 		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"
@@ -239,6 +240,13 @@ robot_fabricator
 
 	dat += "<B>Anomalies:</B><BR>"
 	available_announces = subtypesof(/datum/announcement/centcomm/anomaly)
+	for(var/announce in available_announces)
+		var/datum/announcement/announce_type = announce
+		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"
+	dat += "<HR>"
+
+	dat += "<B>Events:</B><BR>"
+	available_announces = subtypesof(/datum/announcement/centcomm/event)
 	for(var/announce in available_announces)
 		var/datum/announcement/announce_type = announce
 		dat += "<A href='byond://?src=\ref[src];announce_type=[announce]'>[initial(announce_type.name)]</A>"

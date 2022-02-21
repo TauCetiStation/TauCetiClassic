@@ -1,6 +1,6 @@
 /datum/event/spider_infestation
 	announceWhen = 400
-	announcement = new /datum/announcement/centcomm/aliens
+	announcement = new /datum/announcement/centcomm/event/aliens
 	var/spawncount = 1
 
 /datum/event/spider_infestation/setup()

@@ -1,5 +1,5 @@
 /datum/event/communications_blackout
-	announcement = new /datum/announcement/centcomm/comms_blackout
+	announcement = new /datum/announcement/centcomm/event/comms_blackout
 
 /datum/event/communications_blackout/announce()
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.

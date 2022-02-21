@@ -1,8 +1,8 @@
 /datum/event/carp_migration
 	announceWhen	= 50
 	endWhen = 900
-	announcement = new /datum/announcement/centcomm/carp
-	var/datum/announcement/announcement_major = new /datum/announcement/centcomm/carp_major
+	announcement = new /datum/announcement/centcomm/event/carp
+	var/datum/announcement/announcement_major = new /datum/announcement/centcomm/event/carp_major
 	var/list/spawned_carp = list()
 	var/list/spawned_mobs = list(
 		/mob/living/simple_animal/hostile/carp = 95,

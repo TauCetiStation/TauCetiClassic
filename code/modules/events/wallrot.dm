@@ -1,5 +1,5 @@
 /datum/event/wallrot
-	announcement = new /datum/announcement/centcomm/fungi
+	announcement = new /datum/announcement/centcomm/event/fungi
 
 	var/turf/simulated/wall/center = null
 

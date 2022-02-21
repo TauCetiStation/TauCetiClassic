@@ -21,7 +21,7 @@ var/global/power_fail_event = FALSE
 		return
 	power_fail_event = TRUE
 
-	var/datum/announcement/centcomm/grid_off/announcement = new
+	var/datum/announcement/centcomm/event/grid_off/announcement = new
 	announcement.play()
 	if(prob(25))
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
@@ -55,7 +55,7 @@ var/global/power_fail_event = FALSE
 	power_fail_event = FALSE
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 
-	var/datum/announcement/centcomm/grid_on/announcement = new
+	var/datum/announcement/centcomm/event/grid_on/announcement = new
 	announcement.play()
 
 	for(var/obj/machinery/power/apc/C in apc_list)
@@ -76,7 +76,7 @@ var/global/power_fail_event = FALSE
 //This one can be called only by admin.
 /proc/power_restore_quick(announce = 1)
 	if(announce)
-		var/datum/announcement/centcomm/grid_on/announcement = new
+		var/datum/announcement/centcomm/event/grid_on/announcement = new
 		announcement.play()
 
 	for(var/obj/machinery/power/apc/C in apc_list)

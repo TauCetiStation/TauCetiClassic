@@ -1,6 +1,6 @@
 /datum/event/prison_break
 	announceWhen	= 50
-	announcement = new /datum/announcement/centcomm/greytide
+	announcement = new /datum/announcement/centcomm/event/greytide
 
 	var/releaseWhen = 25
 	var/list/area/prisonAreas = list()

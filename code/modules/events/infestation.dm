@@ -17,7 +17,7 @@
 /datum/event/infestation
 	announceWhen = 10
 	endWhen = 11
-	announcement = new /datum/announcement/centcomm/infestation
+	announcement = new /datum/announcement/centcomm/event/infestation
 	var/location
 	var/locstring
 	var/vermin

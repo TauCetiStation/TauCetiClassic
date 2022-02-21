@@ -1,5 +1,5 @@
 /datum/event/electrical_storm
-	announcement = new /datum/announcement/centcomm/estorm
+	announcement = new /datum/announcement/centcomm/event/estorm
 
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25

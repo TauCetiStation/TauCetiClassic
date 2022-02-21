@@ -4,7 +4,7 @@
 	var/spawncount = 1
 	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
 
-	announcement = new /datum/announcement/centcomm/aliens
+	announcement = new /datum/announcement/centcomm/event/aliens
 
 
 /datum/event/alien_infestation/setup()
