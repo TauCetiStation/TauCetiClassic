@@ -2081,7 +2081,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber West";
@@ -2329,7 +2329,7 @@
 	pixel_y = 22
 	},
 /obj/machinery/newscaster{
-	pixel_x = 32
+	pixel_x = 28
 	},
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/carpet/black,
@@ -3282,7 +3282,7 @@
 "afC" = (
 /obj/structure/table/glass,
 /obj/machinery/newscaster{
-	pixel_y = -32
+	pixel_y = -28
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats{
 	pixel_y = 5
@@ -4063,6 +4063,9 @@
 /obj/item/device/flashlight/seclite,
 /obj/item/weapon/handcuffs,
 /obj/item/device/flash,
+/obj/machinery/newscaster/security_unit{
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -4091,12 +4094,11 @@
 	dir = 6;
 	network = list("SS13","Research")
 	},
-/obj/machinery/light_switch{
-	on = 0;
-	pixel_y = 28
-	},
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/head/helmet/space/rig/science,
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"
@@ -4168,6 +4170,11 @@
 /obj/item/toy/plushie/space_whale{
 	pixel_y = 6
 	},
+/obj/item/device/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = 22
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "ahD" = (
@@ -4175,7 +4182,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4613,9 +4620,6 @@
 	},
 /obj/structure/stool/bed/chair/metal/red,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4709,7 +4713,7 @@
 "ain" = (
 /obj/structure/stool/bar,
 /obj/machinery/atm{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
@@ -5162,7 +5166,7 @@
 /obj/item/weapon/storage/belt,
 /obj/item/weapon/storage/belt,
 /obj/machinery/newscaster{
-	pixel_x = 32
+	pixel_x = 28
 	},
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -5261,7 +5265,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/newscaster{
-	pixel_x = 32
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -5501,7 +5505,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/civilian/locker)
+/area/station/maintenance/escape)
 "ajK" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
@@ -6375,7 +6379,7 @@
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
 /obj/structure/table/woodentable,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -6980,7 +6984,6 @@
 /obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/machinery/light_switch{
-	on = 0;
 	pixel_y = 28
 	},
 /turf/simulated/floor{
@@ -7341,7 +7344,7 @@
 /area/asteroid/mine/explored)
 "anu" = (
 /obj/machinery/atm{
-	pixel_y = -32
+	pixel_y = -28
 	},
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -8547,7 +8550,7 @@
 /obj/structure/table,
 /obj/item/weapon/cigbutt,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
@@ -9735,7 +9738,9 @@
 	id_tag = "research_pump";
 	name = "Research Large Air Vent"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
 /area/station/rnd/hallway)
 "arN" = (
 /obj/structure/lattice,
@@ -10448,7 +10453,7 @@
 "aXD" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atm{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -10484,7 +10489,7 @@
 	name = "Test Subject"
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
@@ -10957,7 +10962,7 @@
 /area/station/civilian/kitchen)
 "bwm" = (
 /obj/machinery/atm{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -11487,7 +11492,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -11564,7 +11569,6 @@
 "cbd" = (
 /obj/structure/reagent_dispensers/coolanttank,
 /obj/machinery/light_switch{
-	on = 0;
 	pixel_y = 28
 	},
 /turf/simulated/floor{
@@ -12015,7 +12019,7 @@
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -12299,7 +12303,7 @@
 "cSt" = (
 /obj/machinery/vending/hydroseeds,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /obj/machinery/requests_console/hydroponics{
 	pixel_x = -32
@@ -13121,10 +13125,6 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/glass,
-/obj/machinery/light_switch{
-	pixel_x = -25;
-	pixel_y = 4
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -15180,9 +15180,18 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "fJZ" = (
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel)
+/obj/structure/closet/secure_closet/quartermaster,
+/obj/item/device/megaphone,
+/obj/item/weapon/stamp/qm,
+/obj/machinery/light,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "fLl" = (
 /obj/machinery/alarm{
 	pixel_y = 21
@@ -15878,6 +15887,10 @@
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/weapon/gun/projectile/glock,
 /obj/item/weapon/shield/riot,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -16151,6 +16164,10 @@
 	c_tag = "RnD North";
 	dir = 8;
 	network = list("SS13","Research")
+	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -17535,13 +17552,11 @@
 /obj/item/weapon/storage/photo_album{
 	pixel_y = 2
 	},
-/obj/item/device/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 22
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
@@ -17621,7 +17636,7 @@
 "ilV" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -18844,6 +18859,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -19923,9 +19942,6 @@
 /area/asteroid/mine/dwarf)
 "krQ" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -20348,7 +20364,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
@@ -21141,7 +21157,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -21228,11 +21244,8 @@
 	pixel_y = 4
 	},
 /obj/item/bodybag/cryobag,
-/obj/structure/sign/warning/enginesafety{
-	pixel_y = 31
-	},
 /obj/machinery/light_switch{
-	pixel_x = 28
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -21465,14 +21478,16 @@
 	},
 /area/station/hallway/primary/central)
 "lZZ" = (
-/obj/structure/closet/secure_closet/quartermaster,
-/obj/item/device/megaphone,
-/obj/item/weapon/stamp/qm,
-/obj/machinery/light,
-/turf/simulated/floor{
-	icon_state = "brown"
+/obj/machinery/computer/atmoscontrol,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
 	},
-/area/station/cargo/storage)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/engineering/break_room)
 "mbf" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor{
@@ -21945,9 +21960,6 @@
 	pixel_y = 12
 	},
 /obj/item/weapon/disk/nuclear,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "mBb" = (
@@ -22481,7 +22493,7 @@
 "nbE" = (
 /obj/machinery/vending/eva,
 /obj/machinery/atm{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -23357,7 +23369,7 @@
 /area/station/bridge)
 "nKQ" = (
 /obj/machinery/atm{
-	pixel_y = -32
+	pixel_y = -28
 	},
 /obj/machinery/camera{
 	c_tag = "Central Hallway South";
@@ -23900,7 +23912,7 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/hand_labeler,
 /obj/machinery/newscaster/security_unit{
-	pixel_y = -32
+	pixel_y = -28
 	},
 /obj/machinery/light,
 /turf/simulated/floor/carpet/blue2,
@@ -24611,6 +24623,10 @@
 /obj/item/clothing/accessory/stethoscope,
 /obj/item/clothing/accessory/armband/medgreen,
 /obj/item/clothing/accessory/armband/medgreen,
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -24736,10 +24752,6 @@
 	pixel_x = 7;
 	pixel_y = -4
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -24826,7 +24838,7 @@
 	pixel_x = -22
 	},
 /obj/machinery/newscaster{
-	pixel_y = -32
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -25076,7 +25088,7 @@
 	pixel_y = 6
 	},
 /obj/machinery/newscaster{
-	pixel_x = 32
+	pixel_x = 28
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = -1
@@ -25260,7 +25272,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -26642,9 +26654,6 @@
 /obj/structure/bobross{
 	pixel_x = 32
 	},
-/obj/machinery/newscaster/security_unit{
-	pixel_y = -28
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 32
 	},
@@ -27529,6 +27538,9 @@
 /area/station/civilian/locker)
 "ryd" = (
 /obj/structure/displaycase,
+/obj/machinery/newscaster/security_unit{
+	pixel_y = -28
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "ryq" = (
@@ -28874,7 +28886,7 @@
 	dir = 4
 	},
 /obj/machinery/atm{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -29135,7 +29147,7 @@
 /obj/structure/table,
 /obj/random/foods/food_trash,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
@@ -29168,12 +29180,9 @@
 	},
 /area/station/maintenance/medbay)
 "thd" = (
-/obj/machinery/computer/atmoscontrol,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/engineering/break_room)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "thP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable{
@@ -29380,6 +29389,7 @@
 	pixel_y = 22
 	},
 /obj/machinery/constructable_frame/machine_frame,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -29484,7 +29494,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/newscaster{
-	pixel_x = 32
+	pixel_x = 28
+	},
+/obj/structure/sign/warning/enginesafety{
+	pixel_y = 31
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -29981,7 +29994,7 @@
 /obj/item/clothing/under/boxing/white,
 /obj/structure/closet,
 /obj/machinery/newscaster{
-	pixel_x = -32
+	pixel_x = -28
 	},
 /obj/item/clothing/gloves/boxing/blue,
 /obj/item/clothing/gloves/boxing,
@@ -31318,7 +31331,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 28
 	},
 /obj/item/weapon/flora/pottedplant/smallcactus{
 	pixel_x = 4;
@@ -53811,7 +53824,7 @@ crv
 gay
 gay
 dsM
-miS
+thd
 nXw
 ajl
 ajw
@@ -54583,7 +54596,7 @@ sWc
 vzT
 aiI
 tsN
-fJZ
+miS
 ajk
 aoL
 hCQ
@@ -56393,7 +56406,7 @@ rTG
 ahA
 ahT
 doQ
-iSt
+akb
 ajJ
 ajT
 akB
@@ -60263,7 +60276,7 @@ tyQ
 tTE
 mGO
 mGO
-thd
+lZZ
 gMz
 iqi
 afJ
@@ -64898,7 +64911,7 @@ ggc
 xQe
 pYv
 oeD
-lZZ
+fJZ
 sFn
 acb
 acb
