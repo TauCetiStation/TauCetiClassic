@@ -297,7 +297,7 @@
 		dat += "<div class='clearBoth'>Выберите одну из доступных ролей:</div>"
 		var/list/categorizedJobs = list(
 			"Руководство" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
-			"Техническое обслуживание" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
+			"Техническое обеспечение" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
 			"Служба безопасности" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
 			"Прочие" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
 			"Синтетический разум" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
