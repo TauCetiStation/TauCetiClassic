@@ -1472,9 +1472,9 @@
 		return TRUE
 
 	if(moody_color)
-		animate(client, color = moody_color, time = 3)
+		animate(client, color = moody_color, time = 5)
 	else
-		animate(client, color = null, time = 3)
+		animate(client, color = null, time = 5)
 
 	return TRUE
 

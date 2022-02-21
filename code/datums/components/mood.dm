@@ -198,10 +198,7 @@
 		if(4)
 			dissapointment = 0.2
 
-	var/datum/ColorMatrix/CM = new
-	CM.Reset()
-	CM.SetSaturation(1.0 - dissapointment)
-	H.moody_color = CM.matrix
+	H.moody_color = SADNESS_COLOR(dissapointment)
 
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
