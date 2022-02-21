@@ -1704,16 +1704,17 @@
 			return FALSE
 
 		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
-				if(!do_mob(user, src, HUMAN_STRIP_DELAY / 2, TRUE))
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
 				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
-			if(!do_mob(user, src, HUMAN_STRIP_DELAY, TRUE))
+			if(!do_mob(user, src, time_to_inject, TRUE))
 				return FALSE
 
 		if(!stealth)
