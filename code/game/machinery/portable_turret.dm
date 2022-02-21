@@ -327,7 +327,7 @@ var/global/list/turret_icons
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(I.use_tool(src, user, 20, volume = 50))
+			if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -358,7 +358,7 @@ var/global/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-		if(I.use_tool(src, user, 50, volume = 100))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
 				anchored = TRUE

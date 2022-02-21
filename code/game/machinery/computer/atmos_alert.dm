@@ -7,6 +7,8 @@
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
+	required_skill = SKILL_ATMOS
+	required_skill_proficiency = SKILL_ATMOS_TRAINED
 
 
 /obj/machinery/computer/atmos_alert/atom_init()

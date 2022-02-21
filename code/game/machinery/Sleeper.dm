@@ -33,6 +33,8 @@
 		list("dexalinp", "alkysine")
 	)
 	var/upgraded = FALSE
+	required_skill = SKILL_MEDICAL
+	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE

@@ -31,6 +31,8 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
+	required_skill = SKILL_RESEARCH
+	required_skill_proficiency = SKILL_RESEARCH_EXPERT
 
 /obj/machinery/computer/telescience/atom_init()
 	. = ..()

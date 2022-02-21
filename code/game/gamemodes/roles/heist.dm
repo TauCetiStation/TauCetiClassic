@@ -5,6 +5,7 @@
 	disallow_job = TRUE
 
 	logo_state = "raider-logo"
+	skills_type = /datum/skills/traitor
 
 /datum/role/vox_raider/Greet(greeting, custom)
 	. = ..()

@@ -21,6 +21,8 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = FALSE
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_TRAINED
 
 /obj/machinery/power/emitter/atom_init()
 	. = ..()
@@ -81,6 +83,8 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
+	if(!do_skill_checks(user))
+		return
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)
@@ -172,7 +176,6 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-
 	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
@@ -210,7 +213,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_TRAINED))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -222,7 +225,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_TRAINED))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()

@@ -42,6 +42,9 @@ field_generator power level display
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 
+	required_skill = SKILL_ENGINEERING
+	required_skill_proficiency = SKILL_ENGINEERING_PRO
+
 
 /obj/machinery/field_generator/Destroy()
 	if(active != FG_OFFLINE)
@@ -90,6 +93,8 @@ field_generator power level display
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
 			else
+				if(!do_skill_checks(user))
+					return
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
 					"<span class='notice'>You turn on the [src].</span>",
@@ -136,7 +141,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if(WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_PRO))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
@@ -145,7 +150,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_proficiency = SKILL_ENGINEERING_PRO))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else

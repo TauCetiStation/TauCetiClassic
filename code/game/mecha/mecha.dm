@@ -90,6 +90,8 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	var/required_skill = SKILL_CIV_MECH
+	var/required_proficiency = SKILL_CIV_MECH_TRAINED
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -293,9 +295,12 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, step_in * move_result)
+		VARSET_IN(src, can_move, TRUE, applySkillModifier(occupant, step_in, required_skill, required_proficiency, 0.15, 0.3) * move_result)
 		return 1
 	return 0
+/obj/mecha/proc/check_fumbling(fumble_text)
+	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skill, required_proficiency, SKILL_TASK_TRIVIAL, fumble_text)
+
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
@@ -433,6 +438,8 @@
 	return attack_hand(user)
 
 /obj/mecha/proc/toggle_strafe()
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle strafing mode [!strafe?"on":"off"].</span>"))
+		return
 	strafe = !strafe
 	prev_move_dir = 0
 
@@ -874,7 +881,8 @@
 
 	if(!has_charge(lights_power))
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle lights [!lights?"on":"off"].</span>"))
+		return
 	lights = !lights
 	if(lights)
 		set_light(light_range + lights_power)
@@ -888,7 +896,8 @@
 /obj/mecha/proc/toggle_internal_tank()
 	if(usr != src.occupant)
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle internal tank usage [!use_internal_tank?"on":"off"].</span>"))
+		return
 	use_internal_tank = !use_internal_tank
 	occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -1015,7 +1024,8 @@
 /obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
+		return
 	src.occupant << browse(get_stats_html(), "window=exosuit")
 	return
 

@@ -105,11 +105,12 @@
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
-
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
+					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
 				update_icon()
@@ -122,7 +123,7 @@
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -137,6 +138,8 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, SKILL_ENGINEERING, SKILL_ENGINEERING_PRO, SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
+					return
 				d_state = INTACT
 				update_icon()
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
@@ -148,7 +151,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-					if(WT.use_tool(src, user, 60, volume = 100))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -162,7 +165,7 @@
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-				if(W.use_tool(src, user, 60, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -175,7 +178,7 @@
 		if(CUT_COVER)
 			if (iscrowbar(W))
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
-				if(W.use_tool(src, user, 100, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -189,7 +192,7 @@
 			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -205,7 +208,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-					if(W.use_tool(src, user, 100, volume = 100))
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -221,7 +224,7 @@
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-				if(W.use_tool(src, user, 70, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -236,7 +239,7 @@
 			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
-				if(W.use_tool(src, user, 100, volume  = 100))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100, required_proficiency = SKILL_ENGINEERING_PRO))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -260,7 +263,7 @@
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
-		if(W.use_tool(src, user, 200, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_FORMIDABLE, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
