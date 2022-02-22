@@ -348,9 +348,9 @@ var/global/list/wedge_image_cache = list()
 	if(!wedging && !wedged_item && can_wedge_items)
 		for(var/turf/turf in locs)
 			for(var/obj/item/I in turf)
-				if(!I.get_quality(QUALITY_PRYING))
-					continue
 				if(I.w_class < SIZE_SMALL)
+					continue
+				if(!I.get_quality(QUALITY_PRYING))
 					continue
 
 				operating = TRUE
@@ -426,6 +426,9 @@ var/global/list/wedge_image_cache = list()
 		return
 
 	if(I.w_class < SIZE_SMALL)
+		return
+
+	if(I.get_quality(QUALITY_PRYING) <= 0)
 		return
 
 	if(density)
