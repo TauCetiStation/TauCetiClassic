@@ -79,7 +79,7 @@
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
 	requirement = "Все, кроме Клоуна."
 
-/datum/quality/clumsy/restriction_check(mob/living/carbon/human/H, latespawn)
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
@@ -127,9 +127,6 @@
 /datum/quality/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
 	var/obj/item/weapon/card/id/id = H.get_idcard()
-	if(!id)
-		return
-
 	id.access = get_all_accesses()
 
 

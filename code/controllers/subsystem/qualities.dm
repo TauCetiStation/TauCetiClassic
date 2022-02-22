@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(qualities)
 
 		possible_qualities -= quality_type
 
-		if(!quality.availability_check(C))
+		if(!quality.satisfies_availability(C))
 			continue
 
 		selected_quality = quality
@@ -71,5 +71,5 @@ SUBSYSTEM_DEF(qualities)
 		return
 
 	var/datum/quality/quality = qualities_pool[registered_clients[H.client.ckey]]
-	if(quality.restriction_check(H, latespawn))
+	if(quality.satisfies_requirements(H, latespawn))
 		quality.add_effect(H, latespawn)
