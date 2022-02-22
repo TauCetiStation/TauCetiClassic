@@ -85,7 +85,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			html += "Осталось повторов: [repeat]<br><br>"
 		else
 			html += "<a href='?src=\ref[src];play=1'>Начать играть</a><br>"
-			html += "<a href='?src=\ref[src];repeat=1'>Число повторов: [repeat]</a><br><br>"
+			html += "<a href='?src=\ref[src];repeat=1'>Повторов: [repeat]</a><br><br>"
 
 	if(!show_edit)
 		html += "<a href='?src=\ref[src];show_edit=1'>Показать редактор</a><br><br>"
@@ -93,7 +93,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		html += "<a href='?src=\ref[src];show_edit=0'>Спрятать редактор</a><br>"
 		if(song_lines.len)
 			html += "<a href='?src=\ref[src];newsong=1'>Создать новую песню</a><br>"
-		html += "<a href='?src=\ref[src];import=1'>Импорт песни</a><br><br>"
+		html += "<a href='?src=\ref[src];import=1'>Импортировать песню</a><br><br>"
 
 		if(song_lines.len)
 			html += "<a href='?src=\ref[src];change_tempo=1'>Темп: [song_tempo] BPM</a><br><br>"
