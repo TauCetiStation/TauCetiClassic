@@ -1035,7 +1035,6 @@
 
 	if(prob(chance * 100))
 		qdel(src)
-		//ex_act(rand(1, 3))
 
 /obj/item/proc/display_accessories()
 	return
