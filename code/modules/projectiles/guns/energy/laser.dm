@@ -83,22 +83,24 @@
 	icon_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
-	var/charge_time = 12
+
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
+	. = ..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	chargespeed = shot.e_cost * 0.01
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/process()
 	if(!isrobot(loc))
-		return
+		return 0
 	var/mob/living/silicon/robot/R = loc
 	if(R.cell)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(R.cell.use(shot.e_cost))
 			if(power_supply.charge == power_supply.maxcharge)
 				return 0
-			power_supply.give(shot.e_cost)
 			..()
-			
-			update_icon()
 			return 1
+	return 0
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
