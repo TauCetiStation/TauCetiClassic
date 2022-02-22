@@ -118,7 +118,7 @@
 	var/busy_right_hand = FALSE
 
 	// Mood affecting how we see the world.
-	var/matrix/moody_color
+	var/list/moody_color
 
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
