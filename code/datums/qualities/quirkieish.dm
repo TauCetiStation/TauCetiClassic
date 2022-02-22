@@ -76,9 +76,7 @@
 /datum/quality/iseedeadpeople/restriction_check(mob/living/carbon/human/H, latespawn)
 	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
 	if(H.mind.assigned_role in funpolice)
-		return FALSE
-
-	return TRUE
+	return !(H.mind.assigned_role in funpolice)
 
 /datum/quality/iseedeadpeople/add_effect(mob/living/carbon/human/H)
 	H.see_invisible = 60
