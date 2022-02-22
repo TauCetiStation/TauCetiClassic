@@ -18,6 +18,8 @@
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
 	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
+	// Symbols(sounds) exclusively available to (native speakers) of this language, and their approximations for those who can't pronounce them
+	var/list/approximations
 
 /datum/language/proc/color_message(message)
 	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
@@ -73,7 +75,11 @@
 	colour = "soghun"
 	key = list("o", "щ")
 	allowed_species = list(IPC)
-	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("sʂ","ss","ss","sʃ","skak","seeki","resh","las","esi","kor","sh")
+	approximations = list(
+		"ʂ" = "s",
+		"ʃ" = "s",
+	)
 
 /datum/language/tajaran
 	name = "Siik'maas"
@@ -85,9 +91,13 @@
 	allowed_species = list(IPC)
 	key = list("j", "о")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
-	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
-	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
-	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
+	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mæh","sænu","dra","ii'r", \
+	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mæk","hrar","nja","rir","khan","jun","dar","rik","kah", \
+	"hal","kət","jurl","mah","tul","cresh","azu","ragh")
+	approximations = list(
+		"æ" = "ae",
+		"ə" = "e",
+	)
 
 /datum/language/tajaran_sign
 	name = "Siik'tajr"
@@ -110,6 +120,11 @@
 	key = list("k", "л")
 	allowed_species = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
+	approximations = list(
+		"♭" = "",
+		"♮" = "",
+		"♯" = "",
+	)
 
 /datum/language/vox
 	name = "Vox-pidgin"
