@@ -1,1 +1,1 @@
-/datum/event/aspect
+/datum/event/feature

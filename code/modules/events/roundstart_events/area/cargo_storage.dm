@@ -1,7 +1,7 @@
-/datum/event/aspect/area/cargo_storage
+/datum/event/feature/area/cargo_storage
 	special_area_types = list(/area/station/cargo/storage)
 
-/datum/event/aspect/area/cargo_storage/start()
+/datum/event/feature/area/cargo_storage/start()
 	for(var/area/target_area in targeted_areas)
 		message_admins("RoundStart Event: Change [target_area]")
 		log_game("RoundStart Event: Change [target_area]")

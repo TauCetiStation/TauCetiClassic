@@ -1,4 +1,4 @@
-/datum/event/aspect/headset/start()
+/datum/event/feature/headset/start()
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if((H.l_ear || H.r_ear) && prob(10))
 			var/headset_to_del = H.l_ear ? H.l_ear : H.r_ear
@@ -7,7 +7,7 @@
 			qdel(headset_to_del)
 			H.update_inv_ears()
 
-/datum/event/aspect/survbox/start()
+/datum/event/feature/survbox/start()
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!prob(10))
 			continue
@@ -20,7 +20,7 @@
 			qdel(box)
 
 var/global/list/fueltank_list = list()
-/datum/event/aspect/fueltank/start()
+/datum/event/feature/fueltank/start()
 	for(var/atom/fueltank in global.fueltank_list)
 		if(prob(10))
 			message_admins("RoundStart Event: [fueltank] was removed from [COORD(fueltank)]")
@@ -28,7 +28,7 @@ var/global/list/fueltank_list = list()
 			qdel(fueltank)
 
 var/global/list/watertank_list = list()
-/datum/event/aspect/watertank/start()
+/datum/event/feature/watertank/start()
 	for(var/atom/watertank in global.watertank_list)
 		if(prob(10))
 			message_admins("RoundStart Event: [watertank] was removed from [COORD(watertank)]")
@@ -36,7 +36,7 @@ var/global/list/watertank_list = list()
 			qdel(watertank)
 
 var/global/list/cleaners_list = list()
-/datum/event/aspect/cleaner/start()
+/datum/event/feature/cleaner/start()
 	for(var/atom/cleaner in global.cleaners_list)
 		if(prob(50))
 			message_admins("RoundStart Event: [cleaner] was removed from [COORD(cleaner)]")
@@ -44,7 +44,7 @@ var/global/list/cleaners_list = list()
 			qdel(cleaner)
 
 var/global/list/extinguisher_list = list()
-/datum/event/aspect/extinguisher/start()
+/datum/event/feature/extinguisher/start()
 	for(var/obj/item/weapon/reagent_containers/spray/extinguisher/E in global.extinguisher_list)
 		if(istype(E, /obj/item/weapon/reagent_containers/spray/extinguisher/golden))
 			continue
@@ -61,7 +61,7 @@ var/global/list/extinguisher_list = list()
 				EC.update_icon()
 
 var/global/list/particle_accelerator_list = list()
-/datum/event/aspect/PA/start()
+/datum/event/feature/PA/start()
 	for(var/atom/PA in global.particle_accelerator_list)
 		if(!prob(60))
 			continue
@@ -72,7 +72,7 @@ var/global/list/particle_accelerator_list = list()
 		log_game("RoundStart Event: [PA] was moved from [old_loc] to [COORD(PA)]")
 
 var/global/list/tank_dispenser_list = list()
-/datum/event/aspect/tank_dispenser/start()
+/datum/event/feature/tank_dispenser/start()
 	for(var/obj/structure/dispenser/D in global.tank_dispenser_list)
 		if(!prob(50))
 			continue
@@ -89,7 +89,7 @@ var/global/list/tank_dispenser_list = list()
 		D.update_icon()
 
 var/global/list/sec_closets_list = list()
-/datum/event/aspect/sec_equipment/start()
+/datum/event/feature/sec_equipment/start()
 	for(var/obj/structure/closet/closet in global.sec_closets_list)
 		message_admins("RoundStart Event: Random items has been removed from [closet] in [COORD(closet)]")
 		for(var/obj/item/I in closet)
@@ -97,7 +97,7 @@ var/global/list/sec_closets_list = list()
 				log_game("RoundStart Event: [I] was removed from [closet] in [COORD(closet)]")
 				qdel(I)
 
-/datum/event/aspect/vending_products/start()
+/datum/event/feature/vending_products/start()
 	for(var/obj/machinery/vending/V in machines)
 		if(!prob(40))
 			continue
@@ -109,7 +109,7 @@ var/global/list/sec_closets_list = list()
 			message_admins("RoundStart Event: [VP.product_name] has changed amount and price in [V] [COORD(V)].")
 			log_game("RoundStart Event: [VP.product_name] has changed amount and price in [V] [COORD(V)].")
 
-/datum/event/aspect/apc/start()
+/datum/event/feature/apc/start()
 	for(var/obj/machinery/power/apc/A in apc_list)
 		if(!prob(3))
 			continue
@@ -120,14 +120,14 @@ var/global/list/sec_closets_list = list()
 		message_admins("RoundStart Event: [A] has bluescreen in [COORD(A)].")
 		log_game("RoundStart Event: [A] bluescreen in [COORD(A)].")
 
-/datum/event/aspect/dead_monkeys/start()
+/datum/event/feature/dead_monkeys/start()
 	for(var/mob/M as anything in monkey_list)
 		if(prob(20))
 			message_admins("RoundStart Event: [M] was killed in [COORD(M)]")
 			log_game("RoundStart Event: [M] was killed in [COORD(M)]")
 			M.death()
 
-/datum/event/aspect/salary/start()
+/datum/event/feature/salary/start()
 	for(var/i in 1 to all_money_accounts.len)
 		if(!prob(20))
 			continue
@@ -140,7 +140,7 @@ var/global/list/sec_closets_list = list()
 			message_admins("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 			log_game("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 
-/datum/event/aspect/airlock_joke/start()
+/datum/event/feature/airlock_joke/start()
 	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap, /obj/item/weapon/legcuffs/beartrap, /obj/effect/decal/cleanable/blood/oil)
 	for(var/obj/machinery/door/airlock/A in airlock_list)
 		if(!is_station_level(A.z))
@@ -153,7 +153,7 @@ var/global/list/sec_closets_list = list()
 			log_game("RoundStart Event: Spawned '[atom]' in [COORD(atom)].")
 
 var/global/list/chief_animal_list = list()
-/datum/event/aspect/head_animals/start()
+/datum/event/feature/head_animals/start()
 	for(var/i in 1 to global.chief_animal_list.len)
 		if(!prob(40))
 			continue
@@ -166,7 +166,7 @@ var/global/list/chief_animal_list = list()
 		log_game("RoundStart Event: [M1] and [M2] has been swapped.")
 
 var/global/list/scrap_list = list()
-/datum/event/aspect/del_scrap/start()
+/datum/event/feature/del_scrap/start()
 	for(var/A in global.scrap_list)
 		qdel(A)
 
@@ -174,7 +174,7 @@ var/global/list/scrap_list = list()
 	log_game("RoundStart Event: All scrap was deleted.")
 
 var/global/list/toilet_list = list()
-/datum/event/aspect/del_toilet/start()
+/datum/event/feature/del_toilet/start()
 	for(var/atom/A in global.toilet_list)
 		if(is_station_level(A.z))
 			qdel(A)
@@ -182,7 +182,7 @@ var/global/list/toilet_list = list()
 	message_admins("RoundStart Event: All toilets was deleted.")
 	log_game("RoundStart Event: All toilets was deleted.")
 
-/datum/event/aspect/leaked_pipe/start()
+/datum/event/feature/leaked_pipe/start()
 	for(var/atom/A in global.toilet_list)
 		if(!is_station_level(A.z) || !prob(50))
 			continue
