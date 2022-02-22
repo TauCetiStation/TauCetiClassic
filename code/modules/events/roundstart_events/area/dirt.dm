@@ -1,6 +1,5 @@
-/datum/event/feature/area/dirt/setup()
-	num_rand_areas = rand(2, 5)
-	. = ..()
+/datum/event/feature/area/dirt
+	percent_areas = 30
 
 /datum/event/feature/area/dirt/start()
 	var/list/black_types = list(

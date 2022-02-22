@@ -1,32 +1,30 @@
 /datum/event/feature/area/replace
 	// replace: left_type on right_type (a = b)
-	var/list/replace_types = list()
+	var/list/replace_types
 	// called before deleting replaceable item
 	var/datum/callback/replace_callback
 	// called after deleting replaced item for new item
 	var/datum/callback/new_atom_callback
 	// number of items to replace, -1 for infinity
 	var/num_replaceable = -1
-	// finds a random item that exists in the area by these types
-	var/list/random_replaceable_types = list()
 
-/datum/event/feature/area/replace/proc/find_replaceable_type()
-	for(var/objects_type in random_replaceable_types)
-		// Collect all atoms so that later can choose a completely random type for a future replacement
-		var/list/all_atoms = list()
-		for(var/area/A in targeted_areas)
-			all_atoms |= A.get_all_contents_type(objects_type)
-		if(!all_atoms.len)
-			continue
-		shuffle(all_atoms)
-		var/atom/A = pick(all_atoms)
-		return A.type
-	return null
+	// finds a random item that exists in the area by these types
+	var/list/random_replaceable_types
+
+	var/picked_type
+
+/datum/event/feature/area/replace/setup()
+	. = ..()
+	if(random_replaceable_types)
+		picked_type = pick(random_replaceable_types)
 
 /datum/event/feature/area/replace/proc/get_replace_type(atom/A)
-	for(var/type in replace_types)
-		if(istype(A, type))
-			return type
+	if(replace_types)
+		return get_type_in_list(A, replace_types)
+
+	else if(picked_type)
+		return picked_type
+
 	return null
 
 /datum/event/feature/area/replace/proc/replace(atom/A)

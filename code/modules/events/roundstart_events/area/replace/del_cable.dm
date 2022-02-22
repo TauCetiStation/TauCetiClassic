@@ -5,7 +5,7 @@
 
 /datum/event/feature/area/replace/del_cable/setup()
 	. = ..()
-	num_replaceable = rand(1, 2)
+	num_replaceable = rand(2, 8)
 	replace_callback = CALLBACK(src, .proc/remove_wire)
 
 /datum/event/feature/area/replace/del_cable/proc/remove_wire(obj/structure/cable/C)

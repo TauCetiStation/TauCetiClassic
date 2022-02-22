@@ -1,6 +1,5 @@
 /datum/event/feature/area/replace/airlock
 	replace_types = list(/obj/machinery/door/airlock = null)
-	num_replaceable = 2
 
 /datum/event/feature/area/replace/airlock/setup()
 	. = ..()

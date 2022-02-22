@@ -1,3 +1,6 @@
+/datum/event/feature/area/break_light
+	percent_areas = 40
+
 /datum/event/feature/area/break_light/start()
 	for(var/area/target_area in targeted_areas)
 		message_admins("RoundStart Event: All light break in [target_area]")

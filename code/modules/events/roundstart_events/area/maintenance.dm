@@ -34,7 +34,7 @@
 	)
 
 /datum/event/feature/area/maintenance_spawn/invasion/setup()
-	nums = rand(1, 3)
+	nums = rand(4, 8)
 	. = ..()
 
 /datum/event/feature/area/maintenance_spawn/antag_meta

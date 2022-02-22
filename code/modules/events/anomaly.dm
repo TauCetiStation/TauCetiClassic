@@ -34,9 +34,9 @@
 		qdel(newAnomaly)
 
 
+var/global/list/allowed_areas_for_events
 /proc/findEventArea()
-	var/static/list/allowed_areas
-	if(!allowed_areas)
+	if(!allowed_areas_for_events)
 		//Places that shouldn't explode
 		var/list/safe_areas = typecacheof(list(
 			/area/station/ai_monitored/storage_secure,
@@ -53,8 +53,8 @@
 			/area/station/engineering/chiefs_office,
 			))
 
-		allowed_areas = make_associative(subtypesof(/area/station)) - safe_areas + unsafe_areas
+		allowed_areas_for_events = make_associative(subtypesof(/area/station)) - safe_areas + unsafe_areas
 
-	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas)
+	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas_for_events)
 	if(length(possible_areas))
 		return pick(possible_areas)

@@ -1,6 +1,6 @@
 /datum/event/feature/area
-	// number of random areas if no special_area_types
-	var/num_rand_areas = 1
+	// percent of random areas if no special_area_types
+	var/percent_areas = 5
 	// if not specified, then random
 	var/list/special_area_types
 	// allows you pick a one random area from special_area_types
@@ -25,7 +25,9 @@
 		for(var/area_type in area_types)
 			targeted_areas += get_area_by_type(area_type)
 	else
-		for(var/i in 1 to num_rand_areas)
+		var/all_areas_num = global.allowed_areas_for_events.len
+		to_chat(world, "Всего зон на боксе [all_areas_num]")
+		for(var/i in 1 to percent_areas * all_areas_num)
 			targeted_areas += findEventArea()
 
 	if(!targeted_areas.len)
