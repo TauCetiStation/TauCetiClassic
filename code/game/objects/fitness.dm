@@ -309,16 +309,10 @@
 	if(!BP)
 		return
 
-	if(BP.pumped >= max_pumped)
-		return
-
-	BP.pumped += mass
-	if(BP.pumped > max_pumped)
-		BP.pumped = max_pumped
+	BP.adjust_pumped(mass, max_pumped)
+	user.update_body()
 
 	user.nutrition -= 2 * mass
 	user.overeatduration -= 2 * mass
 	user.apply_effect(2 * mass, AGONY, 0)
 	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
-	BP.update_sprite()
-	user.update_body()

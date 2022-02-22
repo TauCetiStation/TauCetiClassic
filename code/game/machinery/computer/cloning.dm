@@ -360,7 +360,7 @@
 	if(!subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if(subject.suiciding == 1)
+	if(subject.suiciding)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
 	if((!subject.ckey) || (!subject.client))
