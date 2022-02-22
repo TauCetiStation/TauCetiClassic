@@ -68,3 +68,17 @@
 	if(H.equip_or_collect(NC, SLOT_R_STORE))
 		return
 	qdel(NC)
+
+/datum/quality/iseedeadpeople
+	desc = "После близкого знакомства с сингулярностью ты осознал, что другая сторона совсем рядом. Неупокоенным душам от тебя не утаиться."
+	requirement = "Кто угодно, кроме охраны, Капитана и ХоПа."
+
+/datum/quality/iseedeadpeople/restriction_check(mob/living/carbon/human/H, latespawn)
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
+	if(H.mind.assigned_role in funpolice)
+		return FALSE
+
+	return TRUE
+
+/datum/quality/iseedeadpeople/add_effect(mob/living/carbon/human/H)
+	H.see_invisible = 60
