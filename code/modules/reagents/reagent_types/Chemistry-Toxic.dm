@@ -98,7 +98,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 5)
@@ -360,7 +360,7 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
 			M.Weaken(30)
@@ -427,7 +427,7 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 50)
 			M.SetSleeping(20 SECONDS)
@@ -464,7 +464,7 @@
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -523,7 +523,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -729,7 +729,7 @@
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
-	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
+	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.notransform)
 			return
@@ -808,9 +808,7 @@
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
 	..()
 	M.make_dizzy(1)
-	if(!M.confused)
-		M.confused = 1
-	M.confused = max(M.confused, 20)
+	M.MakeConfused(20)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"

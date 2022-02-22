@@ -4,7 +4,10 @@
 	if (!istype(M))
 		return 0
 
-	if(istype(M, /mob/living/carbon/human))
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
+		return 0
+
+	if(ishuman(M))
 
 		if (vector == DISEASE_SPREAD_AIRBORNE)
 			if(M.internal)	//not breathing infected air helps greatly
@@ -77,6 +80,8 @@
 	if(!istype(M))
 //		log_debug("Bad mob")
 		return
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
+		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
@@ -85,12 +90,12 @@
 	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
 		return
 
-	if(istype(M,/mob/living/carbon/monkey))
+	if(ismonkey(M))
 		var/mob/living/carbon/monkey/chimp = M
 		if (!(chimp.greaterform in disease.affected_species))
 			return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/chump = M
 		if (!(chump.species.name in disease.affected_species))
 			return

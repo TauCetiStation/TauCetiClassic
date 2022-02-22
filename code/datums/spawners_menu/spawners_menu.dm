@@ -35,6 +35,7 @@
 		this["wiki_ref"] = config.wikiurl && spawner.wiki_ref ? "[config.wikiurl]/[spawner.wiki_ref]" : null
 		this["important_warning"] = spawner.important_info
 		this["amount_left"] = spawners_list.len
+		this["is_infinite"] = spawner.infinity
 
 		var/min_time = INFINITY
 		for(var/datum/spawner/S as anything in spawners_list)

@@ -314,8 +314,8 @@
 	while(parts.len && (brute > 0 || burn > 0) )
 		var/obj/item/organ/external/BP = pick(parts)
 
-		var/brute_per_part = round(brute / parts.len)
-		var/burn_per_part = round(burn / parts.len)
+		var/brute_per_part = round(brute / parts.len, 0.1)
+		var/burn_per_part = round(burn / parts.len, 0.1)
 
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
@@ -354,7 +354,7 @@ This function restores all bodyparts.
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
-	if(istype(BP, /obj/item/organ/external))
+	if(isbodypart(BP))
 		if(BP.heal_damage(brute, burn))
 			med_hud_set_health()
 	else

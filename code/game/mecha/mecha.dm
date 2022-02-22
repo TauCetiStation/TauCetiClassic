@@ -554,22 +554,17 @@
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
-		if(1.0)
-			destroy()
-		if(2.0)
-			if (prob(30))
-				destroy()
-			else
+		if(EXPLODE_HEAVY)
+			if(prob(70))
 				take_damage(initial(src.health)/2)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
-		if(3.0)
-			if (prob(5))
-				destroy()
-			else
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				take_damage(initial(src.health)/5)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
-	return
-
+				return
+	destroy()
 
 /obj/mecha/blob_act()
 	take_damage(10, "brute")

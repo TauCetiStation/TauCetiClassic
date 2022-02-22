@@ -314,7 +314,7 @@ A proc that does all the animations before mix()-ing.
 			return attack_hand(user)
 		else if(ismultitool(O))
 			return attack_hand(user)
-		else if(istype(O, /obj/item/device/assembly/signaler))
+		else if(issignaler(O))
 			return attack_hand(user)
 
 	if(exchange_parts(user, O))
