@@ -79,7 +79,7 @@
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
 	requirement = "Все, кроме Клоуна."
 
-/datum/quality/clumsy/restriction_check(mob/living/carbon/human/H, latespawn)
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
