@@ -2265,3 +2265,39 @@
 		return all_languages[species.language]
 
 	return ..()
+
+// TO-DO: make it so it algo triggers a random mild virus symptom because that's funny? ~Luduk
+/mob/living/carbon/human/proc/trigger_allergy(reagent, volume)
+	if(!allergies)
+		return
+
+	if(!allergies[reagent])
+		return
+
+	if(reagents.has_reagent("inaprovaline"))
+		reagents.remove_reagent("inaprovaline", volume)
+		return
+
+	allergies[reagent] += volume
+
+	var/effect_coeff = 0.0
+
+	switch(allergies[reagent])
+		if(ALLERGY_UNDISCOVERED to ALLERGY_DISCOVERED)
+			effect_coeff = 0.1
+		if(ALLERGY_DISCOVERED to ALLERGY_LETHAL)
+			effect_coeff = 0.5
+			allergies[reagent] = ALLERGY_LETHAL
+			to_chat(src, "<span class='danger'>AAAH THE RASH IS UNBEARABLE!</span>")
+		if(ALLERGY_LETHAL to INFINITY)
+			effect_coeff = 2.0
+			adjustOxyLoss(effect_coeff)
+			if(next_allergy_message < world.time)
+				next_allergy_message = world.time + 10 SECONDS
+				to_chat(src, "<span class='userdanger'>I THINK I'M DYING!</span>")
+
+	adjustToxLoss(effect_coeff)
+
+	if(bodytemperature < 330)
+		//310 is the normal bodytemp. 310.055
+		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)

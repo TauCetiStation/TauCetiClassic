@@ -97,6 +97,10 @@
 		var/datum/reagent/D = new path()
 		global.chemical_reagents_list[D.id] = D
 
+		if(!D.allergen)
+			continue
+		global.allergen_reagents_list[D.id] = TRUE
+
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
