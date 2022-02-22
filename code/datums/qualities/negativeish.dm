@@ -40,7 +40,7 @@
 
 /datum/quality/true_keeper
 	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
-	requirement = "Варден"
+	requirement = "Варден."
 
 	jobs_required = list(
 		"Warden",
@@ -61,7 +61,7 @@
 
 /datum/quality/rts
 	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
-	requirement = "Капитан"
+	requirement = "Капитан."
 
 	jobs_required = list(
 		"Captain",
@@ -78,3 +78,12 @@
 /datum/quality/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
+
+
+/datum/quality/non_comprende
+	desc = "Ты не знаешь никаких языков кроме общего."
+	requirement = "Нет."
+
+/datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/language in H.languages)
+		H.remove_language(language)
