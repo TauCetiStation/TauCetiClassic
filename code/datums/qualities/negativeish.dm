@@ -97,12 +97,23 @@
 	if(length(H.languages) == 0)
 		return
 
-	H.force_language = pick(H.languages)
+	H.forced_language = pick(H.languages)
+
+	for(var/language in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language)
 
 
 /datum/quality/shkiondioniovioion
 	desc = "Тё знёёшь тёлькё ёдён ёзёк. Ё всёгдё бёдёшь гёвёрёть тёлькё нё нём."
-	requirement = "Нет."
+	requirement = "Нёт."
 
 /datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
-	H.force_language = LANGUAGE_SHKIONDIONIOVIOION
+	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
+	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
+
+	for(var/language in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language)

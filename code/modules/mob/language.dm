@@ -227,22 +227,30 @@
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "exclaims"
-	colour = "rough"
+	colour = "body"
 	syllables = list("ёх", "ёс", "ёс", "ём", "ён", "бён", "вёл", "гёр", "мёг", "трё", "лёс", "рёйд", "ё", "мём", "ёнт")
 
 	var/list/replacements
 
 /datum/language/shkiondioniovioion/New()
-	replacements = list()
+	var/list/lowercase_vowels = list()
+	lowercase_vowels = list()
 
 	for(var/vowel in ENGLISH_VOWELS)
-		replacements[vowel] = "ё"
+		lowercase_vowels[vowel] = "ё"
 
-	var/list/ru_vowels = list("а", "о", "е", "у", "и", "ы", "э", "ё").Copy()
+	var/list/ru_vowels = RUSSIAN_VOWELS
+	// Define problems
+	ru_vowels = ru_vowels.Copy()
 	ru_vowels.Remove("ё")
 
 	for(var/vowel in ru_vowels)
+		lowercase_vowels[vowel] = "ё"
+
+	replacements = list()
+	for(var/vowel in lowercase_vowels)
 		replacements[vowel] = "ё"
+		replacements[uppertext(vowel)] = "Ё"
 
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)

@@ -3,8 +3,8 @@
 #define NONVERBAL 	4    	// Language has a significant non-verbal component. Speech is garbled without line-of-sight
 #define SIGNLANG 	8     	// Language is completely non-verbal. Speech is displayed through emotes for those who can understand
 
-#define ENGLISH_VOWELS list("a", "o", "e", "u", "i")
-#define RUSSIAN_VOWELS list("а", "о", "е", "у", "и", "ы", "э", "ё")
+#define ENGLISH_VOWELS list("a", "e", "i", "o", "u", "y")
+#define RUSSIAN_VOWELS list("а", "о", "у", "ы", "э", "я", "ё", "ю", "и", "е")
 
 #define LANGUAGE_SINTAUNATHI "Sinta'unathi"
 #define LANGUAGE_SIIKMAAS "Siik'maas"
