@@ -19,6 +19,8 @@ SUBSYSTEM_DEF(events)
 
 	var/datum/event_meta/new_event = new
 
+	var/list/allowed_areas_for_events
+
 /datum/controller/subsystem/events/Initialize()
 	var/list/black_types = list(
 			/datum/event/anomaly,
@@ -29,6 +31,8 @@ SUBSYSTEM_DEF(events)
 			/datum/event/feature/area/maintenance_spawn,
 	)
 	allEvents = subtypesof(/datum/event) - black_types
+
+	collectEventAreas()
 	return ..()
 
 /datum/controller/subsystem/events/fire()
@@ -326,3 +330,28 @@ SUBSYSTEM_DEF(events)
 			EC.next_event = null
 
 	Interact(usr)
+
+/datum/controller/subsystem/events/proc/collectEventAreas()
+	if(!allowed_areas_for_events)
+		//Places that shouldn't explode
+		var/list/safe_areas = typecacheof(list(
+			/area/station/ai_monitored/storage_secure,
+			/area/station/aisat/ai_chamber,
+			/area/station/bridge/ai_upload,
+			/area/station/engineering,
+			/area/station/solar,
+			/area/station/civilian/holodeck,
+			))
+
+		//Subtypes from the above that actually should explode.
+		var/list/unsafe_areas =  typecacheof(list(
+			/area/station/engineering/break_room,
+			/area/station/engineering/chiefs_office,
+			))
+
+		allowed_areas_for_events = make_associative(subtypesof(/area/station)) - safe_areas + unsafe_areas
+
+/datum/controller/subsystem/events/proc/findEventArea()
+	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas_for_events)
+	if(length(possible_areas))
+		return pick(possible_areas)

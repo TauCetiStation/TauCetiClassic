@@ -1,4 +1,4 @@
-/datum/event/feature/area/replace/mice_back
+/datum/event/feature/area/replace/mice_attack
 	special_area_types = list(/area/station/civilian/cold_room)
 	replace_types = list(
 		/obj/item/weapon/reagent_containers/food = null,
@@ -6,7 +6,7 @@
 		/obj/structure/window/reinforced = /obj/item/weapon/shard,
 	)
 
-/datum/event/feature/area/replace/mice_back/start()
+/datum/event/feature/area/replace/mice_attack/start()
 	..()
 	var/list/mice = typesof(/mob/living/simple_animal/mouse) - /mob/living/simple_animal/mouse/brown/Tom
 	for(var/area/target_area in targeted_areas)
@@ -14,7 +14,7 @@
 		log_game("RoundStart Event: Change [target_area]")
 		var/list/all_atoms = target_area.GetAreaAllContents()
 		for(var/A in all_atoms)
-			if(!prob(10))
+			if(!prob(30))
 				continue
 			var/atom/atom = A
 			var/mouse_type = pick(mice)

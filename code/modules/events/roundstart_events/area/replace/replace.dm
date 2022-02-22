@@ -11,20 +11,16 @@
 	// finds a random item that exists in the area by these types
 	var/list/random_replaceable_types
 
-	var/picked_type
-
 /datum/event/feature/area/replace/setup()
 	. = ..()
 	if(random_replaceable_types)
-		picked_type = pick(random_replaceable_types)
+		if(!replace_types)
+			replace_types = list()
+		replace_types += pick(random_replaceable_types)
 
 /datum/event/feature/area/replace/proc/get_replace_type(atom/A)
 	if(replace_types)
 		return get_type_in_list(A, replace_types)
-
-	else if(picked_type)
-		return picked_type
-
 	return null
 
 /datum/event/feature/area/replace/proc/replace(atom/A)
@@ -48,9 +44,9 @@
 
 /datum/event/feature/area/replace/start()
 	var/count = 0
-	for(var/area/target_area in targeted_areas)
+	for(var/area/target_area in shuffle(targeted_areas))
 		var/list/area_atoms = shuffle(target_area.GetAreaAllContents())
-		for(var/atom/A in area_atoms)
+		for(var/atom/A as anything in area_atoms)
 			if(replace(A))
 				count++
 

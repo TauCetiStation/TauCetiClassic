@@ -1,5 +1,5 @@
 /datum/event/feature/area/minefield
-	percent_areas = 10
+	percent_areas = 3
 
 /datum/event/feature/area/minefield/start()
 	var/list/types = list(/obj/item/mine/emp/anchored, /obj/item/mine/incendiary/anchored, /obj/item/mine/shock/anchored, /obj/item/mine/anchored)

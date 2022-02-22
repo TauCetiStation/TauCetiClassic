@@ -99,7 +99,7 @@ var/global/list/sec_closets_list = list()
 			if(!prob(80))
 				continue
 			VP.amount = rand(0, VP.amount)
-			VP.price = rand(-5, VP.amount**2)
+			VP.price = rand(-1, VP.amount**2)
 			log_game("RoundStart Event: [VP.product_name] has changed amount and price in [V] [COORD(V)].")
 
 /datum/event/feature/apc/start()
@@ -183,5 +183,6 @@ var/global/list/toilet_list = list()
 	for(var/obj/machinery/nuclearbomb/bomb in global.poi_list)
 		if(!is_station_level(bomb.z))
 			continue
-		var/area/A = findEventArea()
-		bomb.forceMove(pick(A.contents))
+		var/area/A = SSevents.findEventArea()
+		var/list/turfs = get_area_turfs(A, TRUE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall))
+		bomb.forceMove(pick(turfs))

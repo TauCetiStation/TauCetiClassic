@@ -40,6 +40,9 @@
 	return null
 
 /proc/get_area_by_type(type) //get area by its type
+	var/area/area = areas_by_type[type]
+	if(area)
+		return area
 	return locate(type) in all_areas
 
 /proc/in_range(source, user)

@@ -25,10 +25,10 @@
 		for(var/area_type in area_types)
 			targeted_areas += get_area_by_type(area_type)
 	else
-		var/all_areas_num = global.allowed_areas_for_events.len
-		to_chat(world, "Всего зон на боксе [all_areas_num]")
-		for(var/i in 1 to percent_areas * all_areas_num)
-			targeted_areas += findEventArea()
+		var/all_areas_num = SSevents.allowed_areas_for_events.len
+		var/number = round((all_areas_num * percent_areas) / 100)
+		for(var/i in 1 to number)
+			targeted_areas += SSevents.findEventArea()
 
 	if(!targeted_areas.len)
 		CRASH("No valid areas for roundstart event found.")
