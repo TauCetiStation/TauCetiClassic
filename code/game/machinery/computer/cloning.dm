@@ -75,7 +75,7 @@
 		if (!src.diskette)
 			user.drop_from_inventory(W, src)
 			src.diskette = W
-			to_chat(user, "You insert [W].")
+			to_chat(user, "Вы вставляете [W].")
 			updateUsrDialog()
 			return
 	else
@@ -89,9 +89,9 @@
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Обновить</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
-			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автопроцесс</a>"
+			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автоклонирование</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Прекратить автопроцесс</a>"
+			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Прекратить автоклонирование</a>"
 	else
 		dat += "<span class='disabled'>Сканирование</span>"
 	dat += "<br><tt>[temp]</tt><br>"
@@ -102,7 +102,7 @@
 			dat += "<h4>Аппаратура</h4>"
 			//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 			if (isnull(src.scanner))
-				dat += " <span class='red'>Сканнер: ОШИБКА</span><br>"
+				dat += " <span class='red'>Сканер: ОШИБКА</span><br>"
 			else
 				dat += " <span class='green'>Сканер: Подключено!</span><br>"
 			if (isnull(src.pod1))
@@ -122,11 +122,11 @@
 				dat += "Сканер не обнаружен!!<br>"
 			else
 				if (src.scanner.occupant)
-					if(scantemp == "Сканер пуст") scantemp = "" // Stupid check to remove the text
+					if(scantemp == "Сканер свободен") scantemp = "" // Stupid check to remove the text
 
 					dat += "<a href='byond://?src=\ref[src];scan=1'>Сканировать - [src.scanner.occupant]</a><br>"
 				else
-					scantemp = "Сканер пуст"
+					scantemp = "Сканер свободен"
 
 				dat += "Замок: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Закрыто" : "Открыто"]</a><br>"
 
@@ -165,7 +165,7 @@
 					dat += "<span class='red'>Имплант не найден.</span><br>"
 
 				if (!isnull(src.diskette))
-					dat += "<a href='byond://?src=\ref[src];disk=load'>Загрузить из диска.</a>"
+					dat += "<a href='byond://?src=\ref[src];disk=load'>Загрузить с диска.</a>"
 
 					dat += " | Save: <a href='byond://?src=\ref[src];save_disk=ue'>UI + UE</a>"
 					dat += " | Save: <a href='byond://?src=\ref[src];save_disk=ui'>UI</a>"
@@ -191,7 +191,7 @@
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Проведите картой для подтверждения.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Нет</a></b>"
 
-	var/datum/browser/popup = new(user, "cloning", "Контроль Системы клонирования")
+	var/datum/browser/popup = new(user, "Клонирование", "Контроль Системы клонирования")
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -338,7 +338,7 @@
 					else
 						temp = "Клонирование в процессе...<br>Ошибка инициализации: клонирование отменено."
 				else
-					temp = "Клонирование в процессе...<br>Error: Ошибка инициализации: клонирование отменено."
+					temp = "Клонирование в процессе...<br>Ошибка инициализации: клонирование отменено."
 
 		else
 			temp = "Ошибка: Данные повреждены."
@@ -355,7 +355,7 @@
 			scantemp = "Ошибка: Признаки разума не обнаружены."
 			return
 	else if(!isbrain(subject))
-		scantemp = "Ошибка: Тело субъекта не поддерживается сканером."
+		scantemp = "Ошибка: Структура тела субъекта не поддерживается сканером."
 		return
 	if(!subject.dna)
 		scantemp = "Ошибка: Не удалось обнаружить геннетические данные."
@@ -367,7 +367,7 @@
 		scantemp = "Ошибка: Не удалось установить контакт с мозгом субъекта."
 		return
 	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
-		scantemp = "<span class='bad'>Субъект более не имеет достаточного геннетического материала для создания клона.</span>"
+		scantemp = "<span class='bad'>Субъект более не имеет достаточного генетического материала для создания клона.</span>"
 		return
 	if(!isnull(find_record(subject.ckey)))
 		scantemp = "Субъект уже записан в базу данных."
@@ -405,7 +405,7 @@
 		R.mind = "\ref[subject.mind]"
 
 	src.records += R
-	scantemp = "Сканирование успешно завершено."
+	scantemp = "Сканирование завершено успешно."
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(find_key)
