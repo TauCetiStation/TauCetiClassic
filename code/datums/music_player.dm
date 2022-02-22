@@ -82,7 +82,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	if(song_lines.len)
 		if(playing)
 			html += "<a href='?src=\ref[src];stop=1'>Прекратить играть</a><br>"
-			html += "Осталось повторовt: [repeat]<br><br>"
+			html += "Осталось повторов: [repeat]<br><br>"
 		else
 			html += "<a href='?src=\ref[src];play=1'>Начать играть</a><br>"
 			html += "<a href='?src=\ref[src];repeat=1'>Число повторов: [repeat]</a><br><br>"
@@ -107,12 +107,12 @@ var/global/datum/notes_storage/note_cache_storage = new
 				html += "</tr>"
 			html += "</table>"
 
-			html += "<a href='?src=\ref[src];newline=1'>Добавть строку</a><br><br>"
+			html += "<a href='?src=\ref[src];newline=1'>Добавить строку</a><br><br>"
 
 		if(!show_help)
-			html += "<a href='?src=\ref[src];show_help=1'>Показать помощь</a>"
+			html += "<a href='?src=\ref[src];show_help=1'>Показать справку</a>"
 		else
-			html += "<a href='?src=\ref[src];show_help=0'>Спрятать помощь</a><br>"
+			html += "<a href='?src=\ref[src];show_help=0'>Спрятать справку</a><br>"
 			html += {"
 					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
