@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(events)
 			/datum/event/anomaly,
 			/datum/event/feature,
 			/datum/event/feature/area,
+			/datum/event/feature/area/mess,
 			/datum/event/feature/area/replace,
 			/datum/event/feature/area/maintenance_spawn,
 	)

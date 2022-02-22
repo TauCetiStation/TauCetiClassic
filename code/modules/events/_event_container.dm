@@ -140,7 +140,9 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Break Light",             /datum/event/feature/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Dirt Bay",                /datum/event/feature/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Randomize Cargo Storage", /datum/event/feature/area/cargo_storage,                      10),
-		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Armory Mess",             /datum/event/feature/area/armory_mess,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Armory Mess",             /datum/event/feature/area/mess/armory,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Bridge Mess",             /datum/event/feature/area/mess/bridge,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Medical Mess",            /datum/event/feature/area/mess/med_storage,                   10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "MineField",               /datum/event/feature/area/minefield,                          5,  list(ASSIGNMENT_MEDICAL = 2), , list(ASSIGNMENT_SECURITY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Lasertag ED-209",         /datum/event/feature/area/lasertag_ed,                        10),list(ASSIGNMENT_ANY = 2),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen Weapon",           /datum/event/feature/area/replace/sec_weapons,                10, list(ASSIGNMENT_SECURITY = 5)),
@@ -160,7 +162,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Watertanks",    /datum/event/feature/watertank,                               10, list(ASSIGNMENT_BOTANIST = 10)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Cleaners",      /datum/event/feature/cleaner,                                 10, list(ASSIGNMENT_JANITOR = 100)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Extinguishers", /datum/event/feature/extinguisher,                            10),
-		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Scraps",        /datum/event/feature/del_scrap,                               10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Toilets",       /datum/event/feature/del_toilet,                              10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Leaked Pipe",             /datum/event/feature/leaked_pipe,                             10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Die Monkey",              /datum/event/feature/dead_monkeys,                            10, list(ASSIGNMENT_SCIENTIST = 5)),
@@ -172,6 +173,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Accounting Got It Wrong", /datum/event/feature/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Last Clown Jokes",        /datum/event/feature/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Chiefs Animals",          /datum/event/feature/head_animals,                            10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Nuke Journey",            /datum/event/feature/bomb_journey,                            10),
 	)
 
 /datum/event_container/mundane

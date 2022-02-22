@@ -923,15 +923,19 @@ Owl & Griffin toys
 	if(cards.len == 0)
 		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
 		return
-	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(user.loc)
-	choice = cards[1]
-	H.cardname = choice
-	H.parentdeck = src
-	cards -= choice
+	var/obj/item/toy/singlecard/H = remove_card()
 	H.pickup(user)
 	user.put_in_active_hand(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
+
+/obj/item/toy/cards/proc/remove_card()
+	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(loc)
+	choice = cards[1]
+	H.cardname = choice
+	H.parentdeck = src
+	cards -= choice
+	return H
 
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
