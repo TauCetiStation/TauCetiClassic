@@ -82,5 +82,5 @@
 	var/response = "[codewords2string(global.syndicate_code_response)]"
 	var/phrase = "[codewords2string(global.syndicate_code_phrase)]"
 	var/message = "Кажется, было что-то типа... [pick(response, phrase)]"
-	to_chat(H, "<span class ='notice'>Ты припоминаешь услышанные слова... [message].")
+	to_chat(H, "<span class ='notice'>Ты припоминаешь услышанные слова... [message].</span>")
 	H.mind.store_memory(message)
