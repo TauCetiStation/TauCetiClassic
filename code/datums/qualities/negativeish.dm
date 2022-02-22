@@ -98,3 +98,11 @@
 		return
 
 	H.force_language = pick(H.languages)
+
+
+/datum/quality/shkiondioniovioion
+	desc = "Тё знёёшь тёлькё ёдён ёзёк. Ё всёгдё бёдёшь гёвёрёть тёлькё нё нём."
+	requirement = "Нет."
+
+/datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+	H.force_language = LANGUAGE_SHKIONDIONIOVIOION

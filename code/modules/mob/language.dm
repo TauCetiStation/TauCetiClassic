@@ -221,6 +221,32 @@
 	colour = "alien"
 	syllables = list("сс", "хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
 
+/datum/language/shkiondioniovioion
+	name = LANGUAGE_SHKIONDIONIOVIOION
+	desc = "Ёn ёncёёnt, fёrgёttёn lёngёёgё, ёt's rёёts stёm frёm tёmё ёmmёmёrёёl."
+	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "exclaims"
+	colour = "rough"
+	syllables = list("ёх", "ёс", "ёс", "ём", "ён", "бён", "вёл", "гёр", "мёг", "трё", "лёс", "рёйд", "ё", "мём", "ёнт")
+
+	var/list/replacements
+
+/datum/language/shkiondioniovioion/New()
+	replacements = list()
+
+	for(var/vowel in ENGLISH_VOWELS)
+		replacements[vowel] = "ё"
+
+	var/list/ru_vowels = list("а", "о", "е", "у", "и", "ы", "э", "ё").Copy()
+	ru_vowels.Remove("ё")
+
+	for(var/vowel in ru_vowels)
+		replacements[vowel] = "ё"
+
+/datum/language/shkiondioniovioion/scramble(input)
+	return replace_characters(input, replacements)
+
 // Language handling.
 /mob/proc/add_language(language)
 
