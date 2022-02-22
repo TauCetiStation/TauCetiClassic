@@ -2251,3 +2251,17 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/handle_drunkenness()
+	. = ..()
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		if(istype(IO))
+			IO.take_damage(0.1, 1)
+		adjustToxLoss(0.1)
+
+/mob/living/carbon/human/get_language()
+	if(species.force_racial_language)
+		return all_languages[species.language]
+
+	return ..()

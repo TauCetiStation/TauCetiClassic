@@ -1441,11 +1441,3 @@
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
-
-/mob/living/carbon/human/handle_drunkenness()
-	. = ..()
-	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
-		if(istype(IO))
-			IO.take_damage(0.1, 1)
-		adjustToxLoss(0.1)

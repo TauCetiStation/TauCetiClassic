@@ -87,3 +87,14 @@
 /datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/language in H.languages)
 		H.remove_language(language)
+
+
+/datum/quality/monolingual
+	desc = "Ты знаешь только один язык. И всегда будешь говорить только на нём."
+	requirement = "Нет."
+
+/datum/quality/monolingual/add_effect(mob/living/carbon/human/H, latespawn)
+	if(length(H.languages) == 0)
+		return
+
+	H.force_language = pick(H.languages)

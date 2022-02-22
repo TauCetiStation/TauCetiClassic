@@ -146,9 +146,11 @@
 		message = copytext(message,2+length_char(speaking.key))
 		if(!message)
 			return
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+
 	else
+		speaking = get_language()
+
+	if(!speaking)
 		switch(species.name)
 			if(TAJARAN)
 				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
