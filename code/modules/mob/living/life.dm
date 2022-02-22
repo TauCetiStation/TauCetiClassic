@@ -45,10 +45,7 @@
 	update_action_buttons()
 
 	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
+		pullin.icon_state = pulling ? "pull1" : "pull0"
 
 	return TRUE
 
