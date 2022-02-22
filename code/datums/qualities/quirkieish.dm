@@ -68,3 +68,12 @@
 	if(H.equip_or_collect(NC, SLOT_R_STORE))
 		return
 	qdel(NC)
+
+/datum/quality/random
+	desc = "Вы имеете случайную особенность."
+	requirement = "Нет."
+
+/datum/quality/random/add_effect(mob/living/carbon/human/H, latespawn)
+	var/quality_type = pick(SSqualities.qualities_pool)
+	var/datum/quality/quality = SSqualities.qualities_pool[quality_type]
+	quality.add_effect(H)

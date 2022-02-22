@@ -3,6 +3,8 @@
 
 	var/requirement
 
+	var/hidden = FALSE
+
 	var/list/jobs_required
 	var/list/species_required
 

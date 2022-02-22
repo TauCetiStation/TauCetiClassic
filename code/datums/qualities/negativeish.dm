@@ -78,3 +78,42 @@
 /datum/quality/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
+
+/datum/quality/nigger
+	desc = "Перед вылетом на станцию тебя облили чёрной краской."
+	requirement = "Быть белым."
+
+/datum/quality/nigger/satisfies_availability(client/C)
+	if(!..())
+		return FALSE
+	// min: -185, max: 34
+	if(C.prefs.s_tone > -85)
+		return TRUE
+	return FALSE
+
+/datum/quality/nigger/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	if(!..())
+		return FALSE
+	if(H.s_tone > -85)
+		return TRUE
+	return FALSE
+
+/datum/quality/nigger/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/obj/O in H.get_all_slots())
+		O.color = "#4D220E"
+
+	H.hair_painted = TRUE
+	H.s_tone = -185
+	H.r_skin = 0
+	H.g_skin = 0
+	H.b_skin = 0
+	H.r_hair = 0
+	H.g_hair = 0
+	H.b_hair = 0
+	H.r_facial = 0
+	H.g_facial = 0
+	H.b_facial = 0
+
+	H.apply_recolor()
+	H.update_body()
+	H.regenerate_icons()

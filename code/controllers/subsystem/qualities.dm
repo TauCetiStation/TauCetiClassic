@@ -55,9 +55,13 @@ SUBSYSTEM_DEF(qualities)
 
 	if(C.mob && selected_quality)
 		var/mob/M = C.mob
+		var/hide = selected_quality.hidden || prob(0)
+		var/q_desc = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.desc
+		var/q_requirement = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.requirement
+
 		to_chat(M, "<font color='green'><b>Вы особенный.</b></font>")
-		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [selected_quality.desc]</font>")
-		to_chat(M, "<font color='green'><b>Требования:</b> [selected_quality.requirement]</font>")
+		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [q_desc]</font>")
+		to_chat(M, "<font color='green'><b>Требования:</b> [q_requirement]</font>")
 
 		C.prefs.have_quality = TRUE
 		C << output(TRUE, "lobbybrowser:set_quality")
