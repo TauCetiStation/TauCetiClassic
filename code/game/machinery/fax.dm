@@ -44,7 +44,7 @@ var/global/list/alldepartments = list("Central Command")
 	else
 		scan_name = "--------"
 
-	dat += "Подтверждение личности: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+	dat += "Подтвердить личность: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
 	if(authenticated)
 		dat += "<a href='byond://?src=\ref[src];logout=1'>Выйти</a>"
@@ -57,7 +57,7 @@ var/global/list/alldepartments = list("Central Command")
 		dat += "<b>Соединено с:</b> Квантовая Сеть Коммуникации ЦК<br><br>"
 
 		if(tofax)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Убрать лист</a><br><br>"
+			dat += "<a href='byond://?src=\ref[src];remove=1'>Извлечь лист</a><br><br>"
 
 			if(sendcooldown)
 				dat += "<b>Производится калибровка передатчиков. Ожидайте.</b><br>"
@@ -69,16 +69,16 @@ var/global/list/alldepartments = list("Central Command")
 
 		else
 			if(sendcooldown)
-				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
+				dat += "Вставьте лист для отправки сообщения по зашифрованному каналу.<br><br>"
 				dat += "<b>Производится калибровка передатчиков. Ожидайте.</b><br>"
 			else
-				dat += "Для отправки сообщения по зашифрованному каналу вставьте лист бумаги.<br><br>"
+				dat += "Вставьте лист для отправки сообщения по зашифрованному каналу.<br><br>"
 
 	else
 		dat += "Для использования необходима авторизация.<br><br>"
 
 		if(tofax)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Убрать лист</a><br>"
+			dat += "<a href ='byond://?src=\ref[src];remove=1'>Извлечь лист</a><br>"
 
 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
 	popup.set_content(dat)
