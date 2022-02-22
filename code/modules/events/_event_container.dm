@@ -153,7 +153,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Clondike",                /datum/event/feature/area/replace/vault_gold,                 10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Deathly Sec.",            /datum/event/feature/area/replace/deathly_sec,                10,  list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Surgeon Tools", /datum/event/feature/area/replace/del_surgeon_tools,          10, list(ASSIGNMENT_MEDICAL = 2)),
-		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Anti meat",               /datum/event/feature/area/replace/mince_back,                 10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Anti meat",               /datum/event/feature/area/replace/mice_back,                 10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Invasion In Mainteance",  /datum/event/feature/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Sign of Antagonists",     /datum/event/feature/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Headset",       /datum/event/feature/headset,                                 10, list(ASSIGNMENT_ANY = 5)),

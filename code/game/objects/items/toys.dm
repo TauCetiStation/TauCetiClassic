@@ -919,7 +919,6 @@ Owl & Griffin toys
 	integrity += cards
 
 /obj/item/toy/cards/attack_hand(mob/user)
-	var/choice = null
 	if(cards.len == 0)
 		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
 		return
@@ -931,7 +930,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/proc/remove_card()
 	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(loc)
-	choice = cards[1]
+	var/choice = cards[1]
 	H.cardname = choice
 	H.parentdeck = src
 	cards -= choice
