@@ -12,7 +12,7 @@
 					qdel(A)
 				else if(prob(10))
 					var/obj/structure/closet/crate/crate = A
-					new /mob/living/simple_animal/hostile/mimic/(crate.loc)
+					new /mob/living/simple_animal/hostile/mimic(crate.loc)
 					qdel(A)
 			else if(istype(A, /obj/item/device/flashlight/lamp/fir))
 				if(prob(50))
@@ -35,7 +35,7 @@
 					AB.make_empty(TRUE)
 			else if(istype(A, /turf/simulated/floor))
 				if(prob(5))
-					var/list/types = list(/mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/headcrab, /mob/living/simple_animal/borer, /mob/living/simple_animal/hostile/giant_spider, /mob/living/carbon/monkey, /mob/living/simple_animal/chicken, /mob/living/simple_animal/cow, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/snake)
+					var/list/types = list(/mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/giant_spider, /mob/living/carbon/monkey, /mob/living/simple_animal/chicken, /mob/living/simple_animal/cow, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/snake)
 					var/type = pick(types)
 					new type(A)
 				if(prob(2))
