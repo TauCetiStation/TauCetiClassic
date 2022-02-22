@@ -136,7 +136,7 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
-			power += round((1 - (force / 10) ** 2) * (BP.pumped / 10)) //Cool Graph 1 is +6, 5 is +4, 10 is +0
+			power += clamp(round((1 - (force / 10) ** 2) * (BP.pumped / 10)), 0, 6) //Cool Graph 1 is +6, 5 is +4, 10 is +0
 	if(HULK in user.mutations)
 		power *= 2
 
