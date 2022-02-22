@@ -191,3 +191,12 @@
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_species)
 			H.add_language(language)
+
+/datum/quality/endangered_plants
+	desc = "Бабушка передала тебе со своего гидропонического огорода семена редких растений."
+	requirement = "Ботаник."
+
+	jobs_required = list("Botanist")
+
+/datum/quality/endangered_plants/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/rare_seeds(H), SLOT_L_HAND)
