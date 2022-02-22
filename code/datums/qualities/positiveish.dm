@@ -127,6 +127,9 @@
 /datum/quality/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
 	var/obj/item/weapon/card/id/id = H.get_idcard()
+	if(!id)
+		return
+
 	id.access = get_all_accesses()
 
 
