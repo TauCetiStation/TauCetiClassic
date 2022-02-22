@@ -200,3 +200,12 @@
 
 /datum/quality/endangered_plants/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/storage/box/rare_seeds(H), SLOT_L_HAND)
+
+/datum/quality/reliquary
+	desc = "Тебе выпала великая честь - нести осколок душ. Возможно, заплатив частью своей."
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)

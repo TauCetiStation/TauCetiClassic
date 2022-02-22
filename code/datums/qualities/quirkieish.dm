@@ -75,10 +75,7 @@
 
 /datum/quality/informed/restriction_check(mob/living/carbon/human/H, latespawn)
 	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
-	if(H.mind.assigned_role in funpolice)
-		return FALSE
-
-	return TRUE
+	return !(H.mind.assigned_role in funpolice)
 
 /datum/quality/informed/add_effect(mob/living/carbon/human/H)
 	var/response = "[codewords2string(global.syndicate_code_response)]"
