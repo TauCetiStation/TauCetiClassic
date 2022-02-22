@@ -45,7 +45,7 @@
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = DIONA
-	add_language("Rootspeak")
+	add_language(LANGUAGE_ROOTSPEAK)
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
 	var/count = 0

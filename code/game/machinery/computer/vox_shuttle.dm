@@ -1,6 +1,6 @@
 #define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
-#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages["Vox-pidgin"]) || isobserver(A))
+#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages[LANGUAGE_VOXPIDGIN]) || isobserver(A))
 // human and know vox language (and ghosts, because ghosts see everything).
 
 //Copied from Syndicate shuttle.

@@ -65,7 +65,7 @@
 	return speech_verb
 
 /datum/language/unathi
-	name = "Sinta'unathi"
+	name = LANGUAGE_SINTAUNATHI
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
 	speech_verb = "hisses"
 	ask_verb = "hisses"
@@ -76,7 +76,7 @@
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
-	name = "Siik'maas"
+	name = LANGUAGE_SIIKMAAS
 	desc = "The traditionally employed tongue of Ahdomai, composed of expressive yowls and chirps. Native to the Tajaran."
 	speech_verb = "mrowls"
 	ask_verb = "mrowls"
@@ -90,7 +90,7 @@
 	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
 
 /datum/language/tajaran_sign
-	name = "Siik'tajr"
+	name = LANGUAGE_SIIKTAJR
 	desc = "An expressive language that combines yowls and chirps with posture, tail and ears. Spoken by many Tajaran."
 	speech_verb = "mrowls"
 	ask_verb = "mrowls"
@@ -101,7 +101,7 @@
 	flags = NONVERBAL
 
 /datum/language/skrell
-	name = "Skrellian"
+	name = LANGUAGE_SKRELLIAN
 	desc = "A melodic and complex language spoken by the Skrell of Qerrbalak. Some of the notes are inaudible to humans."
 	speech_verb = "warbles"
 	ask_verb = "warbles"
@@ -112,7 +112,7 @@
 	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
 
 /datum/language/vox
-	name = "Vox-pidgin"
+	name = LANGUAGE_VOXPIDGIN
 	desc = "The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else."
 	speech_verb = "shrieks"
 	ask_verb = "creels"
@@ -124,7 +124,7 @@
 	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
 
 /datum/language/diona
-	name = "Rootspeak"
+	name = LANGUAGE_ROOTSPEAK
 	desc = "A creaking, subvocal language spoken instinctively by the Dionaea. Due to the unique makeup of the average Diona, a phrase of Rootspeak can be a combination of anywhere from one to twelve individual voices and notes."
 	speech_verb = "creaks and rustles"
 	ask_verb = "creaks"
@@ -135,7 +135,7 @@
 	syllables = list("hs","zt","kr","st","sh")
 
 /datum/language/diona_space
-	name = "Rootsong"
+	name = LANGUAGE_ROOTSONG
 	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
 	allowed_species = list(IPC, DIONA)
 	colour = "soghun"
@@ -144,7 +144,7 @@
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
 /datum/language/human
-	name = "Sol Common"
+	name = LANGUAGE_SOLCOMMON
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
@@ -152,7 +152,7 @@
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 /datum/language/ipc
-	name = "Trinary"
+	name = LANGUAGE_TRINARY
 	desc = "A modified binary fuzzy logic based language spoken by IPC. Basically, is just a sequence of zeros, ones and twos."
 	speech_verb = "pings"
 	ask_verb = "beeps"
@@ -165,7 +165,7 @@
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
-	name = "Tradeband"
+	name = LANGUAGE_TRADEBAND
 	desc = "Maintained by the various trading cartels in major systems, this elegant, structured language is used for bartering and bargaining."
 	speech_verb = "enunciates"
 	colour = "say_quote"
@@ -181,7 +181,7 @@
 					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
 
 /datum/language/gutter
-	name = "Gutter"
+	name = LANGUAGE_GUTTER
 	desc = "Much like Standard, this crude pidgin tongue descended from numerous languages and serves as Tradeband for criminal elements."
 	speech_verb = "growls"
 	colour = "rough"
@@ -191,7 +191,7 @@
 
 
 /datum/language/syndi
-	name = "Sy-Code"
+	name = LANGUAGE_SYCODE
 	desc = "Constructed language, used by syndicate agents and operatives. Consists of NATO alphabet and booze. The definition of each syllable is predetermined by current operation."
 	speech_verb = "signals"
 	colour = "syndcode"
@@ -204,7 +204,7 @@
 	space_chance = 100
 
 /datum/language/unisign
-	name = "Universal Sign Language"
+	name = LANGUAGE_USL
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
 	key = list("4")
@@ -213,7 +213,7 @@
 	flags = SIGNLANG
 
 /datum/language/xenomorph
-	name = "Xenomorph language"
+	name = LANGUAGE_XENOMORPH
 	desc = "Xenomorph language."
 	speech_verb = "hisses"
 	ask_verb = "hisses"

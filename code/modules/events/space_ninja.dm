@@ -259,7 +259,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive(side)
 	var/directive = "[side] is your employer. "//Let them know which side they're on.
-	var/xenorace = pick("Unathi","Tajaran", "Skrellian")
+	var/xenorace = pick("Unathi","Tajaran", LANGUAGE_SKRELLIAN)
 	directive += pick(list(
 		"The Spider Clan must not be linked to this operation. Remain hidden and covert when possible.",
 		"[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as desired.",

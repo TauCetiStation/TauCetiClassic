@@ -125,7 +125,7 @@
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
 	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
+		var/datum/language/USL = all_languages[LANGUAGE_USL]
 		if(can_speak(USL))
 			speaking = USL
 
