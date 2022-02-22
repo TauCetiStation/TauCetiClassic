@@ -66,7 +66,8 @@
 		else if(BP.status & ORGAN_BROKEN)
 			tally += 3
 
-		weight_negation += BP.pumped / 100
+		if(BP)
+			weight_negation += BP.pumped / 100
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
