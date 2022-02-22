@@ -3,7 +3,7 @@
 
 	var/requirement
 
-	var/hidden = FALSE
+	var/hidden_chance = 20
 
 	var/list/jobs_required
 	var/list/species_required

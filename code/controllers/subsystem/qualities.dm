@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(qualities)
 
 	if(C.mob && selected_quality)
 		var/mob/M = C.mob
-		var/hide = selected_quality.hidden || prob(0)
+		var/hide = prob(selected_quality.hidden_chance)
 		var/q_desc = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.desc
 		var/q_requirement = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.requirement
 

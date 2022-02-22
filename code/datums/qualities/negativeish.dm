@@ -79,11 +79,11 @@
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
-/datum/quality/nigger
+/datum/quality/blackened
 	desc = "Перед вылетом на станцию тебя облили чёрной краской."
 	requirement = "Быть белым."
 
-/datum/quality/nigger/satisfies_availability(client/C)
+/datum/quality/blackened/satisfies_availability(client/C)
 	if(!..())
 		return FALSE
 	// min: -185, max: 34
@@ -91,14 +91,14 @@
 		return TRUE
 	return FALSE
 
-/datum/quality/nigger/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/blackened/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	if(!..())
 		return FALSE
 	if(H.s_tone > -85)
 		return TRUE
 	return FALSE
 
-/datum/quality/nigger/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/blackened/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/obj/O in H.get_all_slots())
 		O.color = "#4d220e"
 
