@@ -134,7 +134,7 @@
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
 	requirement = "Унатх."
 
-	jobs_required = list(UNATHI)
+	species_required = list(UNATHI)
 
 /datum/quality/cultural_heritage/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/space/unathi/breacher(H), SLOT_WEAR_SUIT)
