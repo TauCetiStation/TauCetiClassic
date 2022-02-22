@@ -78,9 +78,9 @@
 //Привет! Как дела?
 //======
 //Привет! Как дела?
-/turf/simulated/environment/space/shuttle
+/turf/environment/space/shuttle
 	icon = 'icons/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"
 
-/turf/simulated/environment/space/shuttle/New()
+/turf/environment/space/shuttle/New()
 	icon_state = "[rand(1,4)]swall_s"

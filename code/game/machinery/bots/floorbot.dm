@@ -326,7 +326,7 @@
 
 
 		if(amount > 0)
-			for (var/turf/simulated/environment/D in view(7, src))
+			for (var/turf/environment/D in view(7, src))
 				if(is_hull_breach(D))
 					boringness = 0
 					do_task(D, FLOORBOT_TASK_FIXHOLE)
