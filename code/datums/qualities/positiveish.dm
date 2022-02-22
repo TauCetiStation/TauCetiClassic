@@ -2,7 +2,7 @@
 
 /datum/quality/loadsamoney
 	desc = "У тебя целая КУЧА денег! Как бы их потратить?"
-	restriction = "Нет."
+	requirement = "Нет."
 
 	var/list/money_types = list(
 		/obj/item/weapon/spacecash/c1000,
@@ -42,7 +42,7 @@
 
 /datum/quality/wonder_doctor
 	desc = "В качестве эксперимента, тебе выдали таблетку с новейшим препаратом, чем-то напоминающим тот самый Философский Камень."
-	restriction = "Доктор, Парамедик, СМО."
+	requirement = "Доктор, Парамедик, СМО."
 
 	jobs_required = list(
 		"Medical Doctor",
@@ -57,7 +57,7 @@
 
 /datum/quality/prepared
 	desc = "Ты задумал пролезть в какой-то отсек. Пришлось найти изоляционные перчатки."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/prepared/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
@@ -65,7 +65,7 @@
 
 /datum/quality/disguise
 	desc = "С ЦК тебе прислали прикольную посылочку с лучшим в мире камуфляжем."
-	restriction = "Клоун."
+	requirement = "Клоун."
 
 	jobs_required = list("Clown")
 
@@ -77,7 +77,7 @@
 
 /datum/quality/clumsy
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
-	restriction = "Все, кроме Клоуна."
+	requirement = "Все, кроме Клоуна."
 
 /datum/quality/clumsy/restriction_check(mob/living/carbon/human/H, latespawn)
 	return H.mind.assigned_role != "Clown"
@@ -88,7 +88,7 @@
 
 /datum/quality/heavy_equipment
 	desc = "По программе усиления СБ тебе была выдана экипировка получше."
-	restriction = "Офицер СБ."
+	requirement = "Офицер СБ."
 
 	jobs_required = list("Security Officer")
 
@@ -101,7 +101,7 @@
 
 /datum/quality/big_iron
 	desc = "Эта станция слишком мала для тебя и преступности."
-	restriction = "Детектив."
+	requirement = "Детектив."
 
 	jobs_required = list("Detective")
 
@@ -120,7 +120,7 @@
 
 /datum/quality/all_affairs
 	desc = "У тебя полный доступ. Да начнётся расследование."
-	restriction = "Агент Внутренних Дел."
+	requirement = "Агент Внутренних Дел."
 
 	jobs_required = list("Internal Affairs Agent")
 
@@ -132,7 +132,7 @@
 
 /datum/quality/cultural_heritage
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
-	restriction = "Унатх."
+	requirement = "Унатх."
 
 	jobs_required = list(UNATHI)
 
@@ -143,7 +143,7 @@
 
 /datum/quality/sunglasses
 	desc = "Крутые очки, чувак."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/sunglasses/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
@@ -151,7 +151,7 @@
 
 /datum/quality/hygiene
 	desc = "Гигиена - это важно. Ты принёс из дома мыльце."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/hygiene/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/soap(H), SLOT_R_STORE)
@@ -159,7 +159,7 @@
 
 /datum/quality/vaccinated
 	desc = "Привившись всеми известными человечеству вакцинами, ты стал полностью невосприимчив для любого вируса."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/vaccinated/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/antigen in ANTIGENS)
@@ -170,7 +170,7 @@
 
 /datum/quality/happiness
 	desc = "Ты очень-очень счастлив! Жизнь прекрасна и люди на станции прекрасны!!!"
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/happiness/add_effect(mob/living/carbon/human/H, latespawn)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_happiness", /datum/mood_event/happiness)
@@ -178,7 +178,7 @@
 
 /datum/quality/polyglot
 	desc = "Ты знаешь все языки. Вот и всё, все."
-	restriction = "Мим, Библиотекарь, Агент Внутренних Дел."
+	requirement = "Мим, Библиотекарь, Агент Внутренних Дел."
 
 	jobs_required = list(
 		"Mime",

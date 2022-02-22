@@ -1,7 +1,7 @@
 /datum/quality
 	var/desc
 
-	var/restriction
+	var/requirement
 
 	var/list/jobs_required
 	var/list/species_required

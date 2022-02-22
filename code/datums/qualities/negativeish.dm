@@ -2,7 +2,7 @@
 
 /datum/quality/mute
 	desc = "Так вышло, что языка у тебя больше нет."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/mute/add_effect(mob/living/carbon/human/H, latespawn)
 	H.add_quirk(QUIRK_MUTE)
@@ -11,7 +11,7 @@
 // It's 80% negative and 20% positive.
 /datum/quality/mutant
 	desc = "Тебе не повезло облучиться по пути на работу."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/mutant/add_effect(mob/living/carbon/human/H, latespawn)
 	if(prob(80))
@@ -23,7 +23,7 @@
 
 /datum/quality/frail
 	desc = "Жизнь раба корпорации довела тебя до серьезной болезни. Здоровье существенно снижено."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/frail/add_effect(mob/living/carbon/human/H, latespawn)
 	H.health = 50
@@ -32,7 +32,7 @@
 
 /datum/quality/depression
 	desc = "Ты в депрессии и чувствуешь себя уныло. Так и живём."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/depression/add_effect(mob/living/carbon/human/H, latespawn)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_depression", /datum/mood_event/depression)
@@ -40,8 +40,7 @@
 
 /datum/quality/true_keeper
 	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
-
-	restriction = "Варден"
+	requirement = "Варден"
 
 	jobs_required = list(
 		"Warden",
@@ -62,8 +61,7 @@
 
 /datum/quality/rts
 	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
-
-	restriction = "Капитан"
+	requirement = "Капитан"
 
 	jobs_required = list(
 		"Captain",

@@ -2,7 +2,7 @@
 
 /datum/quality/cyborg
 	desc = "Все твои конечности и органы были заменены протезами в результате недавнего несчастного случая."
-	restriction = "Нет."
+	requirement = "Нет."
 
 /datum/quality/cyborg/add_effect(mob/living/carbon/human/H, latespawn)
 	qdel(H.bodyparts_by_name[BP_L_LEG])
@@ -28,8 +28,7 @@
 
 /datum/quality/nuclear_option
 	desc = "Тебе известен код от бомбы."
-
-	restriction = "Капитан, АВД, Библиотекарь, Клоун, Мим."
+	requirement = "Капитан, АВД, Библиотекарь, Клоун, Мим."
 
 	jobs_required = list(
 		"Captain",
