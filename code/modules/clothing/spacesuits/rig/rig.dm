@@ -780,7 +780,7 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
-	var/space_armor = list(melee = 45, bullet = 35, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/space_armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
 
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
@@ -836,7 +836,7 @@
 	icon_state = "rig0-heavy"
 	item_state = "syndie_helm"
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
-	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	space_armor = list(melee = 50, bullet = 40, laser = 40, energy = 45, bomb = 50, bio = 100, rad = 60)
 	rig_type = "heavy"
 
 /obj/item/clothing/suit/space/rig/syndi/heavy
@@ -984,7 +984,7 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	item_color = "sec"
-	armor = list(melee = 50, bullet = 50, laser = 45, energy = 35, bomb = 65, bio = 100, rad = 10)
+	armor = list(melee = 50, bullet = 45, laser = 45, energy = 35, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"

@@ -53,7 +53,7 @@
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
 	body_parts_covered = HEAD|EYES
-	armor = list(melee = 30, bullet = 15, laser = 35,energy = 25, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 15, laser = 30,energy = 25, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
@@ -65,7 +65,7 @@
 	item_state = "cultrobesalt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 40, bullet = 25, laser = 35,energy = 30, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 40, bullet = 25, laser = 30,energy = 30, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
 
