@@ -25,6 +25,8 @@
 	for(var/obj/item/organ/internal/IO in H.organs)
 		IO.mechanize()
 
+	H.regenerate_icons()
+
 
 /datum/quality/nuclear_option
 	desc = "Тебе известен код от бомбы."
