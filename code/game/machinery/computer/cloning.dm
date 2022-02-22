@@ -11,7 +11,7 @@
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/temp = ""
-	var/scantemp = "Сканер пуст"
+	var/scantemp = "Сканер свободен"
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/dna2/record/active_record = null
@@ -137,7 +137,7 @@
 			dat += "<h4>Управление базой данных</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'>Просмотреть записи</a><br>"
 			if (src.diskette)
-				dat += "<a href='byond://?src=\ref[src];disk=eject'>Забрать диск</a>"
+				dat += "<a href='byond://?src=\ref[src];disk=eject'>Извлечь диск</a>"
 
 
 		if(2)
