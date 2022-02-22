@@ -100,7 +100,7 @@
 
 /datum/quality/nigger/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/obj/O in H.get_all_slots())
-		O.color = "#4D220E"
+		O.color = "#4d220e"
 
 	H.hair_painted = TRUE
 	H.s_tone = -185
