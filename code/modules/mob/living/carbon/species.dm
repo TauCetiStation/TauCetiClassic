@@ -418,6 +418,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
+	has_gendered_icons = FALSE
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -1287,6 +1288,7 @@
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
