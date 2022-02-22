@@ -350,7 +350,7 @@ var/global/list/wedge_image_cache = list()
 			for(var/obj/item/I in turf)
 				if(I.w_class < SIZE_SMALL)
 					continue
-				if(!I.get_quality(QUALITY_PRYING))
+				if(I.get_quality(QUALITY_PRYING) <= 0.0)
 					continue
 
 				operating = TRUE
@@ -428,7 +428,7 @@ var/global/list/wedge_image_cache = list()
 	if(I.w_class < SIZE_SMALL)
 		return
 
-	if(I.get_quality(QUALITY_PRYING) <= 0)
+	if(I.get_quality(QUALITY_PRYING) <= 0.0)
 		return
 
 	if(density)
