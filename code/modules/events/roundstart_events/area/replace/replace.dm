@@ -1,4 +1,4 @@
-/datum/event/roundstart/area/replace
+/datum/event/aspect/area/replace
 	// replace: left_type on right_type (a = b)
 	var/list/replace_types = list()
 	// called before deleting replaceable item
@@ -10,7 +10,7 @@
 	// finds a random item that exists in the area by these types
 	var/list/random_replaceable_types = list()
 
-/datum/event/roundstart/area/replace/proc/find_replaceable_type()
+/datum/event/aspect/area/replace/proc/find_replaceable_type()
 	for(var/objects_type in random_replaceable_types)
 		// Collect all atoms so that later can choose a completely random type for a future replacement
 		var/list/all_atoms = list()
@@ -23,13 +23,13 @@
 		return A.type
 	return null
 
-/datum/event/roundstart/area/replace/proc/get_replace_type(atom/A)
+/datum/event/aspect/area/replace/proc/get_replace_type(atom/A)
 	for(var/type in replace_types)
 		if(istype(A, type))
 			return type
 	return null
 
-/datum/event/roundstart/area/replace/proc/replace(atom/A)
+/datum/event/aspect/area/replace/proc/replace(atom/A)
 	var/replace_type = get_replace_type(A)
 	if(!replace_type)
 		return FALSE
@@ -48,7 +48,7 @@
 		qdel(A)
 	return TRUE
 
-/datum/event/roundstart/area/replace/start()
+/datum/event/aspect/area/replace/start()
 	var/count = 0
 	for(var/area/target_area in targeted_areas)
 		var/list/area_atoms = shuffle(target_area.GetAreaAllContents())

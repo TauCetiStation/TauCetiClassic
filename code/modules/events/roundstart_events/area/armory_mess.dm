@@ -1,7 +1,7 @@
-/datum/event/roundstart/area/armory_mess
+/datum/event/aspect/area/armory_mess
 	special_area_types = list(/area/station/security/warden, /area/station/security/armoury)
 
-/datum/event/roundstart/area/armory_mess/start()
+/datum/event/aspect/area/armory_mess/start()
 	for(var/area/target_area in targeted_areas)
 		for(var/obj/machinery/door/window/brigdoor/B in target_area)
 			qdel(B)

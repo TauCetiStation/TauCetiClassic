@@ -1,4 +1,4 @@
-/datum/event/roundstart/area
+/datum/event/aspect/area
 	// number of random areas if no special_area_types
 	var/num_rand_areas = 1
 	// if not specified, then random
@@ -9,7 +9,7 @@
 	// refs
 	var/list/area/targeted_areas = list()
 
-/datum/event/roundstart/area/setup()
+/datum/event/aspect/area/setup()
 	..()
 	SHOULD_CALL_PARENT(TRUE)
 	if(special_area_types?.len)

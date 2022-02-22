@@ -1,8 +1,8 @@
-/datum/event/roundstart/area/minefield/setup()
+/datum/event/aspect/area/minefield/setup()
 	num_rand_areas = rand(1, 3)
 	. = ..()
 
-/datum/event/roundstart/area/minefield/start()
+/datum/event/aspect/area/minefield/start()
 	var/list/types = list(/obj/item/mine/emp/anchored, /obj/item/mine/incendiary/anchored, /obj/item/mine/shock/anchored, /obj/item/mine/anchored)
 	for(var/area/target_area in targeted_areas)
 		var/list/all_turfs = get_area_turfs(target_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))

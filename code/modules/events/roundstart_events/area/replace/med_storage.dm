@@ -1,7 +1,7 @@
-/datum/event/roundstart/area/replace/med_storage
+/datum/event/aspect/area/replace/med_storage
 	special_area_types = list(/area/station/medical/storage)
 
-/datum/event/roundstart/area/replace/med_storage/setup()
+/datum/event/aspect/area/replace/med_storage/setup()
 	. = ..()
 	random_replaceable_types = typesof(/obj/item/weapon/storage/firstaid)
 

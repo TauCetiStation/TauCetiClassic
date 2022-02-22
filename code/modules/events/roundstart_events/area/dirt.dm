@@ -1,8 +1,8 @@
-/datum/event/roundstart/area/dirt/setup()
+/datum/event/aspect/area/dirt/setup()
 	num_rand_areas = rand(2, 5)
 	. = ..()
 
-/datum/event/roundstart/area/dirt/start()
+/datum/event/aspect/area/dirt/start()
 	var/list/black_types = list(
 	/obj/effect/decal/cleanable/cellular/bluespace, /obj/effect/decal/cleanable/cellular/necro,
 	/obj/effect/decal/cleanable/bluespace, /obj/effect/decal/cleanable/blood/trail_holder,

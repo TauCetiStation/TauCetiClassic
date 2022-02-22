@@ -22,10 +22,10 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/Initialize()
 	var/list/black_types = list(
 			/datum/event/anomaly,
-			/datum/event/roundstart,
-			/datum/event/roundstart/area,
-			/datum/event/roundstart/area/replace,
-			/datum/event/roundstart/area/maintenance_spawn,
+			/datum/event/aspect,
+			/datum/event/aspect/area,
+			/datum/event/aspect/area/replace,
+			/datum/event/aspect/area/maintenance_spawn,
 	)
 	allEvents = subtypesof(/datum/event) - black_types
 	return ..()
