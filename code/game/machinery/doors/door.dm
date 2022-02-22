@@ -412,10 +412,16 @@ var/global/list/wedge_image_cache = list()
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/proc/on_wedge_destroy()
+	UnregisterSignal(wedged_item, list(COMSIG_PARENT_QDELETING))
+	wedged_item = null
+	update_icon()
+
 /obj/machinery/door/proc/force_wedge_item(obj/item/I)
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)
@@ -457,6 +463,8 @@ var/global/list/wedge_image_cache = list()
 	if(user)
 		user.put_in_hands(wedged_item)
 		to_chat(user, "<span class='notice'>You took [wedged_item] out of [src].</span>")
+
+	UnregisterSignal(wedged_item, list(COMSIG_PARENT_QDELETING))
 	wedged_item = null
 	update_icon()
 
