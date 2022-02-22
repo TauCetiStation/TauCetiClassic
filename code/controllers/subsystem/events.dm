@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(events)
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_ROUNDSTART = new/datum/event_container/roundstart,
+			EVENT_LEVEL_FEATURE    = new/datum/event_container/feature,
 			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
 			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
 			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(events)
 		EC.process()
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
-	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
+	var/datum/event_container/feature/EC = event_containers[EVENT_LEVEL_FEATURE]
 	for(var/i in 1 to rand(1, 3))
 		EC.start_event()
 
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(events)
 	if(!E.severity)
 		theseverity = EVENT_LEVEL_MODERATE
 
-	if(E.severity != EVENT_LEVEL_ROUNDSTART && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
+	if(E.severity != EVENT_LEVEL_FEATURE && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
 		theseverity = EVENT_LEVEL_MODERATE //just to be careful
 
 	if(E.severity)
