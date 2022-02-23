@@ -491,7 +491,13 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	remove_from_mob(item)
+	if(item.loc == src)
+		// Holder and the mob holding it.
+		item.jump_from_contents(rec_level=2)
+		if(!isturf(item.loc))
+			return
+		if(!remove_from_mob(item, item.loc))
+			return
 
 	//actually throw it!
 	if (item)

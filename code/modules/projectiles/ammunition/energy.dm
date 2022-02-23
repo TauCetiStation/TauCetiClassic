@@ -12,6 +12,9 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/cyborg
+	e_cost = 250
+
 /obj/item/ammo_casing/energy/laser_pulse
 	projectile_type = /obj/item/projectile/energy/laser
 	select_name = "kill"

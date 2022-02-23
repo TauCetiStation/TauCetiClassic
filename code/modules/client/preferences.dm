@@ -130,6 +130,9 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/sec_record = ""
 	var/gen_record = ""
 
+	// Qualities
+	var/have_quality = FALSE
+
 	// Quirk list
 	var/list/positive_quirks = list()
 	var/list/negative_quirks = list()
