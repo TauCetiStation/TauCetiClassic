@@ -52,7 +52,7 @@
 
 /datum/quality/wonder_doctor/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>В твоем кармане лежит фиолетовая таблетка, которая способна излечить любые раны... как жаль, что в ней лишь одна единица вещества.</span>")
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/adminodrazine(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/pill/adminodrazine(H), SLOT_L_STORE)
 
 
 /datum/quality/prepared
@@ -60,7 +60,7 @@
 	requirement = "Нет."
 
 /datum/quality/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
 
 
 /datum/quality/disguise
@@ -71,8 +71,8 @@
 
 /datum/quality/disguise/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Карта в твоих руках способна менять свой внешний вид и имя владельца, а одежда в коробке заменит целый гардероб.</span>")
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
-	H.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
+	H.equip_or_collect(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
 
 
 /datum/quality/clumsy
