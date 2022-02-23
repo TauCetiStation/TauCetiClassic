@@ -81,7 +81,7 @@
 	icon = 'icons/mob/talk.dmi'
 	icon_state = "default0"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	layer = MOB_LAYER + 1
 
 /obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)

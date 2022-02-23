@@ -34,21 +34,15 @@
 
 /obj/structure/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.forceMove(loc)
-				AM.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.forceMove(loc)
-					AM.ex_act(severity++)
-				qdel(src)
 				return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			return
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
+		AM.ex_act(severity++)
+	qdel(src)
 
 /obj/structure/proc/climb_on()
 

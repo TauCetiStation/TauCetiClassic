@@ -4,6 +4,11 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
+// Define for coders.
+// If you want switch conditions to be fully specified in the switch body
+// and at the same time the empty condition do nothing.
+#define SWITCH_PASS ;
+
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"

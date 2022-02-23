@@ -61,7 +61,7 @@
 /obj/item/projectile/bullet/revbullet/price = 120
 /obj/item/projectile/bullet/rifle1/price = 240
 /obj/item/projectile/bullet/rifle2/price = 240
-/obj/item/projectile/bullet/stunslug/price = 65
+/obj/item/projectile/bullet/stunshot/price = 65
 /obj/item/projectile/bullet/weakbullet/price = 27
 /obj/item/projectile/missile/price = 1300
 
@@ -278,7 +278,7 @@
 /obj/item/weapon/rcd_ammo/price = 1700
 /obj/item/weapon/retractor/price = 1250
 /obj/item/weapon/scalpel/price = 1250
-/obj/item/weapon/soap/nanotrasen/price = 222
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
 /obj/item/weapon/stamp/captain/price = 25000
 /obj/item/weapon/stamp/clown/price = 9900

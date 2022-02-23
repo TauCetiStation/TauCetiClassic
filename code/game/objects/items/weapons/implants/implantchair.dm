@@ -45,7 +45,7 @@
 
 
 /obj/machinery/implantchair/Topic(href, href_list)
-	if((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
+	if((get_dist(src, usr) <= 1) || isAI(usr))
 		if(href_list["implant"])
 			if(src.occupant)
 				injecting = 1
@@ -116,7 +116,7 @@
 
 
 /obj/machinery/implantchair/proc/implant(mob/M)
-	if (!istype(M, /mob/living/carbon))
+	if (!iscarbon(M))
 		return
 	for(var/obj/item/weapon/implant/mind_protect/mindshield/imp in implant_list)
 		visible_message("<span class='userdanger'>[M] has been implanted by the [src.name].</span>")

@@ -129,7 +129,7 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \

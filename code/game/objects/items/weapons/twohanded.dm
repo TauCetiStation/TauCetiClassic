@@ -55,7 +55,6 @@
 	var/wieldsound = 'sound/weapons/saberon.ogg'
 	var/unwieldsound = 'sound/weapons/saberoff.ogg'
 	var/hitsound_wielded = list('sound/weapons/blade1.ogg')
-	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1

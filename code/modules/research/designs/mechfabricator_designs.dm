@@ -952,6 +952,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_hud
+	name = "Cyborg Upgrade Module (Hud Module)"
+	id = "borg_upgrade_hud"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hud_calibrator
+	materials = list(MAT_METAL = 500, MAT_GLASS = 400)
+	construction_time = 80
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

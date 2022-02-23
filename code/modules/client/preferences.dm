@@ -76,6 +76,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/height = HUMANHEIGHT_MEDIUM			//height of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
@@ -128,6 +129,9 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
+
+	// Qualities
+	var/have_quality = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()
@@ -342,7 +346,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	character.gender = gender
 	character.age = age
+	character.height = height
 	character.b_type = b_type
+
+	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])

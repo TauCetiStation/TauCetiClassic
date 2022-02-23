@@ -622,7 +622,7 @@
 /area/space_structures/broken_breacher)
 "xe" = (
 /obj/structure/rack,
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /obj/item/clothing/under/bathtowel,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"

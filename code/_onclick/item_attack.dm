@@ -105,7 +105,7 @@
 					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if (isbrain(M))
 		messagesource = M:container
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
@@ -149,7 +149,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(isslimeadult(slime))
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)
@@ -257,7 +257,7 @@
 	else
 		switch(damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
+				if(isslime(src))
 					M.adjustBrainLoss(power)
 
 				else

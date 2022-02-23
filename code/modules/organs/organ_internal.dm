@@ -131,12 +131,16 @@
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
+	var/failing_interval = 1 MINUTE
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	heart_status = HEART_FAILURE
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
+		heart_status = HEART_FAILURE
+	else
+		take_damage(1, 0)
+		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
-	var/failing_interval = 1 MINUTE
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
@@ -362,7 +366,7 @@
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
 		explosion(T, 1, 0, 1, 1)
-		C.ex_act(1.0)
+		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"

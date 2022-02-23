@@ -51,7 +51,7 @@
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return PROJECTILE_ACTED
 
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		P.agony *= get_siemens_coefficient_organ(BP)
 		P.stun *= get_siemens_coefficient_organ(BP)
@@ -192,6 +192,8 @@
 		return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+
+	protection += BP.pumped * 0.3
 	for(var/gear in protective_gear)
 		if(gear && istype(gear ,/obj/item/clothing))
 			var/obj/item/clothing/C = gear

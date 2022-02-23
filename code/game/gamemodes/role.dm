@@ -256,7 +256,7 @@
 	else
 		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
-			if (!istype(M, /mob/living/carbon/brain))
+			if (isbrain(M))
 				flat.Turn(90)
 			var/icon/ded = icon('icons/effects/blood.dmi', "floor_old")
 			ded.Blend(flat, ICON_OVERLAY)

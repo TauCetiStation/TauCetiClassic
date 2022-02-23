@@ -31,7 +31,7 @@
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/H, mob/user)
-	if(!istype(H, /mob/living/carbon/human))//If target is not a human.
+	if(!ishuman(H))//If target is not a human.
 		return ..()
 
 	if(H.has_brain_worms()) //Borer stuff - RR

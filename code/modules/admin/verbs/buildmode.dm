@@ -73,37 +73,42 @@
 	screen_loc = "NORTH,WEST+1"
 
 /obj/effect/bmode/buildhelp/Click()
+	var/msg
 	switch(master.cl.buildmode)
 		if(1)
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button + alt  = Airlock</span>")
-			to_chat(usr, "")
-			to_chat(usr, "<span class='notice'>Use the button in the upper left corner to</span>")
-			to_chat(usr, "<span class='notice'>change the direction of built objects.</span>")
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
+			msg = "<span class='notice'>***********************************************************</span><br>" + \
+				"<span class='notice'>Left Mouse Button        = Construct / Upgrade</span><br>" + \
+				"<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span><br>" + \
+				"<span class='notice'>Left Mouse Button + ctrl = R-Window</span><br>" + \
+				"<span class='notice'>Left Mouse Button + alt  = Airlock</span><br>" + \
+				"<br>" + \
+				"<span class='notice'>Use the button in the upper left corner to</span><br>" + \
+				"<span class='notice'>change the direction of built objects.</span><br>" + \
+				"<span class='notice'>***********************************************************</span><br>"
 		if(2)
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button                     = Delete objects</span>")
-			to_chat(usr, "")
-			to_chat(usr, "<span class='notice'>Use the button in the upper left corner to</span>")
-			to_chat(usr, "<span class='notice'>change the direction of built objects.</span>")
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
+			msg = "<span class='notice'>***********************************************************</span><br>" + \
+				"<span class='notice'>Right Mouse Button on buildmode button = Set object type</span><br>" + \
+				"<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span><br>" + \
+				"<span class='notice'>Right Mouse Button                     = Delete objects</span><br>" + \
+				"<br>" + \
+				"<span class='notice'>Use the button in the upper left corner to</span><br>" + \
+				"<span class='notice'>change the direction of built objects.</span><br>" + \
+				"<span class='notice'>***********************************************************</span><br>"
 		if(3)
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span>")
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
+			msg = "<span class='notice'>***********************************************************</span><br>" + \
+				"<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span><br>" + \
+				"<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span><br>" + \
+				"<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span><br>" + \
+				"<span class='notice'>***********************************************************</span><br>"
 		if(4)
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
-			to_chat(usr, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>")
-			to_chat(usr, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>")
-			to_chat(usr, "<span class='notice'>***********************************************************</span>")
+			msg = "<span class='notice'>***********************************************************</span><br>" + \
+				"<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span><br>" + \
+				"<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span><br>" + \
+				"<span class='notice'>***********************************************************</span><br>"
+	
+	if(msg)
+		to_chat(usr, msg)
+	
 	return 1
 
 /obj/effect/bmode/buildquit

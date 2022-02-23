@@ -29,6 +29,8 @@
 	beauty_living = 0
 	beauty_dead = -1500
 
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -215,7 +217,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			if (!prob(getarmor(null, "bomb")))
 				gib()
@@ -227,7 +229,7 @@
 //				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				//user.throw_at(target, 200, 4)
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 			if (!shielded)
 				b_loss += 60
 
@@ -243,7 +245,7 @@
 			if (prob(70) && !shielded)
 				Paralyse(10)
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -475,9 +477,8 @@
 		dat += "&nbsp;<A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags & ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A></td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>ID:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_ID]'>[(wear_id && !(wear_id.flags & ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A></td></tr>"
 		if(suit)
-			if(suit.accessories.len)
-				for(var/obj/item/I in suit.accessories)
-					dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
+			for(var/obj/item/I in suit.accessories)
+				dat += "<tr><td>&nbsp;&#8627;<B>[I.name]:</B></td><td><A href='?src=\ref[src];accessory=\ref[I];suit_accessory=\ref[suit]'>Remove Accessory</A></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
@@ -623,7 +624,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(5, 5)
+	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -806,10 +807,10 @@
 										PDA_Manifest.Cut()
 
 									spawn()
-										if(istype(usr,/mob/living/carbon/human))
+										if(ishuman(usr))
 											var/mob/living/carbon/human/U = usr
 											U.handle_regular_hud_updates()
-										if(istype(usr,/mob/living/silicon/robot))
+										if(isrobot(usr))
 											var/mob/living/silicon/robot/U = usr
 											U.handle_regular_hud_updates()
 
@@ -873,10 +874,10 @@
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(ishuman(usr))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
-								if(istype(usr,/mob/living/silicon/robot))
+								if(isrobot(usr))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
@@ -1389,6 +1390,13 @@
 		if(species.language)
 			remove_language(species.language)
 
+		if(species.additional_languages)
+			for(var/A in species.additional_languages)
+				remove_language(A)
+
+		if(client?.prefs.language)
+			remove_language(client.prefs.language)
+
 		species.on_loose(src, new_species)
 
 	species = all_species[new_species]
@@ -1883,7 +1891,9 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	I = update_height(I)
+	flick_overlay(I, viewing, anim_duration)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 

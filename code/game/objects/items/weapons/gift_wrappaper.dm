@@ -71,7 +71,7 @@
 		/obj/item/weapon/storage/fancy/crayons,
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
-		/obj/item/weapon/soap/deluxe,
+		/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 		/obj/item/weapon/pickaxe/silver,
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
@@ -179,7 +179,7 @@
 		to_chat(user, "<span class='notice'>There is about [amount] square units of paper left!</span>")
 
 /obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
-	if (!istype(target, /mob/living/carbon/human)) return
+	if (!ishuman(target)) return
 	var/mob/living/carbon/human/H = target
 
 	if (H.incapacitated())

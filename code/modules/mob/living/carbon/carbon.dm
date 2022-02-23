@@ -17,6 +17,59 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+/mob/living/carbon/calculate_affecting_pressure(pressure)
+	return pressure
+
+/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
+	if(!environment)
+		return
+
+	var/pressure = environment.return_pressure()
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+
+	if(!on_fire)
+		if(affecting_temp > BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
+		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
+		else
+			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+
+	if(flags & GODMODE)
+		clear_alert("temp")
+		clear_alert("pressure")
+		return
+
+	switch(bodytemperature)
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_3)
+		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
+			clear_alert("temp")
+		else
+			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_3)
+
+	//Account for massive pressure differences
+	switch(adjusted_pressure)
+		if(HAZARD_HIGH_PRESSURE to INFINITY)
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
+		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+			clear_alert("pressure")
+		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+		else
+			if( !(COLD_RESISTANCE in mutations) )
+				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+			else
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(. && !ISDIAGONALDIR(Dir))
@@ -72,7 +125,7 @@
 /mob/living/carbon/MiddleClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -81,7 +134,7 @@
 /mob/living/carbon/AltClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -197,7 +250,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health >= config.health_threshold_crit)
-		if(src == M && istype(src, /mob/living/carbon/human))
+		if(src == M && ishuman(src))
 			var/mob/living/carbon/human/H = src
 			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
@@ -252,7 +305,7 @@
 				t_him = "him"
 			else if (src.gender == FEMALE)
 				t_him = "her"
-			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			if (ishuman(src) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
@@ -283,7 +336,7 @@
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else switch(M.get_targetzone())
-				if(BP_R_ARM || BP_L_ARM)
+				if(BP_R_ARM, BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
 				if(BP_HEAD)
@@ -417,7 +470,7 @@
 	if(!item)
 		return
 
-	if(istype(item, /obj/item))
+	if(isitem(item))
 		var/obj/item/W = item
 		if(!W.canremove || W.flags & NODROP)
 			return
@@ -438,7 +491,13 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	remove_from_mob(item)
+	if(item.loc == src)
+		// Holder and the mob holding it.
+		item.jump_from_contents(rec_level=2)
+		if(!isturf(item.loc))
+			return
+		if(!remove_from_mob(item, item.loc))
+			return
 
 	//actually throw it!
 	if (item)
@@ -902,6 +961,7 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+			AdjustDrunkenness(-toxins_puked * 2)
 
 /mob/living/carbon/update_stat()
 	if(stat == DEAD)
@@ -943,7 +1003,7 @@
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8
 		if(!druggy)
-			see_invisible = SEE_INVISIBLE_LEVEL_TWO	
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
