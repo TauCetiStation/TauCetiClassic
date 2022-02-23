@@ -916,7 +916,7 @@ body
 		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
 		if(!quality_type)
 			return
-		SSqualities.force_give_quality(H, quality_type)
+		SSqualities.force_give_quality(H, quality_type, usr)
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

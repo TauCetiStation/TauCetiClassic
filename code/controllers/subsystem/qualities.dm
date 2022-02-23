@@ -78,10 +78,9 @@ SUBSYSTEM_DEF(qualities)
 	if(quality.satisfies_requirements(H, latespawn))
 		quality.add_effect(H, latespawn)
 
-/datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, quality_type)
+/datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, quality_type, mob/admin)
 	var/datum/quality/quality = qualities_pool[quality_type]
 	if(quality.satisfies_requirements(H, FALSE))
 		quality.add_effect(H, FALSE)
 	else
-		if(istype(usr, /client) )
-			to_chat(usr, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")
+		to_chat(admin, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")
