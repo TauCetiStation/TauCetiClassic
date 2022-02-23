@@ -6,7 +6,7 @@
 
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "hudrevolutionary"
-	skills_type = /datum/skills/revolutionary
+	skillset = /datum/skills/revolutionary
 
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())
@@ -39,7 +39,7 @@
 	antag_hud_name = "hudheadrevolutionary"
 
 	var/rev_cooldown = 0
-	skills_type = /datum/skills/traitor
+	skillset = /datum/skills/traitor
 
 /datum/role/rev_leader/New()
 	..()
