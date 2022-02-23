@@ -89,11 +89,11 @@
 		H.remove_language(language)
 
 
-/datum/quality/monolingual
+/datum/quality/patriot
 	desc = "Ты знаешь только один язык. И всегда будешь говорить только на нём."
 	requirement = "Нет."
 
-/datum/quality/monolingual/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/patriot/add_effect(mob/living/carbon/human/H, latespawn)
 	if(length(H.languages) == 0)
 		return
 
