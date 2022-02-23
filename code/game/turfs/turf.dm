@@ -459,48 +459,6 @@
 		blooddatum = new /datum/dirt_cover/red_blood
 	tracks.AddTracks(bloodDNA, comingdir, goingdir, blooddatum)
 
-/turf/Entered(atom/movable/AM, atom/oldLoc)
-	if (istype(AM, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/Hulk = AM
-		if(!(flags & NOSTEPSOUND) && !Hulk.lying)
-			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-		return ..()
-	
-	if (!iscarbon(AM))
-		return ..()
-
-	var/mob/living/carbon/M = AM
-
-	if(M.lying && !M.crawling)
-		return ..()
-
-	var/turf/from = oldLoc
-
-	// check if oldLoc is turf, oldLoc touches src (l1==1) and at least one doesn't have the NOBLOODY flag
-	if (!isturf(from) || (abs(from.x - src.x) + abs(from.y - src.y)) != 1 || ((flags & NOBLOODY) && (from.flags & NOBLOODY)))
-		return ..()
-
-	// Tracking blood
-	var/list/bloodDNA = null
-	var/datum/dirt_cover/blooddatum
-	if(M.shoes)
-		var/obj/item/clothing/shoes/S = M.shoes
-		if(S.track_blood && S.blood_DNA)
-			bloodDNA   = S.blood_DNA
-			blooddatum = new/datum/dirt_cover(S.dirt_overlay)
-			S.track_blood--
-	else
-		if(M.track_blood && M.feet_blood_DNA)
-			bloodDNA   = M.feet_blood_DNA
-			blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
-			M.track_blood--
-
-	if (bloodDNA)
-		AddTracks(M, bloodDNA, M.dir, 0, blooddatum) // Coming
-		from.AddTracks(M, bloodDNA, 0, M.dir, blooddatum) // Going
-
-	..()
-
 //returns 1 if made bloody, returns 0 otherwise
 /turf/add_blood(mob/living/carbon/human/M)
 	if (!..())
