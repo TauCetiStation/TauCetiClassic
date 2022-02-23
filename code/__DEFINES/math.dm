@@ -214,5 +214,5 @@ var/global/normal_next
 // Linear conversion from range of [minx, maxx] to [miny, maxy] regarding the value x. Clamps excesses.
 #define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) clamp(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)
 
-//returns y = multiplier*x^2 + pike
+//A parabola y = multiplier*x^2 + pike
 #define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))
