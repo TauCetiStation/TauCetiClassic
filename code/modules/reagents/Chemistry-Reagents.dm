@@ -30,7 +30,7 @@
 	var/color_weight = 1
 
 	// Whether this reagent can produce an allergy.
-	var/allergen = list(
+	var/list/allergen = list(
 		ALLERGY_SKIN = TRUE,
 		ALLERGY_INGESTION = TRUE,
 	)
