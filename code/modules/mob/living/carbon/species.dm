@@ -27,7 +27,9 @@
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
-	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
+	// Additional languages, to the primary. These can not be the forced ones.
+	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
+	var/list/additional_languages = list()
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.

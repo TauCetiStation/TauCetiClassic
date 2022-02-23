@@ -281,15 +281,15 @@
 
 /obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
 	//full set of languages
-	R.add_language(LANGUAGE_SOLCOMMON, 1)
-	R.add_language(LANGUAGE_SINTAUNATHI, 1)
-	R.add_language(LANGUAGE_SIIKMAAS, 1)
-	R.add_language(LANGUAGE_SIIKTAJR, 0)
-	R.add_language(LANGUAGE_SKRELLIAN, 1)
-	R.add_language(LANGUAGE_ROOTSPEAK, 1)
-	R.add_language(LANGUAGE_TRADEBAND, 1)
-	R.add_language(LANGUAGE_TRINARY, 1)
-	R.add_language(LANGUAGE_GUTTER, 1)
+	R.add_language(LANGUAGE_SOLCOMMON)
+	R.add_language(LANGUAGE_SINTAUNATHI)
+	R.add_language(LANGUAGE_SIIKMAAS)
+	R.add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	R.add_language(LANGUAGE_SKRELLIAN)
+	R.add_language(LANGUAGE_ROOTSPEAK)
+	R.add_language(LANGUAGE_TRADEBAND)
+	R.add_language(LANGUAGE_TRINARY)
+	R.add_language(LANGUAGE_GUTTER)
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -335,14 +335,14 @@
 	//basic set+Sy-Code
 	. = ..()
 
-	R.add_language(LANGUAGE_SYCODE, TRUE)
+	R.add_language(LANGUAGE_SYCODE)
 
 /obj/item/weapon/robot_module/syndidrone
 	name = "syndicate drone module"
 
 /obj/item/weapon/robot_module/syndidrone/add_languages(mob/living/silicon/robot/R)
 	. = ..()
-	R.add_language(LANGUAGE_SYCODE, TRUE)
+	R.add_language(LANGUAGE_SYCODE)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"

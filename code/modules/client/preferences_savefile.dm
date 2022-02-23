@@ -82,7 +82,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = A.name
 
 			var/datum/language/lang = all_languages[language]
-			if(!(species in lang.allowed_species))
+			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
 

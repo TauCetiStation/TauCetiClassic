@@ -22,3 +22,6 @@
 #define LANGUAGE_XENOMORPH "Xenomorph language"
 // ё priovioiols!
 #define LANGUAGE_SHKIONDIONIOVIOION "Shkёndёnёvёёn"
+
+#define LANGUAGE_CAN_UNDERSTAND 0
+#define LANGUAGE_CAN_SPEAK 1

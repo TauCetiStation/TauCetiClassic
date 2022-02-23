@@ -249,7 +249,7 @@
 		qdel(L)
 
 	for(var/datum/language/L in languages)
-		adult.add_language(L.name)
+		adult.add_language(L.name, languages[L])
 	adult.regenerate_icons()
 
 	adult.name = "diona ([rand(100,999)])"
@@ -284,7 +284,7 @@
 	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
-		languages |= L
+		add_language(L.name)
 
 	spawn(25)
 		update_progression()
