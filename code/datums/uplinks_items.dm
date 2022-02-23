@@ -336,7 +336,7 @@
 	name = "Standard Armor Set"
 	desc = "A set of basic armor to protect against enemies"
 	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
-	cost = 5
+	cost = 10
 	uplink_types = list("dealer")
 
 /datum/uplink_item/dangerous/mine
