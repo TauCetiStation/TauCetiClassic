@@ -93,6 +93,7 @@
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
+	global.allergen_reagents_list = list()
 	for(var/path in subtypesof(/datum/reagent))
 		var/datum/reagent/D = new path()
 		global.chemical_reagents_list[D.id] = D
