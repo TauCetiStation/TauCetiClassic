@@ -79,7 +79,7 @@
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
 	requirement = "Все, кроме Клоуна."
 
-/datum/quality/clumsy/restriction_check(mob/living/carbon/human/H, latespawn)
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
@@ -134,7 +134,7 @@
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
 	requirement = "Унатх."
 
-	jobs_required = list(UNATHI)
+	species_required = list(UNATHI)
 
 /datum/quality/cultural_heritage/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/space/unathi/breacher(H), SLOT_WEAR_SUIT)
