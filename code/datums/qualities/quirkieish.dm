@@ -73,7 +73,7 @@
 	desc = "В баре тебе удалось подслушать странный разговор о каких-то кодовых словах."
 	requirement = "Все, кроме охраны, Капитана и ХоПа."
 
-/datum/quality/informed/restriction_check(mob/living/carbon/human/H, latespawn)
+/datum/quality/informed/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
 	return !(H.mind.assigned_role in funpolice)
 
