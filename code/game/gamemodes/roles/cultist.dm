@@ -12,7 +12,7 @@
 	logo_state = "cult-logo"
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
-	skills_type = /datum/skills/cultist
+	skillset = /datum/skills/cultist
 
 /datum/role/cultist/CanBeAssigned(datum/mind/M, laterole)
 	if(laterole == FALSE) // can be null
@@ -93,4 +93,4 @@
 	antag_hud_name = "hudheadcultist"
 
 	holy_rank = CULT_ROLE_MASTER
-	skills_type = /datum/skills/cultist/leader
+	skillset = /datum/skills/cultist/leader

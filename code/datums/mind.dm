@@ -61,7 +61,7 @@
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
 	//skills
-	var/datum/skills/original_skills
+	var/list/skillsets = list()
 	var/datum/skills/current_skills
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
@@ -109,28 +109,23 @@
 				return G
 			break
 /datum/mind/proc/getSkillRating(skill)
-	if(issilicon(usr)) return getSkillMaximum(skill);
+	if(issilicon(usr))
+		return getSkillMaximum(skill);
 	if(!current_skills)
-		current_skills = original_skills
+		current_skills = getAvailableSkills()
 	var/datum/skills/available_skills = getAvailableSkills()
 	return min(current_skills.getRating(skill), available_skills.getRating(skill))
 
 /datum/mind/proc/getAvailableSkills()
-	var/datum/skills/available_skills = original_skills
-	if(antag_roles.len)
-		for(var/role in antag_roles)
-			var/datum/role/R = antag_roles[role]
-			var/datum/skills = R.return_skills_type()
-			available_skills = available_skills.mergeSkills(skills)
-	
-	var/datum/role/changeling/Host = GetRoleByType(/datum/role/changeling)
-	if(!Host)
-		return available_skills
-	for(var/mob/living/parasite/essence/E in Host.essences)
-		var/datum/skills = E.mind.getAvailableSkills()
-		available_skills = available_skills.mergeSkills(skills)
-	
+	var/datum/skills/available_skills = skillsets[1]
+	for(var/skillset in skillsets)
+		available_skills = available_skills.mergeSkills(skillset)
 	return available_skills
+
+/datum/mind/proc/removeSkillSet(datum/skills/skillset)
+	for(var/datum/skills/s in skillsets)
+		if(s.tag == skillset.tag)
+			skillsets.Remove(s)
 
 /datum/mind/proc/changeSkillValue(skill,value)
 	var/datum/skills/available_skills = getAvailableSkills()
@@ -670,7 +665,7 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
-		mind.original_skills = new /datum/skills()
+		mind.skillsets = list(new /datum/skills())
 		if(SSticker)
 			SSticker.minds += mind
 		else

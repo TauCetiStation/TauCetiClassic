@@ -34,7 +34,7 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
-	var/datum/skills/skills_type = /datum/skills
+	var/datum/skills/skillset = /datum/skills
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
@@ -64,6 +64,7 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
+	M.skillsets += new skillset()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -85,6 +86,8 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	M.removeSkillSet(new skillset())
+
 	remove_antag_hud()
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
@@ -444,6 +447,3 @@
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
 		set_antag_hud(antag.current, null)
-
-/datum/role/proc/return_skills_type()
-	return new skills_type()
