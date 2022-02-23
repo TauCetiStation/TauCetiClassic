@@ -82,7 +82,8 @@
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	if (H.mind)
-		H.mind.original_skills = getSkillsType(return_skills_type(H,alt_title))
+		var/skillset = getSkillsType(return_skill_set(H,alt_title))
+		H.mind.skillsets += skillset
 	post_equip(H, visualsOnly)
 	return TRUE
 
@@ -179,7 +180,7 @@
 /datum/job/proc/map_check()
 	return TRUE
 
-/datum/job/proc/return_skills_type(mob/living/carbon/human/H, alt_title)
+/datum/job/proc/return_skill_set(mob/living/carbon/human/H, alt_title)
 	if(H.mind)
 		if(alt_titles && H.mind.role_alt_title)
 			return skill_sets[H.mind.role_alt_title] || skill_sets[title]
