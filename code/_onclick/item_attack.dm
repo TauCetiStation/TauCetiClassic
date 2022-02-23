@@ -132,11 +132,11 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
-	if(ishuman(user) && damtype == "brute")
+	if(ishuman(user) && damtype == BRUTE)
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
-			power += clamp(round((1 - (force / 10) ** 2) * (BP.pumped / 10)), 0, 6) //Cool Graph 1 is +6, 5 is +4, 10 is +0
+			power += Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(force, BP.pumped)
 	if(HULK in user.mutations)
 		power *= 2
 
@@ -281,3 +281,6 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return TRUE
+
+datum/proc/Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(Force, Pumped)
+	return clamp(round((1 - (Force / 10) ** 2) * (Pumped / 10)), 0, 6)
