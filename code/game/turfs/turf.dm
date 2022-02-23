@@ -459,38 +459,45 @@
 		blooddatum = new /datum/dirt_cover/red_blood
 	tracks.AddTracks(bloodDNA, comingdir, goingdir, blooddatum)
 
-/turf/Entered(atom/A, atom/OL)
-	if (istype(A, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/Hulk = A
+/turf/Entered(atom/movable/AM, atom/oldLoc)
+	if (istype(AM, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/Hulk = AM
 		if(!(flags & NOSTEPSOUND) && !Hulk.lying)
 			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-	else if (iscarbon(A))
-		var/mob/living/carbon/M = A
-		if(M.lying && !M.crawling)
-			return
+		return ..()
+	
+	if (!iscarbon(AM))
+		return ..()
 
-		// Tracking blood
-		var/list/bloodDNA = null
-		var/datum/dirt_cover/blooddatum
-		if(M.shoes)
-			var/obj/item/clothing/shoes/S = M.shoes
-			if(S.track_blood && S.blood_DNA)
-				bloodDNA   = S.blood_DNA
-				blooddatum = new/datum/dirt_cover(S.dirt_overlay)
-				S.track_blood--
-		else
-			if(M.track_blood && M.feet_blood_DNA)
-				bloodDNA   = M.feet_blood_DNA
-				blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
-				M.track_blood--
+	var/mob/living/carbon/M = AM
 
-		if (bloodDNA)
-			AddTracks(M, bloodDNA, M.dir, 0, blooddatum) // Coming
-			var/turf/from = get_step(M, reverse_dir[M.dir])
-			if(istype(from) && from)
-				from.AddTracks(M, bloodDNA, 0, M.dir, blooddatum) // Going
+	if(M.lying && !M.crawling)
+		return ..()
 
-			bloodDNA = null
+	var/turf/from = oldLoc
+
+	// check if oldLoc is turf, oldLoc touches src (l1==1) and at least one doesn't have the NOBLOODY flag
+	if (!isturf(from) || (abs(from.x - src.x) + abs(from.y - src.y)) != 1 || ((flags & NOBLOODY) && (from.flags & NOBLOODY)))
+		return ..()
+
+	// Tracking blood
+	var/list/bloodDNA = null
+	var/datum/dirt_cover/blooddatum
+	if(M.shoes)
+		var/obj/item/clothing/shoes/S = M.shoes
+		if(S.track_blood && S.blood_DNA)
+			bloodDNA   = S.blood_DNA
+			blooddatum = new/datum/dirt_cover(S.dirt_overlay)
+			S.track_blood--
+	else
+		if(M.track_blood && M.feet_blood_DNA)
+			bloodDNA   = M.feet_blood_DNA
+			blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
+			M.track_blood--
+
+	if (bloodDNA)
+		AddTracks(M, bloodDNA, M.dir, 0, blooddatum) // Coming
+		from.AddTracks(M, bloodDNA, 0, M.dir, blooddatum) // Going
 
 	..()
 
