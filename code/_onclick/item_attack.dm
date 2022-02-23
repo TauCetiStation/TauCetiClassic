@@ -282,5 +282,5 @@
 	SSdemo.mark_dirty(user)
 	return TRUE
 
-datum/proc/Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(Force, Pumped)
+/datum/proc/Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(Force, Pumped)
 	return clamp(round((1 - (Force / 10) ** 2) * (Pumped / 10)), 0, 6)
