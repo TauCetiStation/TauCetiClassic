@@ -85,8 +85,8 @@
 	requirement = "Нет."
 
 /datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
-	for(var/language in H.languages)
-		H.remove_language(language)
+	for(var/datum/language/language as anything in H.languages)
+		H.remove_language(language.name)
 
 
 /datum/quality/patriot
@@ -99,10 +99,10 @@
 
 	H.forced_language = pick(H.languages)
 
-	for(var/language in H.languages)
+	for(var/datum/language/language as anything in H.languages)
 		if(language == H.forced_language)
 			continue
-		H.remove_language(language)
+		H.remove_language(language.name)
 
 
 /datum/quality/shkiondioniovioion
@@ -113,10 +113,10 @@
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
 	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
 
-	for(var/language in H.languages)
+	for(var/datum/language/language as anything in H.languages)
 		if(language == H.forced_language)
 			continue
-		H.remove_language(language)
+		H.remove_language(language.name)
 
 
 /datum/quality/clumsy
