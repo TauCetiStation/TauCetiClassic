@@ -328,13 +328,9 @@
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/light_armor/dealer
-  name = "Armor Set"
-  desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
-  item = /obj/item/weapon/storage/box/syndie_kit/light_armor
-  cost = 12
-  uplink_types = list("dealer")
-
-  need_wanted_level = 5
+	cost = 12
+	uplink_types = list("dealer")
+	need_wanted_level = 5
 
 /datum/uplink_item/dangerous/cheap_armor
 	name = "Standard Armor Set"
