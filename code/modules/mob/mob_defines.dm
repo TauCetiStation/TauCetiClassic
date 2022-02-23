@@ -90,6 +90,7 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
+	var/was_lying = FALSE //For user of clown pda slippery
 	var/lying_current = 0
 	var/crawling = 0 //For crawling
 	var/canmove = 1
