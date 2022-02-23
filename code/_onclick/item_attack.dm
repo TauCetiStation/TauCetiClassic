@@ -136,7 +136,7 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
-			power += Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(force, BP.pumped)
+			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped / 10)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
 	if(HULK in user.mutations)
 		power *= 2
 
@@ -281,6 +281,3 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return TRUE
-
-/datum/proc/Anti_Ushaped_Parabola_Pike_0_1_Touches_Absciss_10_0(Force, Pumped)
-	return clamp(round((1 - (Force / 10) ** 2) * (Pumped / 10)), 0, 6)
