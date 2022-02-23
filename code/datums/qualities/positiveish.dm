@@ -209,3 +209,13 @@
 
 /datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
+
+/datum/quality/crusader
+	desc = "Dominus concessit vos arma! DEUS VULT!"
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
