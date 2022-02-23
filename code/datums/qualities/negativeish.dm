@@ -79,40 +79,37 @@
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
-/datum/quality/blackened
-	desc = "Перед вылетом на станцию тебя облили чёрной краской."
-	requirement = "Быть белым."
+/datum/quality/dirty
+	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, полностью пропитавшись этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
+	requirement = "Быть чистым. (Требований нет)"
 
-/datum/quality/blackened/satisfies_availability(client/C)
-	if(!..())
-		return FALSE
-	// min: -185, max: 34
-	if(C.prefs.s_tone > -85)
-		return TRUE
-	return FALSE
+/datum/quality/dirty/add_effect(mob/living/carbon/human/H, latespawn)
+	var/datum/dirt_cover/mud/dirt_config = new
+	var/dirt_r = HEX_VAL_RED(dirt_config.color)
+	var/dirt_g = HEX_VAL_GREEN(dirt_config.color)
+	var/dirt_b = HEX_VAL_BLUE(dirt_config.color)
 
-/datum/quality/blackened/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	if(!..())
-		return FALSE
-	if(H.s_tone > -85)
-		return TRUE
-	return FALSE
-
-/datum/quality/blackened/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/obj/O in H.get_all_slots())
-		O.color = "#4d220e"
+		O.add_dirt_cover(dirt_config)
 
+	var/list/dirt_DNA = list("UNKNOWN DNA" = "X*")
+	H.blood_DNA = dirt_DNA
+	H.hand_dirt_datum = new /datum/dirt_cover(dirt_config)
+	H.feet_blood_DNA = dirt_DNA
+	H.feet_dirt_color = new /datum/dirt_cover(dirt_config)
+
+	H.lip_style = "spray_face"
+	H.lip_color = dirt_config.color
+
+	H.dyed_r_hair = dirt_r
+	H.dyed_g_hair = dirt_g
+	H.dyed_b_hair = dirt_b
 	H.hair_painted = TRUE
-	H.s_tone = -185
-	H.r_skin = 0
-	H.g_skin = 0
-	H.b_skin = 0
-	H.r_hair = 0
-	H.g_hair = 0
-	H.b_hair = 0
-	H.r_facial = 0
-	H.g_facial = 0
-	H.b_facial = 0
+
+	H.dyed_r_facial = dirt_r
+	H.dyed_g_facial = dirt_g
+	H.dyed_b_facial = dirt_b
+	H.facial_painted = TRUE
 
 	H.apply_recolor()
 	H.update_body()
