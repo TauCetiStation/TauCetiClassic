@@ -488,12 +488,7 @@
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.slot_equipped)
-			var/prev_slot = I.slot_equipped
-			. = remove_from_mob(I, loc)
-			if(.)
-				update_inv_slot(prev_slot)
-
-			return
+			return drop_from_inventory(I, loc, putdown_anim=TRUE)
 
 	AM.forceMove(loc)
 	return TRUE

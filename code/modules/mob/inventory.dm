@@ -251,7 +251,7 @@ var/global/list/slot_equipment_priority = list(
 		return 0
 
 // Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0)
+/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0, putdown_anim=TRUE)
 	if(!W)
 		return FALSE
 
@@ -262,7 +262,7 @@ var/global/list/slot_equipment_priority = list(
 	if(!(W && W.loc))
 		return TRUE // self destroying objects (tk, grabs)
 
-	if(target && was_holding && target != src && target.loc != src)
+	if(target && putdown_anim && was_holding && target != src && target.loc != src)
 		INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
 
 	update_inv_slot(prev_slot)
