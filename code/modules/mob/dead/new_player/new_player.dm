@@ -217,11 +217,12 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+	SSjob.EquipRank(character, rank, 1)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
-
-	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
