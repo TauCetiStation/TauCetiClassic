@@ -166,17 +166,56 @@
 
 
 /datum/quality/polyglot
-	desc = "Ты знаешь все языки. Вот и всё, все."
-	requirement = "Мим, Библиотекарь, Агент Внутренних Дел."
-
-	jobs_required = list(
-		"Mime",
-		"Librarian",
-		"Internal Affairs Agent",
-	)
+	desc = "Ты знаешь все языки."
+	requirement = "Нет."
 
 /datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
-		if(H.get_species() in L.allowed_species)
+		if(H.get_species() in L.allowed_speak)
 			H.add_language(language)
+
+
+/datum/quality/freakish_linguist
+	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
+	requirement = "Мим."
+
+	jobs_required = list(
+		"Mime"
+	)
+
+/datum/quality/freakish_linguist/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/language in all_languages)
+		H.add_language(language)
+
+
+/datum/quality/traveler
+	desc = "Ты много где побывал, и понимаешь большинство существующих языков."
+	requirement = "Нет."
+
+/datum/quality/traveler/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/language in all_languages)
+		var/datum/language/L = all_languages[language]
+		if(L.flags & RESTRICTED)
+			continue
+		H.add_language(language, LANGUAGE_CAN_UNDERSTAND)
+
+
+/datum/quality/mutated_throat
+	desc = "Мутация в строении твоего речевого аппарата позволяет издавать удивительные звуки..."
+	requirement = "Нет."
+
+/datum/quality/mutated_throat/add_effect(mob/living/carbon/human/H, latespawn)
+	var/possibilities = list()
+	for(var/language in all_languages)
+		var/datum/language/L = all_languages[language]
+		if(L.flags & RESTRICTED)
+			continue
+		if(H.can_speak(L))
+			continue
+		possibilities += L.name
+
+	if(length(possibilities) == 0)
+		return
+
+	H.add_language(pick(possibilities))
