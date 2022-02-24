@@ -531,6 +531,9 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_GHOSTLY)
 
 /datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		return
+
 	var/spawnloc = pick(espionageagent_start)
 	espionageagent_start -= spawnloc
 
