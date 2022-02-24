@@ -384,7 +384,7 @@
 	pull()
 
 /datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
-	if(!istype(AM, /obj/item))
+	if(!isitem(AM))
 		return
 
 	var/mob/living/simple_animal/hostile/H = parent
@@ -397,6 +397,8 @@
 	set background = BACKGROUND_ENABLED
 
 	var/mob/living/simple_animal/hostile/H = parent
+	if(QDELETED(parent))
+		return
 
 	for(var/tile in spiral_range_turfs(grav_pull, H, 1))
 		var/turf/T = tile

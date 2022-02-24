@@ -63,8 +63,10 @@
 
 /obj/item/clothing/head/beret/sec/hos
 	name = "head of security's beret"
-	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station."
+	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station. Also has some space for special armor plate."
 	icon_state = "beret_hos"
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 // Engineering
 

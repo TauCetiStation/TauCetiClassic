@@ -160,7 +160,7 @@
 	D.makerandom()
 	D.infectionchance = rand(1,100)
 
-	if(istype(host,/mob/living/carbon/human))
+	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		if (H.species)
 			D.affected_species = list(H.species.name)
