@@ -10,43 +10,7 @@
 
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
 /mob/living/carbon/human/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
-	var/cloud_emote = ""
-	var/sound_priority = SOUND_PRIORITY_LOW
-	var/emote_sound
-	var/sound_frequency = null
-	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
-
-	var/mute_message = "" // high priority. usuially VISIBLE
-	var/muzzled_message = "" // medium priority. usually HEARABLE
-	var/miming_message = "" // low priority. usually VISIBLE
-
-	var/muted = HAS_TRAIT(src, TRAIT_MUTE)
-	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
-
-	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
-			I.trigger(act, src)
-
-	if(stat == DEAD && (act != "deathgasp"))
-		return
-
-	var/his_macro = "its" // maybe put it in a separate file and expand the variables in such cases? I don't know how to make it through the BYOND macro
-	switch(gender)
-		if(FEMALE)
-			his_macro = "her"
-		if(MALE)
-			his_macro = "his"
-		if(PLURAL)
-			his_macro = "their"
-	var/he_macro = "it" // this too
-	switch(gender)
-		if(FEMALE)
-			he_macro = "she"
-		if(MALE)
-			he_macro = "he"
-		if(PLURAL)
-			he_macro = "they"
 
 	switch(act)
 
@@ -216,30 +180,6 @@
 			muzzled_message = "makes a weak noise"
 
 // ========== HYBRID ==========
-
-		if ("laugh")
-			message_type = can_make_a_sound ? SHOWMSG_AUDIO : SHOWMSG_VISUAL
-			message = "laughs."
-			mute_message = "laughs silently."
-			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
-			miming_message = "acts out a laugh."
-			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE) && !species.flags[NO_BREATHE]
-			var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
-			sound_frequency = 1.05 - (voice_frequency - 0.85)
-			switch(get_species())
-				if(SKRELL)
-					switch(gender)
-						if(FEMALE)
-							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_FEMALE)
-						else
-							emote_sound = pick(SOUNDIN_LAUGH_SKRELL_MALE)
-				else
-					switch(gender)
-						if(FEMALE)
-							emote_sound = pick(SOUNDIN_LAUGH_FEMALE)
-						else
-							emote_sound = pick(SOUNDIN_LAUGH_MALE)
-
 
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
@@ -413,59 +353,10 @@
 		else
 			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
 			                                   Otherwise, you can perform your action via the \"F4\" button.</span>")
-
-	if(!conditions_for_emote) // = if(cant_make_an_emotion)
-		return auto ? FALSE : to_chat(src, "<span class='warning'>And how can I do that? I can't!</span>")
-
-	if(muted && mute_message)
-		message = mute_message
-	else if((muzzled || silent) && muzzled_message)
-		message = muzzled_message
-	else if(miming && miming_message)
-		message = miming_message
-
 	if(!message || !message_type)
 		return
 
-	if(message_type & SHOWMSG_VISUAL)
-		visible_message("<B>[src]</B> [message]", ignored_mobs = observer_list)
-	else if(message_type & SHOWMSG_AUDIO)
-		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
-			if(sound_priority == SOUND_PRIORITY_HIGH && next_high_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
-				next_high_priority_sound = world.time + 4 SECONDS
-				next_medium_priority_sound = next_high_priority_sound
-				next_low_priority_sound = next_high_priority_sound
-			else if(sound_priority == SOUND_PRIORITY_MEDIUM && next_medium_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
-				next_medium_priority_sound = world.time + 4 SECONDS
-				next_low_priority_sound = next_medium_priority_sound
-			else if(sound_priority == SOUND_PRIORITY_LOW && next_low_priority_sound < world.time)
-				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
-				next_low_priority_sound = world.time + 4 SECONDS
-			else
-				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
-		audible_message("<B>[src]</B> [message]", ignored_mobs = observer_list)
-
-	log_emote("[key_name(src)] : [message]")
-
-	for(var/mob/M as anything in observer_list)
-		if(!M.client)
-			continue // skip leavers
-		switch(M.client.prefs.chat_ghostsight)
-			if(CHAT_GHOSTSIGHT_ALL)
-				to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
-			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(!auto)
-					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
-
 	play_rock_paper_scissors_animation(act)
-
-	if(cloud_emote)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
-		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		flick_overlay(emote_bubble, clients, 30)
-		QDEL_IN(emote_bubble, 3 SECONDS)
 
 #undef SOUND_PRIORITY_LOW
 #undef SOUND_PRIORITY_MEDIUM
