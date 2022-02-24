@@ -52,7 +52,7 @@
 
 /datum/quality/wonder_doctor/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>В твоем кармане лежит фиолетовая таблетка, которая способна излечить любые раны... как жаль, что в ней лишь одна единица вещества.</span>")
-	H.equip_or_collect(new /obj/item/weapon/reagent_containers/pill/adminodrazine(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/pill/adminordrazine(H), SLOT_L_STORE)
 
 
 /datum/quality/prepared
