@@ -89,16 +89,15 @@
 
 	if(href_list["lobby_be_special"])
 		if(!client.prefs.have_quality)
-			if(tgui_alert(src, "Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.", "Особенность", list("ДА!!!", "Нет")) == "ДА!!!")
+			client.prefs.have_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
-		else
-			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
-		return
-
-	if(href_list["lobby_be_special"])
-		if(!client.prefs.have_quality)
-			if(tgui_alert(src, "Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.", "Особенность", list("ДА!!!", "Нет")) == "ДА!!!")
-				SSqualities.register_client(client)
+			else
+				client.prefs.have_quality = FALSE
 		else
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 		return
