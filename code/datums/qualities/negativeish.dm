@@ -78,3 +78,10 @@
 /datum/quality/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
+
+/datum/quality/dumb
+	desc = "Ты несколько раз упал головой на тулбокс и отупел."
+	requirement = "Нет."
+
+/datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+	H.adjustBrainLoss(rand(30, 99))
