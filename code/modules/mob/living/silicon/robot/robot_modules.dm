@@ -63,9 +63,9 @@
 			S.add(1)
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
-	R.add_language(LANGUAGE_TRADEBAND, 1)
-	R.add_language(LANGUAGE_TRINARY, 1)
-	R.add_language(LANGUAGE_SOLCOMMON, 1)
+	R.add_language(LANGUAGE_TRADEBAND)
+	R.add_language(LANGUAGE_TRINARY)
+	R.add_language(LANGUAGE_SOLCOMMON)
 
 /obj/item/weapon/robot_module/proc/add_item(obj/O)
 	O.forceMove(src)
@@ -334,7 +334,6 @@
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
 	. = ..()
-
 	R.add_language(LANGUAGE_SYCODE)
 
 /obj/item/weapon/robot_module/syndidrone

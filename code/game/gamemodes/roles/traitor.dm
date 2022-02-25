@@ -66,6 +66,7 @@
 	to_chat(killer, "New law: 0. [law]")
 
 	killer.add_language(LANGUAGE_SYCODE)
+
 	if(isAI(killer))
 		qdel(killer.aiRadio.keyslot1)
 		killer.aiRadio.keyslot1 = new /obj/item/device/encryptionkey/syndicate()
