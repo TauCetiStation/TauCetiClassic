@@ -125,7 +125,6 @@
 	for(var/datum/skills/skills in skills_modifiers)
 		available_skillset.merge(skills)
 
-
 /datum/mind/proc/remove_skills_modifier(datum/skills/removable)
 	for(var/datum/skills/s in skills_modifiers)
 		if(s.tag == removable.tag)
