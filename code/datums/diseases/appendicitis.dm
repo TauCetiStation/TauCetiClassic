@@ -19,7 +19,7 @@
 
 	if(istype(affected_mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
-		if(H.species.name == DIONA || H.species.name == IPC || H.species.name == VOX)
+		if(H.get_species() in list(DIONA, PODMAN, IPC, VOX))
 			cure()
 
 	if(stage == 1)

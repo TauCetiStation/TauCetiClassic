@@ -75,6 +75,7 @@
 #define TAJARAN        "Tajaran"
 #define SKRELL         "Skrell"
 #define DIONA          "Diona"
+#define PODMAN         "Podman"
 #define IPC            "Machine"
 #define VOX            "Vox"
 #define VOX_ARMALIS    "Vox Armalis"

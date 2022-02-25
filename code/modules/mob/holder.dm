@@ -62,6 +62,10 @@
 	icon_state = "nymph"
 	origin_tech = "magnets=3;biotech=5"
 
+/obj/item/weapon/holder/diona/podkid
+	name = "podkid"
+	icon_state = "podkid"
+
 /obj/item/weapon/holder/drone
 	name = "maintenance drone"
 	desc = "It's a small maintenance robot."
