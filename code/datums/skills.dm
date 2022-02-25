@@ -88,26 +88,13 @@ medical, chemistry, research, command)
 	if(skill in SKILL_BOUNDS)
 		return vars[skill]
 
-/datum/skills/proc/mergeSkills(datum/skills/other)
-	var/datum/skills/result = new /datum/skills()
-	for(var/skill in SKILL_BOUNDS)
-		var/skill_value = max(getRating(skill), other.getRating(skill))
-		skill_value = max(skill_value, getSkillMinimum(skill))
-		skill_value = min(skill_value, getSkillMaximum(skill))
-		result.vars[skill] = skill_value
-	return result
-
-/proc/cloneSkills(datum/skills/original)
-	var/datum/skills/result = new /datum/skills()
-	for(var/skill in SKILL_BOUNDS)
-		result.vars[skill] = max(getSkillMinimum(skill), min(original.getRating(skill), getSkillMaximum(skill)))
-	return result
-
 /proc/getSkillMinimum(skill)
-	return SKILL_BOUNDS[skill][1]
+	if(skill in SKILL_BOUNDS)
+		return SKILL_BOUNDS[skill][1]
 
 /proc/getSkillMaximum(skill)
-	return SKILL_BOUNDS[skill][2]
+	if(skill in SKILL_BOUNDS)
+		return SKILL_BOUNDS[skill][2]
 
 /proc/applySkillModifier(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
 	if(user.mind.getSkillRating(required_skill) < required_proficiency)
@@ -149,10 +136,12 @@ medical, chemistry, research, command)
 		setRating(skill, max(other.getRating(skill), getRating(skill)))
 
 /skillset/proc/getRating(skill)
-	return skills[skill]
+	if(skill in skills)
+		return skills[skill]
 
 /skillset/proc/setRating(skill, value)
-	skills[skill] = value
+	if(skill in skills)
+		skills[skill] = max(min(getSkillMaximum(skill), value), getSkillMinimum(skill))
 
 //medical
 /datum/skills/cmo
