@@ -30,7 +30,8 @@
 	icon_state = "dermal"
 	item_state = "dermal"
 	siemens_coefficient = 0.6
-	body_parts_covered = 1
+	pierce_protection = HEAD
+	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_TIE
 	slot = "dermal"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)

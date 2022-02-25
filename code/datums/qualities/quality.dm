@@ -7,22 +7,22 @@
 	var/list/species_required
 
 // Whether it is even possible for this player to get this quality (job bans, xeno whitelist)
-/datum/quality/proc/availability_check(client/C)
-	if(jobs_required && !pref_job_checks(C, jobs_required))
+/datum/quality/proc/satisfies_availability(client/C)
+	if(jobs_required && !can_be_jobs(C, jobs_required))
 		return FALSE
 
-	if(species_required && !pref_species_checks(C, species_required))
+	if(species_required && !can_be_species(C, species_required))
 		return FALSE
 
 	return TRUE
 
 // Whether the spawned-in human can get this quality. For example a player can choose a job that doesn't fit this quality.
 // Latespawn arg is true for players spawning after roundstart.
-/datum/quality/proc/restriction_check(mob/living/carbon/human/H, latespawn)
-	if(jobs_required && !job_checks(H, jobs_required))
+/datum/quality/proc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	if(jobs_required && !is_jobs(H, jobs_required))
 		return FALSE
 
-	if(species_required && !species_checks(H, species_required))
+	if(species_required && !is_species(H, species_required))
 		return FALSE
 
 	return TRUE
@@ -31,13 +31,13 @@
 /datum/quality/proc/add_effect(mob/living/carbon/human/H, latespawn)
 	return
 
-/datum/quality/proc/job_checks(mob/living/carbon/human/H, list/jobs)
+/datum/quality/proc/is_jobs(mob/living/carbon/human/H, list/jobs)
 	return H.mind.assigned_role in jobs
 
-/datum/quality/proc/species_checks(mob/living/carbon/human/H, list/species)
+/datum/quality/proc/is_species(mob/living/carbon/human/H, list/species)
 	return H.get_species() in species
 
-/datum/quality/proc/pref_job_checks(client/C, list/jobs)
+/datum/quality/proc/can_be_jobs(client/C, list/jobs)
 	for(var/job in jobs)
 		if(jobban_isbanned(C.mob, job))
 			continue
@@ -49,7 +49,7 @@
 
 	return FALSE
 
-/datum/quality/proc/pref_species_checks(client/C, list/species)
+/datum/quality/proc/can_be_species(client/C, list/species)
 	if(!config.usealienwhitelist)
 		return TRUE
 
