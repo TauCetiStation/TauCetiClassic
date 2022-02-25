@@ -27,7 +27,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list(HUMAN)
+	var/list/species_allowed = list(HUMAN, PODMAN)
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -48,7 +48,7 @@
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
 	icon_state = "bald"
-	species_allowed = list(HUMAN , UNATHI , DIONA)
+	species_allowed = list(HUMAN, UNATHI, DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
@@ -864,7 +864,7 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA)
+	species_allowed = list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX, IPC, DIONA, PODMAN)
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -1177,17 +1177,17 @@
 /datum/sprite_accessory/hair/una_small_horns
 	name = "Small Horny"
 	icon_state = "una_small_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_faun
 	name = "Faunus"
 	icon_state = "una_faun"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_bullhorn
 	name = "Bully"
 	icon_state = "una_bullhorn"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_ram2_horns
 	name = "Ramming Horns"
@@ -1196,648 +1196,646 @@
 /datum/sprite_accessory/hair/una_chin_horns
 	name = "Chin Horns"
 	icon_state = "una_chin_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_drac_horns
 	name = "Drac Horns"
 	icon_state = "una_drac_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_adorns_horns
 	name = "Adorns"
 	icon_state = "una_adorns_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_spikes_horn
 	name = "Spikes"
 	icon_state = "una_spikes_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_big_horns
 	name = "Big Horns"
 	icon_state = "una_big_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_simple_horns
 	name = "Simple Horns"
 	icon_state = "una_simple_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_cobrahood
 	name = "Cobra Hood"
 	icon_state = "una_facial_cobrahood"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facialhair/una_facial_aquaticfrills
 	name = "Aquatic Frills Full"
 	icon_state = "una_facial_aquaticfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_longdorsal
 	name = "Long Dorsal 4"
 	icon_state = "una_facial_longdorsal"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_ramhorn2
 	name = "Ram Horns 2"
 	icon_state = "una_ramhorn2"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_demonforward
 	name = "Demon Horns"
 	icon_state = "una_demonforward"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_chameleon
 	name = "Chameleon"
 	icon_state = "una_chameleon"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_dubhorns
 	name = "Dub Horn"
 	icon_state = "una_dubhorns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_faun
 	name = "Faun"
 	icon_state = "una_faun"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_hood
 	name = "Hood"
 	icon_state = "una_facial_hood"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_shortfrills2
 	name = "Short Frills 2"
 	icon_state = "una_facial_shortfrills2"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills
 	name = "Drac Frills Full"
 	icon_state = "una_facial_dracfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
 	icon_state = "una_warrior_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
 	name = "Small Horns"
 	icon_state = "una_smallhorns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_dreads
 	name = "Dreads"
 	icon_state = "una_dreads"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_dreads_long
 	name = "Long Dreads"
 	icon_state = "una_dreads_long"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_dreads_short
 	name = "Short Dreads"
 	icon_state = "una_dreads_short"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_dreads_predator
 	name = "Predator Dreads"
 	icon_state = "una_dreads_predator"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_hiss_collinss
 	name = "Hiss Collinss"
 	icon_state = "una_hiss_collinss"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_horns_curled
 	name = "Curled Horns"
 	icon_state = "una_horns_curled"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/unathi_horns_ram
 	name = "Ram Horns"
 	icon_state = "una_horns_ram"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_spines_long
 	name = "Long Unathi Spines"
 	icon_state = "una_longspines"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_spines_short
 	name = "Short Unathi Spines"
 	icon_state = "una_shortspines"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_longfrills
 	name = "Long Unathi Frills"
 	icon_state = "una_facial_longfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
 	icon_state = "una_shortfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_horns
 	name = "Unathi Horns"
 	icon_state = "una_horns"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_aquaticfrill
 	name = "Aquatic Frills"
 	icon_state = "una_facial_aquaticfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_aquaticfrills_webbing
 	name = "Aquatic Frills Webbed"
 	icon_state = "una_facial_aquaticfrills_webbing"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_shortfrills2
 	name = "Short Frills 2"
 	icon_state = "una_facial_shortfrills2"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills
 	name = "Drac Frills"
 	icon_state = "una_facial_dracfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
 	name = "Drac Frills Webbed"
 	icon_state = "una_facial_dracfrills_webbing"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_sidefrills
 	name = "Side Frills"
 	icon_state = "una_facial_sidefrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/hair/una_demonforward
 	name = "Demon Forward"
 	icon_state = "una_demonforward"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
 	name = "Dorsa Frills"
 	icon_state = "una_facial_dorsalfrills"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrills_webbing
 	name = "Dorsa Frills Webbed"
 	icon_state = "una_facial_dorsalfrills_webbing"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrill3
 	name = "Dorsa Frills 3"
 	icon_state = "una_facial_dorsalfrill3"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 
 /datum/sprite_accessory/facial_hair/una_hipbraid_beads
 	name = "Bead"
 	icon_state = "una_facial_hipbraid_beads"
-	species_allowed = list(UNATHI)
+	species_allowed = list(UNATHI, PODMAN)
 
 //SKRELL HAIRS
 
 /datum/sprite_accessory/hair/skr_veryshort_m
 	name = "Skrell Very Short Male Tentacles"
 	icon_state = "skr_veryshort_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_long_f
 	name = "Skrell Long Female Tentacles"
 	icon_state = "skr_long_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_verylong_f
 	name = "Skrell Very Long Female Tentacles"
 	icon_state = "skr_verylong_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_zeke_f
 	name = "Skrell Zeke Female Tentacles"
 	icon_state = "skr_zeke_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_tentacle_m
 	name = "Skrell Male Tentacles"
 	icon_state = "skr_hair_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_tentacle_f
 	name = "Skrell Female Tentacles"
 	icon_state = "skr_hair_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_gold_m
 	name = "Gold plated Skrell Male Tentacles"
 	icon_state = "skr_goldhair_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_gold_f
 	name = "Gold chained Skrell Female Tentacles"
 	icon_state = "skr_goldhair_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_clothtentacle_m
 	name = "Cloth draped Skrell Male Tentacles"
 	icon_state = "skr_clothhair_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_clothtentacle_f
 	name = "Cloth draped Skrell Female Tentacles"
 	icon_state = "skr_clothhair_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/taj_ears
 	name = "Tajaran Ears"
 	icon_state = "taj_ears_plain"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_clean
 	name = "Tajara Clean"
 	icon_state = "taj_hair_clean"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_bangs
 	name = "Tajara Bangs"
 	icon_state = "taj_hair_bangs"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_braid
 	name = "Tajara Braid"
 	icon_state = "taj_hair_tbraid"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_shaggy
 	name = "Tajara Shaggy"
 	icon_state = "taj_hair_shaggy"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_mohawk
 	name = "Tajaran Mohawk"
 	icon_state = "taj_hair_mohawk"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_plait
 	name = "Tajara Plait"
 	icon_state = "taj_hair_plait"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_straight
 	name = "Tajara Straight"
 	icon_state = "taj_hair_straight"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_long
 	name = "Tajara Long"
 	icon_state = "taj_hair_long"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_rattail
 	name = "Tajara Rat Tail"
 	icon_state = "taj_hair_rattail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_spiky
 	name = "Tajara Spiky"
 	icon_state = "taj_hair_tajspiky"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_messy
 	name = "Tajara Messy"
 	icon_state = "taj_hair_messy"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_tailshort
 	name = "Tajara Short Tail"
 	icon_state = "taj_hair_shorttail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears_messylong
 	name = "Tajara Long Messy"
 	icon_state = "taj_hair_messylong"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_sidebraid
 	name = "Tajara Side Braid"
 	icon_state = "taj_hair_sidebraid"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ribbons
 	name = "Tajara Ribbons"
 	icon_state = "taj_hair_ribbons"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_earrings
 	name = "Tajara Ear Rings"
 	icon_state = "taj_hair_earrings"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_combedback
 	name = "Tajara Combed Back"
 	icon_state = "taj_hair_combedback"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_tailedbangs
 	name = "Tajara Tailed Bangs"
 	icon_state = "taj_hair_tailedbangs"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_punk
 	name = "Tajara Punk"
 	icon_state = "taj_hair_punk"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_marmalade
 	name = "Tajara Marmalade"
 	icon_state = "taj_hair_marmalade"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_lynx
 	name = "Tajara Lynx"
 	icon_state = "taj_hair_lynx"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_longtail
 	name = "Tajara Long Tail"
 	icon_state = "taj_hair_longtail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_shy
 	name = "Tajara Shy"
 	icon_state = "taj_hair_shy"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_metal
 	name = "Tajara Metal"
 	icon_state = "taj_hair_metal"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ponytail
 	name = "Tajara Ponytail"
 	icon_state = "taj_hair_ponytail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_overeye
 	name = "Tajara Over Eye"
 	icon_state = "taj_hair_overeye"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_tough
 	name = "Tajara Tough"
 	icon_state = "taj_hair_tough"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_cuttail
 	name = "Tajara Cut Tail"
 	icon_state = "taj_hair_cuttail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/taj_dreadlocks
 	name = "Tajara Dreadlocks"
 	icon_state = "taj_hair_dreadlocks"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/tajbun
 	name = "Tajara Bun."
 	icon_state = "taj_hair_bun"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/tajtail
 	name = "Tajara Tail."
 	icon_state = "taj_hair_tail"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_punk
 	name = "Punk Razor"
 	icon_state = "vox_punk"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_razor
 	name = "Big Knife"
 	icon_state = "vox_razor"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_kingly
 	name = "Kingly"
 	icon_state = "vox_kingly"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_bayonet
 	name = "Bayonet"
 	icon_state = "vox_bayonet"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_rome
 	name = "Rome Razor"
 	icon_state = "vox_rome"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_kinglyq
 	name = "Kingly Quills"
 	icon_state = "vox_kinglyq"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_whip
 	name = "Whip Quills"
 	icon_state = "vox_whip"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_long
 	name = "Long Quills"
 	icon_state = "vox_long"
-	species_allowed = list(VOX)
+	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
 	icon_state = "taj_facial_sideburns"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_mutton
 	name = "Tajara Mutton"
 	icon_state = "taj_facial_mutton"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_pencilstache
 	name = "Tajara Pencilstache"
 	icon_state = "taj_facial_pencilstache"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_moustache
 	name = "Tajara Moustache"
 	icon_state = "taj_facial_moustache"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_goatee
 	name = "Tajara Goatee"
 	icon_state = "taj_facial_goatee"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/facial_hair/taj_smallstache
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
-	species_allowed = list(TAJARAN)
+	species_allowed = list(TAJARAN, PODMAN)
 
 /datum/sprite_accessory/hair/dio_bloom
 	name = "Diona Everbloom"
 	icon_state = "dio_bloom"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_rose
 	name = "Diona Rose"
 	icon_state = "dio_rose"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_king
 	name = "Diona Flowerking"
 	icon_state = "dio_king"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_vines
 	name = "Diona Vines Short"
 	icon_state = "dio_vines"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_vinel
 	name = "Diona Vines Long"
 	icon_state = "dio_vinel"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_lotus
 	name = "Diona Lotus"
 	icon_state = "dio_lotus"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_palm
 	name = "Diona Palmhead"
 	icon_state = "dio_palm"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_garland
 	name = "Diona Garland"
 	icon_state = "dio_garland"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_shrub
 	name = "Diona Shrub"
 	icon_state = "dio_shrub"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_ficus
 	name = "Diona Ficus"
 	icon_state = "dio_ficus"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_rosey
 	name = "Diona Rosey"
 	icon_state = "dio_rosey"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_oak
 	name = "Diona Oak"
 	icon_state = "dio_oak"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_sprout
 	name = "Diona Sprout"
 	icon_state = "dio_sprout"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_leafy
 	name = "Diona Leafy"
 	icon_state = "dio_leafy"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 
 /datum/sprite_accessory/hair/dio_meadow
 	name = "Diona Meadow"
 	icon_state = "dio_meadow"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_laurel
 	name = "Diona Laurel"
 	icon_state = "dio_laurel"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_root
 	name = "Diona Root"
 	icon_state = "dio_root"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_spinner
 	name = "Diona Spinner"
 	icon_state = "dio_spinner"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_bracket
 	name = "Diona Bracket"
 	icon_state = "dio_bracket"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_vine
 	name = "Diona Vines"
 	icon_state = "dio_vine"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_wildflower
 	name = "Diona Wild Flowers"
 	icon_state = "dio_wildflower"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_cornflower
 	name = "Diona Cornflowers"
 	icon_state = "dio_cornflower"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)
 
 /datum/sprite_accessory/hair/dio_brush
 	name = "Diona Brush"
 	icon_state = "dio_brush"
 	do_colouration = FALSE
-	species_allowed = list(DIONA)
+	species_allowed = list(DIONA, PODMAN)

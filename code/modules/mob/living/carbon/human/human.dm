@@ -107,6 +107,9 @@
 /mob/living/carbon/human/diona/atom_init(mapload)
 	. = ..(mapload, DIONA)
 
+/mob/living/carbon/human/podman/atom_init(mapload)
+	. = ..(mapload, PODMAN)
+
 /mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
 	. = ..(mapload, IPC)
@@ -1696,7 +1699,7 @@
 
 	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
 
-	if(istype(G.affecting,/mob/living/carbon/human))
+	if(ishuman(G.affecting))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
 		if(H.stat == DEAD)
@@ -2142,7 +2145,7 @@
 	if(species.flags[IS_SYNTHETIC])
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/dangerous_clothes, -wet_clothes * 2)
 		return
-	if(get_species() in list(SKRELL, DIONA))
+	if(get_species() in list(SKRELL, DIONA, PODMAN))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/refreshing_clothes, wet_clothes)
 		return
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/wet_clothes, -wet_clothes)

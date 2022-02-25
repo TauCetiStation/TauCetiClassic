@@ -123,17 +123,6 @@
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
 
-/mob/living/carbon/monkey/diona/atom_init()
-
-	. = ..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = DIONA
-	add_language(LANGUAGE_ROOTSPEAK)
-
-/mob/living/carbon/monkey/diona/movement_delay()
-	return ..(tally = 3.5)
-
 /mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1

@@ -51,7 +51,7 @@
 		return STATUS_INTERACTIVE
 	if(istype(get_area(src), /area/shuttle/syndicate))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE
-	if(istype(src_object, /obj/machinery))				// Otherwise they can only interact with emagged machinery
+	if(ismachinery(src_object))				// Otherwise they can only interact with emagged machinery
 		var/obj/machinery/Machine = src_object
 		if(Machine.emagged)
 			return STATUS_INTERACTIVE

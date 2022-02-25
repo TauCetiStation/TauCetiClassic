@@ -249,7 +249,7 @@
 
 	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if (isliving(G.affecting))
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
