@@ -104,6 +104,9 @@
 		TOOL_KNIFE = 1
 		)
 	required_skill = SKILL_SURGERY
+	qualities = list(
+		QUALITY_CUTTING = 1
+	)
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -145,7 +148,7 @@
 	icon_state = "scalpel_manager_on"
 	force = 7.5
 	toolspeed = 0.6
-	tools = list()
+	qualities = null
 /*
  * Circular Saw
  */

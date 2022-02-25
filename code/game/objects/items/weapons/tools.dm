@@ -350,7 +350,7 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, .proc/start_welding, target)
 	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
@@ -550,13 +550,19 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = SIZE_TINY
+
+	w_class = SIZE_SMALL
+
 	m_amt = 50
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 	required_skill = SKILL_ENGINEERING
+
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"

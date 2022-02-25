@@ -69,7 +69,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -749,7 +749,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -766,6 +766,14 @@
 		skill_bonus = applySkillModifier(user, 1, other_skill, required_proficiency)
 	delay *= toolspeed
 	delay *= skill_bonus
+
+	if(!isnull(quality))
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
+			return
+
+		delay *= 1 / qual_mod
+
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
@@ -1027,5 +1035,20 @@
 	if(src != over)
 		remove_outline()
 
+/obj/item/airlock_crush_act()
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
+		return
+
+	var/chance = w_class / (qual_prying * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+
 /obj/item/proc/display_accessories()
 	return
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]
