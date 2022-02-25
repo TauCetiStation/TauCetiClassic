@@ -204,3 +204,14 @@
 #define HUMANHEIGHT_MEDIUM   "medium height"
 #define HUMANHEIGHT_TALL     "tall height"
 #define HUMANHEIGHT_TALLEST  "tallest height"
+
+// How much of the reagent needs to be ingested before moving onto the next stage.
+#define ALLERGY_NONE 0
+#define ALLERGY_UNDISCOVERED 1
+#define ALLERGY_DISCOVERED 5
+#define ALLERGY_LETHAL 7
+
+#define ALLERGY_SKIN "skin"
+#define ALLERGY_INGESTION "ingestion"
+// can't implement rn but would be funny
+// #define ALLERGY_BREATH 3

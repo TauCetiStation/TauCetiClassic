@@ -125,7 +125,7 @@
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
 	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
+		var/datum/language/USL = all_languages[LANGUAGE_USL]
 		if(can_speak(USL))
 			speaking = USL
 
@@ -146,9 +146,11 @@
 		message = copytext(message,2+length_char(speaking.key))
 		if(!message)
 			return
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+
 	else
+		speaking = get_language()
+
+	if(!speaking)
 		switch(species.name)
 			if(TAJARAN)
 				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
