@@ -21,7 +21,7 @@
 /obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	var/temperature = W.get_current_temperature()
-	if(W.sharp || W.tools[TOOL_KNIFE] || temperature > 3000)
+	if(W.sharp || W.get_quality(QUALITY_CUTTING) > 0 || temperature > 3000)
 		qdel(src)
 	else
 		return ..()
@@ -147,7 +147,7 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
+		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || isblob(O) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0

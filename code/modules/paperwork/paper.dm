@@ -61,7 +61,7 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src) || istype(user, /mob/dead/observer))
+	if(in_range(user, src) || isobserver(user))
 		if(crumpled)
 			to_chat(user, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
@@ -472,7 +472,7 @@
 		else if(I.name != "paper" && I.name != "photo")
 			B.name = I.name
 		user.drop_from_inventory(I)
-		if (istype(user, /mob/living/carbon/human))
+		if (ishuman(user))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
 				h_user.drop_from_inventory(src)
@@ -747,3 +747,17 @@
 
 /obj/item/weapon/paper/lovenote/update_icon()
 	icon_state = "lovenote"
+
+/obj/item/weapon/paper/nuclear_code
+	name = "NSS Exodus Nuclear Detonation Device Code (TOP SECRET)"
+
+/obj/item/weapon/paper/nuclear_code/atom_init(mapload, nukecode)
+	. = ..()
+	name = "[station_name()] Nuclear Detonation Device Code (TOP SECRET)"
+	info = "<b>Nuclear Authentication Code:</b> [nukecode]"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Security Department")
+
+	update_icon()
+	updateinfolinks()

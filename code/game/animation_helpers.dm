@@ -9,6 +9,12 @@
 /atom/proc/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
+/mob/living/proc/prevent_item_animations()
+	return m_intent == MOVE_INTENT_WALK
+
+/mob/living/carbon/human/prevent_item_animations()
+	return istype(gloves, /obj/item/clothing/gloves/black/strip) || ..()
+
 /atom/proc/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
 	if(invisibility > 0)
 		return
@@ -190,9 +196,9 @@
 	if (!Adjacent(target))
 		return
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.prevent_item_animations())
 			return
 
 	if(is_invis_anim)
@@ -254,9 +260,9 @@
 	if (!target.Adjacent(user))
 		return
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.prevent_item_animations())
 			return
 
 	if(is_invis_anim)
@@ -313,11 +319,6 @@
 		return
 	if (QDELETED(target))
 		return
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
-			return
 
 	if(is_invis_anim)
 		return

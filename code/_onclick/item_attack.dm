@@ -132,6 +132,11 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
+	if(ishuman(user) && damtype == BRUTE)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+		if(BP.pumped)
+			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped * 0.1)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
 	if(HULK in user.mutations)
 		power *= 2
 
@@ -149,7 +154,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(isslimeadult(slime))
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)
@@ -257,7 +262,7 @@
 	else
 		switch(damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
+				if(isslime(src))
 					M.adjustBrainLoss(power)
 
 				else

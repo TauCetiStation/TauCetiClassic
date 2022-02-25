@@ -7828,7 +7828,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bwR" = (
-/obj/structure/weightlifter,
+/obj/structure/stacklifter,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -8201,7 +8201,7 @@
 "bCA" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/table/woodentable,
@@ -16556,8 +16556,8 @@
 "eio" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	name = "Vacant Office";
-	sortType = "Vacant Office"
+	name = "Coworking";
+	sortType = "Coworking"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18892,6 +18892,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
+"eVq" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/prison)
 "eVC" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -22039,7 +22045,7 @@
 "fRA" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -74614,6 +74620,12 @@
 	icon_state = "vault"
 	},
 /area/station/gateway)
+"wub" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "wvH" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -100859,7 +100871,7 @@ uyY
 oMm
 kzJ
 kzJ
-kzJ
+eVq
 gOl
 eHC
 amh
@@ -102470,7 +102482,7 @@ uIK
 rBj
 dhY
 uwW
-uwW
+wub
 rBj
 bRY
 caR

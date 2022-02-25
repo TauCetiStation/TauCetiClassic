@@ -72,10 +72,10 @@
 	radio = card.radio
 
 	//Default languages without universal translator software
-	add_language("Sol Common", 1)
-	add_language("Trinary", 1)
-	add_language("Tradeband", 1)
-	add_language("Gutter", 1)
+	add_language(LANGUAGE_SOLCOMMON, 1)
+	add_language(LANGUAGE_TRINARY, 1)
+	add_language(LANGUAGE_TRADEBAND, 1)
+	add_language(LANGUAGE_GUTTER, 1)
 
 	//PDA
 	pda = new(src)
@@ -167,7 +167,7 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	if(istype(usr, /mob/living))
+	if(isliving(usr))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)

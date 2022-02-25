@@ -47,7 +47,7 @@
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
 			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-	if (istype(A,/mob/living/carbon))
+	if (iscarbon(A))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
 
@@ -117,14 +117,14 @@
 
 // Only adds blood on the floor -- Skie
 /turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(M, /mob/living/carbon/monkey))
+	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Monkey = M
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		this.blood_DNA[Monkey.dna.unique_enzymes] = Monkey.dna.b_type
 		this.basedatum = new Monkey.blood_datum
 		this.update_icon()
 
-	else if(istype(M,/mob/living/carbon/human))
+	else if(ishuman(M))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		var/mob/living/carbon/human/H = M
@@ -185,6 +185,6 @@
 		if(WATER_FLOOR)
 			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 		if(LUBE_FLOOR)
-			AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
+			AddComponent(/datum/component/slippery, 5, SLIDE)
 		else
 			qdel(GetComponent(/datum/component/slippery))

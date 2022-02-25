@@ -107,6 +107,10 @@
 
 	if(mob.stat == DEAD)
 		return
+
+	if(HAS_TRAIT(mob, TRAIT_VACCINATED))
+		return
+
 	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
@@ -279,4 +283,3 @@ var/global/list/virusDB = list()
 
 /obj/machinery/disease2
 	allowed_checks = ALLOWED_CHECK_TOPIC
-	

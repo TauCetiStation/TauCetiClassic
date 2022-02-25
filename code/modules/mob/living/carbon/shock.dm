@@ -31,7 +31,7 @@
 		src.traumatic_shock = 0
 
 	// broken or ripped off bodyparts will add quite a bit of pain
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if(BP.is_stump)

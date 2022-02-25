@@ -123,3 +123,7 @@
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	// Reagent allergies.
+	var/list/allergies
+	var/next_allergy_message = 0

@@ -26,7 +26,7 @@
 	if(knife)
 		return ..()
 
-	if(I.tools[TOOL_KNIFE] >= 1)
+	if(I.get_quality(QUALITY_CUTTING) > 0)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")

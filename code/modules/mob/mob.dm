@@ -212,7 +212,6 @@
 				client.eye = loc
 	return
 
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -366,7 +365,7 @@
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -584,7 +583,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -768,6 +767,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 					lying = 1
 
 	density = !lying
+
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
@@ -1286,3 +1292,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		input_offsets = null
 		next_randomise_inputs = world.time
+
+/mob/proc/get_language()
+	if(forced_language)
+		return all_languages[forced_language]
+	return null
