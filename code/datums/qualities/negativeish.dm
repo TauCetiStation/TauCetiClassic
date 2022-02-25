@@ -144,3 +144,11 @@ var/global/list/allergen_reagents_list
 	for(var/i in 1 to allergies_amount)
 		var/reagent = pick(global.allergen_reagents_list)
 		H.allergies[reagent] = ALLERGY_UNDISCOVERED
+
+
+/datum/quality/dumb
+	desc = "Ты несколько раз упал головой на тулбокс и отупел."
+	requirement = "Нет."
+
+/datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+	H.adjustBrainLoss(rand(30, 99))
