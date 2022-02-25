@@ -64,7 +64,7 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	M.skills_modifiers += new skillset()
+	M.add_skills_modifier(new skillset())
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -86,7 +86,7 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
-	M.removeSkillsModifier(new skillset())
+	M.remove_skills_modifier(new skillset())
 
 	remove_antag_hud()
 	if(msg_admins)
@@ -173,7 +173,6 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
-	antag.current_skillset = antag.getAvailableSkillSet()
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()

@@ -1586,10 +1586,9 @@
 
 		for(var/slider_name in sliders_data)
 			var/slider_id = sliders_data[slider_name]
-			var/slider_value = mind.getSkillRating(slider_id)
-			var/slider_min_value = getSkillMinimum(slider_id)
-			var/skillset/available = mind.getAvailableSkillSet()
-			var/slider_max_value = available.getRating(slider_id)
+			var/slider_value = mind.get_skill_value(slider_id)
+			var/slider_min_value = get_skill_minimum(slider_id)
+			var/slider_max_value = mind.available_skillset.get_value(slider_id)
 			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>

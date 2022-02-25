@@ -77,8 +77,7 @@
 
 		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
-		user.mind.skills_modifiers += target.mind.skills_modifiers
-		user.mind.current_skillset = user.mind.getAvailableSkillSet()
+		user.mind.add_skills_modifier(target.mind.skills_modifiers)
 
 		var/datum/role/changeling/C = target.mind.GetRoleByType(/datum/role/changeling)
 		if(C)//If the target was a changeling, suck out their extra juice and objective points!

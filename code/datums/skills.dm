@@ -84,23 +84,23 @@ medical, chemistry, research, command)
 #undef SKILLSID
 
 
-/datum/skills/proc/getRating(skill)
+/datum/skills/proc/get_value(skill)
 	if(skill in SKILL_BOUNDS)
 		return vars[skill]
 
-/proc/getSkillMinimum(skill)
+/proc/get_skill_minimum(skill)
 	if(skill in SKILL_BOUNDS)
 		return SKILL_BOUNDS[skill][1]
 
-/proc/getSkillMaximum(skill)
+/proc/get_skill_maximum(skill)
 	if(skill in SKILL_BOUNDS)
 		return SKILL_BOUNDS[skill][2]
 
 /proc/applySkillModifier(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	if(user.mind.getSkillRating(required_skill) < required_proficiency)
-		return  value + value * penalty * (required_proficiency - user.mind.getSkillRating(required_skill))
-	if(user.mind.getSkillRating(required_skill) > required_proficiency)
-		return value - value * bonus * (user.mind.getSkillRating(required_skill) - required_proficiency)
+	if(user.mind.get_skill_value(required_skill) < required_proficiency)
+		return  value + value * penalty * (required_proficiency - user.mind.get_skill_value(required_skill))
+	if(user.mind.get_skill_value(required_skill) > required_proficiency)
+		return value - value * bonus * (user.mind.get_skill_value(required_skill) - required_proficiency)
 	return value
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
@@ -117,31 +117,31 @@ medical, chemistry, research, command)
 		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
 	to_chat(user, display_message_self)
 
-	var/required_time = max(time_bonus, delay - time_bonus * user.mind.getSkillRating(required_skill))
+	var/required_time = max(time_bonus, delay - time_bonus * user.mind.get_skill_value(required_skill))
 	return do_after(user, required_time, target = target)
 
 
 /proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
-	return user?.mind?.getSkillRating(required_skill) >= required_proficiency
+	return user?.mind?.get_skill_value(required_skill) >= required_proficiency
 
 /skillset
 	var/skills = list()
 
-/skillset/proc/InitFromDatum(datum/skills/initial)
+/skillset/proc/init_from_datum(datum/skills/initial)
 	for(var/skill in SKILL_BOUNDS)
-		skills[skill] = max(getSkillMinimum(skill), initial.getRating(skill))
+		skills[skill] = max(get_skill_minimum(skill), initial.get_value(skill))
 
-/skillset/proc/Merge(datum/skills/other)
+/skillset/proc/merge(datum/skills/other)
 	for(var/skill in skills)
-		setRating(skill, max(other.getRating(skill), getRating(skill)))
+		set_value(skill, max(other.get_value(skill), get_value(skill)))
 
-/skillset/proc/getRating(skill)
+/skillset/proc/get_value(skill)
 	if(skill in skills)
 		return skills[skill]
 
-/skillset/proc/setRating(skill, value)
+/skillset/proc/set_value(skill, value)
 	if(skill in skills)
-		skills[skill] = max(min(getSkillMaximum(skill), value), getSkillMinimum(skill))
+		skills[skill] = max(min(get_skill_maximum(skill), value), get_skill_minimum(skill))
 
 //medical
 /datum/skills/cmo

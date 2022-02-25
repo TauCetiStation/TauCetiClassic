@@ -83,7 +83,7 @@
 
 	if (H.mind)
 		var/skills = getSkillsType(return_skill_set(H,alt_title))
-		H.mind.skills_modifiers += skills
+		H.mind.add_skills_modifier(skills)
 	post_equip(H, visualsOnly)
 	return TRUE
 
