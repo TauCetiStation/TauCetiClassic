@@ -2234,7 +2234,6 @@
 	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
 
-
 /mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	if(!Heart)
@@ -2301,3 +2300,10 @@
 	if(bodytemperature < 330)
 		//310 is the normal bodytemp. 310.055
 		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)
+
+/mob/living/carbon/human/get_pumped(bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(bodypart)
+	if(!BP)
+		return 0
+
+	return BP.pumped
