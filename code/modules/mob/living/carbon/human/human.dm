@@ -1426,7 +1426,7 @@
 
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
-			add_language(A)
+			add_language(A, species.additional_languages[A])
 
 	typing_indicator_type = species.typing_indicator_type
 
