@@ -82,8 +82,8 @@
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	if (H.mind)
-		var/skillset = getSkillsType(return_skill_set(H,alt_title))
-		H.mind.skillsets += skillset
+		var/skills = getSkillsType(return_skill_set(H,alt_title))
+		H.mind.skills_modifiers += skills
 	post_equip(H, visualsOnly)
 	return TRUE
 

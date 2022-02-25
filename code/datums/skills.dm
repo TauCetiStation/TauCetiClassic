@@ -85,7 +85,8 @@ medical, chemistry, research, command)
 
 
 /datum/skills/proc/getRating(skill)
-	return vars[skill]
+	if(skill in SKILL_BOUNDS)
+		return vars[skill]
 
 /datum/skills/proc/mergeSkills(datum/skills/other)
 	var/datum/skills/result = new /datum/skills()
@@ -136,7 +137,22 @@ medical, chemistry, research, command)
 /proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
 	return user?.mind?.getSkillRating(required_skill) >= required_proficiency
 
+/skillset
+	var/skills = list()
 
+/skillset/proc/InitFromDatum(datum/skills/initial)
+	for(var/skill in SKILL_BOUNDS)
+		skills[skill] = max(getSkillMinimum(skill), initial.getRating(skill))
+
+/skillset/proc/Merge(datum/skills/other)
+	for(var/skill in skills)
+		setRating(skill, max(other.getRating(skill), getRating(skill)))
+
+/skillset/proc/getRating(skill)
+	return skills[skill]
+
+/skillset/proc/setRating(skill, value)
+	skills[skill] = value
 
 //medical
 /datum/skills/cmo
@@ -347,7 +363,7 @@ medical, chemistry, research, command)
 
 /datum/skills/miner
 	civ_mech = SKILL_CIV_MECH_MASTER
-	firearms  = SKILL_FIREARMS_TRAINED 
+	firearms  = SKILL_FIREARMS_TRAINED
 
 /datum/skills/cargotech
 	civ_mech = SKILL_CIV_MECH_PRO
@@ -519,6 +535,6 @@ medical, chemistry, research, command)
 	combat_mech = SKILL_COMBAT_MECH_PRO
 	command = SKILL_COMMAND_EXPERT
 	melee = SKILL_MELEE_MASTER
-	
+
 
 
