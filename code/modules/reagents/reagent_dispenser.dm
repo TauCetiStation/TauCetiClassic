@@ -133,7 +133,7 @@
 			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
+			if (isigniter(H.a_left) || isigniter(H.a_right))
 				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 

@@ -132,6 +132,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	// Qualities
 	var/have_quality = FALSE
+	var/selecting_quality = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()
