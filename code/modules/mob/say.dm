@@ -101,12 +101,7 @@
 			return 1
 		return 0
 
-	//Language check.
-	for(var/datum/language/L in languages)
-		if(speaking.name == L.name)
-			return 1
-
-	return 0
+	return can_understand(speaking)
 
 /*
    ***Deprecated***

@@ -23,15 +23,21 @@
 	BP = null
 	return ..()
 
-/datum/bodypart_controller/proc/adjust_pumped(value)
+/datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
 	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return
 
-	BP.pumped += value
-	if(BP.pumped > BP.max_pumped)
-		BP.pumped = BP.max_pumped
+	if(isnull(cap))
+		cap = BP.max_pumped
+	if(BP.pumped >= cap)
+		return 0
+
+	var/old_pumped = BP.pumped
+	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	return BP.pumped - old_pumped
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
@@ -181,7 +187,7 @@
 			//Check edge eligibility
 			var/edge_eligible = 0
 			if(edge)
-				if(istype(used_weapon, /obj/item))
+				if(isitem(used_weapon))
 					var/obj/item/W = used_weapon
 					if(W.w_class >= BP.w_class)
 						edge_eligible = 1
@@ -600,7 +606,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// This is mostly for the ninja suit to stop ninja being so crippled by breaks.
 	// TODO: consider moving this to a suit proc or process() or something during
 	// hardsuit rewrite.
-	if(!(BP.status & ORGAN_SPLINTED) && istype(BP.owner,/mob/living/carbon/human))
+	if(!(BP.status & ORGAN_SPLINTED) && ishuman(BP.owner))
 
 		var/mob/living/carbon/human/H = BP.owner
 

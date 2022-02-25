@@ -186,7 +186,7 @@
 		if(bodytemperature <= (T0C - 40)) // stun temperature
 			Tempstun = 1
 
-		if(bodytemperature <= (T0C - 50)) // hurt temperature
+		if(bodytemperature <= (T0C - 45)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
 				adjustToxLoss(200)
 			else

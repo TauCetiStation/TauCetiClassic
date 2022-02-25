@@ -9,8 +9,11 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
+
 	w_class = SIZE_NORMAL
-	max_storage_space = DEFAULT_BOX_STORAGE + 2 // fits all tools and around 2 extra items
+	max_w_class = SIZE_SMALL
+	max_storage_space = DEFAULT_BOX_STORAGE + 3 // fits all tools and around 2 extra items
+
 	origin_tech = "combat=1"
 	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")

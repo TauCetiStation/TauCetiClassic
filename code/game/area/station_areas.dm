@@ -540,7 +540,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "security"
 
 /area/station/security/vacantoffice
-	name = "Vacant Office"
+	name = "Coworking"
 	icon_state = "security"
 
 /area/station/security/iaa_office

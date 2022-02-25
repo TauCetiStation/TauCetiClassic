@@ -717,6 +717,11 @@
 		new /obj/item/mine/shock(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/rare_seeds
+	name = "granny's gift"
+	desc = "XOXO! - Granny"
+	startswith = list(/obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
+
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"
