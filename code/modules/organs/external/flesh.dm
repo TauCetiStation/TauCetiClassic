@@ -23,15 +23,21 @@
 	BP = null
 	return ..()
 
-/datum/bodypart_controller/proc/adjust_pumped(value)
+/datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
 	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return
 
-	BP.pumped += value
-	if(BP.pumped > BP.max_pumped)
-		BP.pumped = BP.max_pumped
+	if(isnull(cap))
+		cap = BP.max_pumped
+	if(BP.pumped >= cap)
+		return 0
+
+	var/old_pumped = BP.pumped
+	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	return BP.pumped - old_pumped
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you

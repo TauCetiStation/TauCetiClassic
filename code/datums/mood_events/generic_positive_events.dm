@@ -11,6 +11,10 @@
 	mood_change = 2
 	timeout = 10 MINUTES
 
+/datum/mood_event/happiness
+	mood_change = 6
+	description = "<span class='bold nicegreen'>For no apparent reason I feel great! I love life!</span>"
+
 /datum/mood_event/drunk
 	mood_change = 1
 	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>"
