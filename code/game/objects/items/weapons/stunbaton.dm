@@ -113,7 +113,7 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (prob(50))
-		if(istype(hit_atom, /mob/living))
+		if(isliving(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
 				//H.apply_effect(10, STUN, 0)

@@ -368,7 +368,7 @@
 		else
 			user.remove_from_mob(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 
 		user.next_move = max(user.next_move+2,world.time + 2)
