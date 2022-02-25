@@ -1449,3 +1449,6 @@
 		if(istype(IO))
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
+
+/mob/living/proc/get_pumped(bodypart)
+	return 0
