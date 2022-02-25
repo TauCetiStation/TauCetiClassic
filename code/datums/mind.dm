@@ -60,10 +60,9 @@
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+
 	//skills
-	var/list/skills_modifiers = list()
-	var/skillset/active_skillset
-	var/skillset/available_skillset
+	var/datum/skills/skills = new /datum/skills()
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
@@ -109,43 +108,6 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
-
-/datum/mind/proc/get_skill_value(skill)
-	if(issilicon(usr))
-		return get_skill_maximum(skill)
-	if(!available_skillset)
-		update_available_skillset()
-	if(!active_skillset)
-		active_skillset = available_skillset
-	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
-
-/datum/mind/proc/update_available_skillset()
-	available_skillset = new /skillset()
-	available_skillset.init_from_datum(skills_modifiers[1])
-	for(var/datum/skills/skills in skills_modifiers)
-		available_skillset.merge(skills)
-
-/datum/mind/proc/remove_skills_modifier(datum/skills/removable)
-	for(var/datum/skills/s in skills_modifiers)
-		if(s.tag == removable.tag)
-			skills_modifiers.Remove(s)
-	update_available_skillset()
-
-/datum/mind/proc/add_skills_modifier(datum/skills/new_skills)
-	skills_modifiers += new_skills
-	update_available_skillset()
-	active_skillset = available_skillset
-
-/datum/mind/proc/changeSkillValue(skill,value)
-	if (value > get_skill_maximum(skill) || value < get_skill_minimum(skill))
-		return
-	if (value > available_skillset.get_value(skill))
-		return
-	if (value == get_skill_value(skill))
-		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active_skillset.get_value(skill)] to [value].</span>")
-	available_skillset.set_value(skill, value)
-
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -672,7 +634,7 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
-		mind.skills_modifiers = list(new /datum/skills())
+		mind.skills.add_skills_modifier(new /datum/skills_modifier())
 		if(SSticker)
 			SSticker.minds += mind
 		else

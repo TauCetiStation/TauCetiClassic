@@ -1586,9 +1586,9 @@
 
 		for(var/slider_name in sliders_data)
 			var/slider_id = sliders_data[slider_name]
-			var/slider_value = mind.get_skill_value(slider_id)
+			var/slider_value = mind.skills.get_value(slider_id)
 			var/slider_min_value = get_skill_minimum(slider_id)
-			var/slider_max_value = mind.available_skillset.get_value(slider_id)
+			var/slider_max_value = mind.skills.get_max_value(slider_id)
 			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>
@@ -1650,7 +1650,7 @@
 		return
 	if(!mind)
 		return
-	mind.changeSkillValue(skill, value)
+	mind.skills.set_value(skill, value)
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"

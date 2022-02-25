@@ -83,7 +83,7 @@
 
 	if (H.mind)
 		var/skills = getSkillsType(return_skill_set(H,alt_title))
-		H.mind.add_skills_modifier(skills)
+		H.mind.skills.add_skills_modifier(skills)
 	post_equip(H, visualsOnly)
 	return TRUE
 
@@ -184,6 +184,4 @@
 	if(H.mind)
 		if(alt_titles && H.mind.role_alt_title)
 			return skill_sets[H.mind.role_alt_title] || skill_sets[title]
-	if(alt_title)
-		return skill_sets[alt_title]
 	return skill_sets[title]
