@@ -6,31 +6,35 @@
 	density = TRUE
 	anchored = TRUE
 
+	var/taken = FALSE
+
 /obj/structure/stacklifter/proc/finish_pump(mob/living/carbon/human/user)
 	icon_state = "fitnesslifter"
 	user.pixel_y = 0
+	taken = FALSE
 
 /obj/structure/stacklifter/proc/get_pumped(mob/living/carbon/human/user)
 	for(var/lifts in 1 to 5)
 		animate(user, pixel_y = -2, time = 3)
-		if(!do_after(user, 3, TRUE, src, progress=FALSE))
+		if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 			return
 		animate(user, pixel_y = -4, time = 3)
-		if(!do_after(user, 3, TRUE, src, progress=FALSE))
+		if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 			return
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 	playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+
 	user.nutrition -= 6
 	user.overeatduration -= 8
-	user.apply_effect(15,AGONY,0)
+
 
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
 	if(C)
-		C.adjust_pumped(1)
+		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
 	if(G)
-		C.adjust_pumped(1)
+		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
 
 	user.update_body()
 
@@ -52,7 +56,7 @@
 	if(!istype(gymnast) || gymnast.lying)
 		return
 
-	if(in_use)
+	if(taken)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(user.buckled && user.buckled != src)
@@ -62,6 +66,8 @@
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
 		to_chat(user, "You are too exausted.")
 		return
+
+	taken = TRUE
 
 	icon_state = "fitnesslifter2"
 	user.set_dir(SOUTH)
@@ -82,6 +88,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	var/taken = FALSE
+
 	var/static/image/weight_overlay
 
 /obj/structure/weightlifter/atom_init()
@@ -100,6 +108,7 @@
 	cut_overlay(weight_overlay)
 	user.pixel_y = 0
 	icon_state = "fitnessweight"
+	taken = FALSE
 
 /obj/structure/weightlifter/proc/get_pumped(mob/living/carbon/human/user)
 	add_overlay(weight_overlay)
@@ -107,30 +116,29 @@
 	for(var/reps in 1 to 5)
 		for(var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
-			if(!do_after(user, 3, TRUE, src, progress=FALSE))
+			if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 				return
 
 		playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 	animate(user, pixel_y = 2, time = 3)
-	if(!do_after(user, 3, TRUE, src, progress=FALSE))
+	if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 		return
 	playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 
 	animate(user, pixel_y = 0, time = 3)
-	if(!do_after(user, 3, TRUE, src, progress=FALSE))
+	if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 		return
 
 	user.nutrition -= 12
 	user.overeatduration -= 16
-	user.apply_effect(25, AGONY, 0)
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
 	if(LA)
-		LA.adjust_pumped(1)
+		user.apply_effect(12 * LA.adjust_pumped(1), AGONY, 0)
 	if(RA)
-		RA.adjust_pumped(1)
+		user.apply_effect(12 * RA.adjust_pumped(1), AGONY, 0)
 
 	user.update_body()
 
@@ -149,7 +157,7 @@
 		return
 	if(!istype(user) || user.lying)
 		return
-	if(in_use)
+	if(taken)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(user.buckled && user.buckled != src)
@@ -158,6 +166,8 @@
 	if(user.halloss > 80 || user.shock_stage > 80)
 		to_chat(user, "You are too exausted.")
 		return
+
+	taken = TRUE
 
 	icon_state = "fitnessweight-c"
 	user.set_dir(SOUTH)
@@ -267,6 +277,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "dumbbells_light"
 	force = 7.0
+	sharp = 0
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 3
@@ -281,6 +292,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "dumbbells_heavy"
 	force = 10.0
+	sharp = 0
 	throwforce = 8.0
 	throw_speed = 5
 	throw_range = 1
@@ -299,16 +311,10 @@
 	if(!BP)
 		return
 
-	if(BP.pumped >= max_pumped)
-		return
-
-	BP.pumped += mass
-	if(BP.pumped > max_pumped)
-		BP.pumped = max_pumped
+	user.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
+	user.update_body()
 
 	user.nutrition -= 2 * mass
 	user.overeatduration -= 2 * mass
-	user.apply_effect(2 * mass, AGONY, 0)
+
 	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
-	BP.update_sprite()
-	user.update_body()

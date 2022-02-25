@@ -65,8 +65,8 @@
 			tally += 0.8
 		else if(BP.status & ORGAN_BROKEN)
 			tally += 3
-
-		weight_negation += BP.pumped / 100
+		else
+			weight_negation += BP.pumped / 100
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
@@ -84,7 +84,8 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	weight_tally = max(weight_tally - weight_negation, 0)
+	if(weight_tally > 0)
+		weight_tally = max(weight_tally - weight_negation, 0)
 
 	tally += weight_tally
 

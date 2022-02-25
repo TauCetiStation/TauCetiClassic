@@ -314,8 +314,8 @@
 	while(parts.len && (brute > 0 || burn > 0) )
 		var/obj/item/organ/external/BP = pick(parts)
 
-		var/brute_per_part = round(brute / parts.len)
-		var/burn_per_part = round(burn / parts.len)
+		var/brute_per_part = round(brute / parts.len, 0.1)
+		var/burn_per_part = round(burn / parts.len, 0.1)
 
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam

@@ -61,13 +61,38 @@
 			return 0
 	return 0
 
-//items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
+//objects that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
 //returns TRUE if the master item's parent's attack_hand() should be called, FALSE otherwise.
 //It's strange, but no other way of doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user)
-	add_fingerprint(user)
-	open(user)
-	return FALSE
+	if(isitem(master_item))
+		if(master_item.loc == user)
+			add_fingerprint(user)
+			open(user)
+			return FALSE
+
+		//Prevents opening if it's in a pocket.
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+
+			if(H.l_store == master_item && !H.get_active_hand())
+				add_fingerprint(H)
+				H.put_in_hands(master_item)
+				H.l_store = null
+				return FALSE
+
+			if(H.r_store == master_item && !H.get_active_hand())
+				add_fingerprint(H)
+				H.put_in_hands(master_item)
+				H.r_store = null
+				return TRUE
+
+	if(istype(master_item, /obj/structure))
+		add_fingerprint(user)
+		open(user)
+		return FALSE
+
+	return TRUE
 
 /obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
 	return master_item.Adjacent(neighbor)
