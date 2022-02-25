@@ -52,7 +52,7 @@
 
 /datum/quality/wonder_doctor/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>В твоем кармане лежит фиолетовая таблетка, которая способна излечить любые раны... как жаль, что в ней лишь одна единица вещества.</span>")
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/adminodrazine(H), SLOT_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/adminordrazine(H), SLOT_L_STORE)
 
 
 /datum/quality/prepared
@@ -73,17 +73,6 @@
 	to_chat(H, "<span class='notice'>Карта в твоих руках способна менять свой внешний вид и имя владельца, а одежда в коробке заменит целый гардероб.</span>")
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
-
-
-/datum/quality/clumsy
-	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
-	requirement = "Все, кроме Клоуна."
-
-/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role != "Clown"
-
-/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
 
 
 /datum/quality/heavy_equipment
@@ -191,3 +180,31 @@
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_species)
 			H.add_language(language)
+
+/datum/quality/endangered_plants
+	desc = "Бабушка передала тебе со своего гидропонического огорода семена редких растений."
+	requirement = "Ботаник."
+
+	jobs_required = list("Botanist")
+
+/datum/quality/endangered_plants/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/rare_seeds(H), SLOT_L_HAND)
+
+/datum/quality/reliquary
+	desc = "Тебе выпала великая честь - нести осколок душ. Возможно, заплатив частью своей."
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
+
+/datum/quality/crusader
+	desc = "Dominus concessit vos arma! DEUS VULT!"
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
