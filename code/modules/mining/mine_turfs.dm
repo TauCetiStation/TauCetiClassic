@@ -10,14 +10,16 @@
 	icon_state = "rock"
 	oxygen = 0
 	nitrogen = 0
+
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
-	var/last_act = 0
+	var/next_act = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
@@ -64,7 +66,7 @@
 			T = get_step(src, direction_to_check)
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-				I.plane = 6
+				I.plane = FLOOR_PLANE
 				T.add_overlay(I)
 
 	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
@@ -80,17 +82,16 @@
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
-		if(2.0)
-			if (prob(70))
-				mined_ore = 1 // some of the stuff gets blown up
-				GetDrilled()
-		if(1.0)
-			mined_ore = 2 // some of the stuff gets blown up
-			GetDrilled()
-
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
+			return
+	mined_ore = 3 - severity
+	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
 			if(istype(H.l_hand,/obj/item/weapon/pickaxe/drill))
@@ -105,7 +106,7 @@
 					return
 			attackby(H.r_hand,H)
 
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			attackby(R.module_active,R)
@@ -184,7 +185,7 @@
 
 	if (istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
-		if(S.wielded)
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
 			GetDrilled(artifact_fail = 1)
 		else
@@ -196,9 +197,9 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
+		if(next_act > world.time)//prevents message spam
 			return
-		last_act = world.time
+		next_act = world.time + 50 * P.toolspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
@@ -234,6 +235,10 @@
 					artifact_debris()
 
 		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+				BPHand.adjust_pumped(0.1, 30)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -676,14 +681,12 @@
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(30))
+				return
+		if(EXPLODE_LIGHT)
 			return
-		if(2.0)
-			if(prob(70))
-				gets_dug()
-		if(1.0)
-			gets_dug()
-	return
+	gets_dug()
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
 

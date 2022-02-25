@@ -96,11 +96,11 @@
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
-/obj/item/ammo_casing/shotgun/stunslug
+/obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "An electrified, stunning taser slug for shotguns."
+	desc = "An electrified, stunning taser shell for shotguns."
 	icon_state = "stunshell"
-	projectile_type = /obj/item/projectile/bullet/stunslug
+	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 3
 	m_amt = 2500
 

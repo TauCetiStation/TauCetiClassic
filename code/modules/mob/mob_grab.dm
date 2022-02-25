@@ -153,7 +153,8 @@
 /mob/proc/GetGrabs()
 	. = list()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
-		. += G
+		if(!QDELETED(G)) // slots are wacky and clean itself some time after qdel
+			. += G
 
 /obj/item/weapon/grab/process()
 	confirm()

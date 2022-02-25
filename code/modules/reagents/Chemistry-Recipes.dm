@@ -893,7 +893,7 @@
 		var/x_distance = TO.x - FROM.x
 		for (var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
 			if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-			if( A.anchored && !istype(A, /mob/dead/observer) ) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
+			if( A.anchored && !isobserver(A) ) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
 			// do teleport ghosts however because hell why not
 
 			var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
@@ -1262,8 +1262,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
-	P.loc = get_turf_loc(holder.my_atom)
+	new /obj/item/weapon/stock_parts/cell/slime(get_turf_loc(holder.my_atom))
 
 /datum/chemical_reaction/slimeglow
 	name = "Slime Glow"

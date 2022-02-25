@@ -58,7 +58,7 @@
 	var/a_computerid
 	var/a_ip
 
-	if(src.owner && istype(src.owner, /client))
+	if(src.owner && isclient(src.owner))
 		a_ckey = ckey(src.owner:ckey)
 		a_computerid = sanitize_sql(src.owner:computer_id)
 		a_ip = sanitize_sql(src.owner:address)
@@ -71,7 +71,7 @@
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else
@@ -269,7 +269,7 @@
 	var/pjob = query.item[4]
 	var/preason = query.item[5]
 
-	if(!src.owner || !istype(src.owner, /client))
+	if(!src.owner || !isclient(src.owner))
 		return
 
 	var/unban_ckey = ckey(src.owner.ckey)
@@ -570,7 +570,7 @@
 			who += ", [ckey(C)]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!adminwho)
 			adminwho = "[ckey(C)]"
 		else

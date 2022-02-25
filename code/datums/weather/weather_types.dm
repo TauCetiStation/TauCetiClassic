@@ -57,7 +57,7 @@
 	for(var/V in impacted_areas)
 		var/area/A = V
 		if(stage == MAIN_STAGE)
-			A.invisibility = 0
+			A.invisibility = INVISIBILITY_NONE
 			A.set_opacity(TRUE)
 			A.layer = overlay_layer
 			A.icon = 'icons/effects/weather_effects.dmi'
@@ -98,7 +98,7 @@
 /datum/weather/scrap_storm/proc/is_scrap_immune(mob/living/L)
 	if(istype(L.loc, /obj/mecha)) //Mechs are immune
 		return TRUE
-	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
+	if(isliving(L.loc) && L.loc != L) //Matryoshka check
 		return is_scrap_immune(L.loc)
 	return FALSE //RIP you
 

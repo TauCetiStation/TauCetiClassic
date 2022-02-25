@@ -254,7 +254,7 @@
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -262,7 +262,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()
@@ -356,7 +356,7 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
@@ -616,7 +616,7 @@
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
-	for(var/mob/dead/observer/O in observer_list)
+	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
@@ -635,7 +635,7 @@
 	for(var/mob/M in group)
 		if(!M.client)
 			continue
-		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(M, be_special_type))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
@@ -677,7 +677,7 @@
 	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
-	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 		return
 
 	if(isobserver(M))
@@ -708,7 +708,7 @@
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question |= IGNORE_BORER
+		M.client.prefs.ignore_question |= Ignore_Role
 		return
 
 	if(key || mind || stat != CONSCIOUS)

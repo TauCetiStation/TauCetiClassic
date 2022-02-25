@@ -44,7 +44,7 @@
 		var/turf/simulated/wall/W = target
 		W.dismantle_wall(1)
 	else
-		target.ex_act(1)
+		target.ex_act(EXPLODE_DEVASTATE)
 
 	explosion(location, 0, 0, 2, 3)
 	if(target && !QDELETED(target))

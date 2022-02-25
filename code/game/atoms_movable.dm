@@ -27,7 +27,7 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/client_mobs_in_contents
+	var/list/clients_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
@@ -43,13 +43,13 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
 
 	. = ..()
 
+	loc = null
 	// If we have opacity, make sure to tell (potentially) affected light sources.
 	if (opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
@@ -132,8 +132,8 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
+
+	update_parallax_contents()
 
 	if (orbiters)
 		for (var/thing in orbiters)
@@ -361,7 +361,7 @@
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
+	if(istype(mover) && buckled_mob == mover)
 		return 1
 	return ..()
 
@@ -468,3 +468,31 @@
 	var/atom/old_loc = loc
 	loc = new_loc
 	Moved(old_loc)
+
+/atom/movable/proc/jump_from_contents(rec_level=1)
+	for(var/i in 1 to rec_level)
+		if(!ismovable(loc))
+			return
+		var/atom/movable/AM = loc
+
+		if(!AM.drop_from_contents(src))
+			return
+
+/*
+	Return TRUE on successful drop.
+*/
+/atom/movable/proc/drop_from_contents(atom/movable/AM)
+	return FALSE
+
+/mob/drop_from_contents(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.slot_equipped)
+			return drop_from_inventory(I, loc)
+
+	AM.forceMove(loc)
+	return TRUE
+
+/obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
+	return TRUE

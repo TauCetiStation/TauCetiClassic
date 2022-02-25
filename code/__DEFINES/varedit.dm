@@ -23,7 +23,7 @@
 #define VE_DEBUG \
 	list("vars", "virus", "viruses", "mutantrace", "summon_type", "AI_Interact", "key", "ckey", "client")
 #define VE_FULLY_LOCKED \
-	list("holder", "pixel_step_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text")
+	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text")
 
 
 /* massmodify protected */
@@ -33,8 +33,8 @@
 #define VE_MASS_DEBUG \
 	list("vars", "virus", "viruses", "mutantrace", "summon_type", "AI_Interact")
 #define VE_MASS_FULLY_LOCKED \
-	list("holder", "pixel_step_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "key", "ckey", "client", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text")
+	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "key", "ckey", "client", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text")
 
 /* hidden variables */
 #define VE_HIDDEN_LOG \
-	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP")
+	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP", "telemetry_connections")

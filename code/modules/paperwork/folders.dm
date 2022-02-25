@@ -26,6 +26,18 @@
 	desc = "A purple folder."
 	icon_state = "folder_purple"
 
+/obj/item/weapon/folder/green
+	desc = "A green folder."
+	icon_state = "folder_green"
+
+/obj/item/weapon/folder/pink
+	desc = "A pink folder."
+	icon_state = "folder_pink"
+
+/obj/item/weapon/folder/brown
+	desc = "A brown folder."
+	icon_state = "folder_brown"
+
 /obj/item/weapon/folder/update_icon()
 	cut_overlays()
 	if(contents.len)

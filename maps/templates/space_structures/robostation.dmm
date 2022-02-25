@@ -660,7 +660,7 @@
 /area/space_structures/robostatoin)
 "cy" = (
 /obj/item/weapon/paper{
-	info = "August 31, 2556. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
+	info = "August 31, 2206. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
 	name = "no hope"
 	},
 /turf/simulated/floor/plating,

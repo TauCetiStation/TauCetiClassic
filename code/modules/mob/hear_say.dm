@@ -20,7 +20,7 @@
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
@@ -38,14 +38,14 @@
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
 			return
 		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = FOLLOW_LINK(src, speaker)
+		track = "[FOLLOW_LINK(src, speaker)] "
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -68,9 +68,9 @@
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
 		if(language)
-			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
+			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
-			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
@@ -170,7 +170,8 @@
 
 		if(isautosay(speaker))
 			var/turf/T = get_turf(speaker)
-			track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
+			if(T)
+				track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
 		else
 			if(speaker.mouse_opacity && (speaker.alpha > 50))
 				if(changed_voice)

@@ -59,7 +59,7 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list(
+var/global/list/slot_equipment_priority = list(
 	SLOT_BACK,
 	SLOT_WEAR_ID,
 	SLOT_W_UNIFORM,
@@ -268,7 +268,7 @@ var/list/slot_equipment_priority = list(
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
-	if(istype(l_hand, /obj/item))
+	if(isitem(l_hand))
 		var/obj/item/W = l_hand
 		if(W.flags & NODROP)
 			return FALSE
@@ -276,7 +276,7 @@ var/list/slot_equipment_priority = list(
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
-	if(istype(r_hand, /obj/item))
+	if(isitem(r_hand))
 		var/obj/item/W = r_hand
 		if(W.flags & NODROP)
 			return FALSE
@@ -339,7 +339,7 @@ var/list/slot_equipment_priority = list(
 	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(!target)
 			target = loc
 
@@ -535,7 +535,8 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = TRUE
-	if(!do_after(usr, C.equip_time, target = C))
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(!do_after(usr, equip_time, target = C))
 		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 		return FALSE
@@ -562,7 +563,8 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	if(do_after(usr, equip_time, target = C))
 		equip_to_slot_if_possible(C, slot)
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
 	else

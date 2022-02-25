@@ -139,7 +139,7 @@
 
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
 			if(H.ismindshielded())
@@ -390,7 +390,7 @@
 			else
 				for (var/datum/objective/objective in unique_objectives_role)
 					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
-		else if(istype(owner, /datum/faction))
+		else if(isfaction(owner))
 			var/datum/faction/F = owner
 			var/list/faction_objectives = F.GetObjectives()
 			var/list/prev_objectives = faction_objectives.Copy()
@@ -447,7 +447,7 @@
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)
-					R.RemoveFromRole(src)
+					R.Deconvert()
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
@@ -488,7 +488,7 @@
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	var/is_currently_brigged = 0
 
@@ -504,7 +504,7 @@
 
 	if(!is_currently_brigged)
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	if(brigged_since == -1)
 		brigged_since = world.time

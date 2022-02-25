@@ -102,6 +102,12 @@
 	stamp_border = "#ff66cc"
 	big_stamp = TRUE
 
+/obj/item/weapon/stamp/law
+	name = "lawyer's rubber stamp"
+	item_color = "redcoat"
+	stamp_message = "Lawyer"
+	big_stamp = TRUE	
+
 /obj/item/weapon/stamp/internalaffairs
 	name = "internal affairs rubber stamp"
 	icon_state = "stamp-intaff"

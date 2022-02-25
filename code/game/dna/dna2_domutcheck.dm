@@ -66,12 +66,12 @@
 // This proc is highly unsafe. It contains nochecks concerning whether M can have a gene activated. Please don't use directly.
 /proc/domutation(datum/dna/gene/gene, mob/living/M, connected=null, flags=0, forced=1)
 	if(!gene || !istype(gene))
-		return FALSE
+		return
 
 	// Sanity checks, don't skip.
 	if(!gene.can_activate(M,flags))
 		//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
-		return FALSE
+		return
 
 	// Current state
 	var/gene_active = (gene.flags & GENE_ALWAYS_ACTIVATE)

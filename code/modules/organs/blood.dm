@@ -2,12 +2,12 @@
                 BLOOD SYSTEM
 ****************************************************/
 // Blood levels
-var/const/BLOOD_VOLUME_MAXIMUM = 600
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/global/const/BLOOD_VOLUME_MAXIMUM = 600
+var/global/const/BLOOD_VOLUME_NORMAL = 560
+var/global/const/BLOOD_VOLUME_SAFE = 501
+var/global/const/BLOOD_VOLUME_OKAY = 336
+var/global/const/BLOOD_VOLUME_BAD = 224
+var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 /mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
@@ -238,7 +238,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
 
-	if(istype(source, /mob/living/carbon/human))
+	if(ishuman(source))
 		var/mob/living/carbon/human/M = source
 		source = M.blood_get()
 

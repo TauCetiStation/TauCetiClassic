@@ -1,4 +1,4 @@
-var/list/admin_datums = list()
+var/global/list/admin_datums = list()
 
 /datum/admins
 	var/rank			= "Temporary Admin"
@@ -13,6 +13,8 @@ var/list/admin_datums = list()
 	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
 	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
 	var/admincaster_signature	//What you'll sign the newsfeeds as
+
+	var/datum/filter_editor/filteriffic
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)

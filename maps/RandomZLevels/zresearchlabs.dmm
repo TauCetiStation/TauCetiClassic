@@ -7875,7 +7875,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "si" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},

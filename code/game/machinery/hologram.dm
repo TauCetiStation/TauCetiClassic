@@ -27,7 +27,7 @@ Possible to do for anyone motivated enough:
 // HOLOPAD MODE
 // 0 = RANGE BASED
 // 1 = AREA BASED
-var/const/HOLOPAD_MODE = 0
+var/global/const/HOLOPAD_MODE = 0
 
 /obj/machinery/hologram/holopad
 	name = "AI holopad"
@@ -81,7 +81,7 @@ var/const/HOLOPAD_MODE = 0
 			last_request = world.time
 			to_chat(user, "<span class='notice'>You request an AI's presence.</span>")
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in ai_list)
+			for(var/mob/living/silicon/ai/AI as anything in ai_list)
 				if(!AI.client || AI.stat == DEAD)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
@@ -213,15 +213,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/machinery/hologram/blob_act()
 	qdel(src)

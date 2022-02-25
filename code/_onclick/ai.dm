@@ -146,7 +146,6 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
-
 /atom/proc/AIAltClick()
 	return
 

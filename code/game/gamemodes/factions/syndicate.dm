@@ -117,6 +117,7 @@
 
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+		the_bomb.nuketype = "Syndi"
 		the_bomb.r_code = nuke_code
 
 	return ..()
@@ -223,7 +224,7 @@
 	var/nukedpenalty = 1000
 	for(var/datum/role/role in members)
 		foecount++
-		if (!role.antag || !role.antag.current)
+		if (!role.antag.current)
 			score["opkilled"]++
 			continue
 		var/turf/T = role.antag.current.loc

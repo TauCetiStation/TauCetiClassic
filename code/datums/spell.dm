@@ -1,7 +1,7 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -23,6 +23,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/divine_power = 0 //control of spell power depending on the aspect
 	var/list/needed_aspects
 	/****RELIGIOUS ASPECT****/
+
+	var/plasma_cost = 0 //for xenomorph powers
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -59,10 +61,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		if(try_start)
 			to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
-		return 0
+		return FALSE
 
 	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
-		return 0
+		return FALSE
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -70,48 +72,55 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(charge_counter < charge_max)
 					if(try_start)
 						to_chat(user, "[name] is still recharging.")
-					return 0
+					return FALSE
 			if("charges")
 				if(!charge_counter)
 					if(try_start)
 						to_chat(user, "[name] has no charges left.")
-					return 0
+					return FALSE
 
 		if(favor_cost > 0 && user.mind.holy_role)
 			if(user.my_religion.favor < favor_cost)
 				if(try_start)
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
-				return 0
+				return FALSE
 
 	if(user.stat && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
-		return 0
+		return FALSE
+	
+	if(plasma_cost && isxeno(user))
+		var/mob/living/carbon/xenomorph/alien = user
+		if(!alien.check_enough_plasma(plasma_cost))
+			if(try_start)
+				to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
+			return FALSE
 
 	if(ishuman(user) || ismonkey(user))
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			if(try_start)
 				user.say("Mmmf mrrfff!")
-			return 0
+			return FALSE
 
 	if(clothes_req) //clothes check
 		if(!ishuman(user))
 			if(try_start)
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/H = user
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
-			return 0
+			return FALSE
 		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
-			return 0
+			return FALSE
 		if(!is_type_in_typecache(H.head, casting_clothes))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my hat.")
-			return 0
+			return FALSE
 
 	if(try_start && !skipcharge)
 		switch(charge_type)
@@ -125,7 +134,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(favor_cost > 0 && user.mind.holy_role)
 			user.my_religion.adjust_favor(-favor_cost)  //steals favor from spells per favor
 
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
@@ -149,11 +158,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!casting_clothes)
 		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
 		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
+	if(plasma_cost)
+		name += " ([plasma_cost])"
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
@@ -163,7 +174,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
-		cooldown.tick()
+		if(cooldown)
+			cooldown.tick()
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)

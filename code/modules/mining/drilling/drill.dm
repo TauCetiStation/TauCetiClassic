@@ -97,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 
@@ -355,7 +355,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user

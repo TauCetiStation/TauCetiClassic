@@ -34,7 +34,7 @@
 	var/playercount = 0
 	var/traitorcount = 0
 
-	for(var/mob/living/player in living_list)
+	for(var/mob/living/player as anything in living_list)
 		if (player.client && player.mind && player.stat != DEAD && (is_station_level(player.z) || is_mining_level(player.z)))
 			playercount++
 			if(isanyantag(player))

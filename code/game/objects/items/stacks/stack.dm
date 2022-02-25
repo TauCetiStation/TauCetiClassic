@@ -188,7 +188,7 @@
 	. = (amount)
 
 /obj/item/stack/proc/is_cyborg()
-	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
+	return istype(loc, /obj/item/weapon/robot_module) || issilicon(loc)
 
 /obj/item/stack/use(used, transfer = FALSE)
 	if(used < 0)
@@ -235,8 +235,9 @@
 			S.use(res_list[x])
 
 /obj/item/stack/proc/zero_amount()
-	if(amount < 1 && !is_cyborg())
-		qdel(src)
+	if(amount < 1)
+		if(!is_cyborg())
+			qdel(src)
 		return TRUE
 	return FALSE
 

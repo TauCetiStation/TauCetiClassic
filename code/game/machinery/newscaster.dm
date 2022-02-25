@@ -71,9 +71,9 @@
 	var/list/datum/feed_channel/network_channels = list()
 	var/datum/feed_message/wanted_issue
 
-var/datum/feed_network/news_network = new /datum/feed_network     //The global news-network, which is coincidentally a global list.
+var/global/datum/feed_network/news_network = new /datum/feed_network     //The global news-network, which is coincidentally a global list.
 
-var/list/obj/machinery/newscaster/allCasters = list() //Global list that will contain reference to all newscasters in existence.
+var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that will contain reference to all newscasters in existence.
 
 /obj/item/newscaster_frame
 	name = "newscaster frame"
@@ -225,21 +225,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			src.isbroken=1
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				qdel(src)
-			else
-				update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
-			return
-		else
+				return
+		if(EXPLODE_LIGHT)
 			if(prob(50))
-				src.isbroken=1
-			update_icon()
-			return
+				return
+
+	src.isbroken=1
+	update_icon()
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
 	if(isbroken)
@@ -904,7 +902,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_from_inventory(photo, src)
-	else if(istype(user,/mob/living/silicon))
+	else if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
 
@@ -1114,7 +1112,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
-	if(istype(user,/mob/living/carbon/human))                       //User is a human
+	if(ishuman(user))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you
 			if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!

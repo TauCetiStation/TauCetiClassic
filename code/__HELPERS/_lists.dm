@@ -822,6 +822,10 @@
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+// This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+// Removes value V and key K from associative list L
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 

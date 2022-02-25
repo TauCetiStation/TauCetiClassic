@@ -45,7 +45,7 @@
 			can_wedge = TRUE
 		else if(istype(C, /obj/item/weapon/fireaxe))
 			var/obj/item/weapon/fireaxe/F = C
-			can_wedge = F.wielded
+			can_wedge = HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED)
 
 		if(can_wedge)
 			open(TRUE)

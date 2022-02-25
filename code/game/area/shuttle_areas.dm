@@ -221,6 +221,10 @@
 	name = "Vox Skipjack"
 	icon_state = "yellow"
 
+/area/shuttle/vox/arkship_hold
+	name = "Vox Skipjack Hold"
+	icon_state = "yellow"
+
 /area/shuttle/vox/transit
 	name = "hyperspace"
 	icon_state = "shuttle"
@@ -303,7 +307,7 @@
 
 //Shuttle lists, group by areas
 // CENTCOM
-var/list/centcom_shuttle_areas = list (
+var/global/list/centcom_shuttle_areas = list (
 	/area/shuttle/escape/centcom,
 	/area/shuttle/escape_pod1/centcom,
 	/area/shuttle/escape_pod2/centcom,
@@ -316,7 +320,7 @@ var/list/centcom_shuttle_areas = list (
 )
 
 // DOCKED TO STATION
-var/list/station_shuttle_areas = list (
+var/global/list/station_shuttle_areas = list (
 	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,

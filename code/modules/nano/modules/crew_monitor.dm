@@ -30,7 +30,7 @@
 		var/turf/pos = get_turf(C)
 
 		if((C) && (C.has_sensor) && (pos) && (T && pos.z == T.z) && (C.sensor_mode != SUIT_SENSOR_OFF))
-			if(istype(C.loc, /mob/living/carbon/human))
+			if(ishuman(C.loc))
 
 				var/mob/living/carbon/human/H = C.loc
 				if(H.w_uniform != C)
@@ -80,7 +80,7 @@
 		ui.set_auto_update(1)
 
 /obj/nano_module/crew_monitor/proc/scan()
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/C = H.w_uniform
 			if (C.has_sensor)

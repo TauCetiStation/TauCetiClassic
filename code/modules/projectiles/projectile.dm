@@ -169,7 +169,7 @@
 	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
-		if(!istype(A, /mob/living))
+		if(!isliving(A))
 			loc = A.loc
 			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
@@ -382,7 +382,7 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		result = A
 		bumped = TRUE
 		return
@@ -436,7 +436,7 @@
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-var/static/list/taser_projectiles = list(
+var/global/static/list/taser_projectiles = list(
 	/obj/item/projectile/beam/stun,
 	/obj/item/ammo_casing/energy/electrode
 )
