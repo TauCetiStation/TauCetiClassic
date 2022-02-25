@@ -125,7 +125,7 @@
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
 	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
+		var/datum/language/USL = all_languages[LANGUAGE_USL]
 		if(can_speak(USL))
 			speaking = USL
 
@@ -146,9 +146,11 @@
 		message = copytext(message,2+length_char(speaking.key))
 		if(!message)
 			return
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+
 	else
+		speaking = get_language()
+
+	if(!speaking)
 		switch(species.name)
 			if(TAJARAN)
 				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
@@ -157,6 +159,11 @@
 				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
 				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
+			if(PODMAN)
+				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
+				message = replacetextEx_char(message, "Ж", pick(list("Ш", "Хш")))
+				message = replacetextEx_char(message, "з", pick(list("с", "хс")))
+				message = replacetextEx_char(message, "З", pick(list("С", "Хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)

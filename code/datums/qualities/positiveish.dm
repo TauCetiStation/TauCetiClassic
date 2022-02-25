@@ -75,17 +75,6 @@
 	H.equip_or_collect(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
 
 
-/datum/quality/clumsy
-	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
-	requirement = "Все, кроме Клоуна."
-
-/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role != "Clown"
-
-/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
-
-
 /datum/quality/heavy_equipment
 	desc = "По программе усиления СБ тебе была выдана экипировка получше."
 	requirement = "Офицер СБ."
@@ -191,3 +180,31 @@
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_species)
 			H.add_language(language)
+
+/datum/quality/endangered_plants
+	desc = "Бабушка передала тебе со своего гидропонического огорода семена редких растений."
+	requirement = "Ботаник."
+
+	jobs_required = list("Botanist")
+
+/datum/quality/endangered_plants/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/rare_seeds(H), SLOT_L_HAND)
+
+/datum/quality/reliquary
+	desc = "Тебе выпала великая честь - нести осколок душ. Возможно, заплатив частью своей."
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
+
+/datum/quality/crusader
+	desc = "Dominus concessit vos arma! DEUS VULT!"
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
