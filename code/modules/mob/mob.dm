@@ -1281,3 +1281,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		input_offsets = null
 		next_randomise_inputs = world.time
+
+/mob/proc/get_language()
+	if(forced_language)
+		return all_languages[forced_language]
+	return null

@@ -63,9 +63,9 @@
 			S.add(1)
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
-	R.add_language("Tradeband", 1)
-	R.add_language("Trinary", 1)
-	R.add_language("Sol Common", 1)
+	R.add_language(LANGUAGE_TRADEBAND, 1)
+	R.add_language(LANGUAGE_TRINARY, 1)
+	R.add_language(LANGUAGE_SOLCOMMON, 1)
 
 /obj/item/weapon/robot_module/proc/add_item(obj/O)
 	O.forceMove(src)
@@ -281,15 +281,15 @@
 
 /obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
 	//full set of languages
-	R.add_language("Sol Common", 1)
-	R.add_language("Sinta'unathi", 1)
-	R.add_language("Siik'maas", 1)
-	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 1)
-	R.add_language("Rootspeak", 1)
-	R.add_language("Tradeband", 1)
-	R.add_language("Trinary", 1)
-	R.add_language("Gutter", 1)
+	R.add_language(LANGUAGE_SOLCOMMON, 1)
+	R.add_language(LANGUAGE_SINTAUNATHI, 1)
+	R.add_language(LANGUAGE_SIIKMAAS, 1)
+	R.add_language(LANGUAGE_SIIKTAJR, 0)
+	R.add_language(LANGUAGE_SKRELLIAN, 1)
+	R.add_language(LANGUAGE_ROOTSPEAK, 1)
+	R.add_language(LANGUAGE_TRADEBAND, 1)
+	R.add_language(LANGUAGE_TRINARY, 1)
+	R.add_language(LANGUAGE_GUTTER, 1)
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -335,14 +335,14 @@
 	//basic set+Sy-Code
 	. = ..()
 
-	R.add_language("Sy-Code", TRUE)
+	R.add_language(LANGUAGE_SYCODE, TRUE)
 
 /obj/item/weapon/robot_module/syndidrone
 	name = "syndicate drone module"
 
 /obj/item/weapon/robot_module/syndidrone/add_languages(mob/living/silicon/robot/R)
 	. = ..()
-	R.add_language("Sy-Code", TRUE)
+	R.add_language(LANGUAGE_SYCODE, TRUE)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"

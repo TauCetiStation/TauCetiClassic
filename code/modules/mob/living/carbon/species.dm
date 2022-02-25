@@ -257,7 +257,7 @@
 
 /datum/species/human
 	name = HUMAN
-	language = "Sol Common"
+	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
@@ -281,7 +281,7 @@
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
-	language = "Sinta'unathi"
+	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT | DIET_DAIRY
@@ -348,8 +348,8 @@
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
-	language = "Siik'maas"
-	additional_languages = list("Siik'tajr")
+	language = LANGUAGE_SIIKMAAS
+	additional_languages = list(LANGUAGE_SIIKTAJR)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -411,7 +411,7 @@
 	name = SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
-	language = "Skrellian"
+	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
@@ -454,8 +454,8 @@
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
-	language = "Vox-pidgin"
-	additional_languages = list("Tradeband")
+	language = LANGUAGE_VOXPIDGIN
+	additional_languages = list(LANGUAGE_TRADEBAND)
 	tail = "vox_prim"
 
 	force_racial_language = TRUE
@@ -591,7 +591,7 @@
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
-	language = "Vox-pidgin"
+	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
@@ -639,7 +639,7 @@
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
-	language = "Rootspeak"
+	language = LANGUAGE_ROOTSPEAK
 	unarmed_type = /datum/unarmed_attack/diona
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -827,7 +827,7 @@
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
-	language = "Trinary"
+	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -1089,7 +1089,7 @@
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
 	deform = 'icons/mob/human_races/r_shadowling.dmi'
-	language = "Sol Common"
+	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 
@@ -1403,7 +1403,7 @@
 	name = ABOMINATION
 	icobase = 'icons/mob/human_races/r_abomination.dmi'
 	deform = 'icons/mob/human_races/r_abomination.dmi'
-	language = "Sol Common"
+	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws/abomination
 	dietflags = DIET_OMNI
 

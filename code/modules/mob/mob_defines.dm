@@ -266,3 +266,5 @@
 	var/typing = FALSE
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
+
+	var/forced_language
