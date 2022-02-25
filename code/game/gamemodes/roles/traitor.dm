@@ -31,7 +31,7 @@
 /datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
-	if(istype(antag.current, /mob/living/silicon))
+	if(issilicon(antag.current))
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/survive)
