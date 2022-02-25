@@ -100,9 +100,6 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	tools = list(
-		TOOL_KNIFE = 1
-		)
 	required_skill = SKILL_SURGERY
 	qualities = list(
 		QUALITY_CUTTING = 1
