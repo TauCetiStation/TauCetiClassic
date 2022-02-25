@@ -443,6 +443,6 @@
 			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
 			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of Sy-Code and [src] burns to ashes.</span>"
 		)
-		user.add_language("Sy-Code")
+		user.add_language(LANGUAGE_SYCODE)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)
