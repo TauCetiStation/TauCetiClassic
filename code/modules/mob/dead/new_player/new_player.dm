@@ -88,19 +88,18 @@
 		return
 
 	if(href_list["lobby_be_special"])
-		if(!client.prefs.have_quality)
-			if(tgui_alert(src, "Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.", "Особенность", list("ДА!!!", "Нет")) == "ДА!!!")
-				SSqualities.register_client(client)
-		else
+		if(client.prefs.have_quality)
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
-		return
-
-	if(href_list["lobby_be_special"])
-		if(!client.prefs.have_quality)
-			if(tgui_alert(src, "Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.", "Особенность", list("ДА!!!", "Нет")) == "ДА!!!")
+			return
+		if(!client.prefs.selecting_quality)
+			client.prefs.selecting_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
-		else
-			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			client.prefs.selecting_quality = FALSE
 		return
 
 	if(href_list["lobby_observe"])
@@ -217,11 +216,12 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+	SSjob.EquipRank(character, rank, 1)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
-
-	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

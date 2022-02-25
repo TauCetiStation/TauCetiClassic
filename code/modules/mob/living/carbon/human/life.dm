@@ -1386,7 +1386,15 @@
 			else
 				sightglassesmod = "nightsight"
 
-	set_EyesVision(sightglassesmod)
+	if(sightglassesmod)
+		set_EyesVision(sightglassesmod)
+		return TRUE
+
+	if(moody_color)
+		animate(client, color = moody_color, time = 5)
+	else
+		animate(client, color = null, time = 5)
+
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
