@@ -2251,3 +2251,10 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/get_pumped(bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(bodypart)
+	if(!BP)
+		return 0
+
+	return BP.pumped
