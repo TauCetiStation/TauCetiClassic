@@ -15,12 +15,19 @@
 	var/clawfootstep
 	var/heavyfootstep
 
+	var/wet_timer_id
+
 /turf/simulated/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/atom_init_late()
 	levelupdate()
+
+/turf/simulated/ChangeTurf()
+	if(wet_timer_id)
+		deltimer(wet_timer_id)
+	return ..()
 
 /turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir, blooddatum = null)
 	var/typepath
@@ -162,7 +169,7 @@
 
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
-	addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE)
+	wet_timer_id = addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()
