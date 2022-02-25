@@ -91,15 +91,15 @@
 		if(client.prefs.have_quality)
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 			return
-		if(!client.prefs.selection_quality)
-			client.prefs.selection_quality = TRUE
+		if(!client.prefs.selecting_quality)
+			client.prefs.selecting_quality = TRUE
 			if(tgui_alert(
 				src,
 				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
 				"Особенность",
 				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
-			client.prefs.selection_quality = FALSE
+			client.prefs.selecting_quality = FALSE
 		return
 
 	if(href_list["lobby_observe"])
