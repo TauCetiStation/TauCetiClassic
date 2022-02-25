@@ -200,13 +200,13 @@ function newline_at_eof {
 }
 
 function match_helper {
-    local s=$1 regex='([A-Za-z1-9._]+)\([A-Za-z1-9._]+\) \((istype\([A-Za-z1-9._]+, [A-Za-z0-9\/]+\))\)'
+    local s=$1 regex='([A-Za-z1-9._]+)\([A-Za-z1-9._]+\) \((istype\([A-Za-z1-9._]+,\s?[A-Za-z0-9\/]+\))\)'
     while [[ $s =~ $regex ]]; do
         define="${BASH_REMATCH[1]}"
         s=${s#*"${BASH_REMATCH[1]}"}
         istype="${BASH_REMATCH[2]}"
         s=${s#*"${BASH_REMATCH[2]}"}
-        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z1-9._]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z1-9._]+),\\\\\s*\1\\\\\)/"`
+        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z1-9._]+,\s?([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z1-9._]+),\\\\\s*\1\\\\\)/"`
         run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
     done
 }
