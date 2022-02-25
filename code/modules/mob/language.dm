@@ -17,7 +17,12 @@
 	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
-	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
+
+	// Names of species in both of these.
+	// What species can understand but can't speak
+	// var/list/allowed_understand
+	// What species can speak(and thus understand). Is used in loadout language choosing.
+	var/list/allowed_speak
 
 /datum/language/proc/color_message(message)
 	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
@@ -72,7 +77,7 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "щ")
-	allowed_species = list(IPC)
+	allowed_speak = list(IPC)
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
@@ -82,7 +87,7 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran"
-	allowed_species = list(IPC)
+	allowed_speak = list(IPC)
 	key = list("j", "о")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
@@ -108,7 +113,7 @@
 	exclaim_verb = "warbles"
 	colour = "skrell"
 	key = list("k", "л")
-	allowed_species = list(IPC)
+	allowed_speak = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
 
 /datum/language/vox
@@ -119,9 +124,9 @@
 	exclaim_verb = "SHRIEKS"
 	colour = "vox"
 	key = list("v", "м")
-	flags = RESTRICTED
 	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
 	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
+	allowed_speak = list(IPC)
 
 /datum/language/diona
 	name = LANGUAGE_ROOTSPEAK
@@ -129,7 +134,7 @@
 	speech_verb = "creaks and rustles"
 	ask_verb = "creaks"
 	exclaim_verb = "rustles"
-	allowed_species = list(IPC)
+	allowed_speak = list(IPC)
 	colour = "soghun"
 	key = list("q", "й")
 	syllables = list("hs","zt","kr","st","sh")
@@ -137,7 +142,7 @@
 /datum/language/diona_space
 	name = LANGUAGE_ROOTSONG
 	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
-	allowed_species = list(IPC, DIONA)
+	allowed_speak = list(IPC, DIONA)
 	colour = "soghun"
 	key = list("f", "а")
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
@@ -148,7 +153,7 @@
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
-	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 /datum/language/ipc
@@ -159,8 +164,6 @@
 	exclaim_verb = "boops"
 	colour = "ipc"
 	key = list("x", "ч") //only "dpz" left.
-	//need to find a way to resolve possesive macros
-	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
 
 // Galactic common languages (systemwide accepted standards).
@@ -170,7 +173,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -186,7 +189,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
 
@@ -208,7 +211,7 @@
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
 	key = list("4")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
 
@@ -220,6 +223,7 @@
 	exclaim_verb = "hisses"
 	colour = "alien"
 	syllables = list("сс", "хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
+	flags = RESTRICTED
 
 /datum/language/shkiondioniovioion
 	name = LANGUAGE_SHKIONDIONIOVIOION
@@ -256,26 +260,37 @@
 	return replace_characters(input, replacements)
 
 // Language handling.
-/mob/proc/add_language(language)
+/mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
+	if(isnull(flags))
+		flags = LANGUAGE_CAN_SPEAK
 
 	var/datum/language/new_language = all_languages[language]
 
-	if(!istype(new_language) || (new_language in languages))
+	if(!istype(new_language))
 		return 0
 
-	languages.Add(new_language)
+	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
+		return 0
+
+	languages[new_language] = flags
 	return 1
 
-/mob/proc/remove_language(rem_language)
-
-	languages.Remove(all_languages[rem_language])
-
+/mob/proc/remove_language(language, flags)
+	languages.Remove(all_languages[language])
 	return 0
+
+/mob/proc/can_understand(datum/language/speaking)
+	return universal_understand || (speaking in languages)
 
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)
+	if(universal_speak)
+		return TRUE
 
-	return (universal_speak || (speaking in src.languages))
+	if(!languages)
+		return FALSE
+
+	return languages[speaking] == LANGUAGE_CAN_SPEAK
 
 //TBD
 /mob/verb/check_languages()
@@ -289,7 +304,10 @@
 		dat += "<b>[L.name] "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
-		dat += " </b><br/>[L.desc]<br/><br/>"
+		var/remark = ""
+		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
+			remark = " <i>(can't speak)</i>"
+		dat += " </b><br/>[L.desc][remark]<br/><br/>"
 
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
 	popup.set_content(dat)
