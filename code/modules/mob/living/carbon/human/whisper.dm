@@ -43,8 +43,8 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+	else
+		speaking = get_language()
 
 	return whisper_say(message, speaking, alt_name)
 

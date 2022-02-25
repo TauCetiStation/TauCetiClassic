@@ -30,11 +30,14 @@
 
 	if(isnull(cap))
 		cap = BP.max_pumped
+	if(BP.pumped >= cap)
+		return 0
 
-	BP.pumped += value
-	if(BP.pumped > cap)
-		BP.pumped = cap
+	var/old_pumped = BP.pumped
+	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	return BP.pumped - old_pumped
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
