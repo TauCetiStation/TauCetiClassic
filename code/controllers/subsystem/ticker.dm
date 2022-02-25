@@ -283,6 +283,7 @@ SUBSYSTEM_DEF(ticker)
 		show_blurbs()
 
 		SSevents.start_roundstart_event()
+		SSqualities.give_all_qualities()
 
 		for(var/mob/dead/new_player/N as anything in new_player_list)
 			if(N.client)
@@ -402,8 +403,7 @@ SUBSYSTEM_DEF(ticker)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(ishuman(player))
-				SSquirks.AssignQuirks(player, player.client, TRUE)
+			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)

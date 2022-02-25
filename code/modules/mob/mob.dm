@@ -212,7 +212,6 @@
 				client.eye = loc
 	return
 
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -757,6 +756,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 					lying = 1
 
 	density = !lying
+
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
