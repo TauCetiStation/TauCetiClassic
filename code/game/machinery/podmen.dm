@@ -80,7 +80,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		return
 
 	to_chat(user, "<span class='notice'>The strange, sluglike seeds quiver gently and swell with blood.</span>")
-	if(istype(blood_source.mind.current, /mob/dead/observer))
+	if(isobserver(blood_source.mind.current))
 		to_chat(blood_source.mind.current, "<span class='bold danger'>Your blood has been placed into a replica pod seed. Re-enter your corpse to be reborn anew.</span>")
 
 	priveleged_player = blood_source.mind

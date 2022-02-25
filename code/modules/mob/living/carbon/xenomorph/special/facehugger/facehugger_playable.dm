@@ -281,7 +281,7 @@ This is chestburster mechanic for damaging
 		return FALSE
 
 	if(affecting)
-		if(istype(chestburster.loc, /mob/living))
+		if(isliving(chestburster.loc))
 			return TRUE
 		else
 			qdel(src)
