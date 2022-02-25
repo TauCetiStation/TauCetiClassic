@@ -1529,7 +1529,7 @@
 			"Civilian exosuits" = SKILL_CIV_MECH
 			)
 	)
-	
+
 	var/list/sliders_hint = list(
 		"[SKILL_ENGINEERING]" = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications. ",
 		"[SKILL_CONSTRUCTION]" = "Construction of tables, walls, windows and crafting.",
@@ -1588,8 +1588,8 @@
 			var/slider_id = sliders_data[slider_name]
 			var/slider_value = mind.getSkillRating(slider_id)
 			var/slider_min_value = getSkillMinimum(slider_id)
-			var/datum/skills/available_skills = mind.getAvailableSkills()
-			var/slider_max_value = available_skills.getRating(slider_id)
+			var/skillset/available = mind.getAvailableSkillSet()
+			var/slider_max_value = available.getRating(slider_id)
 			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>
