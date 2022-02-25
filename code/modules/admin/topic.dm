@@ -1853,7 +1853,7 @@
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
 					return
-				else if(!istype(marked_datum,/atom))
+				else if(!isatom(marked_datum))
 					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.")
 					return
 				else
