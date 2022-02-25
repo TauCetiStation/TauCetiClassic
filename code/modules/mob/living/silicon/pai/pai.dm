@@ -72,10 +72,10 @@
 	radio = card.radio
 
 	//Default languages without universal translator software
-	add_language(LANGUAGE_SOLCOMMON, 1)
-	add_language(LANGUAGE_TRINARY, 1)
-	add_language(LANGUAGE_TRADEBAND, 1)
-	add_language(LANGUAGE_GUTTER, 1)
+	add_language(LANGUAGE_SOLCOMMON)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_GUTTER)
 
 	//PDA
 	pda = new(src)
