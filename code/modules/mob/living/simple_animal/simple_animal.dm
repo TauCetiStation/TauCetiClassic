@@ -323,7 +323,7 @@
 		var/obj/mecha/M = target_mob
 		if(M.occupant)
 			return FALSE
-	if (istype(target_mob, /obj/machinery/bot))
+	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
 			return FALSE

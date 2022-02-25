@@ -258,7 +258,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 		if(M.glasses == src)
