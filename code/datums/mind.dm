@@ -112,7 +112,9 @@
 
 /datum/mind/proc/get_skill_value(skill)
 	if(issilicon(usr))
-		return get_skill_maximum(skill);
+		return get_skill_maximum(skill)
+	if(!available_skillset)
+		update_available_skillset()
 	if(!active_skillset)
 		active_skillset = available_skillset
 	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
