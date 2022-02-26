@@ -6,7 +6,7 @@
 	antag_hud_name = "abductor"
 
 	logo_state = "abductor-logo"
-	skillset = /datum/skills_modifier/abductor
+	skillset_type = /datum/skills_modifier/abductor
 
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
@@ -51,7 +51,7 @@
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT
-	skillset = /datum/skills_modifier/abductor/agent
+	skillset_type = /datum/skills_modifier/abductor/agent
 
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
@@ -80,7 +80,7 @@
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
-	skillset = /datum/skills_modifier/abductor/scientist
+	skillset_type = /datum/skills_modifier/abductor/scientist
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())

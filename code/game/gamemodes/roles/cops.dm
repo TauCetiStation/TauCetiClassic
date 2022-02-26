@@ -13,7 +13,7 @@
 					/obj/item/clothing/under/rank/security/beatcop,
 					/obj/item/clothing/head/spacepolice,
 					)
-	skillset = /datum/skills_modifier/undercover
+	skillset_type = /datum/skills_modifier/undercover
 
 /datum/role/cop/undercover/OnPostSetup(laterole)
 	. = ..()
@@ -54,7 +54,7 @@
 	logo_state = "space_cop"
 
 	var/outfit
-	skillset = /datum/skills_modifier/cop
+	skillset_type = /datum/skills_modifier/cop
 
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
