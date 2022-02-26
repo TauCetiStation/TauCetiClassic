@@ -64,7 +64,7 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	M.skills.add_skills_modifier(new skillset_type)
+	M.skills.add_modifier(new skillset_type)
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
