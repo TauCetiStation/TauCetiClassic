@@ -118,7 +118,7 @@
 		else
 			cleansed.result = G.result
 		cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -128,21 +128,21 @@
 		if(G.lit) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
 		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -198,7 +198,7 @@
 		else
 			cursed.result = N.result
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -208,7 +208,7 @@
 		if(N.lit) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -216,14 +216,14 @@
 		var/obj/item/weapon/game_kit/N = O
 		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
 		cursed.board_stat = N.board_stat
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
