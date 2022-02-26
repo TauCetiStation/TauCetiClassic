@@ -135,7 +135,7 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, SKILL_SURGERY, SKILL_SURGERY_PROFESSIONAL, SKILL_TASK_TOUGH, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))	
+	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, SKILL_SURGERY, SKILL_SURGERY_PROFESSIONAL, SKILL_TASK_TOUGH, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -152,7 +152,7 @@
 			var/step_duration = rand(S.min_duration, S.max_duration)
 
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, other_skill = SKILL_SURGERY) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills = list(SKILL_SURGERY = SKILL_SURGERY_TRAINED)) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~

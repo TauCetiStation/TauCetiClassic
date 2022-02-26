@@ -88,24 +88,25 @@ medical, chemistry, research, command)
 		return vars[skill]
 
 /datum/skills
-	var/datum/skillset/active_skillset = new /datum/skillset
-	var/datum/skillset/available_skillset = new /datum/skillset
+	var/datum/skillset/active = new
+	var/datum/skillset/available  = new
 
-	var/list/modifiers = list()
+	var/list/modifiers
 
 /datum/skills/proc/get_value(skill, user = usr)
-	return active_skillset.get_value(skill)
+	return active.get_value(skill)
 
 /datum/skills/proc/get_max(skill)
-	return available_skillset.get_value(skill)
+	return available.get_value(skill)
 
 /datum/skills/proc/update_available()
-	available_skillset = new /datum/skillset()
-	available_skillset.init_from_datum(modifiers[1])
-	for(var/datum/skills_modifier/skills in modifiers)
-		available_skillset.merge(skills)
+	available = new /datum/skillset()
+	available.init_from_datum(modifiers[1])
+	for(var/datum/skills_modifier/modifier as anything in modifiers)
+		available.merge(modifier)
 
 /datum/skills/proc/remove_modifier(datum/skills/removable)
+	removable = new removable()
 	for(var/datum/skills_modifier/s as anything in modifiers)
 		if(s.tag == removable.tag)
 			LAZYREMOVE(modifiers, s)
@@ -119,14 +120,14 @@ medical, chemistry, research, command)
 /datum/skills/proc/add_modifier(datum/skills/new_skills)
 	LAZYADD(modifiers, new_skills)
 	update_available()
-	active_skillset.skills = available_skillset.skills.Copy()
+	active.skills = available.skills.Copy()
 
-/datum/skills/proc/set_value(skill,value)
+/datum/skills/proc/choose_value(skill,value)
 	if (value > get_skill_absolute_maximum(skill) || value < get_skill_absolute_minimum(skill))
 		return
-	if (value > available_skillset.get_value(skill))
+	if (value > available.get_value(skill))
 		return
 	if (value == get_value(skill))
 		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active_skillset.get_value(skill)] to [value].</span>")
-	active_skillset.set_value(skill, value)
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active.get_value(skill)] to [value].</span>")
+	active.set_value(skill, value)

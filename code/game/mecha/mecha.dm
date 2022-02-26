@@ -295,7 +295,7 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skill, required_proficiency, 0.15, 0.3) * move_result)
+		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, list(required_skill = required_proficiency), 0.15, 0.3) * move_result)
 		return 1
 	return 0
 /obj/mecha/proc/check_fumbling(fumble_text)

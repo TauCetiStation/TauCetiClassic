@@ -1,23 +1,30 @@
 /proc/get_skill_absolute_minimum(skill)
-	if(skill in SKILL_BOUNDS)
-		return SKILL_BOUNDS[skill][1]
+	if(!(skill in SKILL_BOUNDS))
+		return 0
+	return SKILL_BOUNDS[skill][1]
 
 /proc/get_skill_absolute_maximum(skill)
-	if(skill in SKILL_BOUNDS)
-		return SKILL_BOUNDS[skill][2]
+	if(!(skill in SKILL_BOUNDS))
+		return 0
+	return SKILL_BOUNDS[skill][2]
 
-/proc/is_skill_competent(mob/user, required_skill, required_proficiency)
-	return user.mind?.skills.get_value(required_skill) >= required_proficiency
+/proc/is_skill_competent(mob/user, required_skills)
+	for(var/skill in required_skills)
+		if(user.mind.skills.get_value(skill) < required_skills[skill])
+			return FALSE
+	return TRUE
 
-/proc/apply_skill_bonus(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	if(user.mind.skills.get_value(required_skill) < required_proficiency)
-		return  value + value * penalty * (required_proficiency - user.mind.skills.get_value(required_skill))
-	if(user.mind.skills.get_value(required_skill) > required_proficiency)
-		return value - value * bonus * (user.mind.skills.get_value(required_skill) - required_proficiency)
-	return value
+/proc/apply_skill_bonus(mob/user, value, required_skills, penalty = 0.5, bonus = 0.4)
+	var/result = value
+	for(var/skill in required_skills)
+		if(user.mind.skills.get_value(skill) < required_skills[skill])
+			result += value * penalty * (required_skills[skill] - user.mind.skills.get_value(skill))
+		if(user.mind.skills.get_value(skill) > required_skills[skill])
+			result -= value * bonus * (user.mind.skills.get_value(skill) - required_skills[skill])
+	return result
 
-/proc/do_skilled(mob/user, atom/target,  delay, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	return do_after(user, delay = apply_skill_bonus(user, delay, required_skill, required_proficiency, penalty, bonus), target = target)
+/proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
+	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, penalty, bonus), target = target)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", text_target = null)
 	if(is_skill_competent(user, required_skill, required_proficiency))

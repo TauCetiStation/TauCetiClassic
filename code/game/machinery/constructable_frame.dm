@@ -69,7 +69,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_proficiency = SKILL_CONSTRUCTION_ADVANCED))
+				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills = list(SKILL_CONSTRUCTION = SKILL_CONSTRUCTION_ADVANCED)))
 					if(state == 1)
 						if(!C.use(5))
 							return

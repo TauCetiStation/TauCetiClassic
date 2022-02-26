@@ -28,6 +28,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
+	required_skill = SKILL_ENGINEERING
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
 	. = ..()
@@ -350,11 +351,11 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, .proc/start_welding, target)
 	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
-	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_proficiency = required_proficiency, other_skill = null)
+	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills = required_skills)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
 

@@ -153,7 +153,7 @@
 	if (R.on_floor)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 		return
-	var/building_time = apply_skill_bonus(user, R.time, SKILL_CONSTRUCTION, R.skill_req, 1, 0.4)
+	var/building_time = apply_skill_bonus(user, R.time, list(SKILL_CONSTRUCTION = R.skill_req), 1, 0.4)
 	if (building_time)
 		if(usr.is_busy())
 			return

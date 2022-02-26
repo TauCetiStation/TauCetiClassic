@@ -20,7 +20,7 @@
 		return
 	if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, message_self =  "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>"))
 		return
-	var/planting_time =  max(SKILL_TASK_VERY_EASY, SKILL_TASK_AVERAGE - 1 SECONDS *  (2 * user.mind.skills.get_value(SKILL_FIREARMS)  + user.mind.skills.get_value(SKILL_ENGINEERING)))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(SKILL_FIREARMS = SKILL_FIREARMS_TRAINED, SKILL_ENGINEERING = SKILL_ENGINEERING_TRAINED))
 	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
 	if(!do_after(user, planting_time, target = src))
 		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", "<span class='notice'>You stop deploying \the [src].</span>")

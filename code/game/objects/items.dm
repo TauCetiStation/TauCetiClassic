@@ -749,7 +749,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_proficiency = 2, other_skill = null)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -759,11 +759,13 @@
 		return
 
 	var/skill_bonus = 1
+	//default check for item, assumes that is 2 equal to trained in most of skills, so this check veryfies that we are trained enough
 	if(required_skill)
-		skill_bonus = apply_skill_bonus(user, 1, required_skill, required_proficiency)
-	//skill bonus for tool but use other skill than defined in `required_skill`. E.g. check surgergy skill for screwdriver in case of ghetto surgery
-	if(other_skill)
-		skill_bonus = apply_skill_bonus(user, 1, other_skill, required_proficiency)
+		skill_bonus = apply_skill_bonus(user, 1, list(required_skill = 2))
+	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
+	if(required_skills)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills)
+
 	delay *= toolspeed
 	delay *= skill_bonus
 
