@@ -7,7 +7,7 @@
 	return TRUE // Robot organs don't count towards total damage so no need to cap them.
 
 /datum/bodypart_controller/robot/adjust_pumped(value)
-	return
+	return 0
 
 /datum/bodypart_controller/robot/emp_act(severity)
 	var/burn_damage = 0
