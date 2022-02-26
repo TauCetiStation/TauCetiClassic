@@ -500,7 +500,7 @@
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.slot_equipped)
-			return drop_from_inventory(I, loc)
+			return drop_from_inventory(I, loc, putdown_anim=FALSE)
 
 	AM.forceMove(loc)
 	return TRUE

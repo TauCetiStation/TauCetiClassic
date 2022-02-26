@@ -257,20 +257,22 @@ var/global/list/slot_equipment_priority = list(
 		return 0
 
 // Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0)
-	if(W)
-		var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
+/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0, putdown_anim=TRUE)
+	if(!W)
+		return FALSE
 
-		remove_from_mob(W, target)
-		if(!(W && W.loc))
-			return 1 // self destroying objects (tk, grabs)
+	var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
 
-		if(target && was_holding && target != src && target.loc != src)
-			INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+	var/prev_slot = W.slot_equipped
+	remove_from_mob(W, target)
+	if(!(W && W.loc))
+		return TRUE // self destroying objects (tk, grabs)
 
-		update_icons()
-		return 1
-	return 0
+	if(target && putdown_anim && was_holding && target != src && target.loc != src)
+		INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+
+	update_inv_slot(prev_slot)
+	return TRUE
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
