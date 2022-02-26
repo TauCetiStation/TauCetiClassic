@@ -1,15 +1,15 @@
 /proc/get_skill_absolute_minimum(skill)
-	if(!skill in SKILL_BOUNDS)
+	if(!(skill in SKILL_BOUNDS))
 		return 0
 	return SKILL_BOUNDS[skill][1]
 
 /proc/get_skill_absolute_maximum(skill)
-	if(!skill in SKILL_BOUNDS)
+	if(!(skill in SKILL_BOUNDS))
 		return 0
 	return SKILL_BOUNDS[skill][2]
 
 /proc/is_skill_competent(mob/user, required_skill, required_proficiency)
-	return user.mind?.skills.get_value(required_skill) >= required_proficiency
+	return user.mind.skills.get_value(required_skill) >= required_proficiency
 
 /proc/apply_skill_bonus(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
 	if(user.mind.skills.get_value(required_skill) < required_proficiency)

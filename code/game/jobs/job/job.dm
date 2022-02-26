@@ -181,7 +181,6 @@
 	return TRUE
 
 /datum/job/proc/return_skill_set(mob/living/carbon/human/H)
-	if(H.mind)
-		if(alt_titles && H.mind.role_alt_title)
-			return skill_sets[H.mind.role_alt_title] || skill_sets[title]
+	if(H.mind && alt_titles && H.mind.role_alt_title)
+		return skill_sets[H.mind.role_alt_title] || skill_sets[title]
 	return skill_sets[title]
