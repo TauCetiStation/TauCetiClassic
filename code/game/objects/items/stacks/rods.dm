@@ -13,6 +13,9 @@
 	max_amount = 60
 	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")
+	qualities = list(
+		QUALITY_PRYING = 0.5
+	)
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()

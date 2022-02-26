@@ -52,7 +52,7 @@
 			return
 
 		var/obj/item/weapon/grab/G = I
-		if(istype(G.affecting, /mob/living))
+		if(isliving(G.affecting))
 			if(!buckled_mob)
 				if(do_mob(user, src, 120))
 					if(buckled_mob) //to prevent spam/queing up attacks

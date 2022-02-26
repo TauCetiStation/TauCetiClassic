@@ -268,7 +268,7 @@ var/global/list/slot_equipment_priority = list(
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
-	if(istype(l_hand, /obj/item))
+	if(isitem(l_hand))
 		var/obj/item/W = l_hand
 		if(W.flags & NODROP)
 			return FALSE
@@ -276,7 +276,7 @@ var/global/list/slot_equipment_priority = list(
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
-	if(istype(r_hand, /obj/item))
+	if(isitem(r_hand))
 		var/obj/item/W = r_hand
 		if(W.flags & NODROP)
 			return FALSE

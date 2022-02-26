@@ -1061,6 +1061,7 @@
 				sight |= SEE_TURFS
 				if(!druggy)
 					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
 	return TRUE
 
 /mob/living/carbon/get_unarmed_attack()

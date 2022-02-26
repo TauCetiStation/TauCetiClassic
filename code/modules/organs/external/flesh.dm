@@ -30,11 +30,14 @@
 
 	if(isnull(cap))
 		cap = BP.max_pumped
+	if(BP.pumped >= cap)
+		return 0
 
-	BP.pumped += value
-	if(BP.pumped > cap)
-		BP.pumped = cap
+	var/old_pumped = BP.pumped
+	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	return BP.pumped - old_pumped
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
@@ -184,7 +187,7 @@
 			//Check edge eligibility
 			var/edge_eligible = 0
 			if(edge)
-				if(istype(used_weapon, /obj/item))
+				if(isitem(used_weapon))
 					var/obj/item/W = used_weapon
 					if(W.w_class >= BP.w_class)
 						edge_eligible = 1
@@ -603,7 +606,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// This is mostly for the ninja suit to stop ninja being so crippled by breaks.
 	// TODO: consider moving this to a suit proc or process() or something during
 	// hardsuit rewrite.
-	if(!(BP.status & ORGAN_SPLINTED) && istype(BP.owner,/mob/living/carbon/human))
+	if(!(BP.status & ORGAN_SPLINTED) && ishuman(BP.owner))
 
 		var/mob/living/carbon/human/H = BP.owner
 
