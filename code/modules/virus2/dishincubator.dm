@@ -139,7 +139,6 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	
 	if (href_list["close"])
 		user.unset_machine(src)
 		ui.close()

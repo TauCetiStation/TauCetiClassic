@@ -142,30 +142,31 @@
 	if(!is_skill_competent(user, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED))
 		to_chat(user, "<span class='warning'>You don't know how to do tactical reloads.</span>")
 		return
-	if ((istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2) && mag_type != null)))
-		to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
+	if((!istype(new_magazine, mag_type) || (!istype(new_magazine, mag_type2) || mag_type == null)))
+		return
+	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
 
-		var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(SKILL_FIREARMS, SKILL_FIREARMS_TRAINED), bonus = 0.5)
-		if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
-			return
-		var/old_magazine = magazine
-		if(magazine)
-			playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-			if (istype(new_magazine.loc,/obj/item/weapon/storage))
-				var/obj/item/weapon/storage/storage = new_magazine.loc
-				storage.remove_from_storage(new_magazine,src)
-			magazine.loc = get_turf(src.loc)
-			magazine.update_icon()
-			user.drop_from_inventory(new_magazine, src)
-			magazine = new_magazine
-			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
-			user.put_in_hands(old_magazine)
-			chamber_round()
-		else
-			user.drop_from_inventory(new_magazine, src)
-			magazine = new_magazine
-			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-		update_icon()
+	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(SKILL_FIREARMS = SKILL_FIREARMS_TRAINED), bonus = 0.5)
+	if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
+		return
+	var/old_magazine = magazine
+	if(magazine)
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
+		if (istype(new_magazine.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/storage = new_magazine.loc
+			storage.remove_from_storage(new_magazine,src)
+		magazine.loc = get_turf(src.loc)
+		magazine.update_icon()
+		user.drop_from_inventory(new_magazine, src)
+		magazine = new_magazine
+		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+		user.put_in_hands(old_magazine)
+		chamber_round()
+	else
+		user.drop_from_inventory(new_magazine, src)
+		magazine = new_magazine
+		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+		chamber_round()
+	update_icon()
 

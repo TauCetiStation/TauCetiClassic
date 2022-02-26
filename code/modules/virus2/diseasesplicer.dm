@@ -135,7 +135,6 @@
 	if(!.)
 		return
 
-
 	if (href_list["grab"])
 		if (dish)
 			memorybank = locate(href_list["grab"])
