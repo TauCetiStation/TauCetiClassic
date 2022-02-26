@@ -105,10 +105,11 @@ medical, chemistry, research, command)
 	for(var/datum/skills_modifier/skills in skills_modifiers)
 		available_skillset.merge(skills)
 
-/datum/skills/proc/remove_skills_modifier(datum/skills/removable)
-	for(var/datum/skills_modifier/s in skills_modifiers)
+/datum/skills/proc/remove_modifier(datum/skills/removable)
+	for(var/datum/skills_modifier/s as anything in skills_modifiers)
 		if(s.tag == removable.tag)
 			skills_modifiers.Remove(s)
+			break
 	update_available_skillset()
 
 /datum/skills/proc/transfer_skills(datum/mind/target)
