@@ -108,7 +108,7 @@ medical, chemistry, research, command)
 /datum/skills/proc/remove_modifier(datum/skills/removable)
 	for(var/datum/skills_modifier/s as anything in modifiers)
 		if(s.tag == removable.tag)
-			modifiers.Remove(s)
+			LAZYREMOVE(modifiers, s)
 			break
 	update_available()
 
@@ -117,7 +117,7 @@ medical, chemistry, research, command)
 		add_modifier(s)
 
 /datum/skills/proc/add_modifier(datum/skills/new_skills)
-	modifiers += new_skills
+	LAZYADD(modifiers, new_skills)
 	update_available()
 	active_skillset.skills = available_skillset.skills.Copy()
 
