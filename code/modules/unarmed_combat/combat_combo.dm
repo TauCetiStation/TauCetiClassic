@@ -62,6 +62,8 @@ var/global/list/combat_combos_by_name = list()
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
 
+	var/list/pump_bodyparts
+
 /datum/combat_combo/New()
 	gen_description()
 
@@ -356,6 +358,17 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/datum/combat_combo/proc/after_combo_finished(mob/living/victim, mob/living/attacker)
+	if(!ishuman(attacker))
+		return
+	var/mob/living/carbon/human/H = attacker
+
+	var/cap = victim.get_pumped(H.get_targetzone()) + 20
+
+	for(var/bodypart in pump_bodyparts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		BP?.adjust_pumped(pump_bodyparts[bodypart], cap)
 
 /// A lot of combos currently have such mechanic, so it's somewhat reasonable to abstract it here.
 /datum/combat_combo/proc/prepare_grab(mob/living/victim, mob/living/attacker, state)

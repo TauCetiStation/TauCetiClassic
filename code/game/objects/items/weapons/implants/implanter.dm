@@ -111,7 +111,7 @@
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = target
-		if(istype(target.loc,/mob/living/carbon/human))
+		if(ishuman(target.loc))
 			var/mob/living/carbon/human/H = target.loc
 			H.remove_from_mob(target)
 		else if(istype(target.loc,/obj/item/weapon/storage))
